@@ -8,7 +8,7 @@
     "node": ">=24 <25"
   },
   "scripts": {
-    "build": "pnpm -r --if-present run build",
+    "build": "pnpm -r run build",
     "test": "node --test scripts/test-workspace-structure.mjs apps/cli/test/smoke.test.mjs apps/mcp/test/smoke.test.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",

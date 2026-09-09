@@ -6,7 +6,7 @@
 
 **Architecture:** Use a pnpm workspace for the TypeScript apps and packages declared by the Module Boundaries specification, plus a Cargo workspace for the native analyzer. All modules begin as dependency-free shells, so this task establishes physical boundaries without introducing domain behavior, Canonical IR, storage schemas, IPC, or deferred capabilities. Executable smoke modes are explicit; MCP and native-analyzer readiness output uses stderr so future protocol stdout remains clean.
 
-**Tech Stack:** Node.js 24, pnpm 11.19.0, TypeScript 7.0.2, Node built-in test runner, Prettier 3.9.6, stable Rust (observed as 1.98.1 during bootstrap, edition 2024), Cargo, rustfmt, Clippy, GitHub Actions.
+**Tech Stack:** Node.js 24, pnpm 11.19.0, TypeScript 7.0.2, Node built-in test runner, Prettier 3.9.6, Rust 1.98.1 (edition 2024), Cargo, rustfmt, Clippy, GitHub Actions.
 
 **Spec:** `docs/handoff/specs/MODULE_BOUNDARIES.md`
 
@@ -80,7 +80,7 @@ Expected: failure because declared workspace packages, application entry points,
 
 - [ ] **Step 3: Add deterministic root configuration**
 
-Set `packageManager` to `pnpm@11.19.0`, require Node `>=24 <25`, pin TypeScript `7.0.2`, `@types/node` `26.5.0`, and Prettier `3.9.6` in the lockfile, use strict ESM TypeScript settings with declaration output, and select the complete locally verified `stable` Rust channel with `rustfmt` and `clippy` components. Record the observed Rust/Cargo versions in completion evidence. The Cargo workspace uses resolver `3` and contains only `crates/native-analyzer`.
+Set `packageManager` to `pnpm@11.19.0`, require Node `>=24 <25`, pin TypeScript `7.0.2`, `@types/node` `26.5.0`, and Prettier `3.9.6` in the lockfile, use strict ESM TypeScript settings with declaration output, and pin the complete locally verified Rust 1.98.1 toolchain with `rustfmt` and `clippy` components. Record the observed Rust/Cargo versions in completion evidence. The Cargo workspace uses resolver `3` and contains only `crates/native-analyzer`.
 
 - [ ] **Step 4: Install and validate configuration**
 
