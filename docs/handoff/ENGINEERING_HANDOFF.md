@@ -8,7 +8,7 @@ This handoff is agent-neutral. Codex, Claude Code, OpenCode, or another Implemen
 
 ## Mandatory reading before code changes
 
-1. This file and `README.md`.
+1. This file and the repository root `../../README.md`.
 2. `CURRENT_STATUS.md` to determine the active phase and next unblocked task.
 3. `DESIGN_AUTHORITY.md` to classify decisions as FROZEN, EVOLVABLE, or DEFERRED.
 4. `IMPLEMENTATION_PROTOCOL.md` for task execution and evidence rules.
@@ -51,4 +51,3 @@ Stop and propose a design change when work appears to require a breaking Canonic
 ## Completion standard
 
 Unit tests alone do not complete a task or phase. Completion requires the declared fixtures and quantitative gates, demonstrated failure/recovery behavior, synchronized documentation, an updated `CURRENT_STATUS.md`, and fresh reproducible evidence.
-

@@ -27,11 +27,10 @@ This check covers the repository root `AGENTS.md` and every Markdown file in the
 
 ## Inventory at check time
 
-- Pack Markdown files: 40
+- Pack Markdown files: 39
 - Approximate whitespace-delimited words: 11,290
-- Repository-level entry files outside the pack: `AGENTS.md`
+- Repository-level entry files outside the pack: `AGENTS.md` and `README.md`; implementation plans live separately under `docs/superpowers/`
 
 ## Maintenance rule
 
 Rerun these checks whenever a phase status, update policy, flow model, canonical storage rule, provider boundary, LLM publication rule, Phase 0/0.5 task, Fixture, or acceptance gate changes. Update this report with fresh evidence instead of carrying forward an earlier result.
-

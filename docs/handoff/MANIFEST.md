@@ -2,7 +2,7 @@
 
 ## Core
 
-- README.md
+- ../../README.md
 - ENGINEERING_HANDOFF.md
 - PRODUCT_VISION.md
 - ARCHITECTURE.md

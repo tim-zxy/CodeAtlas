@@ -8,45 +8,45 @@
 
 **Tech Stack:** Node.js 24, pnpm 11.19.0, TypeScript 7.0.2, Node built-in test runner, Prettier 3.9.6, Rust 1.98.1 (edition 2024), Cargo, rustfmt, Clippy, GitHub Actions.
 
-**Spec:** `docs/specs/MODULE_BOUNDARIES.md`
+**Spec:** `docs/handoff/specs/MODULE_BOUNDARIES.md`
 
 ## Global Constraints
 
 - Implement only `P0-W0-001`; add no business logic or database schema.
-- Create exactly the apps, packages, native crate, and shared fixture root declared in `docs/specs/MODULE_BOUNDARIES.md`.
+- Create exactly the apps, packages, native crate, and shared fixture root declared in `docs/handoff/specs/MODULE_BOUNDARIES.md`.
 - Preserve provider-independent Canonical IR and every dependency direction even though the initial shells have no cross-package imports.
 - `apps/daemon` is a buildable placeholder only; DAEMON behavior and local HTTP remain Phase 2 scope.
 - The Rust analyzer owns no SQLite state and writes no non-protocol content to stdout.
 - Evaluation evidence is required: workspace build, independent package builds, CLI/MCP smoke tests, Rust build/test, formatting, Clippy, and CI definition validation.
 - Do not modify an acceptance gate or baseline to make implementation pass.
-- Complete the task only after `docs/CURRENT_STATUS.md` records commands, pass counts, limitations, and the next task.
+- Complete the task only after `docs/handoff/CURRENT_STATUS.md` records commands, pass counts, limitations, and the next task.
 
 ---
 
-### Task 1: Restore handoff-pack path consistency
+### Task 1: Verify handoff-pack path consistency
 
 **Files:**
-- Modify: `docs/ENGINEERING_HANDOFF.md`
-- Modify: `docs/MANIFEST.md`
-- Modify: `docs/CONSISTENCY_CHECK.md`
+- Verify: `docs/handoff/ENGINEERING_HANDOFF.md`
+- Verify: `docs/handoff/MANIFEST.md`
+- Verify: `docs/handoff/CONSISTENCY_CHECK.md`
 - Verify: `AGENTS.md`
 - Verify: `README.md`
 
 **Interfaces:**
-- Consumes: the approved move of `docs/README.md` to repository-root `README.md`.
+- Consumes: the approved move of the handoff pack to `docs/handoff/` and `docs/README.md` to repository-root `README.md`.
 - Produces: valid repository-relative references from the handoff pack and an accurate inventory statement.
 
-- [ ] **Step 1: Write the failing path check**
+- [ ] **Step 1: Define the path consistency check**
 
-Create a temporary, non-versioned PowerShell assertion in the terminal that requires `README.md`, requires every path listed by `AGENTS.md`, rejects `docs/README.md`, and rejects the stale `outputs/Engineering-Handoff-Pack` prefix.
+Create a temporary, non-versioned PowerShell assertion in the terminal that requires `README.md`, requires every path listed by `AGENTS.md`, requires `docs/handoff/`, permits only `docs/handoff/` and `docs/superpowers/` directly below `docs/`, rejects `docs/README.md`, and rejects stale `outputs/Engineering-Handoff-Pack` or pre-migration `docs/specs` paths.
 
-- [ ] **Step 2: Run the path check and verify it fails correctly**
+- [ ] **Step 2: Run the path check**
 
-Run the assertion before editing the handoff documents. Expected: failure because `docs/ENGINEERING_HANDOFF.md` and `docs/MANIFEST.md` still describe `README.md` as if it were inside the pack.
+Expected: PASS with all authoritative handoff documents under `docs/handoff/`, implementation plans under `docs/superpowers/`, and repository entry files at the root.
 
-- [ ] **Step 3: Correct only the stale references and inventory**
+- [ ] **Step 3: Confirm scope and inventory**
 
-Change the handoff reading reference to repository-root `../README.md`, change the manifest entry to `../README.md`, and update the consistency inventory to distinguish authoritative pack files from repository-root entry files. Do not change architectural language or acceptance criteria.
+Confirm that the Handoff references repository-root `../../README.md`, the manifest lists that same relative path, and the consistency inventory distinguishes handoff-pack files, repository entry files, and `docs/superpowers/` plans. Do not change architectural language or acceptance criteria.
 
 - [ ] **Step 4: Re-run the path check**
 
@@ -207,9 +207,9 @@ Expected: PASS for CI command coverage and workspace structure.
 ### Task 7: Run the declared gate and record evidence
 
 **Files:**
-- Modify: `docs/CURRENT_STATUS.md`
-- Verify: `docs/PHASE_ACCEPTANCE.md`
-- Verify: `docs/DESIGN_TRACEABILITY.md`
+- Modify: `docs/handoff/CURRENT_STATUS.md`
+- Verify: `docs/handoff/PHASE_ACCEPTANCE.md`
+- Verify: `docs/handoff/DESIGN_TRACEABILITY.md`
 
 **Interfaces:**
 - Consumes: every deliverable and check from Tasks 1–6.
@@ -230,4 +230,3 @@ Record task ID `P0-W0-001`, the exact commands, observed pass counts, the Git re
 - [ ] **Step 4: Re-run the full gate after documentation changes**
 
 Expected: all commands pass without warnings or skipped mandatory checks.
-

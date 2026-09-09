@@ -6,15 +6,15 @@ This repository uses an agent-neutral Engineering Handoff Pack. These instructio
 
 Read these documents in order before making any code, schema, configuration, fixture, or build change:
 
-1. `docs/ENGINEERING_HANDOFF.md`
-2. `docs/CURRENT_STATUS.md`
-3. `docs/DESIGN_AUTHORITY.md`
-4. `docs/IMPLEMENTATION_PROTOCOL.md`
-5. `docs/ROADMAP.md`
-6. The active phase sections in `docs/WORK_BREAKDOWN.md` and `docs/PHASE_ACCEPTANCE.md`
-7. Every relevant ADR under `docs/adr/`
-8. Every relevant specification under `docs/specs/`
-9. `docs/DESIGN_TRACEABILITY.md`
+1. `docs/handoff/ENGINEERING_HANDOFF.md`
+2. `docs/handoff/CURRENT_STATUS.md`
+3. `docs/handoff/DESIGN_AUTHORITY.md`
+4. `docs/handoff/IMPLEMENTATION_PROTOCOL.md`
+5. `docs/handoff/ROADMAP.md`
+6. The active phase sections in `docs/handoff/WORK_BREAKDOWN.md` and `docs/handoff/PHASE_ACCEPTANCE.md`
+7. Every relevant ADR under `docs/handoff/adr/`
+8. Every relevant specification under `docs/handoff/specs/`
+9. `docs/handoff/DESIGN_TRACEABILITY.md`
 
 Do not rely on the original ChatGPT discussion or any unavailable conversation history. The repository documents are the implementation authority.
 
