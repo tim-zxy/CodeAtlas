@@ -1,5 +1,18 @@
 # Runtime and Configuration Specification
 
+## Phase 0 runtime bootstrap
+
+`RuntimeBuilder` constructs an immutable `KnowledgeRuntime` from explicit
+`RuntimeDependencies`. The Phase 0 dependencies validate configuration version
+`1` and the `ONE_SHOT | MCP_STDIO` runtime mode, normalize an explicit
+workspace root, and create a discriminated `WORKSPACE_CONTEXT_PLACEHOLDER`.
+CLI and MCP use the same builder and differ only in runtime mode.
+
+Phase 0 construction is asynchronous but in-memory. It performs no YAML loading,
+workspace discovery, database work, source reconciliation, provider invocation,
+network access, watching, or background service startup. Typed canonical errors
+remain part of the Common IR task.
+
 ## Modes and lifecycle
 
 Supported modes are `ONE_SHOT`, `MCP_STDIO`, and optional Phase 2 `DAEMON`. Startup loads global/workspace/repository overrides, validates config, opens and migrates databases, reconciles missed file changes, initializes capabilities, then serves the use case. MCP starts a watcher while alive; one-shot relies on startup reconciliation.
