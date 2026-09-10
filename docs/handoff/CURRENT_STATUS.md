@@ -6,7 +6,7 @@
 - Handoff assembly: refreshed as the agent-neutral Engineering Handoff Pack.
 - Primary handoff entry: `ENGINEERING_HANDOFF.md`.
 - Compatibility entry: `CODEX_HANDOFF.md`.
-- Implementation repository: P0-W0-001 and P0-W0-002 are complete with local verification and successful hosted CI evidence.
+- Implementation repository: P0-W0-001 and P0-W0-002 are complete with local verification and successful hosted CI evidence; P0-W0-003 has fresh local evidence and is awaiting its required hosted CI cycle.
 - Active implementation phase: Phase 0.
 
 ## Phase readiness
@@ -21,7 +21,7 @@
 
 ## Next action
 
-Proceed with the next eligible Phase 0 task under `WORK_BREAKDOWN.md`, preserving predecessor order and the task-level Fixture, Evaluation, Acceptance, documentation, and traceability requirements. P0-W0-003 is now unblocked by completion of P0-W0-001 and P0-W0-002.
+P0-W0-003 is awaiting hosted CI evidence. Do not select a successor until that evidence has been recorded; then use `WORK_BREAKDOWN.md` predecessor order, task-level Fixture, Evaluation, Acceptance, documentation, and traceability requirements.
 
 ## Active task evidence
 
@@ -59,6 +59,22 @@ Proceed with the next eligible Phase 0 task under `WORK_BREAKDOWN.md`, preservin
 - Hosted CI evidence: GitHub Actions run `34434113552` succeeded for commit `74cf1d5` on branch `codex/p0-w0-001-bootstrap` on 2026-09-10; this closes the hosted-CI condition inherited from P0-W0-001.
 - Known gap: none for this task.
 - Deferred scope check: no Canonical IR, database schema, Java parser, provider/plugin implementation, LLM, embedding/vector index, daemon behavior, Knowledge compilation, or Phase 1+ capability was introduced.
+
+### P0-W0-003 Runtime bootstrap
+
+- Status: local acceptance evidence recorded; hosted CI pending.
+- Implementation revisions: `353e4ba` (configuration bootstrap), `bcf3f91` (runtime composition), `200e2f6` (CLI/MCP construction), `4168685` (Phase 0 runtime specification), and `a60fa0c` (formatting). The current evidence baseline is `a60fa0c`.
+- Governing specification: `specs/RUNTIME_CONFIGURATION.md`, with dependency direction governed by `specs/MODULE_BOUNDARIES.md` and local-first boundaries by ADR-001.
+- Fixture / Evaluation / Acceptance: `P0-W0-003`'s `CLI/MCP shared runtime-construction smoke`, represented by `scripts/test-runtime-construction.mjs`, maps in `DESIGN_TRACEABILITY.md` to the `Same KnowledgeRuntime without inversion` acceptance gate.
+- Reproducible command: `pnpm verify` from the repository root on 2026-09-10.
+- TypeScript evidence: Prettier passed; all 16 TypeScript workspace projects built independently; 51 of 51 Node tests passed, including configuration validation and failure short-circuit tests, CLI/MCP smoke tests, the shared construction smoke, the architecture fixtures, and the real-workspace architecture check.
+- Architecture evidence: `pnpm architecture:check` passed for all 17 projects. The shared smoke proves CLI and MCP construct the same `KnowledgeRuntime` contract through `RuntimeBuilder`, while the runtime package only composes explicit configuration and workspace-context dependencies.
+- Rust evidence: `cargo fmt --all --check`, workspace build, Clippy with denied warnings, and workspace tests passed; 2 of 2 native analyzer smoke tests passed.
+- Failure / recovery evidence: invalid configuration version, runtime mode, and workspace root are rejected before workspace construction; a workspace-construction failure exposes no partial runtime. This in-memory bootstrap creates no Canonical State or published artifact.
+- Configuration / schema / migration impact: an in-memory, immutable bootstrap validates config version `1`, `ONE_SHOT`, `MCP_STDIO`, and an explicit workspace root before creating `WORKSPACE_CONTEXT_PLACEHOLDER`. It adds no YAML loading, `.ekp` discovery, database/schema/migration work, provider/plugin invocation, native process, LLM, embedding/vector index, watcher/daemon, HTTP/socket, or knowledge workflow behavior.
+- Deferred-scope audit: changed production files were searched for `sqlite|database|yaml|\\.ekp|provider|plugin|native|llm|embedding|zvec|watch|daemon|http|socket|knowledge`; every match was an intentional `KnowledgeRuntime` type/name. `git diff --check` passed for the task worktree, and the P0-W0-003 diff contains no deferred implementation.
+- Design documents / traceability / ADRs: `RUNTIME_CONFIGURATION.md` now documents the explicit Phase 0 boundary. No frozen or evolvable design decision changed; no ADR or `DESIGN_TRACEABILITY.md` update is required because the existing P0-W0-003 row already names its fixture, acceptance gate, and governing spec.
+- Hosted CI evidence: pending the first evidence-record commit. The next Phase 0 task remains held pending this hosted evidence.
 
 ## Decision reminders
 
