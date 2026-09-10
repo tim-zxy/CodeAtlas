@@ -8,17 +8,19 @@
     "node": ">=24 <25"
   },
   "scripts": {
+    "architecture:check": "node scripts/check-architecture.mjs",
     "build": "pnpm -r run build",
-    "test": "node --test scripts/test-workspace-structure.mjs apps/cli/test/smoke.test.mjs apps/mcp/test/smoke.test.mjs",
+    "test": "node --test scripts/test-workspace-structure.mjs scripts/test-architecture-rules.mjs apps/cli/test/smoke.test.mjs apps/mcp/test/smoke.test.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "format:rust": "cargo fmt --all",
     "format:rust:check": "cargo fmt --all --check",
-    "verify": "pnpm format:check && pnpm build && pnpm test && pnpm format:rust:check && cargo build --workspace && cargo clippy --workspace --all-targets -- -D warnings && cargo test --workspace"
+    "verify": "pnpm format:check && pnpm build && pnpm test && pnpm architecture:check && pnpm format:rust:check && cargo build --workspace && cargo clippy --workspace --all-targets -- -D warnings && cargo test --workspace"
   },
   "devDependencies": {
     "@types/node": "26.5.0",
     "prettier": "3.9.6",
+    "smol-toml": "1.8.0",
     "typescript": "7.0.2"
   }
 }

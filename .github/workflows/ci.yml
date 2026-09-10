@@ -31,6 +31,8 @@ jobs:
         run: pnpm build
       - name: Run tests
         run: pnpm test
+      - name: Check architecture dependencies
+        run: pnpm architecture:check
 
   rust:
     name: Rust workspace

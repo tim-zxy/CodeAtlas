@@ -84,6 +84,7 @@ test('continuous integration runs every bootstrap gate', async () => {
     'pnpm format:check',
     'pnpm build',
     'pnpm test',
+    'pnpm architecture:check',
     'cargo fmt --all --check',
     'cargo build --workspace',
     'cargo clippy --workspace --all-targets -- -D warnings',
@@ -94,6 +95,14 @@ test('continuous integration runs every bootstrap gate', async () => {
   for (const command of requiredCommands) {
     assert.match(workflow, new RegExp(command.replaceAll(/[.*+?^${}()|[\]\\]/g, '\\$&')));
   }
+});
+
+test('workspace scripts expose and compose the architecture dependency gate', async () => {
+  const manifest = await readJson('package.json');
+
+  assert.equal(manifest.scripts['architecture:check'], 'node scripts/check-architecture.mjs');
+  assert.match(manifest.scripts.test, /scripts\/test-architecture-rules\.mjs/);
+  assert.match(manifest.scripts.verify, /pnpm architecture:check/);
 });
 
 test('Rust toolchain is pinned to the verified compiler release', async () => {
