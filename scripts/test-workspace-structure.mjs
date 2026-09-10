@@ -63,7 +63,6 @@ for (const name of packageNames) {
     assert.deepEqual(manifest.dependencies ?? {}, expectedPackageDependencies[name]);
     assert.deepEqual(manifest.devDependencies ?? {}, {});
     await readFile(`packages/${name}/tsconfig.json`, 'utf8');
-    assert.equal(await readFile(`packages/${name}/src/index.ts`, 'utf8'), 'export {};\n');
     const source = await readFile(`packages/${name}/src/index.ts`, 'utf8');
     if (name === 'runtime') {
       assert.match(source, /RuntimeBuilder/);
