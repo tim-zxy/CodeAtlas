@@ -20,12 +20,15 @@ const packageNames = [
 
 const appNames = ['cli', 'mcp', 'daemon'];
 const expectedPackageDependencies = Object.fromEntries(packageNames.map((name) => [name, {}]));
-const expectedAppDependencies = { cli: { '@codeatlas/runtime': 'workspace:*' }, daemon: {}, mcp: { '@codeatlas/runtime': 'workspace:*' } };
+const expectedAppDependencies = {
+  cli: { '@codeatlas/runtime': 'workspace:*' },
+  daemon: {},
+  mcp: { '@codeatlas/runtime': 'workspace:*' },
+};
 
 async function readJson(path) {
   return JSON.parse(await readFile(path, 'utf8'));
 }
-
 async function directoryNames(path) {
   const entries = await readdir(path, { withFileTypes: true });
   return entries
@@ -33,7 +36,6 @@ async function directoryNames(path) {
     .map((entry) => entry.name)
     .sort();
 }
-
 test('workspace contains exactly the approved module inventory', async () => {
   assert.deepEqual(await directoryNames('packages'), [...packageNames].sort());
   assert.deepEqual(await directoryNames('apps'), [...appNames].sort());
@@ -58,10 +60,17 @@ for (const name of packageNames) {
     });
     assert.deepEqual(manifest.files, ['dist']);
     assert.equal(manifest.scripts.build, 'tsc -p tsconfig.json');
-    assert.deepEqual(manifest.dependencies ?? {}, {});
+    assert.deepEqual(manifest.dependencies ?? {}, expectedPackageDependencies[name]);
     assert.deepEqual(manifest.devDependencies ?? {}, {});
     await readFile(`packages/${name}/tsconfig.json`, 'utf8');
     assert.equal(await readFile(`packages/${name}/src/index.ts`, 'utf8'), 'export {};\n');
+    const source = await readFile(`packages/${name}/src/index.ts`, 'utf8');
+    if (name === 'runtime') {
+      assert.match(source, /RuntimeBuilder/);
+      assert.match(source, /KnowledgeRuntime/);
+    } else {
+      assert.equal(source, 'export {};\n');
+    }
   });
 }
 
@@ -73,12 +82,11 @@ for (const name of appNames) {
     assert.equal(manifest.private, true);
     assert.equal(manifest.type, 'module');
     assert.equal(manifest.scripts.build, 'tsc -p tsconfig.json');
-    assert.deepEqual(manifest.dependencies ?? {}, {});
+    assert.deepEqual(manifest.dependencies ?? {}, expectedAppDependencies[name]);
     assert.deepEqual(manifest.devDependencies ?? {}, {});
     await readFile(`apps/${name}/tsconfig.json`, 'utf8');
   });
 }
-
 test('continuous integration runs every bootstrap gate', async () => {
   const workflow = await readFile('.github/workflows/ci.yml', 'utf8');
   const requiredCommands = [
@@ -114,4 +122,3 @@ test('Rust toolchain is pinned to the verified compiler release', async () => {
   assert.match(toolchain, /^profile = "default"$/m);
   assert.match(toolchain, /^components = \["rustfmt", "clippy"\]$/m);
 });
-
