@@ -6,8 +6,12 @@ const {
   DefaultWorkspaceContextFactory,
   KnowledgeRuntime,
   RuntimeBuilder,
+  createBootstrapRuntimeDependencies,
 } = await import('../dist/index.js');
 const request = { configVersion: 1, mode: 'ONE_SHOT', workspaceRoot: '.' };
+test('default bootstrap dependency collection is publicly frozen', () => {
+  assert.equal(Object.isFrozen(createBootstrapRuntimeDependencies()), true);
+});
 test('RuntimeBuilder composes configuration before workspace context', async () => {
   const calls = [];
   const config = Object.freeze({

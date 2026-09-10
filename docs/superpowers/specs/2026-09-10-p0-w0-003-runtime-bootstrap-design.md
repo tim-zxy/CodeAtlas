@@ -1,7 +1,7 @@
 # P0-W0-003 Runtime Bootstrap Design
 
 **Date:** 2026-09-10  
-**Status:** Approved in principle; implementation pending written-spec review  
+**Status:** Implemented; verification evidence recorded in `docs/handoff/CURRENT_STATUS.md`\
 **Task:** P0-W0-003  
 **Authorities:** ADR-001, Runtime and Configuration Specification, Module Boundaries Specification  
 **Acceptance mapping:** CLI/MCP shared runtime-construction smoke -> same `KnowledgeRuntime` without domain-layer inversion

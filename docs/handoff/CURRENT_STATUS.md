@@ -36,7 +36,7 @@ Proceed with P0-W1-001 Common IR primitives, the first next-listed Phase 0 task 
 - Architecture evidence: no app or package dependency fields; no SQLite, LLM, embedding/vector, parser, network listener, or file-watcher implementation markers were found in task source roots.
 - Recovery / preservation impact: none; this task introduces no Canonical State, database migration, Provider Facts, or Published Knowledge.
 - Contract changes: physical module and toolchain shells only; no Canonical IR or public runtime contract was introduced.
-- Design changes: none. The Rust channel is `stable`; the locally observed toolchain is Rust 1.98.1. This is an implementation pinning adjustment, not an architecture change.
+- Design changes: none. Rust is pinned to 1.98.1; this is an implementation pinning adjustment, not an architecture change.
 - Hosted CI evidence: GitHub Actions run `34434113552` succeeded for commit `74cf1d5` on branch `codex/p0-w0-001-bootstrap` on 2026-09-10; workflow duration was 1 minute 31 seconds.
 - Known gap: none for this task.
 - Deferred scope check: no Java parser, database/schema, Canonical IR model, IPC, provider integration, LLM, embedding, daemon service, Knowledge compilation, or graph behavior was implemented.
@@ -75,6 +75,7 @@ Proceed with P0-W1-001 Common IR primitives, the first next-listed Phase 0 task 
 - Deferred-scope audit: changed production files were searched for `sqlite|database|yaml|\\.ekp|provider|plugin|native|llm|embedding|zvec|watch|daemon|http|socket|knowledge`; every match was an intentional `KnowledgeRuntime` type/name. `git diff --check` passed for the task worktree, and the P0-W0-003 diff contains no deferred implementation.
 - Design documents / traceability / ADRs: `RUNTIME_CONFIGURATION.md` now documents the explicit Phase 0 boundary. No frozen or evolvable design decision changed; no ADR or `DESIGN_TRACEABILITY.md` update is required because the existing P0-W0-003 row already names its fixture, acceptance gate, and governing spec.
 - Hosted CI evidence: GitHub Actions run `34462476370` succeeded for head SHA `c04144d32ab228ac5cf2a4859a07468dbe1b8f7e` on branch `codex/p0-w0-001-bootstrap` on 2026-09-10: TypeScript workspace (formatting, build, tests, and architecture check) and Rust workspace (formatting, build, Clippy with warnings denied, and tests) both succeeded. Run URL: `https://github.com/tim-zxy/CodeAtlas/actions/runs/34462476370`. GitHub emitted Node.js 20 deprecation annotations for action internals; these were advisory runner annotations, not mandatory-gate failures.
+- Final-review fix-wave local evidence: on 2026-09-10, `pnpm verify` passed with formatting, all 16 TypeScript projects built, 52 of 52 Node tests passed, the architecture check covered 17 projects, and Rust formatting, build, Clippy with denied warnings, and 2 of 2 native smoke tests passed; `git diff --check` passed. This adds a direct public `createBootstrapRuntimeDependencies()` freeze regression assertion and synchronizes status-only labels. Hosted CI for this revision is pending.
 - Next task: P0-W1-001 Common IR primitives; it is the next-listed Phase 0 task with no unmet predecessor.
 
 ## Decision reminders
