@@ -1,3 +1,21 @@
+import { DefaultConfigurationBootstrap } from './configuration.js';
+import { RuntimeBuilder, type RuntimeDependencies } from './runtime-builder.js';
+import { DefaultWorkspaceContextFactory } from './workspace-context.js';
+
+export { KnowledgeRuntime } from './knowledge-runtime.js';
+export { RuntimeBuilder, type RuntimeDependencies } from './runtime-builder.js';
+
+export function createBootstrapRuntimeDependencies(): RuntimeDependencies {
+  return Object.freeze({
+    configurationBootstrap: new DefaultConfigurationBootstrap(),
+    workspaceContextFactory: new DefaultWorkspaceContextFactory(),
+  });
+}
+
+export function createBootstrapRuntimeBuilder(): RuntimeBuilder {
+  return new RuntimeBuilder(createBootstrapRuntimeDependencies());
+}
+
 export {
   DefaultConfigurationBootstrap,
   type ConfigurationBootstrap,
