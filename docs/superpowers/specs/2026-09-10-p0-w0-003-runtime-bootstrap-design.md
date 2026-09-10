@@ -35,7 +35,7 @@ The runtime package exposes contracts equivalent to the following:
 export type RuntimeMode = 'ONE_SHOT' | 'MCP_STDIO';
 
 export interface RuntimeBootstrapRequest {
-  readonly configVersion: 1;
+  readonly configVersion: number;
   readonly mode: RuntimeMode;
   readonly workspaceRoot: string;
 }
@@ -43,6 +43,7 @@ export interface RuntimeBootstrapRequest {
 export interface EffectiveBootstrapConfig {
   readonly configVersion: 1;
   readonly mode: RuntimeMode;
+  readonly workspaceRoot: string;
 }
 
 export interface WorkspaceContext {
@@ -55,10 +56,7 @@ export interface ConfigurationBootstrap {
 }
 
 export interface WorkspaceContextFactory {
-  create(
-    workspaceRoot: string,
-    config: EffectiveBootstrapConfig,
-  ): Promise<WorkspaceContext>;
+  create(config: EffectiveBootstrapConfig): Promise<WorkspaceContext>;
 }
 
 export interface RuntimeDependencies {
@@ -92,7 +90,8 @@ The Phase 0 configuration bootstrap:
 3. accepts only `ONE_SHOT` and `MCP_STDIO`;
 4. rejects an empty or whitespace-only workspace root;
 5. resolves the workspace root to a normalized absolute path;
-6. returns immutable configuration and workspace objects.
+6. places the normalized absolute workspace root in the immutable effective
+   bootstrap configuration.
 
 It does not read YAML, merge global/workspace/repository files, read secrets, inspect `.ekp/`, or materialize the Phase 1 `EffectiveConfig`. The narrow `EffectiveBootstrapConfig` name prevents the placeholder from masquerading as the complete Phase 1 configuration contract.
 
@@ -100,7 +99,11 @@ Validation failures use deterministic messages and ordinary JavaScript error cla
 
 ## Workspace context placeholder
 
-The placeholder carries only its explicit discriminator and normalized workspace root. It must not expose repository registrations, revision sets, database handles, source fingerprints, watchers, or lifecycle status that has not been implemented.
+The workspace-context factory consumes only the validated effective bootstrap
+configuration. The placeholder carries only its explicit discriminator and the
+already-normalized workspace root. It must not expose repository registrations,
+revision sets, database handles, source fingerprints, watchers, or lifecycle
+status that has not been implemented.
 
 The discriminator makes placeholder state observable and prevents consumers from treating it as a fully initialized workspace.
 
@@ -219,4 +222,3 @@ The implementation must preserve all of the following:
 This design implements the existing P0-W0-003 task and does not amend a FROZEN decision. No ADR is required.
 
 The normative Runtime and Configuration Specification will gain a Phase 0 bootstrap subsection during implementation because the public runtime contract is being made concrete. If implementation evidence contradicts this design, work stops to classify the issue as implementation, Fixture, or design-assumption error before changing the contract or gates.
-
