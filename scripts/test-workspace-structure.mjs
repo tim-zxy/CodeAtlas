@@ -19,6 +19,8 @@ const packageNames = [
 ];
 
 const appNames = ['cli', 'mcp', 'daemon'];
+const expectedPackageDependencies = Object.fromEntries(packageNames.map((name) => [name, {}]));
+const expectedAppDependencies = { cli: { '@codeatlas/runtime': 'workspace:*' }, daemon: {}, mcp: { '@codeatlas/runtime': 'workspace:*' } };
 
 async function readJson(path) {
   return JSON.parse(await readFile(path, 'utf8'));
@@ -112,3 +114,4 @@ test('Rust toolchain is pinned to the verified compiler release', async () => {
   assert.match(toolchain, /^profile = "default"$/m);
   assert.match(toolchain, /^components = \["rustfmt", "clippy"\]$/m);
 });
+
