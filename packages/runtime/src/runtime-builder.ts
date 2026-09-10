@@ -1,7 +1,4 @@
-import type {
-  ConfigurationBootstrap,
-  RuntimeBootstrapRequest,
-} from './configuration.js';
+import type { ConfigurationBootstrap, RuntimeBootstrapRequest } from './configuration.js';
 import { KnowledgeRuntime } from './knowledge-runtime.js';
 import type { WorkspaceContextFactory } from './workspace-context.js';
 

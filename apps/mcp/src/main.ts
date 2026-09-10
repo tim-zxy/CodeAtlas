@@ -4,14 +4,9 @@ import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 
-import {
-  createBootstrapRuntimeBuilder,
-  type KnowledgeRuntime,
-} from '@codeatlas/runtime';
+import { createBootstrapRuntimeBuilder, type KnowledgeRuntime } from '@codeatlas/runtime';
 
-export async function buildMcpRuntime(
-  workspaceRoot = process.cwd(),
-): Promise<KnowledgeRuntime> {
+export async function buildMcpRuntime(workspaceRoot = process.cwd()): Promise<KnowledgeRuntime> {
   return createBootstrapRuntimeBuilder().build({
     configVersion: 1,
     mode: 'MCP_STDIO',
