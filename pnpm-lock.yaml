@@ -20,11 +20,19 @@ importers:
         specifier: 7.0.2
         version: 7.0.2
 
-  apps/cli: {}
+  apps/cli:
+    dependencies:
+      '@codeatlas/runtime':
+        specifier: workspace:*
+        version: link:../../packages/runtime
 
   apps/daemon: {}
 
-  apps/mcp: {}
+  apps/mcp:
+    dependencies:
+      '@codeatlas/runtime':
+        specifier: workspace:*
+        version: link:../../packages/runtime
 
   packages/agent-api: {}
 
