@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "id": "p0-common-ir-v1",
+  "task": "P0-W1-001",
+  "governingSpec": "docs/handoff/specs/CANONICAL_IR.md",
+  "acceptance": "Canonical primitives and envelopes round-trip",
+  "validCases": "valid/cases.json",
+  "invalidCases": "invalid/cases.json"
+}

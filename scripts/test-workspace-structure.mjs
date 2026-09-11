@@ -20,6 +20,7 @@ const packageNames = [
 
 const appNames = ['cli', 'mcp', 'daemon'];
 const expectedPackageDependencies = Object.fromEntries(packageNames.map((name) => [name, {}]));
+expectedPackageDependencies.ir = { zod: '4.6.1' };
 const expectedAppDependencies = {
   cli: { '@codeatlas/runtime': 'workspace:*' },
   daemon: {},
@@ -67,6 +68,10 @@ for (const name of packageNames) {
     if (name === 'runtime') {
       assert.match(source, /RuntimeBuilder/);
       assert.match(source, /KnowledgeRuntime/);
+    } else if (name === 'ir') {
+      assert.match(source, /EntityIdSchema/);
+      assert.match(source, /SourceRangeSchema/);
+      assert.match(source, /parseSchemaEnvelope/);
     } else {
       assert.equal(source, 'export {};\n');
     }

@@ -1,0 +1,168 @@
+[
+  {
+    "id": "empty-entity-id",
+    "target": "ENTITY_ID",
+    "input": "",
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
+  },
+  {
+    "id": "whitespace-canonical-id",
+    "target": "CANONICAL_ID",
+    "input": "   ",
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
+  },
+  {
+    "id": "padded-entity-id",
+    "target": "ENTITY_ID",
+    "input": " entity:01",
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
+  },
+  {
+    "id": "entity-ref-extra-key",
+    "target": "ENTITY_REF",
+    "input": { "kind": "SYMBOL", "id": "entity:01", "providerId": "forbidden" },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
+  },
+  {
+    "id": "range-negative",
+    "target": "SOURCE_RANGE",
+    "input": {
+      "sourceFileId": "entity:file",
+      "startLine": -1,
+      "startColumn": 0,
+      "endLine": 0,
+      "endColumn": 0
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["startLine"]
+  },
+  {
+    "id": "range-fractional",
+    "target": "SOURCE_RANGE",
+    "input": {
+      "sourceFileId": "entity:file",
+      "startLine": 0,
+      "startColumn": 0.5,
+      "endLine": 0,
+      "endColumn": 1
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["startColumn"]
+  },
+  {
+    "id": "range-unsafe",
+    "target": "SOURCE_RANGE",
+    "input": {
+      "sourceFileId": "entity:file",
+      "startLine": 0,
+      "startColumn": 0,
+      "endLine": 9007199254740992,
+      "endColumn": 0
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["endLine"]
+  },
+  {
+    "id": "range-reversed-line",
+    "target": "SOURCE_RANGE",
+    "input": {
+      "sourceFileId": "entity:file",
+      "startLine": 3,
+      "startColumn": 0,
+      "endLine": 2,
+      "endColumn": 9
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["endLine"]
+  },
+  {
+    "id": "range-reversed-column",
+    "target": "SOURCE_RANGE",
+    "input": {
+      "sourceFileId": "entity:file",
+      "startLine": 2,
+      "startColumn": 9,
+      "endLine": 2,
+      "endColumn": 8
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["endColumn"]
+  },
+  {
+    "id": "confidence-low",
+    "target": "CONFIDENCE",
+    "input": { "score": -0.1, "method": "HEURISTIC", "reasons": [] },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["score"]
+  },
+  {
+    "id": "confidence-high",
+    "target": "CONFIDENCE",
+    "input": { "score": 1.1, "method": "HEURISTIC", "reasons": [] },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["score"]
+  },
+  {
+    "id": "unknown-resolution",
+    "target": "RESOLUTION_LEVEL",
+    "input": "CERTAIN",
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
+  },
+  {
+    "id": "timestamp-offset",
+    "target": "UTC_INSTANT",
+    "input": "2026-09-10T20:34:56.789+08:00",
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
+  },
+  {
+    "id": "timestamp-no-milliseconds",
+    "target": "UTC_INSTANT",
+    "input": "2026-09-10T12:34:56Z",
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
+  },
+  {
+    "id": "timestamp-invalid-date",
+    "target": "UTC_INSTANT",
+    "input": "2026-02-30T12:34:56.789Z",
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
+  },
+  {
+    "id": "envelope-extra-key",
+    "target": "FIXTURE_ENVELOPE",
+    "input": {
+      "schema": "codeatlas.fixture.common",
+      "version": 1,
+      "payload": { "value": "ok" },
+      "extra": true
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
+  },
+  {
+    "id": "envelope-schema-mismatch",
+    "target": "FIXTURE_ENVELOPE",
+    "input": { "schema": "provider.native", "version": 1, "payload": { "value": "ok" } },
+    "errorCode": "SCHEMA_MISMATCH"
+  },
+  {
+    "id": "envelope-version",
+    "target": "FIXTURE_ENVELOPE",
+    "input": { "schema": "codeatlas.fixture.common", "version": 2, "payload": { "value": "ok" } },
+    "errorCode": "UNSUPPORTED_SCHEMA_VERSION"
+  },
+  {
+    "id": "envelope-invalid-payload",
+    "target": "FIXTURE_ENVELOPE",
+    "input": { "schema": "codeatlas.fixture.common", "version": 1, "payload": { "value": 42 } },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["payload", "value"]
+  }
+]

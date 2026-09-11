@@ -1,0 +1,58 @@
+[
+  { "id": "entity-id", "target": "ENTITY_ID", "input": "entity:opaque-01" },
+  { "id": "canonical-id", "target": "CANONICAL_ID", "input": "canonical:opaque-01" },
+  {
+    "id": "entity-ref",
+    "target": "ENTITY_REF",
+    "input": { "kind": "SYMBOL", "id": "entity:symbol-01" }
+  },
+  {
+    "id": "entity-ref-revision",
+    "target": "ENTITY_REF",
+    "input": { "kind": "SYMBOL", "id": "entity:symbol-01", "revisionId": "entity:revision-01" }
+  },
+  {
+    "id": "empty-range",
+    "target": "SOURCE_RANGE",
+    "input": {
+      "sourceFileId": "entity:file-01",
+      "startLine": 0,
+      "startColumn": 0,
+      "endLine": 0,
+      "endColumn": 0
+    }
+  },
+  {
+    "id": "multi-line-range",
+    "target": "SOURCE_RANGE",
+    "input": {
+      "sourceFileId": "entity:file-01",
+      "startLine": 1,
+      "startColumn": 4,
+      "endLine": 3,
+      "endColumn": 2
+    }
+  },
+  { "id": "resolution-exact", "target": "RESOLUTION_LEVEL", "input": "EXACT" },
+  { "id": "resolution-heuristic", "target": "RESOLUTION_LEVEL", "input": "HEURISTIC" },
+  { "id": "resolution-ambiguous", "target": "RESOLUTION_LEVEL", "input": "AMBIGUOUS" },
+  { "id": "resolution-unresolved", "target": "RESOLUTION_LEVEL", "input": "UNRESOLVED" },
+  { "id": "resolution-unsupported", "target": "RESOLUTION_LEVEL", "input": "UNSUPPORTED" },
+  {
+    "id": "confidence-zero",
+    "target": "CONFIDENCE",
+    "input": { "score": 0, "method": "EXACT_MATCH", "reasons": [] }
+  },
+  {
+    "id": "confidence-one",
+    "target": "CONFIDENCE",
+    "input": { "score": 1, "method": "EXACT_MATCH", "reasons": ["stable-key"] }
+  },
+  { "id": "utc-instant", "target": "UTC_INSTANT", "input": "2026-09-10T12:34:56.789Z" },
+  { "id": "epoch-milliseconds", "target": "EPOCH_MILLISECONDS", "input": 1789043696789 },
+  {
+    "id": "schema-envelope",
+    "target": "FIXTURE_ENVELOPE",
+    "input": { "schema": "codeatlas.fixture.common", "version": 1, "payload": { "value": "ok" } }
+  }
+]
