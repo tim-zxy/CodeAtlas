@@ -6,7 +6,7 @@
 - Handoff assembly: refreshed as the agent-neutral Engineering Handoff Pack.
 - Primary handoff entry: `ENGINEERING_HANDOFF.md`.
 - Compatibility entry: `CODEX_HANDOFF.md`.
-- Implementation repository: P0-W0-001, P0-W0-002, and P0-W0-003 are complete with fresh local verification and successful hosted CI evidence.
+- Implementation repository: P0-W0-001, P0-W0-002, P0-W0-003, and P0-W1-001 are complete with fresh local verification and successful hosted CI evidence.
 - Active implementation phase: Phase 0.
 
 ## Phase readiness
@@ -21,7 +21,7 @@
 
 ## Next action
 
-Proceed with P0-W1-001 Common IR primitives, the first next-listed Phase 0 task in `WORK_BREAKDOWN.md` whose predecessors are satisfied. Preserve predecessor order and the task-level Fixture, Evaluation, Acceptance, documentation, and traceability requirements.
+Proceed with P0-W1-002 Source and revision IR, the first next-listed Phase 0 task in `WORK_BREAKDOWN.md` whose predecessors are satisfied. Preserve predecessor order and the task-level Fixture, Evaluation, Acceptance, documentation, and traceability requirements.
 
 ## Active task evidence
 
@@ -80,7 +80,7 @@ Proceed with P0-W1-001 Common IR primitives, the first next-listed Phase 0 task 
 
 ### P0-W1-001 Common IR primitives
 
-- Status: in progress pending hosted CI.
+- Status: complete.
 - Implementation revisions: `c69e5fafb3a453f47aa66c8944f288ae390146e7` (design), `d318b2cc371199f27408996fa65918530a0e3cc0` (task plan), `14e046b712e058f319a2eaa3c2466af69b99e222` and `bed9e88a28509b523014f3f2f0281a888dbf6875` (fixture and edge-case tests), `ea049483e57b071ef236f4b226cafe0537422d61` (identity/reference/range schemas), `01aaf714eb32ad1cea97647ee3e76689e29684a6` (confidence/time schemas), `9c6e64ef1e43bf27073570ca13af50f6a69c1bbd` (strict versioned envelopes), `0a71454bbe48bd533f77e13c8aa313501f87b138` (normative specification), and `35717f35f2ebb9781067b86e9e63e05a77f2dfd1` (padded-schema rejection).
 - Governing specification and ADR: `specs/CANONICAL_IR.md`; ADR-002 Provider Independent Canonical IR. Dependency direction remains governed by `specs/MODULE_BOUNDARIES.md`; fresh fixture evidence is required by ADR-012.
 - Fixture / Evaluation / Acceptance: `p0-common-ir-v1`, owned by P0-W1-001 in `DESIGN_TRACEABILITY.md`; the acceptance gate is `Canonical primitives and envelopes round-trip`.
@@ -91,7 +91,8 @@ Proceed with P0-W1-001 Common IR primitives, the first next-listed Phase 0 task 
 - Deferred-scope audit: changed production code is confined to `packages/ir` schemas, validation, errors, and time helpers. It implements no provider ID, repository/revision/source entity, graph fact, evidence, SQLite/database, IPC, Java, LLM, embedding, network, watcher, daemon, or Knowledge behavior. The only source-related primitive is the required `SourceRange.sourceFileId`; it is not a Source IR entity.
 - Documentation / traceability: `specs/CANONICAL_IR.md` now specifies the Common IR executable contract and strict boundary ordering; `DESIGN_TRACEABILITY.md` retains the P0-W1-001 fixture-to-gate mapping. No frozen or evolvable decision changed, so no migration, ADR, or traceability-row amendment is required.
 - Known limitations: Source/Revision IR, Code Fact IR, Evidence, database/storage, and IPC remain intentionally out of scope for their separately ordered Phase 0 tasks.
-- Candidate next task after hosted CI: P0-W1-002 Source and revision IR. P0-W1-002 and P0-W1-003 will both be predecessor-valid after P0-W1-001, and P0-W1-002 is first in `WORK_BREAKDOWN.md`.
+- Hosted CI evidence: GitHub Actions run `34572366292` succeeded for head SHA `5db08a485b322bfb20e162d2ec94085a8f428443` on branch `codex/p0-w1-001-common-ir` on 2026-09-11. Both mandatory jobs succeeded: TypeScript workspace in 29 seconds and Rust workspace in 1 minute 49 seconds. Run URL: `https://github.com/tim-zxy/CodeAtlas/actions/runs/34572366292`. GitHub emitted a Node.js 20 deprecation annotation for action internals; it is advisory and not a mandatory-gate failure.
+- Next task: P0-W1-002 Source and revision IR. P0-W1-002 and P0-W1-003 are predecessor-valid after P0-W1-001, and P0-W1-002 is first in `WORK_BREAKDOWN.md`.
 
 ## Decision reminders
 
