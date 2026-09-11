@@ -87,6 +87,16 @@ test('epoch milliseconds reject non-finite numbers', () => {
   }
 });
 
+test('confidence scores reject non-finite numbers', () => {
+  for (const score of [Number.NaN, Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY]) {
+    assertIrError(
+      () => parseIr(ConfidenceSchema, { score, method: 'HEURISTIC', reasons: [] }),
+      'IR_VALIDATION_FAILED',
+      ['score'],
+    );
+  }
+});
+
 test('UTC instants and epoch milliseconds convert in both directions', () => {
   const instant = parseIr(UtcInstantSchema, '2026-09-10T12:34:56.789Z');
   const epochMilliseconds = parseIr(EpochMillisecondsSchema, 1789043696789);
@@ -133,7 +143,28 @@ test('schema envelopes reject non-JSON payload values', () => {
   }
 });
 
-test('schema envelope parsing checks schema, version, payload, and unknown keys in order', () => {
+test('schema envelopes validate outer shape before schema, version, and payload', () => {
+  assertIrError(
+    () =>
+      parseSchemaEnvelope(fixtureEnvelope, {
+        schema: 'provider.native',
+        version: 1,
+        payload: { value: 'ok' },
+        extra: true,
+      }),
+    'IR_VALIDATION_FAILED',
+    [],
+  );
+  assertIrError(
+    () =>
+      parseSchemaEnvelope(fixtureEnvelope, {
+        schema: 'provider.native',
+        version: 1,
+        payload: () => {},
+      }),
+    'IR_VALIDATION_FAILED',
+    ['payload'],
+  );
   assertIrError(
     () =>
       parseSchemaEnvelope(fixtureEnvelope, { schema: 'provider.native', version: 2, payload: 42 }),
