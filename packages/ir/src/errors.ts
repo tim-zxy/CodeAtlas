@@ -34,7 +34,7 @@ export class SchemaMismatchError extends IrContractError {
     readonly expectedSchema: string,
     readonly actualSchema: string,
   ) {
-    super(`Expected schema ${expectedSchema}, received ${actualSchema}`);
+    super('Schema name does not match the expected Canonical IR contract');
     this.name = 'SchemaMismatchError';
   }
 }
@@ -43,10 +43,11 @@ export class UnsupportedSchemaVersionError extends IrContractError {
   readonly code = 'UNSUPPORTED_SCHEMA_VERSION' as const;
 
   constructor(
+    readonly schema: string,
     readonly expectedVersion: number,
     readonly actualVersion: number,
   ) {
-    super(`Expected schema version ${expectedVersion}, received ${actualVersion}`);
+    super('Schema version is not supported by this Canonical IR reader');
     this.name = 'UnsupportedSchemaVersionError';
   }
 }
