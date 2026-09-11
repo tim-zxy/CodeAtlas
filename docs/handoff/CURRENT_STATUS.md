@@ -13,7 +13,7 @@
 
 | Phase | Readiness | Implementation progress |
 |---|---|---|
-| 0 | IMPLEMENTATION-READY | P0-W0-001, P0-W0-002, and P0-W0-003 complete |
+| 0 | IMPLEMENTATION-READY | P0-W0-001, P0-W0-002, P0-W0-003, and P0-W1-001 complete |
 | 0.5 | IMPLEMENTATION-READY | 0 percent |
 | 1 | DESIGN-READY | 0 percent |
 | 2 | ARCHITECTURE-READY | 0 percent |
