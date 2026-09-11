@@ -8,8 +8,11 @@ Canonical IR is the versioned, provider-independent interchange and persistence 
 
 The Zod schemas exported by `@codeatlas/ir` are the executable contracts. The
 exported TypeScript types are inferred from those schemas and are not separate
-wire definitions. Parsing helpers validate at public boundaries and return only
-JSON-compatible values.
+wire definitions. The schema-specific Common IR schemas and
+`parseSchemaEnvelope` validate JSON-compatible values. `parseIr` is a generic
+typed validation adapter whose output follows the supplied schema; JSON safety
+comes from using the exported Canonical IR schemas with it, not from arbitrary
+caller-supplied schemas.
 
 `EntityId` and `CanonicalId` are distinct TypeScript-branded forms of the same
 opaque, non-empty string representation. Whitespace-only values and values with

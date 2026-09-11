@@ -216,3 +216,34 @@ test('schema envelopes validate outer shape before schema, version, and payload'
     [],
   );
 });
+
+test('schema envelopes reject padded schema names without normalization', () => {
+  assertIrError(
+    () =>
+      parseSchemaEnvelope(fixtureEnvelope, {
+        schema: ' codeatlas.fixture.common',
+        version: 1,
+        payload: { value: 'ok' },
+      }),
+    'IR_VALIDATION_FAILED',
+    ['schema'],
+  );
+
+  assertIrError(
+    () =>
+      parseSchemaEnvelope(
+        {
+          schema: ' codeatlas.fixture.common ',
+          version: 1,
+          payload: fixtureEnvelope.payload,
+        },
+        {
+          schema: 'codeatlas.fixture.common',
+          version: 1,
+          payload: { value: 'ok' },
+        },
+      ),
+    'IR_VALIDATION_FAILED',
+    ['schema'],
+  );
+});

@@ -7,7 +7,12 @@ export const JsonValueSchema = z.json();
 export type JsonValue = z.infer<typeof JsonValueSchema>;
 
 export const SchemaEnvelopeSchema = z.strictObject({
-  schema: z.string().trim().min(1),
+  schema: z
+    .string()
+    .min(1)
+    .refine((value) => value === value.trim(), {
+      message: 'Schema names must not have surrounding whitespace',
+    }),
   version: z.number().int().positive().refine(Number.isSafeInteger),
   payload: JsonValueSchema,
 });
