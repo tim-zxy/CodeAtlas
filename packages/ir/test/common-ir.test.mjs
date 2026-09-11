@@ -3,7 +3,9 @@ import { readFile } from 'node:fs/promises';
 import { test } from 'node:test';
 import { z } from 'zod';
 
-import {
+import * as ir from '../dist/index.js';
+
+const {
   CanonicalIdSchema,
   ConfidenceSchema,
   EntityIdSchema,
@@ -18,7 +20,7 @@ import {
   UtcInstantSchema,
   epochMillisecondsToUtcInstant,
   utcInstantToEpochMilliseconds,
-} from '../dist/index.js';
+} = ir;
 
 const fixtureRoot = new URL('../../../fixtures/ir/common-v1/', import.meta.url);
 const fixturePayloadSchema = z.strictObject({ value: z.string() });
@@ -65,21 +67,44 @@ function assertIrError(callback, code, expectedPath) {
   });
 }
 
-test('Common IR valid fixtures preserve JSON round-trips', () => {
-  for (const fixture of validCases) {
+function fixtureCategory(fixture) {
+  switch (fixture.target) {
+    case 'ENTITY_ID':
+    case 'CANONICAL_ID':
+      return 'identity';
+    case 'ENTITY_REF':
+      return fixture.id.includes('extra-key') ? 'entity ref unknown key' : 'entity ref';
+    case 'SOURCE_RANGE':
+      return 'range';
+    case 'RESOLUTION_LEVEL':
+      return 'resolution level';
+    case 'CONFIDENCE':
+      return 'confidence';
+    case 'UTC_INSTANT':
+    case 'EPOCH_MILLISECONDS':
+      return 'time';
+    case 'FIXTURE_ENVELOPE':
+      return 'schema envelope';
+    default:
+      throw new Error(`fixture ${fixture.id} has an unknown target ${fixture.target}`);
+  }
+}
+
+for (const fixture of validCases) {
+  test(`valid ${fixtureCategory(fixture)} fixture ${fixture.id} preserves a JSON round-trip`, () => {
     const parser = parserFor(fixture.target);
     const first = parser(fixture.input);
     const second = parser(JSON.parse(JSON.stringify(first)));
 
     assert.deepEqual(second, first, fixture.id);
-  }
-});
+  });
+}
 
-test('Common IR invalid fixtures expose typed codes and paths', () => {
-  for (const fixture of invalidCases) {
+for (const fixture of invalidCases) {
+  test(`invalid ${fixtureCategory(fixture)} fixture ${fixture.id} exposes its typed code and path`, () => {
     assertIrError(() => parserFor(fixture.target)(fixture.input), fixture.errorCode, fixture.path);
-  }
-});
+  });
+}
 
 test('epoch milliseconds reject non-finite numbers', () => {
   for (const input of [Number.NaN, Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY]) {
