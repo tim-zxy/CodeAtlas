@@ -6,28 +6,41 @@ Canonical IR is the versioned, provider-independent interchange and persistence 
 
 ## Common primitives
 
-```ts
-type EntityId = string;
-type CanonicalId = string;
+The Zod schemas exported by `@codeatlas/ir` are the executable contracts. The
+exported TypeScript types are inferred from those schemas and are not separate
+wire definitions. Parsing helpers validate at public boundaries and return only
+JSON-compatible values.
 
-interface EntityRef {
-  kind: string;
-  id: EntityId;
-  revisionId?: EntityId;
-}
+`EntityId` and `CanonicalId` are distinct TypeScript-branded forms of the same
+opaque, non-empty string representation. Whitespace-only values and values with
+leading or trailing whitespace are rejected. Accepted IDs retain their string
+JSON representation; validation does not trim, rewrite, or infer meaning from
+UUID shape, prefixes, provider identity, names, or source text.
 
-interface SourceRange {
-  sourceFileId: EntityId;
-  startLine: number; startColumn: number;
-  endLine: number; endColumn: number;
-}
+`EntityRef` is a strict object with a non-blank, trimmed-string `kind`, a
+validated `id`, and an optional validated `revisionId`. Unknown object keys are
+rejected. The `kind` value remains open in P0-W1-001; later task-specific
+schemas may narrow it.
 
-type ResolutionLevel = "EXACT" | "HEURISTIC" | "AMBIGUOUS" | "UNRESOLVED" | "UNSUPPORTED";
-interface Confidence { score: number; method: string; reasons: string[]; }
-interface SchemaEnvelope<T> { schema: string; version: number; payload: T; }
-```
+`SourceRange` is a strict object containing `sourceFileId`, `startLine`,
+`startColumn`, `endLine`, and `endColumn`. Coordinates are zero-based,
+start-inclusive, end-exclusive, non-negative safe integers. Columns are UTF-8
+byte offsets within a line. The end position must not precede the start
+position when ordered by line and then column; empty and multi-line ranges are
+valid.
 
-`Confidence.score` is within 0..1 and never substitutes for `ResolutionLevel`. Epoch milliseconds UTC are used in SQLite; public APIs emit ISO-8601 instants.
+`ResolutionLevel` is exactly `EXACT | HEURISTIC | AMBIGUOUS | UNRESOLVED |
+UNSUPPORTED`. `Confidence` is a strict object with a finite `score` in the
+inclusive range `0..1`, a non-blank trimmed `method`, and an array of non-blank
+trimmed `reasons`. Confidence and resolution are independent dimensions: one
+is never derived from or substituted for the other.
+
+Public timestamps use the exact UTC millisecond form
+`YYYY-MM-DDTHH:mm:ss.sssZ`. Offsets, invalid calendar values, and other
+precision are rejected rather than normalized. SQLite boundaries use finite,
+safe integer epoch milliseconds. Explicit `utcInstantToEpochMilliseconds` and
+`epochMillisecondsToUtcInstant` helpers validate both directions; no implicit
+date or timezone conversion is performed.
 
 ## Source IR
 
@@ -66,5 +79,23 @@ Each KnowledgeRevision stores structured content, semantic and presentation fing
 
 ## Compatibility
 
-Every payload carries a schema name/version. Readers accept supported older compatible versions through explicit adapters. Unknown enum values at external boundaries are rejected or preserved as provider extensions; they are never silently coerced. Breaking changes require an ADR, migration path, fixture updates, and a major schema version.
+Every payload is carried in a strict envelope containing only a non-empty schema
+name, a positive safe-integer version, and a JSON-compatible payload validated
+by a caller-supplied Zod schema. A reader declares one exact schema name and
+version. Envelope parsing is ordered and deterministic: validate the outer
+shape, compare the schema name, compare the version, then validate the payload.
+This means malformed shape wins over schema/version checks, schema mismatch wins
+over version checks, and version mismatch wins over payload validation.
+
+The public typed failures are `IR_VALIDATION_FAILED` for primitive, envelope,
+or payload violations, `SCHEMA_MISMATCH` for an unexpected schema name, and
+`UNSUPPORTED_SCHEMA_VERSION` for an unsupported version. Validation failures
+retain structured field paths and bounded messages; they do not retain raw
+rejected payloads.
+
+P0-W1-001 supports exact version matching only. It adds no implicit adapter,
+downgrade, upgrade, provider-extension coercion, or best-effort normalization.
+Unknown enum values and unknown strict-object keys are rejected at the public
+boundary. Breaking changes require an ADR, migration path, fixture updates, and
+a major schema version.
 
