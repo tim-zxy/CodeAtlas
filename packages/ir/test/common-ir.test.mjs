@@ -295,6 +295,24 @@ test('final review cycles: shared acyclic children retain a JSON round-trip', ()
 });
 
 for (const [name, read] of Object.entries(envelopeReaders)) {
+  test(`corrective output stability: ${name} returns plain JSON after a hidden toJSON transform`, () => {
+    const descriptor = {
+      ...jsonEnvelope,
+      payload: z.strictObject({ value: z.string() }).transform((value) =>
+        Object.defineProperty(value, 'toJSON', {
+          value: () => ({ value: 'changed during serialization' }),
+          enumerable: false,
+        }),
+      ),
+    };
+    const first = read(descriptor, { ...jsonEnvelope, payload: { value: 'original' } });
+    const serialized = JSON.parse(JSON.stringify(first));
+
+    assert.deepEqual(serialized.payload, { value: 'original' });
+    assert.equal(Object.hasOwn(first.payload, 'toJSON'), false);
+    assert.deepEqual(read(descriptor, serialized), first);
+  });
+
   for (const { label, schema, input, path } of [
     { label: 'NaN output', schema: z.string().transform(Number), input: 'not-a-number', path: [] },
     { label: 'changed type', schema: z.string().transform(Number), input: '42', path: [] },

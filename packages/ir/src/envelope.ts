@@ -102,7 +102,8 @@ function createPayloadSchema<TPayloadSchema extends z.ZodType<JsonValue>>(
       return z.NEVER;
     }
 
-    return result.data;
+    // JSON validation preserves the schema's value while removing non-JSON metadata.
+    return output.data as z.output<TPayloadSchema>;
   });
 }
 
