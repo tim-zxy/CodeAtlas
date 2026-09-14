@@ -75,5 +75,185 @@
     "input": "src/",
     "errorCode": "IR_VALIDATION_FAILED",
     "path": []
+  },
+  {
+    "id": "revision-commit-missing-identity",
+    "target": "REVISION",
+    "input": {
+      "id": "entity:revision-commit-01",
+      "repositoryId": "entity:repo-01",
+      "kind": "COMMIT",
+      "contentFingerprint": "fingerprint:commit-01"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["commitIdentity"]
+  },
+  {
+    "id": "revision-worktree-cross-kind-field",
+    "target": "REVISION",
+    "input": {
+      "id": "entity:revision-worktree-01",
+      "repositoryId": "entity:repo-01",
+      "kind": "WORKTREE",
+      "contentFingerprint": "fingerprint:worktree-01",
+      "baseRevisionId": null,
+      "commitIdentity": "commit:01"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
+  },
+  {
+    "id": "revision-worktree-transition-id-change",
+    "target": "REVISION_TRANSITION",
+    "input": {
+      "previous": {
+        "id": "entity:revision-worktree-01",
+        "repositoryId": "entity:repo-01",
+        "kind": "WORKTREE",
+        "contentFingerprint": "fingerprint:worktree-01",
+        "baseRevisionId": null
+      },
+      "next": {
+        "id": "entity:revision-worktree-02",
+        "repositoryId": "entity:repo-01",
+        "kind": "WORKTREE",
+        "contentFingerprint": "fingerprint:worktree-02",
+        "baseRevisionId": null
+      }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["next", "id"]
+  },
+  {
+    "id": "revision-worktree-transition-repository-change",
+    "target": "REVISION_TRANSITION",
+    "input": {
+      "previous": {
+        "id": "entity:revision-worktree-01",
+        "repositoryId": "entity:repo-01",
+        "kind": "WORKTREE",
+        "contentFingerprint": "fingerprint:worktree-01",
+        "baseRevisionId": null
+      },
+      "next": {
+        "id": "entity:revision-worktree-01",
+        "repositoryId": "entity:repo-02",
+        "kind": "WORKTREE",
+        "contentFingerprint": "fingerprint:worktree-02",
+        "baseRevisionId": null
+      }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["next", "repositoryId"]
+  },
+  {
+    "id": "revision-worktree-transition-kind-change",
+    "target": "REVISION_TRANSITION",
+    "input": {
+      "previous": {
+        "id": "entity:revision-worktree-01",
+        "repositoryId": "entity:repo-01",
+        "kind": "WORKTREE",
+        "contentFingerprint": "fingerprint:worktree-01",
+        "baseRevisionId": null
+      },
+      "next": {
+        "id": "entity:revision-worktree-01",
+        "repositoryId": "entity:repo-01",
+        "kind": "SNAPSHOT",
+        "contentFingerprint": "fingerprint:worktree-02",
+        "sourceRevisionId": null
+      }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["next", "kind"]
+  },
+  {
+    "id": "revision-commit-transition-fingerprint-change",
+    "target": "REVISION_TRANSITION",
+    "input": {
+      "previous": {
+        "id": "entity:revision-commit-01",
+        "repositoryId": "entity:repo-01",
+        "kind": "COMMIT",
+        "contentFingerprint": "fingerprint:commit-01",
+        "commitIdentity": "commit:01"
+      },
+      "next": {
+        "id": "entity:revision-commit-01",
+        "repositoryId": "entity:repo-01",
+        "kind": "COMMIT",
+        "contentFingerprint": "fingerprint:commit-02",
+        "commitIdentity": "commit:01"
+      }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["next", "contentFingerprint"]
+  },
+  {
+    "id": "revision-commit-transition-identity-change",
+    "target": "REVISION_TRANSITION",
+    "input": {
+      "previous": {
+        "id": "entity:revision-commit-01",
+        "repositoryId": "entity:repo-01",
+        "kind": "COMMIT",
+        "contentFingerprint": "fingerprint:commit-01",
+        "commitIdentity": "commit:01"
+      },
+      "next": {
+        "id": "entity:revision-commit-01",
+        "repositoryId": "entity:repo-01",
+        "kind": "COMMIT",
+        "contentFingerprint": "fingerprint:commit-01",
+        "commitIdentity": "commit:02"
+      }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["next", "commitIdentity"]
+  },
+  {
+    "id": "revision-snapshot-transition-fingerprint-change",
+    "target": "REVISION_TRANSITION",
+    "input": {
+      "previous": {
+        "id": "entity:revision-snapshot-01",
+        "repositoryId": "entity:repo-01",
+        "kind": "SNAPSHOT",
+        "contentFingerprint": "fingerprint:snapshot-01",
+        "sourceRevisionId": "entity:revision-commit-01"
+      },
+      "next": {
+        "id": "entity:revision-snapshot-01",
+        "repositoryId": "entity:repo-01",
+        "kind": "SNAPSHOT",
+        "contentFingerprint": "fingerprint:snapshot-02",
+        "sourceRevisionId": "entity:revision-commit-01"
+      }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["next", "contentFingerprint"]
+  },
+  {
+    "id": "revision-snapshot-transition-source-change",
+    "target": "REVISION_TRANSITION",
+    "input": {
+      "previous": {
+        "id": "entity:revision-snapshot-01",
+        "repositoryId": "entity:repo-01",
+        "kind": "SNAPSHOT",
+        "contentFingerprint": "fingerprint:snapshot-01",
+        "sourceRevisionId": "entity:revision-commit-01"
+      },
+      "next": {
+        "id": "entity:revision-snapshot-01",
+        "repositoryId": "entity:repo-01",
+        "kind": "SNAPSHOT",
+        "contentFingerprint": "fingerprint:snapshot-01",
+        "sourceRevisionId": null
+      }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["next", "sourceRevisionId"]
   }
 ]

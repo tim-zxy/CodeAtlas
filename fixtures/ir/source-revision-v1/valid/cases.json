@@ -9,5 +9,78 @@
     "target": "REPOSITORY",
     "input": { "id": "entity:repo-01", "rootPath": "E:/moved/project" }
   },
-  { "id": "relative-path-basic", "target": "REPOSITORY_RELATIVE_PATH", "input": "src/main.ts" }
+  { "id": "relative-path-basic", "target": "REPOSITORY_RELATIVE_PATH", "input": "src/main.ts" },
+  {
+    "id": "revision-commit-basic",
+    "target": "REVISION",
+    "input": {
+      "id": "entity:revision-commit-01",
+      "repositoryId": "entity:repo-01",
+      "kind": "COMMIT",
+      "contentFingerprint": "fingerprint:commit-01",
+      "commitIdentity": "commit:01"
+    }
+  },
+  {
+    "id": "revision-worktree-null-base",
+    "target": "REVISION",
+    "input": {
+      "id": "entity:revision-worktree-01",
+      "repositoryId": "entity:repo-01",
+      "kind": "WORKTREE",
+      "contentFingerprint": "fingerprint:worktree-01",
+      "baseRevisionId": null
+    }
+  },
+  {
+    "id": "revision-snapshot-source",
+    "target": "REVISION",
+    "input": {
+      "id": "entity:revision-snapshot-01",
+      "repositoryId": "entity:repo-01",
+      "kind": "SNAPSHOT",
+      "contentFingerprint": "fingerprint:snapshot-01",
+      "sourceRevisionId": "entity:revision-commit-01"
+    }
+  },
+  {
+    "id": "revision-commit-idempotent-transition",
+    "target": "REVISION_TRANSITION",
+    "input": {
+      "previous": {
+        "id": "entity:revision-commit-01",
+        "repositoryId": "entity:repo-01",
+        "kind": "COMMIT",
+        "contentFingerprint": "fingerprint:commit-01",
+        "commitIdentity": "commit:01"
+      },
+      "next": {
+        "id": "entity:revision-commit-01",
+        "repositoryId": "entity:repo-01",
+        "kind": "COMMIT",
+        "contentFingerprint": "fingerprint:commit-01",
+        "commitIdentity": "commit:01"
+      }
+    }
+  },
+  {
+    "id": "revision-worktree-mutable-transition",
+    "target": "REVISION_TRANSITION",
+    "input": {
+      "previous": {
+        "id": "entity:revision-worktree-01",
+        "repositoryId": "entity:repo-01",
+        "kind": "WORKTREE",
+        "contentFingerprint": "fingerprint:worktree-01",
+        "baseRevisionId": null
+      },
+      "next": {
+        "id": "entity:revision-worktree-01",
+        "repositoryId": "entity:repo-01",
+        "kind": "WORKTREE",
+        "contentFingerprint": "fingerprint:worktree-02",
+        "baseRevisionId": "entity:revision-commit-01"
+      }
+    }
+  }
 ]

@@ -14,6 +14,21 @@ export type { EntityRef, SourceRange } from './references.js';
 export { RepositorySchema } from './repository.js';
 export type { Repository } from './repository.js';
 export {
+  CommitRevisionSchema,
+  RevisionKindSchema,
+  RevisionSchema,
+  SnapshotRevisionSchema,
+  WorktreeRevisionSchema,
+  validateRevisionTransition,
+} from './revision.js';
+export type {
+  CommitRevision,
+  Revision,
+  RevisionKind,
+  SnapshotRevision,
+  WorktreeRevision,
+} from './revision.js';
+export {
   CommitIdentitySchema,
   ContentFingerprintSchema,
   ProviderIdSchema,

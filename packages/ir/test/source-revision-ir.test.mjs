@@ -8,6 +8,8 @@ const fixtureRoot = new URL('../../../fixtures/ir/source-revision-v1/', import.m
 const parsers = {
   REPOSITORY: (input) => ir.parseIr(ir.RepositorySchema, input),
   REPOSITORY_RELATIVE_PATH: (input) => ir.parseIr(ir.RepositoryRelativePathSchema, input),
+  REVISION: (input) => ir.parseIr(ir.RevisionSchema, input),
+  REVISION_TRANSITION: (input) => ir.validateRevisionTransition(input.previous, input.next),
 };
 const validCases = JSON.parse(await readFile(new URL('valid/cases.json', fixtureRoot), 'utf8'));
 const invalidCases = JSON.parse(await readFile(new URL('invalid/cases.json', fixtureRoot), 'utf8'));
@@ -21,6 +23,14 @@ function parserFor(target) {
 function fixtureCategory(fixture) {
   if (fixture.target === 'REPOSITORY') {
     return 'repository';
+  }
+
+  if (fixture.target === 'REVISION') {
+    return 'revision';
+  }
+
+  if (fixture.target === 'REVISION_TRANSITION') {
+    return 'revision transition';
   }
 
   return 'relative path';
@@ -46,7 +56,15 @@ for (const fixture of validCases) {
   test(`valid ${fixtureCategory(fixture)} fixture ${fixture.id} preserves a JSON round-trip`, () => {
     const parser = parserFor(fixture.target);
     const first = parser(fixture.input);
-    const second = parser(JSON.parse(JSON.stringify(first)));
+    const roundTripped = JSON.parse(JSON.stringify(first));
+    const second =
+      fixture.target === 'REVISION_TRANSITION'
+        ? ir.parseIr(ir.RevisionSchema, roundTripped)
+        : parser(roundTripped);
+
+    if (fixture.target === 'REVISION_TRANSITION') {
+      assert.deepEqual(first, fixture.input.next, `${fixture.id} returns the next revision`);
+    }
 
     assert.deepEqual(second, first, fixture.id);
   });
