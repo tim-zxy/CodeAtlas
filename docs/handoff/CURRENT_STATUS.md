@@ -6,14 +6,14 @@
 - Handoff assembly: refreshed as the agent-neutral Engineering Handoff Pack.
 - Primary handoff entry: `ENGINEERING_HANDOFF.md`.
 - Compatibility entry: `CODEX_HANDOFF.md`.
-- Implementation repository: P0-W0-001, P0-W0-002, and P0-W0-003 are complete. P0-W1-001 final-review corrections pass local verification and await matching hosted CI.
+- Implementation repository: P0-W0-001, P0-W0-002, P0-W0-003, and P0-W1-001 are complete with fresh local verification and successful hosted CI evidence.
 - Active implementation phase: Phase 0.
 
 ## Phase readiness
 
 | Phase | Readiness | Implementation progress |
 |---|---|---|
-| 0 | IMPLEMENTATION-READY | P0-W0-001, P0-W0-002, and P0-W0-003 complete; P0-W1-001 final-review CI pending |
+| 0 | IMPLEMENTATION-READY | P0-W0-001, P0-W0-002, P0-W0-003, and P0-W1-001 complete |
 | 0.5 | IMPLEMENTATION-READY | 0 percent |
 | 1 | DESIGN-READY | 0 percent |
 | 2 | ARCHITECTURE-READY | 0 percent |
@@ -21,7 +21,7 @@
 
 ## Next action
 
-Close hosted CI for the P0-W1-001 final-review corrections, then proceed with P0-W1-002 Source and revision IR. Preserve predecessor order and the task-level Fixture, Evaluation, Acceptance, documentation, and traceability requirements.
+Proceed with P0-W1-002 Source and revision IR, the first next-listed Phase 0 task in `WORK_BREAKDOWN.md` whose predecessors are satisfied. Preserve predecessor order and the task-level Fixture, Evaluation, Acceptance, documentation, and traceability requirements.
 
 ## Active task evidence
 
@@ -80,7 +80,7 @@ Close hosted CI for the P0-W1-001 final-review corrections, then proceed with P0
 
 ### P0-W1-001 Common IR primitives
 
-- Status: final-review corrections locally verified; matching hosted CI pending.
+- Status: complete.
 - Implementation revisions: `c69e5fafb3a453f47aa66c8944f288ae390146e7` (design), `d318b2cc371199f27408996fa65918530a0e3cc0` (task plan), `14e046b712e058f319a2eaa3c2466af69b99e222` and `bed9e88a28509b523014f3f2f0281a888dbf6875` (fixture and edge-case tests), `ea049483e57b071ef236f4b226cafe0537422d61` (identity/reference/range schemas), `01aaf714eb32ad1cea97647ee3e76689e29684a6` (confidence/time schemas), `9c6e64ef1e43bf27073570ca13af50f6a69c1bbd` (strict versioned envelopes), `0a71454bbe48bd533f77e13c8aa313501f87b138` (normative specification), and `35717f35f2ebb9781067b86e9e63e05a77f2dfd1` (padded-schema rejection).
 - Governing specification and ADR: `specs/CANONICAL_IR.md`; ADR-002 Provider Independent Canonical IR. Dependency direction remains governed by `specs/MODULE_BOUNDARIES.md`; fresh fixture evidence is required by ADR-012.
 - Fixture / Evaluation / Acceptance: `p0-common-ir-v1`, owned by P0-W1-001 in `DESIGN_TRACEABILITY.md`; the acceptance gate is `Canonical primitives and envelopes round-trip`.
@@ -93,7 +93,7 @@ Close hosted CI for the P0-W1-001 final-review corrections, then proceed with P0
 - Final-review correction evidence (2026-09-14; base `d652a765f6089cab5e9265b6e76d6889b335deb3`): strict RED reproduced cycles (5 failures), unsafe/changed output (12 failures plus 2 in-place mutation failures), uncontrolled diagnostics (4 failures), and unstable primitives (9 failures). Focused GREEN passed 6 cycle, 16 output, 4 diagnostic, and 9 primitive checks. `pnpm verify` passed: Prettier, all 16 TypeScript project builds, IR brand compilation, 129 of 129 Node tests, the architecture gate for 17 projects, Rust formatting/build/Clippy with denied warnings, and 2 of 2 native smoke tests. `p0-common-ir-v1` now has 16 valid and 25 invalid cases; the six added invalid JSON cases explicitly exercise negative zero without replacing or weakening any baseline.
 - Final-review contract clarification: the JSON boundary rejects cycles with structured paths, final payload output must be JSON-safe and preserve the input JSON value at both envelope entry points, typed errors use fixed messages of at most 128 characters per issue, and negative zero plus explicit `revisionId: undefined` are rejected without normalization. `CANONICAL_IR.md` and the P0-W1-001 traceability row record these compatible schema corrections to the existing round-trip/strict-validation requirements. The Phase 0 acceptance gate and ADR-002 remain unchanged; no migration, version adapter, frozen-decision change, or new dependency is required.
 - Final-review architecture / Deferred / recovery audit: `git diff --check` passed; changed production files stay inside `packages/ir` and import no project package. No provider/source/revision entity, graph/evidence, database/SQLite, IPC, Java, LLM, embedding, network, watcher, daemon, or Knowledge implementation was introduced. Validation failure returns no partial value and mutates no canonical or published state. The only runtime package dependency remains `zod@4.6.1`.
-- Final-review hosted CI: pending the correction commit; the earlier hosted run below is historical evidence and does not validate the final-review corrections.
+- Final-review hosted CI: GitHub Actions run `34794915994` succeeded for correction commit `b18d0221ef92f51a1da502d25245acde3e984ccf` on branch `codex/p0-w1-001-common-ir` on 2026-09-14. Both mandatory jobs succeeded: TypeScript workspace in 29 seconds and Rust workspace in 1 minute 33 seconds. Run URL: `https://github.com/tim-zxy/CodeAtlas/actions/runs/34794915994`. Node.js 20 action-internal deprecation annotations were advisory; all mandatory gates passed.
 - Known limitations: Source/Revision IR, Code Fact IR, Evidence, database/storage, and IPC remain intentionally out of scope for their separately ordered Phase 0 tasks.
 - Hosted CI evidence: GitHub Actions run `34572366292` succeeded for head SHA `5db08a485b322bfb20e162d2ec94085a8f428443` on branch `codex/p0-w1-001-common-ir` on 2026-09-11. Both mandatory jobs succeeded: TypeScript workspace in 29 seconds and Rust workspace in 1 minute 49 seconds. Run URL: `https://github.com/tim-zxy/CodeAtlas/actions/runs/34572366292`. GitHub emitted a Node.js 20 deprecation annotation for action internals; it is advisory and not a mandatory-gate failure.
 - Next task: P0-W1-002 Source and revision IR. P0-W1-002 and P0-W1-003 are predecessor-valid after P0-W1-001, and P0-W1-002 is first in `WORK_BREAKDOWN.md`.
