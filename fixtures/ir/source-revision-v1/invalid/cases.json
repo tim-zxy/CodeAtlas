@@ -255,5 +255,170 @@
     },
     "errorCode": "IR_VALIDATION_FAILED",
     "path": ["next", "sourceRevisionId"]
+  },
+  {
+    "id": "source-file-unknown-role",
+    "target": "SOURCE_FILE",
+    "input": {
+      "id": "entity:file-src-main",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-worktree",
+      "path": "src/main.ts",
+      "contentFingerprint": "sha256:file-main-v1",
+      "classification": { "role": "SCRIPT", "provenance": "AUTHORED", "contentKind": "TEXT" },
+      "languageHint": "typescript",
+      "sensitivity": "INTERNAL"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["classification", "role"]
+  },
+  {
+    "id": "source-file-unknown-provenance",
+    "target": "SOURCE_FILE",
+    "input": {
+      "id": "entity:file-src-main",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-worktree",
+      "path": "src/main.ts",
+      "contentFingerprint": "sha256:file-main-v1",
+      "classification": { "role": "SOURCE", "provenance": "THIRD_PARTY", "contentKind": "TEXT" },
+      "languageHint": "typescript",
+      "sensitivity": "INTERNAL"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["classification", "provenance"]
+  },
+  {
+    "id": "source-file-unknown-content-kind",
+    "target": "SOURCE_FILE",
+    "input": {
+      "id": "entity:file-src-main",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-worktree",
+      "path": "src/main.ts",
+      "contentFingerprint": "sha256:file-main-v1",
+      "classification": { "role": "SOURCE", "provenance": "AUTHORED", "contentKind": "ARCHIVE" },
+      "languageHint": "typescript",
+      "sensitivity": "INTERNAL"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["classification", "contentKind"]
+  },
+  {
+    "id": "source-file-unknown-sensitivity",
+    "target": "SOURCE_FILE",
+    "input": {
+      "id": "entity:file-src-main",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-worktree",
+      "path": "src/main.ts",
+      "contentFingerprint": "sha256:file-main-v1",
+      "classification": { "role": "SOURCE", "provenance": "AUTHORED", "contentKind": "TEXT" },
+      "languageHint": "typescript",
+      "sensitivity": "RESTRICTED"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["sensitivity"]
+  },
+  {
+    "id": "source-file-blank-language-hint",
+    "target": "SOURCE_FILE",
+    "input": {
+      "id": "entity:file-src-main",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-worktree",
+      "path": "src/main.ts",
+      "contentFingerprint": "sha256:file-main-v1",
+      "classification": { "role": "SOURCE", "provenance": "AUTHORED", "contentKind": "TEXT" },
+      "languageHint": "   ",
+      "sensitivity": "INTERNAL"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["languageHint"]
+  },
+  {
+    "id": "source-file-padded-language-hint",
+    "target": "SOURCE_FILE",
+    "input": {
+      "id": "entity:file-src-main",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-worktree",
+      "path": "src/main.ts",
+      "contentFingerprint": "sha256:file-main-v1",
+      "classification": { "role": "SOURCE", "provenance": "AUTHORED", "contentKind": "TEXT" },
+      "languageHint": " typescript",
+      "sensitivity": "INTERNAL"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["languageHint"]
+  },
+  {
+    "id": "source-file-invalid-relative-path",
+    "target": "SOURCE_FILE",
+    "input": {
+      "id": "entity:file-src-main",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-worktree",
+      "path": "src\\main.ts",
+      "contentFingerprint": "sha256:file-main-v1",
+      "classification": { "role": "SOURCE", "provenance": "AUTHORED", "contentKind": "TEXT" },
+      "languageHint": "typescript",
+      "sensitivity": "INTERNAL"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["path"]
+  },
+  {
+    "id": "source-file-missing-language-hint",
+    "target": "SOURCE_FILE",
+    "input": {
+      "id": "entity:file-src-main",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-worktree",
+      "path": "src/main.ts",
+      "contentFingerprint": "sha256:file-main-v1",
+      "classification": { "role": "SOURCE", "provenance": "AUTHORED", "contentKind": "TEXT" },
+      "sensitivity": "INTERNAL"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["languageHint"]
+  },
+  {
+    "id": "source-file-extra-key",
+    "target": "SOURCE_FILE",
+    "input": {
+      "id": "entity:file-src-main",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-worktree",
+      "path": "src/main.ts",
+      "contentFingerprint": "sha256:file-main-v1",
+      "classification": { "role": "SOURCE", "provenance": "AUTHORED", "contentKind": "TEXT" },
+      "languageHint": "typescript",
+      "sensitivity": "INTERNAL",
+      "extra": true
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
+  },
+  {
+    "id": "source-file-classification-extra-key",
+    "target": "SOURCE_FILE",
+    "input": {
+      "id": "entity:file-src-main",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-worktree",
+      "path": "src/main.ts",
+      "contentFingerprint": "sha256:file-main-v1",
+      "classification": {
+        "role": "SOURCE",
+        "provenance": "AUTHORED",
+        "contentKind": "TEXT",
+        "extra": true
+      },
+      "languageHint": "typescript",
+      "sensitivity": "INTERNAL"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["classification"]
   }
 ]

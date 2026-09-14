@@ -8,6 +8,7 @@ import {
   RepositoryRelativePathSchema,
   RepositoryRootPathSchema,
   RuntimeVersionSchema,
+  SourceFileSchema,
   type CanonicalId,
   type CommitIdentity,
   type ContentFingerprint,
@@ -17,6 +18,7 @@ import {
   type RepositoryRelativePath,
   type RepositoryRootPath,
   type RuntimeVersion,
+  type SourceFile,
 } from '../src/index.js';
 
 const repositoryRootPath: RepositoryRootPath =
@@ -30,6 +32,16 @@ const providerVersion: ProviderVersion = ProviderVersionSchema.parse('version:01
 const runtimeVersion: RuntimeVersion = RuntimeVersionSchema.parse('runtime:01');
 const entityId: EntityId = EntityIdSchema.parse('entity:01');
 const canonicalId: CanonicalId = CanonicalIdSchema.parse('canonical:01');
+const sourceFile: SourceFile = SourceFileSchema.parse({
+  id: 'entity:file-src-main',
+  repositoryId: 'entity:repo-01',
+  revisionId: 'entity:revision-worktree',
+  path: 'src/main.ts',
+  contentFingerprint: 'content:file-main-v1',
+  classification: { role: 'SOURCE', provenance: 'AUTHORED', contentKind: 'TEXT' },
+  languageHint: 'typescript',
+  sensitivity: 'INTERNAL',
+});
 
 const acceptRepositoryRelativePath = (value: RepositoryRelativePath): RepositoryRelativePath =>
   value;
@@ -69,3 +81,4 @@ void repositoryRootPath;
 void commitIdentity;
 void providerVersion;
 void runtimeVersion;
+void sourceFile;

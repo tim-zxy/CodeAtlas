@@ -14,6 +14,24 @@ export type { EntityRef, SourceRange } from './references.js';
 export { RepositorySchema } from './repository.js';
 export type { Repository } from './repository.js';
 export {
+  LanguageHintSchema,
+  SourceContentKindSchema,
+  SourceFileClassificationSchema,
+  SourceFileProvenanceSchema,
+  SourceFileRoleSchema,
+  SourceFileSchema,
+  SourceSensitivitySchema,
+} from './source-file.js';
+export type {
+  LanguageHint,
+  SourceContentKind,
+  SourceFile,
+  SourceFileClassification,
+  SourceFileProvenance,
+  SourceFileRole,
+  SourceSensitivity,
+} from './source-file.js';
+export {
   CommitRevisionSchema,
   RevisionKindSchema,
   RevisionSchema,

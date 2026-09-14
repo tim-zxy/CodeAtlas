@@ -82,5 +82,89 @@
         "baseRevisionId": "entity:revision-commit-01"
       }
     }
+  },
+  {
+    "id": "source-file-authored-source",
+    "target": "SOURCE_FILE",
+    "input": {
+      "id": "entity:file-src-main",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-worktree",
+      "path": "src/main.ts",
+      "contentFingerprint": "sha256:file-main-v1",
+      "classification": { "role": "SOURCE", "provenance": "AUTHORED", "contentKind": "TEXT" },
+      "languageHint": "typescript",
+      "sensitivity": "INTERNAL"
+    }
+  },
+  {
+    "id": "source-file-generated-test",
+    "target": "SOURCE_FILE",
+    "input": {
+      "id": "entity:file-generated-test",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-worktree",
+      "path": "generated/client.test.ts",
+      "contentFingerprint": "sha256:generated-test-v1",
+      "classification": { "role": "TEST", "provenance": "GENERATED", "contentKind": "TEXT" },
+      "languageHint": "typescript",
+      "sensitivity": "PUBLIC"
+    }
+  },
+  {
+    "id": "source-file-vendor-binary",
+    "target": "SOURCE_FILE",
+    "input": {
+      "id": "entity:file-vendor-binary",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-snapshot",
+      "path": "vendor/data.bin",
+      "contentFingerprint": "sha256:vendor-binary-v1",
+      "classification": { "role": "OTHER", "provenance": "VENDOR", "contentKind": "BINARY" },
+      "languageHint": null,
+      "sensitivity": "SENSITIVE"
+    }
+  },
+  {
+    "id": "source-file-secret",
+    "target": "SOURCE_FILE",
+    "input": {
+      "id": "entity:file-secret",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-worktree",
+      "path": "config/production.env",
+      "contentFingerprint": "sha256:secret-v1",
+      "classification": { "role": "OTHER", "provenance": "AUTHORED", "contentKind": "TEXT" },
+      "languageHint": "dotenv",
+      "sensitivity": "SECRET"
+    }
+  },
+  {
+    "id": "source-file-logical-identity-earlier-revision",
+    "target": "SOURCE_FILE",
+    "input": {
+      "id": "entity:file-logical-main",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-commit-01",
+      "path": "src/logical-main.ts",
+      "contentFingerprint": "sha256:logical-main-v1",
+      "classification": { "role": "SOURCE", "provenance": "AUTHORED", "contentKind": "TEXT" },
+      "languageHint": "typescript",
+      "sensitivity": "INTERNAL"
+    }
+  },
+  {
+    "id": "source-file-logical-identity-later-revision",
+    "target": "SOURCE_FILE",
+    "input": {
+      "id": "entity:file-logical-main",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-worktree",
+      "path": "src/logical-main.ts",
+      "contentFingerprint": "sha256:logical-main-v2",
+      "classification": { "role": "SOURCE", "provenance": "AUTHORED", "contentKind": "TEXT" },
+      "languageHint": "typescript",
+      "sensitivity": "INTERNAL"
+    }
   }
 ]

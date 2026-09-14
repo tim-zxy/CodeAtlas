@@ -10,6 +10,7 @@ const parsers = {
   REPOSITORY_RELATIVE_PATH: (input) => ir.parseIr(ir.RepositoryRelativePathSchema, input),
   REVISION: (input) => ir.parseIr(ir.RevisionSchema, input),
   REVISION_TRANSITION: (input) => ir.validateRevisionTransition(input.previous, input.next),
+  SOURCE_FILE: (input) => ir.parseIr(ir.SourceFileSchema, input),
 };
 const validCases = JSON.parse(await readFile(new URL('valid/cases.json', fixtureRoot), 'utf8'));
 const invalidCases = JSON.parse(await readFile(new URL('invalid/cases.json', fixtureRoot), 'utf8'));
@@ -31,6 +32,10 @@ function fixtureCategory(fixture) {
 
   if (fixture.target === 'REVISION_TRANSITION') {
     return 'revision transition';
+  }
+
+  if (fixture.target === 'SOURCE_FILE') {
+    return 'source file';
   }
 
   return 'relative path';
@@ -86,5 +91,43 @@ test('repository rejects unknown keys rather than stripping them', () => {
       }),
     'IR_VALIDATION_FAILED',
     [],
+  );
+});
+
+test('source file identity remains stable while revision and content fingerprint change', () => {
+  const earlier = validCases.find(
+    (fixture) => fixture.id === 'source-file-logical-identity-earlier-revision',
+  );
+  const later = validCases.find(
+    (fixture) => fixture.id === 'source-file-logical-identity-later-revision',
+  );
+
+  assert.ok(earlier);
+  assert.ok(later);
+
+  const earlierFile = parserFor(earlier.target)(earlier.input);
+  const laterFile = parserFor(later.target)(later.input);
+
+  assert.equal(earlierFile.id, laterFile.id);
+  assert.equal(earlierFile.path, laterFile.path);
+  assert.notEqual(earlierFile.revisionId, laterFile.revisionId);
+  assert.notEqual(earlierFile.contentFingerprint, laterFile.contentFingerprint);
+});
+
+test('source file language hint rejects explicit undefined', () => {
+  assertIrError(
+    () =>
+      ir.parseIr(ir.SourceFileSchema, {
+        id: 'entity:file-src-main',
+        repositoryId: 'entity:repo-01',
+        revisionId: 'entity:revision-worktree',
+        path: 'src/main.ts',
+        contentFingerprint: 'sha256:file-main-v1',
+        classification: { role: 'SOURCE', provenance: 'AUTHORED', contentKind: 'TEXT' },
+        languageHint: undefined,
+        sensitivity: 'INTERNAL',
+      }),
+    'IR_VALIDATION_FAILED',
+    ['languageHint'],
   );
 });
