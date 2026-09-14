@@ -1,0 +1,79 @@
+[
+  {
+    "id": "repository-blank-root",
+    "target": "REPOSITORY",
+    "input": { "id": "entity:repo-01", "rootPath": "   " },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["rootPath"]
+  },
+  {
+    "id": "repository-padded-root",
+    "target": "REPOSITORY",
+    "input": { "id": "entity:repo-01", "rootPath": " D:/workspace/project" },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["rootPath"]
+  },
+  {
+    "id": "repository-extra-key",
+    "target": "REPOSITORY",
+    "input": { "id": "entity:repo-01", "rootPath": "D:/workspace/project", "extra": true },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
+  },
+  {
+    "id": "relative-path-absolute",
+    "target": "REPOSITORY_RELATIVE_PATH",
+    "input": "/src/main.ts",
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
+  },
+  {
+    "id": "relative-path-drive-absolute",
+    "target": "REPOSITORY_RELATIVE_PATH",
+    "input": "D:/src/main.ts",
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
+  },
+  {
+    "id": "relative-path-backslash",
+    "target": "REPOSITORY_RELATIVE_PATH",
+    "input": "src\\main.ts",
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
+  },
+  {
+    "id": "relative-path-nul",
+    "target": "REPOSITORY_RELATIVE_PATH",
+    "input": "src/\u0000main.ts",
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
+  },
+  {
+    "id": "relative-path-empty-segment",
+    "target": "REPOSITORY_RELATIVE_PATH",
+    "input": "src//main.ts",
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
+  },
+  {
+    "id": "relative-path-dot-segment",
+    "target": "REPOSITORY_RELATIVE_PATH",
+    "input": "src/./main.ts",
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
+  },
+  {
+    "id": "relative-path-parent-segment",
+    "target": "REPOSITORY_RELATIVE_PATH",
+    "input": "src/../main.ts",
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
+  },
+  {
+    "id": "relative-path-trailing-slash",
+    "target": "REPOSITORY_RELATIVE_PATH",
+    "input": "src/",
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
+  }
+]

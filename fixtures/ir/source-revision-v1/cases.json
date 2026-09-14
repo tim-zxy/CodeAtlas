@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "id": "p0-source-revision-ir-v1",
+  "task": "P0-W1-002",
+  "governingSpec": "docs/handoff/specs/CANONICAL_IR.md",
+  "acceptance": "Mutable and immutable revision semantics differ",
+  "validCases": "valid/cases.json",
+  "invalidCases": "invalid/cases.json"
+}

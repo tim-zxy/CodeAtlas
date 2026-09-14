@@ -1,0 +1,13 @@
+[
+  {
+    "id": "repository-basic",
+    "target": "REPOSITORY",
+    "input": { "id": "entity:repo-01", "rootPath": "D:/workspace/project" }
+  },
+  {
+    "id": "repository-relocated-same-id",
+    "target": "REPOSITORY",
+    "input": { "id": "entity:repo-01", "rootPath": "E:/moved/project" }
+  },
+  { "id": "relative-path-basic", "target": "REPOSITORY_RELATIVE_PATH", "input": "src/main.ts" }
+]
