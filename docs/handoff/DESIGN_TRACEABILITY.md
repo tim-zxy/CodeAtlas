@@ -30,7 +30,7 @@ Every future task must add or update a row when it introduces a public capabilit
 | P0-W0-002 | injected forbidden-import and cycle cases | Dependency guardrails reject forbidden edges | Module Boundaries |
 | P0-W0-003 | CLI/MCP shared runtime-construction smoke | Same KnowledgeRuntime without inversion | Runtime and Configuration |
 | P0-W1-001 | `p0-common-ir-v1` valid/invalid round-trip fixtures, including negative-zero boundaries; Common IR regressions for cycles, payload transformations, explicit undefined revisions, and bounded typed errors | Canonical primitives and envelopes round-trip | Canonical IR |
-| P0-W1-002 | COMMIT/WORKTREE/SNAPSHOT identity cases | Mutable and immutable revision semantics differ | Canonical IR |
+| P0-W1-002 | `p0-source-revision-ir-v1`: `fixtures/ir/source-revision-v1/cases.json`, `fixtures/ir/source-revision-v1/valid/cases.json`, and `fixtures/ir/source-revision-v1/invalid/cases.json`; `packages/ir/test/source-revision-ir.test.mjs`; `packages/ir/type-test/source-revision-brands.test.ts` | Mutable and immutable revision semantics differ | `docs/handoff/specs/CANONICAL_IR.md`; ADR-002 |
 | P0-W1-003 | resolved, ambiguous, and unresolved graph facts | Provider/canonical identity remains separate | Canonical IR |
 | P0-W1-004 | multi-provider evidence lifecycle | One canonical fact retains independent supports | Canonical IR; SQLite Schema |
 | P0-W1-005 | migration-empty, upgrade, failure, too-new | Sequential, rollback, rerun, lock, checksum gates | SQLite Schema |

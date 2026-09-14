@@ -53,12 +53,141 @@ normalization, including JSON bytes containing the numeric literal `-0`.
 
 ## Source IR
 
-- Workspace: local knowledge boundary and repository registry.
-- Repository: stable source-control unit with a root independent from workspace root.
-- Revision: `COMMIT`, mutable `WORKTREE`, or immutable `SNAPSHOT`.
-- RevisionSet: frozen mapping of repository IDs to revision IDs for a knowledge compilation.
-- SourceFile: normalized repository-relative path, content fingerprint, classification, language hint, sensitivity.
-- ProviderSnapshot: provider run, versions, requested revision, capability/coverage status, diagnostics, and outcome.
+P0-W1-002 exports strict Zod schemas and schema-inferred TypeScript types for
+Repository, Revision, SourceFile, and ProviderSnapshot. These contracts accept
+already-observed values; they do not discover repositories or files, calculate
+fingerprints, run Providers, persist state, or activate a revision.
+
+### Source identity scalars
+
+The following exported scalars are separately TypeScript-branded opaque
+strings. Each must be non-empty, non-blank, and free of leading or trailing
+whitespace. Parsing preserves the exact string and rejects rather than trims,
+normalizes, or interprets it.
+
+- `RepositoryRootPath` is a host-local repository locator. Its syntax is opaque
+  in this contract and it is not repository identity.
+- `RepositoryRelativePath` is a canonical `/`-separated logical path. It
+  rejects a leading or trailing `/`, a drive-absolute prefix, `\`, NUL, empty
+  segments, and `.` or `..` segments. It performs no rewriting.
+- `ContentFingerprint` is an opaque, precomputed content or revision
+  fingerprint. This contract specifies no hash algorithm or encoding.
+- `CommitIdentity` is an opaque source-control commit identity. This contract
+  assumes no hash algorithm or length.
+- `ProviderId` is an opaque Provider identity and is branded separately from
+  `EntityId` and `CanonicalId`.
+- `ProviderVersion` and `RuntimeVersion` are opaque exact versions. No semantic
+  version parsing or coercion occurs.
+
+### Repository
+
+`Repository` is a strict object with `id: EntityId` and
+`rootPath: RepositoryRootPath`. The ID is the stable repository identity;
+`rootPath` is a relocatable local locator independent from any workspace root.
+Moving a repository root does not authorize regenerating its ID. Workspace
+membership, display names, and source-control discovery metadata are outside
+this contract.
+
+### Revision
+
+`RevisionKind` is exactly `COMMIT | WORKTREE | SNAPSHOT`. `Revision` is a strict
+discriminated union. Every variant has `id: EntityId`,
+`repositoryId: EntityId`, `kind`, and
+`contentFingerprint: ContentFingerprint`. The variant-specific fields are:
+
+- `CommitRevision`: `kind: COMMIT` and `commitIdentity: CommitIdentity`;
+- `WorktreeRevision`: `kind: WORKTREE` and
+  `baseRevisionId: EntityId | null`;
+- `SnapshotRevision`: `kind: SNAPSHOT` and
+  `sourceRevisionId: EntityId | null`.
+
+`null` records an unknown base or source revision in the current repository
+context. The nullable fields are required: explicit `undefined` is invalid, and
+a field belonging to another variant is an unknown key and is rejected.
+
+`validateRevisionTransition(previous, next)` parses both inputs and validates
+an update of one revision identity. Repository ID, revision ID, and kind must
+remain equal. A `WORKTREE` may change `contentFingerprint` and
+`baseRevisionId` under that stable identity. A `COMMIT` or `SNAPSHOT` permits an
+idempotent observation only: its fingerprint and `commitIdentity` or
+`sourceRevisionId` cannot change. A different repository, ID, or kind denotes a
+different revision identity rather than a valid transition. This validator is
+pure and performs no persistence or concurrency control.
+
+### SourceFile
+
+`SourceFile` is a strict, revision-scoped object with `id: EntityId`,
+`repositoryId: EntityId`, `revisionId: EntityId`,
+`path: RepositoryRelativePath`,
+`contentFingerprint: ContentFingerprint`, `classification`,
+`languageHint: LanguageHint | null`, and `sensitivity: SourceSensitivity`.
+The ID represents stable logical-path identity within one repository. The same
+logical SourceFile ID may appear at different revisions while `revisionId` and
+the path-scoped fingerprint change.
+
+`SourceFileClassification` is a strict object whose dimensions are
+orthogonal:
+
+- `role: SOURCE | TEST | OTHER`;
+- `provenance: AUTHORED | GENERATED | VENDOR`;
+- `contentKind: TEXT | BINARY`.
+
+`LanguageHint` is an open exact, non-blank string rather than a Provider enum;
+`null` means no hint is declared. `SourceSensitivity` is exactly
+`PUBLIC | INTERNAL | SENSITIVE | SECRET` and follows the Security
+specification. P0-W1-002 validates declared values only. It does not scan or
+classify files, infer language, or access their contents. Rename identity is
+not inferred; Phase 0.5 represents rename as delete plus add.
+
+### ProviderSnapshot
+
+`ProviderSnapshot` is a strict record of one Provider observation attempt. It
+contains:
+
+- `id: EntityId`, `repositoryId: EntityId`, `providerId: ProviderId`,
+  `providerVersion: ProviderVersion`, and `runtimeVersion: RuntimeVersion`;
+- `requestedRevisionId: EntityId` and
+  `requestedRevisionFingerprint: ContentFingerprint`;
+- `startedAt: UtcInstant` and `completedAt: UtcInstant`;
+- `capabilities: ProviderCapabilityObservation[]`;
+- `diagnostics: ProviderSnapshotDiagnostic[]`;
+- `outcome: SUCCEEDED | PARTIAL | FAILED | CANCELLED`.
+
+Completion cannot precede start; both fields retain the Common IR exact UTC
+millisecond representation. Capability names are open exact, non-blank strings
+and must be unique within one snapshot. Each capability observation is a strict
+object with `name`, `support: SUPPORTED | UNSUPPORTED`, and
+`coverage: COMPLETE | PARTIAL | NONE | UNKNOWN`.
+
+Each diagnostic is a strict object with an exact, non-blank `code`,
+`severity: INFO | WARNING | ERROR`, an exact, non-blank `message` of at most 128
+characters, and `sourceRange: SourceRange | null`. This bounded shape has no
+field for Provider-native objects, source text, stack traces, or unrestricted
+prose; producers must not place secrets in diagnostic strings. Diagnostic array
+order is preserved, and the schema does not derive `outcome` from severity.
+
+`validateProviderSnapshotRevision(snapshot, revision)` parses both inputs and
+requires equal repository ID, requested revision ID, and requested revision
+fingerprint. The fingerprint check prevents an observation for an earlier
+state of a stable `WORKTREE` identity from matching a newer state. The helper
+returns the validated snapshot or raises `IR_VALIDATION_FAILED` with a
+structured mismatch path. It does not activate Canonical State, apply facts,
+or write storage.
+
+### Source IR boundaries
+
+ProviderSnapshot is observation metadata, not proof of canonical truth or an
+activation decision. Provider-native data must still be normalized before it
+can enter provider-independent Canonical IR. Evidence remains separate from
+claims, candidates, and published Knowledge, and LLM output remains
+candidate-only. P0-W1-002 introduces no SQLite schema or write path; SQLite
+remains the authority when later storage tasks persist canonical state, while
+search and vector indexes remain derived and rebuildable.
+
+Workspace and RevisionSet remain outside the P0-W1-002 executable contract, as
+do repository/file discovery, fingerprint calculation, Provider execution,
+FactMerger behavior, persistence, graph activation, native IPC, and later-phase
+Knowledge or Runtime behavior.
 
 ## Code IR
 
