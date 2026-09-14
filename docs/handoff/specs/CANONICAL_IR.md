@@ -21,8 +21,9 @@ JSON representation; validation does not trim, rewrite, or infer meaning from
 UUID shape, prefixes, provider identity, names, or source text.
 
 `EntityRef` is a strict object with a non-blank, trimmed-string `kind`, a
-validated `id`, and an optional validated `revisionId`. Unknown object keys are
-rejected. The `kind` value remains open in P0-W1-001; later task-specific
+validated `id`, and an optional validated `revisionId`. An absent revision must
+omit `revisionId`; an explicit `undefined` is rejected rather than removed.
+Unknown object keys are rejected. The `kind` value remains open in P0-W1-001; later task-specific
 schemas may narrow it.
 
 `SourceRange` is a strict object containing `sourceFileId`, `startLine`,
@@ -44,6 +45,11 @@ precision are rejected rather than normalized. SQLite boundaries use finite,
 safe integer epoch milliseconds. Explicit `utcInstantToEpochMilliseconds` and
 `epochMillisecondsToUtcInstant` helpers validate both directions; no implicit
 date or timezone conversion is performed.
+
+Negative zero (`-0`) is rejected by confidence scores, source coordinates,
+epoch milliseconds, and the generic JSON boundary. Positive zero remains valid.
+This preserves the validated value across JSON serialization without implicit
+normalization, including JSON bytes containing the numeric literal `-0`.
 
 ## Source IR
 
@@ -90,11 +96,24 @@ shape, compare the schema name, compare the version, then validate the payload.
 This means malformed shape wins over schema/version checks, schema mismatch wins
 over version checks, and version mismatch wins over payload validation.
 
+The JSON boundary rejects circular references with the path of the circular
+edge; shared acyclic children are allowed. JSON safety is checked before and
+after the supplied payload schema in both `createSchemaEnvelopeSchema` and
+`parseSchemaEnvelope`. Payload schemas must preserve the input's JSON value:
+changes in type, value, or object fields are rejected, including stripping or
+in-place mutation. A new object with the same fields and values is allowed;
+object key order is immaterial. No payload transform runs before the helper's
+schema-name and version checks pass.
+
 The public typed failures are `IR_VALIDATION_FAILED` for primitive, envelope,
 or payload violations, `SCHEMA_MISMATCH` for an unexpected schema name, and
 `UNSUPPORTED_SCHEMA_VERSION` for an unsupported version. Validation failures
-retain structured field paths and bounded messages; they do not retain raw
-rejected payloads.
+retain structured field paths and controlled messages of at most 128 characters
+per issue. Typed parsing helpers select fixed messages by issue category rather
+than copying arbitrary Zod or custom-refinement prose, including rejected key
+names or values. They do not retain raw rejected payloads. Direct Zod schemas
+remain available for composition; this typed-error policy does not replace
+Zod's own error interface.
 
 P0-W1-001 supports exact version matching only. It adds no implicit adapter,
 downgrade, upgrade, provider-extension coercion, or best-effort normalization.

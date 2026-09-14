@@ -8,17 +8,28 @@ const EntityKindSchema = z
     message: 'Entity kinds must be non-blank and must not have surrounding whitespace',
   });
 
-export const EntityRefSchema = z.strictObject({
-  kind: EntityKindSchema,
-  id: EntityIdSchema,
-  revisionId: EntityIdSchema.optional(),
-});
+export const EntityRefSchema = z
+  .strictObject({
+    kind: EntityKindSchema,
+    id: EntityIdSchema,
+    revisionId: EntityIdSchema.optional(),
+  })
+  .superRefine((value, context) => {
+    if (Object.hasOwn(value, 'revisionId') && value.revisionId === undefined) {
+      context.addIssue({
+        code: 'custom',
+        path: ['revisionId'],
+        message: 'An absent revision must omit revisionId',
+      });
+    }
+  });
 export type EntityRef = z.infer<typeof EntityRefSchema>;
 
 const SourceCoordinateSchema = z
   .number()
   .int()
   .nonnegative()
+  .refine((value) => !Object.is(value, -0), { message: 'Coordinates must not be negative zero' })
   .refine(Number.isSafeInteger, { message: 'Source coordinates must be safe integers' });
 
 export const SourceRangeSchema = z

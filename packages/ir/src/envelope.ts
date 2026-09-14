@@ -1,9 +1,40 @@
+import { isDeepStrictEqual } from 'node:util';
 import { z } from 'zod';
 
 import { IrValidationError, SchemaMismatchError, UnsupportedSchemaVersionError } from './errors.js';
 import { parseIr } from './validation.js';
 
-export const JsonValueSchema = z.json();
+export const JsonValueSchema = z
+  .unknown()
+  .superRefine((value, context) => {
+    const ancestors = new Set<object>();
+
+    function visit(current: unknown, path: (string | number)[]): void {
+      if (typeof current === 'number' && (!Number.isFinite(current) || Object.is(current, -0))) {
+        context.addIssue({
+          code: 'custom',
+          path,
+          message: 'JSON numbers must be finite and not negative zero',
+        });
+        return;
+      }
+      if (current === null || typeof current !== 'object') return;
+
+      if (ancestors.has(current)) {
+        context.addIssue({ code: 'custom', path, message: 'JSON values must not contain cycles' });
+        return;
+      }
+
+      ancestors.add(current);
+      for (const [key, child] of Object.entries(current)) {
+        visit(child, [...path, Array.isArray(current) ? Number(key) : key]);
+      }
+      ancestors.delete(current);
+    }
+
+    visit(value, []);
+  })
+  .pipe(z.json());
 export type JsonValue = z.infer<typeof JsonValueSchema>;
 
 export const SchemaEnvelopeSchema = z.strictObject({
@@ -44,6 +75,37 @@ function parseSchemaDescriptor<TPayloadSchema extends z.ZodType<JsonValue>>(
   });
 }
 
+function createPayloadSchema<TPayloadSchema extends z.ZodType<JsonValue>>(
+  payloadSchema: TPayloadSchema,
+) {
+  return JsonValueSchema.transform((input, context): z.output<TPayloadSchema> => {
+    // Snapshot before invoking a caller schema, which may mutate its argument.
+    const original: JsonValue = JSON.parse(JSON.stringify(input));
+    const result = payloadSchema.safeParse(input);
+    if (!result.success) {
+      for (const issue of result.error.issues) {
+        context.addIssue({ code: 'custom', path: issue.path, message: issue.message });
+      }
+      return z.NEVER;
+    }
+
+    const output = JsonValueSchema.safeParse(result.data);
+    if (!output.success) {
+      for (const issue of output.error.issues) {
+        context.addIssue({ code: 'custom', path: issue.path, message: issue.message });
+      }
+      return z.NEVER;
+    }
+
+    if (!isDeepStrictEqual(original, result.data)) {
+      context.addIssue({ code: 'custom', message: 'Payload schemas must preserve JSON values' });
+      return z.NEVER;
+    }
+
+    return result.data;
+  });
+}
+
 export function createSchemaEnvelopeSchema<
   const TSchema extends string,
   const TVersion extends number,
@@ -55,7 +117,8 @@ export function createSchemaEnvelopeSchema<
   },
 ): z.ZodType<SchemaEnvelope<z.output<TPayloadSchema>>> {
   const { schema, version } = parseSchemaDescriptor(descriptor);
-  const payloadSchema = descriptor.payload as unknown as z.ZodType<
+  // The preceding envelope schema has already narrowed the payload to JSON.
+  const payloadSchema = createPayloadSchema(descriptor.payload) as z.ZodType<
     z.output<TPayloadSchema>,
     JsonValue
   >;
@@ -86,7 +149,7 @@ export function parseSchemaEnvelope<TPayloadSchema extends z.ZodType<JsonValue>>
 
   let payload: z.output<TPayloadSchema>;
   try {
-    payload = parseIr(descriptor.payload, envelope.payload);
+    payload = parseIr(createPayloadSchema(descriptor.payload), envelope.payload);
   } catch (error: unknown) {
     if (error instanceof IrValidationError) {
       throw new IrValidationError(

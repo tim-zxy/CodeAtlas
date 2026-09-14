@@ -1,5 +1,71 @@
 [
   {
+    "id": "final-review-negative-zero-confidence",
+    "target": "CONFIDENCE",
+    "input": { "score": -0, "method": "EXACT_MATCH", "reasons": [] },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["score"]
+  },
+  {
+    "id": "final-review-negative-zero-startLine",
+    "target": "SOURCE_RANGE",
+    "input": {
+      "sourceFileId": "entity:file",
+      "startLine": -0,
+      "startColumn": 0,
+      "endLine": 0,
+      "endColumn": 0
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["startLine"]
+  },
+  {
+    "id": "final-review-negative-zero-startColumn",
+    "target": "SOURCE_RANGE",
+    "input": {
+      "sourceFileId": "entity:file",
+      "startLine": 0,
+      "startColumn": -0,
+      "endLine": 0,
+      "endColumn": 0
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["startColumn"]
+  },
+  {
+    "id": "final-review-negative-zero-endLine",
+    "target": "SOURCE_RANGE",
+    "input": {
+      "sourceFileId": "entity:file",
+      "startLine": 0,
+      "startColumn": 0,
+      "endLine": -0,
+      "endColumn": 0
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["endLine"]
+  },
+  {
+    "id": "final-review-negative-zero-endColumn",
+    "target": "SOURCE_RANGE",
+    "input": {
+      "sourceFileId": "entity:file",
+      "startLine": 0,
+      "startColumn": 0,
+      "endLine": 0,
+      "endColumn": -0
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["endColumn"]
+  },
+  {
+    "id": "final-review-negative-zero-epoch",
+    "target": "EPOCH_MILLISECONDS",
+    "input": -0,
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
+  },
+  {
     "id": "empty-entity-id",
     "target": "ENTITY_ID",
     "input": "",

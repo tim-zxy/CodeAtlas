@@ -29,7 +29,7 @@ Every future task must add or update a row when it introduces a public capabilit
 | P0-W0-001 | workspace build and TypeScript/Rust CI smoke | Monorepo packages and crate build/test | Module Boundaries |
 | P0-W0-002 | injected forbidden-import and cycle cases | Dependency guardrails reject forbidden edges | Module Boundaries |
 | P0-W0-003 | CLI/MCP shared runtime-construction smoke | Same KnowledgeRuntime without inversion | Runtime and Configuration |
-| P0-W1-001 | `p0-common-ir-v1` valid/invalid round-trip fixtures | Canonical primitives and envelopes round-trip | Canonical IR |
+| P0-W1-001 | `p0-common-ir-v1` valid/invalid round-trip fixtures, including negative-zero boundaries; Common IR regressions for cycles, payload transformations, explicit undefined revisions, and bounded typed errors | Canonical primitives and envelopes round-trip | Canonical IR |
 | P0-W1-002 | COMMIT/WORKTREE/SNAPSHOT identity cases | Mutable and immutable revision semantics differ | Canonical IR |
 | P0-W1-003 | resolved, ambiguous, and unresolved graph facts | Provider/canonical identity remains separate | Canonical IR |
 | P0-W1-004 | multi-provider evidence lifecycle | One canonical fact retains independent supports | Canonical IR; SQLite Schema |

@@ -16,7 +16,14 @@ export const ResolutionLevelSchema = z.enum([
 export type ResolutionLevel = z.infer<typeof ResolutionLevelSchema>;
 
 export const ConfidenceSchema = z.strictObject({
-  score: z.number().finite().min(0).max(1),
+  score: z
+    .number()
+    .finite()
+    .min(0)
+    .max(1)
+    .refine((value) => !Object.is(value, -0), {
+      message: 'Confidence must not be negative zero',
+    }),
   method: NonBlankTrimmedStringSchema,
   reasons: z.array(NonBlankTrimmedStringSchema),
 });

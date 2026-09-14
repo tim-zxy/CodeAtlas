@@ -20,6 +20,9 @@ export const EpochMillisecondsSchema = z
   .finite()
   .int()
   .refine(Number.isSafeInteger, { message: 'Epoch milliseconds must be safe integers' })
+  .refine((value) => !Object.is(value, -0), {
+    message: 'Epoch milliseconds must not be negative zero',
+  })
   .brand<'EpochMilliseconds'>();
 export type EpochMilliseconds = z.infer<typeof EpochMillisecondsSchema>;
 

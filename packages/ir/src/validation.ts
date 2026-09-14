@@ -2,6 +2,22 @@ import { z } from 'zod';
 
 import { IrValidationError } from './errors.js';
 
+function validationMessage(code: z.core.$ZodIssue['code']): string {
+  switch (code) {
+    case 'invalid_type':
+      return 'Value has an invalid type';
+    case 'unrecognized_keys':
+      return 'Object contains unknown keys';
+    case 'too_small':
+    case 'too_big':
+      return 'Value is outside the allowed bounds';
+    case 'invalid_format':
+      return 'Value has an invalid format';
+    default:
+      return 'Value does not satisfy the IR schema';
+  }
+}
+
 export function parseIr<TSchema extends z.ZodType>(
   schema: TSchema,
   input: unknown,
@@ -14,7 +30,7 @@ export function parseIr<TSchema extends z.ZodType>(
         path: issue.path.map((segment) =>
           typeof segment === 'symbol' ? (segment.description ?? segment.toString()) : segment,
         ),
-        message: issue.message,
+        message: validationMessage(issue.code),
       })),
     );
   }

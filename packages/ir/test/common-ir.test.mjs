@@ -247,3 +247,174 @@ test('schema envelopes reject padded schema names without normalization', () => 
     ['schema'],
   );
 });
+
+const jsonEnvelope = { schema: 'codeatlas.fixture.json', version: 1, payload: z.unknown() };
+const envelopeReaders = {
+  helper: (descriptor, input) => parseSchemaEnvelope(descriptor, input),
+  schema: (descriptor, input) => parseIr(ir.createSchemaEnvelopeSchema(descriptor), input),
+};
+
+for (const [name, parse] of Object.entries({
+  json: (payload) => parseIr(ir.JsonValueSchema, payload),
+  raw: (payload) => parseIr(ir.SchemaEnvelopeSchema, { ...jsonEnvelope, payload }),
+  ...Object.fromEntries(
+    Object.entries(envelopeReaders).map(([name, read]) => [
+      name,
+      (payload) => read(jsonEnvelope, { ...jsonEnvelope, payload }),
+    ]),
+  ),
+})) {
+  test(`final review cycles: ${name} rejects a cycle at its field path`, () => {
+    const circular = {};
+    circular.self = circular;
+    assertIrError(() => parse({ items: [circular] }), 'IR_VALIDATION_FAILED', [
+      ...(name === 'json' ? [] : ['payload']),
+      'items',
+      0,
+      'self',
+    ]);
+  });
+}
+
+test('final review cycles: malformed JSON precedes schema and version disagreement', () => {
+  const circular = {};
+  circular.self = circular;
+  assertIrError(
+    () => parseSchemaEnvelope(jsonEnvelope, { schema: 'wrong', version: 2, payload: circular }),
+    'IR_VALIDATION_FAILED',
+    ['payload', 'self'],
+  );
+});
+
+test('final review cycles: shared acyclic children retain a JSON round-trip', () => {
+  const child = { value: 'shared' };
+  const input = { ...jsonEnvelope, payload: { left: child, right: child } };
+  const first = parseSchemaEnvelope(jsonEnvelope, input);
+  assert.deepEqual(first.payload, { left: { value: 'shared' }, right: { value: 'shared' } });
+  assert.deepEqual(parseSchemaEnvelope(jsonEnvelope, JSON.parse(JSON.stringify(first))), first);
+});
+
+for (const [name, read] of Object.entries(envelopeReaders)) {
+  for (const { label, schema, input, path } of [
+    { label: 'NaN output', schema: z.string().transform(Number), input: 'not-a-number', path: [] },
+    { label: 'changed type', schema: z.string().transform(Number), input: '42', path: [] },
+    {
+      label: 'changed value',
+      schema: z.number().transform((value) => value + 1),
+      input: 1,
+      path: [],
+    },
+    {
+      label: 'mutated value',
+      schema: z.unknown().transform((value) => {
+        value.count += 1;
+        return value;
+      }),
+      input: { count: 1 },
+      path: [],
+    },
+    {
+      label: 'stripped field',
+      schema: z.object({ keep: z.string() }),
+      input: { keep: 'value', extra: true },
+      path: [],
+    },
+    {
+      label: 'nested non-JSON output',
+      schema: z.string().transform(() => ({ result: Number.NaN })),
+      input: 'value',
+      path: ['result'],
+    },
+    {
+      label: 'circular output',
+      schema: z.string().transform(() => {
+        const circular = {};
+        circular.self = circular;
+        return circular;
+      }),
+      input: 'value',
+      path: ['self'],
+    },
+  ]) {
+    test(`final review output: ${name} rejects ${label}`, () => {
+      assertIrError(
+        () => read({ ...jsonEnvelope, payload: schema }, { ...jsonEnvelope, payload: input }),
+        'IR_VALIDATION_FAILED',
+        ['payload', ...path],
+      );
+    });
+  }
+
+  test(`final review output: ${name} accepts a representation-preserving transformation`, () => {
+    const descriptor = {
+      ...jsonEnvelope,
+      payload: z.strictObject({ a: z.number(), b: z.string() }).transform(({ a, b }) => ({ b, a })),
+    };
+    const first = read(descriptor, { ...jsonEnvelope, payload: { a: 42, b: 'ok' } });
+    assert.deepEqual(first.payload, { a: 42, b: 'ok' });
+    assert.deepEqual(read(descriptor, JSON.parse(JSON.stringify(first))), first);
+  });
+}
+
+test('final review diagnostics: unknown keys cannot expand validation prose', () => {
+  const rejectedKey = `private-key-${'x'.repeat(5000)}`;
+  assert.throws(
+    () => parseIr(EntityRefSchema, { kind: 'SYMBOL', id: 'entity:01', [rejectedKey]: true }),
+    (error) => {
+      assert.ok(error instanceof IrValidationError);
+      assert.deepEqual(error.issues[0].path, []);
+      assert.ok(error.issues.every(({ message }) => message.length <= 128));
+      assert.ok(!JSON.stringify(error).includes(rejectedKey));
+      return true;
+    },
+  );
+});
+
+for (const [name, read] of Object.entries({
+  primitive: (payload, input) => parseIr(payload, input),
+  ...Object.fromEntries(
+    Object.entries(envelopeReaders).map(([name, read]) => [
+      name,
+      (payload, input) => read({ ...jsonEnvelope, payload }, { ...jsonEnvelope, payload: input }),
+    ]),
+  ),
+})) {
+  test(`final review diagnostics: ${name} does not reflect custom rejected-input prose`, () => {
+    const secret = 'private-rejected-value';
+    const payload = z.strictObject({
+      value: z.string().refine(() => false, { message: `${secret}-${'x'.repeat(5000)}` }),
+    });
+    assert.throws(
+      () => read(payload, { value: secret }),
+      (error) => {
+        assert.ok(error instanceof IrValidationError);
+        assert.deepEqual(error.issues[0].path, [
+          ...(name === 'primitive' ? [] : ['payload']),
+          'value',
+        ]);
+        assert.ok(error.issues.every(({ message }) => message.length <= 128));
+        assert.ok(!JSON.stringify(error).includes(secret));
+        assert.ok(!error.message.includes(secret));
+        return true;
+      },
+    );
+  });
+}
+
+test('final review primitives: an explicit undefined revision is rejected at its field path', () => {
+  assertIrError(
+    () => parseIr(EntityRefSchema, { kind: 'SYMBOL', id: 'entity:01', revisionId: undefined }),
+    'IR_VALIDATION_FAILED',
+    ['revisionId'],
+  );
+});
+
+test('final review primitives: negative zero is rejected at the generic JSON boundary', () => {
+  assertIrError(() => parseIr(ir.JsonValueSchema, { value: -0 }), 'IR_VALIDATION_FAILED', [
+    'value',
+  ]);
+});
+
+test('final review primitives: epoch conversion rejects negative zero before converting', () => {
+  assertIrError(() => epochMillisecondsToUtcInstant(-0), 'IR_VALIDATION_FAILED', []);
+});
