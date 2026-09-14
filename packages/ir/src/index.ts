@@ -32,6 +32,25 @@ export type {
   SourceSensitivity,
 } from './source-file.js';
 export {
+  ProviderCapabilityObservationSchema,
+  ProviderCapabilitySupportSchema,
+  ProviderCoverageStatusSchema,
+  ProviderDiagnosticSeveritySchema,
+  ProviderSnapshotDiagnosticSchema,
+  ProviderSnapshotOutcomeSchema,
+  ProviderSnapshotSchema,
+  validateProviderSnapshotRevision,
+} from './provider-snapshot.js';
+export type {
+  ProviderCapabilityObservation,
+  ProviderCapabilitySupport,
+  ProviderCoverageStatus,
+  ProviderDiagnosticSeverity,
+  ProviderSnapshot,
+  ProviderSnapshotDiagnostic,
+  ProviderSnapshotOutcome,
+} from './provider-snapshot.js';
+export {
   CommitRevisionSchema,
   RevisionKindSchema,
   RevisionSchema,

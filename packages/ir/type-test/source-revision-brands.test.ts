@@ -4,6 +4,7 @@ import {
   ContentFingerprintSchema,
   EntityIdSchema,
   ProviderIdSchema,
+  ProviderSnapshotSchema,
   ProviderVersionSchema,
   RepositoryRelativePathSchema,
   RepositoryRootPathSchema,
@@ -14,6 +15,7 @@ import {
   type ContentFingerprint,
   type EntityId,
   type ProviderId,
+  type ProviderSnapshot,
   type ProviderVersion,
   type RepositoryRelativePath,
   type RepositoryRootPath,
@@ -41,6 +43,20 @@ const sourceFile: SourceFile = SourceFileSchema.parse({
   classification: { role: 'SOURCE', provenance: 'AUTHORED', contentKind: 'TEXT' },
   languageHint: 'typescript',
   sensitivity: 'INTERNAL',
+});
+const providerSnapshot: ProviderSnapshot = ProviderSnapshotSchema.parse({
+  id: 'entity:snapshot-type-test',
+  repositoryId: 'entity:repo-01',
+  providerId: 'provider:01',
+  providerVersion: 'version:01',
+  runtimeVersion: 'runtime:01',
+  requestedRevisionId: 'entity:revision-commit-01',
+  requestedRevisionFingerprint: 'content:01',
+  startedAt: '2026-09-14T00:00:00.000Z',
+  completedAt: '2026-09-14T00:00:01.000Z',
+  capabilities: [],
+  diagnostics: [],
+  outcome: 'SUCCEEDED',
 });
 
 const acceptRepositoryRelativePath = (value: RepositoryRelativePath): RepositoryRelativePath =>
@@ -82,3 +98,4 @@ void commitIdentity;
 void providerVersion;
 void runtimeVersion;
 void sourceFile;
+void providerSnapshot;

@@ -420,5 +420,441 @@
     },
     "errorCode": "IR_VALIDATION_FAILED",
     "path": ["classification"]
+  },
+  {
+    "id": "provider-snapshot-duplicate-capability",
+    "target": "PROVIDER_SNAPSHOT",
+    "input": {
+      "id": "entity:snapshot-duplicate",
+      "repositoryId": "entity:repo-01",
+      "providerId": "provider:typescript",
+      "providerVersion": "version:1.0.0",
+      "runtimeVersion": "runtime:1.0.0",
+      "requestedRevisionId": "entity:revision-commit-01",
+      "requestedRevisionFingerprint": "fingerprint:commit-01",
+      "startedAt": "2026-09-14T00:00:00.000Z",
+      "completedAt": "2026-09-14T00:00:01.000Z",
+      "capabilities": [
+        { "name": "symbols", "support": "SUPPORTED", "coverage": "COMPLETE" },
+        { "name": "symbols", "support": "UNSUPPORTED", "coverage": "NONE" }
+      ],
+      "diagnostics": [],
+      "outcome": "SUCCEEDED"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["capabilities", 1, "name"]
+  },
+  {
+    "id": "provider-snapshot-unknown-support",
+    "target": "PROVIDER_SNAPSHOT",
+    "input": {
+      "id": "entity:snapshot-support",
+      "repositoryId": "entity:repo-01",
+      "providerId": "provider:typescript",
+      "providerVersion": "version:1.0.0",
+      "runtimeVersion": "runtime:1.0.0",
+      "requestedRevisionId": "entity:revision-commit-01",
+      "requestedRevisionFingerprint": "fingerprint:commit-01",
+      "startedAt": "2026-09-14T00:00:00.000Z",
+      "completedAt": "2026-09-14T00:00:01.000Z",
+      "capabilities": [{ "name": "symbols", "support": "MAYBE", "coverage": "COMPLETE" }],
+      "diagnostics": [],
+      "outcome": "SUCCEEDED"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["capabilities", 0, "support"]
+  },
+  {
+    "id": "provider-snapshot-unknown-coverage",
+    "target": "PROVIDER_SNAPSHOT",
+    "input": {
+      "id": "entity:snapshot-coverage",
+      "repositoryId": "entity:repo-01",
+      "providerId": "provider:typescript",
+      "providerVersion": "version:1.0.0",
+      "runtimeVersion": "runtime:1.0.0",
+      "requestedRevisionId": "entity:revision-commit-01",
+      "requestedRevisionFingerprint": "fingerprint:commit-01",
+      "startedAt": "2026-09-14T00:00:00.000Z",
+      "completedAt": "2026-09-14T00:00:01.000Z",
+      "capabilities": [{ "name": "symbols", "support": "SUPPORTED", "coverage": "FULL" }],
+      "diagnostics": [],
+      "outcome": "SUCCEEDED"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["capabilities", 0, "coverage"]
+  },
+  {
+    "id": "provider-snapshot-unknown-outcome",
+    "target": "PROVIDER_SNAPSHOT",
+    "input": {
+      "id": "entity:snapshot-outcome",
+      "repositoryId": "entity:repo-01",
+      "providerId": "provider:typescript",
+      "providerVersion": "version:1.0.0",
+      "runtimeVersion": "runtime:1.0.0",
+      "requestedRevisionId": "entity:revision-commit-01",
+      "requestedRevisionFingerprint": "fingerprint:commit-01",
+      "startedAt": "2026-09-14T00:00:00.000Z",
+      "completedAt": "2026-09-14T00:00:01.000Z",
+      "capabilities": [],
+      "diagnostics": [],
+      "outcome": "DONE"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["outcome"]
+  },
+  {
+    "id": "provider-snapshot-unknown-severity",
+    "target": "PROVIDER_SNAPSHOT",
+    "input": {
+      "id": "entity:snapshot-severity",
+      "repositoryId": "entity:repo-01",
+      "providerId": "provider:typescript",
+      "providerVersion": "version:1.0.0",
+      "runtimeVersion": "runtime:1.0.0",
+      "requestedRevisionId": "entity:revision-commit-01",
+      "requestedRevisionFingerprint": "fingerprint:commit-01",
+      "startedAt": "2026-09-14T00:00:00.000Z",
+      "completedAt": "2026-09-14T00:00:01.000Z",
+      "capabilities": [],
+      "diagnostics": [
+        {
+          "code": "notice",
+          "severity": "NOTICE",
+          "message": "Unrecognized severity",
+          "sourceRange": null
+        }
+      ],
+      "outcome": "SUCCEEDED"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["diagnostics", 0, "severity"]
+  },
+  {
+    "id": "provider-snapshot-padded-provider-id",
+    "target": "PROVIDER_SNAPSHOT",
+    "input": {
+      "id": "entity:snapshot-provider-id",
+      "repositoryId": "entity:repo-01",
+      "providerId": " provider:typescript",
+      "providerVersion": "version:1.0.0",
+      "runtimeVersion": "runtime:1.0.0",
+      "requestedRevisionId": "entity:revision-commit-01",
+      "requestedRevisionFingerprint": "fingerprint:commit-01",
+      "startedAt": "2026-09-14T00:00:00.000Z",
+      "completedAt": "2026-09-14T00:00:01.000Z",
+      "capabilities": [],
+      "diagnostics": [],
+      "outcome": "SUCCEEDED"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["providerId"]
+  },
+  {
+    "id": "provider-snapshot-blank-provider-id",
+    "target": "PROVIDER_SNAPSHOT",
+    "input": {
+      "id": "entity:snapshot-blank-provider-id",
+      "repositoryId": "entity:repo-01",
+      "providerId": "",
+      "providerVersion": "version:1.0.0",
+      "runtimeVersion": "runtime:1.0.0",
+      "requestedRevisionId": "entity:revision-commit-01",
+      "requestedRevisionFingerprint": "fingerprint:commit-01",
+      "startedAt": "2026-09-14T00:00:00.000Z",
+      "completedAt": "2026-09-14T00:00:01.000Z",
+      "capabilities": [],
+      "diagnostics": [],
+      "outcome": "SUCCEEDED"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["providerId"]
+  },
+  {
+    "id": "provider-snapshot-blank-provider-version",
+    "target": "PROVIDER_SNAPSHOT",
+    "input": {
+      "id": "entity:snapshot-provider-version",
+      "repositoryId": "entity:repo-01",
+      "providerId": "provider:typescript",
+      "providerVersion": "",
+      "runtimeVersion": "runtime:1.0.0",
+      "requestedRevisionId": "entity:revision-commit-01",
+      "requestedRevisionFingerprint": "fingerprint:commit-01",
+      "startedAt": "2026-09-14T00:00:00.000Z",
+      "completedAt": "2026-09-14T00:00:01.000Z",
+      "capabilities": [],
+      "diagnostics": [],
+      "outcome": "SUCCEEDED"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["providerVersion"]
+  },
+  {
+    "id": "provider-snapshot-padded-provider-version",
+    "target": "PROVIDER_SNAPSHOT",
+    "input": {
+      "id": "entity:snapshot-padded-provider-version",
+      "repositoryId": "entity:repo-01",
+      "providerId": "provider:typescript",
+      "providerVersion": " version:1.0.0",
+      "runtimeVersion": "runtime:1.0.0",
+      "requestedRevisionId": "entity:revision-commit-01",
+      "requestedRevisionFingerprint": "fingerprint:commit-01",
+      "startedAt": "2026-09-14T00:00:00.000Z",
+      "completedAt": "2026-09-14T00:00:01.000Z",
+      "capabilities": [],
+      "diagnostics": [],
+      "outcome": "SUCCEEDED"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["providerVersion"]
+  },
+  {
+    "id": "provider-snapshot-padded-runtime-version",
+    "target": "PROVIDER_SNAPSHOT",
+    "input": {
+      "id": "entity:snapshot-runtime-version",
+      "repositoryId": "entity:repo-01",
+      "providerId": "provider:typescript",
+      "providerVersion": "version:1.0.0",
+      "runtimeVersion": " runtime:1.0.0",
+      "requestedRevisionId": "entity:revision-commit-01",
+      "requestedRevisionFingerprint": "fingerprint:commit-01",
+      "startedAt": "2026-09-14T00:00:00.000Z",
+      "completedAt": "2026-09-14T00:00:01.000Z",
+      "capabilities": [],
+      "diagnostics": [],
+      "outcome": "SUCCEEDED"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["runtimeVersion"]
+  },
+  {
+    "id": "provider-snapshot-diagnostic-blank-message",
+    "target": "PROVIDER_SNAPSHOT",
+    "input": {
+      "id": "entity:snapshot-blank-message",
+      "repositoryId": "entity:repo-01",
+      "providerId": "provider:typescript",
+      "providerVersion": "version:1.0.0",
+      "runtimeVersion": "runtime:1.0.0",
+      "requestedRevisionId": "entity:revision-commit-01",
+      "requestedRevisionFingerprint": "fingerprint:commit-01",
+      "startedAt": "2026-09-14T00:00:00.000Z",
+      "completedAt": "2026-09-14T00:00:01.000Z",
+      "capabilities": [],
+      "diagnostics": [{ "code": "notice", "severity": "INFO", "message": "", "sourceRange": null }],
+      "outcome": "SUCCEEDED"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["diagnostics", 0, "message"]
+  },
+  {
+    "id": "provider-snapshot-diagnostic-padded-message",
+    "target": "PROVIDER_SNAPSHOT",
+    "input": {
+      "id": "entity:snapshot-padded-message",
+      "repositoryId": "entity:repo-01",
+      "providerId": "provider:typescript",
+      "providerVersion": "version:1.0.0",
+      "runtimeVersion": "runtime:1.0.0",
+      "requestedRevisionId": "entity:revision-commit-01",
+      "requestedRevisionFingerprint": "fingerprint:commit-01",
+      "startedAt": "2026-09-14T00:00:00.000Z",
+      "completedAt": "2026-09-14T00:00:01.000Z",
+      "capabilities": [],
+      "diagnostics": [
+        { "code": "notice", "severity": "INFO", "message": " padded", "sourceRange": null }
+      ],
+      "outcome": "SUCCEEDED"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["diagnostics", 0, "message"]
+  },
+  {
+    "id": "provider-snapshot-diagnostic-over-128-message",
+    "target": "PROVIDER_SNAPSHOT",
+    "input": {
+      "id": "entity:snapshot-long-message",
+      "repositoryId": "entity:repo-01",
+      "providerId": "provider:typescript",
+      "providerVersion": "version:1.0.0",
+      "runtimeVersion": "runtime:1.0.0",
+      "requestedRevisionId": "entity:revision-commit-01",
+      "requestedRevisionFingerprint": "fingerprint:commit-01",
+      "startedAt": "2026-09-14T00:00:00.000Z",
+      "completedAt": "2026-09-14T00:00:01.000Z",
+      "capabilities": [],
+      "diagnostics": [
+        {
+          "code": "notice",
+          "severity": "INFO",
+          "message": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "sourceRange": null
+        }
+      ],
+      "outcome": "SUCCEEDED"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["diagnostics", 0, "message"]
+  },
+  {
+    "id": "provider-snapshot-completed-before-started",
+    "target": "PROVIDER_SNAPSHOT",
+    "input": {
+      "id": "entity:snapshot-time",
+      "repositoryId": "entity:repo-01",
+      "providerId": "provider:typescript",
+      "providerVersion": "version:1.0.0",
+      "runtimeVersion": "runtime:1.0.0",
+      "requestedRevisionId": "entity:revision-commit-01",
+      "requestedRevisionFingerprint": "fingerprint:commit-01",
+      "startedAt": "2026-09-14T00:00:01.000Z",
+      "completedAt": "2026-09-14T00:00:00.000Z",
+      "capabilities": [],
+      "diagnostics": [],
+      "outcome": "SUCCEEDED"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["completedAt"]
+  },
+  {
+    "id": "provider-snapshot-extra-key",
+    "target": "PROVIDER_SNAPSHOT",
+    "input": {
+      "id": "entity:snapshot-extra",
+      "repositoryId": "entity:repo-01",
+      "providerId": "provider:typescript",
+      "providerVersion": "version:1.0.0",
+      "runtimeVersion": "runtime:1.0.0",
+      "requestedRevisionId": "entity:revision-commit-01",
+      "requestedRevisionFingerprint": "fingerprint:commit-01",
+      "startedAt": "2026-09-14T00:00:00.000Z",
+      "completedAt": "2026-09-14T00:00:01.000Z",
+      "capabilities": [],
+      "diagnostics": [],
+      "outcome": "SUCCEEDED",
+      "extra": true
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
+  },
+  {
+    "id": "provider-snapshot-revision-repository-mismatch",
+    "target": "PROVIDER_SNAPSHOT_REVISION",
+    "input": {
+      "snapshot": {
+        "id": "entity:snapshot-repository-mismatch",
+        "repositoryId": "entity:repo-02",
+        "providerId": "provider:typescript",
+        "providerVersion": "version:1.0.0",
+        "runtimeVersion": "runtime:1.0.0",
+        "requestedRevisionId": "entity:revision-commit-01",
+        "requestedRevisionFingerprint": "fingerprint:commit-01",
+        "startedAt": "2026-09-14T00:00:00.000Z",
+        "completedAt": "2026-09-14T00:00:01.000Z",
+        "capabilities": [],
+        "diagnostics": [],
+        "outcome": "SUCCEEDED"
+      },
+      "revision": {
+        "id": "entity:revision-commit-01",
+        "repositoryId": "entity:repo-01",
+        "kind": "COMMIT",
+        "contentFingerprint": "fingerprint:commit-01",
+        "commitIdentity": "commit:01"
+      }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["snapshot", "repositoryId"]
+  },
+  {
+    "id": "provider-snapshot-revision-id-mismatch",
+    "target": "PROVIDER_SNAPSHOT_REVISION",
+    "input": {
+      "snapshot": {
+        "id": "entity:snapshot-id-mismatch",
+        "repositoryId": "entity:repo-01",
+        "providerId": "provider:typescript",
+        "providerVersion": "version:1.0.0",
+        "runtimeVersion": "runtime:1.0.0",
+        "requestedRevisionId": "entity:revision-commit-02",
+        "requestedRevisionFingerprint": "fingerprint:commit-01",
+        "startedAt": "2026-09-14T00:00:00.000Z",
+        "completedAt": "2026-09-14T00:00:01.000Z",
+        "capabilities": [],
+        "diagnostics": [],
+        "outcome": "SUCCEEDED"
+      },
+      "revision": {
+        "id": "entity:revision-commit-01",
+        "repositoryId": "entity:repo-01",
+        "kind": "COMMIT",
+        "contentFingerprint": "fingerprint:commit-01",
+        "commitIdentity": "commit:01"
+      }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["snapshot", "requestedRevisionId"]
+  },
+  {
+    "id": "provider-snapshot-revision-fingerprint-mismatch",
+    "target": "PROVIDER_SNAPSHOT_REVISION",
+    "input": {
+      "snapshot": {
+        "id": "entity:snapshot-fingerprint-mismatch",
+        "repositoryId": "entity:repo-01",
+        "providerId": "provider:typescript",
+        "providerVersion": "version:1.0.0",
+        "runtimeVersion": "runtime:1.0.0",
+        "requestedRevisionId": "entity:revision-commit-01",
+        "requestedRevisionFingerprint": "fingerprint:commit-02",
+        "startedAt": "2026-09-14T00:00:00.000Z",
+        "completedAt": "2026-09-14T00:00:01.000Z",
+        "capabilities": [],
+        "diagnostics": [],
+        "outcome": "SUCCEEDED"
+      },
+      "revision": {
+        "id": "entity:revision-commit-01",
+        "repositoryId": "entity:repo-01",
+        "kind": "COMMIT",
+        "contentFingerprint": "fingerprint:commit-01",
+        "commitIdentity": "commit:01"
+      }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["snapshot", "requestedRevisionFingerprint"]
+  },
+  {
+    "id": "provider-snapshot-revision-mismatch-precedence",
+    "target": "PROVIDER_SNAPSHOT_REVISION",
+    "input": {
+      "snapshot": {
+        "id": "entity:snapshot-mismatch-precedence",
+        "repositoryId": "entity:repo-02",
+        "providerId": "provider:typescript",
+        "providerVersion": "version:1.0.0",
+        "runtimeVersion": "runtime:1.0.0",
+        "requestedRevisionId": "entity:revision-commit-02",
+        "requestedRevisionFingerprint": "fingerprint:commit-02",
+        "startedAt": "2026-09-14T00:00:00.000Z",
+        "completedAt": "2026-09-14T00:00:01.000Z",
+        "capabilities": [],
+        "diagnostics": [],
+        "outcome": "SUCCEEDED"
+      },
+      "revision": {
+        "id": "entity:revision-commit-01",
+        "repositoryId": "entity:repo-01",
+        "kind": "COMMIT",
+        "contentFingerprint": "fingerprint:commit-01",
+        "commitIdentity": "commit:01"
+      }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["snapshot", "repositoryId"]
   }
 ]

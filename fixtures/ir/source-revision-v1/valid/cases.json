@@ -166,5 +166,185 @@
       "languageHint": "typescript",
       "sensitivity": "INTERNAL"
     }
+  },
+  {
+    "id": "provider-snapshot-succeeded",
+    "target": "PROVIDER_SNAPSHOT",
+    "input": {
+      "id": "entity:snapshot-succeeded",
+      "repositoryId": "entity:repo-01",
+      "providerId": "provider:typescript",
+      "providerVersion": "version:1.0.0",
+      "runtimeVersion": "runtime:1.0.0",
+      "requestedRevisionId": "entity:revision-commit-01",
+      "requestedRevisionFingerprint": "fingerprint:commit-01",
+      "startedAt": "2026-09-14T00:00:00.000Z",
+      "completedAt": "2026-09-14T00:00:01.000Z",
+      "capabilities": [{ "name": "symbols", "support": "SUPPORTED", "coverage": "COMPLETE" }],
+      "diagnostics": [
+        {
+          "code": "analysis.started",
+          "severity": "INFO",
+          "message": "Analysis completed",
+          "sourceRange": null
+        }
+      ],
+      "outcome": "SUCCEEDED"
+    }
+  },
+  {
+    "id": "provider-snapshot-partial",
+    "target": "PROVIDER_SNAPSHOT",
+    "input": {
+      "id": "entity:snapshot-partial",
+      "repositoryId": "entity:repo-01",
+      "providerId": "provider:typescript",
+      "providerVersion": "version:1.0.0",
+      "runtimeVersion": "runtime:1.0.0",
+      "requestedRevisionId": "entity:revision-worktree-01",
+      "requestedRevisionFingerprint": "fingerprint:worktree-01",
+      "startedAt": "2026-09-14T00:01:00.000Z",
+      "completedAt": "2026-09-14T00:01:01.000Z",
+      "capabilities": [{ "name": "calls", "support": "SUPPORTED", "coverage": "PARTIAL" }],
+      "diagnostics": [
+        {
+          "code": "analysis.partial",
+          "severity": "WARNING",
+          "message": "Some files were skipped",
+          "sourceRange": {
+            "sourceFileId": "entity:file-src-main",
+            "startLine": 0,
+            "startColumn": 0,
+            "endLine": 0,
+            "endColumn": 1
+          }
+        }
+      ],
+      "outcome": "PARTIAL"
+    }
+  },
+  {
+    "id": "provider-snapshot-failed",
+    "target": "PROVIDER_SNAPSHOT",
+    "input": {
+      "id": "entity:snapshot-failed",
+      "repositoryId": "entity:repo-01",
+      "providerId": "provider:typescript",
+      "providerVersion": "version:1.0.0",
+      "runtimeVersion": "runtime:1.0.0",
+      "requestedRevisionId": "entity:revision-worktree-01",
+      "requestedRevisionFingerprint": "fingerprint:worktree-01",
+      "startedAt": "2026-09-14T00:02:00.000Z",
+      "completedAt": "2026-09-14T00:02:01.000Z",
+      "capabilities": [{ "name": "inheritance", "support": "UNSUPPORTED", "coverage": "NONE" }],
+      "diagnostics": [
+        {
+          "code": "analysis.failed",
+          "severity": "ERROR",
+          "message": "Analysis failed",
+          "sourceRange": null
+        }
+      ],
+      "outcome": "FAILED"
+    }
+  },
+  {
+    "id": "provider-snapshot-cancelled",
+    "target": "PROVIDER_SNAPSHOT",
+    "input": {
+      "id": "entity:snapshot-cancelled",
+      "repositoryId": "entity:repo-01",
+      "providerId": "provider:typescript",
+      "providerVersion": "version:1.0.0",
+      "runtimeVersion": "runtime:1.0.0",
+      "requestedRevisionId": "entity:revision-worktree-01",
+      "requestedRevisionFingerprint": "fingerprint:worktree-02",
+      "startedAt": "2026-09-14T00:03:00.000Z",
+      "completedAt": "2026-09-14T00:03:01.000Z",
+      "capabilities": [{ "name": "references", "support": "SUPPORTED", "coverage": "UNKNOWN" }],
+      "diagnostics": [],
+      "outcome": "CANCELLED"
+    }
+  },
+  {
+    "id": "provider-snapshot-matches-commit-request",
+    "target": "PROVIDER_SNAPSHOT_REVISION",
+    "input": {
+      "snapshot": {
+        "id": "entity:snapshot-match-commit",
+        "repositoryId": "entity:repo-01",
+        "providerId": "provider:typescript",
+        "providerVersion": "version:1.0.0",
+        "runtimeVersion": "runtime:1.0.0",
+        "requestedRevisionId": "entity:revision-commit-01",
+        "requestedRevisionFingerprint": "fingerprint:commit-01",
+        "startedAt": "2026-09-14T00:04:00.000Z",
+        "completedAt": "2026-09-14T00:04:01.000Z",
+        "capabilities": [],
+        "diagnostics": [],
+        "outcome": "SUCCEEDED"
+      },
+      "revision": {
+        "id": "entity:revision-commit-01",
+        "repositoryId": "entity:repo-01",
+        "kind": "COMMIT",
+        "contentFingerprint": "fingerprint:commit-01",
+        "commitIdentity": "commit:01"
+      }
+    }
+  },
+  {
+    "id": "provider-snapshot-matches-worktree-first-state",
+    "target": "PROVIDER_SNAPSHOT_REVISION",
+    "input": {
+      "snapshot": {
+        "id": "entity:snapshot-match-worktree-first",
+        "repositoryId": "entity:repo-01",
+        "providerId": "provider:typescript",
+        "providerVersion": "version:1.0.0",
+        "runtimeVersion": "runtime:1.0.0",
+        "requestedRevisionId": "entity:revision-worktree-01",
+        "requestedRevisionFingerprint": "fingerprint:worktree-01",
+        "startedAt": "2026-09-14T00:05:00.000Z",
+        "completedAt": "2026-09-14T00:05:01.000Z",
+        "capabilities": [],
+        "diagnostics": [],
+        "outcome": "SUCCEEDED"
+      },
+      "revision": {
+        "id": "entity:revision-worktree-01",
+        "repositoryId": "entity:repo-01",
+        "kind": "WORKTREE",
+        "contentFingerprint": "fingerprint:worktree-01",
+        "baseRevisionId": null
+      }
+    }
+  },
+  {
+    "id": "provider-snapshot-matches-worktree-second-state",
+    "target": "PROVIDER_SNAPSHOT_REVISION",
+    "input": {
+      "snapshot": {
+        "id": "entity:snapshot-match-worktree-second",
+        "repositoryId": "entity:repo-01",
+        "providerId": "provider:typescript",
+        "providerVersion": "version:1.0.0",
+        "runtimeVersion": "runtime:1.0.0",
+        "requestedRevisionId": "entity:revision-worktree-01",
+        "requestedRevisionFingerprint": "fingerprint:worktree-02",
+        "startedAt": "2026-09-14T00:06:00.000Z",
+        "completedAt": "2026-09-14T00:06:01.000Z",
+        "capabilities": [],
+        "diagnostics": [],
+        "outcome": "SUCCEEDED"
+      },
+      "revision": {
+        "id": "entity:revision-worktree-01",
+        "repositoryId": "entity:repo-01",
+        "kind": "WORKTREE",
+        "contentFingerprint": "fingerprint:worktree-02",
+        "baseRevisionId": "entity:revision-commit-01"
+      }
+    }
   }
 ]

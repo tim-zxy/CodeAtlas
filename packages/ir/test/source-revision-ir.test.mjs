@@ -11,6 +11,9 @@ const parsers = {
   REVISION: (input) => ir.parseIr(ir.RevisionSchema, input),
   REVISION_TRANSITION: (input) => ir.validateRevisionTransition(input.previous, input.next),
   SOURCE_FILE: (input) => ir.parseIr(ir.SourceFileSchema, input),
+  PROVIDER_SNAPSHOT: (input) => ir.parseIr(ir.ProviderSnapshotSchema, input),
+  PROVIDER_SNAPSHOT_REVISION: (input) =>
+    ir.validateProviderSnapshotRevision(input.snapshot, input.revision),
 };
 const validCases = JSON.parse(await readFile(new URL('valid/cases.json', fixtureRoot), 'utf8'));
 const invalidCases = JSON.parse(await readFile(new URL('invalid/cases.json', fixtureRoot), 'utf8'));
@@ -38,6 +41,14 @@ function fixtureCategory(fixture) {
     return 'source file';
   }
 
+  if (fixture.target === 'PROVIDER_SNAPSHOT') {
+    return 'provider snapshot';
+  }
+
+  if (fixture.target === 'PROVIDER_SNAPSHOT_REVISION') {
+    return 'requested revision';
+  }
+
   return 'relative path';
 }
 
@@ -63,12 +74,22 @@ for (const fixture of validCases) {
     const first = parser(fixture.input);
     const roundTripped = JSON.parse(JSON.stringify(first));
     const second =
-      fixture.target === 'REVISION_TRANSITION'
-        ? ir.parseIr(ir.RevisionSchema, roundTripped)
+      fixture.target === 'REVISION_TRANSITION' || fixture.target === 'PROVIDER_SNAPSHOT_REVISION'
+        ? fixture.target === 'REVISION_TRANSITION'
+          ? ir.parseIr(ir.RevisionSchema, roundTripped)
+          : ir.parseIr(ir.ProviderSnapshotSchema, roundTripped)
         : parser(roundTripped);
 
     if (fixture.target === 'REVISION_TRANSITION') {
       assert.deepEqual(first, fixture.input.next, `${fixture.id} returns the next revision`);
+    }
+
+    if (fixture.target === 'PROVIDER_SNAPSHOT_REVISION') {
+      assert.deepEqual(
+        first,
+        fixture.input.snapshot,
+        `${fixture.id} returns the validated snapshot`,
+      );
     }
 
     assert.deepEqual(second, first, fixture.id);
@@ -129,5 +150,62 @@ test('source file language hint rejects explicit undefined', () => {
       }),
     'IR_VALIDATION_FAILED',
     ['languageHint'],
+  );
+});
+
+test('provider snapshot rejects explicit undefined rather than stripping it', () => {
+  assertIrError(
+    () =>
+      ir.parseIr(ir.ProviderSnapshotSchema, {
+        id: 'entity:snapshot-undefined',
+        repositoryId: 'entity:repo-01',
+        providerId: 'provider:typescript',
+        providerVersion: 'version:1.0.0',
+        runtimeVersion: 'runtime:1.0.0',
+        requestedRevisionId: 'entity:revision-commit-01',
+        requestedRevisionFingerprint: 'fingerprint:commit-01',
+        startedAt: '2026-09-14T00:00:00.000Z',
+        completedAt: '2026-09-14T00:00:01.000Z',
+        capabilities: [],
+        diagnostics: undefined,
+        outcome: 'SUCCEEDED',
+      }),
+    'IR_VALIDATION_FAILED',
+    ['diagnostics'],
+  );
+});
+
+test('provider snapshot reports every duplicate capability after the first', () => {
+  assert.throws(
+    () =>
+      ir.parseIr(ir.ProviderSnapshotSchema, {
+        id: 'entity:snapshot-duplicate-every-occurrence',
+        repositoryId: 'entity:repo-01',
+        providerId: 'provider:typescript',
+        providerVersion: 'version:1.0.0',
+        runtimeVersion: 'runtime:1.0.0',
+        requestedRevisionId: 'entity:revision-commit-01',
+        requestedRevisionFingerprint: 'fingerprint:commit-01',
+        startedAt: '2026-09-14T00:00:00.000Z',
+        completedAt: '2026-09-14T00:00:01.000Z',
+        capabilities: [
+          { name: 'symbols', support: 'SUPPORTED', coverage: 'COMPLETE' },
+          { name: 'symbols', support: 'SUPPORTED', coverage: 'COMPLETE' },
+          { name: 'symbols', support: 'UNSUPPORTED', coverage: 'NONE' },
+        ],
+        diagnostics: [],
+        outcome: 'SUCCEEDED',
+      }),
+    (error) => {
+      assert.ok(error instanceof ir.IrValidationError);
+      assert.deepEqual(
+        error.issues.map((issue) => issue.path),
+        [
+          ['capabilities', 1, 'name'],
+          ['capabilities', 2, 'name'],
+        ],
+      );
+      return true;
+    },
   );
 });
