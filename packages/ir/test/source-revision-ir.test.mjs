@@ -5,6 +5,7 @@ import { test } from 'node:test';
 import * as ir from '../dist/index.js';
 
 const fixtureRoot = new URL('../../../fixtures/ir/source-revision-v1/', import.meta.url);
+const fixtureIndex = JSON.parse(await readFile(new URL('cases.json', fixtureRoot), 'utf8'));
 const parsers = {
   REPOSITORY: (input) => ir.parseIr(ir.RepositorySchema, input),
   REPOSITORY_RELATIVE_PATH: (input) => ir.parseIr(ir.RepositoryRelativePathSchema, input),
@@ -15,8 +16,70 @@ const parsers = {
   PROVIDER_SNAPSHOT_REVISION: (input) =>
     ir.validateProviderSnapshotRevision(input.snapshot, input.revision),
 };
-const validCases = JSON.parse(await readFile(new URL('valid/cases.json', fixtureRoot), 'utf8'));
-const invalidCases = JSON.parse(await readFile(new URL('invalid/cases.json', fixtureRoot), 'utf8'));
+const validCases = JSON.parse(
+  await readFile(new URL(fixtureIndex.validCases, fixtureRoot), 'utf8'),
+);
+const invalidCases = JSON.parse(
+  await readFile(new URL(fixtureIndex.invalidCases, fixtureRoot), 'utf8'),
+);
+
+const sourceEntityEnvelopeCases = [
+  {
+    label: 'Repository',
+    descriptor: {
+      schema: 'codeatlas.fixture.source-revision.repository',
+      version: 1,
+      payload: ir.RepositorySchema,
+    },
+    validFixtureId: 'repository-basic',
+    invalidFixtureId: 'repository-extra-key',
+    invalidPayloadPath: ['payload'],
+  },
+  {
+    label: 'Revision',
+    descriptor: {
+      schema: 'codeatlas.fixture.source-revision.revision',
+      version: 1,
+      payload: ir.RevisionSchema,
+    },
+    validFixtureId: 'revision-commit-basic',
+    invalidFixtureId: 'revision-worktree-cross-kind-field',
+    invalidPayloadPath: ['payload'],
+  },
+  {
+    label: 'SourceFile',
+    descriptor: {
+      schema: 'codeatlas.fixture.source-revision.source-file',
+      version: 1,
+      payload: ir.SourceFileSchema,
+    },
+    validFixtureId: 'source-file-authored-source',
+    invalidFixtureId: 'source-file-classification-extra-key',
+    invalidPayloadPath: ['payload', 'classification'],
+  },
+  {
+    label: 'ProviderSnapshot',
+    descriptor: {
+      schema: 'codeatlas.fixture.source-revision.provider-snapshot',
+      version: 1,
+      payload: ir.ProviderSnapshotSchema,
+    },
+    validFixtureId: 'provider-snapshot-succeeded',
+    invalidFixtureId: 'provider-snapshot-extra-key',
+    invalidPayloadPath: ['payload'],
+  },
+];
+
+const envelopeParsers = [
+  {
+    label: 'parseSchemaEnvelope',
+    parse: (descriptor, input) => ir.parseSchemaEnvelope(descriptor, input),
+  },
+  {
+    label: 'createSchemaEnvelopeSchema',
+    parse: (descriptor, input) => ir.parseIr(ir.createSchemaEnvelopeSchema(descriptor), input),
+  },
+];
 
 function parserFor(target) {
   const parser = parsers[target];
@@ -65,6 +128,90 @@ function assertIrError(callback, code, expectedPath) {
     }
 
     return true;
+  });
+}
+
+test('task-local fixture index declares exact P0-W1-002 metadata and child references', () => {
+  assert.deepEqual(fixtureIndex, {
+    schemaVersion: 1,
+    id: 'p0-source-revision-ir-v1',
+    task: 'P0-W1-002',
+    governingSpec: 'docs/handoff/specs/CANONICAL_IR.md',
+    acceptance: 'Mutable and immutable revision semantics differ',
+    validCases: 'valid/cases.json',
+    invalidCases: 'invalid/cases.json',
+  });
+});
+
+for (const envelopeCase of sourceEntityEnvelopeCases) {
+  test(`${envelopeCase.label} payload preserves a version-1 envelope JSON round-trip through both public APIs`, () => {
+    const fixture = validCases.find(({ id }) => id === envelopeCase.validFixtureId);
+    assert.ok(fixture, `${envelopeCase.validFixtureId} must be present in the valid Fixture file`);
+
+    const input = {
+      schema: envelopeCase.descriptor.schema,
+      version: 1,
+      payload: fixture.input,
+    };
+
+    for (const envelopeParser of envelopeParsers) {
+      const first = envelopeParser.parse(envelopeCase.descriptor, input);
+      const second = envelopeParser.parse(
+        envelopeCase.descriptor,
+        JSON.parse(JSON.stringify(first)),
+      );
+      assert.deepEqual(first, input, envelopeParser.label);
+      assert.deepEqual(second, first, envelopeParser.label);
+    }
+  });
+
+  test(`${envelopeCase.label} version-1 envelope rejects a structured payload through both public APIs`, () => {
+    const fixture = invalidCases.find(({ id }) => id === envelopeCase.invalidFixtureId);
+    assert.ok(
+      fixture,
+      `${envelopeCase.invalidFixtureId} must be present in the invalid Fixture file`,
+    );
+
+    const input = {
+      schema: envelopeCase.descriptor.schema,
+      version: 1,
+      payload: fixture.input,
+    };
+
+    for (const envelopeParser of envelopeParsers) {
+      assertIrError(
+        () => envelopeParser.parse(envelopeCase.descriptor, input),
+        'IR_VALIDATION_FAILED',
+        envelopeCase.invalidPayloadPath,
+      );
+    }
+  });
+
+  test(`${envelopeCase.label} envelope preserves schema then version error ordering before payload validation`, () => {
+    const fixture = invalidCases.find(({ id }) => id === envelopeCase.invalidFixtureId);
+    assert.ok(
+      fixture,
+      `${envelopeCase.invalidFixtureId} must be present in the invalid Fixture file`,
+    );
+
+    assertIrError(
+      () =>
+        ir.parseSchemaEnvelope(envelopeCase.descriptor, {
+          schema: 'codeatlas.fixture.source-revision.wrong',
+          version: 2,
+          payload: fixture.input,
+        }),
+      'SCHEMA_MISMATCH',
+    );
+    assertIrError(
+      () =>
+        ir.parseSchemaEnvelope(envelopeCase.descriptor, {
+          schema: envelopeCase.descriptor.schema,
+          version: 2,
+          payload: fixture.input,
+        }),
+      'UNSUPPORTED_SCHEMA_VERSION',
+    );
   });
 }
 

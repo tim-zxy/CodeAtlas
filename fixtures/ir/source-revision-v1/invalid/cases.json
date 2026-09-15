@@ -829,6 +829,35 @@
     "path": ["snapshot", "requestedRevisionFingerprint"]
   },
   {
+    "id": "provider-snapshot-revision-stale-worktree-fingerprint",
+    "target": "PROVIDER_SNAPSHOT_REVISION",
+    "input": {
+      "snapshot": {
+        "id": "entity:snapshot-match-worktree-first",
+        "repositoryId": "entity:repo-01",
+        "providerId": "provider:typescript",
+        "providerVersion": "version:1.0.0",
+        "runtimeVersion": "runtime:1.0.0",
+        "requestedRevisionId": "entity:revision-worktree-01",
+        "requestedRevisionFingerprint": "fingerprint:worktree-01",
+        "startedAt": "2026-09-14T00:05:00.000Z",
+        "completedAt": "2026-09-14T00:05:01.000Z",
+        "capabilities": [],
+        "diagnostics": [],
+        "outcome": "SUCCEEDED"
+      },
+      "revision": {
+        "id": "entity:revision-worktree-01",
+        "repositoryId": "entity:repo-01",
+        "kind": "WORKTREE",
+        "contentFingerprint": "fingerprint:worktree-02",
+        "baseRevisionId": "entity:revision-commit-01"
+      }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["snapshot", "requestedRevisionFingerprint"]
+  },
+  {
     "id": "provider-snapshot-revision-mismatch-precedence",
     "target": "PROVIDER_SNAPSHOT_REVISION",
     "input": {
