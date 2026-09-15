@@ -6,14 +6,14 @@
 - Handoff assembly: refreshed as the agent-neutral Engineering Handoff Pack.
 - Primary handoff entry: `ENGINEERING_HANDOFF.md`.
 - Compatibility entry: `CODEX_HANDOFF.md`.
-- Implementation repository: P0-W0-001, P0-W0-002, P0-W0-003, and P0-W1-001 are complete with fresh local verification and successful hosted CI evidence.
+- Implementation repository: P0-W0-001, P0-W0-002, P0-W0-003, P0-W1-001, and P0-W1-002 are complete with fresh local verification and successful hosted CI evidence.
 - Active implementation phase: Phase 0.
 
 ## Phase readiness
 
 | Phase | Readiness | Implementation progress |
 |---|---|---|
-| 0 | IMPLEMENTATION-READY | P0-W0-001, P0-W0-002, P0-W0-003, and P0-W1-001 complete |
+| 0 | IMPLEMENTATION-READY | P0-W0-001, P0-W0-002, P0-W0-003, P0-W1-001, and P0-W1-002 complete |
 | 0.5 | IMPLEMENTATION-READY | 0 percent |
 | 1 | DESIGN-READY | 0 percent |
 | 2 | ARCHITECTURE-READY | 0 percent |
@@ -21,7 +21,7 @@
 
 ## Next action
 
-Proceed with P0-W1-002 Source and revision IR, the first next-listed Phase 0 task in `WORK_BREAKDOWN.md` whose predecessors are satisfied. Preserve predecessor order and the task-level Fixture, Evaluation, Acceptance, documentation, and traceability requirements.
+Proceed with P0-W1-003 Code fact IR, the first next-listed Phase 0 task in `WORK_BREAKDOWN.md` whose predecessors are satisfied. Preserve predecessor order and the task-level Fixture, Evaluation, Acceptance, documentation, and traceability requirements.
 
 ## Active task evidence
 
@@ -104,7 +104,7 @@ Proceed with P0-W1-002 Source and revision IR, the first next-listed Phase 0 tas
 
 ### P0-W1-002 Source and revision IR
 
-- Status: implementation and local completion evidence are complete; hosted CI is pending for the feature-branch evidence commit.
+- Status: complete.
 - Branch and local evidence baseline: `codex/p0-w1-002-source-revision-ir` at `2879a000414bfaa47012e19efea1eea973ed8e4f` before this status-only evidence commit. The verified chain contains `26733eb004cf8160cf27668ee063442cf8b1ed60` (approved design), `304f2a2cdc8e9e4a0c6fe6e7dbb701820799b9ab` (implementation plan), `61b25847202b097c1c37f5da5486ab8540fcd6b6` (source identity and Repository), `5fc2c1bfcb79944f380228ffd7a8b7130e89f983` (Revision semantics), `34d1a3f0750a728c0efd7af83c52d1bafc3b38ba` (SourceFile), `655bb115c248b7464ee7b537ef6e15fe3399efa4` (ProviderSnapshot), and `2879a000414bfaa47012e19efea1eea973ed8e4f` (normative documentation and traceability).
 - Governing authority: ADR-002 Provider Independent Canonical IR, with ADR-003, ADR-011, and ADR-012 boundaries; `specs/CANONICAL_IR.md`, `specs/MODULE_BOUNDARIES.md`, `specs/SECURITY.md`, and `specs/SQLITE_SCHEMA.md`; approved design `docs/superpowers/specs/2026-09-14-p0-w1-002-source-revision-ir-design.md`.
 - Implemented contracts: strict, schema-derived Repository, `COMMIT | WORKTREE | SNAPSHOT` Revision, SourceFile, orthogonal SourceFile classification, SourceSensitivity, and ProviderSnapshot contracts; separately branded opaque source/provider identity scalars; and pure `validateRevisionTransition` and `validateProviderSnapshotRevision` helpers. The helpers validate already-observed values and do not discover, persist, activate, or mutate state.
@@ -113,8 +113,8 @@ Proceed with P0-W1-002 Source and revision IR, the first next-listed Phase 0 tas
 - Failure and recovery evidence: task-local RED checks failed before each public contract existed—15 of 15 Repository/source-identity checks, 14 of 14 Revision checks, 18 of 18 SourceFile checks, and 24 of 24 ProviderSnapshot checks—then the corresponding focused GREEN suites passed. The final Fixture rejects invalid scalar/path/object boundaries, illegal or mutated immutable revisions, changed WORKTREE identity fields, invalid SourceFile classifications, invalid/duplicate ProviderSnapshot metadata, timestamp/diagnostic violations, and repository/revision/fingerprint relationship mismatches with typed paths. Validation failures return no partial typed result. P0-W1-002 introduces no storage, active Canonical Graph, or Published Knowledge, so preservation of previous Canonical Graph or Published Knowledge is not exercised by this task.
 - Guardrail and Deferred-scope audit: the three declared searches for internal `@codeatlas/` dependencies, storage/vector/LLM/knowledge/evidence/claim/flow/RevisionSet/watcher/daemon/network/fetch markers, and Provider-ID/Canonical-ID co-use each returned no matches. Therefore `@codeatlas/ir` remains dependency-bottom; Provider IDs do not masquerade as EntityId or CanonicalId; no database/application boundary is bypassed; the retired formal flow name is not restored; and no Workspace/RevisionSet, discovery, scanning, hashing, Provider SPI, FactMerger, Code Fact, Evidence, SQLite, IPC, Java, graph activation, Knowledge, LLM, embedding, network, watcher, daemon, or Phase 1+ capability is implemented.
 - Documentation and traceability: `specs/CANONICAL_IR.md` records the executable Source/Revision contract and explicit exclusions; the single P0-W1-002 row in `DESIGN_TRACEABILITY.md` names the Fixture files, unit/type tests, acceptance gate, governing spec, and ADR-002. No frozen decision or Fixture baseline changed, so no new ADR, schema migration, or storage migration was required.
-- Hosted CI evidence: pending; no success claim is recorded before the feature-branch run exists.
-- Next task after hosted-CI closure: P0-W1-003 Code fact IR, the next-listed Phase 0 task in `WORK_BREAKDOWN.md`. P0-W1-003 remains unimplemented and is not marked complete here.
+- Hosted CI evidence: GitHub Actions workflow `CI`, run `34915868051`, succeeded for evidence commit `fbdf8a79c5a1624227427f0457ea13e6cd319638` on branch `codex/p0-w1-002-source-revision-ir`. The push run started at `2026-09-15T01:05:35Z` and completed at `2026-09-15T01:07:21Z`; TypeScript workspace succeeded in 28 seconds and Rust workspace succeeded in 1 minute 41 seconds. Run URL: `https://github.com/tim-zxy/CodeAtlas/actions/runs/34915868051`. Node.js 20 action-internal deprecation annotations were advisory; both mandatory jobs succeeded. This closeout status commit changes only documentation after the verified evidence commit; its exact hosted-CI run and SHA are recorded in the final handoff without another self-referential status commit.
+- Next task: P0-W1-003 Code fact IR, the next-listed Phase 0 task in `WORK_BREAKDOWN.md`. P0-W1-003 remains unimplemented and is not marked complete here.
 
 ## Decision reminders
 
