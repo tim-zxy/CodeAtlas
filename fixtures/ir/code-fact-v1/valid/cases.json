@@ -1,1 +1,213 @@
-[]
+[
+  {
+    "id": "provider-node-typescript-class",
+    "target": "PROVIDER_NODE",
+    "input": {
+      "providerId": "provider:typescript",
+      "providerFactId": "provider-fact:node-widget",
+      "providerSnapshotId": "entity:provider-snapshot-01",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerKind": "ts.class.declaration",
+      "name": "Widget",
+      "qualifiedName": "src/widget.ts#Widget",
+      "sourceRange": {
+        "sourceFileId": "entity:file-widget",
+        "startLine": 1,
+        "startColumn": 0,
+        "endLine": 8,
+        "endColumn": 1
+      },
+      "confidence": { "score": 1, "method": "parser", "reasons": ["syntax"] }
+    }
+  },
+  {
+    "id": "provider-node-jvm-method",
+    "target": "PROVIDER_NODE",
+    "input": {
+      "providerId": "provider:jvm",
+      "providerFactId": "provider-fact:node-widget-run",
+      "providerSnapshotId": "entity:provider-snapshot-02",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerKind": "jvm.method",
+      "name": "run",
+      "qualifiedName": null,
+      "sourceRange": null,
+      "confidence": { "score": 0.75, "method": "parser", "reasons": ["bytecode"] }
+    }
+  },
+  {
+    "id": "provider-edge-call-exact",
+    "target": "PROVIDER_EDGE",
+    "input": {
+      "providerId": "provider:typescript",
+      "providerFactId": "provider-fact:edge-call-exact",
+      "providerSnapshotId": "entity:provider-snapshot-01",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerKind": "ts.call.expression",
+      "source": {
+        "factType": "NODE",
+        "providerId": "provider:typescript",
+        "providerFactId": "provider-fact:node-source"
+      },
+      "target": {
+        "state": "RESOLVED",
+        "resolution": "EXACT",
+        "target": {
+          "factType": "NODE",
+          "providerId": "provider:typescript",
+          "providerFactId": "provider-fact:node-target"
+        }
+      },
+      "sourceRange": null,
+      "confidence": { "score": 0.95, "method": "parser", "reasons": ["binding"] }
+    }
+  },
+  {
+    "id": "provider-edge-call-heuristic",
+    "target": "PROVIDER_EDGE",
+    "input": {
+      "providerId": "provider:typescript",
+      "providerFactId": "provider-fact:edge-call-heuristic",
+      "providerSnapshotId": "entity:provider-snapshot-01",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerKind": "ts.call.expression",
+      "source": {
+        "factType": "NODE",
+        "providerId": "provider:typescript",
+        "providerFactId": "provider-fact:node-source"
+      },
+      "target": {
+        "state": "RESOLVED",
+        "resolution": "HEURISTIC",
+        "target": {
+          "factType": "NODE",
+          "providerId": "provider:typescript",
+          "providerFactId": "provider-fact:node-target"
+        }
+      },
+      "sourceRange": null,
+      "confidence": { "score": 0.8, "method": "resolver", "reasons": ["type hint"] }
+    }
+  },
+  {
+    "id": "provider-edge-call-ambiguous",
+    "target": "PROVIDER_EDGE",
+    "input": {
+      "providerId": "provider:typescript",
+      "providerFactId": "provider-fact:edge-call-ambiguous",
+      "providerSnapshotId": "entity:provider-snapshot-01",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerKind": "ts.call.expression",
+      "source": {
+        "factType": "NODE",
+        "providerId": "provider:typescript",
+        "providerFactId": "provider-fact:node-source"
+      },
+      "target": {
+        "state": "UNRESOLVED",
+        "resolution": "AMBIGUOUS",
+        "originalHint": "Widget.run",
+        "candidates": [
+          {
+            "factType": "NODE",
+            "providerId": "provider:typescript",
+            "providerFactId": "provider-fact:node-target-a"
+          },
+          {
+            "factType": "NODE",
+            "providerId": "provider:typescript",
+            "providerFactId": "provider-fact:node-target-b"
+          }
+        ]
+      },
+      "sourceRange": null,
+      "confidence": { "score": 0.5, "method": "resolver", "reasons": ["overload"] }
+    }
+  },
+  {
+    "id": "provider-edge-call-unresolved-empty",
+    "target": "PROVIDER_EDGE",
+    "input": {
+      "providerId": "provider:typescript",
+      "providerFactId": "provider-fact:edge-call-unresolved-empty",
+      "providerSnapshotId": "entity:provider-snapshot-01",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerKind": "ts.call.expression",
+      "source": {
+        "factType": "NODE",
+        "providerId": "provider:typescript",
+        "providerFactId": "provider-fact:node-source"
+      },
+      "target": {
+        "state": "UNRESOLVED",
+        "resolution": "UNRESOLVED",
+        "originalHint": "Widget.run",
+        "candidates": []
+      },
+      "sourceRange": null,
+      "confidence": { "score": 0.25, "method": "resolver", "reasons": ["missing symbol"] }
+    }
+  },
+  {
+    "id": "provider-edge-call-unresolved-retained",
+    "target": "PROVIDER_EDGE",
+    "input": {
+      "providerId": "provider:typescript",
+      "providerFactId": "provider-fact:edge-call-unresolved-retained",
+      "providerSnapshotId": "entity:provider-snapshot-01",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerKind": "ts.call.expression",
+      "source": {
+        "factType": "NODE",
+        "providerId": "provider:typescript",
+        "providerFactId": "provider-fact:node-source"
+      },
+      "target": {
+        "state": "UNRESOLVED",
+        "resolution": "UNRESOLVED",
+        "originalHint": "Widget.run",
+        "candidates": [
+          {
+            "factType": "NODE",
+            "providerId": "provider:typescript",
+            "providerFactId": "provider-fact:node-target-a"
+          }
+        ]
+      },
+      "sourceRange": null,
+      "confidence": { "score": 0.4, "method": "resolver", "reasons": ["partial binding"] }
+    }
+  },
+  {
+    "id": "provider-edge-call-unsupported",
+    "target": "PROVIDER_EDGE",
+    "input": {
+      "providerId": "provider:typescript",
+      "providerFactId": "provider-fact:edge-call-unsupported",
+      "providerSnapshotId": "entity:provider-snapshot-01",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerKind": "ts.call.expression",
+      "source": {
+        "factType": "NODE",
+        "providerId": "provider:typescript",
+        "providerFactId": "provider-fact:node-source"
+      },
+      "target": {
+        "state": "UNRESOLVED",
+        "resolution": "UNSUPPORTED",
+        "originalHint": "dynamic dispatch",
+        "candidates": []
+      },
+      "sourceRange": null,
+      "confidence": { "score": 0, "method": "resolver", "reasons": ["unsupported"] }
+    }
+  }
+]

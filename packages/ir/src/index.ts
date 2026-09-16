@@ -53,6 +53,8 @@ export type {
   TargetState,
   UnresolvedTargetResolution,
 } from './code-fact-target.js';
+export { ProviderEdgeSchema, ProviderNodeSchema } from './provider-code-fact.js';
+export type { ProviderEdge, ProviderNode } from './provider-code-fact.js';
 export {
   JsonValueSchema,
   SchemaEnvelopeSchema,

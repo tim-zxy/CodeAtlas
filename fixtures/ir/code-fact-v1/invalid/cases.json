@@ -1,1 +1,549 @@
-[]
+[
+  {
+    "id": "provider-node-canonical-id",
+    "target": "PROVIDER_NODE",
+    "input": {
+      "providerId": "provider:typescript",
+      "providerFactId": "provider-fact:node-widget",
+      "providerSnapshotId": "entity:provider-snapshot-01",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerKind": "ts.class.declaration",
+      "name": "Widget",
+      "qualifiedName": "src/widget.ts#Widget",
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "parser", "reasons": ["syntax"] },
+      "id": "canonical:node-01"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
+  },
+  {
+    "id": "provider-node-node-fact-key",
+    "target": "PROVIDER_NODE",
+    "input": {
+      "providerId": "provider:typescript",
+      "providerFactId": "provider-fact:node-widget",
+      "providerSnapshotId": "entity:provider-snapshot-01",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerKind": "ts.class.declaration",
+      "name": "Widget",
+      "qualifiedName": "src/widget.ts#Widget",
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "parser", "reasons": ["syntax"] },
+      "factKey": "node-key:01"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
+  },
+  {
+    "id": "provider-node-attributes",
+    "target": "PROVIDER_NODE",
+    "input": {
+      "providerId": "provider:typescript",
+      "providerFactId": "provider-fact:node-widget",
+      "providerSnapshotId": "entity:provider-snapshot-01",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerKind": "ts.class.declaration",
+      "name": "Widget",
+      "qualifiedName": "src/widget.ts#Widget",
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "parser", "reasons": ["syntax"] },
+      "attributes": {}
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
+  },
+  {
+    "id": "provider-node-missing-qualified-name",
+    "target": "PROVIDER_NODE",
+    "input": {
+      "providerId": "provider:typescript",
+      "providerFactId": "provider-fact:node-widget",
+      "providerSnapshotId": "entity:provider-snapshot-01",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerKind": "ts.class.declaration",
+      "name": "Widget",
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "parser", "reasons": ["syntax"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["qualifiedName"]
+  },
+  {
+    "id": "provider-node-missing-source-range",
+    "target": "PROVIDER_NODE",
+    "input": {
+      "providerId": "provider:typescript",
+      "providerFactId": "provider-fact:node-widget",
+      "providerSnapshotId": "entity:provider-snapshot-01",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerKind": "ts.class.declaration",
+      "name": "Widget",
+      "qualifiedName": "src/widget.ts#Widget",
+      "confidence": { "score": 1, "method": "parser", "reasons": ["syntax"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["sourceRange"]
+  },
+  {
+    "id": "provider-node-blank-provider-fact-id",
+    "target": "PROVIDER_NODE",
+    "input": {
+      "providerId": "provider:typescript",
+      "providerFactId": "",
+      "providerSnapshotId": "entity:provider-snapshot-01",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerKind": "ts.class.declaration",
+      "name": "Widget",
+      "qualifiedName": "src/widget.ts#Widget",
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "parser", "reasons": ["syntax"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["providerFactId"]
+  },
+  {
+    "id": "provider-node-padded-provider-fact-id",
+    "target": "PROVIDER_NODE",
+    "input": {
+      "providerId": "provider:typescript",
+      "providerFactId": " provider-fact:node-widget",
+      "providerSnapshotId": "entity:provider-snapshot-01",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerKind": "ts.class.declaration",
+      "name": "Widget",
+      "qualifiedName": "src/widget.ts#Widget",
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "parser", "reasons": ["syntax"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["providerFactId"]
+  },
+  {
+    "id": "provider-node-blank-provider-kind",
+    "target": "PROVIDER_NODE",
+    "input": {
+      "providerId": "provider:typescript",
+      "providerFactId": "provider-fact:node-widget",
+      "providerSnapshotId": "entity:provider-snapshot-01",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerKind": "",
+      "name": "Widget",
+      "qualifiedName": "src/widget.ts#Widget",
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "parser", "reasons": ["syntax"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["providerKind"]
+  },
+  {
+    "id": "provider-node-padded-provider-kind",
+    "target": "PROVIDER_NODE",
+    "input": {
+      "providerId": "provider:typescript",
+      "providerFactId": "provider-fact:node-widget",
+      "providerSnapshotId": "entity:provider-snapshot-01",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerKind": " ts.class.declaration",
+      "name": "Widget",
+      "qualifiedName": "src/widget.ts#Widget",
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "parser", "reasons": ["syntax"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["providerKind"]
+  },
+  {
+    "id": "provider-node-blank-name",
+    "target": "PROVIDER_NODE",
+    "input": {
+      "providerId": "provider:typescript",
+      "providerFactId": "provider-fact:node-widget",
+      "providerSnapshotId": "entity:provider-snapshot-01",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerKind": "ts.class.declaration",
+      "name": "",
+      "qualifiedName": "src/widget.ts#Widget",
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "parser", "reasons": ["syntax"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["name"]
+  },
+  {
+    "id": "provider-node-padded-name",
+    "target": "PROVIDER_NODE",
+    "input": {
+      "providerId": "provider:typescript",
+      "providerFactId": "provider-fact:node-widget",
+      "providerSnapshotId": "entity:provider-snapshot-01",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerKind": "ts.class.declaration",
+      "name": " Widget",
+      "qualifiedName": "src/widget.ts#Widget",
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "parser", "reasons": ["syntax"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["name"]
+  },
+  {
+    "id": "provider-node-blank-qualified-name",
+    "target": "PROVIDER_NODE",
+    "input": {
+      "providerId": "provider:typescript",
+      "providerFactId": "provider-fact:node-widget",
+      "providerSnapshotId": "entity:provider-snapshot-01",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerKind": "ts.class.declaration",
+      "name": "Widget",
+      "qualifiedName": "",
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "parser", "reasons": ["syntax"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["qualifiedName"]
+  },
+  {
+    "id": "provider-node-padded-qualified-name",
+    "target": "PROVIDER_NODE",
+    "input": {
+      "providerId": "provider:typescript",
+      "providerFactId": "provider-fact:node-widget",
+      "providerSnapshotId": "entity:provider-snapshot-01",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerKind": "ts.class.declaration",
+      "name": "Widget",
+      "qualifiedName": " src/widget.ts#Widget",
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "parser", "reasons": ["syntax"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["qualifiedName"]
+  },
+  {
+    "id": "provider-edge-source-provider-mismatch",
+    "target": "PROVIDER_EDGE",
+    "input": {
+      "providerId": "provider:typescript",
+      "providerFactId": "provider-fact:edge-source-mismatch",
+      "providerSnapshotId": "entity:provider-snapshot-01",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerKind": "ts.call.expression",
+      "source": {
+        "factType": "NODE",
+        "providerId": "provider:jvm",
+        "providerFactId": "provider-fact:node-source"
+      },
+      "target": {
+        "state": "RESOLVED",
+        "resolution": "EXACT",
+        "target": {
+          "factType": "NODE",
+          "providerId": "provider:typescript",
+          "providerFactId": "provider-fact:node-target"
+        }
+      },
+      "sourceRange": null,
+      "confidence": { "score": 0.95, "method": "parser", "reasons": ["binding"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["source", "providerId"]
+  },
+  {
+    "id": "provider-edge-resolved-provider-mismatch",
+    "target": "PROVIDER_EDGE",
+    "input": {
+      "providerId": "provider:typescript",
+      "providerFactId": "provider-fact:edge-target-mismatch",
+      "providerSnapshotId": "entity:provider-snapshot-01",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerKind": "ts.call.expression",
+      "source": {
+        "factType": "NODE",
+        "providerId": "provider:typescript",
+        "providerFactId": "provider-fact:node-source"
+      },
+      "target": {
+        "state": "RESOLVED",
+        "resolution": "EXACT",
+        "target": {
+          "factType": "NODE",
+          "providerId": "provider:jvm",
+          "providerFactId": "provider-fact:node-target"
+        }
+      },
+      "sourceRange": null,
+      "confidence": { "score": 0.95, "method": "parser", "reasons": ["binding"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["target", "target", "providerId"]
+  },
+  {
+    "id": "provider-edge-candidate-provider-mismatch",
+    "target": "PROVIDER_EDGE",
+    "input": {
+      "providerId": "provider:typescript",
+      "providerFactId": "provider-fact:edge-candidate-mismatch",
+      "providerSnapshotId": "entity:provider-snapshot-01",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerKind": "ts.call.expression",
+      "source": {
+        "factType": "NODE",
+        "providerId": "provider:typescript",
+        "providerFactId": "provider-fact:node-source"
+      },
+      "target": {
+        "state": "UNRESOLVED",
+        "resolution": "AMBIGUOUS",
+        "originalHint": "Widget.run",
+        "candidates": [
+          {
+            "factType": "NODE",
+            "providerId": "provider:typescript",
+            "providerFactId": "provider-fact:node-target-a"
+          },
+          {
+            "factType": "NODE",
+            "providerId": "provider:jvm",
+            "providerFactId": "provider-fact:node-target-b"
+          }
+        ]
+      },
+      "sourceRange": null,
+      "confidence": { "score": 0.5, "method": "resolver", "reasons": ["overload"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["target", "candidates", 1, "providerId"]
+  },
+  {
+    "id": "provider-edge-source-edge-ref",
+    "target": "PROVIDER_EDGE",
+    "input": {
+      "providerId": "provider:typescript",
+      "providerFactId": "provider-fact:edge-source-ref",
+      "providerSnapshotId": "entity:provider-snapshot-01",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerKind": "ts.call.expression",
+      "source": {
+        "factType": "EDGE",
+        "providerId": "provider:typescript",
+        "providerFactId": "provider-fact:edge-source"
+      },
+      "target": {
+        "state": "RESOLVED",
+        "resolution": "EXACT",
+        "target": {
+          "factType": "NODE",
+          "providerId": "provider:typescript",
+          "providerFactId": "provider-fact:node-target"
+        }
+      },
+      "sourceRange": null,
+      "confidence": { "score": 0.95, "method": "parser", "reasons": ["binding"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["source", "factType"]
+  },
+  {
+    "id": "provider-edge-target-edge-ref",
+    "target": "PROVIDER_EDGE",
+    "input": {
+      "providerId": "provider:typescript",
+      "providerFactId": "provider-fact:edge-target-ref",
+      "providerSnapshotId": "entity:provider-snapshot-01",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerKind": "ts.call.expression",
+      "source": {
+        "factType": "NODE",
+        "providerId": "provider:typescript",
+        "providerFactId": "provider-fact:node-source"
+      },
+      "target": {
+        "state": "RESOLVED",
+        "resolution": "EXACT",
+        "target": {
+          "factType": "EDGE",
+          "providerId": "provider:typescript",
+          "providerFactId": "provider-fact:edge-target"
+        }
+      },
+      "sourceRange": null,
+      "confidence": { "score": 0.95, "method": "parser", "reasons": ["binding"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["target", "target", "factType"]
+  },
+  {
+    "id": "provider-edge-candidate-edge-ref",
+    "target": "PROVIDER_EDGE",
+    "input": {
+      "providerId": "provider:typescript",
+      "providerFactId": "provider-fact:edge-candidate-ref",
+      "providerSnapshotId": "entity:provider-snapshot-01",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerKind": "ts.call.expression",
+      "source": {
+        "factType": "NODE",
+        "providerId": "provider:typescript",
+        "providerFactId": "provider-fact:node-source"
+      },
+      "target": {
+        "state": "UNRESOLVED",
+        "resolution": "AMBIGUOUS",
+        "originalHint": "Widget.run",
+        "candidates": [
+          {
+            "factType": "NODE",
+            "providerId": "provider:typescript",
+            "providerFactId": "provider-fact:node-target-a"
+          },
+          {
+            "factType": "EDGE",
+            "providerId": "provider:typescript",
+            "providerFactId": "provider-fact:edge-target-b"
+          }
+        ]
+      },
+      "sourceRange": null,
+      "confidence": { "score": 0.5, "method": "resolver", "reasons": ["overload"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["target", "candidates", 1, "factType"]
+  },
+  {
+    "id": "provider-edge-canonical-field",
+    "target": "PROVIDER_EDGE",
+    "input": {
+      "providerId": "provider:typescript",
+      "providerFactId": "provider-fact:edge-canonical-field",
+      "providerSnapshotId": "entity:provider-snapshot-01",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerKind": "ts.call.expression",
+      "source": {
+        "factType": "NODE",
+        "providerId": "provider:typescript",
+        "providerFactId": "provider-fact:node-source"
+      },
+      "target": {
+        "state": "RESOLVED",
+        "resolution": "EXACT",
+        "target": {
+          "factType": "NODE",
+          "providerId": "provider:typescript",
+          "providerFactId": "provider-fact:node-target"
+        }
+      },
+      "sourceRange": null,
+      "confidence": { "score": 0.95, "method": "parser", "reasons": ["binding"] },
+      "factKey": "edge-key:01"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
+  },
+  {
+    "id": "provider-edge-unknown-field",
+    "target": "PROVIDER_EDGE",
+    "input": {
+      "providerId": "provider:typescript",
+      "providerFactId": "provider-fact:edge-extra",
+      "providerSnapshotId": "entity:provider-snapshot-01",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerKind": "ts.call.expression",
+      "source": {
+        "factType": "NODE",
+        "providerId": "provider:typescript",
+        "providerFactId": "provider-fact:node-source"
+      },
+      "target": {
+        "state": "RESOLVED",
+        "resolution": "EXACT",
+        "target": {
+          "factType": "NODE",
+          "providerId": "provider:typescript",
+          "providerFactId": "provider-fact:node-target"
+        }
+      },
+      "sourceRange": null,
+      "confidence": { "score": 0.95, "method": "parser", "reasons": ["binding"] },
+      "extra": true
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
+  },
+  {
+    "id": "provider-edge-blank-target-hint",
+    "target": "PROVIDER_EDGE",
+    "input": {
+      "providerId": "provider:typescript",
+      "providerFactId": "provider-fact:edge-blank-hint",
+      "providerSnapshotId": "entity:provider-snapshot-01",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerKind": "ts.call.expression",
+      "source": {
+        "factType": "NODE",
+        "providerId": "provider:typescript",
+        "providerFactId": "provider-fact:node-source"
+      },
+      "target": {
+        "state": "UNRESOLVED",
+        "resolution": "UNRESOLVED",
+        "originalHint": "",
+        "candidates": []
+      },
+      "sourceRange": null,
+      "confidence": { "score": 0.25, "method": "resolver", "reasons": ["missing symbol"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["target", "originalHint"]
+  },
+  {
+    "id": "provider-edge-padded-target-hint",
+    "target": "PROVIDER_EDGE",
+    "input": {
+      "providerId": "provider:typescript",
+      "providerFactId": "provider-fact:edge-padded-hint",
+      "providerSnapshotId": "entity:provider-snapshot-01",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerKind": "ts.call.expression",
+      "source": {
+        "factType": "NODE",
+        "providerId": "provider:typescript",
+        "providerFactId": "provider-fact:node-source"
+      },
+      "target": {
+        "state": "UNRESOLVED",
+        "resolution": "UNRESOLVED",
+        "originalHint": " Widget.run",
+        "candidates": []
+      },
+      "sourceRange": null,
+      "confidence": { "score": 0.25, "method": "resolver", "reasons": ["missing symbol"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["target", "originalHint"]
+  }
+]

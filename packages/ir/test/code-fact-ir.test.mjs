@@ -27,12 +27,144 @@ const validCases = JSON.parse(
 const invalidCases = JSON.parse(
   await readFile(new URL(fixtureIndex.invalidCases, fixtureRoot), 'utf8'),
 );
-const parsers = {};
+const parsers = {
+  PROVIDER_NODE: (input) => ir.parseIr(ir.ProviderNodeSchema, input),
+  PROVIDER_EDGE: (input) => ir.parseIr(ir.ProviderEdgeSchema, input),
+};
+
+function parserFor(target) {
+  const parser = parsers[target];
+  assert.ok(parser, 'fixture target ' + target + ' must have an explicit parser');
+  return parser;
+}
+
+function assertIrError(callback, code, expectedPath) {
+  let captured;
+  assert.throws(callback, (error) => {
+    captured = error;
+    assert.ok(error instanceof ir.IrContractError);
+    assert.equal(error.code, code);
+    assert.ok(error instanceof ir.IrValidationError);
+    assert.deepEqual(error.issues[0].path, expectedPath);
+    return true;
+  });
+  return captured;
+}
+
+function sensitiveFixtureValues(input) {
+  const sensitiveKeys = new Set([
+    'providerId',
+    'providerFactId',
+    'providerKind',
+    'name',
+    'qualifiedName',
+    'originalHint',
+  ]);
+  const values = [];
+
+  function visit(value, key) {
+    if (typeof value === 'string' && sensitiveKeys.has(key) && value.length > 0) {
+      values.push(value);
+      return;
+    }
+    if (Array.isArray(value)) {
+      value.forEach((entry) => visit(entry));
+      return;
+    }
+    if (value && typeof value === 'object') {
+      for (const [childKey, childValue] of Object.entries(value)) visit(childValue, childKey);
+    }
+  }
+
+  visit(input);
+  return [...new Set(values)];
+}
 
 test('p0-code-fact-ir-v1 Fixture index is authoritative', () => {
   assertFixtureIndex(fixtureIndex);
   assert.ok(Array.isArray(validCases));
   assert.ok(Array.isArray(invalidCases));
+});
+
+test('Provider fact valid Fixtures parse, JSON-round-trip, and preserve exact values', () => {
+  assert.equal(validCases.length, 8);
+  for (const fixture of validCases) {
+    const parser = parserFor(fixture.target);
+    const first = parser(fixture.input);
+    const second = parser(JSON.parse(JSON.stringify(first)));
+    assert.deepEqual(first, fixture.input, fixture.id);
+    assert.deepEqual(second, first, fixture.id + ' second parse');
+  }
+});
+
+test('Provider fact invalid Fixtures expose the declared first issue path without rejected values', () => {
+  assert.equal(invalidCases.length, 23);
+  for (const fixture of invalidCases) {
+    const error = assertIrError(
+      () => parserFor(fixture.target)(fixture.input),
+      fixture.errorCode,
+      fixture.path,
+    );
+    const messages = error.issues.map(({ message }) => message).join(' ');
+    for (const rejectedValue of sensitiveFixtureValues(fixture.input)) {
+      assert.equal(
+        messages.includes(rejectedValue),
+        false,
+        fixture.id + ' exposed ' + rejectedValue,
+      );
+    }
+  }
+});
+
+test('ProviderNode rejects explicit undefined for required nullable fields', () => {
+  const base = validCases.find(({ id }) => id === 'provider-node-typescript-class')?.input;
+  assert.ok(base);
+  assertIrError(
+    () => parserFor('PROVIDER_NODE')({ ...base, qualifiedName: undefined }),
+    'IR_VALIDATION_FAILED',
+    ['qualifiedName'],
+  );
+  assertIrError(
+    () => parserFor('PROVIDER_NODE')({ ...base, sourceRange: undefined }),
+    'IR_VALIDATION_FAILED',
+    ['sourceRange'],
+  );
+});
+
+test('ProviderEdge same Provider validation checks source then resolved target then candidates', () => {
+  const resolved = validCases.find(({ id }) => id === 'provider-edge-call-exact')?.input;
+  const ambiguous = validCases.find(({ id }) => id === 'provider-edge-call-ambiguous')?.input;
+  assert.ok(resolved);
+  assert.ok(ambiguous);
+
+  assertIrError(
+    () =>
+      parserFor('PROVIDER_EDGE')({
+        ...resolved,
+        source: { ...resolved.source, providerId: 'provider:jvm' },
+        target: {
+          ...resolved.target,
+          target: { ...resolved.target.target, providerId: 'provider:jvm' },
+        },
+      }),
+    'IR_VALIDATION_FAILED',
+    ['source', 'providerId'],
+  );
+  assertIrError(
+    () =>
+      parserFor('PROVIDER_EDGE')({
+        ...ambiguous,
+        target: {
+          ...ambiguous.target,
+          candidates: ambiguous.target.candidates.map((candidate) => ({
+            ...candidate,
+            providerId: 'provider:jvm',
+          })),
+        },
+      }),
+    'IR_VALIDATION_FAILED',
+    ['target', 'candidates', 0, 'providerId'],
+  );
 });
 
 test('Fixture index rejects a redirected child path before use', () => {
