@@ -32,6 +32,28 @@ export type {
   ProviderNodeRef,
 } from './code-fact-reference.js';
 export {
+  CanonicalNonResolvedTargetSchema,
+  CanonicalResolvedTargetSchema,
+  CanonicalTargetSchema,
+  ProviderNonResolvedTargetSchema,
+  ProviderResolvedTargetSchema,
+  ProviderTargetSchema,
+  ResolvedTargetResolutionSchema,
+  TargetStateSchema,
+  UnresolvedTargetResolutionSchema,
+} from './code-fact-target.js';
+export type {
+  CanonicalNonResolvedTarget,
+  CanonicalResolvedTarget,
+  CanonicalTarget,
+  ProviderNonResolvedTarget,
+  ProviderResolvedTarget,
+  ProviderTarget,
+  ResolvedTargetResolution,
+  TargetState,
+  UnresolvedTargetResolution,
+} from './code-fact-target.js';
+export {
   JsonValueSchema,
   SchemaEnvelopeSchema,
   createSchemaEnvelopeSchema,
