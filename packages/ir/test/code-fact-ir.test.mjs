@@ -312,6 +312,19 @@ test('target candidate invariants use deterministic cardinality and duplicate is
   }
 });
 
+test('provider target candidate identity remains tuple-aware when IDs contain delimiters', () => {
+  const first = { factType: 'NODE', providerId: 'a', providerFactId: 'b\u0000c' };
+  const second = { factType: 'NODE', providerId: 'a\u0000b', providerFactId: 'c' };
+  const value = {
+    state: 'UNRESOLVED',
+    resolution: 'AMBIGUOUS',
+    originalHint: 'Widget.run',
+    candidates: [first, second],
+  };
+
+  assert.deepEqual(ir.parseIr(ir.ProviderTargetSchema, value), value);
+});
+
 test('target resolution rejects blank and padded unresolved hints', () => {
   for (const schema of [ir.ProviderTargetSchema, ir.CanonicalTargetSchema]) {
     for (const originalHint of ['', ' Widget.run', 'Widget.run ']) {

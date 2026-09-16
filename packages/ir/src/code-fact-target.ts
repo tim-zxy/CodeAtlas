@@ -26,9 +26,10 @@ export const CanonicalResolvedTargetSchema = z.strictObject({
 });
 export type CanonicalResolvedTarget = z.infer<typeof CanonicalResolvedTargetSchema>;
 
-function nonResolvedTargetSchema<TRefSchema extends z.ZodType>(
+function nonResolvedTargetSchema<TRefSchema extends z.ZodType, TSeen>(
   refSchema: TRefSchema,
-  identity: (value: z.output<TRefSchema>) => string,
+  createSeen: () => TSeen,
+  isDuplicateAndRecord: (seen: TSeen, value: z.output<TRefSchema>) => boolean,
 ) {
   return z
     .strictObject({
@@ -55,17 +56,14 @@ function nonResolvedTargetSchema<TRefSchema extends z.ZodType>(
         return;
       }
 
-      const seen = new Set<string>();
+      const seen = createSeen();
       value.candidates.forEach((candidate, index) => {
-        const key = identity(candidate);
-        if (seen.has(key)) {
+        if (isDuplicateAndRecord(seen, candidate)) {
           context.addIssue({
             code: 'custom',
             path: ['candidates', index],
             message: 'Target candidates must be unique',
           });
-        } else {
-          seen.add(key);
         }
       });
     });
@@ -73,13 +71,32 @@ function nonResolvedTargetSchema<TRefSchema extends z.ZodType>(
 
 export const ProviderNonResolvedTargetSchema = nonResolvedTargetSchema(
   ProviderNodeRefSchema,
-  ({ providerId, providerFactId }) => `${providerId}\u0000${providerFactId}`,
+  () => new Map<string, Set<string>>(),
+  (seen, { providerId, providerFactId }) => {
+    const providerFactIds = seen.get(providerId);
+    if (providerFactIds?.has(providerFactId)) {
+      return true;
+    }
+    if (providerFactIds) {
+      providerFactIds.add(providerFactId);
+    } else {
+      seen.set(providerId, new Set([providerFactId]));
+    }
+    return false;
+  },
 );
 export type ProviderNonResolvedTarget = z.infer<typeof ProviderNonResolvedTargetSchema>;
 
 export const CanonicalNonResolvedTargetSchema = nonResolvedTargetSchema(
   CanonicalNodeRefSchema,
-  ({ id }) => id,
+  () => new Set<string>(),
+  (seen, { id }) => {
+    if (seen.has(id)) {
+      return true;
+    }
+    seen.add(id);
+    return false;
+  },
 );
 export type CanonicalNonResolvedTarget = z.infer<typeof CanonicalNonResolvedTargetSchema>;
 
