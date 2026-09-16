@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "id": "p0-code-fact-ir-v1",
+  "task": "P0-W1-003",
+  "governingSpec": "docs/handoff/specs/CANONICAL_IR.md",
+  "acceptance": "Provider/canonical identity remains separate",
+  "validCases": "valid/cases.json",
+  "invalidCases": "invalid/cases.json"
+}

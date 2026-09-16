@@ -1,5 +1,37 @@
 export * from './confidence.js';
 export {
+  CodeFactNameSchema,
+  EdgeFactKeySchema,
+  NodeFactKeySchema,
+  ProviderFactIdSchema,
+  ProviderFactKindSchema,
+  QualifiedCodeFactNameSchema,
+  UnresolvedTargetHintSchema,
+} from './code-fact-identity.js';
+export type {
+  CodeFactName,
+  EdgeFactKey,
+  NodeFactKey,
+  ProviderFactId,
+  ProviderFactKind,
+  QualifiedCodeFactName,
+  UnresolvedTargetHint,
+} from './code-fact-identity.js';
+export {
+  CanonicalFactRefSchema,
+  CanonicalNodeRefSchema,
+  FactTypeSchema,
+  ProviderFactRefSchema,
+  ProviderNodeRefSchema,
+} from './code-fact-reference.js';
+export type {
+  CanonicalFactRef,
+  CanonicalNodeRef,
+  FactType,
+  ProviderFactRef,
+  ProviderNodeRef,
+} from './code-fact-reference.js';
+export {
   JsonValueSchema,
   SchemaEnvelopeSchema,
   createSchemaEnvelopeSchema,

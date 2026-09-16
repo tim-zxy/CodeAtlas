@@ -10,7 +10,7 @@
   "scripts": {
     "architecture:check": "node scripts/check-architecture.mjs",
     "build": "pnpm -r run build",
-    "test": "pnpm --filter @codeatlas/ir test:types && node --test packages/ir/test/common-ir.test.mjs packages/ir/test/source-revision-ir.test.mjs scripts/test-workspace-structure.mjs scripts/test-architecture-rules.mjs packages/runtime/test/runtime-bootstrap.test.mjs scripts/test-runtime-construction.mjs apps/cli/test/smoke.test.mjs apps/mcp/test/smoke.test.mjs",
+    "test": "pnpm --filter @codeatlas/ir test:types && node --test packages/ir/test/common-ir.test.mjs packages/ir/test/source-revision-ir.test.mjs packages/ir/test/code-fact-ir.test.mjs scripts/test-workspace-structure.mjs scripts/test-architecture-rules.mjs packages/runtime/test/runtime-bootstrap.test.mjs scripts/test-runtime-construction.mjs apps/cli/test/smoke.test.mjs apps/mcp/test/smoke.test.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "format:rust": "cargo fmt --all",
