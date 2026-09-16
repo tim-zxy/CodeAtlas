@@ -6,14 +6,14 @@
 - Handoff assembly: refreshed as the agent-neutral Engineering Handoff Pack.
 - Primary handoff entry: `ENGINEERING_HANDOFF.md`.
 - Compatibility entry: `CODEX_HANDOFF.md`.
-- Implementation repository: P0-W0-001, P0-W0-002, P0-W0-003, P0-W1-001, and P0-W1-002 are complete with fresh local verification and successful hosted CI evidence. P0-W1-003 implementation and local gates are verified; its exact-SHA hosted CI is pending feature-branch push authorization.
+- Implementation repository: P0-W0-001, P0-W0-002, P0-W0-003, P0-W1-001, P0-W1-002, and P0-W1-003 implementation evidence have fresh local verification and successful hosted CI evidence. P0-W1-003's final documentation-only closeout CI remains pending.
 - Active implementation phase: Phase 0.
 
 ## Phase readiness
 
 | Phase | Readiness | Implementation progress |
 |---|---|---|
-| 0 | IMPLEMENTATION-READY | P0-W0-001, P0-W0-002, P0-W0-003, P0-W1-001, and P0-W1-002 complete; P0-W1-003 locally verified, hosted CI pending |
+| 0 | IMPLEMENTATION-READY | P0-W0-001, P0-W0-002, P0-W0-003, P0-W1-001, P0-W1-002, and P0-W1-003 implementation evidence verified; final P0-W1-003 documentation-only CI pending |
 | 0.5 | IMPLEMENTATION-READY | 0 percent |
 | 1 | DESIGN-READY | 0 percent |
 | 2 | ARCHITECTURE-READY | 0 percent |
@@ -21,7 +21,7 @@
 
 ## Next action
 
-Obtain exact-SHA hosted CI for the locally verified `P0-W1-003` feature branch before treating it as complete. The next authoritative task is P0-W1-004 Evidence model, which remains unimplemented and blocked on P0-W1-003 completion. Preserve predecessor order and the task-level Fixture, Evaluation, Acceptance, documentation, and traceability requirements.
+Wait for exact-SHA hosted CI on the P0-W1-003 documentation-only closeout commit before treating that task as fully complete. The next authoritative task is P0-W1-004 Evidence model, which remains unimplemented and blocked on P0-W1-003 completion. Preserve predecessor order and the task-level Fixture, Evaluation, Acceptance, documentation, and traceability requirements.
 
 ## Active task evidence
 
@@ -121,7 +121,7 @@ Obtain exact-SHA hosted CI for the locally verified `P0-W1-003` feature branch b
 
 ### P0-W1-003 Code fact IR
 
-- Status: implementation and local closure verified; hosted CI is pending explicit authorization to push the feature branch. This is not a hosted-completion claim.
+- Status: implementation evidence is locally and host-verified; final documentation-only closeout CI is pending. This is not yet a claim for the closeout commit's hosted result.
 - Branch and local evidence baseline: `codex/p0-w1-003-code-fact-ir` at `255940638ac22851a0f256ca3540f6077f40c6fa` on 2026-09-16, immediately before this status-only evidence commit. The local implementation chain from merge base `969210b` is `39a9a6cadfb4fd19686ea6045ae049a35a99f150` (approved design), `84dc2fd8058a40331f7a27ca24fb4b06ccc985e0` (plan), `0f3c21b63cb14134dce6dc8f215ba1d00cb61512` and `31fa7478501ad948350737ee7a1761a9c8fa6c0a` (identity/reference and Fixture-path validation), `cd3772d018f4057098cce795d230c9447d4c3851` and `45f2bb9bac504fbc7b86de575339c84fe4fa0912` (target resolution and tuple identity), `b87d4f819bf01fea1b42376f5ba2ebcc5f5decee` (Provider facts), `34386f3c70affe6198fc2e04bed5b35eeeb697e8` and `be7fbc9629936e5e5558a2c61a4765106174c302` (Canonical facts and brand coverage), and `255940638ac22851a0f256ca3540f6077f40c6fa` (Canonical IR specification and traceability).
 - Governing authority: ADR-002 Provider Independent Canonical IR and ADR-012 Evaluation as a Phase Gate; `specs/CANONICAL_IR.md`; acceptance `Provider/canonical identity remains separate`; approved design `docs/superpowers/specs/2026-09-15-p0-w1-003-code-fact-ir-design.md`; and approved plan `docs/superpowers/plans/2026-09-15-p0-w1-003-code-fact-ir.md`.
 - Implemented contracts: separately branded ProviderFactId, NodeFactKey, EdgeFactKey, CodeFactName, QualifiedCodeFactName, ProviderFactKind, and UnresolvedTargetHint; strict Provider/Canonical fact and NODE-only endpoint references; parallel resolved and unresolved Provider/Canonical targets; strict ProviderNode and ProviderEdge observations; closed Canonical node/type/symbol and edge vocabularies; required Confidence/source context; and strict version-1 envelope validation. Provider identity does not become Canonical identity, FactKeys remain opaque inputs, and unresolved or ambiguous targets are retained without selection.
@@ -131,8 +131,8 @@ Obtain exact-SHA hosted CI for the locally verified `P0-W1-003` feature branch b
 - Architecture Guardrail and Deferred audit: `rg -n "@codeatlas/" packages/ir/src packages/ir/test packages/ir/type-test` and the storage/knowledge/claim/evidence/flow/watcher/daemon/network search had no matches. The canonicalization/normalization/hash/FactKey-computation/IPC/parser/scanner/provider-execution search had no production-source matches: Fixture confidence `method` strings and type-test literal values describe test data, while `parser` identifiers are only Common/Source/Code Fixture test-harness functions. The Provider/Canonical/FactKey co-occurrence search returned only `@ts-expect-error` negative assignability assertions. The direct PowerShell `packages/ir/src/code-fact-*.ts` glob form returned Windows error 123; its equivalent `rg -n -g "code-fact-*.ts" "attributes|Record<string|unknown>" packages/ir/src` had no matches. Thus `@codeatlas/ir` remains dependency-bottom; no arbitrary attributes bag, FactKey computation, database/application boundary, or Deferred production feature exists.
 - Recovery / publication boundary: P0-W1-003 validates pure wire contracts only. It creates no storage, Canonical Graph activation, Evidence relation, or publication workflow, so preservation of a previous Canonical Graph or Published Knowledge is not exercised.
 - Documentation and traceability: `CANONICAL_IR.md` and the existing P0-W1-003 row in `DESIGN_TRACEABILITY.md` synchronize the exported contracts, Fixture index/children, runtime/type tests, ADR-002/ADR-012 authority, governing spec, and acceptance gate. No frozen decision changed; therefore no ADR, migration, adapter, registry, or IPC-schema change was required.
-- Hosted CI: not yet run for this feature branch evidence chain. Do not infer success from prior tasks or local verification.
-- Next task: P0-W1-004 Evidence model is the next authoritative Phase 0 task, but it remains unimplemented and blocked until P0-W1-003 receives its exact-SHA hosted-CI completion evidence.
+- Hosted CI evidence: GitHub Actions workflow `CI`, run `35062973276`, succeeded for evidence commit `6024a35671b176e77984a5a37202949f85deccac` on branch `codex/p0-w1-003-code-fact-ir`. The push run started at `2026-09-16T06:16:22Z` and completed at `2026-09-16T06:18:01Z`; TypeScript workspace succeeded in 24 seconds and Rust workspace succeeded. Run URL: `https://github.com/tim-zxy/CodeAtlas/actions/runs/35062973276`. GitHub emitted a Node.js 20 action-internal deprecation annotation; it was advisory and both mandatory jobs succeeded. This closeout commit changes only `CURRENT_STATUS.md` after the tested evidence commit; its exact hosted-CI result is recorded in the final handoff rather than creating an infinite status-commit chain.
+- Next task: P0-W1-004 Evidence model is the next authoritative Phase 0 task, but it remains unimplemented and blocked until P0-W1-003's documentation-only closeout commit receives its exact-SHA hosted-CI evidence.
 
 ## Decision reminders
 
