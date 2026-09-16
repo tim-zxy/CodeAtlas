@@ -5,7 +5,22 @@ import { test } from 'node:test';
 import * as ir from '../dist/index.js';
 
 const fixtureRoot = new URL('../../../fixtures/ir/code-fact-v1/', import.meta.url);
+const expectedFixtureIndex = {
+  schemaVersion: 1,
+  id: 'p0-code-fact-ir-v1',
+  task: 'P0-W1-003',
+  governingSpec: 'docs/handoff/specs/CANONICAL_IR.md',
+  acceptance: 'Provider/canonical identity remains separate',
+  validCases: 'valid/cases.json',
+  invalidCases: 'invalid/cases.json',
+};
+
+function assertFixtureIndex(index) {
+  assert.deepEqual(index, expectedFixtureIndex);
+}
+
 const fixtureIndex = JSON.parse(await readFile(new URL('cases.json', fixtureRoot), 'utf8'));
+assertFixtureIndex(fixtureIndex);
 const validCases = JSON.parse(
   await readFile(new URL(fixtureIndex.validCases, fixtureRoot), 'utf8'),
 );
@@ -15,17 +30,21 @@ const invalidCases = JSON.parse(
 const parsers = {};
 
 test('p0-code-fact-ir-v1 Fixture index is authoritative', () => {
-  assert.deepEqual(fixtureIndex, {
-    schemaVersion: 1,
-    id: 'p0-code-fact-ir-v1',
-    task: 'P0-W1-003',
-    governingSpec: 'docs/handoff/specs/CANONICAL_IR.md',
-    acceptance: 'Provider/canonical identity remains separate',
-    validCases: 'valid/cases.json',
-    invalidCases: 'invalid/cases.json',
-  });
+  assertFixtureIndex(fixtureIndex);
   assert.ok(Array.isArray(validCases));
   assert.ok(Array.isArray(invalidCases));
+});
+
+test('Fixture index is validated before resolving either child path', async () => {
+  const runnerSource = await readFile(new URL(import.meta.url), 'utf8');
+  const validationOffset = runnerSource.indexOf('assertFixtureIndex(fixtureIndex);');
+  const validCasesOffset = runnerSource.indexOf('new URL(fixtureIndex.validCases, fixtureRoot)');
+  const invalidCasesOffset = runnerSource.indexOf(
+    'new URL(fixtureIndex.invalidCases, fixtureRoot)',
+  );
+
+  assert.ok(validationOffset < validCasesOffset);
+  assert.ok(validationOffset < invalidCasesOffset);
 });
 
 test('Code Fact scalar schemas preserve exact values and reject blank or padded values', () => {
