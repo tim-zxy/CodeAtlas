@@ -126,12 +126,16 @@ acceptCanonicalNodeRef(canonicalNodeRef);
 
 // @ts-expect-error ProviderFactId must not masquerade as ProviderId.
 acceptProviderId(providerFactId);
+// @ts-expect-error CanonicalId must not masquerade as ProviderId.
+acceptProviderId(canonicalId);
 // @ts-expect-error ProviderId must not masquerade as ProviderFactId.
 acceptProviderFactId(providerId);
 // @ts-expect-error CanonicalId must not masquerade as ProviderFactId.
 acceptProviderFactId(canonicalId);
 // @ts-expect-error EntityId must not masquerade as CanonicalId.
 acceptCanonicalId(entityId);
+// @ts-expect-error ProviderId must not masquerade as CanonicalId.
+acceptCanonicalId(providerId);
 // @ts-expect-error CanonicalId must not masquerade as EntityId.
 acceptEntityId(canonicalId);
 // @ts-expect-error EdgeFactKey must not masquerade as NodeFactKey.
@@ -144,6 +148,8 @@ acceptNodeFactKey(canonicalId);
 acceptEdgeFactKey(providerFactId);
 // @ts-expect-error CanonicalFactRef must not masquerade as ProviderNodeRef.
 acceptProviderNodeRef(canonicalFactRef);
+// @ts-expect-error CanonicalNodeRef must not masquerade as ProviderNodeRef.
+acceptProviderNodeRef(canonicalNodeRef);
 // @ts-expect-error ProviderFactId must not masquerade as CanonicalId.
 acceptCanonicalId(providerFactId);
 // @ts-expect-error ProviderNodeRef must not masquerade as CanonicalNodeRef.
