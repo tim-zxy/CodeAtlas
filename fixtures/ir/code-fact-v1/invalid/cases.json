@@ -545,5 +545,541 @@
     },
     "errorCode": "IR_VALIDATION_FAILED",
     "path": ["target", "originalHint"]
+  },
+  {
+    "id": "canonical-node-provider-field",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-widget",
+      "factKey": "node-key:repo/widget",
+      "repositoryId": "entity:repo",
+      "revisionId": "entity:revision",
+      "kind": "TYPE",
+      "typeKind": "CLASS",
+      "name": "Widget",
+      "qualifiedName": null,
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] },
+      "providerId": "provider:typescript"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
+  },
+  {
+    "id": "canonical-edge-provider-field",
+    "target": "CANONICAL_EDGE",
+    "input": {
+      "id": "canonical:edge-call",
+      "factKey": "edge-key:repo/call",
+      "repositoryId": "entity:repo",
+      "revisionId": "entity:revision",
+      "kind": "CALL",
+      "source": { "factType": "NODE", "id": "canonical:node-source" },
+      "target": {
+        "state": "RESOLVED",
+        "resolution": "EXACT",
+        "target": { "factType": "NODE", "id": "canonical:node-target" }
+      },
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] },
+      "providerFactId": "provider-fact:call"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
+  },
+  {
+    "id": "canonical-node-unknown-kind",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-widget",
+      "factKey": "node-key:repo/widget",
+      "repositoryId": "entity:repo",
+      "revisionId": "entity:revision",
+      "kind": "NAMESPACE",
+      "name": "Widget",
+      "qualifiedName": null,
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["kind"]
+  },
+  {
+    "id": "canonical-edge-unknown-kind",
+    "target": "CANONICAL_EDGE",
+    "input": {
+      "id": "canonical:edge-call",
+      "factKey": "edge-key:repo/call",
+      "repositoryId": "entity:repo",
+      "revisionId": "entity:revision",
+      "kind": "THROWS",
+      "source": { "factType": "NODE", "id": "canonical:node-source" },
+      "target": {
+        "state": "RESOLVED",
+        "resolution": "EXACT",
+        "target": { "factType": "NODE", "id": "canonical:node-target" }
+      },
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["kind"]
+  },
+  {
+    "id": "canonical-node-type-missing-subkind",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-widget",
+      "factKey": "node-key:repo/widget",
+      "repositoryId": "entity:repo",
+      "revisionId": "entity:revision",
+      "kind": "TYPE",
+      "name": "Widget",
+      "qualifiedName": null,
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["typeKind"]
+  },
+  {
+    "id": "canonical-node-type-symbol-subkind",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-widget",
+      "factKey": "node-key:repo/widget",
+      "repositoryId": "entity:repo",
+      "revisionId": "entity:revision",
+      "kind": "TYPE",
+      "typeKind": "CLASS",
+      "symbolKind": "METHOD",
+      "name": "Widget",
+      "qualifiedName": null,
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
+  },
+  {
+    "id": "canonical-node-symbol-missing-subkind",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-widget",
+      "factKey": "node-key:repo/widget",
+      "repositoryId": "entity:repo",
+      "revisionId": "entity:revision",
+      "kind": "SYMBOL",
+      "name": "Widget",
+      "qualifiedName": null,
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["symbolKind"]
+  },
+  {
+    "id": "canonical-node-symbol-type-subkind",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-widget",
+      "factKey": "node-key:repo/widget",
+      "repositoryId": "entity:repo",
+      "revisionId": "entity:revision",
+      "kind": "SYMBOL",
+      "typeKind": "CLASS",
+      "symbolKind": "METHOD",
+      "name": "Widget",
+      "qualifiedName": null,
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
+  },
+  {
+    "id": "canonical-node-base-subkind",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-widget",
+      "factKey": "node-key:repo/widget",
+      "repositoryId": "entity:repo",
+      "revisionId": "entity:revision",
+      "kind": "REPOSITORY",
+      "typeKind": "CLASS",
+      "name": "Widget",
+      "qualifiedName": null,
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
+  },
+  {
+    "id": "canonical-node-unknown-type-subkind",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-widget",
+      "factKey": "node-key:repo/widget",
+      "repositoryId": "entity:repo",
+      "revisionId": "entity:revision",
+      "kind": "TYPE",
+      "typeKind": "MIXIN",
+      "name": "Widget",
+      "qualifiedName": null,
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["typeKind"]
+  },
+  {
+    "id": "canonical-node-unknown-symbol-subkind",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-widget",
+      "factKey": "node-key:repo/widget",
+      "repositoryId": "entity:repo",
+      "revisionId": "entity:revision",
+      "kind": "SYMBOL",
+      "symbolKind": "ACCESSOR",
+      "name": "Widget",
+      "qualifiedName": null,
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["symbolKind"]
+  },
+  {
+    "id": "canonical-edge-source-edge-ref",
+    "target": "CANONICAL_EDGE",
+    "input": {
+      "id": "canonical:edge-call",
+      "factKey": "edge-key:repo/call",
+      "repositoryId": "entity:repo",
+      "revisionId": "entity:revision",
+      "kind": "CALL",
+      "source": { "factType": "EDGE", "id": "canonical:edge-source" },
+      "target": {
+        "state": "RESOLVED",
+        "resolution": "EXACT",
+        "target": { "factType": "NODE", "id": "canonical:node-target" }
+      },
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["source", "factType"]
+  },
+  {
+    "id": "canonical-edge-target-edge-ref",
+    "target": "CANONICAL_EDGE",
+    "input": {
+      "id": "canonical:edge-call",
+      "factKey": "edge-key:repo/call",
+      "repositoryId": "entity:repo",
+      "revisionId": "entity:revision",
+      "kind": "CALL",
+      "source": { "factType": "NODE", "id": "canonical:node-source" },
+      "target": {
+        "state": "RESOLVED",
+        "resolution": "EXACT",
+        "target": { "factType": "EDGE", "id": "canonical:edge-target" }
+      },
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["target", "target", "factType"]
+  },
+  {
+    "id": "canonical-node-blank-id",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "",
+      "factKey": "node-key:repo/widget",
+      "repositoryId": "entity:repo",
+      "revisionId": "entity:revision",
+      "kind": "TYPE",
+      "typeKind": "CLASS",
+      "name": "Widget",
+      "qualifiedName": null,
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["id"]
+  },
+  {
+    "id": "canonical-edge-padded-id",
+    "target": "CANONICAL_EDGE",
+    "input": {
+      "id": " canonical:edge-call",
+      "factKey": "edge-key:repo/call",
+      "repositoryId": "entity:repo",
+      "revisionId": "entity:revision",
+      "kind": "CALL",
+      "source": { "factType": "NODE", "id": "canonical:node-source" },
+      "target": {
+        "state": "RESOLVED",
+        "resolution": "EXACT",
+        "target": { "factType": "NODE", "id": "canonical:node-target" }
+      },
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["id"]
+  },
+  {
+    "id": "canonical-node-blank-fact-key",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-widget",
+      "factKey": "",
+      "repositoryId": "entity:repo",
+      "revisionId": "entity:revision",
+      "kind": "TYPE",
+      "typeKind": "CLASS",
+      "name": "Widget",
+      "qualifiedName": null,
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["factKey"]
+  },
+  {
+    "id": "canonical-edge-padded-fact-key",
+    "target": "CANONICAL_EDGE",
+    "input": {
+      "id": "canonical:edge-call",
+      "factKey": " edge-key:repo/call",
+      "repositoryId": "entity:repo",
+      "revisionId": "entity:revision",
+      "kind": "CALL",
+      "source": { "factType": "NODE", "id": "canonical:node-source" },
+      "target": {
+        "state": "RESOLVED",
+        "resolution": "EXACT",
+        "target": { "factType": "NODE", "id": "canonical:node-target" }
+      },
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["factKey"]
+  },
+  {
+    "id": "canonical-node-blank-name",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-widget",
+      "factKey": "node-key:repo/widget",
+      "repositoryId": "entity:repo",
+      "revisionId": "entity:revision",
+      "kind": "TYPE",
+      "typeKind": "CLASS",
+      "name": "",
+      "qualifiedName": null,
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["name"]
+  },
+  {
+    "id": "canonical-node-padded-name",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-widget",
+      "factKey": "node-key:repo/widget",
+      "repositoryId": "entity:repo",
+      "revisionId": "entity:revision",
+      "kind": "TYPE",
+      "typeKind": "CLASS",
+      "name": " Widget",
+      "qualifiedName": null,
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["name"]
+  },
+  {
+    "id": "canonical-node-blank-qualified-name",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-widget",
+      "factKey": "node-key:repo/widget",
+      "repositoryId": "entity:repo",
+      "revisionId": "entity:revision",
+      "kind": "TYPE",
+      "typeKind": "CLASS",
+      "name": "Widget",
+      "qualifiedName": "",
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["qualifiedName"]
+  },
+  {
+    "id": "canonical-node-padded-qualified-name",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-widget",
+      "factKey": "node-key:repo/widget",
+      "repositoryId": "entity:repo",
+      "revisionId": "entity:revision",
+      "kind": "TYPE",
+      "typeKind": "CLASS",
+      "name": "Widget",
+      "qualifiedName": " src/widget.ts#Widget",
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["qualifiedName"]
+  },
+  {
+    "id": "canonical-edge-blank-hint",
+    "target": "CANONICAL_EDGE",
+    "input": {
+      "id": "canonical:edge-call",
+      "factKey": "edge-key:repo/call",
+      "repositoryId": "entity:repo",
+      "revisionId": "entity:revision",
+      "kind": "CALL",
+      "source": { "factType": "NODE", "id": "canonical:node-source" },
+      "target": {
+        "state": "UNRESOLVED",
+        "resolution": "UNRESOLVED",
+        "originalHint": "",
+        "candidates": []
+      },
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["target", "originalHint"]
+  },
+  {
+    "id": "canonical-edge-padded-hint",
+    "target": "CANONICAL_EDGE",
+    "input": {
+      "id": "canonical:edge-call",
+      "factKey": "edge-key:repo/call",
+      "repositoryId": "entity:repo",
+      "revisionId": "entity:revision",
+      "kind": "CALL",
+      "source": { "factType": "NODE", "id": "canonical:node-source" },
+      "target": {
+        "state": "UNRESOLVED",
+        "resolution": "UNRESOLVED",
+        "originalHint": " Widget.run",
+        "candidates": []
+      },
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["target", "originalHint"]
+  },
+  {
+    "id": "canonical-node-missing-qualified-name",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-widget",
+      "factKey": "node-key:repo/widget",
+      "repositoryId": "entity:repo",
+      "revisionId": "entity:revision",
+      "kind": "TYPE",
+      "typeKind": "CLASS",
+      "name": "Widget",
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["qualifiedName"]
+  },
+  {
+    "id": "canonical-node-missing-source-range",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-widget",
+      "factKey": "node-key:repo/widget",
+      "repositoryId": "entity:repo",
+      "revisionId": "entity:revision",
+      "kind": "TYPE",
+      "typeKind": "CLASS",
+      "name": "Widget",
+      "qualifiedName": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["sourceRange"]
+  },
+  {
+    "id": "canonical-edge-missing-source-range",
+    "target": "CANONICAL_EDGE",
+    "input": {
+      "id": "canonical:edge-call",
+      "factKey": "edge-key:repo/call",
+      "repositoryId": "entity:repo",
+      "revisionId": "entity:revision",
+      "kind": "CALL",
+      "source": { "factType": "NODE", "id": "canonical:node-source" },
+      "target": {
+        "state": "RESOLVED",
+        "resolution": "EXACT",
+        "target": { "factType": "NODE", "id": "canonical:node-target" }
+      },
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["sourceRange"]
+  },
+  {
+    "id": "canonical-node-unknown-field",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-widget",
+      "factKey": "node-key:repo/widget",
+      "repositoryId": "entity:repo",
+      "revisionId": "entity:revision",
+      "kind": "TYPE",
+      "typeKind": "CLASS",
+      "name": "Widget",
+      "qualifiedName": null,
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] },
+      "attributes": {}
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
+  },
+  {
+    "id": "canonical-edge-unknown-field",
+    "target": "CANONICAL_EDGE",
+    "input": {
+      "id": "canonical:edge-call",
+      "factKey": "edge-key:repo/call",
+      "repositoryId": "entity:repo",
+      "revisionId": "entity:revision",
+      "kind": "CALL",
+      "source": { "factType": "NODE", "id": "canonical:node-source" },
+      "target": {
+        "state": "RESOLVED",
+        "resolution": "EXACT",
+        "target": { "factType": "NODE", "id": "canonical:node-target" }
+      },
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] },
+      "extra": true
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
   }
 ]

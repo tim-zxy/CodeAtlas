@@ -1,6 +1,9 @@
 import {
   CanonicalFactRefSchema,
   CanonicalIdSchema,
+  CanonicalNodeRefSchema,
+  CanonicalNodeSchema,
+  CanonicalEdgeSchema,
   EdgeFactKeySchema,
   EntityIdSchema,
   NodeFactKeySchema,
@@ -9,6 +12,9 @@ import {
   ProviderIdSchema,
   ProviderNodeSchema,
   type CanonicalFactRef,
+  type CanonicalNode,
+  type CanonicalNodeRef,
+  type CanonicalEdge,
   type CanonicalId,
   type EdgeFactKey,
   type EntityId,
@@ -66,6 +72,37 @@ const providerEdge: ProviderEdge = ProviderEdgeSchema.parse({
   sourceRange: null,
   confidence: { score: 0.95, method: 'parser', reasons: ['binding'] },
 });
+const canonicalNode: CanonicalNode = CanonicalNodeSchema.parse({
+  id: 'canonical:node-widget',
+  factKey: 'node-key:repo-01/widget',
+  repositoryId: 'entity:repo-01',
+  revisionId: 'entity:revision-01',
+  kind: 'TYPE',
+  typeKind: 'CLASS',
+  name: 'Widget',
+  qualifiedName: 'src/widget.ts#Widget',
+  sourceRange: null,
+  confidence: { score: 1, method: 'canonicalization', reasons: ['exact'] },
+});
+const canonicalEdge: CanonicalEdge = CanonicalEdgeSchema.parse({
+  id: 'canonical:edge-call',
+  factKey: 'edge-key:repo-01/call',
+  repositoryId: 'entity:repo-01',
+  revisionId: 'entity:revision-01',
+  kind: 'CALL',
+  source: { factType: 'NODE', id: 'canonical:node-source' },
+  target: {
+    state: 'RESOLVED',
+    resolution: 'EXACT',
+    target: { factType: 'NODE', id: 'canonical:node-target' },
+  },
+  sourceRange: null,
+  confidence: { score: 1, method: 'canonicalization', reasons: ['exact'] },
+});
+const canonicalNodeRef: CanonicalNodeRef = CanonicalNodeRefSchema.parse({
+  factType: 'NODE',
+  id: 'canonical:node-01',
+});
 const acceptProviderId = (value: ProviderId): ProviderId => value;
 const acceptProviderFactId = (value: ProviderFactId): ProviderFactId => value;
 const acceptCanonicalId = (value: CanonicalId): CanonicalId => value;
@@ -73,6 +110,7 @@ const acceptEntityId = (value: EntityId): EntityId => value;
 const acceptNodeFactKey = (value: NodeFactKey): NodeFactKey => value;
 const acceptEdgeFactKey = (value: EdgeFactKey): EdgeFactKey => value;
 const acceptProviderNodeRef = (value: ProviderNodeRef): ProviderNodeRef => value;
+const acceptCanonicalNodeRef = (value: CanonicalNodeRef): CanonicalNodeRef => value;
 
 acceptProviderId(providerId);
 acceptProviderFactId(providerFactId);
@@ -82,6 +120,9 @@ acceptNodeFactKey(nodeFactKey);
 acceptEdgeFactKey(edgeFactKey);
 ProviderNodeSchema.parse(providerNode);
 ProviderEdgeSchema.parse(providerEdge);
+CanonicalNodeSchema.parse(canonicalNode);
+CanonicalEdgeSchema.parse(canonicalEdge);
+acceptCanonicalNodeRef(canonicalNodeRef);
 
 // @ts-expect-error ProviderFactId must not masquerade as ProviderId.
 acceptProviderId(providerFactId);
@@ -105,3 +146,5 @@ acceptEdgeFactKey(providerFactId);
 acceptProviderNodeRef(canonicalFactRef);
 // @ts-expect-error ProviderFactId must not masquerade as CanonicalId.
 acceptCanonicalId(providerFactId);
+// @ts-expect-error ProviderNodeRef must not masquerade as CanonicalNodeRef.
+acceptCanonicalNodeRef(providerEdge.source);

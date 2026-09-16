@@ -209,5 +209,465 @@
       "sourceRange": null,
       "confidence": { "score": 0, "method": "resolver", "reasons": ["unsupported"] }
     }
+  },
+  {
+    "id": "canonical-node-repository",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-repository",
+      "factKey": "node-key:repo-01/repository",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "kind": "REPOSITORY",
+      "name": "Repository",
+      "qualifiedName": null,
+      "sourceRange": null,
+      "confidence": { "score": 0, "method": "canonicalization", "reasons": ["exact"] }
+    }
+  },
+  {
+    "id": "canonical-node-module",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-module",
+      "factKey": "node-key:repo-01/module",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "kind": "MODULE",
+      "name": "widget",
+      "qualifiedName": "src/widget.ts",
+      "sourceRange": {
+        "sourceFileId": "entity:file-widget",
+        "startLine": 0,
+        "startColumn": 0,
+        "endLine": 10,
+        "endColumn": 0
+      },
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    }
+  },
+  {
+    "id": "canonical-node-package",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-package",
+      "factKey": "node-key:repo-01/package",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "kind": "PACKAGE",
+      "name": "widget",
+      "qualifiedName": "src",
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    }
+  },
+  {
+    "id": "canonical-node-type-class",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-type-class",
+      "factKey": "node-key:repo-01/type-class",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "kind": "TYPE",
+      "typeKind": "CLASS",
+      "name": "Widget",
+      "qualifiedName": "src/widget.ts#Widget",
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    }
+  },
+  {
+    "id": "canonical-node-type-interface",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-type-interface",
+      "factKey": "node-key:repo-01/type-interface",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "kind": "TYPE",
+      "typeKind": "INTERFACE",
+      "name": "Widget",
+      "qualifiedName": "src/widget.ts#Widget",
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    }
+  },
+  {
+    "id": "canonical-node-type-enum",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-type-enum",
+      "factKey": "node-key:repo-01/type-enum",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "kind": "TYPE",
+      "typeKind": "ENUM",
+      "name": "Widget",
+      "qualifiedName": "src/widget.ts#Widget",
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    }
+  },
+  {
+    "id": "canonical-node-type-record",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-type-record",
+      "factKey": "node-key:repo-01/type-record",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "kind": "TYPE",
+      "typeKind": "RECORD",
+      "name": "Widget",
+      "qualifiedName": "src/widget.ts#Widget",
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    }
+  },
+  {
+    "id": "canonical-node-type-annotation",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-type-annotation",
+      "factKey": "node-key:repo-01/type-annotation",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "kind": "TYPE",
+      "typeKind": "ANNOTATION",
+      "name": "Widget",
+      "qualifiedName": "src/widget.ts#Widget",
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    }
+  },
+  {
+    "id": "canonical-node-type-trait",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-type-trait",
+      "factKey": "node-key:repo-01/type-trait",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "kind": "TYPE",
+      "typeKind": "TRAIT",
+      "name": "Widget",
+      "qualifiedName": "src/widget.ts#Widget",
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    }
+  },
+  {
+    "id": "canonical-node-type-struct",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-type-struct",
+      "factKey": "node-key:repo-01/type-struct",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "kind": "TYPE",
+      "typeKind": "STRUCT",
+      "name": "Widget",
+      "qualifiedName": "src/widget.ts#Widget",
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    }
+  },
+  {
+    "id": "canonical-node-type-union",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-type-union",
+      "factKey": "node-key:repo-01/type-union",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "kind": "TYPE",
+      "typeKind": "UNION",
+      "name": "Widget",
+      "qualifiedName": "src/widget.ts#Widget",
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    }
+  },
+  {
+    "id": "canonical-node-type-other",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-type-other",
+      "factKey": "node-key:repo-01/type-other",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "kind": "TYPE",
+      "typeKind": "OTHER",
+      "name": "Widget",
+      "qualifiedName": "src/widget.ts#Widget",
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    }
+  },
+  {
+    "id": "canonical-node-symbol-method",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-symbol-method",
+      "factKey": "node-key:repo-01/symbol-method",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "kind": "SYMBOL",
+      "symbolKind": "METHOD",
+      "name": "run",
+      "qualifiedName": "src/widget.ts#Widget.run",
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    }
+  },
+  {
+    "id": "canonical-node-symbol-constructor",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-symbol-constructor",
+      "factKey": "node-key:repo-01/symbol-constructor",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "kind": "SYMBOL",
+      "symbolKind": "CONSTRUCTOR",
+      "name": "Widget",
+      "qualifiedName": "src/widget.ts#Widget.constructor",
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    }
+  },
+  {
+    "id": "canonical-node-symbol-function",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-symbol-function",
+      "factKey": "node-key:repo-01/symbol-function",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "kind": "SYMBOL",
+      "symbolKind": "FUNCTION",
+      "name": "run",
+      "qualifiedName": "src/widget.ts#run",
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    }
+  },
+  {
+    "id": "canonical-node-symbol-field",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-symbol-field",
+      "factKey": "node-key:repo-01/symbol-field",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "kind": "SYMBOL",
+      "symbolKind": "FIELD",
+      "name": "value",
+      "qualifiedName": "src/widget.ts#Widget.value",
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    }
+  },
+  {
+    "id": "canonical-node-symbol-property",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-symbol-property",
+      "factKey": "node-key:repo-01/symbol-property",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "kind": "SYMBOL",
+      "symbolKind": "PROPERTY",
+      "name": "value",
+      "qualifiedName": "src/widget.ts#Widget.value",
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    }
+  },
+  {
+    "id": "canonical-node-symbol-variable",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-symbol-variable",
+      "factKey": "node-key:repo-01/symbol-variable",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "kind": "SYMBOL",
+      "symbolKind": "VARIABLE",
+      "name": "value",
+      "qualifiedName": "src/widget.ts#value",
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    }
+  },
+  {
+    "id": "canonical-node-symbol-parameter",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-symbol-parameter",
+      "factKey": "node-key:repo-01/symbol-parameter",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "kind": "SYMBOL",
+      "symbolKind": "PARAMETER",
+      "name": "value",
+      "qualifiedName": "src/widget.ts#run.value",
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    }
+  },
+  {
+    "id": "canonical-node-symbol-constant",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-symbol-constant",
+      "factKey": "node-key:repo-01/symbol-constant",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "kind": "SYMBOL",
+      "symbolKind": "CONSTANT",
+      "name": "VALUE",
+      "qualifiedName": "src/widget.ts#VALUE",
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    }
+  },
+  {
+    "id": "canonical-node-symbol-other",
+    "target": "CANONICAL_NODE",
+    "input": {
+      "id": "canonical:node-symbol-other",
+      "factKey": "node-key:repo-01/symbol-other",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "kind": "SYMBOL",
+      "symbolKind": "OTHER",
+      "name": "value",
+      "qualifiedName": "src/widget.ts#value",
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "canonicalization", "reasons": ["exact"] }
+    }
+  },
+  {
+    "id": "canonical-edge-call-exact",
+    "target": "CANONICAL_EDGE",
+    "input": {
+      "id": "canonical:edge-call-exact",
+      "factKey": "edge-key:repo-01/call-exact",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "kind": "CALL",
+      "source": { "factType": "NODE", "id": "canonical:node-source" },
+      "target": {
+        "state": "RESOLVED",
+        "resolution": "EXACT",
+        "target": { "factType": "NODE", "id": "canonical:node-target" }
+      },
+      "sourceRange": null,
+      "confidence": { "score": 0.9, "method": "canonicalization", "reasons": ["provider support"] }
+    }
+  },
+  {
+    "id": "canonical-edge-import-heuristic",
+    "target": "CANONICAL_EDGE",
+    "input": {
+      "id": "canonical:edge-import-heuristic",
+      "factKey": "edge-key:repo-01/import-heuristic",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "kind": "IMPORT",
+      "source": { "factType": "NODE", "id": "canonical:node-source" },
+      "target": {
+        "state": "RESOLVED",
+        "resolution": "HEURISTIC",
+        "target": { "factType": "NODE", "id": "canonical:node-target" }
+      },
+      "sourceRange": null,
+      "confidence": { "score": 0.9, "method": "canonicalization", "reasons": ["provider support"] }
+    }
+  },
+  {
+    "id": "canonical-edge-reference-ambiguous",
+    "target": "CANONICAL_EDGE",
+    "input": {
+      "id": "canonical:edge-reference-ambiguous",
+      "factKey": "edge-key:repo-01/reference-ambiguous",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "kind": "REFERENCE",
+      "source": { "factType": "NODE", "id": "canonical:node-source" },
+      "target": {
+        "state": "UNRESOLVED",
+        "resolution": "AMBIGUOUS",
+        "originalHint": "Widget.run",
+        "candidates": [
+          { "factType": "NODE", "id": "canonical:node-target-a" },
+          { "factType": "NODE", "id": "canonical:node-target-b" }
+        ]
+      },
+      "sourceRange": null,
+      "confidence": { "score": 0.9, "method": "canonicalization", "reasons": ["provider support"] }
+    }
+  },
+  {
+    "id": "canonical-edge-inheritance-unresolved-empty",
+    "target": "CANONICAL_EDGE",
+    "input": {
+      "id": "canonical:edge-inheritance-unresolved-empty",
+      "factKey": "edge-key:repo-01/inheritance-unresolved-empty",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "kind": "INHERITANCE",
+      "source": { "factType": "NODE", "id": "canonical:node-source" },
+      "target": {
+        "state": "UNRESOLVED",
+        "resolution": "UNRESOLVED",
+        "originalHint": "Widget",
+        "candidates": []
+      },
+      "sourceRange": null,
+      "confidence": { "score": 0.9, "method": "canonicalization", "reasons": ["provider support"] }
+    }
+  },
+  {
+    "id": "canonical-edge-override-unresolved-retained",
+    "target": "CANONICAL_EDGE",
+    "input": {
+      "id": "canonical:edge-override-unresolved-retained",
+      "factKey": "edge-key:repo-01/override-unresolved-retained",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "kind": "OVERRIDE",
+      "source": { "factType": "NODE", "id": "canonical:node-source" },
+      "target": {
+        "state": "UNRESOLVED",
+        "resolution": "UNRESOLVED",
+        "originalHint": "Widget.run",
+        "candidates": [{ "factType": "NODE", "id": "canonical:node-target" }]
+      },
+      "sourceRange": null,
+      "confidence": { "score": 0.9, "method": "canonicalization", "reasons": ["provider support"] }
+    }
+  },
+  {
+    "id": "canonical-edge-call-unsupported",
+    "target": "CANONICAL_EDGE",
+    "input": {
+      "id": "canonical:edge-call-unsupported",
+      "factKey": "edge-key:repo-01/call-unsupported",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "kind": "CALL",
+      "source": { "factType": "NODE", "id": "canonical:node-source" },
+      "target": {
+        "state": "UNRESOLVED",
+        "resolution": "UNSUPPORTED",
+        "originalHint": "dynamic dispatch",
+        "candidates": []
+      },
+      "sourceRange": null,
+      "confidence": { "score": 0.9, "method": "canonicalization", "reasons": ["provider support"] }
+    }
   }
 ]

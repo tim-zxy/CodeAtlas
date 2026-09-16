@@ -30,7 +30,63 @@ const invalidCases = JSON.parse(
 const parsers = {
   PROVIDER_NODE: (input) => ir.parseIr(ir.ProviderNodeSchema, input),
   PROVIDER_EDGE: (input) => ir.parseIr(ir.ProviderEdgeSchema, input),
+  CANONICAL_NODE: (input) => ir.parseIr(ir.CanonicalNodeSchema, input),
+  CANONICAL_EDGE: (input) => ir.parseIr(ir.CanonicalEdgeSchema, input),
 };
+
+const codeFactEnvelopeCases = [
+  [
+    'ProviderNode',
+    {
+      schema: 'codeatlas.fixture.code-fact.provider-node',
+      version: 1,
+      payload: ir.ProviderNodeSchema,
+    },
+    'provider-node-typescript-class',
+    'provider-node-node-fact-key',
+  ],
+  [
+    'ProviderEdge',
+    {
+      schema: 'codeatlas.fixture.code-fact.provider-edge',
+      version: 1,
+      payload: ir.ProviderEdgeSchema,
+    },
+    'provider-edge-call-exact',
+    'provider-edge-unknown-field',
+  ],
+  [
+    'CanonicalNode',
+    {
+      schema: 'codeatlas.fixture.code-fact.canonical-node',
+      version: 1,
+      payload: ir.CanonicalNodeSchema,
+    },
+    'canonical-node-type-class',
+    'canonical-node-unknown-field',
+  ],
+  [
+    'CanonicalEdge',
+    {
+      schema: 'codeatlas.fixture.code-fact.canonical-edge',
+      version: 1,
+      payload: ir.CanonicalEdgeSchema,
+    },
+    'canonical-edge-call-exact',
+    'canonical-edge-unknown-field',
+  ],
+];
+
+const envelopeParsers = [
+  {
+    label: 'parseSchemaEnvelope',
+    parse: (descriptor, input) => ir.parseSchemaEnvelope(descriptor, input),
+  },
+  {
+    label: 'createSchemaEnvelopeSchema',
+    parse: (descriptor, input) => ir.parseIr(ir.createSchemaEnvelopeSchema(descriptor), input),
+  },
+];
 
 function parserFor(target) {
   const parser = parsers[target];
@@ -44,8 +100,10 @@ function assertIrError(callback, code, expectedPath) {
     captured = error;
     assert.ok(error instanceof ir.IrContractError);
     assert.equal(error.code, code);
-    assert.ok(error instanceof ir.IrValidationError);
-    assert.deepEqual(error.issues[0].path, expectedPath);
+    if (expectedPath !== undefined) {
+      assert.ok(error instanceof ir.IrValidationError);
+      assert.deepEqual(error.issues[0].path, expectedPath);
+    }
     return true;
   });
   return captured;
@@ -87,8 +145,9 @@ test('p0-code-fact-ir-v1 Fixture index is authoritative', () => {
 });
 
 test('Provider fact valid Fixtures parse, JSON-round-trip, and preserve exact values', () => {
-  assert.equal(validCases.length, 8);
-  for (const fixture of validCases) {
+  const providerFixtures = validCases.filter(({ target }) => target.startsWith('PROVIDER_'));
+  assert.equal(providerFixtures.length, 8);
+  for (const fixture of providerFixtures) {
     const parser = parserFor(fixture.target);
     const first = parser(fixture.input);
     const second = parser(JSON.parse(JSON.stringify(first)));
@@ -97,8 +156,8 @@ test('Provider fact valid Fixtures parse, JSON-round-trip, and preserve exact va
   }
 });
 
-test('Provider fact invalid Fixtures expose the declared first issue path without rejected values', () => {
-  assert.equal(invalidCases.length, 23);
+test('Code Fact invalid Fixtures expose the declared first issue path without rejected values', () => {
+  assert.ok(invalidCases.length > 23);
   for (const fixture of invalidCases) {
     const error = assertIrError(
       () => parserFor(fixture.target)(fixture.input),
@@ -115,6 +174,214 @@ test('Provider fact invalid Fixtures expose the declared first issue path withou
     }
   }
 });
+
+test('CanonicalNode and CanonicalEdge valid Fixtures cover every closed kind, subkind, and resolution variant', () => {
+  const canonicalNodes = validCases.filter(({ target }) => target === 'CANONICAL_NODE');
+  const canonicalEdges = validCases.filter(({ target }) => target === 'CANONICAL_EDGE');
+  assert.deepEqual(
+    canonicalNodes.map(({ input }) => input.kind).sort(),
+    [
+      'MODULE',
+      'PACKAGE',
+      'REPOSITORY',
+      ...Array(9).fill('SYMBOL'),
+      ...Array(9).fill('TYPE'),
+    ].sort(),
+  );
+  assert.deepEqual(
+    canonicalNodes
+      .filter(({ input }) => input.kind === 'TYPE')
+      .map(({ input }) => input.typeKind)
+      .sort(),
+    ['ANNOTATION', 'CLASS', 'ENUM', 'INTERFACE', 'OTHER', 'RECORD', 'STRUCT', 'TRAIT', 'UNION'],
+  );
+  assert.deepEqual(
+    canonicalNodes
+      .filter(({ input }) => input.kind === 'SYMBOL')
+      .map(({ input }) => input.symbolKind)
+      .sort(),
+    [
+      'CONSTANT',
+      'CONSTRUCTOR',
+      'FIELD',
+      'FUNCTION',
+      'METHOD',
+      'OTHER',
+      'PARAMETER',
+      'PROPERTY',
+      'VARIABLE',
+    ],
+  );
+  assert.deepEqual(canonicalEdges.map(({ input }) => input.kind).sort(), [
+    'CALL',
+    'CALL',
+    'IMPORT',
+    'INHERITANCE',
+    'OVERRIDE',
+    'REFERENCE',
+  ]);
+  assert.deepEqual(canonicalEdges.map(({ input }) => input.target.resolution).sort(), [
+    'AMBIGUOUS',
+    'EXACT',
+    'HEURISTIC',
+    'UNRESOLVED',
+    'UNRESOLVED',
+    'UNSUPPORTED',
+  ]);
+  for (const fixture of [...canonicalNodes, ...canonicalEdges]) {
+    const parsed = parserFor(fixture.target)(fixture.input);
+    assert.deepEqual(parsed, fixture.input, fixture.id);
+    assert.deepEqual(
+      JSON.parse(JSON.stringify(parsed)),
+      fixture.input,
+      fixture.id + ' JSON round-trip',
+    );
+  }
+});
+
+test('CanonicalNode and CanonicalEdge reject explicit undefined for required nullable fields', () => {
+  const node = validCases.find(({ id }) => id === 'canonical-node-type-class')?.input;
+  const edge = validCases.find(({ id }) => id === 'canonical-edge-call-exact')?.input;
+  assert.ok(node);
+  assert.ok(edge);
+  for (const [target, base] of [
+    ['CANONICAL_NODE', node],
+    ['CANONICAL_EDGE', edge],
+  ]) {
+    assertIrError(
+      () => parserFor(target)({ ...base, sourceRange: undefined }),
+      'IR_VALIDATION_FAILED',
+      ['sourceRange'],
+    );
+  }
+  assertIrError(
+    () => parserFor('CANONICAL_NODE')({ ...node, qualifiedName: undefined }),
+    'IR_VALIDATION_FAILED',
+    ['qualifiedName'],
+  );
+});
+
+test('Canonical node variants reject every forbidden subkind field', () => {
+  for (const id of [
+    'canonical-node-repository',
+    'canonical-node-module',
+    'canonical-node-package',
+  ]) {
+    const node = validCases.find((fixture) => fixture.id === id)?.input;
+    assert.ok(node, `${id} must be present`);
+    for (const subkind of [{ typeKind: 'CLASS' }, { symbolKind: 'METHOD' }]) {
+      assertIrError(
+        () => parserFor('CANONICAL_NODE')({ ...node, ...subkind }),
+        'IR_VALIDATION_FAILED',
+        [],
+      );
+    }
+  }
+});
+
+test('CanonicalEdge applies the target invalid matrix at nested edge paths', () => {
+  const edge = validCases.find(({ id }) => id === 'canonical-edge-call-exact')?.input;
+  assert.ok(edge);
+  const source = edge.source;
+  const target = edge.target.target;
+  const candidate = { factType: 'NODE', id: 'canonical:node-candidate' };
+  const invalidTargets = [
+    { state: 'RESOLVED', resolution: 'AMBIGUOUS', target },
+    { state: 'UNRESOLVED', resolution: 'EXACT', originalHint: 'Widget.run', candidates: [] },
+    { state: 'PENDING', resolution: 'EXACT', target },
+    { state: 'RESOLVED', resolution: 'PREDICTED', target },
+    { state: 'RESOLVED', resolution: 'EXACT', target, originalHint: 'Widget.run', candidates: [] },
+    {
+      state: 'UNRESOLVED',
+      resolution: 'AMBIGUOUS',
+      originalHint: 'Widget.run',
+      candidates: [candidate],
+    },
+    {
+      state: 'UNRESOLVED',
+      resolution: 'AMBIGUOUS',
+      originalHint: 'Widget.run',
+      candidates: [candidate, candidate],
+    },
+    {
+      state: 'UNRESOLVED',
+      resolution: 'UNRESOLVED',
+      originalHint: 'Widget.run',
+      candidates: [candidate, candidate],
+    },
+    {
+      state: 'UNRESOLVED',
+      resolution: 'UNSUPPORTED',
+      originalHint: 'Widget.run',
+      candidates: [candidate],
+    },
+    { state: 'RESOLVED', resolution: 'EXACT', target: { ...target, factType: 'EDGE' } },
+  ];
+  for (const invalidTarget of invalidTargets) {
+    assertIrError(
+      () => parserFor('CANONICAL_EDGE')({ ...edge, source, target: invalidTarget }),
+      'IR_VALIDATION_FAILED',
+    );
+  }
+});
+
+for (const [label, descriptor, validFixtureId, invalidFixtureId] of codeFactEnvelopeCases) {
+  test(`${label} version-1 envelope round-trips through both public APIs`, () => {
+    const fixture = validCases.find(({ id }) => id === validFixtureId);
+    assert.ok(fixture, `${validFixtureId} must be present`);
+    const input = { schema: descriptor.schema, version: 1, payload: fixture.input };
+    for (const envelopeParser of envelopeParsers) {
+      const first = envelopeParser.parse(descriptor, input);
+      const second = envelopeParser.parse(descriptor, JSON.parse(JSON.stringify(first)));
+      assert.deepEqual(first, input, envelopeParser.label);
+      assert.deepEqual(second, first, envelopeParser.label);
+    }
+  });
+
+  test(`${label} version-1 envelope rejects a structured payload through both public APIs`, () => {
+    const fixture = invalidCases.find(({ id }) => id === invalidFixtureId);
+    assert.ok(fixture, `${invalidFixtureId} must be present`);
+    const input = { schema: descriptor.schema, version: 1, payload: fixture.input };
+    for (const envelopeParser of envelopeParsers) {
+      assertIrError(() => envelopeParser.parse(descriptor, input), 'IR_VALIDATION_FAILED', [
+        'payload',
+      ]);
+    }
+  });
+
+  test(`${label} envelope validates schema then version before payload`, () => {
+    const fixture = invalidCases.find(({ id }) => id === invalidFixtureId);
+    assert.ok(fixture, `${invalidFixtureId} must be present`);
+    assertIrError(
+      () =>
+        ir.parseSchemaEnvelope(descriptor, {
+          schema: 'codeatlas.fixture.code-fact.wrong',
+          version: 2,
+          payload: fixture.input,
+        }),
+      'SCHEMA_MISMATCH',
+    );
+    assertIrError(
+      () =>
+        ir.parseSchemaEnvelope(descriptor, {
+          schema: descriptor.schema,
+          version: 2,
+          payload: fixture.input,
+        }),
+      'UNSUPPORTED_SCHEMA_VERSION',
+    );
+    assertIrError(
+      () =>
+        ir.parseSchemaEnvelope(descriptor, {
+          schema: descriptor.schema,
+          version: 1,
+          payload: fixture.input,
+        }),
+      'IR_VALIDATION_FAILED',
+      ['payload'],
+    );
+  });
+}
 
 test('ProviderNode rejects explicit undefined for required nullable fields', () => {
   const base = validCases.find(({ id }) => id === 'provider-node-typescript-class')?.input;

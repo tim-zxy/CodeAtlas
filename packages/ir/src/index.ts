@@ -56,6 +56,32 @@ export type {
 export { ProviderEdgeSchema, ProviderNodeSchema } from './provider-code-fact.js';
 export type { ProviderEdge, ProviderNode } from './provider-code-fact.js';
 export {
+  CanonicalEdgeSchema,
+  CanonicalNodeSchema,
+  CodeEdgeKindSchema,
+  CodeNodeKindSchema,
+  CodeSymbolKindSchema,
+  CodeTypeKindSchema,
+  ModuleCodeNodeSchema,
+  PackageCodeNodeSchema,
+  RepositoryCodeNodeSchema,
+  SymbolCodeNodeSchema,
+  TypeCodeNodeSchema,
+} from './canonical-code-fact.js';
+export type {
+  CanonicalEdge,
+  CanonicalNode,
+  CodeEdgeKind,
+  CodeNodeKind,
+  CodeSymbolKind,
+  CodeTypeKind,
+  ModuleCodeNode,
+  PackageCodeNode,
+  RepositoryCodeNode,
+  SymbolCodeNode,
+  TypeCodeNode,
+} from './canonical-code-fact.js';
+export {
   JsonValueSchema,
   SchemaEnvelopeSchema,
   createSchemaEnvelopeSchema,
