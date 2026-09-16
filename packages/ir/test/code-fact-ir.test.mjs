@@ -35,16 +35,11 @@ test('p0-code-fact-ir-v1 Fixture index is authoritative', () => {
   assert.ok(Array.isArray(invalidCases));
 });
 
-test('Fixture index is validated before resolving either child path', async () => {
-  const runnerSource = await readFile(new URL(import.meta.url), 'utf8');
-  const validationOffset = runnerSource.indexOf('assertFixtureIndex(fixtureIndex);');
-  const validCasesOffset = runnerSource.indexOf('new URL(fixtureIndex.validCases, fixtureRoot)');
-  const invalidCasesOffset = runnerSource.indexOf(
-    'new URL(fixtureIndex.invalidCases, fixtureRoot)',
+test('Fixture index rejects a redirected child path before use', () => {
+  assert.throws(
+    () => assertFixtureIndex({ ...fixtureIndex, validCases: 'redirected/cases.json' }),
+    assert.AssertionError,
   );
-
-  assert.ok(validationOffset < validCasesOffset);
-  assert.ok(validationOffset < invalidCasesOffset);
 });
 
 test('Code Fact scalar schemas preserve exact values and reject blank or padded values', () => {
