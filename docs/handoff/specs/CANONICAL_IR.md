@@ -191,9 +191,130 @@ Knowledge or Runtime behavior.
 
 ## Code IR
 
-ProviderNode and ProviderEdge retain `providerId` and `providerFactId`. CanonicalNode and CanonicalEdge use stable fact keys and aggregate evidence. Initial node kinds cover repository/module/package/type/symbol; initial edge kinds cover import/reference/call/inheritance/override. A target is either a resolved `EntityRef` or an `UnresolvedTarget` with the original hint and candidate references.
+P0-W1-003 defines strict, JSON-safe Provider Fact and Canonical Code Fact
+contracts. They validate already-observed fact values only; they do not
+normalize, merge, persist, activate, or otherwise publish facts. Provider and
+Canonical facts are deliberately separate shapes: a Provider fact never
+substitutes for a Canonical fact, and no public fact carries an arbitrary
+attributes or Provider-payload bag.
 
-No normalizer may invent a target to satisfy a non-null constraint.
+### Code Fact identity and references
+
+The following exported schemas and schema-inferred types are separately
+branded, exact, non-empty, non-blank strings without surrounding whitespace:
+`ProviderFactIdSchema` / `ProviderFactId`, `NodeFactKeySchema` / `NodeFactKey`,
+`EdgeFactKeySchema` / `EdgeFactKey`, `CodeFactNameSchema` / `CodeFactName`,
+`QualifiedCodeFactNameSchema` / `QualifiedCodeFactName`,
+`ProviderFactKindSchema` / `ProviderFactKind`, and
+`UnresolvedTargetHintSchema` / `UnresolvedTargetHint`. Parsing preserves each
+accepted string exactly: it does not trim, normalize, interpret a prefix,
+derive identity, or compute a FactKey.
+
+`ProviderFactId`, `NodeFactKey`, `EdgeFactKey`, `EntityId`, `CanonicalId`, and
+`ProviderId` are non-interchangeable identity families. `FactTypeSchema` /
+`FactType` is exactly `NODE | EDGE`. `ProviderFactRefSchema` /
+`ProviderFactRef` contains `factType`, `providerId: ProviderId`, and
+`providerFactId: ProviderFactId`; `CanonicalFactRefSchema` /
+`CanonicalFactRef` contains `factType` and `id: CanonicalId`.
+`ProviderNodeRefSchema` / `ProviderNodeRef` and `CanonicalNodeRefSchema` /
+`CanonicalNodeRef` narrow `factType` to `NODE`. Edge sources, resolved targets,
+and target candidates use only the corresponding Node reference; an edge
+reference cannot be a graph endpoint.
+
+`providerSnapshotId: EntityId` is observation provenance on a Provider fact.
+It is not part of Provider Fact identity or `ProviderFactRef`. References do
+not assert that a referenced fact exists, belongs to a repository or revision,
+or is graph-consistent; those checks require graph or storage context.
+
+### Target resolution
+
+`ProviderTargetSchema` / `ProviderTarget` and `CanonicalTargetSchema` /
+`CanonicalTarget` are parallel strict discriminated unions with their respective
+Node references. A resolved target is exactly
+`{ state: 'RESOLVED', resolution: 'EXACT' | 'HEURISTIC', target }`; it carries
+no hint or candidates. A non-resolved target is exactly
+`{ state: 'UNRESOLVED', resolution: 'AMBIGUOUS' | 'UNRESOLVED' |
+'UNSUPPORTED', originalHint, candidates }`.
+
+`AMBIGUOUS` requires at least two unique candidates, `UNRESOLVED` permits zero
+or more unique candidates, and `UNSUPPORTED` requires exactly zero candidates.
+Provider candidates are unique by `(providerId, providerFactId)`; Canonical
+candidates are unique by `CanonicalId`. Candidate array order is preserved.
+Validation neither sorts nor deduplicates candidates, infers a resolution from
+candidate count, nor auto-selects or promotes a candidate. No normalizer may
+invent a target to satisfy a non-null constraint.
+
+### Provider facts
+
+`ProviderNodeSchema` / `ProviderNode` is a strict record containing
+`providerId`, `providerFactId`, `providerSnapshotId`, `repositoryId`,
+`revisionId`, `providerKind`, `name`, `qualifiedName`, `sourceRange`, and
+`confidence`. `ProviderEdgeSchema` / `ProviderEdge` is a strict record
+containing `providerId`, `providerFactId`, `providerSnapshotId`, `repositoryId`,
+`revisionId`, `providerKind`, `source`, `target`, `sourceRange`, and
+`confidence`. `qualifiedName` and `sourceRange` are required nullable fields:
+they must contain a valid value or `null`, and explicit `undefined` is rejected.
+
+Provider facts retain opaque Provider-native `providerKind` but contain no
+`CanonicalId`, `NodeFactKey`, or `EdgeFactKey`. For a `ProviderEdge`, its
+source, resolved target, and every non-resolved candidate must have the same
+`providerId` as the edge. A mismatch is rejected at the nested reference's
+`providerId` path; validation performs no Provider lookup or Provider-ID-format
+interpretation.
+
+### Canonical facts
+
+`CodeNodeKindSchema` / `CodeNodeKind` is exactly `REPOSITORY | MODULE | PACKAGE
+| TYPE | SYMBOL`. Every Canonical node has `id: CanonicalId`,
+`factKey: NodeFactKey`, `repositoryId`, `revisionId`, `name`, `qualifiedName`,
+`sourceRange`, and required `confidence`. `CanonicalNodeSchema` /
+`CanonicalNode` is a strict discriminated union: `REPOSITORY`, `MODULE`, and
+`PACKAGE` have no subkind; `TYPE` requires `typeKind` and rejects `symbolKind`;
+and `SYMBOL` requires `symbolKind` and rejects `typeKind`.
+
+Canonical-node `qualifiedName` and the Canonical node and edge `sourceRange`
+fields are required nullable fields: each must contain a valid value or `null`,
+and explicit `undefined` is rejected.
+
+`CodeTypeKindSchema` / `CodeTypeKind` is exactly `CLASS | INTERFACE | ENUM |
+RECORD | ANNOTATION | TRAIT | STRUCT | UNION | OTHER`.
+`CodeSymbolKindSchema` / `CodeSymbolKind` is exactly `METHOD | CONSTRUCTOR |
+FUNCTION | FIELD | PROPERTY | VARIABLE | PARAMETER | CONSTANT | OTHER`.
+Unknown, cross-kind, missing, and forbidden subkind fields are invalid. These
+are language-neutral Canonical categories; Provider-specific kinds remain on
+Provider facts until normalization.
+
+`CodeEdgeKindSchema` / `CodeEdgeKind` is exactly `IMPORT | REFERENCE | CALL |
+INHERITANCE | OVERRIDE`. `CanonicalEdgeSchema` / `CanonicalEdge` is a strict
+record containing `id: CanonicalId`, `factKey: EdgeFactKey`, `repositoryId`,
+`revisionId`, `kind`, `source: CanonicalNodeRef`, `target: CanonicalTarget`,
+`sourceRange`, and required `confidence`. Canonical facts contain no
+`ProviderId`, `ProviderFactId`, `providerSnapshotId`, or Provider-native kind.
+FactKey uniqueness and target existence are graph-level responsibilities, not
+single-object parsing rules.
+
+Every Provider and Canonical fact requires Common IR `Confidence`; this task
+validates only the supplied value. Resolution belongs solely to an edge target,
+and nodes carry no artificial resolution.
+
+### Validation, errors, and phase boundary
+
+All public Code Fact objects are strict and JSON-safe. Unknown fields, invalid
+brands or enums, target cardinality or uniqueness failures, and cross-field
+Provider-edge failures use `IR_VALIDATION_FAILED`; envelope schema disagreement
+uses `SCHEMA_MISMATCH`; and envelope version disagreement uses
+`UNSUPPORTED_SCHEMA_VERSION`. Structured paths identify the relevant field;
+messages are controlled and at most 128 characters, do not copy rejected values
+or source text, and failed parsing returns no partial fact or mutated state.
+
+This task explicitly excludes FactKey computation, hashing, canonicalization,
+normalization, graph-wide uniqueness, referential integrity, Evidence,
+`FactEvidence`, `ProviderFactBinding`, merge or aggregation, storage,
+activation, SQLite, migrations, Native IPC, parsing, scanning, Provider or
+plugin execution, graph queries, `ExecutionGraph`, `RuntimeFlow`,
+`BusinessFlow`, Knowledge, LLM, embedding, network, watcher, and daemon
+behavior. Evidence belongs to P0-W1-004. P05-W4-001 performs normalization and
+FactKey generation; P05-W4-002 performs merge and Confidence aggregation.
 
 ## Runtime IR
 
