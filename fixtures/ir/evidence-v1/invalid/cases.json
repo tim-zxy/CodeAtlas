@@ -52,5 +52,500 @@
     },
     "errorCode": "IR_VALIDATION_FAILED",
     "path": ["canonicalFact", "id"]
+  },
+  {
+    "id": "evidence-missing-id",
+    "target": "EVIDENCE",
+    "input": {
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerSnapshotId": "entity:snapshot-a",
+      "providerFact": {
+        "factType": "NODE",
+        "providerId": "provider:a",
+        "providerFactId": "provider-fact:node-a"
+      },
+      "status": "ACTIVE"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["id"]
+  },
+  {
+    "id": "evidence-missing-repository-id",
+    "target": "EVIDENCE",
+    "input": {
+      "id": "evidence:node-a",
+      "revisionId": "entity:revision-01",
+      "providerSnapshotId": "entity:snapshot-a",
+      "providerFact": {
+        "factType": "NODE",
+        "providerId": "provider:a",
+        "providerFactId": "provider-fact:node-a"
+      },
+      "status": "ACTIVE"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["repositoryId"]
+  },
+  {
+    "id": "evidence-missing-revision-id",
+    "target": "EVIDENCE",
+    "input": {
+      "id": "evidence:node-a",
+      "repositoryId": "entity:repo-01",
+      "providerSnapshotId": "entity:snapshot-a",
+      "providerFact": {
+        "factType": "NODE",
+        "providerId": "provider:a",
+        "providerFactId": "provider-fact:node-a"
+      },
+      "status": "ACTIVE"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["revisionId"]
+  },
+  {
+    "id": "evidence-missing-provider-snapshot-id",
+    "target": "EVIDENCE",
+    "input": {
+      "id": "evidence:node-a",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerFact": {
+        "factType": "NODE",
+        "providerId": "provider:a",
+        "providerFactId": "provider-fact:node-a"
+      },
+      "status": "ACTIVE"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["providerSnapshotId"]
+  },
+  {
+    "id": "evidence-missing-provider-fact",
+    "target": "EVIDENCE",
+    "input": {
+      "id": "evidence:node-a",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerSnapshotId": "entity:snapshot-a",
+      "status": "ACTIVE"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["providerFact"]
+  },
+  {
+    "id": "evidence-missing-status",
+    "target": "EVIDENCE",
+    "input": {
+      "id": "evidence:node-a",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerSnapshotId": "entity:snapshot-a",
+      "providerFact": {
+        "factType": "NODE",
+        "providerId": "provider:a",
+        "providerFactId": "provider-fact:node-a"
+      }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["status"]
+  },
+  {
+    "id": "evidence-id-wrong-type",
+    "target": "EVIDENCE",
+    "input": {
+      "id": 1,
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerSnapshotId": "entity:snapshot-a",
+      "providerFact": {
+        "factType": "NODE",
+        "providerId": "provider:a",
+        "providerFactId": "provider-fact:node-a"
+      },
+      "status": "ACTIVE"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["id"]
+  },
+  {
+    "id": "evidence-repository-id-wrong-type",
+    "target": "EVIDENCE",
+    "input": {
+      "id": "evidence:node-a",
+      "repositoryId": 1,
+      "revisionId": "entity:revision-01",
+      "providerSnapshotId": "entity:snapshot-a",
+      "providerFact": {
+        "factType": "NODE",
+        "providerId": "provider:a",
+        "providerFactId": "provider-fact:node-a"
+      },
+      "status": "ACTIVE"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["repositoryId"]
+  },
+  {
+    "id": "evidence-revision-id-wrong-type",
+    "target": "EVIDENCE",
+    "input": {
+      "id": "evidence:node-a",
+      "repositoryId": "entity:repo-01",
+      "revisionId": 1,
+      "providerSnapshotId": "entity:snapshot-a",
+      "providerFact": {
+        "factType": "NODE",
+        "providerId": "provider:a",
+        "providerFactId": "provider-fact:node-a"
+      },
+      "status": "ACTIVE"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["revisionId"]
+  },
+  {
+    "id": "evidence-provider-snapshot-id-wrong-type",
+    "target": "EVIDENCE",
+    "input": {
+      "id": "evidence:node-a",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerSnapshotId": 1,
+      "providerFact": {
+        "factType": "NODE",
+        "providerId": "provider:a",
+        "providerFactId": "provider-fact:node-a"
+      },
+      "status": "ACTIVE"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["providerSnapshotId"]
+  },
+  {
+    "id": "evidence-provider-fact-wrong-type",
+    "target": "EVIDENCE",
+    "input": {
+      "id": "evidence:node-a",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerSnapshotId": "entity:snapshot-a",
+      "providerFact": 1,
+      "status": "ACTIVE"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["providerFact"]
+  },
+  {
+    "id": "evidence-status-wrong-type",
+    "target": "EVIDENCE",
+    "input": {
+      "id": "evidence:node-a",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerSnapshotId": "entity:snapshot-a",
+      "providerFact": {
+        "factType": "NODE",
+        "providerId": "provider:a",
+        "providerFactId": "provider-fact:node-a"
+      },
+      "status": 1
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["status"]
+  },
+  {
+    "id": "evidence-unknown-key",
+    "target": "EVIDENCE",
+    "input": {
+      "id": "evidence:node-a",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerSnapshotId": "entity:snapshot-a",
+      "providerFact": {
+        "factType": "NODE",
+        "providerId": "provider:a",
+        "providerFactId": "provider-fact:node-a"
+      },
+      "status": "ACTIVE",
+      "extra": true
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
+  },
+  {
+    "id": "evidence-blank-id",
+    "target": "EVIDENCE",
+    "input": {
+      "id": "",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerSnapshotId": "entity:snapshot-a",
+      "providerFact": {
+        "factType": "NODE",
+        "providerId": "provider:a",
+        "providerFactId": "provider-fact:node-a"
+      },
+      "status": "ACTIVE"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["id"]
+  },
+  {
+    "id": "evidence-padded-id",
+    "target": "EVIDENCE",
+    "input": {
+      "id": " evidence:node-a ",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerSnapshotId": "entity:snapshot-a",
+      "providerFact": {
+        "factType": "NODE",
+        "providerId": "provider:a",
+        "providerFactId": "provider-fact:node-a"
+      },
+      "status": "ACTIVE"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["id"]
+  },
+  {
+    "id": "evidence-canonical-reference-as-provider-reference",
+    "target": "EVIDENCE",
+    "input": {
+      "id": "evidence:node-a",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerSnapshotId": "entity:snapshot-a",
+      "providerFact": { "factType": "NODE", "id": "canonical:node-01" },
+      "status": "ACTIVE"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["providerFact", "providerId"]
+  },
+  {
+    "id": "fact-evidence-missing-fact",
+    "target": "FACT_EVIDENCE",
+    "input": { "evidenceId": "evidence:node-a" },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["fact"]
+  },
+  {
+    "id": "fact-evidence-missing-evidence-id",
+    "target": "FACT_EVIDENCE",
+    "input": { "fact": { "factType": "NODE", "id": "canonical:node-01" } },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["evidenceId"]
+  },
+  {
+    "id": "fact-evidence-fact-wrong-type",
+    "target": "FACT_EVIDENCE",
+    "input": { "fact": 1, "evidenceId": "evidence:node-a" },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["fact"]
+  },
+  {
+    "id": "fact-evidence-id-wrong-type",
+    "target": "FACT_EVIDENCE",
+    "input": { "fact": { "factType": "NODE", "id": "canonical:node-01" }, "evidenceId": 1 },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["evidenceId"]
+  },
+  {
+    "id": "fact-evidence-unknown-key",
+    "target": "FACT_EVIDENCE",
+    "input": {
+      "fact": { "factType": "NODE", "id": "canonical:node-01" },
+      "evidenceId": "evidence:node-a",
+      "extra": true
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
+  },
+  {
+    "id": "fact-evidence-padded-id",
+    "target": "FACT_EVIDENCE",
+    "input": {
+      "fact": { "factType": "NODE", "id": "canonical:node-01" },
+      "evidenceId": " evidence:node-a"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["evidenceId"]
+  },
+  {
+    "id": "fact-evidence-provider-reference-as-canonical-reference",
+    "target": "FACT_EVIDENCE",
+    "input": {
+      "fact": {
+        "factType": "NODE",
+        "providerId": "provider:a",
+        "providerFactId": "provider-fact:node-a"
+      },
+      "evidenceId": "evidence:node-a"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["fact", "id"]
+  },
+  {
+    "id": "provider-binding-missing-provider-fact",
+    "target": "PROVIDER_FACT_BINDING",
+    "input": {
+      "providerSnapshotId": "entity:snapshot-a",
+      "canonicalFact": { "factType": "NODE", "id": "canonical:node-01" },
+      "evidenceId": "evidence:node-a"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["providerFact"]
+  },
+  {
+    "id": "provider-binding-missing-provider-snapshot-id",
+    "target": "PROVIDER_FACT_BINDING",
+    "input": {
+      "providerFact": {
+        "factType": "NODE",
+        "providerId": "provider:a",
+        "providerFactId": "provider-fact:node-a"
+      },
+      "canonicalFact": { "factType": "NODE", "id": "canonical:node-01" },
+      "evidenceId": "evidence:node-a"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["providerSnapshotId"]
+  },
+  {
+    "id": "provider-binding-missing-canonical-fact",
+    "target": "PROVIDER_FACT_BINDING",
+    "input": {
+      "providerFact": {
+        "factType": "NODE",
+        "providerId": "provider:a",
+        "providerFactId": "provider-fact:node-a"
+      },
+      "providerSnapshotId": "entity:snapshot-a",
+      "evidenceId": "evidence:node-a"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["canonicalFact"]
+  },
+  {
+    "id": "provider-binding-missing-evidence-id",
+    "target": "PROVIDER_FACT_BINDING",
+    "input": {
+      "providerFact": {
+        "factType": "NODE",
+        "providerId": "provider:a",
+        "providerFactId": "provider-fact:node-a"
+      },
+      "providerSnapshotId": "entity:snapshot-a",
+      "canonicalFact": { "factType": "NODE", "id": "canonical:node-01" }
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["evidenceId"]
+  },
+  {
+    "id": "provider-binding-provider-fact-wrong-type",
+    "target": "PROVIDER_FACT_BINDING",
+    "input": {
+      "providerFact": 1,
+      "providerSnapshotId": "entity:snapshot-a",
+      "canonicalFact": { "factType": "NODE", "id": "canonical:node-01" },
+      "evidenceId": "evidence:node-a"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["providerFact"]
+  },
+  {
+    "id": "provider-binding-provider-snapshot-id-wrong-type",
+    "target": "PROVIDER_FACT_BINDING",
+    "input": {
+      "providerFact": {
+        "factType": "NODE",
+        "providerId": "provider:a",
+        "providerFactId": "provider-fact:node-a"
+      },
+      "providerSnapshotId": 1,
+      "canonicalFact": { "factType": "NODE", "id": "canonical:node-01" },
+      "evidenceId": "evidence:node-a"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["providerSnapshotId"]
+  },
+  {
+    "id": "provider-binding-canonical-fact-wrong-type",
+    "target": "PROVIDER_FACT_BINDING",
+    "input": {
+      "providerFact": {
+        "factType": "NODE",
+        "providerId": "provider:a",
+        "providerFactId": "provider-fact:node-a"
+      },
+      "providerSnapshotId": "entity:snapshot-a",
+      "canonicalFact": 1,
+      "evidenceId": "evidence:node-a"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["canonicalFact"]
+  },
+  {
+    "id": "provider-binding-evidence-id-wrong-type",
+    "target": "PROVIDER_FACT_BINDING",
+    "input": {
+      "providerFact": {
+        "factType": "NODE",
+        "providerId": "provider:a",
+        "providerFactId": "provider-fact:node-a"
+      },
+      "providerSnapshotId": "entity:snapshot-a",
+      "canonicalFact": { "factType": "NODE", "id": "canonical:node-01" },
+      "evidenceId": 1
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["evidenceId"]
+  },
+  {
+    "id": "provider-binding-unknown-key",
+    "target": "PROVIDER_FACT_BINDING",
+    "input": {
+      "providerFact": {
+        "factType": "NODE",
+        "providerId": "provider:a",
+        "providerFactId": "provider-fact:node-a"
+      },
+      "providerSnapshotId": "entity:snapshot-a",
+      "canonicalFact": { "factType": "NODE", "id": "canonical:node-01" },
+      "evidenceId": "evidence:node-a",
+      "extra": true
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": []
+  },
+  {
+    "id": "provider-binding-blank-id",
+    "target": "PROVIDER_FACT_BINDING",
+    "input": {
+      "providerFact": {
+        "factType": "NODE",
+        "providerId": "provider:a",
+        "providerFactId": "provider-fact:node-a"
+      },
+      "providerSnapshotId": "entity:snapshot-a",
+      "canonicalFact": { "factType": "NODE", "id": "canonical:node-01" },
+      "evidenceId": ""
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["evidenceId"]
+  },
+  {
+    "id": "provider-binding-canonical-reference-as-provider-reference",
+    "target": "PROVIDER_FACT_BINDING",
+    "input": {
+      "providerFact": { "factType": "NODE", "id": "canonical:node-01" },
+      "providerSnapshotId": "entity:snapshot-a",
+      "canonicalFact": { "factType": "NODE", "id": "canonical:node-01" },
+      "evidenceId": "evidence:node-a"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["providerFact", "providerId"]
   }
 ]

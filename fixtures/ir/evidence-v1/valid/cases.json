@@ -16,11 +16,67 @@
     }
   },
   {
+    "id": "evidence-active-node-b",
+    "target": "EVIDENCE",
+    "input": {
+      "id": "evidence:node-b",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerSnapshotId": "entity:snapshot-b",
+      "providerFact": {
+        "factType": "NODE",
+        "providerId": "provider:b",
+        "providerFactId": "provider-fact:node-b"
+      },
+      "status": "ACTIVE"
+    }
+  },
+  {
+    "id": "evidence-superseded-node-a",
+    "target": "EVIDENCE",
+    "input": {
+      "id": "evidence:node-a",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerSnapshotId": "entity:snapshot-a",
+      "providerFact": {
+        "factType": "NODE",
+        "providerId": "provider:a",
+        "providerFactId": "provider-fact:node-a"
+      },
+      "status": "SUPERSEDED"
+    }
+  },
+  {
+    "id": "evidence-invalidated-node-a",
+    "target": "EVIDENCE",
+    "input": {
+      "id": "evidence:node-a",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerSnapshotId": "entity:snapshot-a",
+      "providerFact": {
+        "factType": "NODE",
+        "providerId": "provider:a",
+        "providerFactId": "provider-fact:node-a"
+      },
+      "status": "INVALIDATED"
+    }
+  },
+  {
     "id": "fact-evidence-node-a",
     "target": "FACT_EVIDENCE",
     "input": {
       "fact": { "factType": "NODE", "id": "canonical:node-01" },
       "evidenceId": "evidence:node-a"
+    }
+  },
+  {
+    "id": "fact-evidence-node-b",
+    "target": "FACT_EVIDENCE",
+    "input": {
+      "fact": { "factType": "NODE", "id": "canonical:node-01" },
+      "evidenceId": "evidence:node-b"
     }
   },
   {
@@ -35,6 +91,58 @@
       "providerSnapshotId": "entity:snapshot-a",
       "canonicalFact": { "factType": "NODE", "id": "canonical:node-01" },
       "evidenceId": "evidence:node-a"
+    }
+  },
+  {
+    "id": "provider-binding-node-b",
+    "target": "PROVIDER_FACT_BINDING",
+    "input": {
+      "providerFact": {
+        "factType": "NODE",
+        "providerId": "provider:b",
+        "providerFactId": "provider-fact:node-b"
+      },
+      "providerSnapshotId": "entity:snapshot-b",
+      "canonicalFact": { "factType": "NODE", "id": "canonical:node-01" },
+      "evidenceId": "evidence:node-b"
+    }
+  },
+  {
+    "id": "evidence-active-edge-a",
+    "target": "EVIDENCE",
+    "input": {
+      "id": "evidence:edge-a",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerSnapshotId": "entity:snapshot-a",
+      "providerFact": {
+        "factType": "EDGE",
+        "providerId": "provider:a",
+        "providerFactId": "provider-fact:edge-a"
+      },
+      "status": "ACTIVE"
+    }
+  },
+  {
+    "id": "fact-evidence-edge-a",
+    "target": "FACT_EVIDENCE",
+    "input": {
+      "fact": { "factType": "EDGE", "id": "canonical:edge-01" },
+      "evidenceId": "evidence:edge-a"
+    }
+  },
+  {
+    "id": "provider-binding-edge-a",
+    "target": "PROVIDER_FACT_BINDING",
+    "input": {
+      "providerFact": {
+        "factType": "EDGE",
+        "providerId": "provider:a",
+        "providerFactId": "provider-fact:edge-a"
+      },
+      "providerSnapshotId": "entity:snapshot-a",
+      "canonicalFact": { "factType": "EDGE", "id": "canonical:edge-01" },
+      "evidenceId": "evidence:edge-a"
     }
   }
 ]

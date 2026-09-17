@@ -22,6 +22,72 @@ const parsers = {
   FACT_EVIDENCE: (input) => ir.parseIr(ir.FactEvidenceSchema, input),
   PROVIDER_FACT_BINDING: (input) => ir.parseIr(ir.ProviderFactBindingSchema, input),
 };
+const envelopeCases = [
+  {
+    label: 'Evidence',
+    descriptor: {
+      schema: 'codeatlas.fixture.evidence.evidence',
+      version: 1,
+      payload: ir.EvidenceSchema,
+    },
+    validFixtureId: 'evidence-active-node-a',
+    invalidFixtureId: 'evidence-unknown-key',
+  },
+  {
+    label: 'FactEvidence',
+    descriptor: {
+      schema: 'codeatlas.fixture.evidence.fact-evidence',
+      version: 1,
+      payload: ir.FactEvidenceSchema,
+    },
+    validFixtureId: 'fact-evidence-node-a',
+    invalidFixtureId: 'fact-evidence-unknown-key',
+  },
+  {
+    label: 'ProviderFactBinding',
+    descriptor: {
+      schema: 'codeatlas.fixture.evidence.provider-fact-binding',
+      version: 1,
+      payload: ir.ProviderFactBindingSchema,
+    },
+    validFixtureId: 'provider-binding-node-a',
+    invalidFixtureId: 'provider-binding-unknown-key',
+  },
+];
+const envelopeParsers = [
+  {
+    label: 'parseSchemaEnvelope',
+    parse: (descriptor, input) => ir.parseSchemaEnvelope(descriptor, input),
+  },
+  {
+    label: 'createSchemaEnvelopeSchema',
+    parse: (descriptor, input) => ir.parseIr(ir.createSchemaEnvelopeSchema(descriptor), input),
+  },
+];
+
+function validInput(id) {
+  const fixture = validCases.find((entry) => entry.id === id);
+  assert.ok(fixture, 'Fixture must exist: ' + id);
+  return fixture.input;
+}
+
+function invalidInput(id) {
+  const fixture = invalidCases.find((entry) => entry.id === id);
+  assert.ok(fixture, 'Invalid Fixture must exist: ' + id);
+  return fixture.input;
+}
+
+function assertIrError(callback, code, expectedPath) {
+  assert.throws(callback, (error) => {
+    assert.ok(error instanceof ir.IrContractError);
+    assert.equal(error.code, code);
+    if (expectedPath !== undefined) {
+      assert.ok(error instanceof ir.IrValidationError);
+      assert.deepEqual(error.issues[0].path, expectedPath);
+    }
+    return true;
+  });
+}
 
 for (const fixture of validCases) {
   test('valid Evidence Fixture ' + fixture.id + ' round-trips', () => {
@@ -155,6 +221,44 @@ test('Evidence relations accept matching EDGE references', () => {
   );
 });
 
+test('one Canonical Fact retains two independent Provider supports', () => {
+  const evidence = ['evidence-active-node-a', 'evidence-active-node-b'].map((id) =>
+    ir.parseIr(ir.EvidenceSchema, validInput(id)),
+  );
+  const links = ['fact-evidence-node-a', 'fact-evidence-node-b'].map((id) =>
+    ir.parseIr(ir.FactEvidenceSchema, validInput(id)),
+  );
+  const bindings = ['provider-binding-node-a', 'provider-binding-node-b'].map((id) =>
+    ir.parseIr(ir.ProviderFactBindingSchema, validInput(id)),
+  );
+  assert.notEqual(evidence[0].id, evidence[1].id);
+  assert.notEqual(evidence[0].providerFact.providerId, evidence[1].providerFact.providerId);
+  assert.deepEqual(
+    links.map((row) => row.fact),
+    [
+      { factType: 'NODE', id: 'canonical:node-01' },
+      { factType: 'NODE', id: 'canonical:node-01' },
+    ],
+  );
+  assert.deepEqual(
+    bindings.map((row) => row.evidenceId),
+    evidence.map((row) => row.id),
+  );
+  assert.deepEqual(
+    links.map((row) => row.evidenceId),
+    evidence.map((row) => row.id),
+  );
+  assert.deepEqual(
+    evidence.map((row) => row.status),
+    ['ACTIVE', 'ACTIVE'],
+  );
+  const superseded = ir.validateEvidenceTransition(evidence[0], {
+    ...evidence[0],
+    status: 'SUPERSEDED',
+  });
+  assert.deepEqual([superseded.status, evidence[1].status], ['SUPERSEDED', 'ACTIVE']);
+});
+
 test('Evidence transitions preserve identity and only terminalize active evidence', () => {
   const active = validCases.find((fixture) => fixture.id === 'evidence-active-node-a').input;
   const superseded = { ...active, status: 'SUPERSEDED' };
@@ -207,6 +311,7 @@ test('Evidence transitions preserve identity and only terminalize active evidenc
     assert.throws(
       () => ir.validateEvidenceTransition(active, immutableCase.next),
       (error) => {
+        assert.ok(error instanceof ir.IrValidationError, immutableCase.field);
         assert.equal(error.code, 'IR_VALIDATION_FAILED', immutableCase.field);
         assert.deepEqual(error.issues[0].path, immutableCase.path, immutableCase.field);
         return true;
@@ -225,6 +330,7 @@ test('Evidence transitions preserve identity and only terminalize active evidenc
     assert.throws(
       () => ir.validateEvidenceTransition(statusCase.previous, statusCase.next),
       (error) => {
+        assert.ok(error instanceof ir.IrValidationError, statusCase.label);
         assert.equal(error.code, 'IR_VALIDATION_FAILED', statusCase.label);
         assert.deepEqual(error.issues[0].path, ['next', 'status'], statusCase.label);
         return true;
@@ -232,6 +338,92 @@ test('Evidence transitions preserve identity and only terminalize active evidenc
     );
   }
 });
+
+for (const envelopeCase of envelopeCases) {
+  test(`${envelopeCase.label} version-1 envelope JSON-round-trips through both public APIs`, () => {
+    const input = {
+      schema: envelopeCase.descriptor.schema,
+      version: 1,
+      payload: validInput(envelopeCase.validFixtureId),
+    };
+    for (const envelopeParser of envelopeParsers) {
+      const first = envelopeParser.parse(envelopeCase.descriptor, input);
+      const second = envelopeParser.parse(
+        envelopeCase.descriptor,
+        JSON.parse(JSON.stringify(first)),
+      );
+      assert.deepEqual(first, input, envelopeParser.label);
+      assert.deepEqual(second, first, envelopeParser.label);
+    }
+  });
+
+  test(`${envelopeCase.label} version-1 envelope rejects a structured Fixture payload through both public APIs`, () => {
+    const input = {
+      schema: envelopeCase.descriptor.schema,
+      version: 1,
+      payload: invalidInput(envelopeCase.invalidFixtureId),
+    };
+    for (const envelopeParser of envelopeParsers) {
+      assertIrError(
+        () => envelopeParser.parse(envelopeCase.descriptor, input),
+        'IR_VALIDATION_FAILED',
+        ['payload'],
+      );
+    }
+  });
+
+  test(`${envelopeCase.label} parseSchemaEnvelope orders schema, version, then payload failures`, () => {
+    const payload = invalidInput(envelopeCase.invalidFixtureId);
+    assertIrError(
+      () =>
+        ir.parseSchemaEnvelope(envelopeCase.descriptor, {
+          schema: 'codeatlas.fixture.evidence.wrong',
+          version: 2,
+          payload,
+        }),
+      'SCHEMA_MISMATCH',
+    );
+    assertIrError(
+      () =>
+        ir.parseSchemaEnvelope(envelopeCase.descriptor, {
+          schema: envelopeCase.descriptor.schema,
+          version: 2,
+          payload,
+        }),
+      'UNSUPPORTED_SCHEMA_VERSION',
+    );
+    assertIrError(
+      () =>
+        ir.parseSchemaEnvelope(envelopeCase.descriptor, {
+          schema: envelopeCase.descriptor.schema,
+          version: 1,
+          payload,
+        }),
+      'IR_VALIDATION_FAILED',
+      ['payload'],
+    );
+  });
+
+  test(`${envelopeCase.label} createSchemaEnvelopeSchema reports schema, version, and payload paths`, () => {
+    const parser = ir.createSchemaEnvelopeSchema(envelopeCase.descriptor);
+    const payload = invalidInput(envelopeCase.invalidFixtureId);
+    assertIrError(
+      () => ir.parseIr(parser, { schema: 'codeatlas.fixture.evidence.wrong', version: 2, payload }),
+      'IR_VALIDATION_FAILED',
+      ['schema'],
+    );
+    assertIrError(
+      () => ir.parseIr(parser, { schema: envelopeCase.descriptor.schema, version: 2, payload }),
+      'IR_VALIDATION_FAILED',
+      ['version'],
+    );
+    assertIrError(
+      () => ir.parseIr(parser, { schema: envelopeCase.descriptor.schema, version: 1, payload }),
+      'IR_VALIDATION_FAILED',
+      ['payload'],
+    );
+  });
+}
 
 test('Evidence transition parses both inputs before enforcing lifecycle policy', () => {
   const active = validCases.find((fixture) => fixture.id === 'evidence-active-node-a').input;
