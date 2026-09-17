@@ -1,0 +1,20 @@
+[
+  {
+    "id": "evidence-unknown-status-node-a",
+    "target": "EVIDENCE",
+    "input": {
+      "id": "evidence:node-a",
+      "repositoryId": "entity:repo-01",
+      "revisionId": "entity:revision-01",
+      "providerSnapshotId": "entity:snapshot-a",
+      "providerFact": {
+        "factType": "NODE",
+        "providerId": "provider:a",
+        "providerFactId": "provider-fact:node-a"
+      },
+      "status": "UNKNOWN"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["status"]
+  }
+]

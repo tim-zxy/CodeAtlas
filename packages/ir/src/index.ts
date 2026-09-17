@@ -31,6 +31,10 @@ export type {
   ProviderFactRef,
   ProviderNodeRef,
 } from './code-fact-reference.js';
+export { EvidenceIdSchema } from './evidence-identity.js';
+export type { EvidenceId } from './evidence-identity.js';
+export { EvidenceSchema, EvidenceStatusSchema } from './evidence.js';
+export type { Evidence, EvidenceStatus } from './evidence.js';
 export {
   CanonicalNonResolvedTargetSchema,
   CanonicalResolvedTargetSchema,
