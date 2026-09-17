@@ -135,10 +135,10 @@ test('Evidence relations accept matching EDGE references', () => {
   };
   const canonicalFact = { factType: 'EDGE', id: 'canonical:edge-01' };
 
-  assert.deepEqual(
-    parsers.FACT_EVIDENCE({ fact: canonicalFact, evidenceId: 'evidence:edge-a' }),
-    { fact: canonicalFact, evidenceId: 'evidence:edge-a' },
-  );
+  assert.deepEqual(parsers.FACT_EVIDENCE({ fact: canonicalFact, evidenceId: 'evidence:edge-a' }), {
+    fact: canonicalFact,
+    evidenceId: 'evidence:edge-a',
+  });
   assert.deepEqual(
     parsers.PROVIDER_FACT_BINDING({
       providerFact,
@@ -153,4 +153,103 @@ test('Evidence relations accept matching EDGE references', () => {
       evidenceId: 'evidence:edge-a',
     },
   );
+});
+
+test('Evidence transitions preserve identity and only terminalize active evidence', () => {
+  const active = validCases.find((fixture) => fixture.id === 'evidence-active-node-a').input;
+  const superseded = { ...active, status: 'SUPERSEDED' };
+  const invalidated = { ...active, status: 'INVALIDATED' };
+
+  assert.deepEqual(ir.validateEvidenceTransition(active, active), active);
+  assert.deepEqual(ir.validateEvidenceTransition(active, superseded), superseded);
+  assert.deepEqual(ir.validateEvidenceTransition(active, invalidated), invalidated);
+  assert.deepEqual(ir.validateEvidenceTransition(superseded, superseded), superseded);
+  assert.deepEqual(ir.validateEvidenceTransition(invalidated, invalidated), invalidated);
+
+  const immutableCases = [
+    { field: 'id', next: { ...active, id: 'evidence:node-b' }, path: ['next', 'id'] },
+    {
+      field: 'repositoryId',
+      next: { ...active, repositoryId: 'entity:repository-b' },
+      path: ['next', 'repositoryId'],
+    },
+    {
+      field: 'revisionId',
+      next: { ...active, revisionId: 'entity:revision-b' },
+      path: ['next', 'revisionId'],
+    },
+    {
+      field: 'providerSnapshotId',
+      next: { ...active, providerSnapshotId: 'entity:snapshot-b' },
+      path: ['next', 'providerSnapshotId'],
+    },
+    {
+      field: 'providerFact.factType',
+      next: { ...active, providerFact: { ...active.providerFact, factType: 'EDGE' } },
+      path: ['next', 'providerFact', 'factType'],
+    },
+    {
+      field: 'providerFact.providerId',
+      next: { ...active, providerFact: { ...active.providerFact, providerId: 'provider:b' } },
+      path: ['next', 'providerFact', 'providerId'],
+    },
+    {
+      field: 'providerFact.providerFactId',
+      next: {
+        ...active,
+        providerFact: { ...active.providerFact, providerFactId: 'provider-fact:node-b' },
+      },
+      path: ['next', 'providerFact', 'providerFactId'],
+    },
+  ];
+
+  for (const immutableCase of immutableCases) {
+    assert.throws(
+      () => ir.validateEvidenceTransition(active, immutableCase.next),
+      (error) => {
+        assert.equal(error.code, 'IR_VALIDATION_FAILED', immutableCase.field);
+        assert.deepEqual(error.issues[0].path, immutableCase.path, immutableCase.field);
+        return true;
+      },
+    );
+  }
+
+  const forbiddenStatusCases = [
+    { previous: superseded, next: active, label: 'SUPERSEDED -> ACTIVE' },
+    { previous: invalidated, next: active, label: 'INVALIDATED -> ACTIVE' },
+    { previous: superseded, next: invalidated, label: 'SUPERSEDED -> INVALIDATED' },
+    { previous: invalidated, next: superseded, label: 'INVALIDATED -> SUPERSEDED' },
+  ];
+
+  for (const statusCase of forbiddenStatusCases) {
+    assert.throws(
+      () => ir.validateEvidenceTransition(statusCase.previous, statusCase.next),
+      (error) => {
+        assert.equal(error.code, 'IR_VALIDATION_FAILED', statusCase.label);
+        assert.deepEqual(error.issues[0].path, ['next', 'status'], statusCase.label);
+        return true;
+      },
+    );
+  }
+});
+
+test('Evidence transition parses both inputs before enforcing lifecycle policy', () => {
+  const active = validCases.find((fixture) => fixture.id === 'evidence-active-node-a').input;
+  const superseded = { ...active, status: 'SUPERSEDED' };
+
+  const cases = [
+    { label: 'invalid previous', previous: { ...superseded, status: 'UNKNOWN' }, next: active },
+    { label: 'invalid next', previous: superseded, next: { ...active, status: 'UNKNOWN' } },
+  ];
+
+  for (const transitionCase of cases) {
+    assert.throws(
+      () => ir.validateEvidenceTransition(transitionCase.previous, transitionCase.next),
+      (error) => {
+        assert.equal(error.code, 'IR_VALIDATION_FAILED', transitionCase.label);
+        assert.deepEqual(error.issues[0].path, ['status'], transitionCase.label);
+        return true;
+      },
+    );
+  }
 });
