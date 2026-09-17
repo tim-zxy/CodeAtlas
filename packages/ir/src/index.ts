@@ -35,6 +35,8 @@ export { EvidenceIdSchema } from './evidence-identity.js';
 export type { EvidenceId } from './evidence-identity.js';
 export { EvidenceSchema, EvidenceStatusSchema } from './evidence.js';
 export type { Evidence, EvidenceStatus } from './evidence.js';
+export { FactEvidenceSchema, ProviderFactBindingSchema } from './evidence-relations.js';
+export type { FactEvidence, ProviderFactBinding } from './evidence-relations.js';
 export {
   CanonicalNonResolvedTargetSchema,
   CanonicalResolvedTargetSchema,

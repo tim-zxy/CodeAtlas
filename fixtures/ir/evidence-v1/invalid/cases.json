@@ -16,5 +16,41 @@
     },
     "errorCode": "IR_VALIDATION_FAILED",
     "path": ["status"]
+  },
+  {
+    "id": "provider-binding-mismatched-fact-type",
+    "target": "PROVIDER_FACT_BINDING",
+    "input": {
+      "providerFact": {
+        "factType": "NODE",
+        "providerId": "provider:a",
+        "providerFactId": "provider-fact:node-a"
+      },
+      "providerSnapshotId": "entity:snapshot-a",
+      "canonicalFact": { "factType": "EDGE", "id": "canonical:node-01" },
+      "evidenceId": "evidence:node-a"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["canonicalFact", "factType"]
+  },
+  {
+    "id": "provider-binding-provider-reference-as-canonical-reference",
+    "target": "PROVIDER_FACT_BINDING",
+    "input": {
+      "providerFact": {
+        "factType": "NODE",
+        "providerId": "provider:a",
+        "providerFactId": "provider-fact:node-a"
+      },
+      "providerSnapshotId": "entity:snapshot-a",
+      "canonicalFact": {
+        "factType": "NODE",
+        "providerId": "provider:a",
+        "providerFactId": "provider-fact:node-a"
+      },
+      "evidenceId": "evidence:node-a"
+    },
+    "errorCode": "IR_VALIDATION_FAILED",
+    "path": ["canonicalFact", "id"]
   }
 ]

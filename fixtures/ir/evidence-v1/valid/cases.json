@@ -14,5 +14,27 @@
       },
       "status": "ACTIVE"
     }
+  },
+  {
+    "id": "fact-evidence-node-a",
+    "target": "FACT_EVIDENCE",
+    "input": {
+      "fact": { "factType": "NODE", "id": "canonical:node-01" },
+      "evidenceId": "evidence:node-a"
+    }
+  },
+  {
+    "id": "provider-binding-node-a",
+    "target": "PROVIDER_FACT_BINDING",
+    "input": {
+      "providerFact": {
+        "factType": "NODE",
+        "providerId": "provider:a",
+        "providerFactId": "provider-fact:node-a"
+      },
+      "providerSnapshotId": "entity:snapshot-a",
+      "canonicalFact": { "factType": "NODE", "id": "canonical:node-01" },
+      "evidenceId": "evidence:node-a"
+    }
   }
 ]
