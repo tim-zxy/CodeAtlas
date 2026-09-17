@@ -265,6 +265,81 @@ test('one Canonical Fact retains two independent Provider supports', () => {
   assert.deepEqual([superseded.status, evidence[1].status], ['SUPERSEDED', 'ACTIVE']);
 });
 
+test('post-transition support set JSON round-trip retains ordered Evidence and relation rows', () => {
+  const evidence = ['evidence-active-node-a', 'evidence-active-node-b'].map((id) =>
+    ir.parseIr(ir.EvidenceSchema, validInput(id)),
+  );
+  const factEvidence = ['fact-evidence-node-a', 'fact-evidence-node-b'].map((id) =>
+    ir.parseIr(ir.FactEvidenceSchema, validInput(id)),
+  );
+  const providerFactBindings = ['provider-binding-node-a', 'provider-binding-node-b'].map((id) =>
+    ir.parseIr(ir.ProviderFactBindingSchema, validInput(id)),
+  );
+  const postTransition = {
+    evidence: [
+      ir.validateEvidenceTransition(evidence[0], { ...evidence[0], status: 'SUPERSEDED' }),
+      evidence[1],
+    ],
+    factEvidence,
+    providerFactBindings,
+  };
+
+  assert.deepEqual(JSON.parse(JSON.stringify(postTransition)), {
+    evidence: [
+      {
+        id: 'evidence:node-a',
+        repositoryId: 'entity:repo-01',
+        revisionId: 'entity:revision-01',
+        providerSnapshotId: 'entity:snapshot-a',
+        providerFact: {
+          factType: 'NODE',
+          providerId: 'provider:a',
+          providerFactId: 'provider-fact:node-a',
+        },
+        status: 'SUPERSEDED',
+      },
+      {
+        id: 'evidence:node-b',
+        repositoryId: 'entity:repo-01',
+        revisionId: 'entity:revision-01',
+        providerSnapshotId: 'entity:snapshot-b',
+        providerFact: {
+          factType: 'NODE',
+          providerId: 'provider:b',
+          providerFactId: 'provider-fact:node-b',
+        },
+        status: 'ACTIVE',
+      },
+    ],
+    factEvidence: [
+      { fact: { factType: 'NODE', id: 'canonical:node-01' }, evidenceId: 'evidence:node-a' },
+      { fact: { factType: 'NODE', id: 'canonical:node-01' }, evidenceId: 'evidence:node-b' },
+    ],
+    providerFactBindings: [
+      {
+        providerFact: {
+          factType: 'NODE',
+          providerId: 'provider:a',
+          providerFactId: 'provider-fact:node-a',
+        },
+        providerSnapshotId: 'entity:snapshot-a',
+        canonicalFact: { factType: 'NODE', id: 'canonical:node-01' },
+        evidenceId: 'evidence:node-a',
+      },
+      {
+        providerFact: {
+          factType: 'NODE',
+          providerId: 'provider:b',
+          providerFactId: 'provider-fact:node-b',
+        },
+        providerSnapshotId: 'entity:snapshot-b',
+        canonicalFact: { factType: 'NODE', id: 'canonical:node-01' },
+        evidenceId: 'evidence:node-b',
+      },
+    ],
+  });
+});
+
 test('Evidence transitions preserve identity and only terminalize active evidence', () => {
   const active = validCases.find((fixture) => fixture.id === 'evidence-active-node-a').input;
   const superseded = { ...active, status: 'SUPERSEDED' };
