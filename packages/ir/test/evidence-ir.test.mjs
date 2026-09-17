@@ -233,6 +233,7 @@ test('one Canonical Fact retains two independent Provider supports', () => {
   );
   assert.notEqual(evidence[0].id, evidence[1].id);
   assert.notEqual(evidence[0].providerFact.providerId, evidence[1].providerFact.providerId);
+  assert.notEqual(evidence[0].providerSnapshotId, evidence[1].providerSnapshotId);
   assert.deepEqual(
     links.map((row) => row.fact),
     [
@@ -252,6 +253,11 @@ test('one Canonical Fact retains two independent Provider supports', () => {
     evidence.map((row) => row.status),
     ['ACTIVE', 'ACTIVE'],
   );
+  for (const [index, binding] of bindings.entries()) {
+    assert.deepEqual(binding.providerFact, evidence[index].providerFact);
+    assert.equal(binding.providerSnapshotId, evidence[index].providerSnapshotId);
+    assert.deepEqual(binding.canonicalFact, links[index].fact);
+  }
   const superseded = ir.validateEvidenceTransition(evidence[0], {
     ...evidence[0],
     status: 'SUPERSEDED',
