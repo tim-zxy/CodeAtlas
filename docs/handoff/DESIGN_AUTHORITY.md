@@ -6,7 +6,7 @@ When documents disagree, use this order:
 
 1. Accepted ADRs and amendments
 2. `DESIGN_AUTHORITY.md`
-3. Normative files in `specs/`
+3. Normative files in `specs/` and `../specs/` (the latter only for their named extension topics)
 4. `ARCHITECTURE.md` and `PRODUCT_VISION.md`
 5. `PHASE_ACCEPTANCE.md`
 6. `ROADMAP.md` and `WORK_BREAKDOWN.md`
@@ -31,6 +31,8 @@ An Engineering Agent must not silently change any item below. A change requires 
 - Rust analyzer has no SQLite ownership;
 - evaluation and fixtures are implementation infrastructure;
 - no automatic remote fallback when local-only or security-blocked.
+- Wiki is a published-Knowledge projection, never a canonical writer; projection-only changes cannot initiate semantic compilation (ADR-013).
+- NativeProvider remains language-neutral, framework semantics remain Plugin-owned, and Rust cannot activate SQLite state (ADR-014).
 
 ## EVOLVABLE decisions
 
@@ -44,6 +46,8 @@ An Engineering Agent may tune these only when Fixture or Evaluation evidence sup
 - provider capability routing and performance thresholds;
 - semantic-task decomposition and retry counts within security/budget bounds;
 - hybrid ranking weights after Phase 2 begins.
+- Wiki profile layout, optional sections, and projection validation thresholds within the versioned contract, based on projection Fixtures and review.
+- analyzer worker count, cache budget, performance thresholds, and language capability maturity, based on reproducible benchmarks and Evaluation.
 
 ## DEFERRED decisions
 
@@ -57,6 +61,8 @@ These are intentionally postponed to the assigned phase. They must not become de
 - enterprise ACLs and remote runtime;
 - single-executable implementation;
 - fully automatic knowledge publication.
+- user-authored Declarative WikiSpec, profile inheritance/pinning, validation, and diff until Phase 2; the Phase 1 standard profile is not blocked.
+- custom Wiki section/data extensions and SDK until Phase 3; adaptive analysis-depth profiles remain phase-gated by evidence.
 
 ## Engineering Agent authority
 

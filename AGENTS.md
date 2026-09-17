@@ -14,7 +14,8 @@ Read these documents in order before making any code, schema, configuration, fix
 6. The active phase sections in `docs/handoff/WORK_BREAKDOWN.md` and `docs/handoff/PHASE_ACCEPTANCE.md`
 7. Every relevant ADR under `docs/handoff/adr/`
 8. Every relevant specification under `docs/handoff/specs/`
-9. `docs/handoff/DESIGN_TRACEABILITY.md`
+9. Every relevant extension specification under `docs/specs/`
+10. `docs/handoff/DESIGN_TRACEABILITY.md`
 
 Do not rely on the original ChatGPT discussion or any unavailable conversation history. The repository documents are the implementation authority.
 

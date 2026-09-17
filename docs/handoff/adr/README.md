@@ -14,4 +14,6 @@ All records are Accepted unless explicitly superseded by a later record. Amendme
 - ADR-010 Native analyzer IPC and storage boundary
 - ADR-011 Repository and workspace database split
 - ADR-012 Evaluation as a phase gate
+- ADR-013 Versioned Projection Framework for Wiki Customization
+- ADR-014 Multi Language Native Analyzer and Performance Architecture
 

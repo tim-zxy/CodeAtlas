@@ -24,6 +24,8 @@ Sequence starts at zero and strictly increases per request. Exactly one terminal
 
 Returns analyzer version, supported protocol and IR schema versions, languages, capabilities, limits, and build/platform metadata. The runtime selects a mutually supported protocol/IR pair before analysis and rejects incompatibility explicitly.
 
+The future language-neutral `DESCRIBE` contract may negotiate versioned grammar/analyzer/analysis-compatibility metadata for each language. Optionality and reader behavior must be specified in the IPC schema and shared fixtures before use; unknown data is not silently added to strict Canonical IR or ProviderSnapshot v1. See [ADR-014](../adr/ADR-014-multilanguage-native-analyzer.md) and the [Native Analyzer Scalability specification](../../specs/native-analyzer-scalability.md).
+
 ## ANALYZE events
 
 `ANALYSIS_STARTED`, `SOURCE_FILE`, `NODE`, `EDGE`, `COVERAGE`, `DIAGNOSTIC`, `ANALYSIS_COMPLETED`, and `ANALYSIS_FAILED`. A completed payload includes counts, coverage summary, content fingerprint, and integrity checksum. Failed streams are never applied.

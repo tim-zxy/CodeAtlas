@@ -34,3 +34,7 @@ Publishing uses copy-on-write. Partial or failed runs retain the previous publis
 
 `SourceFreshness` is `FRESH | AFFECTED | STALE`. `CompilationCurrency` is `CURRENT | OUTDATED_WORKFLOW | OUTDATED_PROMPT | OUTDATED_MODEL_POLICY`. Model/prompt changes recommend recompilation but do not impersonate source changes.
 
+## Wiki projection boundary
+
+Wiki publication remains MANUAL, but explicit reprojection of an already published KnowledgeRevision is distinct from semantic `update_knowledge`. A Wiki spec/profile/renderer change can invalidate an artifact and request reprojection; it must not compile Knowledge or invoke an LLM to fill missing facts. Its reader uses KnowledgeQuery/Application API, not direct SQLite. Version dimensions and phase allocation are governed by [ADR-013](../adr/ADR-013-versioned-wiki-projection.md) and the [Wiki Projection specification](../../specs/wiki-projection.md).
+

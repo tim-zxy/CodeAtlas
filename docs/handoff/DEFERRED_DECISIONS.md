@@ -13,6 +13,10 @@
 | Single executable | 3 | Packaging data shows benefit over npm plus native binaries | Protocol and IR versioning remain independent. |
 | Automatic semantic publication | 3 or later | False-change and identity-drift rates meet an approved gate | Manual mode remains available and safe. |
 | Exact Phase 3 physical schemas | 3 | Prior phase requirements stabilize | Avoid speculative migrations. |
+| User-authored Declarative WikiSpec, profile inheritance, and persistence | 2 | Phase 1 standard Wiki/projection has been evaluated | Spec/profile changes never call `update_knowledge`; pin versions. |
+| Wiki validation and diff policy tuning | 2 | Projection Fixtures and internal use cases exist | Missing data is explicit; no LLM filler. |
+| Custom Wiki Section Provider and Data Adapter SDK | 3 | Trusted extension use cases and security review exist | No direct Canonical Knowledge or SQLite mutation. |
+| `FAST`/`BALANCED`/`PRECISE` analysis-depth profiles | 2 or later | Cold and incremental benchmarks plus quality data exist | Profiles never change Canonical IR or bypass capability evidence; adaptive routing remains Phase 3. |
 
 Deferred means intentionally undecided, not forgotten. The formal roadmap contains no Phase 4.
 

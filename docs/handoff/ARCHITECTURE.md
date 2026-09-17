@@ -81,6 +81,12 @@ Source
 
 `ExecutionGraph` is a detailed, automatically maintained runtime graph. `RuntimeFlow` is a deterministic technical-flow compression of that graph. `BusinessFlow` is a grounded semantic abstraction whose steps retain support references.
 
+## Backward-compatible design extensions
+
+Wiki remains a projection of published Canonical Knowledge, not another truth store. A versioned projection reads through KnowledgeQuery/Application API, produces structured sections, validates provenance and missing data, and renders separately versioned artifacts. Commercial Agent use has a locked standard profile; internal customization is policy-gated. Spec/profile/renderer changes may require explicit reprojection but never trigger semantic `update_knowledge`. See [ADR-013](adr/ADR-013-versioned-wiki-projection.md) and the [Wiki Projection specification](../specs/wiki-projection.md). This is Phase 1+ design, not a Phase 0 implementation.
+
+NativeProvider remains language-neutral. A future internal `LanguageAnalyzer` boundary isolates syntax extraction and resolution by language; Java is first, while framework meaning belongs to Plugins. File fingerprints, bounded parser workers, changed-file refresh, protocol-only JSONL stdout, validated staging, and TypeScript-owned batched SQLite activation preserve the existing Provider/Canonical and storage boundaries. See [ADR-014](adr/ADR-014-multilanguage-native-analyzer.md) and the [Native Analyzer Scalability specification](../specs/native-analyzer-scalability.md). Phase 0.5 retains its Java-first priority and existing numeric quality gates.
+
 ## Deployment modes
 
 - `ONE_SHOT`: CLI opens the workspace, reconciles changes, performs one use case, and exits.

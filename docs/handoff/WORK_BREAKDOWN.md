@@ -58,7 +58,7 @@ Depends on P0-W3-001. Add `describe-v1`, `analyze-java-basic-v1`, `refresh-modif
 
 ### P0-W3-003 Rust DESCRIBE
 
-Depends on P0-W3-002. Build a native binary using stdin for requests, stdout exclusively for JSONL protocol, and stderr for logs. Return analyzer, protocol, IR schema, language, and capability descriptors. Prove compatible handshake and explicit rejection paths.
+Depends on P0-W3-002. Build a native binary using stdin for requests, stdout exclusively for JSONL protocol, and stderr for logs. Return analyzer, protocol, IR schema, language, and capability descriptors through a language-neutral envelope. Prove compatible handshake and explicit rejection paths. See ADR-014; no parser is required in Phase 0.
 
 ### P0-W3-004 TypeScript native client
 
@@ -92,7 +92,7 @@ Depends on P05-W2-001. Implement normalized paths, content hashes, sizes, revisi
 
 ### P05-W3-001 Java parser and symbol extraction
 
-Depends on IPC/IR freeze. Bootstrap Rust plus Tree-sitter Java; emit packages, classes, interfaces, methods, fields, constructors, nested types, source ranges, diagnostics, and coverage. Fixtures: `java-basic-symbol` and `java-nested-types`.
+Depends on IPC/IR freeze. Bootstrap Rust plus Tree-sitter Java behind an internal `LanguageAnalyzer` boundary; emit packages, classes, interfaces, methods, fields, constructors, nested types, source ranges, diagnostics, and coverage. Java visitor/resolver logic stays in the adapter; framework meaning stays in Plugins. Fixtures: `java-basic-symbol` and `java-nested-types`. This does not add another language to Phase 0.5.
 
 ### P05-W3-002 Imports, calls, inheritance, and references
 
@@ -112,7 +112,7 @@ Depends on P05-W4-001. Merge identical facts, retain multiple evidence/bindings,
 
 ### P05-W1-010 Full analysis apply
 
-Depends on repository schema and normalization. Stream into staging, validate, atomically activate the indexed revision, and retain the previous graph on failure. Analysis coordination must call `CanonicalFactStore`, not compose SQL.
+Depends on repository schema and normalization. Stream into staging, validate, use batched SQL within one activation transaction, atomically activate the indexed revision, and retain the previous graph on failure. Analysis coordination must call `CanonicalFactStore`, not compose SQL or commit per node/edge.
 
 ### P05-W1-011 Incremental patch apply
 
@@ -124,7 +124,7 @@ Depends on fingerprints. Produce added, modified, deleted, and renamed changes; 
 
 ### P05-W3-020 Native REFRESH
 
-Depends on change detector and patch apply. Consume changed files and emit a validated patch stream. Fixtures: modify call target, delete class/method, add class/method, and change import.
+Depends on change detector and patch apply. Consume changed files and emit a validated patch stream. Refresh reparses changed files plus a bounded resolver-dependent set, not the whole repository by default; in-memory incremental trees are an optimization only while alive, and ASTs are not persisted. Fixtures: modify call target, delete class/method, add class/method, and change import.
 
 ### P05-W5-001 Graph query and entry-less trace
 
@@ -136,11 +136,11 @@ Expose full/incremental/status indexing, symbol understanding, and code-level tr
 
 ### P05-W9-001 Phase 0.5 evaluation suite
 
-Freeze symbol, call, overload, inheritance, unresolved, incremental, and provider-merge fixtures. Enforce the numeric gates in `PHASE_ACCEPTANCE.md`, write a machine-readable report, and block Phase 1 promotion on failure.
+Freeze symbol, call, overload, inheritance, unresolved, incremental, and provider-merge fixtures. Enforce the numeric gates in `PHASE_ACCEPTANCE.md`, write a machine-readable report with stage durations and peak memory for pinned cold/1-/5-/50-file scenarios, and block Phase 1 promotion on failure. No new numeric latency threshold is implied.
 
 ## Phase 1 planning package
 
-After Phase 0.5, the Engineering Agent creates reviewed task groups for: framework plugins; `ExecutionGraph` and `RuntimeFlow`; contracts/cross-repository stitching; Document IR/claims; knowledge workflows/identity/reconciliation/publication; LLM runtime; Agent API/MCP; security; evaluation; and packaging. Use `vulnerability-processing` and `spring-fastapi-kafka` as end-to-end acceptance fixtures. Do not redesign the target architecture.
+After Phase 0.5, the Engineering Agent creates reviewed task groups for: framework plugins; `ExecutionGraph` and `RuntimeFlow`; contracts/cross-repository stitching; Document IR/claims; knowledge workflows/identity/reconciliation/publication and the standard Wiki projection; LLM runtime; Agent API/MCP; security; evaluation; and packaging. Use `vulnerability-processing` and `spring-fastapi-kafka` as end-to-end acceptance fixtures. Do not redesign the target architecture or pull Declarative WikiSpec into Phase 1.
 
 ## Parallelization constraints
 

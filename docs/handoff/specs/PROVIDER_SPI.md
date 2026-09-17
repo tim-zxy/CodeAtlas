@@ -35,3 +35,7 @@ Provider IDs remain in ProviderNode/ProviderEdge and ProviderFactBinding. Normal
 
 Every provider must pass descriptor/schema, deterministic replay, cancellation, terminal-event, invalid-event, coverage, diagnostics, unresolved-target, and refresh semantics. Native/reference dual-support fixtures verify canonical fact lifetime.
 
+## Native language extension
+
+The public Provider SPI remains versioned and provider-independent. A future NativeProvider may expose negotiated provider-side `LanguageDescriptor` metadata (`grammarVersion`, `analyzerVersion`, `analysisCompatibilityId`); language capability maturity requires Fixture/Evaluation evidence. The current strict ProviderSnapshot v1 has no extension field, so persistence of this metadata requires a separately approved compatible schema/version rather than an unvalidated extra key. See [ADR-014](../adr/ADR-014-multilanguage-native-analyzer.md) and the [Native Analyzer Scalability specification](../../specs/native-analyzer-scalability.md).
+

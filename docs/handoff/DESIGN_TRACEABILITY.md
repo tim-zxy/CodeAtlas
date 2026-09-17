@@ -19,6 +19,10 @@
 | Freshness separate from compilation currency | Knowledge Workflow | Agent API; Reconciliation | Phase 1 status gate | Phase 1 lifecycle tasks |
 | FTS5 required, embedding optional | Product Vision | SQLite Schema; Runtime | Phase 1 no-embedding gate | Phase 1 search tasks |
 | No Phase 4 | Roadmap; Design Authority | None | Roadmap consistency check | Governance only |
+| Versioned Wiki projection, locked commercial profile, internal policy tiers | ADR-013; Design Authority | [`docs/specs/wiki-projection.md`](../specs/wiki-projection.md) | Phase 1 standard Wiki/read boundary and locked policy; Phase 2 declarative validation/diff; Phase 3 extension gate | Phase 1 planning package; no P0/P05 task |
+| Wiki spec/profile changes do not compile Knowledge; missing data is explicit | ADR-013; ADR-004; ADR-008 | [`docs/specs/wiki-projection.md`](../specs/wiki-projection.md); Knowledge Workflow | Phase 1 no-`update_knowledge` and missing-data Fixtures | Phase 1 Wiki projection tasks |
+| Language-neutral NativeProvider with Java first and Plugin-owned framework semantics | ADR-014; ADR-002 | [`docs/specs/native-analyzer-scalability.md`](../specs/native-analyzer-scalability.md); Provider SPI; Plugin SPI | P0 language-neutral handshake; P05 Java adapter; later capability evidence | P0-W3-003, P05-W3-001, P05-W9-001 |
+| File-level incremental parse, JSONL-only stdout, validated batch apply | ADR-014; ADR-010 | [`docs/specs/native-analyzer-scalability.md`](../specs/native-analyzer-scalability.md); Native IPC; SQLite Schema | P05 refresh/correctness, failure retention, benchmark telemetry | P0-W3-003, P05-W3-020, P05-W1-010, P05-W9-001 |
 
 Every future task must add or update a row when it introduces a public capability, schema, phase gate, or architectural decision.
 
@@ -38,7 +42,7 @@ Every future task must add or update a row when it introduces a public capabilit
 | P0-W1-007 | fresh and sequential workspace DB migration | W001-W003; frozen RevisionSet immutable | SQLite Schema |
 | P0-W3-001 | request/event schema validation | IPC v1 contract frozen | Native IPC |
 | P0-W3-002 | shared valid/invalid protocol byte fixtures | TypeScript and Rust consume identical fixtures | Native IPC |
-| P0-W3-003 | describe-v1 and incompatible versions | Rust/TypeScript handshake and rejection | Native IPC; Provider SPI |
+| P0-W3-003 | describe-v1, incompatible versions, language-neutral descriptor, stdout/stderr separation | Rust/TypeScript handshake and rejection | Native IPC; Provider SPI; `docs/specs/native-analyzer-scalability.md`; ADR-014 |
 | P0-W3-004 | malformed/out-of-order/oversize/timeout/cancel | Corruption never partially applies state | Native IPC; Security |
 | P0-W4-001 | fake provider/plugin contract suite | Descriptors, capabilities, analysis contracts | Provider SPI; Plugin SPI |
 | P0-W9-001 | valid and invalid fixture manifests | Registry discovery/schema/version behavior | Evaluation |
@@ -51,17 +55,17 @@ Every future task must add or update a row when it introduces a public capabilit
 |---|---|---|---|
 | P05-W2-001 | basic-java-repo, gitignore, generated-vendor | Correct discovery, inclusion, exclusion, classification | Runtime and Configuration; Canonical IR |
 | P05-W2-002 | restart and worktree fingerprint cases | Stable change set and startup reconciliation | Canonical IR; Runtime and Configuration |
-| P05-W3-001 | java-basic-symbol, java-nested-types | Critical Symbol Recall at least 95 percent | Provider SPI; Native IPC; Evaluation |
+| P05-W3-001 | java-basic-symbol, java-nested-types, adapter-boundary check | Critical Symbol Recall at least 95 percent; no framework meaning in adapter | Provider SPI; Native IPC; Evaluation; `docs/specs/native-analyzer-scalability.md` |
 | P05-W3-002 | java-call-basic, overload, inheritance, unresolved-call | Call precision at least 95 and recall at least 90 percent | Canonical IR; Evaluation |
 | P05-W3-003 | partial/unsupported coverage fixtures | Coverage and resolution warnings are visible | Provider SPI; Agent API |
 | P05-W4-001 | canonical normalization golden files | Language-neutral keys and unresolved preservation | Canonical IR; Provider SPI |
 | P05-W4-002 | two-provider-same-call | Support removal obeys canonical fact lifetime | Provider SPI; SQLite Schema |
-| P05-W1-010 | full-analysis failure injection | Previous active graph remains available | SQLite Schema; Native IPC |
+| P05-W1-010 | full-analysis failure injection; batch transaction check | Previous active graph remains available; no per-fact transactions | SQLite Schema; Native IPC; `docs/specs/native-analyzer-scalability.md` |
 | P05-W1-011 | patch add/remove and stale-binding cases | Atomic patch and zero stale provider bindings | SQLite Schema |
 | P05-W2-010 | added/modified/deleted/rename-as-add-delete | Deterministic change detection across restart | Runtime and Configuration |
-| P05-W3-020 | modify-call-target, delete/add method/class, change-import | Declared incremental correctness equals 100 percent | Native IPC; Evaluation |
+| P05-W3-020 | modify-call-target, delete/add method/class, change-import; unchanged-file parse count | Declared incremental correctness equals 100 percent; no default full-reparse | Native IPC; Evaluation; `docs/specs/native-analyzer-scalability.md` |
 | P05-W5-001 | bounded graph-query and traversal cases | Confidence, coverage, freshness, and refs returned | Agent API |
 | P05-W8-001 | index/understand/trace CLI E2E | Code trace is available and correctly labeled | Agent API; Runtime and Configuration |
-| P05-W9-001 | complete Phase 0.5 suite | All quantitative Phase 0.5 gates pass | Evaluation; Phase Acceptance |
+| P05-W9-001 | complete Phase 0.5 suite; pinned cold/1-/5-/50-file telemetry | All quantitative Phase 0.5 gates pass; stage timing and memory reported | Evaluation; Phase Acceptance; `docs/specs/native-analyzer-scalability.md` |
 
 The task ID, Fixture ID, governing spec, and acceptance gate must all appear in the completion record in `CURRENT_STATUS.md`. This table is the canonical cross-document trace for Phase 0 and Phase 0.5.

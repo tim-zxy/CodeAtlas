@@ -13,7 +13,7 @@ This handoff is agent-neutral. Codex, Claude Code, OpenCode, or another Implemen
 3. `DESIGN_AUTHORITY.md` to classify decisions as FROZEN, EVOLVABLE, or DEFERRED.
 4. `IMPLEMENTATION_PROTOCOL.md` for task execution and evidence rules.
 5. The active phase sections in `WORK_BREAKDOWN.md` and `PHASE_ACCEPTANCE.md`.
-6. Every ADR and spec referenced by the selected task or traceability row.
+6. Every ADR and spec referenced by the selected task or traceability row, including topic extensions in `../specs/` when relevant.
 
 The Agent must not modify code until this reading is complete and task predecessors are verified.
 
