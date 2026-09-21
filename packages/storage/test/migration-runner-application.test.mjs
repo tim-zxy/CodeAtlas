@@ -29,8 +29,20 @@ async function expectError(code, operation) {
 }
 
 for (const [kind, manifestUrl] of [
-  ['REPOSITORY', new URL('../migrations/repository/manifest.json', import.meta.url)],
-  ['WORKSPACE', new URL('../migrations/workspace/manifest.json', import.meta.url)],
+  [
+    'REPOSITORY',
+    new URL(
+      '../../../fixtures/storage/migrations/migration-empty/repository-manifest.json',
+      import.meta.url,
+    ),
+  ],
+  [
+    'WORKSPACE',
+    new URL(
+      '../../../fixtures/storage/migrations/migration-empty/workspace-manifest.json',
+      import.meta.url,
+    ),
+  ],
 ]) {
   test(`empty ${kind} manifest creates a reusable version-zero database`, async () => {
     const temporary = await temporaryDatabase();

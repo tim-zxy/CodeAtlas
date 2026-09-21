@@ -1,5 +1,55 @@
 {
   "schemaVersion": 1,
   "databaseKind": "REPOSITORY",
-  "migrations": []
+  "migrations": [
+    {
+      "version": 1,
+      "name": "repo_core",
+      "file": "001_repo_core.sql",
+      "checksum": "sha256:aee2f70c50dad27f48ad74be5f59c05ad3260f793f07e581c8e8e161333825f3",
+      "backupRequired": false
+    },
+    {
+      "version": 2,
+      "name": "source_revision",
+      "file": "002_source_revision.sql",
+      "checksum": "sha256:9f72c9de43ff151f878aa22d0641bb294ef8a24ec5fb7eebbab537348ce0675e",
+      "backupRequired": false
+    },
+    {
+      "version": 3,
+      "name": "provider_runtime",
+      "file": "003_provider_runtime.sql",
+      "checksum": "sha256:e4e996c807312aac19262f18123fb07fb09de1ead58c0c52323284fd718017a4",
+      "backupRequired": false
+    },
+    {
+      "version": 4,
+      "name": "code_graph",
+      "file": "004_code_graph.sql",
+      "checksum": "sha256:8fe353964ab1d749e25a661f2e41c1730376fe4ab0857a5ce598f7058208f354",
+      "backupRequired": false
+    },
+    {
+      "version": 5,
+      "name": "evidence",
+      "file": "005_evidence.sql",
+      "checksum": "sha256:39f0175b2c25616d7f07cd0ed1d769c36c92355602949e018bfefc11a5428934",
+      "backupRequired": false
+    },
+    {
+      "version": 6,
+      "name": "analysis_coverage",
+      "file": "006_analysis_coverage.sql",
+      "checksum": "sha256:0aef0920c2db24d9ae23e6cf05b7ab620ebf76e7ce0f1db82ac21b3c90c678fc",
+      "backupRequired": false
+    },
+    {
+      "version": 7,
+      "name": "diagnostics",
+      "file": "007_diagnostics.sql",
+      "checksum": "sha256:f9e862c1a64d5cf917345036b5b7caee7b60b358020410b01e808b750011d7d4",
+      "backupRequired": false
+    }
+  ]
 }

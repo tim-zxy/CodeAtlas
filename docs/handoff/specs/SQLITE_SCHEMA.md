@@ -27,6 +27,10 @@ interface CanonicalFactStore {
 | R008 execution_graph | 1 | execution_nodes, execution_edges, execution_contexts |
 | R009 runtime_flow | 1 | runtime_flows, runtime_flow_steps |
 
+R001-R007 are the Phase 0 repository schema. `repository` is a single stable-ID row per database; `root_path` is a locator, not identity. Revisions retain kind-specific identity and fingerprints; a source-file ID may recur across revisions, while `(revision_id, path)` is unique. Provider snapshots retain requested revision/fingerprint and outcome, including partial or failed observations. Canonical node/edge IDs and FactKeys are Provider-independent and unique within a revision. Resolved edges reference same-revision nodes; unresolved edges retain their resolution and a separate hint/candidate array without selecting a target. Evidence and Provider bindings are separate from Canonical Facts. Coverage and bounded diagnostics belong to Provider snapshots. The exact column mapping and deliberate application-validation boundary are recorded in [`P0-W1-006 Repository Database Design`](../../superpowers/specs/2026-09-21-p0-w1-006-repository-db-design.md).
+
+The repository manifest contains seven immutable, checksummed SQL files, `001_repo_core.sql` through `007_diagnostics.sql`. The workspace manifest remains empty until P0-W1-007. The P0-W1-006 Fixture `p0-repository-schema-v1` at `fixtures/storage/repository-schema/cases.json` covers fresh-to-latest, all seven sequential upgrade boundaries, rerun safety, exact Phase 0 table/index inventory, representative relational constraints, and repository/workspace isolation. Full analysis activation, Fact Merge, and validated graph writes are later tasks; R001-R007 create structure only.
+
 Critical indexes cover normalized source path, revision/fingerprint, node canonical key/kind, edge source/target/kind, unresolved hints, provider snapshot, evidence source/status, binding provider fact, coverage capability, diagnostics run, and runtime-flow ordinal.
 
 `repository_state.indexed_revision_id` points only to a successfully activated graph. Failed snapshots remain diagnostic history but never become active.
@@ -52,7 +56,7 @@ Phase 0 must not pre-create Phase 1 knowledge tables. Revision sets reject mutat
 
 ## Migration mechanics
 
-The storage package owns SQLite connections and separate `REPOSITORY` and `WORKSPACE` migration manifests. Each manifest is schema version `1` with exactly `schemaVersion`, `databaseKind`, and ordered `migrations`. Each entry has exactly `version`, `name`, `file`, `checksum`, and `backupRequired`. Versions are unique safe positive integers, ordered contiguously from `1`; names and files are unique. Files use safe relative POSIX paths contained by the manifest directory, including after symlink resolution. A kind mismatch is rejected. The checked-in Phase 0 production manifests are empty for both kinds; P0-W1-005 creates no R/W business tables.
+The storage package owns SQLite connections and separate `REPOSITORY` and `WORKSPACE` migration manifests. Each manifest is schema version `1` with exactly `schemaVersion`, `databaseKind`, and ordered `migrations`. Each entry has exactly `version`, `name`, `file`, `checksum`, and `backupRequired`. Versions are unique safe positive integers, ordered contiguously from `1`; names and files are unique. Files use safe relative POSIX paths contained by the manifest directory, including after symlink resolution. A kind mismatch is rejected. P0-W1-005 created empty manifests; P0-W1-006 populates only the repository manifest with R001-R007. The workspace manifest remains empty pending P0-W1-007.
 
 The loader validates every entry and reads every SQL file before opening a transaction. Files are strict UTF-8 without BOM; CRLF and CR normalize to LF, with all other content preserved. SHA-256 is compared against the lowercase `sha256:<64 hex>` value after normalization. Published files and checksums are immutable; a correction is a new migration. Any malformed manifest, unreadable file, or checksum mismatch fails before mutation.
 
@@ -60,7 +64,7 @@ The Node 24 `node:sqlite` runner reads `PRAGMA user_version`, rejects invalid or
 
 The closed storage error family is `MIGRATION_MANIFEST_INVALID`, `MIGRATION_DATABASE_KIND_MISMATCH`, `MIGRATION_FILE_INVALID`, `MIGRATION_CHECKSUM_MISMATCH`, `MIGRATION_BACKUP_REQUIRED`, `DATABASE_VERSION_INVALID`, `DATABASE_TOO_NEW`, `MIGRATION_LOCKED`, `MIGRATION_VERSION_CHANGED`, `MIGRATION_TRANSACTION_ESCAPED`, and `MIGRATION_FAILED`. No raw SQL is included in public error messages. `fixtures/storage/migrations/cases.json` (`p0-migration-runner-v1`) covers empty, sequential upgrade, failed migration, and too-new scenarios, with locking, checksum, transaction-control, and rerun assertions in the storage tests.
 
-Required later schema tests remain fresh-to-latest, every sequential boundary, independent repository DB rebuild, and workspace continuity. P0-W1-006 and P0-W1-007 own those business-table migrations; P0-W1-005 does not satisfy their acceptance gates.
+P0-W1-006 verifies repository fresh-to-latest and every sequential boundary in real temporary databases. Independent repository DB rebuild and workspace continuity remain integration acceptance for later storage/application tasks. P0-W1-007 owns W001-W003; neither P0-W1-005 nor P0-W1-006 satisfies its workspace acceptance gate.
 
 ## Atomic update semantics
 
