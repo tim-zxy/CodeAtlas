@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "p0-workspace-schema-v1",
+  "task": "P0-W1-007",
+  "governingSpec": "docs/handoff/specs/SQLITE_SCHEMA.md",
+  "acceptance": "W001-W003 exist after fresh and sequential workspace upgrades and frozen RevisionSets are immutable",
+  "cases": [
+    "fresh-to-latest",
+    "sequential-upgrade",
+    "constraints-and-isolation",
+    "frozen-revision-set"
+  ]
+}

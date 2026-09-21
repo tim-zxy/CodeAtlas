@@ -6,14 +6,14 @@
 - Handoff assembly: refreshed as the agent-neutral Engineering Handoff Pack.
 - Primary handoff entry: `ENGINEERING_HANDOFF.md`.
 - Compatibility entry: `CODEX_HANDOFF.md`.
-- Implementation repository: P0-W0-001, P0-W0-002, P0-W0-003, P0-W1-001, P0-W1-002, and P0-W1-003 have local verification and successful hosted CI evidence, including P0-W1-003's final documentation correction. P0-W1-004 has fresh local completion evidence; hosted CI remains pending separate push authorization.
+- Implementation repository: P0-W0-001 through P0-W1-003 have local verification and successful hosted CI evidence. P0-W1-004 through P0-W1-007 have fresh local completion evidence on their isolated branch chain; exact-branch hosted CI remains pending separate push authorization.
 - Active implementation phase: Phase 0.
 
 ## Phase readiness
 
 | Phase | Readiness | Implementation progress |
 |---|---|---|
-| 0 | IMPLEMENTATION-READY | P0-W0-001, P0-W0-002, P0-W0-003, P0-W1-001, P0-W1-002, and P0-W1-003 verified locally and in hosted CI; P0-W1-004 locally verified, hosted CI pending push authorization |
+| 0 | IMPLEMENTATION-READY | P0-W0-001 through P0-W1-003 verified locally and in hosted CI; P0-W1-004 through P0-W1-007 locally verified, exact-branch hosted CI pending push authorization |
 | 0.5 | IMPLEMENTATION-READY | 0 percent |
 | 1 | DESIGN-READY | 0 percent |
 | 2 | ARCHITECTURE-READY | 0 percent |
@@ -21,7 +21,7 @@
 
 ## Next action
 
-P0-W1-004 Evidence model is locally verified. Preserve its branch pending explicit authorization to push and obtain hosted CI for the exact final SHA; do not treat local verification as hosted completion. The next authoritative Phase 0 task is P0-W1-005 Migration runner. Preserve predecessor order and the task-level Fixture, Evaluation, Acceptance, documentation, and traceability requirements.
+P0-W1-007 Workspace database is locally verified at the end of the unmerged W1 branch chain. Preserve the chain pending explicit authorization to integrate or push; do not treat local verification as hosted completion. The next listed unblocked Phase 0 task is P0-W3-001 Native IPC schema v1. Preserve predecessor order and the task-level Fixture, Evaluation, Acceptance, documentation, and traceability requirements.
 
 ## Active task evidence
 
@@ -185,3 +185,13 @@ P0-W1-004 Evidence model is locally verified. Preserve its branch pending explic
 - Local Quality Gates: `pnpm verify` passed on the implementation working tree on 2026-09-21: Prettier, 16 TypeScript workspace builds, IR type tests, 342/342 Node tests, 17-project architecture check, Rust formatting/build/Clippy with warnings denied, and Cargo tests (0 native unit tests, 2/2 smoke tests). An earlier Gate attempt exposed the outdated empty-manifest Fixture; after correction, another run reached a transient Windows linker LNK1105 file lock, then a standalone `cargo test --workspace` and the final full `pnpm verify` passed. Windows checkout CRLF caused initial formatter noise; this isolated worktree was normalized to LF without changing the declared Gate.
 - Guardrails and Deferred audit: R001-R007 contain only relational Phase 0 schema and indexes. Provider IDs are provenance, never Canonical identity; unresolved/ambiguous targets remain unresolved. The migration SQL does not control transactions, `user_version`, or active graph state. No W001-W003, ExecutionGraph, RuntimeFlow, FTS5, vector, LLM, Knowledge, Wiki, watcher, daemon, or Phase 1/2/3 capability was added. Cross-row polymorphic fact validation and activation remain later validated Application/Storage work, not silently claimed complete.
 - Next task: P0-W1-007 Workspace database W001-W003 after review/integration of this branch. P0-W1-006 local completion does not itself satisfy Phase 0 exit or hosted CI.
+
+## 2026-09-21 P0-W1-007 Workspace database local verification
+
+- Status and baseline: Phase 0 P0-W1-007 is implemented and locally verified on isolated branch `codex/p0-w1-007-workspace-db`, based on P0-W1-006 commit `e346632d00b044defa2c29e2835a5ed1036e37bd`. This entry records working-tree verification before the local commit. No merge, push, or exact-branch hosted CI is claimed.
+- Authority and scope: ADR-003, ADR-011, ADR-012; `docs/handoff/specs/SQLITE_SCHEMA.md`; implementation design `docs/superpowers/specs/2026-09-21-p0-w1-007-workspace-db-design.md`. The workspace manifest declares three immutable checksummed SQL migrations W001-W003. The repository manifest and migration runner API are unchanged.
+- Fixture / Evaluation / Acceptance: `p0-workspace-schema-v1` at `fixtures/storage/workspace-schema/cases.json` maps to P0-W1-007 and the fresh/sequential Workspace DB plus frozen RevisionSet gate. `packages/storage/test/workspace-schema.test.mjs` proves exact manifest order, fresh-to-latest version 3, rerun safety, exact four-table/five-trigger Phase 0 inventory, absence of W004-W012/repository graph tables, and every sequential boundary. `workspace-revision-set.test.mjs` proves mutable pre-freeze items, irreversible freeze, rejection of frozen parent/item mutation, registered-repository integrity, and representative constraints. Focused tests passed 5/5.
+- Implementation: W001 stores one stable workspace ID and root-path locator. W002 registers stable repository IDs and locators without copying repository facts or adding cross-database foreign keys. W003 stores a single revision ID/fingerprint per registered repository and uses SQLite constraints/triggers to make `frozen = 1` irreversible and block all frozen set/item changes. No direct database mutation API or compilation workflow was added.
+- Local Quality Gates: `pnpm verify` passed on 2026-09-21: Prettier, 16 TypeScript workspace builds, IR type tests, 347/347 Node tests, the 17-project architecture check, Rust formatting/build/Clippy with warnings denied, and Cargo tests (0 native unit tests, 2/2 smoke tests). Initial formatter output reflected Windows CRLF checkout conversion; the isolated worktree was normalized to repository-standard LF and the unchanged Gate then passed.
+- Guardrails and Deferred audit: Repository/Workspace storage remains separately versioned and joined only by stable IDs/fingerprints. Migration SQL contains no transaction control, `user_version`, network, LLM, vector, FTS, graph activation, or Knowledge behavior. W004-W012, services, contracts, ExecutionGraph, RuntimeFlow, documents, claims, Knowledge, lifecycle, evaluation, and usage tables remain unimplemented as required. Knowledge compilation will own RevisionSet creation/freezing in Phase 1 through validated Application workflows; it was not implemented early.
+- Next task: P0-W3-001 Native IPC schema v1 is the next listed unblocked Phase 0 task after review/integration of the W1 storage chain. Local P0-W1-007 completion does not itself satisfy Phase 0 exit or hosted CI.

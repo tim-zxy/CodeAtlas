@@ -1,5 +1,27 @@
 {
   "schemaVersion": 1,
   "databaseKind": "WORKSPACE",
-  "migrations": []
+  "migrations": [
+    {
+      "version": 1,
+      "name": "workspace_core",
+      "file": "001_workspace_core.sql",
+      "checksum": "sha256:f6c3ec4b4029754227c0016dd52defffc2ba79d338e6539d1b85b127344668db",
+      "backupRequired": false
+    },
+    {
+      "version": 2,
+      "name": "repositories",
+      "file": "002_repositories.sql",
+      "checksum": "sha256:abc027a7cf1a93fd852b7a3c5bbe2ce0bf223166981c6b3035305dac3de1f17d",
+      "backupRequired": false
+    },
+    {
+      "version": 3,
+      "name": "revision_sets",
+      "file": "003_revision_sets.sql",
+      "checksum": "sha256:5278670e504bef6b7ddcb3fa52666de327d4508a2b5575cce4633215c10ab1f8",
+      "backupRequired": false
+    }
+  ]
 }
