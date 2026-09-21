@@ -1,5 +1,7 @@
 export { StorageMigrationError } from './errors.js';
 export type { StorageMigrationErrorCode } from './errors.js';
+export { loadMigrationPlan } from './manifest.js';
+export type { LoadedMigration, LoadedMigrationPlan } from './manifest.js';
 export type {
   MigrationDatabaseKind,
   MigrationManifestEntryV1,

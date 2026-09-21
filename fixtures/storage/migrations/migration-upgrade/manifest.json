@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "databaseKind": "REPOSITORY",
+  "migrations": [
+    {
+      "version": 1,
+      "name": "create_probe",
+      "file": "001-create-probe.sql",
+      "checksum": "sha256:755e9ebfe0d0a94b522656969191fa06cbd9956baa1b8edb2d71c764a680eb10",
+      "backupRequired": false
+    },
+    {
+      "version": 2,
+      "name": "add_revision",
+      "file": "002-add-revision.sql",
+      "checksum": "sha256:9f8fbdb113edfabba6898a298114045b55e63d1fd6526d9063941ca79e918897",
+      "backupRequired": false
+    }
+  ]
+}
