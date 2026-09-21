@@ -4,13 +4,13 @@
 
 `@codeatlas/providers` owns the strict TypeScript request, event, descriptor, and complete-stream schemas. Native output remains Provider Facts and is not Canonical IR until the TypeScript Runtime validates, canonicalizes, merges, and stores it. The Rust analyzer owns no SQLite connection and cannot publish Canonical Knowledge.
 
-Protocol version 1 and IR schema version 1 are the only accepted values in P0-W3-001. The schemas are implemented in `packages/providers/src/native-ipc.ts`; the executable Fixture index is `fixtures/ipc/schema-v1/cases.json`, and `packages/providers/test/native-ipc.test.mjs` is a mandatory root-test input. Byte framing, process lifecycle, and cross-language byte fixtures remain P0-W3-002 through P0-W3-004.
+Protocol version 1 and IR schema version 1 are the only accepted values in P0-W3-001. The schemas are implemented in `packages/providers/src/native-ipc.ts`; the object-schema Fixture index is `fixtures/ipc/schema-v1/cases.json`, and `packages/providers/test/native-ipc.test.mjs` is a mandatory root-test input. P0-W3-002 adds the shared raw-byte corpus described below. Production byte decoding, process lifecycle, handshake enforcement, and state application remain P0-W3-003, P0-W3-004, or later work.
 
 ## Transport
 
 One JSON object per UTF-8 line. TypeScript writes requests to stdin; Rust writes protocol events only to stdout and logs only to stderr. No shell. The client enforces maximum line/event/count/total-byte limits, backpressure, timeout, cancellation, and process termination.
 
-Transport enforcement is specified here but is not implemented by P0-W3-001. The complete-stream schema validates already-decoded objects; it does not claim JSONL byte decoding, process execution, timeout enforcement, or database application.
+Transport enforcement is specified here but is not implemented in production by P0-W3-002. The complete-stream schema validates already-decoded objects, while the P0-W3-002 consumers are test-only classifiers over the shared byte corpus. Neither task claims production JSONL decoding, process execution, timeout enforcement, checksum verification, or database application.
 
 ## Envelope
 
@@ -59,7 +59,7 @@ A successful stream starts with `REFRESH_STARTED` and ends with one `REFRESH_COM
 
 For every request, event request IDs match, sequence is exactly zero-based and contiguous, only request-legal event types occur, and exactly one terminal event is last. `ANALYZE` and `REFRESH` also enforce the request `maxEvents` budget, start-event ordering, context agreement, and terminal emitted-count agreement. `DESCRIBE_COMPLETED`, analysis/refresh completed or failed, `CANCEL_ACCEPTED`, and `REQUEST_FAILED` are terminal.
 
-This validator intentionally does not compute or verify integrity checksums. It preserves the declared fingerprint/checksum in the terminal payload; byte-stream checksum computation and process corruption handling belong to P0-W3-002 through P0-W3-004.
+This validator intentionally does not compute or verify integrity checksums. It preserves the declared fingerprint/checksum in the terminal payload; production byte-stream checksum computation and process corruption handling belong to P0-W3-003, P0-W3-004, or later validated application work.
 
 ## Error model
 
@@ -69,7 +69,13 @@ Errors use a closed code enum, an exact non-blank message of at most 128 charact
 
 ## Shared fixtures
 
-Both implementations consume byte-identical describe, analyze, refresh modify/delete, partial coverage, invalid event, malformed JSON, out-of-order, oversize, cancellation, incompatible version, and premature EOF fixtures.
+P0-W3-002 defines `p0-native-ipc-protocol-bytes-v1` at `fixtures/ipc/protocol-v1/cases.json`. Its raw JSONL covers describe, analyze, refresh modify/delete, partial analysis, cancellation, malformed JSON, invalid event, incompatible protocol, oversize line, out-of-order sequence, and premature EOF. `packages/providers/test/native-ipc-bytes.test.mjs` and `crates/native-analyzer/tests/protocol_fixtures.rs` consume the same request and event files and verify the declared byte lengths and classifications.
 
-P0-W3-001 contributes the TypeScript object-schema Fixture for the request/event matrix, version and limit declarations, complete-stream ordering/terminal/count/context rules, and cancellation. It does not claim the byte-identical TypeScript/Rust fixture gate assigned to P0-W3-002.
+The closed classification names are `VALID`, `MALFORMED_JSON`, `INVALID_EVENT`, `INCOMPATIBLE_PROTOCOL`, `OVERSIZE_LINE`, `OUT_OF_ORDER`, and `PREMATURE_EOF`. Classification is deterministic: raw framing is checked before JSON parsing; line byte limits are checked before UTF-8/JSON decoding; malformed JSON precedes protocol and schema checks; incompatible protocol precedes closed-envelope validation; sequence gaps precede terminal completeness; and a legal non-terminal prefix produces premature EOF. Request-ID mismatch, illegal event types, invalid envelope shape, or invalid terminal placement produce `INVALID_EVENT`.
+
+Raw Fixture bytes are protected by `fixtures/ipc/protocol-v1/**/*.jsonl -text` in `.gitattributes`; consumers reject BOM, invalid UTF-8, CRLF, and blank lines rather than relying on checkout conversion. The maximum line size is measured in UTF-8 bytes, not characters.
+
+Both classifiers are deliberately test-only. Rust adds `serde_json` only under `[dev-dependencies]`; it does not add a production protocol module or import test behavior into `src/main.rs`.
+
+P0-W3-001 contributes the TypeScript object-schema Fixture for the request/event matrix, version and limit declarations, complete-stream ordering/terminal/count/context rules, and cancellation. P0-W3-002 proves only cross-language agreement on the shared raw corpus. Rust `DESCRIBE`, production decoding and process enforcement, checksum verification, atomic validated state application, and file-level incremental analysis remain P0-W3-003, P0-W3-004, or later tasks.
 

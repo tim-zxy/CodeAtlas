@@ -6,14 +6,14 @@
 - Handoff assembly: refreshed as the agent-neutral Engineering Handoff Pack.
 - Primary handoff entry: `ENGINEERING_HANDOFF.md`.
 - Compatibility entry: `CODEX_HANDOFF.md`.
-- Implementation repository: P0-W0-001 through P0-W1-003 have local verification and successful hosted CI evidence. P0-W1-004 through P0-W1-007 have fresh local completion evidence on their isolated branch chain; exact-branch hosted CI remains pending separate push authorization.
+- Implementation repository: the Phase 0 chain through P0-W3-001 is integrated on `main`; its implementation merge has successful exact-SHA hosted CI evidence. P0-W3-002 has fresh local completion evidence on its isolated branch; no push or hosted CI is claimed for it.
 - Active implementation phase: Phase 0.
 
 ## Phase readiness
 
 | Phase | Readiness | Implementation progress |
 |---|---|---|
-| 0 | IMPLEMENTATION-READY | P0-W0-001 through P0-W1-003 verified locally and in hosted CI; P0-W1-004 through P0-W1-007 locally verified, exact-branch hosted CI pending push authorization |
+| 0 | IMPLEMENTATION-READY | 11 of 18 tasks integrated through P0-W3-001; P0-W3-002 locally verified on an isolated branch, pending review/integration and exact-SHA hosted CI |
 | 0.5 | IMPLEMENTATION-READY | 0 percent |
 | 1 | DESIGN-READY | 0 percent |
 | 2 | ARCHITECTURE-READY | 0 percent |
@@ -21,7 +21,7 @@
 
 ## Next action
 
-P0-W1-007 Workspace database is locally verified at the end of the unmerged W1 branch chain. Preserve the chain pending explicit authorization to integrate or push; do not treat local verification as hosted completion. The next listed unblocked Phase 0 task is P0-W3-001 Native IPC schema v1. Preserve predecessor order and the task-level Fixture, Evaluation, Acceptance, documentation, and traceability requirements.
+P0-W3-002 shared protocol byte fixtures are locally verified on `codex/p0-w3-002-protocol-fixtures`. Review and integrate this branch before starting P0-W3-003 Rust/TypeScript handshake; do not treat local verification as hosted completion. Preserve predecessor order and the task-level Fixture, Evaluation, Acceptance, documentation, and traceability requirements.
 
 ## Active task evidence
 
@@ -212,3 +212,15 @@ P0-W1-007 Workspace database is locally verified at the end of the unmerged W1 b
 - Local merged-result verification: after confirming that the initial formatter stop was caused solely by a Windows CRLF working-tree checkout over LF-indexed content, the tree was normalized without a Git content diff. pnpm install --frozen-lockfile and pnpm verify then passed on the merge commit: all 16 TypeScript workspace builds, IR type tests, 354/354 Node tests, the 17-project architecture check, Rust formatting/build/Clippy with warnings denied, and Cargo tests (0 native unit tests and 2/2 smoke tests).
 - Hosted CI: GitHub Actions run 35573494637 (https://github.com/tim-zxy/CodeAtlas/actions/runs/35573494637) succeeded for exact merge SHA a29c39956d3a1f1d782e001a60008cc1c1543a6f. Both mandatory jobs passed: TypeScript workspace in 29 seconds and Rust workspace in 1 minute 31 seconds. The actions Node 20 deprecation and future Ubuntu runner migration messages were non-blocking platform notices, not project failures.
 - Phase status: Phase 0 now has 11 of 18 listed tasks implemented and integrated through P0-W3-001. Phase 0 exit remains unmet; P0-W3-002 shared valid/invalid protocol byte fixtures is the next authoritative task. P0-W3-003/004, P0-W4-001, and P0-W9-001..003 remain unimplemented and are not implicitly satisfied by this integration.
+
+## 2026-09-21 P0-W3-002 shared protocol byte fixtures local verification
+
+- Status and baseline: Phase 0 P0-W3-002 is implemented and locally verified on isolated branch `codex/p0-w3-002-protocol-fixtures`, based on integrated `main` commit `5e0cebb2dd3afb7c203dcdaca63a2190536e74cd`. Implementation commits are `f3496cd`, `1e4f589`, and `da72f52`; this entry records the verified working tree before its documentation commit. No merge, push, or exact-branch hosted CI is claimed.
+- Authority and scope: ADR-010, ADR-012, ADR-014; `docs/handoff/specs/NATIVE_IPC.md`; `docs/specs/native-analyzer-scalability.md`; design `docs/superpowers/specs/2026-09-21-p0-w3-002-shared-protocol-fixtures-design.md`; implementation plan `docs/superpowers/plans/2026-09-21-p0-w3-002-shared-protocol-fixtures.md`. No Frozen decision, phase definition, acceptance threshold, or ADR changed.
+- Fixture / Evaluation / Acceptance: `p0-native-ipc-protocol-bytes-v1` at `fixtures/ipc/protocol-v1/cases.json` declares 12 byte-exact request/event pairs: six valid describe/analyze/refresh/partial/cancellation cases and six malformed JSON, invalid event, incompatible protocol, oversize line, out-of-order, and premature EOF cases. `packages/providers/test/native-ipc-bytes.test.mjs` and `crates/native-analyzer/tests/protocol_fixtures.rs` consume the same raw JSONL bytes, verify declared lengths and safe paths, and agree on the seven closed classifications. `.gitattributes` protects these JSONL files with `-text`.
+- Failure and read-only behavior: both classifiers are test-only and read Fixture bytes without spawning a process, writing SQLite, canonicalizing Provider Facts, or applying state. BOM, invalid UTF-8, CRLF, blank lines, malformed JSON, incompatible protocol, illegal/mismatched events, sequence gaps, oversize UTF-8 byte lines, and missing terminals are rejected deterministically. Invalid transcripts cannot partially apply state because this task has no application path.
+- Schema, migration, and dependency impact: no Canonical IR schema, SQLite schema, migration, production package dependency, or production Rust module changed. `serde_json = "1.0"` is a Rust `[dev-dependencies]` entry used only by the integration-test consumer; `Cargo.lock` records its resolved test dependency graph.
+- Focused verification: `pnpm build` passed for all 16 TypeScript workspace projects. `node --test packages/providers/test/native-ipc.test.mjs packages/providers/test/native-ipc-bytes.test.mjs scripts/test-workspace-structure.mjs` passed 32/32. `cargo test -p codeatlas-native-analyzer --test protocol_fixtures` passed 4/4. `git diff --check` passed.
+- Full Quality Gate: after formatting four Git-ignored Superpowers execution-ledger/brief files that `prettier --check .` also scans, a fresh `pnpm verify` passed: Prettier, all 16 TypeScript builds, IR type tests, 359/359 Node tests, the 17-project architecture check, Rust formatting/build/Clippy with warnings denied, native unit tests 0/0, shared protocol Fixture tests 4/4, and native smoke tests 2/2. The initial formatting stop was not counted as a passing run and no Gate was weakened.
+- Guardrail / Deferred audit: `git diff 5e0cebb2dd3afb7c203dcdaca63a2190536e74cd..HEAD -- crates/native-analyzer/src packages/providers/src packages/storage packages/knowledge` was empty. The requested keyword scan of the new test/Fixture corpus returned no SQLite, SQLx, Diesel, Tree-sitter, `LanguageAnalyzer`, process-spawn, Knowledge, LLM, embedding/Zvec, watcher, or daemon hits. Provider-independent Canonical IR, SQLite authority, Evidence/Claim/Knowledge separation, AUTO/MANUAL lifecycles, and `ExecutionGraph -> RuntimeFlow -> BusinessFlow` remain unchanged.
+- Known limitations and next task: Rust `DESCRIBE`, production JSONL decoding/process enforcement, stdout protocol emission beyond the existing smoke boundary, checksum verification, timeout/cancellation process handling, atomic validated state application, and file-level incremental analysis remain **未实现** as assigned to P0-W3-003, P0-W3-004, or later work. P0-W3-003 Rust/TypeScript handshake is the next authoritative task after review/integration of this branch.
