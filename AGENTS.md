@@ -34,6 +34,14 @@ Do not rely on the original ChatGPT discussion or any unavailable conversation h
 - Use `ExecutionGraph -> RuntimeFlow -> BusinessFlow`; do not restore the retired flow identifier as a formal core model.
 - Do not add a Phase 4 without a formally approved design.
 
+## Implementation discipline
+
+- Before changing code, state material assumptions and the task's verifiable success criteria. Resolve ambiguity that would change scope or design; do not silently choose an interpretation.
+- Understand the relevant call path and existing implementation before editing. Reuse established project patterns and standard-library or platform capabilities where they satisfy the approved design.
+- Implement only the current task's required behavior. Avoid speculative abstractions, options, dependencies, and adjacent refactors; keep each changed line traceable to the task.
+- Make focused changes that match the surrounding style. Remove unused code introduced by the change, but do not clean up unrelated pre-existing code without authorization.
+- Prove non-trivial behavior with the task's declared tests, Fixtures, Evaluation, and Acceptance gates. Simplicity never justifies weakening validation, error recovery, architecture boundaries, or any required Quality Gate.
+
 ## Task completion
 
 Writing the code is not, by itself, completion. A task is complete only when all of the following are true:
