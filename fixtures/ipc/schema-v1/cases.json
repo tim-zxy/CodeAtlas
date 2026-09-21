@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "p0-native-ipc-schema-v1",
+  "task": "P0-W3-001",
+  "governingSpec": "docs/handoff/specs/NATIVE_IPC.md",
+  "acceptance": "Native IPC v1 request, event, negotiation, and complete-stream schemas reject invalid protocol states",
+  "cases": [
+    "request-envelope-matrix",
+    "event-envelope-matrix",
+    "version-and-limit-declarations",
+    "stream-ordering-terminal-count-and-context",
+    "cancellation"
+  ]
+}
