@@ -52,9 +52,15 @@ Phase 0 must not pre-create Phase 1 knowledge tables. Revision sets reject mutat
 
 ## Migration mechanics
 
-Separate repo/workspace manifest JSON records version, name, file, checksum, and backup requirement. A runner locks, verifies checksums, wraps each migration in a transaction, updates `user_version` only after success, and rejects a database newer than the runtime as `DATABASE_TOO_NEW`.
+The storage package owns SQLite connections and separate `REPOSITORY` and `WORKSPACE` migration manifests. Each manifest is schema version `1` with exactly `schemaVersion`, `databaseKind`, and ordered `migrations`. Each entry has exactly `version`, `name`, `file`, `checksum`, and `backupRequired`. Versions are unique safe positive integers, ordered contiguously from `1`; names and files are unique. Files use safe relative POSIX paths contained by the manifest directory, including after symlink resolution. A kind mismatch is rejected. The checked-in Phase 0 production manifests are empty for both kinds; P0-W1-005 creates no R/W business tables.
 
-Required tests: fresh-to-latest, every sequential boundary, rerun safety, rollback on failure, lock contention, checksum mismatch, too-new rejection, independent repository DB rebuild, and workspace continuity.
+The loader validates every entry and reads every SQL file before opening a transaction. Files are strict UTF-8 without BOM; CRLF and CR normalize to LF, with all other content preserved. SHA-256 is compared against the lowercase `sha256:<64 hex>` value after normalization. Published files and checksums are immutable; a correction is a new migration. Any malformed manifest, unreadable file, or checksum mismatch fails before mutation.
+
+The Node 24 `node:sqlite` runner reads `PRAGMA user_version`, rejects invalid or newer-than-plan versions, and applies each pending migration in its own `BEGIN IMMEDIATE` transaction. It re-reads the version under the write lock so a concurrent advance is not replayed. Migration SQL cannot control transactions or write `user_version`; the runner updates `user_version` only after SQL succeeds and verifies it before commit. Failure rolls back only the current transaction and closes the connection; prior committed versions remain available. Reruns apply only pending versions. A pending `backupRequired: true` entry is rejected before mutation until backup orchestration is available; the runner does not silently back up.
+
+The closed storage error family is `MIGRATION_MANIFEST_INVALID`, `MIGRATION_DATABASE_KIND_MISMATCH`, `MIGRATION_FILE_INVALID`, `MIGRATION_CHECKSUM_MISMATCH`, `MIGRATION_BACKUP_REQUIRED`, `DATABASE_VERSION_INVALID`, `DATABASE_TOO_NEW`, `MIGRATION_LOCKED`, `MIGRATION_VERSION_CHANGED`, `MIGRATION_TRANSACTION_ESCAPED`, and `MIGRATION_FAILED`. No raw SQL is included in public error messages. `fixtures/storage/migrations/cases.json` (`p0-migration-runner-v1`) covers empty, sequential upgrade, failed migration, and too-new scenarios, with locking, checksum, transaction-control, and rerun assertions in the storage tests.
+
+Required later schema tests remain fresh-to-latest, every sequential boundary, independent repository DB rebuild, and workspace continuity. P0-W1-006 and P0-W1-007 own those business-table migrations; P0-W1-005 does not satisfy their acceptance gates.
 
 ## Atomic update semantics
 
@@ -63,4 +69,3 @@ Full analysis writes staging state, validates it, then atomically activates the 
 ## Derived indexes
 
 FTS5 tables and any Zvec indexes are rebuildable from canonical rows. Vector records include entity ID/revision, content hash, and embedding profile ID. An embedding-profile change dirties only the vector index.
-
