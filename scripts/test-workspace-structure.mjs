@@ -131,6 +131,7 @@ test('workspace scripts expose and compose the architecture dependency gate', as
     /packages\/storage\/test\/migration-runner-failures\.test\.mjs/,
   );
   assert.match(manifest.scripts.test, /packages\/providers\/test\/native-ipc\.test\.mjs/);
+  assert.match(manifest.scripts.test, /packages\/providers\/test\/native-ipc-bytes\.test\.mjs/);
   assert.match(manifest.scripts.verify, /pnpm architecture:check/);
 });
 

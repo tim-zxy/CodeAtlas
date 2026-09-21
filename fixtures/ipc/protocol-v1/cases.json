@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "id": "p0-native-ipc-protocol-bytes-v1",
+  "task": "P0-W3-002",
+  "governingSpec": "docs/handoff/specs/NATIVE_IPC.md",
+  "acceptance": "TypeScript and Rust consume the same Native IPC v1 request and event bytes",
+  "cases": [
+    {
+      "id": "describe-v1",
+      "requestFile": "describe-v1/request.jsonl",
+      "eventsFile": "describe-v1/events.jsonl",
+      "requestBytes": 141,
+      "eventsBytes": 506,
+      "maxLineBytes": 8192,
+      "expected": "VALID"
+    },
+    {
+      "id": "analyze-java-basic-v1",
+      "requestFile": "analyze-java-basic-v1/request.jsonl",
+      "eventsFile": "analyze-java-basic-v1/events.jsonl",
+      "requestBytes": 706,
+      "eventsBytes": 2262,
+      "maxLineBytes": 8192,
+      "expected": "VALID"
+    },
+    {
+      "id": "refresh-modified-file-v1",
+      "requestFile": "refresh-modified-file-v1/request.jsonl",
+      "eventsFile": "refresh-modified-file-v1/events.jsonl",
+      "requestBytes": 816,
+      "eventsBytes": 2207,
+      "maxLineBytes": 8192,
+      "expected": "VALID"
+    },
+    {
+      "id": "refresh-delete-file-v1",
+      "requestFile": "refresh-delete-file-v1/request.jsonl",
+      "eventsFile": "refresh-delete-file-v1/events.jsonl",
+      "requestBytes": 652,
+      "eventsBytes": 1104,
+      "maxLineBytes": 8192,
+      "expected": "VALID"
+    },
+    {
+      "id": "partial-analysis-v1",
+      "requestFile": "partial-analysis-v1/request.jsonl",
+      "eventsFile": "partial-analysis-v1/events.jsonl",
+      "requestBytes": 706,
+      "eventsBytes": 1407,
+      "maxLineBytes": 8192,
+      "expected": "VALID"
+    },
+    {
+      "id": "cancellation-v1",
+      "requestFile": "cancellation-v1/request.jsonl",
+      "eventsFile": "cancellation-v1/events.jsonl",
+      "requestBytes": 115,
+      "eventsBytes": 137,
+      "maxLineBytes": 8192,
+      "expected": "VALID"
+    }
+  ]
+}
