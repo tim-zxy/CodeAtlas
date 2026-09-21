@@ -1,0 +1,1 @@
+{"protocolVersion":1,"requestId":"request-analyze","sequence":0,"type":"ANALYSIS_STARTED","payload":{"providerSnapshotId":"snapshot-a","repositoryId":"repo-a","revisionId":"rev-a","revisionFingerprint":"rev-fp-a"}}

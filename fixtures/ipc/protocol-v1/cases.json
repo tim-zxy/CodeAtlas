@@ -58,6 +58,60 @@
       "eventsBytes": 137,
       "maxLineBytes": 8192,
       "expected": "VALID"
+    },
+    {
+      "id": "malformed-json-v1",
+      "requestFile": "malformed-json-v1/request.jsonl",
+      "eventsFile": "malformed-json-v1/events.jsonl",
+      "requestBytes": 141,
+      "eventsBytes": 104,
+      "maxLineBytes": 8192,
+      "expected": "MALFORMED_JSON"
+    },
+    {
+      "id": "invalid-event-v1",
+      "requestFile": "invalid-event-v1/request.jsonl",
+      "eventsFile": "invalid-event-v1/events.jsonl",
+      "requestBytes": 706,
+      "eventsBytes": 105,
+      "maxLineBytes": 8192,
+      "expected": "INVALID_EVENT"
+    },
+    {
+      "id": "incompatible-protocol-v1",
+      "requestFile": "incompatible-protocol-v1/request.jsonl",
+      "eventsFile": "incompatible-protocol-v1/events.jsonl",
+      "requestBytes": 141,
+      "eventsBytes": 506,
+      "maxLineBytes": 8192,
+      "expected": "INCOMPATIBLE_PROTOCOL"
+    },
+    {
+      "id": "oversize-line-v1",
+      "requestFile": "oversize-line-v1/request.jsonl",
+      "eventsFile": "oversize-line-v1/events.jsonl",
+      "requestBytes": 141,
+      "eventsBytes": 506,
+      "maxLineBytes": 504,
+      "expected": "OVERSIZE_LINE"
+    },
+    {
+      "id": "out-of-order-v1",
+      "requestFile": "out-of-order-v1/request.jsonl",
+      "eventsFile": "out-of-order-v1/events.jsonl",
+      "requestBytes": 706,
+      "eventsBytes": 692,
+      "maxLineBytes": 8192,
+      "expected": "OUT_OF_ORDER"
+    },
+    {
+      "id": "premature-eof-v1",
+      "requestFile": "premature-eof-v1/request.jsonl",
+      "eventsFile": "premature-eof-v1/events.jsonl",
+      "requestBytes": 706,
+      "eventsBytes": 215,
+      "maxLineBytes": 8192,
+      "expected": "PREMATURE_EOF"
     }
   ]
 }

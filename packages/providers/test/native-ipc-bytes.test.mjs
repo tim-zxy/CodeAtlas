@@ -27,13 +27,19 @@ const terminalEventTypes = new Set([
   'CANCEL_ACCEPTED',
   'REQUEST_FAILED',
 ]);
-const validCaseIds = [
+const fixtureCaseIds = [
   'describe-v1',
   'analyze-java-basic-v1',
   'refresh-modified-file-v1',
   'refresh-delete-file-v1',
   'partial-analysis-v1',
   'cancellation-v1',
+  'malformed-json-v1',
+  'invalid-event-v1',
+  'incompatible-protocol-v1',
+  'oversize-line-v1',
+  'out-of-order-v1',
+  'premature-eof-v1',
 ];
 
 function resolveFixturePath(relativePath) {
@@ -109,7 +115,7 @@ async function loadFixture() {
   return JSON.parse(await readFile(new URL('cases.json', fixtureRoot), 'utf8'));
 }
 
-test('P0-W3-002 Fixture index declares valid shared byte cases with safe paths', async () => {
+test('P0-W3-002 Fixture index declares shared byte cases with safe paths', async () => {
   const fixture = await loadFixture();
   assert.equal(fixture.schemaVersion, 1);
   assert.equal(fixture.id, 'p0-native-ipc-protocol-bytes-v1');
@@ -121,9 +127,9 @@ test('P0-W3-002 Fixture index declares valid shared byte cases with safe paths',
   );
   assert.deepEqual(
     fixture.cases.map((fixtureCase) => fixtureCase.id),
-    validCaseIds,
+    fixtureCaseIds,
   );
-  assert.equal(new Set(validCaseIds).size, fixture.cases.length);
+  assert.equal(new Set(fixtureCaseIds).size, fixture.cases.length);
   for (const fixtureCase of fixture.cases) {
     assert.equal(classifications.has(fixtureCase.expected), true);
     for (const name of ['requestBytes', 'eventsBytes', 'maxLineBytes']) {
@@ -140,7 +146,7 @@ test('Fixture paths reject parent traversal and absolute paths before file acces
   assert.throws(() => resolveFixturePath('/absolute.jsonl'));
 });
 
-test('valid fixtures preserve exact bytes and pass the strict IPC stream schema', async () => {
+test('fixtures preserve exact bytes and match their protocol classification', async () => {
   const fixture = await loadFixture();
   for (const fixtureCase of fixture.cases) {
     const request = await readFile(resolveFixturePath(fixtureCase.requestFile));
@@ -169,4 +175,41 @@ test('raw framing rejects BOM, invalid UTF-8, and middle blank lines', async () 
     classifyTranscript(Buffer.from(`${request.toString('utf8')}\n`), events, 8192),
     'MALFORMED_JSON',
   );
+});
+
+test('classification precedence and byte counting stay deterministic', async () => {
+  const fixture = await loadFixture();
+  const describe = fixture.cases.find((fixtureCase) => fixtureCase.id === 'describe-v1');
+  const analyze = fixture.cases.find((fixtureCase) => fixtureCase.id === 'analyze-java-basic-v1');
+  const describeRequest = await readFile(resolveFixturePath(describe.requestFile));
+  const describeEvents = await readFile(resolveFixturePath(describe.eventsFile));
+  const analyzeRequest = await readFile(resolveFixturePath(analyze.requestFile));
+  const analyzeEvents = await readFile(resolveFixturePath(analyze.eventsFile));
+  const requestLineBytes = describeRequest.length - 1;
+  const malformedOversize = Buffer.from(`{"broken":"${'x'.repeat(requestLineBytes)}`);
+
+  assert.equal(
+    classifyTranscript(describeRequest, malformedOversize, requestLineBytes),
+    'OVERSIZE_LINE',
+  );
+  assert.equal(
+    classifyTranscript(describeRequest, Buffer.from('{"broken":\n'), requestLineBytes),
+    'MALFORMED_JSON',
+  );
+  assert.equal(Buffer.byteLength('界'), 3);
+  assert.deepEqual(decodeLines(Buffer.from('界'), 2), { error: 'OVERSIZE_LINE' });
+
+  const mismatchedEvents = Buffer.from(
+    describeEvents.toString('utf8').replaceAll('request-describe', 'request-mismatch'),
+  );
+  assert.equal(classifyTranscript(describeRequest, mismatchedEvents, 8192), 'INVALID_EVENT');
+
+  const outOfOrderEvents = Buffer.from(
+    analyzeEvents.toString('utf8').replace('"sequence":1', '"sequence":9'),
+  );
+  assert.equal(classifyTranscript(analyzeRequest, outOfOrderEvents, 8192), 'OUT_OF_ORDER');
+
+  const crlfEvents = Buffer.from(describeEvents.toString('utf8').replaceAll('\n', '\r\n'));
+  assert.notEqual(crlfEvents.length, describe.eventsBytes);
+  assert.equal(classifyTranscript(describeRequest, crlfEvents, 8192), 'MALFORMED_JSON');
 });
