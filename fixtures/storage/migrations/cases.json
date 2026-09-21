@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "id": "p0-migration-runner-v1",
+  "task": "P0-W1-005",
+  "governingSpec": "docs/handoff/specs/SQLITE_SCHEMA.md",
+  "acceptance": "Sequential, rollback, rerun, lock, checksum gates",
+  "cases": ["migration-empty", "migration-upgrade", "migration-failure", "database-too-new"]
+}
