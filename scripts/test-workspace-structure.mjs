@@ -59,7 +59,7 @@ for (const name of packageNames) {
         default: './dist/index.js',
       },
     });
-    assert.deepEqual(manifest.files, ['dist']);
+    assert.deepEqual(manifest.files, name === 'storage' ? ['dist', 'migrations'] : ['dist']);
     assert.equal(manifest.scripts.build, 'tsc -p tsconfig.json');
     assert.deepEqual(manifest.dependencies ?? {}, expectedPackageDependencies[name]);
     assert.deepEqual(manifest.devDependencies ?? {}, {});
@@ -72,6 +72,8 @@ for (const name of packageNames) {
       assert.match(source, /EntityIdSchema/);
       assert.match(source, /SourceRangeSchema/);
       assert.match(source, /parseSchemaEnvelope/);
+    } else if (name === 'storage') {
+      assert.equal(source, "export * from './migrations/index.js';\n");
     } else {
       assert.equal(source, 'export {};\n');
     }
@@ -116,6 +118,15 @@ test('workspace scripts expose and compose the architecture dependency gate', as
 
   assert.equal(manifest.scripts['architecture:check'], 'node scripts/check-architecture.mjs');
   assert.match(manifest.scripts.test, /scripts\/test-architecture-rules\.mjs/);
+  assert.match(manifest.scripts.test, /packages\/storage\/test\/migration-runner\.test\.mjs/);
+  assert.match(
+    manifest.scripts.test,
+    /packages\/storage\/test\/migration-runner-application\.test\.mjs/,
+  );
+  assert.match(
+    manifest.scripts.test,
+    /packages\/storage\/test\/migration-runner-failures\.test\.mjs/,
+  );
   assert.match(manifest.scripts.verify, /pnpm architecture:check/);
 });
 
