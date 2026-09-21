@@ -1,0 +1,1 @@
+CREATE TABLE stable_probe (id INTEGER PRIMARY KEY);

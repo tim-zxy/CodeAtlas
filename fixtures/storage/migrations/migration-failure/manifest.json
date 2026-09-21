@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "databaseKind": "REPOSITORY",
+  "migrations": [
+    {
+      "version": 1,
+      "name": "stable_probe",
+      "file": "001-stable.sql",
+      "checksum": "sha256:ac8fffc73f5b96706867cb0f3e556240ef96bd2052d98d74235975dd8f2f0360",
+      "backupRequired": false
+    },
+    {
+      "version": 2,
+      "name": "failed_probe",
+      "file": "002-fail.sql",
+      "checksum": "sha256:671f58bf6e949ab7653b2af00a974fec7361115273aa7a6cbfb009427dc13c7f",
+      "backupRequired": false
+    }
+  ]
+}
