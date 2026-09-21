@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "id": "p0-repository-schema-v1",
+  "task": "P0-W1-006",
+  "governingSpec": "docs/handoff/specs/SQLITE_SCHEMA.md",
+  "acceptance": "R001-R007 and critical indexes exist after fresh and sequential repository upgrades",
+  "cases": ["fresh-to-latest", "sequential-upgrade", "constraints-and-isolation"]
+}
