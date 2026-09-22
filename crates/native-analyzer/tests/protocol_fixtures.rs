@@ -358,6 +358,10 @@ fn fixture_paths_reject_absolute_and_parent_components() {
     assert!(
         std::panic::catch_unwind(|| resolve_fixture_path(&root, "nested/../case.jsonl")).is_err()
     );
+    assert_eq!(
+        resolve_fixture_path(&root, "nested/%2e%2e/case.jsonl"),
+        root.join("nested").join("%2e%2e").join("case.jsonl")
+    );
 }
 
 #[test]

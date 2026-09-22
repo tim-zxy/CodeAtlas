@@ -72,14 +72,13 @@ const fixtureCaseIds = [
 
 function resolveFixturePath(relativePath) {
   assert.equal(typeof relativePath, 'string');
+  const components = relativePath.split('/');
   assert.equal(
-    relativePath
-      .split('/')
-      .every((component) => component !== '' && component !== '.' && component !== '..'),
+    components.every((component) => component !== '' && component !== '.' && component !== '..'),
     true,
   );
   assert.equal(relativePath.includes('\\'), false);
-  const resolved = new URL(relativePath, fixtureRoot);
+  const resolved = new URL(components.map(encodeURIComponent).join('/'), fixtureRoot);
   assert.equal(resolved.href.startsWith(fixtureRoot.href), true);
   return resolved;
 }
@@ -191,6 +190,8 @@ test('Fixture paths reject parent traversal and absolute paths before file acces
   assert.throws(() => resolveFixturePath('../escape.jsonl'));
   assert.throws(() => resolveFixturePath('/absolute.jsonl'));
   assert.throws(() => resolveFixturePath('nested/../describe-v1/request.jsonl'));
+  const encodedParent = resolveFixturePath('nested/%2e%2e/describe-v1/request.jsonl');
+  assert.equal(encodedParent.pathname.includes('/nested/%252e%252e/'), true);
 });
 
 test('fixtures preserve exact bytes and match their protocol classification', async () => {
