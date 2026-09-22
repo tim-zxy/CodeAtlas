@@ -162,6 +162,18 @@ const LEGAL_EVENT_TYPES: Readonly<
   ]),
   CANCEL: new Set(['CANCEL_ACCEPTED', 'REQUEST_FAILED']),
 };
+const FAILURE_PRECEDENCE: Readonly<Record<NativeClientErrorCode, number>> = {
+  CANCELLED: 5,
+  TIMEOUT: 4,
+  PROTOCOL_VIOLATION: 3,
+  OUTPUT_LIMIT_EXCEEDED: 3,
+  CHECKSUM_MISMATCH: 3,
+  INVALID_CONFIGURATION: 3,
+  INVALID_REQUEST: 3,
+  PROVIDER_UNAVAILABLE: 2,
+  PROCESS_FAILED: 2,
+  ANALYZER_FAILED: 1,
+};
 
 export async function executeNativeRequest(
   requestValue: NativeRequestEnvelope,
@@ -169,12 +181,19 @@ export async function executeNativeRequest(
 ): Promise<ValidatedNativeResult> {
   const request = parseRequest(requestValue);
   const options = validateOptions(optionsValue);
+  if (options.signal?.aborted === true) {
+    throw clientError('CANCELLED', 'Native request was cancelled', request);
+  }
+  const timeoutMs = effectiveTimeout(request, options.timeoutMs);
+  if (timeoutMs <= 0) {
+    throw clientError('TIMEOUT', 'Native request timed out', request);
+  }
   const requestBytes = Buffer.from(`${JSON.stringify(request)}\n`, 'utf8');
   if (requestBytes.byteLength > options.limits.maxStdinBytes) {
     throw clientError('OUTPUT_LIMIT_EXCEEDED', 'Native request exceeds the byte limit', request);
   }
 
-  const result = await runProcess(requestBytes, options, request);
+  const result = await runProcess(requestBytes, options, request, timeoutMs);
   const stream = NativeEventStreamSchema.safeParse({ request, events: result.output.events });
   if (!stream.success) {
     throw clientError('PROTOCOL_VIOLATION', 'Native event stream is invalid', request, {
@@ -278,77 +297,201 @@ function runProcess(
   requestBytes: Buffer,
   options: ValidatedOptions,
   request: NativeRequestEnvelope,
+  timeoutMs: number,
 ): Promise<{ readonly output: DecodedOutput; readonly stderr: string }> {
-  return new Promise((resolve, reject) => {
-    let child;
-    try {
-      child = spawn(options.executablePath, [...options.arguments], {
-        shell: false,
-        windowsHide: true,
-        stdio: ['pipe', 'pipe', 'pipe'],
-        env: { ...options.environment },
-      });
-    } catch {
-      reject(clientError('PROVIDER_UNAVAILABLE', 'Native provider is unavailable', request));
-      return;
+  let child;
+  try {
+    child = spawn(options.executablePath, [...options.arguments], {
+      shell: false,
+      windowsHide: true,
+      stdio: ['pipe', 'pipe', 'pipe'],
+      env: childEnvironment(options.environment),
+    });
+  } catch {
+    return Promise.reject(
+      clientError('PROVIDER_UNAVAILABLE', 'Native provider is unavailable', request),
+    );
+  }
+
+  let failure: NativeClientError | undefined;
+  let closed = false;
+  let graceTimer: NodeJS.Timeout | undefined;
+
+  const terminate = () => {
+    if (closed || graceTimer !== undefined) return;
+    child.kill();
+    graceTimer = setTimeout(() => {
+      if (!closed) child.kill('SIGKILL');
+    }, 250);
+    graceTimer.unref();
+  };
+  const recordFailure = (error: NativeClientError) => {
+    if (
+      failure === undefined ||
+      FAILURE_PRECEDENCE[error.code] > FAILURE_PRECEDENCE[failure.code]
+    ) {
+      failure = error;
     }
+    terminate();
+  };
 
-    const stderr: Buffer[] = [];
-    let stderrBytes = 0;
-    let captureError: NativeClientError | undefined;
+  const stdoutPromise = decodeStdout(child.stdout, request, options.limits).catch(
+    (error: unknown) => {
+      recordFailure(asClientError(error, request));
+      return undefined;
+    },
+  );
+  const stderrPromise = captureStderr(
+    child.stderr,
+    options.limits.maxStderrBytes,
+    request,
+    recordFailure,
+  );
+  const stdinPromise = writeRequest(child.stdin, requestBytes, request).catch((error: unknown) => {
+    recordFailure(asClientError(error, request, 'Native request could not be written'));
+  });
+  const closePromise = new Promise<{
+    readonly exitCode: number | null;
+    readonly signal: NodeJS.Signals | null;
+  }>((resolve) => {
+    child.once('error', () => {
+      recordFailure(clientError('PROVIDER_UNAVAILABLE', 'Native provider is unavailable', request));
+    });
+    child.once('close', (exitCode, signal) => {
+      closed = true;
+      resolve({ exitCode, signal });
+    });
+  });
+
+  const timeout = setTimeout(
+    () => recordFailure(clientError('TIMEOUT', 'Native request timed out', request)),
+    timeoutMs,
+  );
+  timeout.unref();
+  const abort = () => recordFailure(clientError('CANCELLED', 'Native request was cancelled', request));
+  options.signal?.addEventListener('abort', abort, { once: true });
+
+  return Promise.all([stdoutPromise, stderrPromise, stdinPromise, closePromise])
+    .then(([output, stderr, , close]) => {
+      if (close.exitCode !== 0 || close.signal !== null) {
+        recordFailure(
+          clientError('PROCESS_FAILED', 'Native process failed', request, {
+            ...(close.exitCode === null ? {} : { exitCode: close.exitCode }),
+            ...(close.signal === null ? {} : { signal: close.signal }),
+          }),
+        );
+      }
+      if (failure !== undefined) throw withStderr(failure, stderr);
+      if (output === undefined) {
+        throw clientError('PROCESS_FAILED', 'Native process failed', request, { stderr });
+      }
+      return { output, stderr };
+    })
+    .finally(() => {
+      clearTimeout(timeout);
+      if (graceTimer !== undefined) clearTimeout(graceTimer);
+      options.signal?.removeEventListener('abort', abort);
+    });
+}
+
+function childEnvironment(
+  allowed: Readonly<Record<string, string>>,
+): Readonly<Record<string, string>> {
+  const environment: Record<string, string> = {};
+  if (process.platform === 'win32') {
+    for (const name of Object.keys(process.env)) environment[name] = '';
+  }
+  return { ...environment, ...allowed };
+}
+
+function effectiveTimeout(request: NativeRequestEnvelope, invocationTimeoutMs: number): number {
+  if (request.type !== 'ANALYZE' && request.type !== 'REFRESH') return invocationTimeoutMs;
+  const durations = [invocationTimeoutMs, request.payload.resourceBudget.maxDurationMs];
+  if (request.payload.deadlineEpochMs !== null) {
+    durations.push(request.payload.deadlineEpochMs - Date.now());
+  }
+  return Math.min(...durations);
+}
+
+function writeRequest(
+  stdin: NodeJS.WritableStream,
+  bytes: Buffer,
+  request: NativeRequestEnvelope,
+): Promise<void> {
+  return new Promise((resolve, reject) => {
     let settled = false;
-
+    const cleanup = () => {
+      stdin.removeListener('drain', end);
+      stdin.removeListener('error', fail);
+      stdin.removeListener('close', closedBeforeFinish);
+      stdin.removeListener('finish', succeed);
+    };
     const settle = (action: () => void) => {
       if (settled) return;
       settled = true;
+      cleanup();
       action();
     };
-    const stdoutOutcome = decodeStdout(child.stdout, request, options.limits).then(
-      (output) => ({ output }),
-      (error: unknown) => {
-        child.kill();
-        return { error };
-      },
-    );
-    child.stderr.on('data', (chunk: Buffer) => {
-      stderrBytes += chunk.byteLength;
-      if (stderrBytes > options.limits.maxStderrBytes) {
-        captureError ??= clientError(
-          'OUTPUT_LIMIT_EXCEEDED',
-          'Native stderr exceeds the byte limit',
-          request,
-        );
-        child.kill();
-        return;
-      }
-      stderr.push(chunk);
-    });
-    child.once('error', () =>
-      settle(() => reject(clientError('PROVIDER_UNAVAILABLE', 'Native provider is unavailable', request))),
-    );
-    child.once('close', (exitCode, signal) => {
-      const stderrText = Buffer.concat(stderr).toString('utf8');
-      void stdoutOutcome.then((outcome) =>
-        settle(() => {
-          if (captureError !== undefined) {
-            reject(captureError);
-          } else if ('error' in outcome) {
-            reject(outcome.error);
-          } else if (exitCode !== 0 || signal !== null) {
-            reject(
-              clientError('PROCESS_FAILED', 'Native process failed', request, {
-                ...(exitCode === null ? {} : { exitCode }),
-                ...(signal === null ? {} : { signal }),
-                stderr: stderrText,
-              }),
-            );
-          } else {
-            resolve({ output: outcome.output, stderr: stderrText });
-          }
-        }),
+    const succeed = () => settle(resolve);
+    const fail = () =>
+      settle(() =>
+        reject(clientError('PROCESS_FAILED', 'Native request could not be written', request)),
       );
-    });
-    child.stdin.end(requestBytes);
+    const closedBeforeFinish = () => {
+      if (!settled) fail();
+    };
+    const end = () => stdin.end();
+
+    stdin.once('error', fail);
+    stdin.once('close', closedBeforeFinish);
+    stdin.once('finish', succeed);
+    if (stdin.write(bytes)) end();
+    else stdin.once('drain', end);
+  });
+}
+
+async function captureStderr(
+  stderr: Readable,
+  limit: number,
+  request: NativeRequestEnvelope,
+  recordFailure: (error: NativeClientError) => void,
+): Promise<string> {
+  const chunks: Buffer[] = [];
+  let total = 0;
+  let exceeded = false;
+  for await (const chunk of stderr) {
+    const bytes = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
+    const remaining = Math.max(0, limit - total);
+    if (remaining > 0) chunks.push(bytes.subarray(0, remaining));
+    total += bytes.byteLength;
+    if (!exceeded && total > limit) {
+      exceeded = true;
+      recordFailure(
+        clientError('OUTPUT_LIMIT_EXCEEDED', 'Native stderr exceeds the byte limit', request),
+      );
+    }
+  }
+  return Buffer.concat(chunks).toString('utf8');
+}
+
+function asClientError(
+  error: unknown,
+  request: NativeRequestEnvelope,
+  message = 'Native process failed',
+): NativeClientError {
+  return error instanceof NativeClientError
+    ? error
+    : clientError('PROCESS_FAILED', message, request);
+}
+
+function withStderr(error: NativeClientError, stderr: string): NativeClientError {
+  if (stderr.length === 0 || error.stderr !== undefined) return error;
+  return new NativeClientError(error.code, error.message, {
+    ...(error.requestId === undefined ? {} : { requestId: error.requestId }),
+    ...(error.exitCode === undefined ? {} : { exitCode: error.exitCode }),
+    ...(error.signal === undefined ? {} : { signal: error.signal }),
+    ...(error.analyzerError === undefined ? {} : { analyzerError: error.analyzerError }),
+    stderr,
   });
 }
 

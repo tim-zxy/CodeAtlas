@@ -18,12 +18,34 @@ const describeRequest = {
 };
 
 function runScenario(scenario, overrides = {}, request = describeRequest) {
+  const platformEnvironment = Object.fromEntries(
+    ['SYSTEMROOT', 'WINDIR', 'TEMP', 'TMP']
+      .filter((name) => process.env[name] !== undefined)
+      .map((name) => [name, process.env[name]]),
+  );
   return executeNativeRequest(request, {
     executablePath: process.execPath,
     arguments: [childHelper, scenario],
     timeoutMs: 2_000,
     ...overrides,
+    allowedEnvironment: { ...platformEnvironment, ...overrides.allowedEnvironment },
   });
+}
+
+const hasCode = (code) =>
+  (error) => error instanceof NativeClientError && error.code === code;
+
+function largeAnalyzeRequest() {
+  const request = structuredClone(analyzeRequest);
+  const template = request.payload.sourceFiles[0];
+  request.requestId = 'request-large-stdin';
+  request.payload.sourceFiles = Array.from({ length: 2_000 }, (_, index) => ({
+    ...template,
+    id: `file-${index}`,
+    path: `src/File${index}.java`,
+    contentFingerprint: `file-fp-${index}`,
+  }));
+  return request;
 }
 
 test('p0-native-client-v1 declares the P0-W3-004 acceptance surface', async () => {
@@ -143,4 +165,78 @@ test('byte-at-a-time chunks preserve split UTF-8 and LF boundaries', async () =>
   const result = await runScenario('byte-at-a-time');
   assert.equal(result.terminal.type, 'DESCRIBE_COMPLETED');
   assert.equal(result.terminal.payload.build.profile, 'débug');
+});
+
+test('child environment contains only explicitly allowed values', async () => {
+  const result = await runScenario('environment', {
+    allowedEnvironment: { LANG: 'C', TEMP: 'native-temp' },
+  });
+  assert.equal(
+    result.stderr,
+    'LANG=C\nTEMP=native-temp\nPATH=<empty>\nLEAKED=<none>\n',
+  );
+});
+
+test('stdin and stdout backpressure complete without deadlock', async () => {
+  const slowInput = await runScenario('slow-stdin', {}, largeAnalyzeRequest());
+  assert.equal(slowInput.terminal.type, 'ANALYSIS_COMPLETED');
+  const burstRequest = structuredClone(analyzeRequest);
+  burstRequest.payload.resourceBudget.maxEvents = 2_000;
+  const burst = await runScenario('burst-output', {}, burstRequest);
+  assert.equal(burst.terminal.type, 'ANALYSIS_COMPLETED');
+  assert.equal(burst.events.length, 1_002);
+});
+
+test('stderr capture is exact and bounded', async () => {
+  const result = await runScenario('stderr');
+  assert.equal(result.stderr, 'native diagnostic\n');
+  await assert.rejects(
+    runScenario('stderr-oversize', { limits: { maxStderrBytes: 16 } }),
+    hasCode('OUTPUT_LIMIT_EXCEEDED'),
+  );
+});
+
+test('timeout and cancellation close the child before rejection settles', async () => {
+  await assert.rejects(runScenario('hang', { timeoutMs: 50 }), hasCode('TIMEOUT'));
+  const controller = new AbortController();
+  setTimeout(() => controller.abort(), 25);
+  await assert.rejects(runScenario('hang', { signal: controller.signal }), hasCode('CANCELLED'));
+});
+
+test('already expired and aborted requests never spawn', async () => {
+  const controller = new AbortController();
+  controller.abort();
+  await assert.rejects(
+    runScenario('should-not-run', { signal: controller.signal }),
+    hasCode('CANCELLED'),
+  );
+  const expired = structuredClone(analyzeRequest);
+  expired.payload.deadlineEpochMs = Date.now() - 1;
+  await assert.rejects(runScenario('should-not-run', {}, expired), hasCode('TIMEOUT'));
+});
+
+test('early-close and nonzero exit report process failure without unhandled rejection', async () => {
+  const unhandled = [];
+  const collect = (reason) => unhandled.push(reason);
+  process.on('unhandledRejection', collect);
+  try {
+    await assert.rejects(
+      runScenario('early-close', {}, largeAnalyzeRequest()),
+      hasCode('PROCESS_FAILED'),
+    );
+    await assert.rejects(runScenario('nonzero-exit'), hasCode('PROCESS_FAILED'));
+    await new Promise((resolve) => setImmediate(resolve));
+    assert.deepEqual(unhandled, []);
+  } finally {
+    process.off('unhandledRejection', collect);
+  }
+});
+
+test('external cancellation wins the successful-close race', async () => {
+  const controller = new AbortController();
+  setTimeout(() => controller.abort(), 25);
+  await assert.rejects(
+    runScenario('abort-close-race', { signal: controller.signal }),
+    hasCode('CANCELLED'),
+  );
 });
