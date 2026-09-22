@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "id": "p0-native-ipc-handshake-v1",
+  "task": "P0-W3-003",
+  "governingSpec": "docs/handoff/specs/NATIVE_IPC.md",
+  "acceptance": "Rust and TypeScript negotiate the Native IPC v1 DESCRIBE handshake and explicit rejection paths",
+  "cases": [
+    {
+      "id": "describe-v1",
+      "requestFile": "describe-v1/request.jsonl",
+      "requestBytes": 141,
+      "expected": {
+        "exitCode": 0,
+        "eventType": "DESCRIBE_COMPLETED",
+        "errorCode": null,
+        "stderr": "EMPTY"
+      }
+    },
+    {
+      "id": "incompatible-protocol-v1",
+      "requestFile": "incompatible-protocol-v1/request.jsonl",
+      "requestBytes": 154,
+      "expected": {
+        "exitCode": 0,
+        "eventType": "REQUEST_FAILED",
+        "errorCode": "INCOMPATIBLE_PROTOCOL_VERSION",
+        "stderr": "EMPTY"
+      }
+    },
+    {
+      "id": "incompatible-ir-v1",
+      "requestFile": "incompatible-ir-v1/request.jsonl",
+      "requestBytes": 148,
+      "expected": {
+        "exitCode": 0,
+        "eventType": "REQUEST_FAILED",
+        "errorCode": "INCOMPATIBLE_IR_SCHEMA_VERSION",
+        "stderr": "EMPTY"
+      }
+    },
+    {
+      "id": "invalid-describe-v1",
+      "requestFile": "invalid-describe-v1/request.jsonl",
+      "requestBytes": 158,
+      "expected": {
+        "exitCode": 0,
+        "eventType": "REQUEST_FAILED",
+        "errorCode": "INVALID_REQUEST",
+        "stderr": "EMPTY"
+      }
+    },
+    {
+      "id": "malformed-request-v1",
+      "requestFile": "malformed-request-v1/request.jsonl",
+      "requestBytes": 34,
+      "expected": {
+        "exitCode": 2,
+        "eventType": null,
+        "errorCode": null,
+        "stderr": "NON_EMPTY"
+      }
+    }
+  ]
+}

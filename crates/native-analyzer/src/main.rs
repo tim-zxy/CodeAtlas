@@ -1,3 +1,6 @@
+#[cfg_attr(not(test), allow(dead_code))]
+mod protocol;
+
 use std::ffi::OsStr;
 
 fn main() {
