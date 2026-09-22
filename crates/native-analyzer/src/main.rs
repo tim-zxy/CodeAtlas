@@ -1,15 +1,24 @@
+mod protocol;
+
 use std::ffi::OsStr;
+use std::process::ExitCode;
 
-fn main() {
+fn main() -> ExitCode {
     let mut arguments = std::env::args_os().skip(1);
-    let smoke_requested =
-        arguments.next().as_deref() == Some(OsStr::new("--smoke")) && arguments.next().is_none();
-
-    if smoke_requested {
-        eprintln!("codeatlas-native-analyzer:ready");
-        return;
+    match (arguments.next(), arguments.next()) {
+        (None, None) => protocol::serve_once(
+            &mut std::io::stdin().lock(),
+            &mut std::io::stdout().lock(),
+            &mut std::io::stderr().lock(),
+        )
+        .unwrap_or_else(|_| ExitCode::from(2)),
+        (Some(argument), None) if argument == OsStr::new("--smoke") => {
+            eprintln!("codeatlas-native-analyzer:ready");
+            ExitCode::SUCCESS
+        }
+        _ => {
+            eprintln!("codeatlas-native-analyzer: unsupported arguments");
+            ExitCode::from(2)
+        }
     }
-
-    eprintln!("codeatlas native analyzer behavior is not implemented in P0-W0-001");
-    std::process::exit(2);
 }

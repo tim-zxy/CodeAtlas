@@ -1,0 +1,1 @@
+{"protocolVersion":1,"requestId":"request-cancel","sequence":0,"type":"CANCEL_ACCEPTED","payload":{"targetRequestId":"request-analyze"}}

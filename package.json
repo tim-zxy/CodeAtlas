@@ -10,12 +10,13 @@
   "scripts": {
     "architecture:check": "node scripts/check-architecture.mjs",
     "build": "pnpm -r run build",
-    "test": "pnpm --filter @codeatlas/ir test:types && node --test packages/ir/test/common-ir.test.mjs packages/ir/test/source-revision-ir.test.mjs packages/ir/test/code-fact-ir.test.mjs packages/ir/test/evidence-ir.test.mjs packages/providers/test/native-ipc.test.mjs scripts/test-workspace-structure.mjs scripts/test-architecture-rules.mjs packages/runtime/test/runtime-bootstrap.test.mjs scripts/test-runtime-construction.mjs apps/cli/test/smoke.test.mjs apps/mcp/test/smoke.test.mjs packages/storage/test/migration-runner.test.mjs packages/storage/test/migration-runner-application.test.mjs packages/storage/test/migration-runner-failures.test.mjs packages/storage/test/repository-schema.test.mjs packages/storage/test/repository-constraints.test.mjs packages/storage/test/workspace-schema.test.mjs packages/storage/test/workspace-revision-set.test.mjs",
+    "test": "pnpm --filter @codeatlas/ir test:types && node --test packages/ir/test/common-ir.test.mjs packages/ir/test/source-revision-ir.test.mjs packages/ir/test/code-fact-ir.test.mjs packages/ir/test/evidence-ir.test.mjs packages/providers/test/native-ipc.test.mjs packages/providers/test/native-ipc-bytes.test.mjs scripts/test-workspace-structure.mjs scripts/test-architecture-rules.mjs packages/runtime/test/runtime-bootstrap.test.mjs scripts/test-runtime-construction.mjs apps/cli/test/smoke.test.mjs apps/mcp/test/smoke.test.mjs packages/storage/test/migration-runner.test.mjs packages/storage/test/migration-runner-application.test.mjs packages/storage/test/migration-runner-failures.test.mjs packages/storage/test/repository-schema.test.mjs packages/storage/test/repository-constraints.test.mjs packages/storage/test/workspace-schema.test.mjs packages/storage/test/workspace-revision-set.test.mjs",
+    "test:native-handshake": "node --test packages/providers/test/native-handshake.test.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "format:rust": "cargo fmt --all",
     "format:rust:check": "cargo fmt --all --check",
-    "verify": "pnpm format:check && pnpm build && pnpm test && pnpm architecture:check && pnpm format:rust:check && cargo build --workspace && cargo clippy --workspace --all-targets -- -D warnings && cargo test --workspace"
+    "verify": "pnpm format:check && pnpm build && pnpm test && pnpm architecture:check && pnpm format:rust:check && cargo build --workspace && pnpm test:native-handshake && cargo clippy --workspace --all-targets -- -D warnings && cargo test --workspace"
   },
   "devDependencies": {
     "@types/node": "26.5.0",
