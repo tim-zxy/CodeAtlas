@@ -1,5 +1,6 @@
 import { spawn } from 'node:child_process';
 import { isAbsolute } from 'node:path';
+import type { Readable } from 'node:stream';
 
 import {
   NativeEventEnvelopeSchema,
@@ -7,6 +8,7 @@ import {
   NativeRequestEnvelopeSchema,
   type NativeEventEnvelope,
   type NativeIpcError,
+  type NativeIpcRequestType,
   type NativeRequestEnvelope,
 } from './native-ipc.js';
 
@@ -105,6 +107,11 @@ interface ValidatedOptions {
   readonly limits: Readonly<NativeClientLimits>;
 }
 
+interface DecodedOutput {
+  readonly events: NativeEventEnvelope[];
+  readonly rawRecords: Buffer[];
+}
+
 const ALLOWED_ENVIRONMENT = new Set([
   'LANG',
   'LC_ALL',
@@ -116,6 +123,45 @@ const ALLOWED_ENVIRONMENT = new Set([
 ]);
 
 const LIMIT_NAMES = Object.keys(NATIVE_CLIENT_HARD_LIMITS) as (keyof NativeClientLimits)[];
+const TERMINAL_EVENT_TYPES = new Set<NativeEventEnvelope['type']>([
+  'DESCRIBE_COMPLETED',
+  'ANALYSIS_COMPLETED',
+  'ANALYSIS_FAILED',
+  'REFRESH_COMPLETED',
+  'REFRESH_FAILED',
+  'CANCEL_ACCEPTED',
+  'REQUEST_FAILED',
+]);
+const LEGAL_EVENT_TYPES: Readonly<
+  Record<NativeIpcRequestType, ReadonlySet<NativeEventEnvelope['type']>>
+> = {
+  DESCRIBE: new Set(['DESCRIBE_COMPLETED', 'REQUEST_FAILED']),
+  ANALYZE: new Set([
+    'ANALYSIS_STARTED',
+    'SOURCE_FILE',
+    'NODE',
+    'EDGE',
+    'COVERAGE',
+    'DIAGNOSTIC',
+    'ANALYSIS_COMPLETED',
+    'ANALYSIS_FAILED',
+    'REQUEST_FAILED',
+  ]),
+  REFRESH: new Set([
+    'REFRESH_STARTED',
+    'SOURCE_FILE',
+    'UPSERT_NODE',
+    'REMOVE_NODE',
+    'UPSERT_EDGE',
+    'REMOVE_EDGE',
+    'COVERAGE',
+    'DIAGNOSTIC',
+    'REFRESH_COMPLETED',
+    'REFRESH_FAILED',
+    'REQUEST_FAILED',
+  ]),
+  CANCEL: new Set(['CANCEL_ACCEPTED', 'REQUEST_FAILED']),
+};
 
 export async function executeNativeRequest(
   requestValue: NativeRequestEnvelope,
@@ -129,8 +175,7 @@ export async function executeNativeRequest(
   }
 
   const result = await runProcess(requestBytes, options, request);
-  const events = decodeOutput(result.stdout, request, options.limits);
-  const stream = NativeEventStreamSchema.safeParse({ request, events });
+  const stream = NativeEventStreamSchema.safeParse({ request, events: result.output.events });
   if (!stream.success) {
     throw clientError('PROTOCOL_VIOLATION', 'Native event stream is invalid', request, {
       stderr: result.stderr,
@@ -233,7 +278,7 @@ function runProcess(
   requestBytes: Buffer,
   options: ValidatedOptions,
   request: NativeRequestEnvelope,
-): Promise<{ readonly stdout: Buffer; readonly stderr: string }> {
+): Promise<{ readonly output: DecodedOutput; readonly stderr: string }> {
   return new Promise((resolve, reject) => {
     let child;
     try {
@@ -248,9 +293,7 @@ function runProcess(
       return;
     }
 
-    const stdout: Buffer[] = [];
     const stderr: Buffer[] = [];
-    let stdoutBytes = 0;
     let stderrBytes = 0;
     let captureError: NativeClientError | undefined;
     let settled = false;
@@ -260,19 +303,13 @@ function runProcess(
       settled = true;
       action();
     };
-    child.stdout.on('data', (chunk: Buffer) => {
-      stdoutBytes += chunk.byteLength;
-      if (stdoutBytes > options.limits.maxStdoutBytes) {
-        captureError ??= clientError(
-          'OUTPUT_LIMIT_EXCEEDED',
-          'Native stdout exceeds the byte limit',
-          request,
-        );
+    const stdoutOutcome = decodeStdout(child.stdout, request, options.limits).then(
+      (output) => ({ output }),
+      (error: unknown) => {
         child.kill();
-        return;
-      }
-      stdout.push(chunk);
-    });
+        return { error };
+      },
+    );
     child.stderr.on('data', (chunk: Buffer) => {
       stderrBytes += chunk.byteLength;
       if (stderrBytes > options.limits.maxStderrBytes) {
@@ -291,59 +328,119 @@ function runProcess(
     );
     child.once('close', (exitCode, signal) => {
       const stderrText = Buffer.concat(stderr).toString('utf8');
-      settle(() => {
-        if (captureError !== undefined) {
-          reject(captureError);
-        } else if (exitCode !== 0 || signal !== null) {
-          reject(
-            clientError('PROCESS_FAILED', 'Native process failed', request, {
-              ...(exitCode === null ? {} : { exitCode }),
-              ...(signal === null ? {} : { signal }),
-              stderr: stderrText,
-            }),
-          );
-        } else {
-          resolve({ stdout: Buffer.concat(stdout), stderr: stderrText });
-        }
-      });
+      void stdoutOutcome.then((outcome) =>
+        settle(() => {
+          if (captureError !== undefined) {
+            reject(captureError);
+          } else if ('error' in outcome) {
+            reject(outcome.error);
+          } else if (exitCode !== 0 || signal !== null) {
+            reject(
+              clientError('PROCESS_FAILED', 'Native process failed', request, {
+                ...(exitCode === null ? {} : { exitCode }),
+                ...(signal === null ? {} : { signal }),
+                stderr: stderrText,
+              }),
+            );
+          } else {
+            resolve({ output: outcome.output, stderr: stderrText });
+          }
+        }),
+      );
     });
     child.stdin.end(requestBytes);
   });
 }
 
-function decodeOutput(
-  output: Buffer,
+async function decodeStdout(
+  stdout: Readable,
   request: NativeRequestEnvelope,
   limits: NativeClientLimits,
-): NativeEventEnvelope[] {
+): Promise<DecodedOutput> {
+  const decoder = new TextDecoder('utf-8', { fatal: true });
+  const events: NativeEventEnvelope[] = [];
+  const rawRecords: Buffer[] = [];
+  const requestEventLimit =
+    request.type === 'ANALYZE' || request.type === 'REFRESH'
+      ? request.payload.resourceBudget.maxEvents
+      : limits.maxEvents;
+  const maxEvents = Math.min(limits.maxEvents, requestEventLimit);
+  let pending = Buffer.alloc(0);
+  let totalBytes = 0;
+  let terminalSeen = false;
+
+  for await (const chunk of stdout) {
+    const bytes = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
+    totalBytes += bytes.byteLength;
+    if (totalBytes > limits.maxStdoutBytes) {
+      throw clientError('OUTPUT_LIMIT_EXCEEDED', 'Native stdout exceeds the byte limit', request);
+    }
+    if (terminalSeen && bytes.byteLength > 0) {
+      throw clientError('PROTOCOL_VIOLATION', 'Native stdout continues after a terminal event', request);
+    }
+    pending = Buffer.concat([pending, bytes]);
+    while (true) {
+      const lf = pending.indexOf(0x0a);
+      if (lf < 0) {
+        if (pending.byteLength > limits.maxLineBytes) {
+          throw clientError('OUTPUT_LIMIT_EXCEEDED', 'Native stdout line exceeds the limit', request);
+        }
+        break;
+      }
+      const rawLine = pending.subarray(0, lf);
+      pending = pending.subarray(lf + 1);
+      if (events.length >= maxEvents) {
+        throw clientError('OUTPUT_LIMIT_EXCEEDED', 'Native event count exceeds the limit', request);
+      }
+      if (rawLine.byteLength > limits.maxLineBytes) {
+        throw clientError('OUTPUT_LIMIT_EXCEEDED', 'Native stdout line exceeds the limit', request);
+      }
+      const event = parseEventLine(rawLine, decoder, request, events.length);
+      if (!LEGAL_EVENT_TYPES[request.type].has(event.type)) {
+        throw clientError('PROTOCOL_VIOLATION', 'Native event is not legal for the request', request);
+      }
+      if (event.type === 'REQUEST_FAILED' && events.length !== 0) {
+        throw clientError('PROTOCOL_VIOLATION', 'Native request failure follows another event', request);
+      }
+      if (terminalSeen) {
+        throw clientError('PROTOCOL_VIOLATION', 'Native stdout continues after a terminal event', request);
+      }
+      events.push(event);
+      rawRecords.push(Buffer.concat([rawLine, Buffer.from('\n')]));
+      terminalSeen = TERMINAL_EVENT_TYPES.has(event.type);
+    }
+  }
+
+  if (pending.byteLength !== 0) {
+    throw clientError('PROTOCOL_VIOLATION', 'Native stdout ended with an incomplete record', request);
+  }
+  return { events, rawRecords };
+}
+
+function parseEventLine(
+  rawLine: Buffer,
+  decoder: TextDecoder,
+  request: NativeRequestEnvelope,
+  expectedSequence: number,
+): NativeEventEnvelope {
   if (
-    output.byteLength === 0 ||
-    output.at(-1) !== 0x0a ||
-    output.subarray(0, -1).includes(0x0d) ||
-    output.subarray(0, 3).equals(Buffer.from([0xef, 0xbb, 0xbf]))
+    rawLine.byteLength === 0 ||
+    rawLine.includes(0x0d) ||
+    rawLine.subarray(0, 3).equals(Buffer.from([0xef, 0xbb, 0xbf]))
   ) {
     throw clientError('PROTOCOL_VIOLATION', 'Native stdout is not valid JSONL', request);
   }
-
-  const decoder = new TextDecoder('utf-8', { fatal: true });
-  const lines = output.subarray(0, -1).toString('binary').split('\n');
-  if (lines.length > limits.maxEvents) {
-    throw clientError('OUTPUT_LIMIT_EXCEEDED', 'Native event count exceeds the limit', request);
+  try {
+    const parsed: unknown = JSON.parse(decoder.decode(rawLine));
+    const result = NativeEventEnvelopeSchema.safeParse(parsed);
+    if (!result.success) throw new Error('invalid event');
+    if (result.data.requestId !== request.requestId || result.data.sequence !== expectedSequence) {
+      throw new Error('invalid event context');
+    }
+    return result.data;
+  } catch {
+    throw clientError('PROTOCOL_VIOLATION', 'Native stdout contains an invalid event', request);
   }
-  return lines.map((binaryLine) => {
-    const bytes = Buffer.from(binaryLine, 'binary');
-    if (bytes.byteLength === 0 || bytes.byteLength > limits.maxLineBytes) {
-      throw clientError('OUTPUT_LIMIT_EXCEEDED', 'Native stdout line exceeds the limit', request);
-    }
-    try {
-      const parsed: unknown = JSON.parse(decoder.decode(bytes));
-      const event = NativeEventEnvelopeSchema.safeParse(parsed);
-      if (!event.success) throw new Error('invalid event');
-      return event.data;
-    } catch {
-      throw clientError('PROTOCOL_VIOLATION', 'Native stdout contains an invalid event', request);
-    }
-  });
 }
 
 function clientError(

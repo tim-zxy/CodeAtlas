@@ -7,6 +7,9 @@ import { executeNativeRequest, NativeClientError } from '../dist/index.js';
 
 const fixtureRoot = new URL('../../../fixtures/ipc/client-v1/', import.meta.url);
 const childHelper = fileURLToPath(new URL('./fixtures/native-client-child.mjs', import.meta.url));
+const analyzeRequest = JSON.parse(
+  await readFile(new URL('../../../fixtures/ipc/protocol-v1/analyze-java-basic-v1/request.jsonl', import.meta.url), 'utf8'),
+);
 const describeRequest = {
   protocolVersion: 1,
   requestId: 'client-describe-a',
@@ -89,4 +92,55 @@ test('native client errors omit captured diagnostics from serialization', () => 
     message: 'Native process failed',
     exitCode: 7,
   });
+});
+
+test('strict framing rejects malformed bytes and invalid protocol records', async () => {
+  const scenarios = [
+    'malformed-json',
+    'invalid-utf8',
+    'bom',
+    'crlf',
+    'blank-line',
+    'wrong-request-id',
+    'out-of-order',
+    'post-terminal',
+  ];
+  for (const scenario of scenarios) {
+    await assert.rejects(
+      runScenario(scenario),
+      (error) => error instanceof NativeClientError && error.code === 'PROTOCOL_VIOLATION',
+      scenario,
+    );
+  }
+  await assert.rejects(
+    runScenario('premature-eof', {}, analyzeRequest),
+    (error) => error instanceof NativeClientError && error.code === 'PROTOCOL_VIOLATION',
+  );
+});
+
+test('byte and event boundaries accept exact limits and reject one over', async () => {
+  for (const [scenario, limits] of [
+    ['line-boundary', { maxLineBytes: 502 }],
+    ['total-boundary', { maxStdoutBytes: 503 }],
+    ['event-boundary', { maxEvents: 1 }],
+  ]) {
+    await assert.doesNotReject(runScenario(scenario, { limits }), scenario);
+  }
+  for (const [scenario, limits] of [
+    ['line-oversize', { maxLineBytes: 501 }],
+    ['total-oversize', { maxStdoutBytes: 502 }],
+    ['event-oversize', { maxEvents: 1 }],
+  ]) {
+    await assert.rejects(
+      runScenario(scenario, { limits }),
+      (error) => error instanceof NativeClientError && error.code === 'OUTPUT_LIMIT_EXCEEDED',
+      scenario,
+    );
+  }
+});
+
+test('byte-at-a-time chunks preserve split UTF-8 and LF boundaries', async () => {
+  const result = await runScenario('byte-at-a-time');
+  assert.equal(result.terminal.type, 'DESCRIBE_COMPLETED');
+  assert.equal(result.terminal.payload.build.profile, 'débug');
 });
