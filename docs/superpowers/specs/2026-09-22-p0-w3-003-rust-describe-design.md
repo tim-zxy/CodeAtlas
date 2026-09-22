@@ -2,7 +2,7 @@
 
 ## Status and intent
 
-- Status: approved conversational design, pending written-design review.
+- Status: written design approved by the user on 2026-09-22.
 - Phase: Phase 0, Workstream 3.
 - Task: P0-W3-003 Rust `DESCRIBE` protocol handshake.
 - Scope: expose and verify the native analyzer descriptor over the versioned JSONL IPC contract.
