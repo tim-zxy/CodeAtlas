@@ -77,6 +77,7 @@ function resolveFixturePath(relativePath) {
     components.every((component) => component !== '' && component !== '.' && component !== '..'),
     true,
   );
+  assert.equal(/^[A-Za-z]:/.test(relativePath), false);
   assert.equal(relativePath.includes('\\'), false);
   const resolved = new URL(components.map(encodeURIComponent).join('/'), fixtureRoot);
   assert.equal(resolved.href.startsWith(fixtureRoot.href), true);
@@ -189,6 +190,7 @@ test('P0-W3-002 Fixture index declares shared byte cases with safe paths', async
 test('Fixture paths reject parent traversal and absolute paths before file access', () => {
   assert.throws(() => resolveFixturePath('../escape.jsonl'));
   assert.throws(() => resolveFixturePath('/absolute.jsonl'));
+  assert.throws(() => resolveFixturePath('C:/escape.jsonl'));
   assert.throws(() => resolveFixturePath('nested/../describe-v1/request.jsonl'));
   const encodedParent = resolveFixturePath('nested/%2e%2e/describe-v1/request.jsonl');
   assert.equal(encodedParent.pathname.includes('/nested/%252e%252e/'), true);
