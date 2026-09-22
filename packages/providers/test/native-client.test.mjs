@@ -240,3 +240,41 @@ test('external cancellation wins the successful-close race', async () => {
     hasCode('CANCELLED'),
   );
 });
+
+test('valid analysis resolves only after checksum and returns a deeply frozen result', async () => {
+  const result = await runScenario('valid-analyze', {}, analyzeRequest);
+  assert.equal(result.terminal.type, 'ANALYSIS_COMPLETED');
+  assert.ok(Object.isFrozen(result));
+  assert.ok(Object.isFrozen(result.events));
+  assert.ok(result.events.every(Object.isFrozen));
+  assert.ok(Object.isFrozen(result.terminal.payload));
+  assert.throws(() => {
+    result.events[0].sequence = 9;
+  }, TypeError);
+});
+
+test('analyzer failures retain safe metadata and expose no event buffer or checksum requirement', async () => {
+  await assert.rejects(runScenario('analyzer-failed', {}, analyzeRequest), (error) => {
+    assert.equal(error.code, 'ANALYZER_FAILED');
+    assert.equal(error.analyzerError.code, 'INTERNAL_ANALYZER_FAILURE');
+    assert.equal('events' in error, false);
+    assert.equal('stderr' in error.toJSON(), false);
+    return true;
+  });
+});
+
+test('invalid and mismatched checksums are rejected', async () => {
+  for (const scenario of ['invalid-checksum', 'checksum-mismatch']) {
+    await assert.rejects(runScenario(scenario, {}, analyzeRequest), hasCode('CHECKSUM_MISMATCH'));
+  }
+});
+
+test('every corrupt valid prefix leaves application state unchanged', async () => {
+  for (const scenario of ['out-of-order', 'premature-eof', 'post-terminal', 'checksum-mismatch']) {
+    const applied = [];
+    await assert.rejects(
+      runScenario(scenario, {}, analyzeRequest).then((result) => applied.push(result)),
+    );
+    assert.deepEqual(applied, [], scenario);
+  }
+});

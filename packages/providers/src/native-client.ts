@@ -1,4 +1,5 @@
 import { spawn } from 'node:child_process';
+import { createHash, timingSafeEqual } from 'node:crypto';
 import { isAbsolute } from 'node:path';
 import type { Readable } from 'node:stream';
 
@@ -206,7 +207,57 @@ export async function executeNativeRequest(
       stderr: result.stderr,
     });
   }
-  return { request: stream.data.request, events: stream.data.events, terminal, stderr: result.stderr };
+  if (
+    terminal.type === 'REQUEST_FAILED' ||
+    terminal.type === 'ANALYSIS_FAILED' ||
+    terminal.type === 'REFRESH_FAILED'
+  ) {
+    throw clientError('ANALYZER_FAILED', 'Native analyzer rejected the request', request, {
+      analyzerError: terminal.payload.error,
+      stderr: result.stderr,
+    });
+  }
+  if (terminal.type === 'ANALYSIS_COMPLETED' || terminal.type === 'REFRESH_COMPLETED') {
+    verifyChecksum(
+      result.output.rawRecords.slice(0, -1),
+      terminal.payload.integrityChecksum,
+      request,
+      result.stderr,
+    );
+  }
+  return deepFreeze({
+    request: stream.data.request,
+    events: stream.data.events,
+    terminal,
+    stderr: result.stderr,
+  });
+}
+
+function verifyChecksum(
+  records: readonly Buffer[],
+  declared: string,
+  request: NativeRequestEnvelope,
+  stderr: string,
+): void {
+  if (!/^sha256:[0-9a-f]{64}$/.test(declared)) {
+    throw clientError('CHECKSUM_MISMATCH', 'Native result checksum is invalid', request, { stderr });
+  }
+  const actual = createHash('sha256').update(Buffer.concat(records)).digest();
+  const expected = Buffer.from(declared.slice('sha256:'.length), 'hex');
+  if (!timingSafeEqual(actual, expected)) {
+    throw clientError('CHECKSUM_MISMATCH', 'Native result checksum does not match', request, {
+      stderr,
+    });
+  }
+}
+
+function deepFreeze<T>(value: T, seen = new WeakSet<object>()): T {
+  if (value === null || typeof value !== 'object' || Buffer.isBuffer(value)) return value;
+  const object = value as object;
+  if (seen.has(object)) return value;
+  seen.add(object);
+  for (const child of Object.values(object)) deepFreeze(child, seen);
+  return Object.freeze(value);
 }
 
 function parseRequest(value: NativeRequestEnvelope): NativeRequestEnvelope {

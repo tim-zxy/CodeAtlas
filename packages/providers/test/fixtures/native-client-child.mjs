@@ -157,6 +157,37 @@ if (
 } else if (scenario === 'abort-close-race') {
   await write(describeLine);
   await new Promise((resolve) => setTimeout(resolve, 100));
+} else if (scenario === 'valid-analyze') {
+  await write(Buffer.concat(analysisRecords()));
+} else if (scenario === 'invalid-checksum' || scenario === 'checksum-mismatch') {
+  const records = analysisRecords();
+  const terminal = JSON.parse(records.at(-1).toString('utf8'));
+  terminal.payload.integrityChecksum =
+    scenario === 'invalid-checksum' ? 'not-a-sha256' : `sha256:${'0'.repeat(64)}`;
+  records[records.length - 1] = line(terminal);
+  await write(Buffer.concat(records));
+} else if (scenario === 'analyzer-failed') {
+  const context = {
+    providerSnapshotId: request.payload.providerSnapshotId,
+    repositoryId: request.payload.repository.id,
+    revisionId: request.payload.revision.id,
+    revisionFingerprint: request.payload.revision.contentFingerprint,
+  };
+  await write(
+    Buffer.concat([
+      line(envelope('ANALYSIS_STARTED', 0, context)),
+      line(
+        envelope('ANALYSIS_FAILED', 1, {
+          ...context,
+          error: {
+            code: 'INTERNAL_ANALYZER_FAILURE',
+            message: 'Analyzer failed',
+            retryable: true,
+          },
+        }),
+      ),
+    ]),
+  );
 } else {
   process.stderr.write('unknown native-client test scenario\n');
   process.exitCode = 2;
