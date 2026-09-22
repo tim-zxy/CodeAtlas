@@ -8,7 +8,13 @@ import { executeNativeRequest, NativeClientError } from '../dist/index.js';
 const fixtureRoot = new URL('../../../fixtures/ipc/client-v1/', import.meta.url);
 const childHelper = fileURLToPath(new URL('./fixtures/native-client-child.mjs', import.meta.url));
 const analyzeRequest = JSON.parse(
-  await readFile(new URL('../../../fixtures/ipc/protocol-v1/analyze-java-basic-v1/request.jsonl', import.meta.url), 'utf8'),
+  await readFile(
+    new URL(
+      '../../../fixtures/ipc/protocol-v1/analyze-java-basic-v1/request.jsonl',
+      import.meta.url,
+    ),
+    'utf8',
+  ),
 );
 const describeRequest = {
   protocolVersion: 1,
@@ -32,8 +38,7 @@ function runScenario(scenario, overrides = {}, request = describeRequest) {
   });
 }
 
-const hasCode = (code) =>
-  (error) => error instanceof NativeClientError && error.code === code;
+const hasCode = (code) => (error) => error instanceof NativeClientError && error.code === code;
 
 function largeAnalyzeRequest() {
   const request = structuredClone(analyzeRequest);
@@ -171,10 +176,7 @@ test('child environment contains only explicitly allowed values', async () => {
   const result = await runScenario('environment', {
     allowedEnvironment: { LANG: 'C', TEMP: 'native-temp' },
   });
-  assert.equal(
-    result.stderr,
-    'LANG=C\nTEMP=native-temp\nPATH=<empty>\nLEAKED=<none>\n',
-  );
+  assert.equal(result.stderr, 'LANG=C\nTEMP=native-temp\nPATH=<empty>\nLEAKED=<none>\n');
 });
 
 test('stdin and stdout backpressure complete without deadlock', async () => {

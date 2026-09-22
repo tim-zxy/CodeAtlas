@@ -88,9 +88,14 @@ function analysisRecords(sourceFileCount = 0) {
 }
 
 if (
-  ['valid-describe', 'line-boundary', 'line-oversize', 'total-boundary', 'total-oversize', 'event-boundary'].includes(
-    scenario,
-  )
+  [
+    'valid-describe',
+    'line-boundary',
+    'line-oversize',
+    'total-boundary',
+    'total-oversize',
+    'event-boundary',
+  ].includes(scenario)
 ) {
   await write(describeLine);
 } else if (scenario === 'malformed-json') {
@@ -132,7 +137,8 @@ if (
     .filter(
       ([name, value]) =>
         !allowed.has(name.toUpperCase()) &&
-        value !== '' && name.toUpperCase() !== 'NUMBER_OF_PROCESSORS',
+        value !== '' &&
+        name.toUpperCase() !== 'NUMBER_OF_PROCESSORS',
     )
     .map(([name]) => name)
     .sort();

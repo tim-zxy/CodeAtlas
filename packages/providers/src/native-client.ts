@@ -66,7 +66,11 @@ export class NativeClientError extends Error {
   readonly analyzerError?: NativeIpcError;
   readonly stderr?: string;
 
-  constructor(code: NativeClientErrorCode, message: string, details: NativeClientErrorDetails = {}) {
+  constructor(
+    code: NativeClientErrorCode,
+    message: string,
+    details: NativeClientErrorDetails = {},
+  ) {
     super(message);
     this.name = 'NativeClientError';
     this.code = code;
@@ -240,7 +244,9 @@ function verifyChecksum(
   stderr: string,
 ): void {
   if (!/^sha256:[0-9a-f]{64}$/.test(declared)) {
-    throw clientError('CHECKSUM_MISMATCH', 'Native result checksum is invalid', request, { stderr });
+    throw clientError('CHECKSUM_MISMATCH', 'Native result checksum is invalid', request, {
+      stderr,
+    });
   }
   const actual = createHash('sha256').update(Buffer.concat(records)).digest();
   const expected = Buffer.from(declared.slice('sha256:'.length), 'hex');
@@ -308,7 +314,10 @@ function validateOptions(value: NativeClientOptions): ValidatedOptions {
       environmentEntry.length > 4_096 ||
       environmentEntry.includes('\0')
     ) {
-      throw new NativeClientError('INVALID_CONFIGURATION', 'Native client configuration is invalid');
+      throw new NativeClientError(
+        'INVALID_CONFIGURATION',
+        'Native client configuration is invalid',
+      );
     }
     environment[canonicalName] = environmentEntry;
   }
@@ -328,8 +337,15 @@ function validateOptions(value: NativeClientOptions): ValidatedOptions {
   for (const name of LIMIT_NAMES) {
     const supplied = suppliedLimits[name];
     if (supplied === undefined) continue;
-    if (!Number.isSafeInteger(supplied) || supplied <= 0 || supplied > NATIVE_CLIENT_HARD_LIMITS[name]) {
-      throw new NativeClientError('INVALID_CONFIGURATION', 'Native client configuration is invalid');
+    if (
+      !Number.isSafeInteger(supplied) ||
+      supplied <= 0 ||
+      supplied > NATIVE_CLIENT_HARD_LIMITS[name]
+    ) {
+      throw new NativeClientError(
+        'INVALID_CONFIGURATION',
+        'Native client configuration is invalid',
+      );
     }
     (limits as Record<keyof NativeClientLimits, number>)[name] = supplied;
   }
@@ -419,7 +435,8 @@ function runProcess(
     timeoutMs,
   );
   timeout.unref();
-  const abort = () => recordFailure(clientError('CANCELLED', 'Native request was cancelled', request));
+  const abort = () =>
+    recordFailure(clientError('CANCELLED', 'Native request was cancelled', request));
   options.signal?.addEventListener('abort', abort, { once: true });
 
   return Promise.all([stdoutPromise, stderrPromise, stdinPromise, closePromise])
@@ -570,14 +587,22 @@ async function decodeStdout(
       throw clientError('OUTPUT_LIMIT_EXCEEDED', 'Native stdout exceeds the byte limit', request);
     }
     if (terminalSeen && bytes.byteLength > 0) {
-      throw clientError('PROTOCOL_VIOLATION', 'Native stdout continues after a terminal event', request);
+      throw clientError(
+        'PROTOCOL_VIOLATION',
+        'Native stdout continues after a terminal event',
+        request,
+      );
     }
     pending = Buffer.concat([pending, bytes]);
     while (true) {
       const lf = pending.indexOf(0x0a);
       if (lf < 0) {
         if (pending.byteLength > limits.maxLineBytes) {
-          throw clientError('OUTPUT_LIMIT_EXCEEDED', 'Native stdout line exceeds the limit', request);
+          throw clientError(
+            'OUTPUT_LIMIT_EXCEEDED',
+            'Native stdout line exceeds the limit',
+            request,
+          );
         }
         break;
       }
@@ -591,13 +616,25 @@ async function decodeStdout(
       }
       const event = parseEventLine(rawLine, decoder, request, events.length);
       if (!LEGAL_EVENT_TYPES[request.type].has(event.type)) {
-        throw clientError('PROTOCOL_VIOLATION', 'Native event is not legal for the request', request);
+        throw clientError(
+          'PROTOCOL_VIOLATION',
+          'Native event is not legal for the request',
+          request,
+        );
       }
       if (event.type === 'REQUEST_FAILED' && events.length !== 0) {
-        throw clientError('PROTOCOL_VIOLATION', 'Native request failure follows another event', request);
+        throw clientError(
+          'PROTOCOL_VIOLATION',
+          'Native request failure follows another event',
+          request,
+        );
       }
       if (terminalSeen) {
-        throw clientError('PROTOCOL_VIOLATION', 'Native stdout continues after a terminal event', request);
+        throw clientError(
+          'PROTOCOL_VIOLATION',
+          'Native stdout continues after a terminal event',
+          request,
+        );
       }
       events.push(event);
       rawRecords.push(Buffer.concat([rawLine, Buffer.from('\n')]));
@@ -606,7 +643,11 @@ async function decodeStdout(
   }
 
   if (pending.byteLength !== 0) {
-    throw clientError('PROTOCOL_VIOLATION', 'Native stdout ended with an incomplete record', request);
+    throw clientError(
+      'PROTOCOL_VIOLATION',
+      'Native stdout ended with an incomplete record',
+      request,
+    );
   }
   return { events, rawRecords };
 }
