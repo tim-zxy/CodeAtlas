@@ -4,13 +4,13 @@
 
 `@codeatlas/providers` owns the strict TypeScript request, event, descriptor, and complete-stream schemas. Native output remains Provider Facts and is not Canonical IR until the TypeScript Runtime validates, canonicalizes, merges, and stores it. The Rust analyzer owns no SQLite connection and cannot publish Canonical Knowledge.
 
-Protocol version 1 and IR schema version 1 are the only accepted values in P0-W3-001. The schemas are implemented in `packages/providers/src/native-ipc.ts`; the object-schema Fixture index is `fixtures/ipc/schema-v1/cases.json`, and `packages/providers/test/native-ipc.test.mjs` is a mandatory root-test input. P0-W3-002 adds the shared raw-byte corpus described below. Production byte decoding, process lifecycle, handshake enforcement, and state application remain P0-W3-003, P0-W3-004, or later work.
+Protocol version 1 and IR schema version 1 are the only accepted values in P0-W3-001. The schemas are implemented in `packages/providers/src/native-ipc.ts`; the object-schema Fixture index is `fixtures/ipc/schema-v1/cases.json`, and `packages/providers/test/native-ipc.test.mjs` is a mandatory root-test input. P0-W3-002 adds the shared raw-byte corpus described below. P0-W3-003 implements the one-request Rust `DESCRIBE` boundary and a test-only TypeScript real-binary verifier. Production TypeScript process lifecycle, streaming, timeout/cancellation, corruption handling, checksum verification, and validated state application remain P0-W3-004 or later work.
 
 ## Transport
 
 One JSON object per UTF-8 line. TypeScript writes requests to stdin; Rust writes protocol events only to stdout and logs only to stderr. No shell. The client enforces maximum line/event/count/total-byte limits, backpressure, timeout, cancellation, and process termination.
 
-Transport enforcement is specified here but is not implemented in production by P0-W3-002. The complete-stream schema validates already-decoded objects, while the P0-W3-002 consumers are test-only classifiers over the shared byte corpus. Neither task claims production JSONL decoding, process execution, timeout enforcement, checksum verification, or database application.
+P0-W3-003 enforces the Rust side of a single `DESCRIBE` request per process: one UTF-8 JSON object, exactly one final LF, no BOM/CR/second record, and a 1,000,000-byte total request limit including the LF. It writes exactly one terminal protocol event to stdout for recoverable requests; malformed framing, UTF-8, JSON, or an untrustworthy request ID leaves stdout empty, writes a safe diagnostic to stderr, and exits `2`. This is not the production TypeScript client: client-side decoding, backpressure, timeout/cancellation, corruption handling, checksum verification, and database application remain deferred.
 
 ## Envelope
 
@@ -43,6 +43,8 @@ Returns analyzer version, supported protocol and IR schema versions, languages, 
 
 The version 1 language-neutral descriptor contains Provider, Provider version, Runtime version, unique protocol and IR version lists, unique capabilities, per-language grammar/analyzer/compatibility versions, positive line/event/total-byte limits, and build target/profile. Language IDs must be unique. This metadata is handshake data; it is not silently added to strict Canonical IR or ProviderSnapshot v1. See [ADR-014](../adr/ADR-014-multilanguage-native-analyzer.md) and the [Native Analyzer Scalability specification](../../specs/native-analyzer-scalability.md).
 
+P0-W3-003 emits Provider `native`; package-derived Provider and Runtime versions; protocol/IR lists `[1]`; capability `protocol-handshake`; Java language metadata with grammar/analyzer version `0.0.0` and compatibility version `1`; limits of 1,000,000 line bytes, 10,000 events, and 10,000,000 total bytes; and the compile target/profile. Negotiation checks protocol compatibility before IR compatibility. Incompatibility and other recoverable validation failures emit `REQUEST_FAILED` with a closed error code, fixed bounded message, and `retryable: false`.
+
 ## ANALYZE events
 
 `ANALYSIS_STARTED`, `SOURCE_FILE`, `NODE`, `EDGE`, `COVERAGE`, `DIAGNOSTIC`, `ANALYSIS_COMPLETED`, and `ANALYSIS_FAILED`. A completed payload includes counts, coverage summary, content fingerprint, and integrity checksum. Failed streams are never applied.
@@ -59,7 +61,7 @@ A successful stream starts with `REFRESH_STARTED` and ends with one `REFRESH_COM
 
 For every request, event request IDs match, sequence is exactly zero-based and contiguous, only request-legal event types occur, and exactly one terminal event is last. `ANALYZE` and `REFRESH` also enforce the request `maxEvents` budget, start-event ordering, context agreement, and terminal emitted-count agreement. `DESCRIBE_COMPLETED`, analysis/refresh completed or failed, `CANCEL_ACCEPTED`, and `REQUEST_FAILED` are terminal.
 
-This validator intentionally does not compute or verify integrity checksums. It preserves the declared fingerprint/checksum in the terminal payload; production byte-stream checksum computation and process corruption handling belong to P0-W3-003, P0-W3-004, or later validated application work.
+This validator intentionally does not compute or verify integrity checksums. It preserves the declared fingerprint/checksum in the terminal payload; production byte-stream checksum computation and process corruption handling belong to P0-W3-004 or later validated application work.
 
 ## Error model
 
@@ -75,7 +77,7 @@ The closed classification names are `VALID`, `MALFORMED_JSON`, `INVALID_EVENT`, 
 
 Raw Fixture bytes are protected by `fixtures/ipc/protocol-v1/**/*.jsonl -text` in `.gitattributes`; consumers reject BOM, invalid UTF-8, CRLF, and blank lines rather than relying on checkout conversion. The maximum line size is measured in UTF-8 bytes, not characters.
 
-Both classifiers are deliberately test-only. Rust adds `serde_json` only under `[dev-dependencies]`; it does not add a production protocol module or import test behavior into `src/main.rs`.
+Both P0-W3-002 classifiers are deliberately test-only. P0-W3-003 moves `serde_json` into Rust production dependencies for the real protocol module and adds `p0-native-ipc-handshake-v1` at `fixtures/ipc/handshake-v1/cases.json`. `crates/native-analyzer/tests/handshake.rs` and the test-only `packages/providers/test/native-handshake.test.mjs` spawn the real no-argument executable, verify the five compatible/incompatible/invalid/malformed outcomes, enforce stdout/stderr separation and bounded capture, and validate recoverable output with the existing TypeScript schemas. The verifier is ordered after `cargo build --workspace` and is not production provider code.
 
-P0-W3-001 contributes the TypeScript object-schema Fixture for the request/event matrix, version and limit declarations, complete-stream ordering/terminal/count/context rules, and cancellation. P0-W3-002 proves only cross-language agreement on the shared raw corpus. Rust `DESCRIBE`, production decoding and process enforcement, checksum verification, atomic validated state application, and file-level incremental analysis remain P0-W3-003, P0-W3-004, or later tasks.
+P0-W3-001 contributes the TypeScript object-schema Fixture for the request/event matrix, version and limit declarations, complete-stream ordering/terminal/count/context rules, and cancellation. P0-W3-002 proves cross-language agreement on the shared raw corpus. P0-W3-003 implements only Rust `DESCRIBE` request decoding and emission. Production TypeScript process execution, multi-event streaming, checksum verification, timeout/cancellation, atomic validated state application, and file-level incremental analysis remain P0-W3-004 or later tasks.
 
