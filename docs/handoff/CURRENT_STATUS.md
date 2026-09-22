@@ -6,14 +6,14 @@
 - Handoff assembly: refreshed as the agent-neutral Engineering Handoff Pack.
 - Primary handoff entry: `ENGINEERING_HANDOFF.md`.
 - Compatibility entry: `CODEX_HANDOFF.md`.
-- Implementation repository: the Phase 0 chain through P0-W3-001 is integrated on `main`; its implementation merge has successful exact-SHA hosted CI evidence. P0-W3-002 has fresh local completion evidence on its isolated branch; no push or hosted CI is claimed for it.
+- Implementation repository: the Phase 0 chain through P0-W3-002 is integrated on local `main`. Hosted CI evidence remains successful through P0-W3-001; no push or hosted CI is claimed for P0-W3-002.
 - Active implementation phase: Phase 0.
 
 ## Phase readiness
 
 | Phase | Readiness | Implementation progress |
 |---|---|---|
-| 0 | IMPLEMENTATION-READY | 11 of 18 tasks integrated through P0-W3-001; P0-W3-002 locally verified on an isolated branch, pending review/integration and exact-SHA hosted CI |
+| 0 | IMPLEMENTATION-READY | 12 of 18 tasks integrated through P0-W3-002; P0-W3-002 has exact-SHA local verification and awaits push/hosted CI |
 | 0.5 | IMPLEMENTATION-READY | 0 percent |
 | 1 | DESIGN-READY | 0 percent |
 | 2 | ARCHITECTURE-READY | 0 percent |
@@ -21,7 +21,7 @@
 
 ## Next action
 
-P0-W3-002 shared protocol byte fixtures are locally verified on `codex/p0-w3-002-protocol-fixtures`. Review and integrate this branch before starting P0-W3-003 Rust/TypeScript handshake; do not treat local verification as hosted completion. Preserve predecessor order and the task-level Fixture, Evaluation, Acceptance, documentation, and traceability requirements.
+P0-W3-002 shared protocol byte fixtures are locally integrated. P0-W3-003 Rust/TypeScript handshake is the next authoritative task; do not treat local verification as hosted completion. Preserve predecessor order and the task-level Fixture, Evaluation, Acceptance, documentation, and traceability requirements.
 
 ## Active task evidence
 
@@ -227,3 +227,10 @@ P0-W3-002 shared protocol byte fixtures are locally verified on `codex/p0-w3-002
 - 2026-09-22 Windows-path re-review correction: the next read-only review found that TypeScript encoded `C:/escape.jsonl` under the Fixture root while Windows Rust rejected the drive prefix. A new TypeScript regression first failed, then passed after the resolver explicitly rejected drive-prefixed paths before component encoding. This preserves literal `%2e%2e` handling while aligning rejection of POSIX absolute, Windows drive-prefixed, raw parent, and backslash paths. Focused TypeScript tests passed 5/5 and `git diff --check` passed. A fresh `pnpm verify` then passed on documented branch head `b99c3e1`: Prettier, all 16 TypeScript builds, IR type tests, 359/359 Node tests, the 17-project architecture check, Rust formatting/build/Clippy with warnings denied, native unit tests 0/0, shared protocol Fixture tests 4/4, and native smoke tests 2/2. No production path or Deferred capability changed.
 - Guardrail / Deferred audit: `git diff 5e0cebb2dd3afb7c203dcdaca63a2190536e74cd..HEAD -- crates/native-analyzer/src packages/providers/src packages/storage packages/knowledge` was empty. The requested keyword scan of the new test/Fixture corpus returned no SQLite, SQLx, Diesel, Tree-sitter, `LanguageAnalyzer`, process-spawn, Knowledge, LLM, embedding/Zvec, watcher, or daemon hits. Provider-independent Canonical IR, SQLite authority, Evidence/Claim/Knowledge separation, AUTO/MANUAL lifecycles, and `ExecutionGraph -> RuntimeFlow -> BusinessFlow` remain unchanged.
 - Known limitations and next task: Rust `DESCRIBE`, production JSONL decoding/process enforcement, stdout protocol emission beyond the existing smoke boundary, checksum verification, timeout/cancellation process handling, atomic validated state application, and file-level incremental analysis remain **未实现** as assigned to P0-W3-003, P0-W3-004, or later work. P0-W3-003 Rust/TypeScript handshake is the next authoritative task after review/integration of this branch.
+
+## 2026-09-22 P0-W3-002 local integration checkpoint
+
+- Integration: after final read-only review reported no Critical, Important, or Minor findings and `Ready to merge: Yes`, local `main` was fast-forwarded from `5e0cebb2dd3afb7c203dcdaca63a2190536e74cd` to exact implementation/documentation SHA `3b87f31d7f95679bc3d3c11702a931f90172b398`. No push or hosted CI is claimed.
+- Exact-SHA completion evidence: `pnpm verify` passed on `3b87f31d7f95679bc3d3c11702a931f90172b398` in the isolated task worktree: Prettier, all 16 TypeScript builds, IR type tests, 359/359 Node tests, the 17-project architecture check, Rust formatting/build/Clippy with warnings denied, native unit tests 0/0, shared protocol Fixture tests 4/4, and native smoke tests 2/2. The final status-only closeout commit is verified below before local `main` advances to it.
+- Main-worktree environment check: the first merged-result run stopped at Prettier because four newly checked-out files were `w/crlf` while their index content was `i/lf` under `core.autocrlf=true`; formatting only those files restored `w/lf`, `git diff --quiet` and staged-diff checks proved no content change, and the worktree returned clean. Subsequent merged-result runs passed formatting, all TypeScript and Node tests, and architecture checks, but Windows `link.exe` repeatedly failed with `LNK1105`, error 1224, while closing newly generated Rust executables in both repository and independent temporary target directories. No residual CodeAtlas, Cargo, Rustc, or Link process was present. These environment-failed runs are not reported as passing; the exact-SHA isolated-worktree Gate above remains the completion evidence.
+- Governance and next task: the integration changes no design decision, acceptance threshold, schema, migration, production boundary, or Deferred scope. P0-W3-003 Rust/TypeScript handshake is next; P0-W3-004, P0-W4-001, and P0-W9-001..003 remain unimplemented.
