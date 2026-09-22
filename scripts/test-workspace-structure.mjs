@@ -120,6 +120,10 @@ test('workspace scripts expose and compose the architecture dependency gate', as
   const manifest = await readJson('package.json');
 
   assert.equal(manifest.scripts['architecture:check'], 'node scripts/check-architecture.mjs');
+  assert.equal(
+    manifest.scripts['test:native-handshake'],
+    'node --test packages/providers/test/native-handshake.test.mjs',
+  );
   assert.match(manifest.scripts.test, /scripts\/test-architecture-rules\.mjs/);
   assert.match(manifest.scripts.test, /packages\/storage\/test\/migration-runner\.test\.mjs/);
   assert.match(
@@ -133,6 +137,14 @@ test('workspace scripts expose and compose the architecture dependency gate', as
   assert.match(manifest.scripts.test, /packages\/providers\/test\/native-ipc\.test\.mjs/);
   assert.match(manifest.scripts.test, /packages\/providers\/test\/native-ipc-bytes\.test\.mjs/);
   assert.match(manifest.scripts.verify, /pnpm architecture:check/);
+  assert.ok(
+    manifest.scripts.verify.indexOf('cargo build --workspace') <
+      manifest.scripts.verify.indexOf('pnpm test:native-handshake'),
+  );
+  assert.ok(
+    manifest.scripts.verify.indexOf('pnpm test:native-handshake') <
+      manifest.scripts.verify.indexOf('cargo clippy --workspace'),
+  );
 });
 
 test('Rust toolchain is pinned to the verified compiler release', async () => {
