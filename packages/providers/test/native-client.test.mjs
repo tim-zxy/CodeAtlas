@@ -77,6 +77,7 @@ test('configuration rejects relative paths, command strings, unsafe environment,
       allowedEnvironment: { TEMP: 'a', temp: 'b' },
     },
     { executablePath: process.execPath, timeoutMs: 0 },
+    { executablePath: process.execPath, timeoutMs: 1_000, signal: {} },
     { executablePath: process.execPath, timeoutMs: 1_000, limits: { maxLineBytes: 1_000_001 } },
   ];
 

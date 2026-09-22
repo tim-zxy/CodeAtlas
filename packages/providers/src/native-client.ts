@@ -282,7 +282,8 @@ function validateOptions(value: NativeClientOptions): ValidatedOptions {
     !isAbsolute(value.executablePath) ||
     value.executablePath.includes('\0') ||
     !Number.isSafeInteger(value.timeoutMs) ||
-    value.timeoutMs <= 0
+    value.timeoutMs <= 0 ||
+    (value.signal !== undefined && !(value.signal instanceof AbortSignal))
   ) {
     throw new NativeClientError('INVALID_CONFIGURATION', 'Native client configuration is invalid');
   }
