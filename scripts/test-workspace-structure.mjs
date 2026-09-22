@@ -76,7 +76,10 @@ for (const name of packageNames) {
     } else if (name === 'storage') {
       assert.equal(source, "export * from './migrations/index.js';\n");
     } else if (name === 'providers') {
-      assert.equal(source, "export * from './native-ipc.js';\n");
+      assert.equal(
+        source,
+        "export * from './native-client.js';\nexport * from './native-ipc.js';\n",
+      );
     } else {
       assert.equal(source, 'export {};\n');
     }
