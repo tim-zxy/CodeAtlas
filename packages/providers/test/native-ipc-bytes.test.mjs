@@ -27,6 +27,34 @@ const terminalEventTypes = new Set([
   'CANCEL_ACCEPTED',
   'REQUEST_FAILED',
 ]);
+const legalEventTypes = {
+  DESCRIBE: new Set(['DESCRIBE_COMPLETED', 'REQUEST_FAILED']),
+  ANALYZE: new Set([
+    'ANALYSIS_STARTED',
+    'SOURCE_FILE',
+    'NODE',
+    'EDGE',
+    'COVERAGE',
+    'DIAGNOSTIC',
+    'ANALYSIS_COMPLETED',
+    'ANALYSIS_FAILED',
+    'REQUEST_FAILED',
+  ]),
+  REFRESH: new Set([
+    'REFRESH_STARTED',
+    'SOURCE_FILE',
+    'UPSERT_NODE',
+    'REMOVE_NODE',
+    'UPSERT_EDGE',
+    'REMOVE_EDGE',
+    'COVERAGE',
+    'DIAGNOSTIC',
+    'REFRESH_COMPLETED',
+    'REFRESH_FAILED',
+    'REQUEST_FAILED',
+  ]),
+  CANCEL: new Set(['CANCEL_ACCEPTED', 'REQUEST_FAILED']),
+};
 const fixtureCaseIds = [
   'describe-v1',
   'analyze-java-basic-v1',
@@ -44,6 +72,12 @@ const fixtureCaseIds = [
 
 function resolveFixturePath(relativePath) {
   assert.equal(typeof relativePath, 'string');
+  assert.equal(
+    relativePath
+      .split('/')
+      .every((component) => component !== '' && component !== '.' && component !== '..'),
+    true,
+  );
   assert.equal(relativePath.includes('\\'), false);
   const resolved = new URL(relativePath, fixtureRoot);
   assert.equal(resolved.href.startsWith(fixtureRoot.href), true);
@@ -102,7 +136,19 @@ function classifyTranscript(requestBytes, eventBytes, maxLineBytes) {
   if (events.some((event) => !NativeEventEnvelopeSchema.safeParse(event).success)) {
     return 'INVALID_EVENT';
   }
+  if (events.some((event) => event.requestId !== request.requestId)) {
+    return 'INVALID_EVENT';
+  }
   if (events.some((event, index) => event.sequence !== index)) return 'OUT_OF_ORDER';
+  if (
+    events.some(
+      (event, index) =>
+        !legalEventTypes[request.type].has(event.type) ||
+        (event.type === 'REQUEST_FAILED' && index !== 0),
+    )
+  ) {
+    return 'INVALID_EVENT';
+  }
   const terminals = events.flatMap((event, index) =>
     terminalEventTypes.has(event.type) ? [index] : [],
   );
@@ -144,6 +190,7 @@ test('P0-W3-002 Fixture index declares shared byte cases with safe paths', async
 test('Fixture paths reject parent traversal and absolute paths before file access', () => {
   assert.throws(() => resolveFixturePath('../escape.jsonl'));
   assert.throws(() => resolveFixturePath('/absolute.jsonl'));
+  assert.throws(() => resolveFixturePath('nested/../describe-v1/request.jsonl'));
 });
 
 test('fixtures preserve exact bytes and match their protocol classification', async () => {
@@ -203,12 +250,40 @@ test('classification precedence and byte counting stay deterministic', async () 
     describeEvents.toString('utf8').replaceAll('request-describe', 'request-mismatch'),
   );
   assert.equal(classifyTranscript(describeRequest, mismatchedEvents, 8192), 'INVALID_EVENT');
+  const mismatchedOutOfOrderEvents = Buffer.from(
+    describeEvents
+      .toString('utf8')
+      .replaceAll('request-describe', 'request-mismatch')
+      .replace('"sequence":0', '"sequence":9'),
+  );
+  assert.equal(
+    classifyTranscript(describeRequest, mismatchedOutOfOrderEvents, 8192),
+    'INVALID_EVENT',
+  );
+
+  const illegalNonTerminal = Buffer.from(
+    `${analyzeEvents
+      .toString('utf8')
+      .split('\n')[0]
+      .replaceAll('request-analyze', 'request-describe')}\n`,
+  );
+  assert.equal(classifyTranscript(describeRequest, illegalNonTerminal, 8192), 'INVALID_EVENT');
 
   const outOfOrderEvents = Buffer.from(
     analyzeEvents.toString('utf8').replace('"sequence":1', '"sequence":9'),
   );
   assert.equal(classifyTranscript(analyzeRequest, outOfOrderEvents, 8192), 'OUT_OF_ORDER');
 
+  const declaredOutOfOrder = fixture.cases.find(
+    (fixtureCase) => fixtureCase.id === 'out-of-order-v1',
+  );
+  const declaredOutOfOrderEvents = await readFile(
+    resolveFixturePath(declaredOutOfOrder.eventsFile),
+  );
+  const repairedOutOfOrderEvents = Buffer.from(
+    declaredOutOfOrderEvents.toString('utf8').replace('"sequence":2', '"sequence":1'),
+  );
+  assert.equal(classifyTranscript(analyzeRequest, repairedOutOfOrderEvents, 8192), 'VALID');
   const crlfEvents = Buffer.from(describeEvents.toString('utf8').replaceAll('\n', '\r\n'));
   assert.notEqual(crlfEvents.length, describe.eventsBytes);
   assert.equal(classifyTranscript(describeRequest, crlfEvents, 8192), 'MALFORMED_JSON');

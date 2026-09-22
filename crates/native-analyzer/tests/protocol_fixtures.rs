@@ -355,6 +355,9 @@ fn fixture_paths_reject_absolute_and_parent_components() {
     let root = fixture_root();
     assert!(std::panic::catch_unwind(|| resolve_fixture_path(&root, "/absolute.jsonl")).is_err());
     assert!(std::panic::catch_unwind(|| resolve_fixture_path(&root, "../escape.jsonl")).is_err());
+    assert!(
+        std::panic::catch_unwind(|| resolve_fixture_path(&root, "nested/../case.jsonl")).is_err()
+    );
 }
 
 #[test]
@@ -417,6 +420,17 @@ fn classification_precedence_and_stream_failures_are_deterministic() {
         classify_transcript(&describe_request, &mismatch, max_line_bytes),
         Classification::InvalidEvent
     );
+
+    let mismatch_and_gap = String::from_utf8(describe_events.clone())
+        .unwrap()
+        .replace("request-describe", "request-mismatch")
+        .replacen("\"sequence\":0", "\"sequence\":9", 1)
+        .into_bytes();
+    assert_eq!(
+        classify_transcript(&describe_request, &mismatch_and_gap, max_line_bytes),
+        Classification::InvalidEvent
+    );
+
     let illegal = String::from_utf8(describe_events)
         .unwrap()
         .replace("DESCRIBE_COMPLETED", "CANCEL_ACCEPTED")
@@ -425,6 +439,21 @@ fn classification_precedence_and_stream_failures_are_deterministic() {
         classify_transcript(&describe_request, &illegal, max_line_bytes),
         Classification::InvalidEvent
     );
+
+    let illegal_nonterminal_end = analyze_events
+        .iter()
+        .position(|byte| *byte == b'\n')
+        .unwrap()
+        + 1;
+    let illegal_nonterminal = String::from_utf8(analyze_events[..illegal_nonterminal_end].to_vec())
+        .unwrap()
+        .replace("request-analyze", "request-describe")
+        .into_bytes();
+    assert_eq!(
+        classify_transcript(&describe_request, &illegal_nonterminal, max_line_bytes),
+        Classification::InvalidEvent
+    );
+
     let sequence_gap = String::from_utf8(analyze_events.clone())
         .unwrap()
         .replacen("\"sequence\":1", "\"sequence\":9", 1)
