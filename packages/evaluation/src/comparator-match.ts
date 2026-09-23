@@ -61,7 +61,7 @@ export function validateFactSet(input: unknown, side: 'expected' | 'actual'): Ca
       | { success: false; error: { issues: readonly { path: readonly PropertyKey[] }[] } },
   ): T[] => {
     const factKeys = new Set<string>();
-    return values.map((value, index) => {
+    return Array.from(values, (value, index) => {
       const base = `${side}.${collection}[${index}]`;
       const result = parseValue(value);
       if (!result.success) {

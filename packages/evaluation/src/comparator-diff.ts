@@ -55,8 +55,11 @@ function sameNodeRef(
   expectedId: string,
   actualId: string,
   paired: ReadonlyMap<string, string>,
+  pairedActualIds: ReadonlySet<string>,
 ): boolean {
-  return expectedId === actualId || paired.get(expectedId) === actualId;
+  const mapped = paired.get(expectedId);
+  if (mapped !== undefined) return mapped === actualId;
+  return !pairedActualIds.has(actualId) && expectedId === actualId;
 }
 
 function compareTarget(
@@ -64,6 +67,7 @@ function compareTarget(
   expected: CanonicalTarget,
   actual: CanonicalTarget,
   paired: ReadonlyMap<string, string>,
+  pairedActualIds: ReadonlySet<string>,
 ): void {
   const add = (path: string, a: unknown, b: unknown) =>
     addDifference(differences, 'RESOLUTION_DIFFERENCE', path, a, b);
@@ -72,7 +76,7 @@ function compareTarget(
     add('target.resolution', expected.resolution, actual.resolution);
   if (expected.state !== actual.state) return;
   if (expected.state === 'RESOLVED' && actual.state === 'RESOLVED') {
-    if (!sameNodeRef(expected.target.id, actual.target.id, paired))
+    if (!sameNodeRef(expected.target.id, actual.target.id, paired, pairedActualIds))
       add('target.target.id', expected.target.id, actual.target.id);
   } else if (expected.state === 'UNRESOLVED' && actual.state === 'UNRESOLVED') {
     if (expected.originalHint !== actual.originalHint)
@@ -86,7 +90,7 @@ function compareTarget(
     ) {
       const before = expected.candidates[index]!;
       const after = actual.candidates[index]!;
-      if (!sameNodeRef(before.id, after.id, paired))
+      if (!sameNodeRef(before.id, after.id, paired, pairedActualIds))
         add(`target.candidates[${index}].id`, before.id, after.id);
     }
   }
@@ -131,6 +135,7 @@ export function compareEdges(
   expected: CanonicalEdge,
   actual: CanonicalEdge,
   paired: ReadonlyMap<string, string>,
+  pairedActualIds: ReadonlySet<string>,
 ): ComparisonDifference[] {
   const differences: ComparisonDifference[] = [];
   for (const field of [
@@ -142,7 +147,7 @@ export function compareEdges(
     'confidence',
   ] as const)
     compareJson(differences, 'SEMANTIC_DIFFERENCE', field, expected[field], actual[field]);
-  if (!sameNodeRef(expected.source.id, actual.source.id, paired))
+  if (!sameNodeRef(expected.source.id, actual.source.id, paired, pairedActualIds))
     addDifference(
       differences,
       'SEMANTIC_DIFFERENCE',
@@ -150,7 +155,7 @@ export function compareEdges(
       expected.source.id,
       actual.source.id,
     );
-  compareTarget(differences, expected.target, actual.target, paired);
+  compareTarget(differences, expected.target, actual.target, paired, pairedActualIds);
   return sortDifferences(differences);
 }
 

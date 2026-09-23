@@ -51,6 +51,7 @@ export function compareCanonicalFacts(input: unknown): CanonicalComparison {
   const nodes = matchFacts(expected.nodes, actual.nodes);
   const edges = matchFacts(expected.edges, actual.edges);
   const nodeIds = new Map(nodes.pairs.map((pair) => [pair.expected.id, pair.actual.id]));
+  const pairedActualNodeIds = new Set(nodeIds.values());
   const entries: ComparisonEntry[] = [];
   for (const pair of nodes.pairs) {
     entries.push({
@@ -69,7 +70,7 @@ export function compareCanonicalFacts(input: unknown): CanonicalComparison {
       actual: identity(pair.actual),
       matchBasis: pair.basis,
       classification: null,
-      differences: compareEdges(pair.expected, pair.actual, nodeIds),
+      differences: compareEdges(pair.expected, pair.actual, nodeIds, pairedActualNodeIds),
     });
   }
   for (const [factType, matched] of [

@@ -76,7 +76,7 @@ test('a node and edge cannot reuse a Canonical ID on one side', () => {
 });
 ```
 
-  Also test malformed IR at `expected.nodes[0].kind`, duplicate node FactKey at `actual.nodes[1].factKey`, duplicate edge FactKey, malformed outer collection, empty collections, and that parsed objects do not alias input objects. For error shape, define:
+  Also test malformed IR at `expected.nodes[0].kind`, sparse `nodes`/`edges` arrays on both sides with `[0]` input paths, duplicate node FactKey at `actual.nodes[1].factKey`, duplicate edge FactKey, malformed outer collection, empty collections, and that parsed objects do not alias input objects. For error shape, define:
 
 ```ts
 export class CanonicalComparatorError extends Error {
@@ -151,7 +151,7 @@ export interface CanonicalComparison { readonly entries: readonly ComparisonEntr
 export function compareCanonicalFacts(input: unknown): CanonicalComparison;
 ```
 
-- [ ] **Step 1: Write RED public tests.** Extend the focused suite to assert the complete `entries` shape for unchanged FactKey matches, ID-fallback FactKey changes, a missing node and extra node, a semantic node name/confidence change, a resolved-to-unresolved target, a resolution-level change, candidate reorder, and one edge with semantic and resolution differences. Use the Task 1 factories and this edge factory:
+- [ ] **Step 1: Write RED public tests.** Extend the focused suite to assert the complete `entries` shape for unchanged FactKey matches, ID-fallback FactKey changes, a missing node and extra node, a semantic node name/confidence change, a resolved-to-unresolved target, a resolution-level change, candidate reorder, swapped node IDs with equal literal edge references, and one edge with semantic and resolution differences. Use the Task 1 factories and this edge factory:
 
 ```js
 const ref = (id) => ({ factType: 'NODE', id });
@@ -175,20 +175,24 @@ test('paired node IDs normalize edge references without changing resolution', ()
 
 - [ ] **Step 2: Run RED.** `pnpm --filter @codeatlas/evaluation build && node --test packages/evaluation/test/canonical-comparator.test.mjs`. Expected: `compareCanonicalFacts` is not exported.
 
-- [ ] **Step 3: Implement comparisons and ordering.** `compareCanonicalFacts` validates expected then actual, calls `matchFacts` separately for nodes and edges, builds `Map(expectedNodeId, actualNodeId)` from node pairs, makes paired/unmatched entries, and sorts once. Compare known schema fields explicitly: omit opaque `id`; include `factKey` (different only on ID fallback), repository/revision, kind/subkind, names, range, confidence, source, and target. Use structured field paths, never compare JSON stringification of whole objects. Node refs compare equal if IDs are equal or `nodeIdMap.get(expected.id) === actual.id`; candidate positions remain ordered.
+- [ ] **Step 3: Implement comparisons and ordering.** `compareCanonicalFacts` validates expected then actual, calls `matchFacts` separately for nodes and edges, builds `Map(expectedNodeId, actualNodeId)` from node pairs and a set of paired actual node IDs, makes paired/unmatched entries, and sorts once. Compare known schema fields explicitly: omit opaque `id`; include `factKey` (different only on ID fallback), repository/revision, kind/subkind, names, range, confidence, source, and target. Use structured field paths, never compare JSON stringification of whole objects. A reference to a paired expected node compares only to its mapped actual ID; literal equality is a fallback only when neither referenced node is paired. Candidate positions remain ordered. This corrects the original OR rule after the independent-review regression proved swapped IDs can hide a reversed edge.
 
 ```ts
-function sameNodeRef(expectedId: string, actualId: string, paired: ReadonlyMap<string, string>): boolean {
-  return expectedId === actualId || paired.get(expectedId) === actualId;
+function sameNodeRef(expectedId: string, actualId: string,
+  paired: ReadonlyMap<string, string>, pairedActualIds: ReadonlySet<string>): boolean {
+  const mapped = paired.get(expectedId);
+  if (mapped !== undefined) return mapped === actualId;
+  return !pairedActualIds.has(actualId) && expectedId === actualId;
 }
 function compareTarget(expected: CanonicalTarget, actual: CanonicalTarget,
-  paired: ReadonlyMap<string, string>, add: (path: string, a: unknown, b: unknown) => void): void {
+  paired: ReadonlyMap<string, string>, pairedActualIds: ReadonlySet<string>,
+  add: (path: string, a: unknown, b: unknown) => void): void {
   if (expected.state !== actual.state) add('target.state', expected.state, actual.state);
   if (expected.resolution !== actual.resolution)
     add('target.resolution', expected.resolution, actual.resolution);
   if (expected.state !== actual.state) return;
   if (expected.state === 'RESOLVED' && actual.state === 'RESOLVED') {
-    if (!sameNodeRef(expected.target.id, actual.target.id, paired))
+    if (!sameNodeRef(expected.target.id, actual.target.id, paired, pairedActualIds))
       add('target.target.id', expected.target.id, actual.target.id);
   } else if (expected.state === 'UNRESOLVED' && actual.state === 'UNRESOLVED') {
     if (expected.originalHint !== actual.originalHint)
@@ -196,7 +200,7 @@ function compareTarget(expected: CanonicalTarget, actual: CanonicalTarget,
     if (expected.candidates.length !== actual.candidates.length)
       add('target.candidates.length', expected.candidates.length, actual.candidates.length);
     expected.candidates.slice(0, actual.candidates.length).forEach((candidate, index) => {
-      if (!sameNodeRef(candidate.id, actual.candidates[index]!.id, paired))
+      if (!sameNodeRef(candidate.id, actual.candidates[index]!.id, paired, pairedActualIds))
         add(`target.candidates[${index}].id`, candidate.id, actual.candidates[index]!.id);
     });
   }

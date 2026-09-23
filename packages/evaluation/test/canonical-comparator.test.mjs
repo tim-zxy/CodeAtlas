@@ -121,6 +121,19 @@ test('invalid IR and collection shapes carry the input field path', () => {
   );
 });
 
+test('sparse node and edge arrays report their missing slot on either side', () => {
+  for (const side of ['expected', 'actual']) {
+    for (const collection of ['nodes', 'edges']) {
+      const input = {
+        expected: facts(),
+        actual: facts(),
+      };
+      input[side] = { ...input[side], [collection]: new Array(1) };
+      expectError(() => compareCanonicalFacts(input), 'INPUT_INVALID', `${side}.${collection}[0]`);
+    }
+  }
+});
+
 test('empty collections are valid and parsed facts do not alias input', () => {
   assert.deepEqual(validateFactSet({ nodes: [], edges: [] }, 'expected'), { nodes: [], edges: [] });
   const input = { nodes: [node('a', 'key')], edges: [] };
@@ -217,6 +230,45 @@ test('paired node IDs normalize edge references without changing resolution', ()
     compareCanonicalFacts({ expected, actual }).entries.every(
       (entry) => entry.classification === null && entry.differences.length === 0,
     ),
+  );
+});
+
+test('paired node identity takes precedence when literal IDs are swapped', () => {
+  const expectedNodes = [node('1', 'a'), node('2', 'b')];
+  const actualNodes = [node('2', 'a'), node('1', 'b')];
+  const resolvedResult = compareCanonicalFacts({
+    expected: facts(expectedNodes, [callEdge('e', 'call', '1', resolved('2'))]),
+    actual: facts(actualNodes, [callEdge('a', 'call', '1', resolved('2'))]),
+  });
+  assert.deepEqual(
+    resolvedResult.entries
+      .find(({ factType }) => factType === 'EDGE')
+      .differences.map(({ path }) => path),
+    ['source.id', 'target.target.id'],
+  );
+
+  const candidateResult = compareCanonicalFacts({
+    expected: facts(expectedNodes, [
+      callEdge('e', 'call', '1', unresolved(['2', '1'], 'AMBIGUOUS')),
+    ]),
+    actual: facts(actualNodes, [callEdge('a', 'call', '1', unresolved(['2', '1'], 'AMBIGUOUS'))]),
+  });
+  assert.deepEqual(
+    candidateResult.entries
+      .find(({ factType }) => factType === 'EDGE')
+      .differences.map(({ path }) => path),
+    ['source.id', 'target.candidates[0].id', 'target.candidates[1].id'],
+  );
+});
+
+test('a dangling expected ID is not equal to an actual paired-node ID', () => {
+  const result = compareCanonicalFacts({
+    expected: facts([node('old', 'a')], [callEdge('e', 'call', 'new', resolved('new'))]),
+    actual: facts([node('new', 'a')], [callEdge('a', 'call', 'new', resolved('new'))]),
+  });
+  assert.deepEqual(
+    result.entries.find(({ factType }) => factType === 'EDGE').differences.map(({ path }) => path),
+    ['source.id', 'target.target.id'],
   );
 });
 
