@@ -6,14 +6,14 @@
 - Handoff assembly: refreshed as the agent-neutral Engineering Handoff Pack.
 - Primary handoff entry: `ENGINEERING_HANDOFF.md`.
 - Compatibility entry: `CODEX_HANDOFF.md`.
-- Implementation repository: the Phase 0 chain through P0-W4-001 is integrated on local `main` at `cbe7ad2` (PR #2 merged). P0-W9-001 is independently reviewed and locally verified in an isolated worktree and awaits integration; no push or hosted CI is claimed for it.
+- Implementation repository: the Phase 0 chain through P0-W9-001 is integrated on local `main` at `b921633` (PR #3 merged after four green hosted checks). P0-W9-002 is locally implemented and verified in an isolated worktree; independent review, push, hosted CI, and merge are not yet claimed.
 - Active implementation phase: Phase 0.
 
 ## Phase readiness
 
 | Phase | Readiness | Implementation progress |
 |---|---|---|
-| 0 | IMPLEMENTATION-READY | 15 of 18 tasks integrated through P0-W4-001; P0-W9-001 is independently reviewed and locally verified, making 16 of 18 implemented pending integration |
+| 0 | IMPLEMENTATION-READY | 16 of 18 tasks integrated through P0-W9-001; P0-W9-002 is locally implemented and verified, making 17 of 18 implemented pending review/integration |
 | 0.5 | IMPLEMENTATION-READY | 0 percent |
 | 1 | DESIGN-READY | 0 percent |
 | 2 | ARCHITECTURE-READY | 0 percent |
@@ -21,7 +21,7 @@
 
 ## Next action
 
-Integrate P0-W9-001 Fixture registry after its local verification and independent review. P0-W9-002 Canonical comparator is the next listed Phase 0 implementation task; P0-W9-003 remains dependent on it. Do not treat local verification as hosted completion or claim the Phase 0 exit gate before comparator and metrics evidence exists.
+Review and integrate P0-W9-002 Canonical comparator after local verification. P0-W9-003 Metric engine and eval CLI is the next listed Phase 0 task and remains dependent on comparator integration. Do not claim the Phase 0 exit gate before metrics evidence and hosted checks exist.
 
 ## Active task evidence
 
@@ -281,3 +281,11 @@ Integrate P0-W9-001 Fixture registry after its local verification and independen
 - Fresh reproducible evidence: `pnpm install --frozen-lockfile --offline` succeeded; baseline `pnpm test` passed 404/404 before code changes. After root integration, `node --test scripts/test-workspace-structure.mjs` passed 20/20. A final-review regression first failed because a regular file with a trailing `/` was accepted; after correction the focused evaluation suites passed 34/34 with no skips. A fresh `pnpm verify` on 2026-09-23 passed: Prettier, all 16 TypeScript workspace builds, IR type tests, 438/438 root Node tests, the 17-project architecture check, Rust formatting/build/Clippy with warnings denied, real-binary Native client 2/2, Native handshake 4/4, and Rust workspace tests (5 unit, 1 handshake, 4 protocol-Fixture, 5 smoke).
 - Contract and design impact: the evaluation package adds no runtime dependency, database mutation, canonical publication, comparator, metric engine, CLI eval command, Java analysis, or deferred capability. `specs/EVALUATION.md` now makes `fixture.json` JSON v1 normative and retains task-specific `cases.json` separately. Canonical IR, SQLite schemas, Native IPC, and frozen architecture decisions are unchanged. The next task is P0-W9-002 after review/integration.
 - Independent-review scope note: a minor mixed-error ordering edge remains: a symlink named `fixture.json` discovered later can be reported before an earlier malformed regular manifest. Both are rejected with actionable paths and no partial registry; the ordering polish is deferred for user review. Hosted CI, POSIX permission-denied behavior, and concurrent hostile filesystem mutation are not claimed by this local evidence.
+
+## 2026-09-23 P0-W9-002 Canonical comparator local verification
+
+- Status and baseline: P0-W9-001 is merged into local `main` at `b921633` (PR #3). The comparator design and plan are `670d361` and `8d145e5`; implementation and acceptance commits are `5bdabad`, `ff8af4a`, and `73d3f4e`. This entry records local evidence only; independent review, push, hosted CI, and merge are pending.
+- Authority and acceptance: P0-W9-002 in `WORK_BREAKDOWN.md`; `specs/EVALUATION.md`, `specs/CANONICAL_IR.md`, ADR-002, ADR-012, and the P0-W9-002 row in `DESIGN_TRACEABILITY.md`. The Phase 0 comparator gate requires stable `MISSING`, `EXTRA`, `SEMANTIC_DIFFERENCE`, and `RESOLUTION_DIFFERENCE` classifications.
+- Fixture and contract: `p0-canonical-comparator-v1` at `fixtures/evaluation/comparator-v1/fixture.json` declares `expected.json` and `actual.json`; its test asserts all four classes and exact paths. The pure public `compareCanonicalFacts` API validates both sides atomically, pairs same-type facts by FactKey then unique Canonical ID, compares edge references through paired nodes, preserves unresolved target/candidate order, and returns stable entries including unchanged pairs. Duplicate identities and invalid IR fail with a typed input path and no partial result.
+- Reproducible local evidence: the new matcher tests first failed on missing implementation, then passed 6/6; public comparator tests first failed on the missing export, then passed 15/15; the golden Fixture test failed while absent, then the focused suite passed 16/16. The registry's committed-Fixture test initially assumed only one manifest; after narrowing its assertion to the original Fixture's ID/path, the combined evaluation suites passed 27/27. `pnpm test` passed 454/454 with zero skips, and a fresh `pnpm verify` passed Prettier, all 16 TypeScript workspace builds, IR type tests, 454/454 root Node tests, the 17-project architecture check, Rust formatting/build/Clippy with warnings denied, real-binary Native client tests 2/2, Native handshake tests 4/4, and Rust workspace tests (5 unit, 1 handshake, 4 protocol-Fixture, 5 smoke). On this Windows worktree the pnpm invocation set `pnpm_config_verify_deps_before_run=error`, `pnpm_config_update_notifier=false`, and `pnpm_config_enable_global_virtual_store=false` to match the locally restored offline dependency layout; clean CI uses its normal install.
+- Contract, dependency, and phase impact: `@codeatlas/evaluation` now depends on existing `@codeatlas/ir`; no new third-party runtime dependency, Canonical IR schema, SQLite migration, provider normalization, baseline regeneration, metric engine, eval CLI, Java parser, canonical publication, or deferred capability was added. P0-W9-003 remains the next task after review/integration. Hosted CI and final branch review are not claimed by this entry.
