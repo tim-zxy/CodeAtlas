@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "p0-fixture-registry-v1",
+  "category": "code-intelligence",
+  "phase": "0",
+  "languages": [],
+  "frameworks": [],
+  "capabilities": [],
+  "inputs": { "source": "source/" },
+  "expected": { "nodes": "expected/nodes.json" },
+  "criticalFacts": [],
+  "qualityGates": {}
+}
