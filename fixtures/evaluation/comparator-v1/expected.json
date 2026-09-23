@@ -1,0 +1,45 @@
+{
+  "nodes": [
+    {
+      "id": "e-a",
+      "factKey": "key-a",
+      "repositoryId": "repo",
+      "revisionId": "rev",
+      "kind": "SYMBOL",
+      "symbolKind": "METHOD",
+      "name": "A",
+      "qualifiedName": null,
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "fixture", "reasons": [] }
+    },
+    {
+      "id": "e-b",
+      "factKey": "key-b",
+      "repositoryId": "repo",
+      "revisionId": "rev",
+      "kind": "SYMBOL",
+      "symbolKind": "METHOD",
+      "name": "B",
+      "qualifiedName": null,
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "fixture", "reasons": [] }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e-call",
+      "factKey": "key-call",
+      "repositoryId": "repo",
+      "revisionId": "rev",
+      "kind": "CALL",
+      "source": { "factType": "NODE", "id": "e-a" },
+      "target": {
+        "state": "RESOLVED",
+        "resolution": "EXACT",
+        "target": { "factType": "NODE", "id": "e-b" }
+      },
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "fixture", "reasons": [] }
+    }
+  ]
+}

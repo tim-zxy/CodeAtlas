@@ -1,9 +1,11 @@
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import { test } from 'node:test';
+import { fileURLToPath } from 'node:url';
 
 import { CanonicalComparatorError } from '../dist/comparator-error.js';
 import { matchFacts, validateFactSet } from '../dist/comparator-match.js';
-import { compareCanonicalFacts } from '../dist/index.js';
+import { compareCanonicalFacts, discoverFixtures } from '../dist/index.js';
 
 const confidence = { score: 1, method: 'fixture', reasons: [] };
 const node = (id, factKey, name = 'A') => ({
@@ -290,4 +292,38 @@ test('permutations produce byte-identical results and do not mutate inputs', () 
   );
   assert.equal(second, first);
   assert.equal(JSON.stringify({ expected, actual }), before);
+});
+
+test('declared comparator Fixture proves all four Phase 0 classes', async () => {
+  const root = fileURLToPath(new URL('../../../fixtures/evaluation/', import.meta.url));
+  const fixtures = await discoverFixtures(root);
+  const fixture = fixtures.find(({ manifest }) => manifest.id === 'p0-canonical-comparator-v1');
+  assert.ok(fixture, 'p0-canonical-comparator-v1 must be registered');
+  const expected = JSON.parse(await readFile(fixture.expected.canonical, 'utf8'));
+  const actual = JSON.parse(await readFile(fixture.inputs.actual, 'utf8'));
+  const result = compareCanonicalFacts({ expected, actual });
+  const classifications = result.entries.flatMap((entry) => [
+    ...(entry.classification === null ? [] : [entry.classification]),
+    ...entry.differences.map(({ kind }) => kind),
+  ]);
+  assert.deepEqual([...new Set(classifications)].sort(), [
+    'EXTRA',
+    'MISSING',
+    'RESOLUTION_DIFFERENCE',
+    'SEMANTIC_DIFFERENCE',
+  ]);
+  assert.deepEqual(
+    result.entries.map(({ expected, actual, classification, differences }) => [
+      expected?.factKey ?? null,
+      actual?.factKey ?? null,
+      classification,
+      differences.map(({ path }) => path),
+    ]),
+    [
+      ['key-a', 'key-a', null, ['name']],
+      ['key-b', null, 'MISSING', []],
+      [null, 'key-c', 'EXTRA', []],
+      ['key-call', 'key-call', null, ['target.resolution', 'target.state']],
+    ],
+  );
 });
