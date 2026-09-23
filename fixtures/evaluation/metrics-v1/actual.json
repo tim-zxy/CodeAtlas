@@ -1,0 +1,73 @@
+{
+  "nodes": [
+    {
+      "id": "a-u",
+      "factKey": "node-unchanged",
+      "repositoryId": "repo",
+      "revisionId": "rev",
+      "kind": "SYMBOL",
+      "symbolKind": "METHOD",
+      "name": "Unchanged",
+      "qualifiedName": null,
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "fixture", "reasons": [] }
+    },
+    {
+      "id": "a-c",
+      "factKey": "node-changed",
+      "repositoryId": "repo",
+      "revisionId": "rev",
+      "kind": "SYMBOL",
+      "symbolKind": "METHOD",
+      "name": "After",
+      "qualifiedName": null,
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "fixture", "reasons": [] }
+    },
+    {
+      "id": "a-x",
+      "factKey": "node-extra",
+      "repositoryId": "repo",
+      "revisionId": "rev",
+      "kind": "SYMBOL",
+      "symbolKind": "METHOD",
+      "name": "Extra",
+      "qualifiedName": null,
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "fixture", "reasons": [] }
+    }
+  ],
+  "edges": [
+    {
+      "id": "a-edge",
+      "factKey": "edge-changed",
+      "repositoryId": "repo",
+      "revisionId": "rev",
+      "kind": "CALL",
+      "source": { "factType": "NODE", "id": "a-c" },
+      "target": {
+        "state": "UNRESOLVED",
+        "resolution": "UNRESOLVED",
+        "originalHint": "Before",
+        "candidates": []
+      },
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "fixture", "reasons": [] }
+    },
+    {
+      "id": "a-extra-edge",
+      "factKey": "edge-extra",
+      "repositoryId": "repo",
+      "revisionId": "rev",
+      "kind": "CALL",
+      "source": { "factType": "NODE", "id": "a-u" },
+      "target": {
+        "state": "RESOLVED",
+        "resolution": "EXACT",
+        "target": { "factType": "NODE", "id": "a-x" }
+      },
+      "sourceRange": null,
+      "confidence": { "score": 1, "method": "fixture", "reasons": [] }
+    }
+  ]
+}

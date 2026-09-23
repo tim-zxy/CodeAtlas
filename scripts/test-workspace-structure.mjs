@@ -90,7 +90,7 @@ for (const name of packageNames) {
     } else if (name === 'evaluation') {
       assert.equal(
         source,
-        "export * from './canonical-comparator.js';\nexport * from './comparator-error.js';\nexport * from './fixture-error.js';\nexport * from './fixture-manifest.js';\nexport * from './fixture-registry.js';\n",
+        "export * from './canonical-comparator.js';\nexport * from './comparator-error.js';\nexport * from './fixture-error.js';\nexport * from './fixture-manifest.js';\nexport * from './fixture-registry.js';\nexport * from './metric-engine.js';\n",
       );
     } else {
       assert.equal(source, 'export {};\n');
