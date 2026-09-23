@@ -6,14 +6,14 @@
 - Handoff assembly: refreshed as the agent-neutral Engineering Handoff Pack.
 - Primary handoff entry: `ENGINEERING_HANDOFF.md`.
 - Compatibility entry: `CODEX_HANDOFF.md`.
-- Implementation repository: the Phase 0 chain through P0-W4-001 is integrated on local `main` at `cbe7ad2` (PR #2 merged). P0-W9-001 is locally verified in an isolated worktree and awaits independent review and integration; no push or hosted CI is claimed for it.
+- Implementation repository: the Phase 0 chain through P0-W4-001 is integrated on local `main` at `cbe7ad2` (PR #2 merged). P0-W9-001 is independently reviewed and locally verified in an isolated worktree and awaits integration; no push or hosted CI is claimed for it.
 - Active implementation phase: Phase 0.
 
 ## Phase readiness
 
 | Phase | Readiness | Implementation progress |
 |---|---|---|
-| 0 | IMPLEMENTATION-READY | 15 of 18 tasks integrated through P0-W4-001; P0-W9-001 is locally verified, making 16 of 18 implemented pending review/integration |
+| 0 | IMPLEMENTATION-READY | 15 of 18 tasks integrated through P0-W4-001; P0-W9-001 is independently reviewed and locally verified, making 16 of 18 implemented pending integration |
 | 0.5 | IMPLEMENTATION-READY | 0 percent |
 | 1 | DESIGN-READY | 0 percent |
 | 2 | ARCHITECTURE-READY | 0 percent |
@@ -21,7 +21,7 @@
 
 ## Next action
 
-Review and integrate P0-W9-001 Fixture registry after its local verification. P0-W9-002 Canonical comparator is the next listed Phase 0 implementation task; P0-W9-003 remains dependent on it. Do not treat local verification as hosted completion or claim the Phase 0 exit gate before comparator and metrics evidence exists.
+Integrate P0-W9-001 Fixture registry after its local verification and independent review. P0-W9-002 Canonical comparator is the next listed Phase 0 implementation task; P0-W9-003 remains dependent on it. Do not treat local verification as hosted completion or claim the Phase 0 exit gate before comparator and metrics evidence exists.
 
 ## Active task evidence
 
@@ -275,7 +275,7 @@ Review and integrate P0-W9-001 Fixture registry after its local verification. P0
 
 ## 2026-09-23 P0-W9-001 Fixture registry local verification
 
-- Status and baseline: P0-W4-001 is merged into local `main` at `cbe7ad2`. This task was implemented in an isolated, detached worktree from the merged PR's content commit `4144cd1`; design and plan commits are `ed16fc9` and `1b6c2a3`, and implementation commits are `9063624` and `d5a12fa` before documentation integration. No push, hosted CI, or merge of this task is claimed.
+- Status and baseline: P0-W4-001 is merged into local `main` at `cbe7ad2`. This task was implemented in an isolated, detached worktree from the merged PR's content commit `4144cd1`; design and plan commits are `ed16fc9` and `1b6c2a3`, implementation commits are `9063624` and `d5a12fa`, documentation integration is `3caa81d`, and the independent-review correction is `f32edcf`. No push, hosted CI, or merge of this task is claimed.
 - Authority and acceptance: P0-W9-001 in `WORK_BREAKDOWN.md`; `specs/EVALUATION.md`, `specs/MODULE_BOUNDARIES.md`, ADR-012, and the P0-W9-001 row in `DESIGN_TRACEABILITY.md`. The Phase 0 gate is discovery and validation of manifests, not comparison or metric calculation.
 - Fixture and contract: `p0-fixture-registry-v1` at `fixtures/evaluation/registry-v1/fixture.json` exercises a version-1 JSON manifest with declared inputs and expected artifacts. Focused tests validate 23 pure-schema cases and 11 filesystem cases, including legacy `cases.json` coexistence, ordering, duplicate IDs, malformed JSON, missing artifacts, traversal, trailing-slash type checking, symlink escape, and symlink cycle. The registry returns no partial set after a bad manifest.
 - Fresh reproducible evidence: `pnpm install --frozen-lockfile --offline` succeeded; baseline `pnpm test` passed 404/404 before code changes. After root integration, `node --test scripts/test-workspace-structure.mjs` passed 20/20. A final-review regression first failed because a regular file with a trailing `/` was accepted; after correction the focused evaluation suites passed 34/34 with no skips. A fresh `pnpm verify` on 2026-09-23 passed: Prettier, all 16 TypeScript workspace builds, IR type tests, 438/438 root Node tests, the 17-project architecture check, Rust formatting/build/Clippy with warnings denied, real-binary Native client 2/2, Native handshake 4/4, and Rust workspace tests (5 unit, 1 handshake, 4 protocol-Fixture, 5 smoke).
