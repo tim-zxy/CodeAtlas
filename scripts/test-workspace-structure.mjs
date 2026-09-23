@@ -78,7 +78,7 @@ for (const name of packageNames) {
     } else if (name === 'providers') {
       assert.equal(
         source,
-        "export * from './native-client.js';\nexport * from './native-ipc.js';\n",
+        "export * from './native-client.js';\nexport * from './native-ipc.js';\nexport * from './provider-routing.js';\nexport * from './provider-spi.js';\n",
       );
     } else {
       assert.equal(source, 'export {};\n');
