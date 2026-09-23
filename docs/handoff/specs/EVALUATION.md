@@ -13,21 +13,28 @@ Use deterministic checks whenever possible, structured comparison when facts hav
 
 ## Fixture manifest
 
-```yaml
-schemaVersion: 1
-id: java-call-basic
-category: code-intelligence
-phase: "0.5"
-languages: [java]
-capabilities: [SYMBOL, CALL]
-inputs: { source: source/ }
-expected: { nodes: expected/nodes.json, edges: expected/edges.json }
-criticalFacts:
-  - { id: call-order-to-payment, type: EDGE, importance: CRITICAL }
-qualityGates:
-  callPrecision: { operator: ">=", threshold: 0.95 }
-  callRecall: { operator: ">=", threshold: 0.90 }
+The evaluation registry recursively discovers files named `fixture.json` under an explicitly supplied root. Version 1 is strict JSON; all fields below are required, even when an array or quality-gate map is empty. Existing task-specific `cases.json` indexes are separate and are not discovered as evaluation manifests.
+
+```json
+{
+  "schemaVersion": 1,
+  "id": "java-call-basic",
+  "category": "code-intelligence",
+  "phase": "0.5",
+  "languages": ["java"],
+  "frameworks": [],
+  "capabilities": ["SYMBOL", "CALL"],
+  "inputs": { "source": "source/" },
+  "expected": { "nodes": "expected/nodes.json", "edges": "expected/edges.json" },
+  "criticalFacts": [{ "id": "call-order-to-payment", "type": "EDGE", "importance": "CRITICAL" }],
+  "qualityGates": {
+    "callPrecision": { "operator": ">=", "threshold": 0.95 },
+    "callRecall": { "operator": ">=", "threshold": 0.9 }
+  }
+}
 ```
+
+The registry validates schema version `1`, unique manifest IDs, the four layer categories, phases `"0"`, `"0.5"`, `"1"`, `"2"`, and `"3"`, nonempty exact strings, unique list values and critical-fact IDs, and finite thresholds with operators `>=`, `>`, `<=`, `<`, or `==`. `inputs` and `expected` are nonempty named maps of existing file or directory paths relative to the manifest directory. Absolute, drive/UNC, traversal, backslash, and symlink-escape paths fail with the manifest and field path. Discovery is deterministic and fails atomically on any invalid manifest. The registry does not compare facts or calculate the gates; those belong to P0-W9-002 and P0-W9-003.
 
 Incremental fixtures contain baseline, modified, declared changes, and expected added/removed facts with zero stale state.
 
