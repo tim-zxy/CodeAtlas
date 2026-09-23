@@ -2,7 +2,7 @@
 
 Date: 2026-09-23
 Task: P0-W9-001
-Status: conversational design approved; written specification awaiting review
+Status: written specification approved; implementation plan awaiting review
 
 ## Purpose and success criteria
 
