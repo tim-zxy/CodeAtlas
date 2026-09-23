@@ -6,14 +6,14 @@
 - Handoff assembly: refreshed as the agent-neutral Engineering Handoff Pack.
 - Primary handoff entry: `ENGINEERING_HANDOFF.md`.
 - Compatibility entry: `CODEX_HANDOFF.md`.
-- Implementation repository: the Phase 0 chain through P0-W3-002 is integrated on local `main`. Hosted CI evidence remains successful through P0-W3-001; no push or hosted CI is claimed for P0-W3-002.
+- Implementation repository: the Phase 0 chain through P0-W3-004 is integrated on local `main` at `15f0d8c`. P0-W4-001 is locally verified in an isolated worktree and awaits review/integration. No push or hosted CI is claimed for P0-W4-001.
 - Active implementation phase: Phase 0.
 
 ## Phase readiness
 
 | Phase | Readiness | Implementation progress |
 |---|---|---|
-| 0 | IMPLEMENTATION-READY | 12 of 18 tasks integrated through P0-W3-002; P0-W3-002 has exact-SHA local verification and awaits push/hosted CI |
+| 0 | IMPLEMENTATION-READY | 14 of 18 tasks integrated through P0-W3-004; P0-W4-001 is locally verified, making 15 of 18 implemented pending integration |
 | 0.5 | IMPLEMENTATION-READY | 0 percent |
 | 1 | DESIGN-READY | 0 percent |
 | 2 | ARCHITECTURE-READY | 0 percent |
@@ -21,7 +21,7 @@
 
 ## Next action
 
-P0-W3-002 shared protocol byte fixtures are locally integrated. P0-W3-003 Rust/TypeScript handshake is the next authoritative task; do not treat local verification as hosted completion. Preserve predecessor order and the task-level Fixture, Evaluation, Acceptance, documentation, and traceability requirements.
+P0-W4-001 Provider and Plugin SPI is locally verified and awaits review/integration. P0-W9-001 Fixture registry is the next listed Phase 0 task after that integration. Do not treat local verification as hosted completion; preserve task-level Fixture, Evaluation, Acceptance, documentation, and traceability requirements.
 
 ## Active task evidence
 
@@ -258,3 +258,14 @@ P0-W3-002 shared protocol byte fixtures are locally integrated. P0-W3-003 Rust/T
 - Full Quality Gate: a fresh `pnpm verify` passed on the documented working tree: Prettier, all 16 TypeScript workspace builds, IR type tests, 378/378 ordinary root Node tests, the 17-project architecture check, Rust formatting/build/Clippy with warnings denied, the production real-binary Native client tests 2/2, the separate handshake tests 4/4, Rust protocol unit tests 5/5, handshake Fixture 1/1, shared protocol Fixture 4/4, and native smoke/process tests 5/5.
 - Guardrail / Deferred audit: production changes are confined to the Provider-owned process boundary and its public export. The client validates Provider Facts but does not canonicalize, merge, persist, or publish them. No SQLite, Knowledge/Claim/LLM/vector behavior, Tree-sitter/Java analyzer, framework semantics, watcher, daemon, network path, direct database mutation, or validated state-application workflow was added. Provider-independent Canonical IR, SQLite authority, Evidence/Claim/Knowledge separation, AUTO/MANUAL lifecycles, and `ExecutionGraph -> RuntimeFlow -> BusinessFlow` remain unchanged.
 - Governance and next task: `NATIVE_IPC.md`, `SECURITY.md`, and `DESIGN_TRACEABILITY.md` now describe the implemented client boundary and its executable acceptance surface. Atomic validated state application, native multi-event analysis emission, and file-level Java/incremental analysis remain later work. P0-W4-001 Provider and Plugin SPI is the next listed implementation task; P0-W9-001..003 remain unimplemented.
+
+## 2026-09-23 P0-W4-001 Provider and Plugin SPI local verification
+
+- Status and baseline: P0-W4-001 is implemented and locally verified in an isolated, host-managed worktree based on local `main` SHA `15f0d8cf56a3e45a72d0f472957e2f8153cc9803`. Design and implementation-plan commits are `7598ad6` and `0f8c649`; implementation task commits before final integration are `fbce817`, `d32fd00`, and `2061373`. No merge, push, hosted CI, or exact remote-ref equality is claimed.
+- Authority and success criteria: `WORK_BREAKDOWN.md` P0-W4-001; `specs/PROVIDER_SPI.md`, `specs/PLUGIN_SPI.md`, `specs/MODULE_BOUNDARIES.md`; ADR-002, ADR-010, ADR-012, ADR-014; design `docs/superpowers/specs/2026-09-23-p0-w4-001-provider-plugin-spi-design.md`; plan `docs/superpowers/plans/2026-09-23-p0-w4-001-provider-plugin-spi.md`. The mapped acceptance gate is descriptors, capabilities, analysis contracts, plugin detection/extraction, and deterministic routing metadata.
+- Fixture and implementation: `p0-provider-plugin-spi-v1` at `fixtures/spi/provider-plugin-v1/cases.json` declares 12 fake-provider/plugin cases. `@codeatlas/providers` exports strict descriptors and full/refresh request schemas, `CodeIntelligenceProvider`, bounded complete-stream validation, and pure role/priority/ID routing. `@codeatlas/plugins` exports strict descriptors and bounded canonical contexts, evidence-backed detection and JSON-safe candidate validation, `FrameworkPlugin`, and pure capability-filtered priority/ID routing. Plugin candidates cannot publish canonical knowledge; Phase 1 owns their semantic payload schemas.
+- Failure and recovery: duplicate or malformed descriptors/registrations fail, unsupported route requirements yield no candidates, invalid/out-of-order/truncated/failed Provider streams yield no applicable result, cancellation rejects before or during iteration, and over-budget streams close their iterator. Positive detection and candidate support must reference facts in the supplied repository revision; negative detection cannot claim support. Existing IPC byte checksum verification remains the native client's responsibility.
+- Focused evidence: Provider descriptor/route tests passed 5/5; Provider stream tests passed 5/5 with the existing Native IPC schema tests 7/7; Plugin descriptor/detection/candidate tests passed 7/7, including a RED→GREEN deep-immutability regression; Plugin routing tests passed 4/4. The combined SPI and workspace-structure command passed 41/41. `pnpm --filter @codeatlas/providers build`, `pnpm --filter @codeatlas/plugins build`, `pnpm format:check`, and `pnpm architecture:check` passed.
+- Full Quality Gate: a fresh `pnpm verify` passed on 2026-09-23 after all SPI and documentation edits: Prettier, all 16 TypeScript workspace builds, IR type tests, 399/399 root Node tests, the 17-project architecture check, Rust formatting/build/Clippy with warnings denied, real-binary Native client tests 2/2, Native handshake tests 4/4, Rust protocol unit tests 5/5, handshake Fixture 1/1, shared protocol Fixture 4/4, and native smoke/process tests 5/5. A fresh standalone `pnpm test` also passed 399/399 after the full gate.
+- Contract, schema, migration, and Deferred impact: Provider/Plugin public SPIs and the new Fixture are the only product-contract additions. The plugins package adds existing `@codeatlas/ir` and Zod 4.6.1 dependencies; Canonical IR, ProviderSnapshot v1, SQLite schemas/migrations, Rust, and Native IPC v1 are unchanged. There is no Spring/Mongo/Kafka/FastAPI extractor, Java parser, native adapter, FactMerger, runtime executor, third-party loader, arbitrary plugin authority, direct database write, LLM path, vector path, watcher, or daemon feature. Provider-independent Canonical IR, SQLite authority, candidate-only semantic knowledge, AUTO/MANUAL lifecycles, and `ExecutionGraph -> RuntimeFlow -> BusinessFlow` remain intact.
+- Governance and next task: `PROVIDER_SPI.md`, `PLUGIN_SPI.md`, and `DESIGN_TRACEABILITY.md` describe the executable public contracts and Fixture gate. P0-W9-001 Fixture registry is next after review/integration; P0-W9-002/003 remain unimplemented.

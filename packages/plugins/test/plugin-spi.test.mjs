@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 
 import {
@@ -48,6 +49,29 @@ const candidate = {
   value: { schema: 'entry-point-candidate', version: 1, payload: { path: '/health' } },
   support: [support],
 };
+
+test('P0-W4-001 fixture declares the fake Provider and Plugin contract cases', async () => {
+  const fixture = JSON.parse(
+    await readFile(new URL('../../../fixtures/spi/provider-plugin-v1/cases.json', import.meta.url)),
+  );
+  assert.equal(fixture.fixtureId, 'p0-provider-plugin-spi-v1');
+  assert.equal(fixture.task, 'P0-W4-001');
+  assert.deepEqual(fixture.governingSpecs, ['Provider SPI', 'Plugin SPI']);
+  assert.deepEqual(fixture.cases, [
+    'descriptor',
+    'analyze',
+    'refresh',
+    'cancellation',
+    'failed-terminal',
+    'invalid-event',
+    'coverage-diagnostic',
+    'unresolved-target',
+    'plugin-detection',
+    'plugin-extraction',
+    'provider-routing',
+    'plugin-routing',
+  ]);
+});
 
 test('plugin descriptor and bounded context accept canonical input', () => {
   assert.deepEqual(PluginDescriptorSchema.parse(descriptor), descriptor);
@@ -144,4 +168,18 @@ test('plugin context and candidate reject foreign revisions and non-JSON data', 
     }).success,
     false,
   );
+});
+
+test('validated plugin contexts are deeply immutable', () => {
+  const input = DetectionContextSchema.parse(context);
+  assert.equal(Object.isFrozen(input), true);
+  assert.equal(Object.isFrozen(input.nodes), true);
+  assert.equal(Object.isFrozen(input.nodes[0]), true);
+  assert.equal(Object.isFrozen(input.configuration), true);
+  assert.throws(() => {
+    input.nodes[0].name = 'changed';
+  }, TypeError);
+
+  const extraction = SemanticExtractionContextSchema.parse({ ...context, detection });
+  assert.equal(Object.isFrozen(extraction.detection.support[0]), true);
 });

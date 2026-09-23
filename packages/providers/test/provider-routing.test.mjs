@@ -71,10 +71,12 @@ test('provider route filters capabilities and orders role, priority, then stable
 
 test('provider route rejects duplicate IDs before filtering', () => {
   const entry = { descriptor, role: 'PRIMARY', priority: 0 };
-  assert.throws(() =>
-    selectProviderCandidates([entry, { ...entry, role: 'SHADOW' }], {
-      languageId: 'python',
-      requiredCapabilities: [],
-    }),
+  assert.throws(
+    () =>
+      selectProviderCandidates([entry, { ...entry, role: 'SHADOW' }], {
+        languageId: 'python',
+        requiredCapabilities: [],
+      }),
+    { code: 'IR_VALIDATION_FAILED' },
   );
 });

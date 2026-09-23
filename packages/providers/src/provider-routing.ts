@@ -1,4 +1,4 @@
-import { ProviderIdSchema } from '@codeatlas/ir';
+import { IrValidationError, ProviderIdSchema, parseIr } from '@codeatlas/ir';
 import { z } from 'zod';
 
 import { ProviderDescriptorSchema } from './provider-spi.js';
@@ -31,12 +31,19 @@ export function selectProviderCandidates(
   registrations: readonly ProviderRegistration[],
   request: ProviderRouteRequest,
 ): readonly ProviderRegistration[] {
-  const validated = z.array(ProviderRegistrationSchema).parse(registrations);
-  const wanted = ProviderRouteRequestSchema.parse(request);
+  const validated = parseIr(z.array(ProviderRegistrationSchema), registrations);
+  const wanted = parseIr(ProviderRouteRequestSchema, request);
   const seen = new Set<z.infer<typeof ProviderIdSchema>>();
-  for (const registration of validated) {
+  for (const [index, registration] of validated.entries()) {
     const id = registration.descriptor.providerId;
-    if (seen.has(id)) throw new Error(`Duplicate provider ID: ${id}`);
+    if (seen.has(id)) {
+      throw new IrValidationError([
+        {
+          path: ['registrations', index, 'descriptor', 'providerId'],
+          message: 'Duplicate provider ID',
+        },
+      ]);
+    }
     seen.add(id);
   }
 

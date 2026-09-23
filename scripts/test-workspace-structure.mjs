@@ -82,7 +82,10 @@ for (const name of packageNames) {
         "export * from './native-client.js';\nexport * from './native-ipc.js';\nexport * from './provider-routing.js';\nexport * from './provider-spi.js';\n",
       );
     } else if (name === 'plugins') {
-      assert.equal(source, "export * from './plugin-spi.js';\n");
+      assert.equal(
+        source,
+        "export * from './plugin-routing.js';\nexport * from './plugin-spi.js';\n",
+      );
     } else {
       assert.equal(source, 'export {};\n');
     }
@@ -142,6 +145,10 @@ test('workspace scripts expose and compose the architecture dependency gate', as
   );
   assert.match(manifest.scripts.test, /packages\/providers\/test\/native-ipc\.test\.mjs/);
   assert.match(manifest.scripts.test, /packages\/providers\/test\/native-ipc-bytes\.test\.mjs/);
+  assert.match(manifest.scripts.test, /packages\/providers\/test\/provider-routing\.test\.mjs/);
+  assert.match(manifest.scripts.test, /packages\/providers\/test\/provider-spi\.test\.mjs/);
+  assert.match(manifest.scripts.test, /packages\/plugins\/test\/plugin-routing\.test\.mjs/);
+  assert.match(manifest.scripts.test, /packages\/plugins\/test\/plugin-spi\.test\.mjs/);
   assert.match(manifest.scripts.verify, /pnpm architecture:check/);
   assert.ok(
     manifest.scripts.verify.indexOf('cargo build --workspace') <

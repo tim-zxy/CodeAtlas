@@ -55,6 +55,14 @@ const ContextShape = {
   configuration: JsonValueSchema,
 };
 
+function freezeDeep<T>(value: T): T {
+  if (value !== null && typeof value === 'object') {
+    for (const nested of Object.values(value)) freezeDeep(nested);
+    Object.freeze(value);
+  }
+  return value;
+}
+
 function validateContext(
   context: {
     repositoryId: string;
@@ -81,7 +89,10 @@ function validateContext(
   }
 }
 
-export const DetectionContextSchema = z.strictObject(ContextShape).superRefine(validateContext);
+export const DetectionContextSchema = z
+  .strictObject(ContextShape)
+  .superRefine(validateContext)
+  .transform(freezeDeep);
 export type DetectionContext = z.infer<typeof DetectionContextSchema>;
 
 export const DetectionResultSchema = z.strictObject({
@@ -113,7 +124,8 @@ export const SemanticExtractionContextSchema = z
         message: 'Detection support must exist in the input context',
       });
     }
-  });
+  })
+  .transform(freezeDeep);
 export type SemanticExtractionContext = z.infer<typeof SemanticExtractionContextSchema>;
 
 export const SemanticFactSchema = z.strictObject({
