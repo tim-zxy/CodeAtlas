@@ -17,5 +17,9 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@codeatlas/ir": "workspace:*",
+    "zod": "4.6.1"
   }
 }

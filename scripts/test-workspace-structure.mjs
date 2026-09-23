@@ -22,6 +22,7 @@ const appNames = ['cli', 'mcp', 'daemon'];
 const expectedPackageDependencies = Object.fromEntries(packageNames.map((name) => [name, {}]));
 expectedPackageDependencies.ir = { zod: '4.6.1' };
 expectedPackageDependencies.providers = { '@codeatlas/ir': 'workspace:*', zod: '4.6.1' };
+expectedPackageDependencies.plugins = { '@codeatlas/ir': 'workspace:*', zod: '4.6.1' };
 const expectedAppDependencies = {
   cli: { '@codeatlas/runtime': 'workspace:*' },
   daemon: {},
@@ -80,6 +81,8 @@ for (const name of packageNames) {
         source,
         "export * from './native-client.js';\nexport * from './native-ipc.js';\nexport * from './provider-routing.js';\nexport * from './provider-spi.js';\n",
       );
+    } else if (name === 'plugins') {
+      assert.equal(source, "export * from './plugin-spi.js';\n");
     } else {
       assert.equal(source, 'export {};\n');
     }

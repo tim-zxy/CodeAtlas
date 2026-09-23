@@ -54,7 +54,14 @@ importers:
 
   packages/knowledge: {}
 
-  packages/plugins: {}
+  packages/plugins:
+    dependencies:
+      '@codeatlas/ir':
+        specifier: workspace:*
+        version: link:../ir
+      zod:
+        specifier: 4.6.1
+        version: 4.6.1
 
   packages/providers:
     dependencies:
