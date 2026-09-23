@@ -158,3 +158,89 @@ test('Provider SPI enforces the event budget and closes a rejected iterator', as
   });
   assert.equal(closed, true);
 });
+
+test('Provider SPI closes an iterator when cancellation races with a resolved event', async () => {
+  const { request, events } = await fixture('analyze-java-basic-v1');
+  const controller = new AbortController();
+  let returns = 0;
+  const stream = {
+    [Symbol.asyncIterator]() {
+      return {
+        next() {
+          queueMicrotask(() => queueMicrotask(() => controller.abort()));
+          return Promise.resolve({ done: false, value: events[0] });
+        },
+        async return() {
+          returns += 1;
+          return { done: true };
+        },
+      };
+    },
+  };
+  await assert.rejects(() => validateProviderStream(input(request, controller.signal), stream), {
+    code: 'CANCELLED',
+  });
+  assert.equal(returns, 1);
+});
+
+test('Provider SPI preserves cancellation when iterator cleanup throws', async () => {
+  const { request } = await fixture('analyze-java-basic-v1');
+  const controller = new AbortController();
+  const stream = {
+    [Symbol.asyncIterator]() {
+      return {
+        next: () => new Promise(() => undefined),
+        return: () => {
+          throw new Error('cleanup failed');
+        },
+      };
+    },
+  };
+  const result = validateProviderStream(input(request, controller.signal), stream);
+  queueMicrotask(() => controller.abort());
+  await assert.rejects(() => result, { code: 'CANCELLED' });
+});
+
+test('Provider SPI snapshots the request envelope before an asynchronous stream', async () => {
+  const { request, events } = await fixture('analyze-java-basic-v1');
+  request.payload.resourceBudget.maxEvents = 1;
+  const parsed = FullAnalysisRequestSchema.parse(input(request));
+  assert.notEqual(parsed.envelope, request);
+  async function* mutated() {
+    request.payload.resourceBudget.maxEvents = events.length;
+    yield* events;
+  }
+  await assert.rejects(() => validateProviderStream(input(request), mutated()), {
+    code: 'IR_VALIDATION_FAILED',
+  });
+});
+
+test('Provider SPI validates event context against the original repository', async () => {
+  const { request, events } = await fixture('analyze-java-basic-v1');
+  const repositoryId = request.payload.repository.id;
+  async function* mutated() {
+    request.payload.repository.id = 'mutated-repository';
+    yield* events;
+  }
+  const result = await validateProviderStream(input(request), mutated());
+  assert.equal(result.request.payload.repository.id, repositoryId);
+  assert.equal(request.payload.repository.id, 'mutated-repository');
+});
+
+test('Provider SPI exposes a frozen configuration snapshot without freezing the signal', async () => {
+  const { request } = await fixture('analyze-java-basic-v1');
+  const original = { nested: { enabled: true } };
+  const signal = new AbortController().signal;
+  const parsed = FullAnalysisRequestSchema.parse({
+    envelope: request,
+    configuration: original,
+    signal,
+  });
+  assert.notEqual(parsed.configuration, original);
+  assert.equal(Object.isFrozen(parsed.configuration), true);
+  assert.equal(Object.isFrozen(parsed.configuration.nested), true);
+  assert.equal(Object.isFrozen(signal), false);
+  assert.throws(() => {
+    parsed.configuration.nested.enabled = false;
+  }, TypeError);
+});

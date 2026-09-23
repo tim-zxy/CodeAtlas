@@ -55,8 +55,13 @@ test('P0-W4-001 fixture declares the fake Provider and Plugin contract cases', a
     await readFile(new URL('../../../fixtures/spi/provider-plugin-v1/cases.json', import.meta.url)),
   );
   assert.equal(fixture.fixtureId, 'p0-provider-plugin-spi-v1');
+  assert.equal(fixture.schemaVersion, 1);
   assert.equal(fixture.task, 'P0-W4-001');
   assert.deepEqual(fixture.governingSpecs, ['Provider SPI', 'Plugin SPI']);
+  assert.equal(
+    fixture.acceptance,
+    'Descriptors, capabilities, analysis contracts, plugin detection/extraction, and deterministic routing metadata',
+  );
   assert.deepEqual(fixture.cases, [
     'descriptor',
     'analyze',

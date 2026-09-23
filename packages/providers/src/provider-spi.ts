@@ -58,22 +58,44 @@ export const ProviderDescriptorSchema = z.strictObject({
 export type ProviderDescriptor = z.infer<typeof ProviderDescriptorSchema>;
 
 function envelopeSchema<TType extends 'ANALYZE' | 'REFRESH'>(type: TType) {
-  return z.custom<Extract<NativeRequestEnvelope, { type: TType }>>((value) => {
-    const result = NativeRequestEnvelopeSchema.safeParse(value);
-    return result.success && result.data.type === type;
-  });
+  return NativeRequestEnvelopeSchema.pipe(
+    z.custom<Extract<NativeRequestEnvelope, { type: TType }>>(
+      (value) =>
+        typeof value === 'object' && value !== null && 'type' in value && value.type === type,
+    ),
+  );
 }
+
+export type ReadonlyJsonValue =
+  | string
+  | number
+  | boolean
+  | null
+  | readonly ReadonlyJsonValue[]
+  | { readonly [key: string]: ReadonlyJsonValue };
+
+function freezeDeep<T>(value: T): T {
+  if (value !== null && typeof value === 'object') {
+    for (const nested of Object.values(value)) freezeDeep(nested);
+    Object.freeze(value);
+  }
+  return value;
+}
+
+const ReadonlyConfigurationSchema = JsonValueSchema.transform((value): ReadonlyJsonValue =>
+  freezeDeep(value),
+);
 
 export const FullAnalysisRequestSchema = z.strictObject({
   envelope: envelopeSchema('ANALYZE'),
-  configuration: JsonValueSchema,
+  configuration: ReadonlyConfigurationSchema,
   signal: z.custom<AbortSignal>((value) => value instanceof AbortSignal),
 });
 export type FullAnalysisRequest = z.infer<typeof FullAnalysisRequestSchema>;
 
 export const RefreshAnalysisRequestSchema = z.strictObject({
   envelope: envelopeSchema('REFRESH'),
-  configuration: JsonValueSchema,
+  configuration: ReadonlyConfigurationSchema,
   signal: z.custom<AbortSignal>((value) => value instanceof AbortSignal),
 });
 export type RefreshAnalysisRequest = z.infer<typeof RefreshAnalysisRequestSchema>;
@@ -106,20 +128,24 @@ function nextOrAbort(
   return new Promise((resolve, reject) => {
     const onAbort = () => {
       signal.removeEventListener('abort', onAbort);
-      void iterator.return?.().catch(() => undefined);
       reject(cancelled());
     };
     signal.addEventListener('abort', onAbort, { once: true });
-    void iterator.next().then(
-      (value) => {
-        signal.removeEventListener('abort', onAbort);
-        resolve(value);
-      },
-      (error: unknown) => {
-        signal.removeEventListener('abort', onAbort);
-        reject(error);
-      },
-    );
+    try {
+      void iterator.next().then(
+        (value) => {
+          signal.removeEventListener('abort', onAbort);
+          resolve(value);
+        },
+        (error: unknown) => {
+          signal.removeEventListener('abort', onAbort);
+          reject(error);
+        },
+      );
+    } catch (error) {
+      signal.removeEventListener('abort', onAbort);
+      reject(error);
+    }
   });
 }
 
@@ -151,7 +177,17 @@ export async function validateProviderStream(
     }
     complete = true;
   } finally {
-    if (!complete && !signal.aborted) await iterator.return?.();
+    if (!complete) {
+      if (signal.aborted) {
+        try {
+          void Promise.resolve(iterator.return?.()).catch(() => undefined);
+        } catch {
+          // Cancellation must remain prompt even if cleanup fails synchronously.
+        }
+      } else {
+        await iterator.return?.();
+      }
+    }
   }
 
   const stream = parseIr(NativeEventStreamSchema, { request: envelope, events: collected });
