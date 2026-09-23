@@ -137,11 +137,13 @@ function criticalFacts(value: unknown, manifestPath: string): CriticalFact[] {
     if (!isRecord(item)) fail(manifestPath, path, 'must be an object');
     exactKeys(item, ['id', 'type', 'importance'], manifestPath, path);
     const id = exactString(item.id, manifestPath, `${path}.id`);
-    if (seen.has(id)) fail(manifestPath, `${path}.id`, 'duplicate critical fact ID');
-    seen.add(id);
+    const type = exactString(item.type, manifestPath, `${path}.type`);
+    const key = JSON.stringify([type, id]);
+    if (seen.has(key)) fail(manifestPath, `${path}.id`, 'duplicate critical fact identity');
+    seen.add(key);
     return {
       id,
-      type: exactString(item.type, manifestPath, `${path}.type`),
+      type,
       importance: exactString(item.importance, manifestPath, `${path}.importance`),
     };
   });

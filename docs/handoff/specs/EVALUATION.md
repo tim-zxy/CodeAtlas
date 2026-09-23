@@ -34,7 +34,7 @@ The evaluation registry recursively discovers files named `fixture.json` under a
 }
 ```
 
-The registry validates schema version `1`, unique manifest IDs, the four layer categories, phases `"0"`, `"0.5"`, `"1"`, `"2"`, and `"3"`, nonempty exact strings, unique list values and critical-fact IDs, and finite thresholds with operators `>=`, `>`, `<=`, `<`, or `==`. `inputs` and `expected` are nonempty named maps of existing file or directory paths relative to the manifest directory. Absolute, drive/UNC, traversal, backslash, and symlink-escape paths fail with the manifest and field path. Discovery is deterministic and fails atomically on any invalid manifest. The registry does not compare facts or calculate the gates; those belong to P0-W9-002 and P0-W9-003.
+The registry validates schema version `1`, unique manifest IDs, the four layer categories, phases `"0"`, `"0.5"`, `"1"`, `"2"`, and `"3"`, nonempty exact strings, unique list values and critical-fact `(type, id)` pairs, and finite thresholds with operators `>=`, `>`, `<=`, `<`, or `==`. The same `id` may name a NODE and an EDGE, but duplicate declarations of the same type and ID fail. `inputs` and `expected` are nonempty named maps of existing file or directory paths relative to the manifest directory. Absolute, drive/UNC, traversal, backslash, and symlink-escape paths fail with the manifest and field path. Discovery is deterministic and fails atomically on any invalid manifest. The registry does not compare facts or calculate the gates; those belong to P0-W9-002 and P0-W9-003.
 
 Incremental fixtures contain baseline, modified, declared changes, and expected added/removed facts with zero stale state.
 

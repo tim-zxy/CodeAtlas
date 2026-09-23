@@ -16,7 +16,7 @@
 - `ekp-dev eval <fixture>` takes an explicit directory and exactly one `fixture.json`; use `inputs.actual` and `expected.canonical` JSON files. Run it in-repo with `pnpm ekp-dev eval <fixture>`.
 - Only six ratio gate names are supported: `nodePrecision`, `nodeRecall`, `edgePrecision`, `edgeRecall`, `criticalFactPrecision`, `criticalFactRecall`. Gate thresholds are finite and in `[0, 1]`.
 - A changed pair is one FP and one FN even with two difference classes; a matching pair is one TP. Zero-denominator metric value is `null` with a reason and cannot auto-pass a gate.
-- `criticalFacts[].id` is an expected FactKey; `type` is `NODE` or `EDGE`. Only `importance: "CRITICAL"` enters critical counts. Undeclared extras do not enter critical precision.
+- `criticalFacts[].id` is an expected FactKey; `type` is `NODE` or `EDGE`, and declaration uniqueness is by `(type, id)`. Only `importance: "CRITICAL"` enters critical counts. Undeclared extras do not enter critical precision.
 - Exit 0: complete report and no failed declared gate; exit 1: complete report with failed/not-evaluable gate; exit 2: controlled input error on stderr and no JSON report. Do not regenerate baselines.
 - The current Windows worktree has CRLF-only Git status noise (`git -c core.safecrlf=false diff --quiet HEAD` confirms content equality). Preserve unrelated files. The `pnpm` shim may attempt network-dependent dependency repair; first inspect local dependency state, then use the prior documented offline overrides if needed. Never claim a failed/blocked gate passed.
 

@@ -77,6 +77,26 @@ test('absolute Fixture path containing spaces stays one argument', async (t) => 
   assert.equal(JSON.parse(result.stdout).fixtureId, 'p0-metric-engine-v1');
 });
 
+test('NODE and EDGE critical declarations may share a FactKey', async (t) => {
+  const fixture = await copyGolden(join(await temporaryRoot(t), 'fixture'));
+  await updateManifest(fixture, (manifest) => {
+    manifest.criticalFacts = [
+      { id: 'node-unchanged', type: 'NODE', importance: 'CRITICAL' },
+      { id: 'node-unchanged', type: 'EDGE', importance: 'CRITICAL' },
+    ];
+    manifest.qualityGates = {};
+  });
+  for (const name of ['expected.json', 'actual.json']) {
+    const path = join(fixture, name);
+    const graph = JSON.parse(await readFile(path, 'utf8'));
+    graph.edges[0].factKey = 'node-unchanged';
+    await writeFile(path, JSON.stringify(graph), 'utf8');
+  }
+  const result = evaluate(fixture);
+  assert.equal(result.status, 0, result.stderr);
+  assert.deepEqual(JSON.parse(result.stdout).counts.criticalFact, { tp: 1, fp: 1, fn: 1 });
+});
+
 test('failed gate returns complete JSON and exit one', async (t) => {
   const fixture = await copyGolden(join(await temporaryRoot(t), 'fixture'));
   await updateManifest(fixture, (manifest) => {
