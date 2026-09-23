@@ -154,6 +154,8 @@ test('workspace scripts expose and compose the architecture dependency gate', as
   assert.match(manifest.scripts.test, /packages\/providers\/test\/provider-spi\.test\.mjs/);
   assert.match(manifest.scripts.test, /packages\/plugins\/test\/plugin-routing\.test\.mjs/);
   assert.match(manifest.scripts.test, /packages\/plugins\/test\/plugin-spi\.test\.mjs/);
+  assert.match(manifest.scripts.test, /packages\/evaluation\/test\/fixture-manifest\.test\.mjs/);
+  assert.match(manifest.scripts.test, /packages\/evaluation\/test\/fixture-registry\.test\.mjs/);
   assert.match(manifest.scripts.verify, /pnpm architecture:check/);
   assert.ok(
     manifest.scripts.verify.indexOf('cargo build --workspace') <

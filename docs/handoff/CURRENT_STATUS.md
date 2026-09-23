@@ -6,14 +6,14 @@
 - Handoff assembly: refreshed as the agent-neutral Engineering Handoff Pack.
 - Primary handoff entry: `ENGINEERING_HANDOFF.md`.
 - Compatibility entry: `CODEX_HANDOFF.md`.
-- Implementation repository: the Phase 0 chain through P0-W3-004 is integrated on local `main` at `15f0d8c`. P0-W4-001 is independently reviewed and locally verified in an isolated worktree and awaits integration. No push or hosted CI is claimed for P0-W4-001.
+- Implementation repository: the Phase 0 chain through P0-W4-001 is integrated on local `main` at `cbe7ad2` (PR #2 merged). P0-W9-001 is locally verified in an isolated worktree and awaits independent review and integration; no push or hosted CI is claimed for it.
 - Active implementation phase: Phase 0.
 
 ## Phase readiness
 
 | Phase | Readiness | Implementation progress |
 |---|---|---|
-| 0 | IMPLEMENTATION-READY | 14 of 18 tasks integrated through P0-W3-004; P0-W4-001 is locally verified, making 15 of 18 implemented pending integration |
+| 0 | IMPLEMENTATION-READY | 15 of 18 tasks integrated through P0-W4-001; P0-W9-001 is locally verified, making 16 of 18 implemented pending review/integration |
 | 0.5 | IMPLEMENTATION-READY | 0 percent |
 | 1 | DESIGN-READY | 0 percent |
 | 2 | ARCHITECTURE-READY | 0 percent |
@@ -21,7 +21,7 @@
 
 ## Next action
 
-P0-W4-001 Provider and Plugin SPI is independently reviewed and locally verified and awaits integration. P0-W9-001 Fixture registry is the next listed Phase 0 task after that integration. Do not treat local verification as hosted completion; preserve task-level Fixture, Evaluation, Acceptance, documentation, and traceability requirements.
+Review and integrate P0-W9-001 Fixture registry after its local verification. P0-W9-002 Canonical comparator is the next listed Phase 0 implementation task; P0-W9-003 remains dependent on it. Do not treat local verification as hosted completion or claim the Phase 0 exit gate before comparator and metrics evidence exists.
 
 ## Active task evidence
 
@@ -272,3 +272,11 @@ P0-W4-001 Provider and Plugin SPI is independently reviewed and locally verified
 - Independent-review correction (2026-09-23): read-only review found a cancellation/iterator-cleanup race and a mutable request-envelope alias. Four new Provider regressions first failed on cancellation cleanup, synchronous cleanup failure, envelope snapshot, and frozen nested configuration; the repository-context regression further proves that caller mutation during iteration cannot change validation. Provider request parsing now snapshots its native envelope and deeply freezes only JSON configuration, while incomplete streams close their iterators on every failure path without delaying cancellation. The Fixture test now checks its declared schema version and exact acceptance mapping. Focused Provider/Plugin tests passed 17/17. A fresh `pnpm verify` then passed: Prettier, 16 TypeScript builds, IR types, 404/404 root Node tests, 17-project architecture gate, Rust formatting/build/Clippy with denied warnings, real-binary Native client 2/2, handshake 4/4, Rust unit 5/5, handshake Fixture 1/1, shared protocol Fixture 4/4, and native smoke/process 5/5. No design decision, Quality Gate, Fixture threshold, or Deferred scope changed.
 - P0-W3-004 hosted-CI portability correction (2026-09-23): PR #2's push and pull-request TypeScript jobs (`35812426908`, `35812461856`) each passed 403/404 Node tests and failed only `child environment contains only explicitly allowed values`: Linux reports an absent `PATH`, while the test had hard-coded the empty `PATH` required by the Windows process-launcher defense. The existing test now expects the platform-specific absent/blank representation while still asserting exact `LANG`, `TEMP`, and no leaked values. Native client production code, environment allowlist, Fixture manifest, and acceptance gate are unchanged. The focused Native client suite passed 19/19 and a fresh local `pnpm verify` passed all formatting, 16 TypeScript builds, IR type tests, 404/404 root Node tests, 17-project architecture gate, Rust formatting/build/Clippy with denied warnings, real-binary Native client 2/2, handshake 4/4, Rust unit 5/5, handshake Fixture 1/1, shared protocol Fixture 4/4, and native smoke/process 5/5. Hosted rerun evidence remains pending this correction's push.
 - Hosted CI completion for correction commit `5a60a9e`: GitHub Actions push run `35813821958` and pull-request run `35813825542` both passed TypeScript workspace and Rust workspace checks for PR #2 on 2026-09-23. The TypeScript jobs passed in 39 and 33 seconds respectively, replacing the failed Linux environment assertion with a green exact allowlist check; the Rust jobs passed in 1 minute 55 seconds and 2 minutes 2 seconds. These runs supersede the pending hosted-rerun note above. No product contract or acceptance threshold changed.
+
+## 2026-09-23 P0-W9-001 Fixture registry local verification
+
+- Status and baseline: P0-W4-001 is merged into local `main` at `cbe7ad2`. This task was implemented in an isolated, detached worktree from the merged PR's content commit `4144cd1`; design and plan commits are `ed16fc9` and `1b6c2a3`, and implementation commits are `9063624` and `d5a12fa` before documentation integration. No push, hosted CI, or merge of this task is claimed.
+- Authority and acceptance: P0-W9-001 in `WORK_BREAKDOWN.md`; `specs/EVALUATION.md`, `specs/MODULE_BOUNDARIES.md`, ADR-012, and the P0-W9-001 row in `DESIGN_TRACEABILITY.md`. The Phase 0 gate is discovery and validation of manifests, not comparison or metric calculation.
+- Fixture and contract: `p0-fixture-registry-v1` at `fixtures/evaluation/registry-v1/fixture.json` exercises a version-1 JSON manifest with declared inputs and expected artifacts. Focused tests validate 23 pure-schema cases and 10 filesystem cases, including legacy `cases.json` coexistence, ordering, duplicate IDs, malformed JSON, missing artifacts, traversal, symlink escape, and symlink cycle. The registry returns no partial set after a bad manifest.
+- Fresh reproducible evidence: `pnpm install --frozen-lockfile --offline` succeeded; baseline `pnpm test` passed 404/404 before code changes. After root integration, `node --test scripts/test-workspace-structure.mjs` passed 20/20 and `pnpm verify` passed on 2026-09-23: Prettier, all 16 TypeScript workspace builds, IR type tests, 437/437 root Node tests, the 17-project architecture check, Rust formatting/build/Clippy with warnings denied, real-binary Native client 2/2, Native handshake 4/4, and Rust workspace tests (5 unit, 1 handshake, 4 protocol-Fixture, 5 smoke). The focused evaluation suites passed 33/33 with no skips after using a directory junction to test symlink escape on Windows.
+- Contract and design impact: the evaluation package adds no runtime dependency, database mutation, canonical publication, comparator, metric engine, CLI eval command, Java analysis, or deferred capability. `specs/EVALUATION.md` now makes `fixture.json` JSON v1 normative and retains task-specific `cases.json` separately. Canonical IR, SQLite schemas, Native IPC, and frozen architecture decisions are unchanged. The next task is P0-W9-002 after review/integration.
