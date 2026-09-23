@@ -86,6 +86,11 @@ for (const name of packageNames) {
         source,
         "export * from './plugin-routing.js';\nexport * from './plugin-spi.js';\n",
       );
+    } else if (name === 'evaluation') {
+      assert.equal(
+        source,
+        "export * from './fixture-error.js';\nexport * from './fixture-manifest.js';\n",
+      );
     } else {
       assert.equal(source, 'export {};\n');
     }
