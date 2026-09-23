@@ -23,6 +23,7 @@ const expectedPackageDependencies = Object.fromEntries(packageNames.map((name) =
 expectedPackageDependencies.ir = { zod: '4.6.1' };
 expectedPackageDependencies.providers = { '@codeatlas/ir': 'workspace:*', zod: '4.6.1' };
 expectedPackageDependencies.plugins = { '@codeatlas/ir': 'workspace:*', zod: '4.6.1' };
+expectedPackageDependencies.evaluation = { '@codeatlas/ir': 'workspace:*' };
 const expectedAppDependencies = {
   cli: { '@codeatlas/runtime': 'workspace:*' },
   daemon: {},
