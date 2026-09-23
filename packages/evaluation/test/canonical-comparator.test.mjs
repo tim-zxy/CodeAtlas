@@ -3,6 +3,7 @@ import { test } from 'node:test';
 
 import { CanonicalComparatorError } from '../dist/comparator-error.js';
 import { matchFacts, validateFactSet } from '../dist/comparator-match.js';
+import { compareCanonicalFacts } from '../dist/index.js';
 
 const confidence = { score: 1, method: 'fixture', reasons: [] };
 const node = (id, factKey, name = 'A') => ({
@@ -126,4 +127,167 @@ test('empty collections are valid and parsed facts do not alias input', () => {
   assert.notStrictEqual(output, input);
   assert.notStrictEqual(output.nodes[0], input.nodes[0]);
   assert.notStrictEqual(output.nodes[0].confidence, input.nodes[0].confidence);
+});
+
+const resolved = (id, resolution = 'EXACT') => ({
+  state: 'RESOLVED',
+  resolution,
+  target: ref(id),
+});
+const unresolved = (candidateIds = [], resolution = 'UNRESOLVED') => ({
+  state: 'UNRESOLVED',
+  resolution,
+  originalHint: 'B',
+  candidates: candidateIds.map(ref),
+});
+const callEdge = (id, factKey, source, target) => ({
+  ...edge(id, factKey),
+  source: ref(source),
+  target,
+});
+const facts = (nodes = [], edges = []) => ({ nodes, edges });
+
+test('equal FactKeys with different opaque IDs are unchanged pairs', () => {
+  const result = compareCanonicalFacts({
+    expected: facts([node('e', 'key')]),
+    actual: facts([node('a', 'key')]),
+  });
+  assert.deepEqual(result.entries, [
+    {
+      factType: 'NODE',
+      expected: { id: 'e', factKey: 'key' },
+      actual: { id: 'a', factKey: 'key' },
+      matchBasis: 'FACT_KEY',
+      classification: null,
+      differences: [],
+    },
+  ]);
+});
+
+test('ID fallback reports changed FactKey as one semantic difference', () => {
+  const result = compareCanonicalFacts({
+    expected: facts([node('same', 'old-key')]),
+    actual: facts([node('same', 'new-key')]),
+  });
+  assert.equal(result.entries.length, 1);
+  assert.equal(result.entries[0].matchBasis, 'ID');
+  assert.deepEqual(result.entries[0].differences, [
+    { kind: 'SEMANTIC_DIFFERENCE', path: 'factKey', expected: 'old-key', actual: 'new-key' },
+  ]);
+});
+
+test('unpaired expected and actual nodes are missing and extra', () => {
+  const result = compareCanonicalFacts({
+    expected: facts([node('e', 'key-a')]),
+    actual: facts([node('a', 'key-b')]),
+  });
+  assert.deepEqual(
+    result.entries.map(({ classification }) => classification),
+    ['MISSING', 'EXTRA'],
+  );
+  assert.deepEqual(
+    result.entries.map(({ matchBasis }) => matchBasis),
+    [null, null],
+  );
+});
+
+test('node name and confidence leaf changes are semantic', () => {
+  const result = compareCanonicalFacts({
+    expected: facts([node('e', 'key')]),
+    actual: facts([{ ...node('a', 'key', 'Changed'), confidence: { ...confidence, score: 0.5 } }]),
+  });
+  assert.deepEqual(result.entries[0].differences, [
+    { kind: 'SEMANTIC_DIFFERENCE', path: 'confidence.score', expected: 1, actual: 0.5 },
+    { kind: 'SEMANTIC_DIFFERENCE', path: 'name', expected: 'A', actual: 'Changed' },
+  ]);
+});
+
+test('paired node IDs normalize edge references without changing resolution', () => {
+  const expected = facts(
+    [node('e-a', 'a'), node('e-b', 'b')],
+    [callEdge('e-edge', 'call', 'e-a', resolved('e-b'))],
+  );
+  const actual = facts(
+    [node('a-a', 'a'), node('a-b', 'b')],
+    [callEdge('a-edge', 'call', 'a-a', resolved('a-b'))],
+  );
+  assert.ok(
+    compareCanonicalFacts({ expected, actual }).entries.every(
+      (entry) => entry.classification === null && entry.differences.length === 0,
+    ),
+  );
+});
+
+test('target state, level, and candidate order are resolution differences', () => {
+  const changedState = compareCanonicalFacts({
+    expected: facts([], [callEdge('e', 'call', 'source', resolved('target'))]),
+    actual: facts([], [callEdge('a', 'call', 'source', unresolved())]),
+  });
+  assert.deepEqual(
+    changedState.entries[0].differences.map(({ path }) => path),
+    ['target.resolution', 'target.state'],
+  );
+  const changedLevel = compareCanonicalFacts({
+    expected: facts([], [callEdge('e', 'call', 'source', resolved('target'))]),
+    actual: facts([], [callEdge('a', 'call', 'source', resolved('target', 'HEURISTIC'))]),
+  });
+  assert.deepEqual(
+    changedLevel.entries[0].differences.map(({ path }) => path),
+    ['target.resolution'],
+  );
+  const reordered = compareCanonicalFacts({
+    expected: facts([], [callEdge('e', 'call', 'source', unresolved(['x', 'y'], 'AMBIGUOUS'))]),
+    actual: facts([], [callEdge('a', 'call', 'source', unresolved(['y', 'x'], 'AMBIGUOUS'))]),
+  });
+  assert.deepEqual(
+    reordered.entries[0].differences.map(({ path }) => path),
+    ['target.candidates[0].id', 'target.candidates[1].id'],
+  );
+});
+
+test('one edge can carry semantic and resolution differences without a second pair', () => {
+  const result = compareCanonicalFacts({
+    expected: facts([], [callEdge('e', 'call', 'first', resolved('target'))]),
+    actual: facts([], [callEdge('a', 'call', 'second', unresolved())]),
+  });
+  assert.equal(result.entries.length, 1);
+  assert.deepEqual(
+    result.entries[0].differences.map(({ kind }) => kind),
+    ['SEMANTIC_DIFFERENCE', 'RESOLUTION_DIFFERENCE', 'RESOLUTION_DIFFERENCE'],
+  );
+  assert.equal(result.entries[0].differences[0].path, 'source.id');
+});
+
+test('different dangling references differ while identical dangling references match', () => {
+  const expected = facts([], [callEdge('e', 'call', 'dangling', resolved('dangling'))]);
+  const same = facts([], [callEdge('a', 'call', 'dangling', resolved('dangling'))]);
+  const changed = facts([], [callEdge('a', 'call', 'other', resolved('other'))]);
+  assert.deepEqual(compareCanonicalFacts({ expected, actual: same }).entries[0].differences, []);
+  assert.deepEqual(
+    compareCanonicalFacts({ expected, actual: changed }).entries[0].differences.map(
+      ({ path }) => path,
+    ),
+    ['source.id', 'target.target.id'],
+  );
+});
+
+test('permutations produce byte-identical results and do not mutate inputs', () => {
+  const expected = facts(
+    [node('e-z', 'z'), node('e-a', 'a')],
+    [callEdge('e2', 'edge-z', 'e-z', resolved('e-a'))],
+  );
+  const actual = facts(
+    [node('a-x', 'x'), node('a-a', 'a')],
+    [callEdge('a2', 'edge-z', 'a-x', resolved('a-a'))],
+  );
+  const before = JSON.stringify({ expected, actual });
+  const first = JSON.stringify(compareCanonicalFacts({ expected, actual }));
+  const second = JSON.stringify(
+    compareCanonicalFacts({
+      expected: facts([...expected.nodes].reverse(), [...expected.edges].reverse()),
+      actual: facts([...actual.nodes].reverse(), [...actual.edges].reverse()),
+    }),
+  );
+  assert.equal(second, first);
+  assert.equal(JSON.stringify({ expected, actual }), before);
 });
