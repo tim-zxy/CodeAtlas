@@ -64,7 +64,11 @@ async function resolveArtifacts(
     try {
       target = await realpath(resolve(fixtureDirectory, ...path.split('/')));
       const info = await stat(target);
-      if (!isInside(fixtureDirectory, target) || (!info.isFile() && !info.isDirectory())) {
+      if (
+        !isInside(fixtureDirectory, target) ||
+        (!info.isFile() && !info.isDirectory()) ||
+        (path.endsWith('/') && !info.isDirectory())
+      ) {
         throw new FixtureRegistryError(
           'ARTIFACT_INVALID',
           manifestPath,

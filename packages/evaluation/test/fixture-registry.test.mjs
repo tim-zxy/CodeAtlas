@@ -110,6 +110,12 @@ test('missing artifact names the manifest and field', async (t) => {
   await expectError(root, 'ARTIFACT_INVALID', 'a/fixture.json', 'expected.nodes');
 });
 
+test('a trailing slash requires a directory artifact', async (t) => {
+  const root = await temporaryFixtureRoot(t);
+  await writeFixture(root, 'a', { ...valid, expected: { nodes: 'expected/nodes.json/' } });
+  await expectError(root, 'ARTIFACT_INVALID', 'a/fixture.json', 'expected.nodes');
+});
+
 test('lexical traversal and absolute paths fail before filesystem access', async (t) => {
   const root = await temporaryFixtureRoot(t);
   const directory = await writeFixture(root, 'a', {
