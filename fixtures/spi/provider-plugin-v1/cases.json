@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "fixtureId": "p0-provider-plugin-spi-v1",
+  "task": "P0-W4-001",
+  "governingSpecs": ["Provider SPI", "Plugin SPI"],
+  "acceptance": "Descriptors, capabilities, analysis contracts, plugin detection/extraction, and deterministic routing metadata",
+  "cases": [
+    "descriptor",
+    "analyze",
+    "refresh",
+    "cancellation",
+    "failed-terminal",
+    "invalid-event",
+    "coverage-diagnostic",
+    "unresolved-target",
+    "plugin-detection",
+    "plugin-extraction",
+    "provider-routing",
+    "plugin-routing"
+  ]
+}

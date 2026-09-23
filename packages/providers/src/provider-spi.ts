@@ -1,5 +1,19 @@
-import { ProviderIdSchema, ProviderVersionSchema } from '@codeatlas/ir';
+import {
+  IrValidationError,
+  JsonValueSchema,
+  ProviderIdSchema,
+  ProviderVersionSchema,
+  parseIr,
+} from '@codeatlas/ir';
 import { z } from 'zod';
+
+import {
+  NativeEventStreamSchema,
+  NativeRequestEnvelopeSchema,
+  type NativeEventEnvelope,
+  type NativeEventStream,
+  type NativeRequestEnvelope,
+} from './native-ipc.js';
 
 const ExactStringSchema = z
   .string()
@@ -42,3 +56,113 @@ export const ProviderDescriptorSchema = z.strictObject({
   capabilities: UniqueStringsSchema,
 });
 export type ProviderDescriptor = z.infer<typeof ProviderDescriptorSchema>;
+
+function envelopeSchema<TType extends 'ANALYZE' | 'REFRESH'>(type: TType) {
+  return z.custom<Extract<NativeRequestEnvelope, { type: TType }>>((value) => {
+    const result = NativeRequestEnvelopeSchema.safeParse(value);
+    return result.success && result.data.type === type;
+  });
+}
+
+export const FullAnalysisRequestSchema = z.strictObject({
+  envelope: envelopeSchema('ANALYZE'),
+  configuration: JsonValueSchema,
+  signal: z.custom<AbortSignal>((value) => value instanceof AbortSignal),
+});
+export type FullAnalysisRequest = z.infer<typeof FullAnalysisRequestSchema>;
+
+export const RefreshAnalysisRequestSchema = z.strictObject({
+  envelope: envelopeSchema('REFRESH'),
+  configuration: JsonValueSchema,
+  signal: z.custom<AbortSignal>((value) => value instanceof AbortSignal),
+});
+export type RefreshAnalysisRequest = z.infer<typeof RefreshAnalysisRequestSchema>;
+
+export interface CodeIntelligenceProvider {
+  describe(): Promise<ProviderDescriptor>;
+  analyze(request: FullAnalysisRequest): AsyncIterable<NativeEventEnvelope>;
+  refresh(request: RefreshAnalysisRequest): AsyncIterable<NativeEventEnvelope>;
+}
+
+export class ProviderContractError extends Error {
+  constructor(
+    readonly code: 'CANCELLED' | 'PROVIDER_FAILED',
+    message: string,
+  ) {
+    super(message);
+    this.name = 'ProviderContractError';
+  }
+}
+
+function cancelled(): ProviderContractError {
+  return new ProviderContractError('CANCELLED', 'Provider analysis was cancelled');
+}
+
+function nextOrAbort(
+  iterator: AsyncIterator<NativeEventEnvelope>,
+  signal: AbortSignal,
+): Promise<IteratorResult<NativeEventEnvelope>> {
+  if (signal.aborted) return Promise.reject(cancelled());
+  return new Promise((resolve, reject) => {
+    const onAbort = () => {
+      signal.removeEventListener('abort', onAbort);
+      void iterator.return?.().catch(() => undefined);
+      reject(cancelled());
+    };
+    signal.addEventListener('abort', onAbort, { once: true });
+    void iterator.next().then(
+      (value) => {
+        signal.removeEventListener('abort', onAbort);
+        resolve(value);
+      },
+      (error: unknown) => {
+        signal.removeEventListener('abort', onAbort);
+        reject(error);
+      },
+    );
+  });
+}
+
+export async function validateProviderStream(
+  request: FullAnalysisRequest | RefreshAnalysisRequest,
+  events: AsyncIterable<NativeEventEnvelope>,
+): Promise<NativeEventStream> {
+  const validatedRequest =
+    request.envelope?.type === 'ANALYZE'
+      ? parseIr(FullAnalysisRequestSchema, request)
+      : parseIr(RefreshAnalysisRequestSchema, request);
+  const { signal, envelope } = validatedRequest;
+  if (signal.aborted) throw cancelled();
+
+  const iterator = events[Symbol.asyncIterator]();
+  const collected: NativeEventEnvelope[] = [];
+  let complete = false;
+  try {
+    while (true) {
+      const next = await nextOrAbort(iterator, signal);
+      if (signal.aborted) throw cancelled();
+      if (next.done) break;
+      collected.push(next.value);
+      if (collected.length > envelope.payload.resourceBudget.maxEvents) {
+        throw new IrValidationError([
+          { path: ['events'], message: 'Event count exceeds the request budget' },
+        ]);
+      }
+    }
+    complete = true;
+  } finally {
+    if (!complete && !signal.aborted) await iterator.return?.();
+  }
+
+  const stream = parseIr(NativeEventStreamSchema, { request: envelope, events: collected });
+  if (signal.aborted) throw cancelled();
+  const terminal = stream.events.at(-1);
+  if (
+    terminal?.type === 'ANALYSIS_FAILED' ||
+    terminal?.type === 'REFRESH_FAILED' ||
+    terminal?.type === 'REQUEST_FAILED'
+  ) {
+    throw new ProviderContractError('PROVIDER_FAILED', 'Provider analysis failed');
+  }
+  return stream;
+}
