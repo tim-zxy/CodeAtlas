@@ -177,7 +177,8 @@ test('child environment contains only explicitly allowed values', async () => {
   const result = await runScenario('environment', {
     allowedEnvironment: { LANG: 'C', TEMP: 'native-temp' },
   });
-  assert.equal(result.stderr, 'LANG=C\nTEMP=native-temp\nPATH=<empty>\nLEAKED=<none>\n');
+  const pathState = process.platform === 'win32' ? '<empty>' : '<absent>';
+  assert.equal(result.stderr, `LANG=C\nTEMP=native-temp\nPATH=${pathState}\nLEAKED=<none>\n`);
 });
 
 test('stdin and stdout backpressure complete without deadlock', async () => {
