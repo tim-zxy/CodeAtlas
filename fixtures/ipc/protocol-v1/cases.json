@@ -19,7 +19,7 @@
       "requestFile": "analyze-java-basic-v1/request.jsonl",
       "eventsFile": "analyze-java-basic-v1/events.jsonl",
       "requestBytes": 706,
-      "eventsBytes": 2262,
+      "eventsBytes": 2314,
       "maxLineBytes": 8192,
       "expected": "VALID"
     },
@@ -28,7 +28,7 @@
       "requestFile": "refresh-modified-file-v1/request.jsonl",
       "eventsFile": "refresh-modified-file-v1/events.jsonl",
       "requestBytes": 816,
-      "eventsBytes": 2207,
+      "eventsBytes": 2253,
       "maxLineBytes": 8192,
       "expected": "VALID"
     },
@@ -37,7 +37,7 @@
       "requestFile": "refresh-delete-file-v1/request.jsonl",
       "eventsFile": "refresh-delete-file-v1/events.jsonl",
       "requestBytes": 652,
-      "eventsBytes": 1104,
+      "eventsBytes": 1152,
       "maxLineBytes": 8192,
       "expected": "VALID"
     },
@@ -46,7 +46,7 @@
       "requestFile": "partial-analysis-v1/request.jsonl",
       "eventsFile": "partial-analysis-v1/events.jsonl",
       "requestBytes": 706,
-      "eventsBytes": 1407,
+      "eventsBytes": 1453,
       "maxLineBytes": 8192,
       "expected": "VALID"
     },

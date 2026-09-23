@@ -22,6 +22,7 @@ const appNames = ['cli', 'mcp', 'daemon'];
 const expectedPackageDependencies = Object.fromEntries(packageNames.map((name) => [name, {}]));
 expectedPackageDependencies.ir = { zod: '4.6.1' };
 expectedPackageDependencies.providers = { '@codeatlas/ir': 'workspace:*', zod: '4.6.1' };
+expectedPackageDependencies.plugins = { '@codeatlas/ir': 'workspace:*', zod: '4.6.1' };
 const expectedAppDependencies = {
   cli: { '@codeatlas/runtime': 'workspace:*' },
   daemon: {},
@@ -76,7 +77,15 @@ for (const name of packageNames) {
     } else if (name === 'storage') {
       assert.equal(source, "export * from './migrations/index.js';\n");
     } else if (name === 'providers') {
-      assert.equal(source, "export * from './native-ipc.js';\n");
+      assert.equal(
+        source,
+        "export * from './native-client.js';\nexport * from './native-ipc.js';\nexport * from './provider-routing.js';\nexport * from './provider-spi.js';\n",
+      );
+    } else if (name === 'plugins') {
+      assert.equal(
+        source,
+        "export * from './plugin-routing.js';\nexport * from './plugin-spi.js';\n",
+      );
     } else {
       assert.equal(source, 'export {};\n');
     }
@@ -136,6 +145,10 @@ test('workspace scripts expose and compose the architecture dependency gate', as
   );
   assert.match(manifest.scripts.test, /packages\/providers\/test\/native-ipc\.test\.mjs/);
   assert.match(manifest.scripts.test, /packages\/providers\/test\/native-ipc-bytes\.test\.mjs/);
+  assert.match(manifest.scripts.test, /packages\/providers\/test\/provider-routing\.test\.mjs/);
+  assert.match(manifest.scripts.test, /packages\/providers\/test\/provider-spi\.test\.mjs/);
+  assert.match(manifest.scripts.test, /packages\/plugins\/test\/plugin-routing\.test\.mjs/);
+  assert.match(manifest.scripts.test, /packages\/plugins\/test\/plugin-spi\.test\.mjs/);
   assert.match(manifest.scripts.verify, /pnpm architecture:check/);
   assert.ok(
     manifest.scripts.verify.indexOf('cargo build --workspace') <
