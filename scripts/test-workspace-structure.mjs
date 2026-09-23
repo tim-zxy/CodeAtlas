@@ -23,6 +23,7 @@ const expectedPackageDependencies = Object.fromEntries(packageNames.map((name) =
 expectedPackageDependencies.ir = { zod: '4.6.1' };
 expectedPackageDependencies.providers = { '@codeatlas/ir': 'workspace:*', zod: '4.6.1' };
 expectedPackageDependencies.plugins = { '@codeatlas/ir': 'workspace:*', zod: '4.6.1' };
+expectedPackageDependencies.evaluation = { '@codeatlas/ir': 'workspace:*' };
 const expectedAppDependencies = {
   cli: { '@codeatlas/runtime': 'workspace:*' },
   daemon: {},
@@ -89,7 +90,7 @@ for (const name of packageNames) {
     } else if (name === 'evaluation') {
       assert.equal(
         source,
-        "export * from './fixture-error.js';\nexport * from './fixture-manifest.js';\nexport * from './fixture-registry.js';\n",
+        "export * from './canonical-comparator.js';\nexport * from './comparator-error.js';\nexport * from './fixture-error.js';\nexport * from './fixture-manifest.js';\nexport * from './fixture-registry.js';\n",
       );
     } else {
       assert.equal(source, 'export {};\n');
@@ -156,6 +157,10 @@ test('workspace scripts expose and compose the architecture dependency gate', as
   assert.match(manifest.scripts.test, /packages\/plugins\/test\/plugin-spi\.test\.mjs/);
   assert.match(manifest.scripts.test, /packages\/evaluation\/test\/fixture-manifest\.test\.mjs/);
   assert.match(manifest.scripts.test, /packages\/evaluation\/test\/fixture-registry\.test\.mjs/);
+  assert.match(
+    manifest.scripts.test,
+    /packages\/evaluation\/test\/canonical-comparator\.test\.mjs/,
+  );
   assert.match(manifest.scripts.verify, /pnpm architecture:check/);
   assert.ok(
     manifest.scripts.verify.indexOf('cargo build --workspace') <

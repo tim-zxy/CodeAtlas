@@ -42,7 +42,11 @@ importers:
 
   packages/documents: {}
 
-  packages/evaluation: {}
+  packages/evaluation:
+    dependencies:
+      '@codeatlas/ir':
+        specifier: workspace:*
+        version: link:../ir
 
   packages/execution: {}
 

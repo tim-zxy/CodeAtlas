@@ -40,7 +40,9 @@ Incremental fixtures contain baseline, modified, declared changes, and expected 
 
 ## Comparator and reports
 
-Canonical comparison classifies missing, extra, semantic difference, and resolution difference. Reports include fixture/schema versions, provider/runtime versions, raw counts, metrics, critical failures, coverage exclusions, duration, and resource use. Baseline changes are reviewed artifacts, never silently regenerated.
+P0-W9-002 provides a pure, in-memory comparison of expected and actual Canonical Code IR node/edge arrays. Both sides are validated with the strict IR schemas; duplicate Canonical IDs, per-type FactKeys, or sparse array slots fail atomically with an input field path. Same-type facts pair by FactKey first, then by unique Canonical ID among the remainder. No similarity matching occurs. Unpaired expected facts are `MISSING`; unpaired actual facts are `EXTRA`. For a paired fact, changed non-target canonical payload fields are `SEMANTIC_DIFFERENCE`, while an edge target's state, resolution, resolved reference, hint, or ordered candidates produce `RESOLUTION_DIFFERENCE`. Both classes may occur on one pair. A different opaque ID on a FactKey match is not itself a difference; edge references to paired nodes compare through the established mapping even when literal IDs coincide, and literal equality applies only when neither reference names a paired node. The comparator does not resolve an unresolved target. The result includes unchanged pairs, changed pairs with field paths, and unmatched facts in deterministic order, allowing P0-W9-003 to count each pair once. The declared `p0-canonical-comparator-v1` Fixture at `fixtures/evaluation/comparator-v1/fixture.json` exercises all four classes.
+
+P0-W9-003 owns precision/recall, critical-fact recall, quality-gate evaluation, the eval CLI, and machine-readable reports. Those reports include fixture/schema versions, provider/runtime versions, raw counts, metrics, critical failures, coverage exclusions, duration, and resource use. Baseline changes are reviewed artifacts, never silently regenerated.
 
 ## Reference strategy
 

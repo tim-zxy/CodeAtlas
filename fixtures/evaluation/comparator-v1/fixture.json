@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "p0-canonical-comparator-v1",
+  "category": "code-intelligence",
+  "phase": "0",
+  "languages": [],
+  "frameworks": [],
+  "capabilities": [],
+  "inputs": { "actual": "actual.json" },
+  "expected": { "canonical": "expected.json" },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

@@ -168,8 +168,7 @@ test('directory symlink cycle does not cause recursive discovery', async (t) => 
 test('committed registry Fixture is discoverable', async () => {
   const root = resolve('fixtures/evaluation');
   const found = await discoverFixtures(root);
-  assert.deepEqual(
-    found.map((entry) => entry.manifest.id),
-    ['p0-fixture-registry-v1'],
-  );
+  const fixture = found.find(({ manifest }) => manifest.id === 'p0-fixture-registry-v1');
+  assert.ok(fixture);
+  assert.equal(fixture.manifestPath, 'registry-v1/fixture.json');
 });
