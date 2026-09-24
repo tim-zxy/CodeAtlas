@@ -24,7 +24,7 @@ Phase 0 explicitly does not require Java parsing.
 
 ## Phase 0.5 exit
 
-- [ ] A Java repository is scanned with ignore, generated/vendor/test, binary, and include/exclude handling.
+- [x] A Java repository is scanned with ignore, generated/vendor/test, binary, and include/exclude handling (P05-W2-001; three declared Source Fixtures and reproducible commands in `CURRENT_STATUS.md`).
 - [ ] Native analysis emits symbols, imports, direct calls, inheritance, references, diagnostics, and coverage through IPC v1.
 - [ ] Java extraction is behind a `LanguageAnalyzer` boundary; framework interpretation is absent from the language adapter.
 - [ ] Provider facts normalize into canonical facts while unresolved targets remain unresolved.

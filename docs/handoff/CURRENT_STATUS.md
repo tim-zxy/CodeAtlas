@@ -7,21 +7,21 @@
 - Primary handoff entry: `ENGINEERING_HANDOFF.md`.
 - Compatibility entry: `CODEX_HANDOFF.md`.
 - Implementation repository: all 18 Phase 0 tasks and the documentation-only Phase 0 exit record are integrated on remote `main`. PR #6 merged P0-W9-003 at `9f4ec958c1f18ea13623fb7cf5703e0c1efe3b4c`; PR #7 merged the Phase 0 closeout at `71dd18ce58e89b489336fc942bfdac4b36cc024b`. Hosted CI for the closeout merge passed. Phase 0 is closed; the prior closeout-pending language below is historical evidence, not current state.
-- Active implementation phase: Phase 0.5 design preparation. P05-W2-001 written design at `393b3c296ad18e3271886533925255c5dc488f7f` and the 2026-09-24 compatibility amendment at `a47991379bd503cdc653065a304c43235dbd7ab9` were approved by the user; the P05-W2-001 implementation plan is awaiting review and execution-method selection. No Phase 0.5 product code or executable P05 Fixture has been added.
+- Active implementation phase: Phase 0.5. The user approved the compatibility amendment, P05-W2-001 written design, and native execution of the implementation plan. P05-W2-001 is implemented and locally accepted on branch `codex/p05-w2-001-repository-discovery`; its code evidence reaches `fc400d31feb0bf2e143703d676ddf5fad0ddab72`. Hosted CI and integration into `main` have not yet been observed.
 
 ## Phase readiness
 
 | Phase | Readiness | Implementation progress |
 |---|---|---|
 | 0 | IMPLEMENTATION-READY | 18 of 18 tasks integrated; 11 of 11 technical exit checks passed on `9f4ec95`; documentation closeout merged as PR #7 at `71dd18c` |
-| 0.5 | IMPLEMENTATION-READY | 0 percent; first-task written design and compatibility amendment approved; implementation plan review and execution-method selection remain before coding |
+| 0.5 | IMPLEMENTATION-READY | 1 of 14 tasks locally accepted (P05-W2-001); the other 13 tasks and Phase 0.5 exit gates remain open |
 | 1 | DESIGN-READY | 0 percent |
 | 2 | ARCHITECTURE-READY | 0 percent |
 | 3 | ROADMAP/ARCHITECTURE-READY | 0 percent |
 
 ## Next action
 
-Review the P05-W2-001 implementation plan and select an execution method before product-code work. The 2026-09-24 Design Amendment Report and P05-W2-001 written design are user-approved. P05-W2-001 remains Git-only; non-Git directory support is a later separately reviewed adapter. Do not treat Phase 0 evaluator Fixture thresholds as Phase 0.5 quality thresholds or advance deferred capabilities.
+Review/integrate the P05-W2-001 branch and observe hosted CI; then prepare P05-W2-002 file/worktree fingerprints under its existing dependency and acceptance mapping. P05-W2-001 remains Git-only; non-Git directory support is a later separately reviewed adapter. Do not promote Phase 0.5 from this one task or advance deferred capabilities.
 
 ## 2026-09-24 compatibility amendment evidence
 
@@ -30,6 +30,18 @@ Review the P05-W2-001 implementation plan and select an execution method before 
 - Documentation scope: Native resource/outcome/Worker Consistency requirements are mapped to existing P05 tasks; KnowledgeCandidate degradation, System Wiki, Diagram, and progressive Agent consumption are phase-gated. No product code, executable P05 Fixture, migration, Canonical IR/IPC contract, numeric threshold, or Phase 4 was introduced by this amendment. Hosted CI for this documentation change has not yet been observed.
 
 ## Active task evidence
+
+### P05-W2-001 Repository discovery and source scanning
+
+- Status: locally accepted on 2026-09-24; not yet integrated into `main`, and hosted CI has not been observed. This checks only the repository-scanning item of Phase 0.5 exit, not the Phase 0.5 phase as a whole.
+- Implementation commits: `ba53a9a` (Git context), `b75d676` (policy/Git ignore), `bb2e977` (walker/classifier), `22e817b` (atomic public scan), and `fc400d3` (review fixes). Approved design/plan precede these commits. The final status/traceability commit is documentation-only.
+- Governing design: `docs/superpowers/specs/2026-09-24-p05-w2-001-repository-discovery-design.md`, `docs/superpowers/plans/2026-09-24-p05-w2-001-repository-discovery.md`; `docs/handoff/specs/RUNTIME_CONFIGURATION.md`, `CANONICAL_IR.md`, `SECURITY.md`, and `EVALUATION.md`; ADR-001, ADR-002, and ADR-012. The `DESIGN_TRACEABILITY.md` P05-W2-001 row maps these to the first Phase 0.5 scanning acceptance gate.
+- Fixture evidence: registry-discovered `basic-java-repo`, `gitignore`, and `generated-vendor` at `fixtures/source/*/fixture.json`, each with pinned `setup.json` and exact `expected.json`. `node --test packages/source/test/git.test.mjs packages/source/test/path-policy.test.mjs packages/source/test/walk-classify.test.mjs packages/source/test/source-scan.test.mjs` passed 23/23. The full-scan test compares sorted paths and every language/role/provenance/content dimension, independently observes branch/HEAD, and covers an external-workspace repository. Focused tests cover unborn/detached Git, ignored-descendant re-inclusion, security/exclusion precedence, NUL-delimited ignore names, symlink skipping, disappearing files, and failure atomicity.
+- Full Node evidence after the final review fixes: all 511 fileset tests named by root `package.json` passed 511/511 with `node --test --test-concurrency=1` and `packages/providers/test/native-client.test.mjs` ordered first; the PowerShell reproduction is `$files = (((Get-Content package.json -Raw | ConvertFrom-Json).scripts.test -split 'node --test ')[1] -split ' '); $native = 'packages/providers/test/native-client.test.mjs'; $ordered = @($native) + @($files | Where-Object { $_ -ne $native }); node --test --test-concurrency=1 @ordered`. The original default-concurrency run and a serial run in original file order intermittently timed out in the unchanged Native Client tests; that file separately passed 19/19. No timeout or Quality Gate was weakened.
+- Build/guardrail evidence: direct local TypeScript compilation passed for all 16 projects plus IR type tests; `node scripts/check-architecture.mjs` passed for 17 projects; `cargo fmt --all --check`, `cargo build --workspace`, `cargo clippy --workspace --all-targets -- -D warnings`, and `cargo test --workspace` passed (5 unit, 1 handshake, 4 protocol-Fixture, and 5 smoke Rust tests). `node --test packages/providers/test/native-client-binary.test.mjs packages/providers/test/native-handshake.test.mjs` passed 6/6. `node_modules/.bin/prettier.cmd --check .` passed after the documentation update, as did `git -c core.safecrlf=false diff --check`.
+- Package-manager caveat: the current desktop pnpm wrapper attempts a registry install and interactive `node_modules` purge before running `pnpm test`/`pnpm verify`; network is unavailable, so those exact aggregate commands were not claimed as passed. Direct installed binaries were used for equivalent checks. The source package now declares the approved `source -> ir` dependency; a worktree-local ignored junction supplies it until a clean installation recreates workspace links. Hosted CI remains the authoritative clean-install check.
+- Failure/recovery and scope: typed non-Git/invalid-input/Git/read/change errors expose no partial inventory; external `GIT_*` environment cannot redirect Git discovery; no Canonical SQLite, graph activation, migration, IR/IPC schema change, content fingerprint, Revision, CLI, non-Git adapter, framework plugin, or DEFERRED capability was introduced. No numeric Phase 0.5 Quality Gate was added. On Windows, newline-containing Git names are checked at the NUL decoder boundary because the filesystem cannot create such names; POSIX runs the real-name case.
+- Review: native inline execution used a whole-branch self-review because subagent dispatch was not authorized. The two Important findings (Git environment contamination and sparse-pattern validation) were reproduced RED and fixed GREEN; independent pre-merge review remains advisable. Next dependency-valid task after integration is P05-W2-002; the remaining Phase 0.5 tasks and phase promotion are not claimed complete.
 
 ### P0-W0-001 Monorepo bootstrap
 
