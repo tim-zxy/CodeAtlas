@@ -6,22 +6,22 @@
 - Handoff assembly: refreshed as the agent-neutral Engineering Handoff Pack.
 - Primary handoff entry: `ENGINEERING_HANDOFF.md`.
 - Compatibility entry: `CODEX_HANDOFF.md`.
-- Implementation repository: the Phase 0 chain through P0-W9-002 is integrated on remote `main`; PR #5's comparator-evidence follow-up is also merged at `e706fb3`. P0-W9-003 is locally implemented on `codex/p0-w9-003-metric-eval` and awaits review/integration.
-- Active implementation phase: Phase 0.
+- Implementation repository: all 18 Phase 0 tasks are integrated on remote `main`; PR #6 merged P0-W9-003 at `9f4ec958c1f18ea13623fb7cf5703e0c1efe3b4c` on 2026-09-24. The exact merge commit passed hosted TypeScript and Rust CI. The Phase 0 exit evidence and checklist are updated in this documentation-only closeout branch; their integration into `main` remains the formal promotion condition.
+- Active implementation phase: Phase 0.5 design preparation only. Product-code implementation waits for this closeout's integration and an approved first-task design/plan.
 
 ## Phase readiness
 
 | Phase | Readiness | Implementation progress |
 |---|---|---|
-| 0 | IMPLEMENTATION-READY | 17 of 18 tasks integrated through P0-W9-002; P0-W9-003 is locally verified, not yet integrated |
-| 0.5 | IMPLEMENTATION-READY | 0 percent |
+| 0 | IMPLEMENTATION-READY | 18 of 18 tasks integrated; 11 of 11 technical exit checks passed on merge commit `9f4ec95`; documentation closeout awaits integration |
+| 0.5 | IMPLEMENTATION-READY | 0 percent; first-task design preparation may proceed, implementation waits for Phase 0 closeout integration and reviewed design/plan |
 | 1 | DESIGN-READY | 0 percent |
 | 2 | ARCHITECTURE-READY | 0 percent |
 | 3 | ROADMAP/ARCHITECTURE-READY | 0 percent |
 
 ## Next action
 
-Complete P0-W9-003's review closeout and obtain hosted CI evidence before integration. Do not claim the Phase 0 exit gate before all Phase 0 acceptance checks are verified on the integrated result.
+Integrate this documentation-only Phase 0 exit record and its checked acceptance list into `main`, then begin P05-W2-001 Repository discovery and source scanning under an approved task design and implementation plan. Do not treat Phase 0's evaluator Fixture thresholds as Phase 0.5 quality thresholds.
 
 ## Active task evidence
 
@@ -302,3 +302,27 @@ Complete P0-W9-003's review closeout and obtain hosted CI evidence before integr
 - Failure and recovery: process tests prove a failed or not-evaluable gate still yields a complete JSON report and exit 1; no gates are declared explicitly and successful evaluation exits 0 without claiming a threshold. Zero/multiple Fixtures, missing/wrong-type artifacts, malformed/wrong-shape JSON, unknown gates, and wrong CLI usage return exit 2 with no partial stdout or source-payload echo. Inputs and expected baselines are read-only; no Canonical State or published knowledge is created or mutated.
 - Contract, dependency, and deferred impact: evaluation gains pure metric and gate exports, a root developer script, and the golden Fixture. The registry's v1 critical-declaration uniqueness is clarified compatibly to `(type, id)` by the review correction below; the comparator, Canonical IR schema, SQLite schema/migrations, Provider SPI, Native IPC, production CLI, and dependency graph remain unchanged. No new third-party dependency, provider execution, Java parser, semantic judge, runtime/knowledge metric, baseline regeneration, or Phase 1+ behavior is added. The Evaluation specification and traceability row are synchronized. Hosted CI and integration remain the next evidence before Phase 0 exit.
 - Independent-review correction: whole-branch review reproduced that a valid NODE and EDGE may share a FactKey, while the pre-existing registry rejected their second critical declaration as a duplicate `id` before the scorer could apply its `(type, FactKey)` identity. A registry regression and a real CLI regression both failed first on `criticalFacts.1.id`; after changing uniqueness to `(type, id)`, both passed while same-type duplicates remain rejected. The focused manifest and CLI suites passed 35/35. The governing Evaluation specification, approved design, plan, and traceability row now state the typed identity explicitly; this backward-compatible validation correction adds no schema version, migration, threshold, or baseline change. A fresh post-correction `pnpm verify` passed Prettier, all 16 TypeScript builds, IR types, 488/488 root Node tests, the 17-project architecture check, Rust formatting/build/Clippy with warnings denied, real-binary Native client 2/2, Native handshake 4/4, and Rust workspace tests (5 unit, 1 handshake, 4 shared-protocol Fixture, 5 smoke) using the same three documented Windows pnpm overrides. No Critical or Minor finding remained in the independent review; no second review was dispatched after the RED→GREEN correction.
+
+## 2026-09-24 Phase 0 integrated exit audit
+
+- Integration baseline: [PR #6](https://github.com/tim-zxy/CodeAtlas/pull/6) merged P0-W9-003 into remote `main` at exact SHA `9f4ec958c1f18ea13623fb7cf5703e0c1efe3b4c` on 2026-09-24. The previous P0-W9-003 section describes its earlier local checkpoint, not its final integration status. `git rev-parse HEAD` and `git rev-parse origin/main` both returned that SHA in the closeout worktree before this documentation-only change.
+- Hosted evidence: [GitHub Actions run 35940263204](https://github.com/tim-zxy/CodeAtlas/actions/runs/35940263204) succeeded for the exact merge SHA. Its TypeScript workspace job passed install, formatting, build, tests, and architecture dependencies; its Rust workspace job passed toolchain check, formatting, build, Clippy, and tests. The P0-W9-003 PR's push and pull-request checks were also successful before merge.
+- Reproducible local command: from repository root, set `pnpm_config_verify_deps_before_run=error`, `pnpm_config_update_notifier=false`, and `pnpm_config_enable_global_virtual_store=false` for this Windows dependency layout, then run `pnpm verify`. On the exact merge tree it exited `0`: Prettier, 16 TypeScript workspace builds, IR brand types, 488/488 Node tests with no failures or skips, the 17-project architecture check, Rust formatting/build/Clippy with warnings denied, real-binary Native client 2/2, Native handshake 4/4, and Rust tests (5 unit, 1 handshake, 4 shared-protocol Fixture, 5 smoke). Clean hosted CI used its normal install.
+- Direct Evaluation command: `pnpm ekp-dev eval fixtures/evaluation/metrics-v1` exited `0` with Fixture `p0-metric-engine-v1`, `overall: PASS`, six of six declared metric gates passing, and NODE/EDGE/CRITICAL TP/FP/FN counts of `1/2/2`, `0/2/1`, and `1/2/2` respectively. The Fixture's demonstration thresholds are not Phase 0.5 quality thresholds.
+
+| Phase 0 exit check | Task and governing specification from `DESIGN_TRACEABILITY.md` | Fixture/check and result on the integrated tree |
+| --- | --- | --- |
+| Monorepo TypeScript and Rust CI | P0-W0-001; Module Boundaries | `pnpm verify` and exact-SHA hosted CI: both language jobs pass. |
+| Forbidden dependency guardrails | P0-W0-002; Module Boundaries | `scripts/test-architecture-rules.mjs` injected failures pass; `pnpm architecture:check` passes 17 projects. |
+| Common, source, code, evidence, envelope round-trips | P0-W1-001..004; Canonical IR, ADR-002, ADR-006 | `p0-common-ir-v1`, `p0-source-revision-ir-v1`, `p0-code-fact-ir-v1`, `p0-evidence-ir-v1`; IR runtime/type tests in `pnpm verify` pass. |
+| Fresh repository and workspace schema | P0-W1-006..007; SQLite Schema, ADR-003/011 | `p0-repository-schema-v1` and `p0-workspace-schema-v1`; fresh/sequential schema tests in `pnpm verify` pass. |
+| Sequential upgrade, rollback, idempotence, lock, checksum, too-new | P0-W1-005; SQLite Schema, ADR-003/011/012 | `p0-migration-runner-v1` with empty/upgrade/failure/too-new scenarios; migration tests in `pnpm verify` pass. |
+| IPC v1 schemas and TS/Rust shared bytes | P0-W3-001..002; Native IPC, ADR-010/012 | `p0-native-ipc-schema-v1`, `p0-native-ipc-protocol-bytes-v1`; TypeScript and Rust Fixture tests pass. |
+| Language-neutral DESCRIBE and stdout/stderr separation | P0-W3-003; Native IPC, Provider SPI, ADR-014 | `p0-native-ipc-handshake-v1`; real-binary process and descriptor tests pass. |
+| Rust/TypeScript compatible version handshake | P0-W3-003..004; Native IPC, Security, ADR-010/014 | `p0-native-ipc-handshake-v1`, `p0-native-client-v1`; real-binary handshake and client tests pass. |
+| Fixture registry discovery/validation | P0-W9-001; Evaluation, ADR-012 | `p0-fixture-registry-v1`; manifest and registry tests in `pnpm verify` pass. |
+| Four comparator classifications | P0-W9-002; Evaluation, Canonical IR, ADR-002/012 | `p0-canonical-comparator-v1`; comparator tests in `pnpm verify` pass. |
+| Node, edge, critical precision/recall | P0-W9-003; Evaluation, ADR-012 | `p0-metric-engine-v1`; metric/gate/CLI tests pass; direct Evaluation reports six passing gates. |
+
+- Phase boundary and governance: these are the 11 mandatory Phase 0 technical exit checks in `PHASE_ACCEPTANCE.md`; Java parsing is not required for Phase 0. No Phase 0.5 parser, framework Plugin, Canonical Fact activation, Knowledge publication, LLM, vector index, daemon, or other Deferred capability is claimed by this audit. Existing ADRs, specifications, Fixture baselines, schemas, and migrations are unchanged. This closeout updates only evidence and the acceptance checklist. Formal Phase 0.5 promotion waits for this documentation-only closeout to reach `main`.
+- Next task after closeout integration: P05-W2-001 Repository discovery and source scanning. Phase 0.5 has an implementation-ready task breakdown and traceability row but no executable P05 Fixture yet; review its task design and three declared Fixtures before product-code implementation. Product CLI integration remains P05-W8-001, not part of the scanner task.

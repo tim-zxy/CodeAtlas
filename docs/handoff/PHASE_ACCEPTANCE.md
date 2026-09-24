@@ -8,17 +8,17 @@ For Phase 0 and Phase 0.5, each result must also name the corresponding task and
 
 ## Phase 0 exit
 
-- [ ] Monorepo TypeScript packages and Rust crate build and test in CI.
-- [ ] Dependency guardrails reject forbidden imports.
-- [ ] Canonical common, source, code, evidence, and envelope schemas round-trip.
-- [ ] Fresh repository and workspace databases migrate to the current Phase 0 schema.
-- [ ] Sequential upgrade, rollback-on-failure, idempotence, lock, checksum, and `DATABASE_TOO_NEW` cases pass.
-- [ ] Native IPC v1 schemas and shared fixtures pass in TypeScript and Rust.
-- [ ] `DESCRIBE` can express language/capability metadata without binding the Provider contract to Java; stdout remains protocol-only and stderr carries logs.
-- [ ] Rust `DESCRIBE` and TypeScript handshake negotiate compatible protocol and IR versions.
-- [ ] Fixture registry discovers and validates manifests.
-- [ ] Comparator reports missing, extra, semantic, and resolution differences.
-- [ ] Metrics engine calculates node, edge, and critical-fact precision/recall.
+- [x] Monorepo TypeScript packages and Rust crate build and test in CI.
+- [x] Dependency guardrails reject forbidden imports.
+- [x] Canonical common, source, code, evidence, and envelope schemas round-trip.
+- [x] Fresh repository and workspace databases migrate to the current Phase 0 schema.
+- [x] Sequential upgrade, rollback-on-failure, idempotence, lock, checksum, and `DATABASE_TOO_NEW` cases pass.
+- [x] Native IPC v1 schemas and shared fixtures pass in TypeScript and Rust.
+- [x] `DESCRIBE` can express language/capability metadata without binding the Provider contract to Java; stdout remains protocol-only and stderr carries logs.
+- [x] Rust `DESCRIBE` and TypeScript handshake negotiate compatible protocol and IR versions.
+- [x] Fixture registry discovers and validates manifests.
+- [x] Comparator reports missing, extra, semantic, and resolution differences.
+- [x] Metrics engine calculates node, edge, and critical-fact precision/recall.
 
 Phase 0 explicitly does not require Java parsing.
 
