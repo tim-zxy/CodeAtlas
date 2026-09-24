@@ -36,7 +36,14 @@ importers:
 
   packages/agent-api: {}
 
-  packages/application: {}
+  packages/application:
+    dependencies:
+      '@codeatlas/ir':
+        specifier: workspace:*
+        version: link:../ir
+      '@codeatlas/source':
+        specifier: workspace:*
+        version: link:../source
 
   packages/contracts: {}
 

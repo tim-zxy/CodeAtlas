@@ -1,0 +1,5 @@
+{
+  "initialChangedPaths": ["src/Keep.java", "src/Remove.java"],
+  "afterEditsChangedPaths": ["src/Add.java", "src/Keep.java", "src/Remove.java"],
+  "afterReaddChangedPaths": ["src/Remove.java"]
+}

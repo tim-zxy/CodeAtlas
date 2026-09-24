@@ -25,6 +25,11 @@ expectedPackageDependencies.providers = { '@codeatlas/ir': 'workspace:*', zod: '
 expectedPackageDependencies.plugins = { '@codeatlas/ir': 'workspace:*', zod: '4.6.1' };
 expectedPackageDependencies.evaluation = { '@codeatlas/ir': 'workspace:*' };
 expectedPackageDependencies.source = { '@codeatlas/ir': 'workspace:*' };
+expectedPackageDependencies.storage = { '@codeatlas/ir': 'workspace:*' };
+expectedPackageDependencies.application = {
+  '@codeatlas/ir': 'workspace:*',
+  '@codeatlas/source': 'workspace:*',
+};
 const expectedAppDependencies = {
   cli: { '@codeatlas/runtime': 'workspace:*' },
   daemon: {},
@@ -77,7 +82,12 @@ for (const name of packageNames) {
       assert.match(source, /SourceRangeSchema/);
       assert.match(source, /parseSchemaEnvelope/);
     } else if (name === 'storage') {
-      assert.equal(source, "export * from './migrations/index.js';\n");
+      assert.equal(
+        source,
+        "export * from './migrations/index.js';\nexport * from './source-state/index.js';\n",
+      );
+    } else if (name === 'application') {
+      assert.match(source, /reconcileGitWorktree/);
     } else if (name === 'providers') {
       assert.equal(
         source,

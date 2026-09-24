@@ -70,7 +70,7 @@ function validateState(state: StoredWorktreeState): StoredWorktreeState {
       ids.add(file.id);
       paths.add(file.path);
     }
-    files.sort((left, right) => left.path.localeCompare(right.path, 'en'));
+    files.sort((left, right) => (left.path < right.path ? -1 : left.path > right.path ? 1 : 0));
     return { revision, files };
   } catch {
     return invalid();

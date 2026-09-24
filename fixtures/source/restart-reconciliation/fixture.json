@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "restart-reconciliation",
+  "category": "code-intelligence",
+  "phase": "0.5",
+  "languages": ["java"],
+  "frameworks": [],
+  "capabilities": ["SOURCE_FINGERPRINT"],
+  "inputs": { "setup": "setup.json" },
+  "expected": { "changes": "expected.json" },
+  "criticalFacts": [],
+  "qualityGates": {}
+}
