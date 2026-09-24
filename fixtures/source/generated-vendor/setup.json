@@ -1,0 +1,13 @@
+{
+  "branch": "main",
+  "commit": true,
+  "files": [
+    { "path": "src/main/java/Main.java", "text": "class Main {}\n" },
+    { "path": "src/test/java/MainTest.java", "text": "class MainTest {}\n" },
+    { "path": "build/generated/test/TestGenerated.java", "text": "class TestGenerated {}\n" },
+    { "path": "vendor/lib/Other.java", "text": "class Other {}\n" },
+    { "path": "docs/readme.md", "text": "# Readme\n" },
+    { "path": "assets/blob.bin", "base64": "AAECAw==" }
+  ],
+  "config": { "include": ["build/generated/**", "vendor/**"], "exclude": [] }
+}
