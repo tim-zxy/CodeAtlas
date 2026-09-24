@@ -3,6 +3,7 @@ import { open, lstat } from 'node:fs/promises';
 import type { RepositoryRelativePath } from '@codeatlas/ir';
 
 import { SourceScanError } from './errors.js';
+import { assertSameAncestors, safeAncestors } from './path-safety.js';
 import type { ScannedFile } from './types.js';
 
 const sampleBytes = 8_192;
@@ -64,6 +65,7 @@ export async function classifyFile(
   path: RepositoryRelativePath,
 ): Promise<Pick<ScannedFile, 'languageHint' | 'classification'>> {
   try {
+    const ancestors = await safeAncestors(absolutePath, path);
     const before = await lstat(absolutePath);
     if (!before.isFile() || before.isSymbolicLink()) {
       throw new SourceScanError('SOURCE_CHANGED', 'Source entry changed during classification');
@@ -71,6 +73,7 @@ export async function classifyFile(
     const handle = await open(absolutePath, 'r');
     let sample: Buffer;
     try {
+      await assertSameAncestors(absolutePath, path, ancestors);
       const opened = await handle.stat();
       if (!sameFile(before, opened)) {
         throw new SourceScanError('SOURCE_CHANGED', 'Source entry changed during classification');
@@ -78,6 +81,7 @@ export async function classifyFile(
       const buffer = Buffer.alloc(sampleBytes);
       const { bytesRead } = await handle.read(buffer, 0, sampleBytes, 0);
       sample = buffer.subarray(0, bytesRead);
+      await assertSameAncestors(absolutePath, path, ancestors);
     } finally {
       await handle.close();
     }
@@ -85,6 +89,7 @@ export async function classifyFile(
     if (!sameFile(before, after)) {
       throw new SourceScanError('SOURCE_CHANGED', 'Source entry changed during classification');
     }
+    await assertSameAncestors(absolutePath, path, ancestors);
     return classifySample(path, sample, before.size);
   } catch (error) {
     if (error instanceof SourceScanError) throw error;

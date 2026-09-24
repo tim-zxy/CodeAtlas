@@ -8,6 +8,7 @@ import type { ContentFingerprint, RepositoryRelativePath } from '@codeatlas/ir';
 import { classifySample } from './classify.js';
 import { SourceScanError } from './errors.js';
 import { discoverGitContext } from './git.js';
+import { assertSameAncestors, safeAncestors } from './path-safety.js';
 import { scanGitRepository } from './scan.js';
 import type { ObservedFile, ObservedWorktree, ScannedFile, SourceScanRequest } from './types.js';
 
@@ -43,6 +44,7 @@ export async function fingerprintFile(
   Pick<ObservedFile, 'contentFingerprint' | 'sizeBytes' | 'classification' | 'languageHint'>
 > {
   try {
+    const ancestors = await safeAncestors(absolutePath, path);
     const before = await lstat(absolutePath);
     if (!before.isFile() || before.isSymbolicLink()) throw sourceChanged();
     const handle = await open(absolutePath, 'r');
@@ -51,6 +53,7 @@ export async function fingerprintFile(
     const sample = Buffer.alloc(sampleBytes);
     let sampleLength = 0;
     try {
+      await assertSameAncestors(absolutePath, path, ancestors);
       if (!sameFile(before, await handle.stat())) throw sourceChanged();
       const hash = createHash('sha256');
       const buffer = Buffer.alloc(readBufferBytes);
@@ -68,11 +71,13 @@ export async function fingerprintFile(
       }
       if (!sameFile(before, await handle.stat()) || sizeBytes !== before.size)
         throw sourceChanged();
+      await assertSameAncestors(absolutePath, path, ancestors);
       digest = hash.digest('hex');
     } finally {
       await handle.close();
     }
     if (!sameFile(before, await lstat(absolutePath))) throw sourceChanged();
+    await assertSameAncestors(absolutePath, path, ancestors);
     return {
       ...classifySample(path, sample.subarray(0, sampleLength), sizeBytes),
       contentFingerprint: ContentFingerprintSchema.parse(`sha256:${digest}`),

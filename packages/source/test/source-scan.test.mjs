@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { mkdtemp, mkdir, readFile, rm } from 'node:fs/promises';
+import { mkdtemp, mkdir, readFile, rename, rm, symlink } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
@@ -150,4 +150,42 @@ test('internal dependency seam uses the same real components as the public entry
       classifyFile,
     });
     assert.deepEqual(actual, expected);
+  }));
+
+test('classification rejects a selected ancestor redirected into a denied directory', async () =>
+  inDirectory(async (base) => {
+    const repo = await materialize(
+      {
+        branch: 'main',
+        commit: true,
+        files: [
+          { path: 'src/A.java', text: 'class Public {}\n' },
+          { path: 'secrets/A.java', text: 'class Private {}\n' },
+        ],
+      },
+      base,
+    );
+    const request = {
+      repositoryId,
+      startingPath: repo,
+      workspaceRoot: base,
+      config: { include: [], exclude: [] },
+    };
+    await assert.rejects(
+      scanWithDependencies(request, {
+        discoverGitContext,
+        gitIgnoredPaths: async () => new Set(),
+        walkCandidates: async function* () {
+          yield { absolutePath: join(repo, 'src', 'A.java'), path: repoPath('src/A.java') };
+          await rename(join(repo, 'src'), join(repo, 'src-original'));
+          await symlink(
+            join(repo, 'secrets'),
+            join(repo, 'src'),
+            process.platform === 'win32' ? 'junction' : 'dir',
+          );
+        },
+        classifyFile,
+      }),
+      hasCode('SOURCE_CHANGED'),
+    );
   }));

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, rename, rm, symlink, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
@@ -15,7 +15,7 @@ import {
   fingerprintInventory,
   observeWithDependencies,
 } from '../dist/fingerprint.js';
-import { hasCode, materialize, repoPath } from './helpers.mjs';
+import { git, hasCode, materialize, repoPath } from './helpers.mjs';
 
 const fixtureRoot = fileURLToPath(
   new URL('../../../fixtures/source/worktree-fingerprint/', import.meta.url),
@@ -188,3 +188,137 @@ test('changed classification or read failure cannot return a partial observation
     await rm(base, { recursive: true, force: true });
   }
 });
+
+test('a selected ancestor replaced by a junction cannot redirect fingerprinting outside the repository', async () => {
+  const base = await mkdtemp(join(tmpdir(), 'codeatlas-fingerprint-parent-'));
+  try {
+    const repo = await materialize(
+      { branch: 'main', commit: true, files: [{ path: 'src/A.java', text: 'class A {}\n' }] },
+      base,
+    );
+    const outside = join(base, 'outside');
+    await mkdir(outside);
+    await writeFile(join(outside, 'A.java'), 'class Different {}\n');
+    let swapped = false;
+    await assert.rejects(
+      observeWithDependencies(
+        {
+          repositoryId,
+          startingPath: repo,
+          workspaceRoot: base,
+          config: { include: [], exclude: [] },
+        },
+        {
+          fingerprintFile: async (absolutePath, path) => {
+            if (!swapped) {
+              await rename(join(repo, 'src'), join(repo, 'src-original'));
+              await symlink(
+                outside,
+                join(repo, 'src'),
+                process.platform === 'win32' ? 'junction' : 'dir',
+              );
+              swapped = true;
+            }
+            return fingerprintFile(absolutePath, path);
+          },
+        },
+      ),
+      hasCode('SOURCE_CHANGED'),
+    );
+    assert.equal(swapped, true);
+  } finally {
+    await rm(base, { recursive: true, force: true });
+  }
+});
+
+test('a selected ancestor cannot redirect into a denied in-repository secrets directory', async () => {
+  const base = await mkdtemp(join(tmpdir(), 'codeatlas-fingerprint-secret-parent-'));
+  try {
+    const repo = await materialize(
+      {
+        branch: 'main',
+        commit: true,
+        files: [
+          { path: 'src/A.java', text: 'class Public {}\n' },
+          { path: 'secrets/A.java', text: 'class Private {}\n' },
+        ],
+      },
+      base,
+    );
+    const request = {
+      repositoryId,
+      startingPath: repo,
+      workspaceRoot: base,
+      config: { include: [], exclude: [] },
+    };
+    await assert.rejects(
+      observeWithDependencies(request, {
+        fingerprintFile: async (absolutePath, path) => {
+          await rename(join(repo, 'src'), join(repo, 'src-original'));
+          await symlink(
+            join(repo, 'secrets'),
+            join(repo, 'src'),
+            process.platform === 'win32' ? 'junction' : 'dir',
+          );
+          return fingerprintFile(absolutePath, path);
+        },
+      }),
+      hasCode('SOURCE_CHANGED'),
+    );
+  } finally {
+    await rm(base, { recursive: true, force: true });
+  }
+});
+
+test('a HEAD change during observation cannot be accepted', async () => {
+  const base = await mkdtemp(join(tmpdir(), 'codeatlas-fingerprint-head-race-'));
+  try {
+    const repo = await materialize(
+      { branch: 'main', commit: true, files: [{ path: 'src/A.java', text: 'class A {}\n' }] },
+      base,
+    );
+    const request = {
+      repositoryId,
+      startingPath: repo,
+      workspaceRoot: base,
+      config: { include: [], exclude: [] },
+    };
+    await assert.rejects(
+      observeWithDependencies(request, {
+        fingerprintFile: async (absolutePath, path) => {
+          const value = await fingerprintFile(absolutePath, path);
+          git(repo, [
+            '-c',
+            'user.name=Fixture',
+            '-c',
+            'user.email=fixture@example.test',
+            'commit',
+            '--allow-empty',
+            '-m',
+            'head-changed',
+          ]);
+          return value;
+        },
+      }),
+      hasCode('SOURCE_CHANGED'),
+    );
+  } finally {
+    await rm(base, { recursive: true, force: true });
+  }
+});
+
+test(
+  'selected leaf symlinks cannot be fingerprinted',
+  { skip: process.platform === 'win32' },
+  async () => {
+    const base = await mkdtemp(join(tmpdir(), 'codeatlas-fingerprint-leaf-link-'));
+    try {
+      const file = join(base, 'A.java');
+      await writeFile(join(base, 'Original.java'), 'class A {}\n');
+      await symlink(join(base, 'Original.java'), file, 'file');
+      await assert.rejects(fingerprintFile(file, repoPath('A.java')), hasCode('SOURCE_CHANGED'));
+    } finally {
+      await rm(base, { recursive: true, force: true });
+    }
+  },
+);
