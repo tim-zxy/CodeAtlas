@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "worktree-fingerprint",
+  "category": "code-intelligence",
+  "phase": "0.5",
+  "languages": ["java"],
+  "frameworks": [],
+  "capabilities": ["SOURCE_FINGERPRINT"],
+  "inputs": { "setup": "setup.json" },
+  "expected": { "fingerprints": "expected.json" },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

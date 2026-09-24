@@ -1,0 +1,22 @@
+{
+  "contentFingerprint": "sha256:ce7a36cbac4677751d0e89da549206bf9fffa325e91ffa3c4ce483284470d1cb",
+  "paths": ["src/Empty.java", "src/Large.java", "src/Unicode.java", "vendor/blob.bin"],
+  "files": {
+    "src/Empty.java": {
+      "contentFingerprint": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    "src/Large.java": {
+      "contentFingerprint": "sha256:008ffc88d3c96a9f307524eb361e47c5222a887fc45fa0c1fb8d429c5c23b430",
+      "sizeBytes": 65537
+    },
+    "src/Unicode.java": {
+      "contentFingerprint": "sha256:a4b8b5b43cf5c15d1f260d9ff8d997803e0f14d95e828cce41a428997bea326f",
+      "sizeBytes": 15
+    },
+    "vendor/blob.bin": {
+      "contentFingerprint": "sha256:3d1f57c984978ef98a18378c8166c1cb8ede02c03eeb6aee7e2f121dfeee3e56",
+      "sizeBytes": 4
+    }
+  }
+}

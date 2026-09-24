@@ -27,7 +27,14 @@ export async function materialize(setup, baseDirectory) {
   for (const file of setup.files) {
     const target = join(repo, ...file.path.split('/'));
     await mkdir(dirname(target), { recursive: true });
-    await writeFile(target, 'text' in file ? file.text : Buffer.from(file.base64, 'base64'));
+    if ('repeat' in file) {
+      if (!Number.isSafeInteger(file.repeat.count) || file.repeat.count <= 0) {
+        throw new Error('Fixture repeat count must be a positive safe integer');
+      }
+      await writeFile(target, file.repeat.text.repeat(file.repeat.count));
+    } else {
+      await writeFile(target, 'text' in file ? file.text : Buffer.from(file.base64, 'base64'));
+    }
   }
   if (setup.commit) {
     git(repo, ['add', '--all']);

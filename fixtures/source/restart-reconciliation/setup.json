@@ -1,0 +1,18 @@
+{
+  "branch": "main",
+  "commit": true,
+  "files": [
+    { "path": "src/Keep.java", "text": "class One {}\n" },
+    { "path": "src/Remove.java", "text": "class Gone {}\n" },
+    { "path": "build/Skipped.java", "text": "class Skip {}\n" },
+    { "path": ".env", "text": "secret" }
+  ],
+  "config": { "include": [], "exclude": [] },
+  "edits": [
+    { "path": "src/Keep.java", "text": "class Two {}\n" },
+    { "path": "src/Add.java", "text": "class Add {}\n" },
+    { "path": "build/Skipped.java", "text": "class Else {}\n" },
+    { "path": ".env", "text": "changed-secret" }
+  ],
+  "deletes": ["src/Remove.java"]
+}

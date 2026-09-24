@@ -3,6 +3,7 @@ import { open, lstat } from 'node:fs/promises';
 import type { RepositoryRelativePath } from '@codeatlas/ir';
 
 import { SourceScanError } from './errors.js';
+import { assertSameAncestors, safeAncestors } from './path-safety.js';
 import type { ScannedFile } from './types.js';
 
 const sampleBytes = 8_192;
@@ -25,11 +26,46 @@ function sameFile(
   );
 }
 
+export function classifySample(
+  path: RepositoryRelativePath,
+  sample: Buffer,
+  sizeBytes: number,
+): Pick<ScannedFile, 'languageHint' | 'classification'> {
+  const parts = path.split('/');
+  const lower = parts.map((part) => part.toLowerCase());
+  const basename = parts.at(-1)!;
+  const isJava = basename.toLowerCase().endsWith('.java');
+  const testRole = lower.some((part) => ['test', 'tests', '__tests__'].includes(part));
+  const provenance = lower.includes('vendor')
+    ? 'VENDOR'
+    : lower.some((part) => ['generated', 'build', 'dist', 'target'].includes(part))
+      ? 'GENERATED'
+      : 'AUTHORED';
+  let contentKind: 'TEXT' | 'BINARY' = 'TEXT';
+  if (sample.includes(0)) contentKind = 'BINARY';
+  else {
+    try {
+      new TextDecoder('utf-8', { fatal: true }).decode(sample, { stream: sizeBytes > sampleBytes });
+    } catch {
+      contentKind = 'BINARY';
+    }
+  }
+  return {
+    languageHint: isJava ? 'java' : null,
+    classification: {
+      role: testRole ? 'TEST' : isJava ? 'SOURCE' : 'OTHER',
+      provenance,
+      contentKind,
+    },
+  };
+}
+
 export async function classifyFile(
   absolutePath: string,
   path: RepositoryRelativePath,
 ): Promise<Pick<ScannedFile, 'languageHint' | 'classification'>> {
   try {
+    const ancestors = await safeAncestors(absolutePath, path);
     const before = await lstat(absolutePath);
     if (!before.isFile() || before.isSymbolicLink()) {
       throw new SourceScanError('SOURCE_CHANGED', 'Source entry changed during classification');
@@ -37,6 +73,7 @@ export async function classifyFile(
     const handle = await open(absolutePath, 'r');
     let sample: Buffer;
     try {
+      await assertSameAncestors(absolutePath, path, ancestors);
       const opened = await handle.stat();
       if (!sameFile(before, opened)) {
         throw new SourceScanError('SOURCE_CHANGED', 'Source entry changed during classification');
@@ -44,6 +81,7 @@ export async function classifyFile(
       const buffer = Buffer.alloc(sampleBytes);
       const { bytesRead } = await handle.read(buffer, 0, sampleBytes, 0);
       sample = buffer.subarray(0, bytesRead);
+      await assertSameAncestors(absolutePath, path, ancestors);
     } finally {
       await handle.close();
     }
@@ -51,35 +89,8 @@ export async function classifyFile(
     if (!sameFile(before, after)) {
       throw new SourceScanError('SOURCE_CHANGED', 'Source entry changed during classification');
     }
-    const parts = path.split('/');
-    const lower = parts.map((part) => part.toLowerCase());
-    const basename = parts.at(-1)!;
-    const isJava = basename.toLowerCase().endsWith('.java');
-    const testRole = lower.some((part) => ['test', 'tests', '__tests__'].includes(part));
-    const provenance = lower.includes('vendor')
-      ? 'VENDOR'
-      : lower.some((part) => ['generated', 'build', 'dist', 'target'].includes(part))
-        ? 'GENERATED'
-        : 'AUTHORED';
-    let contentKind: 'TEXT' | 'BINARY' = 'TEXT';
-    if (sample.includes(0)) contentKind = 'BINARY';
-    else {
-      try {
-        new TextDecoder('utf-8', { fatal: true }).decode(sample, {
-          stream: before.size > sampleBytes,
-        });
-      } catch {
-        contentKind = 'BINARY';
-      }
-    }
-    return {
-      languageHint: isJava ? 'java' : null,
-      classification: {
-        role: testRole ? 'TEST' : isJava ? 'SOURCE' : 'OTHER',
-        provenance,
-        contentKind,
-      },
-    };
+    await assertSameAncestors(absolutePath, path, ancestors);
+    return classifySample(path, sample, before.size);
   } catch (error) {
     if (error instanceof SourceScanError) throw error;
     if (isMissing(error)) {
