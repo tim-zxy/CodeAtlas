@@ -1,0 +1,13 @@
+{
+  "paths": ["ignored/Keep.java", "src/Main.java"],
+  "files": {
+    "ignored/Keep.java": {
+      "languageHint": "java",
+      "classification": { "role": "SOURCE", "provenance": "AUTHORED", "contentKind": "TEXT" }
+    },
+    "src/Main.java": {
+      "languageHint": "java",
+      "classification": { "role": "SOURCE", "provenance": "AUTHORED", "contentKind": "TEXT" }
+    }
+  }
+}
