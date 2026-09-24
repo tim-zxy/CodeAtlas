@@ -1,5 +1,6 @@
 import type {
   CommitIdentity,
+  ContentFingerprint,
   EntityId,
   RepositoryRelativePath,
   SourceFileClassification,
@@ -31,4 +32,14 @@ export interface ScannedFile {
 export interface SourceScanResult extends GitContext {
   readonly repositoryId: EntityId;
   readonly files: readonly ScannedFile[];
+}
+
+export interface ObservedFile extends ScannedFile {
+  readonly contentFingerprint: ContentFingerprint;
+  readonly sizeBytes: number;
+}
+
+export interface ObservedWorktree extends Omit<SourceScanResult, 'files'> {
+  readonly files: readonly ObservedFile[];
+  readonly contentFingerprint: ContentFingerprint;
 }

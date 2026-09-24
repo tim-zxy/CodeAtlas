@@ -29,7 +29,10 @@ async function inDirectory(run) {
 }
 
 test('all three declared source Fixtures produce exact sorted inventories', async () => {
-  const fixtures = await discoverFixtures(fixtureRoot);
+  const scanFixtureIds = new Set(['basic-java-repo', 'generated-vendor', 'gitignore']);
+  const fixtures = (await discoverFixtures(fixtureRoot)).filter((fixture) =>
+    scanFixtureIds.has(fixture.manifest.id),
+  );
   assert.deepEqual(
     fixtures.map((fixture) => fixture.manifest.id),
     ['basic-java-repo', 'generated-vendor', 'gitignore'],

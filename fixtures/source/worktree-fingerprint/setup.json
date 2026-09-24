@@ -1,0 +1,13 @@
+{
+  "branch": "main",
+  "commit": true,
+  "files": [
+    { "path": "src/Empty.java", "text": "" },
+    { "path": "src/Large.java", "repeat": { "text": "a", "count": 65537 } },
+    { "path": "src/Unicode.java", "text": "class Café {}\n" },
+    { "path": "vendor/blob.bin", "base64": "AAEC/w==" },
+    { "path": "build/Skipped.java", "text": "class Skipped {}\n" },
+    { "path": ".env", "text": "not-for-indexing" }
+  ],
+  "config": { "include": ["vendor/blob.bin"], "exclude": [] }
+}

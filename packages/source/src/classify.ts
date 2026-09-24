@@ -25,6 +25,40 @@ function sameFile(
   );
 }
 
+export function classifySample(
+  path: RepositoryRelativePath,
+  sample: Buffer,
+  sizeBytes: number,
+): Pick<ScannedFile, 'languageHint' | 'classification'> {
+  const parts = path.split('/');
+  const lower = parts.map((part) => part.toLowerCase());
+  const basename = parts.at(-1)!;
+  const isJava = basename.toLowerCase().endsWith('.java');
+  const testRole = lower.some((part) => ['test', 'tests', '__tests__'].includes(part));
+  const provenance = lower.includes('vendor')
+    ? 'VENDOR'
+    : lower.some((part) => ['generated', 'build', 'dist', 'target'].includes(part))
+      ? 'GENERATED'
+      : 'AUTHORED';
+  let contentKind: 'TEXT' | 'BINARY' = 'TEXT';
+  if (sample.includes(0)) contentKind = 'BINARY';
+  else {
+    try {
+      new TextDecoder('utf-8', { fatal: true }).decode(sample, { stream: sizeBytes > sampleBytes });
+    } catch {
+      contentKind = 'BINARY';
+    }
+  }
+  return {
+    languageHint: isJava ? 'java' : null,
+    classification: {
+      role: testRole ? 'TEST' : isJava ? 'SOURCE' : 'OTHER',
+      provenance,
+      contentKind,
+    },
+  };
+}
+
 export async function classifyFile(
   absolutePath: string,
   path: RepositoryRelativePath,
@@ -51,35 +85,7 @@ export async function classifyFile(
     if (!sameFile(before, after)) {
       throw new SourceScanError('SOURCE_CHANGED', 'Source entry changed during classification');
     }
-    const parts = path.split('/');
-    const lower = parts.map((part) => part.toLowerCase());
-    const basename = parts.at(-1)!;
-    const isJava = basename.toLowerCase().endsWith('.java');
-    const testRole = lower.some((part) => ['test', 'tests', '__tests__'].includes(part));
-    const provenance = lower.includes('vendor')
-      ? 'VENDOR'
-      : lower.some((part) => ['generated', 'build', 'dist', 'target'].includes(part))
-        ? 'GENERATED'
-        : 'AUTHORED';
-    let contentKind: 'TEXT' | 'BINARY' = 'TEXT';
-    if (sample.includes(0)) contentKind = 'BINARY';
-    else {
-      try {
-        new TextDecoder('utf-8', { fatal: true }).decode(sample, {
-          stream: before.size > sampleBytes,
-        });
-      } catch {
-        contentKind = 'BINARY';
-      }
-    }
-    return {
-      languageHint: isJava ? 'java' : null,
-      classification: {
-        role: testRole ? 'TEST' : isJava ? 'SOURCE' : 'OTHER',
-        provenance,
-        contentKind,
-      },
-    };
+    return classifySample(path, sample, before.size);
   } catch (error) {
     if (error instanceof SourceScanError) throw error;
     if (isMissing(error)) {
