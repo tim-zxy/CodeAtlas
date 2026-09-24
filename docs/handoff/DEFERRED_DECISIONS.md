@@ -17,6 +17,9 @@
 | Wiki validation and diff policy tuning | 2 | Projection Fixtures and internal use cases exist | Missing data is explicit; no LLM filler. |
 | Custom Wiki Section Provider and Data Adapter SDK | 3 | Trusted extension use cases and security review exist | No direct Canonical Knowledge or SQLite mutation. |
 | `FAST`/`BALANCED`/`PRECISE` analysis-depth profiles | 2 or later | Cold and incremental benchmarks plus quality data exist | Profiles never change Canonical IR or bypass capability evidence; adaptive routing remains Phase 3. |
+| Complete source-grounded KnowledgeCandidate degradation orchestration | 2 | Phase 1 candidate-path grounding/security and agent-utility evidence | Phase 1 may define and validate bounded candidates under its authorized manual workflow; full orchestration is not a Phase 0/0.5/1 dependency. |
+| DiagramModel, Mermaid renderer, and artifact lifecycle | 2 | Phase 1 engineering-fact/Knowledge provenance and projection Fixtures | Diagram remains derived, not canonical; temporal sequence requires ordered evidence. |
+| Cross-repository sequence and migration diagrams | 2 | Contract-boundary order evidence and published migration knowledge | Do not infer order from CallGraph or fabricate target-state steps. |
 
 Deferred means intentionally undecided, not forgotten. The formal roadmap contains no Phase 4.
 

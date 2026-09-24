@@ -1,0 +1,36 @@
+{
+  "paths": [
+    "assets/blob.bin",
+    "build/generated/test/TestGenerated.java",
+    "docs/readme.md",
+    "src/main/java/Main.java",
+    "src/test/java/MainTest.java",
+    "vendor/lib/Other.java"
+  ],
+  "files": {
+    "assets/blob.bin": {
+      "languageHint": null,
+      "classification": { "role": "OTHER", "provenance": "AUTHORED", "contentKind": "BINARY" }
+    },
+    "build/generated/test/TestGenerated.java": {
+      "languageHint": "java",
+      "classification": { "role": "TEST", "provenance": "GENERATED", "contentKind": "TEXT" }
+    },
+    "docs/readme.md": {
+      "languageHint": null,
+      "classification": { "role": "OTHER", "provenance": "AUTHORED", "contentKind": "TEXT" }
+    },
+    "src/main/java/Main.java": {
+      "languageHint": "java",
+      "classification": { "role": "SOURCE", "provenance": "AUTHORED", "contentKind": "TEXT" }
+    },
+    "src/test/java/MainTest.java": {
+      "languageHint": "java",
+      "classification": { "role": "TEST", "provenance": "AUTHORED", "contentKind": "TEXT" }
+    },
+    "vendor/lib/Other.java": {
+      "languageHint": "java",
+      "classification": { "role": "SOURCE", "provenance": "VENDOR", "contentKind": "TEXT" }
+    }
+  }
+}

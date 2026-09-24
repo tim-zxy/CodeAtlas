@@ -1,0 +1,6 @@
+{
+  "branch": "main",
+  "commit": true,
+  "files": [{ "path": "src/Main.java", "text": "class Main {}\n" }],
+  "config": { "include": [], "exclude": [] }
+}

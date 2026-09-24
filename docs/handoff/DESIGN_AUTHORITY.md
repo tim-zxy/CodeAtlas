@@ -68,6 +68,8 @@ These are intentionally postponed to the assigned phase. They must not become de
 
 The Engineering Agent shall implement the current phase, run its fixtures, update status, record design issues, refine future phases when evidence warrants it, and preserve traceability. Codex, Claude Code, OpenCode, and other Coding Agents have identical authority under this pack. No Agent may silently redefine Canonical IR, lifecycle semantics, update policy, trust boundaries, or phase scope.
 
+The 2026-09-24 Phase 0.5 compatibility amendment interprets future System Wiki sections within ADR-013's published-Knowledge-only reader. Source-grounded knowledge degradation remains candidate-only and permissioned; Diagram and Agent Context remain derived views. No new FROZEN decision is substituted for ADR-013/014, no Phase 0 gate is reopened, and the original Phase 0.5 exit gates remain authoritative alongside additive resource/outcome consistency checks. See the dated [Design Amendment Report](DESIGN_AMENDMENT_REPORT_2026-09-24.md) for implementation-state evidence and phase allocation.
+
 ## Design Change Proposal minimum content
 
 A proposal must state the decision being changed, its current authority class, evidence, alternatives, compatibility impact, migration impact, security impact, affected phases, affected documents, required fixture/baseline changes, and rollback strategy. Implementation begins only after the proposal is accepted.

@@ -30,6 +30,12 @@ LLM/network work occurs outside database transactions. A CompilationRun records 
 
 Publishing uses copy-on-write. Partial or failed runs retain the previous published knowledge. Deterministic draft knowledge may exist but cannot be labeled as complete semantic publication.
 
+## Source-grounded degradation (Phase 1 design)
+
+When an authorized semantic update encounters unsupported or partially failed parsing, it may create local, source-grounded `KnowledgeCandidate` records from source, configuration, or documents the caller is permitted to access. Prefer degradation for the affected files/capabilities rather than downgrading an otherwise valid repository result. This path never changes Source/Code/Contract/ExecutionGraph/RuntimeFlow AUTO updates, never fabricates Canonical Code Facts, and never invokes `update_knowledge` merely because a parser failed. Remote LLM use still requires its independent opt-in and security policy; a local-only or security block never triggers remote fallback.
+
+Each degraded candidate records its generation method, source/evidence references, affected scope, parser/coverage limitation, and relations that could not be verified. Missing support or an unverified relationship remains explicit uncertainty. Candidates pass the existing schema/grounding validation, identity resolution, Reconciliation, Evaluation, and Quality Gate before copy-on-write publication; failure retains the last published revision. Do not create a second knowledge chain or let an LLM write SQLite. Phase 1 may validate a bounded candidate path; complete degradation orchestration is deferred until Phase 2 evidence-based design and is not a Phase 0.5 or Phase 1 dependency.
+
 ## Freshness
 
 `SourceFreshness` is `FRESH | AFFECTED | STALE`. `CompilationCurrency` is `CURRENT | OUTDATED_WORKFLOW | OUTDATED_PROMPT | OUTDATED_MODEL_POLICY`. Model/prompt changes recommend recompilation but do not impersonate source changes.

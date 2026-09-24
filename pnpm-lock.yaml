@@ -78,7 +78,11 @@ importers:
 
   packages/runtime: {}
 
-  packages/source: {}
+  packages/source:
+    dependencies:
+      '@codeatlas/ir':
+        specifier: workspace:*
+        version: link:../ir
 
   packages/storage: {}
 

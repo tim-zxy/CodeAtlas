@@ -24,7 +24,7 @@ Phase 0 explicitly does not require Java parsing.
 
 ## Phase 0.5 exit
 
-- [ ] A Java repository is scanned with ignore, generated/vendor/test, binary, and include/exclude handling.
+- [x] A Java repository is scanned with ignore, generated/vendor/test, binary, and include/exclude handling (P05-W2-001; three declared Source Fixtures and reproducible commands in `CURRENT_STATUS.md`).
 - [ ] Native analysis emits symbols, imports, direct calls, inheritance, references, diagnostics, and coverage through IPC v1.
 - [ ] Java extraction is behind a `LanguageAnalyzer` boundary; framework interpretation is absent from the language adapter.
 - [ ] Provider facts normalize into canonical facts while unresolved targets remain unresolved.
@@ -33,6 +33,8 @@ Phase 0 explicitly does not require Java parsing.
 - [ ] One-file add, modify, and delete changes use validated incremental patches.
 - [ ] Changed-file refresh does not silently reparse an unchanged repository; restart uses file fingerprints and does not require persisted ASTs.
 - [ ] Cold, 1-file, 5-file, and 50-file scenarios report stage durations and peak memory with pinned inputs; any numeric performance threshold requires a reviewed baseline.
+- [ ] Worker Consistency on pinned inputs preserves normalized Canonical Graph semantics, coverage, and stale-fact state across worker counts/completion orders; in-flight files, output, and staging remain bounded under declared budgets.
+- [ ] Analyzer outcomes distinguish timeout/budget failure, parser exception, unsupported language/capability, syntax-error/partial coverage, and successful zero-fact analysis without publishing partial graph state.
 - [ ] Removed provider support leaves no stale binding; a fact remains while another provider still supports it.
 - [ ] `understand` and code-level `trace` return locations, relations, confidence, and coverage warnings.
 - [ ] Critical Symbol Recall is at least 95 percent.
@@ -62,12 +64,17 @@ Phase 0 explicitly does not require Java parsing.
 - [ ] The standard Wiki reads published Knowledge through KnowledgeQuery/Application API. If a WikiGenerator exists, a thin facade/default-profile adapter preserves it; a complete user-authored WikiSpec is not required.
 - [ ] Default-profile reprojection never invokes `update_knowledge`; locked policy rejects unauthorized customization; missing required Knowledge yields explicit diagnostics, not invented text.
 - [ ] Registered language capabilities have Fixture/Evaluation evidence; Phase 1 does not require all languages.
+- [ ] L0 summary, L1 task-relevant knowledge, and L2 deeper engineering context are budgeted and retrieved on demand; startup does not preload the full Wiki and read-only queries do not invoke `update_knowledge`.
+- [ ] If source-grounded degraded candidates are enabled, they retain evidence, generation method, coverage and unverified-relation limitations, and pass the normal Reconciliation/Quality Gate before publication; local-only and security blocks never trigger remote fallback.
+- [ ] Standard System Wiki sections use only published Knowledge and report missing or stale cross-repository support rather than inventing contracts, flows, or migration state.
 
 ## Phase 2 exit direction
 
 Detailed numeric baselines are set during Phase 2 planning. Acceptance must cover architecture/decision/migration knowledge, state-aware consistency and drift, curated feedback, advanced reconciliation, hybrid retrieval with rebuildable vectors, impact/change context, usage/agent utility, richer documents, daemon/local HTTP, and expanded authorization. Core behavior must still work in LITE mode without vectors.
 
 Projection acceptance covers Declarative WikiSpec, profile inheritance and pin stability, six-dimensional artifact provenance, validation statuses, and diff. Multi-language performance gates use measured cold/incremental baselines and full-rebuild correctness comparisons, not hand-declared capability maturity.
+
+Diagram projection direction covers a grounded lightweight DiagramModel, default Mermaid rendering, support/version references, type-specific validation, and explicit ordering evidence for cross-repository sequence diagrams. No DiagramModel or renderer is a Phase 0.5 gate, and Phase 2 numerical gates are set only from reviewed evidence.
 
 ## Phase 3 exit direction
 

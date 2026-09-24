@@ -1,0 +1,17 @@
+{
+  "branch": "main",
+  "commit": true,
+  "files": [
+    { "path": ".gitignore", "text": "ignored/\n" },
+    { "path": "ignored/Keep.java", "text": "class Keep {}\n" },
+    { "path": "ignored/Skip.java", "text": "class Skip {}\n" },
+    { "path": "src/.gitignore", "text": "*.tmp\n" },
+    { "path": "src/Main.java", "text": "class Main {}\n" },
+    { "path": "src/Cache.tmp", "text": "cache\n" },
+    { "path": "config/.env.local", "text": "SECRET=value\n" }
+  ],
+  "config": {
+    "include": ["ignored/Keep.java", "config/.env.local"],
+    "exclude": ["ignored/Skip.java"]
+  }
+}

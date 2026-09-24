@@ -54,3 +54,9 @@ Native analysis is evaluated with ground-truth fixtures, differential comparison
 
 Prompt changes run knowledge fixtures for grounding, probes, identity preservation, state consistency, token use, and false structural changes. Deterministic CI, reference-model prompt CI, and optional compatibility benchmarks are separate.
 
+## Additional path-specific evidence (future phases)
+
+Phase 0.5 Native Analyzer evaluation adds a Worker Consistency case to the existing pinned cold/1-/5-/50-file suite. Compare normalized Canonical Graph semantics, coverage, and stale-fact state across distinct effective worker counts and completion orders, and report the scan/parse/resolve/IPC/normalize/DB-apply/total/peak-memory stages. Existing Phase 0.5 accuracy and incremental gates remain unchanged; performance thresholds require reviewed measured baselines.
+
+Phase 1 Knowledge evaluation distinguishes parser-grounded and source-grounded-degraded candidate paths. Report grounding, unsupported/partial coverage, unverified relations, publication acceptance/rejection, and agent utility by generation method without inventing a new numerical pass threshold. Later Diagram projection evaluation checks source/version references, permission/freshness, graph grounding, type-specific completeness, and sequence-order evidence. An unsupported diagram is reported as such, not rendered as a complete graph.
+

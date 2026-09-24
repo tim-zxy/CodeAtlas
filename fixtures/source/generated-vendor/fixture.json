@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "generated-vendor",
+  "category": "code-intelligence",
+  "phase": "0.5",
+  "languages": ["java"],
+  "frameworks": [],
+  "capabilities": ["SOURCE_SCAN"],
+  "inputs": { "setup": "setup.json" },
+  "expected": { "inventory": "expected.json" },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

@@ -1,0 +1,9 @@
+{
+  "paths": ["src/Main.java"],
+  "files": {
+    "src/Main.java": {
+      "languageHint": "java",
+      "classification": { "role": "SOURCE", "provenance": "AUTHORED", "contentKind": "TEXT" }
+    }
+  }
+}

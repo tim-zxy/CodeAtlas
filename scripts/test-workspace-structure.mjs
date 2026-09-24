@@ -24,6 +24,7 @@ expectedPackageDependencies.ir = { zod: '4.6.1' };
 expectedPackageDependencies.providers = { '@codeatlas/ir': 'workspace:*', zod: '4.6.1' };
 expectedPackageDependencies.plugins = { '@codeatlas/ir': 'workspace:*', zod: '4.6.1' };
 expectedPackageDependencies.evaluation = { '@codeatlas/ir': 'workspace:*' };
+expectedPackageDependencies.source = { '@codeatlas/ir': 'workspace:*' };
 const expectedAppDependencies = {
   cli: { '@codeatlas/runtime': 'workspace:*' },
   daemon: {},
@@ -92,6 +93,8 @@ for (const name of packageNames) {
         source,
         "export * from './canonical-comparator.js';\nexport * from './comparator-error.js';\nexport * from './fixture-error.js';\nexport * from './fixture-manifest.js';\nexport * from './fixture-registry.js';\nexport * from './metric-engine.js';\nexport * from './quality-gates.js';\n",
       );
+    } else if (name === 'source') {
+      assert.match(source, /scanGitRepository/);
     } else {
       assert.equal(source, 'export {};\n');
     }
@@ -150,6 +153,7 @@ test('workspace scripts expose and compose the architecture dependency gate', as
     /packages\/storage\/test\/migration-runner-failures\.test\.mjs/,
   );
   assert.match(manifest.scripts.test, /packages\/providers\/test\/native-ipc\.test\.mjs/);
+  assert.match(manifest.scripts.test, /packages\/source\/test\/source-scan\.test\.mjs/);
   assert.match(manifest.scripts.test, /packages\/providers\/test\/native-ipc-bytes\.test\.mjs/);
   assert.match(manifest.scripts.test, /packages\/providers\/test\/provider-routing\.test\.mjs/);
   assert.match(manifest.scripts.test, /packages\/providers\/test\/provider-spi\.test\.mjs/);

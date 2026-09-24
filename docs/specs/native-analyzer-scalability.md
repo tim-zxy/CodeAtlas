@@ -1,6 +1,6 @@
 # Multi Language Native Analyzer and Scalability
 
-Status: backward-compatible architecture extension. Authority: [ADR-014](../handoff/adr/ADR-014-multilanguage-native-analyzer.md). Java is the first planned analyzer language, not an architectural binding; only a Rust process smoke shell exists today. This specification governs future NativeProvider internals without changing Canonical IR or the external Provider SPI.
+Status: backward-compatible architecture extension. Authority: [ADR-014](../handoff/adr/ADR-014-multilanguage-native-analyzer.md). Java is the first planned analyzer language, not an architectural binding; the Rust executable currently implements DESCRIBE and smoke handling, not Java analysis. This specification governs future NativeProvider internals without changing Canonical IR or the external Provider SPI.
 
 ## Internal boundaries
 
@@ -50,11 +50,21 @@ The core runtime owns scheduling, fingerprints, parser pooling, cancellation, bu
 - Apply a staged analysis or patch through batched parameterized SQL in a single activation transaction. Never open one SQLite transaction per node or edge. Failure leaves the previous active graph available.
 - Bound parser/IPC queues, line/event sizes, worker count, memory, and cancellation latency; record partial coverage rather than inventing resolved facts under budget pressure.
 
+### Phase 0.5 scheduling and outcome contract
+
+The one worker-count input is `EffectiveConfig.indexing.nativeAnalyzer.parseWorkers` and is passed to the native analysis coordinator. Its value is `AUTO` or an explicit positive safe integer. `AUTO` derives a safe effective count from available execution resources and the configured request memory budget; an explicit value is still constrained by that budget, with an impossible request rejected rather than silently changed. Record both requested mode and effective count. Do not introduce a second CLI-only or Rust-only knob or add a strict IPC v1 field merely for this setting. Concrete default and budget limits are selected from pinned benchmark evidence, not copied from another analyzer.
+
+Bound pending files, in-flight parses, completed-but-unconsumed results, and native-to-TypeScript events by the effective memory/resource budget. When the downstream JSONL reader, normalizer, or staging writer cannot accept more work, apply backpressure upstream rather than retaining an unbounded result set. The existing Phase 0 client intentionally buffers a validated response under hard byte/event ceilings; it proves protocol integrity, not the Phase 0.5 large-repository streaming-to-staging path. Do not raise those ceilings as a substitute for bounded staging and apply.
+
+Represent outcomes without treating an empty fact list as an error: timeout/budget exhaustion, parser exception, unsupported language or capability, syntax-error/partial coverage, and successful analysis with zero facts are distinct. Use existing IPC error, diagnostic, capability-coverage, and terminal-outcome channels where they can express the distinction. A new wire field or persisted ProviderSnapshot field requires a separately reviewed version/compatibility decision. Syntax errors retain source/coverage evidence; they do not become invented resolved relations. A failed terminal never activates state.
+
+Parallel parse completion order must not change Provider Fact identity, normalized Canonical Graph semantics, coverage, or stale-fact removal. A Worker Consistency Fixture runs the same pinned input with distinct effective worker counts and completion orders, then compares the normalized result and active-state outcome. Stable wire ordering is required where IPC v1 requires it; otherwise normalization, not arrival order, determines graph semantics.
+
 ## Measurement and benchmarks
 
 Record, at minimum, `scan_ms`, `parse_ms`, `resolve_ms`, `ipc_ms`, `normalize_ms`, `db_apply_ms`, `total_ms`, and `peak_memory` for each run, together with language, capability, file count, changed-file count, repository fingerprint, grammar/analyzer/compatibility versions, worker count, environment, and success/coverage status. Timings are durations in milliseconds; `peak_memory` includes units and collection method. Stage times may overlap under streaming/parallelism, so `total_ms` is independently measured rather than assumed to equal their sum.
 
-The benchmark suite has four scenarios: Cold Index, 1-file incremental, 5-file incremental, and 50-file incremental. Each scenario reports median and tail latency, memory, throughput, correctness versus a full rebuild, and stale-fact count on a pinned fixture/repository. No numeric latency threshold is invented in this amendment; thresholds are EVOLVABLE and must be set from baseline measurements before becoming a phase gate. The existing Phase 0.5 correctness gates still apply.
+The benchmark suite has Cold Index, 1-file Incremental, Small-batch (pinned 5-file), Large-batch (pinned 50-file), and Worker Consistency scenarios. Each scenario reports median and tail latency, memory, throughput, correctness versus a full rebuild, and stale-fact count on a pinned fixture/repository. Record scan, parse, resolve, IPC, normalize, DB apply, total, and peak-memory stages even if a stage is unavailable, with an explicit unavailable reason rather than a fabricated zero. No numeric latency threshold is invented in this amendment; thresholds are EVOLVABLE and must be set from baseline measurements before becoming a phase gate. The existing Phase 0.5 correctness gates still apply.
 
 ## Multi language capability matrix
 

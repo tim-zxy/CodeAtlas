@@ -37,6 +37,8 @@ interface EffectiveConfig {
 
 Config version is mandatory. Unknown keys warn with paths in Phase 1. Secrets use environment or OS credentials, not workspace YAML. Default exclusions cover VCS/build/vendor artifacts and common secret files, while index, LLM, and embedding access policies remain distinct.
 
+For Phase 0.5 native analysis, `EffectiveConfig.indexing.nativeAnalyzer.parseWorkers` is the sole control-plane source for requested parse-worker mode (`AUTO` or explicit positive safe integer). The runtime derives an effective count under the request memory/resource budget, rejects an impossible explicit request, and records requested/effective values with analysis telemetry. This does not expand the Phase 0 bootstrap object, require YAML loading in P05-W2-001, or add a new Native IPC v1 field. The worker-count/default policy is EVOLVABLE only with pinned Fixture and benchmark evidence; see [Native Analyzer Scalability](../../specs/native-analyzer-scalability.md).
+
 ## Degradation
 
 Native/reference provider absence reports unsupported coverage and uses allowed alternatives. LLM absence leaves deterministic graph/query capabilities usable. Embedding defaults disabled; FTS5 remains available. Failed knowledge update retains publication. `ekp doctor` checks environment/capabilities; `ekp status` reports project state.

@@ -44,3 +44,9 @@ interface ContextItem {
 - Query tools are read-only. `update_knowledge` requires explicit write permission and cannot edit source code.
 - Errors are typed, actionable, and never encoded as successful empty results.
 
+## Progressive knowledge consumption (Phase 1 design)
+
+Agent context has L0 bounded project summary, L1 task-relevant published knowledge, and L2 deeper engineering facts/evidence on demand. These are response-depth levels, not new truth stores or a requirement to preload the entire Wiki at agent startup. The existing request budget and permissions constrain each level; escalation to L2 is explicit or query-driven and returns bounded references and truncation information.
+
+When published knowledge is affected or stale, return its `SourceFreshness`, `CompilationCurrency`, coverage, and evidence limitations, then use an authorized read-only query of current engineering facts where needed. Never present older knowledge as fresh or infer missing cross-repository relationships. Ordinary `get_project_context`, `search_knowledge`, `understand_symbol`, and `trace_flow` calls remain read-only and must not implicitly enqueue or invoke `update_knowledge`. This refines future Phase 1 behavior without changing the current Phase 0 API shell or rewriting the six named tools.
+

@@ -94,6 +94,8 @@ Depends on P05-W2-001. Implement normalized paths, content hashes, sizes, revisi
 
 Depends on IPC/IR freeze. Bootstrap Rust plus Tree-sitter Java behind an internal `LanguageAnalyzer` boundary; emit packages, classes, interfaces, methods, fields, constructors, nested types, source ranges, diagnostics, and coverage. Java visitor/resolver logic stays in the adapter; framework meaning stays in Plugins. Fixtures: `java-basic-symbol` and `java-nested-types`. This does not add another language to Phase 0.5.
 
+Use validated indexing configuration as the sole parse-worker mode input (`AUTO` or explicit positive count) and enforce the analysis memory/resource budget. Do not change strict Native IPC v1 solely to carry this control-plane setting.
+
 ### P05-W3-002 Imports, calls, inheritance, and references
 
 Depends on P05-W3-001. Support normal/static/wildcard imports; direct/this/static/constructor calls; extends/implements; and initial type/method/field references. Preserve overload ambiguity and unresolved calls. Fixtures include `java-call-basic`, `java-overload`, `java-inheritance`, and `java-unresolved-call`.
@@ -101,6 +103,8 @@ Depends on P05-W3-001. Support normal/static/wildcard imports; direct/this/stati
 ### P05-W3-003 Coverage output
 
 Depends on P05-W3-002. Emit eligible, covered, unsupported, partial, and resolution-level statistics per file/capability. Queries and evaluations must surface incomplete coverage.
+
+Distinguish timeout/budget exhaustion, parser exception, unsupported language/capability, syntax-error/partial coverage, and successful zero-fact analysis through existing terminal, diagnostic, and coverage channels where possible. Any wire or persisted snapshot extension needs separate compatibility review.
 
 ### P05-W4-001 Canonical normalizers and fact identity
 
@@ -113,6 +117,8 @@ Depends on P05-W4-001. Merge identical facts, retain multiple evidence/bindings,
 ### P05-W1-010 Full analysis apply
 
 Depends on repository schema and normalization. Stream into staging, validate, use batched SQL within one activation transaction, atomically activate the indexed revision, and retain the previous graph on failure. Analysis coordination must call `CanonicalFactStore`, not compose SQL or commit per node/edge.
+
+Bound pending files, completed results, native output, normalization, and staging with downstream backpressure; do not treat the Phase 0 bounded in-memory IPC result as proof of large-repository streaming apply.
 
 ### P05-W1-011 Incremental patch apply
 
@@ -138,9 +144,13 @@ Expose full/incremental/status indexing, symbol understanding, and code-level tr
 
 Freeze symbol, call, overload, inheritance, unresolved, incremental, and provider-merge fixtures. Enforce the numeric gates in `PHASE_ACCEPTANCE.md`, write a machine-readable report with stage durations and peak memory for pinned cold/1-/5-/50-file scenarios, and block Phase 1 promotion on failure. No new numeric latency threshold is implied.
 
+Include a Worker Consistency Fixture that varies effective worker count and parse completion order while comparing normalized Canonical Graph semantics, coverage, and stale-fact state. Report requested/effective worker mode and bounded-resource outcomes; no new numerical performance threshold is set.
+
 ## Phase 1 planning package
 
 After Phase 0.5, the Engineering Agent creates reviewed task groups for: framework plugins; `ExecutionGraph` and `RuntimeFlow`; contracts/cross-repository stitching; Document IR/claims; knowledge workflows/identity/reconciliation/publication and the standard Wiki projection; LLM runtime; Agent API/MCP; security; evaluation; and packaging. Use `vulnerability-processing` and `spring-fastapi-kafka` as end-to-end acceptance fixtures. Do not redesign the target architecture or pull Declarative WikiSpec into Phase 1.
+
+The Phase 1 package also scopes a bounded permissioned source-grounded KnowledgeCandidate path and its path-specific Evaluation, progressive L0/L1/L2 Agent consumption, and supported cross-repository System Wiki sections through published Knowledge. Full degradation orchestration is deferred to Phase 2 and is not a Phase 0.5 or Phase 1 dependency; complete DiagramModel/renderer design also belongs to Phase 2.
 
 ## Parallelization constraints
 

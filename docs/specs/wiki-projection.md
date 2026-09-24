@@ -111,3 +111,7 @@ Validation status is distinct from Knowledge SourceFreshness and CompilationCurr
 - Phase 3: add Custom Section Provider, Custom Data Adapter, and Extension SDK under security and capability controls.
 
 The standard locked profile remains available in every phase. Customization never changes Product Vision, Canonical IR, or the manual knowledge publication rule.
+
+## Cross-repository System Wiki composition
+
+The standard System Wiki may present a system overview, service dependencies, cross-repository runtime and business flows, contracts, data/event flows, and architecture or migration state when the selected published KnowledgeRevisions contain grounded support for those sections. Each section preserves scope, revision, and support references; absent or stale material receives the existing `MISSING_DATA`, `PARTIAL`, or `STALE` diagnostics rather than invented filler. Deterministic current engineering facts may be exposed by a separate read-only Diagram or Agent Context projection, but the Wiki planner continues to read published Knowledge only through KnowledgeQuery/Application API. Adding direct raw-fact reads to Wiki would require an ADR amending ADR-013.
