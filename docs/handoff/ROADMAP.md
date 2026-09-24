@@ -22,17 +22,23 @@ Prove `Source -> Native Analyzer -> Canonical Facts -> SQLite -> Incremental Pat
 
 The Java implementation uses a language-neutral NativeProvider with a narrow internal `LanguageAnalyzer` boundary, file-level refresh, protocol-only stdout, staging/batch apply, and stage/memory measurements. These constrain existing tasks rather than adding another language or a new numeric gate.
 
+Within those existing tasks, native scheduling obtains parse-worker mode from validated indexing configuration, bounds in-flight and pending results with backpressure, distinguishes timeout/parser/unsupported/syntax/empty-success outcomes, and proves worker-count consistency against pinned inputs. The benchmark suite retains cold, 1-, 5-, and 50-file scenarios plus a worker-consistency case. Numeric performance limits still require measured baselines; none is added here.
+
 ## Phase 1 Core product proof
 
 Add Java/Spring, Mongo, Kafka, FastAPI semantics; `ExecutionGraph`; `RuntimeFlow`; contract registry and basic cross-repository stitching; Markdown/ADR document IR; components, capabilities, integrations, and grounded business flows; repository/workspace/cross-repository knowledge workflows; manual knowledge update; FTS5; LLM runtime with local/OpenAI-compatible structured output; six core MCP tools; security baseline; packaging and install flow.
 
 Provide the standard Wiki through a KnowledgeQuery/Application read boundary. If a WikiGenerator exists when this phase is implemented, retain it behind a thin projection facade/default-profile adapter; none exists yet. A complete user-authored Declarative WikiSpec is not required. Framework semantics remain Plugin-owned. Additional analyzer languages are optional and require their own Fixture/Evaluation evidence, not an all-language Phase 1 gate.
 
+Design source-grounded, permissioned KnowledgeCandidate degradation for unsupported/partial parser coverage within the existing manual Knowledge workflow; a bounded candidate path may be evaluated, but complete degradation orchestration is not a Phase 1 dependency. Standard cross-repository System Wiki sections use published Knowledge with explicit missing/stale diagnostics. Agent knowledge consumption is progressive (L0 summary, L1 task-relevant knowledge, L2 deep engineering context) and read-only queries never trigger `update_knowledge`. This amendment does not make a full DiagramModel/renderer a Phase 1 exit requirement.
+
 ## Phase 2 Knowledge flywheel and agent enhancement
 
 Add architecture rules, decisions, migrations, current/target/transition reasoning, architecture drift, advanced reconciliation, curated claims and resolution rules, embeddings and Zvec, hybrid retrieval, impact and change context, usage and feedback, richer document sources, daemon/local HTTP, and expanded security and permissions.
 
 Add declarative WikiSpec, profile inheritance and version pinning, projection validation and diff. Refine multi-language concurrency and capability-aware analysis depth from measured baselines; no unsupported latency target is frozen here.
+
+Detail grounded DiagramModel, default Mermaid rendering, type-specific provenance/ordering validation, and artifact lifecycle from Phase 1 evidence. In particular, cross-repository sequence diagrams require temporal evidence rather than dependency edges alone.
 
 ## Phase 3 Advanced intelligence and scale
 

@@ -6,22 +6,28 @@
 - Handoff assembly: refreshed as the agent-neutral Engineering Handoff Pack.
 - Primary handoff entry: `ENGINEERING_HANDOFF.md`.
 - Compatibility entry: `CODEX_HANDOFF.md`.
-- Implementation repository: all 18 Phase 0 tasks are integrated on remote `main`; PR #6 merged P0-W9-003 at `9f4ec958c1f18ea13623fb7cf5703e0c1efe3b4c` on 2026-09-24. The exact merge commit passed hosted TypeScript and Rust CI. The Phase 0 exit evidence and checklist are updated in this documentation-only closeout branch; their integration into `main` remains the formal promotion condition.
-- Active implementation phase: Phase 0.5 design preparation only. Product-code implementation waits for this closeout's integration and an approved first-task design/plan.
+- Implementation repository: all 18 Phase 0 tasks and the documentation-only Phase 0 exit record are integrated on remote `main`. PR #6 merged P0-W9-003 at `9f4ec958c1f18ea13623fb7cf5703e0c1efe3b4c`; PR #7 merged the Phase 0 closeout at `71dd18ce58e89b489336fc942bfdac4b36cc024b`. Hosted CI for the closeout merge passed. Phase 0 is closed; the prior closeout-pending language below is historical evidence, not current state.
+- Active implementation phase: Phase 0.5 design preparation. P05-W2-001 has a local written design at `393b3c296ad18e3271886533925255c5dc488f7f`, awaiting user review; no Phase 0.5 product code or executable P05 Fixture has been added. The 2026-09-24 compatibility amendment is documentation-only and also awaits review.
 
 ## Phase readiness
 
 | Phase | Readiness | Implementation progress |
 |---|---|---|
-| 0 | IMPLEMENTATION-READY | 18 of 18 tasks integrated; 11 of 11 technical exit checks passed on merge commit `9f4ec95`; documentation closeout awaits integration |
-| 0.5 | IMPLEMENTATION-READY | 0 percent; first-task design preparation may proceed, implementation waits for Phase 0 closeout integration and reviewed design/plan |
+| 0 | IMPLEMENTATION-READY | 18 of 18 tasks integrated; 11 of 11 technical exit checks passed on `9f4ec95`; documentation closeout merged as PR #7 at `71dd18c` |
+| 0.5 | IMPLEMENTATION-READY | 0 percent; first-task written design and compatibility amendment require review, then an approved implementation plan before coding |
 | 1 | DESIGN-READY | 0 percent |
 | 2 | ARCHITECTURE-READY | 0 percent |
 | 3 | ROADMAP/ARCHITECTURE-READY | 0 percent |
 
 ## Next action
 
-Integrate this documentation-only Phase 0 exit record and its checked acceptance list into `main`, then begin P05-W2-001 Repository discovery and source scanning under an approved task design and implementation plan. Do not treat Phase 0's evaluator Fixture thresholds as Phase 0.5 quality thresholds.
+Review the 2026-09-24 Design Amendment Report and P05-W2-001 written design, then create/review the P05-W2-001 implementation plan before product-code work. P05-W2-001 remains Git-only; non-Git directory support is a later separately reviewed adapter. Do not treat Phase 0 evaluator Fixture thresholds as Phase 0.5 quality thresholds or advance deferred capabilities.
+
+## 2026-09-24 compatibility amendment evidence
+
+- Read-only audit base: `393b3c296ad18e3271886533925255c5dc488f7f`; nine code-path dispositions, change classes, scope, and phase ownership are recorded in [DESIGN_AMENDMENT_REPORT_2026-09-24.md](DESIGN_AMENDMENT_REPORT_2026-09-24.md). Existing ADR-013/014 are reused; the System Wiki remains published-Knowledge-only by explicit user decision.
+- Fresh targeted checks at that base: `node --test packages/providers/test/native-ipc.test.mjs packages/providers/test/native-client.test.mjs packages/evaluation/test/fixture-manifest.test.mjs packages/evaluation/test/quality-gates.test.mjs` passed 64/64; `cargo test --workspace` passed 5 Rust unit, 1 handshake, 4 protocol-Fixture, and 5 smoke tests. These validate existing Phase 0 boundaries only; they do not prove unimplemented Phase 0.5 or future-phase capabilities.
+- Documentation scope: Native resource/outcome/Worker Consistency requirements are mapped to existing P05 tasks; KnowledgeCandidate degradation, System Wiki, Diagram, and progressive Agent consumption are phase-gated. No product code, executable P05 Fixture, migration, Canonical IR/IPC contract, numeric threshold, or Phase 4 was introduced by this amendment. Hosted CI for this documentation change has not yet been observed.
 
 ## Active task evidence
 
