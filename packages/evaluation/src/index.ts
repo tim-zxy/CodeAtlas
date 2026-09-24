@@ -3,3 +3,5 @@ export * from './comparator-error.js';
 export * from './fixture-error.js';
 export * from './fixture-manifest.js';
 export * from './fixture-registry.js';
+export * from './metric-engine.js';
+export * from './quality-gates.js';

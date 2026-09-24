@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "p0-metric-engine-v1",
+  "category": "code-intelligence",
+  "phase": "0",
+  "languages": [],
+  "frameworks": [],
+  "capabilities": [],
+  "inputs": { "actual": "actual.json" },
+  "expected": { "canonical": "expected.json" },
+  "criticalFacts": [
+    { "id": "node-unchanged", "type": "NODE", "importance": "CRITICAL" },
+    { "id": "node-changed", "type": "NODE", "importance": "CRITICAL" },
+    { "id": "edge-changed", "type": "EDGE", "importance": "CRITICAL" },
+    { "id": "node-missing", "type": "NODE", "importance": "SECONDARY" }
+  ],
+  "qualityGates": {
+    "nodePrecision": { "operator": ">=", "threshold": 0.3 },
+    "nodeRecall": { "operator": ">=", "threshold": 0.3 },
+    "edgePrecision": { "operator": ">=", "threshold": 0 },
+    "edgeRecall": { "operator": ">=", "threshold": 0 },
+    "criticalFactPrecision": { "operator": ">=", "threshold": 0.3 },
+    "criticalFactRecall": { "operator": ">=", "threshold": 0.3 }
+  }
+}

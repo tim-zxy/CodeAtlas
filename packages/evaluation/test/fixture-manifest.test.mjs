@@ -58,6 +58,24 @@ test('empty dimensions and empty fact/gate collections are valid', () => {
   assert.deepEqual(JSON.parse(JSON.stringify(parseFixtureManifest(input, 'm'))), input);
 });
 
+test('critical NODE and EDGE may share one FactKey while same-type duplicates remain invalid', () => {
+  const input = {
+    ...valid,
+    criticalFacts: [
+      { id: 'shared-key', type: 'NODE', importance: 'CRITICAL' },
+      { id: 'shared-key', type: 'EDGE', importance: 'CRITICAL' },
+    ],
+  };
+  assert.deepEqual(
+    parseFixtureManifest(input, 'sample/fixture.json').criticalFacts,
+    input.criticalFacts,
+  );
+  expectField(
+    { ...input, criticalFacts: [input.criticalFacts[0], input.criticalFacts[0]] },
+    'criticalFacts.1.id',
+  );
+});
+
 for (const [name, value, field] of [
   ['unsupported schema version', { ...valid, schemaVersion: 2 }, 'schemaVersion'],
   ['missing field', { ...valid, frameworks: undefined }, 'frameworks'],
