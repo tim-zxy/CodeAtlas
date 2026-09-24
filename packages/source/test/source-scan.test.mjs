@@ -91,6 +91,11 @@ test('public scan rejects non-Git and malformed configuration with typed errors'
       scanGitRepository({ ...request, config: { include: ['../escape'], exclude: [] } }),
       hasCode('INVALID_INPUT'),
     );
+    await assert.rejects(scanGitRepository(undefined), hasCode('INVALID_INPUT'));
+    await assert.rejects(
+      scanGitRepository({ ...request, config: { include: Array(1), exclude: [] } }),
+      hasCode('INVALID_INPUT'),
+    );
   }));
 
 test('scan discards buffered and classified observations when later traversal fails', async () =>

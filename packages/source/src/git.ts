@@ -11,6 +11,13 @@ import type { GitContext } from './types.js';
 
 const execFileAsync = promisify(execFile);
 
+function gitEnvironment(): NodeJS.ProcessEnv {
+  const environment = Object.fromEntries(
+    Object.entries(process.env).filter(([name]) => !name.toUpperCase().startsWith('GIT_')),
+  );
+  return { ...environment, GIT_TERMINAL_PROMPT: '0' };
+}
+
 interface GitCommandResult {
   readonly stdout: string;
   readonly exitCode: number;
@@ -37,7 +44,7 @@ async function git(cwd: string, args: readonly string[]): Promise<GitCommandResu
       encoding: 'utf8',
       windowsHide: true,
       maxBuffer: 1_000_000,
-      env: { ...process.env, GIT_TERMINAL_PROMPT: '0' },
+      env: gitEnvironment(),
     });
     return { stdout, exitCode: 0 };
   } catch (error) {
@@ -107,7 +114,7 @@ async function checkIgnoreBatch(
     const child = spawn('git', ['-C', rootPath, 'check-ignore', '--no-index', '-z', '--stdin'], {
       windowsHide: true,
       stdio: ['pipe', 'pipe', 'pipe'],
-      env: { ...process.env, GIT_TERMINAL_PROMPT: '0' },
+      env: gitEnvironment(),
     });
     const output: Buffer[] = [];
     let outputBytes = 0;

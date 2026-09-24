@@ -115,6 +115,13 @@ export function compilePathPolicy(config: SourceScanRequest['config']): Compiled
   if (!config || !Array.isArray(config.include) || !Array.isArray(config.exclude)) {
     throw new SourceScanError('INVALID_INPUT', 'Invalid source path configuration');
   }
+  for (const patterns of [config.include, config.exclude]) {
+    for (let index = 0; index < patterns.length; index += 1) {
+      if (!Object.hasOwn(patterns, index)) {
+        throw new SourceScanError('INVALID_INPUT', 'Invalid source path configuration');
+      }
+    }
+  }
   const included = config.include.map(parsePattern);
   const excluded = config.exclude.map(parsePattern);
   const decision = (path: RepositoryRelativePath): Decision => {

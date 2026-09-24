@@ -78,3 +78,25 @@ test('a non-Git directory fails with a typed unsupported-source error', async ()
     await mkdir(nonGit);
     await assert.rejects(discoverGitContext(nonGit, base), hasCode('NON_GIT_DIRECTORY'));
   }));
+
+test('caller Git environment cannot redirect repository discovery', async () =>
+  inTemporaryDirectory(async (base) => {
+    const repo = await materialize(setup, base);
+    const otherBase = join(base, 'other');
+    await mkdir(otherBase);
+    const other = await materialize(
+      { ...setup, files: [{ path: 'src/Other.java', text: 'class Other {}\n' }] },
+      otherBase,
+    );
+    const expectedHead = git(repo, ['rev-parse', 'HEAD']).trim();
+    const previous = process.env.GIT_DIR;
+    process.env.GIT_DIR = join(other, '.git');
+    try {
+      const context = await discoverGitContext(repo, base);
+      assert.equal(context.rootPath, await realpath(repo));
+      assert.equal(context.headCommit, expectedHead);
+    } finally {
+      if (previous === undefined) delete process.env.GIT_DIR;
+      else process.env.GIT_DIR = previous;
+    }
+  }));
