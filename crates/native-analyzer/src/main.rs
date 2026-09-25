@@ -1,3 +1,4 @@
+mod analyze;
 mod protocol;
 
 use std::ffi::OsStr;

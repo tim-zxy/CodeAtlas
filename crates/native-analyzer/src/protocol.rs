@@ -3,6 +3,7 @@ use std::io::{self, Read, Write};
 use std::process::ExitCode;
 
 use serde_json::{Map, Value, json};
+use std::num::NonZeroUsize;
 
 const PROTOCOL_VERSION: u64 = 1;
 const IR_SCHEMA_VERSION: u64 = 1;
@@ -37,6 +38,21 @@ pub(crate) fn serve_once<R: Read, W: Write, E: Write>(
     input
         .take((MAX_LINE_BYTES + 1) as u64)
         .read_to_end(&mut bytes)?;
+
+    if bytes.len() <= MAX_LINE_BYTES
+        && bytes.last() == Some(&b'\n')
+        && !bytes[..bytes.len() - 1].contains(&b'\n')
+        && !bytes[..bytes.len() - 1].contains(&b'\r')
+        && let Ok(value) = serde_json::from_slice::<Value>(&bytes[..bytes.len() - 1])
+        && value.get("type").and_then(Value::as_str) == Some("ANALYZE")
+    {
+        return crate::analyze::run(
+            value,
+            NonZeroUsize::new(1).expect("one worker"),
+            output,
+            diagnostics,
+        );
+    }
 
     let request = match parse_request(&bytes) {
         Ok(request) => request,
