@@ -40,6 +40,8 @@ pub struct LanguageAnalysis {
 pub enum AnalyzerError {
     GrammarUnavailable,
     ParserFailed,
+    BudgetExceeded,
+    ResourceLimit,
 }
 
 pub trait LanguageAnalyzer {

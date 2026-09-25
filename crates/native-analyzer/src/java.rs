@@ -1,7 +1,10 @@
 use std::collections::HashMap;
+use std::ops::ControlFlow;
+use std::sync::atomic::{AtomicBool, Ordering};
+use std::time::Instant;
 
 use sha2::{Digest, Sha256};
-use tree_sitter::{Node, Parser};
+use tree_sitter::{Node, ParseOptions, Parser};
 
 use crate::language::{
     AnalyzerError, LanguageAnalysis, LanguageAnalyzer, SourceSpan, SymbolFact, SyntaxCoverage,
@@ -20,21 +23,72 @@ impl JavaAnalyzer {
             .map_err(|_| AnalyzerError::GrammarUnavailable)?;
         Ok(Self { parser })
     }
-}
 
-impl LanguageAnalyzer for JavaAnalyzer {
-    fn analyze(
+    pub fn analyze_until(
         &mut self,
         relative_path: &str,
         source: &[u8],
+        deadline: Instant,
+        cancelled: &AtomicBool,
+        max_result_bytes: usize,
     ) -> Result<LanguageAnalysis, AnalyzerError> {
-        let tree = self
-            .parser
-            .parse(source, None)
-            .ok_or(AnalyzerError::ParserFailed)?;
+        self.analyze_inner(
+            relative_path,
+            source,
+            Some((deadline, cancelled)),
+            max_result_bytes,
+        )
+    }
+
+    fn analyze_inner(
+        &mut self,
+        relative_path: &str,
+        source: &[u8],
+        budget: Option<(Instant, &AtomicBool)>,
+        max_result_bytes: usize,
+    ) -> Result<LanguageAnalysis, AnalyzerError> {
+        let exhausted = || {
+            budget.is_some_and(|(deadline, cancelled)| {
+                Instant::now() >= deadline || cancelled.load(Ordering::Relaxed)
+            })
+        };
+        if exhausted() {
+            return Err(AnalyzerError::BudgetExceeded);
+        }
+        let tree = if budget.is_some() {
+            let mut progress = |_state: &tree_sitter::ParseState| {
+                if exhausted() {
+                    ControlFlow::Break(())
+                } else {
+                    ControlFlow::Continue(())
+                }
+            };
+            let options = ParseOptions::new().progress_callback(&mut progress);
+            self.parser.parse_with_options(
+                &mut |offset, _| source.get(offset..).unwrap_or_default(),
+                None,
+                Some(options),
+            )
+        } else {
+            self.parser.parse(source, None)
+        }
+        .ok_or(if exhausted() {
+            AnalyzerError::BudgetExceeded
+        } else {
+            AnalyzerError::ParserFailed
+        })?;
+        if exhausted() {
+            return Err(AnalyzerError::BudgetExceeded);
+        }
         let root = tree.root_node();
-        let mut collector = SymbolCollector::new(relative_path, source);
+        let mut collector = SymbolCollector::new(relative_path, source, max_result_bytes);
         collector.collect(root);
+        if collector.over_budget {
+            return Err(AnalyzerError::ResourceLimit);
+        }
+        if exhausted() {
+            return Err(AnalyzerError::BudgetExceeded);
+        }
         let coverage = if root.has_error() {
             SyntaxCoverage::Partial
         } else {
@@ -54,6 +108,16 @@ impl LanguageAnalyzer for JavaAnalyzer {
             diagnostics,
             coverage,
         })
+    }
+}
+
+impl LanguageAnalyzer for JavaAnalyzer {
+    fn analyze(
+        &mut self,
+        relative_path: &str,
+        source: &[u8],
+    ) -> Result<LanguageAnalysis, AnalyzerError> {
+        self.analyze_inner(relative_path, source, None, usize::MAX)
     }
 }
 
@@ -89,16 +153,22 @@ struct SymbolCollector<'a> {
     owners: Vec<String>,
     ordinals: HashMap<(String, String, String, String), usize>,
     symbols: Vec<SymbolFact>,
+    result_bytes: usize,
+    max_result_bytes: usize,
+    over_budget: bool,
 }
 
 impl<'a> SymbolCollector<'a> {
-    fn new(relative_path: &'a str, source: &'a [u8]) -> Self {
+    fn new(relative_path: &'a str, source: &'a [u8], max_result_bytes: usize) -> Self {
         Self {
             relative_path,
             source,
             owners: Vec::new(),
             ordinals: HashMap::new(),
             symbols: Vec::new(),
+            result_bytes: 0,
+            max_result_bytes,
+            over_budget: false,
         }
     }
 
@@ -124,6 +194,9 @@ impl<'a> SymbolCollector<'a> {
     }
 
     fn visit(&mut self, node: Node<'_>) {
+        if self.over_budget {
+            return;
+        }
         match node.kind() {
             "class_declaration" | "interface_declaration" => {
                 let kind = if node.kind() == "class_declaration" {
@@ -187,10 +260,35 @@ impl<'a> SymbolCollector<'a> {
         let mut types = Vec::new();
         let mut cursor = parameters.walk();
         for parameter in parameters.named_children(&mut cursor) {
-            if let Some(type_node) = parameter.child_by_field_name("type")
-                && let Some(type_name) = self.text(type_node)
-            {
-                types.push(type_name.trim().to_owned());
+            let type_node = if parameter.kind() == "spread_parameter" {
+                let mut children = parameter.walk();
+                parameter.named_children(&mut children).find(|child| {
+                    !matches!(
+                        child.kind(),
+                        "modifiers" | "annotation" | "marker_annotation" | "variable_declarator"
+                    )
+                })
+            } else {
+                parameter.child_by_field_name("type")
+            };
+            if let Some(type_node) = type_node.and_then(|type_node| self.text(type_node)) {
+                let mut signature = type_node.trim().to_owned();
+                if parameter.kind() == "spread_parameter" {
+                    signature.push_str("...");
+                }
+                let dimensions = if parameter.kind() == "spread_parameter" {
+                    let mut children = parameter.walk();
+                    parameter
+                        .named_children(&mut children)
+                        .find(|child| child.kind() == "variable_declarator")
+                        .and_then(|declarator| declarator.child_by_field_name("dimensions"))
+                } else {
+                    parameter.child_by_field_name("dimensions")
+                };
+                if let Some(dimensions) = dimensions.and_then(|node| self.text(node)) {
+                    signature.push_str(dimensions.trim());
+                }
+                types.push(signature);
             }
         }
         format!("({})", types.join(","))
@@ -201,6 +299,18 @@ impl<'a> SymbolCollector<'a> {
     }
 
     fn push(&mut self, kind: &str, name: &str, signature: &str, name_node: Node<'_>) {
+        let estimated = 512usize.saturating_add(
+            kind.len()
+                .saturating_add(name.len())
+                .saturating_add(signature.len())
+                .saturating_add(self.owners.iter().map(String::len).sum::<usize>())
+                .saturating_mul(3),
+        );
+        self.result_bytes = self.result_bytes.saturating_add(estimated);
+        if self.result_bytes > self.max_result_bytes {
+            self.over_budget = true;
+            return;
+        }
         let owner = self.owners.join("/");
         let key = (
             kind.to_owned(),

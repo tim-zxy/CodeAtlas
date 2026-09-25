@@ -1,6 +1,8 @@
 use codeatlas_native_analyzer::java::JavaAnalyzer;
 use codeatlas_native_analyzer::language::{LanguageAnalyzer, SyntaxCoverage};
 use serde_json::Value;
+use std::sync::atomic::AtomicBool;
+use std::time::{Duration, Instant};
 
 fn assert_exact_symbols(relative_path: &str, source: &[u8], expected_json: &str) {
     let mut analyzer = JavaAnalyzer::new().expect("Java grammar loads");
@@ -140,4 +142,62 @@ fn duplicate_names_in_different_owners_have_distinct_ids() {
     assert_eq!(fields[0].qualified_name.as_deref(), Some("First.value"));
     assert_eq!(fields[1].qualified_name.as_deref(), Some("Second.value"));
     assert_ne!(fields[0].provider_fact_id, fields[1].provider_fact_id);
+}
+
+#[test]
+fn varargs_and_declarator_dimensions_have_stable_distinct_signatures() {
+    let mut analyzer = JavaAnalyzer::new().unwrap();
+    let first = analyzer
+        .analyze("src/Shapes.java", b"class Shapes { void run(String... xs) {} void run(String[] xs) {} void other(int xs[]) {} }")
+        .unwrap();
+    let methods: Vec<_> = first
+        .symbols
+        .iter()
+        .filter(|fact| fact.provider_kind == "java.method")
+        .collect();
+    assert_eq!(
+        methods
+            .iter()
+            .map(|fact| fact.signature.as_str())
+            .collect::<Vec<_>>(),
+        ["(String...)", "(String[])", "(int[])"]
+    );
+    assert_ne!(methods[0].provider_fact_id, methods[1].provider_fact_id);
+    let second = analyzer
+        .analyze("src/Shapes.java", b"class Shapes { void run(String[] xs) {} void run(String... xs) {} void other(int xs[]) {} }")
+        .unwrap();
+    for fact in methods {
+        let reordered = second
+            .symbols
+            .iter()
+            .find(|candidate| {
+                candidate.provider_kind == fact.provider_kind
+                    && candidate.name == fact.name
+                    && candidate.signature == fact.signature
+            })
+            .unwrap();
+        assert_eq!(fact.provider_fact_id, reordered.provider_fact_id);
+    }
+}
+
+#[test]
+fn large_valid_java_file_stops_at_accounted_result_budget() {
+    let mut source = String::from("class Many { ");
+    for index in 0..9_000 {
+        source.push_str(&format!("int field{index}; "));
+    }
+    source.push('}');
+    assert!(source.len() < 8 * 1024 * 1024);
+    let mut analyzer = JavaAnalyzer::new().unwrap();
+    let result = analyzer.analyze_until(
+        "src/Many.java",
+        source.as_bytes(),
+        Instant::now() + Duration::from_secs(30),
+        &AtomicBool::new(false),
+        4 * 1024 * 1024,
+    );
+    assert_eq!(
+        result,
+        Err(codeatlas_native_analyzer::language::AnalyzerError::ResourceLimit)
+    );
 }

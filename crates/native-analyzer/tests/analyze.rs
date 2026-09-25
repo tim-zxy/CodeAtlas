@@ -197,6 +197,15 @@ fn rejects_cross_context_duplicates_and_unsupported_requests() {
         events.last().unwrap()["payload"]["error"]["code"],
         "UNSUPPORTED_LANGUAGE"
     );
+
+    let mut binary = request(&source);
+    binary["payload"]["sourceFiles"][0]["classification"]["contentKind"] = json!("BINARY");
+    let (_, events, _, _) = run_analyzer(&binary);
+    assert_eq!(events.last().unwrap()["type"], "ANALYSIS_FAILED");
+    assert_eq!(
+        events.last().unwrap()["payload"]["error"]["code"],
+        "INVALID_REQUEST"
+    );
 }
 
 #[test]
@@ -243,5 +252,51 @@ fn malformed_java_is_partial_and_empty_java_succeeds_without_facts() {
         assert_eq!(terminal["payload"]["counts"]["nodes"], nodes);
         assert_eq!(terminal["payload"]["counts"]["diagnostics"], diagnostics);
     }
+    fs::remove_dir_all(root).unwrap();
+}
+
+#[test]
+fn large_source_result_budget_has_failed_terminal() {
+    let root = std::env::temp_dir().join(format!("codeatlas-result-budget-{}", std::process::id()));
+    fs::create_dir_all(root.join("src")).unwrap();
+    let mut source = String::from("class Many { ");
+    for _ in 0..9_000 {
+        source.push_str("int a; ");
+    }
+    source.push('}');
+    fs::write(root.join("src/Basic.java"), &source).unwrap();
+    let mut input = request(source.as_bytes());
+    input["payload"]["repository"]["rootPath"] = json!(root.to_str().unwrap());
+    let (exit, events, _, _) = run_analyzer(&input);
+    assert_eq!(exit, 0);
+    assert_eq!(events[0]["type"], "ANALYSIS_STARTED");
+    assert_eq!(events.last().unwrap()["type"], "ANALYSIS_FAILED");
+    assert_eq!(
+        events.last().unwrap()["payload"]["error"]["code"],
+        "RESOURCE_LIMIT_EXCEEDED"
+    );
+    fs::remove_dir_all(root).unwrap();
+}
+
+#[test]
+fn source_above_measured_admission_band_fails_before_parsing() {
+    let root = std::env::temp_dir().join(format!("codeatlas-source-cap-{}", std::process::id()));
+    fs::create_dir_all(root.join("src")).unwrap();
+    let mut source = String::from("class Many { ");
+    for index in 0..9_000 {
+        source.push_str(&format!("int field{index}; "));
+    }
+    source.push('}');
+    assert!(source.len() > 64 * 1024);
+    fs::write(root.join("src/Basic.java"), &source).unwrap();
+    let mut input = request(source.as_bytes());
+    input["payload"]["repository"]["rootPath"] = json!(root.to_str().unwrap());
+    let (exit, events, _, _) = run_analyzer(&input);
+    assert_eq!(exit, 0);
+    assert_eq!(events.last().unwrap()["type"], "ANALYSIS_FAILED");
+    assert_eq!(
+        events.last().unwrap()["payload"]["error"]["code"],
+        "RESOURCE_LIMIT_EXCEEDED"
+    );
     fs::remove_dir_all(root).unwrap();
 }
