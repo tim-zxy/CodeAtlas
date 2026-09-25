@@ -66,6 +66,142 @@ fn run_analyzer_with_args(
 }
 
 #[test]
+fn relation_full_analysis_resolves_later_file_and_preserves_worker_order_and_checksum() {
+    let root = std::env::temp_dir().join(format!("codeatlas-relations-{}", std::process::id()));
+    fs::create_dir_all(root.join("src")).unwrap();
+    let first = b"package demo; class A { void go() { B.run(); } }";
+    let second = b"package demo; class B { static void run() {} }";
+    fs::write(root.join("src/A.java"), first).unwrap();
+    fs::write(root.join("src/B.java"), second).unwrap();
+    let mut relation_request = request(first);
+    relation_request["payload"]["repository"]["rootPath"] = json!(root.to_str().unwrap());
+    relation_request["payload"]["sourceFiles"][0]["path"] = json!("src/A.java");
+    relation_request["payload"]["sourceFiles"][0]["id"] = json!("file-a");
+    relation_request["payload"]["requestedCapabilities"] =
+        json!(["SYMBOL", "IMPORT", "CALL", "INHERITANCE", "REFERENCE"]);
+    let mut later = relation_request["payload"]["sourceFiles"][0].clone();
+    later["path"] = json!("src/B.java");
+    later["id"] = json!("file-b");
+    later["contentFingerprint"] = json!(format!("sha256:{:x}", Sha256::digest(second)));
+    relation_request["payload"]["sourceFiles"]
+        .as_array_mut()
+        .unwrap()
+        .push(later);
+    let one = run_analyzer_with_args(&relation_request, &["--parse-workers", "1"]);
+    let two = run_analyzer_with_args(&relation_request, &["--parse-workers", "2"]);
+    assert_eq!(one.0, 0);
+    assert!(one.2.is_empty());
+    assert_eq!(one.1, two.1);
+    assert_eq!(one.3, two.3);
+    let edge = one
+        .1
+        .iter()
+        .find(|event| event["type"] == "EDGE" && event["payload"]["providerKind"] == "java.call")
+        .unwrap();
+    let target = one
+        .1
+        .iter()
+        .find(|event| {
+            event["type"] == "NODE"
+                && event["payload"]["providerKind"] == "java.method"
+                && event["payload"]["name"] == "run"
+        })
+        .unwrap();
+    assert_eq!(edge["payload"]["target"]["state"], "RESOLVED");
+    assert_eq!(
+        edge["payload"]["target"]["target"]["providerFactId"],
+        target["payload"]["providerFactId"]
+    );
+    assert_eq!(one.1.last().unwrap()["payload"]["counts"]["edges"], 1);
+    assert_eq!(one.1.last().unwrap()["payload"]["counts"]["coverage"], 10);
+    let lines: Vec<_> = one.3.split_inclusive(|byte| *byte == b'\n').collect();
+    assert_eq!(
+        one.1.last().unwrap()["payload"]["integrityChecksum"],
+        format!(
+            "sha256:{:x}",
+            Sha256::digest(lines[..lines.len() - 1].concat())
+        )
+    );
+    fs::remove_file(root.join("src/A.java")).unwrap();
+    fs::remove_file(root.join("src/B.java")).unwrap();
+    fs::remove_dir(root.join("src")).unwrap();
+    fs::remove_dir(root).unwrap();
+}
+
+#[test]
+fn relation_index_budget_failure_has_typed_terminal_and_no_completion() {
+    let source = fs::read(
+        std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("../../fixtures/native/java-basic-symbol/source/src/Basic.java"),
+    )
+    .unwrap();
+    let mut request = request(&source);
+    request["payload"]["requestedCapabilities"] = json!(["SYMBOL", "CALL"]);
+    request["payload"]["resourceBudget"]["maxMemoryBytes"] = json!(16 * 1024 * 1024);
+    let (_, events, _, _) = run_analyzer_with_args(&request, &["--parse-workers", "1"]);
+    assert_eq!(events.last().unwrap()["type"], "ANALYSIS_FAILED");
+    assert_eq!(
+        events.last().unwrap()["payload"]["error"]["code"],
+        "RESOURCE_LIMIT_EXCEEDED"
+    );
+    assert!(
+        !events
+            .iter()
+            .any(|event| event["type"] == "ANALYSIS_COMPLETED")
+    );
+}
+
+#[test]
+fn relation_zero_fact_and_syntax_partial_have_distinct_success_outcomes() {
+    let root =
+        std::env::temp_dir().join(format!("codeatlas-relations-empty-{}", std::process::id()));
+    fs::create_dir_all(root.join("src")).unwrap();
+    let source = b"class Empty {}";
+    fs::write(root.join("src/Empty.java"), source).unwrap();
+    let mut request = request(source);
+    request["payload"]["repository"]["rootPath"] = json!(root.to_str().unwrap());
+    request["payload"]["sourceFiles"][0]["path"] = json!("src/Empty.java");
+    request["payload"]["requestedCapabilities"] = json!(["SYMBOL", "CALL"]);
+    let (_, empty, _, _) = run_analyzer(&request);
+    assert_eq!(empty.last().unwrap()["payload"]["outcome"], "SUCCEEDED");
+    assert_eq!(empty.last().unwrap()["payload"]["counts"]["edges"], 0);
+    assert_eq!(empty.last().unwrap()["payload"]["counts"]["coverage"], 2);
+    let broken = b"class Broken { void run( }";
+    fs::write(root.join("src/Empty.java"), broken).unwrap();
+    request["payload"]["sourceFiles"][0]["contentFingerprint"] =
+        json!(format!("sha256:{:x}", Sha256::digest(broken)));
+    let (_, partial, _, _) = run_analyzer(&request);
+    assert_eq!(partial.last().unwrap()["payload"]["outcome"], "PARTIAL");
+    assert!(partial.iter().any(|event| event["type"] == "DIAGNOSTIC"));
+    fs::remove_file(root.join("src/Empty.java")).unwrap();
+    fs::remove_dir(root.join("src")).unwrap();
+    fs::remove_dir(root).unwrap();
+}
+
+#[test]
+fn relation_event_limit_fails_without_a_success_terminal() {
+    let source = fs::read(
+        std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("../../fixtures/native/java-basic-symbol/source/src/Basic.java"),
+    )
+    .unwrap();
+    let mut request = request(&source);
+    request["payload"]["requestedCapabilities"] = json!(["SYMBOL", "CALL"]);
+    request["payload"]["resourceBudget"]["maxEvents"] = json!(3);
+    let (_, events, _, _) = run_analyzer(&request);
+    assert_eq!(events.last().unwrap()["type"], "ANALYSIS_FAILED");
+    assert_eq!(
+        events.last().unwrap()["payload"]["error"]["code"],
+        "RESOURCE_LIMIT_EXCEEDED"
+    );
+    assert!(
+        !events
+            .iter()
+            .any(|event| event["type"] == "ANALYSIS_COMPLETED")
+    );
+}
+
+#[test]
 fn bounded_scheduler_preserves_event_order_across_worker_counts() {
     let fixture = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../fixtures/native");
     let basic = fs::read(fixture.join("java-basic-symbol/source/src/Basic.java")).unwrap();
