@@ -1,3 +1,8 @@
 [
-  { "capability": "SYMBOL", "sourceFileId": "file-outer", "support": "SUPPORTED", "coverage": "COMPLETE" }
+  {
+    "capability": "SYMBOL",
+    "sourceFileId": "file-outer",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE"
+  }
 ]

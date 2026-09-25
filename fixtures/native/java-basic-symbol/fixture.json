@@ -13,10 +13,26 @@
     "diagnostics": "expected/diagnostics.json"
   },
   "criticalFacts": [
-    { "id": "src/Basic.java|java.class|sample.basic.Basic", "type": "NODE", "importance": "CRITICAL" },
-    { "id": "src/Basic.java|java.interface|sample.basic.Greeter", "type": "NODE", "importance": "CRITICAL" },
-    { "id": "src/Basic.java|java.constructor|sample.basic.Basic", "type": "NODE", "importance": "CRITICAL" },
-    { "id": "src/Basic.java|java.method|sample.basic.Basic.greet", "type": "NODE", "importance": "CRITICAL" }
+    {
+      "id": "src/Basic.java|java.class|sample.basic.Basic",
+      "type": "NODE",
+      "importance": "CRITICAL"
+    },
+    {
+      "id": "src/Basic.java|java.interface|sample.basic.Greeter",
+      "type": "NODE",
+      "importance": "CRITICAL"
+    },
+    {
+      "id": "src/Basic.java|java.constructor|sample.basic.Basic.Basic|()",
+      "type": "NODE",
+      "importance": "CRITICAL"
+    },
+    {
+      "id": "src/Basic.java|java.method|sample.basic.Basic.greet|()",
+      "type": "NODE",
+      "importance": "CRITICAL"
+    }
   ],
   "qualityGates": {}
 }

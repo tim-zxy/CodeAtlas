@@ -1,3 +1,8 @@
 [
-  { "capability": "SYMBOL", "sourceFileId": "file-basic", "support": "SUPPORTED", "coverage": "COMPLETE" }
+  {
+    "capability": "SYMBOL",
+    "sourceFileId": "file-basic",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE"
+  }
 ]

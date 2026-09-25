@@ -49,6 +49,8 @@ The version 1 language-neutral descriptor contains Provider, Provider version, R
 
 P0-W3-003 emits Provider `native`; package-derived Provider and Runtime versions; protocol/IR lists `[1]`; capability `protocol-handshake`; Java language metadata with grammar/analyzer version `0.0.0` and compatibility version `1`; limits of 1,000,000 line bytes, 10,000 events, and 10,000,000 total bytes; and the compile target/profile. Negotiation checks protocol compatibility before IR compatibility. Incompatibility and other recoverable validation failures emit `REQUEST_FAILED` with a closed error code, fixed bounded message, and `retryable: false`.
 
+P05-W3-001 retains that DESCRIBE framing and negotiation behavior, and after the `java-basic-symbol` and `java-nested-types` Fixtures pass it additionally advertises `SYMBOL`. Java `grammarVersion` is the pinned `tree-sitter-java` crate version `0.23.5`; `analyzerVersion` remains package-derived `0.0.0` and compatibility version remains `1`. `ANALYZE` accepts only Java SYMBOL source files for this task, emits source-grounded ProviderNode facts with complete or partial coverage, and has no REFRESH, relation extraction, framework semantics, or state-application authority. The effective parse-worker count is a private process argument validated against the request budget, not a version-1 IPC field.
+
 ## ANALYZE events
 
 `ANALYSIS_STARTED`, `SOURCE_FILE`, `NODE`, `EDGE`, `COVERAGE`, `DIAGNOSTIC`, `ANALYSIS_COMPLETED`, and `ANALYSIS_FAILED`. A completed payload includes counts, coverage summary, content fingerprint, and integrity checksum. Failed streams are never applied.

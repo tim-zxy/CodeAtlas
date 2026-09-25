@@ -218,10 +218,10 @@ fn describe_completed(request_id: &str) -> Value {
             "runtimeVersion": env!("CARGO_PKG_VERSION"),
             "protocolVersions": [PROTOCOL_VERSION],
             "irSchemaVersions": [IR_SCHEMA_VERSION],
-            "capabilities": ["protocol-handshake"],
+            "capabilities": ["protocol-handshake", "SYMBOL"],
             "languages": [{
                 "languageId": "java",
-                "grammarVersion": "0.0.0",
+                "grammarVersion": "0.23.5",
                 "analyzerVersion": "0.0.0",
                 "compatibilityVersion": "1"
             }],
@@ -293,7 +293,7 @@ mod tests {
         assert_eq!(event["type"], "DESCRIBE_COMPLETED");
         assert_eq!(
             event["payload"]["capabilities"],
-            json!(["protocol-handshake"])
+            json!(["protocol-handshake", "SYMBOL"])
         );
     }
 
