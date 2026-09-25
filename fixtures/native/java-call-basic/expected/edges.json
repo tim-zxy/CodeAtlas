@@ -1,0 +1,70 @@
+[
+  {
+    "providerId": "native",
+    "providerFactId": "java-relation-v1:79132936cefde34c662d7d2c5b07cfbe217169b1e8c36d238279fb8fc29ff160",
+    "providerSnapshotId": "snapshot-fixture",
+    "repositoryId": "repo-fixture",
+    "revisionId": "rev-fixture",
+    "providerKind": "java.import.normal",
+    "source": {
+      "factType": "NODE",
+      "providerId": "native",
+      "providerFactId": "java-compilation-unit-v1:4cbbab06ef84cdec68308cf809203c22da70b7b78a8b69d68ae681c330223c96"
+    },
+    "target": {
+      "state": "RESOLVED",
+      "resolution": "EXACT",
+      "target": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "java-symbol-v1:bbda0f41cbac3bfb48b51b76732db4ba6121e23946dbeb37532dc324d0bf4a6c"
+      }
+    },
+    "sourceRange": {
+      "sourceFileId": "file-A.java",
+      "startLine": 1,
+      "startColumn": 7,
+      "endLine": 1,
+      "endColumn": 13
+    },
+    "confidence": {
+      "score": 1,
+      "method": "parser",
+      "reasons": []
+    }
+  },
+  {
+    "providerId": "native",
+    "providerFactId": "java-relation-v1:5f2b20383ad47663550e0f9271646c083fab8904ba931ef8c4d7016a6d1f83e8",
+    "providerSnapshotId": "snapshot-fixture",
+    "repositoryId": "repo-fixture",
+    "revisionId": "rev-fixture",
+    "providerKind": "java.call",
+    "source": {
+      "factType": "NODE",
+      "providerId": "native",
+      "providerFactId": "java-symbol-v1:7a6ab31ece93398629e3ff402743d06322e9ed89720f6055bd3fe58d9a4057be"
+    },
+    "target": {
+      "state": "RESOLVED",
+      "resolution": "EXACT",
+      "target": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "java-symbol-v1:d9b6fac297373b23901b8839c9876e76ca650f267ac1bc53ef11f05016081b6a"
+      }
+    },
+    "sourceRange": {
+      "sourceFileId": "file-A.java",
+      "startLine": 2,
+      "startColumn": 25,
+      "endLine": 2,
+      "endColumn": 29
+    },
+    "confidence": {
+      "score": 1,
+      "method": "parser",
+      "reasons": []
+    }
+  }
+]

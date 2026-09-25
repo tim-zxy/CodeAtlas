@@ -1,0 +1,20 @@
+[
+  {
+    "capability": "SYMBOL",
+    "sourceFileId": "file-Hierarchy.java",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE"
+  },
+  {
+    "capability": "INHERITANCE",
+    "sourceFileId": "file-Hierarchy.java",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE"
+  },
+  {
+    "capability": "REFERENCE",
+    "sourceFileId": "file-Hierarchy.java",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE"
+  }
+]

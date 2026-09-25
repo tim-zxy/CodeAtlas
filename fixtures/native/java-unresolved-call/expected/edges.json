@@ -1,0 +1,33 @@
+[
+  {
+    "providerId": "native",
+    "providerFactId": "java-relation-v1:843bf0e41ca61eb500e60e84d1b2a546d58d7fb6b5d794bbdbd26f71bad78598",
+    "providerSnapshotId": "snapshot-fixture",
+    "repositoryId": "repo-fixture",
+    "revisionId": "rev-fixture",
+    "providerKind": "java.call",
+    "source": {
+      "factType": "NODE",
+      "providerId": "native",
+      "providerFactId": "java-symbol-v1:09d501fbea76ca2b88ac40c4836bf0bd28eb26d9e0c691160390322784b35b87"
+    },
+    "target": {
+      "state": "UNRESOLVED",
+      "resolution": "UNRESOLVED",
+      "originalHint": "External.doIt",
+      "candidates": []
+    },
+    "sourceRange": {
+      "sourceFileId": "file-Unknown.java",
+      "startLine": 1,
+      "startColumn": 38,
+      "endLine": 1,
+      "endColumn": 42
+    },
+    "confidence": {
+      "score": 1,
+      "method": "parser",
+      "reasons": []
+    }
+  }
+]

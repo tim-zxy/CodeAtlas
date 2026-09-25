@@ -14,14 +14,14 @@
 | Phase | Readiness | Implementation progress |
 |---|---|---|
 | 0 | IMPLEMENTATION-READY | 18 of 18 tasks integrated; 11 of 11 technical exit checks passed on `9f4ec95`; documentation closeout merged as PR #7 at `71dd18c` |
-| 0.5 | IMPLEMENTATION-READY | P05-W2-001, P05-W2-002, and P05-W3-001 integrated; P05-W3-002 written design approved and implementation plan under review; remaining tasks and Phase 0.5 exit gates remain open |
+| 0.5 | IMPLEMENTATION-READY | P05-W2-001, P05-W2-002, and P05-W3-001 integrated; P05-W3-002 locally implemented with acceptance and review/hosted CI pending; remaining tasks and Phase 0.5 exit gates remain open |
 | 1 | DESIGN-READY | 0 percent |
 | 2 | ARCHITECTURE-READY | 0 percent |
 | 3 | ROADMAP/ARCHITECTURE-READY | 0 percent |
 
 ## Next action
 
-Review `docs/superpowers/plans/2026-09-25-p05-w3-002-java-relations.md` and choose its execution method before product edits. The written P05-W3-002 design at `docs/superpowers/specs/2026-09-25-p05-w3-002-java-relations-design.md` was approved by the user after commit `16b5731`; implementation has not started. P05-W2-010 change-event labels remain separate. Source discovery remains Git-only; non-Git directory support is a later separately reviewed adapter. Do not promote Phase 0.5 on these tasks or advance deferred capabilities.
+Complete independent review and hosted clean-install CI for the locally implemented P05-W3-002 Java relations branch before integration. Then resume the next dependency-valid Phase 0.5 task under the Handoff gates. P05-W2-010 change-event labels remain separate. Source discovery remains Git-only; non-Git directory support is a later separately reviewed adapter. Do not promote Phase 0.5 or advance deferred capabilities.
 
 ## 2026-09-24 compatibility amendment evidence
 
@@ -30,6 +30,14 @@ Review `docs/superpowers/plans/2026-09-25-p05-w3-002-java-relations.md` and choo
 - Documentation scope: Native resource/outcome/Worker Consistency requirements are mapped to existing P05 tasks; KnowledgeCandidate degradation, System Wiki, Diagram, and progressive Agent consumption are phase-gated. No product code, executable P05 Fixture, migration, Canonical IR/IPC contract, numeric threshold, or Phase 4 was introduced by this amendment. Hosted CI for this documentation change has not yet been observed.
 
 ## Active task evidence
+
+### P05-W3-002 Java relation extraction (local acceptance; integration pending)
+
+- Approved design/plan: `docs/superpowers/specs/2026-09-25-p05-w3-002-java-relations-design.md` (`16b5731`) and `docs/superpowers/plans/2026-09-25-p05-w3-002-java-relations.md` (`e545c83`). Isolated implementation commits `e6768af`, `40961a5`, `4f81c94`, `d704cc0` cover declaration identity/index, relation-site extraction, honest resolution, and bounded two-pass IPC. No Canonical IR schema or migration change.
+- Fixture evidence: four registered manifests under `fixtures/native/java-{call-basic,overload,inheritance,unresolved-call}/` pin exact nodes, edges, coverage, diagnostics, and source ranges. The real Rust binary runs through the production TypeScript Native client, including checksum/terminal validation. The cross-file static call resolves EXACT; same-arity overload remains AMBIGUOUS with two sorted candidates; inheritance/reference resolve to declarations; missing external call remains UNRESOLVED. One source-grounded critical direct call matches 1/1: task-local precision and recall are both 100% against the existing >=95% and >=90% gates. Wrong-target, extra resolved, missing/ambiguous, and zero-denominator metric tests pass. Manifest `qualityGates` stays `{}` because the Phase 0 six-gate CLI does not support call-specific names. Raw-byte source SHA-256 in fixture order: `A.java` `473bc293dd1a5c7041301525ccff64a904b51cbe3e3688d63fdca3d13f0c71bd`, `B.java` `bdc5e449b20fe07873289274ef846c50b1ff0a72f26d58b769c2caaa96687d46`, `Overload.java` `6a41585f7c36966de106ecf94babb93703b989eaec4eef6d96735e27516c6d39`, `Hierarchy.java` `97a26f735421c297c057ee0ae327bd4c5483c28542d242487331f397d6be89a6`, `Unknown.java` `1ac44411475a2a676bf577a6aae9261d6b01e31178e63483adf86f20e0487bee`.
+- Resource/recovery evidence: first pass retains only a declaration index within `maxMemoryBytes - parseWorkers * 16 MiB`; second pass reopens verified source bytes and drains bounded worker batches in source order. Same-length source mutation between passes fails `SOURCE_CHANGED`. Event/line/total-byte limits fail with terminal instead of silently truncating. A 1-worker/2-worker test pins identical raw output and checksum. This is an accounting/admission policy, not an OS-enforced peak-RSS bound or a large-repository performance claim. JSONL stdout remains protocol-only; Rust does not write Canonical SQLite.
+- Fresh local checks on 2026-09-25: `cargo fmt --all --check`, `cargo build --workspace -j 1`, `cargo clippy --workspace --all-targets -- -D warnings`, and `cargo test --workspace -j 1` all exit 0. Installed `tsc -p` builds all 16 TypeScript projects and IR type tests; the root-script Node fileset passes 528/529 with one existing Windows symlink-privilege skip. The real-binary Native analysis and metric suite passes 7/7, including the two previous SYMBOL Fixtures. `node scripts/check-architecture.mjs` passes all 17 projects; direct Prettier and Git whitespace checks pass. `pnpm verify` does not reach scripts on this desktop worktree: its dependency-status preflight attempts to fetch `pnpm` from `registry.npmmirror.com` in the network-restricted environment and aborts a modules purge without TTY. Direct checks are not relabeled as that command. Hosted clean-install TypeScript, Native Java integration, and Rust jobs remain to be observed before integration completion.
+- Remaining scope: P05-W3-003 outcome-matrix work, REFRESH/stale graph removal, Canonical normalization/SQLite application, later framework/Knowledge/Wiki/Diagram/Agent capabilities, large-batch performance Evaluation, and all other Phase 0.5 exit gates are not completed by this task. Independent whole-branch review is pending. No Phase 0.5 promotion is claimed.
 
 ### P05-W2-001 Repository discovery and source scanning
 

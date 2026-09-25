@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "java-call-basic",
+  "category": "code-intelligence",
+  "phase": "0.5",
+  "languages": ["java"],
+  "frameworks": [],
+  "capabilities": ["SYMBOL", "IMPORT", "CALL", "REFERENCE"],
+  "inputs": { "source": "source/" },
+  "expected": {
+    "nodes": "expected/nodes.json",
+    "edges": "expected/edges.json",
+    "coverage": "expected/coverage.json",
+    "diagnostics": "expected/diagnostics.json"
+  },
+  "criticalFacts": [
+    {
+      "id": "java-relation-v1:5f2b20383ad47663550e0f9271646c083fab8904ba931ef8c4d7016a6d1f83e8",
+      "type": "EDGE",
+      "importance": "CRITICAL"
+    }
+  ],
+  "qualityGates": {}
+}

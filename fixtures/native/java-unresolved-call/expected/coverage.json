@@ -1,0 +1,14 @@
+[
+  {
+    "capability": "SYMBOL",
+    "sourceFileId": "file-Unknown.java",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE"
+  },
+  {
+    "capability": "CALL",
+    "sourceFileId": "file-Unknown.java",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE"
+  }
+]
