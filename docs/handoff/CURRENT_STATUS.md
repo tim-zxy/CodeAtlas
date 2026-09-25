@@ -7,21 +7,21 @@
 - Primary handoff entry: `ENGINEERING_HANDOFF.md`.
 - Compatibility entry: `CODEX_HANDOFF.md`.
 - Implementation repository: all 18 Phase 0 tasks and the documentation-only Phase 0 exit record are integrated on remote `main`. PR #6 merged P0-W9-003 at `9f4ec958c1f18ea13623fb7cf5703e0c1efe3b4c`; PR #7 merged the Phase 0 closeout at `71dd18ce58e89b489336fc942bfdac4b36cc024b`. Hosted CI for the closeout merge passed. Phase 0 is closed; the prior closeout-pending language below is historical evidence, not current state.
-- Active implementation phase: Phase 0.5. P05-W2-001 was integrated into `main` by PR #8 at `ed4f80edd955da2ce9627f7943717a4176335702`. P05-W2-002 was integrated by PR #9 at `813fcbe882fafaf859cc44f630c7d390bd5ee41d`; its four hosted TypeScript/Rust workspace checks succeeded. P05-W3-001 Java symbol extraction has a written design pending user review; no P05-W3-001 implementation is authorized yet.
+- Active implementation phase: Phase 0.5. P05-W2-001 was integrated into `main` by PR #8 at `ed4f80edd955da2ce9627f7943717a4176335702`. P05-W2-002 was integrated by PR #9 at `813fcbe882fafaf859cc44f630c7d390bd5ee41d`; its four hosted TypeScript/Rust workspace checks succeeded. P05-W3-001 Java symbol extraction has an approved written design and a task plan pending user review and execution-method selection; no P05-W3-001 product code has changed.
 
 ## Phase readiness
 
 | Phase | Readiness | Implementation progress |
 |---|---|---|
 | 0 | IMPLEMENTATION-READY | 18 of 18 tasks integrated; 11 of 11 technical exit checks passed on `9f4ec95`; documentation closeout merged as PR #7 at `71dd18c` |
-| 0.5 | IMPLEMENTATION-READY | P05-W2-001 and P05-W2-002 integrated; P05-W3-001 design pending review; remaining tasks and Phase 0.5 exit gates remain open |
+| 0.5 | IMPLEMENTATION-READY | P05-W2-001 and P05-W2-002 integrated; P05-W3-001 plan pending review; remaining tasks and Phase 0.5 exit gates remain open |
 | 1 | DESIGN-READY | 0 percent |
 | 2 | ARCHITECTURE-READY | 0 percent |
 | 3 | ROADMAP/ARCHITECTURE-READY | 0 percent |
 
 ## Next action
 
-Review the written P05-W3-001 Java symbol design in `docs/superpowers/specs/2026-09-25-p05-w3-001-java-symbols-design.md`. After explicit design approval, prepare and review its implementation plan before coding. P05-W2-010 change-event labels remain a separate task. Source discovery remains Git-only; non-Git directory support is a later separately reviewed adapter. Do not promote Phase 0.5 on these tasks or advance deferred capabilities.
+Review the P05-W3-001 implementation plan in `docs/superpowers/plans/2026-09-25-p05-w3-001-java-symbols.md` against its approved design, then select an execution method before coding. P05-W2-010 change-event labels remain a separate task. Source discovery remains Git-only; non-Git directory support is a later separately reviewed adapter. Do not promote Phase 0.5 on these tasks or advance deferred capabilities.
 
 ## 2026-09-24 compatibility amendment evidence
 
