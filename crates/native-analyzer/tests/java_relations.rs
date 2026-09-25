@@ -1,8 +1,27 @@
 use codeatlas_native_analyzer::java::JavaAnalyzer;
+use codeatlas_native_analyzer::java_relations::compilation_unit_id;
 use codeatlas_native_analyzer::language::{
     AnalyzerError, LanguageAnalyzer, RelationKind, RelationSite, SourceSpan,
 };
 use codeatlas_native_analyzer::relation_index::{DeclarationIndex, relation_fact_id};
+use std::sync::atomic::AtomicBool;
+use std::time::{Duration, Instant};
+
+fn analyze_sites(
+    path: &str,
+    source: &[u8],
+) -> codeatlas_native_analyzer::language::LanguageAnalysis {
+    JavaAnalyzer::new()
+        .unwrap()
+        .analyze_with_relations_until(
+            path,
+            source,
+            Instant::now() + Duration::from_secs(2),
+            &AtomicBool::new(false),
+            4 * 1024 * 1024,
+        )
+        .unwrap()
+}
 
 #[test]
 fn declaration_index_finds_later_file_method_by_qualified_name_and_arity() {
@@ -112,4 +131,157 @@ fn relation_identity_is_stable_for_a_site_but_distinguishes_variant_and_position
     let mut different_variant = site;
     different_variant.variant = "static".into();
     assert_ne!(first, relation_fact_id("src/A.java", &different_variant, 0));
+}
+
+#[test]
+fn relation_sites_imports_use_a_file_source_even_without_package_declaration() {
+    let analysis = analyze_sites(
+        "src/A.java",
+        b"import demo.B;\nimport static demo.B.run;\nimport demo.*;\nclass A {}",
+    );
+    let imports: Vec<_> = analysis
+        .relation_sites
+        .iter()
+        .filter(|site| site.kind == RelationKind::Import)
+        .collect();
+    assert_eq!(imports.len(), 3);
+    assert_eq!(
+        imports
+            .iter()
+            .map(|site| site.variant.as_str())
+            .collect::<Vec<_>>(),
+        ["normal", "static", "wildcard"]
+    );
+    assert_eq!(
+        imports
+            .iter()
+            .map(|site| site.target_hint.as_str())
+            .collect::<Vec<_>>(),
+        ["demo.B", "demo.B.run", "demo"]
+    );
+    assert!(
+        imports
+            .iter()
+            .all(|site| site.source_fact_id == compilation_unit_id("src/A.java"))
+    );
+    assert_eq!(imports[0].span.start_line, 0);
+    assert_eq!(imports[0].span.start_column, 7);
+    assert_eq!(imports[0].span.end_column, 13);
+}
+
+#[test]
+fn relation_sites_inheritance_and_type_references_keep_type_owner() {
+    let analysis = analyze_sites(
+        "src/A.java",
+        b"interface I {} class A extends B implements I { B field; }",
+    );
+    let owner = analysis
+        .symbols
+        .iter()
+        .find(|symbol| symbol.name == "A")
+        .unwrap();
+    let inheritance: Vec<_> = analysis
+        .relation_sites
+        .iter()
+        .filter(|site| site.kind == RelationKind::Inheritance)
+        .collect();
+    assert_eq!(
+        inheritance
+            .iter()
+            .map(|site| site.target_hint.as_str())
+            .collect::<Vec<_>>(),
+        ["B", "I"]
+    );
+    assert!(
+        inheritance
+            .iter()
+            .all(|site| site.source_fact_id == owner.provider_fact_id)
+    );
+    assert!(
+        analysis
+            .relation_sites
+            .iter()
+            .any(|site| site.kind == RelationKind::Reference && site.target_hint == "B")
+    );
+}
+
+#[test]
+fn relation_sites_calls_and_member_references_have_real_callable_owners() {
+    let analysis = analyze_sites(
+        "src/A.java",
+        b"class A { A() { this(1); } A(int x) {} static void stat() {} void run() { this.go(); go(); A.stat(); new A(); int x=this.value; Runnable r = A::stat; } void go() {} int value; }",
+    );
+    let calls: Vec<_> = analysis
+        .relation_sites
+        .iter()
+        .filter(|site| site.kind == RelationKind::Call)
+        .collect();
+    assert_eq!(
+        calls
+            .iter()
+            .map(|site| site.target_hint.as_str())
+            .collect::<Vec<_>>(),
+        ["this.A", "this.go", "go", "A.stat", "A"]
+    );
+    let run = analysis
+        .symbols
+        .iter()
+        .find(|symbol| symbol.name == "run")
+        .unwrap();
+    assert!(
+        calls
+            .iter()
+            .skip(1)
+            .all(|site| site.source_fact_id == run.provider_fact_id)
+    );
+    assert!(
+        analysis
+            .relation_sites
+            .iter()
+            .any(|site| site.kind == RelationKind::Reference && site.target_hint == "this.value")
+    );
+    assert!(
+        analysis
+            .relation_sites
+            .iter()
+            .any(|site| site.kind == RelationKind::Reference && site.target_hint == "A::stat")
+    );
+    assert!(
+        analysis
+            .relation_sites
+            .iter()
+            .all(|site| !site.variant.starts_with("spring."))
+    );
+}
+
+#[test]
+fn relation_sites_do_not_assign_initializer_calls_to_a_made_up_method() {
+    let analysis = analyze_sites(
+        "src/A.java",
+        b"class A { static { helper(); } void helper() {} }",
+    );
+    assert!(
+        !analysis
+            .relation_sites
+            .iter()
+            .any(|site| site.kind == RelationKind::Call)
+    );
+    assert!(
+        analysis
+            .diagnostics
+            .iter()
+            .any(|diagnostic| diagnostic.code == "UNSUPPORTED_RELATION_SOURCE")
+    );
+}
+
+#[test]
+fn relation_sites_charge_diagnostics_to_the_result_budget() {
+    let result = JavaAnalyzer::new().unwrap().analyze_with_relations_until(
+        "src/A.java",
+        b"class A { static { helper(); } void helper() {} }",
+        Instant::now() + Duration::from_secs(2),
+        &AtomicBool::new(false),
+        1500,
+    );
+    assert!(matches!(result, Err(AnalyzerError::ResourceLimit)));
 }

@@ -73,6 +73,7 @@ pub enum SyntaxCoverage {
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct LanguageAnalysis {
     pub symbols: Vec<SymbolFact>,
+    pub relation_sites: Vec<RelationSite>,
     pub diagnostics: Vec<SyntaxDiagnostic>,
     pub coverage: SyntaxCoverage,
 }

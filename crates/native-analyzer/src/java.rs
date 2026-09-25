@@ -37,6 +37,24 @@ impl JavaAnalyzer {
             source,
             Some((deadline, cancelled)),
             max_result_bytes,
+            false,
+        )
+    }
+
+    pub fn analyze_with_relations_until(
+        &mut self,
+        relative_path: &str,
+        source: &[u8],
+        deadline: Instant,
+        cancelled: &AtomicBool,
+        max_result_bytes: usize,
+    ) -> Result<LanguageAnalysis, AnalyzerError> {
+        self.analyze_inner(
+            relative_path,
+            source,
+            Some((deadline, cancelled)),
+            max_result_bytes,
+            true,
         )
     }
 
@@ -46,6 +64,7 @@ impl JavaAnalyzer {
         source: &[u8],
         budget: Option<(Instant, &AtomicBool)>,
         max_result_bytes: usize,
+        collect_relations: bool,
     ) -> Result<LanguageAnalysis, AnalyzerError> {
         let exhausted = || {
             budget.is_some_and(|(deadline, cancelled)| {
@@ -94,7 +113,7 @@ impl JavaAnalyzer {
         } else {
             SyntaxCoverage::Complete
         };
-        let diagnostics = if root.has_error() {
+        let mut diagnostics = if root.has_error() {
             vec![SyntaxDiagnostic {
                 code: "SYNTAX_ERROR".into(),
                 message: "Java source contains syntax errors".into(),
@@ -103,8 +122,31 @@ impl JavaAnalyzer {
         } else {
             Vec::new()
         };
+        let relation_sites = if collect_relations {
+            let remaining = max_result_bytes.saturating_sub(collector.result_bytes);
+            let (sites, relation_diagnostics) = crate::java_relations::collect_sites(
+                root,
+                source,
+                relative_path,
+                &collector.symbols,
+                remaining,
+            )?;
+            diagnostics.extend(relation_diagnostics);
+            sites
+        } else {
+            Vec::new()
+        };
+        if exhausted() {
+            return Err(AnalyzerError::BudgetExceeded);
+        }
+        let coverage = if diagnostics.is_empty() {
+            coverage
+        } else {
+            SyntaxCoverage::Partial
+        };
         Ok(LanguageAnalysis {
             symbols: collector.symbols,
+            relation_sites,
             diagnostics,
             coverage,
         })
@@ -117,7 +159,7 @@ impl LanguageAnalyzer for JavaAnalyzer {
         relative_path: &str,
         source: &[u8],
     ) -> Result<LanguageAnalysis, AnalyzerError> {
-        self.analyze_inner(relative_path, source, None, usize::MAX)
+        self.analyze_inner(relative_path, source, None, usize::MAX, false)
     }
 }
 
