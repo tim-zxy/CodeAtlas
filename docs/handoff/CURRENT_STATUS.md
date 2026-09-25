@@ -14,14 +14,14 @@
 | Phase | Readiness | Implementation progress |
 |---|---|---|
 | 0 | IMPLEMENTATION-READY | 18 of 18 tasks integrated; 11 of 11 technical exit checks passed on `9f4ec95`; documentation closeout merged as PR #7 at `71dd18c` |
-| 0.5 | IMPLEMENTATION-READY | P05-W2-001, P05-W2-002, and P05-W3-001 integrated; P05-W3-002 design is under written review; remaining tasks and Phase 0.5 exit gates remain open |
+| 0.5 | IMPLEMENTATION-READY | P05-W2-001, P05-W2-002, and P05-W3-001 integrated; P05-W3-002 written design approved and implementation plan under review; remaining tasks and Phase 0.5 exit gates remain open |
 | 1 | DESIGN-READY | 0 percent |
 | 2 | ARCHITECTURE-READY | 0 percent |
 | 3 | ROADMAP/ARCHITECTURE-READY | 0 percent |
 
 ## Next action
 
-Review `docs/superpowers/specs/2026-09-25-p05-w3-002-java-relations-design.md` before writing its implementation plan or code. P05-W3-002 is the next dependency-valid Java task; its implementation has not started. P05-W2-010 change-event labels remain separate. Source discovery remains Git-only; non-Git directory support is a later separately reviewed adapter. Do not promote Phase 0.5 on these tasks or advance deferred capabilities.
+Review `docs/superpowers/plans/2026-09-25-p05-w3-002-java-relations.md` and choose its execution method before product edits. The written P05-W3-002 design at `docs/superpowers/specs/2026-09-25-p05-w3-002-java-relations-design.md` was approved by the user after commit `16b5731`; implementation has not started. P05-W2-010 change-event labels remain separate. Source discovery remains Git-only; non-Git directory support is a later separately reviewed adapter. Do not promote Phase 0.5 on these tasks or advance deferred capabilities.
 
 ## 2026-09-24 compatibility amendment evidence
 
