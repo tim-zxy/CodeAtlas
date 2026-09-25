@@ -180,7 +180,7 @@ impl<'a> SymbolCollector<'a> {
                 && let Some(name) = self.text(name_node)
             {
                 let name = name.to_owned();
-                self.push("java.package", &name, "", name_node);
+                self.push("java.package", &name, "", false, name_node);
                 self.owners.push(name);
                 break;
             }
@@ -208,7 +208,7 @@ impl<'a> SymbolCollector<'a> {
                     && let Some(name) = self.text(name_node)
                 {
                     let name = name.to_owned();
-                    self.push(kind, &name, "", name_node);
+                    self.push(kind, &name, "", has_static_modifier(node), name_node);
                     self.owners.push(name);
                     if let Some(body) = node.child_by_field_name("body") {
                         self.visit_children(body);
@@ -227,7 +227,13 @@ impl<'a> SymbolCollector<'a> {
                     } else {
                         "java.method"
                     };
-                    self.push(kind, &name, &signature, name_node);
+                    self.push(
+                        kind,
+                        &name,
+                        &signature,
+                        has_static_modifier(node),
+                        name_node,
+                    );
                 }
             }
             "field_declaration" => {
@@ -238,7 +244,13 @@ impl<'a> SymbolCollector<'a> {
                         && let Some(name) = self.text(name_node)
                     {
                         let name = name.to_owned();
-                        self.push("java.field", &name, "", name_node);
+                        self.push(
+                            "java.field",
+                            &name,
+                            "",
+                            has_static_modifier(node),
+                            name_node,
+                        );
                     }
                 }
             }
@@ -298,7 +310,14 @@ impl<'a> SymbolCollector<'a> {
         std::str::from_utf8(self.source.get(node.byte_range())?).ok()
     }
 
-    fn push(&mut self, kind: &str, name: &str, signature: &str, name_node: Node<'_>) {
+    fn push(
+        &mut self,
+        kind: &str,
+        name: &str,
+        signature: &str,
+        is_static: bool,
+        name_node: Node<'_>,
+    ) {
         let estimated = 512usize.saturating_add(
             kind.len()
                 .saturating_add(name.len())
@@ -339,9 +358,22 @@ impl<'a> SymbolCollector<'a> {
             name: name.to_owned(),
             qualified_name,
             signature: signature.to_owned(),
+            is_static,
             span: span(name_node),
         });
     }
+}
+
+fn has_static_modifier(node: Node<'_>) -> bool {
+    let mut cursor = node.walk();
+    node.named_children(&mut cursor)
+        .find(|child| child.kind() == "modifiers")
+        .is_some_and(|modifiers| {
+            let mut cursor = modifiers.walk();
+            modifiers
+                .children(&mut cursor)
+                .any(|child| child.kind() == "static")
+        })
 }
 
 fn first_named_child(node: Node<'_>) -> Option<Node<'_>> {
