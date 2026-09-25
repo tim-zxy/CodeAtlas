@@ -52,3 +52,29 @@ jobs:
         run: cargo clippy --workspace --all-targets -- -D warnings
       - name: Run tests
         run: cargo test --workspace
+
+  native-analysis:
+    name: Native Java analysis integration
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.19.0
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Install Rust toolchain
+        run: rustup toolchain install 1.98.1 --profile default
+      - name: Build TypeScript workspace
+        run: pnpm build
+      - name: Build Native Analyzer
+        run: cargo build --workspace
+      - name: Run real-binary Java Fixtures
+        run: pnpm test:native-analysis

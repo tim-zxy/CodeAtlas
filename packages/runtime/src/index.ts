@@ -3,6 +3,14 @@ import { RuntimeBuilder, type RuntimeDependencies } from './runtime-builder.js';
 import { DefaultWorkspaceContextFactory } from './workspace-context.js';
 
 export { KnowledgeRuntime } from './knowledge-runtime.js';
+export {
+  NativeWorkerConfigError,
+  nativeLaunchArguments,
+  resolveNativeWorkerConfig,
+  type EffectiveNativeIndexingConfig,
+  type EffectiveNativeWorkerConfig,
+  type NativeWorkerBudget,
+} from './native-worker-config.js';
 export { RuntimeBuilder, type RuntimeDependencies } from './runtime-builder.js';
 
 export function createBootstrapRuntimeDependencies(): RuntimeDependencies {

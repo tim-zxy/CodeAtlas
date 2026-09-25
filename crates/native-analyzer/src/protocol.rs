@@ -3,6 +3,7 @@ use std::io::{self, Read, Write};
 use std::process::ExitCode;
 
 use serde_json::{Map, Value, json};
+use std::num::NonZeroUsize;
 
 const PROTOCOL_VERSION: u64 = 1;
 const IR_SCHEMA_VERSION: u64 = 1;
@@ -33,10 +34,47 @@ pub(crate) fn serve_once<R: Read, W: Write, E: Write>(
     output: &mut W,
     diagnostics: &mut E,
 ) -> io::Result<ExitCode> {
+    serve_once_impl(input, output, diagnostics, None)
+}
+
+pub(crate) fn serve_once_with_workers<R: Read, W: Write, E: Write>(
+    input: &mut R,
+    output: &mut W,
+    diagnostics: &mut E,
+    worker_count: NonZeroUsize,
+) -> io::Result<ExitCode> {
+    serve_once_impl(input, output, diagnostics, Some(worker_count))
+}
+
+fn serve_once_impl<R: Read, W: Write, E: Write>(
+    input: &mut R,
+    output: &mut W,
+    diagnostics: &mut E,
+    worker_count: Option<NonZeroUsize>,
+) -> io::Result<ExitCode> {
     let mut bytes = Vec::new();
     input
         .take((MAX_LINE_BYTES + 1) as u64)
         .read_to_end(&mut bytes)?;
+
+    if bytes.len() <= MAX_LINE_BYTES
+        && bytes.last() == Some(&b'\n')
+        && !bytes[..bytes.len() - 1].contains(&b'\n')
+        && !bytes[..bytes.len() - 1].contains(&b'\r')
+        && let Ok(value) = serde_json::from_slice::<Value>(&bytes[..bytes.len() - 1])
+        && value.get("type").and_then(Value::as_str) == Some("ANALYZE")
+    {
+        return crate::analyze::run(
+            value,
+            worker_count.unwrap_or(NonZeroUsize::new(1).expect("one worker")),
+            output,
+            diagnostics,
+        );
+    }
+    if worker_count.is_some() {
+        writeln!(diagnostics, "parse-workers requires ANALYZE")?;
+        return Ok(ExitCode::from(2));
+    }
 
     let request = match parse_request(&bytes) {
         Ok(request) => request,
@@ -180,10 +218,10 @@ fn describe_completed(request_id: &str) -> Value {
             "runtimeVersion": env!("CARGO_PKG_VERSION"),
             "protocolVersions": [PROTOCOL_VERSION],
             "irSchemaVersions": [IR_SCHEMA_VERSION],
-            "capabilities": ["protocol-handshake"],
+            "capabilities": ["protocol-handshake", "SYMBOL"],
             "languages": [{
                 "languageId": "java",
-                "grammarVersion": "0.0.0",
+                "grammarVersion": "0.23.5",
                 "analyzerVersion": "0.0.0",
                 "compatibilityVersion": "1"
             }],
@@ -255,7 +293,7 @@ mod tests {
         assert_eq!(event["type"], "DESCRIBE_COMPLETED");
         assert_eq!(
             event["payload"]["capabilities"],
-            json!(["protocol-handshake"])
+            json!(["protocol-handshake", "SYMBOL"])
         );
     }
 
