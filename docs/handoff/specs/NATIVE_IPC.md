@@ -53,6 +53,8 @@ P05-W3-001 retains that DESCRIBE framing and negotiation behavior, and after the
 
 P05-W3-002 adds evaluated Java `IMPORT`, `CALL`, `INHERITANCE`, and `REFERENCE` capabilities to DESCRIBE after the four registered relation Fixtures and task-local direct-call gates pass. A relation request uses a bounded two-pass declaration index and emits deterministic ProviderEdge facts with source range, resolved target or honest unresolved/ambiguous candidate state, and per-capability coverage. The existing version-1 event framing, JSONL terminal integrity, and TypeScript client validation remain unchanged. SYMBOL-only requests retain their previous path. This task does not implement REFRESH, Canonical SQLite application, framework semantics, or later-phase knowledge projections.
 
+The first relation pass retains declaration and inheritance context; the second pass re-verifies source and resolves sites. A sole call candidate with positive arity and no argument-type proof is `HEURISTIC`, not `EXACT`. Indexed superclass lookup can supply an inherited candidate, also `HEURISTIC`. Java package declaration nodes are file-scoped, so a normal wildcard package import remains `UNRESOLVED` rather than choosing one file's package node or declaring a false ambiguity; uses of that wildcard can still yield heuristic type candidates. These are resolution semantics within the existing ProviderTarget v1 shape, not new IPC fields.
+
 ## ANALYZE events
 
 `ANALYSIS_STARTED`, `SOURCE_FILE`, `NODE`, `EDGE`, `COVERAGE`, `DIAGNOSTIC`, `ANALYSIS_COMPLETED`, and `ANALYSIS_FAILED`. A completed payload includes counts, coverage summary, content fingerprint, and integrity checksum. Failed streams are never applied.

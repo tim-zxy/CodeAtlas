@@ -1,4 +1,4 @@
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet, VecDeque};
 
 use sha2::{Digest, Sha256};
 
@@ -9,6 +9,7 @@ use crate::language::{
 pub struct DeclarationIndex {
     by_qualified: BTreeMap<String, Vec<SymbolFact>>,
     path_packages: BTreeMap<String, String>,
+    super_types: BTreeMap<String, Vec<(String, String)>>,
     file_imports: Vec<(String, String)>,
     import_path: String,
     max_bytes: usize,
@@ -20,6 +21,7 @@ impl DeclarationIndex {
         Self {
             by_qualified: BTreeMap::new(),
             path_packages: BTreeMap::new(),
+            super_types: BTreeMap::new(),
             file_imports: Vec::new(),
             import_path: String::new(),
             max_bytes,
@@ -82,22 +84,51 @@ impl DeclarationIndex {
         path: &str,
         sites: &[RelationSite],
     ) -> Result<(), AnalyzerError> {
+        let bytes = sites
+            .iter()
+            .filter(|site| site.kind == RelationKind::Import)
+            .fold(path.len(), |total, site| {
+                total
+                    .saturating_add(256)
+                    .saturating_add(site.variant.len())
+                    .saturating_add(site.target_hint.len())
+            });
+        if self.used_bytes.saturating_add(bytes) > self.max_bytes {
+            return Err(AnalyzerError::ResourceLimit);
+        }
         let imports: Vec<_> = sites
             .iter()
             .filter(|site| site.kind == RelationKind::Import)
             .map(|site| (site.variant.clone(), site.target_hint.clone()))
             .collect();
-        let bytes = imports.iter().fold(path.len(), |total, (variant, hint)| {
-            total
-                .saturating_add(256)
-                .saturating_add(variant.len())
-                .saturating_add(hint.len())
-        });
-        if self.used_bytes.saturating_add(bytes) > self.max_bytes {
-            return Err(AnalyzerError::ResourceLimit);
-        }
         self.file_imports = imports;
         self.import_path = path.to_owned();
+        Ok(())
+    }
+
+    pub fn insert_inheritance(
+        &mut self,
+        path: &str,
+        sites: &[RelationSite],
+    ) -> Result<(), AnalyzerError> {
+        for site in sites
+            .iter()
+            .filter(|site| site.kind == RelationKind::Inheritance)
+        {
+            let charge = 256usize
+                .saturating_add(path.len())
+                .saturating_add(site.source_fact_id.len())
+                .saturating_add(site.target_hint.len());
+            let new_used = self.used_bytes.saturating_add(charge);
+            if new_used > self.max_bytes {
+                return Err(AnalyzerError::ResourceLimit);
+            }
+            self.super_types
+                .entry(site.source_fact_id.clone())
+                .or_default()
+                .push((path.to_owned(), site.target_hint.clone()));
+            self.used_bytes = new_used;
+        }
         Ok(())
     }
 
@@ -157,7 +188,28 @@ impl DeclarationIndex {
             },
             [candidate] => RelationTarget::Resolved {
                 fact_id: candidate.provider_fact_id.clone(),
-                resolution: if from_wildcard { "HEURISTIC" } else { "EXACT" },
+                resolution: if from_wildcard
+                    || (site.kind == RelationKind::Call
+                        && site.arity.is_some_and(|arity| arity > 0))
+                    || (site.kind == RelationKind::Call
+                        && matches!(site.variant.as_str(), "direct" | "this")
+                        && owner
+                            .and_then(|symbol| symbol.qualified_name.as_deref())
+                            .and_then(|name| name.rsplit_once('.'))
+                            .is_some_and(|(type_name, _)| {
+                                candidate
+                                    .qualified_name
+                                    .as_deref()
+                                    .is_none_or(|name| !name.starts_with(&format!("{type_name}.")))
+                            })
+                        && !self.file_imports.iter().any(|(variant, imported)| {
+                            variant == "static"
+                                && candidate.qualified_name.as_deref() == Some(imported)
+                        })) {
+                    "HEURISTIC"
+                } else {
+                    "EXACT"
+                },
             },
             many => RelationTarget::NonResolved {
                 resolution: "AMBIGUOUS",
@@ -195,7 +247,9 @@ impl DeclarationIndex {
             .into_iter()
             .filter(|symbol| match variant {
                 "normal" => is_type(symbol),
-                "wildcard" => symbol.provider_kind == "java.package",
+                // Package symbols are per source file, not a canonical package node.
+                // A wildcard import cannot truthfully resolve to one of them.
+                "wildcard" => false,
                 "static" => symbol.is_static,
                 "static_wildcard" => is_type(symbol),
                 _ => false,
@@ -312,6 +366,12 @@ impl DeclarationIndex {
             candidates.extend(self.candidates(&qualified, site.arity).into_iter().filter(
                 |symbol| symbol.provider_kind == kind && (!require_static || symbol.is_static),
             ));
+            if candidates.is_empty()
+                && kind == "java.method"
+                && matches!(site.variant.as_str(), "direct" | "this")
+            {
+                candidates.extend(self.inherited_methods(type_symbol, method, site.arity));
+            }
         }
         if candidates.is_empty() && site.variant == "direct" && self.import_path == path {
             for (variant, import) in &self.file_imports {
@@ -328,6 +388,50 @@ impl DeclarationIndex {
             }
         }
         candidates
+    }
+
+    fn inherited_methods(
+        &self,
+        owner_type: &SymbolFact,
+        method: &str,
+        arity: Option<usize>,
+    ) -> Vec<&SymbolFact> {
+        let mut seen = BTreeSet::new();
+        let mut queue = VecDeque::from([owner_type]);
+        seen.insert(owner_type.provider_fact_id.as_str());
+        while !queue.is_empty() {
+            let mut next = VecDeque::new();
+            let mut candidates = Vec::new();
+            for current in queue {
+                if let Some(parents) = self.super_types.get(&current.provider_fact_id) {
+                    for (path, hint) in parents {
+                        let package = self
+                            .path_packages
+                            .get(path)
+                            .map(String::as_str)
+                            .unwrap_or("");
+                        for parent in self.type_candidates(path, package, hint).0 {
+                            if !seen.insert(parent.provider_fact_id.as_str()) {
+                                continue;
+                            }
+                            if let Some(name) = parent.qualified_name.as_deref() {
+                                candidates.extend(
+                                    self.candidates(&format!("{name}.{method}"), arity)
+                                        .into_iter()
+                                        .filter(|symbol| symbol.provider_kind == "java.method"),
+                                );
+                            }
+                            next.push_back(parent);
+                        }
+                    }
+                }
+            }
+            if !candidates.is_empty() {
+                return candidates;
+            }
+            queue = next;
+        }
+        Vec::new()
     }
 
     fn reference_candidates(

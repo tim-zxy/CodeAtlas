@@ -389,6 +389,123 @@ fn resolves_relation_unavailable_external_call_as_unresolved() {
 }
 
 #[test]
+fn sole_same_arity_call_without_argument_types_is_not_exact() {
+    let analyzed = analyze_sites(
+        "src/A.java",
+        b"class A { void run(int value) {} void go() { run(\"text\"); } }",
+    );
+    let mut index = DeclarationIndex::new(8192);
+    index.insert("src/A.java", &analyzed.symbols).unwrap();
+    let call = analyzed
+        .relation_sites
+        .iter()
+        .find(|site| site.kind == RelationKind::Call)
+        .unwrap();
+    assert!(matches!(
+        index.resolve("src/A.java", call).target,
+        RelationTarget::Resolved {
+            resolution: "HEURISTIC",
+            ..
+        }
+    ));
+}
+
+#[test]
+fn wildcard_import_does_not_ambiguate_file_scoped_package_nodes() {
+    let client = analyze_sites("src/A.java", b"package app; import demo.*; class A {} ");
+    let first = analyze_sites("src/B.java", b"package demo; class B {} ");
+    let second = analyze_sites("src/C.java", b"package demo; class C {} ");
+    let mut index = DeclarationIndex::new(16 * 1024);
+    for (path, analysis) in [
+        ("src/A.java", &client),
+        ("src/B.java", &first),
+        ("src/C.java", &second),
+    ] {
+        index.insert(path, &analysis.symbols).unwrap();
+    }
+    index
+        .set_file_imports("src/A.java", &client.relation_sites)
+        .unwrap();
+    let import = client
+        .relation_sites
+        .iter()
+        .find(|site| site.kind == RelationKind::Import)
+        .unwrap();
+    assert!(matches!(
+        index.resolve("src/A.java", import).target,
+        RelationTarget::NonResolved {
+            resolution: "UNRESOLVED",
+            ref hint,
+            ref candidates,
+        } if hint == "demo" && candidates.is_empty()
+    ));
+}
+
+#[test]
+fn direct_call_can_reach_indexed_superclass_method() {
+    let parent = analyze_sites(
+        "src/Base.java",
+        b"package demo; class Base { void ping() {} }",
+    );
+    let child = analyze_sites(
+        "src/Child.java",
+        b"package demo; class Child extends Base { void go() { ping(); this.ping(); } }",
+    );
+    let mut index = DeclarationIndex::new(16 * 1024);
+    index.insert("src/Base.java", &parent.symbols).unwrap();
+    index.insert("src/Child.java", &child.symbols).unwrap();
+    index
+        .insert_inheritance("src/Child.java", &child.relation_sites)
+        .unwrap();
+    let expected = &parent
+        .symbols
+        .iter()
+        .find(|symbol| symbol.name == "ping")
+        .unwrap()
+        .provider_fact_id;
+    for call in child
+        .relation_sites
+        .iter()
+        .filter(|site| site.kind == RelationKind::Call)
+    {
+        assert!(matches!(
+            index.resolve("src/Child.java", call).target,
+            RelationTarget::Resolved { ref fact_id, resolution: "HEURISTIC" } if fact_id == expected
+        ));
+    }
+}
+
+#[test]
+fn explicit_static_import_call_remains_exact_without_wildcard() {
+    let library = analyze_sites(
+        "src/B.java",
+        b"package demo; class B { static void ping() {} }",
+    );
+    let client = analyze_sites(
+        "src/A.java",
+        b"package demo; import static demo.B.ping; class A { void go() { ping(); } }",
+    );
+    let mut index = DeclarationIndex::new(16 * 1024);
+    index.insert("src/A.java", &client.symbols).unwrap();
+    index.insert("src/B.java", &library.symbols).unwrap();
+    index
+        .set_file_imports("src/A.java", &client.relation_sites)
+        .unwrap();
+    let call = client
+        .relation_sites
+        .iter()
+        .find(|site| site.kind == RelationKind::Call)
+        .unwrap();
+    assert!(matches!(
+        index.resolve("src/A.java", call).target,
+        RelationTarget::Resolved {
+            resolution: "EXACT",
+            ..
+        }
+    ));
+}
+
+#[test]
 fn resolves_relation_wildcard_import_and_this_constructor_without_inventing_targets() {
     let library = analyze_sites("src/B.java", b"package demo; class B {} ");
     let client = analyze_sites(
@@ -425,7 +542,7 @@ fn resolves_relation_wildcard_import_and_this_constructor_without_inventing_targ
         .unwrap();
     let resolved = index.resolve("src/A.java", constructor_call);
     assert!(
-        matches!(&resolved.target, RelationTarget::Resolved { fact_id, resolution: "EXACT" } if fact_id == &constructor.provider_fact_id),
+        matches!(&resolved.target, RelationTarget::Resolved { fact_id, resolution: "HEURISTIC" } if fact_id == &constructor.provider_fact_id),
         "{:?}",
         resolved.target
     );

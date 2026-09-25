@@ -5,7 +5,7 @@
   "phase": "0.5",
   "languages": ["java"],
   "frameworks": [],
-  "capabilities": ["SYMBOL", "INHERITANCE", "REFERENCE"],
+  "capabilities": ["SYMBOL", "INHERITANCE", "REFERENCE", "IMPORT", "CALL"],
   "inputs": { "source": "source/" },
   "expected": {
     "nodes": "expected/nodes.json",
@@ -13,6 +13,17 @@
     "coverage": "expected/coverage.json",
     "diagnostics": "expected/diagnostics.json"
   },
-  "criticalFacts": [],
+  "criticalFacts": [
+    {
+      "id": "java-relation-v1:2ee3185577b063e56942a9a1bae92d4f9d7e3cd4722dc553c9f05abb610ff4f5",
+      "type": "EDGE",
+      "importance": "CRITICAL"
+    },
+    {
+      "id": "java-relation-v1:3ea632d59172119f40c5d9d2a9c415df74209788417a0e636a92919dfcf6d0a3",
+      "type": "EDGE",
+      "importance": "CRITICAL"
+    }
+  ],
   "qualityGates": {}
 }

@@ -1,6 +1,36 @@
 [
   {
     "capability": "SYMBOL",
+    "sourceFileId": "file-Base.java",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE"
+  },
+  {
+    "capability": "INHERITANCE",
+    "sourceFileId": "file-Base.java",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE"
+  },
+  {
+    "capability": "REFERENCE",
+    "sourceFileId": "file-Base.java",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE"
+  },
+  {
+    "capability": "IMPORT",
+    "sourceFileId": "file-Base.java",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE"
+  },
+  {
+    "capability": "CALL",
+    "sourceFileId": "file-Base.java",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE"
+  },
+  {
+    "capability": "SYMBOL",
     "sourceFileId": "file-Hierarchy.java",
     "support": "SUPPORTED",
     "coverage": "COMPLETE"
@@ -14,6 +44,48 @@
   {
     "capability": "REFERENCE",
     "sourceFileId": "file-Hierarchy.java",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE"
+  },
+  {
+    "capability": "IMPORT",
+    "sourceFileId": "file-Hierarchy.java",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE"
+  },
+  {
+    "capability": "CALL",
+    "sourceFileId": "file-Hierarchy.java",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE"
+  },
+  {
+    "capability": "SYMBOL",
+    "sourceFileId": "file-I.java",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE"
+  },
+  {
+    "capability": "INHERITANCE",
+    "sourceFileId": "file-I.java",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE"
+  },
+  {
+    "capability": "REFERENCE",
+    "sourceFileId": "file-I.java",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE"
+  },
+  {
+    "capability": "IMPORT",
+    "sourceFileId": "file-I.java",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE"
+  },
+  {
+    "capability": "CALL",
+    "sourceFileId": "file-I.java",
     "support": "SUPPORTED",
     "coverage": "COMPLETE"
   }

@@ -32,10 +32,98 @@
     "qualifiedName": "demo.A",
     "sourceRange": {
       "sourceFileId": "file-A.java",
-      "startLine": 2,
+      "startLine": 3,
       "startColumn": 6,
-      "endLine": 2,
+      "endLine": 3,
       "endColumn": 7
+    },
+    "confidence": {
+      "score": 1,
+      "method": "parser",
+      "reasons": []
+    }
+  },
+  {
+    "providerId": "native",
+    "providerFactId": "java-symbol-v1:b5b38fed6cb1e25a8371cae9c7df33087a58f760cf1d8b859746c482f804a264",
+    "providerSnapshotId": "snapshot-fixture",
+    "repositoryId": "repo-fixture",
+    "revisionId": "rev-fixture",
+    "providerKind": "java.constructor",
+    "name": "A",
+    "qualifiedName": "demo.A.A",
+    "sourceRange": {
+      "sourceFileId": "file-A.java",
+      "startLine": 4,
+      "startColumn": 2,
+      "endLine": 4,
+      "endColumn": 3
+    },
+    "confidence": {
+      "score": 1,
+      "method": "parser",
+      "reasons": []
+    }
+  },
+  {
+    "providerId": "native",
+    "providerFactId": "java-symbol-v1:83373dfe948245f77015bcbb344e674273326862221b22e348e72e2624677650",
+    "providerSnapshotId": "snapshot-fixture",
+    "repositoryId": "repo-fixture",
+    "revisionId": "rev-fixture",
+    "providerKind": "java.constructor",
+    "name": "A",
+    "qualifiedName": "demo.A.A",
+    "sourceRange": {
+      "sourceFileId": "file-A.java",
+      "startLine": 5,
+      "startColumn": 2,
+      "endLine": 5,
+      "endColumn": 3
+    },
+    "confidence": {
+      "score": 1,
+      "method": "parser",
+      "reasons": []
+    }
+  },
+  {
+    "providerId": "native",
+    "providerFactId": "java-symbol-v1:b7c68748ef76d0cb088f69165b3cdeabfe8dfb4200a1f94f301a6d99a4b71220",
+    "providerSnapshotId": "snapshot-fixture",
+    "repositoryId": "repo-fixture",
+    "revisionId": "rev-fixture",
+    "providerKind": "java.field",
+    "name": "field",
+    "qualifiedName": "demo.A.field",
+    "sourceRange": {
+      "sourceFileId": "file-A.java",
+      "startLine": 6,
+      "startColumn": 6,
+      "endLine": 6,
+      "endColumn": 11
+    },
+    "confidence": {
+      "score": 1,
+      "method": "parser",
+      "reasons": []
+    }
+  },
+  {
+    "providerId": "native",
+    "providerFactId": "java-symbol-v1:7d6fc927117d68944cea3ce2c4307d74a9f1e3a560eaaca616edfc782abb46cc",
+    "providerSnapshotId": "snapshot-fixture",
+    "repositoryId": "repo-fixture",
+    "revisionId": "rev-fixture",
+    "providerKind": "java.method",
+    "name": "local",
+    "qualifiedName": "demo.A.local",
+    "sourceRange": {
+      "sourceFileId": "file-A.java",
+      "startLine": 7,
+      "startColumn": 7,
+      "endLine": 7,
+      "endColumn": 12
     },
     "confidence": {
       "score": 1,
@@ -54,10 +142,10 @@
     "qualifiedName": "demo.A.run",
     "sourceRange": {
       "sourceFileId": "file-A.java",
-      "startLine": 2,
-      "startColumn": 15,
-      "endLine": 2,
-      "endColumn": 18
+      "startLine": 8,
+      "startColumn": 7,
+      "endLine": 8,
+      "endColumn": 10
     },
     "confidence": {
       "score": 1,
@@ -127,6 +215,28 @@
   },
   {
     "providerId": "native",
+    "providerFactId": "java-symbol-v1:dd96398a4c0c33735f21e0a3857f82e4e15728e18e52d7345ede17d29c08993c",
+    "providerSnapshotId": "snapshot-fixture",
+    "repositoryId": "repo-fixture",
+    "revisionId": "rev-fixture",
+    "providerKind": "java.constructor",
+    "name": "B",
+    "qualifiedName": "demo.B.B",
+    "sourceRange": {
+      "sourceFileId": "file-B.java",
+      "startLine": 1,
+      "startColumn": 10,
+      "endLine": 1,
+      "endColumn": 11
+    },
+    "confidence": {
+      "score": 1,
+      "method": "parser",
+      "reasons": []
+    }
+  },
+  {
+    "providerId": "native",
     "providerFactId": "java-symbol-v1:d9b6fac297373b23901b8839c9876e76ca650f267ac1bc53ef11f05016081b6a",
     "providerSnapshotId": "snapshot-fixture",
     "repositoryId": "repo-fixture",
@@ -137,9 +247,9 @@
     "sourceRange": {
       "sourceFileId": "file-B.java",
       "startLine": 1,
-      "startColumn": 22,
+      "startColumn": 29,
       "endLine": 1,
-      "endColumn": 26
+      "endColumn": 33
     },
     "confidence": {
       "score": 1,

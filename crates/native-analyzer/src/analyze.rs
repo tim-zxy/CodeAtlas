@@ -293,7 +293,7 @@ fn run_relations<W: Write>(
         }
         let root = request.root.clone();
         let Some(results) = timed_batch(chunk, remaining, move |file, deadline, cancelled| {
-            parse_source(&root, &file, deadline, cancelled, false)
+            parse_source(&root, &file, deadline, cancelled, true)
         }) else {
             return stream.fail(context, "BUDGET_EXCEEDED", "Analysis deadline exceeded");
         };
@@ -308,6 +308,16 @@ fn run_relations<W: Write>(
                     context,
                     "RESOURCE_LIMIT_EXCEEDED",
                     "Declaration index exceeds memory budget",
+                );
+            }
+            if index
+                .insert_inheritance(path, &analysis.relation_sites)
+                .is_err()
+            {
+                return stream.fail(
+                    context,
+                    "RESOURCE_LIMIT_EXCEEDED",
+                    "Inheritance index exceeds memory budget",
                 );
             }
         }

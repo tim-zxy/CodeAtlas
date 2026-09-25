@@ -1,2 +1,2 @@
 package demo;
-class B { static void call() {} }
+class B { B() {} static void call() {} }

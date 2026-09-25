@@ -49,3 +49,15 @@ test('zero denominators cannot pass a direct-call gate', () => {
     recall: null,
   });
 });
+
+test('invalid critical declarations cannot disappear from recall', () => {
+  assert.throws(() => directCallMetrics([], [], ['missing']), /missing critical direct call/);
+  assert.throws(
+    () => directCallMetrics([call('site', null, 'AMBIGUOUS')], [], ['site']),
+    /not an expected resolved direct call/,
+  );
+  assert.throws(
+    () => directCallMetrics([call('site', 'right')], [], ['site', 'site']),
+    /duplicate critical direct call/,
+  );
+});

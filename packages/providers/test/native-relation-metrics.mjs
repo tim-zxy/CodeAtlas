@@ -4,6 +4,16 @@ function resolvedCall(edge) {
 
 export function directCallMetrics(expected, actual, criticalIds) {
   const critical = new Set(criticalIds);
+  if (critical.size !== criticalIds.length) {
+    throw new Error('duplicate critical direct call');
+  }
+  for (const id of critical) {
+    const declared = expected.filter((edge) => edge.providerFactId === id);
+    if (declared.length === 0) throw new Error(`missing critical direct call: ${id}`);
+    if (declared.length !== 1 || !resolvedCall(declared[0])) {
+      throw new Error(`critical ${id} is not an expected resolved direct call`);
+    }
+  }
   const expectedById = new Map(
     expected
       .filter((edge) => resolvedCall(edge) && critical.has(edge.providerFactId))
