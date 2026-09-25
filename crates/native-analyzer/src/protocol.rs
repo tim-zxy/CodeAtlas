@@ -34,6 +34,24 @@ pub(crate) fn serve_once<R: Read, W: Write, E: Write>(
     output: &mut W,
     diagnostics: &mut E,
 ) -> io::Result<ExitCode> {
+    serve_once_impl(input, output, diagnostics, None)
+}
+
+pub(crate) fn serve_once_with_workers<R: Read, W: Write, E: Write>(
+    input: &mut R,
+    output: &mut W,
+    diagnostics: &mut E,
+    worker_count: NonZeroUsize,
+) -> io::Result<ExitCode> {
+    serve_once_impl(input, output, diagnostics, Some(worker_count))
+}
+
+fn serve_once_impl<R: Read, W: Write, E: Write>(
+    input: &mut R,
+    output: &mut W,
+    diagnostics: &mut E,
+    worker_count: Option<NonZeroUsize>,
+) -> io::Result<ExitCode> {
     let mut bytes = Vec::new();
     input
         .take((MAX_LINE_BYTES + 1) as u64)
@@ -48,10 +66,14 @@ pub(crate) fn serve_once<R: Read, W: Write, E: Write>(
     {
         return crate::analyze::run(
             value,
-            NonZeroUsize::new(1).expect("one worker"),
+            worker_count.unwrap_or(NonZeroUsize::new(1).expect("one worker")),
             output,
             diagnostics,
         );
+    }
+    if worker_count.is_some() {
+        writeln!(diagnostics, "parse-workers requires ANALYZE")?;
+        return Ok(ExitCode::from(2));
     }
 
     let request = match parse_request(&bytes) {

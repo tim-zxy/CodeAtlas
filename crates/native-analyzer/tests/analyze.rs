@@ -33,7 +33,15 @@ fn request(source: &[u8]) -> Value {
 }
 
 fn run_analyzer(request: &Value) -> (i32, Vec<Value>, String, Vec<u8>) {
+    run_analyzer_with_args(request, &[])
+}
+
+fn run_analyzer_with_args(
+    request: &Value,
+    arguments: &[&str],
+) -> (i32, Vec<Value>, String, Vec<u8>) {
     let mut child = Command::new(env!("CARGO_BIN_EXE_codeatlas-native-analyzer"))
+        .args(arguments)
         .stdin(Stdio::piped())
         .stdout(Stdio::piped())
         .stderr(Stdio::piped())
@@ -55,6 +63,40 @@ fn run_analyzer(request: &Value) -> (i32, Vec<Value>, String, Vec<u8>) {
         String::from_utf8(output.stderr).unwrap(),
         output.stdout,
     )
+}
+
+#[test]
+fn bounded_scheduler_preserves_event_order_across_worker_counts() {
+    let fixture = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../fixtures/native");
+    let basic = fs::read(fixture.join("java-basic-symbol/source/src/Basic.java")).unwrap();
+    let nested = fs::read(fixture.join("java-nested-types/source/src/Outer.java")).unwrap();
+    let root = std::env::temp_dir().join(format!("codeatlas-workers-{}", std::process::id()));
+    fs::create_dir_all(root.join("src")).unwrap();
+    fs::write(root.join("src/Basic.java"), &basic).unwrap();
+    fs::write(root.join("src/Outer.java"), &nested).unwrap();
+    let mut request = request(&basic);
+    request["payload"]["repository"]["rootPath"] = json!(root.to_str().unwrap());
+    let mut second = request["payload"]["sourceFiles"][0].clone();
+    second["id"] = json!("file-nested");
+    second["path"] = json!("src/Outer.java");
+    second["contentFingerprint"] = json!(format!("sha256:{:x}", Sha256::digest(&nested)));
+    request["payload"]["sourceFiles"]
+        .as_array_mut()
+        .unwrap()
+        .push(second);
+    let one = run_analyzer_with_args(&request, &["--parse-workers", "1"]);
+    let two = run_analyzer_with_args(&request, &["--parse-workers", "2"]);
+    assert_eq!(one.0, 0);
+    assert_eq!(two.0, 0);
+    assert_eq!(one.1, two.1);
+    assert_eq!(one.3, two.3);
+    let impossible = run_analyzer_with_args(&request, &["--parse-workers", "5"]);
+    assert_eq!(impossible.1[0]["type"], "REQUEST_FAILED");
+    assert_eq!(
+        impossible.1[0]["payload"]["error"]["code"],
+        "RESOURCE_LIMIT_EXCEEDED"
+    );
+    fs::remove_dir_all(root).unwrap();
 }
 
 #[test]

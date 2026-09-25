@@ -6,7 +6,7 @@ use std::process::ExitCode;
 use std::time::{Instant, SystemTime, UNIX_EPOCH};
 
 use codeatlas_native_analyzer::java::JavaAnalyzer;
-use codeatlas_native_analyzer::language::{LanguageAnalyzer, SyntaxCoverage};
+use codeatlas_native_analyzer::language::{LanguageAnalysis, LanguageAnalyzer, SyntaxCoverage};
 use codeatlas_native_analyzer::source_access::{SourceAccessError, read_verified_source};
 use serde_json::{Map, Value, json};
 use sha2::{Digest, Sha256};
@@ -15,6 +15,9 @@ const MAX_LINE_BYTES: usize = 1_000_000;
 const MAX_EVENT_COUNT: u64 = 10_000;
 const MAX_TOTAL_BYTES: u64 = 10_000_000;
 const MAX_SAFE_INTEGER: u64 = 9_007_199_254_740_991;
+// Five pinned Windows MSVC debug runs peaked at 5.51 MiB (basic) and 2.98 MiB
+// (nested); 16 MiB reserves headroom for each parser plus one bounded source.
+const WORKER_RESERVATION_BYTES: u64 = 16 * 1024 * 1024;
 
 struct Request {
     id: String,
@@ -33,7 +36,7 @@ struct Request {
 
 pub(crate) fn run<W: Write, E: Write>(
     request: Value,
-    _worker_count: NonZeroUsize,
+    worker_count: NonZeroUsize,
     output: &mut W,
     _diagnostics: &mut E,
 ) -> io::Result<ExitCode> {
@@ -77,6 +80,16 @@ pub(crate) fn run<W: Write, E: Write>(
         )?;
         return Ok(ExitCode::SUCCESS);
     }
+    if (worker_count.get() as u64).saturating_mul(WORKER_RESERVATION_BYTES)
+        > request.max_memory_bytes
+    {
+        write_one(
+            output,
+            json!({"protocolVersion": 1, "requestId": request.id, "sequence": 0,
+            "type": "REQUEST_FAILED", "payload": {"error": error("RESOURCE_LIMIT_EXCEEDED", "Parse workers exceed memory budget", false)}}),
+        )?;
+        return Ok(ExitCode::SUCCESS);
+    }
     let context = json!({
         "providerSnapshotId": request.snapshot_id,
         "repositoryId": request.repository_id,
@@ -88,66 +101,43 @@ pub(crate) fn run<W: Write, E: Write>(
     let started = Instant::now();
     let mut counts = Counts::default();
     let mut partial = false;
-    let mut analyzer = match JavaAnalyzer::new() {
-        Ok(analyzer) => analyzer,
-        Err(_) => {
-            return stream.fail(
-                &context,
-                "INTERNAL_ANALYZER_FAILURE",
-                "Java parser unavailable",
-            );
-        }
-    };
-
-    for source_file in &request.source_files {
-        if started.elapsed().as_millis() >= u128::from(request.max_duration_ms)
-            || request
-                .deadline_epoch_ms
-                .is_some_and(|deadline| now_epoch_ms() >= deadline)
-        {
-            return stream.fail(&context, "BUDGET_EXCEEDED", "Analysis deadline exceeded");
-        }
-        if source_file["languageHint"] != "java"
-            || !source_file["path"]
-                .as_str()
-                .is_some_and(|path| path.ends_with(".java"))
-        {
-            return stream.fail(
-                &context,
-                "UNSUPPORTED_LANGUAGE",
-                "Source language is unsupported",
-            );
-        }
-        let path = source_file["path"].as_str().expect("validated path");
-        let expected = source_file["contentFingerprint"]
-            .as_str()
-            .expect("validated fingerprint");
-        let source_bytes = match read_verified_source(
-            Path::new(&request.root),
-            path,
-            expected,
-            usize::try_from(request.max_memory_bytes).unwrap_or(usize::MAX),
-        ) {
-            Ok(bytes) => bytes,
-            Err(error) => {
-                let (code, message) = source_error(&error);
-                return stream.fail(&context, code, message);
+    // At most one batch of worker_count files is parsed before output drains.
+    // Holding a later completed result can therefore never accumulate across batches.
+    for chunk in request.source_files.chunks(worker_count.get()) {
+        let results = ordered_batch(chunk, &|file| parse_source(&request.root, file));
+        for (source_file, result) in chunk.iter().zip(results) {
+            if started.elapsed().as_millis() >= u128::from(request.max_duration_ms)
+                || request
+                    .deadline_epoch_ms
+                    .is_some_and(|deadline| now_epoch_ms() >= deadline)
+            {
+                return stream.fail(&context, "BUDGET_EXCEEDED", "Analysis deadline exceeded");
             }
-        };
-        let analysis = match analyzer.analyze(path, &source_bytes) {
-            Ok(analysis) => analysis,
-            Err(_) => {
-                return stream.fail(&context, "INTERNAL_ANALYZER_FAILURE", "Java parse failed");
+            let analysis = match result {
+                Ok(Ok(analysis)) => analysis,
+                Ok(Err(ProcessingError::Source(error))) => {
+                    let (code, message) = source_error(&error);
+                    return stream.fail(&context, code, message);
+                }
+                Ok(Err(ProcessingError::Unsupported)) => {
+                    return stream.fail(
+                        &context,
+                        "UNSUPPORTED_LANGUAGE",
+                        "Source language is unsupported",
+                    );
+                }
+                Ok(Err(ProcessingError::Parser)) | Err(_) => {
+                    return stream.fail(&context, "INTERNAL_ANALYZER_FAILURE", "Java parse failed");
+                }
+            };
+            if !stream.has_room(analysis.symbols.len() + analysis.diagnostics.len() + 2) {
+                return stream.fail(&context, "RESOURCE_LIMIT_EXCEEDED", "Event budget exceeded");
             }
-        };
-        if !stream.has_room(analysis.symbols.len() + analysis.diagnostics.len() + 2) {
-            return stream.fail(&context, "RESOURCE_LIMIT_EXCEEDED", "Event budget exceeded");
-        }
-        stream.emit("SOURCE_FILE", source_file.clone(), false)?;
-        counts.source_files += 1;
-        for symbol in analysis.symbols {
-            let span = symbol.span;
-            stream.emit("NODE", json!({
+            stream.emit("SOURCE_FILE", source_file.clone(), false)?;
+            counts.source_files += 1;
+            for symbol in analysis.symbols {
+                let span = symbol.span;
+                stream.emit("NODE", json!({
                 "providerId": "native",
                 "providerFactId": symbol.provider_fact_id,
                 "providerSnapshotId": request.snapshot_id,
@@ -160,35 +150,36 @@ pub(crate) fn run<W: Write, E: Write>(
                     "startColumn": span.start_column, "endLine": span.end_line, "endColumn": span.end_column},
                 "confidence": {"score": 1, "method": "parser", "reasons": []}
             }), false)?;
-            counts.nodes += 1;
-        }
-        let coverage = match analysis.coverage {
-            SyntaxCoverage::Complete => "COMPLETE",
-            SyntaxCoverage::Partial => {
-                partial = true;
-                "PARTIAL"
+                counts.nodes += 1;
             }
-        };
-        stream.emit(
-            "COVERAGE",
-            json!({"capability": "SYMBOL", "sourceFileId": source_file["id"],
-            "support": "SUPPORTED", "coverage": coverage}),
-            false,
-        )?;
-        counts.coverage += 1;
-        for diagnostic in analysis.diagnostics {
-            let range = diagnostic.span.map(|span| {
-                json!({"sourceFileId": source_file["id"],
-                "startLine": span.start_line, "startColumn": span.start_column,
-                "endLine": span.end_line, "endColumn": span.end_column})
-            });
+            let coverage = match analysis.coverage {
+                SyntaxCoverage::Complete => "COMPLETE",
+                SyntaxCoverage::Partial => {
+                    partial = true;
+                    "PARTIAL"
+                }
+            };
             stream.emit(
-                "DIAGNOSTIC",
-                json!({"code": diagnostic.code, "severity": "WARNING",
-                "message": diagnostic.message, "sourceRange": range}),
+                "COVERAGE",
+                json!({"capability": "SYMBOL", "sourceFileId": source_file["id"],
+            "support": "SUPPORTED", "coverage": coverage}),
                 false,
             )?;
-            counts.diagnostics += 1;
+            counts.coverage += 1;
+            for diagnostic in analysis.diagnostics {
+                let range = diagnostic.span.map(|span| {
+                    json!({"sourceFileId": source_file["id"],
+                "startLine": span.start_line, "startColumn": span.start_column,
+                "endLine": span.end_line, "endColumn": span.end_column})
+                });
+                stream.emit(
+                    "DIAGNOSTIC",
+                    json!({"code": diagnostic.code, "severity": "WARNING",
+                "message": diagnostic.message, "sourceRange": range}),
+                    false,
+                )?;
+                counts.diagnostics += 1;
+            }
         }
     }
     let checksum = stream.checksum();
@@ -444,6 +435,46 @@ fn source_error(error: &SourceAccessError) -> (&'static str, &'static str) {
         SourceAccessError::Io(_) => ("INTERNAL_ANALYZER_FAILURE", "Cannot read source"),
     }
 }
+
+enum ProcessingError {
+    Source(SourceAccessError),
+    Unsupported,
+    Parser,
+}
+
+fn ordered_batch<T: Sync, R: Send, F: Fn(&T) -> R + Sync>(
+    items: &[T],
+    process: &F,
+) -> Vec<std::thread::Result<R>> {
+    std::thread::scope(|scope| {
+        let jobs: Vec<_> = items
+            .iter()
+            .map(|item| scope.spawn(|| process(item)))
+            .collect();
+        jobs.into_iter().map(|job| job.join()).collect()
+    })
+}
+
+fn parse_source(root: &str, source_file: &Value) -> Result<LanguageAnalysis, ProcessingError> {
+    let path = source_file["path"].as_str().expect("validated path");
+    if source_file["languageHint"] != "java" || !path.ends_with(".java") {
+        return Err(ProcessingError::Unsupported);
+    }
+    let expected = source_file["contentFingerprint"]
+        .as_str()
+        .expect("validated fingerprint");
+    let source_bytes = read_verified_source(
+        Path::new(root),
+        path,
+        expected,
+        (WORKER_RESERVATION_BYTES / 2) as usize,
+    )
+    .map_err(ProcessingError::Source)?;
+    let mut analyzer = JavaAnalyzer::new().map_err(|_| ProcessingError::Parser)?;
+    analyzer
+        .analyze(path, &source_bytes)
+        .map_err(|_| ProcessingError::Parser)
+}
 fn now_epoch_ms() -> i64 {
     SystemTime::now()
         .duration_since(UNIX_EPOCH)
@@ -525,5 +556,45 @@ impl<'a, W: Write> EventWriter<'a, W> {
         payload.insert("error".into(), error(code, message, false));
         self.emit("ANALYSIS_FAILED", Value::Object(payload), true)?;
         Ok(ExitCode::SUCCESS)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use std::sync::atomic::{AtomicUsize, Ordering};
+    use std::sync::{Arc, Barrier, Mutex};
+    use std::time::Duration;
+
+    use super::ordered_batch;
+
+    #[test]
+    fn later_completion_and_slow_drain_hold_at_most_one_batch() {
+        let completed = AtomicUsize::new(0);
+        let high_water = AtomicUsize::new(0);
+        let barrier = Arc::new(Barrier::new(2));
+        let completion_order = Mutex::new(Vec::new());
+        let mut order = Vec::new();
+        for chunk in (0..6).collect::<Vec<_>>().chunks(2) {
+            let results = ordered_batch(chunk, &|index| {
+                if index % 2 == 0 {
+                    barrier.wait();
+                    std::thread::sleep(Duration::from_millis(5));
+                } else {
+                    barrier.wait();
+                }
+                let now = completed.fetch_add(1, Ordering::SeqCst) + 1;
+                high_water.fetch_max(now, Ordering::SeqCst);
+                completion_order.lock().unwrap().push(*index);
+                *index
+            });
+            for result in results {
+                order.push(result.unwrap());
+                std::thread::sleep(Duration::from_millis(5));
+                completed.fetch_sub(1, Ordering::SeqCst);
+            }
+        }
+        assert_eq!(order, [0, 1, 2, 3, 4, 5]);
+        assert_eq!(*completion_order.lock().unwrap(), [1, 0, 3, 2, 5, 4]);
+        assert_eq!(high_water.load(Ordering::SeqCst), 2);
     }
 }
