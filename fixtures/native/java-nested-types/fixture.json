@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "java-nested-types",
+  "category": "code-intelligence",
+  "phase": "0.5",
+  "languages": ["java"],
+  "frameworks": [],
+  "capabilities": ["SYMBOL"],
+  "inputs": { "source": "source/" },
+  "expected": {
+    "nodes": "expected/nodes.json",
+    "coverage": "expected/coverage.json",
+    "diagnostics": "expected/diagnostics.json"
+  },
+  "criticalFacts": [
+    { "id": "src/Outer.java|java.class|sample.nested.Outer", "type": "NODE", "importance": "CRITICAL" },
+    { "id": "src/Outer.java|java.method|sample.nested.Outer.run|(int)", "type": "NODE", "importance": "CRITICAL" },
+    { "id": "src/Outer.java|java.method|sample.nested.Outer.run|(String)", "type": "NODE", "importance": "CRITICAL" },
+    { "id": "src/Outer.java|java.interface|sample.nested.Outer.Inner", "type": "NODE", "importance": "CRITICAL" },
+    { "id": "src/Outer.java|java.class|sample.nested.Outer.Nested", "type": "NODE", "importance": "CRITICAL" }
+  ],
+  "qualityGates": {}
+}
