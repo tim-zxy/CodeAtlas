@@ -2,10 +2,15 @@ use std::collections::BTreeMap;
 
 use sha2::{Digest, Sha256};
 
-use crate::language::{AnalyzerError, RelationKind, RelationSite, SymbolFact};
+use crate::language::{
+    AnalyzerError, RelationKind, RelationSite, RelationTarget, ResolvedRelation, SymbolFact,
+};
 
 pub struct DeclarationIndex {
     by_qualified: BTreeMap<String, Vec<SymbolFact>>,
+    path_packages: BTreeMap<String, String>,
+    file_imports: Vec<(String, String)>,
+    import_path: String,
     max_bytes: usize,
     used_bytes: usize,
 }
@@ -14,6 +19,9 @@ impl DeclarationIndex {
     pub fn new(max_bytes: usize) -> Self {
         Self {
             by_qualified: BTreeMap::new(),
+            path_packages: BTreeMap::new(),
+            file_imports: Vec::new(),
+            import_path: String::new(),
             max_bytes,
             used_bytes: 0,
         }
@@ -37,6 +45,10 @@ impl DeclarationIndex {
             return Err(AnalyzerError::ResourceLimit);
         }
         for symbol in symbols {
+            if symbol.provider_kind == "java.package" {
+                self.path_packages
+                    .insert(path.to_owned(), symbol.name.clone());
+            }
             self.by_qualified
                 .entry(
                     symbol
@@ -64,6 +76,306 @@ impl DeclarationIndex {
         candidates.sort_by(|left, right| left.provider_fact_id.cmp(&right.provider_fact_id));
         candidates
     }
+
+    pub fn set_file_imports(
+        &mut self,
+        path: &str,
+        sites: &[RelationSite],
+    ) -> Result<(), AnalyzerError> {
+        let imports: Vec<_> = sites
+            .iter()
+            .filter(|site| site.kind == RelationKind::Import)
+            .map(|site| (site.variant.clone(), site.target_hint.clone()))
+            .collect();
+        let bytes = imports.iter().fold(path.len(), |total, (variant, hint)| {
+            total
+                .saturating_add(256)
+                .saturating_add(variant.len())
+                .saturating_add(hint.len())
+        });
+        if self.used_bytes.saturating_add(bytes) > self.max_bytes {
+            return Err(AnalyzerError::ResourceLimit);
+        }
+        self.file_imports = imports;
+        self.import_path = path.to_owned();
+        Ok(())
+    }
+
+    pub fn resolve(&self, path: &str, site: &RelationSite) -> ResolvedRelation {
+        let owner = self.symbol_by_id(&site.source_fact_id);
+        let package = self
+            .path_packages
+            .get(path)
+            .map(String::as_str)
+            .unwrap_or("");
+        let mut candidates: Vec<&SymbolFact> = match site.kind {
+            RelationKind::Import => self.import_candidates(&site.target_hint, &site.variant),
+            RelationKind::Inheritance => self.type_candidates(path, package, &site.target_hint).0,
+            RelationKind::Call => self.call_candidates(path, package, owner, site),
+            RelationKind::Reference => self.reference_candidates(path, package, owner, site),
+        };
+        candidates.sort_by(|left, right| left.provider_fact_id.cmp(&right.provider_fact_id));
+        candidates.dedup_by(|left, right| left.provider_fact_id == right.provider_fact_id);
+        let from_wildcard = match site.kind {
+            RelationKind::Inheritance => self.type_candidates(path, package, &site.target_hint).1,
+            RelationKind::Call => match site.variant.as_str() {
+                "constructor" => self.type_candidates(path, package, &site.target_hint).1,
+                "qualified" => site
+                    .target_hint
+                    .rsplit_once('.')
+                    .is_some_and(|(receiver, _)| self.type_candidates(path, package, receiver).1),
+                "direct" => candidates.iter().any(|candidate| {
+                    self.file_imports.iter().any(|(variant, imported)| {
+                        variant == "static_wildcard"
+                            && candidate
+                                .qualified_name
+                                .as_deref()
+                                .is_some_and(|name| name.starts_with(&format!("{imported}.")))
+                    })
+                }),
+                _ => false,
+            },
+            RelationKind::Reference => {
+                if site.variant == "type" {
+                    self.type_candidates(path, package, &site.target_hint).1
+                } else {
+                    site.target_hint
+                        .replace("::", ".")
+                        .rsplit_once('.')
+                        .is_some_and(|(receiver, _)| {
+                            receiver != "this" && self.type_candidates(path, package, receiver).1
+                        })
+                }
+            }
+            RelationKind::Import => false,
+        };
+        let target = match candidates.as_slice() {
+            [] => RelationTarget::NonResolved {
+                resolution: "UNRESOLVED",
+                hint: site.target_hint.clone(),
+                candidates: Vec::new(),
+            },
+            [candidate] => RelationTarget::Resolved {
+                fact_id: candidate.provider_fact_id.clone(),
+                resolution: if from_wildcard { "HEURISTIC" } else { "EXACT" },
+            },
+            many => RelationTarget::NonResolved {
+                resolution: "AMBIGUOUS",
+                hint: site.target_hint.clone(),
+                candidates: many
+                    .iter()
+                    .map(|item| item.provider_fact_id.clone())
+                    .collect(),
+            },
+        };
+        let provider_kind = match site.kind {
+            RelationKind::Import => format!("java.import.{}", site.variant),
+            RelationKind::Call => "java.call".to_owned(),
+            RelationKind::Inheritance => "java.inheritance".to_owned(),
+            RelationKind::Reference => "java.reference".to_owned(),
+        };
+        ResolvedRelation {
+            provider_fact_id: relation_fact_id(path, site, 0),
+            provider_kind,
+            source_fact_id: site.source_fact_id.clone(),
+            target,
+            span: site.span.clone(),
+        }
+    }
+
+    fn symbol_by_id(&self, fact_id: &str) -> Option<&SymbolFact> {
+        self.by_qualified
+            .values()
+            .flat_map(|values| values.iter())
+            .find(|symbol| symbol.provider_fact_id == fact_id)
+    }
+
+    fn import_candidates(&self, hint: &str, variant: &str) -> Vec<&SymbolFact> {
+        self.candidates(hint, None)
+            .into_iter()
+            .filter(|symbol| match variant {
+                "normal" => is_type(symbol),
+                "wildcard" => symbol.provider_kind == "java.package",
+                "static" => symbol.is_static,
+                "static_wildcard" => is_type(symbol),
+                _ => false,
+            })
+            .collect()
+    }
+
+    fn type_candidates(&self, path: &str, package: &str, hint: &str) -> (Vec<&SymbolFact>, bool) {
+        if hint.contains('.') {
+            return (
+                self.candidates(hint, None)
+                    .into_iter()
+                    .filter(|symbol| is_type(symbol))
+                    .collect(),
+                false,
+            );
+        }
+        let mut names = Vec::new();
+        if !package.is_empty() {
+            names.push((format!("{package}.{hint}"), false));
+        } else {
+            names.push((hint.to_owned(), false));
+        }
+        if self.import_path == path {
+            for (variant, imported) in &self.file_imports {
+                if variant == "normal" && imported.rsplit('.').next() == Some(hint) {
+                    names.push((imported.clone(), false));
+                } else if variant == "wildcard" {
+                    names.push((format!("{imported}.{hint}"), true));
+                }
+            }
+        }
+        let mut candidates = Vec::new();
+        for (name, wildcard) in &names {
+            if !wildcard {
+                candidates.extend(
+                    self.candidates(name, None)
+                        .into_iter()
+                        .filter(|symbol| is_type(symbol)),
+                );
+            }
+        }
+        if !candidates.is_empty() {
+            return (candidates, false);
+        }
+        for (name, wildcard) in &names {
+            if *wildcard {
+                candidates.extend(
+                    self.candidates(name, None)
+                        .into_iter()
+                        .filter(|symbol| is_type(symbol)),
+                );
+            }
+        }
+        let from_wildcard = !candidates.is_empty();
+        (candidates, from_wildcard)
+    }
+
+    fn call_candidates(
+        &self,
+        path: &str,
+        package: &str,
+        owner: Option<&SymbolFact>,
+        site: &RelationSite,
+    ) -> Vec<&SymbolFact> {
+        let hint = site.target_hint.as_str();
+        let owner_type = owner
+            .and_then(|symbol| symbol.qualified_name.as_deref())
+            .and_then(|name| name.rsplit_once('.'))
+            .map(|(name, _)| name);
+        let (types, method, require_static) = if site.variant == "constructor" {
+            let (types, _) = self.type_candidates(path, package, hint);
+            (types, hint.rsplit('.').next().unwrap_or(hint), false)
+        } else if site.variant == "this_constructor" {
+            let type_name = owner_type.unwrap_or("");
+            let method = type_name.rsplit('.').next().unwrap_or(type_name);
+            let types = self
+                .candidates(type_name, None)
+                .into_iter()
+                .filter(|symbol| is_type(symbol))
+                .collect();
+            (types, method, false)
+        } else if let Some((receiver, method)) = hint.rsplit_once('.') {
+            if receiver == "this" {
+                let types = owner_type
+                    .into_iter()
+                    .flat_map(|name| self.candidates(name, None))
+                    .filter(|symbol| is_type(symbol))
+                    .collect();
+                (types, method, false)
+            } else {
+                let (types, _) = self.type_candidates(path, package, receiver);
+                (types, method, true)
+            }
+        } else {
+            let types = owner_type
+                .into_iter()
+                .flat_map(|name| self.candidates(name, None))
+                .filter(|symbol| is_type(symbol))
+                .collect();
+            (types, hint, false)
+        };
+        let kind = if matches!(site.variant.as_str(), "constructor" | "this_constructor") {
+            "java.constructor"
+        } else {
+            "java.method"
+        };
+        let mut candidates = Vec::new();
+        for type_symbol in types {
+            let Some(type_name) = type_symbol.qualified_name.as_deref() else {
+                continue;
+            };
+            let qualified = format!("{type_name}.{method}");
+            candidates.extend(self.candidates(&qualified, site.arity).into_iter().filter(
+                |symbol| symbol.provider_kind == kind && (!require_static || symbol.is_static),
+            ));
+        }
+        if candidates.is_empty() && site.variant == "direct" && self.import_path == path {
+            for (variant, import) in &self.file_imports {
+                if variant == "static" && import.rsplit('.').next() == Some(method) {
+                    candidates.extend(self.candidates(import, site.arity).into_iter().filter(
+                        |symbol| symbol.provider_kind == "java.method" && symbol.is_static,
+                    ));
+                } else if variant == "static_wildcard" {
+                    let qualified = format!("{import}.{method}");
+                    candidates.extend(self.candidates(&qualified, site.arity).into_iter().filter(
+                        |symbol| symbol.provider_kind == "java.method" && symbol.is_static,
+                    ));
+                }
+            }
+        }
+        candidates
+    }
+
+    fn reference_candidates(
+        &self,
+        path: &str,
+        package: &str,
+        owner: Option<&SymbolFact>,
+        site: &RelationSite,
+    ) -> Vec<&SymbolFact> {
+        if site.variant == "type" {
+            return self.type_candidates(path, package, &site.target_hint).0;
+        }
+        let owner_type = owner
+            .and_then(|symbol| symbol.qualified_name.as_deref())
+            .and_then(|name| name.rsplit_once('.'))
+            .map(|(name, _)| name);
+        let hint = site.target_hint.replace("::", ".");
+        let Some((receiver, member)) = hint.rsplit_once('.') else {
+            return Vec::new();
+        };
+        let type_names: Vec<String> = if receiver == "this" {
+            owner_type.into_iter().map(str::to_owned).collect()
+        } else {
+            self.type_candidates(path, package, receiver)
+                .0
+                .into_iter()
+                .filter_map(|symbol| symbol.qualified_name.clone())
+                .collect()
+        };
+        type_names
+            .into_iter()
+            .flat_map(|name| self.candidates(&format!("{name}.{member}"), None))
+            .filter(|symbol| {
+                if site.variant == "field" {
+                    symbol.provider_kind == "java.field"
+                } else {
+                    symbol.provider_kind == "java.method"
+                }
+            })
+            .collect()
+    }
+}
+
+fn is_type(symbol: &SymbolFact) -> bool {
+    matches!(
+        symbol.provider_kind.as_str(),
+        "java.class" | "java.interface"
+    )
 }
 
 fn signature_arity(signature: &str) -> usize {

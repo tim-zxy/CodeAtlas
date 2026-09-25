@@ -1,7 +1,7 @@
 use codeatlas_native_analyzer::java::JavaAnalyzer;
 use codeatlas_native_analyzer::java_relations::compilation_unit_id;
 use codeatlas_native_analyzer::language::{
-    AnalyzerError, LanguageAnalyzer, RelationKind, RelationSite, SourceSpan,
+    AnalyzerError, LanguageAnalyzer, RelationKind, RelationSite, RelationTarget, SourceSpan,
 };
 use codeatlas_native_analyzer::relation_index::{DeclarationIndex, relation_fact_id};
 use std::sync::atomic::AtomicBool;
@@ -284,4 +284,224 @@ fn relation_sites_charge_diagnostics_to_the_result_budget() {
         1500,
     );
     assert!(matches!(result, Err(AnalyzerError::ResourceLimit)));
+}
+
+#[test]
+fn resolves_relation_cross_file_static_calls_imports_inheritance_and_constructor() {
+    let library = analyze_sites(
+        "src/B.java",
+        b"package demo; public class B { public B() {} public static void run() {} }",
+    );
+    let client = analyze_sites(
+        "src/A.java",
+        b"package app; import demo.B; import static demo.B.run; class A extends B { void go() { B.run(); run(); new B(); } }",
+    );
+    let mut index = DeclarationIndex::new(32 * 1024);
+    index.insert("src/A.java", &client.symbols).unwrap();
+    index.insert("src/B.java", &library.symbols).unwrap();
+    index
+        .set_file_imports("src/A.java", &client.relation_sites)
+        .unwrap();
+    let expected_run = library
+        .symbols
+        .iter()
+        .find(|fact| fact.name == "run")
+        .unwrap();
+    let expected_constructor = library
+        .symbols
+        .iter()
+        .find(|fact| fact.provider_kind == "java.constructor")
+        .unwrap();
+    for site in client
+        .relation_sites
+        .iter()
+        .filter(|site| site.kind == RelationKind::Call)
+    {
+        let result = index.resolve("src/A.java", site);
+        let expected = if site.variant == "constructor" {
+            expected_constructor
+        } else {
+            expected_run
+        };
+        assert!(
+            matches!(result.target, RelationTarget::Resolved { ref fact_id, .. } if fact_id == &expected.provider_fact_id),
+            "{}",
+            site.target_hint
+        );
+    }
+    let inheritance = client
+        .relation_sites
+        .iter()
+        .find(|site| site.kind == RelationKind::Inheritance)
+        .unwrap();
+    let target = library
+        .symbols
+        .iter()
+        .find(|fact| fact.name == "B" && fact.provider_kind == "java.class")
+        .unwrap();
+    assert!(
+        matches!(index.resolve("src/A.java", inheritance).target, RelationTarget::Resolved { ref fact_id, .. } if fact_id == &target.provider_fact_id)
+    );
+    for site in client
+        .relation_sites
+        .iter()
+        .filter(|site| site.kind == RelationKind::Import)
+    {
+        assert!(matches!(
+            index.resolve("src/A.java", site).target,
+            RelationTarget::Resolved { .. }
+        ));
+    }
+}
+
+#[test]
+fn resolves_relation_ambiguous_equal_arity_overloads_without_guessing() {
+    let analyzed = analyze_sites(
+        "src/B.java",
+        b"package demo; class B { void run(String x) {} void run(Integer x) {} void go() { run(null); } }",
+    );
+    let mut index = DeclarationIndex::new(16 * 1024);
+    index.insert("src/B.java", &analyzed.symbols).unwrap();
+    let call = analyzed
+        .relation_sites
+        .iter()
+        .find(|site| site.kind == RelationKind::Call)
+        .unwrap();
+    let result = index.resolve("src/B.java", call);
+    assert!(
+        matches!(result.target, RelationTarget::NonResolved { resolution: "AMBIGUOUS", ref candidates, .. } if candidates.len() == 2 && candidates[0] < candidates[1])
+    );
+}
+
+#[test]
+fn resolves_relation_unavailable_external_call_as_unresolved() {
+    let analyzed = analyze_sites("src/A.java", b"class A { void go() { External.run(); } }");
+    let mut index = DeclarationIndex::new(4096);
+    index.insert("src/A.java", &analyzed.symbols).unwrap();
+    let call = analyzed
+        .relation_sites
+        .iter()
+        .find(|site| site.kind == RelationKind::Call)
+        .unwrap();
+    assert!(
+        matches!(index.resolve("src/A.java", call).target, RelationTarget::NonResolved { resolution: "UNRESOLVED", ref candidates, .. } if candidates.is_empty())
+    );
+}
+
+#[test]
+fn resolves_relation_wildcard_import_and_this_constructor_without_inventing_targets() {
+    let library = analyze_sites("src/B.java", b"package demo; class B {} ");
+    let client = analyze_sites(
+        "src/A.java",
+        b"package app; import demo.*; class A extends B { A() { this(1); } A(int x) {} }",
+    );
+    let mut index = DeclarationIndex::new(16 * 1024);
+    index.insert("src/A.java", &client.symbols).unwrap();
+    index.insert("src/B.java", &library.symbols).unwrap();
+    index
+        .set_file_imports("src/A.java", &client.relation_sites)
+        .unwrap();
+    let inheritance = client
+        .relation_sites
+        .iter()
+        .find(|site| site.kind == RelationKind::Inheritance)
+        .unwrap();
+    assert!(matches!(
+        index.resolve("src/A.java", inheritance).target,
+        RelationTarget::Resolved {
+            resolution: "HEURISTIC",
+            ..
+        }
+    ));
+    let constructor_call = client
+        .relation_sites
+        .iter()
+        .find(|site| site.kind == RelationKind::Call)
+        .unwrap();
+    let constructor = client
+        .symbols
+        .iter()
+        .find(|fact| fact.signature == "(int)")
+        .unwrap();
+    let resolved = index.resolve("src/A.java", constructor_call);
+    assert!(
+        matches!(&resolved.target, RelationTarget::Resolved { fact_id, resolution: "EXACT" } if fact_id == &constructor.provider_fact_id),
+        "{:?}",
+        resolved.target
+    );
+}
+
+#[test]
+fn resolves_relation_field_and_method_references_to_declared_members() {
+    let analyzed = analyze_sites(
+        "src/A.java",
+        b"class A { int value; static void stat() {} void go() { int x = this.value; Runnable r = A::stat; } }",
+    );
+    let mut index = DeclarationIndex::new(16 * 1024);
+    index.insert("src/A.java", &analyzed.symbols).unwrap();
+    for (hint, member) in [("this.value", "value"), ("A::stat", "stat")] {
+        let site = analyzed
+            .relation_sites
+            .iter()
+            .find(|site| site.target_hint == hint)
+            .unwrap();
+        let expected = analyzed
+            .symbols
+            .iter()
+            .find(|fact| fact.name == member)
+            .unwrap();
+        assert!(
+            matches!(index.resolve("src/A.java", site).target, RelationTarget::Resolved { ref fact_id, resolution: "EXACT" } if fact_id == &expected.provider_fact_id)
+        );
+    }
+}
+
+#[test]
+fn resolves_relation_ambiguous_candidates_in_fact_id_order_across_insertion_orders() {
+    let first = analyze_sites(
+        "src/First.java",
+        b"class B { void run() {} void go() { run(); } }",
+    );
+    let second = analyze_sites("src/Second.java", b"class B { void run() {} }");
+    let call = first
+        .relation_sites
+        .iter()
+        .find(|site| site.kind == RelationKind::Call)
+        .unwrap();
+    let mut forward = DeclarationIndex::new(16 * 1024);
+    forward.insert("src/First.java", &first.symbols).unwrap();
+    forward.insert("src/Second.java", &second.symbols).unwrap();
+    let mut reverse = DeclarationIndex::new(16 * 1024);
+    reverse.insert("src/Second.java", &second.symbols).unwrap();
+    reverse.insert("src/First.java", &first.symbols).unwrap();
+    let target = forward.resolve("src/First.java", call).target;
+    assert!(
+        matches!(&target, RelationTarget::NonResolved { resolution: "AMBIGUOUS", candidates, .. } if candidates.len() == 2 && candidates[0] < candidates[1])
+    );
+    assert_eq!(target, reverse.resolve("src/First.java", call).target);
+}
+
+#[test]
+fn resolves_relation_same_package_target_remains_exact_with_redundant_wildcard_import() {
+    let analyzed = analyze_sites(
+        "src/A.java",
+        b"package demo; import demo.*; class B {} class A extends B {}",
+    );
+    let mut index = DeclarationIndex::new(16 * 1024);
+    index.insert("src/A.java", &analyzed.symbols).unwrap();
+    index
+        .set_file_imports("src/A.java", &analyzed.relation_sites)
+        .unwrap();
+    let inheritance = analyzed
+        .relation_sites
+        .iter()
+        .find(|site| site.kind == RelationKind::Inheritance)
+        .unwrap();
+    assert!(matches!(
+        index.resolve("src/A.java", inheritance).target,
+        RelationTarget::Resolved {
+            resolution: "EXACT",
+            ..
+        }
+    ));
 }
