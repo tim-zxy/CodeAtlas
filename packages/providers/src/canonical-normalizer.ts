@@ -12,7 +12,11 @@ import {
   type SourceFile,
 } from '@codeatlas/ir';
 
-import { canonicalFactId, edgeFactKey } from './canonical-fact-identity.js';
+import {
+  CanonicalIdentityEncodingError,
+  canonicalFactId,
+  edgeFactKey,
+} from './canonical-fact-identity.js';
 import {
   CanonicalNormalizationError,
   normalizeJavaNode,
@@ -119,7 +123,7 @@ function normalizeJavaEdge(
     };
     targetIdentity = edge.target.originalHint;
   }
-  const factKey = edgeFactKey([
+  const fields = [
     edge.repositoryId,
     edge.revisionId,
     kind,
@@ -131,7 +135,29 @@ function normalizeJavaEdge(
     range.endColumn,
     edge.target.state,
     targetIdentity,
-  ]);
+  ];
+  let factKey;
+  try {
+    factKey = edgeFactKey(fields);
+  } catch (error) {
+    if (error instanceof CanonicalIdentityEncodingError) {
+      const fieldPaths: (string | number)[][] = [
+        ['repositoryId'],
+        ['revisionId'],
+        ['providerKind'],
+        ['source'],
+        ['sourceRange', 'sourceFileId'],
+        ['sourceRange', 'startLine'],
+        ['sourceRange', 'startColumn'],
+        ['sourceRange', 'endLine'],
+        ['sourceRange', 'endColumn'],
+        ['target', 'state'],
+        edge.target.state === 'RESOLVED' ? ['target', 'target'] : ['target', 'originalHint'],
+      ];
+      fail('INVALID_FACT', fieldPaths[error.fieldIndex] ?? [], error.message);
+    }
+    throw error;
+  }
   return CanonicalEdgeSchema.parse({
     id: canonicalFactId('EDGE', factKey),
     factKey,

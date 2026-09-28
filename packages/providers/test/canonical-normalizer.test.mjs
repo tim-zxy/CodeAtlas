@@ -470,6 +470,27 @@ test('Provider identity does not enter Canonical relation identity', () => {
   assert.equal(primary.edges[0].canonical.id, secondary.edges[0].canonical.id);
 });
 
+test('ill-formed relation hint fails with a controlled source path', () => {
+  const bad = result({
+    nodes: [caller],
+    edges: [
+      edge('bad', 'java.reference', {
+        state: 'UNRESOLVED',
+        resolution: 'UNRESOLVED',
+        originalHint: 'demo.\udc00',
+        candidates: [],
+      }),
+    ],
+  });
+  assert.throws(
+    () => normalizeNativeAnalysis(bad),
+    (error) =>
+      failure('INVALID_FACT')(error) &&
+      JSON.stringify(error.path) ===
+        JSON.stringify(['events', 3, 'payload', 'target', 'originalHint']),
+  );
+});
+
 test('registered canonical-normalization Fixture matches exact Provider-to-Canonical goldens', async () => {
   const root = fileURLToPath(new URL('../../../', import.meta.url));
   const fixtures = await discoverFixtures(path.join(root, 'fixtures/normalization'));

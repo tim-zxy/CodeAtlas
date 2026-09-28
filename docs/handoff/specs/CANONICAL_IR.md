@@ -325,6 +325,9 @@ not authorize graph publication. The accepted
 [`P05-W4-001 design`](../../superpowers/specs/2026-09-28-p05-w4-001-canonical-normalization-design.md)
 defines the exact version-1 identity tuples and SHA-256 encoding; the registered
 `canonical-normalization` Fixture pins their resulting opaque keys and IDs.
+Unpaired UTF-16 surrogates in identity fields are rejected before UTF-8
+encoding to prevent replacement-character identity collisions; valid tuple
+vectors and the Canonical IR schema are unchanged.
 
 `java.package` and synthetic `java.package_container` map to one `PACKAGE`
 identity by qualified name while retaining separate Provider support and

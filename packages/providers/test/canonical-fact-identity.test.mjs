@@ -46,3 +46,13 @@ test('length-delimited UTF-8 fields are unambiguous and repository-scoped', () =
     nodeFactKey(['repo', 'rev-b', 'PACKAGE', 'demo']),
   );
 });
+
+test('ill-formed UTF-16 identity fields cannot alias a replacement character', () => {
+  const replacement = nodeFactKey(['repo-\ufffd']);
+  for (const invalid of ['repo-\ud800', 'repo-\udc00']) {
+    assert.throws(() => nodeFactKey([invalid]), TypeError);
+    assert.throws(() => edgeFactKey([invalid]), TypeError);
+  }
+  assert.equal(nodeFactKey(['repo-\ud83d\ude00']), nodeFactKey(['repo-😀']));
+  assert.ok(replacement.startsWith('node-fact-v1:'));
+});

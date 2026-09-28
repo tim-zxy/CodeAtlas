@@ -7,7 +7,11 @@ import {
   type SourceRange,
 } from '@codeatlas/ir';
 
-import { canonicalFactId, nodeFactKey } from './canonical-fact-identity.js';
+import {
+  CanonicalIdentityEncodingError,
+  canonicalFactId,
+  nodeFactKey,
+} from './canonical-fact-identity.js';
 
 export type CanonicalNormalizationErrorCode =
   'UNSUPPORTED_KIND' | 'INVALID_FACT' | 'INVALID_CONTEXT' | 'MISSING_REFERENCE';
@@ -75,6 +79,7 @@ export function normalizeJavaNode(
   };
   let canonical: Record<string, unknown>;
   let fields: (string | number)[];
+  let fieldPaths: (string | number)[][];
 
   switch (node.providerKind) {
     case 'java.package':
@@ -88,6 +93,7 @@ export function normalizeJavaNode(
       if (node.sourceRange !== null) sourceFileFor(node, node.sourceRange, sourceFiles);
       canonical = { ...base, kind: 'PACKAGE' };
       fields = [node.repositoryId, node.revisionId, 'PACKAGE', qualifiedName];
+      fieldPaths = [['repositoryId'], ['revisionId'], ['providerKind'], ['qualifiedName']];
       break;
     }
     case 'java.compilation_unit': {
@@ -103,6 +109,7 @@ export function normalizeJavaNode(
       }
       canonical = { ...base, kind: 'MODULE', sourceRange: null };
       fields = [node.repositoryId, node.revisionId, 'MODULE', file.path];
+      fieldPaths = [['repositoryId'], ['revisionId'], ['providerKind'], ['qualifiedName']];
       break;
     }
     case 'java.class':
@@ -138,12 +145,32 @@ export function normalizeJavaNode(
         range.endLine,
         range.endColumn,
       ];
+      fieldPaths = [
+        ['repositoryId'],
+        ['revisionId'],
+        ['providerKind'],
+        ['providerKind'],
+        ['qualifiedName'],
+        ['sourceRange', 'sourceFileId'],
+        ['sourceRange', 'startLine'],
+        ['sourceRange', 'startColumn'],
+        ['sourceRange', 'endLine'],
+        ['sourceRange', 'endColumn'],
+      ];
       break;
     }
     default:
       fail('UNSUPPORTED_KIND', ['providerKind'], 'Provider node kind is unsupported');
   }
 
-  const factKey = nodeFactKey(fields);
+  let factKey;
+  try {
+    factKey = nodeFactKey(fields);
+  } catch (error) {
+    if (error instanceof CanonicalIdentityEncodingError) {
+      fail('INVALID_FACT', fieldPaths[error.fieldIndex] ?? [], error.message);
+    }
+    throw error;
+  }
   return CanonicalNodeSchema.parse({ ...canonical, factKey, id: canonicalFactId('NODE', factKey) });
 }

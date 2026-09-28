@@ -34,6 +34,8 @@ No `OVERRIDE` Provider edge is currently emitted, so the task does not synthesiz
 
 Use domain-separated, length-delimited UTF-8 tuples and SHA-256 to derive opaque `NodeFactKey`, `EdgeFactKey`, and `CanonicalId` strings. The exact wire-independent encoding is `UTF8(domain) + NUL +` each field encoded as its UTF-8 byte length in unsigned decimal ASCII, `:`, then its exact UTF-8 bytes; integer fields use base-10 ASCII without a leading zero except zero itself. Emit `domain:lowercase-hex-digest`. The versioned domains are `node-fact-v1`, `edge-fact-v1`, `canonical-node-v1`, and `canonical-edge-v1`. Encoding must not rely on JSON object-key order, platform path separators, Provider ID, Provider Fact ID, snapshot ID, event order, or runtime version. Two providers describing the same canonical tuple produce the same key/ID. Different repository or revision identities remain distinct.
 
+Ill-formed UTF-16 strings with unpaired surrogate code units are not valid identity fields: reject them before UTF-8 conversion rather than allowing replacement-character substitution to alias a distinct repository, revision, path, name, or hint. Surface the offending input field as a controlled normalization error. Well-formed supplementary-plane characters retain their ordinary UTF-8 encoding and the pinned version-1 vectors do not change.
+
 The exact node field orders are:
 
 - `PACKAGE`: repository ID, revision ID, `PACKAGE`, qualified package name.
