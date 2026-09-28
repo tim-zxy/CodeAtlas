@@ -4,8 +4,24 @@ use sha2::{Digest, Sha256};
 use tree_sitter::Node;
 
 use crate::language::{
-    AnalyzerError, RelationKind, RelationSite, SourceSpan, SymbolFact, SyntaxDiagnostic,
+    AnalyzerError, RelationKind, RelationSite, SiteStatistics, SourceSpan, SymbolFact,
+    SyntaxDiagnostic,
 };
+
+type CollectedSites = (
+    Vec<RelationSite>,
+    Vec<SyntaxDiagnostic>,
+    BTreeMap<String, SiteStatistics>,
+);
+
+fn capability(kind: RelationKind) -> &'static str {
+    match kind {
+        RelationKind::Import => "IMPORT",
+        RelationKind::Call => "CALL",
+        RelationKind::Inheritance => "INHERITANCE",
+        RelationKind::Reference => "REFERENCE",
+    }
+}
 
 pub fn compilation_unit_id(path: &str) -> String {
     let mut hash = Sha256::new();
@@ -22,7 +38,7 @@ pub fn collect_sites(
     path: &str,
     symbols: &[SymbolFact],
     max_result_bytes: usize,
-) -> Result<(Vec<RelationSite>, Vec<SyntaxDiagnostic>), AnalyzerError> {
+) -> Result<CollectedSites, AnalyzerError> {
     let mut by_span = BTreeMap::new();
     for symbol in symbols {
         by_span.insert((symbol.span.start_line, symbol.span.start_column), symbol);
@@ -35,9 +51,13 @@ pub fn collect_sites(
         diagnostics: Vec::new(),
         max_result_bytes,
         used_bytes: 0,
+        statistics: ["IMPORT", "CALL", "INHERITANCE", "REFERENCE"]
+            .into_iter()
+            .map(|name| (name.to_owned(), SiteStatistics::default()))
+            .collect(),
     };
     visitor.visit(root, None, None)?;
-    Ok((visitor.sites, visitor.diagnostics))
+    Ok((visitor.sites, visitor.diagnostics, visitor.statistics))
 }
 
 struct Visitor<'a> {
@@ -48,6 +68,7 @@ struct Visitor<'a> {
     diagnostics: Vec<SyntaxDiagnostic>,
     max_result_bytes: usize,
     used_bytes: usize,
+    statistics: BTreeMap<String, SiteStatistics>,
 }
 
 impl Visitor<'_> {
@@ -99,9 +120,17 @@ impl Visitor<'_> {
             }
             "method_invocation" => {
                 let Some(name_node) = node.child_by_field_name("name") else {
+                    self.statistics
+                        .get_mut("CALL")
+                        .expect("known capability")
+                        .partial();
                     return Ok(());
                 };
                 let Some(name) = self.text(name_node) else {
+                    self.statistics
+                        .get_mut("CALL")
+                        .expect("known capability")
+                        .partial();
                     return Ok(());
                 };
                 let receiver = node
@@ -130,6 +159,11 @@ impl Visitor<'_> {
                         arity,
                         type_node,
                     )?;
+                } else {
+                    self.statistics
+                        .get_mut("CALL")
+                        .expect("known capability")
+                        .partial();
                 }
                 return self.children(node, type_owner, callable_owner);
             }
@@ -227,12 +261,21 @@ impl Visitor<'_> {
                 None,
                 name_node,
             )?;
+        } else {
+            self.statistics
+                .get_mut("IMPORT")
+                .expect("known capability")
+                .partial();
         }
         Ok(())
     }
 
     fn inheritance(&mut self, clause: Node<'_>, owner: Option<&str>) -> Result<(), AnalyzerError> {
         let Some(owner) = owner else {
+            self.statistics
+                .get_mut("INHERITANCE")
+                .expect("known capability")
+                .unsupported();
             return Ok(());
         };
         let mut cursor = clause.walk();
@@ -268,6 +311,11 @@ impl Visitor<'_> {
                 None,
                 node,
             )?;
+        } else {
+            self.statistics
+                .get_mut("INHERITANCE")
+                .expect("known capability")
+                .partial();
         }
         Ok(())
     }
@@ -315,6 +363,11 @@ impl Visitor<'_> {
                 None,
                 node,
             )?;
+        } else {
+            self.statistics
+                .get_mut("REFERENCE")
+                .expect("known capability")
+                .unsupported();
         }
         Ok(())
     }
@@ -346,6 +399,10 @@ impl Visitor<'_> {
                 message: "Call has no declared callable source".into(),
                 span: Some(span(node)),
             });
+            self.statistics
+                .get_mut("CALL")
+                .expect("known capability")
+                .unsupported();
         }
         Ok(())
     }
@@ -375,6 +432,10 @@ impl Visitor<'_> {
             arity,
             span: span(node),
         });
+        self.statistics
+            .get_mut(capability(kind))
+            .expect("known capability")
+            .covered();
         Ok(())
     }
 

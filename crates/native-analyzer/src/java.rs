@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::{BTreeMap, HashMap};
 use std::ops::ControlFlow;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::time::Instant;
@@ -7,8 +7,8 @@ use sha2::{Digest, Sha256};
 use tree_sitter::{Node, ParseOptions, Parser};
 
 use crate::language::{
-    AnalyzerError, LanguageAnalysis, LanguageAnalyzer, SourceSpan, SymbolFact, SyntaxCoverage,
-    SyntaxDiagnostic,
+    AnalyzerError, LanguageAnalysis, LanguageAnalyzer, SiteStatistics, SourceSpan, SymbolFact,
+    SyntaxCoverage, SyntaxDiagnostic,
 };
 
 pub struct JavaAnalyzer {
@@ -108,7 +108,10 @@ impl JavaAnalyzer {
         if exhausted() {
             return Err(AnalyzerError::BudgetExceeded);
         }
-        let coverage = if root.has_error() {
+        let coverage = if root.has_error()
+            || collector.statistics.unsupported_sites > 0
+            || collector.statistics.partial_sites > 0
+        {
             SyntaxCoverage::Partial
         } else {
             SyntaxCoverage::Complete
@@ -122,9 +125,9 @@ impl JavaAnalyzer {
         } else {
             Vec::new()
         };
-        let relation_sites = if collect_relations {
+        let (relation_sites, relation_statistics) = if collect_relations {
             let remaining = max_result_bytes.saturating_sub(collector.result_bytes);
-            let (sites, relation_diagnostics) = crate::java_relations::collect_sites(
+            let (sites, relation_diagnostics, statistics) = crate::java_relations::collect_sites(
                 root,
                 source,
                 relative_path,
@@ -132,9 +135,9 @@ impl JavaAnalyzer {
                 remaining,
             )?;
             diagnostics.extend(relation_diagnostics);
-            sites
+            (sites, statistics)
         } else {
-            Vec::new()
+            (Vec::new(), BTreeMap::new())
         };
         if exhausted() {
             return Err(AnalyzerError::BudgetExceeded);
@@ -144,11 +147,14 @@ impl JavaAnalyzer {
         } else {
             SyntaxCoverage::Partial
         };
+        let mut site_statistics = relation_statistics;
+        site_statistics.insert("SYMBOL".into(), collector.statistics);
         Ok(LanguageAnalysis {
             symbols: collector.symbols,
             relation_sites,
             diagnostics,
             coverage,
+            site_statistics,
         })
     }
 }
@@ -198,6 +204,7 @@ struct SymbolCollector<'a> {
     result_bytes: usize,
     max_result_bytes: usize,
     over_budget: bool,
+    statistics: SiteStatistics,
 }
 
 impl<'a> SymbolCollector<'a> {
@@ -211,19 +218,23 @@ impl<'a> SymbolCollector<'a> {
             result_bytes: 0,
             max_result_bytes,
             over_budget: false,
+            statistics: SiteStatistics::default(),
         }
     }
 
     fn collect(&mut self, root: Node<'_>) {
         let mut cursor = root.walk();
         for child in root.named_children(&mut cursor) {
-            if child.kind() == "package_declaration"
-                && let Some(name_node) = first_named_child(child)
-                && let Some(name) = self.text(name_node)
-            {
-                let name = name.to_owned();
-                self.push("java.package", &name, "", false, name_node);
-                self.owners.push(name);
+            if child.kind() == "package_declaration" {
+                if let Some(name_node) = first_named_child(child)
+                    && let Some(name) = self.text(name_node)
+                {
+                    let name = name.to_owned();
+                    self.push("java.package", &name, "", false, name_node);
+                    self.owners.push(name);
+                } else {
+                    self.statistics.partial();
+                }
                 break;
             }
         }
@@ -256,6 +267,8 @@ impl<'a> SymbolCollector<'a> {
                         self.visit_children(body);
                     }
                     self.owners.pop();
+                } else {
+                    self.statistics.partial();
                 }
             }
             "method_declaration" | "constructor_declaration" => {
@@ -276,25 +289,33 @@ impl<'a> SymbolCollector<'a> {
                         has_static_modifier(node),
                         name_node,
                     );
+                } else {
+                    self.statistics.partial();
                 }
             }
             "field_declaration" => {
                 let mut cursor = node.walk();
                 for child in node.named_children(&mut cursor) {
-                    if child.kind() == "variable_declarator"
-                        && let Some(name_node) = child.child_by_field_name("name")
-                        && let Some(name) = self.text(name_node)
-                    {
-                        let name = name.to_owned();
-                        self.push(
-                            "java.field",
-                            &name,
-                            "",
-                            has_static_modifier(node),
-                            name_node,
-                        );
+                    if child.kind() == "variable_declarator" {
+                        if let Some(name_node) = child.child_by_field_name("name")
+                            && let Some(name) = self.text(name_node)
+                        {
+                            let name = name.to_owned();
+                            self.push(
+                                "java.field",
+                                &name,
+                                "",
+                                has_static_modifier(node),
+                                name_node,
+                            );
+                        } else {
+                            self.statistics.partial();
+                        }
                     }
                 }
+            }
+            "enum_declaration" | "record_declaration" | "annotation_type_declaration" => {
+                self.statistics.unsupported();
             }
             _ => self.visit_children(node),
         }
@@ -403,6 +424,7 @@ impl<'a> SymbolCollector<'a> {
             is_static,
             span: span(name_node),
         });
+        self.statistics.covered();
     }
 }
 

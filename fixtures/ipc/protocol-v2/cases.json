@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "id": "p05-native-ipc-protocol-bytes-v2",
+  "task": "P05-W3-003",
+  "governingSpec": "docs/handoff/specs/NATIVE_IPC.md",
+  "acceptance": "Rust and TypeScript classify the same strict Native IPC v2 ANALYZE bytes",
+  "cases": [
+    {
+      "id": "valid",
+      "requestFile": "valid/request.jsonl",
+      "eventsFile": "valid/events.jsonl",
+      "requestBytes": 705,
+      "eventsBytes": 1423,
+      "maxLineBytes": 8192,
+      "expected": "VALID"
+    },
+    {
+      "id": "version-mismatch",
+      "requestFile": "version-mismatch/request.jsonl",
+      "eventsFile": "version-mismatch/events.jsonl",
+      "requestBytes": 705,
+      "eventsBytes": 1423,
+      "maxLineBytes": 8192,
+      "expected": "INVALID"
+    },
+    {
+      "id": "duplicate-coverage",
+      "requestFile": "duplicate-coverage/request.jsonl",
+      "eventsFile": "duplicate-coverage/events.jsonl",
+      "requestBytes": 705,
+      "eventsBytes": 1779,
+      "maxLineBytes": 8192,
+      "expected": "INVALID"
+    },
+    {
+      "id": "missing-coverage",
+      "requestFile": "missing-coverage/request.jsonl",
+      "eventsFile": "missing-coverage/events.jsonl",
+      "requestBytes": 705,
+      "eventsBytes": 1067,
+      "maxLineBytes": 8192,
+      "expected": "INVALID"
+    },
+    {
+      "id": "negative-count",
+      "requestFile": "negative-count/request.jsonl",
+      "eventsFile": "negative-count/events.jsonl",
+      "requestBytes": 705,
+      "eventsBytes": 1424,
+      "maxLineBytes": 8192,
+      "expected": "INVALID"
+    },
+    {
+      "id": "fractional-count",
+      "requestFile": "fractional-count/request.jsonl",
+      "eventsFile": "fractional-count/events.jsonl",
+      "requestBytes": 705,
+      "eventsBytes": 1425,
+      "maxLineBytes": 8192,
+      "expected": "INVALID"
+    },
+    {
+      "id": "unsafe-count",
+      "requestFile": "unsafe-count/request.jsonl",
+      "eventsFile": "unsafe-count/events.jsonl",
+      "requestBytes": 705,
+      "eventsBytes": 1438,
+      "maxLineBytes": 8192,
+      "expected": "INVALID"
+    },
+    {
+      "id": "partition-mismatch",
+      "requestFile": "partition-mismatch/request.jsonl",
+      "eventsFile": "partition-mismatch/events.jsonl",
+      "requestBytes": 705,
+      "eventsBytes": 1423,
+      "maxLineBytes": 8192,
+      "expected": "INVALID"
+    },
+    {
+      "id": "resolution-mismatch",
+      "requestFile": "resolution-mismatch/request.jsonl",
+      "eventsFile": "resolution-mismatch/events.jsonl",
+      "requestBytes": 705,
+      "eventsBytes": 1423,
+      "maxLineBytes": 8192,
+      "expected": "INVALID"
+    },
+    {
+      "id": "checksum-mismatch",
+      "requestFile": "checksum-mismatch/request.jsonl",
+      "eventsFile": "checksum-mismatch/events.jsonl",
+      "requestBytes": 705,
+      "eventsBytes": 1423,
+      "maxLineBytes": 8192,
+      "expected": "INVALID"
+    },
+    {
+      "id": "terminal-count-mismatch",
+      "requestFile": "terminal-count-mismatch/request.jsonl",
+      "eventsFile": "terminal-count-mismatch/events.jsonl",
+      "requestBytes": 705,
+      "eventsBytes": 1423,
+      "maxLineBytes": 8192,
+      "expected": "INVALID"
+    },
+    {
+      "id": "post-terminal",
+      "requestFile": "post-terminal/request.jsonl",
+      "eventsFile": "post-terminal/events.jsonl",
+      "requestBytes": 705,
+      "eventsBytes": 1426,
+      "maxLineBytes": 8192,
+      "expected": "INVALID"
+    },
+    {
+      "id": "v1-statistics",
+      "requestFile": "v1-statistics/request.jsonl",
+      "eventsFile": "v1-statistics/events.jsonl",
+      "requestBytes": 705,
+      "eventsBytes": 1423,
+      "maxLineBytes": 8192,
+      "expected": "INVALID"
+    },
+    {
+      "id": "v2-refresh",
+      "requestFile": "v2-refresh/request.jsonl",
+      "eventsFile": "v2-refresh/events.jsonl",
+      "requestBytes": 705,
+      "eventsBytes": 1423,
+      "maxLineBytes": 8192,
+      "expected": "INVALID"
+    }
+  ]
+}

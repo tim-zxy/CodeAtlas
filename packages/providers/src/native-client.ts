@@ -12,6 +12,16 @@ import {
   type NativeIpcRequestType,
   type NativeRequestEnvelope,
 } from './native-ipc.js';
+import {
+  NativeAnalyzeEventEnvelopeV2Schema,
+  NativeAnalyzeEventStreamV2Schema,
+  NativeAnalyzeRequestV2Schema,
+  type NativeAnalyzeEventEnvelopeV2,
+  type NativeAnalyzeRequestV2,
+} from './native-ipc-v2.js';
+
+type AnyNativeRequest = NativeRequestEnvelope | NativeAnalyzeRequestV2;
+type AnyNativeEvent = NativeEventEnvelope | NativeAnalyzeEventEnvelopeV2;
 
 export const NATIVE_CLIENT_HARD_LIMITS = Object.freeze({
   maxStdinBytes: 1_000_000,
@@ -96,12 +106,20 @@ export class NativeClientError extends Error {
   }
 }
 
-export interface ValidatedNativeResult {
+interface NativeResultBase {
+  readonly stderr: string;
+}
+export interface ValidatedNativeResultV1 extends NativeResultBase {
   readonly request: NativeRequestEnvelope;
   readonly events: readonly NativeEventEnvelope[];
   readonly terminal: NativeEventEnvelope;
-  readonly stderr: string;
 }
+export interface ValidatedNativeResultV2 extends NativeResultBase {
+  readonly request: NativeAnalyzeRequestV2;
+  readonly events: readonly NativeAnalyzeEventEnvelopeV2[];
+  readonly terminal: NativeAnalyzeEventEnvelopeV2;
+}
+export type ValidatedNativeResult = ValidatedNativeResultV1 | ValidatedNativeResultV2;
 
 interface ValidatedOptions {
   readonly executablePath: string;
@@ -113,7 +131,7 @@ interface ValidatedOptions {
 }
 
 interface DecodedOutput {
-  readonly events: NativeEventEnvelope[];
+  readonly events: AnyNativeEvent[];
   readonly rawRecords: Buffer[];
 }
 
@@ -180,8 +198,20 @@ const FAILURE_PRECEDENCE: Readonly<Record<NativeClientErrorCode, number>> = {
   ANALYZER_FAILED: 1,
 };
 
-export async function executeNativeRequest(
+export function executeNativeRequest(
+  requestValue: NativeAnalyzeRequestV2,
+  optionsValue: NativeClientOptions,
+): Promise<ValidatedNativeResultV2>;
+export function executeNativeRequest(
   requestValue: NativeRequestEnvelope,
+  optionsValue: NativeClientOptions,
+): Promise<ValidatedNativeResultV1>;
+export function executeNativeRequest(
+  requestValue: AnyNativeRequest,
+  optionsValue: NativeClientOptions,
+): Promise<ValidatedNativeResult>;
+export async function executeNativeRequest(
+  requestValue: AnyNativeRequest,
   optionsValue: NativeClientOptions,
 ): Promise<ValidatedNativeResult> {
   const request = parseRequest(requestValue);
@@ -199,7 +229,10 @@ export async function executeNativeRequest(
   }
 
   const result = await runProcess(requestBytes, options, request, timeoutMs);
-  const stream = NativeEventStreamSchema.safeParse({ request, events: result.output.events });
+  const stream =
+    request.protocolVersion === 2
+      ? NativeAnalyzeEventStreamV2Schema.safeParse({ request, events: result.output.events })
+      : NativeEventStreamSchema.safeParse({ request, events: result.output.events });
   if (!stream.success) {
     throw clientError('PROTOCOL_VIOLATION', 'Native event stream is invalid', request, {
       stderr: result.stderr,
@@ -230,17 +263,17 @@ export async function executeNativeRequest(
     );
   }
   return deepFreeze({
-    request: stream.data.request,
-    events: stream.data.events,
+    request,
+    events: result.output.events,
     terminal,
     stderr: result.stderr,
-  });
+  }) as ValidatedNativeResult;
 }
 
 function verifyChecksum(
   records: readonly Buffer[],
   declared: string,
-  request: NativeRequestEnvelope,
+  request: AnyNativeRequest,
   stderr: string,
 ): void {
   if (!/^sha256:[0-9a-f]{64}$/.test(declared)) {
@@ -266,8 +299,11 @@ function deepFreeze<T>(value: T, seen = new WeakSet<object>()): T {
   return Object.freeze(value);
 }
 
-function parseRequest(value: NativeRequestEnvelope): NativeRequestEnvelope {
-  const result = NativeRequestEnvelopeSchema.safeParse(value);
+function parseRequest(value: AnyNativeRequest): AnyNativeRequest {
+  const result =
+    value?.protocolVersion === 2
+      ? NativeAnalyzeRequestV2Schema.safeParse(value)
+      : NativeRequestEnvelopeSchema.safeParse(value);
   if (!result.success) {
     throw new NativeClientError('INVALID_REQUEST', 'Native request is invalid');
   }
@@ -364,7 +400,7 @@ function validateOptions(value: NativeClientOptions): ValidatedOptions {
 function runProcess(
   requestBytes: Buffer,
   options: ValidatedOptions,
-  request: NativeRequestEnvelope,
+  request: AnyNativeRequest,
   timeoutMs: number,
 ): Promise<{ readonly output: DecodedOutput; readonly stderr: string }> {
   let child;
@@ -473,7 +509,7 @@ function childEnvironment(
   return { ...environment, ...allowed };
 }
 
-function effectiveTimeout(request: NativeRequestEnvelope, invocationTimeoutMs: number): number {
+function effectiveTimeout(request: AnyNativeRequest, invocationTimeoutMs: number): number {
   if (request.type !== 'ANALYZE' && request.type !== 'REFRESH') return invocationTimeoutMs;
   const durations = [invocationTimeoutMs, request.payload.resourceBudget.maxDurationMs];
   if (request.payload.deadlineEpochMs !== null) {
@@ -485,7 +521,7 @@ function effectiveTimeout(request: NativeRequestEnvelope, invocationTimeoutMs: n
 function writeRequest(
   stdin: NodeJS.WritableStream,
   bytes: Buffer,
-  request: NativeRequestEnvelope,
+  request: AnyNativeRequest,
 ): Promise<void> {
   return new Promise((resolve, reject) => {
     let settled = false;
@@ -522,7 +558,7 @@ function writeRequest(
 async function captureStderr(
   stderr: Readable,
   limit: number,
-  request: NativeRequestEnvelope,
+  request: AnyNativeRequest,
   recordFailure: (error: NativeClientError) => void,
 ): Promise<string> {
   const chunks: Buffer[] = [];
@@ -545,7 +581,7 @@ async function captureStderr(
 
 function asClientError(
   error: unknown,
-  request: NativeRequestEnvelope,
+  request: AnyNativeRequest,
   message = 'Native process failed',
 ): NativeClientError {
   return error instanceof NativeClientError
@@ -566,11 +602,11 @@ function withStderr(error: NativeClientError, stderr: string): NativeClientError
 
 async function decodeStdout(
   stdout: Readable,
-  request: NativeRequestEnvelope,
+  request: AnyNativeRequest,
   limits: NativeClientLimits,
 ): Promise<DecodedOutput> {
   const decoder = new TextDecoder('utf-8', { fatal: true });
-  const events: NativeEventEnvelope[] = [];
+  const events: AnyNativeEvent[] = [];
   const rawRecords: Buffer[] = [];
   const requestEventLimit =
     request.type === 'ANALYZE' || request.type === 'REFRESH'
@@ -656,9 +692,9 @@ async function decodeStdout(
 function parseEventLine(
   rawLine: Buffer,
   decoder: TextDecoder,
-  request: NativeRequestEnvelope,
+  request: AnyNativeRequest,
   expectedSequence: number,
-): NativeEventEnvelope {
+): AnyNativeEvent {
   if (
     rawLine.byteLength === 0 ||
     rawLine.includes(0x0d) ||
@@ -668,7 +704,10 @@ function parseEventLine(
   }
   try {
     const parsed: unknown = JSON.parse(decoder.decode(rawLine));
-    const result = NativeEventEnvelopeSchema.safeParse(parsed);
+    const result =
+      request.protocolVersion === 2
+        ? NativeAnalyzeEventEnvelopeV2Schema.safeParse(parsed)
+        : NativeEventEnvelopeSchema.safeParse(parsed);
     if (!result.success) throw new Error('invalid event');
     if (result.data.requestId !== request.requestId || result.data.sequence !== expectedSequence) {
       throw new Error('invalid event context');
@@ -682,7 +721,7 @@ function parseEventLine(
 function clientError(
   code: NativeClientErrorCode,
   message: string,
-  request: NativeRequestEnvelope,
+  request: AnyNativeRequest,
   details: Omit<NativeClientErrorDetails, 'requestId'> = {},
 ): NativeClientError {
   return new NativeClientError(code, message, { requestId: request.requestId, ...details });

@@ -62,6 +62,47 @@ fn extracts_basic_package_types_and_members() {
     );
     assert_eq!(result.coverage, SyntaxCoverage::Complete);
     assert!(result.diagnostics.is_empty());
+    assert_eq!(result.site_statistics["SYMBOL"].covered_sites, 7);
+    assert_eq!(result.site_statistics["SYMBOL"].eligible_sites, 7);
+}
+
+#[test]
+fn symbol_statistics_count_source_declarators_but_not_empty_files() {
+    let mut analyzer = JavaAnalyzer::new().unwrap();
+    let result = analyzer
+        .analyze("src/A.java", b"class A { int a, b; }")
+        .unwrap();
+    assert_eq!(result.site_statistics["SYMBOL"].covered_sites, 3);
+    assert_eq!(result.site_statistics["SYMBOL"].unsupported_sites, 0);
+    assert_eq!(result.site_statistics["SYMBOL"].partial_sites, 0);
+    let empty = analyzer
+        .analyze("src/Empty.java", b"// valid empty file")
+        .unwrap();
+    assert_eq!(empty.site_statistics["SYMBOL"].eligible_sites, 0);
+    assert_eq!(empty.coverage, SyntaxCoverage::Complete);
+}
+
+#[test]
+fn recognized_unsupported_java_types_are_not_reported_as_complete_zero_sites() {
+    let mut analyzer = JavaAnalyzer::new().unwrap();
+    let result = analyzer
+        .analyze("src/Types.java", b"enum E { A } record R(int value) {}")
+        .unwrap();
+    assert!(result.symbols.is_empty());
+    assert_eq!(result.site_statistics["SYMBOL"].eligible_sites, 2);
+    assert_eq!(result.site_statistics["SYMBOL"].unsupported_sites, 2);
+    assert_eq!(result.site_statistics["SYMBOL"].covered_sites, 0);
+    assert_eq!(result.coverage, SyntaxCoverage::Partial);
+}
+
+#[test]
+fn unrecognized_malformed_region_is_not_invented_as_a_symbol_site() {
+    let mut analyzer = JavaAnalyzer::new().unwrap();
+    let result = analyzer.analyze("src/Broken.java", b"class {}").unwrap();
+    assert_eq!(result.coverage, SyntaxCoverage::Partial);
+    assert_eq!(result.site_statistics["SYMBOL"].covered_sites, 0);
+    assert_eq!(result.site_statistics["SYMBOL"].partial_sites, 0);
+    assert_eq!(result.site_statistics["SYMBOL"].eligible_sites, 0);
 }
 
 #[test]

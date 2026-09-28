@@ -71,6 +71,25 @@ fn serve_once_impl<R: Read, W: Write, E: Write>(
             diagnostics,
         );
     }
+    if bytes.len() <= MAX_LINE_BYTES
+        && bytes.last() == Some(&b'\n')
+        && !bytes[..bytes.len() - 1].contains(&b'\n')
+        && !bytes[..bytes.len() - 1].contains(&b'\r')
+        && let Ok(value) = serde_json::from_slice::<Value>(&bytes[..bytes.len() - 1])
+        && value.get("protocolVersion").and_then(Value::as_u64) == Some(2)
+        && value.get("type").and_then(Value::as_str) == Some("REFRESH")
+        && let Some(request_id) = trustworthy_request_id(&value)
+    {
+        return write_event(
+            output,
+            request_failed_with_version(
+                &request_id,
+                "INVALID_REQUEST",
+                "Protocol v2 REFRESH is unavailable",
+                2,
+            ),
+        );
+    }
     if worker_count.is_some() {
         writeln!(diagnostics, "parse-workers requires ANALYZE")?;
         return Ok(ExitCode::from(2));
@@ -216,7 +235,7 @@ fn describe_completed(request_id: &str) -> Value {
             "providerId": "native",
             "providerVersion": env!("CARGO_PKG_VERSION"),
             "runtimeVersion": env!("CARGO_PKG_VERSION"),
-            "protocolVersions": [PROTOCOL_VERSION],
+            "protocolVersions": [PROTOCOL_VERSION, 2],
             "irSchemaVersions": [IR_SCHEMA_VERSION],
             "capabilities": ["protocol-handshake", "SYMBOL", "IMPORT", "CALL", "INHERITANCE", "REFERENCE"],
             "languages": [{
@@ -239,8 +258,17 @@ fn describe_completed(request_id: &str) -> Value {
 }
 
 fn request_failed(request_id: &str, code: &'static str, message: &'static str) -> Value {
+    request_failed_with_version(request_id, code, message, PROTOCOL_VERSION)
+}
+
+fn request_failed_with_version(
+    request_id: &str,
+    code: &'static str,
+    message: &'static str,
+    version: u64,
+) -> Value {
     json!({
-        "protocolVersion": PROTOCOL_VERSION,
+        "protocolVersion": version,
         "requestId": request_id,
         "sequence": 0,
         "type": "REQUEST_FAILED",
@@ -291,6 +319,8 @@ mod tests {
         assert!(diagnostics.is_empty());
         let event: Value = serde_json::from_slice(&output).unwrap();
         assert_eq!(event["type"], "DESCRIBE_COMPLETED");
+        assert_eq!(event["payload"]["protocolVersions"], json!([1, 2]));
+        assert_eq!(event["payload"]["irSchemaVersions"], json!([1]));
         assert_eq!(
             event["payload"]["capabilities"],
             json!([
@@ -327,6 +357,16 @@ mod tests {
         assert_eq!(exit, ExitCode::from(2));
         assert!(output.is_empty());
         assert!(!diagnostics.is_empty());
+
+        let refresh =
+            r#"{"protocolVersion":2,"requestId":"request-a","type":"REFRESH","payload":{}}"#;
+        for suffix in ["\r\n", "\n\n", "\ntrailing"] {
+            let input = format!("{refresh}{suffix}");
+            let (exit, output, diagnostics) = run(input.as_bytes());
+            assert_eq!(exit, ExitCode::from(2), "suffix: {suffix:?}");
+            assert!(output.is_empty(), "suffix: {suffix:?}");
+            assert!(!diagnostics.is_empty(), "suffix: {suffix:?}");
+        }
     }
 
     #[test]

@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 
@@ -6,9 +7,13 @@ import {
   NativeEventEnvelopeSchema,
   NativeEventStreamSchema,
   NativeRequestEnvelopeSchema,
+  NativeAnalyzeRequestV2Schema,
+  NativeAnalyzeEventEnvelopeV2Schema,
+  NativeAnalyzeEventStreamV2Schema,
 } from '../dist/index.js';
 
 const fixtureRoot = new URL('../../../fixtures/ipc/protocol-v1/', import.meta.url);
+const v2FixtureRoot = new URL('../../../fixtures/ipc/protocol-v2/', import.meta.url);
 const classifications = new Set([
   'VALID',
   'MALFORMED_JSON',
@@ -70,7 +75,7 @@ const fixtureCaseIds = [
   'premature-eof-v1',
 ];
 
-function resolveFixturePath(relativePath) {
+function resolveFixturePath(relativePath, root = fixtureRoot) {
   assert.equal(typeof relativePath, 'string');
   const components = relativePath.split('/');
   assert.equal(
@@ -79,10 +84,63 @@ function resolveFixturePath(relativePath) {
   );
   assert.equal(/^[A-Za-z]:/.test(relativePath), false);
   assert.equal(relativePath.includes('\\'), false);
-  const resolved = new URL(components.map(encodeURIComponent).join('/'), fixtureRoot);
-  assert.equal(resolved.href.startsWith(fixtureRoot.href), true);
+  const resolved = new URL(components.map(encodeURIComponent).join('/'), root);
+  assert.equal(resolved.href.startsWith(root.href), true);
   return resolved;
 }
+
+function classifyV2Transcript(requestBytes, eventBytes, maxLineBytes) {
+  if (requestBytes.at(-1) !== 0x0a || eventBytes.at(-1) !== 0x0a) return 'INVALID';
+  const requestLines = decodeLines(requestBytes, maxLineBytes);
+  const eventLines = decodeLines(eventBytes, maxLineBytes);
+  if (requestLines.error || eventLines.error || requestLines.lines.length !== 1) return 'INVALID';
+  const parsedRequest = parseLines(requestLines.lines);
+  const parsedEvents = parseLines(eventLines.lines);
+  if (parsedRequest.error || parsedEvents.error) return 'INVALID';
+  const request = parsedRequest.values[0];
+  const events = parsedEvents.values;
+  const v2 = request.protocolVersion === 2;
+  const validRequest = v2
+    ? NativeAnalyzeRequestV2Schema.safeParse(request).success
+    : NativeRequestEnvelopeSchema.safeParse(request).success;
+  const validEvents = events.every((event) =>
+    v2
+      ? NativeAnalyzeEventEnvelopeV2Schema.safeParse(event).success
+      : NativeEventEnvelopeSchema.safeParse(event).success,
+  );
+  if (!validRequest || !validEvents) return 'INVALID';
+  const validStream = v2
+    ? NativeAnalyzeEventStreamV2Schema.safeParse({ request, events }).success
+    : NativeEventStreamSchema.safeParse({ request, events }).success;
+  if (!validStream) return 'INVALID';
+  const terminal = events.at(-1);
+  if (terminal.type === 'ANALYSIS_COMPLETED') {
+    const rawLines = eventBytes.toString('utf8').trimEnd().split('\n');
+    const previous = Buffer.from(`${rawLines.slice(0, -1).join('\n')}\n`, 'utf8');
+    const checksum = `sha256:${createHash('sha256').update(previous).digest('hex')}`;
+    if (terminal.payload.integrityChecksum !== checksum) return 'INVALID';
+  }
+  return 'VALID';
+}
+
+test('P05-W3-003 shared v2 byte corpus has exact bytes and classifications', async () => {
+  const manifest = JSON.parse(await readFile(new URL('cases.json', v2FixtureRoot), 'utf8'));
+  assert.equal(manifest.id, 'p05-native-ipc-protocol-bytes-v2');
+  assert.equal(manifest.task, 'P05-W3-003');
+  assert.equal(manifest.governingSpec, 'docs/handoff/specs/NATIVE_IPC.md');
+  assert.equal(manifest.cases.length, 14);
+  for (const fixtureCase of manifest.cases) {
+    const request = await readFile(resolveFixturePath(fixtureCase.requestFile, v2FixtureRoot));
+    const events = await readFile(resolveFixturePath(fixtureCase.eventsFile, v2FixtureRoot));
+    assert.equal(request.length, fixtureCase.requestBytes, fixtureCase.id);
+    assert.equal(events.length, fixtureCase.eventsBytes, fixtureCase.id);
+    assert.equal(
+      classifyV2Transcript(request, events, fixtureCase.maxLineBytes),
+      fixtureCase.expected,
+      fixtureCase.id,
+    );
+  }
+});
 
 function decodeLines(bytes, maxLineBytes) {
   if (bytes.length >= 3 && bytes[0] === 0xef && bytes[1] === 0xbb && bytes[2] === 0xbf)

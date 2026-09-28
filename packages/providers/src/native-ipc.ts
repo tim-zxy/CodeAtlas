@@ -287,7 +287,7 @@ const StreamContextShape = {
   revisionId: EntityIdSchema,
   revisionFingerprint: ContentFingerprintSchema,
 };
-const StreamContextSchema = z.strictObject(StreamContextShape);
+export const StreamContextSchema = z.strictObject(StreamContextShape);
 const AnalyzeCountsSchema = z.strictObject({
   sourceFiles: NonNegativeSafeIntegerSchema,
   nodes: NonNegativeSafeIntegerSchema,
@@ -305,7 +305,7 @@ const RefreshCountsSchema = z.strictObject({
   diagnostics: NonNegativeSafeIntegerSchema,
 });
 
-const AnalyzeCompletedPayloadSchema = z.strictObject({
+export const AnalyzeCompletedPayloadSchema = z.strictObject({
   ...StreamContextShape,
   outcome: ProviderSnapshotOutcomeSchema.exclude(['FAILED', 'CANCELLED']),
   counts: AnalyzeCountsSchema,
@@ -321,11 +321,11 @@ const RefreshCompletedPayloadSchema = z.strictObject({
   contentFingerprint: ContentFingerprintSchema,
   integrityChecksum: ContentFingerprintSchema,
 });
-const FailedPayloadSchema = z.strictObject({
+export const FailedPayloadSchema = z.strictObject({
   ...StreamContextShape,
   error: NativeIpcErrorSchema,
 });
-const RequestFailedPayloadSchema = z.strictObject({ error: NativeIpcErrorSchema });
+export const RequestFailedPayloadSchema = z.strictObject({ error: NativeIpcErrorSchema });
 const ProviderEdgeRefSchema = ProviderFactRefSchema.extend({ factType: z.literal('EDGE') });
 
 const EventEnvelopeBase = {

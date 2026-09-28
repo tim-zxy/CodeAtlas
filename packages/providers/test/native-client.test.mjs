@@ -22,6 +22,7 @@ const describeRequest = {
   type: 'DESCRIBE',
   payload: { clientProtocolVersions: [1], clientIrSchemaVersions: [1] },
 };
+const analyzeRequestV2 = { ...structuredClone(analyzeRequest), protocolVersion: 2 };
 
 function runScenario(scenario, overrides = {}, request = describeRequest) {
   const platformEnvironment = Object.fromEntries(
@@ -278,6 +279,28 @@ test('every corrupt valid prefix leaves application state unchanged', async () =
     const applied = [];
     await assert.rejects(
       runScenario(scenario, {}, analyzeRequest).then((result) => applied.push(result)),
+    );
+    assert.deepEqual(applied, [], scenario);
+  }
+});
+
+test('v2 analysis preserves version and releases only complete measured coverage', async () => {
+  const result = await runScenario('valid-analyze-v2', {}, analyzeRequestV2);
+  assert.equal(result.request.protocolVersion, 2);
+  assert.ok(result.events.every((entry) => entry.protocolVersion === 2));
+  assert.equal(result.terminal.type, 'ANALYSIS_COMPLETED');
+  assert.equal(
+    result.events.find((entry) => entry.type === 'COVERAGE').payload.statistics.eligibleSites,
+    0,
+  );
+  assert.ok(Object.isFrozen(result.events));
+});
+
+test('v2 rejects mismatched envelopes, corrupt statistics and checksum without a partial result', async () => {
+  for (const scenario of ['version-mismatch-v2', 'invalid-coverage-v2', 'checksum-mismatch-v2']) {
+    const applied = [];
+    await assert.rejects(
+      runScenario(scenario, {}, analyzeRequestV2).then((result) => applied.push(result)),
     );
     assert.deepEqual(applied, [], scenario);
   }

@@ -1,7 +1,9 @@
+use std::collections::HashSet;
 use std::fs;
 use std::path::{Component, Path, PathBuf};
 
 use serde_json::Value;
+use sha2::{Digest, Sha256};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum Classification {
@@ -479,4 +481,242 @@ fn classification_precedence_and_stream_failures_are_deterministic() {
         ),
         Classification::PrematureEof
     );
+}
+
+#[test]
+fn shared_v2_byte_corpus_has_exact_bytes_and_cross_language_classifications() {
+    let root = Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../..")
+        .join("fixtures/ipc/protocol-v2");
+    let manifest: Value =
+        serde_json::from_slice(&fs::read(root.join("cases.json")).unwrap()).unwrap();
+    assert_eq!(manifest["id"], "p05-native-ipc-protocol-bytes-v2");
+    assert_eq!(manifest["task"], "P05-W3-003");
+    assert_eq!(manifest["cases"].as_array().unwrap().len(), 14);
+    for case in manifest["cases"].as_array().unwrap() {
+        let request = fs::read(resolve_fixture_path(
+            &root,
+            case["requestFile"].as_str().unwrap(),
+        ))
+        .unwrap();
+        let events = fs::read(resolve_fixture_path(
+            &root,
+            case["eventsFile"].as_str().unwrap(),
+        ))
+        .unwrap();
+        assert_eq!(
+            request.len() as u64,
+            case["requestBytes"].as_u64().unwrap(),
+            "{}",
+            case["id"]
+        );
+        assert_eq!(
+            events.len() as u64,
+            case["eventsBytes"].as_u64().unwrap(),
+            "{}",
+            case["id"]
+        );
+        let observed = if classify_v2_transcript(
+            &request,
+            &events,
+            case["maxLineBytes"].as_u64().unwrap() as usize,
+        ) {
+            "VALID"
+        } else {
+            "INVALID"
+        };
+        assert_eq!(observed, case["expected"], "{}", case["id"]);
+    }
+}
+
+fn v2_count(value: &Value) -> Option<u64> {
+    value
+        .as_u64()
+        .filter(|count| *count <= 9_007_199_254_740_991)
+}
+
+fn valid_v2_statistics(value: &Value, capability: &str) -> bool {
+    if !is_closed_object(
+        value,
+        &[
+            "eligibleSites",
+            "coveredSites",
+            "unsupportedSites",
+            "partialSites",
+            "resolutionCounts",
+        ],
+    ) {
+        return false;
+    }
+    let Some(eligible) = v2_count(&value["eligibleSites"]) else {
+        return false;
+    };
+    let Some(covered) = v2_count(&value["coveredSites"]) else {
+        return false;
+    };
+    let Some(unsupported) = v2_count(&value["unsupportedSites"]) else {
+        return false;
+    };
+    let Some(partial) = v2_count(&value["partialSites"]) else {
+        return false;
+    };
+    if eligible != covered + unsupported + partial {
+        return false;
+    }
+    let resolutions = &value["resolutionCounts"];
+    if !is_closed_object(
+        resolutions,
+        &[
+            "EXACT",
+            "HEURISTIC",
+            "AMBIGUOUS",
+            "UNRESOLVED",
+            "UNSUPPORTED",
+        ],
+    ) {
+        return false;
+    }
+    let Some(total) = [
+        "EXACT",
+        "HEURISTIC",
+        "AMBIGUOUS",
+        "UNRESOLVED",
+        "UNSUPPORTED",
+    ]
+    .iter()
+    .map(|key| v2_count(&resolutions[*key]))
+    .collect::<Option<Vec<_>>>()
+    .map(|counts| counts.into_iter().sum::<u64>()) else {
+        return false;
+    };
+    if capability == "SYMBOL" {
+        total == 0
+    } else {
+        total == covered
+    }
+}
+
+fn classify_v2_transcript(request_bytes: &[u8], event_bytes: &[u8], max_line_bytes: usize) -> bool {
+    if request_bytes.last() != Some(&b'\n') || event_bytes.last() != Some(&b'\n') {
+        return false;
+    }
+    let Ok(request_lines) = decode_lines(request_bytes, max_line_bytes) else {
+        return false;
+    };
+    let Ok(event_lines) = decode_lines(event_bytes, max_line_bytes) else {
+        return false;
+    };
+    if request_lines.len() != 1 {
+        return false;
+    }
+    let Ok(requests) = parse_lines(&request_lines) else {
+        return false;
+    };
+    let Ok(events) = parse_lines(&event_lines) else {
+        return false;
+    };
+    let request = &requests[0];
+    if !is_request_envelope(request)
+        || request["protocolVersion"] != 2
+        || request["type"] != "ANALYZE"
+    {
+        return false;
+    }
+    let Some(request_id) = request["requestId"].as_str() else {
+        return false;
+    };
+    let Some(files) = request["payload"]["sourceFiles"].as_array() else {
+        return false;
+    };
+    let Some(capabilities) = request["payload"]["requestedCapabilities"].as_array() else {
+        return false;
+    };
+    let expected: HashSet<_> = files
+        .iter()
+        .flat_map(|file| {
+            capabilities.iter().filter_map(move |capability| {
+                Some(format!(
+                    "{}\0{}",
+                    file["id"].as_str()?,
+                    capability.as_str()?
+                ))
+            })
+        })
+        .collect();
+    let mut observed = HashSet::new();
+    for (index, event) in events.iter().enumerate() {
+        if !is_event_envelope(event)
+            || event["protocolVersion"] != 2
+            || event["requestId"] != request_id
+            || event["sequence"] != index as u64
+        {
+            return false;
+        }
+        let Some(kind) = event["type"].as_str() else {
+            return false;
+        };
+        if !legal_event_type("ANALYZE", kind) {
+            return false;
+        }
+        if kind == "COVERAGE" {
+            let payload = &event["payload"];
+            if !is_closed_object(
+                payload,
+                &[
+                    "capability",
+                    "sourceFileId",
+                    "support",
+                    "coverage",
+                    "statistics",
+                ],
+            ) {
+                return false;
+            }
+            let Some(capability) = payload["capability"].as_str() else {
+                return false;
+            };
+            let Some(file_id) = payload["sourceFileId"].as_str() else {
+                return false;
+            };
+            let key = format!("{file_id}\0{capability}");
+            if !expected.contains(&key)
+                || !observed.insert(key)
+                || !valid_v2_statistics(&payload["statistics"], capability)
+            {
+                return false;
+            }
+        }
+    }
+    if events
+        .first()
+        .is_none_or(|event| event["type"] != "ANALYSIS_STARTED")
+        || events
+            .last()
+            .is_none_or(|event| event["type"] != "ANALYSIS_COMPLETED")
+        || events[..events.len() - 1]
+            .iter()
+            .any(|event| TERMINAL_EVENT_TYPES.contains(&event["type"].as_str().unwrap_or("")))
+        || observed != expected
+    {
+        return false;
+    }
+    let terminal = events.last().unwrap();
+    for (field, kind) in [
+        ("sourceFiles", "SOURCE_FILE"),
+        ("nodes", "NODE"),
+        ("edges", "EDGE"),
+        ("coverage", "COVERAGE"),
+        ("diagnostics", "DIAGNOSTIC"),
+    ] {
+        let actual = events.iter().filter(|event| event["type"] == kind).count() as u64;
+        if v2_count(&terminal["payload"]["counts"][field]) != Some(actual) {
+            return false;
+        }
+    }
+    let records: Vec<&[u8]> = event_bytes.split_inclusive(|byte| *byte == b'\n').collect();
+    let checksum = format!(
+        "sha256:{:x}",
+        Sha256::digest(records[..records.len() - 1].concat())
+    );
+    terminal["payload"]["integrityChecksum"] == checksum
 }

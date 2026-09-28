@@ -272,6 +272,22 @@ fn relation_sites_do_not_assign_initializer_calls_to_a_made_up_method() {
             .iter()
             .any(|diagnostic| diagnostic.code == "UNSUPPORTED_RELATION_SOURCE")
     );
+    assert_eq!(analysis.site_statistics["CALL"].covered_sites, 0);
+    assert_eq!(analysis.site_statistics["CALL"].unsupported_sites, 1);
+    assert_eq!(analysis.site_statistics["CALL"].eligible_sites, 1);
+}
+
+#[test]
+fn relation_statistics_count_sites_without_synthetic_compilation_unit() {
+    let analysis = analyze_sites(
+        "src/A.java",
+        b"import demo.B; class A { void run() { new B(); } }",
+    );
+    assert_eq!(analysis.site_statistics["IMPORT"].covered_sites, 1);
+    assert_eq!(analysis.site_statistics["IMPORT"].eligible_sites, 1);
+    assert_eq!(analysis.site_statistics["CALL"].covered_sites, 1);
+    assert_eq!(analysis.site_statistics["CALL"].eligible_sites, 1);
+    assert_eq!(analysis.site_statistics["SYMBOL"].covered_sites, 2);
 }
 
 #[test]

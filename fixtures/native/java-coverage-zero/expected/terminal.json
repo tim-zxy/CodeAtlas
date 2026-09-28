@@ -1,0 +1,28 @@
+{
+  "providerSnapshotId": "snapshot-fixture",
+  "repositoryId": "repo-fixture",
+  "revisionId": "rev-fixture",
+  "revisionFingerprint": "sha256:revision-fixture",
+  "outcome": "SUCCEEDED",
+  "counts": {
+    "sourceFiles": 1,
+    "nodes": 0,
+    "edges": 0,
+    "coverage": 2,
+    "diagnostics": 0
+  },
+  "capabilities": [
+    {
+      "name": "SYMBOL",
+      "support": "SUPPORTED",
+      "coverage": "COMPLETE"
+    },
+    {
+      "name": "CALL",
+      "support": "SUPPORTED",
+      "coverage": "COMPLETE"
+    }
+  ],
+  "contentFingerprint": "sha256:697448452240c81a88442cf4fbc72e120e6a904c152b6181a146aa3de963213f",
+  "integrityChecksum": "sha256:697448452240c81a88442cf4fbc72e120e6a904c152b6181a146aa3de963213f"
+}

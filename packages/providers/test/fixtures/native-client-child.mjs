@@ -194,6 +194,74 @@ if (
       ),
     ]),
   );
+} else if (
+  [
+    'valid-analyze-v2',
+    'version-mismatch-v2',
+    'invalid-coverage-v2',
+    'checksum-mismatch-v2',
+  ].includes(scenario)
+) {
+  const sourceFile = request.payload.sourceFiles[0];
+  const context = {
+    providerSnapshotId: request.payload.providerSnapshotId,
+    repositoryId: request.payload.repository.id,
+    revisionId: request.payload.revision.id,
+    revisionFingerprint: request.payload.revision.contentFingerprint,
+  };
+  const v2Envelope = (type, sequence, payload) => ({
+    protocolVersion: 2,
+    requestId: request.requestId,
+    sequence,
+    type,
+    payload,
+  });
+  const records = [
+    line(v2Envelope('ANALYSIS_STARTED', 0, context)),
+    line(v2Envelope('SOURCE_FILE', 1, sourceFile)),
+    line(
+      v2Envelope('COVERAGE', 2, {
+        capability: request.payload.requestedCapabilities[0],
+        sourceFileId: sourceFile.id,
+        support: 'SUPPORTED',
+        coverage: 'COMPLETE',
+        statistics: {
+          eligibleSites: 0,
+          coveredSites: 0,
+          unsupportedSites: 0,
+          partialSites: 0,
+          resolutionCounts: { EXACT: 0, HEURISTIC: 0, AMBIGUOUS: 0, UNRESOLVED: 0, UNSUPPORTED: 0 },
+        },
+      }),
+    ),
+  ];
+  const terminal = v2Envelope('ANALYSIS_COMPLETED', 3, {
+    ...context,
+    outcome: 'SUCCEEDED',
+    counts: { sourceFiles: 1, nodes: 0, edges: 0, coverage: 1, diagnostics: 0 },
+    capabilities: [
+      {
+        name: request.payload.requestedCapabilities[0],
+        support: 'SUPPORTED',
+        coverage: 'COMPLETE',
+      },
+    ],
+    contentFingerprint: 'v2-content',
+    integrityChecksum: checksum(records),
+  });
+  if (scenario === 'version-mismatch-v2') {
+    const mismatched = JSON.parse(records[2].toString('utf8'));
+    mismatched.protocolVersion = 1;
+    records[2] = line(mismatched);
+  }
+  if (scenario === 'invalid-coverage-v2') {
+    const invalid = JSON.parse(records[2].toString('utf8'));
+    invalid.payload.statistics.eligibleSites = 1;
+    records[2] = line(invalid);
+  }
+  if (scenario === 'checksum-mismatch-v2')
+    terminal.payload.integrityChecksum = `sha256:${'0'.repeat(64)}`;
+  await write(Buffer.concat([...records, line(terminal)]));
 } else {
   process.stderr.write('unknown native-client test scenario\n');
   process.exitCode = 2;

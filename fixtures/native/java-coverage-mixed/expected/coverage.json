@@ -1,0 +1,78 @@
+[
+  {
+    "capability": "SYMBOL",
+    "sourceFileId": "file-Case.java",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE",
+    "statistics": {
+      "eligibleSites": 8,
+      "coveredSites": 8,
+      "unsupportedSites": 0,
+      "partialSites": 0,
+      "resolutionCounts": {
+        "EXACT": 0,
+        "HEURISTIC": 0,
+        "AMBIGUOUS": 0,
+        "UNRESOLVED": 0,
+        "UNSUPPORTED": 0
+      }
+    }
+  },
+  {
+    "capability": "IMPORT",
+    "sourceFileId": "file-Case.java",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE",
+    "statistics": {
+      "eligibleSites": 1,
+      "coveredSites": 1,
+      "unsupportedSites": 0,
+      "partialSites": 0,
+      "resolutionCounts": {
+        "EXACT": 1,
+        "HEURISTIC": 0,
+        "AMBIGUOUS": 0,
+        "UNRESOLVED": 0,
+        "UNSUPPORTED": 0
+      }
+    }
+  },
+  {
+    "capability": "CALL",
+    "sourceFileId": "file-Case.java",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE",
+    "statistics": {
+      "eligibleSites": 4,
+      "coveredSites": 4,
+      "unsupportedSites": 0,
+      "partialSites": 0,
+      "resolutionCounts": {
+        "EXACT": 1,
+        "HEURISTIC": 1,
+        "AMBIGUOUS": 1,
+        "UNRESOLVED": 1,
+        "UNSUPPORTED": 0
+      }
+    }
+  },
+  {
+    "capability": "REFERENCE",
+    "sourceFileId": "file-Case.java",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE",
+    "statistics": {
+      "eligibleSites": 1,
+      "coveredSites": 1,
+      "unsupportedSites": 0,
+      "partialSites": 0,
+      "resolutionCounts": {
+        "EXACT": 0,
+        "HEURISTIC": 0,
+        "AMBIGUOUS": 0,
+        "UNRESOLVED": 1,
+        "UNSUPPORTED": 0
+      }
+    }
+  }
+]
