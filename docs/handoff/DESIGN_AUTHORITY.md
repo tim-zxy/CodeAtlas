@@ -33,6 +33,7 @@ An Engineering Agent must not silently change any item below. A change requires 
 - no automatic remote fallback when local-only or security-blocked.
 - Wiki is a published-Knowledge projection, never a canonical writer; projection-only changes cannot initiate semantic compilation (ADR-013).
 - NativeProvider remains language-neutral, framework semantics remain Plugin-owned, and Rust cannot activate SQLite state (ADR-014).
+- Native IPC v1 strict payloads remain compatible; ADR-015 adds a separately negotiated v2 `ANALYZE` coverage payload without changing IR schema v1, ProviderSnapshot v1, or Rust's storage authority.
 
 ## EVOLVABLE decisions
 

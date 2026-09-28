@@ -1,10 +1,10 @@
 # ADR 015 Versioned Native IPC Coverage Statistics
 
-Status: Proposed for P05-W3-003 written-design review; not yet implementation authority.
+Status: Accepted on 2026-09-28 for P05-W3-003; implementation still requires a reviewed plan and task evidence.
 
-## Decision under review
+## Decision
 
-Native IPC v1 remains strict and readable. Add protocol v2 for `ANALYZE` with typed per-file/per-capability site statistics in `COVERAGE`, negotiated through `DESCRIBE`; IR schema remains v1. Do not add fields to ProviderSnapshot v1 or make Rust a Canonical SQLite writer. Accept this ADR before implementing protocol v2.
+Native IPC v1 remains strict and readable. Add protocol v2 for `ANALYZE` with typed per-file/per-capability site statistics in `COVERAGE`; IR schema remains v1. The v1 `DESCRIBE` request remains the bootstrap and advertises support for both analysis protocol versions. Protocol-v2 `REFRESH` is not introduced by this decision. Do not add fields to ProviderSnapshot v1 or make Rust a Canonical SQLite writer.
 
 ## Authority and evidence
 
@@ -14,7 +14,7 @@ ADR-010's version-negotiated JSONL/storage boundary, ADR-014's Native outcome/co
 
 - Infer statistics from existing facts: compatible, but loses unsupported/partial recognized sites and can falsely imply complete coverage.
 - Encode counts in diagnostic messages: avoids a schema change but makes validation, compatibility, and machine consumption unreliable.
-- Version the coverage payload: preserves old clients while allowing strict cross-language validation. This is the proposed choice.
+- Version the coverage payload: preserves old clients while allowing strict cross-language validation. This is the accepted choice.
 
 ## Compatibility, migration, and rollback
 
@@ -22,6 +22,6 @@ Advertise protocol versions `[1, 2]` and IR schema `[1]`; old clients can contin
 
 ## Security, phases, and required synchronization
 
-No raw source, secrets, framework semantics, Knowledge writes, shell execution, or SQLite access is added to Rust. The new counts are source-derived bounded integers and are checked against event/fact and partition invariants. This belongs only to P05-W3-003 in Phase 0.5; later graph queries surface its warnings, and no later-phase feature is made a dependency.
+No raw source, secrets, framework semantics, Knowledge writes, shell execution, or SQLite access is added to Rust. The new counts are source-derived bounded integers; the language-neutral boundary checks partition invariants, while Java Fixtures compare counts with emitted source facts. This belongs only to P05-W3-003 in Phase 0.5; later graph queries surface its warnings, and no later-phase feature is made a dependency.
 
-On acceptance, synchronize `docs/handoff/specs/NATIVE_IPC.md`, `PROVIDER_SPI.md`, `EVALUATION.md`, `PHASE_ACCEPTANCE.md`, `DESIGN_TRACEABILITY.md`, `CURRENT_STATUS.md`, the protocol/handshake Fixture baselines, and the P05-W3-003 design/plan. ADR-010 remains in force; this record adds a compatible version rather than replacing its storage boundary. If v2 fails validation or cannot fit the declared budget, retain v1 availability and the last valid graph; do not relax v1 schemas or publish a partial result.
+Synchronize `docs/handoff/specs/NATIVE_IPC.md`, `PROVIDER_SPI.md`, `EVALUATION.md`, `PHASE_ACCEPTANCE.md`, `DESIGN_TRACEABILITY.md`, `CURRENT_STATUS.md`, the protocol/handshake Fixture baselines, and the P05-W3-003 design/plan. Fixture baselines change only with implementation and reviewed exact outputs, not at design acceptance. ADR-010 remains in force; this record adds a compatible version rather than replacing its storage boundary. If v2 fails validation or cannot fit the declared budget, retain v1 availability and the last valid graph; do not relax v1 schemas or publish a partial result.

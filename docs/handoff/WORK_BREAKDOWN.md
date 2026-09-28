@@ -106,6 +106,8 @@ Depends on P05-W3-002. Emit eligible, covered, unsupported, partial, and resolut
 
 Distinguish timeout/budget exhaustion, parser exception, unsupported language/capability, syntax-error/partial coverage, and successful zero-fact analysis through existing terminal, diagnostic, and coverage channels where possible. Any wire or persisted snapshot extension needs separate compatibility review.
 
+ADR-015 approves a compatible protocol-v2 `ANALYZE` coverage-statistics payload while retaining strict v1 and the v1 `DESCRIBE` bootstrap. Count recognized source-grounded syntax sites, not unknown syntax-error regions; preserve v1 numeric-statistics-unavailable reporting. Protocol-v2 `REFRESH`, persisted snapshot changes, and query implementation remain outside this task.
+
 ### P05-W4-001 Canonical normalizers and fact identity
 
 Depends on P05-W3-002. Normalize provider nodes/edges to language-neutral forms and implement `NodeFactKey`/`EdgeFactKey`. A CALL key includes caller, resolved target or unresolved hint, callsite, and revision semantics.

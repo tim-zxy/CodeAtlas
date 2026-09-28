@@ -2,13 +2,13 @@
 
 Date: 2026-09-28
 Task: P05-W3-003
-Status: written design for user review; no product implementation is authorized by this document
+Status: written design accepted on 2026-09-28; implementation awaits review of the task plan
 
 ## Intent and authority
 
 Make the Java analyzer's per-file, per-capability coverage measurable without mistaking an honestly unresolved relation for a missing fact or a failed analysis for an empty success. The denominator is a source-grounded syntax site that the adapter actually recognized for the requested capability. Syntax that cannot be inspected because parsing failed is not silently added to, or omitted from, a claimed complete denominator: the file is marked `PARTIAL` with a diagnostic. Success requires exact registered coverage/outcome Fixtures, strict cross-language protocol validation, visible limitations in a read-only summary, and no applicable result from a failed stream. This task alone does not complete Phase 0.5.
 
-The controlling authorities are `docs/handoff/WORK_BREAKDOWN.md` P05-W3-003, `PHASE_ACCEPTANCE.md`, `DESIGN_TRACEABILITY.md`, `specs/NATIVE_IPC.md`, `specs/PROVIDER_SPI.md`, `specs/EVALUATION.md`, `specs/AGENT_API.md`, `specs/CANONICAL_IR.md`, ADR-010/012/014, and `docs/specs/native-analyzer-scalability.md`. The merged P05-W3-002 Java relation path at `9bd70cf75802f0b344cc5aa2d437db83375a8ccf` is the implementation baseline. The proposed compatible wire extension is separately recorded as [ADR-015](../../handoff/adr/ADR-015-native-ipc-v2-coverage-statistics.md); it must be accepted before code changes that emit or accept protocol v2.
+The controlling authorities are `docs/handoff/WORK_BREAKDOWN.md` P05-W3-003, `PHASE_ACCEPTANCE.md`, `DESIGN_TRACEABILITY.md`, `specs/NATIVE_IPC.md`, `specs/PROVIDER_SPI.md`, `specs/EVALUATION.md`, `specs/AGENT_API.md`, `specs/CANONICAL_IR.md`, ADR-010/012/014/015, and `docs/specs/native-analyzer-scalability.md`. The merged P05-W3-002 Java relation path at `9bd70cf75802f0b344cc5aa2d437db83375a8ccf` is the implementation baseline. The compatible wire extension is governed by accepted [ADR-015](../../handoff/adr/ADR-015-native-ipc-v2-coverage-statistics.md).
 
 ## Existing behavior and choice
 
@@ -18,7 +18,7 @@ Deriving counts only from emitted facts cannot find recognized sites that produc
 
 ## Versioned contract and data flow
 
-`DESCRIBE` advertises protocol versions `[1, 2]` and IR schema `[1]`. A v1 `ANALYZE` request receives the unchanged v1 event shapes; a v2 `ANALYZE` request receives the v2 envelope and a strict v2 `COVERAGE` payload. Rust never mixes protocol versions within a stream. TypeScript validates the response against the request's version, including the existing request-ID, sequence, context, count, checksum, line/event/total-byte, terminal, cancellation, and failure rules. An unsupported version fails explicitly. The current hard byte/event ceilings are not raised; a statistics-bearing stream that cannot fit fails with the existing resource error rather than dropping coverage records. The one-shot process need not persist negotiated state.
+The v1 `DESCRIBE` bootstrap advertises protocol versions `[1, 2]` and IR schema `[1]`. A v1 `ANALYZE` request receives the unchanged v1 event shapes; a v2 `ANALYZE` request receives the v2 envelope and a strict v2 `COVERAGE` payload. This task does not implement protocol-v2 `REFRESH`. Rust never mixes protocol versions within a stream. TypeScript validates the response against the request's version, including the existing request-ID, sequence, context, count, checksum, line/event/total-byte, terminal, cancellation, and failure rules. An unsupported version fails explicitly. The current hard byte/event ceilings are not raised; a statistics-bearing stream that cannot fit fails with the existing resource error rather than dropping coverage records. The one-shot process need not persist negotiated state.
 
 Each v2 `COVERAGE` record retains the v1 fields and adds `statistics` with non-negative safe-integer `eligibleSites`, `coveredSites`, `unsupportedSites`, `partialSites`, and resolution counts `EXACT`, `HEURISTIC`, `AMBIGUOUS`, `UNRESOLVED`, `UNSUPPORTED`. The exact names and strict JSON shape are normative for the implementation plan, subject to ADR acceptance. `eligibleSites = coveredSites + unsupportedSites + partialSites`. For a relation capability, the five resolution counts sum to `coveredSites`; for `SYMBOL`, they are all zero. Counts never use floating-point ratios as a substitute for exact integers. The language-neutral TypeScript validator checks these cross-field equations and uniqueness of `(sourceFileId, capability)` coverage within the requested scope; Java Fixture/Evaluation checks prove that the counts correspond to emitted source-grounded facts. Synthetic compilation-unit and package-container nodes are excluded from site counts. Terminal NODE/EDGE event counts remain wire counts and need not equal site counts.
 

@@ -35,6 +35,8 @@ Capabilities are fine-grained: symbol, import, reference, call, inheritance, ove
 
 Events conform to Native IPC concepts even for in-process providers. A stream ends in exactly one completed or failed terminal event. Coverage states distinguish covered, partial, unsupported, excluded, and failed. Diagnostics have stable codes, severity, source references, and provider metadata.
 
+For P05-W3-003 Native IPC v2 `ANALYZE`, per-file/capability coverage additionally reports recognized eligible sites partitioned into covered, unsupported, and partial sites, plus relation-target resolution counts. An honestly emitted ambiguous or unresolved relation is covered extraction, not a claimed resolved target. Syntax-error regions that cannot be enumerated leave coverage `PARTIAL`; zero facts in a valid empty file remain a successful complete observation. A v1 Provider response has categorical coverage only, and its numeric statistics are unavailable rather than zero. This is observation metadata, not Canonical Fact identity or a state-activation decision (ADR-015).
+
 ## Normalization and merging
 
 Provider IDs remain in ProviderNode/ProviderEdge and ProviderFactBinding. Normalizers map to canonical kinds and fact keys. `FactMerger` merges equivalent support, respects exact/heuristic/ambiguous/unresolved hierarchy, and exposes explanations. Primary, secondary, and shadow roles affect orchestration and comparison, not automatic authority.

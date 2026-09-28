@@ -62,6 +62,8 @@ A reproducible dense-source benchmark (`scripts/bench-native-symbol-memory.ps1`)
 
 Represent outcomes without treating an empty fact list as an error: timeout/budget exhaustion, parser exception, unsupported language or capability, syntax-error/partial coverage, and successful analysis with zero facts are distinct. Use existing IPC error, diagnostic, capability-coverage, and terminal-outcome channels where they can express the distinction. A new wire field or persisted ProviderSnapshot field requires a separately reviewed version/compatibility decision. Syntax errors retain source/coverage evidence; they do not become invented resolved relations. A failed terminal never activates state.
 
+ADR-015 supplies that compatibility decision for P05-W3-003: negotiated protocol-v2 `ANALYZE` adds exact recognized-site coverage and relation-resolution counts per file/capability, while v1 remains strict and reports numeric statistics as unavailable. Unknown syntax-error regions are not assigned a fabricated denominator. IR schema and persisted ProviderSnapshot remain at version 1; protocol-v2 `REFRESH` is not authorized by this task. The original phase accuracy gates and evidence-driven performance policy remain unchanged.
+
 Parallel parse completion order must not change Provider Fact identity, normalized Canonical Graph semantics, coverage, or stale-fact removal. A Worker Consistency Fixture runs the same pinned input with distinct effective worker counts and completion orders, then compares the normalized result and active-state outcome. Stable wire ordering is required where IPC v1 requires it; otherwise normalization, not arrival order, determines graph semantics.
 
 ## Measurement and benchmarks

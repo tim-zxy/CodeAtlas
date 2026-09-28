@@ -14,14 +14,14 @@
 | Phase | Readiness | Implementation progress |
 |---|---|---|
 | 0 | IMPLEMENTATION-READY | 18 of 18 tasks integrated; 11 of 11 technical exit checks passed on `9f4ec95`; documentation closeout merged as PR #7 at `71dd18c` |
-| 0.5 | IMPLEMENTATION-READY | P05-W2-001, P05-W2-002, P05-W3-001, and P05-W3-002 integrated; P05-W3-003 written design and proposed ADR-015 pending review; remaining tasks and Phase 0.5 exit gates remain open |
+| 0.5 | IMPLEMENTATION-READY | P05-W2-001, P05-W2-002, P05-W3-001, and P05-W3-002 integrated; P05-W3-003 written design and ADR-015 accepted, implementation plan written for review; remaining tasks and Phase 0.5 exit gates remain open |
 | 1 | DESIGN-READY | 0 percent |
 | 2 | ARCHITECTURE-READY | 0 percent |
 | 3 | ROADMAP/ARCHITECTURE-READY | 0 percent |
 
 ## Next action
 
-Review the written P05-W3-003 coverage/outcome design and proposed ADR-015 compatible Native IPC v2 extension. Neither proposal authorizes product-code implementation; accept the ADR and review an implementation plan first. P05-W2-010 change-event labels remain separate. Source discovery remains Git-only; non-Git directory support is a later separately reviewed adapter. Do not promote Phase 0.5 or advance deferred capabilities.
+Review `docs/superpowers/plans/2026-09-28-p05-w3-003-coverage-outcomes.md` and choose its execution method before product-code work. The written coverage/outcome design and compatible Native IPC v2 ADR-015 were accepted on 2026-09-28; normative documentation has been synchronized, but no v2 code, Fixture, or numerical gate is claimed yet. P05-W2-010 change-event labels remain separate. Source discovery remains Git-only; non-Git directory support is a later separately reviewed adapter. Do not promote Phase 0.5 or advance deferred capabilities.
 
 ## 2026-09-24 compatibility amendment evidence
 
@@ -30,6 +30,11 @@ Review the written P05-W3-003 coverage/outcome design and proposed ADR-015 compa
 - Documentation scope: Native resource/outcome/Worker Consistency requirements are mapped to existing P05 tasks; KnowledgeCandidate degradation, System Wiki, Diagram, and progressive Agent consumption are phase-gated. No product code, executable P05 Fixture, migration, Canonical IR/IPC contract, numeric threshold, or Phase 4 was introduced by this amendment. Hosted CI for this documentation change has not yet been observed.
 
 ## Active task evidence
+
+### P05-W3-003 coverage and outcomes (design accepted; plan review pending)
+
+- User accepted the source-grounded syntax-site denominator, strict versioned IPC approach, failure/Fixture scope, the written design at `docs/superpowers/specs/2026-09-28-p05-w3-003-coverage-outcomes-design.md`, and ADR-015 on 2026-09-28. ADR-015 is now accepted; `ARCHITECTURE.md`, `DESIGN_AUTHORITY.md`, `ROADMAP.md`, `WORK_BREAKDOWN.md`, Native IPC/Provider SPI/Evaluation specs, `PHASE_ACCEPTANCE.md`, and `DESIGN_TRACEABILITY.md` describe the compatible v2 `ANALYZE` boundary. This is documentation acceptance, not task implementation or a Phase 0.5 exit. No product code, executable v2 Fixture, migration, ProviderSnapshot/Canonical IR change, or numerical gate has been introduced.
+- The task-sized, test-first implementation plan is `docs/superpowers/plans/2026-09-28-p05-w3-003-coverage-outcomes.md`. Its user review and execution-method selection are pending. The currently checked-in v1 Fixture baselines are intentionally unchanged until executable v2 evidence is produced and reviewed.
 
 ### P05-W3-002 Java relation extraction (integrated)
 
