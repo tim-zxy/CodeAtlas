@@ -1,6 +1,6 @@
 # P05-W4-001 Canonical Normalization and Fact Identity Design
 
-Status: Draft for user review (2026-09-28). No product implementation is authorized by this draft.
+Status: Accepted by user for implementation planning (2026-09-28). Product implementation still awaits review of the task plan.
 
 ## Purpose and authority
 
@@ -10,7 +10,7 @@ Governing authorities are ADR-002, ADR-010, ADR-012; `docs/handoff/DESIGN_AUTHOR
 
 ## Scope and boundaries
 
-- Add one pure normalization entry point in `@codeatlas/providers` that accepts a fully validated, successful v1 or v2 Native `ANALYZE` result. Recheck the necessary request/event context and strict Provider Fact schemas at this boundary; reject `DESCRIBE`, `REFRESH`, failed, truncated, corrupt, or mixed-context streams. The Native client remains responsible for raw JSONL byte framing and checksum verification.
+- Add one pure normalization entry point in `@codeatlas/providers` that accepts a fully validated, completed v1 or v2 Native `ANALYZE` result (`SUCCEEDED` or `PARTIAL`, with the latter retaining its coverage limitations). Recheck the necessary request/event context and strict Provider Fact schemas at this boundary; reject `DESCRIBE`, `REFRESH`, failed, truncated, corrupt, or mixed-context streams. The Native client remains responsible for raw JSONL byte framing and checksum verification. Normalization does not authorize publication of a partial graph.
 - Normalize only the Java Provider kinds already emitted by the Native Analyzer. A kind outside the reviewed map is an explicit typed failure, not a silently dropped fact and not a guessed `OTHER`.
 - Return deterministic, key-ordered pairs of each Provider fact reference and its Canonical node or edge, plus the provider-to-canonical node lookup needed to resolve edge references. The return value is complete or absent; no mutation, I/O, SQLite write, Evidence row, binding row, activation, confidence aggregation, or deduplication occurs.
 - Keep `@codeatlas/ir` provider-independent. The Java-kind map lives below it in `@codeatlas/providers`; Canonical schemas remain the validating output boundary. The function is not a framework Plugin, Knowledge compiler, or general-purpose language registry.

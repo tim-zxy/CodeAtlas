@@ -14,14 +14,14 @@
 | Phase | Readiness | Implementation progress |
 |---|---|---|
 | 0 | IMPLEMENTATION-READY | 18 of 18 tasks integrated; 11 of 11 technical exit checks passed on `9f4ec95`; documentation closeout merged as PR #7 at `71dd18c` |
-| 0.5 | IMPLEMENTATION-READY | P05-W2-001, P05-W2-002, and P05-W3-001..003 integrated; P05-W4-001 design draft awaits review; remaining tasks and Phase 0.5 exit gates remain open |
+| 0.5 | IMPLEMENTATION-READY | P05-W2-001, P05-W2-002, and P05-W3-001..003 integrated; P05-W4-001 design accepted and task plan awaits review; remaining tasks and Phase 0.5 exit gates remain open |
 | 1 | DESIGN-READY | 0 percent |
 | 2 | ARCHITECTURE-READY | 0 percent |
 | 3 | ROADMAP/ARCHITECTURE-READY | 0 percent |
 
 ## Next action
 
-Review `docs/superpowers/specs/2026-09-28-p05-w4-001-canonical-normalization-design.md` before writing its implementation plan or code. P05-W4-001 is the recommended next main-chain task because P05-W4-002 FactMerger and P05-W1-010 full apply depend on canonical normalization. The independent P05-W2-010 change detector remains available later. Source discovery remains Git-only; non-Git directory support is a separately reviewed adapter. Do not promote Phase 0.5 or advance deferred capabilities.
+Review `docs/superpowers/plans/2026-09-28-p05-w4-001-canonical-normalization.md` before any P05-W4-001 product implementation. Its design at `docs/superpowers/specs/2026-09-28-p05-w4-001-canonical-normalization-design.md` was accepted by the user on 2026-09-28; the plan review includes an explicit clarification that completed `PARTIAL` analysis may yield normalized candidate facts but does not authorize publication. P05-W4-001 is the recommended next main-chain task because P05-W4-002 FactMerger and P05-W1-010 full apply depend on canonical normalization. The independent P05-W2-010 change detector remains available later. Source discovery remains Git-only; non-Git directory support is a separately reviewed adapter. Do not promote Phase 0.5 or advance deferred capabilities.
 
 ## 2026-09-24 compatibility amendment evidence
 
