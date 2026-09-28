@@ -32,10 +32,10 @@
     "qualifiedName": "demo.Base",
     "sourceRange": {
       "sourceFileId": "file-Base.java",
-      "startLine": 1,
-      "startColumn": 6,
-      "endLine": 1,
-      "endColumn": 10
+      "startLine": 2,
+      "startColumn": 13,
+      "endLine": 2,
+      "endColumn": 17
     },
     "confidence": {
       "score": 1,
@@ -45,20 +45,14 @@
   },
   {
     "providerId": "native",
-    "providerFactId": "java-symbol-v1:292873ece4f277e045b15ff230741bfc0376ffa699696d10103e55574c071734",
+    "providerFactId": "java-package-container-v1:87ec8535c509a89dd9a565b9eb97d751804579a7dc979353e1b8adde20a1d3a6",
     "providerSnapshotId": "snapshot-fixture",
     "repositoryId": "repo-fixture",
     "revisionId": "rev-fixture",
-    "providerKind": "java.method",
-    "name": "baseMethod",
-    "qualifiedName": "demo.Base.baseMethod",
-    "sourceRange": {
-      "sourceFileId": "file-Base.java",
-      "startLine": 1,
-      "startColumn": 18,
-      "endLine": 1,
-      "endColumn": 28
-    },
+    "providerKind": "java.package_container",
+    "name": "demo",
+    "qualifiedName": "demo",
+    "sourceRange": null,
     "confidence": {
       "score": 1,
       "method": "parser",
@@ -74,6 +68,88 @@
     "providerKind": "java.compilation_unit",
     "name": "src/Base.java",
     "qualifiedName": "src/Base.java",
+    "sourceRange": null,
+    "confidence": {
+      "score": 1,
+      "method": "parser",
+      "reasons": []
+    }
+  },
+  {
+    "providerId": "native",
+    "providerFactId": "java-symbol-v1:bce214a7ea6d65857290c5c7cf702921cfb730d8206e541425d13167d72754fc",
+    "providerSnapshotId": "snapshot-fixture",
+    "repositoryId": "repo-fixture",
+    "revisionId": "rev-fixture",
+    "providerKind": "java.package",
+    "name": "lib",
+    "qualifiedName": "lib",
+    "sourceRange": {
+      "sourceFileId": "file-Grand.java",
+      "startLine": 0,
+      "startColumn": 8,
+      "endLine": 0,
+      "endColumn": 11
+    },
+    "confidence": {
+      "score": 1,
+      "method": "parser",
+      "reasons": []
+    }
+  },
+  {
+    "providerId": "native",
+    "providerFactId": "java-symbol-v1:a4355028eb30a59a7111613df5ba05590a88c399417a4b18a4099c61e2fa38fd",
+    "providerSnapshotId": "snapshot-fixture",
+    "repositoryId": "repo-fixture",
+    "revisionId": "rev-fixture",
+    "providerKind": "java.class",
+    "name": "Grand",
+    "qualifiedName": "lib.Grand",
+    "sourceRange": {
+      "sourceFileId": "file-Grand.java",
+      "startLine": 1,
+      "startColumn": 13,
+      "endLine": 1,
+      "endColumn": 18
+    },
+    "confidence": {
+      "score": 1,
+      "method": "parser",
+      "reasons": []
+    }
+  },
+  {
+    "providerId": "native",
+    "providerFactId": "java-symbol-v1:b176242063882bdc0186769d844fe65430cc10422e3c83daaaeebb81491593e4",
+    "providerSnapshotId": "snapshot-fixture",
+    "repositoryId": "repo-fixture",
+    "revisionId": "rev-fixture",
+    "providerKind": "java.method",
+    "name": "baseMethod",
+    "qualifiedName": "lib.Grand.baseMethod",
+    "sourceRange": {
+      "sourceFileId": "file-Grand.java",
+      "startLine": 1,
+      "startColumn": 33,
+      "endLine": 1,
+      "endColumn": 43
+    },
+    "confidence": {
+      "score": 1,
+      "method": "parser",
+      "reasons": []
+    }
+  },
+  {
+    "providerId": "native",
+    "providerFactId": "java-compilation-unit-v1:770c1a58e03a33de25935dbee9193e97c900a9f0fc35cf69752e0b0a572112c9",
+    "providerSnapshotId": "snapshot-fixture",
+    "repositoryId": "repo-fixture",
+    "revisionId": "rev-fixture",
+    "providerKind": "java.compilation_unit",
+    "name": "src/Grand.java",
+    "qualifiedName": "src/Grand.java",
     "sourceRange": null,
     "confidence": {
       "score": 1,
@@ -219,9 +295,31 @@
     "sourceRange": {
       "sourceFileId": "file-I.java",
       "startLine": 1,
-      "startColumn": 10,
+      "startColumn": 17,
       "endLine": 1,
-      "endColumn": 11
+      "endColumn": 18
+    },
+    "confidence": {
+      "score": 1,
+      "method": "parser",
+      "reasons": []
+    }
+  },
+  {
+    "providerId": "native",
+    "providerFactId": "java-symbol-v1:0e6e2d1d2db83b7dbbb3b9f2b7232a1547392bc7cec5ebdc5f30481cb80b1f46",
+    "providerSnapshotId": "snapshot-fixture",
+    "repositoryId": "repo-fixture",
+    "revisionId": "rev-fixture",
+    "providerKind": "java.method",
+    "name": "baseMethod",
+    "qualifiedName": "demo.I.baseMethod",
+    "sourceRange": {
+      "sourceFileId": "file-I.java",
+      "startLine": 1,
+      "startColumn": 34,
+      "endLine": 1,
+      "endColumn": 44
     },
     "confidence": {
       "score": 1,

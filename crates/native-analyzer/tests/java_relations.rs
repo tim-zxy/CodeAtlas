@@ -411,7 +411,7 @@ fn sole_same_arity_call_without_argument_types_is_not_exact() {
 }
 
 #[test]
-fn wildcard_import_does_not_ambiguate_file_scoped_package_nodes() {
+fn wildcard_import_resolves_one_indexed_package_container() {
     let client = analyze_sites("src/A.java", b"package app; import demo.*; class A {} ");
     let first = analyze_sites("src/B.java", b"package demo; class B {} ");
     let second = analyze_sites("src/C.java", b"package demo; class C {} ");
@@ -433,12 +433,57 @@ fn wildcard_import_does_not_ambiguate_file_scoped_package_nodes() {
         .unwrap();
     assert!(matches!(
         index.resolve("src/A.java", import).target,
-        RelationTarget::NonResolved {
-            resolution: "UNRESOLVED",
-            ref hint,
-            ref candidates,
-        } if hint == "demo" && candidates.is_empty()
+        RelationTarget::Resolved { ref fact_id, resolution: "EXACT" }
+            if fact_id == &codeatlas_native_analyzer::relation_index::package_container_fact_id("demo")
     ));
+}
+
+#[test]
+fn inherited_search_uses_each_ancestors_imports_and_class_before_interface() {
+    let grand = analyze_sites(
+        "src/Grand.java",
+        b"package lib; class Grand { void ping() {} }",
+    );
+    let base = analyze_sites(
+        "src/Base.java",
+        b"package demo; import lib.Grand; class Base extends Grand {} ",
+    );
+    let interface = analyze_sites(
+        "src/I.java",
+        b"package demo; interface I { default void ping() {} }",
+    );
+    let child = analyze_sites(
+        "src/Child.java",
+        b"package demo; class Child extends Base implements I { void go() { ping(); } }",
+    );
+    let mut index = DeclarationIndex::new(64 * 1024);
+    for (path, analysis) in [
+        ("src/Grand.java", &grand),
+        ("src/Base.java", &base),
+        ("src/I.java", &interface),
+        ("src/Child.java", &child),
+    ] {
+        index.insert(path, &analysis.symbols).unwrap();
+        index
+            .insert_inheritance(path, &analysis.relation_sites)
+            .unwrap();
+        index
+            .set_file_imports(path, &analysis.relation_sites)
+            .unwrap();
+    }
+    let call = child
+        .relation_sites
+        .iter()
+        .find(|site| site.kind == RelationKind::Call)
+        .unwrap();
+    let grand_method = &grand
+        .symbols
+        .iter()
+        .find(|symbol| symbol.name == "ping")
+        .unwrap()
+        .provider_fact_id;
+    assert!(matches!(index.resolve("src/Child.java", call).target,
+        RelationTarget::Resolved { ref fact_id, resolution: "HEURISTIC" } if fact_id == grand_method));
 }
 
 #[test]

@@ -9,9 +9,8 @@ use crate::language::{
 pub struct DeclarationIndex {
     by_qualified: BTreeMap<String, Vec<SymbolFact>>,
     path_packages: BTreeMap<String, String>,
-    super_types: BTreeMap<String, Vec<(String, String)>>,
-    file_imports: Vec<(String, String)>,
-    import_path: String,
+    super_types: BTreeMap<String, Vec<(String, String, String)>>,
+    imports_by_path: BTreeMap<String, Vec<(String, String)>>,
     max_bytes: usize,
     used_bytes: usize,
 }
@@ -22,8 +21,7 @@ impl DeclarationIndex {
             by_qualified: BTreeMap::new(),
             path_packages: BTreeMap::new(),
             super_types: BTreeMap::new(),
-            file_imports: Vec::new(),
-            import_path: String::new(),
+            imports_by_path: BTreeMap::new(),
             max_bytes,
             used_bytes: 0,
         }
@@ -84,6 +82,9 @@ impl DeclarationIndex {
         path: &str,
         sites: &[RelationSite],
     ) -> Result<(), AnalyzerError> {
+        if self.imports_by_path.contains_key(path) {
+            return Ok(());
+        }
         let bytes = sites
             .iter()
             .filter(|site| site.kind == RelationKind::Import)
@@ -101,9 +102,16 @@ impl DeclarationIndex {
             .filter(|site| site.kind == RelationKind::Import)
             .map(|site| (site.variant.clone(), site.target_hint.clone()))
             .collect();
-        self.file_imports = imports;
-        self.import_path = path.to_owned();
+        self.imports_by_path.insert(path.to_owned(), imports);
+        self.used_bytes = self.used_bytes.saturating_add(bytes);
         Ok(())
+    }
+
+    fn imports(&self, path: &str) -> &[(String, String)] {
+        self.imports_by_path
+            .get(path)
+            .map(Vec::as_slice)
+            .unwrap_or(&[])
     }
 
     pub fn insert_inheritance(
@@ -118,7 +126,8 @@ impl DeclarationIndex {
             let charge = 256usize
                 .saturating_add(path.len())
                 .saturating_add(site.source_fact_id.len())
-                .saturating_add(site.target_hint.len());
+                .saturating_add(site.target_hint.len())
+                .saturating_add(site.variant.len());
             let new_used = self.used_bytes.saturating_add(charge);
             if new_used > self.max_bytes {
                 return Err(AnalyzerError::ResourceLimit);
@@ -126,7 +135,11 @@ impl DeclarationIndex {
             self.super_types
                 .entry(site.source_fact_id.clone())
                 .or_default()
-                .push((path.to_owned(), site.target_hint.clone()));
+                .push((
+                    path.to_owned(),
+                    site.target_hint.clone(),
+                    site.variant.clone(),
+                ));
             self.used_bytes = new_used;
         }
         Ok(())
@@ -156,7 +169,7 @@ impl DeclarationIndex {
                     .rsplit_once('.')
                     .is_some_and(|(receiver, _)| self.type_candidates(path, package, receiver).1),
                 "direct" => candidates.iter().any(|candidate| {
-                    self.file_imports.iter().any(|(variant, imported)| {
+                    self.imports(path).iter().any(|(variant, imported)| {
                         variant == "static_wildcard"
                             && candidate
                                 .qualified_name
@@ -180,45 +193,54 @@ impl DeclarationIndex {
             }
             RelationKind::Import => false,
         };
-        let target = match candidates.as_slice() {
-            [] => RelationTarget::NonResolved {
-                resolution: "UNRESOLVED",
-                hint: site.target_hint.clone(),
-                candidates: Vec::new(),
-            },
-            [candidate] => RelationTarget::Resolved {
-                fact_id: candidate.provider_fact_id.clone(),
-                resolution: if from_wildcard
-                    || (site.kind == RelationKind::Call
-                        && site.arity.is_some_and(|arity| arity > 0))
-                    || (site.kind == RelationKind::Call
-                        && matches!(site.variant.as_str(), "direct" | "this")
-                        && owner
-                            .and_then(|symbol| symbol.qualified_name.as_deref())
-                            .and_then(|name| name.rsplit_once('.'))
-                            .is_some_and(|(type_name, _)| {
-                                candidate
-                                    .qualified_name
-                                    .as_deref()
-                                    .is_none_or(|name| !name.starts_with(&format!("{type_name}.")))
-                            })
-                        && !self.file_imports.iter().any(|(variant, imported)| {
-                            variant == "static"
-                                && candidate.qualified_name.as_deref() == Some(imported)
-                        })) {
-                    "HEURISTIC"
-                } else {
-                    "EXACT"
+        let target = if site.kind == RelationKind::Import
+            && site.variant == "wildcard"
+            && self.has_package(&site.target_hint)
+        {
+            RelationTarget::Resolved {
+                fact_id: package_container_fact_id(&site.target_hint),
+                resolution: "EXACT",
+            }
+        } else {
+            match candidates.as_slice() {
+                [] => RelationTarget::NonResolved {
+                    resolution: "UNRESOLVED",
+                    hint: site.target_hint.clone(),
+                    candidates: Vec::new(),
                 },
-            },
-            many => RelationTarget::NonResolved {
-                resolution: "AMBIGUOUS",
-                hint: site.target_hint.clone(),
-                candidates: many
-                    .iter()
-                    .map(|item| item.provider_fact_id.clone())
-                    .collect(),
-            },
+                [candidate] => RelationTarget::Resolved {
+                    fact_id: candidate.provider_fact_id.clone(),
+                    resolution: if from_wildcard
+                        || (site.kind == RelationKind::Call
+                            && site.arity.is_some_and(|arity| arity > 0))
+                        || (site.kind == RelationKind::Call
+                            && matches!(site.variant.as_str(), "direct" | "this")
+                            && owner
+                                .and_then(|symbol| symbol.qualified_name.as_deref())
+                                .and_then(|name| name.rsplit_once('.'))
+                                .is_some_and(|(type_name, _)| {
+                                    candidate.qualified_name.as_deref().is_none_or(|name| {
+                                        !name.starts_with(&format!("{type_name}."))
+                                    })
+                                })
+                            && !self.imports(path).iter().any(|(variant, imported)| {
+                                variant == "static"
+                                    && candidate.qualified_name.as_deref() == Some(imported)
+                            })) {
+                        "HEURISTIC"
+                    } else {
+                        "EXACT"
+                    },
+                },
+                many => RelationTarget::NonResolved {
+                    resolution: "AMBIGUOUS",
+                    hint: site.target_hint.clone(),
+                    candidates: many
+                        .iter()
+                        .map(|item| item.provider_fact_id.clone())
+                        .collect(),
+                },
+            }
         };
         let provider_kind = match site.kind {
             RelationKind::Import => format!("java.import.{}", site.variant),
@@ -257,6 +279,24 @@ impl DeclarationIndex {
             .collect()
     }
 
+    fn has_package(&self, package: &str) -> bool {
+        self.candidates(package, None)
+            .iter()
+            .any(|symbol| symbol.provider_kind == "java.package")
+    }
+
+    pub fn should_emit_package_container(&self, path: &str, package: &str) -> bool {
+        self.path_packages
+            .iter()
+            .find(|(_, name)| name.as_str() == package)
+            .is_some_and(|(first_path, _)| first_path == path)
+            && self.imports_by_path.values().any(|imports| {
+                imports
+                    .iter()
+                    .any(|(variant, hint)| variant == "wildcard" && hint == package)
+            })
+    }
+
     fn type_candidates(&self, path: &str, package: &str, hint: &str) -> (Vec<&SymbolFact>, bool) {
         if hint.contains('.') {
             return (
@@ -273,8 +313,8 @@ impl DeclarationIndex {
         } else {
             names.push((hint.to_owned(), false));
         }
-        if self.import_path == path {
-            for (variant, imported) in &self.file_imports {
+        {
+            for (variant, imported) in self.imports(path) {
                 if variant == "normal" && imported.rsplit('.').next() == Some(hint) {
                     names.push((imported.clone(), false));
                 } else if variant == "wildcard" {
@@ -373,8 +413,8 @@ impl DeclarationIndex {
                 candidates.extend(self.inherited_methods(type_symbol, method, site.arity));
             }
         }
-        if candidates.is_empty() && site.variant == "direct" && self.import_path == path {
-            for (variant, import) in &self.file_imports {
+        if candidates.is_empty() && site.variant == "direct" {
+            for (variant, import) in self.imports(path) {
                 if variant == "static" && import.rsplit('.').next() == Some(method) {
                     candidates.extend(self.candidates(import, site.arity).into_iter().filter(
                         |symbol| symbol.provider_kind == "java.method" && symbol.is_static,
@@ -398,13 +438,14 @@ impl DeclarationIndex {
     ) -> Vec<&SymbolFact> {
         let mut seen = BTreeSet::new();
         let mut queue = VecDeque::from([owner_type]);
+        let mut interfaces = VecDeque::new();
         seen.insert(owner_type.provider_fact_id.as_str());
         while !queue.is_empty() {
             let mut next = VecDeque::new();
             let mut candidates = Vec::new();
             for current in queue {
                 if let Some(parents) = self.super_types.get(&current.provider_fact_id) {
-                    for (path, hint) in parents {
+                    for (path, hint, variant) in parents {
                         let package = self
                             .path_packages
                             .get(path)
@@ -414,14 +455,18 @@ impl DeclarationIndex {
                             if !seen.insert(parent.provider_fact_id.as_str()) {
                                 continue;
                             }
-                            if let Some(name) = parent.qualified_name.as_deref() {
-                                candidates.extend(
-                                    self.candidates(&format!("{name}.{method}"), arity)
-                                        .into_iter()
-                                        .filter(|symbol| symbol.provider_kind == "java.method"),
-                                );
+                            if variant == "class" && parent.provider_kind == "java.class" {
+                                if let Some(name) = parent.qualified_name.as_deref() {
+                                    candidates.extend(
+                                        self.candidates(&format!("{name}.{method}"), arity)
+                                            .into_iter()
+                                            .filter(|symbol| symbol.provider_kind == "java.method"),
+                                    );
+                                }
+                                next.push_back(parent);
+                            } else if parent.provider_kind == "java.interface" {
+                                interfaces.push_back(parent);
                             }
-                            next.push_back(parent);
                         }
                     }
                 }
@@ -430,6 +475,39 @@ impl DeclarationIndex {
                 return candidates;
             }
             queue = next;
+        }
+        while !interfaces.is_empty() {
+            let mut next = VecDeque::new();
+            let mut candidates = Vec::new();
+            for current in interfaces {
+                if let Some(name) = current.qualified_name.as_deref() {
+                    candidates.extend(
+                        self.candidates(&format!("{name}.{method}"), arity)
+                            .into_iter()
+                            .filter(|symbol| symbol.provider_kind == "java.method"),
+                    );
+                }
+                if let Some(parents) = self.super_types.get(&current.provider_fact_id) {
+                    for (path, hint, _) in parents {
+                        let package = self
+                            .path_packages
+                            .get(path)
+                            .map(String::as_str)
+                            .unwrap_or("");
+                        for parent in self.type_candidates(path, package, hint).0 {
+                            if parent.provider_kind == "java.interface"
+                                && seen.insert(parent.provider_fact_id.as_str())
+                            {
+                                next.push_back(parent);
+                            }
+                        }
+                    }
+                }
+            }
+            if !candidates.is_empty() {
+                return candidates;
+            }
+            interfaces = next;
         }
         Vec::new()
     }
@@ -503,6 +581,15 @@ fn signature_arity(signature: &str) -> usize {
         }
     }
     count
+}
+
+pub fn package_container_fact_id(package: &str) -> String {
+    let mut hash = Sha256::new();
+    hash.update(b"java-package-container-v1\0");
+    hash.update(package.len().to_string().as_bytes());
+    hash.update(b":");
+    hash.update(package.as_bytes());
+    format!("java-package-container-v1:{:x}", hash.finalize())
 }
 
 pub fn relation_fact_id(path: &str, site: &RelationSite, ordinal: usize) -> String {

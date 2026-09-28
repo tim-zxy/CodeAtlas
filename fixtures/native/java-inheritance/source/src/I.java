@@ -1,2 +1,2 @@
 package demo;
-interface I {}
+public interface I { default void baseMethod() {} }

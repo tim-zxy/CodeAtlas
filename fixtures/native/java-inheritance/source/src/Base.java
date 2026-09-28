@@ -1,2 +1,3 @@
 package demo;
-class Base { void baseMethod() {} }
+import lib.Grand;
+public class Base extends Grand {}

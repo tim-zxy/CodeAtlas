@@ -31,6 +31,36 @@
   },
   {
     "capability": "SYMBOL",
+    "sourceFileId": "file-Grand.java",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE"
+  },
+  {
+    "capability": "INHERITANCE",
+    "sourceFileId": "file-Grand.java",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE"
+  },
+  {
+    "capability": "REFERENCE",
+    "sourceFileId": "file-Grand.java",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE"
+  },
+  {
+    "capability": "IMPORT",
+    "sourceFileId": "file-Grand.java",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE"
+  },
+  {
+    "capability": "CALL",
+    "sourceFileId": "file-Grand.java",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE"
+  },
+  {
+    "capability": "SYMBOL",
     "sourceFileId": "file-Hierarchy.java",
     "support": "SUPPORTED",
     "coverage": "COMPLETE"

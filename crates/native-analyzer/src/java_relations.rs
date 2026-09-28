@@ -240,20 +240,29 @@ impl Visitor<'_> {
             if child.kind() == "type_list" {
                 let mut nested = child.walk();
                 for named in child.named_children(&mut nested) {
-                    self.inheritance_type(named, owner)?;
+                    self.inheritance_type(named, owner, clause.kind())?;
                 }
             } else {
-                self.inheritance_type(child, owner)?;
+                self.inheritance_type(child, owner, clause.kind())?;
             }
         }
         Ok(())
     }
 
-    fn inheritance_type(&mut self, node: Node<'_>, owner: &str) -> Result<(), AnalyzerError> {
+    fn inheritance_type(
+        &mut self,
+        node: Node<'_>,
+        owner: &str,
+        clause_kind: &str,
+    ) -> Result<(), AnalyzerError> {
         if let Some(hint) = self.text(node) {
             self.push(
                 RelationKind::Inheritance,
-                "type",
+                if clause_kind == "superclass" {
+                    "class"
+                } else {
+                    "interface"
+                },
                 owner.to_owned(),
                 hint.to_owned(),
                 None,

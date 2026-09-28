@@ -12,7 +12,7 @@ use codeatlas_native_analyzer::java_relations::compilation_unit_id;
 use codeatlas_native_analyzer::language::{
     LanguageAnalysis, RelationKind, RelationTarget, SyntaxCoverage,
 };
-use codeatlas_native_analyzer::relation_index::DeclarationIndex;
+use codeatlas_native_analyzer::relation_index::{DeclarationIndex, package_container_fact_id};
 use codeatlas_native_analyzer::source_access::{SourceAccessError, read_verified_source};
 use serde_json::{Map, Value, json};
 use sha2::{Digest, Sha256};
@@ -320,6 +320,16 @@ fn run_relations<W: Write>(
                     "Inheritance index exceeds memory budget",
                 );
             }
+            if index
+                .set_file_imports(path, &analysis.relation_sites)
+                .is_err()
+            {
+                return stream.fail(
+                    context,
+                    "RESOURCE_LIMIT_EXCEEDED",
+                    "Import index exceeds memory budget",
+                );
+            }
         }
     }
 
@@ -360,6 +370,19 @@ fn run_relations<W: Write>(
                 .capabilities
                 .iter()
                 .any(|capability| capability == "IMPORT");
+            let container_packages: Vec<_> = if include_import {
+                analysis
+                    .symbols
+                    .iter()
+                    .filter(|symbol| {
+                        symbol.provider_kind == "java.package"
+                            && index.should_emit_package_container(path, &symbol.name)
+                    })
+                    .map(|symbol| symbol.name.clone())
+                    .collect()
+            } else {
+                Vec::new()
+            };
             let included_sites: Vec<_> = analysis
                 .relation_sites
                 .iter()
@@ -378,6 +401,7 @@ fn run_relations<W: Write>(
                 .collect();
             let additional = 1usize
                 .saturating_add(analysis.symbols.len())
+                .saturating_add(container_packages.len())
                 .saturating_add(usize::from(include_import))
                 .saturating_add(included_sites.len())
                 .saturating_add(request.capabilities.len())
@@ -398,6 +422,18 @@ fn run_relations<W: Write>(
                     "name": symbol.name, "qualifiedName": symbol.qualified_name,
                     "sourceRange": {"sourceFileId": source_file["id"], "startLine": span.start_line,
                         "startColumn": span.start_column, "endLine": span.end_line, "endColumn": span.end_column},
+                    "confidence": {"score": 1, "method": "parser", "reasons": []}
+                }), false)? {
+                    return Ok(ExitCode::SUCCESS);
+                }
+                counts.nodes += 1;
+            }
+            for package in container_packages {
+                if !stream.emit("NODE", json!({
+                    "providerId": "native", "providerFactId": package_container_fact_id(&package),
+                    "providerSnapshotId": request.snapshot_id, "repositoryId": request.repository_id,
+                    "revisionId": request.revision_id, "providerKind": "java.package_container",
+                    "name": package, "qualifiedName": package, "sourceRange": null,
                     "confidence": {"score": 1, "method": "parser", "reasons": []}
                 }), false)? {
                     return Ok(ExitCode::SUCCESS);
