@@ -7,21 +7,21 @@
 - Primary handoff entry: `ENGINEERING_HANDOFF.md`.
 - Compatibility entry: `CODEX_HANDOFF.md`.
 - Implementation repository: all 18 Phase 0 tasks and the documentation-only Phase 0 exit record are integrated on remote `main`. PR #6 merged P0-W9-003 at `9f4ec958c1f18ea13623fb7cf5703e0c1efe3b4c`; PR #7 merged the Phase 0 closeout at `71dd18ce58e89b489336fc942bfdac4b36cc024b`. Hosted CI for the closeout merge passed. Phase 0 is closed; the prior closeout-pending language below is historical evidence, not current state.
-- Active implementation phase: Phase 0.5. P05-W2-001 was integrated into `main` by PR #8 at `ed4f80edd955da2ce9627f7943717a4176335702`. P05-W2-002 was integrated by PR #9 at `813fcbe882fafaf859cc44f630c7d390bd5ee41d`; its four hosted TypeScript/Rust workspace checks succeeded. P05-W3-001 Java SYMBOL extraction was integrated by PR #10 at `a9180d8201db80590ceae634e39fa8d501fbc0ea` on 2026-09-25. P05-W3-002 Java relations was integrated by PR #11 at `9bd70cf75802f0b344cc5aa2d437db83375a8ccf` on 2026-09-28; all six PR checks and the exact merge-SHA CI run 36367155942 succeeded. P05-W3-003 coverage/outcomes was integrated by PR #12 at `66b40349ad340b37b48dbccf1b19cd52c8a8b685` on 2026-09-28 after its Rust, TypeScript, and Native Java PR CI jobs passed. `git show --no-patch --format='%H%n%P%n%s%n%cI' 66b4034` reproduces its merge parents. This is not a Phase 0.5 exit.
+- Active implementation phase: Phase 0.5. P05-W2-001 and P05-W2-002 were integrated by PR #8 (`ed4f80e`) and PR #9 (`813fcbe`); P05-W3-001..003 by PR #10 (`a9180d8`), PR #11 (`9bd70cf`), and PR #12 (`66b4034`). P05-W4-001 was integrated by [PR #13](https://github.com/tim-zxy/CodeAtlas/pull/13) at `917e56965f93ddfd8c3ce3faf5c2898a7878ad51` on 2026-09-28. Its push and PR CI runs `36416388284` and `36416498305` each passed TypeScript, Rust, and Native Java jobs for head `d7e9991`; no exact merge-SHA CI result is claimed. `git merge-base --is-ancestor d7e9991 origin/main` exits 0 after `git fetch origin main`. This is 6 of 14 listed Phase 0.5 tasks, not a phase exit.
 
 ## Phase readiness
 
 | Phase | Readiness | Implementation progress |
 |---|---|---|
 | 0 | IMPLEMENTATION-READY | 18 of 18 tasks integrated; 11 of 11 technical exit checks passed on `9f4ec95`; documentation closeout merged as PR #7 at `71dd18c` |
-| 0.5 | IMPLEMENTATION-READY | P05-W2-001, P05-W2-002, and P05-W3-001..003 integrated; P05-W4-001 locally implemented, reviewed, and verified, with hosted integration pending; remaining tasks and Phase 0.5 exit gates remain open |
+| 0.5 | IMPLEMENTATION-READY | 6 of 14 listed tasks integrated through P05-W4-001; 8 remain, and Phase 0.5 exit gates remain open |
 | 1 | DESIGN-READY | 0 percent |
 | 2 | ARCHITECTURE-READY | 0 percent |
 | 3 | ROADMAP/ARCHITECTURE-READY | 0 percent |
 
 ## Next action
 
-Seek hosted clean-install CI for the reviewed P05-W4-001 branch through a PR before integration. Its accepted design is `docs/superpowers/specs/2026-09-28-p05-w4-001-canonical-normalization-design.md`; its task plan is `docs/superpowers/plans/2026-09-28-p05-w4-001-canonical-normalization.md`. Completed `PARTIAL` analysis may yield normalized candidate facts but does not authorize graph publication. After review/integration, P05-W4-002 FactMerger is the next main-chain task; P05-W1-010 full apply depends on both. The independent P05-W2-010 change detector remains available later. Source discovery remains Git-only; non-Git directory support is a separately reviewed adapter. Do not promote Phase 0.5 or advance deferred capabilities.
+Review the proposed `docs/superpowers/specs/2026-09-28-p05-w4-002-fact-merger-design.md` before writing its implementation plan or code. P05-W4-002 FactMerger is the next main-chain task; P05-W1-010 full apply depends on it. The independent P05-W2-010 change detector remains available later. Source discovery remains Git-only; non-Git directory support is a separately reviewed adapter. Do not promote Phase 0.5 or advance deferred capabilities.
 
 ## 2026-09-24 compatibility amendment evidence
 
@@ -31,13 +31,15 @@ Seek hosted clean-install CI for the reviewed P05-W4-001 branch through a PR bef
 
 ## Active task evidence
 
-### P05-W4-001 Canonical normalization (local acceptance; integration pending)
+### P05-W4-001 Canonical normalization (integrated)
+
+- Integration evidence: [PR #13](https://github.com/tim-zxy/CodeAtlas/pull/13) merged at `917e56965f93ddfd8c3ce3faf5c2898a7878ad51`; [push CI run 36416388284](https://github.com/tim-zxy/CodeAtlas/actions/runs/36416388284) and [PR CI run 36416498305](https://github.com/tim-zxy/CodeAtlas/actions/runs/36416498305) each passed TypeScript workspace, Rust workspace, and Native Java analysis integration. Head was `d7e9991e42587655b16e3e41629762bfdb370bfb`. The following local record predates integration; exact merge-SHA CI was not observed.
 
 - Branch and task: `codex/p05-w4-001-normalization-design` from PR #12 merge `66b40349ad340b37b48dbccf1b19cd52c8a8b685`; accepted design/plan commits `d711322` and `f20b53a`; implementation commits `842599d` (identity vectors), `f07f5f9` (Java node mapping), `6456cec` (completed analysis and edge mapping), and `68f8cfe` (Fixture and documentation). The independent whole-branch review found one Important malformed-Unicode identity collision; the reviewed repair rejects unpaired surrogates with a controlled field path, without changing valid key vectors. No push, PR, hosted CI, merge, or Phase 0.5 exit is claimed.
 - Contract: a pure `@codeatlas/providers` entry point accepts only complete validated v1/v2 `ANALYZE` results, maps the reviewed Java kinds to strict provider-independent Canonical nodes/edges, preserves unresolved/ambiguous targets and independent Provider support, and returns controlled all-or-nothing errors. The SHA-256 tuple encoding and location-dependent overload limitation are pinned in the accepted design. No Canonical IR/Native IPC/ProviderSnapshot schema, migration, SQLite Apply, Evidence binding, FactMerger, REFRESH, Knowledge feature, or new numerical gate changed.
 - Fixture and TDD evidence: registered `canonical-normalization` under `fixtures/normalization/` pins one two-file completed Provider result with 10 exact ordered node pairs, 5 exact ordered edge pairs, three separate package supports sharing one key, resolved import/inheritance/call, ambiguous call, and unresolved reference. Its JSONL-event checksum is recomputed in the test; unique-key subsets pass the existing Canonical comparator while duplicate support is compared as pairs. Identity, Java node, stream, failure, and Fixture tests were observed failing before their respective implementation/artifact and then passing. `java-overload`, `java-call-basic`, and `java-inheritance` also pass normalization through the real Rust binary without rewriting source goldens.
 - Fresh local commands on 2026-09-28 after the review repair: direct `tsc -p <project>/tsconfig.json` for all 16 workspace projects and `tsc -p packages/ir/tsconfig.type-tests.json` exit 0. The root `package.json`-declared Node fileset run directly with `node --test` reports 558 passed, zero failed, and one existing Windows symlink-privilege skip out of 559. `node --test packages/providers/test/native-analysis.test.mjs packages/providers/test/native-relation-metrics.test.mjs packages/providers/test/native-relations.test.mjs packages/providers/test/native-coverage-v2.test.mjs` passes 11/11. `node scripts/check-architecture.mjs` passes all 17 projects; direct Prettier full-tree check, `cargo fmt --all --check`, `cargo build --workspace -j 1`, `cargo clippy --workspace --all-targets -- -D warnings`, and `cargo test --workspace -j 1` exit 0. Rust emitted only existing Windows linker-message warnings. The desktop pnpm wrapper previously stopped before `pnpm verify` could start; these direct checks are not represented as a passing `pnpm verify` or hosted CI.
-- Next dependency-valid step: seek hosted PR checks; only after integration begin P05-W4-002 FactMerger. Phase 0.5 exit gates remain open.
+- Next dependency-valid step: review the proposed P05-W4-002 FactMerger design, then prepare its task plan; no P05-W4-002 code or Fixture exists yet. Phase 0.5 exit gates remain open.
 
 ### P05-W3-003 coverage and outcomes (integrated)
 
