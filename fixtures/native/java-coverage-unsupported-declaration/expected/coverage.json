@@ -1,0 +1,21 @@
+[
+  {
+    "capability": "SYMBOL",
+    "sourceFileId": "file-Case.java",
+    "support": "SUPPORTED",
+    "coverage": "PARTIAL",
+    "statistics": {
+      "eligibleSites": 2,
+      "coveredSites": 0,
+      "unsupportedSites": 2,
+      "partialSites": 0,
+      "resolutionCounts": {
+        "EXACT": 0,
+        "HEURISTIC": 0,
+        "AMBIGUOUS": 0,
+        "UNRESOLVED": 0,
+        "UNSUPPORTED": 0
+      }
+    }
+  }
+]

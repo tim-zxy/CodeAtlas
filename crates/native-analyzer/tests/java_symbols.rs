@@ -83,6 +83,19 @@ fn symbol_statistics_count_source_declarators_but_not_empty_files() {
 }
 
 #[test]
+fn recognized_unsupported_java_types_are_not_reported_as_complete_zero_sites() {
+    let mut analyzer = JavaAnalyzer::new().unwrap();
+    let result = analyzer
+        .analyze("src/Types.java", b"enum E { A } record R(int value) {}")
+        .unwrap();
+    assert!(result.symbols.is_empty());
+    assert_eq!(result.site_statistics["SYMBOL"].eligible_sites, 2);
+    assert_eq!(result.site_statistics["SYMBOL"].unsupported_sites, 2);
+    assert_eq!(result.site_statistics["SYMBOL"].covered_sites, 0);
+    assert_eq!(result.coverage, SyntaxCoverage::Partial);
+}
+
+#[test]
 fn unrecognized_malformed_region_is_not_invented_as_a_symbol_site() {
     let mut analyzer = JavaAnalyzer::new().unwrap();
     let result = analyzer.analyze("src/Broken.java", b"class {}").unwrap();

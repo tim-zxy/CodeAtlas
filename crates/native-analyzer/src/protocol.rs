@@ -73,6 +73,8 @@ fn serve_once_impl<R: Read, W: Write, E: Write>(
     }
     if bytes.len() <= MAX_LINE_BYTES
         && bytes.last() == Some(&b'\n')
+        && !bytes[..bytes.len() - 1].contains(&b'\n')
+        && !bytes[..bytes.len() - 1].contains(&b'\r')
         && let Ok(value) = serde_json::from_slice::<Value>(&bytes[..bytes.len() - 1])
         && value.get("protocolVersion").and_then(Value::as_u64) == Some(2)
         && value.get("type").and_then(Value::as_str) == Some("REFRESH")
@@ -355,6 +357,16 @@ mod tests {
         assert_eq!(exit, ExitCode::from(2));
         assert!(output.is_empty());
         assert!(!diagnostics.is_empty());
+
+        let refresh =
+            r#"{"protocolVersion":2,"requestId":"request-a","type":"REFRESH","payload":{}}"#;
+        for suffix in ["\r\n", "\n\n", "\ntrailing"] {
+            let input = format!("{refresh}{suffix}");
+            let (exit, output, diagnostics) = run(input.as_bytes());
+            assert_eq!(exit, ExitCode::from(2), "suffix: {suffix:?}");
+            assert!(output.is_empty(), "suffix: {suffix:?}");
+            assert!(!diagnostics.is_empty(), "suffix: {suffix:?}");
+        }
     }
 
     #[test]

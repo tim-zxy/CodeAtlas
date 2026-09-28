@@ -13,6 +13,7 @@ const fixtureRoot = path.join(repositoryRoot, 'fixtures/native');
 const fixtureIds = [
   'java-coverage-mixed',
   'java-coverage-syntax',
+  'java-coverage-unsupported-declaration',
   'java-coverage-unsupported',
   'java-coverage-zero',
 ];
@@ -125,6 +126,10 @@ test('registered v2 Java Fixtures pin facts, coverage, diagnostics, outcomes and
       assert.equal(one.terminal.payload.outcome, 'PARTIAL');
       assert.ok(summary.warnings.some((warning) => warning.code === 'PARTIAL_COVERAGE'));
     }
+    if (fixture.manifest.id === 'java-coverage-unsupported-declaration') {
+      assert.equal(one.terminal.payload.outcome, 'PARTIAL');
+      assert.ok(summary.warnings.some((warning) => warning.code === 'UNSUPPORTED_SITE'));
+    }
     if (fixture.manifest.id === 'java-coverage-mixed') {
       const syntheticNodes = actual.nodes.filter((node) => node.sourceRange === null);
       assert.ok(syntheticNodes.length > 0);
@@ -134,6 +139,26 @@ test('registered v2 Java Fixtures pin facts, coverage, diagnostics, outcomes and
       );
     }
   }
+});
+
+test('two-file source Fixture keeps v2 facts and statistics stable across worker counts', async () => {
+  const fixtures = (await discoverFixtures(fixtureRoot)).filter(
+    (fixture) => fixture.manifest.id === 'java-call-basic',
+  );
+  assert.equal(fixtures.length, 1);
+  const request = await requestFor(fixtures[0]);
+  assert.deepEqual(
+    request.payload.sourceFiles.map((file) => file.path),
+    ['src/A.java', 'src/B.java'],
+  );
+  const one = await execute(request, 1);
+  const two = await execute(request, 2);
+  assert.deepEqual(two.events, one.events);
+  assert.deepEqual(summarizeNativeCoverage(two), summarizeNativeCoverage(one));
+  assert.equal(
+    summarizeNativeCoverage(two).files.length,
+    request.payload.sourceFiles.length * request.payload.requestedCapabilities.length,
+  );
 });
 
 test('v2 failed or corrupt real-binary streams release no applicable result', async () => {

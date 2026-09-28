@@ -1,0 +1,23 @@
+{
+  "providerSnapshotId": "snapshot-fixture",
+  "repositoryId": "repo-fixture",
+  "revisionId": "rev-fixture",
+  "revisionFingerprint": "sha256:revision-fixture",
+  "outcome": "PARTIAL",
+  "counts": {
+    "sourceFiles": 1,
+    "nodes": 0,
+    "edges": 0,
+    "coverage": 1,
+    "diagnostics": 0
+  },
+  "capabilities": [
+    {
+      "name": "SYMBOL",
+      "support": "SUPPORTED",
+      "coverage": "PARTIAL"
+    }
+  ],
+  "contentFingerprint": "sha256:30bd89652a741fc71b0b5df53cabdca72a4340c212cdbf6943776092d7e5c278",
+  "integrityChecksum": "sha256:30bd89652a741fc71b0b5df53cabdca72a4340c212cdbf6943776092d7e5c278"
+}

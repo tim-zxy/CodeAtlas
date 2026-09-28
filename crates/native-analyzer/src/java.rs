@@ -108,7 +108,10 @@ impl JavaAnalyzer {
         if exhausted() {
             return Err(AnalyzerError::BudgetExceeded);
         }
-        let coverage = if root.has_error() {
+        let coverage = if root.has_error()
+            || collector.statistics.unsupported_sites > 0
+            || collector.statistics.partial_sites > 0
+        {
             SyntaxCoverage::Partial
         } else {
             SyntaxCoverage::Complete
@@ -310,6 +313,9 @@ impl<'a> SymbolCollector<'a> {
                         }
                     }
                 }
+            }
+            "enum_declaration" | "record_declaration" | "annotation_type_declaration" => {
+                self.statistics.unsupported();
             }
             _ => self.visit_children(node),
         }
