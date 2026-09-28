@@ -21,7 +21,7 @@
 
 ## Next action
 
-Review the proposed `docs/superpowers/specs/2026-09-28-p05-w4-002-fact-merger-design.md` before writing its implementation plan or code. P05-W4-002 FactMerger is the next main-chain task; P05-W1-010 full apply depends on it. The independent P05-W2-010 change detector remains available later. Source discovery remains Git-only; non-Git directory support is a separately reviewed adapter. Do not promote Phase 0.5 or advance deferred capabilities.
+Review `docs/superpowers/plans/2026-09-28-p05-w4-002-fact-merger.md` following acceptance of `docs/superpowers/specs/2026-09-28-p05-w4-002-fact-merger-design.md`; select an execution method before any product code or Fixture change. P05-W4-002 FactMerger is the next main-chain task; P05-W1-010 full apply depends on it. The independent P05-W2-010 change detector remains available later. Source discovery remains Git-only; non-Git directory support is a separately reviewed adapter. Do not promote Phase 0.5 or advance deferred capabilities.
 
 ## 2026-09-24 compatibility amendment evidence
 

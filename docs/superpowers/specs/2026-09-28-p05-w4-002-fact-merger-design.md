@@ -1,6 +1,6 @@
 # P05-W4-002 FactMerger v0.1 Design
 
-Status: Proposed for user review. This document does not authorize implementation.
+Status: Accepted for implementation planning by the user's 2026-09-28 "继续" response to the written-spec review request. Product implementation still requires review of the task plan and selection of an execution method.
 
 ## Intent and success
 
@@ -18,7 +18,7 @@ P05-W4-002 is a pure TypeScript merge in `@codeatlas/providers`. It does not cha
 
 `mergeCanonicalObservations(input: MergeInput): MergedCanonicalAnalysis` accepts one repository and revision context plus an array of observations. Each observation contains a strict `ProviderSnapshot` and the `nodes`/`edges` pairs from `normalizeNativeAnalysis`; its lookup map is not a merge input. Each snapshot must be `SUCCEEDED`, match the requested repository/revision, and be the only submitted active snapshot for its Provider ID. `PARTIAL`, `FAILED`, and `CANCELLED` observations are not active merge support; the existing partial normalization result remains a candidate for diagnostics and cannot authorize graph publication.
 
-`MergeInput` has exactly `repositoryId`, `revisionId`, and `observations`; an observation has exactly `snapshot`, `nodes`, and `edges`. The output has exactly `nodes`, `edges`, `evidence`, `factEvidence`, `bindings`, and `explanations`. A `MergeExplanation` names the Canonical Fact reference, selected Evidence ID, sorted support summaries (`evidenceId`, original Confidence, and edge resolution when applicable), selection rule, and sorted categorical conflicts. These are package-local TypeScript contracts, not new persisted IR schemas. Application coordination must pair a snapshot with its own validated normalization result; the pair DTO alone cannot cryptographically prove that provenance.
+`MergeInput` has exactly `repositoryId`, `revisionId`, and `observations`; an observation has exactly `snapshot`, `nodes`, and `edges`. The output has exactly `nodes`, `edges`, `evidence`, `factEvidence`, `bindings`, and `explanations`. A `MergeExplanation` names the Canonical Fact reference, selected Evidence ID, sorted support summaries (`evidenceId`, original Confidence, and edge resolution when applicable), selection rule (`SINGLE_SUPPORT`, `RESOLUTION_PRIORITY`, `SOURCE_BACKED`, or `STABLE_TIE_BREAK`), and sorted categorical conflicts (`DISPLAY_VARIANT`, `CANDIDATE_VARIANT`, `RESOLUTION_VARIANT`, or `CONFIDENCE_VARIANT`). These are package-local TypeScript contracts, not new persisted IR schemas. Application coordination must pair a snapshot with its own validated normalization result; the pair DTO alone cannot cryptographically prove that provenance.
 
 The output contains deterministic arrays of unique Canonical nodes and edges, `Evidence`, `FactEvidence`, `ProviderFactBinding`, and per-fact `MergeExplanation` records. Explanations identify the chosen real support, each support Evidence ID with its original Confidence and resolution level where applicable, the applied confidence/resolution rule, and categorical conflicts without copying source text. All IR records are validated with their existing strict schemas before the function returns. An empty valid observation set yields an empty current view, not an instruction to erase an active database revision.
 
