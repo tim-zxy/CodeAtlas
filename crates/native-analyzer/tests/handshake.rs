@@ -112,7 +112,7 @@ fn executable_matches_handshake_fixture() {
                     "runtimeVersion": env!("CARGO_PKG_VERSION"),
                     "protocolVersions": [1],
                     "irSchemaVersions": [1],
-                    "capabilities": ["protocol-handshake", "SYMBOL"],
+                    "capabilities": ["protocol-handshake", "SYMBOL", "IMPORT", "CALL", "INHERITANCE", "REFERENCE"],
                     "languages": [{
                         "languageId": "java",
                         "grammarVersion": "0.23.5",

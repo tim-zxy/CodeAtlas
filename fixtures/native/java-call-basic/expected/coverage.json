@@ -1,0 +1,50 @@
+[
+  {
+    "capability": "SYMBOL",
+    "sourceFileId": "file-A.java",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE"
+  },
+  {
+    "capability": "IMPORT",
+    "sourceFileId": "file-A.java",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE"
+  },
+  {
+    "capability": "CALL",
+    "sourceFileId": "file-A.java",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE"
+  },
+  {
+    "capability": "REFERENCE",
+    "sourceFileId": "file-A.java",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE"
+  },
+  {
+    "capability": "SYMBOL",
+    "sourceFileId": "file-B.java",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE"
+  },
+  {
+    "capability": "IMPORT",
+    "sourceFileId": "file-B.java",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE"
+  },
+  {
+    "capability": "CALL",
+    "sourceFileId": "file-B.java",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE"
+  },
+  {
+    "capability": "REFERENCE",
+    "sourceFileId": "file-B.java",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE"
+  }
+]

@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "java-inheritance",
+  "category": "code-intelligence",
+  "phase": "0.5",
+  "languages": ["java"],
+  "frameworks": [],
+  "capabilities": ["SYMBOL", "INHERITANCE", "REFERENCE", "IMPORT", "CALL"],
+  "inputs": { "source": "source/" },
+  "expected": {
+    "nodes": "expected/nodes.json",
+    "edges": "expected/edges.json",
+    "coverage": "expected/coverage.json",
+    "diagnostics": "expected/diagnostics.json"
+  },
+  "criticalFacts": [
+    {
+      "id": "java-relation-v1:477b2b9808b3794cd7abd82b328dcde1a84dfb7463f0d9fc12feda787c2c246b",
+      "type": "EDGE",
+      "importance": "CRITICAL"
+    },
+    {
+      "id": "java-relation-v1:8370145bfc651cdbb957239804f6f8dac7b54499e55479db08e28388ca565111",
+      "type": "EDGE",
+      "importance": "CRITICAL"
+    }
+  ],
+  "qualityGates": {}
+}

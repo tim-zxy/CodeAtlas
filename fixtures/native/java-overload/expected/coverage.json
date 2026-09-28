@@ -1,0 +1,14 @@
+[
+  {
+    "capability": "SYMBOL",
+    "sourceFileId": "file-Overload.java",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE"
+  },
+  {
+    "capability": "CALL",
+    "sourceFileId": "file-Overload.java",
+    "support": "SUPPORTED",
+    "coverage": "COMPLETE"
+  }
+]

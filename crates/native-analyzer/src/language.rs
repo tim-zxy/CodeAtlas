@@ -13,6 +13,47 @@ pub struct SymbolFact {
     pub name: String,
     pub qualified_name: Option<String>,
     pub signature: String,
+    pub is_static: bool,
+    pub span: SourceSpan,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum RelationKind {
+    Import,
+    Call,
+    Inheritance,
+    Reference,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct RelationSite {
+    pub kind: RelationKind,
+    pub variant: String,
+    pub source_fact_id: String,
+    pub target_hint: String,
+    pub arity: Option<usize>,
+    pub span: SourceSpan,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum RelationTarget {
+    Resolved {
+        fact_id: String,
+        resolution: &'static str,
+    },
+    NonResolved {
+        resolution: &'static str,
+        hint: String,
+        candidates: Vec<String>,
+    },
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct ResolvedRelation {
+    pub provider_fact_id: String,
+    pub provider_kind: String,
+    pub source_fact_id: String,
+    pub target: RelationTarget,
     pub span: SourceSpan,
 }
 
@@ -32,6 +73,7 @@ pub enum SyntaxCoverage {
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct LanguageAnalysis {
     pub symbols: Vec<SymbolFact>,
+    pub relation_sites: Vec<RelationSite>,
     pub diagnostics: Vec<SyntaxDiagnostic>,
     pub coverage: SyntaxCoverage,
 }

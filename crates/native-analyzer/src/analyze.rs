@@ -8,7 +8,11 @@ use std::sync::atomic::{AtomicBool, Ordering};
 use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
 
 use codeatlas_native_analyzer::java::JavaAnalyzer;
-use codeatlas_native_analyzer::language::{LanguageAnalysis, SyntaxCoverage};
+use codeatlas_native_analyzer::java_relations::compilation_unit_id;
+use codeatlas_native_analyzer::language::{
+    LanguageAnalysis, RelationKind, RelationTarget, SyntaxCoverage,
+};
+use codeatlas_native_analyzer::relation_index::{DeclarationIndex, package_container_fact_id};
 use codeatlas_native_analyzer::source_access::{SourceAccessError, read_verified_source};
 use serde_json::{Map, Value, json};
 use sha2::{Digest, Sha256};
@@ -67,10 +71,16 @@ pub(crate) fn run<W: Write, E: Write>(
             return Ok(ExitCode::SUCCESS);
         }
     };
-    if request
+    if !request
         .capabilities
         .iter()
-        .any(|capability| capability != "SYMBOL")
+        .any(|capability| capability == "SYMBOL")
+        || request.capabilities.iter().any(|capability| {
+            !matches!(
+                capability.as_str(),
+                "SYMBOL" | "IMPORT" | "CALL" | "INHERITANCE" | "REFERENCE"
+            )
+        })
     {
         write_one(
             output,
@@ -115,6 +125,13 @@ pub(crate) fn run<W: Write, E: Write>(
     if !stream.emit("ANALYSIS_STARTED", context.clone(), false)? {
         return Ok(ExitCode::SUCCESS);
     }
+    if request
+        .capabilities
+        .iter()
+        .any(|capability| capability != "SYMBOL")
+    {
+        return run_relations(&request, worker_count, &context, &mut stream, || {});
+    }
     let started = Instant::now();
     let mut counts = Counts::default();
     let mut partial = false;
@@ -127,7 +144,7 @@ pub(crate) fn run<W: Write, E: Write>(
         }
         let root = request.root.clone();
         let Some(results) = timed_batch(chunk, remaining, move |file, deadline, cancelled| {
-            parse_source(&root, &file, deadline, cancelled)
+            parse_source(&root, &file, deadline, cancelled, false)
         }) else {
             return stream.fail(&context, "BUDGET_EXCEEDED", "Analysis deadline exceeded");
         };
@@ -249,6 +266,306 @@ pub(crate) fn run<W: Write, E: Write>(
     terminal.insert("integrityChecksum".into(), json!(checksum));
     stream.emit("ANALYSIS_COMPLETED", Value::Object(terminal), true)?;
     Ok(ExitCode::SUCCESS)
+}
+
+fn run_relations<W: Write>(
+    request: &Request,
+    worker_count: NonZeroUsize,
+    context: &Value,
+    stream: &mut EventWriter<'_, W>,
+    before_second_pass: impl FnOnce(),
+) -> io::Result<ExitCode> {
+    let started = Instant::now();
+    let worker_bytes = (worker_count.get() as u64).saturating_mul(WORKER_RESERVATION_BYTES);
+    let index_budget = request.max_memory_bytes.saturating_sub(worker_bytes);
+    if index_budget == 0 {
+        return stream.fail(
+            context,
+            "RESOURCE_LIMIT_EXCEEDED",
+            "Declaration index exceeds memory budget",
+        );
+    }
+    let mut index = DeclarationIndex::new(usize::try_from(index_budget).unwrap_or(usize::MAX));
+    for chunk in request.source_files.chunks(worker_count.get()) {
+        let remaining = remaining_budget(request, started);
+        if remaining.is_zero() {
+            return stream.fail(context, "BUDGET_EXCEEDED", "Analysis deadline exceeded");
+        }
+        let root = request.root.clone();
+        let Some(results) = timed_batch(chunk, remaining, move |file, deadline, cancelled| {
+            parse_source(&root, &file, deadline, cancelled, true)
+        }) else {
+            return stream.fail(context, "BUDGET_EXCEEDED", "Analysis deadline exceeded");
+        };
+        for (source_file, result) in chunk.iter().zip(results) {
+            let analysis = match checked_result(result) {
+                Ok(analysis) => analysis,
+                Err((code, message)) => return stream.fail(context, code, message),
+            };
+            let path = source_file["path"].as_str().expect("validated path");
+            if index.insert(path, &analysis.symbols).is_err() {
+                return stream.fail(
+                    context,
+                    "RESOURCE_LIMIT_EXCEEDED",
+                    "Declaration index exceeds memory budget",
+                );
+            }
+            if index
+                .insert_inheritance(path, &analysis.relation_sites)
+                .is_err()
+            {
+                return stream.fail(
+                    context,
+                    "RESOURCE_LIMIT_EXCEEDED",
+                    "Inheritance index exceeds memory budget",
+                );
+            }
+            if index
+                .set_file_imports(path, &analysis.relation_sites)
+                .is_err()
+            {
+                return stream.fail(
+                    context,
+                    "RESOURCE_LIMIT_EXCEEDED",
+                    "Import index exceeds memory budget",
+                );
+            }
+        }
+    }
+
+    before_second_pass();
+    let mut counts = Counts::default();
+    let mut partial = false;
+    for chunk in request.source_files.chunks(worker_count.get()) {
+        let remaining = remaining_budget(request, started);
+        if remaining.is_zero() {
+            return stream.fail(context, "BUDGET_EXCEEDED", "Analysis deadline exceeded");
+        }
+        let root = request.root.clone();
+        let Some(results) = timed_batch(chunk, remaining, move |file, deadline, cancelled| {
+            parse_source(&root, &file, deadline, cancelled, true)
+        }) else {
+            return stream.fail(context, "BUDGET_EXCEEDED", "Analysis deadline exceeded");
+        };
+        for (source_file, result) in chunk.iter().zip(results) {
+            if remaining_budget(request, started).is_zero() {
+                return stream.fail(context, "BUDGET_EXCEEDED", "Analysis deadline exceeded");
+            }
+            let analysis = match checked_result(result) {
+                Ok(analysis) => analysis,
+                Err((code, message)) => return stream.fail(context, code, message),
+            };
+            let path = source_file["path"].as_str().expect("validated path");
+            if index
+                .set_file_imports(path, &analysis.relation_sites)
+                .is_err()
+            {
+                return stream.fail(
+                    context,
+                    "RESOURCE_LIMIT_EXCEEDED",
+                    "Import context exceeds memory budget",
+                );
+            }
+            let include_import = request
+                .capabilities
+                .iter()
+                .any(|capability| capability == "IMPORT");
+            let container_packages: Vec<_> = if include_import {
+                analysis
+                    .symbols
+                    .iter()
+                    .filter(|symbol| {
+                        symbol.provider_kind == "java.package"
+                            && index.should_emit_package_container(path, &symbol.name)
+                    })
+                    .map(|symbol| symbol.name.clone())
+                    .collect()
+            } else {
+                Vec::new()
+            };
+            let included_sites: Vec<_> = analysis
+                .relation_sites
+                .iter()
+                .filter(|site| {
+                    let capability = match site.kind {
+                        RelationKind::Import => "IMPORT",
+                        RelationKind::Call => "CALL",
+                        RelationKind::Inheritance => "INHERITANCE",
+                        RelationKind::Reference => "REFERENCE",
+                    };
+                    request
+                        .capabilities
+                        .iter()
+                        .any(|requested| requested == capability)
+                })
+                .collect();
+            let additional = 1usize
+                .saturating_add(analysis.symbols.len())
+                .saturating_add(container_packages.len())
+                .saturating_add(usize::from(include_import))
+                .saturating_add(included_sites.len())
+                .saturating_add(request.capabilities.len())
+                .saturating_add(analysis.diagnostics.len());
+            if !stream.has_room(additional) {
+                return stream.fail(context, "RESOURCE_LIMIT_EXCEEDED", "Event budget exceeded");
+            }
+            if !stream.emit("SOURCE_FILE", source_file.clone(), false)? {
+                return Ok(ExitCode::SUCCESS);
+            }
+            counts.source_files += 1;
+            for symbol in analysis.symbols {
+                let span = symbol.span;
+                if !stream.emit("NODE", json!({
+                    "providerId": "native", "providerFactId": symbol.provider_fact_id,
+                    "providerSnapshotId": request.snapshot_id, "repositoryId": request.repository_id,
+                    "revisionId": request.revision_id, "providerKind": symbol.provider_kind,
+                    "name": symbol.name, "qualifiedName": symbol.qualified_name,
+                    "sourceRange": {"sourceFileId": source_file["id"], "startLine": span.start_line,
+                        "startColumn": span.start_column, "endLine": span.end_line, "endColumn": span.end_column},
+                    "confidence": {"score": 1, "method": "parser", "reasons": []}
+                }), false)? {
+                    return Ok(ExitCode::SUCCESS);
+                }
+                counts.nodes += 1;
+            }
+            for package in container_packages {
+                if !stream.emit("NODE", json!({
+                    "providerId": "native", "providerFactId": package_container_fact_id(&package),
+                    "providerSnapshotId": request.snapshot_id, "repositoryId": request.repository_id,
+                    "revisionId": request.revision_id, "providerKind": "java.package_container",
+                    "name": package, "qualifiedName": package, "sourceRange": null,
+                    "confidence": {"score": 1, "method": "parser", "reasons": []}
+                }), false)? {
+                    return Ok(ExitCode::SUCCESS);
+                }
+                counts.nodes += 1;
+            }
+            if include_import {
+                if !stream.emit("NODE", json!({
+                    "providerId": "native", "providerFactId": compilation_unit_id(path),
+                    "providerSnapshotId": request.snapshot_id, "repositoryId": request.repository_id,
+                    "revisionId": request.revision_id, "providerKind": "java.compilation_unit",
+                    "name": path, "qualifiedName": path, "sourceRange": null,
+                    "confidence": {"score": 1, "method": "parser", "reasons": []}
+                }), false)? {
+                    return Ok(ExitCode::SUCCESS);
+                }
+                counts.nodes += 1;
+            }
+            for site in included_sites {
+                let relation = index.resolve(path, site);
+                let target = match relation.target {
+                    RelationTarget::Resolved {
+                        fact_id,
+                        resolution,
+                    } => json!({
+                        "state": "RESOLVED", "resolution": resolution,
+                        "target": {"factType": "NODE", "providerId": "native", "providerFactId": fact_id}
+                    }),
+                    RelationTarget::NonResolved {
+                        resolution,
+                        hint,
+                        candidates,
+                    } => json!({
+                        "state": "UNRESOLVED", "resolution": resolution, "originalHint": hint,
+                        "candidates": candidates.into_iter().map(|provider_fact_id| json!({
+                            "factType": "NODE", "providerId": "native", "providerFactId": provider_fact_id
+                        })).collect::<Vec<_>>()
+                    }),
+                };
+                let span = relation.span;
+                if !stream.emit("EDGE", json!({
+                    "providerId": "native", "providerFactId": relation.provider_fact_id,
+                    "providerSnapshotId": request.snapshot_id, "repositoryId": request.repository_id,
+                    "revisionId": request.revision_id, "providerKind": relation.provider_kind,
+                    "source": {"factType": "NODE", "providerId": "native", "providerFactId": relation.source_fact_id},
+                    "target": target,
+                    "sourceRange": {"sourceFileId": source_file["id"], "startLine": span.start_line,
+                        "startColumn": span.start_column, "endLine": span.end_line, "endColumn": span.end_column},
+                    "confidence": {"score": 1, "method": "parser", "reasons": []}
+                }), false)? {
+                    return Ok(ExitCode::SUCCESS);
+                }
+                counts.edges += 1;
+            }
+            let coverage = match analysis.coverage {
+                SyntaxCoverage::Complete => "COMPLETE",
+                SyntaxCoverage::Partial => {
+                    partial = true;
+                    "PARTIAL"
+                }
+            };
+            for capability in &request.capabilities {
+                if !stream.emit(
+                    "COVERAGE",
+                    json!({
+                        "capability": capability, "sourceFileId": source_file["id"],
+                        "support": "SUPPORTED", "coverage": coverage
+                    }),
+                    false,
+                )? {
+                    return Ok(ExitCode::SUCCESS);
+                }
+                counts.coverage += 1;
+            }
+            for diagnostic in analysis.diagnostics {
+                let range = diagnostic.span.map(|span| json!({
+                    "sourceFileId": source_file["id"], "startLine": span.start_line,
+                    "startColumn": span.start_column, "endLine": span.end_line, "endColumn": span.end_column
+                }));
+                if !stream.emit(
+                    "DIAGNOSTIC",
+                    json!({
+                        "code": diagnostic.code, "severity": "WARNING",
+                        "message": diagnostic.message, "sourceRange": range
+                    }),
+                    false,
+                )? {
+                    return Ok(ExitCode::SUCCESS);
+                }
+                counts.diagnostics += 1;
+            }
+        }
+    }
+    let checksum = stream.checksum();
+    let mut terminal = context.as_object().expect("context object").clone();
+    terminal.insert(
+        "outcome".into(),
+        json!(if partial { "PARTIAL" } else { "SUCCEEDED" }),
+    );
+    terminal.insert("counts".into(), counts.to_value());
+    terminal.insert("capabilities".into(), json!(request.capabilities.iter().map(|name| json!({
+        "name": name, "support": "SUPPORTED", "coverage": if partial { "PARTIAL" } else { "COMPLETE" }
+    })).collect::<Vec<_>>()));
+    terminal.insert("contentFingerprint".into(), json!(checksum));
+    terminal.insert("integrityChecksum".into(), json!(checksum));
+    stream.emit("ANALYSIS_COMPLETED", Value::Object(terminal), true)?;
+    Ok(ExitCode::SUCCESS)
+}
+
+fn checked_result(
+    result: std::thread::Result<Result<LanguageAnalysis, ProcessingError>>,
+) -> Result<LanguageAnalysis, (&'static str, &'static str)> {
+    match result {
+        Ok(Ok(analysis)) => Ok(analysis),
+        Ok(Err(ProcessingError::Source(error))) => Err(source_error(&error)),
+        Ok(Err(ProcessingError::Unsupported)) => {
+            Err(("UNSUPPORTED_LANGUAGE", "Source language is unsupported"))
+        }
+        Ok(Err(ProcessingError::Ineligible)) => {
+            Err(("INVALID_REQUEST", "Source is not eligible Java text"))
+        }
+        Ok(Err(ProcessingError::Deadline)) => {
+            Err(("BUDGET_EXCEEDED", "Analysis deadline exceeded"))
+        }
+        Ok(Err(ProcessingError::ResourceLimit)) => Err((
+            "RESOURCE_LIMIT_EXCEEDED",
+            "Parse result exceeds worker reservation",
+        )),
+        Ok(Err(ProcessingError::Parser)) | Err(_) => {
+            Err(("INTERNAL_ANALYZER_FAILURE", "Java parse failed"))
+        }
+    }
 }
 
 fn parse_request(value: &Value) -> Option<Request> {
@@ -566,6 +883,7 @@ fn parse_source(
     source_file: &Value,
     deadline: Instant,
     cancelled: &AtomicBool,
+    with_relations: bool,
 ) -> Result<LanguageAnalysis, ProcessingError> {
     if Instant::now() >= deadline || cancelled.load(Ordering::Relaxed) {
         return Err(ProcessingError::Deadline);
@@ -587,23 +905,32 @@ fn parse_source(
         return Err(ProcessingError::Deadline);
     }
     let mut analyzer = JavaAnalyzer::new().map_err(|_| ProcessingError::Parser)?;
-    analyzer
-        .analyze_until(
+    let analysis = if with_relations {
+        analyzer.analyze_with_relations_until(
             path,
             &source_bytes,
             deadline,
             cancelled,
             RESULT_BYTES_PER_WORKER,
         )
-        .map_err(|error| match error {
-            codeatlas_native_analyzer::language::AnalyzerError::BudgetExceeded => {
-                ProcessingError::Deadline
-            }
-            codeatlas_native_analyzer::language::AnalyzerError::ResourceLimit => {
-                ProcessingError::ResourceLimit
-            }
-            _ => ProcessingError::Parser,
-        })
+    } else {
+        analyzer.analyze_until(
+            path,
+            &source_bytes,
+            deadline,
+            cancelled,
+            RESULT_BYTES_PER_WORKER,
+        )
+    };
+    analysis.map_err(|error| match error {
+        codeatlas_native_analyzer::language::AnalyzerError::BudgetExceeded => {
+            ProcessingError::Deadline
+        }
+        codeatlas_native_analyzer::language::AnalyzerError::ResourceLimit => {
+            ProcessingError::ResourceLimit
+        }
+        _ => ProcessingError::Parser,
+    })
 }
 fn now_epoch_ms() -> i64 {
     SystemTime::now()
@@ -623,12 +950,13 @@ fn write_one<W: Write>(output: &mut W, event: Value) -> io::Result<()> {
 struct Counts {
     source_files: u64,
     nodes: u64,
+    edges: u64,
     coverage: u64,
     diagnostics: u64,
 }
 impl Counts {
     fn to_value(&self) -> Value {
-        json!({"sourceFiles": self.source_files, "nodes": self.nodes, "edges": 0,
+        json!({"sourceFiles": self.source_files, "nodes": self.nodes, "edges": self.edges,
             "coverage": self.coverage, "diagnostics": self.diagnostics})
     }
 }
@@ -735,11 +1063,131 @@ impl<'a, W: Write> EventWriter<'a, W> {
 
 #[cfg(test)]
 mod tests {
+    use sha2::Digest;
+    use std::fs;
+    use std::num::NonZeroUsize;
     use std::sync::atomic::{AtomicUsize, Ordering};
     use std::sync::{Arc, Barrier, Mutex};
     use std::time::Duration;
 
-    use super::{EventWriter, ordered_batch, timed_batch};
+    use super::{EventWriter, Request, ordered_batch, run_relations, timed_batch};
+
+    #[test]
+    fn relation_second_pass_same_length_source_change_fails_without_completion() {
+        let root =
+            std::env::temp_dir().join(format!("codeatlas-relation-race-{}", std::process::id()));
+        fs::create_dir_all(root.join("src")).unwrap();
+        let first = b"class A {}";
+        let changed = b"class B {}";
+        let path = root.join("src/A.java");
+        fs::write(&path, first).unwrap();
+        let request = Request {
+            id: "relation-race".into(),
+            snapshot_id: "snapshot".into(),
+            repository_id: "repo".into(),
+            root: root.to_str().unwrap().into(),
+            revision_id: "revision".into(),
+            revision_fingerprint: "sha256:revision".into(),
+            capabilities: vec!["SYMBOL".into(), "CALL".into()],
+            source_files: vec![serde_json::json!({
+                "id": "file-a", "path": "src/A.java", "contentFingerprint": format!("sha256:{:x}", sha2::Sha256::digest(first)),
+                "languageHint": "java", "classification": {"contentKind": "TEXT"}
+            })],
+            max_duration_ms: 10_000,
+            max_memory_bytes: 64 * 1024 * 1024,
+            max_events: 100,
+            deadline_epoch_ms: None,
+        };
+        let context = serde_json::json!({"providerSnapshotId":"snapshot","repositoryId":"repo","revisionId":"revision","revisionFingerprint":"sha256:revision"});
+        let mut output = Vec::new();
+        let mut stream = EventWriter::new(&mut output, &request.id, &context, 100);
+        stream
+            .emit("ANALYSIS_STARTED", context.clone(), false)
+            .unwrap();
+        run_relations(
+            &request,
+            NonZeroUsize::new(1).unwrap(),
+            &context,
+            &mut stream,
+            || {
+                fs::write(&path, changed).unwrap();
+            },
+        )
+        .unwrap();
+        let events: Vec<serde_json::Value> = output
+            .split(|byte| *byte == b'\n')
+            .filter(|line| !line.is_empty())
+            .map(|line| serde_json::from_slice(line).unwrap())
+            .collect();
+        assert_eq!(events.last().unwrap()["type"], "ANALYSIS_FAILED");
+        assert_eq!(
+            events.last().unwrap()["payload"]["error"]["code"],
+            "SOURCE_CHANGED"
+        );
+        assert!(
+            !events.iter().any(
+                |event| event["type"] == "ANALYSIS_COMPLETED" || event["type"] == "SOURCE_FILE"
+            )
+        );
+        fs::remove_file(path).unwrap();
+        fs::remove_dir(root.join("src")).unwrap();
+        fs::remove_dir(root).unwrap();
+    }
+
+    #[test]
+    fn relation_jsonl_byte_limit_emits_failure_instead_of_completion() {
+        let root =
+            std::env::temp_dir().join(format!("codeatlas-relation-bytes-{}", std::process::id()));
+        fs::create_dir_all(root.join("src")).unwrap();
+        let source = b"class A {}";
+        let path = root.join("src/A.java");
+        fs::write(&path, source).unwrap();
+        let request = Request {
+            id: "relation-bytes".into(),
+            snapshot_id: "snapshot".into(),
+            repository_id: "repo".into(),
+            root: root.to_str().unwrap().into(),
+            revision_id: "revision".into(),
+            revision_fingerprint: "sha256:revision".into(),
+            capabilities: vec!["SYMBOL".into(), "CALL".into()],
+            source_files: vec![serde_json::json!({
+                "id": "file-a", "path": "src/A.java", "contentFingerprint": format!("sha256:{:x}", sha2::Sha256::digest(source)),
+                "languageHint": "java", "classification": {"contentKind": "TEXT"}
+            })],
+            max_duration_ms: 10_000,
+            max_memory_bytes: 64 * 1024 * 1024,
+            max_events: 100,
+            deadline_epoch_ms: None,
+        };
+        let context = serde_json::json!({"providerSnapshotId":"snapshot","repositoryId":"repo","revisionId":"revision","revisionFingerprint":"sha256:revision"});
+        let mut output = Vec::new();
+        let mut stream = EventWriter::new(&mut output, &request.id, &context, 100);
+        stream
+            .emit("ANALYSIS_STARTED", context.clone(), false)
+            .unwrap();
+        stream.max_total_bytes = stream.bytes + stream.failure_reservation().unwrap() + 300;
+        run_relations(
+            &request,
+            NonZeroUsize::new(1).unwrap(),
+            &context,
+            &mut stream,
+            || {},
+        )
+        .unwrap();
+        let events: Vec<serde_json::Value> = output
+            .split(|byte| *byte == b'\n')
+            .filter(|line| !line.is_empty())
+            .map(|line| serde_json::from_slice(line).unwrap())
+            .collect();
+        assert_eq!(events.last().unwrap()["type"], "ANALYSIS_FAILED");
+        assert_eq!(
+            events.last().unwrap()["payload"]["error"]["code"],
+            "RESOURCE_LIMIT_EXCEEDED"
+        );
+        fs::remove_file(path).unwrap();
+        fs::remove_dir(root.join("src")).unwrap();
+        fs::remove_dir(root).unwrap();
+    }
 
     #[test]
     fn line_and_total_byte_overflow_emit_failure_terminal() {

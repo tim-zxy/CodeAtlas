@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "java-call-basic",
+  "category": "code-intelligence",
+  "phase": "0.5",
+  "languages": ["java"],
+  "frameworks": [],
+  "capabilities": ["SYMBOL", "IMPORT", "CALL", "REFERENCE"],
+  "inputs": { "source": "source/" },
+  "expected": {
+    "nodes": "expected/nodes.json",
+    "edges": "expected/edges.json",
+    "coverage": "expected/coverage.json",
+    "diagnostics": "expected/diagnostics.json"
+  },
+  "criticalFacts": [
+    {
+      "id": "java-relation-v1:0c6150772f8f086629c7724b4e6cb4c79fc7fcbba3c5b5638e8e54008623cf9a",
+      "type": "EDGE",
+      "importance": "CRITICAL"
+    },
+    {
+      "id": "java-relation-v1:186e22002966a0fa7368d57148a958108451a7e7600f8dcdc2bcaa1f9d0a82ee",
+      "type": "EDGE",
+      "importance": "CRITICAL"
+    },
+    {
+      "id": "java-relation-v1:6897e56550a210b3842b87a8e7e6a45ce21c94e543ab99bae32c66966a8b8a83",
+      "type": "EDGE",
+      "importance": "CRITICAL"
+    },
+    {
+      "id": "java-relation-v1:c3ce3905de999d6a38bb28aab58c45bdb815feeaab281fea4472b86fa8e7f24c",
+      "type": "EDGE",
+      "importance": "CRITICAL"
+    },
+    {
+      "id": "java-relation-v1:57ae9793993ab2149c590c5e5e9ecdc848bf1f2c8b44424f8f0606536c291a9a",
+      "type": "EDGE",
+      "importance": "CRITICAL"
+    }
+  ],
+  "qualityGates": {}
+}

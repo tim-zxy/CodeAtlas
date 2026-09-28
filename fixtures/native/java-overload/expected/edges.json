@@ -1,0 +1,44 @@
+[
+  {
+    "providerId": "native",
+    "providerFactId": "java-relation-v1:fb3ab087b6f173a3f1a87f48be74ce7bae450fd89d73d928581a712711acc059",
+    "providerSnapshotId": "snapshot-fixture",
+    "repositoryId": "repo-fixture",
+    "revisionId": "rev-fixture",
+    "providerKind": "java.call",
+    "source": {
+      "factType": "NODE",
+      "providerId": "native",
+      "providerFactId": "java-symbol-v1:7efea2182bcc8d488161698e4e2db59c3f8afa66666af7388b0c084e3253379d"
+    },
+    "target": {
+      "state": "UNRESOLVED",
+      "resolution": "AMBIGUOUS",
+      "originalHint": "choose",
+      "candidates": [
+        {
+          "factType": "NODE",
+          "providerId": "native",
+          "providerFactId": "java-symbol-v1:39e603679dee398e4f90c7179df8a1d537b49245533341d1dda96145f456a219"
+        },
+        {
+          "factType": "NODE",
+          "providerId": "native",
+          "providerFactId": "java-symbol-v1:85246b7f32b81810d60ea01cf66b04154aacd65cad6911b5e3b359f261cfaad6"
+        }
+      ]
+    },
+    "sourceRange": {
+      "sourceFileId": "file-Overload.java",
+      "startLine": 4,
+      "startColumn": 15,
+      "endLine": 4,
+      "endColumn": 21
+    },
+    "confidence": {
+      "score": 1,
+      "method": "parser",
+      "reasons": []
+    }
+  }
+]

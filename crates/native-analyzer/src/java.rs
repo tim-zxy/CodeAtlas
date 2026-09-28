@@ -37,6 +37,24 @@ impl JavaAnalyzer {
             source,
             Some((deadline, cancelled)),
             max_result_bytes,
+            false,
+        )
+    }
+
+    pub fn analyze_with_relations_until(
+        &mut self,
+        relative_path: &str,
+        source: &[u8],
+        deadline: Instant,
+        cancelled: &AtomicBool,
+        max_result_bytes: usize,
+    ) -> Result<LanguageAnalysis, AnalyzerError> {
+        self.analyze_inner(
+            relative_path,
+            source,
+            Some((deadline, cancelled)),
+            max_result_bytes,
+            true,
         )
     }
 
@@ -46,6 +64,7 @@ impl JavaAnalyzer {
         source: &[u8],
         budget: Option<(Instant, &AtomicBool)>,
         max_result_bytes: usize,
+        collect_relations: bool,
     ) -> Result<LanguageAnalysis, AnalyzerError> {
         let exhausted = || {
             budget.is_some_and(|(deadline, cancelled)| {
@@ -94,7 +113,7 @@ impl JavaAnalyzer {
         } else {
             SyntaxCoverage::Complete
         };
-        let diagnostics = if root.has_error() {
+        let mut diagnostics = if root.has_error() {
             vec![SyntaxDiagnostic {
                 code: "SYNTAX_ERROR".into(),
                 message: "Java source contains syntax errors".into(),
@@ -103,8 +122,31 @@ impl JavaAnalyzer {
         } else {
             Vec::new()
         };
+        let relation_sites = if collect_relations {
+            let remaining = max_result_bytes.saturating_sub(collector.result_bytes);
+            let (sites, relation_diagnostics) = crate::java_relations::collect_sites(
+                root,
+                source,
+                relative_path,
+                &collector.symbols,
+                remaining,
+            )?;
+            diagnostics.extend(relation_diagnostics);
+            sites
+        } else {
+            Vec::new()
+        };
+        if exhausted() {
+            return Err(AnalyzerError::BudgetExceeded);
+        }
+        let coverage = if diagnostics.is_empty() {
+            coverage
+        } else {
+            SyntaxCoverage::Partial
+        };
         Ok(LanguageAnalysis {
             symbols: collector.symbols,
+            relation_sites,
             diagnostics,
             coverage,
         })
@@ -117,7 +159,7 @@ impl LanguageAnalyzer for JavaAnalyzer {
         relative_path: &str,
         source: &[u8],
     ) -> Result<LanguageAnalysis, AnalyzerError> {
-        self.analyze_inner(relative_path, source, None, usize::MAX)
+        self.analyze_inner(relative_path, source, None, usize::MAX, false)
     }
 }
 
@@ -180,7 +222,7 @@ impl<'a> SymbolCollector<'a> {
                 && let Some(name) = self.text(name_node)
             {
                 let name = name.to_owned();
-                self.push("java.package", &name, "", name_node);
+                self.push("java.package", &name, "", false, name_node);
                 self.owners.push(name);
                 break;
             }
@@ -208,7 +250,7 @@ impl<'a> SymbolCollector<'a> {
                     && let Some(name) = self.text(name_node)
                 {
                     let name = name.to_owned();
-                    self.push(kind, &name, "", name_node);
+                    self.push(kind, &name, "", has_static_modifier(node), name_node);
                     self.owners.push(name);
                     if let Some(body) = node.child_by_field_name("body") {
                         self.visit_children(body);
@@ -227,7 +269,13 @@ impl<'a> SymbolCollector<'a> {
                     } else {
                         "java.method"
                     };
-                    self.push(kind, &name, &signature, name_node);
+                    self.push(
+                        kind,
+                        &name,
+                        &signature,
+                        has_static_modifier(node),
+                        name_node,
+                    );
                 }
             }
             "field_declaration" => {
@@ -238,7 +286,13 @@ impl<'a> SymbolCollector<'a> {
                         && let Some(name) = self.text(name_node)
                     {
                         let name = name.to_owned();
-                        self.push("java.field", &name, "", name_node);
+                        self.push(
+                            "java.field",
+                            &name,
+                            "",
+                            has_static_modifier(node),
+                            name_node,
+                        );
                     }
                 }
             }
@@ -298,7 +352,14 @@ impl<'a> SymbolCollector<'a> {
         std::str::from_utf8(self.source.get(node.byte_range())?).ok()
     }
 
-    fn push(&mut self, kind: &str, name: &str, signature: &str, name_node: Node<'_>) {
+    fn push(
+        &mut self,
+        kind: &str,
+        name: &str,
+        signature: &str,
+        is_static: bool,
+        name_node: Node<'_>,
+    ) {
         let estimated = 512usize.saturating_add(
             kind.len()
                 .saturating_add(name.len())
@@ -339,9 +400,22 @@ impl<'a> SymbolCollector<'a> {
             name: name.to_owned(),
             qualified_name,
             signature: signature.to_owned(),
+            is_static,
             span: span(name_node),
         });
     }
+}
+
+fn has_static_modifier(node: Node<'_>) -> bool {
+    let mut cursor = node.walk();
+    node.named_children(&mut cursor)
+        .find(|child| child.kind() == "modifiers")
+        .is_some_and(|modifiers| {
+            let mut cursor = modifiers.walk();
+            modifiers
+                .children(&mut cursor)
+                .any(|child| child.kind() == "static")
+        })
 }
 
 fn first_named_child(node: Node<'_>) -> Option<Node<'_>> {
