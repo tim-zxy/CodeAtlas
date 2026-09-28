@@ -236,7 +236,7 @@
   },
   {
     "providerId": "native",
-    "providerFactId": "java-relation-v1:79d8b5c1c1b3b3f292c3da05d86d2c39abe37c3972dc8643126ff7be1fd3c584",
+    "providerFactId": "java-relation-v1:f6b79c7f379076d45f5f2a7c0910cf246a786508ad5ee6d93a51c60b61943d38",
     "providerSnapshotId": "snapshot-fixture",
     "repositoryId": "repo-fixture",
     "revisionId": "rev-fixture",
@@ -244,12 +244,12 @@
     "source": {
       "factType": "NODE",
       "providerId": "native",
-      "providerFactId": "java-symbol-v1:157501697e15b72e5d4edad1c135416ed3b865b4bb6ec3bd01af092d29aad58b"
+      "providerFactId": "java-symbol-v1:cc8ef913d4851c2281e01ae936521365ac32b4507c3003ab8a7c8aab0376e8b0"
     },
     "target": {
       "state": "UNRESOLVED",
       "resolution": "UNRESOLVED",
-      "originalHint": "Object",
+      "originalHint": "Integer",
       "candidates": []
     },
     "sourceRange": {
@@ -257,7 +257,7 @@
       "startLine": 4,
       "startColumn": 18,
       "endLine": 4,
-      "endColumn": 24
+      "endColumn": 25
     },
     "confidence": {
       "score": 1,
@@ -353,12 +353,12 @@
         {
           "factType": "NODE",
           "providerId": "native",
-          "providerFactId": "java-symbol-v1:157501697e15b72e5d4edad1c135416ed3b865b4bb6ec3bd01af092d29aad58b"
+          "providerFactId": "java-symbol-v1:4bc04710910bfe066555bbe7da7b9c6f7013fb2f49c52af53981627b6996b6ad"
         },
         {
           "factType": "NODE",
           "providerId": "native",
-          "providerFactId": "java-symbol-v1:4bc04710910bfe066555bbe7da7b9c6f7013fb2f49c52af53981627b6996b6ad"
+          "providerFactId": "java-symbol-v1:cc8ef913d4851c2281e01ae936521365ac32b4507c3003ab8a7c8aab0376e8b0"
         }
       ]
     },

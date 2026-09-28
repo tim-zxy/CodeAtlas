@@ -494,7 +494,7 @@ fn local_same_arity_different_signature_does_not_hide_inherited_overload() {
     );
     let child = analyze_sites(
         "src/Child.java",
-        b"package demo; class Child extends Base { void ping(Object value) {} void go() { ping(\"x\"); } }",
+        b"package demo; class Child extends Base { void ping(Integer value) {} void go() { ping(null); } }",
     );
     let mut index = DeclarationIndex::new(16 * 1024);
     for (path, analysis) in [("src/Base.java", &base), ("src/Child.java", &child)] {
@@ -520,11 +520,11 @@ fn deeper_class_overload_is_not_hidden_by_nearer_different_signature() {
     );
     let base = analyze_sites(
         "src/Base.java",
-        b"package demo; class Base extends Grand { void ping(Object value) {} }",
+        b"package demo; class Base extends Grand { void ping(Integer value) {} }",
     );
     let child = analyze_sites(
         "src/Child.java",
-        b"package demo; class Child extends Base { void go() { ping(\"x\"); } }",
+        b"package demo; class Child extends Base { void go() { ping(null); } }",
     );
     let mut index = DeclarationIndex::new(24 * 1024);
     for (path, analysis) in [

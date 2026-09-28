@@ -247,7 +247,7 @@
   },
   {
     "providerId": "native",
-    "providerFactId": "java-symbol-v1:157501697e15b72e5d4edad1c135416ed3b865b4bb6ec3bd01af092d29aad58b",
+    "providerFactId": "java-symbol-v1:cc8ef913d4851c2281e01ae936521365ac32b4507c3003ab8a7c8aab0376e8b0",
     "providerSnapshotId": "snapshot-fixture",
     "repositoryId": "repo-fixture",
     "revisionId": "rev-fixture",
