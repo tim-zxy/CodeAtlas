@@ -487,6 +487,95 @@ fn inherited_search_uses_each_ancestors_imports_and_class_before_interface() {
 }
 
 #[test]
+fn local_same_arity_different_signature_does_not_hide_inherited_overload() {
+    let base = analyze_sites(
+        "src/Base.java",
+        b"package demo; class Base { void ping(String value) {} }",
+    );
+    let child = analyze_sites(
+        "src/Child.java",
+        b"package demo; class Child extends Base { void ping(Object value) {} void go() { ping(\"x\"); } }",
+    );
+    let mut index = DeclarationIndex::new(16 * 1024);
+    for (path, analysis) in [("src/Base.java", &base), ("src/Child.java", &child)] {
+        index.insert(path, &analysis.symbols).unwrap();
+        index
+            .insert_inheritance(path, &analysis.relation_sites)
+            .unwrap();
+    }
+    let call = child
+        .relation_sites
+        .iter()
+        .find(|site| site.kind == RelationKind::Call)
+        .unwrap();
+    assert!(matches!(index.resolve("src/Child.java", call).target,
+        RelationTarget::NonResolved { resolution: "AMBIGUOUS", ref candidates, .. } if candidates.len() == 2));
+}
+
+#[test]
+fn deeper_class_overload_is_not_hidden_by_nearer_different_signature() {
+    let grand = analyze_sites(
+        "src/Grand.java",
+        b"package demo; class Grand { void ping(String value) {} }",
+    );
+    let base = analyze_sites(
+        "src/Base.java",
+        b"package demo; class Base extends Grand { void ping(Object value) {} }",
+    );
+    let child = analyze_sites(
+        "src/Child.java",
+        b"package demo; class Child extends Base { void go() { ping(\"x\"); } }",
+    );
+    let mut index = DeclarationIndex::new(24 * 1024);
+    for (path, analysis) in [
+        ("src/Grand.java", &grand),
+        ("src/Base.java", &base),
+        ("src/Child.java", &child),
+    ] {
+        index.insert(path, &analysis.symbols).unwrap();
+        index
+            .insert_inheritance(path, &analysis.relation_sites)
+            .unwrap();
+    }
+    let call = child
+        .relation_sites
+        .iter()
+        .find(|site| site.kind == RelationKind::Call)
+        .unwrap();
+    assert!(matches!(index.resolve("src/Child.java", call).target,
+        RelationTarget::NonResolved { resolution: "AMBIGUOUS", ref candidates, .. } if candidates.len() == 2));
+}
+
+#[test]
+fn local_identical_signature_overrides_inherited_candidate() {
+    let base = analyze_sites(
+        "src/Base.java",
+        b"package demo; class Base { void ping(String value) {} }",
+    );
+    let child = analyze_sites("src/Child.java", b"package demo; class Child extends Base { void ping(String value) {} void go() { ping(\"x\"); } }");
+    let mut index = DeclarationIndex::new(16 * 1024);
+    for (path, analysis) in [("src/Base.java", &base), ("src/Child.java", &child)] {
+        index.insert(path, &analysis.symbols).unwrap();
+        index
+            .insert_inheritance(path, &analysis.relation_sites)
+            .unwrap();
+    }
+    let call = child
+        .relation_sites
+        .iter()
+        .find(|site| site.kind == RelationKind::Call)
+        .unwrap();
+    let own = &child
+        .symbols
+        .iter()
+        .find(|symbol| symbol.name == "ping")
+        .unwrap()
+        .provider_fact_id;
+    assert!(matches!(index.resolve("src/Child.java", call).target,
+        RelationTarget::Resolved { ref fact_id, resolution: "HEURISTIC" } if fact_id == own));
+}
+
+#[test]
 fn direct_call_can_reach_indexed_superclass_method() {
     let parent = analyze_sites(
         "src/Base.java",

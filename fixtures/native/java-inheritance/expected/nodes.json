@@ -143,6 +143,28 @@
   },
   {
     "providerId": "native",
+    "providerFactId": "java-symbol-v1:4bc04710910bfe066555bbe7da7b9c6f7013fb2f49c52af53981627b6996b6ad",
+    "providerSnapshotId": "snapshot-fixture",
+    "repositoryId": "repo-fixture",
+    "revisionId": "rev-fixture",
+    "providerKind": "java.method",
+    "name": "baseMethod",
+    "qualifiedName": "lib.Grand.baseMethod",
+    "sourceRange": {
+      "sourceFileId": "file-Grand.java",
+      "startLine": 1,
+      "startColumn": 61,
+      "endLine": 1,
+      "endColumn": 71
+    },
+    "confidence": {
+      "score": 1,
+      "method": "parser",
+      "reasons": []
+    }
+  },
+  {
+    "providerId": "native",
     "providerFactId": "java-compilation-unit-v1:770c1a58e03a33de25935dbee9193e97c900a9f0fc35cf69752e0b0a572112c9",
     "providerSnapshotId": "snapshot-fixture",
     "repositoryId": "repo-fixture",
@@ -225,6 +247,28 @@
   },
   {
     "providerId": "native",
+    "providerFactId": "java-symbol-v1:157501697e15b72e5d4edad1c135416ed3b865b4bb6ec3bd01af092d29aad58b",
+    "providerSnapshotId": "snapshot-fixture",
+    "repositoryId": "repo-fixture",
+    "revisionId": "rev-fixture",
+    "providerKind": "java.method",
+    "name": "baseMethod",
+    "qualifiedName": "app.Child.baseMethod",
+    "sourceRange": {
+      "sourceFileId": "file-Hierarchy.java",
+      "startLine": 4,
+      "startColumn": 7,
+      "endLine": 4,
+      "endColumn": 17
+    },
+    "confidence": {
+      "score": 1,
+      "method": "parser",
+      "reasons": []
+    }
+  },
+  {
+    "providerId": "native",
     "providerFactId": "java-symbol-v1:f84ba4f12c140e103a410a731935b9ff3f50b304229a5066d99511486fb2351f",
     "providerSnapshotId": "snapshot-fixture",
     "repositoryId": "repo-fixture",
@@ -234,9 +278,9 @@
     "qualifiedName": "app.Child.run",
     "sourceRange": {
       "sourceFileId": "file-Hierarchy.java",
-      "startLine": 4,
+      "startLine": 5,
       "startColumn": 7,
-      "endLine": 4,
+      "endLine": 5,
       "endColumn": 10
     },
     "confidence": {

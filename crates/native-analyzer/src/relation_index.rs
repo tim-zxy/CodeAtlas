@@ -403,15 +403,25 @@ impl DeclarationIndex {
                 continue;
             };
             let qualified = format!("{type_name}.{method}");
-            candidates.extend(self.candidates(&qualified, site.arity).into_iter().filter(
-                |symbol| symbol.provider_kind == kind && (!require_static || symbol.is_static),
-            ));
-            if candidates.is_empty()
-                && kind == "java.method"
-                && matches!(site.variant.as_str(), "direct" | "this")
-            {
-                candidates.extend(self.inherited_methods(type_symbol, method, site.arity));
+            let local: Vec<_> = self
+                .candidates(&qualified, site.arity)
+                .into_iter()
+                .filter(|symbol| {
+                    symbol.provider_kind == kind && (!require_static || symbol.is_static)
+                })
+                .collect();
+            if kind == "java.method" && matches!(site.variant.as_str(), "direct" | "this") {
+                let overridden: BTreeSet<_> = local
+                    .iter()
+                    .map(|symbol| symbol.signature.as_str())
+                    .collect();
+                candidates.extend(
+                    self.inherited_methods(type_symbol, method, site.arity)
+                        .into_iter()
+                        .filter(|symbol| !overridden.contains(symbol.signature.as_str())),
+                );
             }
+            candidates.extend(local);
         }
         if candidates.is_empty() && site.variant == "direct" {
             for (variant, import) in self.imports(path) {
@@ -439,6 +449,8 @@ impl DeclarationIndex {
         let mut seen = BTreeSet::new();
         let mut queue = VecDeque::from([owner_type]);
         let mut interfaces = VecDeque::new();
+        let mut inherited = Vec::new();
+        let mut covered_signatures = BTreeSet::new();
         seen.insert(owner_type.provider_fact_id.as_str());
         while !queue.is_empty() {
             let mut next = VecDeque::new();
@@ -471,9 +483,16 @@ impl DeclarationIndex {
                     }
                 }
             }
-            if !candidates.is_empty() {
-                return candidates;
+            for candidate in &candidates {
+                if !covered_signatures.contains(candidate.signature.as_str()) {
+                    inherited.push(*candidate);
+                }
             }
+            covered_signatures.extend(
+                candidates
+                    .iter()
+                    .map(|candidate| candidate.signature.as_str()),
+            );
             queue = next;
         }
         while !interfaces.is_empty() {
@@ -504,12 +523,19 @@ impl DeclarationIndex {
                     }
                 }
             }
-            if !candidates.is_empty() {
-                return candidates;
+            for candidate in &candidates {
+                if !covered_signatures.contains(candidate.signature.as_str()) {
+                    inherited.push(*candidate);
+                }
             }
+            covered_signatures.extend(
+                candidates
+                    .iter()
+                    .map(|candidate| candidate.signature.as_str()),
+            );
             interfaces = next;
         }
-        Vec::new()
+        inherited
     }
 
     fn reference_candidates(

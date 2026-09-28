@@ -15,12 +15,12 @@
   },
   "criticalFacts": [
     {
-      "id": "java-relation-v1:2ee3185577b063e56942a9a1bae92d4f9d7e3cd4722dc553c9f05abb610ff4f5",
+      "id": "java-relation-v1:477b2b9808b3794cd7abd82b328dcde1a84dfb7463f0d9fc12feda787c2c246b",
       "type": "EDGE",
       "importance": "CRITICAL"
     },
     {
-      "id": "java-relation-v1:3ea632d59172119f40c5d9d2a9c415df74209788417a0e636a92919dfcf6d0a3",
+      "id": "java-relation-v1:8370145bfc651cdbb957239804f6f8dac7b54499e55479db08e28388ca565111",
       "type": "EDGE",
       "importance": "CRITICAL"
     }
