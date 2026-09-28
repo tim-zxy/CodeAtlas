@@ -54,6 +54,7 @@ export interface MergeSupport {
   readonly factType: 'NODE' | 'EDGE';
   readonly canonical: CanonicalNode | CanonicalEdge;
   readonly snapshotId: string;
+  readonly inputPath: readonly (string | number)[];
   readonly evidence: Evidence;
   readonly factEvidence: FactEvidence;
   readonly binding: ProviderFactBinding;
@@ -183,6 +184,7 @@ export function collectMergeSupports(input: MergeInput): readonly MergeSupport[]
           factType,
           canonical: pair.canonical,
           snapshotId: snapshot.id,
+          inputPath: path,
           evidence,
           factEvidence,
           binding,

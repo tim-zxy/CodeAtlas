@@ -32,9 +32,14 @@ function compare(a: string, b: string): number {
   return a < b ? -1 : a > b ? 1 : 0;
 }
 
-function tie(s: MergeSupport): string {
-  const ref = s.binding.providerFact;
-  return JSON.stringify([ref.providerId, s.snapshotId, ref.providerFactId]);
+function compareSupport(a: MergeSupport, b: MergeSupport): number {
+  const left = a.binding.providerFact;
+  const right = b.binding.providerFact;
+  return (
+    compare(left.providerId, right.providerId) ||
+    compare(a.snapshotId, b.snapshotId) ||
+    compare(left.providerFactId, right.providerFactId)
+  );
 }
 
 function rank(s: MergeSupport): number {
@@ -103,6 +108,7 @@ export function selectMergedFacts(supports: readonly MergeSupport[]): {
   explanations: MergeExplanation[];
 } {
   const groups = new Map<string, MergeSupport[]>();
+  const keysById = new Map<string, string>();
   for (const support of supports) {
     const fact = support.canonical;
     const key = JSON.stringify([
@@ -111,6 +117,11 @@ export function selectMergedFacts(supports: readonly MergeSupport[]): {
       support.factType,
       fact.factKey,
     ]);
+    const idKey = `${support.factType}:${fact.id}`;
+    const existing = keysById.get(idKey);
+    if (existing !== undefined && existing !== key)
+      throw new FactMergeError('FACT_CONFLICT', [...support.inputPath, 'canonical', 'factKey']);
+    keysById.set(idKey, key);
     const group = groups.get(key) ?? [];
     group.push(support);
     groups.set(key, group);
@@ -118,16 +129,14 @@ export function selectMergedFacts(supports: readonly MergeSupport[]): {
   const nodes: CanonicalNode[] = [];
   const edges: CanonicalEdge[] = [];
   const explanations: MergeExplanation[] = [];
+  const selectedPaths = new Map<string, readonly (string | number)[]>();
   for (const group of groups.values()) {
     const identity = identityShape(group[0]!);
-    if (group.some((s) => !isDeepStrictEqual(identityShape(s), identity)))
-      throw new FactMergeError('FACT_CONFLICT', [
-        'supports',
-        group.findIndex((s) => !isDeepStrictEqual(identityShape(s), identity)),
-        'canonical',
-      ]);
-    const ordered = [...group].sort((a, b) => rank(b) - rank(a) || compare(tie(a), tie(b)));
+    const conflict = group.find((s) => !isDeepStrictEqual(identityShape(s), identity));
+    if (conflict) throw new FactMergeError('FACT_CONFLICT', [...conflict.inputPath, 'canonical']);
+    const ordered = [...group].sort((a, b) => rank(b) - rank(a) || compareSupport(a, b));
     const selected = ordered[0]!;
+    selectedPaths.set(selected.canonical.id, selected.inputPath);
     const min = Math.min(...group.map((s) => s.canonical.confidence.score));
     const confidence =
       group.length === 1
@@ -166,17 +175,18 @@ export function selectMergedFacts(supports: readonly MergeSupport[]): {
     compare(`${a.fact.factType}:${a.fact.id}`, `${b.fact.factType}:${b.fact.id}`),
   );
   const nodeIds = new Set(nodes.map((n) => n.id));
-  for (const [index, edge] of edges.entries()) {
+  for (const edge of edges) {
+    const path = selectedPaths.get(edge.id) ?? [];
     if (!nodeIds.has(edge.source.id))
-      throw new FactMergeError('DANGLING_REFERENCE', ['edges', index, 'source']);
+      throw new FactMergeError('DANGLING_REFERENCE', [...path, 'canonical', 'source']);
     if (edge.target.state === 'RESOLVED' && !nodeIds.has(edge.target.target.id))
-      throw new FactMergeError('DANGLING_REFERENCE', ['edges', index, 'target', 'target']);
+      throw new FactMergeError('DANGLING_REFERENCE', [...path, 'canonical', 'target', 'target']);
     if (edge.target.state === 'UNRESOLVED') {
       for (const [candidateIndex, candidate] of edge.target.candidates.entries()) {
         if (!nodeIds.has(candidate.id))
           throw new FactMergeError('DANGLING_REFERENCE', [
-            'edges',
-            index,
+            ...path,
+            'canonical',
             'target',
             'candidates',
             candidateIndex,

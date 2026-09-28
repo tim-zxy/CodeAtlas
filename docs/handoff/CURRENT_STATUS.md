@@ -21,7 +21,7 @@
 
 ## Next action
 
-Review `docs/superpowers/plans/2026-09-28-p05-w4-002-fact-merger.md` following acceptance of `docs/superpowers/specs/2026-09-28-p05-w4-002-fact-merger-design.md`; select an execution method before any product code or Fixture change. P05-W4-002 FactMerger is the next main-chain task; P05-W1-010 full apply depends on it. The independent P05-W2-010 change detector remains available later. Source discovery remains Git-only; non-Git directory support is a separately reviewed adapter. Do not promote Phase 0.5 or advance deferred capabilities.
+P05-W4-002 FactMerger has local implementation and gate evidence below, but remains pending independent whole-branch review and integration. Do not start dependent P05-W1-010 full Apply or promote Phase 0.5 until review/integration. The independent P05-W2-010 change detector remains available later. Source discovery remains Git-only; non-Git directory support is a separately reviewed adapter. Do not advance deferred capabilities.
 
 ## 2026-09-24 compatibility amendment evidence
 
@@ -30,6 +30,14 @@ Review `docs/superpowers/plans/2026-09-28-p05-w4-002-fact-merger.md` following a
 - Documentation scope: Native resource/outcome/Worker Consistency requirements are mapped to existing P05 tasks; KnowledgeCandidate degradation, System Wiki, Diagram, and progressive Agent consumption are phase-gated. No product code, executable P05 Fixture, migration, Canonical IR/IPC contract, numeric threshold, or Phase 4 was introduced by this amendment. Hosted CI for this documentation change has not yet been observed.
 
 ## Active task evidence
+
+### P05-W4-002 FactMerger (local review pending)
+
+- Native inline implementation follows the accepted `docs/superpowers/specs/2026-09-28-p05-w4-002-fact-merger-design.md` and `docs/superpowers/plans/2026-09-28-p05-w4-002-fact-merger.md` on branch `codex/p05-w4-002-fact-merger-design`, based on integrated P05-W4-001 merge `917e569`. Task commits are `e5006a7` (Evidence identity), `1dd6ba9` (support validation), and `593497b` (deterministic selection); public entry/Fixture/docs are pending the final task commit and review. No push, PR, hosted CI, merge, Phase 0.5 exit, or next-task start is claimed.
+- Registered `fixtures/normalization/two-provider-same-call/fixture.json` composes the pinned `canonical-normalization` node/edge pairs into two distinct successful Provider snapshots. Its exact current-view ID/Confidence summaries and full-result SHA-256 digests cover two supports, one removed, and all removed. The merger produces validated Canonical nodes/edges, independent ACTIVE Evidence/FactEvidence/Bindings and explanations; it does not write SQLite, change historical Evidence, or infer targets. This composition exercises the merge boundary, not a second Native parser execution.
+- RED-to-GREEN evidence: the Evidence identity, support collector, deterministic selector, and public merger tests each failed on absent behavior before implementation. A full root run initially exposed the prior normalization test's exact Fixture-inventory expectation; updating that inventory to include the new registered Fixture made its focused suite pass 10/10. The final root-script Node fileset run directly with `node --test --test-concurrency=1` passed 566, failed 0, skipped 1 of 567 (the existing Windows symlink-privilege skip).
+- Fresh local gates on 2026-09-28: installed `tsc` built all 16 app/package projects plus IR type tests; `node scripts/check-architecture.mjs` passed 17 projects; real-binary Native analysis fileset passed 11/11; full-tree Prettier, `cargo fmt --all --check`, `cargo build --workspace -j 1`, `cargo clippy --workspace --all-targets -- -D warnings`, `cargo test --workspace -j 1`, and Git whitespace check exited 0. The Rust build emitted the pre-existing Windows linker-message warning only. The desktop `pnpm` wrapper stopped before scripts due noninteractive dependency purge confirmation; direct constituent checks are not a passing `pnpm verify`. Independent whole-branch review remains to be recorded.
+- Schema/migration impact: none. No Quality Gate or baseline threshold was reduced or invented. The phase-level zero-stale-binding database gate remains open for P05-W1-010/011 and P05-W9-001.
 
 ### P05-W4-001 Canonical normalization (integrated)
 

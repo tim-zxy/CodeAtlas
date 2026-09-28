@@ -1,0 +1,47 @@
+{
+  "repositoryId": "repo-fixture",
+  "revisionId": "rev-fixture",
+  "sourceFixture": "canonical-normalization",
+  "observations": [
+    {
+      "providerId": "alpha",
+      "score": 0.8,
+      "nodeFactIds": ["method-run", "ctor-a"],
+      "edgeFactIds": ["call-ctor"],
+      "snapshot": {
+        "id": "snapshot-alpha",
+        "repositoryId": "repo-fixture",
+        "providerId": "alpha",
+        "providerVersion": "1",
+        "runtimeVersion": "1",
+        "requestedRevisionId": "rev-fixture",
+        "requestedRevisionFingerprint": "fingerprint",
+        "startedAt": "2026-01-01T00:00:00.000Z",
+        "completedAt": "2026-01-01T00:00:01.000Z",
+        "capabilities": [],
+        "diagnostics": [],
+        "outcome": "SUCCEEDED"
+      }
+    },
+    {
+      "providerId": "beta",
+      "score": 0.6,
+      "nodeFactIds": ["method-run", "ctor-a"],
+      "edgeFactIds": ["call-ctor"],
+      "snapshot": {
+        "id": "snapshot-beta",
+        "repositoryId": "repo-fixture",
+        "providerId": "beta",
+        "providerVersion": "1",
+        "runtimeVersion": "1",
+        "requestedRevisionId": "rev-fixture",
+        "requestedRevisionFingerprint": "fingerprint",
+        "startedAt": "2026-01-01T00:00:00.000Z",
+        "completedAt": "2026-01-01T00:00:01.000Z",
+        "capabilities": [],
+        "diagnostics": [],
+        "outcome": "SUCCEEDED"
+      }
+    }
+  ]
+}

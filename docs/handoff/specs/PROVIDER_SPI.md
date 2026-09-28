@@ -53,6 +53,19 @@ versioned identity recipe are specified in the accepted
 [`P05-W4-001 design`](../../superpowers/specs/2026-09-28-p05-w4-001-canonical-normalization-design.md);
 the language-neutral Canonical schemas remain in `@codeatlas/ir`.
 
+P05-W4-002 exposes `mergeCanonicalObservations` as a pure, all-or-nothing
+current-view operation. One `SUCCEEDED` snapshot per Provider supplies validated
+normalized pairs for one repository/revision; non-success, duplicate, or
+cross-context observations raise `FactMergeError` with a structured path.
+Same-key facts retain separate active Evidence and ProviderFactBinding rows.
+The representative is one real support chosen by resolution/source-backed
+priority and stable Provider tuple; multi-support confidence is the minimum
+score without agreement boosting. A last-support removal produces an empty
+current view, not a database deletion or historical Evidence transition.
+Application Apply and REFRESH remain separate tasks. The exact behavior and
+limits are governed by the accepted
+[`P05-W4-002 design`](../../superpowers/specs/2026-09-28-p05-w4-002-fact-merger-design.md).
+
 ## Contract tests
 
 Every provider must pass descriptor/schema, deterministic replay, cancellation, terminal-event, invalid-event, coverage, diagnostics, unresolved-target, and refresh semantics. Native/reference dual-support fixtures verify canonical fact lifetime.
