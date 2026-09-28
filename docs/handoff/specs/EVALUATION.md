@@ -60,5 +60,13 @@ Phase 0.5 Native Analyzer evaluation adds a Worker Consistency case to the exist
 
 P05-W3-003 registers exact Native IPC v2 coverage/outcome Fixtures and reports eligible/covered/unsupported/partial site counts and the `EXACT`/`HEURISTIC`/`AMBIGUOUS`/`UNRESOLVED`/`UNSUPPORTED` relation distribution per file/capability. Cross-language validation checks the site partition and resolution sum; Java goldens check source-grounded counts and distinguish valid zero-fact success, syntax partial, unsupported language/capability, parser exception, timeout, and resource failure. A v1 stream reports numerical statistics as unavailable, not zero. No new numerical Quality Gate or change to the existing Phase 0.5 accuracy thresholds follows from ADR-015.
 
+P05-W4-001 registers `canonical-normalization` with one complete two-file
+Provider input and exact ordered Canonical node/edge pairs, including duplicate
+package support and unresolved/ambiguous targets. Key vectors and the three
+unchanged Java relation source Fixtures exercise provider independence,
+real-binary integration, and schema validity. The Canonical comparator checks
+only unique-key subsets before FactMerger; duplicate-support pairs are compared
+directly. This adds no numerical gate or new baseline for extraction accuracy.
+
 Phase 1 Knowledge evaluation distinguishes parser-grounded and source-grounded-degraded candidate paths. Report grounding, unsupported/partial coverage, unverified relations, publication acceptance/rejection, and agent utility by generation method without inventing a new numerical pass threshold. Later Diagram projection evaluation checks source/version references, permission/freshness, graph grounding, type-specific completeness, and sequence-order evidence. An unsupported diagram is reported as such, not rendered as a complete graph.
 

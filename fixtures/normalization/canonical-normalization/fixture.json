@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "canonical-normalization",
+  "category": "code-intelligence",
+  "phase": "0.5",
+  "languages": ["java"],
+  "frameworks": [],
+  "capabilities": ["SYMBOL", "IMPORT", "CALL", "INHERITANCE", "REFERENCE"],
+  "inputs": { "result": "inputs/result.json" },
+  "expected": { "nodes": "expected/nodes.json", "edges": "expected/edges.json" },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

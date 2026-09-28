@@ -138,12 +138,25 @@ test('unknown Java kind and missing required source facts fail with controlled p
     failure('INVALID_FACT', ['qualifiedName']),
   );
   assert.throws(
+    () =>
+      normalizeJavaNode(providerNode('java.method', { qualifiedName: ' demo.A ' }), sourceFiles),
+    failure('INVALID_FACT', ['qualifiedName']),
+  );
+  assert.throws(
     () => normalizeJavaNode(providerNode('java.method', { sourceRange: null }), sourceFiles),
     failure('INVALID_FACT', ['sourceRange']),
   );
   assert.throws(
     () => normalizeJavaNode(providerNode('java.package_container'), sourceFiles),
     failure('INVALID_FACT', ['sourceRange']),
+  );
+  assert.throws(
+    () =>
+      normalizeJavaNode(
+        providerNode('java.method', { sourceRange: { ...range, endLine: 2 } }),
+        sourceFiles,
+      ),
+    failure('INVALID_FACT', ['sourceRange', 'endLine']),
   );
 });
 

@@ -1,7 +1,11 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
+import { readFile } from 'node:fs/promises';
+import path from 'node:path';
 import { test } from 'node:test';
+import { fileURLToPath } from 'node:url';
 
+import { compareCanonicalFacts, discoverFixtures } from '../../evaluation/dist/index.js';
 import { CanonicalEdgeSchema, CanonicalNodeSchema } from '../../ir/dist/index.js';
 import { CanonicalNormalizationError, normalizeNativeAnalysis } from '../dist/index.js';
 
@@ -436,5 +440,86 @@ test('permuted valid fact events preserve Canonical keys, IDs, and stable pair o
   assert.notEqual(
     first.terminal.payload.integrityChecksum,
     second.terminal.payload.integrityChecksum,
+  );
+});
+
+test('Provider identity does not enter Canonical relation identity', () => {
+  const primary = normalizeNativeAnalysis(
+    result({ nodes: [caller, target], edges: [edge('call', 'java.call', resolved('target'))] }),
+  );
+  const secondaryEdge = edge(
+    'call',
+    'java.call',
+    {
+      state: 'RESOLVED',
+      resolution: 'EXACT',
+      target: ref('target', 'secondary'),
+    },
+    { providerId: 'secondary', source: ref('caller', 'secondary') },
+  );
+  const secondary = normalizeNativeAnalysis(
+    result({
+      nodes: [
+        { ...caller, providerId: 'secondary' },
+        { ...target, providerId: 'secondary' },
+      ],
+      edges: [secondaryEdge],
+    }),
+  );
+  assert.equal(primary.edges[0].canonical.factKey, secondary.edges[0].canonical.factKey);
+  assert.equal(primary.edges[0].canonical.id, secondary.edges[0].canonical.id);
+});
+
+test('registered canonical-normalization Fixture matches exact Provider-to-Canonical goldens', async () => {
+  const root = fileURLToPath(new URL('../../../', import.meta.url));
+  const fixtures = await discoverFixtures(path.join(root, 'fixtures/normalization'));
+  assert.deepEqual(
+    fixtures.map((fixture) => fixture.manifest.id),
+    ['canonical-normalization'],
+  );
+  const fixture = fixtures[0];
+  const input = JSON.parse(await readFile(fixture.inputs.result, 'utf8'));
+  const expectedNodes = JSON.parse(await readFile(fixture.expected.nodes, 'utf8'));
+  const expectedEdges = JSON.parse(await readFile(fixture.expected.edges, 'utf8'));
+  const checksum = createHash('sha256')
+    .update(
+      input.events
+        .slice(0, -1)
+        .map((event) => `${JSON.stringify(event)}\n`)
+        .join(''),
+    )
+    .digest('hex');
+  assert.equal(input.terminal.payload.integrityChecksum, `sha256:${checksum}`);
+  const normalized = normalizeNativeAnalysis(input);
+  assert.deepEqual(normalized.nodes, expectedNodes);
+  assert.deepEqual(normalized.edges, expectedEdges);
+  assert.equal(normalized.nodes.length, 10);
+  assert.equal(normalized.edges.length, 5);
+  assert.equal(normalized.nodes.filter((pair) => pair.canonical.kind === 'PACKAGE').length, 3);
+  assert.equal(
+    normalized.edges.filter((pair) => pair.canonical.target.state === 'UNRESOLVED').length,
+    2,
+  );
+  const uniqueNodes = (pairs) =>
+    pairs
+      .filter(
+        (pair, index) =>
+          pairs.findIndex((other) => other.canonical.factKey === pair.canonical.factKey) === index,
+      )
+      .map((pair) => pair.canonical);
+  const comparison = compareCanonicalFacts({
+    expected: {
+      nodes: uniqueNodes(expectedNodes),
+      edges: expectedEdges.map((pair) => pair.canonical),
+    },
+    actual: {
+      nodes: uniqueNodes(normalized.nodes),
+      edges: normalized.edges.map((pair) => pair.canonical),
+    },
+  });
+  assert.ok(
+    comparison.entries.every(
+      (entry) => entry.classification === null && entry.differences.length === 0,
+    ),
   );
 });

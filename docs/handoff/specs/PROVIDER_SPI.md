@@ -41,6 +41,18 @@ For P05-W3-003 Native IPC v2 `ANALYZE`, per-file/capability coverage additionall
 
 Provider IDs remain in ProviderNode/ProviderEdge and ProviderFactBinding. Normalizers map to canonical kinds and fact keys. `FactMerger` merges equivalent support, respects exact/heuristic/ambiguous/unresolved hierarchy, and exposes explanations. Primary, secondary, and shadow roles affect orchestration and comparison, not automatic authority.
 
+P05-W4-001 exposes `normalizeNativeAnalysis` for a complete validated v1/v2
+Native `ANALYZE` result. It rechecks the completed stream and Provider Fact
+context, maps all nodes before relations, and returns deterministic
+Provider-to-Canonical pairs plus a node-reference lookup. The function is pure:
+it does not merge duplicate support, create Evidence/bindings, activate SQLite,
+or publish a partial graph. Failed/truncated/mixed-context streams, unknown
+Java Provider kinds, absent references, and invalid source-backed locations
+return a controlled typed failure with no partial batch. The Java mapping and
+versioned identity recipe are specified in the accepted
+[`P05-W4-001 design`](../../superpowers/specs/2026-09-28-p05-w4-001-canonical-normalization-design.md);
+the language-neutral Canonical schemas remain in `@codeatlas/ir`.
+
 ## Contract tests
 
 Every provider must pass descriptor/schema, deterministic replay, cancellation, terminal-event, invalid-event, coverage, diagnostics, unresolved-target, and refresh semantics. Native/reference dual-support fixtures verify canonical fact lifetime.

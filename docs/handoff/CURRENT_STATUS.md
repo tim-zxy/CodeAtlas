@@ -14,14 +14,14 @@
 | Phase | Readiness | Implementation progress |
 |---|---|---|
 | 0 | IMPLEMENTATION-READY | 18 of 18 tasks integrated; 11 of 11 technical exit checks passed on `9f4ec95`; documentation closeout merged as PR #7 at `71dd18c` |
-| 0.5 | IMPLEMENTATION-READY | P05-W2-001, P05-W2-002, and P05-W3-001..003 integrated; P05-W4-001 design accepted and task plan awaits review; remaining tasks and Phase 0.5 exit gates remain open |
+| 0.5 | IMPLEMENTATION-READY | P05-W2-001, P05-W2-002, and P05-W3-001..003 integrated; P05-W4-001 locally implemented and verified, with whole-branch review/hosted integration pending; remaining tasks and Phase 0.5 exit gates remain open |
 | 1 | DESIGN-READY | 0 percent |
 | 2 | ARCHITECTURE-READY | 0 percent |
 | 3 | ROADMAP/ARCHITECTURE-READY | 0 percent |
 
 ## Next action
 
-Review `docs/superpowers/plans/2026-09-28-p05-w4-001-canonical-normalization.md` before any P05-W4-001 product implementation. Its design at `docs/superpowers/specs/2026-09-28-p05-w4-001-canonical-normalization-design.md` was accepted by the user on 2026-09-28; the plan review includes an explicit clarification that completed `PARTIAL` analysis may yield normalized candidate facts but does not authorize publication. P05-W4-001 is the recommended next main-chain task because P05-W4-002 FactMerger and P05-W1-010 full apply depend on canonical normalization. The independent P05-W2-010 change detector remains available later. Source discovery remains Git-only; non-Git directory support is a separately reviewed adapter. Do not promote Phase 0.5 or advance deferred capabilities.
+Complete whole-branch review of P05-W4-001, then seek hosted clean-install CI through a PR before integration. Its accepted design is `docs/superpowers/specs/2026-09-28-p05-w4-001-canonical-normalization-design.md`; its task plan is `docs/superpowers/plans/2026-09-28-p05-w4-001-canonical-normalization.md`. Completed `PARTIAL` analysis may yield normalized candidate facts but does not authorize graph publication. After review/integration, P05-W4-002 FactMerger is the next main-chain task; P05-W1-010 full apply depends on both. The independent P05-W2-010 change detector remains available later. Source discovery remains Git-only; non-Git directory support is a separately reviewed adapter. Do not promote Phase 0.5 or advance deferred capabilities.
 
 ## 2026-09-24 compatibility amendment evidence
 
@@ -30,6 +30,14 @@ Review `docs/superpowers/plans/2026-09-28-p05-w4-001-canonical-normalization.md`
 - Documentation scope: Native resource/outcome/Worker Consistency requirements are mapped to existing P05 tasks; KnowledgeCandidate degradation, System Wiki, Diagram, and progressive Agent consumption are phase-gated. No product code, executable P05 Fixture, migration, Canonical IR/IPC contract, numeric threshold, or Phase 4 was introduced by this amendment. Hosted CI for this documentation change has not yet been observed.
 
 ## Active task evidence
+
+### P05-W4-001 Canonical normalization (local acceptance; integration pending)
+
+- Branch and task: `codex/p05-w4-001-normalization-design` from PR #12 merge `66b40349ad340b37b48dbccf1b19cd52c8a8b685`; accepted design/plan commits `d711322` and `f20b53a`; implementation commits `842599d` (identity vectors), `f07f5f9` (Java node mapping), and `6456cec` (completed analysis and edge mapping). This status records the final Fixture/documentation working tree before its closeout commit. No push, PR, hosted CI, merge, or Phase 0.5 exit is claimed.
+- Contract: a pure `@codeatlas/providers` entry point accepts only complete validated v1/v2 `ANALYZE` results, maps the reviewed Java kinds to strict provider-independent Canonical nodes/edges, preserves unresolved/ambiguous targets and independent Provider support, and returns controlled all-or-nothing errors. The SHA-256 tuple encoding and location-dependent overload limitation are pinned in the accepted design. No Canonical IR/Native IPC/ProviderSnapshot schema, migration, SQLite Apply, Evidence binding, FactMerger, REFRESH, Knowledge feature, or new numerical gate changed.
+- Fixture and TDD evidence: registered `canonical-normalization` under `fixtures/normalization/` pins one two-file completed Provider result with 10 exact ordered node pairs, 5 exact ordered edge pairs, three separate package supports sharing one key, resolved import/inheritance/call, ambiguous call, and unresolved reference. Its JSONL-event checksum is recomputed in the test; unique-key subsets pass the existing Canonical comparator while duplicate support is compared as pairs. Identity, Java node, stream, failure, and Fixture tests were observed failing before their respective implementation/artifact and then passing. `java-overload`, `java-call-basic`, and `java-inheritance` also pass normalization through the real Rust binary without rewriting source goldens.
+- Fresh local commands on 2026-09-28: direct `tsc -p <project>/tsconfig.json` for all 16 workspace projects and `tsc -p packages/ir/tsconfig.type-tests.json` exit 0. The root `package.json`-declared Node fileset run directly with `node --test` reports 556 passed, zero failed, and one existing Windows symlink-privilege skip out of 557. `node --test packages/providers/test/native-analysis.test.mjs packages/providers/test/native-relation-metrics.test.mjs packages/providers/test/native-relations.test.mjs packages/providers/test/native-coverage-v2.test.mjs` passes 11/11. `node scripts/check-architecture.mjs` passes all 17 projects; direct Prettier full-tree check, `cargo fmt --all --check`, `cargo build --workspace -j 1`, `cargo clippy --workspace --all-targets -- -D warnings`, and `cargo test --workspace -j 1` exit 0. Rust emitted only existing Windows linker-message warnings. The desktop pnpm wrapper previously stopped before `pnpm verify` could start; these direct checks are not represented as a passing `pnpm verify` or hosted CI.
+- Next dependency-valid step: independent whole-branch review and hosted PR checks; only after integration begin P05-W4-002 FactMerger. Phase 0.5 exit gates remain open.
 
 ### P05-W3-003 coverage and outcomes (integrated)
 

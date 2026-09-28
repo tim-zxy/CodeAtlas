@@ -316,6 +316,34 @@ plugin execution, graph queries, `ExecutionGraph`, `RuntimeFlow`,
 behavior. Evidence belongs to P0-W1-004. P05-W4-001 performs normalization and
 FactKey generation; P05-W4-002 performs merge and Confidence aggregation.
 
+### Phase 0.5 Java normalization profile
+
+P05-W4-001 adds a pure `@codeatlas/providers` normalizer for complete v1/v2
+Native `ANALYZE` results with `ANALYSIS_COMPLETED` outcome `SUCCEEDED` or
+`PARTIAL`. A partial observation can yield Canonical candidate facts but does
+not authorize graph publication. The accepted
+[`P05-W4-001 design`](../../superpowers/specs/2026-09-28-p05-w4-001-canonical-normalization-design.md)
+defines the exact version-1 identity tuples and SHA-256 encoding; the registered
+`canonical-normalization` Fixture pins their resulting opaque keys and IDs.
+
+`java.package` and synthetic `java.package_container` map to one `PACKAGE`
+identity by qualified name while retaining separate Provider support and
+nullable display ranges. `java.compilation_unit` maps to a file-scoped `MODULE`,
+not a language/build module. Java class/interface map to `TYPE`; method,
+constructor, and field map to `SYMBOL`. Imports, calls, inheritance, and
+references map to their existing Canonical edge kinds. Resolution state,
+original hints, ordered unique Canonical candidates, confidence, and callsite
+are preserved. Unknown kinds, detached source locations, missing references,
+and contradictory ambiguity fail as controlled all-or-nothing normalization
+errors; no inferred target is added.
+
+Current ProviderNode v1 has no signature field, so source name position
+distinguishes same-qualified-name overloads. Pure line movement may therefore
+change a FactKey. This limitation is not a claim of cross-revision semantic
+identity; changing it requires reviewed compatibility, Fixture, and migration
+analysis. No Code IR schema, ProviderSnapshot, Native IPC, Evidence, or SQLite
+contract is changed by P05-W4-001.
+
 ## Evidence IR
 
 P0-W1-004 defines provider-origin Evidence v1 as a pure, JSON-safe wire

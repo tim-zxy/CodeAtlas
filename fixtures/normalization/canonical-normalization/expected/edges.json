@@ -1,0 +1,157 @@
+[
+  {
+    "provider": { "factType": "EDGE", "providerId": "native", "providerFactId": "inherits-i" },
+    "canonical": {
+      "id": "canonical-edge-v1:a42b0d14525fe06a303610e86ba6a5e0cbc07a4f12cbbd5fc2988e9293b88ac6",
+      "factKey": "edge-fact-v1:3b241f1c2ad8a3612087eb074707a70ebbb064d355cb5e88216ef5e52eb17534",
+      "repositoryId": "repo-fixture",
+      "revisionId": "rev-fixture",
+      "kind": "INHERITANCE",
+      "source": {
+        "factType": "NODE",
+        "id": "canonical-node-v1:efd31fded8213dcfa540fa27753f72702fb2cdd109031e14166c778eaba746d0"
+      },
+      "target": {
+        "state": "RESOLVED",
+        "resolution": "EXACT",
+        "target": {
+          "factType": "NODE",
+          "id": "canonical-node-v1:dc2f051496639d578658557c02eb255a850ecf0fabab4e6595f779c33be41146"
+        }
+      },
+      "sourceRange": {
+        "sourceFileId": "file-A.java",
+        "startLine": 2,
+        "startColumn": 13,
+        "endLine": 2,
+        "endColumn": 14
+      },
+      "confidence": { "score": 1, "method": "parser", "reasons": [] }
+    }
+  },
+  {
+    "provider": { "factType": "EDGE", "providerId": "native", "providerFactId": "import-i" },
+    "canonical": {
+      "id": "canonical-edge-v1:b456ab6de7aee834856a3319ba3e96f75c906a306ffa2d6ef7cf11a58d5f1873",
+      "factKey": "edge-fact-v1:47cdbaeeddf60f37ae8bee5a2d4203f90e606f706aa12c347eaab29a4e1729ad",
+      "repositoryId": "repo-fixture",
+      "revisionId": "rev-fixture",
+      "kind": "IMPORT",
+      "source": {
+        "factType": "NODE",
+        "id": "canonical-node-v1:f02c5a09a74ad147ae23dae284db45364a14819c9be4a06a9ded75f0452281a1"
+      },
+      "target": {
+        "state": "RESOLVED",
+        "resolution": "EXACT",
+        "target": {
+          "factType": "NODE",
+          "id": "canonical-node-v1:dc2f051496639d578658557c02eb255a850ecf0fabab4e6595f779c33be41146"
+        }
+      },
+      "sourceRange": {
+        "sourceFileId": "file-A.java",
+        "startLine": 1,
+        "startColumn": 7,
+        "endLine": 1,
+        "endColumn": 13
+      },
+      "confidence": { "score": 1, "method": "parser", "reasons": [] }
+    }
+  },
+  {
+    "provider": { "factType": "EDGE", "providerId": "native", "providerFactId": "call-ambiguous" },
+    "canonical": {
+      "id": "canonical-edge-v1:e1686555cf950b7679ba323ff542296dc4bb5a1bcd6c319db83d26ccbe7bc0ef",
+      "factKey": "edge-fact-v1:64cb5cb92a6367a0a38ae74a5c07d4705570e54e0933741223bab4c59fa2ce31",
+      "repositoryId": "repo-fixture",
+      "revisionId": "rev-fixture",
+      "kind": "CALL",
+      "source": {
+        "factType": "NODE",
+        "id": "canonical-node-v1:baf15ef18013ad05ae84847a7608d6fea3706c3c84c5f8da1279eefdf6de7566"
+      },
+      "target": {
+        "state": "UNRESOLVED",
+        "resolution": "AMBIGUOUS",
+        "originalHint": "demo.A.overload",
+        "candidates": [
+          {
+            "factType": "NODE",
+            "id": "canonical-node-v1:fb93891f17c3ca4f09a8eba853ff1224e51c5847921542d5e4bbc8c9c4c25e5f"
+          },
+          {
+            "factType": "NODE",
+            "id": "canonical-node-v1:baf15ef18013ad05ae84847a7608d6fea3706c3c84c5f8da1279eefdf6de7566"
+          }
+        ]
+      },
+      "sourceRange": {
+        "sourceFileId": "file-A.java",
+        "startLine": 4,
+        "startColumn": 16,
+        "endLine": 4,
+        "endColumn": 17
+      },
+      "confidence": { "score": 1, "method": "parser", "reasons": [] }
+    }
+  },
+  {
+    "provider": { "factType": "EDGE", "providerId": "native", "providerFactId": "ref-external" },
+    "canonical": {
+      "id": "canonical-edge-v1:b355c697f133055fcf4c5926e66b2c0dcd2476fc32d04c0f196d44e68070a002",
+      "factKey": "edge-fact-v1:b965cfbdfe701dc7265c08a8ab3c956964b22daee47070d959ac851abbb4cb11",
+      "repositoryId": "repo-fixture",
+      "revisionId": "rev-fixture",
+      "kind": "REFERENCE",
+      "source": {
+        "factType": "NODE",
+        "id": "canonical-node-v1:baf15ef18013ad05ae84847a7608d6fea3706c3c84c5f8da1279eefdf6de7566"
+      },
+      "target": {
+        "state": "UNRESOLVED",
+        "resolution": "UNRESOLVED",
+        "originalHint": "ExternalType",
+        "candidates": []
+      },
+      "sourceRange": {
+        "sourceFileId": "file-A.java",
+        "startLine": 4,
+        "startColumn": 18,
+        "endLine": 4,
+        "endColumn": 19
+      },
+      "confidence": { "score": 1, "method": "parser", "reasons": [] }
+    }
+  },
+  {
+    "provider": { "factType": "EDGE", "providerId": "native", "providerFactId": "call-ctor" },
+    "canonical": {
+      "id": "canonical-edge-v1:4e1272235278fc27da40edb2507af7b7655e65b0477039c86d0e43bd48574a78",
+      "factKey": "edge-fact-v1:e7faf8348779e1ec6fb2e43013a4a817cb32f22c47716a18aa9dd9d0bccb91a8",
+      "repositoryId": "repo-fixture",
+      "revisionId": "rev-fixture",
+      "kind": "CALL",
+      "source": {
+        "factType": "NODE",
+        "id": "canonical-node-v1:baf15ef18013ad05ae84847a7608d6fea3706c3c84c5f8da1279eefdf6de7566"
+      },
+      "target": {
+        "state": "RESOLVED",
+        "resolution": "EXACT",
+        "target": {
+          "factType": "NODE",
+          "id": "canonical-node-v1:fb93891f17c3ca4f09a8eba853ff1224e51c5847921542d5e4bbc8c9c4c25e5f"
+        }
+      },
+      "sourceRange": {
+        "sourceFileId": "file-A.java",
+        "startLine": 4,
+        "startColumn": 12,
+        "endLine": 4,
+        "endColumn": 13
+      },
+      "confidence": { "score": 1, "method": "parser", "reasons": [] }
+    }
+  }
+]
