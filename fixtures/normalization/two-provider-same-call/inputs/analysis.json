@@ -5,6 +5,7 @@
   "observations": [
     {
       "providerId": "alpha",
+      "eventOrder": "FORWARD",
       "score": 0.8,
       "nodeFactIds": ["method-run", "ctor-a"],
       "edgeFactIds": ["call-ctor"],
@@ -25,6 +26,7 @@
     },
     {
       "providerId": "beta",
+      "eventOrder": "REVERSE",
       "score": 0.6,
       "nodeFactIds": ["method-run", "ctor-a"],
       "edgeFactIds": ["call-ctor"],

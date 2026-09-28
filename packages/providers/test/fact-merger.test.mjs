@@ -10,38 +10,81 @@ import {
   FactEvidenceSchema,
   ProviderFactBindingSchema,
 } from '../../ir/dist/index.js';
-import { mergeCanonicalObservations } from '../dist/index.js';
+import { mergeCanonicalObservations, normalizeNativeAnalysis } from '../dist/index.js';
 
 const fixture = new URL('../../../fixtures/normalization/two-provider-same-call/', import.meta.url);
 const manifest = JSON.parse(readFileSync(new URL('fixture.json', fixture), 'utf8'));
 const recipe = JSON.parse(readFileSync(new URL(manifest.inputs.analysis, fixture), 'utf8'));
-const original = new URL('../canonical-normalization/expected/', fixture);
-const nodePairs = JSON.parse(readFileSync(new URL('nodes.json', original), 'utf8'));
-const edgePairs = JSON.parse(readFileSync(new URL('edges.json', original), 'utf8'));
+assert.equal(recipe.sourceFixture, 'canonical-normalization');
+const original = new URL('../canonical-normalization/inputs/result.json', fixture);
+const nativeResult = JSON.parse(readFileSync(original, 'utf8'));
+
+function normalizedObservation({
+  snapshot,
+  providerId,
+  nodeFactIds,
+  edgeFactIds,
+  score,
+  eventOrder,
+}) {
+  const stream = structuredClone(nativeResult);
+  const rewrite = (value) => {
+    if (Array.isArray(value)) return value.forEach(rewrite);
+    if (!value || typeof value !== 'object') return;
+    for (const [key, nested] of Object.entries(value)) {
+      if (key === 'providerId') value[key] = providerId;
+      else if (key === 'providerSnapshotId') value[key] = snapshot.id;
+      else if (key === 'requestId') value[key] = `merge-${providerId}`;
+      else rewrite(nested);
+    }
+  };
+  rewrite(stream);
+  const facts = stream.events.filter((event) => event.type === 'NODE' || event.type === 'EDGE');
+  assert.ok(eventOrder === 'FORWARD' || eventOrder === 'REVERSE');
+  if (eventOrder === 'REVERSE') facts.reverse();
+  let cursor = 0;
+  stream.events = stream.events.map((event) =>
+    event.type === 'NODE' || event.type === 'EDGE' ? facts[cursor++] : event,
+  );
+  stream.events.forEach((event, sequence) => {
+    event.sequence = sequence;
+  });
+  const terminal = stream.events.at(-1);
+  const checksum = createHash('sha256')
+    .update(
+      stream.events
+        .slice(0, -1)
+        .map((event) => `${JSON.stringify(event)}\n`)
+        .join(''),
+    )
+    .digest('hex');
+  terminal.payload.integrityChecksum = `sha256:${checksum}`;
+  stream.terminal = structuredClone(terminal);
+  const normalized = normalizeNativeAnalysis(stream);
+  const nodes = normalized.nodes.filter((pair) =>
+    nodeFactIds.includes(pair.provider.providerFactId),
+  );
+  const edges = normalized.edges.filter((pair) =>
+    edgeFactIds.includes(pair.provider.providerFactId),
+  );
+  assert.equal(nodes.length, nodeFactIds.length);
+  assert.equal(edges.length, edgeFactIds.length);
+  return {
+    snapshot,
+    nodes: nodes.map((pair) => ({
+      ...pair,
+      canonical: { ...pair.canonical, confidence: { score, method: providerId, reasons: [] } },
+    })),
+    edges: edges.map((pair) => ({
+      ...pair,
+      canonical: { ...pair.canonical, confidence: { score, method: providerId, reasons: [] } },
+    })),
+  };
+}
 const input = {
   repositoryId: recipe.repositoryId,
   revisionId: recipe.revisionId,
-  observations: recipe.observations.map(
-    ({ snapshot, providerId, nodeFactIds, edgeFactIds, score }) => ({
-      snapshot,
-      nodes: nodeFactIds.map((id) => {
-        const pair = nodePairs.find((value) => value.provider.providerFactId === id);
-        assert.ok(pair, `missing pinned node ${id}`);
-        return {
-          provider: { ...pair.provider, providerId },
-          canonical: { ...pair.canonical, confidence: { score, method: providerId, reasons: [] } },
-        };
-      }),
-      edges: edgeFactIds.map((id) => {
-        const pair = edgePairs.find((value) => value.provider.providerFactId === id);
-        assert.ok(pair, `missing pinned edge ${id}`);
-        return {
-          provider: { ...pair.provider, providerId },
-          canonical: { ...pair.canonical, confidence: { score, method: providerId, reasons: [] } },
-        };
-      }),
-    }),
-  ),
+  observations: recipe.observations.map(normalizedObservation),
 };
 const expected = JSON.parse(readFileSync(new URL(manifest.expected.lifetimes, fixture), 'utf8'));
 

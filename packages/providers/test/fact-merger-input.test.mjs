@@ -113,6 +113,13 @@ test('invalid contexts, repeated supports, and partial snapshots fail atomically
   );
   rejects(
     (v) => {
+      v.observations.push({ snapshot: { ...snapshot, providerId: 'other' }, nodes: [], edges: [] });
+    },
+    'DUPLICATE_SUPPORT',
+    ['observations', 1, 'snapshot', 'id'],
+  );
+  rejects(
+    (v) => {
       v.observations[0].snapshot = { ...snapshot, outcome: 'PARTIAL' };
     },
     'INVALID_CONTEXT',

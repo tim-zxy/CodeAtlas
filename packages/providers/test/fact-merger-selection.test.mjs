@@ -125,4 +125,12 @@ test('identity conflicts and dangling edge references fail atomically', () => {
     () => selectMergedFacts([good, otherKey]),
     (error) => error instanceof FactMergeError && error.code === 'FACT_CONFLICT',
   );
+  const collidingNode = support(node, 'beta', 1, { id: edge.canonical.id });
+  assert.throws(
+    () => selectMergedFacts([edge, collidingNode]),
+    (error) =>
+      error instanceof FactMergeError &&
+      error.code === 'DANGLING_REFERENCE' &&
+      assert.deepEqual(error.path, [...edge.inputPath, 'canonical', 'source']) === undefined,
+  );
 });

@@ -136,7 +136,7 @@ export function selectMergedFacts(supports: readonly MergeSupport[]): {
     if (conflict) throw new FactMergeError('FACT_CONFLICT', [...conflict.inputPath, 'canonical']);
     const ordered = [...group].sort((a, b) => rank(b) - rank(a) || compareSupport(a, b));
     const selected = ordered[0]!;
-    selectedPaths.set(selected.canonical.id, selected.inputPath);
+    selectedPaths.set(`${selected.factType}:${selected.canonical.id}`, selected.inputPath);
     const min = Math.min(...group.map((s) => s.canonical.confidence.score));
     const confidence =
       group.length === 1
@@ -176,7 +176,7 @@ export function selectMergedFacts(supports: readonly MergeSupport[]): {
   );
   const nodeIds = new Set(nodes.map((n) => n.id));
   for (const edge of edges) {
-    const path = selectedPaths.get(edge.id) ?? [];
+    const path = selectedPaths.get(`EDGE:${edge.id}`) ?? [];
     if (!nodeIds.has(edge.source.id))
       throw new FactMergeError('DANGLING_REFERENCE', [...path, 'canonical', 'source']);
     if (edge.target.state === 'RESOLVED' && !nodeIds.has(edge.target.target.id))

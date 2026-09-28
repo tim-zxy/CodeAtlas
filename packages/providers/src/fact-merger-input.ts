@@ -94,6 +94,7 @@ export function collectMergeSupports(input: MergeInput): readonly MergeSupport[]
   const validated = validate(InputSchema, input, []);
   const supports: MergeSupport[] = [];
   const providers = new Set<string>();
+  const snapshots = new Set<string>();
   const seen = new Set<string>();
   for (const [observationIndex, observation] of validated.observations.entries()) {
     const base = ['observations', observationIndex] as const;
@@ -107,6 +108,9 @@ export function collectMergeSupports(input: MergeInput): readonly MergeSupport[]
     if (providers.has(snapshot.providerId))
       throw new FactMergeError('DUPLICATE_SUPPORT', [...base, 'snapshot', 'providerId']);
     providers.add(snapshot.providerId);
+    if (snapshots.has(snapshot.id))
+      throw new FactMergeError('DUPLICATE_SUPPORT', [...base, 'snapshot', 'id']);
+    snapshots.add(snapshot.id);
 
     for (const factType of ['NODE', 'EDGE'] as const) {
       const field = factType === 'NODE' ? 'nodes' : 'edges';

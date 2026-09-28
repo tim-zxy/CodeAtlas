@@ -68,8 +68,9 @@ real-binary integration, and schema validity. The Canonical comparator checks
 only unique-key subsets before FactMerger; duplicate-support pairs are compared
 directly. This adds no numerical gate or new baseline for extraction accuracy.
 
-P05-W4-002 registers `two-provider-same-call`. It reuses pinned Canonical
-normalization pairs as input observations from two distinct Provider snapshots;
+P05-W4-002 registers `two-provider-same-call`. It independently normalizes
+two transformed copies of the pinned completed Native stream, with distinct
+Provider snapshots and reversed fact-event order for one observation;
 checked-in current-view summaries and full-result SHA-256 digests pin the
 two-, one-, and zero-support outputs. Focused tests also validate emitted
 Canonical and Evidence/Binding IR, support-order independence, conservative
