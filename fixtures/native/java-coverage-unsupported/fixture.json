@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "java-coverage-unsupported",
+  "category": "code-intelligence",
+  "phase": "0.5",
+  "languages": ["java"],
+  "frameworks": [],
+  "capabilities": ["SYMBOL", "CALL"],
+  "inputs": {
+    "source": "source/"
+  },
+  "expected": {
+    "nodes": "expected/nodes.json",
+    "edges": "expected/edges.json",
+    "coverage": "expected/coverage.json",
+    "diagnostics": "expected/diagnostics.json",
+    "terminal": "expected/terminal.json"
+  },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

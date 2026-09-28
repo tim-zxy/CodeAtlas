@@ -1,0 +1,24 @@
+[
+  {
+    "providerId": "native",
+    "providerFactId": "java-symbol-v1:e488c6a8175a749e91cd8c31bec7d4a5d1a5fb960a79a2f94bf2d05b2b6a5805",
+    "providerSnapshotId": "snapshot-fixture",
+    "repositoryId": "repo-fixture",
+    "revisionId": "rev-fixture",
+    "providerKind": "java.class",
+    "name": "A",
+    "qualifiedName": "A",
+    "sourceRange": {
+      "sourceFileId": "file-Case.java",
+      "startLine": 0,
+      "startColumn": 6,
+      "endLine": 0,
+      "endColumn": 7
+    },
+    "confidence": {
+      "score": 1,
+      "method": "parser",
+      "reasons": []
+    }
+  }
+]

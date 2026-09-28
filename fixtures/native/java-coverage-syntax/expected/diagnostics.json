@@ -1,0 +1,14 @@
+[
+  {
+    "code": "SYNTAX_ERROR",
+    "severity": "WARNING",
+    "message": "Java source contains syntax errors",
+    "sourceRange": {
+      "sourceFileId": "file-Case.java",
+      "startLine": 0,
+      "startColumn": 0,
+      "endLine": 0,
+      "endColumn": 5
+    }
+  }
+]

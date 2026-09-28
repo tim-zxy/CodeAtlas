@@ -1,0 +1,14 @@
+[
+  {
+    "code": "UNSUPPORTED_RELATION_SOURCE",
+    "severity": "WARNING",
+    "message": "Call has no declared callable source",
+    "sourceRange": {
+      "sourceFileId": "file-Case.java",
+      "startLine": 0,
+      "startColumn": 19,
+      "endLine": 0,
+      "endColumn": 26
+    }
+  }
+]

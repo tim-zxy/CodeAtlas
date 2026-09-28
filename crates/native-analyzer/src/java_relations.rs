@@ -8,6 +8,12 @@ use crate::language::{
     SyntaxDiagnostic,
 };
 
+type CollectedSites = (
+    Vec<RelationSite>,
+    Vec<SyntaxDiagnostic>,
+    BTreeMap<String, SiteStatistics>,
+);
+
 fn capability(kind: RelationKind) -> &'static str {
     match kind {
         RelationKind::Import => "IMPORT",
@@ -32,14 +38,7 @@ pub fn collect_sites(
     path: &str,
     symbols: &[SymbolFact],
     max_result_bytes: usize,
-) -> Result<
-    (
-        Vec<RelationSite>,
-        Vec<SyntaxDiagnostic>,
-        BTreeMap<String, SiteStatistics>,
-    ),
-    AnalyzerError,
-> {
+) -> Result<CollectedSites, AnalyzerError> {
     let mut by_span = BTreeMap::new();
     for symbol in symbols {
         by_span.insert((symbol.span.start_line, symbol.span.start_column), symbol);

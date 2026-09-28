@@ -14,14 +14,14 @@
 | Phase | Readiness | Implementation progress |
 |---|---|---|
 | 0 | IMPLEMENTATION-READY | 18 of 18 tasks integrated; 11 of 11 technical exit checks passed on `9f4ec95`; documentation closeout merged as PR #7 at `71dd18c` |
-| 0.5 | IMPLEMENTATION-READY | P05-W2-001, P05-W2-002, P05-W3-001, and P05-W3-002 integrated; P05-W3-003 written design and ADR-015 accepted, implementation plan written for review; remaining tasks and Phase 0.5 exit gates remain open |
+| 0.5 | IMPLEMENTATION-READY | P05-W2-001, P05-W2-002, P05-W3-001, and P05-W3-002 integrated; P05-W3-003 implemented and locally verified on an isolated branch, with review and hosted integration still pending; remaining tasks and Phase 0.5 exit gates remain open |
 | 1 | DESIGN-READY | 0 percent |
 | 2 | ARCHITECTURE-READY | 0 percent |
 | 3 | ROADMAP/ARCHITECTURE-READY | 0 percent |
 
 ## Next action
 
-Review `docs/superpowers/plans/2026-09-28-p05-w3-003-coverage-outcomes.md` and choose its execution method before product-code work. The written coverage/outcome design and compatible Native IPC v2 ADR-015 were accepted on 2026-09-28; normative documentation has been synchronized, but no v2 code, Fixture, or numerical gate is claimed yet. P05-W2-010 change-event labels remain separate. Source discovery remains Git-only; non-Git directory support is a later separately reviewed adapter. Do not promote Phase 0.5 or advance deferred capabilities.
+Complete P05-W3-003 whole-branch review and any evidence-driven repairs, then choose whether to open a PR for hosted clean-install CI. Native IPC v2 coverage/outcome work is only locally verified, not integrated into `main`. P05-W2-010 change-event labels remain separate. Source discovery remains Git-only; non-Git directory support is a later separately reviewed adapter. Do not promote Phase 0.5 or advance deferred capabilities.
 
 ## 2026-09-24 compatibility amendment evidence
 
@@ -31,10 +31,12 @@ Review `docs/superpowers/plans/2026-09-28-p05-w3-003-coverage-outcomes.md` and c
 
 ## Active task evidence
 
-### P05-W3-003 coverage and outcomes (design accepted; plan review pending)
+### P05-W3-003 coverage and outcomes (local implementation; review/integration pending)
 
-- User accepted the source-grounded syntax-site denominator, strict versioned IPC approach, failure/Fixture scope, the written design at `docs/superpowers/specs/2026-09-28-p05-w3-003-coverage-outcomes-design.md`, and ADR-015 on 2026-09-28. ADR-015 is now accepted; `ARCHITECTURE.md`, `DESIGN_AUTHORITY.md`, `ROADMAP.md`, `WORK_BREAKDOWN.md`, Native IPC/Provider SPI/Evaluation specs, `PHASE_ACCEPTANCE.md`, and `DESIGN_TRACEABILITY.md` describe the compatible v2 `ANALYZE` boundary. This is documentation acceptance, not task implementation or a Phase 0.5 exit. No product code, executable v2 Fixture, migration, ProviderSnapshot/Canonical IR change, or numerical gate has been introduced.
-- The task-sized, test-first implementation plan is `docs/superpowers/plans/2026-09-28-p05-w3-003-coverage-outcomes.md`. Its user review and execution-method selection are pending. The currently checked-in v1 Fixture baselines are intentionally unchanged until executable v2 evidence is produced and reviewed.
+- User accepted the source-grounded syntax-site denominator, strict versioned IPC approach, failure/Fixture scope, the written design at `docs/superpowers/specs/2026-09-28-p05-w3-003-coverage-outcomes-design.md`, and ADR-015 on 2026-09-28. The task-sized plan is `docs/superpowers/plans/2026-09-28-p05-w3-003-coverage-outcomes.md`; native inline execution was selected. Isolated branch `codex/p05-w3-003-coverage` has implementation commits `7f4c26f` (v2 validation), `4079b3f` (Java site accounting), and `feddd48` (v2 producer/outcomes); Fixture, summary, and evidence changes remain local pending final review. No ProviderSnapshot/Canonical IR schema, SQLite migration, numeric gate, or v1 Fixture baseline was changed.
+- Registered Fixture IDs: `java-coverage-mixed`, `java-coverage-syntax`, `java-coverage-unsupported`, and `java-coverage-zero` under `fixtures/native/`; exact node, edge, coverage, diagnostic, and terminal goldens are exercised through the real Rust binary and production TypeScript client. `p05-native-ipc-protocol-bytes-v2` under `fixtures/ipc/protocol-v2/` pins 14 exact-byte valid/invalid streams, classified by both TypeScript and Rust. Mixed resolution, source-backed versus synthetic sites, unsupported sites, malformed syntax, valid zero-fact success, one-/two-worker identity, version mismatch, malformed/count/checksum/terminal corruption, and no-applicable-result failure are covered. v1 still yields categorical statistics-unavailable rather than fabricated zeroes. The scope and acceptance mapping are in `DESIGN_TRACEABILITY.md` P05-W3-003.
+- Fresh local evidence on 2026-09-28: installed `tsc -p` builds all 16 TypeScript projects plus IR type tests; the root-declared Node fileset reports 539 passed, zero failed, and one existing Windows symlink-privilege skip out of 540. The declared Native analysis fileset passes 10/10, including the four v2 Fixtures and prior SYMBOL/relation Fixtures. `cargo fmt --all --check`, `cargo build --workspace -j 1`, `cargo clippy --workspace --all-targets -- -D warnings`, and `cargo test --workspace -j 1` exit 0; the Rust run includes the shared v2 byte corpus and v1 regressions. `node scripts/check-architecture.mjs` passes all 17 projects; direct Prettier and Git whitespace checks pass. A small return-type alias resolved one Clippy complexity finding without behavior change. These are local checks, not hosted clean-install CI.
+- `pnpm verify` was attempted but stopped before its script: desktop pnpm tried to fetch metadata from `registry.npmmirror.com`, then refused a non-interactive modules purge (`ERR_PNPM_META_FETCH_FAIL`, `ERR_PNPM_ABORTED_REMOVE_MODULES_DIR_NO_TTY`). No dependency purge occurred. The direct constituent checks above must not be represented as a passing `pnpm verify`. Whole-branch review, any repairs, PR choice, and hosted CI remain open. The task does not implement `REFRESH`, Canonical normalization/SQLite activation, query/CLI consumption, framework/Knowledge features, or Phase 0.5 exit.
 
 ### P05-W3-002 Java relation extraction (integrated)
 
