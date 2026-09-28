@@ -1,0 +1,516 @@
+{
+  "request": {
+    "protocolVersion": 1,
+    "requestId": "canonical-normalization-fixture",
+    "type": "ANALYZE",
+    "payload": {
+      "irSchemaVersion": 1,
+      "providerSnapshotId": "snapshot-fixture",
+      "repository": { "id": "repo-fixture", "rootPath": "/repo-fixture" },
+      "requestedCapabilities": ["SYMBOL"],
+      "deadlineEpochMs": null,
+      "resourceBudget": { "maxDurationMs": 10000, "maxMemoryBytes": 64000000, "maxEvents": 100 },
+      "revision": {
+        "id": "rev-fixture",
+        "repositoryId": "repo-fixture",
+        "kind": "WORKTREE",
+        "contentFingerprint": "sha256:revision-fixture",
+        "baseRevisionId": null
+      },
+      "sourceFiles": [
+        {
+          "id": "file-A.java",
+          "repositoryId": "repo-fixture",
+          "revisionId": "rev-fixture",
+          "path": "src/A.java",
+          "contentFingerprint": "sha256:source-A",
+          "classification": { "role": "SOURCE", "provenance": "AUTHORED", "contentKind": "TEXT" },
+          "languageHint": "java",
+          "sensitivity": "PUBLIC"
+        },
+        {
+          "id": "file-B.java",
+          "repositoryId": "repo-fixture",
+          "revisionId": "rev-fixture",
+          "path": "src/B.java",
+          "contentFingerprint": "sha256:source-B",
+          "classification": { "role": "SOURCE", "provenance": "AUTHORED", "contentKind": "TEXT" },
+          "languageHint": "java",
+          "sensitivity": "PUBLIC"
+        }
+      ]
+    }
+  },
+  "events": [
+    {
+      "protocolVersion": 1,
+      "requestId": "canonical-normalization-fixture",
+      "sequence": 0,
+      "type": "ANALYSIS_STARTED",
+      "payload": {
+        "providerSnapshotId": "snapshot-fixture",
+        "repositoryId": "repo-fixture",
+        "revisionId": "rev-fixture",
+        "revisionFingerprint": "sha256:revision-fixture"
+      }
+    },
+    {
+      "protocolVersion": 1,
+      "requestId": "canonical-normalization-fixture",
+      "sequence": 1,
+      "type": "SOURCE_FILE",
+      "payload": {
+        "id": "file-A.java",
+        "repositoryId": "repo-fixture",
+        "revisionId": "rev-fixture",
+        "path": "src/A.java",
+        "contentFingerprint": "sha256:source-A",
+        "classification": { "role": "SOURCE", "provenance": "AUTHORED", "contentKind": "TEXT" },
+        "languageHint": "java",
+        "sensitivity": "PUBLIC"
+      }
+    },
+    {
+      "protocolVersion": 1,
+      "requestId": "canonical-normalization-fixture",
+      "sequence": 2,
+      "type": "SOURCE_FILE",
+      "payload": {
+        "id": "file-B.java",
+        "repositoryId": "repo-fixture",
+        "revisionId": "rev-fixture",
+        "path": "src/B.java",
+        "contentFingerprint": "sha256:source-B",
+        "classification": { "role": "SOURCE", "provenance": "AUTHORED", "contentKind": "TEXT" },
+        "languageHint": "java",
+        "sensitivity": "PUBLIC"
+      }
+    },
+    {
+      "protocolVersion": 1,
+      "requestId": "canonical-normalization-fixture",
+      "sequence": 3,
+      "type": "NODE",
+      "payload": {
+        "providerId": "native",
+        "providerFactId": "pkg-a",
+        "providerSnapshotId": "snapshot-fixture",
+        "repositoryId": "repo-fixture",
+        "revisionId": "rev-fixture",
+        "providerKind": "java.package",
+        "name": "demo",
+        "qualifiedName": "demo",
+        "sourceRange": {
+          "sourceFileId": "file-A.java",
+          "startLine": 0,
+          "startColumn": 8,
+          "endLine": 0,
+          "endColumn": 12
+        },
+        "confidence": { "score": 1, "method": "parser", "reasons": [] }
+      }
+    },
+    {
+      "protocolVersion": 1,
+      "requestId": "canonical-normalization-fixture",
+      "sequence": 4,
+      "type": "NODE",
+      "payload": {
+        "providerId": "native",
+        "providerFactId": "pkg-b",
+        "providerSnapshotId": "snapshot-fixture",
+        "repositoryId": "repo-fixture",
+        "revisionId": "rev-fixture",
+        "providerKind": "java.package",
+        "name": "demo",
+        "qualifiedName": "demo",
+        "sourceRange": {
+          "sourceFileId": "file-B.java",
+          "startLine": 0,
+          "startColumn": 8,
+          "endLine": 0,
+          "endColumn": 12
+        },
+        "confidence": { "score": 1, "method": "parser", "reasons": [] }
+      }
+    },
+    {
+      "protocolVersion": 1,
+      "requestId": "canonical-normalization-fixture",
+      "sequence": 5,
+      "type": "NODE",
+      "payload": {
+        "providerId": "native",
+        "providerFactId": "pkg-container",
+        "providerSnapshotId": "snapshot-fixture",
+        "repositoryId": "repo-fixture",
+        "revisionId": "rev-fixture",
+        "providerKind": "java.package_container",
+        "name": "demo",
+        "qualifiedName": "demo",
+        "sourceRange": null,
+        "confidence": { "score": 1, "method": "parser", "reasons": [] }
+      }
+    },
+    {
+      "protocolVersion": 1,
+      "requestId": "canonical-normalization-fixture",
+      "sequence": 6,
+      "type": "NODE",
+      "payload": {
+        "providerId": "native",
+        "providerFactId": "unit-a",
+        "providerSnapshotId": "snapshot-fixture",
+        "repositoryId": "repo-fixture",
+        "revisionId": "rev-fixture",
+        "providerKind": "java.compilation_unit",
+        "name": "src/A.java",
+        "qualifiedName": "src/A.java",
+        "sourceRange": null,
+        "confidence": { "score": 1, "method": "parser", "reasons": [] }
+      }
+    },
+    {
+      "protocolVersion": 1,
+      "requestId": "canonical-normalization-fixture",
+      "sequence": 7,
+      "type": "NODE",
+      "payload": {
+        "providerId": "native",
+        "providerFactId": "unit-b",
+        "providerSnapshotId": "snapshot-fixture",
+        "repositoryId": "repo-fixture",
+        "revisionId": "rev-fixture",
+        "providerKind": "java.compilation_unit",
+        "name": "src/B.java",
+        "qualifiedName": "src/B.java",
+        "sourceRange": null,
+        "confidence": { "score": 1, "method": "parser", "reasons": [] }
+      }
+    },
+    {
+      "protocolVersion": 1,
+      "requestId": "canonical-normalization-fixture",
+      "sequence": 8,
+      "type": "NODE",
+      "payload": {
+        "providerId": "native",
+        "providerFactId": "class-a",
+        "providerSnapshotId": "snapshot-fixture",
+        "repositoryId": "repo-fixture",
+        "revisionId": "rev-fixture",
+        "providerKind": "java.class",
+        "name": "A",
+        "qualifiedName": "demo.A",
+        "sourceRange": {
+          "sourceFileId": "file-A.java",
+          "startLine": 2,
+          "startColumn": 6,
+          "endLine": 2,
+          "endColumn": 7
+        },
+        "confidence": { "score": 1, "method": "parser", "reasons": [] }
+      }
+    },
+    {
+      "protocolVersion": 1,
+      "requestId": "canonical-normalization-fixture",
+      "sequence": 9,
+      "type": "NODE",
+      "payload": {
+        "providerId": "native",
+        "providerFactId": "interface-i",
+        "providerSnapshotId": "snapshot-fixture",
+        "repositoryId": "repo-fixture",
+        "revisionId": "rev-fixture",
+        "providerKind": "java.interface",
+        "name": "I",
+        "qualifiedName": "demo.I",
+        "sourceRange": {
+          "sourceFileId": "file-B.java",
+          "startLine": 2,
+          "startColumn": 10,
+          "endLine": 2,
+          "endColumn": 11
+        },
+        "confidence": { "score": 1, "method": "parser", "reasons": [] }
+      }
+    },
+    {
+      "protocolVersion": 1,
+      "requestId": "canonical-normalization-fixture",
+      "sequence": 10,
+      "type": "NODE",
+      "payload": {
+        "providerId": "native",
+        "providerFactId": "ctor-a",
+        "providerSnapshotId": "snapshot-fixture",
+        "repositoryId": "repo-fixture",
+        "revisionId": "rev-fixture",
+        "providerKind": "java.constructor",
+        "name": "A",
+        "qualifiedName": "demo.A.A",
+        "sourceRange": {
+          "sourceFileId": "file-A.java",
+          "startLine": 3,
+          "startColumn": 2,
+          "endLine": 3,
+          "endColumn": 3
+        },
+        "confidence": { "score": 1, "method": "parser", "reasons": [] }
+      }
+    },
+    {
+      "protocolVersion": 1,
+      "requestId": "canonical-normalization-fixture",
+      "sequence": 11,
+      "type": "NODE",
+      "payload": {
+        "providerId": "native",
+        "providerFactId": "method-run",
+        "providerSnapshotId": "snapshot-fixture",
+        "repositoryId": "repo-fixture",
+        "revisionId": "rev-fixture",
+        "providerKind": "java.method",
+        "name": "run",
+        "qualifiedName": "demo.A.run",
+        "sourceRange": {
+          "sourceFileId": "file-A.java",
+          "startLine": 4,
+          "startColumn": 7,
+          "endLine": 4,
+          "endColumn": 10
+        },
+        "confidence": { "score": 1, "method": "parser", "reasons": [] }
+      }
+    },
+    {
+      "protocolVersion": 1,
+      "requestId": "canonical-normalization-fixture",
+      "sequence": 12,
+      "type": "NODE",
+      "payload": {
+        "providerId": "native",
+        "providerFactId": "field-x",
+        "providerSnapshotId": "snapshot-fixture",
+        "repositoryId": "repo-fixture",
+        "revisionId": "rev-fixture",
+        "providerKind": "java.field",
+        "name": "x",
+        "qualifiedName": "demo.A.x",
+        "sourceRange": {
+          "sourceFileId": "file-A.java",
+          "startLine": 5,
+          "startColumn": 6,
+          "endLine": 5,
+          "endColumn": 7
+        },
+        "confidence": { "score": 1, "method": "parser", "reasons": [] }
+      }
+    },
+    {
+      "protocolVersion": 1,
+      "requestId": "canonical-normalization-fixture",
+      "sequence": 13,
+      "type": "EDGE",
+      "payload": {
+        "providerId": "native",
+        "providerFactId": "import-i",
+        "providerSnapshotId": "snapshot-fixture",
+        "repositoryId": "repo-fixture",
+        "revisionId": "rev-fixture",
+        "providerKind": "java.import.normal",
+        "source": { "factType": "NODE", "providerId": "native", "providerFactId": "unit-a" },
+        "target": {
+          "state": "RESOLVED",
+          "resolution": "EXACT",
+          "target": { "factType": "NODE", "providerId": "native", "providerFactId": "interface-i" }
+        },
+        "sourceRange": {
+          "sourceFileId": "file-A.java",
+          "startLine": 1,
+          "startColumn": 7,
+          "endLine": 1,
+          "endColumn": 13
+        },
+        "confidence": { "score": 1, "method": "parser", "reasons": [] }
+      }
+    },
+    {
+      "protocolVersion": 1,
+      "requestId": "canonical-normalization-fixture",
+      "sequence": 14,
+      "type": "EDGE",
+      "payload": {
+        "providerId": "native",
+        "providerFactId": "inherits-i",
+        "providerSnapshotId": "snapshot-fixture",
+        "repositoryId": "repo-fixture",
+        "revisionId": "rev-fixture",
+        "providerKind": "java.inheritance",
+        "source": { "factType": "NODE", "providerId": "native", "providerFactId": "class-a" },
+        "target": {
+          "state": "RESOLVED",
+          "resolution": "EXACT",
+          "target": { "factType": "NODE", "providerId": "native", "providerFactId": "interface-i" }
+        },
+        "sourceRange": {
+          "sourceFileId": "file-A.java",
+          "startLine": 2,
+          "startColumn": 13,
+          "endLine": 2,
+          "endColumn": 14
+        },
+        "confidence": { "score": 1, "method": "parser", "reasons": [] }
+      }
+    },
+    {
+      "protocolVersion": 1,
+      "requestId": "canonical-normalization-fixture",
+      "sequence": 15,
+      "type": "EDGE",
+      "payload": {
+        "providerId": "native",
+        "providerFactId": "call-ctor",
+        "providerSnapshotId": "snapshot-fixture",
+        "repositoryId": "repo-fixture",
+        "revisionId": "rev-fixture",
+        "providerKind": "java.call",
+        "source": { "factType": "NODE", "providerId": "native", "providerFactId": "method-run" },
+        "target": {
+          "state": "RESOLVED",
+          "resolution": "EXACT",
+          "target": { "factType": "NODE", "providerId": "native", "providerFactId": "ctor-a" }
+        },
+        "sourceRange": {
+          "sourceFileId": "file-A.java",
+          "startLine": 4,
+          "startColumn": 12,
+          "endLine": 4,
+          "endColumn": 13
+        },
+        "confidence": { "score": 1, "method": "parser", "reasons": [] }
+      }
+    },
+    {
+      "protocolVersion": 1,
+      "requestId": "canonical-normalization-fixture",
+      "sequence": 16,
+      "type": "EDGE",
+      "payload": {
+        "providerId": "native",
+        "providerFactId": "call-ambiguous",
+        "providerSnapshotId": "snapshot-fixture",
+        "repositoryId": "repo-fixture",
+        "revisionId": "rev-fixture",
+        "providerKind": "java.call",
+        "source": { "factType": "NODE", "providerId": "native", "providerFactId": "method-run" },
+        "target": {
+          "state": "UNRESOLVED",
+          "resolution": "AMBIGUOUS",
+          "originalHint": "demo.A.overload",
+          "candidates": [
+            { "factType": "NODE", "providerId": "native", "providerFactId": "ctor-a" },
+            { "factType": "NODE", "providerId": "native", "providerFactId": "method-run" }
+          ]
+        },
+        "sourceRange": {
+          "sourceFileId": "file-A.java",
+          "startLine": 4,
+          "startColumn": 16,
+          "endLine": 4,
+          "endColumn": 17
+        },
+        "confidence": { "score": 1, "method": "parser", "reasons": [] }
+      }
+    },
+    {
+      "protocolVersion": 1,
+      "requestId": "canonical-normalization-fixture",
+      "sequence": 17,
+      "type": "EDGE",
+      "payload": {
+        "providerId": "native",
+        "providerFactId": "ref-external",
+        "providerSnapshotId": "snapshot-fixture",
+        "repositoryId": "repo-fixture",
+        "revisionId": "rev-fixture",
+        "providerKind": "java.reference",
+        "source": { "factType": "NODE", "providerId": "native", "providerFactId": "method-run" },
+        "target": {
+          "state": "UNRESOLVED",
+          "resolution": "UNRESOLVED",
+          "originalHint": "ExternalType",
+          "candidates": []
+        },
+        "sourceRange": {
+          "sourceFileId": "file-A.java",
+          "startLine": 4,
+          "startColumn": 18,
+          "endLine": 4,
+          "endColumn": 19
+        },
+        "confidence": { "score": 1, "method": "parser", "reasons": [] }
+      }
+    },
+    {
+      "protocolVersion": 1,
+      "requestId": "canonical-normalization-fixture",
+      "sequence": 18,
+      "type": "COVERAGE",
+      "payload": {
+        "capability": "SYMBOL",
+        "sourceFileId": "file-A.java",
+        "support": "SUPPORTED",
+        "coverage": "COMPLETE"
+      }
+    },
+    {
+      "protocolVersion": 1,
+      "requestId": "canonical-normalization-fixture",
+      "sequence": 19,
+      "type": "COVERAGE",
+      "payload": {
+        "capability": "SYMBOL",
+        "sourceFileId": "file-B.java",
+        "support": "SUPPORTED",
+        "coverage": "COMPLETE"
+      }
+    },
+    {
+      "protocolVersion": 1,
+      "requestId": "canonical-normalization-fixture",
+      "sequence": 20,
+      "type": "ANALYSIS_COMPLETED",
+      "payload": {
+        "providerSnapshotId": "snapshot-fixture",
+        "repositoryId": "repo-fixture",
+        "revisionId": "rev-fixture",
+        "revisionFingerprint": "sha256:revision-fixture",
+        "outcome": "SUCCEEDED",
+        "counts": { "sourceFiles": 2, "nodes": 10, "edges": 5, "coverage": 2, "diagnostics": 0 },
+        "capabilities": [{ "name": "SYMBOL", "support": "SUPPORTED", "coverage": "COMPLETE" }],
+        "contentFingerprint": "sha256:result",
+        "integrityChecksum": "sha256:ecf2365c08f21c4b6927f2ad37226e30d9f28b322cd6fd9815c351c9d823a459"
+      }
+    }
+  ],
+  "terminal": {
+    "protocolVersion": 1,
+    "requestId": "canonical-normalization-fixture",
+    "sequence": 20,
+    "type": "ANALYSIS_COMPLETED",
+    "payload": {
+      "providerSnapshotId": "snapshot-fixture",
+      "repositoryId": "repo-fixture",
+      "revisionId": "rev-fixture",
+      "revisionFingerprint": "sha256:revision-fixture",
+      "outcome": "SUCCEEDED",
+      "counts": { "sourceFiles": 2, "nodes": 10, "edges": 5, "coverage": 2, "diagnostics": 0 },
+      "capabilities": [{ "name": "SYMBOL", "support": "SUPPORTED", "coverage": "COMPLETE" }],
+      "contentFingerprint": "sha256:result",
+      "integrityChecksum": "sha256:ecf2365c08f21c4b6927f2ad37226e30d9f28b322cd6fd9815c351c9d823a459"
+    }
+  },
+  "stderr": ""
+}

@@ -6,7 +6,7 @@ import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 
 import { discoverFixtures } from '../../evaluation/dist/index.js';
-import { executeNativeRequest } from '../dist/index.js';
+import { executeNativeRequest, normalizeNativeAnalysis } from '../dist/index.js';
 import { directCallMetrics } from './native-relation-metrics.mjs';
 
 const repositoryRoot = fileURLToPath(new URL('../../../', import.meta.url));
@@ -77,17 +77,20 @@ async function actualFor(fixture) {
   });
   assert.equal(result.terminal.type, 'ANALYSIS_COMPLETED');
   assert.equal(result.terminal.payload.outcome, 'SUCCEEDED');
-  return Object.fromEntries(
-    [
-      ['nodes', 'NODE'],
-      ['edges', 'EDGE'],
-      ['coverage', 'COVERAGE'],
-      ['diagnostics', 'DIAGNOSTIC'],
-    ].map(([name, type]) => [
-      name,
-      result.events.filter((event) => event.type === type).map((event) => event.payload),
-    ]),
-  );
+  return {
+    result,
+    ...Object.fromEntries(
+      [
+        ['nodes', 'NODE'],
+        ['edges', 'EDGE'],
+        ['coverage', 'COVERAGE'],
+        ['diagnostics', 'DIAGNOSTIC'],
+      ].map(([name, type]) => [
+        name,
+        result.events.filter((event) => event.type === type).map((event) => event.payload),
+      ]),
+    ),
+  };
 }
 
 test('real Native binary matches registered Java relation Fixtures and direct-call gates', async () => {
@@ -108,6 +111,16 @@ test('real Native binary matches registered Java relation Fixtures and direct-ca
         actual[name],
         JSON.parse(await readFile(fixture.expected[name], 'utf8')),
         `${fixture.manifest.id}/${name}`,
+      );
+    }
+    if (['java-overload', 'java-call-basic', 'java-inheritance'].includes(fixture.manifest.id)) {
+      const normalized = normalizeNativeAnalysis(actual.result);
+      assert.equal(normalized.nodes.length, actual.nodes.length, fixture.manifest.id);
+      assert.equal(normalized.edges.length, actual.edges.length, fixture.manifest.id);
+      assert.equal(
+        normalized.edges.filter((pair) => pair.canonical.target.state === 'UNRESOLVED').length,
+        actual.edges.filter((edge) => edge.target.state === 'UNRESOLVED').length,
+        fixture.manifest.id,
       );
     }
     expectedCalls.push(...JSON.parse(await readFile(fixture.expected.edges, 'utf8')));
