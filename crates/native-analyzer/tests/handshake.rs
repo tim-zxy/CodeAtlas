@@ -110,7 +110,7 @@ fn executable_matches_handshake_fixture() {
                     "providerId": "native",
                     "providerVersion": env!("CARGO_PKG_VERSION"),
                     "runtimeVersion": env!("CARGO_PKG_VERSION"),
-                    "protocolVersions": [1],
+                    "protocolVersions": [1, 2],
                     "irSchemaVersions": [1],
                     "capabilities": ["protocol-handshake", "SYMBOL", "IMPORT", "CALL", "INHERITANCE", "REFERENCE"],
                     "languages": [{

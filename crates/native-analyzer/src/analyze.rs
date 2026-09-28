@@ -10,7 +10,7 @@ use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
 use codeatlas_native_analyzer::java::JavaAnalyzer;
 use codeatlas_native_analyzer::java_relations::compilation_unit_id;
 use codeatlas_native_analyzer::language::{
-    LanguageAnalysis, RelationKind, RelationTarget, SyntaxCoverage,
+    LanguageAnalysis, RelationKind, RelationTarget, SiteStatistics, SyntaxCoverage,
 };
 use codeatlas_native_analyzer::relation_index::{DeclarationIndex, package_container_fact_id};
 use codeatlas_native_analyzer::source_access::{SourceAccessError, read_verified_source};
@@ -31,6 +31,7 @@ const SOURCE_BYTES_PER_WORKER: usize = 64 * 1024;
 const RESULT_BYTES_PER_WORKER: usize = (WORKER_RESERVATION_BYTES / 4) as usize;
 
 struct Request {
+    protocol_version: u64,
     id: String,
     snapshot_id: String,
     repository_id: String,
@@ -63,10 +64,23 @@ pub(crate) fn run<W: Write, E: Write>(
             if request_id.is_empty() {
                 return Ok(ExitCode::from(2));
             }
+            let version = if request["protocolVersion"] == 2 {
+                2
+            } else {
+                1
+            };
+            let code = if request["protocolVersion"]
+                .as_u64()
+                .is_some_and(|value| value != 1 && value != 2)
+            {
+                "INCOMPATIBLE_PROTOCOL_VERSION"
+            } else {
+                "INVALID_REQUEST"
+            };
             write_one(
                 output,
-                json!({"protocolVersion": 1, "requestId": request_id, "sequence": 0,
-                "type": "REQUEST_FAILED", "payload": {"error": error("INVALID_REQUEST", "Invalid ANALYZE request", false)}}),
+                json!({"protocolVersion": version, "requestId": request_id, "sequence": 0,
+                "type": "REQUEST_FAILED", "payload": {"error": error(code, "Invalid ANALYZE request", false)}}),
             )?;
             return Ok(ExitCode::SUCCESS);
         }
@@ -84,7 +98,7 @@ pub(crate) fn run<W: Write, E: Write>(
     {
         write_one(
             output,
-            json!({"protocolVersion": 1, "requestId": request.id, "sequence": 0,
+            json!({"protocolVersion": request.protocol_version, "requestId": request.id, "sequence": 0,
             "type": "REQUEST_FAILED", "payload": {"error": error("UNSUPPORTED_CAPABILITY", "Requested capability is unsupported", false)}}),
         )?;
         return Ok(ExitCode::SUCCESS);
@@ -92,7 +106,7 @@ pub(crate) fn run<W: Write, E: Write>(
     if request.max_events < 2 {
         write_one(
             output,
-            json!({"protocolVersion": 1, "requestId": request.id, "sequence": 0,
+            json!({"protocolVersion": request.protocol_version, "requestId": request.id, "sequence": 0,
             "type": "REQUEST_FAILED", "payload": {"error": error("RESOURCE_LIMIT_EXCEEDED", "Event budget is too small", false)}}),
         )?;
         return Ok(ExitCode::SUCCESS);
@@ -102,7 +116,7 @@ pub(crate) fn run<W: Write, E: Write>(
     {
         write_one(
             output,
-            json!({"protocolVersion": 1, "requestId": request.id, "sequence": 0,
+            json!({"protocolVersion": request.protocol_version, "requestId": request.id, "sequence": 0,
             "type": "REQUEST_FAILED", "payload": {"error": error("RESOURCE_LIMIT_EXCEEDED", "Parse workers exceed memory budget", false)}}),
         )?;
         return Ok(ExitCode::SUCCESS);
@@ -113,11 +127,17 @@ pub(crate) fn run<W: Write, E: Write>(
         "revisionId": request.revision_id,
         "revisionFingerprint": request.revision_fingerprint,
     });
-    let mut stream = EventWriter::new(output, &request.id, &context, request.max_events);
+    let mut stream = EventWriter::new(
+        output,
+        &request.id,
+        &context,
+        request.max_events,
+        request.protocol_version,
+    );
     if stream.failure_reservation()? > MAX_LINE_BYTES as u64 {
         write_one(
             stream.output,
-            json!({"protocolVersion": 1, "requestId": request.id, "sequence": 0,
+            json!({"protocolVersion": request.protocol_version, "requestId": request.id, "sequence": 0,
             "type": "REQUEST_FAILED", "payload": {"error": error("RESOURCE_LIMIT_EXCEEDED", "Request context exceeds output limit", false)}}),
         )?;
         return Ok(ExitCode::SUCCESS);
@@ -225,8 +245,13 @@ pub(crate) fn run<W: Write, E: Write>(
             };
             if !stream.emit(
                 "COVERAGE",
-                json!({"capability": "SYMBOL", "sourceFileId": source_file["id"],
-            "support": "SUPPORTED", "coverage": coverage}),
+                coverage_payload(
+                    &request,
+                    "SYMBOL",
+                    &source_file["id"],
+                    coverage,
+                    &analysis.site_statistics["SYMBOL"],
+                ),
                 false,
             )? {
                 return Ok(ExitCode::SUCCESS);
@@ -399,6 +424,7 @@ fn run_relations<W: Write>(
                         .any(|requested| requested == capability)
                 })
                 .collect();
+            let mut site_statistics = analysis.site_statistics.clone();
             let additional = 1usize
                 .saturating_add(analysis.symbols.len())
                 .saturating_add(container_packages.len())
@@ -454,6 +480,29 @@ fn run_relations<W: Write>(
             }
             for site in included_sites {
                 let relation = index.resolve(path, site);
+                let resolution = match &relation.target {
+                    RelationTarget::Resolved { resolution, .. }
+                    | RelationTarget::NonResolved { resolution, .. } => *resolution,
+                };
+                let capability = relation_capability(site.kind);
+                let buckets = &mut site_statistics
+                    .get_mut(capability)
+                    .expect("analyzed relation capability")
+                    .resolution_counts;
+                match resolution {
+                    "EXACT" => buckets.exact += 1,
+                    "HEURISTIC" => buckets.heuristic += 1,
+                    "AMBIGUOUS" => buckets.ambiguous += 1,
+                    "UNRESOLVED" => buckets.unresolved += 1,
+                    "UNSUPPORTED" => buckets.unsupported += 1,
+                    _ => {
+                        return stream.fail(
+                            context,
+                            "INTERNAL_ANALYZER_FAILURE",
+                            "Unknown relation resolution",
+                        );
+                    }
+                }
                 let target = match relation.target {
                     RelationTarget::Resolved {
                         fact_id,
@@ -498,10 +547,13 @@ fn run_relations<W: Write>(
             for capability in &request.capabilities {
                 if !stream.emit(
                     "COVERAGE",
-                    json!({
-                        "capability": capability, "sourceFileId": source_file["id"],
-                        "support": "SUPPORTED", "coverage": coverage
-                    }),
+                    coverage_payload(
+                        request,
+                        capability,
+                        &source_file["id"],
+                        coverage,
+                        &site_statistics[capability],
+                    ),
                     false,
                 )? {
                     return Ok(ExitCode::SUCCESS);
@@ -543,6 +595,42 @@ fn run_relations<W: Write>(
     Ok(ExitCode::SUCCESS)
 }
 
+fn relation_capability(kind: RelationKind) -> &'static str {
+    match kind {
+        RelationKind::Import => "IMPORT",
+        RelationKind::Call => "CALL",
+        RelationKind::Inheritance => "INHERITANCE",
+        RelationKind::Reference => "REFERENCE",
+    }
+}
+
+fn coverage_payload(
+    request: &Request,
+    capability: &str,
+    source_file_id: &Value,
+    coverage: &str,
+    statistics: &SiteStatistics,
+) -> Value {
+    let mut payload = json!({"capability": capability, "sourceFileId": source_file_id,
+        "support": "SUPPORTED", "coverage": coverage});
+    if request.protocol_version == 2 {
+        payload["statistics"] = json!({
+            "eligibleSites": statistics.eligible_sites,
+            "coveredSites": statistics.covered_sites,
+            "unsupportedSites": statistics.unsupported_sites,
+            "partialSites": statistics.partial_sites,
+            "resolutionCounts": {
+                "EXACT": statistics.resolution_counts.exact,
+                "HEURISTIC": statistics.resolution_counts.heuristic,
+                "AMBIGUOUS": statistics.resolution_counts.ambiguous,
+                "UNRESOLVED": statistics.resolution_counts.unresolved,
+                "UNSUPPORTED": statistics.resolution_counts.unsupported,
+            }
+        });
+    }
+    payload
+}
+
 fn checked_result(
     result: std::thread::Result<Result<LanguageAnalysis, ProcessingError>>,
 ) -> Result<LanguageAnalysis, (&'static str, &'static str)> {
@@ -571,7 +659,7 @@ fn checked_result(
 fn parse_request(value: &Value) -> Option<Request> {
     let object = value.as_object()?;
     if !keys(object, &["protocolVersion", "requestId", "type", "payload"])
-        || integer(&object["protocolVersion"])? != 1
+        || !matches!(integer(&object["protocolVersion"])?, 1 | 2)
         || object["type"] != "ANALYZE"
     {
         return None;
@@ -728,6 +816,7 @@ fn parse_request(value: &Value) -> Option<Request> {
         }
     }
     Some(Request {
+        protocol_version: integer(&object["protocolVersion"])?,
         id: id.into(),
         snapshot_id: snapshot_id.into(),
         repository_id: repository_id.into(),
@@ -964,6 +1053,7 @@ impl Counts {
 struct EventWriter<'a, W: Write> {
     output: &'a mut W,
     request_id: &'a str,
+    protocol_version: u64,
     context: Value,
     sequence: u64,
     bytes: u64,
@@ -973,10 +1063,17 @@ struct EventWriter<'a, W: Write> {
     digest: Sha256,
 }
 impl<'a, W: Write> EventWriter<'a, W> {
-    fn new(output: &'a mut W, request_id: &'a str, context: &Value, max_events: u64) -> Self {
+    fn new(
+        output: &'a mut W,
+        request_id: &'a str,
+        context: &Value,
+        max_events: u64,
+        protocol_version: u64,
+    ) -> Self {
         Self {
             output,
             request_id,
+            protocol_version,
             context: context.clone(),
             sequence: 0,
             bytes: 0,
@@ -993,7 +1090,7 @@ impl<'a, W: Write> EventWriter<'a, W> {
             <= self.max_events
     }
     fn emit(&mut self, event_type: &str, payload: Value, terminal: bool) -> io::Result<bool> {
-        let event = json!({"protocolVersion": 1, "requestId": self.request_id,
+        let event = json!({"protocolVersion": self.protocol_version, "requestId": self.request_id,
             "sequence": self.sequence, "type": event_type, "payload": payload});
         let mut line = serde_json::to_vec(&event).map_err(io::Error::other)?;
         line.push(b'\n');
@@ -1042,7 +1139,7 @@ impl<'a, W: Write> EventWriter<'a, W> {
                 false,
             ),
         );
-        let event = json!({"protocolVersion": 1, "requestId": self.request_id,
+        let event = json!({"protocolVersion": self.protocol_version, "requestId": self.request_id,
             "sequence": self.max_events.saturating_sub(1), "type": "ANALYSIS_FAILED", "payload": payload});
         // All closed failure codes/messages fit within this margin. Reserve it
         // while streaming so a later resource failure still has a legal terminal.
@@ -1070,7 +1167,30 @@ mod tests {
     use std::sync::{Arc, Barrier, Mutex};
     use std::time::Duration;
 
-    use super::{EventWriter, Request, ordered_batch, run_relations, timed_batch};
+    use super::{EventWriter, Request, checked_result, ordered_batch, run_relations, timed_batch};
+
+    #[test]
+    fn injected_worker_panic_maps_to_internal_failure_and_v2_terminal() {
+        let caught = std::thread::spawn(|| panic!("test-only injected parser panic")).join();
+        let (code, message) = checked_result(caught).unwrap_err();
+        assert_eq!(code, "INTERNAL_ANALYZER_FAILURE");
+        let context = serde_json::json!({"providerSnapshotId":"s","repositoryId":"r","revisionId":"v","revisionFingerprint":"f"});
+        let mut output = Vec::new();
+        let mut stream = EventWriter::new(&mut output, "request", &context, 10, 2);
+        stream
+            .emit("ANALYSIS_STARTED", context.clone(), false)
+            .unwrap();
+        stream.fail(&context, code, message).unwrap();
+        let events: Vec<serde_json::Value> = output
+            .split(|byte| *byte == b'\n')
+            .filter(|line| !line.is_empty())
+            .map(|line| serde_json::from_slice(line).unwrap())
+            .collect();
+        assert_eq!(events.len(), 2);
+        assert_eq!(events[1]["protocolVersion"], 2);
+        assert_eq!(events[1]["type"], "ANALYSIS_FAILED");
+        assert_eq!(events[1]["payload"]["error"]["code"], code);
+    }
 
     #[test]
     fn relation_second_pass_same_length_source_change_fails_without_completion() {
@@ -1082,6 +1202,7 @@ mod tests {
         let path = root.join("src/A.java");
         fs::write(&path, first).unwrap();
         let request = Request {
+            protocol_version: 1,
             id: "relation-race".into(),
             snapshot_id: "snapshot".into(),
             repository_id: "repo".into(),
@@ -1100,7 +1221,7 @@ mod tests {
         };
         let context = serde_json::json!({"providerSnapshotId":"snapshot","repositoryId":"repo","revisionId":"revision","revisionFingerprint":"sha256:revision"});
         let mut output = Vec::new();
-        let mut stream = EventWriter::new(&mut output, &request.id, &context, 100);
+        let mut stream = EventWriter::new(&mut output, &request.id, &context, 100, 1);
         stream
             .emit("ANALYSIS_STARTED", context.clone(), false)
             .unwrap();
@@ -1143,6 +1264,7 @@ mod tests {
         let path = root.join("src/A.java");
         fs::write(&path, source).unwrap();
         let request = Request {
+            protocol_version: 1,
             id: "relation-bytes".into(),
             snapshot_id: "snapshot".into(),
             repository_id: "repo".into(),
@@ -1161,7 +1283,7 @@ mod tests {
         };
         let context = serde_json::json!({"providerSnapshotId":"snapshot","repositoryId":"repo","revisionId":"revision","revisionFingerprint":"sha256:revision"});
         let mut output = Vec::new();
-        let mut stream = EventWriter::new(&mut output, &request.id, &context, 100);
+        let mut stream = EventWriter::new(&mut output, &request.id, &context, 100, 1);
         stream
             .emit("ANALYSIS_STARTED", context.clone(), false)
             .unwrap();
@@ -1194,7 +1316,7 @@ mod tests {
         for line_limit in [true, false] {
             let mut output = Vec::new();
             let context = serde_json::json!({"providerSnapshotId":"s","repositoryId":"r","revisionId":"v","revisionFingerprint":"f"});
-            let mut stream = EventWriter::new(&mut output, "request", &context, 100);
+            let mut stream = EventWriter::new(&mut output, "request", &context, 100, 1);
             let reserved = stream.failure_reservation().unwrap();
             if line_limit {
                 stream.max_line_bytes = reserved as usize + 1;
