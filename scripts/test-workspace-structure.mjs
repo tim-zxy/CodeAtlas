@@ -91,7 +91,7 @@ for (const name of packageNames) {
     } else if (name === 'providers') {
       assert.equal(
         source,
-        "export * from './native-client.js';\nexport * from './native-ipc.js';\nexport * from './native-ipc-v2.js';\nexport * from './coverage-summary.js';\nexport * from './provider-routing.js';\nexport * from './provider-spi.js';\n",
+        "export * from './native-client.js';\nexport * from './native-ipc.js';\nexport * from './native-ipc-v2.js';\nexport * from './coverage-summary.js';\nexport * from './provider-routing.js';\nexport * from './provider-spi.js';\nexport { normalizeNativeAnalysis } from './canonical-normalizer.js';\nexport type {\n  NormalizedCanonicalAnalysis,\n  NormalizedNodePair,\n  NormalizedEdgePair,\n} from './canonical-normalizer.js';\nexport { CanonicalNormalizationError } from './java-node-normalizer.js';\nexport type { CanonicalNormalizationErrorCode } from './java-node-normalizer.js';\n",
       );
     } else if (name === 'plugins') {
       assert.equal(
