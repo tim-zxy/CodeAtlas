@@ -1,6 +1,6 @@
 # P05-W1-010 Full Analysis Apply Design
 
-Status: proposed for written-spec review. The conversational choice of bounded staging and the additive activation-fingerprint migration was confirmed on 2026-09-29; this document is not implementation approval.
+Status: accepted by user for implementation planning on 2026-09-29. The conversational choice of bounded staging and the additive activation-fingerprint migration was confirmed on 2026-09-29; this document alone is not implementation approval.
 
 ## Intent and scope
 
@@ -38,6 +38,8 @@ The stage and activation use one owned SQLite connection; `TEMP` data is not vis
 ## Evidence lifecycle and failure semantics
 
 Full replacement must remove active bindings and `fact_evidence` links for superseded target-revision facts before replacing those facts; old Evidence remains `SUPERSEDED` for provenance, but no old binding may point to a removed or newly different fact. New Evidence is `ACTIVE` only with a valid snapshot and matching fact. This task does not persist a failed/cancelled observation; it reports the failure without changing canonical tables or activation metadata. A failure during validation, staging, SQL insertion, or final pointer update drops temporary state and rolls back the entire activation transaction. A process crash leaves only the prior committed active graph. The prior graph may be `STALE` after source reconciliation; preserving it does not assert freshness.
+
+Only `SUCCEEDED` observations enter FactMerger and activation, matching the existing Provider SPI/FactMerger contract. A complete Native `ANALYZE` stream with `PARTIAL` outcome remains a valid observation for diagnostics, but P05-W1-010 does not activate any of its facts or replace the previous graph. Broadening partial-result publication would require a separate reviewed lifecycle decision.
 
 The source-state reconciliation transaction remains independent. If it advances a `WORKTREE` fingerprint during analysis, activation's compare-under-lock rejects the stale result. The coordinator may request another full analysis later; it must not relabel old facts as current or mutate the source fingerprint backward.
 
