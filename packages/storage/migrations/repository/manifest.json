@@ -50,6 +50,13 @@
       "file": "007_diagnostics.sql",
       "checksum": "sha256:f9e862c1a64d5cf917345036b5b7caee7b60b358020410b01e808b750011d7d4",
       "backupRequired": false
+    },
+    {
+      "version": 8,
+      "name": "indexed_fingerprint",
+      "file": "008_indexed_fingerprint.sql",
+      "checksum": "sha256:bd57f0d186f3834dd9dc8be9d36b7f0bebdab96f6cbbaa04d5d86fc46b49180a",
+      "backupRequired": false
     }
   ]
 }

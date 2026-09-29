@@ -123,6 +123,21 @@ if (
       }),
     ),
   );
+} else if (scenario === 'analyze-post-terminal') {
+  await write(Buffer.concat([...analysisRecords(), Buffer.from('{}\n')]));
+} else if (scenario === 'partial-analyze') {
+  const records = analysisRecords();
+  const terminal = JSON.parse(records.at(-1).toString('utf8'));
+  terminal.payload.outcome = 'PARTIAL';
+  records[records.length - 1] = line(terminal);
+  await write(Buffer.concat(records));
+} else if (scenario === 'count-mismatch' || scenario === 'sequence-drift') {
+  const records = analysisRecords();
+  const terminal = JSON.parse(records.at(-1).toString('utf8'));
+  if (scenario === 'count-mismatch') terminal.payload.counts.nodes = 1;
+  else terminal.sequence += 1;
+  records[records.length - 1] = line(terminal);
+  await write(Buffer.concat(records));
 } else if (scenario === 'post-terminal') {
   await write(Buffer.concat([describeLine, Buffer.from('{}\n')]));
 } else if (scenario === 'event-oversize') {

@@ -5,6 +5,8 @@ export * from './coverage-summary.js';
 export * from './provider-routing.js';
 export * from './provider-spi.js';
 export { normalizeNativeAnalysis } from './canonical-normalizer.js';
+export { normalizeStagedAnalysis } from './staged-normalization.js';
+export { mergeStagedAnalysis, finalizeStagedSupports } from './staged-merger.js';
 export type {
   NormalizedCanonicalAnalysis,
   NormalizedNodePair,

@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "id": "p05-repository-activation-v1",
+  "task": "P05-W1-010",
+  "governingSpec": "docs/handoff/specs/SQLITE_SCHEMA.md",
+  "acceptance": "R008 preserves legacy graph and records honest indexed fingerprint freshness",
+  "cases": ["fresh-to-latest", "legacy-pointer-upgrade", "failed-upgrade-rollback"]
+}

@@ -29,7 +29,7 @@ Phase 0 explicitly does not require Java parsing.
 - [ ] Java extraction is behind a `LanguageAnalyzer` boundary; framework interpretation is absent from the language adapter.
 - [ ] Provider facts normalize into canonical facts while unresolved targets remain unresolved.
 - [ ] Canonical facts, evidence, and provider bindings persist correctly.
-- [ ] Full-analysis failure preserves the previous active graph.
+- [ ] Full-analysis failure preserves the previous active graph and activation ID/fingerprint; a retained graph is not reported current solely because a mutable `WORKTREE` ID matches.
 - [ ] One-file add, modify, and delete changes use validated incremental patches.
 - [ ] Changed-file refresh does not silently reparse an unchanged repository; restart uses file fingerprints and does not require persisted ASTs.
 - [ ] Cold, 1-file, 5-file, and 50-file scenarios report stage durations and peak memory with pinned inputs; any numeric performance threshold requires a reviewed baseline.

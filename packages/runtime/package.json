@@ -17,5 +17,10 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@codeatlas/application": "workspace:*",
+    "@codeatlas/providers": "workspace:*",
+    "@codeatlas/storage": "workspace:*"
   }
 }

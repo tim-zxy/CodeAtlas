@@ -20,6 +20,11 @@ const packageNames = [
 
 const appNames = ['cli', 'mcp', 'daemon'];
 const expectedPackageDependencies = Object.fromEntries(packageNames.map((name) => [name, {}]));
+expectedPackageDependencies.runtime = {
+  '@codeatlas/application': 'workspace:*',
+  '@codeatlas/providers': 'workspace:*',
+  '@codeatlas/storage': 'workspace:*',
+};
 expectedPackageDependencies.ir = { zod: '4.6.1' };
 expectedPackageDependencies.providers = { '@codeatlas/ir': 'workspace:*', zod: '4.6.1' };
 expectedPackageDependencies.plugins = { '@codeatlas/ir': 'workspace:*', zod: '4.6.1' };
@@ -84,14 +89,14 @@ for (const name of packageNames) {
     } else if (name === 'storage') {
       assert.equal(
         source,
-        "export * from './migrations/index.js';\nexport * from './source-state/index.js';\n",
+        "export * from './migrations/index.js';\nexport * from './source-state/index.js';\nexport * from './analysis/activation-state.js';\nexport * from './analysis/temp-stage.js';\nexport * from './analysis/canonical-fact-store.js';\n",
       );
     } else if (name === 'application') {
       assert.match(source, /reconcileGitWorktree/);
     } else if (name === 'providers') {
       assert.equal(
         source,
-        "export * from './native-client.js';\nexport * from './native-ipc.js';\nexport * from './native-ipc-v2.js';\nexport * from './coverage-summary.js';\nexport * from './provider-routing.js';\nexport * from './provider-spi.js';\nexport { normalizeNativeAnalysis } from './canonical-normalizer.js';\nexport type {\n  NormalizedCanonicalAnalysis,\n  NormalizedNodePair,\n  NormalizedEdgePair,\n} from './canonical-normalizer.js';\nexport { CanonicalNormalizationError } from './java-node-normalizer.js';\nexport type { CanonicalNormalizationErrorCode } from './java-node-normalizer.js';\nexport { mergeCanonicalObservations } from './fact-merger.js';\nexport type { MergedCanonicalAnalysis } from './fact-merger.js';\nexport { FactMergeError } from './fact-merger-input.js';\nexport type { FactMergeErrorCode, MergeInput, MergeObservation } from './fact-merger-input.js';\nexport type { MergeExplanation, MergeSupportSummary } from './fact-merger-selection.js';\n",
+        "export * from './native-client.js';\nexport * from './native-ipc.js';\nexport * from './native-ipc-v2.js';\nexport * from './coverage-summary.js';\nexport * from './provider-routing.js';\nexport * from './provider-spi.js';\nexport { normalizeNativeAnalysis } from './canonical-normalizer.js';\nexport { normalizeStagedAnalysis } from './staged-normalization.js';\nexport { mergeStagedAnalysis, finalizeStagedSupports } from './staged-merger.js';\nexport type {\n  NormalizedCanonicalAnalysis,\n  NormalizedNodePair,\n  NormalizedEdgePair,\n} from './canonical-normalizer.js';\nexport { CanonicalNormalizationError } from './java-node-normalizer.js';\nexport type { CanonicalNormalizationErrorCode } from './java-node-normalizer.js';\nexport { mergeCanonicalObservations } from './fact-merger.js';\nexport type { MergedCanonicalAnalysis } from './fact-merger.js';\nexport { FactMergeError } from './fact-merger-input.js';\nexport type { FactMergeErrorCode, MergeInput, MergeObservation } from './fact-merger-input.js';\nexport type { MergeExplanation, MergeSupportSummary } from './fact-merger-selection.js';\n",
       );
     } else if (name === 'plugins') {
       assert.equal(

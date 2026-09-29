@@ -78,5 +78,23 @@ confidence, resolution selection, malformed input, and atomic dangling-reference
 rejection. This does not replace later database-level stale-binding or
 incremental Evaluation gates and adds no numerical threshold.
 
+P05-W1-010 registers `p05-repository-activation-v1` and
+`p05-full-analysis-apply-v1`. The repository migration, bounded provisional
+stream, staged normalization/merger, and atomic Store tests cover legacy
+unknown freshness, current/stale fingerprint checks, success with zero or
+Java SYMBOL facts, same-WORKTREE replacement, and rollback after destructive
+SQL steps. Runtime composition runs `java-basic-symbol` through the real
+Native binary into a migrated temporary repository database and checks active
+Canonical facts, Evidence, coverage, and freshness. `PARTIAL`, analyzer
+failure, cancellation, missing requested source files, dangling coverage or
+diagnostic source references, and changed source do not activate a candidate.
+The Cold Index case reports observed transport (including Native execution
+and IPC), normalization, merge, DB apply, transaction-lock, total, TEMP size,
+and sampled Node RSS on its pinned input. Native internal scan/parse/resolve
+and child RSS remain distinct, explicitly unavailable in that measurement;
+a separate deterministic Native memory benchmark is not substituted for the
+same-input peak. The broader multi-size stage and Worker Consistency baseline
+remains P05-W9-001, with no new threshold inferred from this single-file case.
+
 Phase 1 Knowledge evaluation distinguishes parser-grounded and source-grounded-degraded candidate paths. Report grounding, unsupported/partial coverage, unverified relations, publication acceptance/rejection, and agent utility by generation method without inventing a new numerical pass threshold. Later Diagram projection evaluation checks source/version references, permission/freshness, graph grounding, type-specific completeness, and sequence-order evidence. An unsupported diagram is reported as such, not rendered as a complete graph.
 

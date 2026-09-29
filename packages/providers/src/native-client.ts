@@ -121,6 +121,16 @@ export interface ValidatedNativeResultV2 extends NativeResultBase {
 }
 export type ValidatedNativeResult = ValidatedNativeResultV1 | ValidatedNativeResultV2;
 
+/** Events delivered to the sink are provisional until this promise resolves. */
+export interface NativeAnalysisSink {
+  accept(event: NativeEventEnvelope | NativeAnalyzeEventEnvelopeV2): Promise<void>;
+}
+export interface StreamedNativeAnalysisResult {
+  readonly request: AnyNativeRequest;
+  readonly terminal: AnyNativeEvent;
+  readonly stderr: string;
+}
+
 interface ValidatedOptions {
   readonly executablePath: string;
   readonly arguments: readonly string[];
@@ -270,6 +280,43 @@ export async function executeNativeRequest(
   }) as ValidatedNativeResult;
 }
 
+export async function streamNativeAnalysis(
+  requestValue: NativeRequestEnvelope | NativeAnalyzeRequestV2,
+  optionsValue: NativeClientOptions,
+  sink: NativeAnalysisSink,
+): Promise<StreamedNativeAnalysisResult> {
+  const request = parseRequest(requestValue);
+  if (request.type !== 'ANALYZE') {
+    throw clientError('INVALID_REQUEST', 'Streaming requires an ANALYZE request', request);
+  }
+  if (sink === null || typeof sink?.accept !== 'function') {
+    throw clientError('INVALID_CONFIGURATION', 'Native analysis sink is invalid', request);
+  }
+  const options = validateOptions(optionsValue);
+  if (options.signal?.aborted)
+    throw clientError('CANCELLED', 'Native request was cancelled', request);
+  const timeoutMs = effectiveTimeout(request, options.timeoutMs);
+  if (timeoutMs <= 0) throw clientError('TIMEOUT', 'Native request timed out', request);
+  const requestBytes = Buffer.from(`${JSON.stringify(request)}\n`, 'utf8');
+  if (requestBytes.byteLength > options.limits.maxStdinBytes) {
+    throw clientError('OUTPUT_LIMIT_EXCEEDED', 'Native request exceeds the byte limit', request);
+  }
+  const { output: terminal, stderr } = await runProcess(
+    requestBytes,
+    options,
+    request,
+    timeoutMs,
+    (stdout, request, limits) => decodeAnalysisStream(stdout, request, limits, sink),
+  );
+  if (terminal.type === 'ANALYSIS_FAILED' || terminal.type === 'REQUEST_FAILED') {
+    throw clientError('ANALYZER_FAILED', 'Native analyzer rejected the request', request, {
+      analyzerError: terminal.payload.error,
+      stderr,
+    });
+  }
+  return deepFreeze({ request, terminal, stderr });
+}
+
 function verifyChecksum(
   records: readonly Buffer[],
   declared: string,
@@ -397,12 +444,21 @@ function validateOptions(value: NativeClientOptions): ValidatedOptions {
   };
 }
 
-function runProcess(
+function runProcess<TOutput = DecodedOutput>(
   requestBytes: Buffer,
   options: ValidatedOptions,
   request: AnyNativeRequest,
   timeoutMs: number,
-): Promise<{ readonly output: DecodedOutput; readonly stderr: string }> {
+  decode: (
+    stdout: Readable,
+    request: AnyNativeRequest,
+    limits: NativeClientLimits,
+  ) => Promise<TOutput> = decodeStdout as (
+    stdout: Readable,
+    request: AnyNativeRequest,
+    limits: NativeClientLimits,
+  ) => Promise<TOutput>,
+): Promise<{ readonly output: TOutput; readonly stderr: string }> {
   let child;
   try {
     child = spawn(options.executablePath, [...options.arguments], {
@@ -439,12 +495,10 @@ function runProcess(
     terminate();
   };
 
-  const stdoutPromise = decodeStdout(child.stdout, request, options.limits).catch(
-    (error: unknown) => {
-      recordFailure(asClientError(error, request));
-      return undefined;
-    },
-  );
+  const stdoutPromise = decode(child.stdout, request, options.limits).catch((error: unknown) => {
+    recordFailure(asClientError(error, request));
+    return undefined;
+  });
   const stderrPromise = captureStderr(
     child.stderr,
     options.limits.maxStderrBytes,
@@ -605,9 +659,21 @@ async function decodeStdout(
   request: AnyNativeRequest,
   limits: NativeClientLimits,
 ): Promise<DecodedOutput> {
-  const decoder = new TextDecoder('utf-8', { fatal: true });
   const events: AnyNativeEvent[] = [];
   const rawRecords: Buffer[] = [];
+  for await (const { event, record } of readFramedEvents(stdout, request, limits)) {
+    events.push(event);
+    rawRecords.push(record);
+  }
+  return { events, rawRecords };
+}
+
+async function* readFramedEvents(
+  stdout: Readable,
+  request: AnyNativeRequest,
+  limits: NativeClientLimits,
+): AsyncGenerator<{ event: AnyNativeEvent; record: Buffer }> {
+  const decoder = new TextDecoder('utf-8', { fatal: true });
   const requestEventLimit =
     request.type === 'ANALYZE' || request.type === 'REFRESH'
       ? request.payload.resourceBudget.maxEvents
@@ -615,8 +681,8 @@ async function decodeStdout(
   const maxEvents = Math.min(limits.maxEvents, requestEventLimit);
   let pending = Buffer.alloc(0);
   let totalBytes = 0;
+  let sequence = 0;
   let terminalSeen = false;
-
   for await (const chunk of stdout) {
     const bytes = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
     totalBytes += bytes.byteLength;
@@ -643,29 +709,14 @@ async function decodeStdout(
         }
         break;
       }
-      const rawLine = pending.subarray(0, lf);
-      pending = pending.subarray(lf + 1);
-      if (events.length >= maxEvents) {
+      if (sequence >= maxEvents) {
         throw clientError('OUTPUT_LIMIT_EXCEEDED', 'Native event count exceeds the limit', request);
       }
-      if (rawLine.byteLength > limits.maxLineBytes) {
+      if (lf > limits.maxLineBytes) {
         throw clientError('OUTPUT_LIMIT_EXCEEDED', 'Native stdout line exceeds the limit', request);
       }
-      const event = parseEventLine(rawLine, decoder, request, events.length);
-      if (!LEGAL_EVENT_TYPES[request.type].has(event.type)) {
-        throw clientError(
-          'PROTOCOL_VIOLATION',
-          'Native event is not legal for the request',
-          request,
-        );
-      }
-      if (event.type === 'REQUEST_FAILED' && events.length !== 0) {
-        throw clientError(
-          'PROTOCOL_VIOLATION',
-          'Native request failure follows another event',
-          request,
-        );
-      }
+      const rawLine = pending.subarray(0, lf);
+      pending = pending.subarray(lf + 1);
       if (terminalSeen) {
         throw clientError(
           'PROTOCOL_VIOLATION',
@@ -673,12 +724,22 @@ async function decodeStdout(
           request,
         );
       }
-      events.push(event);
-      rawRecords.push(Buffer.concat([rawLine, Buffer.from('\n')]));
+      const event = parseEventLine(rawLine, decoder, request, sequence);
+      if (
+        !LEGAL_EVENT_TYPES[request.type].has(event.type) ||
+        (event.type === 'REQUEST_FAILED' && sequence !== 0)
+      ) {
+        throw clientError(
+          'PROTOCOL_VIOLATION',
+          'Native event is not legal for the request',
+          request,
+        );
+      }
       terminalSeen = TERMINAL_EVENT_TYPES.has(event.type);
+      sequence++;
+      yield { event, record: Buffer.concat([rawLine, Buffer.from('\n')]) };
     }
   }
-
   if (pending.byteLength !== 0) {
     throw clientError(
       'PROTOCOL_VIOLATION',
@@ -686,7 +747,143 @@ async function decodeStdout(
       request,
     );
   }
-  return { events, rawRecords };
+}
+
+async function decodeAnalysisStream(
+  stdout: Readable,
+  request: AnyNativeRequest,
+  limits: NativeClientLimits,
+  sink: NativeAnalysisSink,
+): Promise<AnyNativeEvent> {
+  if (request.type !== 'ANALYZE') throw clientError('INVALID_REQUEST', 'Expected ANALYZE', request);
+  const hash = createHash('sha256');
+  const counts = { sourceFiles: 0, nodes: 0, edges: 0, coverage: 0, diagnostics: 0 };
+  const expectedCoverage =
+    request.protocolVersion === 2
+      ? new Set(
+          request.payload.sourceFiles.flatMap((file) =>
+            request.payload.requestedCapabilities.map((capability) => `${file.id}\0${capability}`),
+          ),
+        )
+      : undefined;
+  const seenCoverage = new Set<string>();
+  let sequence = 0;
+  let terminal: AnyNativeEvent | undefined;
+  for await (const { event, record } of readFramedEvents(stdout, request, limits)) {
+    if (
+      !LEGAL_EVENT_TYPES.ANALYZE.has(event.type) ||
+      (sequence === 0 && event.type !== 'ANALYSIS_STARTED' && event.type !== 'REQUEST_FAILED') ||
+      (sequence > 0 && (event.type === 'ANALYSIS_STARTED' || event.type === 'REQUEST_FAILED'))
+    ) {
+      throw clientError('PROTOCOL_VIOLATION', 'Native analysis event order is invalid', request);
+    }
+    validateAnalysisEvent(event, request, counts, expectedCoverage, seenCoverage);
+    sequence++;
+    if (TERMINAL_EVENT_TYPES.has(event.type)) {
+      terminal = event;
+      if (event.type === 'ANALYSIS_COMPLETED') {
+        const actual = hash.digest('hex');
+        if (
+          !/^sha256:[0-9a-f]{64}$/.test(event.payload.integrityChecksum) ||
+          event.payload.integrityChecksum !== `sha256:${actual}`
+        ) {
+          throw clientError('CHECKSUM_MISMATCH', 'Native result checksum does not match', request);
+        }
+        if (
+          Object.entries(counts).some(
+            ([name, count]) => event.payload.counts[name as keyof typeof counts] !== count,
+          ) ||
+          (expectedCoverage !== undefined && seenCoverage.size !== expectedCoverage.size)
+        ) {
+          throw clientError('PROTOCOL_VIOLATION', 'Native analysis result is incomplete', request);
+        }
+      }
+    } else {
+      hash.update(record);
+      await sink.accept(deepFreeze(event));
+    }
+  }
+  if (terminal === undefined) {
+    throw clientError(
+      'PROTOCOL_VIOLATION',
+      'Native stdout ended without a complete terminal',
+      request,
+    );
+  }
+  return terminal;
+}
+
+function validateAnalysisEvent(
+  event: AnyNativeEvent,
+  request: Extract<AnyNativeRequest, { type: 'ANALYZE' }>,
+  counts: {
+    sourceFiles: number;
+    nodes: number;
+    edges: number;
+    coverage: number;
+    diagnostics: number;
+  },
+  expectedCoverage: Set<string> | undefined,
+  seenCoverage: Set<string>,
+): void {
+  const payload = event.payload;
+  if (event.type === 'SOURCE_FILE') {
+    if (
+      event.payload.repositoryId !== request.payload.repository.id ||
+      event.payload.revisionId !== request.payload.revision.id
+    ) {
+      throw clientError(
+        'PROTOCOL_VIOLATION',
+        'Source file context does not match request',
+        request,
+      );
+    }
+    counts.sourceFiles++;
+  } else if (event.type === 'NODE') counts.nodes++;
+  else if (event.type === 'EDGE') counts.edges++;
+  else if (event.type === 'COVERAGE') {
+    counts.coverage++;
+    if (expectedCoverage !== undefined) {
+      if (!('statistics' in payload)) {
+        throw clientError('PROTOCOL_VIOLATION', 'V2 coverage statistics are missing', request);
+      }
+      const key = `${payload.sourceFileId ?? ''}\0${payload.capability}`;
+      if (!expectedCoverage.has(key) || seenCoverage.has(key)) {
+        throw clientError(
+          'PROTOCOL_VIOLATION',
+          'Coverage is not unique for requested input',
+          request,
+        );
+      }
+      seenCoverage.add(key);
+      const resolved = Object.values(payload.statistics.resolutionCounts).reduce(
+        (sum, count) => sum + count,
+        0,
+      );
+      if (resolved !== (payload.capability === 'SYMBOL' ? 0 : payload.statistics.coveredSites)) {
+        throw clientError(
+          'PROTOCOL_VIOLATION',
+          'Coverage resolution counts do not balance',
+          request,
+        );
+      }
+    }
+  } else if (event.type === 'DIAGNOSTIC') counts.diagnostics++;
+  if ('providerSnapshotId' in payload && 'repositoryId' in payload && 'revisionId' in payload) {
+    if (
+      payload.providerSnapshotId !== request.payload.providerSnapshotId ||
+      payload.repositoryId !== request.payload.repository.id ||
+      payload.revisionId !== request.payload.revision.id ||
+      ('revisionFingerprint' in payload &&
+        payload.revisionFingerprint !== request.payload.revision.contentFingerprint)
+    ) {
+      throw clientError(
+        'PROTOCOL_VIOLATION',
+        'Analysis event context does not match request',
+        request,
+      );
+    }
+  }
 }
 
 function parseEventLine(

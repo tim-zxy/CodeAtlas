@@ -69,6 +69,22 @@ function userVersion(database) {
   return database.prepare('PRAGMA user_version').get().user_version;
 }
 
+async function prefixManifest(directory, version) {
+  const manifest = JSON.parse(await readFile(productionManifestUrl, 'utf8'));
+  const prefixManifestUrl = pathToFileURL(join(directory, `manifest-${version}.json`));
+  await writeFile(
+    prefixManifestUrl,
+    JSON.stringify({ ...manifest, migrations: manifest.migrations.slice(0, version) }),
+  );
+  for (const migration of manifest.migrations.slice(0, version)) {
+    await writeFile(
+      join(directory, migration.file),
+      await readFile(new URL(migration.file, productionManifestUrl)),
+    );
+  }
+  return prefixManifestUrl;
+}
+
 test('p0-repository-schema-v1 Fixture maps to task and acceptance', async () => {
   assert.deepEqual(JSON.parse(await readFile(schemaFixtureUrl, 'utf8')), {
     schemaVersion: 1,
@@ -86,7 +102,7 @@ test('repository manifest declares immutable R001-R007 only', async () => {
   assert.equal(manifest.schemaVersion, 1);
   assert.equal(manifest.databaseKind, 'REPOSITORY');
   assert.deepEqual(
-    manifest.migrations.map(({ version, name }) => ({ version, name })),
+    manifest.migrations.slice(0, 7).map(({ version, name }) => ({ version, name })),
     migrationNames.map((name, index) => ({ version: index + 1, name })),
   );
   assert.ok(manifest.migrations.every(({ backupRequired }) => backupRequired === false));
@@ -96,10 +112,11 @@ test('fresh repository database reaches version 7 with exact Phase 0 tables and 
   const tmp = await temporaryDirectory('codeatlas-repo-schema-fresh-');
   const databasePath = join(tmp.directory, 'repo.sqlite');
   try {
+    const p0ManifestUrl = await prefixManifest(tmp.directory, 7);
     const request = {
       databasePath,
       databaseKind: 'REPOSITORY',
-      manifestUrl: productionManifestUrl,
+      manifestUrl: p0ManifestUrl,
     };
     assert.deepEqual((await runMigrations(request)).appliedVersions, [1, 2, 3, 4, 5, 6, 7]);
     assert.deepEqual((await runMigrations(request)).appliedVersions, []);
@@ -130,20 +147,11 @@ test('fresh repository database reaches version 7 with exact Phase 0 tables and 
 test('all seven sequential upgrade boundaries preserve preceding tables', async () => {
   const tmp = await temporaryDirectory('codeatlas-repo-schema-sequential-');
   const databasePath = join(tmp.directory, 'repo.sqlite');
-  const manifest = JSON.parse(await readFile(productionManifestUrl, 'utf8'));
   try {
+    let latestPrefixUrl;
     for (let version = 1; version <= 7; version++) {
-      const prefixManifestUrl = pathToFileURL(join(tmp.directory, `manifest-${version}.json`));
-      await writeFile(
-        prefixManifestUrl,
-        JSON.stringify({ ...manifest, migrations: manifest.migrations.slice(0, version) }),
-      );
-      for (const migration of manifest.migrations.slice(0, version)) {
-        await writeFile(
-          join(tmp.directory, migration.file),
-          await readFile(new URL(migration.file, productionManifestUrl)),
-        );
-      }
+      const prefixManifestUrl = await prefixManifest(tmp.directory, version);
+      latestPrefixUrl = prefixManifestUrl;
       const result = await runMigrations({
         databasePath,
         databaseKind: 'REPOSITORY',
@@ -167,7 +175,7 @@ test('all seven sequential upgrade boundaries preserve preceding tables', async 
         await runMigrations({
           databasePath,
           databaseKind: 'REPOSITORY',
-          manifestUrl: productionManifestUrl,
+          manifestUrl: latestPrefixUrl,
         })
       ).appliedVersions,
       [],

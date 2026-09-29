@@ -22,6 +22,8 @@ Prove `Source -> Native Analyzer -> Canonical Facts -> SQLite -> Incremental Pat
 
 The Java implementation uses a language-neutral NativeProvider with a narrow internal `LanguageAnalyzer` boundary, file-level refresh, protocol-only stdout, staging/batch apply, and stage/memory measurements. These constrain existing tasks rather than adding another language or a new numeric gate.
 
+P05-W1-010 adds an activation fingerprint through additive repository migration R008 so a retained graph for a mutable `WORKTREE` can be marked stale or legacy-unknown without discarding it. Full-analysis staging and atomic activation stay within Phase 0.5; the unpublished Phase 1 repository migration reservations move to R009/R010. No Phase 1 capability is pulled forward.
+
 Within those existing tasks, native scheduling obtains parse-worker mode from validated indexing configuration, bounds in-flight and pending results with backpressure, distinguishes timeout/parser/unsupported/syntax/empty-success outcomes, and proves worker-count consistency against pinned inputs. The benchmark suite retains cold, 1-, 5-, and 50-file scenarios plus a worker-consistency case. Numeric performance limits still require measured baselines; none is added here.
 
 P05-W3-003 uses the ADR-015 negotiated Native IPC v2 `ANALYZE` coverage payload for per-file/capability source-site counts and resolution distribution. Strict v1 remains available and reports numeric statistics as unavailable. This does not add a persisted ProviderSnapshot schema, protocol-v2 `REFRESH`, a new numerical gate, or an earlier query/activation dependency.
