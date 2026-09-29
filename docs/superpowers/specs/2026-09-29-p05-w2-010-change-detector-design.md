@@ -4,7 +4,7 @@ Date: 2026-09-29
 
 Task: P05-W2-010
 
-Status: written design for user review; no implementation authorized by this document
+Status: approved by user on 2026-09-29; implementation awaits plan review
 
 ## Purpose and authority
 
