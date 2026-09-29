@@ -1,4 +1,5 @@
 import { DatabaseSync } from 'node:sqlite';
+import { isDeepStrictEqual } from 'node:util';
 import {
   CanonicalEdgeSchema,
   CanonicalNodeSchema,
@@ -33,6 +34,14 @@ type RecordRow = { readonly payload: string };
 /** Provisional, connection-local facts. No TEMP row is an active canonical fact. */
 export class RepositoryAnalysisStage {
   private closed = false;
+  private completed = false;
+  private terminalContext: {
+    repositoryId: string;
+    revisionId: string;
+    fingerprint: string;
+    snapshotId: string;
+  } | null = null;
+  private terminalCapabilities: unknown = null;
 
   constructor(private readonly db: DatabaseSync) {
     db.exec(`
@@ -75,6 +84,7 @@ export class RepositoryAnalysisStage {
 
   async accept(value: unknown): Promise<void> {
     this.assertOpen();
+    if (this.completed) throw new Error('Analysis stage is already complete');
     if (
       value === null ||
       typeof value !== 'object' ||
@@ -116,6 +126,89 @@ export class RepositoryAnalysisStage {
 
   *readProviderEdges(): IterableIterator<ProviderEdge> {
     yield* this.readEvents('EDGE', ProviderEdgeSchema);
+  }
+
+  *readCoverage(): IterableIterator<unknown> {
+    yield* this.readEvents('COVERAGE', { parse: (value: unknown) => value });
+  }
+
+  *readDiagnostics(): IterableIterator<unknown> {
+    yield* this.readEvents('DIAGNOSTIC', { parse: (value: unknown) => value });
+  }
+
+  confirmSucceeded(terminal: unknown): void {
+    this.assertOpen();
+    if (this.completed) throw new Error('Analysis stage is already complete');
+    if (
+      terminal === null ||
+      typeof terminal !== 'object' ||
+      !('type' in terminal) ||
+      terminal.type !== 'ANALYSIS_COMPLETED' ||
+      !('payload' in terminal) ||
+      terminal.payload === null ||
+      typeof terminal.payload !== 'object' ||
+      !('outcome' in terminal.payload) ||
+      terminal.payload.outcome !== 'SUCCEEDED'
+    ) {
+      throw new Error('Only a successful complete analysis can activate');
+    }
+    const payload = terminal.payload as Record<string, unknown>;
+    if (
+      typeof payload.repositoryId !== 'string' ||
+      typeof payload.revisionId !== 'string' ||
+      typeof payload.revisionFingerprint !== 'string' ||
+      typeof payload.providerSnapshotId !== 'string'
+    ) {
+      throw new Error('Analysis terminal context is incomplete');
+    }
+    const counts = payload.counts as Record<string, unknown> | undefined;
+    for (const [name, eventType] of [
+      ['sourceFiles', 'SOURCE_FILE'],
+      ['nodes', 'NODE'],
+      ['edges', 'EDGE'],
+      ['coverage', 'COVERAGE'],
+      ['diagnostics', 'DIAGNOSTIC'],
+    ] as const) {
+      const actual = this.db
+        .prepare('SELECT count(*) AS n FROM temp.analysis_event WHERE type = ?')
+        .get(eventType) as { n: number };
+      if (!counts || counts[name] !== actual.n) {
+        throw new Error(`Analysis terminal ${name} count does not match stage`);
+      }
+    }
+    this.terminalContext = {
+      repositoryId: payload.repositoryId,
+      revisionId: payload.revisionId,
+      fingerprint: payload.revisionFingerprint,
+      snapshotId: payload.providerSnapshotId,
+    };
+    this.terminalCapabilities = payload.capabilities;
+    this.completed = true;
+  }
+
+  assertApplicable(
+    db: DatabaseSync,
+    expected: {
+      repositoryId: string;
+      revisionId: string;
+      contentFingerprint: string;
+      snapshotId: string;
+      capabilities: unknown;
+    },
+  ): void {
+    this.assertOpen();
+    if (
+      this.db !== db ||
+      !this.completed ||
+      this.terminalContext === null ||
+      this.terminalContext.repositoryId !== expected.repositoryId ||
+      this.terminalContext.revisionId !== expected.revisionId ||
+      this.terminalContext.fingerprint !== expected.contentFingerprint ||
+      this.terminalContext.snapshotId !== expected.snapshotId ||
+      !isDeepStrictEqual(this.terminalCapabilities, expected.capabilities)
+    ) {
+      throw new Error('Analysis stage is not a complete result on this connection');
+    }
   }
 
   getProviderNode(providerFactId: string): ProviderNode | null {
@@ -286,16 +379,24 @@ export class RepositoryAnalysisStage {
 
   hasMergedNode(id: string): boolean {
     this.assertOpen();
+    return this.hasMergedRow('NODE', id);
+  }
+
+  hasMergedRow(kind: StagedMergedRow['kind'], id: string): boolean {
+    this.assertOpen();
+    const path = kind === 'FACT_EVIDENCE' || kind === 'BINDING' ? '$.evidenceId' : '$.id';
     return (
       this.db
         .prepare(
-          "SELECT 1 FROM temp.analysis_merged_row WHERE kind = 'NODE' AND json_extract(payload, '$.id') = ? LIMIT 1",
+          `SELECT 1 FROM temp.analysis_merged_row WHERE kind = ? AND json_extract(payload, '${path}') = ? LIMIT 1`,
         )
-        .get(id) !== undefined
+        .get(kind, id) !== undefined
     );
   }
 
-  *readMergedRows(kind: StagedMergedRow['kind']): IterableIterator<StagedMergedRow> {
+  *readMergedRows<K extends StagedMergedRow['kind']>(
+    kind: K,
+  ): IterableIterator<Extract<StagedMergedRow, { kind: K }>> {
     this.assertOpen();
     const order =
       kind === 'NODE' || kind === 'EDGE'
@@ -308,7 +409,8 @@ export class RepositoryAnalysisStage {
         `SELECT payload FROM temp.analysis_merged_row WHERE kind = ? ORDER BY json_extract(payload, '${order}')`,
       )
       .iterate(kind) as IterableIterator<RecordRow>;
-    for (const row of rows) yield { kind, value: JSON.parse(row.payload) } as StagedMergedRow;
+    for (const row of rows)
+      yield { kind, value: JSON.parse(row.payload) } as Extract<StagedMergedRow, { kind: K }>;
   }
 
   close(): void {

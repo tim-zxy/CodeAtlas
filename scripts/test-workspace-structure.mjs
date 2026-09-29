@@ -84,7 +84,7 @@ for (const name of packageNames) {
     } else if (name === 'storage') {
       assert.equal(
         source,
-        "export * from './migrations/index.js';\nexport * from './source-state/index.js';\nexport * from './analysis/activation-state.js';\nexport * from './analysis/temp-stage.js';\n",
+        "export * from './migrations/index.js';\nexport * from './source-state/index.js';\nexport * from './analysis/activation-state.js';\nexport * from './analysis/temp-stage.js';\nexport * from './analysis/canonical-fact-store.js';\n",
       );
     } else if (name === 'application') {
       assert.match(source, /reconcileGitWorktree/);
