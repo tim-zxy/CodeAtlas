@@ -7,21 +7,21 @@
 - Primary handoff entry: `ENGINEERING_HANDOFF.md`.
 - Compatibility entry: `CODEX_HANDOFF.md`.
 - Implementation repository: all 18 Phase 0 tasks and the documentation-only Phase 0 exit record are integrated on remote `main`. PR #6 merged P0-W9-003 at `9f4ec958c1f18ea13623fb7cf5703e0c1efe3b4c`; PR #7 merged the Phase 0 closeout at `71dd18ce58e89b489336fc942bfdac4b36cc024b`. Hosted CI for the closeout merge passed. Phase 0 is closed; the prior closeout-pending language below is historical evidence, not current state.
-- Active implementation phase: Phase 0.5. P05-W2-001 and P05-W2-002 were integrated by PR #8 (`ed4f80e`) and PR #9 (`813fcbe`); P05-W3-001..003 by PR #10 (`a9180d8`), PR #11 (`9bd70cf`), and PR #12 (`66b4034`); P05-W4-001 by [PR #13](https://github.com/tim-zxy/CodeAtlas/pull/13) at `917e5696`. P05-W4-002 was integrated by [PR #14](https://github.com/tim-zxy/CodeAtlas/pull/14) into `main` at `ee07602b186494ffc68188a4849826cb0d489e97`; `git merge-base --is-ancestor b9d56a5 origin/main` exits 0 on 2026-09-29. The earlier P05-W4-002 section below is its pre-integration record. This is 7 of 14 listed Phase 0.5 tasks, not a phase exit.
+- Active implementation phase: Phase 0.5. P05-W2-001 and P05-W2-002 were integrated by PR #8 (`ed4f80e`) and PR #9 (`813fcbe`); P05-W3-001..003 by PR #10 (`a9180d8`), PR #11 (`9bd70cf`), and PR #12 (`66b4034`); P05-W4-001 by [PR #13](https://github.com/tim-zxy/CodeAtlas/pull/13) at `917e5696`; P05-W4-002 by [PR #14](https://github.com/tim-zxy/CodeAtlas/pull/14) at `ee07602b186494ffc68188a4849826cb0d489e97`; and P05-W1-010 by [PR #15](https://github.com/tim-zxy/CodeAtlas/pull/15) at `feb4a3aaeae053a06aa2d8190e6b8ea87709c5f1`. `git merge-base --is-ancestor fb64674 origin/main` exited 0 on 2026-09-29. The [exact merge-SHA push run 36557731129](https://github.com/tim-zxy/CodeAtlas/actions/runs/36557731129) completed successfully. Earlier task sections below are pre-integration records. This is 8 of 14 listed Phase 0.5 tasks, not a phase exit.
 
 ## Phase readiness
 
 | Phase | Readiness | Implementation progress |
 |---|---|---|
 | 0 | IMPLEMENTATION-READY | 18 of 18 tasks integrated; 11 of 11 technical exit checks passed on `9f4ec95`; documentation closeout merged as PR #7 at `71dd18c` |
-| 0.5 | IMPLEMENTATION-READY | 7 of 14 listed tasks integrated through P05-W4-002; 7 remain, and Phase 0.5 exit gates remain open |
+| 0.5 | IMPLEMENTATION-READY | 8 of 14 listed tasks integrated through P05-W1-010; 6 remain, and Phase 0.5 exit gates remain open |
 | 1 | DESIGN-READY | 0 percent |
 | 2 | ARCHITECTURE-READY | 0 percent |
 | 3 | ROADMAP/ARCHITECTURE-READY | 0 percent |
 
 ## Next action
 
-P05-W1-010 Full Analysis Apply is the active implementation task after P05-W4-002 integration. Its accepted [design](../superpowers/specs/2026-09-29-p05-w1-010-full-analysis-apply-design.md) and [plan](../superpowers/plans/2026-09-29-p05-w1-010-full-analysis-apply.md) govern bounded streaming, TEMP staging, R008 indexed fingerprint, and atomic activation. All five planned slices have local evidence and passed hosted CI on implementation head `2e88431` in [PR #15](https://github.com/tim-zxy/CodeAtlas/pull/15); PR review/integration and Phase 0.5 exit remain open. The independent P05-W2-010 change detector remains available later. Source discovery remains Git-only; non-Git directory support is a separately reviewed adapter. Do not advance deferred capabilities.
+P05-W2-010 Change Detector is the next independent task after P05-W1-010 integration. Its [written design](../superpowers/specs/2026-09-29-p05-w2-010-change-detector-design.md) is awaiting user review; no implementation plan or code is approved yet. The design extends persisted worktree reconciliation with classified changes and makes the indexed-graph base-fingerprint precondition explicit for later REFRESH. P05-W1-011 Patch Apply has a separate design gap: persisted bindings lack each retained support's candidate payload needed for exact FactMerger reselection after support removal; resolve through reviewed design change, not a silent patch. Source discovery remains Git-only; non-Git directory support is a separately reviewed adapter. Phase 0.5 exit remains open. Do not advance deferred capabilities.
 
 ## 2026-09-24 compatibility amendment evidence
 
