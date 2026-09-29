@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "two-provider-same-call",
+  "category": "code-intelligence",
+  "phase": "0.5",
+  "languages": ["java"],
+  "frameworks": [],
+  "capabilities": ["SYMBOL", "CALL"],
+  "inputs": { "analysis": "inputs/analysis.json" },
+  "expected": { "lifetimes": "expected/lifetimes.json" },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

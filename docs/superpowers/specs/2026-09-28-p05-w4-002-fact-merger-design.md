@@ -1,0 +1,51 @@
+# P05-W4-002 FactMerger v0.1 Design
+
+Status: Accepted for implementation planning by the user's 2026-09-28 "继续" response to the written-spec review request. Product implementation still requires review of the task plan and selection of an execution method.
+
+## Intent and success
+
+Merge independently normalized Provider support for the same Canonical Code Fact without making a Provider authoritative or inventing a target. Removing one support must retain a fact supported by another; removing the last support must remove it from the current merged view. The result is a deterministic, validated batch for later application-owned persistence, not an active graph or a database mutation.
+
+This is the next Phase 0.5 main-chain task after P05-W4-001, integrated by PR #13 at merge commit `917e56965f93ddfd8c3ce3faf5c2898a7878ad51`. It unblocks P05-W1-010 full apply. Phase 0.5 promotion still requires every gate in `docs/handoff/PHASE_ACCEPTANCE.md`.
+
+## Authorities and boundaries
+
+ADR-002 preserves Provider-independent Canonical IR; ADR-003 keeps SQLite authoritative; ADR-004 keeps engineering facts automatic and semantic knowledge manual; ADR-012 makes Fixtures and recovery checks mandatory. `docs/handoff/specs/CANONICAL_IR.md`, `PROVIDER_SPI.md`, `SQLITE_SCHEMA.md`, and `EVALUATION.md` define the existing contracts. `docs/handoff/WORK_BREAKDOWN.md` P05-W4-002 and `DESIGN_TRACEABILITY.md` require `two-provider-same-call` and support-lifetime proof.
+
+P05-W4-002 is a pure TypeScript merge in `@codeatlas/providers`. It does not change Canonical IR, Evidence IR, Native IPC, ProviderSnapshot, or SQLite schema. It does not apply SQL, activate a revision, change Evidence history, implement REFRESH, route Provider roles, generate Knowledge, or add a numerical Quality Gate. P05-W1-010 owns transactional full apply; P05-W1-011 owns persistent patch and historical support-state reconciliation. The caller chooses which eligible Provider observations to submit; routing priority or `PRIMARY`/`SECONDARY`/`SHADOW` order never becomes an automatic truth rule.
+
+## Proposed public boundary
+
+`mergeCanonicalObservations(input: MergeInput): MergedCanonicalAnalysis` accepts one repository and revision context plus an array of observations. Each observation contains a strict `ProviderSnapshot` and the `nodes`/`edges` pairs from `normalizeNativeAnalysis`; its lookup map is not a merge input. Each snapshot must be `SUCCEEDED`, match the requested repository/revision, and be the only submitted active snapshot for its Provider ID. `PARTIAL`, `FAILED`, and `CANCELLED` observations are not active merge support; the existing partial normalization result remains a candidate for diagnostics and cannot authorize graph publication.
+
+`MergeInput` has exactly `repositoryId`, `revisionId`, and `observations`; an observation has exactly `snapshot`, `nodes`, and `edges`. The output has exactly `nodes`, `edges`, `evidence`, `factEvidence`, `bindings`, and `explanations`. A `MergeExplanation` names the Canonical Fact reference, selected Evidence ID, sorted support summaries (`evidenceId`, original Confidence, and edge resolution when applicable), selection rule (`SINGLE_SUPPORT`, `RESOLUTION_PRIORITY`, `SOURCE_BACKED`, or `STABLE_TIE_BREAK`), and sorted categorical conflicts (`DISPLAY_VARIANT`, `CANDIDATE_VARIANT`, `RESOLUTION_VARIANT`, or `CONFIDENCE_VARIANT`). These are package-local TypeScript contracts, not new persisted IR schemas. Application coordination must pair a snapshot with its own validated normalization result; the pair DTO alone cannot cryptographically prove that provenance.
+
+The output contains deterministic arrays of unique Canonical nodes and edges, `Evidence`, `FactEvidence`, `ProviderFactBinding`, and per-fact `MergeExplanation` records. Explanations identify the chosen real support, each support Evidence ID with its original Confidence and resolution level where applicable, the applied confidence/resolution rule, and categorical conflicts without copying source text. All IR records are validated with their existing strict schemas before the function returns. An empty valid observation set yields an empty current view, not an instruction to erase an active database revision.
+
+## Validation and support identity
+
+Validate the outer context, each snapshot and pair, Provider Fact type and Provider ID, snapshot/repository/revision equality, and uniqueness of `(providerSnapshotId, factType, providerId, providerFactId)`. Reject a repeated Provider snapshot, duplicate support, one observation bound to two Canonical Facts, mismatched fact type or context, conflicting Canonical IDs for one FactKey, and dangling merged edge references. Failure is a typed, controlled `FactMergeError` with code `INVALID_INPUT`, `INVALID_CONTEXT`, `DUPLICATE_SUPPORT`, `FACT_CONFLICT`, `DANGLING_REFERENCE`, or `IDENTITY_ENCODING_FAILED` and a structured path rooted in the offending input field; no partial batch is returned and error messages do not echo rejected values.
+
+Each valid pair produces one `ACTIVE` Evidence, one FactEvidence relation, and one ProviderFactBinding. Its Evidence ID is `provider-evidence-v1:<lowercase SHA-256>` over the domain-separated, length-delimited UTF-8 tuple `(repositoryId, revisionId, providerSnapshotId, factType, providerId, providerFactId)`, using the exact encoding rule from the accepted P05-W4-001 identity design. The Canonical FactKey is deliberately absent: Evidence identifies the Provider observation, while the Binding records its interpretation. Ill-formed Unicode identity fields fail before UTF-8 replacement. This new opaque-ID recipe is pinned by Fixture vectors; it does not reinterpret Canonical Fact IDs or alter the Evidence schema.
+
+## Fact grouping and honest selection
+
+Group nodes and edges separately by `(repositoryId, revisionId, factType, factKey)`. The Canonical ID, kind, and identity-bearing relationships must agree within a group; disagreement is an error, not a first-writer choice. A `RESOLVED` edge and an `UNRESOLVED` edge have different P05-W4-001 keys and are never silently fused. The same holds for different resolved targets or callsites. One group may retain multiple Provider bindings and Evidence rows while producing one Canonical Fact.
+
+Among same-key supports, select a real representative deterministically. For edges, prefer an actual `EXACT` over `HEURISTIC` resolved observation, or `AMBIGUOUS` over `UNRESOLVED` over `UNSUPPORTED` unresolved observation. For nodes, prefer a source-backed observation over a synthetic null-range observation. Break remaining ties by the exact `(providerId, providerSnapshotId, providerFactId)` tuple, independent of input order. Do not union divergent candidate lists, infer a resolved target, or manufacture a new SourceRange. Differences in display-only fields or unresolved candidate lists are reported in the explanation; the representative's original fields are retained. Identity-bearing disagreement, impossible target cardinality, or invalid IR fails instead.
+
+For one active support, preserve its original `Confidence`. For multiple supports, use the minimum finite support score, method `fact-merger-min-v1`, and sole reason `minimum active support score`, while keeping each original confidence in the explanation. Provider agreement alone never increases certainty. This is the initial EVOLVABLE aggregation policy, justified only if the declared Fixture and Evaluation assertions pass; a later policy change needs measured evidence and synchronized governing documents. No numeric threshold is invented.
+
+## Support removal and ownership
+
+FactMerger computes the current view from exactly the submitted active supports. Recompute with one of two same-call supports omitted: the Canonical Fact and the remaining Binding/Evidence relation stay. Recompute with both omitted: no current Fact or active relation is emitted. This pure output does not delete or mutate stored Evidence, choose between `SUPERSEDED` and `INVALIDATED`, or activate SQLite state. P05-W1-010/011 reconcile historical rows and graph pointers in a validated transaction; the last good graph survives their failures.
+
+## Fixture and verification contract
+
+Register `two-provider-same-call` as a Phase 0.5 code-intelligence Fixture under `fixtures/normalization/` with exact inputs and output goldens. It must cover two independently normalized Provider observations of one CALL, distinct snapshot/Evidence/Binding identities, one shared Canonical Fact, different support scores, and permutations of Provider and event order. Pin full/two-support, one-support-removed, and all-supports-removed outputs, plus valid supplementary Unicode and malformed-surrogate Evidence-ID cases. Add focused tests for same-key `EXACT`/`HEURISTIC` and `AMBIGUOUS`/`UNRESOLVED` selection without invented targets/candidate union; conflicting identity/context, duplicate support/snapshot, partial outcome, dangling reference, and malformed input must fail atomically with structured paths.
+
+Run the registered Fixture, unit and contract tests, Canonical IR validation, the existing normalization and real-binary Java regressions, architecture checks, TypeScript builds, full root Node tests, formatting/whitespace checks, and applicable Rust/hosted CI checks. Record exact commands, counts, Fixture ID, review result, schema/migration impact (`none`), known limitations, and the next task in `CURRENT_STATUS.md`; synchronize the P05-W4-002 traceability row and Provider SPI/Evaluation specifications. The existing Phase 0.5 `zero stale provider-binding facts` gate remains phase-level until storage/patch and evaluation tasks prove it against the database.
+
+## Review decisions
+
+The user approved a pure merger with persistence deferred to Apply, conservative minimum-support confidence without agreement boosting, honest resolution selection from real supports, deterministic Evidence/Binding output, controlled all-or-nothing errors, and the `two-provider-same-call` support-removal Fixture. No FROZEN decision is changed and no new ADR is proposed. Implementation and its task plan require separate review under the repository protocol.

@@ -498,6 +498,15 @@ Each KnowledgeRevision stores structured content, semantic and presentation fing
 
 ## Compatibility
 
+P05-W4-002 leaves the Canonical and Evidence schemas unchanged. The Provider
+package derives an opaque `provider-evidence-v1` ID from repository, revision,
+snapshot, fact type, Provider ID, and Provider Fact ID using the existing
+length-delimited UTF-8 identity recipe. Canonical FactKey is excluded from
+that Evidence identity; FactEvidence and ProviderFactBinding relate each
+observation to its Canonical fact. The pure merger emits only `ACTIVE`
+current-view Evidence and does not mutate persisted history or infer
+unresolved targets.
+
 Every payload is carried in a strict envelope containing only a non-empty schema
 name, a positive safe-integer version, and a JSON-compatible payload validated
 by a caller-supplied Zod schema. A reader declares one exact schema name and

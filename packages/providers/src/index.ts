@@ -12,3 +12,8 @@ export type {
 } from './canonical-normalizer.js';
 export { CanonicalNormalizationError } from './java-node-normalizer.js';
 export type { CanonicalNormalizationErrorCode } from './java-node-normalizer.js';
+export { mergeCanonicalObservations } from './fact-merger.js';
+export type { MergedCanonicalAnalysis } from './fact-merger.js';
+export { FactMergeError } from './fact-merger-input.js';
+export type { FactMergeErrorCode, MergeInput, MergeObservation } from './fact-merger-input.js';
+export type { MergeExplanation, MergeSupportSummary } from './fact-merger-selection.js';

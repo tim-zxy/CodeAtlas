@@ -68,5 +68,15 @@ real-binary integration, and schema validity. The Canonical comparator checks
 only unique-key subsets before FactMerger; duplicate-support pairs are compared
 directly. This adds no numerical gate or new baseline for extraction accuracy.
 
+P05-W4-002 registers `two-provider-same-call`. It independently normalizes
+two transformed copies of the pinned completed Native stream, with distinct
+Provider snapshots and reversed fact-event order for one observation;
+checked-in current-view summaries and full-result SHA-256 digests pin the
+two-, one-, and zero-support outputs. Focused tests also validate emitted
+Canonical and Evidence/Binding IR, support-order independence, conservative
+confidence, resolution selection, malformed input, and atomic dangling-reference
+rejection. This does not replace later database-level stale-binding or
+incremental Evaluation gates and adds no numerical threshold.
+
 Phase 1 Knowledge evaluation distinguishes parser-grounded and source-grounded-degraded candidate paths. Report grounding, unsupported/partial coverage, unverified relations, publication acceptance/rejection, and agent utility by generation method without inventing a new numerical pass threshold. Later Diagram projection evaluation checks source/version references, permission/freshness, graph grounding, type-specific completeness, and sequence-order evidence. An unsupported diagram is reported as such, not rendered as a complete graph.
 

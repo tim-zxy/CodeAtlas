@@ -496,7 +496,7 @@ test('registered canonical-normalization Fixture matches exact Provider-to-Canon
   const fixtures = await discoverFixtures(path.join(root, 'fixtures/normalization'));
   assert.deepEqual(
     fixtures.map((fixture) => fixture.manifest.id),
-    ['canonical-normalization'],
+    ['canonical-normalization', 'two-provider-same-call'],
   );
   const fixture = fixtures[0];
   const input = JSON.parse(await readFile(fixture.inputs.result, 'utf8'));
