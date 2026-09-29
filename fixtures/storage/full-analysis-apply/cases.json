@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "p05-full-analysis-apply-v1",
+  "task": "P05-W1-010",
+  "governingSpec": "docs/superpowers/specs/2026-09-29-p05-w1-010-full-analysis-apply-design.md",
+  "acceptance": "A complete validated Native analysis stages and replaces the canonical graph atomically; any failure retains the last committed graph",
+  "cases": [
+    "source-and-provider-identity",
+    "reordered-edge-node-normalization",
+    "canonical-merger-equivalence",
+    "zero-fact-success",
+    "dangling-or-duplicate-rejection",
+    "same-worktree-replacement",
+    "failed-apply-rollback",
+    "changed-source-rejection"
+  ]
+}

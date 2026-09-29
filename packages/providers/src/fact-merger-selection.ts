@@ -102,6 +102,48 @@ function conflictCategories(
   return [...categories].sort();
 }
 
+export function selectMergedGroup(group: readonly MergeSupport[]): {
+  readonly fact: CanonicalNode | CanonicalEdge;
+  readonly explanation: MergeExplanation;
+} {
+  const identity = identityShape(group[0]!);
+  const conflict = group.find((s) => !isDeepStrictEqual(identityShape(s), identity));
+  if (conflict) throw new FactMergeError('FACT_CONFLICT', [...conflict.inputPath, 'canonical']);
+  const ordered = [...group].sort((a, b) => rank(b) - rank(a) || compareSupport(a, b));
+  const selected = ordered[0]!;
+  const min = Math.min(...group.map((s) => s.canonical.confidence.score));
+  const confidence =
+    group.length === 1
+      ? selected.canonical.confidence
+      : { score: min, method: 'fact-merger-min-v1', reasons: ['minimum active support score'] };
+  const fact =
+    selected.factType === 'NODE'
+      ? CanonicalNodeSchema.parse({ ...selected.canonical, confidence })
+      : CanonicalEdgeSchema.parse({ ...selected.canonical, confidence });
+  const byEvidence = [...group].sort((a, b) => compare(a.evidence.id, b.evidence.id));
+  return {
+    fact,
+    explanation: {
+      fact: { factType: selected.factType, id: selected.canonical.id },
+      selectedEvidenceId: selected.evidence.id,
+      supports: byEvidence.map((s) => ({
+        evidenceId: s.evidence.id,
+        confidence: s.canonical.confidence,
+        resolution: s.factType === 'EDGE' ? (s.canonical as CanonicalEdge).target.resolution : null,
+      })),
+      selectionRule:
+        group.length === 1
+          ? 'SINGLE_SUPPORT'
+          : rank(ordered[0]!) !== rank(ordered[1]!)
+            ? selected.factType === 'NODE'
+              ? 'SOURCE_BACKED'
+              : 'RESOLUTION_PRIORITY'
+            : 'STABLE_TIE_BREAK',
+      conflicts: conflictCategories(group, selected),
+    },
+  };
+}
+
 export function selectMergedFacts(supports: readonly MergeSupport[]): {
   nodes: CanonicalNode[];
   edges: CanonicalEdge[];
@@ -131,43 +173,12 @@ export function selectMergedFacts(supports: readonly MergeSupport[]): {
   const explanations: MergeExplanation[] = [];
   const selectedPaths = new Map<string, readonly (string | number)[]>();
   for (const group of groups.values()) {
-    const identity = identityShape(group[0]!);
-    const conflict = group.find((s) => !isDeepStrictEqual(identityShape(s), identity));
-    if (conflict) throw new FactMergeError('FACT_CONFLICT', [...conflict.inputPath, 'canonical']);
-    const ordered = [...group].sort((a, b) => rank(b) - rank(a) || compareSupport(a, b));
-    const selected = ordered[0]!;
+    const { fact, explanation } = selectMergedGroup(group);
+    const selected = group.find((s) => s.evidence.id === explanation.selectedEvidenceId)!;
     selectedPaths.set(`${selected.factType}:${selected.canonical.id}`, selected.inputPath);
-    const min = Math.min(...group.map((s) => s.canonical.confidence.score));
-    const confidence =
-      group.length === 1
-        ? selected.canonical.confidence
-        : {
-            score: min,
-            method: 'fact-merger-min-v1',
-            reasons: ['minimum active support score'],
-          };
-    const fact = { ...selected.canonical, confidence };
-    if (selected.factType === 'NODE') nodes.push(CanonicalNodeSchema.parse(fact));
-    else edges.push(CanonicalEdgeSchema.parse(fact));
-    const byEvidence = [...group].sort((a, b) => compare(a.evidence.id, b.evidence.id));
-    explanations.push({
-      fact: { factType: selected.factType, id: selected.canonical.id },
-      selectedEvidenceId: selected.evidence.id,
-      supports: byEvidence.map((s) => ({
-        evidenceId: s.evidence.id,
-        confidence: s.canonical.confidence,
-        resolution: s.factType === 'EDGE' ? (s.canonical as CanonicalEdge).target.resolution : null,
-      })),
-      selectionRule:
-        group.length === 1
-          ? 'SINGLE_SUPPORT'
-          : rank(ordered[0]!) !== rank(ordered[1]!)
-            ? selected.factType === 'NODE'
-              ? 'SOURCE_BACKED'
-              : 'RESOLUTION_PRIORITY'
-            : 'STABLE_TIE_BREAK',
-      conflicts: conflictCategories(group, selected),
-    });
+    if (selected.factType === 'NODE') nodes.push(fact as CanonicalNode);
+    else edges.push(fact as CanonicalEdge);
+    explanations.push(explanation);
   }
   nodes.sort((a, b) => compare(a.factKey, b.factKey));
   edges.sort((a, b) => compare(a.factKey, b.factKey));

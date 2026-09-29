@@ -20,6 +20,7 @@ import {
 import {
   CanonicalNormalizationError,
   normalizeJavaNode,
+  type SourceFileLookup,
   type CanonicalNormalizationErrorCode,
 } from './java-node-normalizer.js';
 import { type ValidatedNativeResult } from './native-client.js';
@@ -67,10 +68,10 @@ function edgeKind(providerKind: string): CanonicalEdge['kind'] {
   }
 }
 
-function normalizeJavaEdge(
+export function normalizeJavaEdge(
   edge: ProviderEdge,
-  nodes: ReadonlyMap<ProviderFactId, CanonicalNode>,
-  sourceFiles: ReadonlyMap<string, SourceFile>,
+  nodes: Pick<ReadonlyMap<ProviderFactId, CanonicalNode>, 'get'>,
+  sourceFiles: SourceFileLookup,
 ): CanonicalEdge {
   const kind = edgeKind(edge.providerKind);
   const range = edge.sourceRange;

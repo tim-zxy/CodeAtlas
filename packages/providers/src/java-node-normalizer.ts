@@ -16,6 +16,12 @@ import {
 export type CanonicalNormalizationErrorCode =
   'UNSUPPORTED_KIND' | 'INVALID_FACT' | 'INVALID_CONTEXT' | 'MISSING_REFERENCE';
 
+export interface SourceFileLookup {
+  get(id: string): SourceFile | null | undefined;
+  getByPath?(path: string): SourceFile | null | undefined;
+  values?(): IterableIterator<SourceFile>;
+}
+
 export class CanonicalNormalizationError extends Error {
   constructor(
     readonly code: CanonicalNormalizationErrorCode,
@@ -38,7 +44,7 @@ function fail(
 function sourceFileFor(
   node: ProviderNode,
   range: SourceRange,
-  sourceFiles: ReadonlyMap<string, SourceFile>,
+  sourceFiles: SourceFileLookup,
 ): SourceFile {
   const file = sourceFiles.get(range.sourceFileId);
   if (!file) {
@@ -52,7 +58,7 @@ function sourceFileFor(
 
 export function normalizeJavaNode(
   input: ProviderNode,
-  sourceFiles: ReadonlyMap<string, SourceFile>,
+  sourceFiles: SourceFileLookup,
 ): CanonicalNode {
   const parsed = ProviderNodeSchema.safeParse(input);
   if (!parsed.success) {
@@ -100,9 +106,13 @@ export function normalizeJavaNode(
       if (node.sourceRange !== null || String(name) !== String(qualifiedName)) {
         fail('INVALID_FACT', ['sourceRange'], 'Compilation unit must be path-only');
       }
-      const file = [...sourceFiles.values()].find(
-        (candidate) => String(candidate.path) === String(qualifiedName),
-      );
+      const file =
+        sourceFiles.getByPath?.(String(qualifiedName)) ??
+        (sourceFiles.values === undefined
+          ? undefined
+          : [...sourceFiles.values()].find(
+              (candidate) => String(candidate.path) === String(qualifiedName),
+            ));
       if (!file) fail('MISSING_REFERENCE', ['qualifiedName'], 'Compilation unit path is absent');
       if (file.repositoryId !== node.repositoryId || file.revisionId !== node.revisionId) {
         fail('INVALID_CONTEXT', ['qualifiedName'], 'Compilation unit source context differs');
