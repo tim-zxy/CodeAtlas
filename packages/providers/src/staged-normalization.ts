@@ -8,7 +8,11 @@ import type {
   SourceFile,
 } from '@codeatlas/ir';
 
-import { normalizeJavaEdge } from './canonical-normalizer.js';
+import {
+  normalizeJavaEdge,
+  type NormalizedEdgePair,
+  type NormalizedNodePair,
+} from './canonical-normalizer.js';
 import { CanonicalNormalizationError, normalizeJavaNode } from './java-node-normalizer.js';
 import type { NativeRequestEnvelope } from './native-ipc.js';
 import type { NativeAnalyzeRequestV2 } from './native-ipc-v2.js';
@@ -20,22 +24,8 @@ export interface AnalysisNormalizationStage {
   getSourceFile(id: string): SourceFile | null;
   getSourceFileByPath(path: string): SourceFile | null;
   getNormalizedNode(id: string): { readonly canonical: CanonicalNode } | null;
-  putNormalizedNode(pair: {
-    readonly provider: {
-      readonly factType: 'NODE';
-      readonly providerId: string;
-      readonly providerFactId: string;
-    };
-    readonly canonical: CanonicalNode;
-  }): void;
-  putNormalizedEdge(pair: {
-    readonly provider: {
-      readonly factType: 'EDGE';
-      readonly providerId: string;
-      readonly providerFactId: string;
-    };
-    readonly canonical: CanonicalEdge;
-  }): void;
+  putNormalizedNode(pair: NormalizedNodePair): void;
+  putNormalizedEdge(pair: NormalizedEdgePair): void;
 }
 
 /** Normalizes one staged row at a time; the stage owns indexed cross-row lookups. */

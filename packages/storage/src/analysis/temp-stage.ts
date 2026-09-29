@@ -8,6 +8,7 @@ import {
   ProviderEdgeSchema,
   ProviderFactBindingSchema,
   ProviderNodeSchema,
+  ProviderSnapshotDiagnosticSchema,
   SourceFileSchema,
   type CanonicalEdge,
   type CanonicalNode,
@@ -16,6 +17,7 @@ import {
   type ProviderEdge,
   type ProviderFactBinding,
   type ProviderNode,
+  type ProviderSnapshotDiagnostic,
   type SourceFile,
   type ProviderFactRef,
   type ProviderNodeRef,
@@ -132,8 +134,8 @@ export class RepositoryAnalysisStage {
     yield* this.readEvents('COVERAGE', { parse: (value: unknown) => value });
   }
 
-  *readDiagnostics(): IterableIterator<unknown> {
-    yield* this.readEvents('DIAGNOSTIC', { parse: (value: unknown) => value });
+  *readDiagnostics(): IterableIterator<ProviderSnapshotDiagnostic> {
+    yield* this.readEvents('DIAGNOSTIC', ProviderSnapshotDiagnosticSchema);
   }
 
   confirmSucceeded(terminal: unknown): void {

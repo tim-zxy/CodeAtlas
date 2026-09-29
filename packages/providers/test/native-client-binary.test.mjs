@@ -29,7 +29,7 @@ test('production client completes a real Rust DESCRIBE handshake', async () => {
     timeoutMs: 5_000,
   });
   assert.equal(result.terminal.type, 'DESCRIBE_COMPLETED');
-  assert.deepEqual(result.terminal.payload.protocolVersions, [1]);
+  assert.deepEqual(result.terminal.payload.protocolVersions, [1, 2]);
   assert.deepEqual(result.terminal.payload.irSchemaVersions, [1]);
   assert.equal(result.stderr, '');
 });
