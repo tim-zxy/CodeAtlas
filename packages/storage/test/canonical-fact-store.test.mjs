@@ -71,15 +71,21 @@ async function withDatabase(run) {
   }
 }
 
-async function candidate(db, snapshotId, fingerprint) {
+async function candidate(db, snapshotId, fingerprint, options = {}) {
   const stage = new RepositoryAnalysisStage(db);
   const request = result.request;
   for (const original of result.events) {
     if (['SOURCE_FILE', 'NODE', 'EDGE', 'COVERAGE', 'DIAGNOSTIC'].includes(original.type)) {
       const event = structuredClone(original);
       if (event.payload?.providerSnapshotId) event.payload.providerSnapshotId = snapshotId;
+      if (event.type === 'COVERAGE' && options.danglingCoverage) {
+        event.payload.sourceFileId = 'missing-source';
+      }
       await stage.accept(event);
     }
+  }
+  if (options.diagnostic) {
+    await stage.accept({ type: 'DIAGNOSTIC', payload: options.diagnostic });
   }
   normalizeStagedAnalysis(stage, request);
   const snapshot = {
@@ -93,13 +99,14 @@ async function candidate(db, snapshotId, fingerprint) {
     startedAt: '2026-01-01T00:00:00.000Z',
     completedAt: '2026-01-01T00:00:01.000Z',
     capabilities: result.terminal.payload.capabilities,
-    diagnostics: [],
+    diagnostics: options.diagnostic ? [options.diagnostic] : [],
     outcome: 'SUCCEEDED',
   };
   mergeStagedAnalysis(stage, snapshot);
   const terminal = structuredClone(result.terminal);
   terminal.payload.providerSnapshotId = snapshotId;
   terminal.payload.revisionFingerprint = fingerprint;
+  if (options.diagnostic) terminal.payload.counts.diagnostics++;
   stage.confirmSucceeded(terminal);
   return { stage, snapshot };
 }
@@ -321,12 +328,21 @@ test('validated zero-fact success can atomically clear the active graph', async 
     });
     first.stage.close();
     const stage = new RepositoryAnalysisStage(db);
+    for (const file of result.request.payload.sourceFiles) {
+      await stage.accept({ type: 'SOURCE_FILE', payload: file });
+    }
     normalizeStagedAnalysis(stage, result.request);
     const snapshot = { ...first.snapshot, id: 'snapshot-empty', capabilities: [] };
     mergeStagedAnalysis(stage, snapshot);
     const terminal = structuredClone(result.terminal);
     terminal.payload.providerSnapshotId = snapshot.id;
-    terminal.payload.counts = { sourceFiles: 0, nodes: 0, edges: 0, coverage: 0, diagnostics: 0 };
+    terminal.payload.counts = {
+      sourceFiles: result.request.payload.sourceFiles.length,
+      nodes: 0,
+      edges: 0,
+      coverage: 0,
+      diagnostics: 0,
+    };
     terminal.payload.capabilities = [];
     stage.confirmSucceeded(terminal);
     store.applyAnalysisBatch(stage, {
@@ -343,5 +359,97 @@ test('validated zero-fact success can atomically clear the active graph', async 
       0,
     );
     stage.close();
+  });
+});
+
+test('Store rejects a completed stage that omits persisted source files', async () => {
+  await withDatabase(async (db) => {
+    const stage = new RepositoryAnalysisStage(db);
+    const snapshot = {
+      id: 'snapshot-empty-invalid',
+      repositoryId: result.request.payload.repository.id,
+      providerId: 'native',
+      providerVersion: '1',
+      runtimeVersion: '1',
+      requestedRevisionId: result.request.payload.revision.id,
+      requestedRevisionFingerprint: result.request.payload.revision.contentFingerprint,
+      startedAt: '2026-01-01T00:00:00.000Z',
+      completedAt: '2026-01-01T00:00:01.000Z',
+      capabilities: [],
+      diagnostics: [],
+      outcome: 'SUCCEEDED',
+    };
+    mergeStagedAnalysis(stage, snapshot);
+    const terminal = structuredClone(result.terminal);
+    terminal.payload.providerSnapshotId = snapshot.id;
+    terminal.payload.counts = { sourceFiles: 0, nodes: 0, edges: 0, coverage: 0, diagnostics: 0 };
+    terminal.payload.capabilities = [];
+    stage.confirmSucceeded(terminal);
+    assert.throws(
+      () =>
+        new RepositoryCanonicalFactStore(db).applyAnalysisBatch(stage, {
+          repositoryId: snapshot.repositoryId,
+          revisionId: snapshot.requestedRevisionId,
+          contentFingerprint: snapshot.requestedRevisionFingerprint,
+          snapshot,
+        }),
+      /Staged source file inventory is incomplete/,
+    );
+    assert.equal(db.prepare('SELECT count(*) AS n FROM provider_snapshots').get().n, 0);
+    stage.close();
+  });
+});
+
+test('dangling coverage and diagnostic source references cannot replace an active graph', async () => {
+  await withDatabase(async (db) => {
+    const store = new RepositoryCanonicalFactStore(db);
+    const first = await candidate(
+      db,
+      'snapshot-valid',
+      result.request.payload.revision.contentFingerprint,
+    );
+    store.applyAnalysisBatch(first.stage, {
+      repositoryId: first.snapshot.repositoryId,
+      revisionId: first.snapshot.requestedRevisionId,
+      contentFingerprint: first.snapshot.requestedRevisionFingerprint,
+      snapshot: first.snapshot,
+    });
+    first.stage.close();
+    const before = graph(db);
+    const diagnostic = {
+      code: 'TEST',
+      severity: 'WARNING',
+      message: 'Test diagnostic',
+      sourceRange: {
+        sourceFileId: 'missing-source',
+        startLine: 0,
+        startColumn: 0,
+        endLine: 0,
+        endColumn: 1,
+      },
+    };
+    for (const [snapshotId, options] of [
+      ['snapshot-bad-coverage', { danglingCoverage: true }],
+      ['snapshot-bad-diagnostic', { diagnostic }],
+    ]) {
+      const next = await candidate(
+        db,
+        snapshotId,
+        result.request.payload.revision.contentFingerprint,
+        options,
+      );
+      assert.throws(
+        () =>
+          store.applyAnalysisBatch(next.stage, {
+            repositoryId: next.snapshot.repositoryId,
+            revisionId: next.snapshot.requestedRevisionId,
+            contentFingerprint: next.snapshot.requestedRevisionFingerprint,
+            snapshot: next.snapshot,
+          }),
+        /Source range has no file|Coverage source has no file/,
+      );
+      assert.deepEqual(graph(db), before);
+      next.stage.close();
+    }
   });
 });

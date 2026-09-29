@@ -40,23 +40,27 @@ export function normalizeStagedAnalysis(
       'Expected ANALYZE',
     );
   }
-  const declared = new Map<string, SourceFile>(
-    request.payload.sourceFiles.map((file) => [file.id, file]),
-  );
-  for (const file of stage.readSourceFiles()) {
-    if (!isDeepStrictEqual(file, declared.get(file.id))) {
+  for (const file of request.payload.sourceFiles) {
+    if (!isDeepStrictEqual(stage.getSourceFile(file.id), file)) {
       throw new CanonicalNormalizationError(
         'INVALID_CONTEXT',
         ['sourceFiles', file.id],
-        'Source file differs from request',
+        'Source file is absent or differs from request',
       );
     }
   }
+  let stagedFileCount = 0;
+  for (const _file of stage.readSourceFiles()) stagedFileCount++;
+  if (stagedFileCount !== request.payload.sourceFiles.length) {
+    throw new CanonicalNormalizationError(
+      'INVALID_CONTEXT',
+      ['sourceFiles'],
+      'Staged source file count differs from request',
+    );
+  }
   const files = {
-    get: (id: string) => stage.getSourceFile(id) ?? declared.get(id),
-    getByPath: (path: string) =>
-      stage.getSourceFileByPath(path) ??
-      request.payload.sourceFiles.find((file) => file.path === path),
+    get: (id: string) => stage.getSourceFile(id) ?? undefined,
+    getByPath: (path: string) => stage.getSourceFileByPath(path) ?? undefined,
   };
   let providerId: string | undefined;
   for (const node of stage.readProviderNodes()) {

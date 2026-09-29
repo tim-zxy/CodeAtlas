@@ -138,6 +138,13 @@ export class RepositoryAnalysisStage {
     yield* this.readEvents('DIAGNOSTIC', ProviderSnapshotDiagnosticSchema);
   }
 
+  estimatedTempBytes(): number {
+    this.assertOpen();
+    const pages = this.db.prepare('PRAGMA temp.page_count').get() as { page_count: number };
+    const size = this.db.prepare('PRAGMA temp.page_size').get() as { page_size: number };
+    return pages.page_count * size.page_size;
+  }
+
   confirmSucceeded(terminal: unknown): void {
     this.assertOpen();
     if (this.completed) throw new Error('Analysis stage is already complete');

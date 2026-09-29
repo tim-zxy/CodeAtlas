@@ -86,12 +86,15 @@ Java SYMBOL facts, same-WORKTREE replacement, and rollback after destructive
 SQL steps. Runtime composition runs `java-basic-symbol` through the real
 Native binary into a migrated temporary repository database and checks active
 Canonical facts, Evidence, coverage, and freshness. `PARTIAL`, analyzer
-failure, cancellation, and changed source do not activate a candidate.
-The Cold Index case reports observed apply total and sampled Node RSS on its
-pinned input; these do not include Native child RSS or separate internal
-scan/parse/resolve/IPC/normalize/DB-apply timings. The broader stage-by-stage
-performance and Worker Consistency baseline remains P05-W9-001, with no new
-threshold inferred from this task's single-file observation.
+failure, cancellation, missing requested source files, dangling coverage or
+diagnostic source references, and changed source do not activate a candidate.
+The Cold Index case reports observed transport (including Native execution
+and IPC), normalization, merge, DB apply, transaction-lock, total, TEMP size,
+and sampled Node RSS on its pinned input. Native internal scan/parse/resolve
+and child RSS remain distinct, explicitly unavailable in that measurement;
+a separate deterministic Native memory benchmark is not substituted for the
+same-input peak. The broader multi-size stage and Worker Consistency baseline
+remains P05-W9-001, with no new threshold inferred from this single-file case.
 
 Phase 1 Knowledge evaluation distinguishes parser-grounded and source-grounded-degraded candidate paths. Report grounding, unsupported/partial coverage, unverified relations, publication acceptance/rejection, and agent utility by generation method without inventing a new numerical pass threshold. Later Diagram projection evaluation checks source/version references, permission/freshness, graph grounding, type-specific completeness, and sequence-order evidence. An unsupported diagram is reported as such, not rendered as a complete graph.
 

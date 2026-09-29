@@ -1,4 +1,5 @@
 import type { DatabaseSync } from 'node:sqlite';
+import { performance } from 'node:perf_hooks';
 import {
   ContentFingerprintSchema,
   EntityIdSchema,
@@ -31,7 +32,7 @@ export class RepositoryCanonicalFactStore {
     );
   }
 
-  applyAnalysisBatch(stage: RepositoryAnalysisStage, expectedValue: ExpectedAnalysis): void {
+  applyAnalysisBatch(stage: RepositoryAnalysisStage, expectedValue: ExpectedAnalysis): number {
     const expected = {
       repositoryId: EntityIdSchema.parse(expectedValue.repositoryId),
       revisionId: EntityIdSchema.parse(expectedValue.revisionId),
@@ -55,6 +56,7 @@ export class RepositoryCanonicalFactStore {
     });
     this.validateCandidate(stage, expected);
 
+    const lockStarted = performance.now();
     this.db.exec('BEGIN IMMEDIATE');
     try {
       const revision = this.db
@@ -108,6 +110,7 @@ export class RepositoryCanonicalFactStore {
         .run(revisionId, contentFingerprint, repositoryId);
       assert(changed.changes === 1, 'Activation pointer update failed');
       this.db.exec('COMMIT');
+      return performance.now() - lockStarted;
     } catch (error) {
       if (this.db.isTransaction) this.db.exec('ROLLBACK');
       throw error;
@@ -122,11 +125,14 @@ export class RepositoryCanonicalFactStore {
     const sourceRange = (range: { sourceFileId: string } | null) => {
       if (range)
         assert(
-          source.get(repositoryId, revisionId, range.sourceFileId),
+          stage.getSourceFile(range.sourceFileId) !== null &&
+            source.get(repositoryId, revisionId, range.sourceFileId),
           'Source range has no file',
         );
     };
+    let stagedFileCount = 0;
     for (const file of stage.readSourceFiles()) {
+      stagedFileCount++;
       assert(
         file.repositoryId === repositoryId && file.revisionId === revisionId,
         'Staged source file context differs',
@@ -142,6 +148,22 @@ export class RepositoryCanonicalFactStore {
         'Staged source file differs from persisted source',
       );
     }
+    const persistedFiles = this.db
+      .prepare('SELECT count(*) AS n FROM source_files WHERE repository_id = ? AND revision_id = ?')
+      .get(repositoryId, revisionId) as { n: number };
+    assert(stagedFileCount === persistedFiles.n, 'Staged source file inventory is incomplete');
+    for (const unknown of stage.readCoverage()) {
+      const sourceFileId = (unknown as { sourceFileId?: unknown }).sourceFileId;
+      assert(
+        sourceFileId === null ||
+          (typeof sourceFileId === 'string' &&
+            stage.getSourceFile(sourceFileId) !== null &&
+            source.get(repositoryId, revisionId, sourceFileId)),
+        'Coverage source has no file',
+      );
+    }
+    for (const diagnostic of stage.readDiagnostics()) sourceRange(diagnostic.sourceRange);
+    for (const diagnostic of expected.snapshot.diagnostics) sourceRange(diagnostic.sourceRange);
     for (const row of stage.readMergedRows('NODE')) {
       const node = row.value;
       assert(

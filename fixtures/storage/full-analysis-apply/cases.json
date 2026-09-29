@@ -12,6 +12,8 @@
     "dangling-or-duplicate-rejection",
     "same-worktree-replacement",
     "failed-apply-rollback",
-    "changed-source-rejection"
+    "changed-source-rejection",
+    "missing-source-file-rejection",
+    "dangling-coverage-diagnostic-rejection"
   ]
 }

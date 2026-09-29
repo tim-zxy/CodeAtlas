@@ -94,10 +94,13 @@ test('staged support grouping matches the registered two-provider selection Fixt
   db.close();
 });
 
-test('zero-fact staged normalization yields no canonical rows', () => {
+test('zero-fact staged normalization requires every requested source file', () => {
   const db = new DatabaseSync(':memory:');
   const stage = new RepositoryAnalysisStage(db);
-  normalizeStagedAnalysis(stage, result.request);
+  assert.throws(() => normalizeStagedAnalysis(stage, result.request), /Source file.*request/);
+  const emptyRequest = structuredClone(result.request);
+  emptyRequest.payload.sourceFiles = [];
+  normalizeStagedAnalysis(stage, emptyRequest);
   assert.deepEqual([...stage.readNormalizedNodes()], []);
   assert.deepEqual([...stage.readNormalizedEdges()], []);
   stage.close();

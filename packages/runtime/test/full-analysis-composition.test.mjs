@@ -22,6 +22,8 @@ const request = JSON.parse(
     'utf8',
   ),
 );
+const zeroFactRequest = structuredClone(request);
+zeroFactRequest.payload.sourceFiles = [];
 const manifestUrl = new URL('../../storage/migrations/repository/manifest.json', import.meta.url);
 const helper = fileURLToPath(
   new URL('../../providers/test/fixtures/native-client-child.mjs', import.meta.url),
@@ -111,10 +113,21 @@ async function withDatabase(run, sourceRequest = request) {
 
 test('runtime composes successful zero-fact Native stream into one active revision', async () => {
   await withDatabase(async (db) => {
-    await applyNativeFullAnalysis(db, request, options('valid-analyze'), descriptor);
-    assert.equal(readAnalysisFreshness(db, request.payload.repository.id), 'CURRENT');
+    await applyNativeFullAnalysis(db, zeroFactRequest, options('valid-analyze'), descriptor);
+    assert.equal(readAnalysisFreshness(db, zeroFactRequest.payload.repository.id), 'CURRENT');
     assert.equal(db.prepare('SELECT count(*) AS n FROM provider_snapshots').get().n, 1);
     assert.equal(db.prepare('SELECT count(*) AS n FROM canonical_nodes').get().n, 0);
+  }, zeroFactRequest);
+});
+
+test('runtime refuses a v1 success missing requested source-file accounting', async () => {
+  await withDatabase(async (db) => {
+    await assert.rejects(
+      applyNativeFullAnalysis(db, request, options('valid-analyze'), descriptor),
+      /Source file is absent/,
+    );
+    assert.equal(db.prepare('SELECT count(*) AS n FROM provider_snapshots').get().n, 0);
+    assert.equal(readAnalysisFreshness(db, request.payload.repository.id), 'NOT_INDEXED');
   });
 });
 
@@ -165,22 +178,34 @@ test(
     await withDatabase(async (db) => {
       const started = performance.now();
       let peakNodeRssBytes = process.memoryUsage().rss;
+      let measurement;
       const sample = setInterval(() => {
         peakNodeRssBytes = Math.max(peakNodeRssBytes, process.memoryUsage().rss);
       }, 5);
       try {
-        await applyNativeFullAnalysis(
+        measurement = await applyNativeFullAnalysis(
           db,
           nativeRequest,
           { executablePath: binary, arguments: ['--parse-workers', '1'], timeoutMs: 10_000 },
           described.terminal.payload,
         );
+        for (const name of [
+          'transportMs',
+          'normalizeMs',
+          'mergeMs',
+          'dbApplyMs',
+          'dbLockMs',
+          'totalMs',
+          'stageBytes',
+        ]) {
+          assert.ok(Number.isFinite(measurement[name]) && measurement[name] >= 0, name);
+        }
       } finally {
         clearInterval(sample);
       }
       peakNodeRssBytes = Math.max(peakNodeRssBytes, process.memoryUsage().rss);
       context.diagnostic(
-        `Cold Index Java basic SYMBOL: applyTotalMs=${(performance.now() - started).toFixed(1)}, sampledPeakNodeRssBytes=${peakNodeRssBytes} (Native child excluded)`,
+        `Cold Index Java basic SYMBOL: ${JSON.stringify({ ...measurement, sampledPeakNodeRssBytes: peakNodeRssBytes, testApplyWallMs: Number((performance.now() - started).toFixed(1)) })} (Native child excluded)`,
       );
       assert.equal(readAnalysisFreshness(db, nativeRequest.payload.repository.id), 'CURRENT');
       assert.ok(db.prepare('SELECT count(*) AS n FROM canonical_nodes').get().n > 0);
@@ -197,28 +222,28 @@ test(
 
 test('runtime rejects PARTIAL without changing the previously active graph', async () => {
   await withDatabase(async (db) => {
-    await applyNativeFullAnalysis(db, request, options('valid-analyze'), descriptor);
+    await applyNativeFullAnalysis(db, zeroFactRequest, options('valid-analyze'), descriptor);
     const before = db.prepare('SELECT * FROM repository_state').get();
     await assert.rejects(
-      applyNativeFullAnalysis(db, request, options('partial-analyze'), descriptor),
+      applyNativeFullAnalysis(db, zeroFactRequest, options('partial-analyze'), descriptor),
     );
     assert.deepEqual(db.prepare('SELECT * FROM repository_state').get(), before);
     assert.equal(db.prepare('SELECT count(*) AS n FROM provider_snapshots').get().n, 1);
-  });
+  }, zeroFactRequest);
 });
 
 test('runtime retains the active graph on analyzer failure and cancellation', async () => {
   await withDatabase(async (db) => {
-    await applyNativeFullAnalysis(db, request, options('valid-analyze'), descriptor);
+    await applyNativeFullAnalysis(db, zeroFactRequest, options('valid-analyze'), descriptor);
     const before = db.prepare('SELECT * FROM repository_state').get();
     const snapshots = db.prepare('SELECT count(*) AS n FROM provider_snapshots').get().n;
     await assert.rejects(
-      applyNativeFullAnalysis(db, request, options('analyzer-failed'), descriptor),
+      applyNativeFullAnalysis(db, zeroFactRequest, options('analyzer-failed'), descriptor),
     );
     const controller = new AbortController();
     const cancelled = applyNativeFullAnalysis(
       db,
-      request,
+      zeroFactRequest,
       { ...options('hang'), signal: controller.signal, timeoutMs: 3_000 },
       descriptor,
     );
@@ -226,22 +251,22 @@ test('runtime retains the active graph on analyzer failure and cancellation', as
     await assert.rejects(cancelled, { code: 'CANCELLED' });
     assert.deepEqual(db.prepare('SELECT * FROM repository_state').get(), before);
     assert.equal(db.prepare('SELECT count(*) AS n FROM provider_snapshots').get().n, snapshots);
-  });
+  }, zeroFactRequest);
 });
 
 test('runtime preserves the old graph as STALE after source changes during analysis', async () => {
   await withDatabase(async (db) => {
-    await applyNativeFullAnalysis(db, request, options('valid-analyze'), descriptor);
+    await applyNativeFullAnalysis(db, zeroFactRequest, options('valid-analyze'), descriptor);
     db.prepare('UPDATE revisions SET content_fingerprint = ? WHERE id = ?').run(
       'sha256:changed-source',
-      request.payload.revision.id,
+      zeroFactRequest.payload.revision.id,
     );
-    assert.equal(readAnalysisFreshness(db, request.payload.repository.id), 'STALE');
+    assert.equal(readAnalysisFreshness(db, zeroFactRequest.payload.repository.id), 'STALE');
     await assert.rejects(
-      applyNativeFullAnalysis(db, request, options('valid-analyze'), descriptor),
+      applyNativeFullAnalysis(db, zeroFactRequest, options('valid-analyze'), descriptor),
       /Source revision changed/,
     );
-    assert.equal(readAnalysisFreshness(db, request.payload.repository.id), 'STALE');
+    assert.equal(readAnalysisFreshness(db, zeroFactRequest.payload.repository.id), 'STALE');
     assert.equal(db.prepare('SELECT count(*) AS n FROM provider_snapshots').get().n, 1);
-  });
+  }, zeroFactRequest);
 });
