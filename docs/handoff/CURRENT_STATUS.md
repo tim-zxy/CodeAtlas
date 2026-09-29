@@ -7,21 +7,21 @@
 - Primary handoff entry: `ENGINEERING_HANDOFF.md`.
 - Compatibility entry: `CODEX_HANDOFF.md`.
 - Implementation repository: all 18 Phase 0 tasks and the documentation-only Phase 0 exit record are integrated on remote `main`. PR #6 merged P0-W9-003 at `9f4ec958c1f18ea13623fb7cf5703e0c1efe3b4c`; PR #7 merged the Phase 0 closeout at `71dd18ce58e89b489336fc942bfdac4b36cc024b`. Hosted CI for the closeout merge passed. Phase 0 is closed; the prior closeout-pending language below is historical evidence, not current state.
-- Active implementation phase: Phase 0.5. P05-W2-001 and P05-W2-002 were integrated by PR #8 (`ed4f80e`) and PR #9 (`813fcbe`); P05-W3-001..003 by PR #10 (`a9180d8`), PR #11 (`9bd70cf`), and PR #12 (`66b4034`). P05-W4-001 was integrated by [PR #13](https://github.com/tim-zxy/CodeAtlas/pull/13) at `917e56965f93ddfd8c3ce3faf5c2898a7878ad51` on 2026-09-28. Its push and PR CI runs `36416388284` and `36416498305` each passed TypeScript, Rust, and Native Java jobs for head `d7e9991`; no exact merge-SHA CI result is claimed. `git merge-base --is-ancestor d7e9991 origin/main` exits 0 after `git fetch origin main`. This is 6 of 14 listed Phase 0.5 tasks, not a phase exit.
+- Active implementation phase: Phase 0.5. P05-W2-001 and P05-W2-002 were integrated by PR #8 (`ed4f80e`) and PR #9 (`813fcbe`); P05-W3-001..003 by PR #10 (`a9180d8`), PR #11 (`9bd70cf`), and PR #12 (`66b4034`); P05-W4-001 by [PR #13](https://github.com/tim-zxy/CodeAtlas/pull/13) at `917e5696`. P05-W4-002 was integrated by [PR #14](https://github.com/tim-zxy/CodeAtlas/pull/14) into `main` at `ee07602b186494ffc68188a4849826cb0d489e97`; `git merge-base --is-ancestor b9d56a5 origin/main` exits 0 on 2026-09-29. The earlier P05-W4-002 section below is its pre-integration record. This is 7 of 14 listed Phase 0.5 tasks, not a phase exit.
 
 ## Phase readiness
 
 | Phase | Readiness | Implementation progress |
 |---|---|---|
 | 0 | IMPLEMENTATION-READY | 18 of 18 tasks integrated; 11 of 11 technical exit checks passed on `9f4ec95`; documentation closeout merged as PR #7 at `71dd18c` |
-| 0.5 | IMPLEMENTATION-READY | 6 of 14 listed tasks integrated through P05-W4-001; 8 remain, and Phase 0.5 exit gates remain open |
+| 0.5 | IMPLEMENTATION-READY | 7 of 14 listed tasks integrated through P05-W4-002; 7 remain, and Phase 0.5 exit gates remain open |
 | 1 | DESIGN-READY | 0 percent |
 | 2 | ARCHITECTURE-READY | 0 percent |
 | 3 | ROADMAP/ARCHITECTURE-READY | 0 percent |
 
 ## Next action
 
-P05-W4-002 FactMerger has local implementation, independent review, repair, and gate evidence below, but remains pending integration. Do not start dependent P05-W1-010 full Apply or promote Phase 0.5 until integration. The independent P05-W2-010 change detector remains available later. Source discovery remains Git-only; non-Git directory support is a separately reviewed adapter. Do not advance deferred capabilities.
+P05-W1-010 Full Analysis Apply is the active implementation task after P05-W4-002 integration. Its accepted [design](../superpowers/specs/2026-09-29-p05-w1-010-full-analysis-apply-design.md) and [plan](../superpowers/plans/2026-09-29-p05-w1-010-full-analysis-apply.md) govern bounded streaming, TEMP staging, R008 indexed fingerprint, and atomic activation. Only the R008/freshness slice has local evidence below; full Apply and Phase 0.5 exit remain open. The independent P05-W2-010 change detector remains available later. Source discovery remains Git-only; non-Git directory support is a separately reviewed adapter. Do not advance deferred capabilities.
 
 ## 2026-09-24 compatibility amendment evidence
 
@@ -30,6 +30,13 @@ P05-W4-002 FactMerger has local implementation, independent review, repair, and 
 - Documentation scope: Native resource/outcome/Worker Consistency requirements are mapped to existing P05 tasks; KnowledgeCandidate degradation, System Wiki, Diagram, and progressive Agent consumption are phase-gated. No product code, executable P05 Fixture, migration, Canonical IR/IPC contract, numeric threshold, or Phase 4 was introduced by this amendment. Hosted CI for this documentation change has not yet been observed.
 
 ## Active task evidence
+
+### P05-W1-010 Full Analysis Apply (R008/freshness slice locally verified; full task open)
+
+- Authority: accepted P05-W1-010 design/plan, SQLite Schema, Native IPC, Provider SPI, ADR-002/003/010/011/012/014/015, and the P05-W1-010 traceability row. The user selected native inline execution. R008 is additive; published R001-R007 SQL/checksums and the closed Phase 0 schema Fixture remain intact. Planned, unpublished Phase 1 repository migration names move to R009/R010. No Canonical IR or Native IPC schema changes are in this slice.
+- Fixture `p05-repository-activation-v1` at `fixtures/storage/repository-activation/cases.json` maps fresh R008, legacy-pointer upgrade, and failed-upgrade rollback to `packages/storage/test/analysis-activation-state.test.mjs`. The test initially failed on absent freshness exports and absent R008; after implementation it passed. A separate absent-Fixture test failed before the manifest was added and then passed. A legacy R007 pointer retains its old node and reports `UNKNOWN`; matching and changed `WORKTREE` fingerprints report `CURRENT` and `STALE`; a deliberately failing R008 rolls back its column and retains schema version 7, pointer, and old node.
+- Fresh local checks on 2026-09-29 before this status update: direct storage TypeScript build exited 0; the focused repository activation/schema/constraints and workspace-structure tests passed 29/29; the root-declared Node fileset plus the new activation test passed 570, failed 0, skipped 1 of 571 (existing Windows symlink-privilege skip); architecture dependency check passed all 17 projects; changed-file Prettier and Git whitespace checks passed after formatting. `pnpm test` stopped before scripts with `ERR_PNPM_VERIFY_DEPS_BEFORE_RUN` because installed modules do not match the lockfile; no install or dependency purge was attempted, and direct constituent checks are not represented as a passing `pnpm test`.
+- Remaining P05-W1-010 work: bounded Native stream, temporary staging and FactMerger equivalence, CanonicalFactStore one-transaction activation/failure injection, Application/Runtime composition, end-to-end Fixture/Evaluation and final review/hosted CI. No full-analysis graph activation, `REFRESH`, patch apply, query/CLI, or Phase 0.5 exit is claimed by the R008 slice.
 
 ### P05-W4-002 FactMerger (local review repaired; integration pending)
 
