@@ -21,13 +21,18 @@ fn hex_bytes(s: &str) -> Vec<u8> {
 fn shared_request_corpus_has_identical_closed_classifications() {
     let manifest: Value = serde_json::from_slice(&read("cases.json")).unwrap();
     for case in manifest["cases"].as_array().unwrap() {
-        let bytes = if let Some(hex) = case["bytesHex"].as_str() {
+        let mut bytes = if let Some(hex) = case["bytesHex"].as_str() {
             hex_bytes(hex)
         } else {
             let name = case["input"].as_str().unwrap();
             assert!(!name.contains('/') && !name.contains('\\') && !name.contains(".."));
             read(name)
         };
+        if let Some(count) = case["repeat"].as_u64() {
+            assert!((1..=1_000_001).contains(&count));
+            assert_eq!(bytes.len(), 1);
+            bytes = vec![bytes[0]; count as usize];
+        }
         let result = decode_request_v3(&bytes);
         if case["expected"].is_null() {
             let valid = result.unwrap_or_else(|e| panic!("{}: {e}", case["id"]));

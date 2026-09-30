@@ -2,13 +2,13 @@
 
 ## Maturity labels
 
-| Phase | Maturity | Meaning |
-|---|---|---|
-| 0 | IMPLEMENTATION-READY | Tasks, contracts, fixtures, and exit gates are defined. |
-| 0.5 | IMPLEMENTATION-READY | The code-intelligence proof path is directly implementable. |
-| 1 | DESIGN-READY | Scope, models, boundaries, and acceptance are defined; expand the work breakdown after Phase 0.5. |
-| 2 | ARCHITECTURE-READY | Capability boundary and invariants are defined; detailed design follows evidence from Phase 1. |
-| 3 | ROADMAP/ARCHITECTURE-READY | Direction and architectural guardrails are defined; implementation details are deliberately deferred to measured needs. |
+| Phase | Maturity                   | Meaning                                                                                                                 |
+| ----- | -------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| 0     | IMPLEMENTATION-READY       | Tasks, contracts, fixtures, and exit gates are defined.                                                                 |
+| 0.5   | IMPLEMENTATION-READY       | The code-intelligence proof path is directly implementable.                                                             |
+| 1     | DESIGN-READY               | Scope, models, boundaries, and acceptance are defined; expand the work breakdown after Phase 0.5.                       |
+| 2     | ARCHITECTURE-READY         | Capability boundary and invariants are defined; detailed design follows evidence from Phase 1.                          |
+| 3     | ROADMAP/ARCHITECTURE-READY | Direction and architectural guardrails are defined; implementation details are deliberately deferred to measured needs. |
 
 There is no Phase 4 in this roadmap.
 
@@ -32,7 +32,7 @@ Within those existing tasks, native scheduling obtains parse-worker mode from va
 
 P05-W3-003 uses the ADR-015 negotiated Native IPC v2 `ANALYZE` coverage payload for per-file/capability source-site counts and resolution distribution. Strict v1 remains available and reports numeric statistics as unavailable. This does not add a persisted ProviderSnapshot schema, protocol-v2 `REFRESH`, a new numerical gate, or an earlier query/activation dependency.
 
-Before Phase 1 promotion, P05-W3-020 must implement/evaluate restart-safe REFRESH. The user accepted [ADR-016](adr/ADR-016-native-refresh-derived-analysis-state.md) on 2026-09-30: negotiated v3, TypeScript-owned derived summaries and additive R010 reservation; unpublished Phase 1 execution/runtime-flow reservations now move to R011/R012. No original Phase 0.5 gate or phase boundary changes. The first [v3 contract design/Fixture packet](../superpowers/specs/2026-09-30-p05-w3-020-v3-contract-design.md) and plan await review; subsequent detailed packets cover state/full bootstrap, producer, composition and Evaluation. No product capability or R010 SQL is released by architecture acceptance.
+Before Phase 1 promotion, P05-W3-020 must implement/evaluate restart-safe REFRESH. The user accepted [ADR-016](adr/ADR-016-native-refresh-derived-analysis-state.md) on 2026-09-30: negotiated v3, TypeScript-owned derived summaries and additive R010 reservation; unpublished Phase 1 execution/runtime-flow reservations now move to R011/R012. No original Phase 0.5 gate or phase boundary changes. The first [v3 contract design/Fixture packet](../superpowers/specs/2026-09-30-p05-w3-020-v3-contract-design.md) and plan were approved for native execution; its input validators are locally implemented (review/integration open); subsequent detailed packets cover state/full bootstrap, producer, composition and Evaluation. No product capability or R010 SQL is released by architecture acceptance.
 
 ## Phase 1 Core product proof
 

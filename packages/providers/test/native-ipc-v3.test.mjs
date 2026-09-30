@@ -267,9 +267,15 @@ test('shared raw request corpus has identical closed classifications', async () 
   const manifest = JSON.parse(await readFile(new URL('cases.json', root), 'utf8'));
   for (const c of manifest.cases) {
     assert.ok(c.bytesHex || /^[a-z0-9-]+\.jsonl$/.test(c.input), c.id);
-    const bytes = c.bytesHex
+    let bytes = c.bytesHex
       ? Buffer.from(c.bytesHex, 'hex')
       : await readFile(new URL(c.input, root));
+    if (c.repeat !== undefined) {
+      assert.ok(
+        Number.isSafeInteger(c.repeat) && c.repeat > 0 && c.repeat <= 1000001 && bytes.length === 1,
+      );
+      bytes = Buffer.alloc(c.repeat, bytes[0]);
+    }
     if (c.expected === null) assert.ok(api.decodeNativeRequestV3(bytes).header, c.id);
     else
       assert.throws(
@@ -277,5 +283,53 @@ test('shared raw request corpus has identical closed classifications', async () 
         (e) => e.code === c.expected,
         c.id,
       );
+  }
+});
+
+test('P05-W3-020-A case manifest has task/spec/acceptance and required coverage', async () => {
+  const root = new URL('../../../fixtures/ipc/protocol-v3/', import.meta.url);
+  const manifest = JSON.parse(await readFile(new URL('cases.json', root), 'utf8'));
+  assert.equal(manifest.id, 'p05-native-v3-request-contract-v1');
+  assert.equal(manifest.task, 'P05-W3-020-A');
+  assert.ok(manifest.acceptance.includes('no production REFRESH'));
+  assert.ok((await readFile(new URL(manifest.spec, root), 'utf8')).includes('P05-W3-020-A'));
+  const errors = new Set(manifest.cases.map((c) => c.expected));
+  for (const e of [
+    'INVALID_REQUEST',
+    'PROTOCOL_CORRUPTION',
+    'RESOURCE_LIMIT_EXCEEDED',
+    'INCOMPATIBLE_PROTOCOL_VERSION',
+  ])
+    assert.ok(errors.has(e), e);
+  const ids = new Set(manifest.cases.map((c) => c.id));
+  assert.equal(ids.size, manifest.cases.length);
+  for (const id of [
+    'valid-full',
+    'valid-refresh',
+    'valid-empty-refresh',
+    'stale-empty-delta',
+    'duplicate-path',
+    'duplicate-id',
+    'foreign-site',
+    'coverage-shape',
+    'source-shape',
+    'diagnostic-shape',
+    'unpaired-surrogate',
+    'negative-zero',
+    'crlf',
+    'bom',
+    'invalid-utf8',
+    'early-eof',
+    'post-terminal',
+    'wrong-checksum',
+  ])
+    assert.ok(ids.has(id), id);
+  const workspace = JSON.parse(
+    await readFile(new URL('../../../package.json', import.meta.url), 'utf8'),
+  );
+  const pkg = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8'));
+  for (const name of ['native-analysis-state.test.mjs', 'native-ipc-v3.test.mjs']) {
+    assert.ok(workspace.scripts.test.includes(name));
+    assert.ok(pkg.scripts.test.includes(name));
   }
 });

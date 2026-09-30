@@ -1,6 +1,6 @@
 # P05-W3-020-A Native v3 contract design
 
-Status: REVIEW-READY; ADR-016 architecture accepted, this detailed packet awaiting review. No product implementation or capability registration claimed.
+Status: User accepted this detailed packet and native implementation on 2026-09-30; isolated input validators are locally implemented (final review/integration open). No real REFRESH producer or capability registration claimed.
 
 ## Goal and scope
 
@@ -10,19 +10,19 @@ This packet includes retained summaries, request framing/integrity and shared co
 
 ## Exact derived summary contract
 
-All objects are strict; every field below is required and nullable only where stated. Integers are safe and nonnegative (reject negative zero); spans use zero-based UTF-8 byte columns and start-inclusive/end-exclusive positions with end ≥ start. Reuse SourceFile and ProviderSnapshotDiagnostic schemas, and NativeCapabilityCoverageV2 statistics/equations. IDs, kinds, names and qualified names reuse their matching IR scalars; compatibility/version strings reuse NativeAnalyzerLanguage's exact nonblank ≤128-character scalar. Digests are lowercase SHA-256 hex, exactly 64 characters, not SourceFile fingerprints.
+All objects are strict; every field below is required and nullable only where stated. New counters/spans are safe and nonnegative (reject negative zero); the reused EpochMilliseconds deadline retains its signed safe-integer contract; spans use zero-based UTF-8 byte columns and start-inclusive/end-exclusive positions with end ≥ start. Reuse SourceFile and ProviderSnapshotDiagnostic schemas, and NativeCapabilityCoverageV2 statistics/equations. IDs, kinds, names and qualified names reuse their matching IR scalars; compatibility/version strings reuse NativeAnalyzerLanguage's exact nonblank ≤128-character scalar. Digests are lowercase SHA-256 hex, exactly 64 characters, not SourceFile fingerprints.
 
 `NativeFileAnalysisSummaryV1`:
 
-| Field         | Type / constraints                                                                                                                         |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| schemaVersion | literal 1                                                                                                                                  |
-| sourceFile    | existing strict SourceFile                                                                                                                 |
-| symbols       | array of strict `{providerFactId, providerKind, name, qualifiedName: string                                                                | null, signature: string, isStatic: boolean, span}`; span has startLine/startColumn/endLine/endColumn; signature may be empty |
-| relationSites | array of strict `{kind, variant, sourceFactId, targetHint, arity: safe integer                                                             | null, span}`; kind is IMPORT/CALL/INHERITANCE/REFERENCE; variant and targetHint are nonempty strings                         |
-| diagnostics   | array of existing ProviderSnapshotDiagnostic                                                                                               |
-| coverage      | array of NativeCapabilityCoverageV2; each sourceFileId equals this source ID; exactly one per requested capability in the enclosing bundle |
-| emittedFacts  | array of strict `{factType: NODE                                                                                                           | EDGE, providerFactId, contentDigest, ownership: FILE                                                                         | SHARED}` |
+| Field         | Type / constraints                                                                                                                                                                                          |
+| ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| schemaVersion | literal 1                                                                                                                                                                                                   |
+| sourceFile    | existing strict SourceFile                                                                                                                                                                                  |
+| symbols       | array of strict `{providerFactId, providerKind, name, qualifiedName: string or null, signature: string, isStatic: boolean, span}`; span has startLine/startColumn/endLine/endColumn; signature may be empty |
+| relationSites | array of strict `{kind, variant, sourceFactId, targetHint, arity: safe integer or null, span}`; kind is IMPORT/CALL/INHERITANCE/REFERENCE; variant and targetHint are nonempty strings                      |
+| diagnostics   | array of existing ProviderSnapshotDiagnostic                                                                                                                                                                |
+| coverage      | array of NativeCapabilityCoverageV2; each sourceFileId equals this source ID; exactly one per requested capability in the enclosing bundle                                                                  |
+| emittedFacts  | array of strict `{factType: NODE or EDGE, providerFactId, contentDigest, ownership: FILE or SHARED}`                                                                                                        |
 
 Duplicate symbol IDs or `(factType,providerFactId)` within a summary fail. Every site sourceFactId must identify a symbol in this file or the deterministic compilation-unit ID for this path; shared containers are not an arbitrary source escape hatch. Diagnostic source ranges, when present, reference this file. Preserve honest unresolved sites; do not persist a chosen target in relationSites. signatures/static/import variants are provider-specific cache input, not Canonical fields. Summary strings are bounded by line/aggregate/resource budgets, not a newly invented accuracy threshold.
 
@@ -69,7 +69,7 @@ Create Rust `analysis_state.rs` and `request_v3.rs`, export through `lib.rs` onl
 
 ## Fixtures and gates
 
-Planned case index `fixtures/ipc/protocol-v3/cases.json`, ID `p05-native-v3-request-contract-v1`, task P05-W3-020-A; raw LF `.jsonl` records protected by `.gitattributes -text`. This is a task-specific cases index, not an evaluation `fixture.json`. Register no source capability from it. TS `native-analysis-state.test.mjs`, `native-ipc-v3.test.mjs` and Rust `tests/request_v3_fixtures.rs` consume the same corpus and exact digest vectors.
+Executable task case index `fixtures/ipc/protocol-v3/cases.json`, ID `p05-native-v3-request-contract-v1`, task P05-W3-020-A; raw LF `.jsonl` records protected by `.gitattributes -text`. Malformed CRLF/partial-LF/BOM/UTF-8 inputs use literal `bytesHex` to survive patch transport; aggregate overflow uses one literal byte repeated 1,000,001 times by both bounded test readers. This is a task-specific cases index, not an evaluation `fixture.json`. Register no source capability from it. TS `native-analysis-state.test.mjs`, `native-ipc-v3.test.mjs` and Rust `tests/request_v3_fixtures.rs` consume the same corpus and exact digest vectors.
 
 Cases: valid full/refresh/zero-file input; unknown fields/versions; source/site ownership and duplicate IDs/paths; reordered object keys digest consistency; non-ASCII/UTF-8 byte-column and key-order vectors; negative zero/unsafe numbers; missing/extra baseline and source inventory; shared-container equal/different owners; import/overload/unresolved metadata preserved; wrong count/context/fingerprint/checksum; stale empty delta; sequence/ID drift; early EOF/post-terminal/CRLF/BOM/malformed UTF-8; byte boundaries and overflows. No parser/graph correctness claim from these input tests.
 

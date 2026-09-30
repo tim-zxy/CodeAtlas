@@ -6,6 +6,12 @@
   "acceptance": "cross-language strict input contract only; no production REFRESH claim",
   "cases": [
     {
+      "id": "aggregate-overflow",
+      "bytesHex": "20",
+      "repeat": 1000001,
+      "expected": "RESOURCE_LIMIT_EXCEEDED"
+    },
+    {
       "id": "signed-existing-deadline",
       "input": "signed-existing-deadline.jsonl",
       "expected": null

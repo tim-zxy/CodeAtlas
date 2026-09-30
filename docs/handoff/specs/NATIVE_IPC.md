@@ -20,13 +20,17 @@ Timeout and `AbortSignal` cancellation terminate the one-shot child, wait throug
 
 ```ts
 interface NativeRequestEnvelope<T> {
-  protocolVersion: 1; requestId: string;
-  type: "DESCRIBE" | "ANALYZE" | "REFRESH" | "CANCEL";
+  protocolVersion: 1;
+  requestId: string;
+  type: 'DESCRIBE' | 'ANALYZE' | 'REFRESH' | 'CANCEL';
   payload: T;
 }
 interface NativeEventEnvelope<T> {
-  protocolVersion: 1; requestId: string;
-  sequence: number; type: string; payload: T;
+  protocolVersion: 1;
+  requestId: string;
+  sequence: number;
+  type: string;
+  payload: T;
 }
 ```
 
@@ -81,11 +85,11 @@ For every request, event request IDs match, sequence is exactly zero-based and c
 
 The object-level complete-stream validator intentionally does not compute or verify integrity checksums by itself. The P0-W3-004 byte-stream client computes SHA-256 over the exact raw JSONL bytes of every pre-terminal event, including each LF, and compares the lowercase 64-character checksum in a successful `ANALYSIS_COMPLETED` or `REFRESH_COMPLETED` terminal. A mismatch is protocol corruption and discards the complete result. Failed terminal streams and request forms without a success checksum still receive complete-stream validation.
 
-### Accepted v3 architecture; detailed contract review open
+### Accepted v3 architecture; isolated input contract implementation
 
 [ADR-016](../adr/ADR-016-native-refresh-derived-analysis-state.md) accepts separate v3 ANALYZE/REFRESH and bounded JSONL request metadata/completion records. Existing single-record v1/v2 framing and strict payloads stay intact; v2 REFRESH remains unavailable. v1 DESCRIBE remains bootstrap. Do not advertise v3 until real producer/client compatibility tests pass or incremental capability until real REFRESH/Evaluation passes. Current executable advertisement remains unchanged.
 
-The [P05-W3-020-A contract design](../../superpowers/specs/2026-09-30-p05-w3-020-v3-contract-design.md) specifies summaries, compatibility context, exact input record/count/digest rules, complete baseline-to-target delta validation and shared byte Fixtures; it is REVIEW-READY, not yet an executable contract. Keep aggregate stdin/line 1,000,000 bytes, stdout 10,000,000 bytes, output events 10,000 and stderr 1,000,000 bytes including metadata. No IR or ProviderSnapshot v1 field is added. Output producer/state publication and cancellation/backpressure integration are separate reviewed packets; contract-only tests cannot claim runtime support.
+The [P05-W3-020-A contract design](../../superpowers/specs/2026-09-30-p05-w3-020-v3-contract-design.md) specifies summaries, compatibility context, exact input record/count/digest rules, complete baseline-to-target delta validation and shared byte Fixtures; it was approved for native execution and is locally implemented in `packages/providers/src/native-analysis-state.ts`, `native-ipc-v3.ts`, `native-ipc-v3-bytes.ts` and `crates/native-analyzer/src/{analysis_state,request_v3}.rs`. Required root/package Node and Cargo runners consume `fixtures/ipc/protocol-v3/cases.json` (`p05-native-v3-request-contract-v1`) and independent summary vectors. Final review/integration are open; serve_once, native-client lifecycle and DESCRIBE are not connected to v3. Keep aggregate stdin/line 1,000,000 bytes, stdout 10,000,000 bytes, output events 10,000 and stderr 1,000,000 bytes including metadata. No IR or ProviderSnapshot v1 field is added. Output producer/state publication and cancellation/backpressure integration are separate reviewed packets; contract-only tests cannot claim runtime support.
 
 ## Error model
 
@@ -104,4 +108,3 @@ Raw Fixture bytes are protected by `fixtures/ipc/protocol-v1/**/*.jsonl -text` i
 Both P0-W3-002 classifiers are deliberately test-only. P0-W3-003 moves `serde_json` into Rust production dependencies for the real protocol module and adds `p0-native-ipc-handshake-v1` at `fixtures/ipc/handshake-v1/cases.json`. `crates/native-analyzer/tests/handshake.rs` and the test-only `packages/providers/test/native-handshake.test.mjs` spawn the real no-argument executable, verify the five compatible/incompatible/invalid/malformed outcomes, enforce stdout/stderr separation and bounded capture, and validate recoverable output with the existing TypeScript schemas. The verifier is ordered after `cargo build --workspace` and is not production provider code.
 
 P0-W3-001 contributes the TypeScript object-schema Fixture for the request/event matrix, version and limit declarations, complete-stream ordering/terminal/count/context rules, and cancellation. P0-W3-002 proves cross-language agreement on the shared raw corpus. P0-W3-003 implements Rust `DESCRIBE` request decoding and emission. P0-W3-004 adds `p0-native-client-v1` at `fixtures/ipc/client-v1/cases.json`; `packages/providers/test/native-client.test.mjs` exercises malformed, out-of-order, oversize, timeout, cancellation, process-exit, checksum, and immutable-result behavior with a deterministic helper, while `packages/providers/test/native-client-binary.test.mjs` verifies the same production client against the real Rust binary. Atomic validated state application, Java/file-level incremental analysis, and native multi-event analysis emission remain later tasks.
-
