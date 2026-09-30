@@ -1,8 +1,12 @@
 import type { DatabaseSync } from 'node:sqlite';
 import { performance } from 'node:perf_hooks';
 import {
+  CanonicalEdgeSchema,
+  CanonicalNodeSchema,
   ContentFingerprintSchema,
   EntityIdSchema,
+  EvidenceSchema,
+  ProviderFactBindingSchema,
   ProviderSnapshotSchema,
   ProviderSnapshotDiagnosticSchema,
   type ContentFingerprint,
@@ -342,6 +346,42 @@ export class RepositoryCanonicalFactStore {
         value.canonicalFact.id,
         value.evidenceId,
       );
+    }
+    const candidate = this.db.prepare(`INSERT INTO active_support_candidates
+      (evidence_id, fact_type, canonical_fact_id, candidate_json) VALUES (?, ?, ?, ?)`);
+    const nodeKey = this.db.prepare(
+      'SELECT fact_key FROM canonical_nodes WHERE revision_id = ? AND id = ?',
+    );
+    const edgeKey = this.db.prepare(
+      'SELECT fact_key FROM canonical_edges WHERE revision_id = ? AND id = ?',
+    );
+    for (const group of stage.readSupportGroups<{
+      factType: 'NODE' | 'EDGE';
+      canonical: unknown;
+      evidence: unknown;
+      binding: unknown;
+    }>()) {
+      for (const support of group) {
+        const fact = (
+          support.factType === 'NODE' ? CanonicalNodeSchema : CanonicalEdgeSchema
+        ).parse(support.canonical);
+        const evidenceValue = EvidenceSchema.parse(support.evidence);
+        const bindingValue = ProviderFactBindingSchema.parse(support.binding);
+        assert(
+          bindingValue.evidenceId === evidenceValue.id &&
+            bindingValue.canonicalFact.factType === support.factType &&
+            bindingValue.canonicalFact.id === fact.id &&
+            bindingValue.providerSnapshotId === evidenceValue.providerSnapshotId &&
+            fact.repositoryId === evidenceValue.repositoryId &&
+            fact.revisionId === evidenceValue.revisionId &&
+            (
+              (support.factType === 'NODE' ? nodeKey : edgeKey).get(fact.revisionId, fact.id) as
+                { fact_key: string } | undefined
+            )?.fact_key === fact.factKey,
+          'Support candidate differs from binding',
+        );
+        candidate.run(evidenceValue.id, support.factType, fact.id, JSON.stringify(fact));
+      }
     }
   }
 

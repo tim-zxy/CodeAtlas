@@ -126,6 +126,8 @@ Bound pending files, completed results, native output, normalization, and stagin
 
 Depends on P05-W1-010 and FactMerger. Atomically support upsert/remove node and edge events, recompute canonical support, and prevent dangling/stale bindings.
 
+Use additive R009 active support candidates and the existing FactMerger selector. A migrated graph without complete per-support candidates must request full analysis before patching. Keep the last graph and activation fingerprint on any invalid patch, stale base, or transaction failure. See the accepted P05-W1-011 design and plan; Rust REFRESH production remains P05-W3-020.
+
 ### P05-W2-010 Change detector
 
 Depends on fingerprints. Produce added, modified, deleted, and renamed changes; delete-plus-add is acceptable for rename in Phase 0.5. Prove stable results across restart.

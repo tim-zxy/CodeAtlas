@@ -57,6 +57,13 @@
       "file": "008_indexed_fingerprint.sql",
       "checksum": "sha256:bd57f0d186f3834dd9dc8be9d36b7f0bebdab96f6cbbaa04d5d86fc46b49180a",
       "backupRequired": false
+    },
+    {
+      "version": 9,
+      "name": "active_support_candidates",
+      "file": "009_active_support_candidates.sql",
+      "checksum": "sha256:35a708e895e009be17336eb748a53406148d031523ad741da8d272e04758e870",
+      "backupRequired": false
     }
   ]
 }

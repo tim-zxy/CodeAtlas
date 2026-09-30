@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "p05-active-support-candidates-v1",
+  "task": "P05-W1-011",
+  "governingSpec": "docs/superpowers/specs/2026-09-30-p05-w1-011-incremental-patch-apply-design.md",
+  "acceptance": "R009 preserves older active state without inventing candidates and full analysis writes each original active support candidate",
+  "cases": [
+    "fresh-r009-schema",
+    "r008-to-r009-preserves-graph",
+    "full-analysis-candidate-write",
+    "same-worktree-replacement-retires-candidates",
+    "failed-full-replacement-restores-candidates"
+  ]
+}

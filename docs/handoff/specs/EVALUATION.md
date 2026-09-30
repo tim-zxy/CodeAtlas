@@ -96,5 +96,14 @@ a separate deterministic Native memory benchmark is not substituted for the
 same-input peak. The broader multi-size stage and Worker Consistency baseline
 remains P05-W9-001, with no new threshold inferred from this single-file case.
 
+P05-W1-011 registers `p05-incremental-patch-apply-v1` for the Storage/Application
+half of a validated patch. Exact SQLite images and the `two-provider-same-call`
+golden prove retained-support reselection, last-support removal, legacy-R009
+full-analysis fallback, stale-base refusal, and rollback after support or
+pointer mutation. Synthetic IPC v1 REFRESH input proves the application path;
+real Native REFRESH output and the existing 100% incremental-correctness and
+zero-stale-binding phase gates remain P05-W3-020/P05-W9-001. No new numerical
+threshold or Phase 0.5 exit claim follows from this task-local Fixture.
+
 Phase 1 Knowledge evaluation distinguishes parser-grounded and source-grounded-degraded candidate paths. Report grounding, unsupported/partial coverage, unverified relations, publication acceptance/rejection, and agent utility by generation method without inventing a new numerical pass threshold. Later Diagram projection evaluation checks source/version references, permission/freshness, graph grounding, type-specific completeness, and sequence-order evidence. An unsupported diagram is reported as such, not rendered as a complete graph.
 

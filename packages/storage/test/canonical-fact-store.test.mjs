@@ -120,10 +120,72 @@ function graph(db) {
       'evidence',
       'fact_evidence',
       'provider_fact_bindings',
+      'active_support_candidates',
       'provider_snapshots',
     ].map((table) => [table, db.prepare(`SELECT * FROM ${table} ORDER BY 1`).all()]),
   );
 }
+
+test('full apply preserves every support candidate for future reselection', async () => {
+  await withDatabase(async (db) => {
+    const { stage, snapshot } = await candidate(
+      db,
+      'snapshot-candidates',
+      result.request.payload.revision.contentFingerprint,
+    );
+    try {
+      new RepositoryCanonicalFactStore(db).applyAnalysisBatch(stage, {
+        repositoryId: result.request.payload.repository.id,
+        revisionId: result.request.payload.revision.id,
+        contentFingerprint: result.request.payload.revision.contentFingerprint,
+        snapshot,
+      });
+      const bindings = db
+        .prepare('SELECT evidence_id, canonical_fact_id FROM provider_fact_bindings')
+        .all();
+      const candidates = db
+        .prepare(
+          'SELECT evidence_id, canonical_fact_id, candidate_json FROM active_support_candidates',
+        )
+        .all();
+      assert.equal(bindings.length, candidates.length);
+      assert.ok(bindings.length > 0);
+      for (const row of candidates) {
+        assert.ok(bindings.some((binding) => binding.evidence_id === row.evidence_id));
+        assert.equal(JSON.parse(row.candidate_json).id, row.canonical_fact_id);
+      }
+    } finally {
+      stage.close();
+    }
+  });
+});
+
+test('full apply rejects a support candidate outside the requested repository', async () => {
+  await withDatabase(async (db) => {
+    const { stage, snapshot } = await candidate(
+      db,
+      'snapshot-foreign-support',
+      result.request.payload.revision.contentFingerprint,
+    );
+    try {
+      db.exec(`UPDATE temp.analysis_support
+        SET payload = json_set(payload, '$.canonical.repositoryId', 'foreign-repository')
+        WHERE evidence_id = (SELECT evidence_id FROM temp.analysis_support LIMIT 1)`);
+      assert.throws(() =>
+        new RepositoryCanonicalFactStore(db).applyAnalysisBatch(stage, {
+          repositoryId: result.request.payload.repository.id,
+          revisionId: result.request.payload.revision.id,
+          contentFingerprint: result.request.payload.revision.contentFingerprint,
+          snapshot,
+        }),
+      );
+      assert.equal(db.prepare('SELECT count(*) AS n FROM canonical_nodes').get().n, 0);
+      assert.equal(db.prepare('SELECT count(*) AS n FROM active_support_candidates').get().n, 0);
+    } finally {
+      stage.close();
+    }
+  });
+});
 
 test('full apply activates facts and both freshness fields together', async () => {
   await withDatabase(async (db) => {
@@ -238,6 +300,16 @@ test('same-WORKTREE success retires old support and replaces graph under one poi
       db
         .prepare(
           "SELECT count(*) AS n FROM provider_fact_bindings WHERE provider_snapshot_id = 'snapshot-A'",
+        )
+        .get().n,
+      0,
+    );
+    assert.equal(
+      db
+        .prepare(
+          `SELECT count(*) AS n FROM active_support_candidates AS candidate
+           JOIN evidence AS evidence ON evidence.id = candidate.evidence_id
+           WHERE evidence.provider_snapshot_id = 'snapshot-A'`,
         )
         .get().n,
       0,

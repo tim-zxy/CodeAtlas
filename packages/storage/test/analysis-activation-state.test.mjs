@@ -51,7 +51,7 @@ test('R008 fresh state distinguishes not-indexed, current, stale, and unknown', 
     assert.deepEqual(
       (await storage.runMigrations({ databasePath, databaseKind: 'REPOSITORY', manifestUrl }))
         .appliedVersions,
-      [1, 2, 3, 4, 5, 6, 7, 8],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9],
     );
     const db = new DatabaseSync(databasePath);
     try {
@@ -114,7 +114,7 @@ test('R008 upgrades legacy pointer without inventing fingerprint or removing gra
     assert.deepEqual(
       (await storage.runMigrations({ databasePath, databaseKind: 'REPOSITORY', manifestUrl }))
         .appliedVersions,
-      [8],
+      [8, 9],
     );
     const db = new DatabaseSync(databasePath);
     try {
@@ -127,7 +127,7 @@ test('R008 upgrades legacy pointer without inventing fingerprint or removing gra
         db.prepare('SELECT name FROM canonical_nodes WHERE id = ?').get('old-node').name,
         'old',
       );
-      assert.equal(db.prepare('PRAGMA user_version').get().user_version, 8);
+      assert.equal(db.prepare('PRAGMA user_version').get().user_version, 9);
       assert.deepEqual(
         (await storage.runMigrations({ databasePath, databaseKind: 'REPOSITORY', manifestUrl }))
           .appliedVersions,
