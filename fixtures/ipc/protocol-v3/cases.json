@@ -6,6 +6,16 @@
   "acceptance": "cross-language strict input contract only; no production REFRESH claim",
   "cases": [
     {
+      "id": "signed-existing-deadline",
+      "input": "signed-existing-deadline.jsonl",
+      "expected": null
+    },
+    {
+      "id": "unpaired-surrogate",
+      "input": "unpaired-surrogate.jsonl",
+      "expected": "INVALID_REQUEST"
+    },
+    {
       "id": "valid-full",
       "input": "valid-full.jsonl",
       "expected": null
