@@ -1,6 +1,6 @@
 # P05-W1-011 Incremental Patch Apply Design
 
-Status: proposed for written-spec review. No product code or migration is authorized by this document alone.
+Status: accepted by user on 2026-09-30 for implementation planning. Product code and migration await review of the implementation plan.
 
 ## Intent and boundary
 
@@ -14,7 +14,7 @@ R005 `provider_fact_bindings` records Provider Fact identity, snapshot, Canonica
 
 ## Decision and alternatives
 
-Add an application-private, validated per-support candidate table in repository migration R009. Persist each active support's normalized `CanonicalNode` or `CanonicalEdge` JSON, keyed by its Evidence ID and tied to its active binding. Full analysis writes these candidates from its existing staged supports; patch apply loads only affected support groups and calls the existing `selectMergedGroup`. It does not introduce a second scoring rule or expand public Canonical/Evidence IR.
+Add an application-private, validated per-support candidate table in repository migration R009. Persist each active support's normalized `CanonicalNode` or `CanonicalEdge` JSON, keyed by its Evidence ID and tied to its active binding. Full analysis writes these candidates from its existing staged supports; patch apply loads only affected support groups and calls the existing `selectMergedGroup` through a structural callback supplied by Runtime. Storage does not import the Provider package. It does not introduce a second scoring rule or expand public Canonical/Evidence IR.
 
 Alternatives rejected:
 
@@ -62,4 +62,4 @@ Reuse `two-provider-same-call`, `p05-full-analysis-apply-v1`, `p05-repository-ac
 - Synchronize on approval: `SQLITE_SCHEMA.md`, `ROADMAP.md`, `WORK_BREAKDOWN.md`, `PHASE_ACCEPTANCE.md`, `DESIGN_TRACEABILITY.md`, `EVALUATION.md`, `CURRENT_STATUS.md`, migration manifest/Fixture inventory, and P05-W1-010 full-apply documentation as implementation makes the candidate write path real. Record this proposal as accepted before changing migration files or product code.
 - Rollback: preserve pre-R009 backup; never infer missing candidates or lower a gate to make a patch pass.
 
-This written proposal requires user review before an implementation plan or product-code change.
+The user accepted this written design and additive design-change proposal on 2026-09-30. Implementation still requires a reviewed plan and synchronized governing documents before product-code or migration changes.
