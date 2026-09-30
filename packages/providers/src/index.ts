@@ -2,6 +2,8 @@ export * from './native-client.js';
 export * from './native-ipc.js';
 export * from './native-ipc-v2.js';
 export * from './native-analysis-state.js';
+export * from './native-ipc-v3.js';
+export * from './native-ipc-v3-bytes.js';
 export * from './coverage-summary.js';
 export * from './provider-routing.js';
 export * from './provider-spi.js';

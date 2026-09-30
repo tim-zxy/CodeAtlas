@@ -1,3 +1,4 @@
 fixtures/ipc/protocol-v1/**/*.jsonl -text
 fixtures/ipc/handshake-v1/**/*.jsonl -text
 fixtures/ipc/protocol-v2/**/*.jsonl -text
+fixtures/ipc/protocol-v3/**/*.jsonl -text

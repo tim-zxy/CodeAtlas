@@ -1,0 +1,179 @@
+{
+  "id": "p05-native-v3-request-contract-v1",
+  "schemaVersion": 1,
+  "task": "P05-W3-020-A",
+  "spec": "../../../docs/superpowers/specs/2026-09-30-p05-w3-020-v3-contract-design.md",
+  "acceptance": "cross-language strict input contract only; no production REFRESH claim",
+  "cases": [
+    {
+      "id": "valid-full",
+      "input": "valid-full.jsonl",
+      "expected": null
+    },
+    {
+      "id": "valid-refresh",
+      "input": "valid-refresh.jsonl",
+      "expected": null
+    },
+    {
+      "id": "valid-empty-refresh",
+      "input": "valid-empty-refresh.jsonl",
+      "expected": null
+    },
+    {
+      "id": "unknown-field",
+      "input": "unknown-field.jsonl",
+      "expected": "INVALID_REQUEST"
+    },
+    {
+      "id": "unsupported-language",
+      "input": "unsupported-language.jsonl",
+      "expected": "INVALID_REQUEST"
+    },
+    {
+      "id": "unknown-capability",
+      "input": "unknown-capability.jsonl",
+      "expected": "INVALID_REQUEST"
+    },
+    {
+      "id": "unsafe-budget",
+      "input": "unsafe-budget.jsonl",
+      "expected": "INVALID_REQUEST"
+    },
+    {
+      "id": "unsupported-version",
+      "input": "unsupported-version.jsonl",
+      "expected": "INCOMPATIBLE_PROTOCOL_VERSION"
+    },
+    {
+      "id": "baseline-digest",
+      "input": "baseline-digest.jsonl",
+      "expected": "INVALID_REQUEST"
+    },
+    {
+      "id": "baseline-count",
+      "input": "baseline-count.jsonl",
+      "expected": "INVALID_REQUEST"
+    },
+    {
+      "id": "context-drift",
+      "input": "context-drift.jsonl",
+      "expected": "INVALID_REQUEST"
+    },
+    {
+      "id": "stale-empty-delta",
+      "input": "stale-empty-delta.jsonl",
+      "expected": "INVALID_REQUEST"
+    },
+    {
+      "id": "duplicate-path",
+      "input": "duplicate-path.jsonl",
+      "expected": "INVALID_REQUEST"
+    },
+    {
+      "id": "duplicate-id",
+      "input": "duplicate-id.jsonl",
+      "expected": "INVALID_REQUEST"
+    },
+    {
+      "id": "target-context",
+      "input": "target-context.jsonl",
+      "expected": "INVALID_REQUEST"
+    },
+    {
+      "id": "same-path-identity",
+      "input": "same-path-identity.jsonl",
+      "expected": "INVALID_REQUEST"
+    },
+    {
+      "id": "missing-inventory",
+      "input": "missing-inventory.jsonl",
+      "expected": "INVALID_REQUEST"
+    },
+    {
+      "id": "source-shape",
+      "input": "source-shape.jsonl",
+      "expected": "INVALID_REQUEST"
+    },
+    {
+      "id": "diagnostic-shape",
+      "input": "diagnostic-shape.jsonl",
+      "expected": "INVALID_REQUEST"
+    },
+    {
+      "id": "coverage-shape",
+      "input": "coverage-shape.jsonl",
+      "expected": "INVALID_REQUEST"
+    },
+    {
+      "id": "foreign-site",
+      "input": "foreign-site.jsonl",
+      "expected": "INVALID_REQUEST"
+    },
+    {
+      "id": "raw-source",
+      "input": "raw-source.jsonl",
+      "expected": "INVALID_REQUEST"
+    },
+    {
+      "id": "missing-baseline",
+      "input": "missing-baseline.jsonl",
+      "expected": "INVALID_REQUEST"
+    },
+    {
+      "id": "wrong-completion-count",
+      "input": "wrong-completion-count.jsonl",
+      "expected": "INVALID_REQUEST"
+    },
+    {
+      "id": "wrong-checksum",
+      "input": "wrong-checksum.jsonl",
+      "expected": "PROTOCOL_CORRUPTION"
+    },
+    {
+      "id": "sequence-drift",
+      "input": "sequence-drift.jsonl",
+      "expected": "PROTOCOL_CORRUPTION"
+    },
+    {
+      "id": "request-id-drift",
+      "input": "request-id-drift.jsonl",
+      "expected": "PROTOCOL_CORRUPTION"
+    },
+    {
+      "id": "negative-zero",
+      "input": "negative-zero.jsonl",
+      "expected": "PROTOCOL_CORRUPTION"
+    },
+    {
+      "id": "early-eof",
+      "input": "early-eof.jsonl",
+      "expected": "PROTOCOL_CORRUPTION"
+    },
+    {
+      "id": "post-terminal",
+      "input": "post-terminal.jsonl",
+      "expected": "PROTOCOL_CORRUPTION"
+    },
+    {
+      "id": "partial-line",
+      "expected": "PROTOCOL_CORRUPTION",
+      "bytesHex": "7b2270726f746f636f6c56657273696f6e223a332c22726571756573744964223a22726571222c2273657175656e6365223a302c2274797065223a22414e414c595a45222c227061796c6f6164223a7b226972536368656d6156657273696f6e223a312c2270726f7669646572536e617073686f744964223a22736e6170222c227265706f7369746f7279223a7b226964223a2272222c22726f6f7450617468223a222f7265706f227d2c227265717565737465644361706162696c6974696573223a5b2253594d424f4c225d2c22646561646c696e6545706f63684d73223a6e756c6c2c227265736f75726365427564676574223a7b226d61784475726174696f6e4d73223a313030302c226d61784d656d6f72794279746573223a31303030303030302c226d61784576656e7473223a3130307d2c22616e616c797369735374617465436f6e74657874223a7b2270726f76696465724964223a226e6174697665222c2270726f766964657256657273696f6e223a22302e302e30222c226c616e6775616765223a7b226c616e67756167654964223a226a617661222c226772616d6d617256657273696f6e223a22302e32332e35222c22616e616c797a657256657273696f6e223a22302e302e30222c22636f6d7061746962696c69747956657273696f6e223a2231227d2c227265736f6c76657256657273696f6e223a2231222c226e6f726d616c697a657256657273696f6e223a2231222c22706f6c69637946696e6765727072696e74223a22706f6c696379227d2c227265766973696f6e223a7b226964223a22726576222c227265706f7369746f72794964223a2272222c226b696e64223a22574f524b54524545222c22636f6e74656e7446696e6765727072696e74223a2262617365222c22626173655265766973696f6e4964223a6e756c6c7d2c22736f7572636546696c6573223a5b5d2c22626173656c696e655374617465223a6e756c6c7d7d0a7b2270726f746f636f6c56657273696f6e223a332c22726571756573744964223a22726571222c2273657175656e6365223a312c2274797065223a22524551554553545f434f4d504c45544544222c227061796c6f6164223a7b2273756d6d6172795265636f726473223a302c22696e74656772697479436865636b73756d223a2232346261366463663839316264363461633939613766393564353332336634393866663134376632373730373731613363666235393064353737313231363461227d7d"
+    },
+    {
+      "id": "crlf",
+      "expected": "PROTOCOL_CORRUPTION",
+      "bytesHex": "7b2270726f746f636f6c56657273696f6e223a332c22726571756573744964223a22726571222c2273657175656e6365223a302c2274797065223a22414e414c595a45222c227061796c6f6164223a7b226972536368656d6156657273696f6e223a312c2270726f7669646572536e617073686f744964223a22736e6170222c227265706f7369746f7279223a7b226964223a2272222c22726f6f7450617468223a222f7265706f227d2c227265717565737465644361706162696c6974696573223a5b2253594d424f4c225d2c22646561646c696e6545706f63684d73223a6e756c6c2c227265736f75726365427564676574223a7b226d61784475726174696f6e4d73223a313030302c226d61784d656d6f72794279746573223a31303030303030302c226d61784576656e7473223a3130307d2c22616e616c797369735374617465436f6e74657874223a7b2270726f76696465724964223a226e6174697665222c2270726f766964657256657273696f6e223a22302e302e30222c226c616e6775616765223a7b226c616e67756167654964223a226a617661222c226772616d6d617256657273696f6e223a22302e32332e35222c22616e616c797a657256657273696f6e223a22302e302e30222c22636f6d7061746962696c69747956657273696f6e223a2231227d2c227265736f6c76657256657273696f6e223a2231222c226e6f726d616c697a657256657273696f6e223a2231222c22706f6c69637946696e6765727072696e74223a22706f6c696379227d2c227265766973696f6e223a7b226964223a22726576222c227265706f7369746f72794964223a2272222c226b696e64223a22574f524b54524545222c22636f6e74656e7446696e6765727072696e74223a2262617365222c22626173655265766973696f6e4964223a6e756c6c7d2c22736f7572636546696c6573223a5b5d2c22626173656c696e655374617465223a6e756c6c7d7d0d0a7b2270726f746f636f6c56657273696f6e223a332c22726571756573744964223a22726571222c2273657175656e6365223a312c2274797065223a22524551554553545f434f4d504c45544544222c227061796c6f6164223a7b2273756d6d6172795265636f726473223a302c22696e74656772697479436865636b73756d223a2232346261366463663839316264363461633939613766393564353332336634393866663134376632373730373731613363666235393064353737313231363461227d7d0d0a"
+    },
+    {
+      "id": "bom",
+      "bytesHex": "efbbbf7b7d0a",
+      "expected": "PROTOCOL_CORRUPTION"
+    },
+    {
+      "id": "invalid-utf8",
+      "bytesHex": "ff0a",
+      "expected": "PROTOCOL_CORRUPTION"
+    }
+  ]
+}
