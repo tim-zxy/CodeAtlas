@@ -6,6 +6,35 @@
   "acceptance": "cross-language strict input contract only; no production REFRESH claim",
   "cases": [
     {
+      "id": "decimal-safe-boundary",
+      "input": "decimal-safe-boundary.jsonl",
+      "expected": null,
+      "maxEvents": 9007199254740991
+    },
+    {
+      "id": "fractional-rounding-trap",
+      "input": "fractional-rounding-trap.jsonl",
+      "expected": "INVALID_REQUEST"
+    },
+    { "id": "number-overflow", "input": "number-overflow.jsonl", "expected": "INVALID_REQUEST" },
+    { "id": "deep-unknown", "input": "deep-unknown.jsonl", "expected": "INVALID_REQUEST" },
+    {
+      "id": "deep-unknown-protocol",
+      "input": "deep-unknown-protocol.jsonl",
+      "expected": "INCOMPATIBLE_PROTOCOL_VERSION"
+    },
+    {
+      "id": "surrogate-id-drift",
+      "input": "surrogate-id-drift.jsonl",
+      "expected": "PROTOCOL_CORRUPTION"
+    },
+    {
+      "id": "unknown-record-type",
+      "input": "unknown-record-type.jsonl",
+      "expected": "INVALID_REQUEST"
+    },
+    { "id": "decimal-summary-digest", "input": "decimal-summary-digest.jsonl", "expected": null },
+    {
       "id": "aggregate-overflow",
       "bytesHex": "20",
       "repeat": 1000001,

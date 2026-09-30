@@ -1,6 +1,6 @@
 # P05-W3-020-A Native v3 contract design
 
-Status: User accepted this detailed packet and native implementation on 2026-09-30; isolated input validators are locally implemented (final review/integration open). No real REFRESH producer or capability registration claimed.
+Status: User accepted this detailed packet and native implementation on 2026-09-30; isolated input validators are locally implemented (one independent review completed; findings repaired; integration open). No real REFRESH producer or capability registration claimed.
 
 ## Goal and scope
 
@@ -60,6 +60,8 @@ Keep ceilings exactly: aggregate stdin 1,000,000 bytes including all LFs; each l
 Decoder error mapping: byte ceiling → RESOURCE_LIMIT_EXCEEDED; invalid framing/UTF-8/JSON, request ID/sequence drift, missing/extra completion or checksum mismatch → PROTOCOL_CORRUPTION; unsupported protocol value → INCOMPATIBLE_PROTOCOL_VERSION; unknown fields/types, invalid scalar/ownership/context/count/digest/inventory/delta or Java/capability mismatch → INVALID_REQUEST. Validation order is byte/framing → UTF-8/JSON → protocol → envelope identity/sequence/order → payload/bundle/delta → completion/counts → raw integrity. Error messages are fixed bounded diagnostics. This decoder cannot prove a database's active fingerprint; the later Store validates it under transaction.
 
 ## APIs and files
+
+Rust wire decoding uses only the existing serde_json `raw_value` feature to validate complete JSON syntax iteratively. Materialize only the strict record's deepest allowed six-level path (`payload.coverage[].statistics.resolutionCounts.EXACT`), rejecting deeper shapes after envelope checks; this is derived schema depth, not a new wire/resource threshold. Parse numeric tokens with Rust's standard binary64 parser so decimal/exponent spellings agree with JSON.parse; preserve negative zero for rejection, and reject nonfinite payload values without misclassifying valid JSON syntax. Compare request IDs as decoded UTF-16 units before Unicode scalar rejection so distinct invalid IDs cannot collapse. Value-only validators cannot recover lexical distinctions lost by a caller's earlier parser. Unknown record types are INVALID_REQUEST; misplaced known record types remain order corruption.
 
 Create `packages/providers/src/native-analysis-state.ts`: exported strict `NativeFileAnalysisSummaryV1Schema`, `NativeAnalysisStateHeaderV1Schema`, `NativeAnalysisStateBundleV1Schema`, inferred types, `computeNativeSummaryDigest(summaries): string`, `computeNativeFactContentDigest(fact: ProviderNode|ProviderEdge): string`. Keep canonical JSON helper private.
 

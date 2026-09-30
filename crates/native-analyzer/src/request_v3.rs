@@ -7,14 +7,49 @@ use serde_json::{Value, json};
 use sha2::{Digest, Sha256};
 use std::collections::{BTreeMap, BTreeSet};
 
-// JSON permits escaped lone UTF-16 units; serde_json rejects them during parsing.
-// Mask only those six-byte escapes so syntax/envelope precedence still agrees
-// with JSON.parse, then reject their scalar values before payload validation.
-fn scalar_json(line: &str) -> (String, bool) {
+// RawValue validates all JSON syntax iteratively, without allocating deep Values
+// or rounding numbers. Only the six-level strict record shapes are materialized.
+fn string_units(raw: &str) -> Option<Vec<u16>> {
+    if !raw.starts_with('"') || !raw.ends_with('"') {
+        return None;
+    }
+    let mut units = Vec::new();
+    let mut chars = raw[1..raw.len() - 1].chars();
+    while let Some(c) = chars.next() {
+        if c == '\\' {
+            let escaped = chars.next()?;
+            if escaped == 'u' {
+                let hex: String = chars.by_ref().take(4).collect();
+                units.push(u16::from_str_radix(&hex, 16).ok()?);
+            } else {
+                let c = match escaped {
+                    '"' => '"',
+                    '\\' => '\\',
+                    '/' => '/',
+                    'b' => '\u{8}',
+                    'f' => '\u{c}',
+                    'n' => '\n',
+                    'r' => '\r',
+                    't' => '\t',
+                    _ => return None,
+                };
+                units.push(c as u16);
+            }
+        } else {
+            let mut encoded = [0; 2];
+            units.extend_from_slice(c.encode_utf16(&mut encoded));
+        }
+    }
+    Some(units)
+}
+// Only invalid object keys need masking for serde's map decoder. Raw string
+// values remain verbatim, so even invalid UTF-16 request IDs retain distinctions.
+fn scalar_keys(line: &str) -> (String, bool) {
     let mut masked = line.to_owned();
     let bytes = line.as_bytes();
     let mut quoted = false;
     let mut i = 0;
+    let mut bad = Vec::new();
     let mut invalid = false;
     let unit = |at: usize| -> Option<u16> {
         if bytes.get(at..at + 2) != Some(b"\\u") {
@@ -28,6 +63,22 @@ fn scalar_json(line: &str) -> (String, bool) {
     };
     while i < bytes.len() {
         if bytes[i] == b'"' {
+            if quoted {
+                let mut next = i + 1;
+                while bytes
+                    .get(next)
+                    .is_some_and(|b| matches!(b, b' ' | b'\t' | b'\r' | b'\n'))
+                {
+                    next += 1;
+                }
+                if bytes.get(next) == Some(&b':') {
+                    for at in &bad {
+                        masked.replace_range(*at..*at + 6, "\\ufffd");
+                        invalid = true;
+                    }
+                }
+                bad.clear();
+            }
             quoted = !quoted;
             i += 1;
         } else if quoted && bytes[i] == b'\\' {
@@ -39,8 +90,7 @@ fn scalar_json(line: &str) -> (String, bool) {
                     continue;
                 }
                 if (0xd800..=0xdfff).contains(&n) {
-                    masked.replace_range(i..i + 6, "\\ufffd");
-                    invalid = true;
+                    bad.push(i);
                 }
                 i += 6;
             } else {
@@ -51,6 +101,82 @@ fn scalar_json(line: &str) -> (String, bool) {
         }
     }
     (masked, invalid)
+}
+fn raw_object(
+    raw: &str,
+    invalid: &mut bool,
+) -> Result<BTreeMap<String, Box<serde_json::value::RawValue>>, V3ContractError> {
+    let (masked, bad) = scalar_keys(raw);
+    *invalid |= bad;
+    serde_json::from_str(&masked).map_err(|_| V3ContractError::corruption())
+}
+fn contract_value(
+    raw: &serde_json::value::RawValue,
+    depth: usize,
+    invalid: &mut bool,
+) -> Result<Value, V3ContractError> {
+    // Deepest valid path: record.payload.coverage[].statistics.resolutionCounts.EXACT.
+    // Greater nesting is a shape violation, not a new protocol/resource ceiling.
+    if depth > 6 {
+        *invalid = true;
+        return Ok(Value::Null);
+    }
+    let text = raw.get().trim();
+    Ok(match text.as_bytes()[0] {
+        b'{' => {
+            let map = raw_object(text, invalid)?;
+            let mut result = serde_json::Map::new();
+            for (k, v) in map {
+                result.insert(k, contract_value(&v, depth + 1, invalid)?);
+            }
+            Value::Object(result)
+        }
+        b'[' => {
+            let values: Vec<Box<serde_json::value::RawValue>> =
+                serde_json::from_str(text).map_err(|_| V3ContractError::corruption())?;
+            Value::Array(
+                values
+                    .iter()
+                    .map(|v| contract_value(v, depth + 1, invalid))
+                    .collect::<Result<_, _>>()?,
+            )
+        }
+        b'"' => {
+            let units = string_units(text).ok_or_else(V3ContractError::corruption)?;
+            match String::from_utf16(&units) {
+                Ok(s) => Value::String(s),
+                Err(_) => {
+                    *invalid = true;
+                    Value::String(String::from_utf16_lossy(&units))
+                }
+            }
+        }
+        b'n' | b't' | b'f' => {
+            serde_json::from_str(text).map_err(|_| V3ContractError::corruption())?
+        }
+        _ => {
+            // Rust's standard binary64 parser agrees with ECMAScript rounding.
+            let number = text.parse::<f64>().ok().and_then(|n| {
+                // Preserve ordinary integer Value accessors after JS-compatible rounding.
+                if n.is_finite()
+                    && n.fract() == 0.0
+                    && n.abs() <= 9_007_199_254_740_991.0
+                    && !(n == 0.0 && n.is_sign_negative())
+                {
+                    Some(serde_json::Number::from(n as i64))
+                } else {
+                    serde_json::Number::from_f64(n)
+                }
+            });
+            match number {
+                Some(n) => Value::Number(n),
+                None => {
+                    *invalid = true;
+                    Value::Null
+                }
+            }
+        }
+    })
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -317,12 +443,21 @@ pub fn decode_request_v3(bytes: &[u8]) -> Result<ValidatedRequestV3, V3ContractE
         return Err(corrupt());
     }
     let mut invalid_scalar = false;
+    let mut identities = Vec::new();
     let records: Vec<Value> = lines
         .iter()
         .map(|s| {
-            let (masked, invalid) = scalar_json(s);
-            invalid_scalar |= invalid;
-            serde_json::from_str(&masked).map_err(|_| corrupt())
+            let raw: Box<serde_json::value::RawValue> =
+                serde_json::from_str(s).map_err(|_| corrupt())?;
+            let identity = if raw.get().trim().starts_with('{') {
+                raw_object(raw.get(), &mut invalid_scalar)?
+                    .get("requestId")
+                    .and_then(|v| string_units(v.get().trim()))
+            } else {
+                None
+            };
+            identities.push(identity);
+            contract_value(&raw, 0, &mut invalid_scalar)
         })
         .collect::<Result<_, _>>()?;
     if records.len() < 2
@@ -345,9 +480,27 @@ pub fn decode_request_v3(bytes: &[u8]) -> Result<ValidatedRequestV3, V3ContractE
     if !limited(&first["requestId"]) {
         return Err(invalid());
     }
-    if records.iter().enumerate().any(|(i, r)| {
-        r["requestId"] != first["requestId"] || number(&r["sequence"]) != Some(i as u64)
-    }) || !choice(&first["type"], &["ANALYZE", "REFRESH"])
+    if records
+        .iter()
+        .enumerate()
+        .any(|(i, r)| identities[i] != identities[0] || number(&r["sequence"]) != Some(i as u64))
+    {
+        return Err(corrupt());
+    }
+    if records.iter().any(|r| {
+        !choice(
+            &r["type"],
+            &[
+                "ANALYZE",
+                "REFRESH",
+                "BASELINE_SUMMARY",
+                "REQUEST_COMPLETED",
+            ],
+        )
+    }) {
+        return Err(invalid());
+    }
+    if !choice(&first["type"], &["ANALYZE", "REFRESH"])
         || last["type"] != "REQUEST_COMPLETED"
         || records[1..records.len() - 1]
             .iter()

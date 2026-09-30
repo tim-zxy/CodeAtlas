@@ -205,6 +205,12 @@ export function validateNativeRequestRecordsV3(
     if (r.requestId !== first.requestId || r.sequence !== i || Object.is(r.sequence, -0))
       fail('PROTOCOL_CORRUPTION');
   if (
+    records.some(
+      (r) => !['ANALYZE', 'REFRESH', 'BASELINE_SUMMARY', 'REQUEST_COMPLETED'].includes(r.type),
+    )
+  )
+    fail('INVALID_REQUEST');
+  if (
     !['ANALYZE', 'REFRESH'].includes(first.type) ||
     records.at(-1)?.type !== 'REQUEST_COMPLETED' ||
     records.slice(1, -1).some((r) => r.type !== 'BASELINE_SUMMARY')

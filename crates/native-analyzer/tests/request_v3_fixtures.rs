@@ -7,6 +7,62 @@ use std::{fs, path::PathBuf};
 fn root() -> PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../fixtures/ipc/protocol-v3")
 }
+
+#[test]
+fn parser_representation_limits_keep_contract_priority() {
+    for (name, expected) in [
+        ("number-overflow.jsonl", "INVALID_REQUEST"),
+        ("deep-unknown.jsonl", "INVALID_REQUEST"),
+        (
+            "deep-unknown-protocol.jsonl",
+            "INCOMPATIBLE_PROTOCOL_VERSION",
+        ),
+    ] {
+        assert_eq!(
+            decode_request_v3(&read(name)).unwrap_err().code(),
+            expected,
+            "{name}"
+        );
+    }
+}
+#[test]
+fn surrogate_request_ids_remain_distinct_before_scalar_rejection() {
+    assert_eq!(
+        decode_request_v3(&read("surrogate-id-drift.jsonl"))
+            .unwrap_err()
+            .code(),
+        "PROTOCOL_CORRUPTION"
+    );
+}
+
+#[test]
+fn deeply_nested_unknown_json_is_bounded_and_still_syntax_checked() {
+    let first = String::from_utf8(read("valid-full.jsonl"))
+        .unwrap()
+        .lines()
+        .next()
+        .unwrap()
+        .to_owned();
+    let nested = format!("{}0{}", "[".repeat(100_000), "]".repeat(100_000));
+    let prefix = format!(
+        "{}\n",
+        first.replace(
+            "\"baselineState\":null",
+            &format!("\"baselineState\":null,\"unknown\":{nested}")
+        )
+    );
+    let terminal = json!({"protocolVersion":3,"requestId":"req","sequence":1,"type":"REQUEST_COMPLETED","payload":{"summaryRecords":0,"integrityChecksum":format!("{:x}",Sha256::digest(prefix.as_bytes()))}});
+    let raw = format!("{prefix}{terminal}\n");
+    assert_eq!(
+        decode_request_v3(raw.as_bytes()).unwrap_err().code(),
+        "INVALID_REQUEST"
+    );
+    let broken = raw.replacen("]", "", 1);
+    assert_eq!(
+        decode_request_v3(broken.as_bytes()).unwrap_err().code(),
+        "PROTOCOL_CORRUPTION"
+    );
+}
 fn read(name: &str) -> Vec<u8> {
     fs::read(root().join(name)).unwrap()
 }
@@ -37,6 +93,12 @@ fn shared_request_corpus_has_identical_closed_classifications() {
         if case["expected"].is_null() {
             let valid = result.unwrap_or_else(|e| panic!("{}: {e}", case["id"]));
             assert_eq!(valid.header()["protocolVersion"], 3);
+            if let Some(n) = case["maxEvents"].as_f64() {
+                assert_eq!(
+                    valid.header()["payload"]["resourceBudget"]["maxEvents"].as_f64(),
+                    Some(n)
+                );
+            }
         } else {
             let e = result.expect_err(case["id"].as_str().unwrap());
             assert_eq!(

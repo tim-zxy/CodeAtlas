@@ -276,8 +276,11 @@ test('shared raw request corpus has identical closed classifications', async () 
       );
       bytes = Buffer.alloc(c.repeat, bytes[0]);
     }
-    if (c.expected === null) assert.ok(api.decodeNativeRequestV3(bytes).header, c.id);
-    else
+    if (c.expected === null) {
+      const h = api.decodeNativeRequestV3(bytes).header;
+      assert.ok(h, c.id);
+      if (c.maxEvents !== undefined) assert.equal(h.payload.resourceBudget.maxEvents, c.maxEvents);
+    } else
       assert.throws(
         () => api.decodeNativeRequestV3(bytes),
         (e) => e.code === c.expected,
@@ -332,4 +335,39 @@ test('P05-W3-020-A case manifest has task/spec/acceptance and required coverage'
     assert.ok(workspace.scripts.test.includes(name));
     assert.ok(pkg.scripts.test.includes(name));
   }
+});
+
+test('governing docs distinguish approved input packet from future producer', async () => {
+  for (const [path, stale] of [
+    ['docs/handoff/specs/EVALUATION.md', 'not registered/passing yet'],
+    [
+      'docs/superpowers/specs/2026-09-30-p05-w3-020-native-refresh-design-change-proposal.md',
+      'REVIEW-READY, not approved for execution',
+    ],
+    ['docs/handoff/ARCHITECTURE.md', 'awaits detailed review'],
+    ['docs/specs/native-analyzer-scalability.md', 'awaits review'],
+  ]) {
+    const text = await readFile(new URL('../../../' + path, import.meta.url), 'utf8');
+    assert.ok(!text.includes(stale), path);
+    assert.ok(text.includes('P05-W3-020') || text.includes('contract packet'));
+  }
+});
+
+test('deep unknown input is rejected after syntax without recursive shape traversal', () => {
+  const nested = '['.repeat(100000) + '0' + ']'.repeat(100000);
+  const prefix =
+    JSON.stringify(header()).replace(
+      '"baselineState":null',
+      '"baselineState":null,"unknown":' + nested,
+    ) + '\n';
+  const terminal = {
+    protocolVersion: 3,
+    requestId: 'req',
+    sequence: 1,
+    type: 'REQUEST_COMPLETED',
+    payload: { summaryRecords: 0, integrityChecksum: hash(prefix) },
+  };
+  const raw = prefix + JSON.stringify(terminal) + '\n';
+  rejects(Buffer.from(raw), 'INVALID_REQUEST');
+  rejects(Buffer.from(raw.replace(']', '')), 'PROTOCOL_CORRUPTION');
 });
