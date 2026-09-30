@@ -87,6 +87,37 @@ function analysisRecords(sourceFileCount = 0) {
   return records;
 }
 
+function refreshRecords() {
+  const context = {
+    providerSnapshotId: request.payload.providerSnapshotId,
+    repositoryId: request.payload.repository.id,
+    revisionId: request.payload.targetRevision.id,
+    revisionFingerprint: request.payload.targetRevision.contentFingerprint,
+  };
+  const records = [line(envelope('REFRESH_STARTED', 0, context))];
+  records.push(
+    line(
+      envelope('REFRESH_COMPLETED', 1, {
+        ...context,
+        outcome: 'SUCCEEDED',
+        counts: {
+          sourceFiles: 0,
+          upsertedNodes: 0,
+          removedNodes: 0,
+          upsertedEdges: 0,
+          removedEdges: 0,
+          coverage: 0,
+          diagnostics: 0,
+        },
+        capabilities: [],
+        contentFingerprint: 'refresh-output-fp',
+        integrityChecksum: checksum(records),
+      }),
+    ),
+  );
+  return records;
+}
+
 if (
   [
     'valid-describe',
@@ -180,6 +211,37 @@ if (
   await new Promise((resolve) => setTimeout(resolve, 100));
 } else if (scenario === 'valid-analyze') {
   await write(Buffer.concat(analysisRecords()));
+} else if (scenario.startsWith('refresh-')) {
+  const records = refreshRecords();
+  if (scenario === 'refresh-burst') {
+    const diagnostic = {
+      code: 'PARSE_WARNING',
+      severity: 'WARNING',
+      message: 'Synthetic warning',
+      sourceRange: null,
+    };
+    records.splice(
+      1,
+      0,
+      line(envelope('DIAGNOSTIC', 1, diagnostic)),
+      line(envelope('DIAGNOSTIC', 2, diagnostic)),
+    );
+  }
+  const terminal = JSON.parse(records.at(-1).toString('utf8'));
+  if (scenario === 'refresh-wrong-context') terminal.payload.revisionId = 'wrong-revision';
+  if (scenario === 'refresh-sequence-drift') terminal.sequence += 1;
+  if (scenario === 'refresh-burst') {
+    terminal.sequence = 3;
+    terminal.payload.counts.diagnostics = 2;
+    terminal.payload.integrityChecksum = checksum(records.slice(0, -1));
+  }
+  if (scenario === 'refresh-partial') terminal.payload.outcome = 'PARTIAL';
+  if (scenario === 'refresh-bad-checksum')
+    terminal.payload.integrityChecksum = `sha256:${'0'.repeat(64)}`;
+  if (scenario === 'refresh-bad-count') terminal.payload.counts.removedNodes = 1;
+  records[records.length - 1] = line(terminal);
+  if (scenario === 'refresh-post-terminal') records.push(Buffer.from('{}\n'));
+  await write(Buffer.concat(records));
 } else if (scenario === 'invalid-checksum' || scenario === 'checksum-mismatch') {
   const records = analysisRecords();
   const terminal = JSON.parse(records.at(-1).toString('utf8'));
