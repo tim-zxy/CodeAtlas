@@ -1,26 +1,49 @@
 import type { DatabaseSync } from 'node:sqlite';
 import { performance } from 'node:perf_hooks';
+import { isDeepStrictEqual } from 'node:util';
 import {
   CanonicalEdgeSchema,
   CanonicalNodeSchema,
   ContentFingerprintSchema,
   EntityIdSchema,
   EvidenceSchema,
+  FactEvidenceSchema,
   ProviderFactBindingSchema,
   ProviderSnapshotSchema,
   ProviderSnapshotDiagnosticSchema,
   type ContentFingerprint,
   type EntityId,
   type ProviderSnapshot,
+  type CanonicalNode,
+  type CanonicalEdge,
 } from '@codeatlas/ir';
 
 import { RepositoryAnalysisStage } from './temp-stage.js';
+import { RepositoryPatchStage, type PatchSupport } from './patch-stage.js';
 
 export interface ExpectedAnalysis {
   readonly repositoryId: EntityId;
   readonly revisionId: EntityId;
   readonly contentFingerprint: ContentFingerprint;
   readonly snapshot: ProviderSnapshot;
+}
+
+export interface ExpectedPatch {
+  readonly repositoryId: EntityId;
+  readonly baseRevisionId: EntityId;
+  readonly baseContentFingerprint: ContentFingerprint;
+  readonly targetRevisionId: EntityId;
+  readonly targetContentFingerprint: ContentFingerprint;
+  readonly snapshot: ProviderSnapshot;
+}
+
+export class AnalysisPatchError extends Error {
+  constructor(
+    readonly code: 'INVALID_PATCH' | 'BASE_REVISION_MISMATCH' | 'FULL_ANALYSIS_REQUIRED',
+  ) {
+    super(`Analysis patch cannot activate: ${code}`);
+    this.name = 'AnalysisPatchError';
+  }
 }
 
 function assert(condition: unknown, message: string): asserts condition {
@@ -34,6 +57,571 @@ export class RepositoryCanonicalFactStore {
       db.prepare('PRAGMA foreign_keys').get()?.foreign_keys === 1,
       'SQLite foreign keys required',
     );
+  }
+
+  applyAnalysisPatch(stage: RepositoryPatchStage, expectedValue: ExpectedPatch): number {
+    const expected = {
+      repositoryId: EntityIdSchema.parse(expectedValue.repositoryId),
+      baseRevisionId: EntityIdSchema.parse(expectedValue.baseRevisionId),
+      baseContentFingerprint: ContentFingerprintSchema.parse(expectedValue.baseContentFingerprint),
+      targetRevisionId: EntityIdSchema.parse(expectedValue.targetRevisionId),
+      targetContentFingerprint: ContentFingerprintSchema.parse(
+        expectedValue.targetContentFingerprint,
+      ),
+      snapshot: ProviderSnapshotSchema.parse(expectedValue.snapshot),
+    };
+    const {
+      repositoryId,
+      baseRevisionId,
+      baseContentFingerprint,
+      targetRevisionId,
+      targetContentFingerprint,
+      snapshot,
+    } = expected;
+    if (
+      snapshot.outcome !== 'SUCCEEDED' ||
+      snapshot.repositoryId !== repositoryId ||
+      snapshot.requestedRevisionId !== targetRevisionId ||
+      snapshot.requestedRevisionFingerprint !== targetContentFingerprint
+    ) {
+      throw new AnalysisPatchError('INVALID_PATCH');
+    }
+    stage.assertApplicable(this.db, {
+      repositoryId,
+      revisionId: targetRevisionId,
+      contentFingerprint: targetContentFingerprint,
+      snapshotId: snapshot.id,
+    });
+    const lockStarted = performance.now();
+    this.db.exec('BEGIN IMMEDIATE');
+    try {
+      const revision = this.db
+        .prepare(
+          'SELECT kind, content_fingerprint FROM revisions WHERE repository_id = ? AND id = ?',
+        )
+        .get(repositoryId, targetRevisionId) as
+        { kind: string; content_fingerprint: string } | undefined;
+      if (baseRevisionId !== targetRevisionId || revision?.kind !== 'WORKTREE')
+        throw new AnalysisPatchError('FULL_ANALYSIS_REQUIRED');
+      const state = this.db
+        .prepare(
+          'SELECT indexed_revision_id, indexed_content_fingerprint FROM repository_state WHERE repository_id = ?',
+        )
+        .get(repositoryId) as
+        | { indexed_revision_id: string | null; indexed_content_fingerprint: string | null }
+        | undefined;
+      if (
+        state?.indexed_revision_id !== baseRevisionId ||
+        state.indexed_content_fingerprint !== baseContentFingerprint
+      )
+        throw new AnalysisPatchError('BASE_REVISION_MISMATCH');
+      if (
+        revision.content_fingerprint !== targetContentFingerprint ||
+        this.db.prepare('SELECT 1 FROM provider_snapshots WHERE id = ?').get(snapshot.id)
+      )
+        throw new AnalysisPatchError('INVALID_PATCH');
+      const bindings = this.db
+        .prepare(
+          `SELECT count(*) AS n FROM provider_fact_bindings AS binding
+        JOIN evidence AS evidence ON evidence.id = binding.evidence_id
+        WHERE evidence.repository_id = ? AND evidence.revision_id = ? AND evidence.status = 'ACTIVE'`,
+        )
+        .get(repositoryId, targetRevisionId) as { n: number };
+      const candidates = this.db
+        .prepare(
+          `SELECT count(*) AS n FROM active_support_candidates AS candidate
+        JOIN evidence AS evidence ON evidence.id = candidate.evidence_id
+        WHERE evidence.repository_id = ? AND evidence.revision_id = ? AND evidence.status = 'ACTIVE'`,
+        )
+        .get(repositoryId, targetRevisionId) as { n: number };
+      if (bindings.n !== candidates.n) throw new AnalysisPatchError('FULL_ANALYSIS_REQUIRED');
+      // ponytail: R009 requires a full active-support integrity check under this lock;
+      // add a durable validated-generation marker only if Evaluation shows lock-time pressure.
+      this.validatePatchBaseline(repositoryId, targetRevisionId);
+      this.validatePatchSources(stage, repositoryId, targetRevisionId, snapshot);
+      const affected = new Map<string, { factType: 'NODE' | 'EDGE'; id: string }>();
+      const recordAffected = (factType: 'NODE' | 'EDGE', id: string) =>
+        affected.set(JSON.stringify([factType, id]), { factType, id });
+      const retire = (
+        factType: 'NODE' | 'EDGE',
+        providerId: string,
+        providerFactId: string,
+        status: 'INVALIDATED' | 'SUPERSEDED',
+        required: boolean,
+      ) => {
+        const rows = this.db
+          .prepare(
+            `SELECT binding.evidence_id, binding.canonical_fact_id
+          FROM provider_fact_bindings AS binding
+          JOIN evidence AS evidence ON evidence.id = binding.evidence_id
+          WHERE binding.fact_type = ? AND binding.provider_id = ? AND binding.provider_fact_id = ?
+            AND evidence.repository_id = ? AND evidence.revision_id = ? AND evidence.status = 'ACTIVE'`,
+          )
+          .all(factType, providerId, providerFactId, repositoryId, targetRevisionId) as {
+          evidence_id: string;
+          canonical_fact_id: string;
+        }[];
+        if (
+          rows.length > 1 ||
+          (required && rows.length !== 1) ||
+          providerId !== snapshot.providerId
+        )
+          throw new AnalysisPatchError('INVALID_PATCH');
+        if (!rows.length) return;
+        const old = rows[0]!;
+        recordAffected(factType, old.canonical_fact_id);
+        this.db.prepare('DELETE FROM fact_evidence WHERE evidence_id = ?').run(old.evidence_id);
+        this.db
+          .prepare('DELETE FROM provider_fact_bindings WHERE evidence_id = ?')
+          .run(old.evidence_id);
+        this.db
+          .prepare('UPDATE evidence SET status = ? WHERE id = ? AND status = ?')
+          .run(status, old.evidence_id, 'ACTIVE');
+      };
+      for (const removal of stage.readRemoveEdges())
+        retire('EDGE', removal.providerId, removal.providerFactId, 'INVALIDATED', true);
+      for (const removal of stage.readRemoveNodes())
+        retire('NODE', removal.providerId, removal.providerFactId, 'INVALIDATED', true);
+      for (const upsert of stage.readUpsertEdges())
+        retire('EDGE', upsert.providerId, upsert.providerFactId, 'SUPERSEDED', false);
+      for (const upsert of stage.readUpsertNodes())
+        retire('NODE', upsert.providerId, upsert.providerFactId, 'SUPERSEDED', false);
+      this.writeSnapshot(snapshot);
+      const insertEvidence = this.db.prepare(`INSERT INTO evidence
+        (id, repository_id, revision_id, provider_snapshot_id, fact_type, provider_id, provider_fact_id, status)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`);
+      const insertLink = this.db.prepare(
+        'INSERT INTO fact_evidence (fact_type, canonical_fact_id, evidence_id) VALUES (?, ?, ?)',
+      );
+      const insertBinding = this.db.prepare(`INSERT INTO provider_fact_bindings
+        (fact_type, provider_id, provider_fact_id, provider_snapshot_id, canonical_fact_id, evidence_id)
+        VALUES (?, ?, ?, ?, ?, ?)`);
+      const insertCandidate = this.db.prepare(`INSERT INTO active_support_candidates
+        (evidence_id, fact_type, canonical_fact_id, candidate_json) VALUES (?, ?, ?, ?)`);
+      const expectedUpserts = new Set<string>();
+      for (const upsert of stage.readUpsertNodes())
+        expectedUpserts.add(JSON.stringify(['NODE', upsert.providerId, upsert.providerFactId]));
+      for (const upsert of stage.readUpsertEdges())
+        expectedUpserts.add(JSON.stringify(['EDGE', upsert.providerId, upsert.providerFactId]));
+      const normalized = new Map<string, CanonicalNode | CanonicalEdge>();
+      for (const pair of stage.readNormalizedNodes()) {
+        if (pair.provider.factType !== 'NODE') throw new AnalysisPatchError('INVALID_PATCH');
+        normalized.set(
+          JSON.stringify(['NODE', pair.provider.providerId, pair.provider.providerFactId]),
+          pair.canonical,
+        );
+      }
+      for (const pair of stage.readNormalizedEdges()) {
+        if (pair.provider.factType !== 'EDGE') throw new AnalysisPatchError('INVALID_PATCH');
+        normalized.set(
+          JSON.stringify(['EDGE', pair.provider.providerId, pair.provider.providerFactId]),
+          pair.canonical,
+        );
+      }
+      if (
+        normalized.size !== expectedUpserts.size ||
+        [...normalized.keys()].some((key) => !expectedUpserts.has(key))
+      )
+        throw new AnalysisPatchError('INVALID_PATCH');
+      for (const support of stage.readSupports()) {
+        const key = JSON.stringify([
+          support.factType,
+          support.binding.providerFact.providerId,
+          support.binding.providerFact.providerFactId,
+        ]);
+        const fact = (
+          support.factType === 'NODE' ? CanonicalNodeSchema : CanonicalEdgeSchema
+        ).parse(support.canonical);
+        const evidence = EvidenceSchema.parse(support.evidence);
+        const binding = ProviderFactBindingSchema.parse(support.binding);
+        const link = FactEvidenceSchema.parse(support.factEvidence);
+        if (
+          !expectedUpserts.delete(key) ||
+          !isDeepStrictEqual(fact, normalized.get(key)) ||
+          support.snapshotId !== snapshot.id ||
+          evidence.id !== binding.evidenceId ||
+          !isDeepStrictEqual(evidence.providerFact, binding.providerFact) ||
+          link.evidenceId !== evidence.id ||
+          link.fact.id !== fact.id ||
+          link.fact.factType !== support.factType ||
+          binding.canonicalFact.id !== fact.id ||
+          binding.canonicalFact.factType !== support.factType ||
+          binding.providerSnapshotId !== snapshot.id ||
+          evidence.providerSnapshotId !== snapshot.id ||
+          evidence.status !== 'ACTIVE' ||
+          evidence.repositoryId !== repositoryId ||
+          evidence.revisionId !== targetRevisionId ||
+          fact.repositoryId !== repositoryId ||
+          fact.revisionId !== targetRevisionId ||
+          binding.providerFact.providerId !== snapshot.providerId
+        )
+          throw new AnalysisPatchError('INVALID_PATCH');
+        recordAffected(support.factType, fact.id);
+        insertEvidence.run(
+          evidence.id,
+          repositoryId,
+          targetRevisionId,
+          snapshot.id,
+          support.factType,
+          binding.providerFact.providerId,
+          binding.providerFact.providerFactId,
+          'ACTIVE',
+        );
+        insertLink.run(support.factType, fact.id, evidence.id);
+        insertBinding.run(
+          support.factType,
+          binding.providerFact.providerId,
+          binding.providerFact.providerFactId,
+          snapshot.id,
+          fact.id,
+          evidence.id,
+        );
+        insertCandidate.run(evidence.id, support.factType, fact.id, JSON.stringify(fact));
+      }
+      if (expectedUpserts.size) throw new AnalysisPatchError('INVALID_PATCH');
+      for (const { factType, id } of affected.values()) {
+        if (factType !== 'EDGE') continue;
+        this.db
+          .prepare('DELETE FROM canonical_edges WHERE revision_id = ? AND id = ?')
+          .run(targetRevisionId, id);
+      }
+      for (const { factType, id } of affected.values()) {
+        if (factType !== 'NODE') continue;
+        this.reselectPatchFact(stage, repositoryId, targetRevisionId, factType, id);
+      }
+      for (const { factType, id } of affected.values()) {
+        if (factType !== 'EDGE') continue;
+        this.reselectPatchFact(stage, repositoryId, targetRevisionId, factType, id);
+      }
+      this.validatePatchGraph(repositoryId, targetRevisionId);
+      this.writeCoverageAndDiagnostics(stage, snapshot);
+      const changed = this.db
+        .prepare(
+          `UPDATE repository_state
+        SET indexed_revision_id = ?, indexed_content_fingerprint = ? WHERE repository_id = ?`,
+        )
+        .run(targetRevisionId, targetContentFingerprint, repositoryId);
+      if (changed.changes !== 1) throw new AnalysisPatchError('INVALID_PATCH');
+      this.db.exec('COMMIT');
+      return performance.now() - lockStarted;
+    } catch (error) {
+      if (this.db.isTransaction) this.db.exec('ROLLBACK');
+      throw error;
+    }
+  }
+
+  private validatePatchSources(
+    stage: RepositoryPatchStage,
+    repositoryId: string,
+    revisionId: string,
+    snapshot: ProviderSnapshot,
+  ): void {
+    const source = this.db.prepare(`SELECT path, content_fingerprint FROM source_files
+      WHERE repository_id = ? AND revision_id = ? AND id = ?`);
+    for (const file of stage.readSourceFiles()) {
+      const row = source.get(repositoryId, revisionId, file.id) as
+        { path: string; content_fingerprint: string } | undefined;
+      if (
+        file.repositoryId !== repositoryId ||
+        file.revisionId !== revisionId ||
+        row?.path !== file.path ||
+        row.content_fingerprint !== file.contentFingerprint
+      )
+        throw new AnalysisPatchError('INVALID_PATCH');
+    }
+    const checkRange = (range: { sourceFileId: string } | null) => {
+      if (range && !source.get(repositoryId, revisionId, range.sourceFileId))
+        throw new AnalysisPatchError('INVALID_PATCH');
+    };
+    for (const coverage of stage.readCoverage())
+      if (
+        coverage.sourceFileId !== null &&
+        !source.get(repositoryId, revisionId, coverage.sourceFileId)
+      )
+        throw new AnalysisPatchError('INVALID_PATCH');
+    for (const diagnostic of stage.readDiagnostics() as Iterable<{
+      sourceRange: { sourceFileId: string } | null;
+    }>)
+      checkRange(diagnostic.sourceRange);
+    for (const diagnostic of snapshot.diagnostics) checkRange(diagnostic.sourceRange);
+    for (const pair of stage.readNormalizedNodes()) checkRange(pair.canonical.sourceRange);
+    for (const pair of stage.readNormalizedEdges()) checkRange(pair.canonical.sourceRange);
+  }
+
+  private validatePatchBaseline(repositoryId: string, revisionId: string): void {
+    const rows = this.db
+      .prepare(
+        `SELECT binding.fact_type, binding.canonical_fact_id,
+      candidate.candidate_json FROM provider_fact_bindings AS binding
+      JOIN evidence AS evidence ON evidence.id = binding.evidence_id
+      LEFT JOIN active_support_candidates AS candidate ON candidate.evidence_id = binding.evidence_id
+      WHERE evidence.repository_id = ? AND evidence.revision_id = ? AND evidence.status = 'ACTIVE'`,
+      )
+      .iterate(repositoryId, revisionId) as IterableIterator<{
+      fact_type: 'NODE' | 'EDGE';
+      canonical_fact_id: string;
+      candidate_json: string | null;
+    }>;
+    const node = this.db.prepare(
+      'SELECT fact_key FROM canonical_nodes WHERE revision_id = ? AND id = ?',
+    );
+    const edge = this.db.prepare(
+      'SELECT fact_key FROM canonical_edges WHERE revision_id = ? AND id = ?',
+    );
+    const source = this.db.prepare(
+      'SELECT 1 FROM source_files WHERE repository_id = ? AND revision_id = ? AND id = ?',
+    );
+    for (const row of rows) {
+      let candidate: CanonicalNode | CanonicalEdge;
+      try {
+        candidate = (row.fact_type === 'NODE' ? CanonicalNodeSchema : CanonicalEdgeSchema).parse(
+          JSON.parse(row.candidate_json ?? 'null'),
+        );
+      } catch {
+        throw new AnalysisPatchError('FULL_ANALYSIS_REQUIRED');
+      }
+      const fact = (row.fact_type === 'NODE' ? node : edge).get(
+        revisionId,
+        row.canonical_fact_id,
+      ) as { fact_key: string } | undefined;
+      if (
+        candidate.id !== row.canonical_fact_id ||
+        candidate.repositoryId !== repositoryId ||
+        candidate.revisionId !== revisionId ||
+        candidate.factKey !== fact?.fact_key ||
+        (candidate.sourceRange !== null &&
+          !source.get(repositoryId, revisionId, candidate.sourceRange.sourceFileId))
+      )
+        throw new AnalysisPatchError('FULL_ANALYSIS_REQUIRED');
+    }
+    const orphan = this.db
+      .prepare(
+        `SELECT 1 FROM evidence AS evidence
+      WHERE evidence.repository_id = ? AND evidence.revision_id = ? AND evidence.status = 'ACTIVE'
+        AND NOT EXISTS (SELECT 1 FROM provider_fact_bindings AS binding
+          WHERE binding.evidence_id = evidence.id)
+      LIMIT 1`,
+      )
+      .get(repositoryId, revisionId);
+    if (orphan) throw new AnalysisPatchError('FULL_ANALYSIS_REQUIRED');
+    for (const [type, table] of [
+      ['NODE', 'canonical_nodes'],
+      ['EDGE', 'canonical_edges'],
+    ] as const) {
+      const unsupported = this.db
+        .prepare(
+          `SELECT 1 FROM ${table} AS fact
+        WHERE fact.repository_id = ? AND fact.revision_id = ? AND NOT EXISTS (
+          SELECT 1 FROM provider_fact_bindings AS binding
+          JOIN evidence AS evidence ON evidence.id = binding.evidence_id
+          WHERE binding.fact_type = ? AND binding.canonical_fact_id = fact.id
+            AND evidence.repository_id = ? AND evidence.revision_id = ? AND evidence.status = 'ACTIVE')
+        LIMIT 1`,
+        )
+        .get(repositoryId, revisionId, type, repositoryId, revisionId);
+      if (unsupported) throw new AnalysisPatchError('FULL_ANALYSIS_REQUIRED');
+    }
+  }
+
+  private validatePatchGraph(repositoryId: string, revisionId: string): void {
+    const danglingCandidate = this.db
+      .prepare(
+        `SELECT 1 FROM unresolved_targets AS target
+      JOIN canonical_edges AS edge ON edge.revision_id = target.revision_id AND edge.id = target.edge_id
+      JOIN json_each(target.candidates_json) AS candidate
+      LEFT JOIN canonical_nodes AS node ON node.revision_id = target.revision_id
+        AND node.id = json_extract(candidate.value, '$.id')
+      WHERE edge.repository_id = ? AND edge.revision_id = ? AND node.id IS NULL LIMIT 1`,
+      )
+      .get(repositoryId, revisionId);
+    if (danglingCandidate) throw new AnalysisPatchError('INVALID_PATCH');
+    for (const [type, table] of [
+      ['NODE', 'canonical_nodes'],
+      ['EDGE', 'canonical_edges'],
+    ] as const) {
+      const danglingRange = this.db
+        .prepare(
+          `SELECT 1 FROM ${table} AS fact
+        WHERE fact.repository_id = ? AND fact.revision_id = ? AND fact.source_range_json IS NOT NULL
+          AND NOT EXISTS (SELECT 1 FROM source_files AS source
+            WHERE source.repository_id = fact.repository_id AND source.revision_id = fact.revision_id
+              AND source.id = json_extract(fact.source_range_json, '$.sourceFileId'))
+        LIMIT 1`,
+        )
+        .get(repositoryId, revisionId);
+      if (danglingRange) throw new AnalysisPatchError('INVALID_PATCH');
+      const unsupported = this.db
+        .prepare(
+          `SELECT 1 FROM ${table} AS fact
+        WHERE fact.repository_id = ? AND fact.revision_id = ? AND NOT EXISTS (
+          SELECT 1 FROM provider_fact_bindings AS binding
+          JOIN evidence AS evidence ON evidence.id = binding.evidence_id
+          WHERE binding.fact_type = ? AND binding.canonical_fact_id = fact.id
+            AND evidence.repository_id = ? AND evidence.revision_id = ? AND evidence.status = 'ACTIVE')
+        LIMIT 1`,
+        )
+        .get(repositoryId, revisionId, type, repositoryId, revisionId);
+      if (unsupported) throw new AnalysisPatchError('INVALID_PATCH');
+    }
+  }
+
+  private reselectPatchFact(
+    stage: RepositoryPatchStage,
+    repositoryId: string,
+    revisionId: string,
+    factType: 'NODE' | 'EDGE',
+    id: string,
+  ): void {
+    const rows = this.db
+      .prepare(
+        `SELECT candidate.candidate_json, binding.provider_id,
+      binding.provider_fact_id, binding.provider_snapshot_id, binding.evidence_id
+      FROM provider_fact_bindings AS binding
+      JOIN evidence AS evidence ON evidence.id = binding.evidence_id
+      JOIN active_support_candidates AS candidate ON candidate.evidence_id = binding.evidence_id
+      WHERE binding.fact_type = ? AND binding.canonical_fact_id = ?
+        AND evidence.repository_id = ? AND evidence.revision_id = ? AND evidence.status = 'ACTIVE'
+      ORDER BY binding.evidence_id`,
+      )
+      .all(factType, id, repositoryId, revisionId) as {
+      candidate_json: string;
+      provider_id: string;
+      provider_fact_id: string;
+      provider_snapshot_id: string;
+      evidence_id: string;
+    }[];
+    if (!rows.length) {
+      if (factType === 'NODE') {
+        const dependent = this.db
+          .prepare(
+            `SELECT 1 FROM canonical_edges
+          WHERE revision_id = ? AND (source_node_id = ? OR target_node_id = ?) LIMIT 1`,
+          )
+          .get(revisionId, id, id);
+        if (dependent) throw new AnalysisPatchError('INVALID_PATCH');
+        this.db
+          .prepare('DELETE FROM canonical_nodes WHERE revision_id = ? AND id = ?')
+          .run(revisionId, id);
+      }
+      return;
+    }
+    const group: PatchSupport[] = rows.map((row) => {
+      const fact = (factType === 'NODE' ? CanonicalNodeSchema : CanonicalEdgeSchema).parse(
+        JSON.parse(row.candidate_json),
+      );
+      if (fact.id !== id || fact.repositoryId !== repositoryId || fact.revisionId !== revisionId)
+        throw new AnalysisPatchError('FULL_ANALYSIS_REQUIRED');
+      const providerFact = {
+        factType,
+        providerId: row.provider_id,
+        providerFactId: row.provider_fact_id,
+      };
+      const reference = { factType, id };
+      return {
+        factType,
+        canonical: fact,
+        snapshotId: row.provider_snapshot_id,
+        inputPath: [],
+        evidence: EvidenceSchema.parse({
+          id: row.evidence_id,
+          repositoryId,
+          revisionId,
+          providerSnapshotId: row.provider_snapshot_id,
+          providerFact,
+          status: 'ACTIVE',
+        }),
+        factEvidence: FactEvidenceSchema.parse({ fact: reference, evidenceId: row.evidence_id }),
+        binding: ProviderFactBindingSchema.parse({
+          providerFact,
+          providerSnapshotId: row.provider_snapshot_id,
+          canonicalFact: reference,
+          evidenceId: row.evidence_id,
+        }),
+      };
+    });
+    if (group.some((support) => support.canonical.factKey !== group[0]!.canonical.factKey))
+      throw new AnalysisPatchError('INVALID_PATCH');
+    const selected = stage.selectGroup(group);
+    if (
+      selected.id !== id ||
+      selected.repositoryId !== repositoryId ||
+      selected.revisionId !== revisionId ||
+      selected.factKey !== group[0]!.canonical.factKey
+    )
+      throw new AnalysisPatchError('INVALID_PATCH');
+    if (factType === 'NODE') {
+      const node = CanonicalNodeSchema.parse(selected) as CanonicalNode;
+      this.db
+        .prepare(
+          `INSERT INTO canonical_nodes
+        (revision_id, id, repository_id, fact_key, kind, type_kind, symbol_kind, name,
+         qualified_name, source_range_json, confidence_score, confidence_method, confidence_reasons_json)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(revision_id, id) DO UPDATE SET
+          fact_key=excluded.fact_key, kind=excluded.kind, type_kind=excluded.type_kind,
+          symbol_kind=excluded.symbol_kind, name=excluded.name,
+          qualified_name=excluded.qualified_name, source_range_json=excluded.source_range_json,
+          confidence_score=excluded.confidence_score, confidence_method=excluded.confidence_method,
+          confidence_reasons_json=excluded.confidence_reasons_json`,
+        )
+        .run(
+          revisionId,
+          id,
+          repositoryId,
+          node.factKey,
+          node.kind,
+          node.kind === 'TYPE' ? node.typeKind : null,
+          node.kind === 'SYMBOL' ? node.symbolKind : null,
+          node.name,
+          node.qualifiedName,
+          node.sourceRange === null ? null : JSON.stringify(node.sourceRange),
+          node.confidence.score,
+          node.confidence.method,
+          JSON.stringify(node.confidence.reasons),
+        );
+    } else {
+      const edge = CanonicalEdgeSchema.parse(selected) as CanonicalEdge;
+      const node = this.db.prepare(
+        'SELECT 1 FROM canonical_nodes WHERE revision_id = ? AND id = ?',
+      );
+      if (
+        !node.get(revisionId, edge.source.id) ||
+        (edge.target.state === 'RESOLVED' && !node.get(revisionId, edge.target.target.id)) ||
+        (edge.target.state === 'UNRESOLVED' &&
+          edge.target.candidates.some((candidate) => !node.get(revisionId, candidate.id)))
+      )
+        throw new AnalysisPatchError('INVALID_PATCH');
+      this.db
+        .prepare(
+          `INSERT INTO canonical_edges
+        (revision_id, id, repository_id, fact_key, kind, source_node_id, target_state,
+         resolution, target_node_id, source_range_json, confidence_score,
+         confidence_method, confidence_reasons_json)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        )
+        .run(
+          revisionId,
+          id,
+          repositoryId,
+          edge.factKey,
+          edge.kind,
+          edge.source.id,
+          edge.target.state,
+          edge.target.resolution,
+          edge.target.state === 'RESOLVED' ? edge.target.target.id : null,
+          edge.sourceRange === null ? null : JSON.stringify(edge.sourceRange),
+          edge.confidence.score,
+          edge.confidence.method,
+          JSON.stringify(edge.confidence.reasons),
+        );
+      if (edge.target.state === 'UNRESOLVED')
+        this.db
+          .prepare(
+            `INSERT INTO unresolved_targets
+          (revision_id, edge_id, original_hint, candidates_json) VALUES (?, ?, ?, ?)`,
+          )
+          .run(revisionId, id, edge.target.originalHint, JSON.stringify(edge.target.candidates));
+    }
   }
 
   applyAnalysisBatch(stage: RepositoryAnalysisStage, expectedValue: ExpectedAnalysis): number {
@@ -386,7 +974,7 @@ export class RepositoryCanonicalFactStore {
   }
 
   private writeCoverageAndDiagnostics(
-    stage: RepositoryAnalysisStage,
+    stage: RepositoryAnalysisStage | RepositoryPatchStage,
     snapshot: ProviderSnapshot,
   ): void {
     const coverage = this.db.prepare(`INSERT INTO analysis_coverage

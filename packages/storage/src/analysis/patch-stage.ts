@@ -448,7 +448,12 @@ export class RepositoryPatchStage {
     if (
       value.evidence.id !== value.binding.evidenceId ||
       value.binding.canonicalFact.id !== fact.id ||
-      value.binding.canonicalFact.factType !== value.factType
+      value.binding.canonicalFact.factType !== value.factType ||
+      value.evidence.providerFact.factType !== value.factType ||
+      value.binding.providerFact.factType !== value.factType ||
+      value.evidence.providerFact.providerId !== value.binding.providerFact.providerId ||
+      value.evidence.providerFact.providerFactId !== value.binding.providerFact.providerFactId ||
+      value.evidence.providerSnapshotId !== value.binding.providerSnapshotId
     )
       throw new Error('Patch support identity differs');
     this.db
@@ -493,6 +498,8 @@ export class RepositoryPatchStage {
   ): void {
     this.assertOpen();
     ProviderFactRefSchema.parse(pair.provider);
+    if (pair.provider.factType !== factType)
+      throw new Error('Normalized Provider Fact type differs');
     schema.parse(pair.canonical);
     this.db
       .prepare(
