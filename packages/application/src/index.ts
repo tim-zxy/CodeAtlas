@@ -6,3 +6,4 @@ export type {
   SourceStatePort,
   StoredWorktreeState,
 } from './reconcile-worktree.js';
+export type { WorktreeChangeSet } from './change-detector.js';

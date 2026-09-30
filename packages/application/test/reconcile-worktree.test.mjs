@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { mkdtemp, readFile, rm, unlink, writeFile } from 'node:fs/promises';
+import { mkdtemp, readFile, rename, rm, unlink, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { DatabaseSync } from 'node:sqlite';
@@ -18,6 +18,34 @@ const fixtureRoot = fileURLToPath(
 const manifestUrl = new URL('../../storage/migrations/repository/manifest.json', import.meta.url);
 const repositoryId = EntityIdSchema.parse('reconciliation-repository');
 
+function assertChanges(result, expected) {
+  assert.deepEqual(
+    {
+      baseContentFingerprint: result.changes.baseContentFingerprint,
+      targetContentFingerprint: result.revision.contentFingerprint,
+      added: result.changes.added.map((file) => ({
+        path: file.path,
+        contentFingerprint: file.contentFingerprint,
+      })),
+      modified: result.changes.modified.map((file) => ({
+        path: file.path,
+        contentFingerprint: file.contentFingerprint,
+      })),
+      deleted: result.changes.deleted.map((file) => ({
+        path: file.path,
+        previousContentFingerprint: file.previousContentFingerprint,
+      })),
+    },
+    expected,
+  );
+  assert.deepEqual(
+    result.changedPaths,
+    [...result.changes.added, ...result.changes.modified, ...result.changes.deleted]
+      .map((file) => file.path)
+      .sort(),
+  );
+}
+
 test('restart-reconciliation Fixture preserves identities and detects exact selected path changes', async () => {
   const [fixture] = await discoverFixtures(fixtureRoot);
   assert.equal(fixture.manifest.id, 'restart-reconciliation');
@@ -25,12 +53,13 @@ test('restart-reconciliation Fixture preserves identities and detects exact sele
   const expected = JSON.parse(await readFile(fixture.expected.changes, 'utf8'));
   const base = await mkdtemp(join(tmpdir(), 'codeatlas-reconcile-'));
   const databasePath = join(base, 'repo.sqlite');
+  let database;
   try {
     const repo = await materialize(setup, base);
     await runMigrations({ databasePath, databaseKind: 'REPOSITORY', manifestUrl });
     const request = { repositoryId, startingPath: repo, workspaceRoot: base, config: setup.config };
     const open = () => new DatabaseSync(databasePath, { enableForeignKeyConstraints: true });
-    let database = open();
+    database = open();
     database
       .prepare('INSERT INTO repository (slot, id, root_path) VALUES (1, ?, ?)')
       .run(repositoryId, repo);
@@ -39,6 +68,8 @@ test('restart-reconciliation Fixture preserves identities and detects exact sele
       .run(repositoryId);
     const first = await reconcileGitWorktree(request, new RepositorySourceStateStore(database));
     assert.deepEqual(first.changedPaths, expected.initialChangedPaths);
+    assertChanges(first, expected.initial);
+    assert.equal(first.changes.baseRevisionId, null);
     assert.equal(first.revision.baseRevisionId, null);
     assert.equal(first.files.length, 2);
     assert.ok(first.files.every((file) => Number.isSafeInteger(file.sizeBytes)));
@@ -47,6 +78,11 @@ test('restart-reconciliation Fixture preserves identities and detects exact sele
         .load(repositoryId)
         .files.map((file) => [file.path, file.id]),
     );
+    database
+      .prepare(
+        'UPDATE repository_state SET indexed_revision_id = ?, indexed_content_fingerprint = ? WHERE repository_id = ?',
+      )
+      .run(first.revision.id, first.revision.contentFingerprint, repositoryId);
     await assert.rejects(
       reconcileGitWorktree(
         { ...request, startingPath: join(base, 'missing') },
@@ -78,6 +114,8 @@ test('restart-reconciliation Fixture preserves identities and detects exact sele
     database = open();
     const restarted = await reconcileGitWorktree(request, new RepositorySourceStateStore(database));
     assert.deepEqual(restarted.changedPaths, []);
+    assertChanges(restarted, expected.unchangedRestart);
+    assert.equal(restarted.changes.baseRevisionId, first.revision.id);
     assert.equal(restarted.revision.id, first.revision.id);
     database.close();
 
@@ -86,6 +124,10 @@ test('restart-reconciliation Fixture preserves identities and detects exact sele
     database = open();
     const changed = await reconcileGitWorktree(request, new RepositorySourceStateStore(database));
     assert.deepEqual(changed.changedPaths, expected.afterEditsChangedPaths);
+    assertChanges(changed, expected.afterEdits);
+    assert.equal(changed.changes.baseRevisionId, first.revision.id);
+    assert.equal(changed.changes.modified[0].id, firstIds.get('src/Keep.java'));
+    assert.equal(changed.changes.deleted[0].id, firstIds.get('src/Remove.java'));
     assert.equal(changed.revision.id, first.revision.id);
     const changedFiles = new RepositorySourceStateStore(database).load(repositoryId).files;
     assert.equal(
@@ -93,11 +135,11 @@ test('restart-reconciliation Fixture preserves identities and detects exact sele
       firstIds.get('src/Keep.java'),
     );
     assert.ok(!changedFiles.some((file) => file.path === 'src/Remove.java'));
-    assert.equal(
-      database.prepare('SELECT indexed_revision_id FROM repository_state').get()
-        .indexed_revision_id,
-      null,
-    );
+    const indexed = database
+      .prepare('SELECT indexed_revision_id, indexed_content_fingerprint FROM repository_state')
+      .get();
+    assert.equal(indexed.indexed_revision_id, first.revision.id);
+    assert.equal(indexed.indexed_content_fingerprint, first.revision.contentFingerprint);
     assert.deepEqual(
       database
         .prepare('PRAGMA table_info(source_files)')
@@ -109,19 +151,38 @@ test('restart-reconciliation Fixture preserves identities and detects exact sele
     database.close();
 
     database = open();
-    assert.deepEqual(
-      (await reconcileGitWorktree(request, new RepositorySourceStateStore(database))).changedPaths,
-      [],
+    const unchanged = await reconcileGitWorktree(request, new RepositorySourceStateStore(database));
+    assert.deepEqual(unchanged.changedPaths, []);
+    assertChanges(unchanged, expected.secondRestart);
+    assert.notEqual(
+      database.prepare('SELECT indexed_content_fingerprint FROM repository_state').get()
+        .indexed_content_fingerprint,
+      unchanged.revision.contentFingerprint,
     );
+    await writeFile(join(repo, 'build/Skipped.java'), 'class OnlyIgnoredChanged {}\n');
+    await writeFile(join(repo, '.env'), 'another-secret');
+    const ignoredOnly = await reconcileGitWorktree(
+      request,
+      new RepositorySourceStateStore(database),
+    );
+    assertChanges(ignoredOnly, expected.secondRestart);
     await writeFile(join(repo, 'src/Remove.java'), 'class New {}\n');
     const readded = await reconcileGitWorktree(request, new RepositorySourceStateStore(database));
     assert.deepEqual(readded.changedPaths, expected.afterReaddChangedPaths);
+    assertChanges(readded, expected.afterReadd);
     const readdedId = new RepositorySourceStateStore(database)
       .load(repositoryId)
       .files.find((file) => file.path === 'src/Remove.java').id;
     assert.notEqual(readdedId, firstIds.get('src/Remove.java'));
+    await rename(join(repo, 'src/Remove.java'), join(repo, 'src/Renamed.java'));
+    const renamed = await reconcileGitWorktree(request, new RepositorySourceStateStore(database));
+    assert.deepEqual(renamed.changedPaths, expected.afterRenameChangedPaths);
+    assertChanges(renamed, expected.afterRename);
+    assert.equal(renamed.changes.deleted[0].id, readdedId);
+    assert.notEqual(renamed.changes.added[0].id, readdedId);
     database.close();
   } finally {
+    if (database?.isOpen) database.close();
     await rm(base, { recursive: true, force: true });
   }
 });
