@@ -35,6 +35,8 @@ An Engineering Agent must not silently change any item below. A change requires 
 - NativeProvider remains language-neutral, framework semantics remain Plugin-owned, and Rust cannot activate SQLite state (ADR-014).
 - Native IPC v1 strict payloads remain compatible; ADR-015 adds a separately negotiated v2 `ANALYZE` coverage payload without changing IR schema v1, ProviderSnapshot v1, or Rust's storage authority.
 
+On 2026-09-30 the user accepted [ADR-016](adr/ADR-016-native-refresh-derived-analysis-state.md): negotiated v3 ANALYZE/REFRESH and TypeScript-owned derived summaries, additive R010 reservation, unchanged initial hard caps and same-WORKTREE applicability. Existing strict v1/v2, IR v1, ProviderSnapshot v1 and no-Rust-SQLite decisions stay FROZEN. Architecture acceptance is not implementation evidence or approval to skip detailed packet/plan review.
+
 ## EVOLVABLE decisions
 
 An Engineering Agent may tune these only when Fixture or Evaluation evidence supports the change. The Agent must record the evidence and update the controlling design document, evaluation baseline, acceptance criteria, and traceability; material contract changes also require an ADR:

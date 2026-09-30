@@ -18,21 +18,21 @@
 
 ## Canonical update policy
 
-| Layer | Policy |
-|---|---|
-| Source fingerprint | AUTO |
-| Code Graph | AUTO |
-| Contract Graph | AUTO |
-| ExecutionGraph | AUTO |
-| RuntimeFlow | AUTO |
-| Knowledge impact | AUTO |
-| Document structural parse | AUTO |
-| Semantic claim extraction | MANUAL |
-| Capability | MANUAL |
-| BusinessFlow | MANUAL |
-| Architecture knowledge | MANUAL |
-| Wiki publication | MANUAL |
-| Evaluation after knowledge update | AUTO |
+| Layer                             | Policy |
+| --------------------------------- | ------ |
+| Source fingerprint                | AUTO   |
+| Code Graph                        | AUTO   |
+| Contract Graph                    | AUTO   |
+| ExecutionGraph                    | AUTO   |
+| RuntimeFlow                       | AUTO   |
+| Knowledge impact                  | AUTO   |
+| Document structural parse         | AUTO   |
+| Semantic claim extraction         | MANUAL |
+| Capability                        | MANUAL |
+| BusinessFlow                      | MANUAL |
+| Architecture knowledge            | MANUAL |
+| Wiki publication                  | MANUAL |
+| Evaluation after knowledge update | AUTO   |
 
 AUTO means deterministic updates occur during watching or startup reconciliation. MANUAL means an authorized `update_knowledge` command initiates semantic compilation and publication. Manual publication never prevents affected-state reporting.
 
@@ -90,6 +90,8 @@ NativeProvider remains language-neutral. A future internal `LanguageAnalyzer` bo
 Native IPC v1 remains a strict compatible path. Accepted [ADR-015](adr/ADR-015-native-ipc-v2-coverage-statistics.md) adds a negotiated v2 `ANALYZE` coverage payload for source-grounded per-file/capability site statistics; v1 `DESCRIBE` remains the bootstrap, IR schema stays v1, and protocol-v2 `REFRESH` is not part of P05-W3-003. Coverage statistics are Provider observation metadata, not Canonical truth or permission to activate partial state.
 
 Source-grounded LLM degradation is a future, permissioned semantic-candidate path when parser coverage is unavailable; it rejoins the existing Reconciliation/Evaluation/publication chain and cannot create Canonical Code Facts or trigger semantic publication automatically. Diagram and Agent Context are bounded, authorized derived views of engineering facts or published Knowledge; neither becomes a canonical writer. Diagram projection defaults to grounded Mermaid, and a sequence requires ordering evidence rather than a CallGraph inference. Wiki remains the narrower ADR-013 projection of published Knowledge only. See [Knowledge Workflow](specs/KNOWLEDGE_WORKFLOW.md), [Diagram Projection](../specs/diagram-projection.md), and [Agent API](specs/AGENT_API.md).
+
+Accepted [ADR-016](adr/ADR-016-native-refresh-derived-analysis-state.md) adds separately negotiated v3 ANALYZE/REFRESH with compact derived per-file resolver summaries, not AST/source persistence. TypeScript owns the derived repository state and activates it in the same validated Store transaction as graph/support/Evidence/coverage/fingerprint. Rust consumes strict bounded JSONL metadata and owns no SQLite. Missing/incompatible baseline requests explicit bootstrap; resource exhaustion never silently triggers full parsing. v1/v2 and same-WORKTREE applicability remain unchanged. This is accepted Phase 0.5 architecture, not an implemented REFRESH capability; the first [contract packet](../superpowers/specs/2026-09-30-p05-w3-020-v3-contract-design.md) was approved and has isolated input validators/shared corpus locally. Real producer, lifecycle and Store integration still require subsequent detailed packets; see CURRENT_STATUS for review-repair evidence.
 
 ## Deployment modes
 

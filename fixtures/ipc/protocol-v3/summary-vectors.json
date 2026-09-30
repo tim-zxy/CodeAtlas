@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "emptyDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "canonicalEmptyFile": "[{\"coverage\":[],\"diagnostics\":[],\"emittedFacts\":[],\"relationSites\":[],\"schemaVersion\":{\"$nativeNumber\":\"3ff0000000000000\"},\"sourceFile\":{\"classification\":{\"contentKind\":\"TEXT\",\"provenance\":\"AUTHORED\",\"role\":\"SOURCE\"},\"contentFingerprint\":\"fp-a\",\"id\":\"f-a\",\"languageHint\":\"java\",\"path\":\"src/A.java\",\"repositoryId\":\"r\",\"revisionId\":\"rev\",\"sensitivity\":\"PUBLIC\"},\"symbols\":[]}]",
+  "numberBits": {
+    "zero": "0000000000000000",
+    "one": "3ff0000000000000",
+    "tenth": "3fb999999999999a"
+  },
+  "sourceFile": {
+    "id": "f-a",
+    "repositoryId": "r",
+    "revisionId": "rev",
+    "path": "src/A.java",
+    "contentFingerprint": "fp-a",
+    "classification": {
+      "role": "SOURCE",
+      "provenance": "AUTHORED",
+      "contentKind": "TEXT"
+    },
+    "languageHint": "java",
+    "sensitivity": "PUBLIC"
+  },
+  "canonicalSymbolFile": "[{\"coverage\":[{\"capability\":\"SYMBOL\",\"coverage\":\"COMPLETE\",\"sourceFileId\":\"f-a\",\"statistics\":{\"coveredSites\":{\"$nativeNumber\":\"0000000000000000\"},\"eligibleSites\":{\"$nativeNumber\":\"0000000000000000\"},\"partialSites\":{\"$nativeNumber\":\"0000000000000000\"},\"resolutionCounts\":{\"AMBIGUOUS\":{\"$nativeNumber\":\"0000000000000000\"},\"EXACT\":{\"$nativeNumber\":\"0000000000000000\"},\"HEURISTIC\":{\"$nativeNumber\":\"0000000000000000\"},\"UNRESOLVED\":{\"$nativeNumber\":\"0000000000000000\"},\"UNSUPPORTED\":{\"$nativeNumber\":\"0000000000000000\"}},\"unsupportedSites\":{\"$nativeNumber\":\"0000000000000000\"}},\"support\":\"SUPPORTED\"}],\"diagnostics\":[],\"emittedFacts\":[],\"relationSites\":[],\"schemaVersion\":{\"$nativeNumber\":\"3ff0000000000000\"},\"sourceFile\":{\"classification\":{\"contentKind\":\"TEXT\",\"provenance\":\"AUTHORED\",\"role\":\"SOURCE\"},\"contentFingerprint\":\"fp-a\",\"id\":\"f-a\",\"languageHint\":\"java\",\"path\":\"src/A.java\",\"repositoryId\":\"r\",\"revisionId\":\"rev\",\"sensitivity\":\"PUBLIC\"},\"symbols\":[]}]"
+}

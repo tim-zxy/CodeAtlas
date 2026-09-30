@@ -2,6 +2,8 @@
 
 ## Principle
 
+ADR-016's first P05-W3-020-A [contract packet](../../superpowers/specs/2026-09-30-p05-w3-020-v3-contract-design.md) implements `p05-native-v3-request-contract-v1` as a shared TS/Rust cases index, not an evaluation `fixture.json` or capability declaration. Its shared contract corpus is registered in required Node/Cargo runners and passes locally; final review repairs and fresh evidence are recorded in CURRENT_STATUS. This does not register an analyzer capability. Later packets must add real Native restart, dependency/import/overload/unresolved/shared-container, migration/atomic-summary rollback, failed-Apply empty-delta and full-rebuild differential evidence. Preserve all four Evaluation layers and original numerical Phase 0.5 gates; contract agreement does not prove parsing, incremental correctness, performance or publication safety.
+
 Use deterministic checks whenever possible, structured comparison when facts have schemas, and semantic judging only for qualities that cannot be mechanically verified. Evaluation is part of every implementation phase.
 
 ## Layers
@@ -109,4 +111,3 @@ zero-stale-binding phase gates remain P05-W3-020/P05-W9-001. No new numerical
 threshold or Phase 0.5 exit claim follows from this task-local Fixture.
 
 Phase 1 Knowledge evaluation distinguishes parser-grounded and source-grounded-degraded candidate paths. Report grounding, unsupported/partial coverage, unverified relations, publication acceptance/rejection, and agent utility by generation method without inventing a new numerical pass threshold. Later Diagram projection evaluation checks source/version references, permission/freshness, graph grounding, type-specific completeness, and sequence-order evidence. An unsupported diagram is reported as such, not rendered as a complete graph.
-

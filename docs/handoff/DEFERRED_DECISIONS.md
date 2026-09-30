@@ -23,3 +23,5 @@
 
 Deferred means intentionally undecided, not forgotten. The formal roadmap contains no Phase 4.
 
+ADR-016's approved Phase 0.5 derived Native summaries are compact restart inputs, not the DEFERRED persisted CFG/PDG, AST, adaptive scheduler, agent memory or semantic knowledge capabilities. Contract/storage/producer packets must preserve every earliest-phase restriction above; metadata implementation is not authority to bring those features forward.
+
