@@ -46,6 +46,8 @@ Phase 0 explicitly does not require Java parsing.
 - [ ] Incremental correctness is 100 percent for declared fixtures.
 - [ ] Stale provider-binding facts equal zero.
 
+ADR-016 adds a P05-W3-020 applicability check without replacing the gates above: compatible complete derived summaries and graph/support/Evidence/coverage/indexed fingerprint must activate atomically; legacy/incompatible state, stale/empty-latest-delta retry, malformed metadata, shared-container ownership and resource overflow retain the last good graph. Prove restart/dependent resolution with real Native streams and unchanged-file parse counts. The first contract packet only establishes strict cross-language schema/byte agreement and cannot check these runtime gates. No Fixture baseline or numerical threshold changes at design acceptance.
+
 ## Phase 1 exit
 
 - [ ] Spring, Mongo, Kafka, and FastAPI fixtures produce canonical entry points, tasks, data resources, and contracts.

@@ -138,6 +138,8 @@ Depends on fingerprints. Produce added, modified, deleted, and renamed changes; 
 
 Depends on change detector and patch apply. Consume changed files and emit a validated patch stream. Refresh reparses changed files plus a bounded resolver-dependent set, not the whole repository by default; in-memory incremental trees are an optimization only while alive, and ASTs are not persisted. Fixtures: modify call target, delete class/method, add class/method, and change import.
 
+P05-W3-020 follows accepted ADR-016. Subdivision A is the review-ready [v3 summary/request contract design](../superpowers/specs/2026-09-30-p05-w3-020-v3-contract-design.md) and [implementation plan](../superpowers/plans/2026-09-30-p05-w3-020-v3-contract.md), followed by separately reviewed R010/full-bootstrap, REFRESH producer, Runtime/Store composition and differential-Evaluation packets. Subdivisions do not increase the 14 roadmap task count. Contract-only implementation must not advertise v3/REFRESH or claim the parent task complete.
+
 ### P05-W5-001 Graph query and entry-less trace
 
 Depends on active canonical store. Implement get symbol, find symbols, incoming/outgoing edges, and bounded call traversal. Return confidence, coverage, freshness, and source references.

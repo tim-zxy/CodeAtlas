@@ -43,6 +43,8 @@ For Phase 0.5 native analysis, `EffectiveConfig.indexing.nativeAnalyzer.parseWor
 
 Native/reference provider absence reports unsupported coverage and uses allowed alternatives. LLM absence leaves deterministic graph/query capabilities usable. Embedding defaults disabled; FTS5 remains available. Failed knowledge update retains publication. `ekp doctor` checks environment/capabilities; `ekp status` reports project state.
 
+Under accepted ADR-016, Native v3 composition receives versioned summaries through validated local IPC, not a new user-facing cache/worker knob or SQLite filename passed to Rust. parseWorkers remains the sole worker input and is excluded from semantic summary compatibility. Source-policy/capability/version changes require an explicit compatible bootstrap; an empty latest reconciliation delta is insufficient when baseline inventory differs. Metadata shares existing byte/memory budgets; hard-cap failure retains the graph and does not automatically fall back to full parsing. Detailed composition and telemetry remain later P05-W3-020 packets.
+
 ## Packaging
 
 Phase 1 distributes a TypeScript npm package plus platform-specific Rust binary packages; users need no Rust toolchain. Product, provider protocol, Canonical IR, database schema, config, workflow, and prompt versions evolve independently with explicit compatibility checks.

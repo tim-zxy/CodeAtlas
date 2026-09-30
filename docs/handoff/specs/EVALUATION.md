@@ -2,6 +2,8 @@
 
 ## Principle
 
+ADR-016's first P05-W3-020-A [contract packet](../../superpowers/specs/2026-09-30-p05-w3-020-v3-contract-design.md) plans `p05-native-v3-request-contract-v1` as a shared TS/Rust cases index, not an evaluation `fixture.json` or capability declaration. It is not registered/passing yet. Later packets must add real Native restart, dependency/import/overload/unresolved/shared-container, migration/atomic-summary rollback, failed-Apply empty-delta and full-rebuild differential evidence. Preserve all four Evaluation layers and original numerical Phase 0.5 gates; contract agreement does not prove parsing, incremental correctness, performance or publication safety.
+
 Use deterministic checks whenever possible, structured comparison when facts have schemas, and semantic judging only for qualities that cannot be mechanically verified. Evaluation is part of every implementation phase.
 
 ## Layers

@@ -17,4 +17,5 @@ All records are Accepted unless explicitly superseded by a later record. Amendme
 - ADR-013 Versioned Projection Framework for Wiki Customization
 - ADR-014 Multi Language Native Analyzer and Performance Architecture
 - ADR-015 Versioned Native IPC Coverage Statistics (Accepted)
+- ADR-016 Native REFRESH Derived Analysis State (architecture Accepted; detailed packets reviewed separately)
 

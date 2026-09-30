@@ -1,6 +1,6 @@
 # P05-W3-020 Native REFRESH startup review and design change proposal
 
-Status: PROPOSED on 2026-09-30; not accepted and not implementation-ready.
+Status: Architecture ACCEPTED by explicit user confirmation on 2026-09-30; recorded in [ADR-016](../../handoff/adr/ADR-016-native-refresh-derived-analysis-state.md). Detailed [contract design](2026-09-30-p05-w3-020-v3-contract-design.md) and [first-packet implementation plan](../plans/2026-09-30-p05-w3-020-v3-contract.md) are REVIEW-READY, not approved for execution. The startup evidence below predates acceptance; proposal wording does not mean product implementation exists.
 
 ## Outcome and baseline
 
@@ -218,7 +218,8 @@ plan. Existing original task milestones and Exit Criteria stay unchanged; this
 adds necessary design/implementation effort inside P05-W3-020, not a Phase 0
 reopen or Phase 1 dependency. No duration estimate is supported yet.
 
-User decision requested: approve the v3 + TypeScript-owned derived summaries
-approach (including additive R010 and unchanged initial hard limits), or choose
-another approach. The first subsequent executable step is detailed contract and
-Fixture design; product implementation waits for the governed design/plan review.
+User decision confirmed on 2026-09-30: v3 + TypeScript-owned derived summaries,
+additive R010 reservation and unchanged initial hard limits. ADR-016 records the
+architecture acceptance. The first detailed contract/Fixture design and its
+implementation plan now await review; product implementation still waits for
+that review. No approval of later packets or phase exit is inferred.

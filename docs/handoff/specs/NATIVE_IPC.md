@@ -81,6 +81,12 @@ For every request, event request IDs match, sequence is exactly zero-based and c
 
 The object-level complete-stream validator intentionally does not compute or verify integrity checksums by itself. The P0-W3-004 byte-stream client computes SHA-256 over the exact raw JSONL bytes of every pre-terminal event, including each LF, and compares the lowercase 64-character checksum in a successful `ANALYSIS_COMPLETED` or `REFRESH_COMPLETED` terminal. A mismatch is protocol corruption and discards the complete result. Failed terminal streams and request forms without a success checksum still receive complete-stream validation.
 
+### Accepted v3 architecture; detailed contract review open
+
+[ADR-016](../adr/ADR-016-native-refresh-derived-analysis-state.md) accepts separate v3 ANALYZE/REFRESH and bounded JSONL request metadata/completion records. Existing single-record v1/v2 framing and strict payloads stay intact; v2 REFRESH remains unavailable. v1 DESCRIBE remains bootstrap. Do not advertise v3 until real producer/client compatibility tests pass or incremental capability until real REFRESH/Evaluation passes. Current executable advertisement remains unchanged.
+
+The [P05-W3-020-A contract design](../../superpowers/specs/2026-09-30-p05-w3-020-v3-contract-design.md) specifies summaries, compatibility context, exact input record/count/digest rules, complete baseline-to-target delta validation and shared byte Fixtures; it is REVIEW-READY, not yet an executable contract. Keep aggregate stdin/line 1,000,000 bytes, stdout 10,000,000 bytes, output events 10,000 and stderr 1,000,000 bytes including metadata. No IR or ProviderSnapshot v1 field is added. Output producer/state publication and cancellation/backpressure integration are separate reviewed packets; contract-only tests cannot claim runtime support.
+
 ## Error model
 
 Errors include incompatible protocol/IR, invalid request, unsupported language/capability, source changed during analysis, resource/budget exceeded, cancelled, internal analyzer failure, protocol corruption, and base mismatch. Diagnostics may be non-fatal; only the terminal event determines stream success.
