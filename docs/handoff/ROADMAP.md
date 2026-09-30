@@ -32,6 +32,8 @@ Within those existing tasks, native scheduling obtains parse-worker mode from va
 
 P05-W3-003 uses the ADR-015 negotiated Native IPC v2 `ANALYZE` coverage payload for per-file/capability source-site counts and resolution distribution. Strict v1 remains available and reports numeric statistics as unavailable. This does not add a persisted ProviderSnapshot schema, protocol-v2 `REFRESH`, a new numerical gate, or an earlier query/activation dependency.
 
+Before Phase 1 promotion, P05-W3-020 needs a reviewed restart-safe retained-analysis contract. The [2026-09-30 startup review and Design Change Proposal](../superpowers/specs/2026-09-30-p05-w3-020-native-refresh-design-change-proposal.md) is PROPOSED only: negotiated v3, derived per-file metadata and possible additive R010 are not approved changes to the roadmap/schema reservations above. No Phase 0.5 gate, phase boundary or future capability is changed by drafting it.
+
 ## Phase 1 Core product proof
 
 Add Java/Spring, Mongo, Kafka, FastAPI semantics; `ExecutionGraph`; `RuntimeFlow`; contract registry and basic cross-repository stitching; Markdown/ADR document IR; components, capabilities, integrations, and grounded business flows; repository/workspace/cross-repository knowledge workflows; manual knowledge update; FTS5; LLM runtime with local/OpenAI-compatible structured output; six core MCP tools; security baseline; packaging and install flow.

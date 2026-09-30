@@ -7,19 +7,27 @@
 - Primary handoff entry: `ENGINEERING_HANDOFF.md`.
 - Compatibility entry: `CODEX_HANDOFF.md`.
 - Implementation repository: all 18 Phase 0 tasks and the documentation-only Phase 0 exit record are integrated on remote `main`. PR #6 merged P0-W9-003 at `9f4ec958c1f18ea13623fb7cf5703e0c1efe3b4c`; PR #7 merged the Phase 0 closeout at `71dd18ce58e89b489336fc942bfdac4b36cc024b`. Hosted CI for the closeout merge passed. Phase 0 is closed; the prior closeout-pending language below is historical evidence, not current state.
-- Active implementation phase: Phase 0.5. P05-W2-001 and P05-W2-002 were integrated by PR #8 (`ed4f80e`) and PR #9 (`813fcbe`); P05-W3-001..003 by PR #10 (`a9180d8`), PR #11 (`9bd70cf`), and PR #12 (`66b4034`); P05-W4-001 by [PR #13](https://github.com/tim-zxy/CodeAtlas/pull/13) at `917e5696`; P05-W4-002 by [PR #14](https://github.com/tim-zxy/CodeAtlas/pull/14) at `ee07602b186494ffc68188a4849826cb0d489e97`; and P05-W1-010 by [PR #15](https://github.com/tim-zxy/CodeAtlas/pull/15) at `feb4a3aaeae053a06aa2d8190e6b8ea87709c5f1`. `git merge-base --is-ancestor fb64674 origin/main` exited 0 on 2026-09-29. The [exact merge-SHA push run 36557731129](https://github.com/tim-zxy/CodeAtlas/actions/runs/36557731129) completed successfully. Earlier task sections below are pre-integration records. This is 8 of 14 listed Phase 0.5 tasks, not a phase exit.
+- Active implementation phase: Phase 0.5. PRs #8-#15 integrated the first eight tasks; [PR #16](https://github.com/tim-zxy/CodeAtlas/pull/16) integrated P05-W2-010 and P05-W1-011 at `84975b780f47807fb5f8fcfb616c48fc1001ca6e` on 2026-09-30. The primary local `main` matches that merge, and [exact merge-SHA push run 36717188345](https://github.com/tim-zxy/CodeAtlas/actions/runs/36717188345) succeeded. This is 10 of 14 listed Phase 0.5 tasks, not a phase exit. P05-W3-020 is in proposed-contract review; earlier local-only task records below are historical.
 
 ## Phase readiness
 
 | Phase | Readiness | Implementation progress |
 |---|---|---|
 | 0 | IMPLEMENTATION-READY | 18 of 18 tasks integrated; 11 of 11 technical exit checks passed on `9f4ec95`; documentation closeout merged as PR #7 at `71dd18c` |
-| 0.5 | IMPLEMENTATION-READY | 8 of 14 listed tasks integrated through P05-W1-010; 6 remain, and Phase 0.5 exit gates remain open |
+| 0.5 | IMPLEMENTATION-READY (phase baseline); P05-W3-020 contract review open | 10 of 14 listed tasks integrated through PR #16; 4 remain, and Phase 0.5 exit gates remain open |
 | 1 | DESIGN-READY | 0 percent |
 | 2 | ARCHITECTURE-READY | 0 percent |
 | 3 | ROADMAP/ARCHITECTURE-READY | 0 percent |
 
 ## Next action
+
+PR #16 was merged on 2026-09-30 at `84975b780f47807fb5f8fcfb616c48fc1001ca6e`; the primary local `main` was fast-forwarded to that exact commit. The [exact merge-SHA push run 36717188345](https://github.com/tim-zxy/CodeAtlas/actions/runs/36717188345) succeeded. P05-W2-010 and P05-W1-011 are integrated, bringing Phase 0.5 to 10/14 tasks. Four remain: Native REFRESH (P05-W3-020), graph queries (P05-W5-001), CLI (P05-W8-001), and phase Evaluation (P05-W9-001). Historical task/publication records below predate this merge; this paragraph and the readiness table are the current integration record.
+
+The user authorized merging and starting the next step. P05-W3-020 has started as an architectural contract review on `codex/p05-w3-020-native-refresh-design`. The [startup review and Design Change Proposal](../superpowers/specs/2026-09-30-p05-w3-020-native-refresh-design-change-proposal.md) identifies missing retained resolver metadata and proposes negotiated v3 plus TypeScript-owned derived summaries; it is PROPOSED, not accepted or implementation-ready. Existing strict IPC, R001-R009 migrations, same-`WORKTREE` patch applicability and Phase 0.5 gates remain unchanged. No Native REFRESH product code or future-phase capability has been added. The next step is user review of this proposal, then exact contract/Fixture design and an implementation-plan review, not Phase 1 promotion.
+
+Fresh merged-tree predecessor check: `node --test --test-concurrency=1 packages/application/test/change-detector.test.mjs packages/application/test/reconcile-worktree.test.mjs packages/storage/test/analysis-patch-store.test.mjs packages/runtime/test/patch-analysis-composition.test.mjs` passed 8/8 on 2026-09-30. This includes the patch Fixture case-index test, not the complete atomic-store suite (which lives in `canonical-fact-store.test.mjs`); broader predecessor checks passed in PR #16 head and merge CI. It is not real Native REFRESH or phase-exit evidence.
+
+### Historical pre-merge publication record
 
 On 2026-09-30 the user selected both local integration and PR publication. Local `main` fast-forwarded to `69994394e9eeb4bad002db2b9c5493adc6a0ff26`, with the same tested tree as the implementation branch; its architecture check passed for 17 projects. [PR #16](https://github.com/tim-zxy/CodeAtlas/pull/16) publishes P05-W2-010 and P05-W1-011 together against remote `main`. For implementation head `6999439`, [push run 36715655291](https://github.com/tim-zxy/CodeAtlas/actions/runs/36715655291) and [PR run 36715718237](https://github.com/tim-zxy/CodeAtlas/actions/runs/36715718237) each passed TypeScript workspace, Rust workspace, and Native Java analysis integration. Remote PR integration remains open, so the integrated count stays 8/14; these head checks are not merge-SHA or Phase 0.5 exit evidence. P05-W3-020 is the next design/implementation dependency. The implementation records below predate PR publication.
 
