@@ -71,6 +71,8 @@ The Engineering Agent shall implement the current phase, run its fixtures, updat
 
 The 2026-09-24 Phase 0.5 compatibility amendment interprets future System Wiki sections within ADR-013's published-Knowledge-only reader. Source-grounded knowledge degradation remains candidate-only and permissioned; Diagram and Agent Context remain derived views. No new FROZEN decision is substituted for ADR-013/014, no Phase 0 gate is reopened, and the original Phase 0.5 exit gates remain authoritative alongside additive resource/outcome consistency checks. See the dated [Design Amendment Report](DESIGN_AMENDMENT_REPORT_2026-09-24.md) for implementation-state evidence and phase allocation.
 
+The user accepted the [P05-W1-011 cross-revision Design Change Proposal](../superpowers/specs/2026-09-30-p05-w1-011-cross-revision-design-change-proposal.md) on 2026-09-30. Phase 0.5 patch activation is limited to a single mutable `WORKTREE` revision ID; a different ID or immutable target requests full analysis without changing the active graph. This preserves immutable Evidence and Provider-independent Canonical IR; broader carry-forward needs a separate reviewed design. Existing Phase 0.5 quantitative gates are unchanged.
+
 ## Design Change Proposal minimum content
 
 A proposal must state the decision being changed, its current authority class, evidence, alternatives, compatibility impact, migration impact, security impact, affected phases, affected documents, required fixture/baseline changes, and rollback strategy. Implementation begins only after the proposal is accepted.

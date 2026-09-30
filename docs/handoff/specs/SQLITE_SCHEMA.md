@@ -41,6 +41,8 @@ P05-W1-010 adds R008 as an additive repository migration. `repository_state.inde
 
 P05-W1-011 adds R009 to retain one schema-validated normalized Canonical candidate per active Evidence/Binding. This allows exact FactMerger reselection after one Provider support is removed without storing raw Provider facts. R009 does not backfill unselected candidates in older graphs: patch apply requires a successful new full analysis first and otherwise returns `FULL_ANALYSIS_REQUIRED` without mutation. Published R001-R008 remain immutable; the unpublished Phase 1 repository reservations move to R010/R011. The [accepted P05-W1-011 design](../../superpowers/specs/2026-09-30-p05-w1-011-incremental-patch-apply-design.md) governs the candidate table, fallback, and atomic patch boundary.
 
+The accepted [cross-revision amendment](../../superpowers/specs/2026-09-30-p05-w1-011-cross-revision-design-change-proposal.md) changes no schema: Phase 0.5 patch activation requires one mutable `WORKTREE` revision ID. A different base/target ID or immutable target returns `FULL_ANALYSIS_REQUIRED` before mutation. Old Evidence and R009 candidates are never copied or relabeled to claim support for a new revision.
+
 ## Workspace migrations
 
 | Migration | Phase | Principal tables |

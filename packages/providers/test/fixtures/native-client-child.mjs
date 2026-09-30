@@ -213,6 +213,45 @@ if (
   await write(Buffer.concat(analysisRecords()));
 } else if (scenario.startsWith('refresh-')) {
   const records = refreshRecords();
+  if (scenario === 'refresh-added-node' || scenario === 'refresh-added-node-no-range') {
+    const file = request.payload.changes.added[0];
+    records.splice(
+      1,
+      0,
+      line(envelope('SOURCE_FILE', 1, file)),
+      line(
+        envelope('UPSERT_NODE', 2, {
+          providerId: 'native',
+          providerFactId: 'added-node',
+          providerSnapshotId: request.payload.providerSnapshotId,
+          repositoryId: request.payload.repository.id,
+          revisionId: request.payload.targetRevision.id,
+          providerKind: 'java.class',
+          name: 'Added',
+          qualifiedName: 'example.Added',
+          sourceRange:
+            scenario === 'refresh-added-node-no-range'
+              ? null
+              : {
+                  sourceFileId: file.id,
+                  startLine: 0,
+                  startColumn: 0,
+                  endLine: 0,
+                  endColumn: 5,
+                },
+          confidence: { score: 1, method: 'parser', reasons: [] },
+        }),
+      ),
+      line(
+        envelope('COVERAGE', 3, {
+          capability: 'code-graph',
+          sourceFileId: file.id,
+          support: 'SUPPORTED',
+          coverage: 'COMPLETE',
+        }),
+      ),
+    );
+  }
   if (scenario === 'refresh-burst') {
     const diagnostic = {
       code: 'PARSE_WARNING',
@@ -233,6 +272,16 @@ if (
   if (scenario === 'refresh-burst') {
     terminal.sequence = 3;
     terminal.payload.counts.diagnostics = 2;
+    terminal.payload.integrityChecksum = checksum(records.slice(0, -1));
+  }
+  if (scenario === 'refresh-added-node' || scenario === 'refresh-added-node-no-range') {
+    terminal.sequence = 4;
+    terminal.payload.counts.sourceFiles = 1;
+    terminal.payload.counts.upsertedNodes = 1;
+    terminal.payload.counts.coverage = 1;
+    terminal.payload.capabilities = [
+      { name: 'code-graph', support: 'SUPPORTED', coverage: 'COMPLETE' },
+    ];
     terminal.payload.integrityChecksum = checksum(records.slice(0, -1));
   }
   if (scenario === 'refresh-partial') terminal.payload.outcome = 'PARTIAL';

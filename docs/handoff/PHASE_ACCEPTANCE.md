@@ -38,6 +38,7 @@ Phase 0 explicitly does not require Java parsing.
 - [ ] P05-W3-003 v2 `ANALYZE` coverage records report source-grounded eligible/covered/unsupported/partial site counts and relation-resolution distribution per file/capability; strict v1 remains usable with numeric statistics explicitly unavailable. Exact Fixtures and failure recovery pass; no new numerical gate is implied (ADR-015).
 - [ ] Removed provider support leaves no stale binding; a fact remains while another provider still supports it.
 - [ ] P05-W1-011 patch application reselects from persisted active-support candidates after one Provider removal, rejects legacy missing candidates with a full-analysis fallback, and preserves graph/Evidence/bindings and activation ID/fingerprint on failed or stale-base patches (registered `p05-incremental-patch-apply-v1`; no new numeric gate).
+- [ ] P05-W1-011's registered Fixture proves same-`WORKTREE`-ID fingerprint advancement and controlled `FULL_ANALYSIS_REQUIRED` for different revision IDs or immutable targets, with exact old-graph/Evidence/binding/candidate/pointer preservation. This is an applicability boundary, not a replacement for the existing Phase 0.5 incremental-correctness or no-default-full-reparse gates.
 - [ ] `understand` and code-level `trace` return locations, relations, confidence, and coverage warnings.
 - [ ] Critical Symbol Recall is at least 95 percent.
 - [ ] Critical Direct Call Precision is at least 95 percent.

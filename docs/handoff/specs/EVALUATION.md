@@ -99,8 +99,11 @@ remains P05-W9-001, with no new threshold inferred from this single-file case.
 P05-W1-011 registers `p05-incremental-patch-apply-v1` for the Storage/Application
 half of a validated patch. Exact SQLite images and the `two-provider-same-call`
 golden prove retained-support reselection, last-support removal, legacy-R009
-full-analysis fallback, stale-base refusal, and rollback after support or
+full-analysis fallback, changed-revision/immutable-target fallback, stale-base refusal, and rollback after support or
 pointer mutation. Synthetic IPC v1 REFRESH input proves the application path;
+the successful patch cases use one mutable `WORKTREE` revision ID with distinct
+base and target fingerprints. Rejected cases compare the unchanged graph,
+Evidence, bindings, candidates, and activation fields after reopening SQLite;
 real Native REFRESH output and the existing 100% incremental-correctness and
 zero-stale-binding phase gates remain P05-W3-020/P05-W9-001. No new numerical
 threshold or Phase 0.5 exit claim follows from this task-local Fixture.

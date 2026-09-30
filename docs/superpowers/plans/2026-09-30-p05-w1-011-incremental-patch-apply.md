@@ -10,12 +10,15 @@
 
 **Spec:** `docs/superpowers/specs/2026-09-30-p05-w1-011-incremental-patch-apply-design.md`
 
+**Accepted amendment:** `docs/superpowers/specs/2026-09-30-p05-w1-011-cross-revision-design-change-proposal.md` limits Phase 0.5 activation to one mutable `WORKTREE` revision ID. Changed-revision or immutable-target input returns `FULL_ANALYSIS_REQUIRED` without mutation.
+
 ## Global Constraints
 
 - Read `AGENTS.md` and the Handoff authorities in their required order before changing code, schema, configuration, Fixture, or build files. Record material assumptions and testable success criteria.
 - Preserve published R001–R008 SQL/checksums. Add R009 only; shift unpublished Phase 1 repository reservations from R009/R010 to R010/R011.
 - Preserve Provider-independent Canonical IR, strict Native IPC v1, ProviderSnapshot/Evidence schemas, FactMerger selection, SQLite authority, and application-owned writes. No new product dependency or numerical Quality Gate.
 - Only a complete, checksum-verified `SUCCEEDED` patch may activate. `PARTIAL`, invalid, stale-base, cancelled, or failed streams never mutate the active graph.
+- Different base/target revision IDs and non-`WORKTREE` targets are inapplicable in this task; prove controlled fallback and exact last-graph preservation without weakening later phase gates.
 - Do not implement the Rust `REFRESH` producer, dependency selection, graph query/CLI, Knowledge, Wiki, watcher, or a deferred capability in this task.
 - Each slice includes its focused tests/Fixtures and a scoped commit. Final status distinguishes local evidence from hosted CI and remote integration.
 
@@ -69,8 +72,10 @@
 
 - [ ] **Step 1: Write failing transaction/Fixture tests.** Start from a committed graph, then assert exact node/edge add/modify/delete and same-WORKTREE target fingerprint activation. Use `two-provider-same-call` goldens for selected-support removal, retained second support, last-support deletion, and original confidence/candidate reselection. Assert explicit remove makes old Evidence `INVALIDATED`; replacement upsert makes it `SUPERSEDED`. Compare candidate/binding/Evidence/graph/pointer images after injected failures, missing candidate, stale base, changed target source, retry, dangling node/edge/candidate, and a zero-event success; reopen SQLite for each rollback check.
 - [ ] **Step 2: Observe RED.** Build Storage, then run `node --test packages/storage/test/analysis-patch-store.test.mjs`; expect absent `applyAnalysisPatch` or new assertions to fail.
+- [ ] **Amendment regression:** changed-revision ID and immutable target each return `FULL_ANALYSIS_REQUIRED` before mutation. Reopen SQLite and compare exact graph, support, Evidence, and activation image. Same-WORKTREE-ID target fingerprint change remains a success case.
 - [ ] **Step 3: Implement the one-transaction store operation.** Under `BEGIN IMMEDIATE`, recheck base ID+fingerprint, target persisted fingerprint, new snapshot ID, and complete active candidate/support coverage. Retire affected support, insert new support/snapshot, reselect indexed affected FactKey groups through `stage.selectGroup` (the injected existing Provider selector), mutate edges/nodes in FK-safe order, validate all active bindings/facts and graph references, then update both activation fields last. Roll back every change on error; do not import Providers into Storage, scan/load the whole graph into a JS array, or commit per fact.
 - [ ] **Step 4: Verify and commit.** Rerun Step 2, full-analysis store, migration, FactMerger, and architecture suites; compare exact Fixture goldens. Commit `feat(storage): apply validated graph patches atomically`.
+- [ ] **Amendment guard:** under the same transaction reject base/target ID mismatch or target kind other than `WORKTREE` before retiring any support, with controlled full-analysis fallback.
 
 ### Task 4: Application composition and Phase 0.5 task evidence
 

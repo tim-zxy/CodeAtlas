@@ -15,5 +15,7 @@ test('P05-W1-011 Fixture declares atomic patch, fallback and rollback boundaries
   assert.equal(fixture.task, 'P05-W1-011');
   assert.ok(fixture.cases.includes('selected-support-removal-retains-second-provider'));
   assert.ok(fixture.cases.includes('changed-revision-fallback'));
+  assert.ok(fixture.cases.includes('dangling-fact-evidence-link-rejection'));
+  assert.ok(fixture.cases.includes('validated-refresh-composition-and-failure-retention'));
   assert.ok(fixture.cases.includes('support-retirement-and-pointer-failure-rollback'));
 });

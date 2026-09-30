@@ -404,6 +404,8 @@ export class RepositoryCanonicalFactStore {
       )
       .get(repositoryId, revisionId);
     if (orphan) throw new AnalysisPatchError('FULL_ANALYSIS_REQUIRED');
+    if (this.hasDanglingFactEvidence(repositoryId, revisionId))
+      throw new AnalysisPatchError('FULL_ANALYSIS_REQUIRED');
     for (const [type, table] of [
       ['NODE', 'canonical_nodes'],
       ['EDGE', 'canonical_edges'],
@@ -424,6 +426,8 @@ export class RepositoryCanonicalFactStore {
   }
 
   private validatePatchGraph(repositoryId: string, revisionId: string): void {
+    if (this.hasDanglingFactEvidence(repositoryId, revisionId))
+      throw new AnalysisPatchError('INVALID_PATCH');
     const danglingCandidate = this.db
       .prepare(
         `SELECT 1 FROM unresolved_targets AS target
@@ -463,6 +467,26 @@ export class RepositoryCanonicalFactStore {
         .get(repositoryId, revisionId, type, repositoryId, revisionId);
       if (unsupported) throw new AnalysisPatchError('INVALID_PATCH');
     }
+  }
+
+  private hasDanglingFactEvidence(repositoryId: string, revisionId: string): boolean {
+    return !!this.db
+      .prepare(
+        `SELECT 1 FROM fact_evidence AS link
+      JOIN evidence AS evidence ON evidence.id = link.evidence_id
+      LEFT JOIN canonical_nodes AS node ON link.fact_type = 'NODE'
+        AND node.repository_id = evidence.repository_id
+        AND node.revision_id = evidence.revision_id AND node.id = link.canonical_fact_id
+      LEFT JOIN canonical_edges AS edge ON link.fact_type = 'EDGE'
+        AND edge.repository_id = evidence.repository_id
+        AND edge.revision_id = evidence.revision_id AND edge.id = link.canonical_fact_id
+      WHERE evidence.repository_id = ? AND evidence.revision_id = ? AND evidence.status = 'ACTIVE'
+        AND (link.fact_type <> evidence.fact_type OR
+          (link.fact_type = 'NODE' AND node.id IS NULL) OR
+          (link.fact_type = 'EDGE' AND edge.id IS NULL))
+      LIMIT 1`,
+      )
+      .get(repositoryId, revisionId);
   }
 
   private reselectPatchFact(

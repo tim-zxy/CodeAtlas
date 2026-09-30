@@ -250,6 +250,88 @@ test('patch apply activates a successful zero-event same-WORKTREE refresh atomic
   });
 });
 
+test('patch apply rejects a dangling active FactEvidence link without advancing activation', async () => {
+  await withDatabase(async (db, path) => {
+    const store = new RepositoryCanonicalFactStore(db);
+    const initial = await candidate(
+      db,
+      'snapshot-dangling-link-base',
+      result.request.payload.revision.contentFingerprint,
+    );
+    try {
+      store.applyAnalysisBatch(initial.stage, {
+        repositoryId: initial.snapshot.repositoryId,
+        revisionId: initial.snapshot.requestedRevisionId,
+        contentFingerprint: initial.snapshot.requestedRevisionFingerprint,
+        snapshot: initial.snapshot,
+      });
+    } finally {
+      initial.stage.close();
+    }
+    const active = db
+      .prepare("SELECT id FROM evidence WHERE status = 'ACTIVE' AND fact_type = 'NODE' LIMIT 1")
+      .get();
+    assert.ok(active);
+    db.prepare(
+      'INSERT INTO fact_evidence (fact_type, canonical_fact_id, evidence_id) VALUES (?, ?, ?)',
+    ).run('NODE', 'missing-canonical-node', active.id);
+    const target = 'sha256:revision-dangling-link';
+    db.prepare('UPDATE revisions SET content_fingerprint = ? WHERE id = ?').run(
+      target,
+      initial.snapshot.requestedRevisionId,
+    );
+    const before = graph(db);
+    const snapshot = {
+      ...initial.snapshot,
+      id: 'snapshot-dangling-link-patch',
+      requestedRevisionFingerprint: target,
+    };
+    const stage = new RepositoryPatchStage(db, (group) => group[0].canonical);
+    try {
+      stage.confirmSucceeded({
+        type: 'REFRESH_COMPLETED',
+        payload: {
+          repositoryId: snapshot.repositoryId,
+          revisionId: snapshot.requestedRevisionId,
+          revisionFingerprint: target,
+          providerSnapshotId: snapshot.id,
+          outcome: 'SUCCEEDED',
+          counts: {
+            sourceFiles: 0,
+            upsertedNodes: 0,
+            removedNodes: 0,
+            upsertedEdges: 0,
+            removedEdges: 0,
+            coverage: 0,
+            diagnostics: 0,
+          },
+        },
+      });
+      assert.throws(
+        () =>
+          store.applyAnalysisPatch(stage, {
+            repositoryId: snapshot.repositoryId,
+            baseRevisionId: snapshot.requestedRevisionId,
+            baseContentFingerprint: initial.snapshot.requestedRevisionFingerprint,
+            targetRevisionId: snapshot.requestedRevisionId,
+            targetContentFingerprint: target,
+            snapshot,
+          }),
+        (error) => error.code === 'FULL_ANALYSIS_REQUIRED',
+      );
+      assert.deepEqual(graph(db), before);
+      const reopened = new DatabaseSync(path);
+      try {
+        assert.deepEqual(graph(reopened), before);
+      } finally {
+        reopened.close();
+      }
+    } finally {
+      stage.close();
+    }
+  });
+});
+
 test('patch apply rejects stale base, changed revision, immutable target, and legacy candidates without mutation', async () => {
   await withDatabase(async (db) => {
     const store = new RepositoryCanonicalFactStore(db);

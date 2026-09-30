@@ -4,6 +4,8 @@ import { DefaultWorkspaceContextFactory } from './workspace-context.js';
 
 export { KnowledgeRuntime } from './knowledge-runtime.js';
 export { applyNativeFullAnalysis } from './full-analysis.js';
+export { applyNativePatchAnalysis } from './patch-analysis.js';
+export type { PatchAnalysisMeasurement } from './patch-analysis.js';
 export {
   NativeWorkerConfigError,
   nativeLaunchArguments,

@@ -12,11 +12,13 @@
     "replacement-upsert-supersedes-evidence",
     "source-and-candidate-drift-rejection",
     "dangling-reference-rejection",
+    "dangling-fact-evidence-link-rejection",
     "legacy-candidate-fallback",
     "stale-base-fallback",
     "changed-revision-fallback",
     "immutable-target-fallback",
     "duplicate-and-contradictory-provider-operation",
+    "validated-refresh-composition-and-failure-retention",
     "support-retirement-and-pointer-failure-rollback"
   ]
 }
