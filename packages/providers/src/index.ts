@@ -6,6 +6,7 @@ export * from './provider-routing.js';
 export * from './provider-spi.js';
 export { normalizeNativeAnalysis } from './canonical-normalizer.js';
 export { normalizeStagedAnalysis } from './staged-normalization.js';
+export { normalizeStagedPatch } from './staged-patch.js';
 export { mergeStagedAnalysis, finalizeStagedSupports } from './staged-merger.js';
 export type {
   NormalizedCanonicalAnalysis,
@@ -15,6 +16,7 @@ export type {
 export { CanonicalNormalizationError } from './java-node-normalizer.js';
 export type { CanonicalNormalizationErrorCode } from './java-node-normalizer.js';
 export { mergeCanonicalObservations } from './fact-merger.js';
+export { selectMergedGroup } from './fact-merger-selection.js';
 export type { MergedCanonicalAnalysis } from './fact-merger.js';
 export { FactMergeError } from './fact-merger-input.js';
 export type { FactMergeErrorCode, MergeInput, MergeObservation } from './fact-merger-input.js';

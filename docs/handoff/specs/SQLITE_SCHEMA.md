@@ -25,8 +25,9 @@ interface CanonicalFactStore {
 | R006 analysis_coverage | 0 | analysis_coverage |
 | R007 diagnostics | 0 | analysis_diagnostics |
 | R008 indexed_fingerprint | 0.5 | repository_state indexed_content_fingerprint |
-| R009 execution_graph | 1 | execution_nodes, execution_edges, execution_contexts |
-| R010 runtime_flow | 1 | runtime_flows, runtime_flow_steps |
+| R009 active_support_candidates | 0.5 | active_support_candidates |
+| R010 execution_graph | 1 | execution_nodes, execution_edges, execution_contexts |
+| R011 runtime_flow | 1 | runtime_flows, runtime_flow_steps |
 
 R001-R007 are the Phase 0 repository schema. `repository` is a single stable-ID row per database; `root_path` is a locator, not identity. Revisions retain kind-specific identity and fingerprints; a source-file ID may recur across revisions, while `(revision_id, path)` is unique. Provider snapshots retain requested revision/fingerprint and outcome, including partial or failed observations. Canonical node/edge IDs and FactKeys are Provider-independent and unique within a revision. Resolved edges reference same-revision nodes; unresolved edges retain their resolution and a separate hint/candidate array without selecting a target. Evidence and Provider bindings are separate from Canonical Facts. Coverage and bounded diagnostics belong to Provider snapshots. The exact column mapping and deliberate application-validation boundary are recorded in [`P0-W1-006 Repository Database Design`](../../superpowers/specs/2026-09-21-p0-w1-006-repository-db-design.md).
 
@@ -36,7 +37,11 @@ Critical indexes cover normalized source path, revision/fingerprint, node canoni
 
 `repository_state.indexed_revision_id` points only to a successfully activated graph. Failed snapshots remain diagnostic history but never become active.
 
-P05-W1-010 adds R008 as an additive repository migration. `repository_state.indexed_content_fingerprint` records the fingerprint activated with `indexed_revision_id` in the same full-analysis transaction. A pre-R008 database may have a non-null indexed revision but no provable active fingerprint; migration leaves the new field null, preserves the graph, and reports freshness as `UNKNOWN` until a successful full analysis replaces both activation values. New validated writes set both fields together. Matching only a mutable `WORKTREE` revision ID cannot prove freshness. The planned, unpublished Phase 1 repository migrations move to R009 and R010; published R001-R007 SQL and checksums remain unchanged. See the [P05-W1-010 design](../../superpowers/specs/2026-09-29-p05-w1-010-full-analysis-apply-design.md).
+P05-W1-010 adds R008 as an additive repository migration. `repository_state.indexed_content_fingerprint` records the fingerprint activated with `indexed_revision_id` in the same full-analysis transaction. A pre-R008 database may have a non-null indexed revision but no provable active fingerprint; migration leaves the new field null, preserves the graph, and reports freshness as `UNKNOWN` until a successful full analysis replaces both activation values. New validated writes set both fields together. Matching only a mutable `WORKTREE` revision ID cannot prove freshness. At the time of R008, the planned, unpublished Phase 1 repository migrations moved to R009/R010; P05-W1-011 subsequently reserves R009 as stated below. Published R001-R007 SQL and checksums remain unchanged. See the [P05-W1-010 design](../../superpowers/specs/2026-09-29-p05-w1-010-full-analysis-apply-design.md).
+
+P05-W1-011 adds R009 to retain one schema-validated normalized Canonical candidate per active Evidence/Binding. This allows exact FactMerger reselection after one Provider support is removed without storing raw Provider facts. R009 does not backfill unselected candidates in older graphs: patch apply requires a successful new full analysis first and otherwise returns `FULL_ANALYSIS_REQUIRED` without mutation. Published R001-R008 remain immutable; the unpublished Phase 1 repository reservations move to R010/R011. The [accepted P05-W1-011 design](../../superpowers/specs/2026-09-30-p05-w1-011-incremental-patch-apply-design.md) governs the candidate table, fallback, and atomic patch boundary.
+
+The accepted [cross-revision amendment](../../superpowers/specs/2026-09-30-p05-w1-011-cross-revision-design-change-proposal.md) changes no schema: Phase 0.5 patch activation requires one mutable `WORKTREE` revision ID. A different base/target ID or immutable target returns `FULL_ANALYSIS_REQUIRED` before mutation. Old Evidence and R009 candidates are never copied or relabeled to claim support for a new revision.
 
 ## Workspace migrations
 

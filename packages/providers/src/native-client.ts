@@ -289,6 +289,32 @@ export async function streamNativeAnalysis(
   if (request.type !== 'ANALYZE') {
     throw clientError('INVALID_REQUEST', 'Streaming requires an ANALYZE request', request);
   }
+  return streamNativeRequest(request, optionsValue, sink, decodeAnalysisStream);
+}
+
+export async function streamNativeRefresh(
+  requestValue: Extract<NativeRequestEnvelope, { type: 'REFRESH' }>,
+  optionsValue: NativeClientOptions,
+  sink: NativeAnalysisSink,
+): Promise<StreamedNativeAnalysisResult> {
+  const request = parseRequest(requestValue);
+  if (request.type !== 'REFRESH') {
+    throw clientError('INVALID_REQUEST', 'Streaming requires a REFRESH request', request);
+  }
+  return streamNativeRequest(request, optionsValue, sink, decodeRefreshStream);
+}
+
+async function streamNativeRequest(
+  request: AnyNativeRequest,
+  optionsValue: NativeClientOptions,
+  sink: NativeAnalysisSink,
+  decode: (
+    stdout: Readable,
+    request: AnyNativeRequest,
+    limits: NativeClientLimits,
+    sink: NativeAnalysisSink,
+  ) => Promise<AnyNativeEvent>,
+): Promise<StreamedNativeAnalysisResult> {
   if (sink === null || typeof sink?.accept !== 'function') {
     throw clientError('INVALID_CONFIGURATION', 'Native analysis sink is invalid', request);
   }
@@ -306,9 +332,13 @@ export async function streamNativeAnalysis(
     options,
     request,
     timeoutMs,
-    (stdout, request, limits) => decodeAnalysisStream(stdout, request, limits, sink),
+    (stdout, request, limits) => decode(stdout, request, limits, sink),
   );
-  if (terminal.type === 'ANALYSIS_FAILED' || terminal.type === 'REQUEST_FAILED') {
+  if (
+    terminal.type === 'ANALYSIS_FAILED' ||
+    terminal.type === 'REFRESH_FAILED' ||
+    terminal.type === 'REQUEST_FAILED'
+  ) {
     throw clientError('ANALYZER_FAILED', 'Native analyzer rejected the request', request, {
       analyzerError: terminal.payload.error,
       stderr,
@@ -796,6 +826,97 @@ async function decodeAnalysisStream(
           (expectedCoverage !== undefined && seenCoverage.size !== expectedCoverage.size)
         ) {
           throw clientError('PROTOCOL_VIOLATION', 'Native analysis result is incomplete', request);
+        }
+      }
+    } else {
+      hash.update(record);
+      await sink.accept(deepFreeze(event));
+    }
+  }
+  if (terminal === undefined) {
+    throw clientError(
+      'PROTOCOL_VIOLATION',
+      'Native stdout ended without a complete terminal',
+      request,
+    );
+  }
+  return terminal;
+}
+
+async function decodeRefreshStream(
+  stdout: Readable,
+  request: AnyNativeRequest,
+  limits: NativeClientLimits,
+  sink: NativeAnalysisSink,
+): Promise<AnyNativeEvent> {
+  if (request.type !== 'REFRESH') throw clientError('INVALID_REQUEST', 'Expected REFRESH', request);
+  const hash = createHash('sha256');
+  const counts = {
+    sourceFiles: 0,
+    upsertedNodes: 0,
+    removedNodes: 0,
+    upsertedEdges: 0,
+    removedEdges: 0,
+    coverage: 0,
+    diagnostics: 0,
+  };
+  let sequence = 0;
+  let terminal: AnyNativeEvent | undefined;
+  for await (const { event, record } of readFramedEvents(stdout, request, limits)) {
+    if (
+      !LEGAL_EVENT_TYPES.REFRESH.has(event.type) ||
+      (sequence === 0 && event.type !== 'REFRESH_STARTED' && event.type !== 'REQUEST_FAILED') ||
+      (sequence > 0 && (event.type === 'REFRESH_STARTED' || event.type === 'REQUEST_FAILED'))
+    ) {
+      throw clientError('PROTOCOL_VIOLATION', 'Native refresh event order is invalid', request);
+    }
+    if (
+      'providerSnapshotId' in event.payload &&
+      'repositoryId' in event.payload &&
+      'revisionId' in event.payload &&
+      (event.payload.providerSnapshotId !== request.payload.providerSnapshotId ||
+        event.payload.repositoryId !== request.payload.repository.id ||
+        event.payload.revisionId !== request.payload.targetRevision.id ||
+        ('revisionFingerprint' in event.payload &&
+          event.payload.revisionFingerprint !== request.payload.targetRevision.contentFingerprint))
+    ) {
+      throw clientError(
+        'PROTOCOL_VIOLATION',
+        'Refresh event context does not match request',
+        request,
+      );
+    }
+    if (
+      event.type === 'SOURCE_FILE' &&
+      (event.payload.repositoryId !== request.payload.repository.id ||
+        event.payload.revisionId !== request.payload.targetRevision.id)
+    ) {
+      throw clientError(
+        'PROTOCOL_VIOLATION',
+        'Refresh source context does not match request',
+        request,
+      );
+    }
+    if (event.type === 'SOURCE_FILE') counts.sourceFiles++;
+    else if (event.type === 'UPSERT_NODE') counts.upsertedNodes++;
+    else if (event.type === 'REMOVE_NODE') counts.removedNodes++;
+    else if (event.type === 'UPSERT_EDGE') counts.upsertedEdges++;
+    else if (event.type === 'REMOVE_EDGE') counts.removedEdges++;
+    else if (event.type === 'COVERAGE') counts.coverage++;
+    else if (event.type === 'DIAGNOSTIC') counts.diagnostics++;
+    sequence++;
+    if (TERMINAL_EVENT_TYPES.has(event.type)) {
+      terminal = event;
+      if (event.type === 'REFRESH_COMPLETED') {
+        if (event.payload.integrityChecksum !== `sha256:${hash.digest('hex')}`) {
+          throw clientError('CHECKSUM_MISMATCH', 'Native result checksum does not match', request);
+        }
+        if (
+          Object.entries(counts).some(
+            ([name, count]) => event.payload.counts[name as keyof typeof counts] !== count,
+          )
+        ) {
+          throw clientError('PROTOCOL_VIOLATION', 'Native refresh result is incomplete', request);
         }
       }
     } else {

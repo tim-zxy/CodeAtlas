@@ -18,6 +18,9 @@ import type {
 import { observeGitWorktree } from '@codeatlas/source';
 import type { ObservedFile, SourceScanRequest } from '@codeatlas/source';
 
+import { detectWorktreeChanges } from './change-detector.js';
+import type { WorktreeChangeSet } from './change-detector.js';
+
 export interface StoredWorktreeState {
   readonly revision: WorktreeRevision;
   readonly files: readonly SourceFile[];
@@ -32,19 +35,8 @@ export interface SourceStatePort {
 export interface ReconcileWorktreeResult {
   readonly revision: WorktreeRevision;
   readonly files: readonly ObservedFile[];
+  readonly changes: WorktreeChangeSet;
   readonly changedPaths: readonly RepositoryRelativePath[];
-}
-
-function differs(previous: SourceFile | undefined, next: SourceFile | undefined): boolean {
-  if (previous === undefined || next === undefined) return previous !== next;
-  return (
-    previous.contentFingerprint !== next.contentFingerprint ||
-    previous.languageHint !== next.languageHint ||
-    previous.classification.role !== next.classification.role ||
-    previous.classification.provenance !== next.classification.provenance ||
-    previous.classification.contentKind !== next.classification.contentKind ||
-    previous.sensitivity !== next.sensitivity
-  );
 }
 
 export async function reconcileGitWorktree(
@@ -78,10 +70,13 @@ export async function reconcileGitWorktree(
       sensitivity: 'INTERNAL',
     }),
   );
-  const nextByPath = new Map(files.map((file) => [file.path, file]));
-  const changedPaths = [...new Set([...previousByPath.keys(), ...nextByPath.keys()])]
-    .filter((path) => differs(previousByPath.get(path), nextByPath.get(path)))
-    .sort((left, right) => (left < right ? -1 : left > right ? 1 : 0));
-  store.replace(previous, { revision, files });
-  return { revision, files: observation.files, changedPaths };
+  const next = { revision, files };
+  const changes = detectWorktreeChanges(previous, next);
+  const changedPaths = [
+    ...changes.added.map((file) => file.path),
+    ...changes.modified.map((file) => file.path),
+    ...changes.deleted.map((file) => file.path),
+  ].sort((left, right) => (left < right ? -1 : left > right ? 1 : 0));
+  store.replace(previous, next);
+  return { revision, files: observation.files, changes, changedPaths };
 }

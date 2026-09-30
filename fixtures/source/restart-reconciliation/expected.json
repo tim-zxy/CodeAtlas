@@ -1,5 +1,87 @@
 {
   "initialChangedPaths": ["src/Keep.java", "src/Remove.java"],
   "afterEditsChangedPaths": ["src/Add.java", "src/Keep.java", "src/Remove.java"],
-  "afterReaddChangedPaths": ["src/Remove.java"]
+  "afterReaddChangedPaths": ["src/Remove.java"],
+  "afterRenameChangedPaths": ["src/Remove.java", "src/Renamed.java"],
+  "initial": {
+    "baseContentFingerprint": null,
+    "targetContentFingerprint": "sha256:7a5d58427a5b66732757cc3afd2a55caf487ec2fd01ef502fe3d157caab808e2",
+    "added": [
+      {
+        "path": "src/Keep.java",
+        "contentFingerprint": "sha256:0bc565e8a290cd53ac79c1f58180652d714e3e898407e6e7bfefc46a74ad312b"
+      },
+      {
+        "path": "src/Remove.java",
+        "contentFingerprint": "sha256:87bf47d79123e3d37bcfd53ff3489ccdcebe3eae1a4f67f294f07a07d05add71"
+      }
+    ],
+    "modified": [],
+    "deleted": []
+  },
+  "unchangedRestart": {
+    "baseContentFingerprint": "sha256:7a5d58427a5b66732757cc3afd2a55caf487ec2fd01ef502fe3d157caab808e2",
+    "targetContentFingerprint": "sha256:7a5d58427a5b66732757cc3afd2a55caf487ec2fd01ef502fe3d157caab808e2",
+    "added": [],
+    "modified": [],
+    "deleted": []
+  },
+  "afterEdits": {
+    "baseContentFingerprint": "sha256:7a5d58427a5b66732757cc3afd2a55caf487ec2fd01ef502fe3d157caab808e2",
+    "targetContentFingerprint": "sha256:53747d8761e943cb1e44b7a4598e31141288ee2f0c72ce0187c94388a167de83",
+    "added": [
+      {
+        "path": "src/Add.java",
+        "contentFingerprint": "sha256:3eb8f1259e41dea0a8880e18711910dc71a0083bfc0ec7bc4e7d3ebf2181c508"
+      }
+    ],
+    "modified": [
+      {
+        "path": "src/Keep.java",
+        "contentFingerprint": "sha256:756cbb25567c3a0b768191c667c4c8cf830eb18a7424c25690032d879477060c"
+      }
+    ],
+    "deleted": [
+      {
+        "path": "src/Remove.java",
+        "previousContentFingerprint": "sha256:87bf47d79123e3d37bcfd53ff3489ccdcebe3eae1a4f67f294f07a07d05add71"
+      }
+    ]
+  },
+  "secondRestart": {
+    "baseContentFingerprint": "sha256:53747d8761e943cb1e44b7a4598e31141288ee2f0c72ce0187c94388a167de83",
+    "targetContentFingerprint": "sha256:53747d8761e943cb1e44b7a4598e31141288ee2f0c72ce0187c94388a167de83",
+    "added": [],
+    "modified": [],
+    "deleted": []
+  },
+  "afterReadd": {
+    "baseContentFingerprint": "sha256:53747d8761e943cb1e44b7a4598e31141288ee2f0c72ce0187c94388a167de83",
+    "targetContentFingerprint": "sha256:b1cc326641e8ed84e452bfad92b995cff3aaf3cdfaff6e1a9ae2248643064807",
+    "added": [
+      {
+        "path": "src/Remove.java",
+        "contentFingerprint": "sha256:a590ab8290c07ffd06e1e1fd34fda088198b2c6bb73abacd92de30deb88fb467"
+      }
+    ],
+    "modified": [],
+    "deleted": []
+  },
+  "afterRename": {
+    "baseContentFingerprint": "sha256:b1cc326641e8ed84e452bfad92b995cff3aaf3cdfaff6e1a9ae2248643064807",
+    "targetContentFingerprint": "sha256:7b324905580cd7edea912ba42ebed599f05ae958ee749fcb247da473380b524c",
+    "added": [
+      {
+        "path": "src/Renamed.java",
+        "contentFingerprint": "sha256:a590ab8290c07ffd06e1e1fd34fda088198b2c6bb73abacd92de30deb88fb467"
+      }
+    ],
+    "modified": [],
+    "deleted": [
+      {
+        "path": "src/Remove.java",
+        "previousContentFingerprint": "sha256:a590ab8290c07ffd06e1e1fd34fda088198b2c6bb73abacd92de30deb88fb467"
+      }
+    ]
+  }
 }
