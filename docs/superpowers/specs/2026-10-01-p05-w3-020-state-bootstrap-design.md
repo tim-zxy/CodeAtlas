@@ -60,7 +60,7 @@ Availability is distinct from graph freshness: a STALE graph can have an AVAILAB
 
 ## Execution clarification pending: Node metadata memory admission
 
-Status: DIRECTION ACCEPTED on 2026-10-01 by the user's “继续” after the measured conservative-admission recommendation. The detailed rules below are PROPOSED for written review; no production reservation or Task 2 completion is approved or claimed by that reply.
+Status: ACCEPTED on 2026-10-01. The user selected the measured conservative-admission direction with “继续”, then confirmed the written detail with “确认”. This approves the accounting/calibration rules, not an unmeasured numeric reservation or Task 2 completion. The existing Task 2 plan is being synchronized for review; native execution is retained.
 
 ### Budget semantics and unchanged boundaries
 
@@ -204,7 +204,7 @@ console.log(
 );
 ```
 
-Alternative isolation-level enforcement remains outside the selected direction and would need a separately reviewed execution/port design. Unaffected accepted sections remain authoritative; detailed admission review is still required before production implementation resumes.
+Alternative isolation-level enforcement remains outside the selected direction and would need a separately reviewed execution/port design. Unaffected accepted sections remain authoritative. Written admission review is complete; review of the synchronized Task 2 plan and the actual measured release profile remain separate gates.
 
 ## Full ANALYZE v3 output contract
 
