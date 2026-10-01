@@ -64,6 +64,13 @@
       "file": "009_active_support_candidates.sql",
       "checksum": "sha256:35a708e895e009be17336eb748a53406148d031523ad741da8d272e04758e870",
       "backupRequired": false
+    },
+    {
+      "version": 10,
+      "name": "native_analysis_state",
+      "file": "010_native_analysis_state.sql",
+      "checksum": "sha256:ebf26d1df42a47418bb06173e4783d3fdf3503ca0f6e0a0f8b6893ebbc711fa2",
+      "backupRequired": false
     }
   ]
 }

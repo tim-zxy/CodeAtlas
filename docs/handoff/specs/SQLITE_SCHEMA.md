@@ -17,20 +17,20 @@ interface CanonicalFactStore {
 
 ## Repository migrations
 
-| Migration                                           | Phase | Principal tables                                                                                         |
-| --------------------------------------------------- | ----: | -------------------------------------------------------------------------------------------------------- |
-| R001 repo_core                                      |     0 | repository, repository_state                                                                             |
-| R002 source_revision                                |     0 | revisions, source_files                                                                                  |
-| R003 provider_runtime                               |     0 | provider_snapshots, provider_capabilities                                                                |
-| R004 code_graph                                     |     0 | canonical_nodes, canonical_edges, unresolved_targets                                                     |
-| R005 evidence                                       |     0 | evidence, fact_evidence, provider_fact_bindings                                                          |
-| R006 analysis_coverage                              |     0 | analysis_coverage                                                                                        |
-| R007 diagnostics                                    |     0 | analysis_diagnostics                                                                                     |
-| R008 indexed_fingerprint                            |   0.5 | repository_state indexed_content_fingerprint                                                             |
-| R009 active_support_candidates                      |   0.5 | active_support_candidates                                                                                |
-| R010 native_analysis_state (reserved; not released) |   0.5 | derived Native analysis-state header/per-file summaries; physical schema requires detailed packet review |
-| R011 execution_graph                                |     1 | execution_nodes, execution_edges, execution_contexts                                                     |
-| R012 runtime_flow                                   |     1 | runtime_flows, runtime_flow_steps                                                                        |
+| Migration                                        | Phase | Principal tables                                                                           |
+| ------------------------------------------------ | ----: | ------------------------------------------------------------------------------------------ |
+| R001 repo_core                                   |     0 | repository, repository_state                                                               |
+| R002 source_revision                             |     0 | revisions, source_files                                                                    |
+| R003 provider_runtime                            |     0 | provider_snapshots, provider_capabilities                                                  |
+| R004 code_graph                                  |     0 | canonical_nodes, canonical_edges, unresolved_targets                                       |
+| R005 evidence                                    |     0 | evidence, fact_evidence, provider_fact_bindings                                            |
+| R006 analysis_coverage                           |     0 | analysis_coverage                                                                          |
+| R007 diagnostics                                 |     0 | analysis_diagnostics                                                                       |
+| R008 indexed_fingerprint                         |   0.5 | repository_state indexed_content_fingerprint                                               |
+| R009 active_support_candidates                   |   0.5 | active_support_candidates                                                                  |
+| R010 native_analysis_state (implemented locally) |   0.5 | native_analysis_state, native_analysis_file; empty derived tables without guessed backfill |
+| R011 execution_graph                             |     1 | execution_nodes, execution_edges, execution_contexts                                       |
+| R012 runtime_flow                                |     1 | runtime_flows, runtime_flow_steps                                                          |
 
 R001-R007 are the Phase 0 repository schema. `repository` is a single stable-ID row per database; `root_path` is a locator, not identity. Revisions retain kind-specific identity and fingerprints; a source-file ID may recur across revisions, while `(revision_id, path)` is unique. Provider snapshots retain requested revision/fingerprint and outcome, including partial or failed observations. Canonical node/edge IDs and FactKeys are Provider-independent and unique within a revision. Resolved edges reference same-revision nodes; unresolved edges retain their resolution and a separate hint/candidate array without selecting a target. Evidence and Provider bindings are separate from Canonical Facts. Coverage and bounded diagnostics belong to Provider snapshots. The exact column mapping and deliberate application-validation boundary are recorded in [`P0-W1-006 Repository Database Design`](../../superpowers/specs/2026-09-21-p0-w1-006-repository-db-design.md).
 
@@ -48,7 +48,7 @@ The accepted [cross-revision amendment](../../superpowers/specs/2026-09-30-p05-w
 
 [ADR-016](../adr/ADR-016-native-refresh-derived-analysis-state.md) reserves additive R010 and moves the unpublished Phase 1 reservations to R011/R012; prior reservation descriptions above are historical. No R010 SQL/manifest is released by design approval. Derived summaries are TypeScript-owned, bounded, versioned and rebuildable; migration must not backfill guessed extraction metadata. Full/patch Apply activates compatible summaries with graph/support/Evidence/coverage/indexed fingerprint in one Store transaction. Legacy/missing/incompatible state requires explicit bootstrap without graph mutation; full writes without valid summaries make the summary baseline unavailable. The exact physical schema and failure/upgrade Fixtures require the next reviewed storage/bootstrap packet. Published R001-R009 SQL/checksums stay unchanged.
 
-The [accepted P05-W3-020-B design](../../superpowers/specs/2026-10-01-p05-w3-020-state-bootstrap-design.md) specifies two derived tables, a Runtime-injected validation port, bounded read/staging, full-bootstrap publication and legacy-write invalidation in the existing Store transaction. Its [implementation plan](../../superpowers/plans/2026-10-01-p05-w3-020-state-bootstrap.md) awaits review; R010 remains unreleased and its SQL/manifest checksum remain absent. No summary FK may couple retained state to the mutable source inventory.
+The [accepted P05-W3-020-B design](../../superpowers/specs/2026-10-01-p05-w3-020-state-bootstrap-design.md) and [native execution plan](../../superpowers/plans/2026-10-01-p05-w3-020-state-bootstrap.md) govern R010. Task 1 implements the two STRICT derived tables locally with normalized checksum `sha256:ebf26d1df42a47418bb06173e4783d3fdf3503ca0f6e0a0f8b6893ebbc711fa2`, no backfill and no source inventory FK. Prior reservation-only language above is historical. R001-R009 remain unchanged. Provider validation, bounded reads/staging, full bootstrap and transactional legacy invalidation remain later tasks; SQL `json_valid` alone is not authority to reuse or publish opaque summaries.
 
 ## Workspace migrations
 

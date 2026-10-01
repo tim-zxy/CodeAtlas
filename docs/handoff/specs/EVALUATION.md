@@ -6,7 +6,7 @@ ADR-016's first P05-W3-020-A [contract packet](../../superpowers/specs/2026-09-3
 
 Use deterministic checks whenever possible, structured comparison when facts have schemas, and semantic judging only for qualities that cannot be mechanically verified. Evaluation is part of every implementation phase.
 
-The [accepted packet B design](../../superpowers/specs/2026-10-01-p05-w3-020-state-bootstrap-design.md) and [REVIEW-READY implementation plan](../../superpowers/plans/2026-10-01-p05-w3-020-state-bootstrap.md) map planned migration/read, full-output and real full-bootstrap Fixtures to atomic reopen-state checks and existing gates. Those Fixtures are not yet registered or passing. Packet A integrated through PR #17 with exact merge-SHA CI; full-bootstrap tests must not be presented as real incremental or phase-wide performance evidence.
+The [accepted packet B design](../../superpowers/specs/2026-10-01-p05-w3-020-state-bootstrap-design.md) and [approved native implementation plan](../../superpowers/plans/2026-10-01-p05-w3-020-state-bootstrap.md) map planned migration/read, full-output and real full-bootstrap Fixtures to atomic reopen-state checks and existing gates. Task 1 registers six migration cases in `p05-native-analysis-state-store-v1` and the required root runner; those cases pass locally. B1 read validation and B2/B3 output/bootstrap cases remain unimplemented and cannot be claimed from migration evidence. Packet A integrated through PR #17 with exact merge-SHA CI; full-bootstrap tests must not be presented as real incremental or phase-wide performance evidence.
 
 ## Layers
 

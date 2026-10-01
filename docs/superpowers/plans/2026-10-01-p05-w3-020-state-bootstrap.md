@@ -8,7 +8,7 @@
 
 **Tech Stack:** Node `>=24 <25`, TypeScript, Zod, `node:sqlite`, Rust edition 2024, existing Tree-sitter Java, SHA-256 and JSONL. Retain `pnpm@11.19.0`; add no dependency.
 
-**Spec:** [Accepted packet B design](../specs/2026-10-01-p05-w3-020-state-bootstrap-design.md), approved by the user on 2026-10-01. This plan is REVIEW-READY, not execution-approved.
+**Spec:** [Accepted packet B design](../specs/2026-10-01-p05-w3-020-state-bootstrap-design.md), approved by the user on 2026-10-01. The user subsequently approved this plan for native execution; implementation is in progress, not packet-complete.
 
 ## Global Constraints
 
@@ -120,7 +120,7 @@ Inspection found packet A test context values `resolverVersion: '1'` and `normal
 
 **Interfaces:** Consume the existing migration runner/manifest API. Produce exactly the spec's two tables at schema version 10; no data/write API yet.
 
-- [ ] Write `R010 creates empty derived tables without altering R009 data`, `R010 migration failure rolls back`, and `R001-R009 manifest checksums remain identical`. Assert in test code:
+- [x] Write `R010 creates empty derived tables without altering R009 data`, `R010 migration failure rolls back`, and `R001-R009 manifest checksums remain identical`. Assert in test code:
   ```js
   assert.equal(versionAfterUpgrade, 10);
   assert.deepEqual(readDerivedRows(), { headers: [], files: [] });
@@ -128,10 +128,10 @@ Inspection found packet A test context values `resolverVersion: '1'` and `normal
   assert.deepEqual(manifest.migrations.slice(0, 9), releasedEntries);
   ```
   Capture `releasedEntries` from the accepted baseline before editing the manifest. Exercise fresh database, R009 upgrade/rerun, malformed migration rollback, FK/JSON/uniqueness constraints, too-new refusal and unchanged workspace migrations. Historical fixtures explicitly pinned to R009 stay pinned; only latest-version expectations advance.
-- [ ] Run `node --test packages/storage/test/native-analysis-state.test.mjs packages/storage/test/migration-runner.test.mjs packages/storage/test/repository-schema.test.mjs`; expect new version/table assertions to fail, not harness/import errors.
-- [ ] Write spec-exact SQL and append its real normalized checksum to the manifest; no source inventory FK or backfill. Register every B1 case by named test and governing design/acceptance.
-- [ ] Build Storage and rerun the above plus `migration-runner-application.test.mjs`, `migration-runner-failures.test.mjs`, `repository-constraints.test.mjs`; expect zero failures and unchanged released migration checksums.
-- [ ] Stage only this task's SQL/manifest/test/Fixture/runner files and commit `feat(storage): release derived native state migration`.
+- [x] Run `node --test packages/storage/test/native-analysis-state.test.mjs packages/storage/test/migration-runner.test.mjs packages/storage/test/repository-schema.test.mjs`; expect new version/table assertions to fail, not harness/import errors.
+- [x] Write spec-exact SQL and append its real normalized checksum to the manifest; no source inventory FK or backfill. Register every B1 case by named test and governing design/acceptance.
+- [x] Build Storage and rerun the above plus `migration-runner-application.test.mjs`, `migration-runner-failures.test.mjs`, `repository-constraints.test.mjs`; expect zero failures and unchanged released migration checksums.
+- [x] Stage only this task's SQL/manifest/test/Fixture/runner files and commit `feat(storage): release derived native state migration`.
 
 ## Task 2: Bounded read, validation port and sealed metadata (B1)
 

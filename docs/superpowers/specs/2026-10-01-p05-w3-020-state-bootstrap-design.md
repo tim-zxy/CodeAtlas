@@ -1,6 +1,6 @@
 # P05-W3-020-B Derived state and full-analysis bootstrap
 
-Status: ACCEPTED for implementation planning. On 2026-10-01 the user approved this written design. The [implementation plan](../plans/2026-10-01-p05-w3-020-state-bootstrap.md) is REVIEW-READY and requires user review before coding. No implementation is claimed. This subdivision does not add a roadmap task.
+Status: ACCEPTED. On 2026-10-01 the user approved this written design and subsequently confirmed the [implementation plan](../plans/2026-10-01-p05-w3-020-state-bootstrap.md) for native execution. Task 1 implements R010 locally; remaining tasks and packet acceptance are open. This subdivision does not add a roadmap task.
 
 ## Intent, authority and baseline
 
@@ -8,7 +8,7 @@ Make a successful full Native analysis establish a restart-readable, validated s
 
 Authority: [ADR-016](../../handoff/adr/ADR-016-native-refresh-derived-analysis-state.md), [packet A](2026-09-30-p05-w3-020-v3-contract-design.md), [SQLite Schema](../../handoff/specs/SQLITE_SCHEMA.md), [Native IPC](../../handoff/specs/NATIVE_IPC.md), [Module Boundaries](../../handoff/specs/MODULE_BOUNDARIES.md), [Evaluation](../../handoff/specs/EVALUATION.md), and the accepted same-WORKTREE amendment. This design details the accepted architecture; it changes no FROZEN decision or accuracy threshold. If implementation needs to change packet A, stop and submit the affected contract amendment rather than silently extending its strict schemas.
 
-Baseline: PR #17 merged packet A at `954897e7cf4395f9a338e8098d95abf305e58d6c`. Its [exact merge CI](https://github.com/tim-zxy/CodeAtlas/actions/runs/36790910152) passed TypeScript, Rust and Native Java integration. The repository manifest ends at R009; R010 is reserved, not released. Source inspection confirms:
+Design-time baseline: PR #17 merged packet A at `954897e7cf4395f9a338e8098d95abf305e58d6c`. Its [exact merge CI](https://github.com/tim-zxy/CodeAtlas/actions/runs/36790910152) passed TypeScript, Rust and Native Java integration. That manifest ended at R009. Native plan Task 1 adds R010 locally; see CURRENT_STATUS for fresh evidence and integration state. Design-time source inspection confirms:
 
 - `native-analysis-state.ts` already validates headers, summaries, ownership and digests; `native-ipc-v3*.ts` validates input only.
 - Rust `language.rs` already retains symbols, signatures/static flags, relation sites and site statistics. `java.rs`, `java_relations.rs` and `analyze.rs` are the extraction/resolution/emission path. Existing relation ANALYZE uses two source-verified passes; this packet need not optimize that algorithm.
@@ -29,7 +29,7 @@ Chosen alternative: two derived tables with strict JSON payloads, Provider valid
 
 ## R010 physical schema proposal
 
-Future migration entry: version `10`, name `native_analysis_state`, file `010_native_analysis_state.sql`, `backupRequired: false`; compute its normalized SQL SHA-256 only when implementation writes SQL. Never modify released R001-R009 SQL/checksums. R011/R012 remain unpublished Phase 1 reservations. This document releases no migration.
+Task 1 migration entry: version `10`, name `native_analysis_state`, file `010_native_analysis_state.sql`, `backupRequired: false`; implemented SQL has normalized checksum `sha256:ebf26d1df42a47418bb06173e4783d3fdf3503ca0f6e0a0f8b6893ebbc711fa2`. Released R001-R009 SQL/checksums remain unchanged. R011/R012 remain unpublished Phase 1 reservations. This local migration does not implement summary publication or v3 dispatch.
 
 | Table                   | Columns and constraints                                                                                                                                                                                                                                                                                                                                                                              |
 | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
