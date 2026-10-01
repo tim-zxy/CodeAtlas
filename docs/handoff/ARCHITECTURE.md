@@ -93,6 +93,8 @@ Source-grounded LLM degradation is a future, permissioned semantic-candidate pat
 
 Accepted [ADR-016](adr/ADR-016-native-refresh-derived-analysis-state.md) adds separately negotiated v3 ANALYZE/REFRESH with compact derived per-file resolver summaries, not AST/source persistence. TypeScript owns the derived repository state and activates it in the same validated Store transaction as graph/support/Evidence/coverage/fingerprint. Rust consumes strict bounded JSONL metadata and owns no SQLite. Missing/incompatible baseline requests explicit bootstrap; resource exhaustion never silently triggers full parsing. v1/v2 and same-WORKTREE applicability remain unchanged. This is accepted Phase 0.5 architecture, not an implemented REFRESH capability; the first [contract packet](../superpowers/specs/2026-09-30-p05-w3-020-v3-contract-design.md) was approved and has isolated input validators/shared corpus locally. Real producer, lifecycle and Store integration still require subsequent detailed packets; see CURRENT_STATUS for review-repair evidence.
 
+The first contract packet is now integrated as PR #17; its earlier local-only description is historical. The [packet B detailed design](../superpowers/specs/2026-10-01-p05-w3-020-state-bootstrap-design.md) is REVIEW-READY only. It proposes Provider-owned validation injected by Runtime into Storage persistence ports, no Storage-to-Providers dependency, and one existing Store activation transaction for full graph and derived summaries. No architecture decision, executable capability or migration is changed by this proposal.
+
 ## Deployment modes
 
 - `ONE_SHOT`: CLI opens the workspace, reconciles changes, performs one use case, and exits.

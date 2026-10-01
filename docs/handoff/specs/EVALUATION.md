@@ -6,6 +6,8 @@ ADR-016's first P05-W3-020-A [contract packet](../../superpowers/specs/2026-09-3
 
 Use deterministic checks whenever possible, structured comparison when facts have schemas, and semantic judging only for qualities that cannot be mechanically verified. Evaluation is part of every implementation phase.
 
+The [packet B design](../../superpowers/specs/2026-10-01-p05-w3-020-state-bootstrap-design.md) is REVIEW-READY and maps planned migration/read, full-output and real full-bootstrap Fixtures to atomic reopen-state checks and existing gates. Those Fixtures are not yet registered or passing. Packet A integrated through PR #17 with exact merge-SHA CI; full-bootstrap tests must not be presented as real incremental or phase-wide performance evidence.
+
 ## Layers
 
 - L1 Code Intelligence: symbol/reference/call/entry-point precision and recall, critical fact recall, resolution distribution, coverage.
