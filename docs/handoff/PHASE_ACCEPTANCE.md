@@ -54,6 +54,8 @@ Task 3 numeric approval update (2026-10-01): the user answered the exact reserva
 
 Task 4 current state: separate full-v3 Provider transport and required process/memory runners are implemented locally; Runtime purpose admission rejects read-only evidence for `FULL_TRANSPORT`. The user approved the paired current-build Windows reservation of 247,132,160 bytes plus twice retained SQL UTF-8 bytes; exact profile installation and fresh admission/refusal gates pass. Final registered root entry passes 795 with one existing Windows skip; local Task 4 gates are complete, commit bookkeeping follows. Tasks 5–7 remain open. See CURRENT_STATUS for raw-report/corpus identities and commands. No real producer/bootstrap/REFRESH, advertisement, phase exit or milestone change is claimed.
 
+Task 5 local producer gates (2026-10-02): full-only Rust v3 now passes 26 real-binary tests against seven existing Java Fixtures and mandatory TEMP correspondence seal; combined Native suites pass 51/51, Rust 94/94 and root Node 795 pass/one existing Windows skip. Context, metadata/resource/oversize, source mutation, worker consistency, partial/empty and cancellation/refusal evidence is recorded in CURRENT_STATUS and B2 Traceability. No Phase 0.5 exit is checked: Task 6 atomic activation/legacy invalidation, Task 7 handshake publication and subsequent real REFRESH differential Evaluation remain open. Frozen phase thresholds and milestones are unchanged.
+
 ## Phase 1 exit
 
 - [ ] Spring, Mongo, Kafka, and FastAPI fixtures produce canonical entry points, tasks, data resources, and contracts.

@@ -16,6 +16,9 @@ pub struct DeclarationIndex {
 }
 
 impl DeclarationIndex {
+    pub fn accounted_bytes(&self) -> usize {
+        self.used_bytes
+    }
     pub fn new(max_bytes: usize) -> Self {
         Self {
             by_qualified: BTreeMap::new(),
@@ -290,11 +293,15 @@ impl DeclarationIndex {
             .iter()
             .find(|(_, name)| name.as_str() == package)
             .is_some_and(|(first_path, _)| first_path == path)
-            && self.imports_by_path.values().any(|imports| {
-                imports
-                    .iter()
-                    .any(|(variant, hint)| variant == "wildcard" && hint == package)
-            })
+            && self.emits_package_container(package)
+    }
+
+    pub fn emits_package_container(&self, package: &str) -> bool {
+        self.imports_by_path.values().any(|imports| {
+            imports
+                .iter()
+                .any(|(variant, hint)| variant == "wildcard" && hint == package)
+        })
     }
 
     fn type_candidates(&self, path: &str, package: &str, hint: &str) -> (Vec<&SymbolFact>, bool) {

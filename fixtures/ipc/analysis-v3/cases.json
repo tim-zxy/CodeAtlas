@@ -5,6 +5,16 @@
   "design": "../../../docs/superpowers/specs/2026-10-01-p05-w3-020-state-bootstrap-design.md",
   "acceptance": "../../../docs/handoff/PHASE_ACCEPTANCE.md",
   "payloadVectors": "payload-vectors.json",
+  "binarySuite": "../../../packages/providers/test/native-full-v3-binary.test.mjs",
+  "binaryFixtures": [
+    "java-call-basic",
+    "java-overload",
+    "java-inheritance",
+    "java-unresolved-call",
+    "java-coverage-zero",
+    "java-coverage-syntax",
+    "java-coverage-unsupported-declaration"
+  ],
   "memoryCases": [
     "zero-file",
     "empty-file",

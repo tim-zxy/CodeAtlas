@@ -237,7 +237,7 @@ Reviewed raw report identities and post-approval command evidence are recorded i
 
 **Interfaces:** Consume accepted request_v3 validation and existing LanguageAnalysis. Add Rust `run_full_v3<W: Write>(request: &serde_json::Value, workers: usize, output: &mut W) -> Result<(), String>` behind the existing dispatch; existing caller error classification remains authoritative. Produce Task 3's exact JSONL types. Pin `JAVA_RESOLVER_VERSION` to `"1"`; compare native-owned provider/language versions to the binary, not caller echoes. Do not advertise v3 yet.
 
-- [ ] Write real-binary tests `full v3 graph equals v2`, `all contributing files own shared package`, `worker completion order preserves graph and summary digest`, `wrong producer context rejected before parse`, `v3 refresh remains rejected`. Assert:
+- [x] Write real-binary tests `full v3 graph equals v2`, `all contributing files own shared package`, `worker completion order preserves graph and summary digest`, `wrong producer context rejected before parse`, `v3 refresh remains rejected`. Assert:
   ```js
   assert.deepEqual(canonicalize(v3Facts), canonicalize(v2Facts));
   assert.equal(summaryCount, request.payload.sourceFiles.length);
@@ -246,10 +246,12 @@ Reviewed raw report identities and post-approval command evidence are recorded i
   assert.equal(workerOne.header.summaryDigest, workerMany.header.summaryDigest);
   ```
   Reuse fixture ground truth and canonical comparison excluding only run identities; independently verify summary digests. Include empty scope/file, PARTIAL syntax failure, source mutation between passes, resolver imports/inheritance needed for a requested CALL without IMPORT output, SYMBOL-only empty relations, static/overload/unresolved sites, oversize summary/memory refusal and cancellation. Rust unit tests prove no parse before validated completion.
-- [ ] Run `cargo build --workspace` then `node --test packages/providers/test/native-full-v3-binary.test.mjs`; expect unsupported full-v3 dispatch/new assertions to fail. Do not regenerate old goldens to make it green.
-- [ ] Implement full-only dispatch after bounded complete input; retain the existing two source-verified passes and resolver inputs, emit per-file summaries with actual fact digests and deterministic diagnostic attribution. Extend EventWriter for metadata counts/raw checksum and admission; shared containers emit once but summarize every grounded owner. Terminal state uses binary-owned compatibility and exact context. REFRESH returns the existing explicit unsupported failure.
-- [ ] Run that binary suite, `cargo test --workspace`, `cargo fmt --all --check`, `cargo clippy --workspace --all-targets -- -D warnings`, plus existing real Java/coverage suites. Require graph equivalence, all shared cases executed and unchanged v1/v2 behavior. Protocol advertisement still `[1,2]` until Task 7.
-- [ ] Commit `feat(native): emit validated full analysis summaries over v3`.
+- [x] Run `cargo build --workspace` then `node --test packages/providers/test/native-full-v3-binary.test.mjs`; expect unsupported full-v3 dispatch/new assertions to fail. Do not regenerate old goldens to make it green.
+- [x] Implement full-only dispatch after bounded complete input; retain the existing two source-verified passes and resolver inputs, emit per-file summaries with actual fact digests and deterministic diagnostic attribution. Extend EventWriter for metadata counts/raw checksum and admission; shared containers emit once but summarize every grounded owner. Terminal state uses binary-owned compatibility and exact context. REFRESH returns the existing explicit unsupported failure.
+- [x] Run that binary suite, `cargo test --workspace`, `cargo fmt --all --check`, `cargo clippy --workspace --all-targets -- -D warnings`, plus existing real Java/coverage suites. Require graph equivalence, all shared cases executed and unchanged v1/v2 behavior. Protocol advertisement still `[1,2]` until Task 7.
+- [x] Commit `feat(native): emit validated full analysis summaries over v3`.
+
+Local verification: 26 real full-v3 tests; combined Native runner 51/51; Rust 94/94; root Node 795 pass/one existing Windows skip. Producer entry uses the existing NonZeroUsize/io::Result<ExitCode> lifecycle instead of illustrative usize/String; Node v3 failure detail is tested on raw binary output. Whole-branch review remains after Task 7; no publication or phase exit.
 
 ## Task 6: Atomic full bootstrap and legacy invalidation (B3)
 
