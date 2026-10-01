@@ -57,7 +57,10 @@ export function nativeMetadataEnvironment() {
   });
 }
 
-export function assertNativeMetadataAdmission(memoryBudgetBytes: number): void {
+export function assertNativeMetadataAdmission(
+  memoryBudgetBytes: number,
+  workspace: 'READ_SEAL' | 'FULL_TRANSPORT' = 'READ_SEAL',
+): void {
   const environment = nativeMetadataEnvironment();
   const profile = nativeMetadataProfiles.find((candidate) =>
     Object.entries(environment).every(
@@ -68,6 +71,20 @@ export function assertNativeMetadataAdmission(memoryBudgetBytes: number): void {
     throw new NativeStateValidationError(
       'RESOURCE_LIMIT_EXCEEDED',
       'No reviewed native metadata profile for this implementation/environment',
+    );
+  if (
+    workspace !== 'READ_SEAL' &&
+    (workspace !== 'FULL_TRANSPORT' ||
+      profile.fullTransportCorpusRevision !== 'p05-native-full-v3-memory-v1' ||
+      !/^[a-f0-9]{64}$/.test(profile.fullTransportCorpusDigest ?? '') ||
+      !/^[a-f0-9]{64}$/.test(profile.fullTransportEvidenceDigest ?? '') ||
+      !Number.isSafeInteger(profile.fullTransportPeakBytes) ||
+      (profile.fullTransportPeakBytes ?? 0) <= 0 ||
+      (profile.fullTransportPeakBytes ?? Number.MAX_SAFE_INTEGER) > profile.reservationBytes)
+  )
+    throw new NativeStateValidationError(
+      'RESOURCE_LIMIT_EXCEEDED',
+      'No reviewed full transport workspace for this metadata profile',
     );
   if (!Number.isSafeInteger(memoryBudgetBytes) || memoryBudgetBytes < profile.reservationBytes)
     throw new NativeStateValidationError(

@@ -2,6 +2,14 @@ import { spawn } from 'node:child_process';
 import { createHash, timingSafeEqual } from 'node:crypto';
 import { isAbsolute } from 'node:path';
 import type { Readable } from 'node:stream';
+import { boundedJson, writeFullRequestRecords } from './native-request-json.js';
+import { NativeRequestHeaderV3Schema } from './native-ipc-v3.js';
+import {
+  decodeNativeFullAnalysisV3,
+  type NativeFullAnalyzeRequestV3,
+  type NativeFullAnalysisEventV3,
+  type NativeFullAnalysisTerminalV3,
+} from './native-analysis-output-v3.js';
 
 import {
   NativeEventEnvelopeSchema,
@@ -304,6 +312,88 @@ export async function streamNativeRefresh(
   return streamNativeRequest(request, optionsValue, sink, decodeRefreshStream);
 }
 
+/** Provisional full-v3 transport only. Runtime must admit the measured workspace
+ * before invocation and seal actual staged correspondence before publication. */
+export async function streamNativeFullAnalysisV3(
+  requestValue: NativeFullAnalyzeRequestV3,
+  optionsValue: NativeClientOptions,
+  sink: { accept(event: NativeFullAnalysisEventV3): Promise<void> },
+): Promise<{ terminal: NativeFullAnalysisTerminalV3; stderr: string }> {
+  const options = validateOptions(optionsValue);
+  if (sink === null || typeof sink?.accept !== 'function')
+    throw new NativeClientError('INVALID_CONFIGURATION', 'Native v3 sink is invalid');
+  if (options.signal?.aborted)
+    throw new NativeClientError('CANCELLED', 'Native request was cancelled');
+  // Bound unknown input before schema copies or a whole JSON string allocation.
+  let header: string;
+  try {
+    header = boundedJson(
+      requestValue,
+      Math.min(options.limits.maxStdinBytes, options.limits.maxLineBytes) - 1,
+    );
+  } catch (error) {
+    throw new NativeClientError(
+      error instanceof TypeError ? 'INVALID_REQUEST' : 'OUTPUT_LIMIT_EXCEEDED',
+      'Native v3 request is invalid or exceeds the byte limit',
+    );
+  }
+  const parsed = NativeRequestHeaderV3Schema.safeParse(requestValue);
+  if (!parsed.success || parsed.data.type !== 'ANALYZE')
+    throw new NativeClientError('INVALID_REQUEST', 'Expected full v3 ANALYZE');
+  const request = parsed.data;
+  const timeoutMs = effectiveTimeout(request, options.timeoutMs);
+  if (timeoutMs <= 0) throw clientError('TIMEOUT', 'Native request timed out', request);
+  header += '\n';
+  const completion =
+    JSON.stringify({
+      protocolVersion: 3,
+      requestId: request.requestId,
+      sequence: 1,
+      type: 'REQUEST_COMPLETED',
+      payload: {
+        summaryRecords: 0,
+        integrityChecksum: createHash('sha256').update(header).digest('hex'),
+      },
+    }) + '\n';
+  const totalBytes = Buffer.byteLength(header) + Buffer.byteLength(completion);
+  if (
+    totalBytes > options.limits.maxStdinBytes ||
+    Buffer.byteLength(completion) > options.limits.maxLineBytes
+  )
+    throw clientError('OUTPUT_LIMIT_EXCEEDED', 'Native v3 request exceeds the byte limit', request);
+  const result = await runProcess<NativeFullAnalysisTerminalV3, NativeFullAnalyzeRequestV3>(
+    [Buffer.from(header), Buffer.from(completion)],
+    options,
+    request,
+    timeoutMs,
+    async (stdout, value, limits, signal) =>
+      (
+        await decodeNativeFullAnalysisV3(
+          value,
+          stdout,
+          {
+            async accept(event) {
+              if (signal.aborted) throw signal.reason;
+              let rejectStop: (reason: unknown) => void = () => {};
+              const interrupted = new Promise<never>((_, reject) => {
+                rejectStop = reject;
+              });
+              const abort = () => rejectStop(signal.reason);
+              signal.addEventListener('abort', abort, { once: true });
+              try {
+                await Promise.race([sink.accept(event), interrupted]);
+              } finally {
+                signal.removeEventListener('abort', abort);
+              }
+            },
+          },
+          limits,
+        )
+      ).terminal,
+  );
+  return deepFreeze({ terminal: result.output, stderr: result.stderr });
+}
+
 async function streamNativeRequest(
   request: AnyNativeRequest,
   optionsValue: NativeClientOptions,
@@ -474,19 +564,24 @@ function validateOptions(value: NativeClientOptions): ValidatedOptions {
   };
 }
 
-function runProcess<TOutput = DecodedOutput>(
-  requestBytes: Buffer,
+function runProcess<
+  TOutput = DecodedOutput,
+  TRequest extends AnyNativeRequest | NativeFullAnalyzeRequestV3 = AnyNativeRequest,
+>(
+  requestBytes: Buffer | readonly Buffer[],
   options: ValidatedOptions,
-  request: AnyNativeRequest,
+  request: TRequest,
   timeoutMs: number,
   decode: (
     stdout: Readable,
-    request: AnyNativeRequest,
+    request: TRequest,
     limits: NativeClientLimits,
-  ) => Promise<TOutput> = decodeStdout as (
+    signal: AbortSignal,
+  ) => Promise<TOutput> = decodeStdout as unknown as (
     stdout: Readable,
-    request: AnyNativeRequest,
+    request: TRequest,
     limits: NativeClientLimits,
+    signal: AbortSignal,
   ) => Promise<TOutput>,
 ): Promise<{ readonly output: TOutput; readonly stderr: string }> {
   let child;
@@ -506,6 +601,7 @@ function runProcess<TOutput = DecodedOutput>(
   let failure: NativeClientError | undefined;
   let closed = false;
   let graceTimer: NodeJS.Timeout | undefined;
+  const stop = new AbortController();
 
   const terminate = () => {
     if (closed || graceTimer !== undefined) return;
@@ -522,20 +618,26 @@ function runProcess<TOutput = DecodedOutput>(
     ) {
       failure = error;
     }
+    stop.abort(failure);
     terminate();
   };
 
-  const stdoutPromise = decode(child.stdout, request, options.limits).catch((error: unknown) => {
-    recordFailure(asClientError(error, request));
-    return undefined;
-  });
+  const stdoutPromise = decode(child.stdout, request, options.limits, stop.signal).catch(
+    (error: unknown) => {
+      recordFailure(asClientError(error, request));
+      return undefined;
+    },
+  );
   const stderrPromise = captureStderr(
     child.stderr,
     options.limits.maxStderrBytes,
     request,
     recordFailure,
   );
-  const stdinPromise = writeRequest(child.stdin, requestBytes, request).catch((error: unknown) => {
+  const writing = Buffer.isBuffer(requestBytes)
+    ? writeRequest(child.stdin, requestBytes, request)
+    : writeFullRequestRecords(child.stdin, requestBytes, stop.signal, request.requestId);
+  const stdinPromise = writing.catch((error: unknown) => {
     recordFailure(asClientError(error, request, 'Native request could not be written'));
   });
   const closePromise = new Promise<{
@@ -593,7 +695,10 @@ function childEnvironment(
   return { ...environment, ...allowed };
 }
 
-function effectiveTimeout(request: AnyNativeRequest, invocationTimeoutMs: number): number {
+function effectiveTimeout(
+  request: AnyNativeRequest | NativeFullAnalyzeRequestV3,
+  invocationTimeoutMs: number,
+): number {
   if (request.type !== 'ANALYZE' && request.type !== 'REFRESH') return invocationTimeoutMs;
   const durations = [invocationTimeoutMs, request.payload.resourceBudget.maxDurationMs];
   if (request.payload.deadlineEpochMs !== null) {
@@ -605,7 +710,7 @@ function effectiveTimeout(request: AnyNativeRequest, invocationTimeoutMs: number
 function writeRequest(
   stdin: NodeJS.WritableStream,
   bytes: Buffer,
-  request: AnyNativeRequest,
+  request: { readonly requestId: string },
 ): Promise<void> {
   return new Promise((resolve, reject) => {
     let settled = false;
@@ -642,7 +747,7 @@ function writeRequest(
 async function captureStderr(
   stderr: Readable,
   limit: number,
-  request: AnyNativeRequest,
+  request: { readonly requestId: string },
   recordFailure: (error: NativeClientError) => void,
 ): Promise<string> {
   const chunks: Buffer[] = [];
@@ -665,7 +770,7 @@ async function captureStderr(
 
 function asClientError(
   error: unknown,
-  request: AnyNativeRequest,
+  request: { readonly requestId: string },
   message = 'Native process failed',
 ): NativeClientError {
   return error instanceof NativeClientError
@@ -1039,7 +1144,7 @@ function parseEventLine(
 function clientError(
   code: NativeClientErrorCode,
   message: string,
-  request: AnyNativeRequest,
+  request: { readonly requestId: string },
   details: Omit<NativeClientErrorDetails, 'requestId'> = {},
 ): NativeClientError {
   return new NativeClientError(code, message, { requestId: request.requestId, ...details });

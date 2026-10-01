@@ -11,12 +11,35 @@ export interface NativeMetadataProfile {
   readonly evidenceDigest: string;
   readonly peakMethod: 'resourceUsage.maxRSS';
   readonly peakUnits: 'bytes';
+  readonly fullTransportCorpusRevision?: string;
+  readonly fullTransportCorpusDigest?: string;
+  readonly fullTransportEvidenceDigest?: string;
+  readonly fullTransportPeakBytes?: number;
 }
 
 // User approved the 65-observation actual-path report on 2026-10-01.
 // Exact Windows environment only; mismatches remain fail-closed. Raw report
 // capture status is preserved; approval is recorded in CURRENT_STATUS.
 export const nativeMetadataProfiles: readonly NativeMetadataProfile[] = Object.freeze([
+  // Paired 65-observation read/seal and 70-observation transport reports approved.
+  Object.freeze({
+    node: 'v24.15.0',
+    v8: '13.6.233.17-node.48',
+    platform: 'win32',
+    arch: 'x64',
+    zodVersion: '4.6.1',
+    implementationDigest: '91931ccddf3b3eae0687e07cae23b9da14901976596811f178cf2f1b7bf8f09c',
+    corpusRevision: 'p05-native-metadata-memory-v1',
+    corpusDigest: '0c599e6626202fe4a0b5d5866e2d89d01a4674e40b0efe0d0b20acf5b4085b29',
+    reservationBytes: 247_132_160,
+    evidenceDigest: '9dca28c23dd8fed77d22374505123b0984a782c700b6590838cee4ce4858e262',
+    peakMethod: 'resourceUsage.maxRSS',
+    peakUnits: 'bytes',
+    fullTransportCorpusRevision: 'p05-native-full-v3-memory-v1',
+    fullTransportCorpusDigest: '11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef',
+    fullTransportEvidenceDigest: 'b7154f67fd8cbcf459eacbcd7405e3788dd9a47ef2bbdf2803390ce778dcda65',
+    fullTransportPeakBytes: 196_911_104,
+  }),
   Object.freeze({
     node: 'v24.15.0',
     v8: '13.6.233.17-node.48',

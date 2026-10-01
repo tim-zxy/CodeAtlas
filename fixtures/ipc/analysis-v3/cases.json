@@ -5,6 +5,30 @@
   "design": "../../../docs/superpowers/specs/2026-10-01-p05-w3-020-state-bootstrap-design.md",
   "acceptance": "../../../docs/handoff/PHASE_ACCEPTANCE.md",
   "payloadVectors": "payload-vectors.json",
+  "memoryCases": [
+    "zero-file",
+    "empty-file",
+    "maximum-short-files",
+    "dense-numeric-sites",
+    "long-ascii",
+    "long-bmp",
+    "long-astral",
+    "repeated-shared-owners",
+    "duplicate-metadata",
+    "foreign-metadata",
+    "deep-unknown-input",
+    "oversized-staged-fact",
+    "large-request",
+    "slow-sink"
+  ],
+  "transportCases": [
+    { "id": "truncated", "expectedCode": "PROTOCOL_VIOLATION" },
+    { "id": "post-terminal", "expectedCode": "PROTOCOL_VIOLATION" },
+    { "id": "bad-checksum", "expectedCode": "CHECKSUM_MISMATCH" },
+    { "id": "oversize-summary", "expectedCode": "OUTPUT_LIMIT_EXCEEDED" },
+    { "id": "early-close", "expectedCode": "PROTOCOL_VIOLATION" },
+    { "id": "nonzero", "expectedCode": "PROCESS_FAILED" }
+  ],
   "cases": [
     {
       "id": "valid-full",

@@ -5,6 +5,12 @@ fixtures/ipc/protocol-v3/**/*.jsonl -text
 fixtures/ipc/analysis-v3/**/*.jsonl -text
 fixtures/storage/native-analysis-state/memory-baseline.json -text
 fixtures/storage/native-analysis-state/memory-baseline-task3.json -text
+fixtures/storage/native-analysis-state/memory-baseline-task4-read-seal.json -text
+fixtures/storage/native-analysis-state/memory-baseline-task4-transport.json -text
 packages/runtime/test/helpers/native-metadata-corpus.mjs text eol=lf
 packages/runtime/test/helpers/native-metadata-worker.mjs text eol=lf
 scripts/bench-native-metadata-memory.mjs text eol=lf
+scripts/bench-native-full-v3-memory.mjs text eol=lf
+packages/providers/test/helpers/native-full-v3-memory-corpus.mjs text eol=lf
+packages/providers/test/helpers/native-full-v3-memory-worker.mjs text eol=lf
+packages/providers/test/fixtures/native-full-v3-memory-child.mjs text eol=lf

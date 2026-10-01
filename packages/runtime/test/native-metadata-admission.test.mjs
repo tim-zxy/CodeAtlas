@@ -9,10 +9,13 @@ import { join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import * as runtime from '../dist/index.js';
 import { buildMemoryCase, corpusExpected } from './helpers/native-metadata-corpus.mjs';
-import { nativeMetadataEnvironment } from '../dist/native-metadata-admission.js';
+import {
+  assertNativeMetadataAdmission,
+  nativeMetadataEnvironment,
+} from '../dist/native-metadata-admission.js';
 import { nativeMetadataProfiles } from '../dist/native-metadata-profiles.js';
 
-const reviewedReservation = 250_855_424;
+const reviewedReservation = 247_132_160;
 const environment = nativeMetadataEnvironment();
 const supported = nativeMetadataProfiles.some((profile) =>
   Object.entries(environment).every(([key, value]) => profile[key] === value),
@@ -38,6 +41,17 @@ async function isolatedFactory(t, variant) {
     );
   if (variant === 'changed')
     await writeFile(join(root, 'dist', 'calibration-change.js'), 'export const changed = true;\n');
+  if (variant === 'read-only-profile') {
+    const profile = {
+      ...nativeMetadataProfiles.find((profile) => !profile.fullTransportCorpusRevision),
+      ...nativeMetadataEnvironment(),
+    };
+    await writeFile(
+      join(root, 'dist', 'native-metadata-profiles.js'),
+      'export const nativeMetadataProfiles = Object.freeze([' + JSON.stringify(profile) + ']);\n',
+    );
+    return import(pathToFileURL(join(root, 'dist', 'native-metadata-admission.js')).href);
+  }
   return (
     await import(pathToFileURL(join(root, 'dist', 'native-analysis-validation.js')).href)
   ).createNativeStateValidationPort();
@@ -75,7 +89,7 @@ test('reviewed matching Runtime admits at reservation and still validates strict
     environment.arch === 'x64' &&
     environment.zodVersion === '4.6.1' &&
     environment.implementationDigest ===
-      '44471febb9b41c2c73ddd30f065f216ba016d74e7179821d7dadf8c1c09a73ee'
+      '91931ccddf3b3eae0687e07cae23b9da14901976596811f178cf2f1b7bf8f09c'
   )
     assert.equal(supported, true, 'reviewed current build must exercise production admission');
   const value = buildMemoryCase('zero-file');
@@ -219,10 +233,34 @@ test('metadata implementation identity is deterministic and environment-specific
   assert.match(identity.zodVersion, /^\d+\.\d+\.\d+/);
 });
 
+test('a read-seal profile cannot admit unreviewed full transport workspace', async (t) => {
+  const module = await isolatedFactory(t, 'read-only-profile');
+  module.assertNativeMetadataAdmission(Number.MAX_SAFE_INTEGER);
+  assert.throws(
+    () => module.assertNativeMetadataAdmission(Number.MAX_SAFE_INTEGER, 'FULL_TRANSPORT'),
+    (e) => e.nativeStateReason === 'RESOURCE_LIMIT_EXCEEDED',
+  );
+});
+
+test('reviewed full transport admits only at its matching reservation', () => {
+  if (!supported) {
+    assert.throws(
+      () => assertNativeMetadataAdmission(Number.MAX_SAFE_INTEGER, 'FULL_TRANSPORT'),
+      (e) => e.nativeStateReason === 'RESOURCE_LIMIT_EXCEEDED',
+    );
+    return;
+  }
+  assertNativeMetadataAdmission(reviewedReservation, 'FULL_TRANSPORT');
+  assert.throws(
+    () => assertNativeMetadataAdmission(reviewedReservation - 1, 'FULL_TRANSPORT'),
+    (e) => e.nativeStateReason === 'RESOURCE_LIMIT_EXCEEDED',
+  );
+});
+
 test('reviewed profile is backed by unchanged raw evidence and calibration corpus', async () => {
   const raw = await readFile(
     new URL(
-      '../../../fixtures/storage/native-analysis-state/memory-baseline-task3.json',
+      '../../../fixtures/storage/native-analysis-state/memory-baseline-task4-read-seal.json',
       import.meta.url,
     ),
   );
@@ -248,6 +286,39 @@ test('reviewed profile is backed by unchanged raw evidence and calibration corpu
     profile.reservationBytes,
   );
   assert.equal(profile.reservationBytes, reviewedReservation);
+  for (const name of report.cases)
+    assert.equal(report.observations.filter((o) => o.name === name).length, 5);
+});
+
+test('reviewed transport evidence covers every actual workspace class', async () => {
+  const raw = await readFile(
+    new URL(
+      '../../../fixtures/storage/native-analysis-state/memory-baseline-task4-transport.json',
+      import.meta.url,
+    ),
+  );
+  const report = JSON.parse(raw);
+  const profile = nativeMetadataProfiles.find(
+    (p) => p.implementationDigest === report.environment.implementationDigest,
+  );
+  assert.ok(profile, 'reviewed transport evidence requires a matching profile');
+  assert.equal(createHash('sha256').update(raw).digest('hex'), profile.fullTransportEvidenceDigest);
+  const corpus = createHash('sha256');
+  for (const path of [
+    '../../../scripts/bench-native-full-v3-memory.mjs',
+    '../../providers/test/helpers/native-full-v3-memory-worker.mjs',
+    '../../providers/test/helpers/native-full-v3-memory-corpus.mjs',
+    '../../providers/test/fixtures/native-full-v3-memory-child.mjs',
+    './helpers/native-metadata-corpus.mjs',
+  ])
+    corpus.update(await readFile(new URL(path, import.meta.url)));
+  assert.equal(corpus.digest('hex'), profile.fullTransportCorpusDigest);
+  assert.equal(report.corpusRevision, profile.fullTransportCorpusRevision);
+  assert.equal(report.observations.length, 70);
+  assert.equal(report.repetitions, 5);
+  assert.equal(profile.fullTransportPeakBytes, 196_911_104);
+  assert.equal(Math.max(...report.observations.map((o) => o.peakResidentBytes)), 196_911_104);
+  assert.ok(profile.reservationBytes >= profile.fullTransportPeakBytes);
   for (const name of report.cases)
     assert.equal(report.observations.filter((o) => o.name === name).length, 5);
 });
