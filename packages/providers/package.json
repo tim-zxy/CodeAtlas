@@ -17,7 +17,7 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "test": "node --test test/native-analysis-state.test.mjs test/native-ipc-v3.test.mjs"
+    "test": "node --test test/native-analysis-state.test.mjs test/native-ipc-v3.test.mjs test/native-analysis-output-v3.test.mjs"
   },
   "dependencies": {
     "@codeatlas/ir": "workspace:*",

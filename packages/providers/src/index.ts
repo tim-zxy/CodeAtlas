@@ -3,6 +3,7 @@ export * from './native-ipc.js';
 export * from './native-ipc-v2.js';
 export * from './native-analysis-state.js';
 export * from './native-analysis-validation.js';
+export * from './native-analysis-output-v3.js';
 export * from './native-ipc-v3.js';
 export * from './native-ipc-v3-bytes.js';
 export * from './coverage-summary.js';

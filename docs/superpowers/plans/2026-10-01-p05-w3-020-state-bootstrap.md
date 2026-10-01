@@ -185,7 +185,7 @@ Tasks 3–6 must invalidate and remeasure the profile when they change correspon
 
 **Interfaces:** Produce the full-v3 types above and `NativeFullAnalysisEventV3Schema`; `decodeNativeFullAnalysisV3(request: NativeFullAnalyzeRequestV3, lines: AsyncIterable<Uint8Array>, sink: {accept(event: NativeFullAnalysisEventV3):Promise<void>}, limits: NativeClientLimits): Promise<{terminal:NativeFullAnalysisTerminalV3}>`. Reuse existing byte syntax primitives/checksum conventions. The shared case runner passes facts/metadata to the validation port; no persistent Apply here.
 
-- [ ] Write corpus-driven tests `full v3 separates summary and graph counts`, `summary identities match observed facts`, `shared package owners are grounded and complete`, `malformed full streams are never applicable`. Assert exact terminal counts/digest and rejection of each indexed invalid case, e.g.:
+- [x] Write corpus-driven tests `full v3 separates summary and graph counts`, `summary identities match observed facts`, `shared package owners are grounded and complete`, `malformed full streams are never applicable`. Assert exact terminal counts/digest and rejection of each indexed invalid case, e.g.:
   ```js
   assert.equal(valid.terminal.payload.summaryRecords, requestedFiles.length);
   assert.deepEqual(valid.terminal.payload.counts, expectedGraphCounts);
@@ -193,10 +193,13 @@ Tasks 3–6 must invalidate and remeasure the profile when they change correspon
   await assert.rejects(decodeCase('valid-summary-wrong-emitted-fact-digest'));
   ```
   Index valid full/zero/zero-file/PARTIAL, duplicate/missing/foreign summaries, mixed ownership, missing package declaration, compilation-unit FILE ownership, coverage/diagnostic multiset drift, deterministic source-less origin/run-global diagnostic, wrong context, unknown keys, unsafe/-0/nonfinite numbers, Unicode scalar ordering, wrong sequence/start/terminal/count/raw checksum, BOM/CRLF/UTF-8, oversized line/event/total and illegal REFRESH output. Preserve independent packet A digest vectors.
-- [ ] Build Providers; run `node --test packages/providers/test/native-analysis-output-v3.test.mjs`; run `cargo test -p codeatlas-native-analyzer analysis_state`; expect new cases to fail behaviorally until validation exists.
-- [ ] Implement the exact spec union and streaming decoder; validate correspondence using actual staged Provider facts, excluding only snapshot ID from fact digests. Extend the existing Rust summary validation tests to consume the same indexed payload vectors; raw response framing is additionally tested against the real writer in Task 5, not claimed from summary-only Rust tests. Protect new raw JSONL with `-text`.
-- [ ] Rerun those tests plus existing `native-analysis-state.test.mjs`, `native-ipc-v3.test.mjs`, `native-ipc-bytes.test.mjs`; require every cases-index entry executed, unchanged packet A/v1/v2 schemas and zero failures.
-- [ ] Commit `feat(providers): validate full v3 summaries and fact correspondence` with only this task's files.
+- [x] Build Providers; run `node --test packages/providers/test/native-analysis-output-v3.test.mjs`; run `cargo test -p codeatlas-native-analyzer analysis_state`; expect new cases to fail behaviorally until validation exists.
+- [x] Implement the exact spec union and streaming decoder; validate correspondence using actual staged Provider facts, excluding only snapshot ID from fact digests. Extend the existing Rust summary validation tests to consume the same indexed payload vectors; raw response framing is additionally tested against the real writer in Task 5, not claimed from summary-only Rust tests. Protect new raw JSONL with `-text`.
+- [x] Rerun those tests plus existing `native-analysis-state.test.mjs`, `native-ipc-v3.test.mjs`, `native-ipc-bytes.test.mjs`; require every cases-index entry executed, unchanged packet A/v1/v2 schemas and zero failures.
+
+Task 3 evidence: output suite 44/44 (14 raw and 21 shared payload vectors plus functional cases); focused regression 70/70; full root Node 762 pass/one existing Windows skip; Cargo workspace 88/88 and existing real-binary suites 25/25. Build/type/architecture/fmt/Clippy pass. The unchanged read/seal benchmark reports 65 observations for the new built identity and proposes 250,855,424 bytes plus twice retained SQL bytes. Hold before profile installation, task completion and commit until explicit numeric-report approval; CURRENT_STATUS records exact identity and raw-report location. The old profile mismatches and fails closed. This is not new decoder/process-transport workspace calibration; Task 4 must measure its actual path.
+
+- [x] Commit `feat(providers): validate full v3 summaries and fact correspondence` with only this task's files.
 
 ## Task 4: Bounded full-v3 process transport (B2)
 
@@ -223,6 +226,8 @@ Tasks 3–6 must invalidate and remeasure the profile when they change correspon
 **Files:** Modify Rust `analyze.rs`, `protocol.rs`, `analysis_state.rs`, `request_v3.rs`, `lib.rs`; create `packages/providers/test/native-full-v3-binary.test.mjs`; extend B2 cases/required native runner. Reuse registered `java-call-basic`, `java-overload`, `java-inheritance`, `java-unresolved-call`, `java-coverage-zero` and syntax/unsupported fixtures; do not create a parallel source truth.
 
 **Interfaces:** Consume accepted request_v3 validation and existing LanguageAnalysis. Add Rust `run_full_v3<W: Write>(request: &serde_json::Value, workers: usize, output: &mut W) -> Result<(), String>` behind the existing dispatch; existing caller error classification remains authoritative. Produce Task 3's exact JSONL types. Pin `JAVA_RESOLVER_VERSION` to `"1"`; compare native-owned provider/language versions to the binary, not caller echoes. Do not advertise v3 yet.
+
+Task 3 numeric approval update (2026-10-01): the user answered the exact reservation question with “继续”. The unaltered report is preserved separately at `fixtures/storage/native-analysis-state/memory-baseline-task3.json`, SHA-256 `a9451c810ae270340cb499cac5dbf01d0fe274b755861a6725b4576eb17815b1`, with capture status unchanged. The current-build Windows read/seal profile now reserves 250,855,424 bytes plus twice retained SQL UTF-8 bytes; Task 2 report/profile is unchanged. Production matching-profile and one-byte-below/refusal checks passed within 83/83 focused tests after explicit RED for the absent current profile. Earlier pending-review/current-build refusal wording is historical and superseded by this approval/install record. Final post-approval root Node regression passes 762 with one existing Windows skip; focused tests pass 83/83, Cargo 88/88, existing real Native tests 25/25, build/type/architecture/fmt/Clippy/format/diff pass. Local Task 3 local Task 3 is complete. Decoder/transport workspace admission is still Task 4 work; no real producer/bootstrap/REFRESH or phase exit is claimed.
 
 - [ ] Write real-binary tests `full v3 graph equals v2`, `all contributing files own shared package`, `worker completion order preserves graph and summary digest`, `wrong producer context rejected before parse`, `v3 refresh remains rejected`. Assert:
   ```js

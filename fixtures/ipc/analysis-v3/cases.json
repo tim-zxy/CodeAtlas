@@ -1,0 +1,788 @@
+{
+  "schemaVersion": 1,
+  "id": "p05-native-v3-full-output-v1",
+  "task": "P05-W3-020-B",
+  "design": "../../../docs/superpowers/specs/2026-10-01-p05-w3-020-state-bootstrap-design.md",
+  "acceptance": "../../../docs/handoff/PHASE_ACCEPTANCE.md",
+  "payloadVectors": "payload-vectors.json",
+  "cases": [
+    {
+      "id": "valid-full",
+      "request": {
+        "protocolVersion": 3,
+        "requestId": "req",
+        "sequence": 0,
+        "type": "ANALYZE",
+        "payload": {
+          "irSchemaVersion": 1,
+          "providerSnapshotId": "snap",
+          "repository": {
+            "id": "r",
+            "rootPath": "/repo"
+          },
+          "revision": {
+            "id": "rev",
+            "repositoryId": "r",
+            "kind": "WORKTREE",
+            "contentFingerprint": "base",
+            "baseRevisionId": null
+          },
+          "sourceFiles": [
+            {
+              "id": "f-0",
+              "repositoryId": "r",
+              "revisionId": "rev",
+              "path": "src/0.java",
+              "contentFingerprint": "fp-0",
+              "classification": {
+                "role": "SOURCE",
+                "provenance": "AUTHORED",
+                "contentKind": "TEXT"
+              },
+              "languageHint": "java",
+              "sensitivity": "PUBLIC"
+            },
+            {
+              "id": "f-1",
+              "repositoryId": "r",
+              "revisionId": "rev",
+              "path": "src/1.java",
+              "contentFingerprint": "fp-1",
+              "classification": {
+                "role": "SOURCE",
+                "provenance": "AUTHORED",
+                "contentKind": "TEXT"
+              },
+              "languageHint": "java",
+              "sensitivity": "PUBLIC"
+            }
+          ],
+          "requestedCapabilities": ["SYMBOL"],
+          "deadlineEpochMs": null,
+          "resourceBudget": {
+            "maxDurationMs": 1000,
+            "maxMemoryBytes": 1000000000,
+            "maxEvents": 100
+          },
+          "analysisStateContext": {
+            "providerId": "native",
+            "providerVersion": "0.0.0",
+            "language": {
+              "languageId": "java",
+              "grammarVersion": "0.23.5",
+              "analyzerVersion": "0.0.0",
+              "compatibilityVersion": "1"
+            },
+            "resolverVersion": "1",
+            "normalizerVersion": "1",
+            "policyFingerprint": "policy"
+          },
+          "baselineState": null
+        }
+      },
+      "events": "valid-full.jsonl",
+      "valid": true,
+      "expectedCounts": {
+        "sourceFiles": 2,
+        "nodes": 5,
+        "edges": 0,
+        "coverage": 2,
+        "diagnostics": 0
+      },
+      "summaryRecords": 2
+    },
+    {
+      "id": "valid-empty",
+      "request": {
+        "protocolVersion": 3,
+        "requestId": "req",
+        "sequence": 0,
+        "type": "ANALYZE",
+        "payload": {
+          "irSchemaVersion": 1,
+          "providerSnapshotId": "snap",
+          "repository": {
+            "id": "r",
+            "rootPath": "/repo"
+          },
+          "revision": {
+            "id": "rev",
+            "repositoryId": "r",
+            "kind": "WORKTREE",
+            "contentFingerprint": "base",
+            "baseRevisionId": null
+          },
+          "sourceFiles": [
+            {
+              "id": "f-0",
+              "repositoryId": "r",
+              "revisionId": "rev",
+              "path": "src/0.java",
+              "contentFingerprint": "fp-0",
+              "classification": {
+                "role": "SOURCE",
+                "provenance": "AUTHORED",
+                "contentKind": "TEXT"
+              },
+              "languageHint": "java",
+              "sensitivity": "PUBLIC"
+            }
+          ],
+          "requestedCapabilities": ["SYMBOL"],
+          "deadlineEpochMs": null,
+          "resourceBudget": {
+            "maxDurationMs": 1000,
+            "maxMemoryBytes": 1000000000,
+            "maxEvents": 100
+          },
+          "analysisStateContext": {
+            "providerId": "native",
+            "providerVersion": "0.0.0",
+            "language": {
+              "languageId": "java",
+              "grammarVersion": "0.23.5",
+              "analyzerVersion": "0.0.0",
+              "compatibilityVersion": "1"
+            },
+            "resolverVersion": "1",
+            "normalizerVersion": "1",
+            "policyFingerprint": "policy"
+          },
+          "baselineState": null
+        }
+      },
+      "events": "valid-empty.jsonl",
+      "valid": true,
+      "expectedCounts": {
+        "sourceFiles": 1,
+        "nodes": 0,
+        "edges": 0,
+        "coverage": 1,
+        "diagnostics": 0
+      },
+      "summaryRecords": 1
+    },
+    {
+      "id": "valid-zero-file",
+      "request": {
+        "protocolVersion": 3,
+        "requestId": "req",
+        "sequence": 0,
+        "type": "ANALYZE",
+        "payload": {
+          "irSchemaVersion": 1,
+          "providerSnapshotId": "snap",
+          "repository": {
+            "id": "r",
+            "rootPath": "/repo"
+          },
+          "revision": {
+            "id": "rev",
+            "repositoryId": "r",
+            "kind": "WORKTREE",
+            "contentFingerprint": "base",
+            "baseRevisionId": null
+          },
+          "sourceFiles": [],
+          "requestedCapabilities": ["SYMBOL"],
+          "deadlineEpochMs": null,
+          "resourceBudget": {
+            "maxDurationMs": 1000,
+            "maxMemoryBytes": 1000000000,
+            "maxEvents": 100
+          },
+          "analysisStateContext": {
+            "providerId": "native",
+            "providerVersion": "0.0.0",
+            "language": {
+              "languageId": "java",
+              "grammarVersion": "0.23.5",
+              "analyzerVersion": "0.0.0",
+              "compatibilityVersion": "1"
+            },
+            "resolverVersion": "1",
+            "normalizerVersion": "1",
+            "policyFingerprint": "policy"
+          },
+          "baselineState": null
+        }
+      },
+      "events": "valid-zero-file.jsonl",
+      "valid": true,
+      "expectedCounts": {
+        "sourceFiles": 0,
+        "nodes": 0,
+        "edges": 0,
+        "coverage": 0,
+        "diagnostics": 0
+      },
+      "summaryRecords": 0
+    },
+    {
+      "id": "valid-partial",
+      "request": {
+        "protocolVersion": 3,
+        "requestId": "req",
+        "sequence": 0,
+        "type": "ANALYZE",
+        "payload": {
+          "irSchemaVersion": 1,
+          "providerSnapshotId": "snap",
+          "repository": {
+            "id": "r",
+            "rootPath": "/repo"
+          },
+          "revision": {
+            "id": "rev",
+            "repositoryId": "r",
+            "kind": "WORKTREE",
+            "contentFingerprint": "base",
+            "baseRevisionId": null
+          },
+          "sourceFiles": [
+            {
+              "id": "f-0",
+              "repositoryId": "r",
+              "revisionId": "rev",
+              "path": "src/0.java",
+              "contentFingerprint": "fp-0",
+              "classification": {
+                "role": "SOURCE",
+                "provenance": "AUTHORED",
+                "contentKind": "TEXT"
+              },
+              "languageHint": "java",
+              "sensitivity": "PUBLIC"
+            }
+          ],
+          "requestedCapabilities": ["SYMBOL"],
+          "deadlineEpochMs": null,
+          "resourceBudget": {
+            "maxDurationMs": 1000,
+            "maxMemoryBytes": 1000000000,
+            "maxEvents": 100
+          },
+          "analysisStateContext": {
+            "providerId": "native",
+            "providerVersion": "0.0.0",
+            "language": {
+              "languageId": "java",
+              "grammarVersion": "0.23.5",
+              "analyzerVersion": "0.0.0",
+              "compatibilityVersion": "1"
+            },
+            "resolverVersion": "1",
+            "normalizerVersion": "1",
+            "policyFingerprint": "policy"
+          },
+          "baselineState": null
+        }
+      },
+      "events": "valid-partial.jsonl",
+      "valid": true,
+      "expectedCounts": {
+        "sourceFiles": 1,
+        "nodes": 0,
+        "edges": 0,
+        "coverage": 1,
+        "diagnostics": 0
+      },
+      "summaryRecords": 1
+    },
+    {
+      "id": "wrong-sequence",
+      "request": {
+        "protocolVersion": 3,
+        "requestId": "req",
+        "sequence": 0,
+        "type": "ANALYZE",
+        "payload": {
+          "irSchemaVersion": 1,
+          "providerSnapshotId": "snap",
+          "repository": {
+            "id": "r",
+            "rootPath": "/repo"
+          },
+          "revision": {
+            "id": "rev",
+            "repositoryId": "r",
+            "kind": "WORKTREE",
+            "contentFingerprint": "base",
+            "baseRevisionId": null
+          },
+          "sourceFiles": [],
+          "requestedCapabilities": ["SYMBOL"],
+          "deadlineEpochMs": null,
+          "resourceBudget": {
+            "maxDurationMs": 1000,
+            "maxMemoryBytes": 1000000000,
+            "maxEvents": 100
+          },
+          "analysisStateContext": {
+            "providerId": "native",
+            "providerVersion": "0.0.0",
+            "language": {
+              "languageId": "java",
+              "grammarVersion": "0.23.5",
+              "analyzerVersion": "0.0.0",
+              "compatibilityVersion": "1"
+            },
+            "resolverVersion": "1",
+            "normalizerVersion": "1",
+            "policyFingerprint": "policy"
+          },
+          "baselineState": null
+        }
+      },
+      "events": "wrong-sequence.jsonl",
+      "valid": false
+    },
+    {
+      "id": "wrong-count",
+      "request": {
+        "protocolVersion": 3,
+        "requestId": "req",
+        "sequence": 0,
+        "type": "ANALYZE",
+        "payload": {
+          "irSchemaVersion": 1,
+          "providerSnapshotId": "snap",
+          "repository": {
+            "id": "r",
+            "rootPath": "/repo"
+          },
+          "revision": {
+            "id": "rev",
+            "repositoryId": "r",
+            "kind": "WORKTREE",
+            "contentFingerprint": "base",
+            "baseRevisionId": null
+          },
+          "sourceFiles": [],
+          "requestedCapabilities": ["SYMBOL"],
+          "deadlineEpochMs": null,
+          "resourceBudget": {
+            "maxDurationMs": 1000,
+            "maxMemoryBytes": 1000000000,
+            "maxEvents": 100
+          },
+          "analysisStateContext": {
+            "providerId": "native",
+            "providerVersion": "0.0.0",
+            "language": {
+              "languageId": "java",
+              "grammarVersion": "0.23.5",
+              "analyzerVersion": "0.0.0",
+              "compatibilityVersion": "1"
+            },
+            "resolverVersion": "1",
+            "normalizerVersion": "1",
+            "policyFingerprint": "policy"
+          },
+          "baselineState": null
+        }
+      },
+      "events": "wrong-count.jsonl",
+      "valid": false
+    },
+    {
+      "id": "wrong-checksum",
+      "request": {
+        "protocolVersion": 3,
+        "requestId": "req",
+        "sequence": 0,
+        "type": "ANALYZE",
+        "payload": {
+          "irSchemaVersion": 1,
+          "providerSnapshotId": "snap",
+          "repository": {
+            "id": "r",
+            "rootPath": "/repo"
+          },
+          "revision": {
+            "id": "rev",
+            "repositoryId": "r",
+            "kind": "WORKTREE",
+            "contentFingerprint": "base",
+            "baseRevisionId": null
+          },
+          "sourceFiles": [],
+          "requestedCapabilities": ["SYMBOL"],
+          "deadlineEpochMs": null,
+          "resourceBudget": {
+            "maxDurationMs": 1000,
+            "maxMemoryBytes": 1000000000,
+            "maxEvents": 100
+          },
+          "analysisStateContext": {
+            "providerId": "native",
+            "providerVersion": "0.0.0",
+            "language": {
+              "languageId": "java",
+              "grammarVersion": "0.23.5",
+              "analyzerVersion": "0.0.0",
+              "compatibilityVersion": "1"
+            },
+            "resolverVersion": "1",
+            "normalizerVersion": "1",
+            "policyFingerprint": "policy"
+          },
+          "baselineState": null
+        }
+      },
+      "events": "wrong-checksum.jsonl",
+      "valid": false
+    },
+    {
+      "id": "wrong-context",
+      "request": {
+        "protocolVersion": 3,
+        "requestId": "req",
+        "sequence": 0,
+        "type": "ANALYZE",
+        "payload": {
+          "irSchemaVersion": 1,
+          "providerSnapshotId": "snap",
+          "repository": {
+            "id": "r",
+            "rootPath": "/repo"
+          },
+          "revision": {
+            "id": "rev",
+            "repositoryId": "r",
+            "kind": "WORKTREE",
+            "contentFingerprint": "base",
+            "baseRevisionId": null
+          },
+          "sourceFiles": [],
+          "requestedCapabilities": ["SYMBOL"],
+          "deadlineEpochMs": null,
+          "resourceBudget": {
+            "maxDurationMs": 1000,
+            "maxMemoryBytes": 1000000000,
+            "maxEvents": 100
+          },
+          "analysisStateContext": {
+            "providerId": "native",
+            "providerVersion": "0.0.0",
+            "language": {
+              "languageId": "java",
+              "grammarVersion": "0.23.5",
+              "analyzerVersion": "0.0.0",
+              "compatibilityVersion": "1"
+            },
+            "resolverVersion": "1",
+            "normalizerVersion": "1",
+            "policyFingerprint": "policy"
+          },
+          "baselineState": null
+        }
+      },
+      "events": "wrong-context.jsonl",
+      "valid": false
+    },
+    {
+      "id": "unknown-key",
+      "request": {
+        "protocolVersion": 3,
+        "requestId": "req",
+        "sequence": 0,
+        "type": "ANALYZE",
+        "payload": {
+          "irSchemaVersion": 1,
+          "providerSnapshotId": "snap",
+          "repository": {
+            "id": "r",
+            "rootPath": "/repo"
+          },
+          "revision": {
+            "id": "rev",
+            "repositoryId": "r",
+            "kind": "WORKTREE",
+            "contentFingerprint": "base",
+            "baseRevisionId": null
+          },
+          "sourceFiles": [],
+          "requestedCapabilities": ["SYMBOL"],
+          "deadlineEpochMs": null,
+          "resourceBudget": {
+            "maxDurationMs": 1000,
+            "maxMemoryBytes": 1000000000,
+            "maxEvents": 100
+          },
+          "analysisStateContext": {
+            "providerId": "native",
+            "providerVersion": "0.0.0",
+            "language": {
+              "languageId": "java",
+              "grammarVersion": "0.23.5",
+              "analyzerVersion": "0.0.0",
+              "compatibilityVersion": "1"
+            },
+            "resolverVersion": "1",
+            "normalizerVersion": "1",
+            "policyFingerprint": "policy"
+          },
+          "baselineState": null
+        }
+      },
+      "events": "unknown-key.jsonl",
+      "valid": false
+    },
+    {
+      "id": "illegal-refresh",
+      "request": {
+        "protocolVersion": 3,
+        "requestId": "req",
+        "sequence": 0,
+        "type": "ANALYZE",
+        "payload": {
+          "irSchemaVersion": 1,
+          "providerSnapshotId": "snap",
+          "repository": {
+            "id": "r",
+            "rootPath": "/repo"
+          },
+          "revision": {
+            "id": "rev",
+            "repositoryId": "r",
+            "kind": "WORKTREE",
+            "contentFingerprint": "base",
+            "baseRevisionId": null
+          },
+          "sourceFiles": [],
+          "requestedCapabilities": ["SYMBOL"],
+          "deadlineEpochMs": null,
+          "resourceBudget": {
+            "maxDurationMs": 1000,
+            "maxMemoryBytes": 1000000000,
+            "maxEvents": 100
+          },
+          "analysisStateContext": {
+            "providerId": "native",
+            "providerVersion": "0.0.0",
+            "language": {
+              "languageId": "java",
+              "grammarVersion": "0.23.5",
+              "analyzerVersion": "0.0.0",
+              "compatibilityVersion": "1"
+            },
+            "resolverVersion": "1",
+            "normalizerVersion": "1",
+            "policyFingerprint": "policy"
+          },
+          "baselineState": null
+        }
+      },
+      "events": "illegal-refresh.jsonl",
+      "valid": false
+    },
+    {
+      "id": "duplicate-start",
+      "request": {
+        "protocolVersion": 3,
+        "requestId": "req",
+        "sequence": 0,
+        "type": "ANALYZE",
+        "payload": {
+          "irSchemaVersion": 1,
+          "providerSnapshotId": "snap",
+          "repository": {
+            "id": "r",
+            "rootPath": "/repo"
+          },
+          "revision": {
+            "id": "rev",
+            "repositoryId": "r",
+            "kind": "WORKTREE",
+            "contentFingerprint": "base",
+            "baseRevisionId": null
+          },
+          "sourceFiles": [],
+          "requestedCapabilities": ["SYMBOL"],
+          "deadlineEpochMs": null,
+          "resourceBudget": {
+            "maxDurationMs": 1000,
+            "maxMemoryBytes": 1000000000,
+            "maxEvents": 100
+          },
+          "analysisStateContext": {
+            "providerId": "native",
+            "providerVersion": "0.0.0",
+            "language": {
+              "languageId": "java",
+              "grammarVersion": "0.23.5",
+              "analyzerVersion": "0.0.0",
+              "compatibilityVersion": "1"
+            },
+            "resolverVersion": "1",
+            "normalizerVersion": "1",
+            "policyFingerprint": "policy"
+          },
+          "baselineState": null
+        }
+      },
+      "events": "duplicate-start.jsonl",
+      "valid": false
+    },
+    {
+      "id": "wrong-header",
+      "request": {
+        "protocolVersion": 3,
+        "requestId": "req",
+        "sequence": 0,
+        "type": "ANALYZE",
+        "payload": {
+          "irSchemaVersion": 1,
+          "providerSnapshotId": "snap",
+          "repository": {
+            "id": "r",
+            "rootPath": "/repo"
+          },
+          "revision": {
+            "id": "rev",
+            "repositoryId": "r",
+            "kind": "WORKTREE",
+            "contentFingerprint": "base",
+            "baseRevisionId": null
+          },
+          "sourceFiles": [],
+          "requestedCapabilities": ["SYMBOL"],
+          "deadlineEpochMs": null,
+          "resourceBudget": {
+            "maxDurationMs": 1000,
+            "maxMemoryBytes": 1000000000,
+            "maxEvents": 100
+          },
+          "analysisStateContext": {
+            "providerId": "native",
+            "providerVersion": "0.0.0",
+            "language": {
+              "languageId": "java",
+              "grammarVersion": "0.23.5",
+              "analyzerVersion": "0.0.0",
+              "compatibilityVersion": "1"
+            },
+            "resolverVersion": "1",
+            "normalizerVersion": "1",
+            "policyFingerprint": "policy"
+          },
+          "baselineState": null
+        }
+      },
+      "events": "wrong-header.jsonl",
+      "valid": false
+    },
+    {
+      "id": "negative-zero-sequence",
+      "request": {
+        "protocolVersion": 3,
+        "requestId": "req",
+        "sequence": 0,
+        "type": "ANALYZE",
+        "payload": {
+          "irSchemaVersion": 1,
+          "providerSnapshotId": "snap",
+          "repository": {
+            "id": "r",
+            "rootPath": "/repo"
+          },
+          "revision": {
+            "id": "rev",
+            "repositoryId": "r",
+            "kind": "WORKTREE",
+            "contentFingerprint": "base",
+            "baseRevisionId": null
+          },
+          "sourceFiles": [],
+          "requestedCapabilities": ["SYMBOL"],
+          "deadlineEpochMs": null,
+          "resourceBudget": {
+            "maxDurationMs": 1000,
+            "maxMemoryBytes": 1000000000,
+            "maxEvents": 100
+          },
+          "analysisStateContext": {
+            "providerId": "native",
+            "providerVersion": "0.0.0",
+            "language": {
+              "languageId": "java",
+              "grammarVersion": "0.23.5",
+              "analyzerVersion": "0.0.0",
+              "compatibilityVersion": "1"
+            },
+            "resolverVersion": "1",
+            "normalizerVersion": "1",
+            "policyFingerprint": "policy"
+          },
+          "baselineState": null
+        }
+      },
+      "events": "negative-zero-sequence.jsonl",
+      "valid": false
+    },
+    {
+      "id": "missing-summary",
+      "request": {
+        "protocolVersion": 3,
+        "requestId": "req",
+        "sequence": 0,
+        "type": "ANALYZE",
+        "payload": {
+          "irSchemaVersion": 1,
+          "providerSnapshotId": "snap",
+          "repository": {
+            "id": "r",
+            "rootPath": "/repo"
+          },
+          "revision": {
+            "id": "rev",
+            "repositoryId": "r",
+            "kind": "WORKTREE",
+            "contentFingerprint": "base",
+            "baseRevisionId": null
+          },
+          "sourceFiles": [
+            {
+              "id": "f-0",
+              "repositoryId": "r",
+              "revisionId": "rev",
+              "path": "src/0.java",
+              "contentFingerprint": "fp-0",
+              "classification": {
+                "role": "SOURCE",
+                "provenance": "AUTHORED",
+                "contentKind": "TEXT"
+              },
+              "languageHint": "java",
+              "sensitivity": "PUBLIC"
+            }
+          ],
+          "requestedCapabilities": ["SYMBOL"],
+          "deadlineEpochMs": null,
+          "resourceBudget": {
+            "maxDurationMs": 1000,
+            "maxMemoryBytes": 1000000000,
+            "maxEvents": 100
+          },
+          "analysisStateContext": {
+            "providerId": "native",
+            "providerVersion": "0.0.0",
+            "language": {
+              "languageId": "java",
+              "grammarVersion": "0.23.5",
+              "analyzerVersion": "0.0.0",
+              "compatibilityVersion": "1"
+            },
+            "resolverVersion": "1",
+            "normalizerVersion": "1",
+            "policyFingerprint": "policy"
+          },
+          "baselineState": null
+        }
+      },
+      "events": "missing-summary.jsonl",
+      "valid": false
+    }
+  ]
+}

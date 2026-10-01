@@ -9,13 +9,14 @@ import { join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import * as runtime from '../dist/index.js';
 import { buildMemoryCase, corpusExpected } from './helpers/native-metadata-corpus.mjs';
+import { nativeMetadataEnvironment } from '../dist/native-metadata-admission.js';
+import { nativeMetadataProfiles } from '../dist/native-metadata-profiles.js';
 
-const reviewedReservation = 250_183_680;
-const supported =
-  process.platform === 'win32' &&
-  process.arch === 'x64' &&
-  process.version === 'v24.15.0' &&
-  process.versions.v8 === '13.6.233.17-node.48';
+const reviewedReservation = 250_855_424;
+const environment = nativeMetadataEnvironment();
+const supported = nativeMetadataProfiles.some((profile) =>
+  Object.entries(environment).every(([key, value]) => profile[key] === value),
+);
 
 async function isolatedFactory(t, variant) {
   const directory = await mkdtemp(join(tmpdir(), 'codeatlas-metadata-admission-'));
@@ -67,6 +68,16 @@ test('uncalibrated Runtime refuses before Provider decoding or iterator access',
 });
 
 test('reviewed matching Runtime admits at reservation and still validates strict metadata', () => {
+  if (
+    environment.node === 'v24.15.0' &&
+    environment.v8 === '13.6.233.17-node.48' &&
+    environment.platform === 'win32' &&
+    environment.arch === 'x64' &&
+    environment.zodVersion === '4.6.1' &&
+    environment.implementationDigest ===
+      '44471febb9b41c2c73ddd30f065f216ba016d74e7179821d7dadf8c1c09a73ee'
+  )
+    assert.equal(supported, true, 'reviewed current build must exercise production admission');
   const value = buildMemoryCase('zero-file');
   const input = {
     headerJson: JSON.stringify(value.header),
@@ -211,7 +222,7 @@ test('metadata implementation identity is deterministic and environment-specific
 test('reviewed profile is backed by unchanged raw evidence and calibration corpus', async () => {
   const raw = await readFile(
     new URL(
-      '../../../fixtures/storage/native-analysis-state/memory-baseline.json',
+      '../../../fixtures/storage/native-analysis-state/memory-baseline-task3.json',
       import.meta.url,
     ),
   );

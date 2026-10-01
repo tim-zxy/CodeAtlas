@@ -508,6 +508,25 @@ pub fn validate_analysis_state(v: &Value) -> Result<(), V3ContractError> {
 mod tests {
     use super::*;
     #[test]
+    fn shared_full_output_state_vectors() {
+        // Summary validation only; fact correspondence is checked by the TS
+        // staged port, and real Rust writer framing belongs to packet B Task 5.
+        let vectors: Value = serde_json::from_str(include_str!(
+            "../../../fixtures/ipc/analysis-v3/payload-vectors.json"
+        ))
+        .unwrap();
+        let entries = vectors["vectors"].as_array().unwrap();
+        assert_eq!(entries.len(), 21);
+        for entry in entries {
+            assert_eq!(
+                validate_analysis_state(&entry["bundle"]).is_ok(),
+                entry["stateValid"].as_bool().unwrap(),
+                "{}",
+                entry["id"]
+            );
+        }
+    }
+    #[test]
     fn independent_unicode_and_numeric_vectors() {
         let vectors: Value = serde_json::from_str(include_str!(
             "../../../fixtures/ipc/protocol-v3/summary-vectors.json"
