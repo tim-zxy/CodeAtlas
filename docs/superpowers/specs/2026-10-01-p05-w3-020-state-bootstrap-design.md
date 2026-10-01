@@ -60,7 +60,7 @@ Availability is distinct from graph freshness: a STALE graph can have an AVAILAB
 
 ## Execution clarification pending: Node metadata memory admission
 
-Status: ACCEPTED on 2026-10-01. The user selected the measured conservative-admission direction with “继续”, then confirmed the written detail with “确认”. This approves the accounting/calibration rules, not an unmeasured numeric reservation or Task 2 completion. The existing Task 2 plan is being synchronized for review; native execution is retained.
+Status: ACCEPTED on 2026-10-01. The user selected the measured conservative-admission direction with “继续”, confirmed the written detail with “确认”, approved the amended Task 2 plan with “继续”, and subsequently approved the actual 65-observation Windows report/reservation with “批准”. Native execution continues; this approval does not cover unmeasured platforms or changed implementations.
 
 ### Budget semantics and unchanged boundaries
 
@@ -85,6 +85,10 @@ A change to schema, digest/correspondence algorithms, relevant dependencies or t
 The draft tests' 16 MiB helper budget is not an accepted minimum-success gate. Once a profile is measured and reviewed, success tests use a budget that fits its independently recorded reservation and retained-row charge; refusal tests cover one byte below admission and the SQL/JSON bounds without weakening integrity or rollback assertions. Runtime keeps its existing factory signature; calibration selection is internal.
 
 Before releasing Task 2: implement the test-only calibration harness and pinned corpus; test strict preflight/typed refusal and mandatory-port behavior RED; implement the bounded read/validation/seal path; measure that actual path; propose the resulting profile, synchronize its evidence and review before exposing supported admission. Tasks 3–6 must remeasure any added correspondence/client/staging workspace before publication. No summary may activate while the profile/path is unvalidated. Task 7 advertisement still depends on the original real bootstrap and complete gate.
+
+### Approved actual-path baseline
+
+The [unaltered report](../../../fixtures/storage/native-analysis-state/memory-baseline.json), SHA-256 `cd69ea2b526a4e70a11f67402924ee1757a0d5eaf26081c3b848ec747c89b386`, contains thirteen cases with five fresh-process observations each. Its original capture status is retained; the approval above releases one internal profile for Node `v24.15.0`, V8 `13.6.233.17-node.48`, `win32`/`x64`, Zod `4.6.1`, implementation `e9fc7784930fe3346c0d0390731c290755242c159f09656404394d811e5c8298`, corpus revision `p05-native-metadata-memory-v1` and digest `0c599e6626202fe4a0b5d5866e2d89d01a4674e40b0efe0d0b20acf5b4085b29`. Reservation is exactly **250,183,680 bytes**, the maximum absolute `resourceUsage.maxRSS` observation converted to bytes, plus the separate retained SQL charge described above. No guessed margin, Linux profile or hard RSS guarantee is added. Matching production read/seal, one-byte-below refusal, absent/changed profile and evidence-identity tests pass; fresh commands live in CURRENT_STATUS. New measured-path changes still require actual remeasurement and report review.
 
 ### Preliminary evidence, not a calibration profile
 
@@ -204,7 +208,7 @@ console.log(
 );
 ```
 
-Alternative isolation-level enforcement remains outside the selected direction and would need a separately reviewed execution/port design. Unaffected accepted sections remain authoritative. Written admission review is complete; review of the synchronized Task 2 plan and the actual measured release profile remain separate gates.
+Alternative isolation-level enforcement remains outside the selected direction and would need a separately reviewed execution/port design. Unaffected accepted sections remain authoritative. Written admission and synchronized Task 2 plan reviews are complete; the actual measured release profile remains a separate gate.
 
 ## Full ANALYZE v3 output contract
 

@@ -1,5 +1,16 @@
 import { DatabaseSync } from 'node:sqlite';
 import { isDeepStrictEqual } from 'node:util';
+import { boundedJson } from './bounded-json.js';
+import {
+  assertNativeStateLimits,
+  assertNativeStringBudget,
+  immutableNativeState,
+  type NativeStateLimits,
+  type NativeStateExpectation,
+  type NativeStateValidationPort,
+  type NativeStateJsonFile,
+  type ValidatedNativeState,
+} from './native-analysis-state.js';
 import {
   CanonicalEdgeSchema,
   CanonicalNodeSchema,
@@ -37,6 +48,10 @@ type RecordRow = { readonly payload: string };
 export class RepositoryAnalysisStage {
   private closed = false;
   private completed = false;
+  private sealed: ValidatedNativeState | null = null;
+  private nativeSerializedBytes = 0;
+  private nativeStringBytes = 0;
+  private readonly nativeLimits: NativeStateLimits | undefined;
   private terminalContext: {
     repositoryId: string;
     revisionId: string;
@@ -45,8 +60,19 @@ export class RepositoryAnalysisStage {
   } | null = null;
   private terminalCapabilities: unknown = null;
 
-  constructor(private readonly db: DatabaseSync) {
+  constructor(
+    private readonly db: DatabaseSync,
+    nativeLimits?: NativeStateLimits,
+  ) {
+    if (nativeLimits) assertNativeStateLimits(nativeLimits);
+    this.nativeLimits = nativeLimits ? { ...nativeLimits } : undefined;
     db.exec(`
+      CREATE TEMP TABLE analysis_native_summary (
+        source_file_id TEXT PRIMARY KEY,
+        source_path TEXT NOT NULL UNIQUE,
+        content_fingerprint TEXT NOT NULL,
+        summary_json TEXT NOT NULL
+      );
       CREATE TEMP TABLE analysis_event (
         sequence INTEGER PRIMARY KEY AUTOINCREMENT,
         type TEXT NOT NULL,
@@ -85,7 +111,7 @@ export class RepositoryAnalysisStage {
   }
 
   async accept(value: unknown): Promise<void> {
-    this.assertOpen();
+    this.assertWritable();
     if (this.completed) throw new Error('Analysis stage is already complete');
     if (
       value === null ||
@@ -118,6 +144,131 @@ export class RepositoryAnalysisStage {
       .run(event.type, sourceId, sourcePath, factId, JSON.stringify(payload));
   }
 
+  async acceptNativeSummary(value: unknown): Promise<void> {
+    this.assertWritable();
+    if (this.completed) throw new Error('Analysis stage is already complete');
+    if (!this.nativeLimits) throw new Error('Native summary retention requires declared limits');
+    const json = boundedJson(
+      value,
+      this.nativeLimits.maxSerializedBytes - this.nativeSerializedBytes,
+    );
+    const source = (value as { sourceFile?: Record<string, unknown> } | null)?.sourceFile;
+    if (
+      !source ||
+      typeof source.id !== 'string' ||
+      typeof source.path !== 'string' ||
+      typeof source.contentFingerprint !== 'string'
+    )
+      throw new TypeError('Native summary requires JSON source columns');
+    const serializedBytes = Buffer.byteLength(json);
+    const stringBytes =
+      serializedBytes +
+      Buffer.byteLength(source.id) +
+      Buffer.byteLength(source.path) +
+      Buffer.byteLength(source.contentFingerprint);
+    assertNativeStringBudget(this.nativeStringBytes + stringBytes, this.nativeLimits);
+    this.db
+      .prepare('INSERT INTO temp.analysis_native_summary VALUES (?, ?, ?, ?)')
+      .run(source.id, source.path, source.contentFingerprint, json);
+    this.nativeSerializedBytes += serializedBytes;
+    this.nativeStringBytes += stringBytes;
+  }
+
+  sealNativeState(
+    headerJson: string,
+    expected: NativeStateExpectation,
+    validate: NativeStateValidationPort,
+    limits: NativeStateLimits,
+  ): ValidatedNativeState {
+    this.assertWritable();
+    if (typeof validate !== 'function') throw new TypeError('Native validation port is required');
+    if (!this.completed || this.terminalContext === null)
+      throw new Error('Analysis stage is not complete');
+    if (
+      this.terminalContext.repositoryId !== expected.repositoryId ||
+      this.terminalContext.revisionId !== expected.revisionId ||
+      this.terminalContext.fingerprint !== expected.contentFingerprint
+    )
+      throw new Error('Native state context differs from completed stage');
+    assertNativeStateLimits(limits);
+    const effective = {
+      maxSerializedBytes: Math.min(
+        limits.maxSerializedBytes,
+        this.nativeLimits?.maxSerializedBytes ?? limits.maxSerializedBytes,
+      ),
+      memoryBudgetBytes: Math.min(
+        limits.memoryBudgetBytes,
+        this.nativeLimits?.memoryBudgetBytes ?? limits.memoryBudgetBytes,
+      ),
+    };
+    const headerBytes = Buffer.byteLength(headerJson);
+    if (headerBytes + this.nativeSerializedBytes > effective.maxSerializedBytes)
+      throw new Error('Native metadata resource limit exceeded');
+    // Preflight the actual full-stage SQL payload before any fact iterator decodes it.
+    const staged = this.db
+      .prepare(
+        'SELECT coalesce(sum(length(CAST(payload AS BLOB))), 0) AS bytes, coalesce(max(length(CAST(payload AS BLOB))), 0) AS largest FROM temp.analysis_event',
+      )
+      .get() as { bytes: number; largest: number };
+    if (staged.largest > 1_000_000) throw new Error('Native staged fact resource limit exceeded');
+    const retained = headerBytes + this.nativeStringBytes + staged.bytes;
+    assertNativeStringBudget(retained, effective);
+    const foreign = this.db
+      .prepare(
+        `SELECT count(*) AS n FROM temp.analysis_event WHERE type IN ('NODE','EDGE') AND (
+      json_extract(payload, '$.providerSnapshotId') IS NOT ? OR json_extract(payload, '$.repositoryId') IS NOT ? OR
+      json_extract(payload, '$.revisionId') IS NOT ? OR json_extract(payload, '$.providerId') IS NOT ?)`,
+      )
+      .get(
+        this.terminalContext.snapshotId,
+        expected.repositoryId,
+        expected.revisionId,
+        expected.providerId,
+      ) as { n: number };
+    if (foreign.n) throw new Error('Native fact context differs from completed snapshot');
+    const rows = this.db
+      .prepare(
+        'SELECT source_file_id, source_path, content_fingerprint, summary_json FROM temp.analysis_native_summary ORDER BY source_path',
+      )
+      .iterate() as IterableIterator<{
+      source_file_id: string;
+      source_path: string;
+      content_fingerprint: string;
+      summary_json: string;
+    }>;
+    function* files(): IterableIterator<NativeStateJsonFile> {
+      for (const row of rows)
+        yield {
+          sourceFileId: row.source_file_id,
+          sourcePath: row.source_path,
+          contentFingerprint: row.content_fingerprint,
+          summaryJson: row.summary_json,
+        };
+    }
+    const state = validate({
+      headerJson,
+      expected,
+      files: files(),
+      maxSerializedBytes: effective.maxSerializedBytes,
+      memoryBudgetBytes: effective.memoryBudgetBytes - 2 * retained,
+      fullStage: Object.freeze({
+        readSourceFiles: () => this.readSourceFiles(),
+        readProviderNodes: () => this.readProviderNodes(),
+        readProviderEdges: () => this.readProviderEdges(),
+        readCoverage: () => this.readCoverage(),
+        readDiagnostics: () => this.readDiagnostics(),
+      }),
+    });
+    this.sealed = immutableNativeState(state);
+    return this.sealed;
+  }
+
+  readSealedNativeState(): ValidatedNativeState {
+    this.assertOpen();
+    if (!this.sealed) throw new Error('Native state has not been sealed');
+    return this.sealed;
+  }
+
   *readSourceFiles(): IterableIterator<SourceFile> {
     yield* this.readEvents('SOURCE_FILE', SourceFileSchema);
   }
@@ -146,7 +297,7 @@ export class RepositoryAnalysisStage {
   }
 
   confirmSucceeded(terminal: unknown): void {
-    this.assertOpen();
+    this.assertWritable();
     if (this.completed) throw new Error('Analysis stage is already complete');
     if (
       terminal === null ||
@@ -250,7 +401,7 @@ export class RepositoryAnalysisStage {
     readonly provider: { readonly providerFactId: string };
     readonly canonical: CanonicalNode;
   }): void {
-    this.assertOpen();
+    this.assertWritable();
     CanonicalNodeSchema.parse(pair.canonical);
     this.db
       .prepare(
@@ -295,7 +446,7 @@ export class RepositoryAnalysisStage {
     readonly provider: ProviderFactRef;
     readonly canonical: CanonicalEdge;
   }): void {
-    this.assertOpen();
+    this.assertWritable();
     CanonicalEdgeSchema.parse(pair.canonical);
     this.db
       .prepare(
@@ -321,7 +472,7 @@ export class RepositoryAnalysisStage {
   }
 
   appendMergedRow(row: StagedMergedRow): void {
-    this.assertOpen();
+    this.assertWritable();
     const schema =
       row.kind === 'NODE'
         ? CanonicalNodeSchema
@@ -343,7 +494,7 @@ export class RepositoryAnalysisStage {
     readonly canonical: CanonicalNode | CanonicalEdge;
     readonly evidence: Evidence;
   }): void {
-    this.assertOpen();
+    this.assertWritable();
     const prior = this.db
       .prepare(
         'SELECT fact_key FROM temp.analysis_support WHERE fact_type = ? AND fact_id = ? LIMIT 1',
@@ -425,7 +576,7 @@ export class RepositoryAnalysisStage {
   close(): void {
     if (this.closed) return;
     this.db.exec(
-      'DROP TABLE temp.analysis_support; DROP TABLE temp.analysis_merged_row; DROP TABLE temp.analysis_normalized_edge; DROP TABLE temp.analysis_normalized_node; DROP TABLE temp.analysis_event;',
+      'DROP TABLE temp.analysis_native_summary; DROP TABLE temp.analysis_support; DROP TABLE temp.analysis_merged_row; DROP TABLE temp.analysis_normalized_edge; DROP TABLE temp.analysis_normalized_node; DROP TABLE temp.analysis_event;',
     );
     this.closed = true;
   }
@@ -440,5 +591,10 @@ export class RepositoryAnalysisStage {
 
   private assertOpen(): void {
     if (this.closed) throw new Error('Analysis stage is closed');
+  }
+
+  private assertWritable(): void {
+    this.assertOpen();
+    if (this.sealed) throw new Error('Analysis stage is sealed');
   }
 }

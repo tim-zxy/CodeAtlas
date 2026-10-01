@@ -11,5 +11,30 @@
     "immutable-r001-r009",
     "derived-constraints-and-source-independence",
     "too-new-and-workspace-isolation"
+  ],
+  "readCases": [
+    "stale-indexed-state-survives-reconciliation",
+    "bounded-read-refuses-before-validator",
+    "duplicated-sql-columns-are-bounded-before-validator",
+    "column-digest-and-provenance-drift",
+    "compatibility-and-applicability-are-explicit",
+    "validation-port-required-and-operational-errors-propagate",
+    "read-snapshot-is-coherent-across-concurrent-writer",
+    "exclusive-sqlite-lock-is-not-a-missing-baseline"
+  ],
+  "memoryCases": [
+    "zero-file",
+    "empty-file",
+    "maximum-short-files",
+    "dense-numeric-sites",
+    "long-ascii",
+    "long-bmp",
+    "long-astral",
+    "repeated-shared-owners",
+    "duplicate-metadata",
+    "foreign-metadata",
+    "deep-unknown-input",
+    "oversized-sql-column",
+    "oversized-staged-fact"
   ]
 }

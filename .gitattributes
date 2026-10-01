@@ -2,3 +2,7 @@ fixtures/ipc/protocol-v1/**/*.jsonl -text
 fixtures/ipc/handshake-v1/**/*.jsonl -text
 fixtures/ipc/protocol-v2/**/*.jsonl -text
 fixtures/ipc/protocol-v3/**/*.jsonl -text
+fixtures/storage/native-analysis-state/memory-baseline.json -text
+packages/runtime/test/helpers/native-metadata-corpus.mjs text eol=lf
+packages/runtime/test/helpers/native-metadata-worker.mjs text eol=lf
+scripts/bench-native-metadata-memory.mjs text eol=lf
