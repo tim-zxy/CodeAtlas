@@ -1,6 +1,6 @@
 # P05-W3-020-B Derived state and full-analysis bootstrap
 
-Status: REVIEW-READY. On 2026-10-01 the user approved writing this detailed design, not its implementation. Written-spec review and a separately reviewed implementation plan are required before coding. This subdivision does not add a roadmap task.
+Status: ACCEPTED for implementation planning. On 2026-10-01 the user approved this written design. The [implementation plan](../plans/2026-10-01-p05-w3-020-state-bootstrap.md) is REVIEW-READY and requires user review before coding. No implementation is claimed. This subdivision does not add a roadmap task.
 
 ## Intent, authority and baseline
 
