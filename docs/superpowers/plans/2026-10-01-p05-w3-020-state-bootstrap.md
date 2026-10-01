@@ -135,6 +135,8 @@ Inspection found packet A test context values `resolverVersion: '1'` and `normal
 
 ## Task 2: Bounded read, validation port and sealed metadata (B1)
 
+Execution clarification on 2026-10-01: the user chose measured conservative admission. Its detailed written accounting/calibration proposal is now in the design for review; numeric release reservations remain unset and must come from the actual read/seal path's reproducible measurements. After written review, synchronize this task's calibration/RED/GREEN steps before production implementation. Eight read-case drafts and one sealing draft are RED because the APIs are absent; no Task 2 production implementation is retained. Do not substitute the Rust worker reservation, a guessed JSON-size multiplier or preliminary schema-only probes for calibration.
+
 **Files:** Create Storage `analysis/native-analysis-state.ts`, Providers `native-analysis-validation.ts`, Runtime `native-analysis-validation.ts`; modify Storage `analysis/temp-stage.ts` and relevant `src/index.ts`; extend B1 cases/test; create `packages/runtime/test/native-analysis-state-read.test.mjs` and register it.
 
 **Interfaces:** Produce the shared types above and:
@@ -263,4 +265,4 @@ Recommended native sequence: 1 → 2 → 3 → 4 → 5 → 6 → 7. After shared
 
 Packet B exit requires all four Fixture/check groups, real Rust full bootstrap and reopen validation, bounded process/state reads, complete atomic rollback and legacy invalidation, runner execution, architecture and synchronized fresh evidence. It does not complete P05-W3-020 or promote Phase 0.5. The next packet requires a separate detailed REFRESH composition design/plan.
 
-Self-review on 2026-10-01: B1 maps to Tasks 1–2, B2 to 3–5, B3 to 6 and B4 to 7; all five Review Focus cases have owning tests. Read validation is distinguished from full-stage correspondence; no provider stream is reconstructed from Canonical representatives. Shared interfaces and new compatibility identifiers are explicitly pinned; language shape was checked against the current Provider schema. Seven independently testable tasks each carry RED/GREEN and a focused commit. No new threshold, dependency or deferred capability is added. All checkboxes remain unexecuted.
+Self-review on 2026-10-01: B1 maps to Tasks 1–2, B2 to 3–5, B3 to 6 and B4 to 7; all five Review Focus cases have owning tests. Read validation is distinguished from full-stage correspondence; no provider stream is reconstructed from Canonical representatives. Shared interfaces and new compatibility identifiers are explicitly pinned; language shape was checked against the current Provider schema. Seven independently testable tasks each carry RED/GREEN and a focused commit. No new threshold, dependency or deferred capability is added. Task 1 checkboxes are executed; Task 2 remains test-first and held for memory-admission clarification; Tasks 3–7 remain unexecuted.

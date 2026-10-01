@@ -58,6 +58,154 @@ Return a discriminated internal result: `AVAILABLE` with immutable validated bun
 
 Availability is distinct from graph freshness: a STALE graph can have an AVAILABLE baseline for future refresh. Missing header, legacy/no indexed fingerprint or incompatible grammar/analyzer/resolver/normalizer/policy/capability context yields explicit bootstrap-required state. A changed revision ID or immutable target remains NOT_APPLICABLE to REFRESH. No automatic full parse or semantic update is triggered by a read. An AVAILABLE bundle alone does not guarantee that a future larger REFRESH request fits; measure the complete actual request, including framing, target inventory and completion, against the unchanged input ceiling before spawning.
 
+## Execution clarification pending: Node metadata memory admission
+
+Status: DIRECTION ACCEPTED on 2026-10-01 by the user's “继续” after the measured conservative-admission recommendation. The detailed rules below are PROPOSED for written review; no production reservation or Task 2 completion is approved or claimed by that reply.
+
+### Budget semantics and unchanged boundaries
+
+Keep the synchronous Provider validation port, Runtime injection, IR-only Storage and unchanged request/wire/schema contracts. The budget is conservative request admission, not allocator enforcement or an OS hard RSS limit. Do not borrow the Rust worker's 16 MiB reservation. Keep all existing protocol ceilings; calibration cannot raise them. No additional worker setting, automatic calibration during a read, external service, or isolation subsystem is introduced.
+
+Storage must query numeric UTF-8 lengths and row counts inside the same read transaction before fetching strings. Include header/file JSON, duplicated SQL IDs/paths/fingerprints, indexed pointer values and snapshot/token provenance. Bound their aggregate before creating row arrays or decoding JSON. Charge SQL strings at two bytes per UTF-8 byte as a conservative UTF-16 storage upper bound (each UTF-16 code unit requires no more than that input bound); this is a representation bound, not a measured heap multiplier. Row/object/container overhead is covered by the calibrated reservation rather than ignored. JSON's cumulative serialized limit remains 1,000,000 bytes or the caller's lower limit. SQLite lock/I/O errors still propagate.
+
+### Calibration and admission rule
+
+Use one fixed, versioned internal calibration profile for the supported execution environment, keyed by Node/V8, platform/architecture, schema/digest/validation implementation and corpus revision. Profiles are reviewed implementation artifacts backed by reproducible Evaluation reports, not caller-supplied trust or a new user-facing configuration. An unavailable/mismatched profile refuses admission, retains the prior graph and reports the existing safe resource refusal; record the missing-profile cause internally, never claim that measured exhaustion occurred.
+
+For the first implementation, prefer deliberately conservative full-envelope reservation to a fitted JSON multiplier or size buckets. Set `R_profile` to the maximum **absolute process peak resident bytes** observed across the complete calibration cases and repetitions in fresh child processes, including runtime/module baseline. This consciously over-reserves rather than subtracting noisy startup measurements. It is a measured policy reservation, not a proof for every possible input shape. Preserve raw observations, collection method and units; missing peak-memory measurement means no releasable profile. Report observed heap, external and buffer allocations as corroborating measurements; do not add `arrayBuffers` to `external` because those values overlap.
+
+Admit only when `R_profile + B_retained_sql_strings <= memoryBudgetBytes`. The separately charged retained SQL strings intentionally make this conservative even when the calibration already includes them. Within validation, require measured phase coverage for JSON decode, schema copies, sort/ownership structures, canonical encoding, hash buffers and immutable output. Request larger-than-calibrated envelopes or an unmeasured full-stage path must be refused rather than guessed. No runtime GC, heap/RSS sampling used as a retroactive success condition, or “parse first, check later” admission.
+
+The profile must cover the existing serialized ceiling, not just the small probe below. Each case runs five times in fresh processes. Cases include zero-file/empty success; maximum feasible short-file count; dense numeric symbols/sites; long ASCII/BMP/astral strings; repeated shared ownership; duplicate/foreign metadata; invalid deep/unknown input; one oversized SQL field with tiny JSON; and one oversized staged fact. Cases must exercise the actual bounded read and full-stage seal/Provider port, not just the schema. Calibration construction must not hide the work being measured; report startup, input preparation and validation separately, and use the absolute process peak for the admission reservation.
+
+A change to schema, digest/correspondence algorithms, relevant dependencies or the validated environment invalidates the profile until remeasurement/review. Required CI executes the corpus and checks the reservation against fresh observations on its validated platform; neither a Windows probe nor an unobserved hosted run is Linux evidence. Exact release values are chosen only from these reports and synchronized with scalability/Evaluation/Traceability/Current Status. This is not a new phase accuracy or performance threshold.
+
+### Test implications and implementation sequence
+
+The draft tests' 16 MiB helper budget is not an accepted minimum-success gate. Once a profile is measured and reviewed, success tests use a budget that fits its independently recorded reservation and retained-row charge; refusal tests cover one byte below admission and the SQL/JSON bounds without weakening integrity or rollback assertions. Runtime keeps its existing factory signature; calibration selection is internal.
+
+Before releasing Task 2: implement the test-only calibration harness and pinned corpus; test strict preflight/typed refusal and mandatory-port behavior RED; implement the bounded read/validation/seal path; measure that actual path; propose the resulting profile, synchronize its evidence and review before exposing supported admission. Tasks 3–6 must remeasure any added correspondence/client/staging workspace before publication. No summary may activate while the profile/path is unvalidated. Task 7 advertisement still depends on the original real bootstrap and complete gate.
+
+### Preliminary evidence, not a calibration profile
+
+Read-only exploratory probes on 2026-10-01 used the existing built Provider schema and digest functions, without changing product code or installing dependencies. Environment: Node 24.15.0, V8 13.6.233.17-node.48, Windows x64. Four independent processes returned matching summary digests.
+
+| Probe                             | Serialized bundle bytes | Maximum observed phase heap-used increment (bytes) |
+| --------------------------------- | ----------------------: | -------------------------------------------------: |
+| Single empty summary              |                   1,086 |                                            628,136 |
+| 1,000 short-file summaries        |                 609,156 |                                         13,873,208 |
+| 2,500 symbol records              |                 508,035 |                                         17,581,296 |
+| One long astral-Unicode signature |                 801,267 |                                          7,917,504 |
+
+The dense-symbol probe exceeds 16 MiB in observed heap increment alone. Phase samples can miss transient peaks/GC; input generation and digest setup precede the baseline and already allocate data. The probes omit SQLite materialization, full-stage correspondence, saturation of the input ceiling and Linux. They therefore demonstrate why a JSON-size check or the Rust reservation is insufficient, but **cannot select a production reservation, prove an RSS bound or complete a Fixture gate**.
+
+Reproduce each probe in a fresh process with Node arguments `['--expose-gc', '--input-type=module', '-e', source, mode]`, passing the following source as one argument (do not interpolate it into shell quoting). Modes are `empty`, `many-files`, `dense-symbols` and `long-unicode`. The code writes only measurements to stdout. The documented source was replayed directly via `spawnSync` after formatting; the empty probe still produced 1,086 bytes and a matching digest:
+
+```js
+import * as api from './packages/providers/dist/index.js';
+import { readFileSync } from 'node:fs';
+const mode = process.argv[1];
+const template = JSON.parse(
+  readFileSync('fixtures/ipc/protocol-v3/summary-vectors.json', 'utf8'),
+).sourceFile;
+const cov = (id) => ({
+  capability: 'SYMBOL',
+  sourceFileId: id,
+  support: 'SUPPORTED',
+  coverage: 'COMPLETE',
+  statistics: {
+    eligibleSites: 0,
+    coveredSites: 0,
+    unsupportedSites: 0,
+    partialSites: 0,
+    resolutionCounts: { EXACT: 0, HEURISTIC: 0, AMBIGUOUS: 0, UNRESOLVED: 0, UNSUPPORTED: 0 },
+  },
+});
+const empty = (i) => ({
+  schemaVersion: 1,
+  sourceFile: { ...template, id: 'f' + i, path: 'src/F' + i + '.java' },
+  symbols: [],
+  relationSites: [],
+  diagnostics: [],
+  coverage: [cov('f' + i)],
+  emittedFacts: [],
+});
+let summaries =
+  mode === 'many-files' ? Array.from({ length: 1000 }, (_, i) => empty(i)) : [empty(0)];
+if (mode === 'dense-symbols')
+  summaries[0].symbols = Array.from({ length: 2500 }, (_, i) => ({
+    providerFactId: 's' + i,
+    providerKind: 'java.method',
+    name: 'm' + i,
+    qualifiedName: 'A.m' + i,
+    signature: 'm(int)',
+    isStatic: true,
+    span: { startLine: i, startColumn: 0, endLine: i, endColumn: 1 },
+  }));
+if (mode === 'long-unicode')
+  summaries[0].symbols = [
+    {
+      providerFactId: 's',
+      providerKind: 'java.method',
+      name: 'm',
+      qualifiedName: 'A.m',
+      signature: '😀'.repeat(200000),
+      isStatic: false,
+      span: { startLine: 0, startColumn: 0, endLine: 0, endColumn: 1 },
+    },
+  ];
+const header = {
+  schemaVersion: 1,
+  repositoryId: 'r',
+  revisionId: 'rev',
+  contentFingerprint: 'base',
+  providerId: 'native',
+  providerVersion: '0.0.0',
+  language: {
+    languageId: 'java',
+    grammarVersion: '0.23.5',
+    analyzerVersion: '0.0.0',
+    compatibilityVersion: '1',
+  },
+  resolverVersion: '1',
+  normalizerVersion: '1',
+  policyFingerprint: 'policy',
+  requestedCapabilities: ['SYMBOL'],
+  sourceFileCount: summaries.length,
+  summaryDigest: api.computeNativeSummaryDigest(summaries),
+};
+const raw = JSON.stringify({ header, summaries });
+const rawBytes = Buffer.byteLength(raw);
+if (rawBytes > 1000000) throw Error('probe exceeds ceiling');
+summaries = null;
+global.gc();
+const before = process.memoryUsage();
+const samples = [before];
+const decoded = JSON.parse(raw);
+samples.push(process.memoryUsage());
+const parsed = api.NativeAnalysisStateBundleV1Schema.parse(decoded);
+samples.push(process.memoryUsage());
+const digest = api.computeNativeSummaryDigest(parsed.summaries);
+samples.push(process.memoryUsage());
+console.log(
+  JSON.stringify({
+    kind: 'preliminary-schema-probe-not-admission-calibration',
+    mode,
+    node: process.version,
+    v8: process.versions.v8,
+    platform: process.platform,
+    arch: process.arch,
+    rawBytes,
+    baseline: before,
+    phaseSamples: samples,
+    resource: process.resourceUsage(),
+    digestMatches: digest === header.summaryDigest,
+  }),
+);
+```
+
+Alternative isolation-level enforcement remains outside the selected direction and would need a separately reviewed execution/port design. Unaffected accepted sections remain authoritative; detailed admission review is still required before production implementation resumes.
+
 ## Full ANALYZE v3 output contract
 
 Keep the accepted two-record full request: ANALYZE header with `baselineState:null`, followed by REQUEST_COMPLETED; no baseline-summary records. Select v3 explicitly. v1 DESCRIBE remains bootstrap. Existing public v1/v2 Provider SPI request contracts remain unchanged; the Native-specific full composition gets a separate validated v3 path.
