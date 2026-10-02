@@ -19,6 +19,7 @@ import {
   readAnalysisFreshness,
 } from '../../storage/dist/index.js';
 import * as runtime from '../dist/index.js';
+import { executeNativeRequest } from '../../providers/dist/index.js';
 
 const root = fileURLToPath(new URL('../../../', import.meta.url));
 const index = JSON.parse(
@@ -46,19 +47,25 @@ const context = {
   normalizerVersion: '1',
   policyFingerprint: 'fixture-policy',
 };
-// Task 6 tests the explicit full-v3 path before Task 7 publishes negotiation.
-// This future descriptor is not evidence that the actual handshake advertises 3.
-const descriptor = {
-  providerId: 'native',
-  providerVersion: '0.0.0',
-  runtimeVersion: '0.0.0',
-  protocolVersions: [1, 2, 3],
-  irSchemaVersions: [1],
-  capabilities: ['protocol-handshake', 'SYMBOL', 'IMPORT', 'CALL', 'INHERITANCE', 'REFERENCE'],
-  languages: [context.language],
-  limits: { maxLineBytes: 1_000_000, maxEventCount: 10_000, maxTotalBytes: 10_000_000 },
-  build: { target: 'test', profile: 'debug' },
-};
+// The required bootstrap runner selects v3 from the actual validated handshake.
+const handshake = await executeNativeRequest(
+  JSON.parse(
+    await readFile(path.join(root, 'fixtures/ipc/handshake-v1/describe-v1/request.jsonl'), 'utf8'),
+  ),
+  { executablePath: binary, timeoutMs: 10_000 },
+);
+assert.equal(handshake.terminal.type, 'DESCRIBE_COMPLETED');
+const descriptor = handshake.terminal.payload;
+assert.deepEqual(descriptor.protocolVersions, [1, 2, 3]);
+assert.deepEqual(descriptor.irSchemaVersions, [1]);
+assert.deepEqual(descriptor.capabilities, [
+  'protocol-handshake',
+  'SYMBOL',
+  'IMPORT',
+  'CALL',
+  'INHERITANCE',
+  'REFERENCE',
+]);
 async function requestFor(id = 'java-call-basic') {
   assert.ok(index.sourceFixtures.includes(id));
   const fixture = fixtures.find((f) => f.manifest.id === id);

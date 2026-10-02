@@ -1,5 +1,7 @@
 # P05-W3-020-B Derived state and full-analysis bootstrap
 
+Packet B execution update (2026-10-02): Task 6 is locally committed as `0b2af73`, with 24 real bootstrap/lifecycle cases, 98/98 expanded focused tests and root 796 pass/0 fail/one existing Windows skip. Task 7 now advertises full v3 `[1,2,3]` after observed RED→GREEN descriptor tests; strict v1/v2, IR v1, capability list and explicit v3 REFRESH refusal are unchanged. The required bootstrap runner obtains the actual descriptor through the production client rather than using a future descriptor. Native integration CI selects Windows/x64 Node 24.15.0 because only that exact environment has reviewed full-transport admission; Ubuntu TypeScript and Windows Rust gates remain. This is configured coverage, not observed hosted CI or Linux bootstrap evidence. Final Task 7 gates/review remain pending; earlier unimplemented/profile-review-blocked wording is historical. Parent REFRESH and original Phase 0.5 exits stay open at 10/14 integrated, with no new milestone or deferred scope.
+
 Status: ACCEPTED. On 2026-10-01 the user approved this written design and subsequently confirmed the [implementation plan](../plans/2026-10-01-p05-w3-020-state-bootstrap.md) for native execution. Tasks 1–3 are locally complete; Task 3 schema/decoder/corpus and reviewed read/seal profile pass local verification; local Task 3 is complete. Remaining tasks and packet acceptance stay open. This subdivision does not add a roadmap task.
 
 ## Intent, authority and baseline

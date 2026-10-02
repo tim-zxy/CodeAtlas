@@ -370,7 +370,7 @@ for (const mode of ['stale', 'memory', 'events'])
     await assert.rejects(observe(request), (e) => e.code === 'ANALYZER_FAILED');
   });
 
-test('real binary does not advertise full-v3 before bootstrap integration', async () => {
+test('real binary advertises full-v3 without incremental capability', async () => {
   const request = await readFile(
     path.join(root, 'fixtures/ipc/handshake-v1/describe-v1/request.jsonl'),
   );
@@ -378,7 +378,7 @@ test('real binary does not advertise full-v3 before bootstrap integration', asyn
   assert.equal(result.status, 0);
   assert.equal(result.events.length, 1);
   assert.equal(result.events[0].type, 'DESCRIBE_COMPLETED');
-  assert.deepEqual(result.events[0].payload.protocolVersions, [1, 2]);
+  assert.deepEqual(result.events[0].payload.protocolVersions, [1, 2, 3]);
   assert.ok(!result.events[0].payload.capabilities.includes('incremental-refresh'));
 });
 

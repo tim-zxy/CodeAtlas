@@ -2,6 +2,8 @@
 
 ## Precedence
 
+Packet B Tasks 1–7 now locally implement accepted ADR-016's R010/full-only v3 path. Actual DESCRIBE publishes [1,2,3] only after real bootstrap gates; no incremental capability or successful REFRESH is published. Native CI uses the reviewed exact Windows/x64 Node 24.15.0 profile; other environments still refuse v3 Runtime bootstrap until measured/reviewed. Existing v1/v2, Canonical IR, application publication and phase/deferred boundaries remain unchanged. See CURRENT_STATUS for gate evidence and outstanding final review/publication status.
+
 When documents disagree, use this order:
 
 1. Accepted ADRs and amendments

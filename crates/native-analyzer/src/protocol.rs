@@ -277,7 +277,7 @@ fn describe_completed(request_id: &str) -> Value {
             "providerId": "native",
             "providerVersion": env!("CARGO_PKG_VERSION"),
             "runtimeVersion": env!("CARGO_PKG_VERSION"),
-            "protocolVersions": [PROTOCOL_VERSION, 2],
+            "protocolVersions": [PROTOCOL_VERSION, 2, 3],
             "irSchemaVersions": [IR_SCHEMA_VERSION],
             "capabilities": ["protocol-handshake", "SYMBOL", "IMPORT", "CALL", "INHERITANCE", "REFERENCE"],
             "languages": [{
@@ -361,7 +361,7 @@ mod tests {
         assert!(diagnostics.is_empty());
         let event: Value = serde_json::from_slice(&output).unwrap();
         assert_eq!(event["type"], "DESCRIBE_COMPLETED");
-        assert_eq!(event["payload"]["protocolVersions"], json!([1, 2]));
+        assert_eq!(event["payload"]["protocolVersions"], json!([1, 2, 3]));
         assert_eq!(event["payload"]["irSchemaVersions"], json!([1]));
         assert_eq!(
             event["payload"]["capabilities"],
