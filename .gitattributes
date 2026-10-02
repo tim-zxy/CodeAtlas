@@ -3,6 +3,7 @@ fixtures/ipc/handshake-v1/**/*.jsonl -text
 fixtures/ipc/protocol-v2/**/*.jsonl -text
 fixtures/ipc/protocol-v3/**/*.jsonl -text
 fixtures/ipc/analysis-v3/**/*.jsonl -text
+fixtures/native/**/*.java text eol=lf
 fixtures/storage/native-analysis-state/memory-baseline.json -text
 fixtures/storage/native-analysis-state/memory-baseline-task3.json -text
 fixtures/storage/native-analysis-state/memory-baseline-task4-read-seal.json -text

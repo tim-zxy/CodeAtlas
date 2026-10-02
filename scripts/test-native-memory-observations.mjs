@@ -8,28 +8,32 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { buildNativeMemoryCandidate } from './native-memory-profile.mjs';
 import * as gate from './native-memory-gate.mjs';
+import { nativeMetadataEnvironment } from '../packages/runtime/dist/native-metadata-admission.js';
 const api = await import('./native-memory-observations.mjs').catch(() => ({}));
 const sha = (value) => createHash('sha256').update(value).digest('hex');
-async function setup(t) {
+async function setup(t, environment = nativeMetadataEnvironment()) {
   const directory = await mkdtemp(path.join(tmpdir(), 'codeatlas-memory-collection-'));
   t.after(() => rm(directory, { recursive: true, force: true }));
   const reports = [],
     corpora = {},
     requiredCases = {},
     rows = {};
-  let environment;
   for (const [workspace, name] of [
     ['READ_SEAL', 'read-seal'],
     ['FULL_TRANSPORT', 'transport'],
   ]) {
-    const bytes = await readFile(
+    const captured = await readFile(
       new URL(
         `../fixtures/storage/native-analysis-state/memory-baseline-review-fix-${name}.json`,
         import.meta.url,
       ),
     );
-    const report = JSON.parse(bytes);
-    environment = report.environment;
+    // These temporary rows exercise collector logic, not host calibration.
+    // Never relabel or rewrite the immutable captured report on disk.
+    const report = JSON.parse(captured);
+    report.environment = environment;
+    for (const row of report.observations) row.environment = environment;
+    const bytes = Buffer.from(JSON.stringify(report));
     corpora[workspace] = { revision: report.corpusRevision, digest: report.corpusDigest };
     requiredCases[workspace] = report.cases;
     rows[workspace] = Object.fromEntries(
@@ -42,7 +46,7 @@ async function setup(t) {
       workspace,
       purpose: 'calibration',
       command: 'fixture',
-      collectionConditions: 'test',
+      collectionConditions: 'synthetic test data; not calibration or admission evidence',
     });
   }
   const manifest = {
@@ -85,6 +89,58 @@ test('collector preserves complete observations on equality and all required cas
   assert.equal(raw.purpose, 'verification');
   assert.equal(raw.observations.length, 27);
   assert.equal(raw.failures.length, 0);
+});
+
+test('synthetic collector fixtures follow a different host platform', async (t) => {
+  const original = Object.getOwnPropertyDescriptor(process, 'platform');
+  try {
+    Object.defineProperty(process, 'platform', {
+      ...original,
+      value: original.value === 'win32' ? 'linux' : 'win32',
+    });
+    const f = await setup(t);
+    const result = await api.collectNativeMemoryObservations(
+      { mode: 'candidate', candidatePath: f.candidatePath, outputDirectory: f.outputDirectory },
+      f.runWorker,
+    );
+    assert.equal(result.passed, true);
+    assert.equal(result.observations.length, 27);
+  } finally {
+    Object.defineProperty(process, 'platform', original);
+  }
+});
+
+test('foreign candidate identity refuses before invoking a worker', async (t) => {
+  const f = await setup(t, { ...nativeMetadataEnvironment(), arch: 'foreign-test-arch' });
+  let calls = 0;
+  const result = await api.collectNativeMemoryObservations(
+    { mode: 'candidate', candidatePath: f.candidatePath, outputDirectory: f.outputDirectory },
+    async () => {
+      calls++;
+      throw Error('Must not run');
+    },
+  );
+  assert.equal(calls, 0);
+  assert.equal(result.passed, false);
+  assert.deepEqual(result.failures, [{ code: 'CANDIDATE_INVALID' }]);
+  const saved = JSON.parse(await readFile(path.join(f.outputDirectory, 'observations.json')));
+  assert.deepEqual(saved.failures, result.failures);
+});
+
+test('foreign observation identity is not retained as valid evidence', async (t) => {
+  const f = await setup(t);
+  const result = await api.collectNativeMemoryObservations(
+    { mode: 'candidate', candidatePath: f.candidatePath, outputDirectory: f.outputDirectory },
+    async (workspace, name) => {
+      const row = structuredClone(f.rows[workspace][name]);
+      row.environment.arch = 'foreign-test-arch';
+      return { exitCode: 0, stdout: JSON.stringify(row), stderr: '' };
+    },
+  );
+  assert.equal(result.passed, false);
+  assert.equal(result.observations.length, 0);
+  assert.equal(result.failures.length, 27);
+  assert.ok(result.failures.every((failure) => failure.code === 'OBSERVATION_INVALID'));
 });
 test('frozen candidate excess retains observation and cannot become success', async (t) => {
   const f = await setup(t);
