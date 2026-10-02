@@ -2,6 +2,10 @@
 
 ## Precedence
 
+Measurement-stability direction approved (2026-10-02): the user authorized alternative2's detailed design. The [written detail](../superpowers/specs/2026-10-02-p05-w3-020-memory-profile-stability-proposal.md) proposes exact-identity high water plus observed within-group range and prior-approval floor. This is an evidence-backed EVOLVABLE admission-policy proposal, not an accepted formula, new numeric approval, FROZEN amendment or implementation authority. Until written review and subsequent numeric review, the existing policy remains authoritative and the corrected build remains unadmitted. No phase/IPC/IR/SQLite/security decision changes.
+
+Packet B admission quality hold (2026-10-02): fresh corpus evidence invalidated the newly approved212,692,992-byte profile for corrected build `86fa33c51ecf63383f3575877bedaf66c47661dee5222ea4e14e8a0dd74e5888`; that entry was withdrawn. Existing exact profiles, frozen contracts and fresh peak gate remain intact. The [measurement-stability proposal](../superpowers/specs/2026-10-02-p05-w3-020-memory-profile-stability-proposal.md) is not accepted and selects no new numeric margin/threshold. Completion and publication are held, not bypassed by a repeated green sample.
+
 Packet B Tasks 1–7 now locally implement accepted ADR-016's R010/full-only v3 path. Actual DESCRIBE publishes [1,2,3] only after real bootstrap gates; no incremental capability or successful REFRESH is published. Native CI uses the reviewed exact Windows/x64 Node 24.15.0 profile; other environments still refuse v3 Runtime bootstrap until measured/reviewed. Existing v1/v2, Canonical IR, application publication and phase/deferred boundaries remain unchanged. See CURRENT_STATUS for gate evidence and outstanding final review/publication status.
 
 When documents disagree, use this order:
