@@ -2,7 +2,7 @@
 
 ## Review status and intent
 
-Written specification awaiting user review, 2026-10-03. The user approved the direction: reuse validated retained summaries, parse changed files, reconstruct the declaration index and re-resolve dependent relations without a persistent dependency index. Direction approval permits this specification, not an implementation plan or product code. After written-spec approval, prepare a separate native execution plan and obtain its review.
+Written specification accepted on2026-10-03: the user answered “确认” after design commit `919d6b7`. The direction remains: reuse validated retained summaries, parse changed files, reconstruct the declaration index and re-resolve dependent relations without a persistent dependency index. Written approval permits the [implementation plan](../plans/2026-10-03-p05-w3-020-native-refresh-producer.md), which now awaits review; it does not permit product code before plan review. Preserve the previously selected native execution method.
 
 This packet is the real Rust producer and strict Provider-side output contract. Packet D will separately design Runtime/Store atomic patch-summary activation; packet E will separately prove end-to-end differential Evaluation. Those are subdivisions of the existing P05-W3-020, not additional roadmap tasks. Phase 0.5 remains 10/14 remotely integrated and its original exit gates remain open. No Phase 1 promotion is proposed.
 
@@ -110,4 +110,4 @@ E and phase-wide Evaluation follow D; graph-query/CLI tasks remain separately op
 
 No FROZEN conflict or new ADR is identified: this expands the accepted ADR-016 producer boundary without changing v1/v2, summary schema, Canonical identity, migration reservations or storage authority. A later discovered mismatch in digest/resolver/summary semantics requires a governed compatibility amendment before implementation. EVOLVABLE optimizations require Fixture/Evaluation evidence, not this design's approval alone.
 
-Self-review: packet split prevents treating C as an end-to-end implementation-ready parent; proposed APIs/Fixtures are labeled absent; complete coverage/summary output is separated from source-delta accounting; all-site resolution is explicit and bounded; no default unchanged parse, invented threshold, new error enum, old-profile reuse or prematurely advertised incremental capability. Approval requested for this written C design; D/E implementation is not included.
+Self-review: packet split prevents treating C as an end-to-end implementation-ready parent; proposed APIs/Fixtures are labeled absent; complete coverage/summary output is separated from source-delta accounting; all-site resolution is explicit and bounded; no default unchanged parse, invented threshold, new error enum, old-profile reuse or prematurely advertised incremental capability. Written C design is accepted; its plan awaits review. D/E implementation is not included.

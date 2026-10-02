@@ -14,12 +14,18 @@
 | Phase | Readiness                                                                                       | Implementation progress                                                                                                            |
 | ----- | ----------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | 0     | IMPLEMENTATION-READY                                                                            | 18 of 18 tasks integrated; 11 of 11 technical exit checks passed on `9f4ec95`; documentation closeout merged as PR #7 at `71dd18c` |
-| 0.5   | IMPLEMENTATION-READY (phase baseline); A integrated; B CI green/unmerged; C written design review pending | 10 of 14 listed tasks integrated; Native REFRESH parent and three other tasks remain; Phase 0.5 exit gates stay open |
+| 0.5   | IMPLEMENTATION-READY (phase baseline); A integrated; B CI green/unmerged; C plan review pending | 10 of 14 listed tasks integrated; Native REFRESH parent and three other tasks remain; Phase 0.5 exit gates stay open |
 | 1     | DESIGN-READY                                                                                    | 0 percent                                                                                                                          |
 | 2     | ARCHITECTURE-READY                                                                              | 0 percent                                                                                                                          |
 | 3     | ROADMAP/ARCHITECTURE-READY                                                                      | 0 percent                                                                                                                          |
 
 ## Next action
+
+### Packet C design accepted; native plan awaiting review (2026-10-03)
+
+User confirmed the written producer spec after919d6b7. The [six-task implementation plan](../superpowers/plans/2026-10-03-p05-w3-020-native-refresh-producer.md) covers strict v3 output/corpus, retained decoding/shared recipes, real producer, registered transition/failure evidence, exact-build compatibility calibration and complete regression/one native branch review. All tasks remain unstarted. Plan approval, B integration or explicit stacked-base authorization, and the later exact numeric approval are separate gates; no merge/main mutation is authorized here. Inspection of nativeMetadataEnvironment confirms it hashes every Provider built JS, so the added module invalidates the old profile even if full bootstrap behavior is unchanged. Task5 reuses approved offline policy/collectors for existing READ_SEAL/FULL_TRANSPORT only; no fabricated reservation or REFRESH admission. D/E and original Phase0.5 exits remain open. Older C-draft-pending statements below are historical.
+
+Planning-only verification:93 relative Markdown links across11 scoped documents resolve; explicit `node node_modules/prettier/bin/prettier.cjs --ignore-path .gitignore --check` for C spec/plan passes; `node scripts/check-architecture.mjs` passes17 projects; `git -c core.safecrlf=false diff --check` passes. Inline plan review maps all spec requirements and five failure classes to tasks, clarifies existing schema-only REFRESH refusal tests without deleting them, and specifies a test-only strict full-observation adapter for mixed-snapshot replay normalization. No product code/config/Fixture/build changes or new test-pass claims are made; no implementation suite was rerun for planning.
 
 ### Real REFRESH packet C written design awaiting review (2026-10-03)
 

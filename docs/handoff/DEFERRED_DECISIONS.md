@@ -1,6 +1,6 @@
 # Deferred Decisions
 
-2026-10-03 packet C design-only boundary: [real REFRESH producer detail](../superpowers/specs/2026-10-03-p05-w3-020-native-refresh-producer-design.md) awaits review. Its deterministic bounded summary scan is not a persistent dependency index, adaptive scheduler, AST/CFG/PDG persistence or later-phase Knowledge/Wiki/Agent capability. The deferred table and earliest phases below are unchanged; D/E still require separate review before implementation.
+2026-10-03 packet C design-only boundary: [real REFRESH producer detail](../superpowers/specs/2026-10-03-p05-w3-020-native-refresh-producer-design.md) is accepted; its implementation plan awaits review. Its deterministic bounded summary scan is not a persistent dependency index, adaptive scheduler, AST/CFG/PDG persistence or later-phase Knowledge/Wiki/Agent capability. The deferred table and earliest phases below are unchanged; D/E still require separate review before implementation.
 
 Packet B final local boundary (2026-10-02): approved exact static memory-profile installation and the original review repairs pass complete equivalent local gates. No adaptive calibration/scheduler, extra language/framework, Wiki, Knowledge, Agent API or deferred capability is introduced; the table below is unchanged. Real REFRESH and original phase gates remain open, Phase0.5 stays10/14 integrated, and no hosted integration is claimed. See CURRENT_STATUS for reproducible evidence; earlier local-review-pending records are historical.
 
