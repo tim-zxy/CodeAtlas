@@ -324,43 +324,7 @@ export async function streamNativeFullAnalysisV3(
     throw new NativeClientError('INVALID_CONFIGURATION', 'Native v3 sink is invalid');
   if (options.signal?.aborted)
     throw new NativeClientError('CANCELLED', 'Native request was cancelled');
-  // Bound unknown input before schema copies or a whole JSON string allocation.
-  let header: string;
-  try {
-    header = boundedJson(
-      requestValue,
-      Math.min(options.limits.maxStdinBytes, options.limits.maxLineBytes) - 1,
-    );
-  } catch (error) {
-    throw new NativeClientError(
-      error instanceof TypeError ? 'INVALID_REQUEST' : 'OUTPUT_LIMIT_EXCEEDED',
-      'Native v3 request is invalid or exceeds the byte limit',
-    );
-  }
-  const parsed = NativeRequestHeaderV3Schema.safeParse(requestValue);
-  if (!parsed.success || parsed.data.type !== 'ANALYZE')
-    throw new NativeClientError('INVALID_REQUEST', 'Expected full v3 ANALYZE');
-  const request = parsed.data;
-  const timeoutMs = effectiveTimeout(request, options.timeoutMs);
-  if (timeoutMs <= 0) throw clientError('TIMEOUT', 'Native request timed out', request);
-  header += '\n';
-  const completion =
-    JSON.stringify({
-      protocolVersion: 3,
-      requestId: request.requestId,
-      sequence: 1,
-      type: 'REQUEST_COMPLETED',
-      payload: {
-        summaryRecords: 0,
-        integrityChecksum: createHash('sha256').update(header).digest('hex'),
-      },
-    }) + '\n';
-  const totalBytes = Buffer.byteLength(header) + Buffer.byteLength(completion);
-  if (
-    totalBytes > options.limits.maxStdinBytes ||
-    Buffer.byteLength(completion) > options.limits.maxLineBytes
-  )
-    throw clientError('OUTPUT_LIMIT_EXCEEDED', 'Native v3 request exceeds the byte limit', request);
+  const { request, header, completion, timeoutMs } = prepareFullV3Request(requestValue, options);
   const result = await runProcess<NativeFullAnalysisTerminalV3, NativeFullAnalyzeRequestV3>(
     [Buffer.from(header), Buffer.from(completion)],
     options,
@@ -392,6 +356,61 @@ export async function streamNativeFullAnalysisV3(
       ).terminal,
   );
   return deepFreeze({ terminal: result.output, stderr: result.stderr });
+}
+
+/** Reuse transport framing limits before Runtime copies input or observes SQLite. */
+export function preflightNativeFullAnalysisV3(
+  requestValue: NativeFullAnalyzeRequestV3,
+  optionsValue: NativeClientOptions,
+): NativeFullAnalyzeRequestV3 {
+  const options = validateOptions(optionsValue);
+  if (options.signal?.aborted)
+    throw new NativeClientError('CANCELLED', 'Native request was cancelled');
+  return prepareFullV3Request(requestValue, options).request;
+}
+
+function prepareFullV3Request(requestValue: NativeFullAnalyzeRequestV3, options: ValidatedOptions) {
+  // Bound unknown input before schema copies or a whole JSON string allocation.
+  let header: string;
+  try {
+    header = boundedJson(
+      requestValue,
+      Math.min(options.limits.maxStdinBytes, options.limits.maxLineBytes) - 1,
+    );
+  } catch (error) {
+    throw new NativeClientError(
+      error instanceof TypeError ? 'INVALID_REQUEST' : 'OUTPUT_LIMIT_EXCEEDED',
+      'Native v3 request is invalid or exceeds the byte limit',
+    );
+  }
+  header += '\n';
+  const completion =
+    JSON.stringify({
+      protocolVersion: 3,
+      requestId: requestValue.requestId,
+      sequence: 1,
+      type: 'REQUEST_COMPLETED',
+      payload: {
+        summaryRecords: 0,
+        integrityChecksum: createHash('sha256').update(header).digest('hex'),
+      },
+    }) + '\n';
+  const totalBytes = Buffer.byteLength(header) + Buffer.byteLength(completion);
+  if (
+    totalBytes > options.limits.maxStdinBytes ||
+    Buffer.byteLength(completion) > options.limits.maxLineBytes
+  )
+    throw new NativeClientError(
+      'OUTPUT_LIMIT_EXCEEDED',
+      'Native v3 request exceeds the byte limit',
+    );
+  const parsed = NativeRequestHeaderV3Schema.safeParse(requestValue);
+  if (!parsed.success || parsed.data.type !== 'ANALYZE')
+    throw new NativeClientError('INVALID_REQUEST', 'Expected full v3 ANALYZE');
+  const request = parsed.data;
+  const timeoutMs = effectiveTimeout(request, options.timeoutMs);
+  if (timeoutMs <= 0) throw clientError('TIMEOUT', 'Native request timed out', request);
+  return { request, header, completion, timeoutMs };
 }
 
 async function streamNativeRequest(

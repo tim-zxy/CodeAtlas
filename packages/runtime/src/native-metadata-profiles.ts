@@ -15,12 +15,40 @@ export interface NativeMetadataProfile {
   readonly fullTransportCorpusDigest?: string;
   readonly fullTransportEvidenceDigest?: string;
   readonly fullTransportPeakBytes?: number;
+  readonly memoryPolicyRevision?: string;
+  readonly memoryCandidateEvidenceDigest?: string;
+  readonly observedPeakBytes?: number;
+  readonly fluctuationAllowanceBytes?: number;
 }
 
 // User approved the 65-observation actual-path report on 2026-10-01.
 // Exact Windows environment only; mismatches remain fail-closed. Raw report
 // capture status is preserved; approval is recorded in CURRENT_STATUS.
 export const nativeMetadataProfiles: readonly NativeMetadataProfile[] = Object.freeze([
+  // Exact candidate and independent holdout approved by the user on 2026-10-02.
+  Object.freeze({
+    node: 'v24.15.0',
+    v8: '13.6.233.17-node.48',
+    platform: 'win32',
+    arch: 'x64',
+    zodVersion: '4.6.1',
+    implementationDigest: '86fa33c51ecf63383f3575877bedaf66c47661dee5222ea4e14e8a0dd74e5888',
+    corpusRevision: 'p05-native-metadata-memory-v1',
+    corpusDigest: '0c599e6626202fe4a0b5d5866e2d89d01a4674e40b0efe0d0b20acf5b4085b29',
+    reservationBytes: 280_453_120,
+    evidenceDigest: '0928e20705954cb72a852a11af8d45cdb50ed9cb70f8ccd1e342f1accead8717',
+    peakMethod: 'resourceUsage.maxRSS',
+    peakUnits: 'bytes',
+    fullTransportCorpusRevision: 'p05-native-full-v3-memory-v1',
+    fullTransportCorpusDigest: '11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef',
+    fullTransportEvidenceDigest: '7188bb6dcf9f2a5ef076b3c462b754356cece808792953b43ac81d7b1feea297',
+    fullTransportPeakBytes: 166_449_152,
+    memoryPolicyRevision: 'p05-native-memory-high-water-range-v1',
+    memoryCandidateEvidenceDigest:
+      '02071679da6cd7d6ff1ce11dab4eae347e8404f8820052079ce52a49f3ab748d',
+    observedPeakBytes: 245_719_040,
+    fluctuationAllowanceBytes: 34_734_080,
+  }),
   // Classification-repair paired reports approved on 2026-10-02.
   Object.freeze({
     node: 'v24.15.0',

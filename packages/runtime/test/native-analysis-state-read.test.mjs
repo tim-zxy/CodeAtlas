@@ -325,7 +325,7 @@ test('production read charges retained SQL strings before applying reviewed rese
       'repo',
       'WORKTREE',
     ].reduce((n, text) => n + Buffer.byteLength(text), 0);
-    const budget = { ...limits, memoryBudgetBytes: 247_508_992 + 2 * retained };
+    const budget = { ...limits, memoryBudgetBytes: 280_453_120 + 2 * retained };
     const before = unchanged(db);
     const port = createNativeStateValidationPort();
     const { nativeMetadataEnvironment } = await import('../dist/native-metadata-admission.js');

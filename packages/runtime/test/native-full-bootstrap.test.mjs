@@ -123,6 +123,50 @@ function expected(request) {
     requestedCapabilities: [...request.payload.requestedCapabilities],
   };
 }
+
+for (const boundary of ['hard ceiling', 'lowered line ceiling', 'aggregate completion'])
+  test(`bootstrap bounds ${boundary} before schema traversal or database observation`, async () => {
+    const request = await requestFor();
+    let tailReads = 0;
+    let queries = 0;
+    const limitedOptions = { ...options };
+    if (boundary === 'aggregate completion') {
+      limitedOptions.limits = { maxStdinBytes: Buffer.byteLength(JSON.stringify(request)) + 1 };
+    } else {
+      const file = request.payload.sourceFiles[0];
+      request.payload.sourceFiles = Array.from({ length: 10_000 }, (_, i) => ({
+        ...file,
+        id: `file-${i}`,
+        path: `src/File${i}.java`,
+      }));
+      Object.defineProperty(request.payload.sourceFiles.at(-1), 'path', {
+        enumerable: true,
+        get() {
+          tailReads++;
+          throw new Error('UNBOUNDED_SCHEMA_TRAVERSAL');
+        },
+      });
+      if (boundary === 'lowered line ceiling') limitedOptions.limits = { maxLineBytes: 2_000 };
+    }
+    const database = {
+      prepare() {
+        queries++;
+        throw new Error('DATABASE_REACHED');
+      },
+    };
+    await assert.rejects(
+      runtime.applyNativeFullBootstrap(
+        database,
+        request,
+        limitedOptions,
+        descriptor,
+        expected(request),
+      ),
+      (error) => error.code === 'OUTPUT_LIMIT_EXCEEDED',
+    );
+    assert.equal(tailReads, 0);
+    assert.equal(queries, 0);
+  });
 async function withDatabase(request, run, version = 10) {
   const directory = await mkdtemp(path.join(tmpdir(), 'codeatlas-full-bootstrap-'));
   const databasePath = path.join(directory, 'repository.sqlite');

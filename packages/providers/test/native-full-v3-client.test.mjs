@@ -29,6 +29,35 @@ const run = (mode, overrides = {}, sink = { async accept() {} }, value = request
 const code = (value) => (error) =>
   error instanceof providers.NativeClientError && error.code === value;
 
+for (const boundary of ['hard ceiling', 'lowered line ceiling', 'aggregate completion'])
+  test(`shared preflight bounds ${boundary} before schema traversal`, () => {
+    const value = structuredClone(request);
+    const overrides = {};
+    let tailReads = 0;
+    if (boundary === 'aggregate completion') {
+      overrides.limits = { maxStdinBytes: Buffer.byteLength(JSON.stringify(value)) + 1 };
+    } else {
+      value.payload.sourceFiles = Array.from({ length: 10_000 }, (_, i) => ({
+        id: `file-${i}`,
+        path: `src/File${i}.java`,
+        contentFingerprint: 'x'.repeat(100),
+      }));
+      Object.defineProperty(value.payload.sourceFiles.at(-1), 'path', {
+        enumerable: true,
+        get() {
+          tailReads++;
+          throw new Error('UNBOUNDED_SCHEMA_TRAVERSAL');
+        },
+      });
+      if (boundary === 'lowered line ceiling') overrides.limits = { maxLineBytes: 2_000 };
+    }
+    assert.throws(
+      () => providers.preflightNativeFullAnalysisV3(value, options('valid', overrides)),
+      code('OUTPUT_LIMIT_EXCEEDED'),
+    );
+    assert.equal(tailReads, 0);
+  });
+
 test('full-v3 process verifies exactly two input records before returning a terminal', async () => {
   assert.equal(typeof providers.streamNativeFullAnalysisV3, 'function');
   const accepted = [];

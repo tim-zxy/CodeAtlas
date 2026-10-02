@@ -276,21 +276,23 @@ Local verification: 26 real full-v3 tests; combined Native runner 51/51; Rust 94
 
 ## Task 7: Handshake publication and complete required gate (B4)
 
+Final execution/review record (2026-10-02): Task7 initial publication commit37c96bb received one whole-branch review with two Important findings. The consolidated correction adds shared byte preflight before Runtime schema copy/SQLite observation and required fresh memory enforcement/failed-observation artifacts. Following the separately accepted stability design/plan and explicit280,453,120-byte exact-build approval, final root840total/839pass/0fail/1existing skip, Runtime51, corpus41, collector27, real Native78, Rust94 and TS16/type/architecture17/format pass. pnpm verify remains a pre-gate no-TTY installation failure; complete direct equivalents/logs are recorded in CURRENT_STATUS. Original RED→GREEN regressions plus full green suite close the one fix pass without a new reviewer. This record/checklist is committed with the consolidated repair; no push/PR/merge/hosted pass or parent REFRESH/phase exit is claimed. Earlier pending Task7 prose is historical.
+
 **Files:** Modify Rust `protocol.rs`, existing handshake test/expected descriptor artifacts identified by `rg` before edits, root/affected package scripts, `.github/workflows/ci.yml` only if its current scripts do not cover new tests; update this plan, packet B spec, Handoff Architecture/Status/Authority/Roadmap/WBD/Acceptance/Traceability/Deferred Decisions and SQLite/IPC/Evaluation specs as affected. No unrelated deferred decision changes.
 
 **Interfaces:** DESCRIBE produces `[1,2,3]` only after Tasks 1–6 pass. No incremental capability appears. Runtime explicit v3 full selection uses this descriptor; v1/v2 full indexing remains available.
 
-- [ ] Write `descriptor advertises full v3 only after complete support` and `advertised v3 still rejects refresh`; assert protocol list `[1,2,3]`, unchanged IR/capabilities and explicit REFRESH refusal. Confirm each new cases/Fixture/test is exercised by required scripts rather than optional manual execution.
-- [ ] Run real handshake suite before changing the expected list; expect the new descriptor assertion to fail with actual `[1,2]`.
-- [ ] Publish exact descriptor version-list change and only its governed handshake expectations; do not rewrite unrelated v1/v2 JSONL goldens. Register new nonbinary tests in root/package test scripts and real tests in `test:native-analysis`, reached by hosted Native Java CI. Synchronize controlling docs with actual evidence, R010 checksum and packet B completion only; mark parent real REFRESH and original phase gates still open.
-- [ ] Run the full gate on the completed branch:
+- [x] Write `descriptor advertises full v3 only after complete support` and `advertised v3 still rejects refresh`; assert protocol list `[1,2,3]`, unchanged IR/capabilities and explicit REFRESH refusal. Confirm each new cases/Fixture/test is exercised by required scripts rather than optional manual execution.
+- [x] Run real handshake suite before changing the expected list; expect the new descriptor assertion to fail with actual `[1,2]`.
+- [x] Publish exact descriptor version-list change and only its governed handshake expectations; do not rewrite unrelated v1/v2 JSONL goldens. Register new nonbinary tests in root/package test scripts and real tests in `test:native-analysis`, reached by hosted Native Java CI. Synchronize controlling docs with actual evidence, R010 checksum and packet B completion only; mark parent real REFRESH and original phase gates still open.
+- [x] Run the full gate on the completed branch:
   ```text
   pnpm verify
   node node_modules/prettier/bin/prettier.cjs --ignore-path NUL --check docs/superpowers/plans/2026-10-01-p05-w3-020-state-bootstrap.md docs/superpowers/specs/2026-10-01-p05-w3-020-state-bootstrap-design.md
   git diff --check
   ```
   `pnpm verify` must include all newly registered tests, TS builds/type tests, architecture (17 projects), Rust build/fmt/Clippy/tests and real native suites. If a local package-manager/linker restriction prevents it, record the actual failure and run every equivalent declared command; do not call the wrapper passed or claim hosted CI passed without observing its exact commit/run. Check relative Markdown links in changed docs. Archive command/version/count/corpus/rollback evidence in CURRENT_STATUS, with unavailable internal performance metrics explicitly unavailable rather than zero.
-- [ ] Commit `feat(native): publish full v3 bootstrap capability and evidence` after fresh verification. Using the preserved native execution method, request one independent whole-branch correctness review and repair/reverify actionable findings. Push/create PR only when authorized; attach any created PR to this chat. Do not auto-merge or begin the REFRESH packet from plan approval alone.
+- [x] Commit `feat(native): publish full v3 bootstrap capability and evidence` after fresh verification. Using the preserved native execution method, request one independent whole-branch correctness review and repair/reverify actionable findings. Push/create PR only when authorized; attach any created PR to this chat. Do not auto-merge or begin the REFRESH packet from plan approval alone.
 
 ## Dependencies, exit and self-review
 

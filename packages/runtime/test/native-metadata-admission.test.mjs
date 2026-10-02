@@ -15,7 +15,7 @@ import {
 } from '../dist/native-metadata-admission.js';
 import { nativeMetadataProfiles } from '../dist/native-metadata-profiles.js';
 
-const reviewedReservation = 247_508_992;
+const reviewedReservation = 280_453_120;
 const environment = nativeMetadataEnvironment();
 const supported = nativeMetadataProfiles.some((profile) =>
   Object.entries(environment).every(([key, value]) => profile[key] === value),
@@ -89,7 +89,7 @@ test('reviewed matching Runtime admits at reservation and still validates strict
     environment.arch === 'x64' &&
     environment.zodVersion === '4.6.1' &&
     environment.implementationDigest ===
-      '87b74e5e9050757eb30ebae478919fada586ece8299cf98588a79a17b28e7e63'
+      '86fa33c51ecf63383f3575877bedaf66c47661dee5222ea4e14e8a0dd74e5888'
   )
     assert.equal(supported, true, 'reviewed current build must exercise production admission');
   const value = buildMemoryCase('zero-file');
@@ -260,7 +260,7 @@ test('reviewed full transport admits only at its matching reservation', () => {
 test('reviewed profile is backed by unchanged raw evidence and calibration corpus', async () => {
   const raw = await readFile(
     new URL(
-      '../../../fixtures/storage/native-analysis-state/memory-baseline-task6-classification-read-seal.json',
+      '../../../fixtures/storage/native-analysis-state/memory-stability-read-seal.json',
       import.meta.url,
     ),
   );
@@ -281,10 +281,8 @@ test('reviewed profile is backed by unchanged raw evidence and calibration corpu
   assert.equal(corpus.digest('hex'), profile.corpusDigest);
   assert.equal(report.observations.length, 65);
   assert.equal(report.repetitions, 5);
-  assert.equal(
-    Math.max(...report.observations.map((o) => o.peakResidentBytes)),
-    profile.reservationBytes,
-  );
+  assert.equal(Math.max(...report.observations.map((o) => o.peakResidentBytes)), 211_857_408);
+  assert.ok(profile.reservationBytes >= report.reservationBytes);
   assert.equal(profile.reservationBytes, reviewedReservation);
   for (const name of report.cases)
     assert.equal(report.observations.filter((o) => o.name === name).length, 5);
@@ -293,7 +291,7 @@ test('reviewed profile is backed by unchanged raw evidence and calibration corpu
 test('reviewed transport evidence covers every actual workspace class', async () => {
   const raw = await readFile(
     new URL(
-      '../../../fixtures/storage/native-analysis-state/memory-baseline-task6-classification-transport.json',
+      '../../../fixtures/storage/native-analysis-state/memory-stability-transport.json',
       import.meta.url,
     ),
   );
@@ -316,9 +314,58 @@ test('reviewed transport evidence covers every actual workspace class', async ()
   assert.equal(report.corpusRevision, profile.fullTransportCorpusRevision);
   assert.equal(report.observations.length, 70);
   assert.equal(report.repetitions, 5);
-  assert.equal(profile.fullTransportPeakBytes, 183_230_464);
-  assert.equal(Math.max(...report.observations.map((o) => o.peakResidentBytes)), 183_230_464);
+  assert.equal(profile.fullTransportPeakBytes, 166_449_152);
+  assert.equal(Math.max(...report.observations.map((o) => o.peakResidentBytes)), 166_449_152);
   assert.ok(profile.reservationBytes >= profile.fullTransportPeakBytes);
   for (const name of report.cases)
     assert.equal(report.observations.filter((o) => o.name === name).length, 5);
+});
+
+test('approved stability profile reproduces frozen policy and independent holdout', async () => {
+  const root = new URL('../../../fixtures/storage/native-analysis-state/', import.meta.url);
+  const raw = await readFile(new URL('memory-stability-candidate.json', root));
+  const candidate = JSON.parse(raw);
+  const profile = nativeMetadataProfiles.find(
+    (p) => p.implementationDigest === candidate.environment.implementationDigest,
+  );
+  assert.ok(profile, 'approved candidate requires an actual release profile');
+  assert.equal(profile.memoryPolicyRevision, 'p05-native-memory-high-water-range-v1');
+  assert.equal(
+    profile.memoryCandidateEvidenceDigest,
+    createHash('sha256').update(raw).digest('hex'),
+  );
+  assert.equal(
+    profile.memoryCandidateEvidenceDigest,
+    '02071679da6cd7d6ff1ce11dab4eae347e8404f8820052079ce52a49f3ab748d',
+  );
+  const m = Math.max(...candidate.groups.map((group) => group.high));
+  const j = Math.max(...candidate.groups.map((group) => group.high - group.low));
+  assert.equal(m, 245_719_040);
+  assert.equal(j, 34_734_080);
+  assert.equal(profile.observedPeakBytes, m);
+  assert.equal(profile.fluctuationAllowanceBytes, j);
+  assert.equal(profile.reservationBytes, Math.max(m + j, candidate.priorApprovalFloorBytes));
+  assert.equal(profile.reservationBytes, reviewedReservation);
+  for (const [key, value] of Object.entries(candidate.environment))
+    assert.equal(profile[key], value);
+  const { loadNativeMemoryCandidate } = await import('../../../scripts/native-memory-profile.mjs');
+  assert.deepEqual(
+    (await loadNativeMemoryCandidate(new URL('memory-stability-candidate.json', root))).candidate,
+    candidate,
+  );
+  const holdoutRaw = await readFile(new URL('memory-stability-holdout.json', root));
+  assert.equal(
+    createHash('sha256').update(holdoutRaw).digest('hex'),
+    'b16157cfc64b6323fed57dd5c973c02bb3603d9244f9eb5fe988c849eaedfad7',
+  );
+  const holdout = JSON.parse(holdoutRaw);
+  assert.deepEqual(holdout.environment, candidate.environment);
+  assert.equal(holdout.candidateEvidenceDigest, profile.memoryCandidateEvidenceDigest);
+  assert.deepEqual(holdout.failures, []);
+  assert.equal(holdout.observations.length, 27);
+  assert.ok(
+    holdout.observations.every(
+      (row) => row.observation.peakResidentBytes <= profile.reservationBytes,
+    ),
+  );
 });

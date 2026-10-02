@@ -1,5 +1,7 @@
 # Code Intelligence Provider SPI
 
+Packet B shared preflight correction (2026-10-02): `preflightNativeFullAnalysisV3` reuses the Provider transport's existing bounded header/completion framing and validated options before Runtime copies schemas or observes SQLite. Streaming still owns awaited delivery/backpressure and outputs Provider facts, never Canonical publication. Runtime static admission precedes observation; actual exact-profile/full-bootstrap and fresh memory gates now pass (CURRENT_STATUS). No new Provider/Canonical schema, higher cap, runtime calibration or real REFRESH capability is introduced.
+
 ## Responsibility
 
 A provider observes source and emits provider facts, coverage, and diagnostics. It does not choose canonical identity, mutate SQLite, compile knowledge, or decide truth by execution order.

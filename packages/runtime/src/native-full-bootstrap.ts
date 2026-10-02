@@ -3,7 +3,7 @@ import { performance } from 'node:perf_hooks';
 import { isDeepStrictEqual } from 'node:util';
 import { applyFullAnalysis, parseFullAnalysisSnapshot } from '../../application/dist/index.js';
 import {
-  NativeRequestHeaderV3Schema,
+  preflightNativeFullAnalysisV3,
   NativeAnalyzerDescriptorSchema,
   JAVA_NORMALIZER_VERSION,
   streamNativeFullAnalysisV3,
@@ -47,7 +47,7 @@ export async function applyNativeFullBootstrap(
     requestValue.payload.resourceBudget.maxMemoryBytes,
     'FULL_TRANSPORT',
   );
-  const request = NativeRequestHeaderV3Schema.parse(requestValue);
+  const request = preflightNativeFullAnalysisV3(requestValue, options);
   if (request.type !== 'ANALYZE') throw new Error('Expected full v3 ANALYZE');
   const descriptor = NativeAnalyzerDescriptorSchema.parse(descriptorValue);
   const p = request.payload;

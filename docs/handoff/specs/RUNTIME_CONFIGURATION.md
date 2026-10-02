@@ -45,7 +45,10 @@ Native/reference provider absence reports unsupported coverage and uses allowed 
 
 Under accepted ADR-016, Native v3 composition receives versioned summaries through validated local IPC, not a new user-facing cache/worker knob or SQLite filename passed to Rust. parseWorkers remains the sole worker input and is excluded from semantic summary compatibility. Source-policy/capability/version changes require an explicit compatible bootstrap; an empty latest reconciliation delta is insufficient when baseline inventory differs. Metadata shares existing byte/memory budgets; hard-cap failure retains the graph and does not automatically fall back to full parsing. Detailed composition and telemetry remain later P05-W3-020 packets.
 
+## Native metadata admission
+
+Packet B metadata admission is an exact built-implementation/Node/V8/platform/architecture/Zod profile, not a user-tunable reservation. The explicitly approved2026-10-02 profile reserves280,453,120 bytes plus twice retained SQL UTF-8 and records optional memoryPolicyRevision, memoryCandidateEvidenceDigest, observedPeakBytes and fluctuationAllowanceBytes. These fields identify offline immutable high-water/range evidence; Runtime still consumes a static reservation and never calibrates or reduces it automatically. Missing/changed identities fail closed before observation; bounded Provider request framing also precedes Runtime schema copies/database access. See CURRENT_STATUS and the accepted stability amendment for hashes, finite-sampling limitations and fresh gates. No new worker/cache knob or phase scope is introduced.
+
 ## Packaging
 
 Phase 1 distributes a TypeScript npm package plus platform-specific Rust binary packages; users need no Rust toolchain. Product, provider protocol, Canonical IR, database schema, config, workflow, and prompt versions evolve independently with explicit compatibility checks.
-
