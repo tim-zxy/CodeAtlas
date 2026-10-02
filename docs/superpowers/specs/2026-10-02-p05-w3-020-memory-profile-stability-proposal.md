@@ -1,6 +1,6 @@
 # P05-W3-020-B Memory profile stability proposal
 
-Status: DIRECTION APPROVED on 2026-10-02; WRITTEN DETAIL AWAITING REVIEW. The user's latest “批准” authorizes alternative2's detailed design, not the formula below, a numeric reservation, implementation, profile installation or publication. The existing maximum-only policy remains authoritative until this written amendment is accepted.
+Status: WRITTEN AMENDMENT ACCEPTED on 2026-10-02 by the user's “确认”. The preceding “批准” authorized detailed design; this later confirmation accepts the high-water/range rule and reporting/validation contract below, permitting implementation planning. It does not approve a concrete reservation, implementation plan, profile installation or publication. The [implementation plan](../plans/2026-10-02-p05-w3-020-memory-profile-stability.md) awaits review; the corrected build remains unadmitted.
 
 ## Decision and evidence
 
@@ -32,7 +32,7 @@ Affected design: packet B measurement detail/plan, CURRENT_STATUS, Design Author
 
 Rollback: retain the old exact profiles and raw reports; withdraw only the newly installed insufficient entry. Any later admitted reservation must have explicit numeric approval, synchronized evidence and fresh complete gates. Required validation includes same-input fresh-process variance investigation, reviewed reservation selection, over-budget/missing-profile refusal, both required corpus suites, Runtime/bootstrap/root and existing native/Rust/architecture gates. Detailed-design work is now authorized; the written detail below requires review before planning or implementation.
 
-## Detailed amendment for review
+## Accepted detailed amendment
 
 ### Intent and boundaries
 
@@ -70,7 +70,7 @@ R_candidate = max(M + J, highest previously approved reservation for this exact 
 
 If there is no previous exact-identity approval, omit that floor. Withdrawn approvals remain historical floors, never permission to reactivate withdrawn profiles. Each required calibration group must have its existing five repetitions; no singleton group may substitute for that coverage. Check integer overflow before addition and refuse candidate generation on incomplete/invalid evidence.
 
-Adding one observed range is the **proposed explicit policy choice**. It is not mathematically mandated by the samples and is not an already approved numeric margin. It avoids choosing an unsupported fixed MiB or percentage multiplier while providing a traceable fluctuation buffer. `M`, `J` and the previous-approval floor must be reported independently with the observations that determine them. Do not label the range as statistical variance or infer a confidence level.
+Adding one observed range is the **explicit policy choice accepted in written review**. It is not mathematically mandated by the samples and approves no concrete numeric margin without subsequent matching measurements/review. It avoids choosing an unsupported fixed MiB or percentage multiplier while providing a traceable fluctuation buffer. `M`, `J` and the previous-approval floor must be reported independently with the observations that determine them. Do not label the range as statistical variance or infer a confidence level.
 
 The result is a provisional candidate only. No concrete new reservation is selected in this design. The user reviews the formula now and later reviews the exact candidate bytes, evidence identity and limitations. Do not round upward to a convenient value or lower a previous reservation automatically. A future intentional reduction requires a separate evidence-backed review.
 

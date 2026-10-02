@@ -21,6 +21,10 @@
 
 ## Next action
 
+### Written amendment accepted; implementation plan awaiting review (2026-10-02)
+
+The user's latest “确认” accepts the written [memory-stability amendment](../superpowers/specs/2026-10-02-p05-w3-020-memory-profile-stability-proposal.md), including high water + maximum comparable-group observed range and prior exact-identity approval floor. The [four-task native implementation plan](../superpowers/plans/2026-10-02-p05-w3-020-memory-profile-stability.md) is now written: provenance/aggregator, failure-inclusive collection/CI, complete calibration/frozen-candidate holdout, then separately approved profile/final parent gates. Plan review remains before implementation; actual numeric approval remains before installation. No new reservation, code, corpus, profile or hosted result is selected by this confirmation. The corrected build remains unadmitted; Phase0.5 remains10/14 and parent exits remain open. Earlier written-detail-awaiting-review prose below is historical, superseded by this record.
+
 ### Measurement-stability written detail ready for review (2026-10-02)
 
 The user's latest “批准” authorizes detailed design of the high-water/observed-range direction only. The [existing proposal](../superpowers/specs/2026-10-02-p05-w3-020-memory-profile-stability-proposal.md) now contains the complete written amendment: exact evidence identities and eligibility, retained five-process calibration, immutable compatible-history manifest, proposed `max(M + J, prior exact-identity approval)` rule, candidate provenance, independent frozen-candidate verification, failure-inclusive CI artifacts, unchanged fresh peak gates, staged tasks and acceptance. `M` is observed high water and `J` is the maximum comparable-group observed range; this is an explicit proposed policy, not a statistical/OS bound. No new concrete reservation is selected or installed, and the withdrawn profile stays withdrawn.
