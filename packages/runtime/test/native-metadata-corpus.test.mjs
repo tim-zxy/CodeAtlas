@@ -7,11 +7,33 @@ import { DatabaseSync } from 'node:sqlite';
 import { RepositoryAnalysisStage } from '../../storage/dist/index.js';
 import { validateNativeStateCandidate } from '../../providers/dist/index.js';
 import {
+  checkNativeMemoryObservation,
+  recordNativeMemoryObservation,
+} from '../../../scripts/native-memory-gate.mjs';
+import {
   buildMemoryCase,
   caseJsonFiles,
   corpusExpected,
   memoryCases,
 } from './helpers/native-metadata-corpus.mjs';
+
+test('fresh memory gate rejects a peak above the matching reviewed reservation', () => {
+  const environment = { platform: 'fixture', implementationDigest: 'exact-build' };
+  const profiles = [{ ...environment, reservationBytes: 100 }];
+  assert.equal(
+    checkNativeMemoryObservation({ environment, peakResidentBytes: 100 }, profiles),
+    true,
+  );
+  assert.throws(() =>
+    checkNativeMemoryObservation({ environment, peakResidentBytes: 101 }, profiles),
+  );
+});
+
+test('required memory gate fails closed on an unreviewed environment', () => {
+  const observation = { environment: { platform: 'unreviewed' }, peakResidentBytes: 1 };
+  assert.equal(checkNativeMemoryObservation(observation, [], false), false);
+  assert.throws(() => checkNativeMemoryObservation(observation, [], true));
+});
 
 test('B1 memory classes are pinned to executable actual-path cases', async () => {
   const fixture = JSON.parse(
@@ -122,10 +144,12 @@ for (const name of memoryCases)
     });
     assert.equal(child.status, 0, child.stderr || child.error?.message);
     const observation = JSON.parse(child.stdout);
+    recordNativeMemoryObservation('READ_SEAL', observation);
     assert.equal(observation.name, name);
     assert.equal(observation.persistentStateUnchanged, true);
     assert.equal(observation.transactionClosed, true);
     assert.ok(observation.peakResidentBytes > 0);
+    checkNativeMemoryObservation(observation);
     assert.equal(observation.retainedReadStringChargeBytes, 2 * observation.retainedReadSqlBytes);
     assert.equal(observation.retainedSealStringChargeBytes, 2 * observation.retainedSealSqlBytes);
   });

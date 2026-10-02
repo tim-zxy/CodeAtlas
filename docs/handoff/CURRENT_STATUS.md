@@ -29,6 +29,8 @@ Root regression recorded **837 total / 833 pass / 3 fail / 1 existing Windows sk
 
 ### Written amendment accepted; implementation plan awaiting review (2026-10-02)
 
+Task2 required collection update: `node scripts/native-memory-observations.mjs approved .superpowers/sdd/2026-10-02-p05-w3-020-memory-profile-stability/approved-refusal` saves all27 schema-valid observations and exits1 with27 `RESERVATION_REFUSED` failures. No invalid-profile success is claimed. Task1 checkpoint `3815848` committed tool/test/status only; its scoped index-only registration patch failed to apply, so the shared root registration is included in Task2 rather than represented as committed. Existing parent corrections remain uncommitted.
+
 The user's latest “确认” accepts the written [memory-stability amendment](../superpowers/specs/2026-10-02-p05-w3-020-memory-profile-stability-proposal.md), including high water + maximum comparable-group observed range and prior exact-identity approval floor. The [four-task native implementation plan](../superpowers/plans/2026-10-02-p05-w3-020-memory-profile-stability.md) is now written: provenance/aggregator, failure-inclusive collection/CI, complete calibration/frozen-candidate holdout, then separately approved profile/final parent gates. Plan review remains before implementation; actual numeric approval remains before installation. No new reservation, code, corpus, profile or hosted result is selected by this confirmation. The corrected build remains unadmitted; Phase0.5 remains10/14 and parent exits remain open. Earlier written-detail-awaiting-review prose below is historical, superseded by this record.
 
 ### Measurement-stability written detail ready for review (2026-10-02)
