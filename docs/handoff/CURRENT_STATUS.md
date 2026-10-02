@@ -21,6 +21,26 @@
 
 ## Next action
 
+### Frozen candidate and independent holdout ready for exact numeric review (2026-10-02)
+
+Task1/2 checkpoints are `3815848`/`cf8b4fc`. Task3 collected the unchanged13×5 READ_SEAL and14×5 FULL_TRANSPORT classes sequentially after a forced Runtime build; Node24.15.0/V8 13.6.233.17-node.48/win32/x64/Zod4.6.1 and built identity `86fa33c51ecf63383f3575877bedaf66c47661dee5222ea4e14e8a0dd74e5888` match earlier evidence. The immutable manifest includes both older65/70 reports, five parent/payload-bound diagnostic observations and both new65/70 reports:275 observations across27 separate comparable groups. No older build's approval is borrowed.
+
+The accepted policy yields **M245,719,040 + J34,734,080 =280,453,120 bytes**, above the withdrawn exact-identity historical floor212,692,992. Both determining values belong to READ_SEAL dense-numeric-sites, payload `170f17e5e7b9cd05b85160a84e85182367124c5b15afc304134582e711793d72`:15 observations, low210,984,960/high245,719,040. The reservation proposal is **280,453,120 bytes plus twice actual retained SQL UTF-8 bytes**, not installed or numerically approved. This finite-observation policy is not an OS/statistical RSS bound; allocation/GC causality remains unknown.
+
+After freezing the candidate, one independent fresh pass collected all27 classes with0 failures and maximum213,184,512 bytes. Correctness/state/transaction/transport checks pass. The holdout did not enter candidate computation. A later collector input-identity regression was reproduced RED and corrected; the existing raw holdout was re-audited for exact payload correspondence, without rerunning workers or changing candidate/data. Fresh tooling plus pinned-evidence provenance tests pass **37/37** (1758.293ms). The scratch audit first failed from a wrong relative import path; corrected read-only audit passes, with both logs retained. Original reports and raw capture statuses are unchanged.
+
+| Evidence in `fixtures/storage/native-analysis-state/` | SHA-256 |
+| --- | --- |
+| `memory-stability-read-seal.json` (65 observations; max211,857,408) | `0928e20705954cb72a852a11af8d45cdb50ed9cb70f8ccd1e342f1accead8717` |
+| `memory-stability-transport.json` (70 observations; max166,449,152) | `7188bb6dcf9f2a5ef076b3c462b754356cece808792953b43ac81d7b1feea297` |
+| `memory-stability-evidence.json` (frozen manifest) | `be7d0d561766deebf48f14ab090108d00659852c64f7800f6e363bd017c7ae14` |
+| `memory-stability-candidate.json` (provisional aggregate) | `02071679da6cd7d6ff1ce11dab4eae347e8404f8820052079ce52a49f3ab748d` |
+| `memory-stability-holdout.json` (27 independent observations) | `b16157cfc64b6323fed57dd5c973c02bb3603d9244f9eb5fe988c849eaedfad7` |
+
+Older reports retain hashes `4f9150504e36ac0c6b77f8ac3914379e45b6aa2e0f9543dcd79389d628720fed`, `71d3460e6f023c72c818e04fecfc2477a050ea30bf741f1ba73401f9f6db4300`, and `d0a021a3344bac3115f5ce83b28900e4838a949451cced4b60ae8a7632153281`. Exact-byte Git attributes cover old and new evidence. Reproduce offline with `node scripts/native-memory-profile.mjs candidate fixtures/storage/native-analysis-state/memory-stability-evidence.json fixtures/storage/native-analysis-state`, then `node --test scripts/test-native-memory-profile.mjs scripts/test-native-memory-observations.mjs`. Original collectors remain `node scripts/bench-native-metadata-memory.mjs` and `node scripts/bench-native-full-v3-memory.mjs`; new samples are not required to re-audit frozen evidence and must not replace it. Local raw logs remain in the stability plan's scratch directory.
+
+**STOP before Task4:** request explicit approval of280,453,120 bytes plus twice retained SQL UTF-8 bytes for this exact identity. Current production admission still refuses; root's three profile-related failures remain open (837/833/3fail/1skip, predating three final tooling tests). Overall Task1/2 and parent completion close only after Task4's complete fresh gates. No push/PR/merge/hosted result or Phase0.5 promotion; count remains10/14 and real REFRESH/queries/CLI/phase Evaluation remain open. Earlier awaiting-calibration prose below is historical.
+
 ### Approved stability plan: tooling checkpoints, numeric hold retained (2026-10-02)
 
 The user's latest “确认” approves the four-task native stability plan. Task1 offline provenance/formula and Task2 failure-inclusive collector are implemented as tooling checkpoints, not packet acceptance. Fresh `node --test scripts/test-native-memory-profile.mjs scripts/test-native-memory-observations.mjs` passes **35/35**; behavioral RED→GREEN covers omitted compatible history (including reordered identity keys), changed calibration input, wrong returned class, invalid worker fields, excess retention and unchanged candidate. Test-only arithmetic never installs a product reservation; isolated empty-profile testing remains independent of future numeric approvals.

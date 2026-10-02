@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "policyRevision": "p05-native-memory-high-water-range-v1",
+  "environment": {
+    "node": "v24.15.0",
+    "v8": "13.6.233.17-node.48",
+    "platform": "win32",
+    "arch": "x64",
+    "zodVersion": "4.6.1",
+    "implementationDigest": "86fa33c51ecf63383f3575877bedaf66c47661dee5222ea4e14e8a0dd74e5888",
+    "corpusRevision": "p05-native-metadata-memory-v1"
+  },
+  "corpora": {
+    "READ_SEAL": {
+      "revision": "p05-native-metadata-memory-v1",
+      "digest": "0c599e6626202fe4a0b5d5866e2d89d01a4674e40b0efe0d0b20acf5b4085b29"
+    },
+    "FULL_TRANSPORT": {
+      "revision": "p05-native-full-v3-memory-v1",
+      "digest": "11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef"
+    }
+  },
+  "requiredCases": {
+    "READ_SEAL": [
+      "zero-file",
+      "empty-file",
+      "maximum-short-files",
+      "dense-numeric-sites",
+      "long-ascii",
+      "long-bmp",
+      "long-astral",
+      "repeated-shared-owners",
+      "duplicate-metadata",
+      "foreign-metadata",
+      "deep-unknown-input",
+      "oversized-sql-column",
+      "oversized-staged-fact"
+    ],
+    "FULL_TRANSPORT": [
+      "zero-file",
+      "empty-file",
+      "maximum-short-files",
+      "dense-numeric-sites",
+      "long-ascii",
+      "long-bmp",
+      "long-astral",
+      "repeated-shared-owners",
+      "duplicate-metadata",
+      "foreign-metadata",
+      "deep-unknown-input",
+      "oversized-staged-fact",
+      "large-request",
+      "slow-sink"
+    ]
+  },
+  "reports": [
+    {
+      "path": "memory-baseline-review-fix-read-seal.json",
+      "sha256": "4f9150504e36ac0c6b77f8ac3914379e45b6aa2e0f9543dcd79389d628720fed",
+      "workspace": "READ_SEAL",
+      "purpose": "calibration",
+      "command": "node scripts/bench-native-metadata-memory.mjs",
+      "collectionConditions": "Sequential fresh Node processes; unchanged pinned workers/corpora, no explicit GC; local Windows environment."
+    },
+    {
+      "path": "memory-baseline-review-fix-transport.json",
+      "sha256": "71d3460e6f023c72c818e04fecfc2477a050ea30bf741f1ba73401f9f6db4300",
+      "workspace": "FULL_TRANSPORT",
+      "purpose": "calibration",
+      "command": "node scripts/bench-native-full-v3-memory.mjs",
+      "collectionConditions": "Sequential fresh Node processes; unchanged pinned workers/corpora, no explicit GC; local Windows environment."
+    },
+    {
+      "path": "memory-review-fix-dense-repeat.json",
+      "sha256": "d0a021a3344bac3115f5ce83b28900e4838a949451cced4b60ae8a7632153281",
+      "workspace": "READ_SEAL",
+      "purpose": "diagnostic",
+      "command": "node packages/runtime/test/helpers/native-metadata-worker.mjs dense-numeric-sites (five sequential processes)",
+      "collectionConditions": "Sequential fresh Node processes; unchanged pinned workers/corpora, no explicit GC; local Windows environment.",
+      "caseName": "dense-numeric-sites",
+      "corpusPayloadDigest": "170f17e5e7b9cd05b85160a84e85182367124c5b15afc304134582e711793d72",
+      "parentCalibrationSha256": "4f9150504e36ac0c6b77f8ac3914379e45b6aa2e0f9543dcd79389d628720fed"
+    },
+    {
+      "path": "memory-stability-read-seal.json",
+      "sha256": "0928e20705954cb72a852a11af8d45cdb50ed9cb70f8ccd1e342f1accead8717",
+      "workspace": "READ_SEAL",
+      "purpose": "calibration",
+      "command": "node scripts/bench-native-metadata-memory.mjs",
+      "collectionConditions": "Sequential fresh Node processes; unchanged pinned workers/corpora, no explicit GC; local Windows environment."
+    },
+    {
+      "path": "memory-stability-transport.json",
+      "sha256": "7188bb6dcf9f2a5ef076b3c462b754356cece808792953b43ac81d7b1feea297",
+      "workspace": "FULL_TRANSPORT",
+      "purpose": "calibration",
+      "command": "node scripts/bench-native-full-v3-memory.mjs",
+      "collectionConditions": "Sequential fresh Node processes; unchanged pinned workers/corpora, no explicit GC; local Windows environment."
+    }
+  ],
+  "priorApprovals": [
+    {
+      "environment": {
+        "node": "v24.15.0",
+        "v8": "13.6.233.17-node.48",
+        "platform": "win32",
+        "arch": "x64",
+        "zodVersion": "4.6.1",
+        "implementationDigest": "86fa33c51ecf63383f3575877bedaf66c47661dee5222ea4e14e8a0dd74e5888",
+        "corpusRevision": "p05-native-metadata-memory-v1"
+      },
+      "reservationBytes": 212692992,
+      "status": "withdrawn",
+      "approvalReference": "docs/handoff/CURRENT_STATUS.md: Numeric approval exercised; fresh gate failed; new profile withdrawn (2026-10-02). Human approved212692992; withdrawal is not release permission."
+    }
+  ]
+}

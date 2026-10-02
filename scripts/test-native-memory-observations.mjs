@@ -188,6 +188,19 @@ test('collector refuses a valid observation for the wrong requested class', asyn
   assert.equal(result.observations.length, 2);
   assert.equal(result.failures.length, 25);
 });
+test('candidate verification refuses a changed read input identity', async (t) => {
+  const f = await setup(t);
+  const result = await api.collectNativeMemoryObservations(
+    { mode: 'candidate', candidatePath: f.candidatePath, outputDirectory: f.outputDirectory },
+    async (workspace, name) => {
+      const row = structuredClone(f.rows[workspace][name]);
+      if (workspace === 'READ_SEAL') row.corpusPayloadDigest = '0'.repeat(64);
+      return { exitCode: 0, stdout: JSON.stringify(row), stderr: '' };
+    },
+  );
+  assert.equal(result.passed, false);
+  assert.equal(result.failures.length, 13);
+});
 test('CLI candidate failure exits nonzero while keeping failure artifact', async (t) => {
   const f = await setup(t);
   const child = spawnSync(

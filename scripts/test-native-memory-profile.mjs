@@ -227,3 +227,43 @@ test('omitted history cannot evade identity matching by reordering keys', async 
   await f.save();
   await assert.rejects(() => api.buildNativeMemoryCandidate(f.manifestPath, f.root));
 });
+test('pinned stability candidate and independent holdout retain complete provenance', async () => {
+  const root = new URL('../fixtures/storage/native-analysis-state/', import.meta.url);
+  const candidatePath = new URL('memory-stability-candidate.json', root);
+  const { candidate, digest } = await api.loadNativeMemoryCandidate(candidatePath);
+  const holdout = JSON.parse(await readFile(new URL('memory-stability-holdout.json', root)));
+  assert.equal(holdout.schemaVersion, 1);
+  assert.equal(holdout.purpose, 'verification');
+  assert.equal(holdout.mode, 'candidate');
+  assert.deepEqual(holdout.environment, candidate.environment);
+  assert.deepEqual(holdout.corpora, candidate.corpora);
+  assert.equal(holdout.candidateEvidenceDigest, digest);
+  assert.deepEqual(holdout.failures, []);
+  const expected = Object.entries(api.requiredMemoryCases)
+    .flatMap(([workspace, names]) => names.map((name) => `${workspace}:${name}`))
+    .sort();
+  assert.deepEqual(
+    holdout.observations
+      .map(({ workspace, observation }) => `${workspace}:${observation.name}`)
+      .sort(),
+    expected,
+  );
+  for (const { workspace, observation } of holdout.observations) {
+    api.validateNativeMemoryObservation(observation, workspace, candidate.environment);
+    assert.ok(observation.peakResidentBytes <= candidate.reservationBytes);
+    if (workspace === 'READ_SEAL')
+      assert.ok(
+        candidate.groups.some(
+          (group) =>
+            group.workspace === workspace &&
+            group.caseName === observation.name &&
+            group.inputIdentity === observation.corpusPayloadDigest,
+        ),
+      );
+  }
+  const m = Math.max(...candidate.groups.map((group) => group.high));
+  const j = Math.max(...candidate.groups.map((group) => group.high - group.low));
+  assert.equal(candidate.observedPeakBytes, m);
+  assert.equal(candidate.fluctuationAllowanceBytes, j);
+  assert.equal(candidate.reservationBytes, Math.max(m + j, candidate.priorApprovalFloorBytes));
+});

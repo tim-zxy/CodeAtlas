@@ -7,6 +7,14 @@ fixtures/storage/native-analysis-state/memory-baseline.json -text
 fixtures/storage/native-analysis-state/memory-baseline-task3.json -text
 fixtures/storage/native-analysis-state/memory-baseline-task4-read-seal.json -text
 fixtures/storage/native-analysis-state/memory-baseline-task4-transport.json -text
+fixtures/storage/native-analysis-state/memory-baseline-review-fix-read-seal.json -text
+fixtures/storage/native-analysis-state/memory-baseline-review-fix-transport.json -text
+fixtures/storage/native-analysis-state/memory-review-fix-dense-repeat.json -text
+fixtures/storage/native-analysis-state/memory-stability-read-seal.json -text
+fixtures/storage/native-analysis-state/memory-stability-transport.json -text
+fixtures/storage/native-analysis-state/memory-stability-evidence.json -text
+fixtures/storage/native-analysis-state/memory-stability-candidate.json -text
+fixtures/storage/native-analysis-state/memory-stability-holdout.json -text
 packages/runtime/test/helpers/native-metadata-corpus.mjs text eol=lf
 packages/runtime/test/helpers/native-metadata-worker.mjs text eol=lf
 scripts/bench-native-metadata-memory.mjs text eol=lf

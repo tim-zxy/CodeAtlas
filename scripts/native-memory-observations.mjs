@@ -88,6 +88,16 @@ export async function collectNativeMemoryObservations(
         row = JSON.parse(child.stdout);
         tools.validateNativeMemoryObservation(row, workspace, artifact.environment);
         assert.equal(row.name, name, 'Observation does not match requested class');
+        if (candidate && workspace === 'READ_SEAL')
+          assert.ok(
+            candidate.groups.some(
+              (group) =>
+                group.workspace === workspace &&
+                group.caseName === name &&
+                group.inputIdentity === row.corpusPayloadDigest,
+            ),
+            'Observation input differs from frozen evidence',
+          );
       } catch {
         artifact.failures.push({ workspace, name, code: 'OBSERVATION_INVALID' });
         await save();
