@@ -15,7 +15,7 @@ import {
 } from '../dist/native-metadata-admission.js';
 import { nativeMetadataProfiles } from '../dist/native-metadata-profiles.js';
 
-const reviewedReservation = 247_132_160;
+const reviewedReservation = 247_508_992;
 const environment = nativeMetadataEnvironment();
 const supported = nativeMetadataProfiles.some((profile) =>
   Object.entries(environment).every(([key, value]) => profile[key] === value),
@@ -89,7 +89,7 @@ test('reviewed matching Runtime admits at reservation and still validates strict
     environment.arch === 'x64' &&
     environment.zodVersion === '4.6.1' &&
     environment.implementationDigest ===
-      '91931ccddf3b3eae0687e07cae23b9da14901976596811f178cf2f1b7bf8f09c'
+      '87b74e5e9050757eb30ebae478919fada586ece8299cf98588a79a17b28e7e63'
   )
     assert.equal(supported, true, 'reviewed current build must exercise production admission');
   const value = buildMemoryCase('zero-file');
@@ -260,7 +260,7 @@ test('reviewed full transport admits only at its matching reservation', () => {
 test('reviewed profile is backed by unchanged raw evidence and calibration corpus', async () => {
   const raw = await readFile(
     new URL(
-      '../../../fixtures/storage/native-analysis-state/memory-baseline-task4-read-seal.json',
+      '../../../fixtures/storage/native-analysis-state/memory-baseline-task6-classification-read-seal.json',
       import.meta.url,
     ),
   );
@@ -293,7 +293,7 @@ test('reviewed profile is backed by unchanged raw evidence and calibration corpu
 test('reviewed transport evidence covers every actual workspace class', async () => {
   const raw = await readFile(
     new URL(
-      '../../../fixtures/storage/native-analysis-state/memory-baseline-task4-transport.json',
+      '../../../fixtures/storage/native-analysis-state/memory-baseline-task6-classification-transport.json',
       import.meta.url,
     ),
   );
@@ -316,8 +316,8 @@ test('reviewed transport evidence covers every actual workspace class', async ()
   assert.equal(report.corpusRevision, profile.fullTransportCorpusRevision);
   assert.equal(report.observations.length, 70);
   assert.equal(report.repetitions, 5);
-  assert.equal(profile.fullTransportPeakBytes, 196_911_104);
-  assert.equal(Math.max(...report.observations.map((o) => o.peakResidentBytes)), 196_911_104);
+  assert.equal(profile.fullTransportPeakBytes, 183_230_464);
+  assert.equal(Math.max(...report.observations.map((o) => o.peakResidentBytes)), 183_230_464);
   assert.ok(profile.reservationBytes >= profile.fullTransportPeakBytes);
   for (const name of report.cases)
     assert.equal(report.observations.filter((o) => o.name === name).length, 5);

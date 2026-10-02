@@ -52,7 +52,11 @@ An Engineering Agent may tune these only when Fixture or Evaluation evidence sup
 - Wiki profile layout, optional sections, and projection validation thresholds within the versioned contract, based on projection Fixtures and review.
 - analyzer worker count, cache budget, performance thresholds, and language capability maturity, based on reproducible benchmarks and Evaluation.
 
+Task 6 EVOLVABLE internal token refinement (2026-10-02) is recorded in ADR-016 and the accepted packet B design: a safe repository committed-snapshot count detects same-fingerprint legacy activation with absent derived state. Actual legacy Fixture RED→GREEN justifies the change; no wire/Canonical/migration/FROZEN contract changes. The initial Task 6 profile was approved and passed focused bootstrap gates. A subsequent write-lock Fixture exposed missing Store classification checks; the repair enforces the already required complete source-inventory recheck, without changing design or migration contracts. Runtime/Store remains provisional; the repaired exact Node build requires renewed reviewed calibration and is not admitted by the older profile. This is not completion or a new phase threshold.
+
 ## DEFERRED decisions
+
+Task 6 repaired-build profile approval (2026-10-02): the user approved 247,508,992 bytes plus twice retained SQL bytes for exact build `87b74e5e9050757eb30ebae478919fada586ece8299cf98588a79a17b28e7e63`. The paired unchanged raw reports and Windows environment/corpus identities are recorded in CURRENT_STATUS. This supersedes the pending-calibration wording above for this exact build only; all existing profiles remain intact and other builds/platforms refuse. No new phase threshold or FROZEN decision is changed.
 
 These are intentionally postponed to the assigned phase. They must not become dependencies, acceptance gates, or implementation scope in Phase 0, Phase 0.5, or Phase 1 without an approved roadmap and design amendment:
 

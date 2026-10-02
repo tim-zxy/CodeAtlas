@@ -6,6 +6,7 @@ export interface NativeStateLimits {
   readonly memoryBudgetBytes: number;
 }
 export interface NativeActivationToken {
+  readonly committedSnapshotCount: number;
   readonly indexedRevisionId: string | null;
   readonly indexedContentFingerprint: string | null;
   readonly states: readonly {
@@ -154,6 +155,14 @@ function token(
   repositoryId: string,
   active: PointerRow | undefined,
 ): NativeActivationToken {
+  // Validated full/patch Apply appends one snapshot inside its activation
+  // transaction. Count also detects legacy activations when no derived header
+  // exists and the indexed fingerprint is unchanged; no rowid/time ordering.
+  const committedSnapshotCount = db
+    .prepare('SELECT count(*) AS n FROM provider_snapshots WHERE repository_id=?')
+    .get(repositoryId)?.n;
+  if (!Number.isSafeInteger(committedSnapshotCount) || (committedSnapshotCount as number) < 0)
+    throw new Error('Invalid native activation snapshot count');
   const states = db
     .prepare('SELECT * FROM native_analysis_state WHERE repository_id=? ORDER BY provider_id')
     .iterate(repositoryId) as IterableIterator<StateRow>;
@@ -185,6 +194,7 @@ function token(
     );
   }
   return Object.freeze({
+    committedSnapshotCount: committedSnapshotCount as number,
     indexedRevisionId: active?.indexed_revision_id ?? null,
     indexedContentFingerprint: active?.indexed_content_fingerprint ?? null,
     states: Object.freeze(result),

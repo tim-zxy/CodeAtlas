@@ -18,7 +18,7 @@ export type {
   NormalizedNodePair,
   NormalizedEdgePair,
 } from './canonical-normalizer.js';
-export { CanonicalNormalizationError } from './java-node-normalizer.js';
+export { CanonicalNormalizationError, JAVA_NORMALIZER_VERSION } from './java-node-normalizer.js';
 export type { CanonicalNormalizationErrorCode } from './java-node-normalizer.js';
 export { mergeCanonicalObservations } from './fact-merger.js';
 export { selectMergedGroup } from './fact-merger-selection.js';

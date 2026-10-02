@@ -1,5 +1,7 @@
 # Multi Language Native Analyzer and Scalability
 
+Task 6 admission update (2026-10-02): the explicitly approved repaired-build Windows profile reserves 247,508,992 bytes plus twice retained SQL UTF-8 bytes. Both immutable paired raw reports, exact environment/build/corpus identities and reproduction commands are recorded in CURRENT_STATUS. Missing/changed profiles and matching read-only evidence still refuse full transport before observation. This is not a hard RSS guarantee, Linux profile, new worker mode or Phase 0.5 performance gate.
+
 Status: backward-compatible architecture extension. Authority: [ADR-014](../handoff/adr/ADR-014-multilanguage-native-analyzer.md). Java is the first implemented analyzer language, not an architectural binding; the Rust executable supports existing DESCRIBE and v1/v2 Java ANALYZE. v3 input validators are isolated and are not an advertised or dispatched REFRESH capability. This specification governs future NativeProvider internals without changing Canonical IR or the external Provider SPI.
 
 ## Internal boundaries
