@@ -21,6 +21,27 @@ export interface NativeMetadataProfile {
   readonly fluctuationAllowanceBytes?: number;
 }
 
+export interface NativeRefreshVerificationProfile extends Pick<
+  NativeMetadataProfile,
+  'node' | 'v8' | 'platform' | 'arch' | 'implementationDigest' | 'zodVersion' | 'corpusRevision'
+> {
+  readonly workspace: 'REFRESH_VERIFY';
+  readonly verificationCorpusRevision: string;
+  readonly verificationCorpusDigest: string;
+  readonly reservationBytes: number;
+  readonly evidenceDigest: string;
+  readonly memoryPolicyRevision: string;
+  readonly memoryCandidateEvidenceDigest: string;
+  readonly observedPeakBytes: number;
+  readonly fluctuationAllowanceBytes: number;
+  readonly peakMethod: 'resourceUsage.maxRSS';
+  readonly peakUnits: 'bytes';
+}
+
+// No verification reservation is approved yet. Never borrow the full/read profiles below.
+export const nativeRefreshVerificationProfiles: readonly NativeRefreshVerificationProfile[] =
+  Object.freeze([]);
+
 // User approved the 65-observation actual-path report on 2026-10-01.
 // Exact Windows environment only; mismatches remain fail-closed. Raw report
 // capture status is preserved; approval is recorded in CURRENT_STATUS.

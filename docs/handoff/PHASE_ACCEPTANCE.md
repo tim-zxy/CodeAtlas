@@ -1,5 +1,7 @@
 # Phase Acceptance
 
+2026-10-03 revised native plan approved: Task1A has fresh scalar/equality/snapshot/refusal evidence (90/90;198 combined) but no reviewed REFRESH_VERIFY reservation/actual memory corpus. Root933/905pass/27 missing-profile failures/1skip remains open. Private port and contract checkpoint cannot satisfy Task1 full acceptance, C completion or phase exit;5/1B/4B and original criteria remain mandatory. No checkbox/threshold changes.
+
 2026-10-03 written C1 amendment accepted after25e7797 adds required design gates, not passing evidence: pre-opener refusal, mandatory trusted/wire equality, bounded snapshot, exact-purpose provenance,15-class independent holdout and actual-port peak checks. Revised-plan review and separate numeric approval of READ_SEAL/FULL_TRANSPORT/REFRESH_VERIFY precede implementation/installation respectively. Task1/4 close only after fresh actual gates. Existing phase checkboxes/thresholds and27 required-profile failures remain intact; C1 is incomplete. Earlier unapproved/direction-only wording is historical.
 
 2026-10-03 preflight direction acceptance adds no passing gate: [written amendment](../superpowers/specs/2026-10-03-p05-w3-020-c1-memory-preflight-proposal.md) proposes pre-opener refusal, trusted/wire budget equality, exact-purpose provenance, independent holdout and required actual-port peaks. They await written/plan/numeric review and execution. Existing checkboxes/thresholds and27 required-profile failures remain intact; C1 is incomplete.

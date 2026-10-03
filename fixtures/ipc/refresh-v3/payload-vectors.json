@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "vectors": [
+    {
+      "id": "unicode-scalars",
+      "valid": true,
+      "json": "{\"protocolVersion\":3,\"requestId\":\"refresh\",\"sequence\":0,\"type\":\"DIAGNOSTIC\",\"payload\":{\"code\":\"SYNTAX_ERROR\",\"severity\":\"ERROR\",\"message\":\"中文 😀\",\"sourceRange\":null}}"
+    },
+    {
+      "id": "negative-zero",
+      "valid": false,
+      "json": "{\"protocolVersion\":3,\"requestId\":\"refresh\",\"sequence\":-0,\"type\":\"REMOVE_NODE\",\"payload\":{\"factType\":\"NODE\",\"providerId\":\"native\",\"providerFactId\":\"n\"}}"
+    },
+    {
+      "id": "isolated-surrogate",
+      "valid": false,
+      "json": "{\"protocolVersion\":3,\"requestId\":\"refresh\",\"sequence\":0,\"type\":\"DIAGNOSTIC\",\"payload\":{\"code\":\"SYNTAX_ERROR\",\"severity\":\"ERROR\",\"message\":\"\\ud800\",\"sourceRange\":null}}"
+    },
+    {
+      "id": "unknown-key",
+      "valid": false,
+      "json": "{\"protocolVersion\":3,\"requestId\":\"refresh\",\"sequence\":0,\"type\":\"REMOVE_NODE\",\"payload\":{\"factType\":\"NODE\",\"providerId\":\"native\",\"providerFactId\":\"n\",\"extra\":true}}"
+    },
+    {
+      "id": "wrong-remove-kind",
+      "valid": false,
+      "json": "{\"protocolVersion\":3,\"requestId\":\"refresh\",\"sequence\":0,\"type\":\"REMOVE_NODE\",\"payload\":{\"factType\":\"EDGE\",\"providerId\":\"native\",\"providerFactId\":\"n\"}}"
+    }
+  ]
+}

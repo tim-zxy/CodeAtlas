@@ -706,7 +706,9 @@ caseTest('read-only-profile-refuses-before-observation', async (t) => {
   const profile = { ...nativeMetadataEnvironment(), reservationBytes: 247_508_992 };
   await writeFile(
     path.join(isolated, 'dist', 'native-metadata-profiles.js'),
-    'export const nativeMetadataProfiles = Object.freeze([' + JSON.stringify(profile) + ']);\n',
+    'export const nativeRefreshVerificationProfiles = Object.freeze([]);\nexport const nativeMetadataProfiles = Object.freeze([' +
+      JSON.stringify(profile) +
+      ']);\n',
   );
   const admission = await import(
     pathToFileURL(path.join(isolated, 'dist', 'native-metadata-admission.js')).href

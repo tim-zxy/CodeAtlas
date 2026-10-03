@@ -1,5 +1,7 @@
 # Code Intelligence Provider SPI
 
+2026-10-03 C1A checkpoint: pure `decodeNativeRefreshV3` requires independently supplied fifth budget, bounded owned input and exact wire equality before output. It returns observation only; private Runtime alone owns measured-purpose admission and its verification profile array is currently empty. Existing CodeIntelligenceProvider/native-client SPI, IR and publication boundaries are unchanged. Fresh contracts/refusal tests do not advertise incremental support; actual memory admission and D process/Store composition remain open.
+
 Packet B shared preflight correction (2026-10-02): `preflightNativeFullAnalysisV3` reuses the Provider transport's existing bounded header/completion framing and validated options before Runtime copies schemas or observes SQLite. Streaming still owns awaited delivery/backpressure and outputs Provider facts, never Canonical publication. Runtime static admission precedes observation; actual exact-profile/full-bootstrap and fresh memory gates now pass (CURRENT_STATUS). No new Provider/Canonical schema, higher cap, runtime calibration or real REFRESH capability is introduced.
 
 ## Responsibility

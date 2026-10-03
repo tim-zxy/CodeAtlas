@@ -4,6 +4,8 @@ Status: WRITTEN AMENDMENT ACCEPTED on2026-10-03 by the user's “确认” after
 
 ## Decision requiring review
 
+Execution update2026-10-03: the user confirms revised plan8fb12a6. Task1A now implements the exact private/fifth-argument/snapshot interfaces and refusal ordering below, with empty separate profile data and fresh contract evidence in CURRENT_STATUS. Thus “proposed/does not exist yet” interface wording below is historical for1A only; calibration corpus/numeric approval/actual-port positive gates are still absent and mandatory. Task1 remains incomplete; root27 required-profile failures are preserved.
+
 The accepted C spec and Task1 require decoder/input/ordering copies to be accounted before allocation under the request memory budget. The planned decoder receives raw request bytes with that budget embedded in the JSON header. Current implementation calls `decodeNativeRequestV3` before its budget check. That function creates UTF-8 decoded text, line strings, parsed records and schema copies before returning the embedded budget. Later output parsing also allocates schema copies and retained identity/ownership structures which a cumulative wire-byte counter does not account for. Hard byte/event ceilings bound wire data, not V8 heap or RSS.
 
 This is an implementation-readiness gap in the newly accepted C contract, not evidence that the original gate can be removed. Preserve the memory requirement; do not accept the existing small-budget rejection test as proof of pre-allocation admission. Existing v1/v2/full-v3, Canonical IR, summary schema1, SQLite authority and source policy are unchanged. The new C-only decoder is unreleased and not connected to Runtime publication.

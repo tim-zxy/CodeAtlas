@@ -1,0 +1,253 @@
+{
+  "schemaVersion": 1,
+  "id": "p05-native-v3-refresh-output-v1",
+  "task": "P05-W3-020-C",
+  "design": "../../../docs/superpowers/specs/2026-10-03-p05-w3-020-native-refresh-producer-design.md",
+  "acceptance": "../../../docs/handoff/PHASE_ACCEPTANCE.md",
+  "payloadVectors": "payload-vectors.json",
+  "cases": [
+    {
+      "id": "retained-caller-upsert",
+      "request": "retained-caller-upsert-request.jsonl",
+      "events": "retained-caller-upsert-events.jsonl",
+      "valid": true,
+      "expectedCounts": {
+        "sourceFiles": 1,
+        "upsertedNodes": 0,
+        "removedNodes": 0,
+        "upsertedEdges": 1,
+        "removedEdges": 0,
+        "coverage": 4,
+        "diagnostics": 0
+      },
+      "summaryRecords": 2
+    },
+    {
+      "id": "noop",
+      "request": "noop-request.jsonl",
+      "events": "noop-events.jsonl",
+      "valid": true,
+      "expectedCounts": {
+        "sourceFiles": 0,
+        "upsertedNodes": 0,
+        "removedNodes": 0,
+        "upsertedEdges": 0,
+        "removedEdges": 0,
+        "coverage": 2,
+        "diagnostics": 0
+      },
+      "summaryRecords": 2
+    },
+    {
+      "id": "delete",
+      "request": "delete-request.jsonl",
+      "events": "delete-events.jsonl",
+      "valid": true,
+      "expectedCounts": {
+        "sourceFiles": 0,
+        "upsertedNodes": 0,
+        "removedNodes": 2,
+        "upsertedEdges": 0,
+        "removedEdges": 0,
+        "coverage": 1,
+        "diagnostics": 0
+      },
+      "summaryRecords": 1
+    },
+    {
+      "id": "shared-owner-transfer",
+      "request": "shared-owner-transfer-request.jsonl",
+      "events": "shared-owner-transfer-events.jsonl",
+      "valid": true,
+      "expectedCounts": {
+        "sourceFiles": 0,
+        "upsertedNodes": 0,
+        "removedNodes": 2,
+        "upsertedEdges": 0,
+        "removedEdges": 0,
+        "coverage": 1,
+        "diagnostics": 0
+      },
+      "summaryRecords": 1
+    },
+    {
+      "id": "partial",
+      "request": "partial-request.jsonl",
+      "events": "partial-events.jsonl",
+      "valid": true,
+      "expectedCounts": {
+        "sourceFiles": 1,
+        "upsertedNodes": 0,
+        "removedNodes": 0,
+        "upsertedEdges": 0,
+        "removedEdges": 0,
+        "coverage": 2,
+        "diagnostics": 0
+      },
+      "summaryRecords": 2
+    },
+    {
+      "id": "zero-target",
+      "request": "zero-target-request.jsonl",
+      "events": "zero-target-events.jsonl",
+      "valid": true,
+      "expectedCounts": {
+        "sourceFiles": 0,
+        "upsertedNodes": 0,
+        "removedNodes": 0,
+        "upsertedEdges": 0,
+        "removedEdges": 0,
+        "coverage": 0,
+        "diagnostics": 0
+      },
+      "summaryRecords": 0
+    },
+    {
+      "id": "wrong-version",
+      "request": "wrong-version-request.jsonl",
+      "events": "wrong-version-events.jsonl",
+      "valid": false,
+      "expectedCode": "PROTOCOL_VIOLATION"
+    },
+    {
+      "id": "wrong-context",
+      "request": "wrong-context-request.jsonl",
+      "events": "wrong-context-events.jsonl",
+      "valid": false,
+      "expectedCode": "PROTOCOL_VIOLATION"
+    },
+    {
+      "id": "wrong-sequence",
+      "request": "wrong-sequence-request.jsonl",
+      "events": "wrong-sequence-events.jsonl",
+      "valid": false,
+      "expectedCode": "PROTOCOL_VIOLATION"
+    },
+    {
+      "id": "wrong-request",
+      "request": "wrong-request-request.jsonl",
+      "events": "wrong-request-events.jsonl",
+      "valid": false,
+      "expectedCode": "PROTOCOL_VIOLATION"
+    },
+    {
+      "id": "wrong-count",
+      "request": "wrong-count-request.jsonl",
+      "events": "wrong-count-events.jsonl",
+      "valid": false,
+      "expectedCode": "PROTOCOL_VIOLATION"
+    },
+    {
+      "id": "wrong-checksum",
+      "request": "wrong-checksum-request.jsonl",
+      "events": "wrong-checksum-events.jsonl",
+      "valid": false,
+      "expectedCode": "CHECKSUM_MISMATCH"
+    },
+    {
+      "id": "wrong-header",
+      "request": "wrong-header-request.jsonl",
+      "events": "wrong-header-events.jsonl",
+      "valid": false,
+      "expectedCode": "PROTOCOL_VIOLATION"
+    },
+    {
+      "id": "wrong-inventory",
+      "request": "wrong-inventory-request.jsonl",
+      "events": "wrong-inventory-events.jsonl",
+      "valid": false,
+      "expectedCode": "PROTOCOL_VIOLATION"
+    },
+    {
+      "id": "forged-owner",
+      "request": "forged-owner-request.jsonl",
+      "events": "forged-owner-events.jsonl",
+      "valid": false,
+      "expectedCode": "PROTOCOL_VIOLATION"
+    },
+    {
+      "id": "forged-retained-digest",
+      "request": "forged-retained-digest-request.jsonl",
+      "events": "forged-retained-digest-events.jsonl",
+      "valid": false,
+      "expectedCode": "PROTOCOL_VIOLATION"
+    },
+    {
+      "id": "duplicate-operation",
+      "request": "duplicate-operation-request.jsonl",
+      "events": "duplicate-operation-events.jsonl",
+      "valid": false,
+      "expectedCode": "PROTOCOL_VIOLATION"
+    },
+    {
+      "id": "conflicting-operation",
+      "request": "conflicting-operation-request.jsonl",
+      "events": "conflicting-operation-events.jsonl",
+      "valid": false,
+      "expectedCode": "PROTOCOL_VIOLATION"
+    },
+    {
+      "id": "mixed-full-event",
+      "request": "mixed-full-event-request.jsonl",
+      "events": "mixed-full-event-events.jsonl",
+      "valid": false,
+      "expectedCode": "PROTOCOL_VIOLATION"
+    },
+    {
+      "id": "missing-source",
+      "request": "missing-source-request.jsonl",
+      "events": "missing-source-events.jsonl",
+      "valid": false,
+      "expectedCode": "PROTOCOL_VIOLATION"
+    },
+    {
+      "id": "extra-source",
+      "request": "extra-source-request.jsonl",
+      "events": "extra-source-events.jsonl",
+      "valid": false,
+      "expectedCode": "PROTOCOL_VIOLATION"
+    },
+    {
+      "id": "malformed-json",
+      "request": "malformed-json-request.jsonl",
+      "events": "malformed-json-events.jsonl",
+      "valid": false,
+      "expectedCode": "PROTOCOL_VIOLATION"
+    },
+    {
+      "id": "blank-line",
+      "request": "blank-line-request.jsonl",
+      "events": "blank-line-events.jsonl",
+      "valid": false,
+      "expectedCode": "PROTOCOL_VIOLATION"
+    },
+    {
+      "id": "post-terminal",
+      "request": "post-terminal-request.jsonl",
+      "events": "post-terminal-events.jsonl",
+      "valid": false,
+      "expectedCode": "PROTOCOL_VIOLATION"
+    },
+    {
+      "id": "negative-zero",
+      "request": "negative-zero-request.jsonl",
+      "events": "negative-zero-events.jsonl",
+      "valid": false,
+      "expectedCode": "PROTOCOL_VIOLATION"
+    },
+    {
+      "id": "invalid-unicode",
+      "request": "invalid-unicode-request.jsonl",
+      "events": "invalid-unicode-events.jsonl",
+      "valid": false,
+      "expectedCode": "PROTOCOL_VIOLATION"
+    },
+    {
+      "id": "failed-terminal",
+      "request": "failed-terminal-request.jsonl",
+      "events": "failed-terminal-events.jsonl",
+      "valid": false,
+      "expectedCode": "ANALYZER_FAILED"
+    }
+  ]
+}

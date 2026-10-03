@@ -1,5 +1,7 @@
 # Roadmap
 
+2026-10-03 revised native plan8fb12a6 confirmed; Task1A is a local interface/refusal checkpoint only, with remaining acceptance and27 compatibility failures held for final-build numeric review. Next existing2 retained/Rust helpers,3 producer,4A evidence/tooling; no new roadmap item/milestone, D/E implementation or phase promotion. Integrated count10/14 is unchanged; earlier plan-review-pending wording is historical.
+
 2026-10-03 C1 written amendment accepted after25e7797; the [revised existing six-task native plan](../superpowers/plans/2026-10-03-p05-w3-020-native-refresh-producer.md) awaits review. Checkpoint sequence1A→2→3→4A→5→1B/4B→6 adds no milestone/roadmap task or D/E implementation. Phase0.5 remains10/14 with original exits open; no plan/numeric approval or passing memory gate is inferred. Earlier direction-only wording is historical.
 
 2026-10-03 C1 preflight direction accepted; [written amendment](../superpowers/specs/2026-10-03-p05-w3-020-c1-memory-preflight-proposal.md) awaits review before the existing native plan is revised. Resource-trust refinement adds no milestone/roadmap task or D/E implementation. Phase0.5 remains10/14 with original exits open.
