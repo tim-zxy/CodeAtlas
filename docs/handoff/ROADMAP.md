@@ -1,5 +1,7 @@
 # Roadmap
 
+2026-10-03 C1 written amendment accepted after25e7797; the [revised existing six-task native plan](../superpowers/plans/2026-10-03-p05-w3-020-native-refresh-producer.md) awaits review. Checkpoint sequence1A→2→3→4A→5→1B/4B→6 adds no milestone/roadmap task or D/E implementation. Phase0.5 remains10/14 with original exits open; no plan/numeric approval or passing memory gate is inferred. Earlier direction-only wording is historical.
+
 2026-10-03 C1 preflight direction accepted; [written amendment](../superpowers/specs/2026-10-03-p05-w3-020-c1-memory-preflight-proposal.md) awaits review before the existing native plan is revised. Resource-trust refinement adds no milestone/roadmap task or D/E implementation. Phase0.5 remains10/14 with original exits open.
 
 2026-10-03 C execution update: B merged at73756f0 with exact merge CI success; C native plan approved. C1 is held for the [preflight proposal](../superpowers/specs/2026-10-03-p05-w3-020-c1-memory-preflight-proposal.md), not complete. The proposed narrow verification-workspace review adds no roadmap task, milestone, D/E implementation or phase promotion;10/14 integrated remains unchanged. Prior plan-pending/B-open language is historical.

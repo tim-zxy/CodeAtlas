@@ -2,6 +2,8 @@
 
 ## Precedence
 
+2026-10-03 C1 written amendment accepted: “确认” after25e7797 approves the [exact private boundary/evidence contract](../superpowers/specs/2026-10-03-p05-w3-020-c1-memory-preflight-proposal.md). It governs the unreleased C helper's trusted budget, lazy preparation, mandatory fifth argument and distinct REFRESH_VERIFY purpose. No FROZEN decision changes/new ADR is identified. The revised native plan awaits review; exact-purpose numeric approval remains separate. This supersedes earlier unapproved/direction-only wording, not implementation readiness, existing acceptance gates or profile values. No coding/profile installation is authorized by this documentation turn.
+
 2026-10-03 C1 preflight direction accepted: “是” permits completing the [written amendment](../superpowers/specs/2026-10-03-p05-w3-020-c1-memory-preflight-proposal.md), now ready for review. Proposed private Runtime trusted-budget/lazy-preparation boundary, mandatory C-helper argument and distinct REFRESH_VERIFY evidence do not amend FROZEN decisions. Written-contract/revised native-plan review and later exact numeric approval remain separate; no implementation/profile installation is authorized yet. Earlier unapproved wording is superseded for direction only.
 
 C1 execution hold (2026-10-03): the [preflight proposal](../superpowers/specs/2026-10-03-p05-w3-020-c1-memory-preflight-proposal.md) is **not approved**. Actual decoding precedes embedded-budget checking; pure wire accounting is not allocation/RSS admission. The accepted C requirement remains in force and Task1 is incomplete. A private verification-workspace/interface/calibration adjustment needs review before implementation; no full profile can be transplanted, new value invented or D/E authority inferred.

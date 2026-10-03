@@ -1,5 +1,7 @@
 # Phase Acceptance
 
+2026-10-03 written C1 amendment accepted after25e7797 adds required design gates, not passing evidence: pre-opener refusal, mandatory trusted/wire equality, bounded snapshot, exact-purpose provenance,15-class independent holdout and actual-port peak checks. Revised-plan review and separate numeric approval of READ_SEAL/FULL_TRANSPORT/REFRESH_VERIFY precede implementation/installation respectively. Task1/4 close only after fresh actual gates. Existing phase checkboxes/thresholds and27 required-profile failures remain intact; C1 is incomplete. Earlier unapproved/direction-only wording is historical.
+
 2026-10-03 preflight direction acceptance adds no passing gate: [written amendment](../superpowers/specs/2026-10-03-p05-w3-020-c1-memory-preflight-proposal.md) proposes pre-opener refusal, trusted/wire budget equality, exact-purpose provenance, independent holdout and required actual-port peaks. They await written/plan/numeric review and execution. Existing checkboxes/thresholds and27 required-profile failures remain intact; C1 is incomplete.
 
 C1 memory hold (2026-10-03):67/131 contract passes do not demonstrate pre-allocation memory admission. Task1 remains incomplete under the [unapproved preflight proposal](../superpowers/specs/2026-10-03-p05-w3-020-c1-memory-preflight-proposal.md); required-profile root27fail is an open compatibility gate. No checklist or numerical threshold is changed.

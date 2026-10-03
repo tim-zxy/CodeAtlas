@@ -21,6 +21,14 @@
 
 ## Next action
 
+### C1 written amendment accepted; revised native plan awaits review (2026-10-03)
+
+The user's “确认” after25e7797 accepts the written C1 memory-preflight contract, not coding/profile installation. The [existing six-task plan](../superpowers/plans/2026-10-03-p05-w3-020-native-refresh-producer.md) is revised for private trusted-budget admission, mandatory fifth argument, owned snapshot,15 independent verification classes and separate REFRESH_VERIFY provenance/collector. Order1A→2→3→4A→5→1B/4B→6 preserves open Task1/4 acceptance checkpoints until final-build three-purpose numeric approval and fresh actual-port gates. Native method remains selected; please review this revision before implementation resumes1A.
+
+Documentation only this turn: no product/build/config/Fixture/profile change or implementation-suite rerun. Existing uncommitted C1 work and dated67/131 passes/27 required-profile failures remain preserved, not newly passing gates. Task1 incomplete/Tasks2–6 unstarted; Phase0.5 remains10/14, D/E and all original exits remain open. Written review is now satisfied; revised-plan and exact-purpose numeric review are not. Earlier direction-only/written-review-pending wording is historical.
+
+Fresh documentation verification: explicit Prettier check for C plan/two specs passes; `node scripts/check-architecture.mjs` passes17 projects; scoped Git whitespace check and127 relative Markdown links across14 changed documents pass. Inline plan review checks exact private/fifth-argument interfaces, checkpoint dependency closure, cap-shaped15-class recipes, identical calibration/holdout/actual-port inputs, separate purpose/history/provenance and numeric holds. Planned tools/Fixtures/profile are not implementation evidence. No new FROZEN conflict or phase threshold is identified; all product gates remain pending.
+
 ### C1 preflight direction accepted; written amendment ready for review (2026-10-03)
 
 The user’s “是” authorizes completing the recommended design before resuming implementation. The [existing C1 proposal](../superpowers/specs/2026-10-03-p05-w3-020-c1-memory-preflight-proposal.md) now defines private Runtime trusted-budget/lazy-preparation interfaces, a mandatory expected-budget argument on the unreleased C primitive, separate REFRESH_VERIFY calibration/holdout/numeric approval and subsequent actual-port peak gates. It proposes extending the existing six-task plan without closing C1’s memory gate early or implementing D/E. Written amendment review precedes revised native-plan review; native execution remains selected.

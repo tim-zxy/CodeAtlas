@@ -1,6 +1,6 @@
 # P05-W3-020-C1 Node verification preflight proposal
 
-Status: DIRECTION ACCEPTED on2026-10-03 by the user's “是” in response to the recommendation to complete this design amendment before resuming development. The written detail below awaits review. Direction approval is not written-contract approval, revised-plan approval, numeric approval or implementation authority. Task1 remains held; no completion or Phase exit is claimed.
+Status: WRITTEN AMENDMENT ACCEPTED on2026-10-03 by the user's “确认” after documentation commit25e7797. The earlier “是” accepted the direction. This acceptance permits revision of the existing six-task native plan, not implementation or profile installation before revised-plan/numeric review. Task1 remains incomplete; no completion or Phase exit is claimed.
 
 ## Decision requiring review
 
@@ -54,7 +54,7 @@ Rollback: leave the unreleased C validator inaccessible from production and rest
 
 ## Approval requested
 
-Review the written detail below. Acceptance permits revision of the existing six-task native plan, which is then reviewed before implementation resumes. Preserve the user's native method. No concrete reservation is available for approval now.
+Written detail is accepted. Review the revised existing six-task plan before native implementation resumes. Preserve the selected native method; exact-purpose numeric approval remains a separate later decision with matching measurements. No concrete reservation is available for approval now.
 
 ## Written detail: authority and exact interfaces
 
