@@ -1,6 +1,39 @@
 # Current Status
 
+2026-10-03 post-approval gates: actual profile provenance/budget36/36, required original+verification corpus75/75 (all42 fresh actual classes), approved original collector27/27, real Native/registry135/135, Cargo122/122,16-project build/IR types/architecture17/fmt/Clippy/client2/handshake4 pass. Required root985total/984pass/0fail/1 existing Windows skip,363153.5125ms. Task1B/4B and Task5 acceptance are verified; Task6's one whole-branch review remains pending. Three exact approved profiles/finite-sampling scope and frozen hashes below are unchanged. Wrapper `pnpm verify` fails before gates at its no-TTY dependency-purge protection; exact registered constituents ran separately, not wrapper success. No hosted CI, persisted E, D publication or parent/phase promotion. This supersedes earlier in-progress/approval-hold/empty-profile records.
+
+2026-10-03 numeric approval: the user's explicit “批准” approves READ_SEAL286,760,960, FULL_TRANSPORT286,760,960 and REFRESH_VERIFY422,711,296 bytes for the frozen Task5 evidence/exact implementationf51a239ca3f95c8d44a4dd858e569f614bd5767c491916789d8fc9731dac74f5. Separate static entries are installed;16-project rebuild preserves that identity. Original paired paths retain twice actual retained SQL UTF-8; verifier owns no SQL. Absent-profile RED and actual provenance/equality/one-byte-below gates pass36/36; four obsolete production-test budgets now use their matching installed reservation, retaining historical evidence assertions. Full required corpus/collector/C2/Cargo/root/final-review gates remain in progress;1B/4B/5/6 are not complete. Frozen evidence is unchanged and finite empirical maxRSS, not an OS bound. This supersedes prior numeric-HOLD/empty-profile wording only; phase10/14, original thresholds and D/E boundaries remain unchanged.
+
 ## Pack status
+
+### Packet C approval and reproducible acceptance (2026-10-03)
+
+HEAD before Task5 commit: `19bc3681a5efad86dba5cd86bd635b8918f81d40`; isolated branch `codex/p05-w3-020-native-refresh-producer`. New exact profiles preserve built digest `f51a239ca3f95c8d44a4dd858e569f614bd5767c491916789d8fc9731dac74f5`; nine frozen evidence hashes and every historical profile entry are unchanged. Existing paired SQL charging is unchanged; REFRESH_VERIFY is observation-only and owns no SQL. User “批准” is exact three-purpose numeric approval, not push/PR/merge/main/D/E authority.
+
+Reproduce from the existing installed workspace, sequentially (Node24.15.0/V8win32x64/Zod4.6.1 and pinned Rust1.98.1). Direct commands are the registered gate constituents; no install/purge bypass:
+
+```powershell
+node node_modules/typescript/bin/tsc -p packages/runtime/tsconfig.json
+node node_modules/typescript/bin/tsc -p packages/ir/tsconfig.type-tests.json --noEmit
+$env:CODEATLAS_REQUIRE_NATIVE_MEMORY_PROFILE='1'
+$env:CODEATLAS_REQUIRE_NATIVE_REFRESH_VERIFICATION_PROFILE='1'
+$env:CODEATLAS_NATIVE_MEMORY_ARTIFACT_DIR='.superpowers/sdd/2026-10-03-p05-w3-020-native-refresh-producer/task6-required-artifacts'
+node --test --test-concurrency=1 packages/runtime/test/native-metadata-admission.test.mjs packages/runtime/test/native-analysis-state-read.test.mjs packages/runtime/test/native-refresh-verification.test.mjs
+node --test --test-concurrency=1 packages/runtime/test/native-metadata-corpus.test.mjs packages/providers/test/native-full-v3-memory.test.mjs packages/runtime/test/native-refresh-verification-memory.test.mjs
+node scripts/native-memory-observations.mjs approved .superpowers/sdd/2026-10-03-p05-w3-020-native-refresh-producer/task5-approved-collector-artifacts
+cargo fmt --all --check
+cargo build --workspace
+cargo clippy --workspace --all-targets -- -D warnings
+cargo test --workspace
+node scripts/check-architecture.mjs
+node node_modules/prettier/bin/prettier.cjs --check .
+```
+
+Full16-project dependency-ordered build: execute each project's declared `tsc -p tsconfig.json` via local TypeScript. Full root: execute the complete `node --test --test-concurrency=1 ...` list in root `scripts.test` after the separate IR type check. Real Native: exact `scripts.test:native-analysis` plus Fixture manifest/registry suites. Client/handshake: exact corresponding root scripts. Plan-owned `build.mjs`, `run.mjs` and `final-gates.mjs` retain these commands and logs locally; no focused-test substitute. The collector target must be a fresh directory on reproduction because frozen outputs are never overwritten.
+
+Fresh accepted corpus peaks: READ_SEAL212,533,248; FULL_TRANSPORT198,168,576; REFRESH_VERIFY333,705,216 bytes. Independent approved collector27/27 peak246,194,176. All are below separately approved reservations286,760,960/286,760,960/422,711,296; no holdout folding/resampling/margin change. Actual-port artifacts retain exact payload/corpus/environment, expected typed outcomes and raw process outputs under `task5-approved-artifacts`/`task6-required-artifacts`; numeric calibration/holdouts below remain frozen. Supplemental gates logs: `task5-boundary-green`, `task5-required-memory`, `task5-approved-collector`, `task5-native-registry`, `task5-rust-*`, `task6-ir-types`, `task6-client-binary`, `task6-handshake`, `task6-root-required`, `task6-format`, `task6-pnpm-verify`. Wrapper failed, equivalent constituents passed; hosted CI remains unobserved.
+
+Regression diagnosis: four original production-budget tests used historical280,453,120 despite the new matching profile; their actual RED was `RESOURCE_LIMIT_EXCEEDED`. They now obtain the exact current installed reservation, preserving one-byte-below refusal, twice SQL charge, unchanged-state checks and historical280,453,120 evidence assertions. New profile absence RED → real matching provenance/equality GREEN. No Runtime algorithm/hash exclusion/corpus/worker/public capability/schema/migration change. Task1 and4 may now close their deferred actual-port acceptance; final packet C completion still requires Task6 branch review. D overlay sealing/atomic summary activation/REFRESH transport and E persisted differential/phase benchmarks remain subsequent reviewed packets; Phase0.5 stays10/14 integrated.
 
 - Design source: completed conversation design, consolidated here.
 - Handoff assembly: refreshed as the agent-neutral Engineering Handoff Pack.
@@ -20,6 +53,42 @@
 | 3     | ROADMAP/ARCHITECTURE-READY                                                              | 0 percent                                                                                                                          |
 
 ## Next action
+
+### Task5 exact numeric approval hold (2026-10-03)
+
+Task4A checkpoint committed `19bc3681a5efad86dba5cd86bd635b8918f81d40`; Task4 acceptance remains pending5/4B, not complete. Final16-project build is reproducible with plan-owned `build.mjs`/`task5-final-build`; Node identity is frozen at `f51a239ca3f95c8d44a4dd858e569f614bd5767c491916789d8fc9731dac74f5`. Original paired profiles and empty separate verification profiles refuse that exact build before capture. No reinstall/purge, source/profile change or parallel heavy suite is used. `capture.mjs` invokes unchanged old benchmark/candidate tools shell-free and preserves exact stdout/failure diagnostics without overwrite.
+
+Sequential calibration is complete: READ_SEAL65 + FULL_TRANSPORT70 + REFRESH_VERIFY75 real fresh-process observations, five repeats/class. Existing policy `p05-native-memory-high-water-range-v1` is unchanged. New identity has no genuine same-identity prior approvals, so both candidate floors are null. Independent arithmetic/recomputed evidence validates M/J/reservation and frozen hashes. No subsequent sampling is folded into either candidate.
+
+| Exact purpose  |     M bytes |    J bytes | Requested reservation bytes | Independent holdout                                                   |
+| -------------- | ----------: | ---------: | --------------------------: | --------------------------------------------------------------------- |
+| READ_SEAL      | 249,556,992 | 37,203,968 |             **286,760,960** | paired27/27,0fail, maximum213,311,488                                 |
+| FULL_TRANSPORT | 249,556,992 | 37,203,968 |             **286,760,960** | same frozen paired candidate/holdout, not a second pooled measurement |
+| REFRESH_VERIFY | 352,083,968 | 70,627,328 |             **422,711,296** | 15/15,0fail, maximum351,334,400                                       |
+
+READ_SEAL/FULL_TRANSPORT retain the existing additional twice-retained-SQL UTF-8 charge; their unchanged paired policy deliberately chooses one high-water/range reservation for both purposes, but requires explicit approval of each. REFRESH_VERIFY owns no SQLite strings and has no SQL surcharge. It is not REFRESH transport admission. These are finite empirical observations on Node v24.15.0/V8 13.6.233.17-node.48/win32-x64/Zod4.6.1 and implementation digest above, not an OS hard memory bound or a promise about other builds/platforms/workloads. Actual-port fresh peak gates remain mandatory after approval; any excess must retain evidence and hold, not retry-green or auto-increase.
+
+Verification corpus revision `p05-native-refresh-verification-memory-v1`, digest `1969707b181cf5bbd2fd753d489c4ff3a39333f4d8166b43c13a62ec40dad232`. Original READ_SEAL corpus digest remains `0c599e6626202fe4a0b5d5866e2d89d01a4674e40b0efe0d0b20acf5b4085b29`; FULL_TRANSPORT remains `11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef`. Complete fixed verification input digests/sizes/outcomes are pinned per group and raw row; MAX_SAFE_INTEGER stays a Fixture budget, not a reservation.
+
+Frozen SHA-256 evidence (existing `fixtures/storage/native-analysis-state/`):
+
+| File                                                                                                                          | SHA-256                                                            |
+| ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| [memory-refresh-c-read-seal.json](../../fixtures/storage/native-analysis-state/memory-refresh-c-read-seal.json)               | `12516a229fea27f2488c2b3dc07cf291ab553af095ef0fd40b9860cbf03dc9d3` |
+| [memory-refresh-c-transport.json](../../fixtures/storage/native-analysis-state/memory-refresh-c-transport.json)               | `37e9493b205c996eab6b0c0d3fbdb0f58d9df482115ab2f9b2288fc18051a98e` |
+| [memory-refresh-c-evidence.json](../../fixtures/storage/native-analysis-state/memory-refresh-c-evidence.json)                 | `504bc04b631abb93bb7c576fe34999871526de0f5696f003f55b86622bbf13e2` |
+| [memory-refresh-c-candidate.json](../../fixtures/storage/native-analysis-state/memory-refresh-c-candidate.json)               | `9a19027b465309abf6ca1992c8fbdf07bc2a83f8dc9689b4a78994c025fbfdb0` |
+| [memory-refresh-c-holdout.json](../../fixtures/storage/native-analysis-state/memory-refresh-c-holdout.json)                   | `0c8211ac1d657cecf4e06adf3add5197e55c47c0f1c8ecb82dd0dfff02e3b1fe` |
+| [memory-refresh-c-verify-report.json](../../fixtures/storage/native-analysis-state/memory-refresh-c-verify-report.json)       | `5820b1246488a2550f0a03a8bc9cc8806a137e2a97a59ee3064dc207f1d44352` |
+| [memory-refresh-c-verify-evidence.json](../../fixtures/storage/native-analysis-state/memory-refresh-c-verify-evidence.json)   | `cbcd21d0da9729db78c451397eb0db099720a5a42b3bbf6e50f38f7c4f005aaf` |
+| [memory-refresh-c-verify-candidate.json](../../fixtures/storage/native-analysis-state/memory-refresh-c-verify-candidate.json) | `e21e3284928866f5e1007aa734d08365b60f2fe4ad4310ea8e39421e5bfd3b26` |
+| [memory-refresh-c-verify-holdout.json](../../fixtures/storage/native-analysis-state/memory-refresh-c-verify-holdout.json)     | `3d7e701aeeb6a836b034f2f6b62457b417a9eb08652843c25960ee29c5449d23` |
+
+Reproduce candidate validation, not resampling/overwriting frozen artifacts: `loadNativeMemoryCandidate('fixtures/storage/native-analysis-state/memory-refresh-c-candidate.json')` from the unchanged paired tool, and `buildVerificationCandidate('fixtures/storage/native-analysis-state/memory-refresh-c-verify-evidence.json','fixtures/storage/native-analysis-state')` from the dedicated tool must equal the saved candidate. Validate every saved holdout row/name/payload/peak and independently recompute M=max(high), J=max(high-low), reservation=M+J (null floors). Logs `task5-{final-build,read-seal,transport,paired-candidate,paired-holdout,verification-bench,verification-candidate,verification-holdout}` live in the original plan ledger. The exact paired holdout bytes equal its plan-owned collector artifact.
+
+Tool self-check found that an extra `candidateSha256` could wrongly exclude a compatible raw report from history audit. Genuine RED `task5-history-red` precedes the minimal classifier correction: strict holdout fields/counts/repetition/outcomes and an existing frozen parent hash are now required. Dedicated tooling15/15 (`task5-history-green`) and both real candidate recomputations/holdouts pass. This affects offline evidence classification only; frozen Node/corpus/worker/input identities and all raw/candidate bytes stay unchanged. Last full-root checkpoint19bc368 remains981/938pass/42fail/1skip; the additional tool regression has not been called a fresh whole-root pass. No numeric gate/schema/quality threshold is weakened.
+
+**STOP: explicit numeric approval is required for each of READ_SEAL286,760,960, FULL_TRANSPORT286,760,960 and REFRESH_VERIFY422,711,296 bytes on this exact identity/evidence.** No static entry is installed, no Task5 evidence/profile commit is made before its approved post-install gates, and42 required admission gates remain held. After approval only: install approved entries without changing identity, run1B/4B exact equality/one-below/provenance and all fresh original/15-class actual-port gates, then complete regression/one whole-branch review6. No Task1/4/C/parent/phase completion, push/PR/main mutation or D/E implementation.
 
 ### Task4A C2 and verification tooling checkpoint (2026-10-03)
 

@@ -160,6 +160,13 @@ test('verification prior approval cannot borrow a foreign-purpose floor', async 
   await s.save('manifest.json', s.manifest);
   await assert.rejects(buildVerificationCandidate(s.path, s.root, identity));
 });
+
+test('compatible raw history cannot masquerade as an unknown-field holdout', async (t) => {
+  const s = await setup(t),
+    { buildVerificationCandidate } = await api();
+  await s.save('hidden-high.json', { ...report(), candidateSha256: 'b'.repeat(64) });
+  await assert.rejects(buildVerificationCandidate(s.path, s.root, identity), /holdout|history/i);
+});
 test('frozen holdout retains malformed/failed/excess rows without recomputing candidate', async (t) => {
   const s = await setup(t),
     { buildVerificationCandidate, collectVerificationObservations } = await api();

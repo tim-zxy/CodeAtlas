@@ -179,7 +179,8 @@ export async function buildVerificationCandidate(manifestPath, fixtureRoot, iden
   }
   // Even a failed compatible report with valid high rows must not be omitted.
   // Holdouts are explicitly candidate-pinned and never select their candidate.
-  for (const reportPath of await jsonFiles(root)) {
+  const evidenceFiles = await jsonFiles(root);
+  for (const reportPath of evidenceFiles) {
     const raw = await readFile(reportPath);
     let old;
     try {
@@ -190,12 +191,64 @@ export async function buildVerificationCandidate(manifestPath, fixtureRoot, iden
     if (
       old?.schemaVersion === 1 &&
       old.workspace === workspace &&
-      !Object.hasOwn(old, 'candidateSha256') &&
       Array.isArray(old.observations) &&
       isDeepStrictEqual(old.environment, identity.environment) &&
       isDeepStrictEqual(old.corpus, identity.corpus)
-    )
-      assert.ok(digests.has(sha(raw)), 'Omitted compatible raw history');
+    ) {
+      if (!Object.hasOwn(old, 'candidateSha256')) {
+        assert.ok(digests.has(sha(raw)), 'Omitted compatible raw history');
+        continue;
+      }
+      // An extra field is not proof that raw calibration is a holdout.
+      keys(old, [
+        'schemaVersion',
+        'workspace',
+        'candidateSha256',
+        'environment',
+        'corpus',
+        'observations',
+        'failures',
+      ]);
+      assert.match(old.candidateSha256 ?? '', /^[a-f0-9]{64}$/, 'Holdout candidate hash missing');
+      assert.ok(Array.isArray(old.failures));
+      assert.ok(
+        old.failures.every((f) =>
+          ['CANDIDATE_INVALID', 'WORKER_OR_PEAK_FAILED', 'CANDIDATE_CHANGED'].includes(f?.code),
+        ),
+        'Unknown holdout failure',
+      );
+      assert.ok(
+        old.observations.length <= verificationCases.length,
+        'Holdout has calibration-sized coverage',
+      );
+      if (old.failures.length === 0)
+        assert.equal(old.observations.length, verificationCases.length, 'Holdout coverage missing');
+      assert.equal(
+        new Set(old.observations.map((r) => r.name)).size,
+        old.observations.length,
+        'Duplicate holdout class',
+      );
+      for (const row of old.observations) {
+        validateVerificationObservation(row, identity);
+        assert.equal(row.repetition, 0, 'Holdout repetition changed');
+      }
+      let parent;
+      for (const file of evidenceFiles) {
+        const bytes = await readFile(file);
+        if (sha(bytes) === old.candidateSha256) {
+          parent = JSON.parse(bytes);
+          break;
+        }
+      }
+      assert.ok(parent, 'Frozen holdout parent missing');
+      header(parent, identity);
+      assert.equal(parent.policyRevision, memoryPolicyRevision);
+      positive(parent.reservationBytes);
+      assert.ok(
+        Array.isArray(parent.groups) && parent.groups.length === verificationCases.length,
+        'Holdout parent groups missing',
+      );
+    }
   }
   records.forEach(({ report }) => validateReport(report, identity));
   const grouped = new Map();
