@@ -2,6 +2,8 @@
 
 ## Corrected C approved profiles and green regression checkpoint (2026-10-04)
 
+Verified local product/evidence checkpoint: `f12d3e9` (`fix(native): verify refresh input and approve corrected memory profiles`), branch `codex/p05-w3-020-native-refresh-producer`. It commits only the28 named repair/profile/evidence/controlling-document files; unrelated EOL-only flags and local artifacts are preserved. No remote integration occurred.
+
 Explicit approval installs READ_SEAL **283,324,416**, FULL_TRANSPORT **283,324,416** and REFRESH_VERIFY **422,879,232** bytes for exact build `453a41edf654df5e1ded7ea6983637544cc7681d6e9ca64290acaca8de095d8a`. The nine frozen review evidence files/hashes below, old reports/profiles, worker/corpus/input recipes, original twice-retained-SQL charge and hash exclusion remain unchanged. Verification owns no SQL. Installation is static data only; no new algorithm, dependency, schema, migration, phase threshold or production REFRESH workflow.
 
 Fresh corrected-build results, after genuine missing-profile RED for both new provenance cases:
