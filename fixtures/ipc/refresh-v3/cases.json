@@ -5,6 +5,8 @@
   "design": "../../../docs/superpowers/specs/2026-10-03-p05-w3-020-native-refresh-producer-design.md",
   "acceptance": "../../../docs/handoff/PHASE_ACCEPTANCE.md",
   "payloadVectors": "payload-vectors.json",
+  "binarySuite": "../../../packages/providers/test/native-refresh-v3-binary.test.mjs",
+  "binaryFixture": "p05-native-refresh-producer-v1",
   "cases": [
     {
       "id": "retained-caller-upsert",

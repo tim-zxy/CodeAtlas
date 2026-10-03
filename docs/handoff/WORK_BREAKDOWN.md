@@ -1,5 +1,7 @@
 # Work Breakdown
 
+2026-10-03 Task4A implements registered source C2/restart/differential/worker/failure evidence and dedicated15-class corpus/worker/offline collector. This is acceptance-pending, not Task4 complete: exact-build75-row calibration plus original paired captures/independent holdouts/numeric approval belong to5, then1B/4B/whole-branch review6. Required root42 profile failures remain. No extra roadmap task, D/E implementation or phase promotion; see CURRENT_STATUS.
+
 2026-10-03 revised native plan8fb12a6 approved; Task1A interface/refusal checkpoint locally verified (CURRENT_STATUS), Task1 acceptance pending5/1B. Next2/3 Rust work consumes the stable C interface without admitted Node acceptance;4A tooling/C2 then5 three-purpose numeric approval precedes1B/4B closure and6. All14 roadmap tasks/original exits unchanged; required-root27fail remains open. Older plan-review-pending records below are historical.
 
 2026-10-03 C1 written detail accepted after25e7797; [existing native plan revision](../superpowers/plans/2026-10-03-p05-w3-020-native-refresh-producer.md) awaits review. Order1A→2→3→4A→5→1B/4B→6 preserves six tasks: interface/refusal checkpoint, unchanged Rust work, C2 plus verification tooling, final-build three-purpose calibration/explicit numeric approval, actual-port closure and whole regression/review. Task1/4 stay acceptance-pending until actual gates pass; record unit BASE/status in the existing ledger. No new roadmap task, D/E scope or phase promotion. Earlier direction-only/written-review-pending wording is historical.

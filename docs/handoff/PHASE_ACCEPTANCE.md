@@ -1,5 +1,7 @@
 # Phase Acceptance
 
+2026-10-03 Task4A checkpoint adds registered17-transition C2/restart/full-target/task-local Canonical evidence and15-class verification/tooling (new48/48; C2+C1106/106). No calibration/numeric approval/admitted actual-port or persisted Evaluation follows. Required root981/938pass/42fail/1skip retains original27 plus new15 profile gates; all phase thresholds/checkboxes stay unchanged. Final checkpoint results are in CURRENT_STATUS;5/1B/4B/6 remain mandatory.
+
 2026-10-03 C Task2/3 local core (Cargo116/real Native+C1114) checks no parent/phase exit. Complete registered C2 differential/restart/worker/failure evidence,15-class candidate/holdout/numeric approval/actual-port gates remain open. Required root27 missing-profile failures retained; Phase0.5 stays10/14 integrated, no threshold/checkbox change.
 
 2026-10-03 revised native plan approved: Task1A has fresh scalar/equality/snapshot/refusal evidence (90/90;198 combined) but no reviewed REFRESH_VERIFY reservation/actual memory corpus. Root933/905pass/27 missing-profile failures/1skip remains open. Private port and contract checkpoint cannot satisfy Task1 full acceptance, C completion or phase exit;5/1B/4B and original criteria remain mandatory. No checkbox/threshold changes.

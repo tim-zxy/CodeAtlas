@@ -24,3 +24,7 @@ scripts/bench-native-full-v3-memory.mjs text eol=lf
 packages/providers/test/helpers/native-full-v3-memory-corpus.mjs text eol=lf
 packages/providers/test/helpers/native-full-v3-memory-worker.mjs text eol=lf
 packages/providers/test/fixtures/native-full-v3-memory-child.mjs text eol=lf
+fixtures/ipc/refresh-v3/verification-memory-cases.json text eol=lf
+packages/runtime/test/helpers/native-refresh-verification-corpus.mjs text eol=lf
+packages/runtime/test/helpers/native-refresh-verification-identity.mjs text eol=lf
+packages/runtime/test/helpers/native-refresh-verification-worker.mjs text eol=lf

@@ -99,6 +99,15 @@ fn run_observed<W: Write, F: Fn(&str) + Sync>(
     output: &mut W,
     on_parse: &F,
 ) -> io::Result<ExitCode> {
+    run_with_observers(validated, workers, output, on_parse, &|_| {})
+}
+fn run_with_observers<W: Write, F: Fn(&str) + Sync, G: Fn(&str) + Sync>(
+    validated: &ValidatedRequestV3,
+    workers: NonZeroUsize,
+    output: &mut W,
+    on_parse: &F,
+    on_parsed: &G,
+) -> io::Result<ExitCode> {
     let header = validated.header();
     let p = &header["payload"];
     let context = &p["analysisStateContext"];
@@ -281,7 +290,10 @@ fn run_observed<W: Write, F: Fn(&str) + Sync>(
                         let cancel = &cancelled;
                         let root = &request.root;
                         scope.spawn(move || {
-                            parse_source_observed(root, file, deadline, cancel, true, on_parse)
+                            let result =
+                                parse_source_observed(root, file, deadline, cancel, true, on_parse);
+                            on_parsed(file["path"].as_str().unwrap());
+                            result
                         })
                     })
                     .collect();
@@ -622,27 +634,39 @@ mod tests {
     }
     impl Drop for Fixture {
         fn drop(&mut self) {
-            for name in ["Caller.java", "Added.java"] {
-                let _ = fs::remove_file(self.root.join(name));
+            if let Ok(entries) = fs::read_dir(&self.root) {
+                for entry in entries.flatten() {
+                    let _ = fs::remove_file(entry.path());
+                }
             }
             let _ = fs::remove_dir(&self.root);
         }
     }
     fn fixture(name: &str, shared: bool) -> Fixture {
+        let sources = if shared {
+            vec![
+                (
+                    "Caller.java".into(),
+                    "package p; import p.*; class Caller {}".into(),
+                ),
+                ("Added.java".into(), "package p; class Added {}".into()),
+            ]
+        } else {
+            vec![(
+                "Caller.java".into(),
+                "class Caller { void run() { Added.go(); } }".into(),
+            )]
+        };
+        fixture_sources(name, &sources)
+    }
+    fn fixture_sources(name: &str, sources: &[(String, String)]) -> Fixture {
         let root =
             std::env::temp_dir().join(format!("codeatlas-refresh-{name}-{}", std::process::id()));
         fs::create_dir_all(&root).unwrap();
         let raw = include_str!("../../../../fixtures/ipc/protocol-v3/valid-refresh.jsonl");
         let mut header: Value = serde_json::from_str(raw.lines().next().unwrap()).unwrap();
         let mut files = Vec::new();
-        for (name, source) in if shared {
-            vec![
-                ("Caller.java", "package p; import p.*; class Caller {}"),
-                ("Added.java", "package p; class Added {}"),
-            ]
-        } else {
-            vec![("Caller.java", "class Caller { void run() { Added.go(); } }")]
-        } {
+        for (name, source) in sources {
             fs::write(root.join(name), source).unwrap();
             let mut file: Value = serde_json::from_str::<Value>(raw.lines().nth(1).unwrap())
                 .unwrap()["payload"]["sourceFile"]
@@ -701,6 +725,112 @@ mod tests {
             summaries,
         }
     }
+    #[test]
+    fn registered_c2_transitions_parse_only_declared_changed_files_after_restart() {
+        let manifest: Value = serde_json::from_str(include_str!(
+            "../../../../fixtures/native/java-refresh-producer/expected/transitions.json"
+        ))
+        .unwrap();
+        let source_root = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("../../fixtures/native/java-refresh-producer/source");
+        for row in manifest["cases"].as_array().unwrap() {
+            let read_sources = |inventory: &Value| {
+                inventory
+                    .as_object()
+                    .unwrap()
+                    .iter()
+                    .map(|(name, artifact)| {
+                        (
+                            name.clone(),
+                            fs::read_to_string(source_root.join(artifact.as_str().unwrap()))
+                                .unwrap(),
+                        )
+                    })
+                    .collect::<Vec<_>>()
+            };
+            let before = read_sources(&row["baseline"]);
+            let mut f =
+                fixture_sources(&format!("counts-{}", row["id"].as_str().unwrap()), &before);
+            let old = f.header["payload"]["targetSourceFiles"]
+                .as_array()
+                .unwrap()
+                .clone();
+            let after = read_sources(&row["target"]);
+            let mut target = Vec::new();
+            for (name, source) in &after {
+                fs::write(f.root.join(name), source).unwrap();
+                let mut file: Value = serde_json::from_str::<Value>(
+                    include_str!("../../../../fixtures/ipc/protocol-v3/valid-refresh.jsonl")
+                        .lines()
+                        .nth(1)
+                        .unwrap(),
+                )
+                .unwrap()["payload"]["sourceFile"]
+                    .clone();
+                file["id"] = json!(name);
+                file["path"] = json!(name);
+                file["contentFingerprint"] =
+                    json!(format!("sha256:{:x}", Sha256::digest(source.as_bytes())));
+                if let Some(role) = row["classificationChange"].as_str() {
+                    file["classification"]["role"] = json!(role);
+                }
+                target.push(file);
+            }
+            let added: Vec<_> = target
+                .iter()
+                .filter(|f| !old.iter().any(|o| o["id"] == f["id"]))
+                .cloned()
+                .collect();
+            let modified: Vec<_> = target
+                .iter()
+                .filter(|f| old.iter().any(|o| o["id"] == f["id"] && o != *f))
+                .cloned()
+                .collect();
+            let deleted: Vec<_> = old.iter().filter(|o| !target.iter().any(|f| o["id"] == f["id"])).map(|o| {
+                fs::remove_file(f.root.join(o["path"].as_str().unwrap())).unwrap();
+                json!({"id":o["id"],"path":o["path"],"previousContentFingerprint":o["contentFingerprint"]})
+            }).collect();
+            f.header["payload"]["targetSourceFiles"] = json!(target);
+            f.header["payload"]["changes"] =
+                json!({"added":added,"modified":modified,"deleted":deleted});
+            f.header["payload"]["targetRevision"]["contentFingerprint"] = json!("target-c2");
+            let (events, mut paths) = execute(&mut f);
+            assert_eq!(
+                events.last().unwrap()["type"],
+                "REFRESH_COMPLETED",
+                "{}",
+                row["id"]
+            );
+            paths.sort();
+            assert_eq!(json!(paths), row["changed"], "{}", row["id"]);
+            assert_eq!(events.last().unwrap()["payload"]["outcome"], row["outcome"]);
+            f.summaries = events
+                .iter()
+                .filter(|e| e["type"] == "ANALYSIS_SUMMARY")
+                .map(|e| e["payload"].clone())
+                .collect();
+            f.header["payload"]["baselineState"] =
+                events.last().unwrap()["payload"]["analysisState"].clone();
+            f.header["payload"]["baseRevisionFingerprint"] = json!("target-c2");
+            f.header["payload"]["changes"] = json!({"added":[],"modified":[],"deleted":[]});
+            // Remove even retained source bytes: the next invocation must use summaries alone.
+            for (name, _) in after {
+                fs::remove_file(f.root.join(name)).unwrap();
+            }
+            let (restarted, paths) = execute(&mut f);
+            assert!(paths.is_empty(), "{}", row["id"]);
+            assert_eq!(
+                restarted.last().unwrap()["type"],
+                "REFRESH_COMPLETED",
+                "{}",
+                row["id"]
+            );
+            assert_eq!(
+                restarted.last().unwrap()["payload"]["outcome"],
+                row["outcome"]
+            );
+        }
+    }
     fn events(bytes: &[u8]) -> Vec<Value> {
         bytes
             .split(|b| *b == b'\n')
@@ -709,6 +839,16 @@ mod tests {
             .collect()
     }
     fn execute(f: &mut Fixture) -> (Vec<Value>, Vec<String>) {
+        let request = validated(f);
+        let paths = Mutex::new(Vec::new());
+        let mut output = Vec::new();
+        run_observed(&request, NonZeroUsize::new(1).unwrap(), &mut output, &|p| {
+            paths.lock().unwrap().push(p.to_owned())
+        })
+        .unwrap();
+        (events(&output), paths.into_inner().unwrap())
+    }
+    fn validated(f: &mut Fixture) -> codeatlas_native_analyzer::request_v3::ValidatedRequestV3 {
         f.summaries.sort_unstable_by(|a, b| {
             a["sourceFile"]["path"]
                 .as_str()
@@ -728,14 +868,236 @@ mod tests {
         bytes.extend(serde_json::to_vec(&json!({"protocolVersion":3,"requestId":"req","sequence":f.summaries.len()+1,"type":"REQUEST_COMPLETED",
             "payload":{"summaryRecords":f.summaries.len(),"integrityChecksum":checksum}})).unwrap());
         bytes.push(b'\n');
-        let request = decode_request_v3(&bytes).unwrap();
-        let paths = Mutex::new(Vec::new());
-        let mut output = Vec::new();
-        run_observed(&request, NonZeroUsize::new(1).unwrap(), &mut output, &|p| {
-            paths.lock().unwrap().push(p.to_owned())
-        })
+        decode_request_v3(&bytes).unwrap()
+    }
+    fn two_changed(name: &str) -> Fixture {
+        let mut f = fixture(name, false);
+        let mut changed = Vec::new();
+        for (name, source) in [
+            (
+                "Caller.java",
+                "class Caller { void run() { Added.go(); Added.go(); } }",
+            ),
+            ("Added.java", "class Added { static void go() {} }"),
+        ] {
+            fs::write(f.root.join(name), source).unwrap();
+            let mut file = f.header["payload"]["targetSourceFiles"][0].clone();
+            file["id"] = json!(name);
+            file["path"] = json!(name);
+            file["contentFingerprint"] =
+                json!(format!("sha256:{:x}", Sha256::digest(source.as_bytes())));
+            changed.push(file);
+        }
+        f.header["payload"]["targetSourceFiles"] = json!(changed);
+        f.header["payload"]["targetRevision"]["contentFingerprint"] = json!("two-changed");
+        f.header["payload"]["changes"] =
+            json!({"added":[changed[1]],"modified":[changed[0]],"deleted":[]});
+        f
+    }
+    #[test]
+    fn retained_index_and_relation_verification_obey_cooperative_deadline_checks() {
+        let f = fixture("retained-deadline-checks", true);
+        let files = f
+            .summaries
+            .iter()
+            .map(|s| super::decode_retained_file(s).unwrap())
+            .collect::<Vec<_>>();
+        let checks = std::cell::Cell::new(0);
+        let expired = || {
+            checks.set(checks.get() + 1);
+            if checks.get() == 2 {
+                Err(("BUDGET_EXCEEDED", "Refresh deadline exceeded"))
+            } else {
+                Ok(())
+            }
+        };
+        let result = super::build_index(&files, 256 * 1024 * 1024, &expired);
+        assert!(matches!(result, Err(("BUDGET_EXCEEDED", _))));
+        assert_eq!(
+            checks.get(),
+            2,
+            "refuse inside retained index reconstruction"
+        );
+        let index = super::build_index(&files, 256 * 1024 * 1024, &|| Ok(())).unwrap();
+        let request = Request {
+            protocol_version: 3,
+            id: "full".into(),
+            snapshot_id: "baseline".into(),
+            repository_id: "r".into(),
+            root: f.root.to_str().unwrap().into(),
+            revision_id: "rev".into(),
+            revision_fingerprint: "base".into(),
+            capabilities: vec!["SYMBOL", "IMPORT", "CALL", "INHERITANCE", "REFERENCE"]
+                .into_iter()
+                .map(str::to_owned)
+                .collect(),
+            source_files: files.iter().map(|f| f.source_file.clone()).collect(),
+            max_duration_ms: 10_000,
+            max_memory_bytes: 256 * 1024 * 1024,
+            max_events: 10_000,
+            deadline_epoch_ms: None,
+        };
+        checks.set(0);
+        assert!(matches!(
+            super::verify_baseline(&request, &files, &index, &expired),
+            Err(("BUDGET_EXCEEDED", _))
+        ));
+        assert_eq!(
+            checks.get(),
+            2,
+            "refuse inside per-fact regeneration, without parsing"
+        );
+    }
+    #[test]
+    fn forced_opposite_worker_completion_orders_preserve_exact_output_and_counts() {
+        let mut f = two_changed("completion-order");
+        let request = validated(&mut f);
+        let mut outputs = Vec::new();
+        for first in ["Added.java", "Caller.java"] {
+            let (release, arrived) = std::sync::mpsc::channel();
+            let arrived = Mutex::new(arrived);
+            let order = Mutex::new(Vec::new());
+            let parses = Mutex::new(Vec::new());
+            let mut output = Vec::new();
+            super::run_with_observers(
+                &request,
+                NonZeroUsize::new(2).unwrap(),
+                &mut output,
+                &|p| parses.lock().unwrap().push(p.to_owned()),
+                &|p| {
+                    if p != first {
+                        arrived
+                            .lock()
+                            .unwrap()
+                            .recv_timeout(Duration::from_secs(1))
+                            .unwrap();
+                    }
+                    order.lock().unwrap().push(p.to_owned());
+                    if p == first {
+                        release.send(()).unwrap();
+                    }
+                },
+            )
+            .unwrap();
+            assert_eq!(order.lock().unwrap()[0], first);
+            let mut parses = parses.into_inner().unwrap();
+            parses.sort();
+            assert_eq!(parses, vec!["Added.java", "Caller.java"]);
+            assert_eq!(events(&output).last().unwrap()["type"], "REFRESH_COMPLETED");
+            outputs.push(output);
+        }
+        assert_eq!(outputs[0], outputs[1]);
+        let mut single = Vec::new();
+        run_observed(
+            &request,
+            NonZeroUsize::new(1).unwrap(),
+            &mut single,
+            &|_| {},
+        )
         .unwrap();
-        (events(&output), paths.into_inner().unwrap())
+        assert_eq!(single, outputs[0]);
+    }
+    #[test]
+    fn parser_worker_exception_is_failed_observation_not_completed_state() {
+        let mut f = two_changed("panic");
+        let request = validated(&mut f);
+        let mut output = Vec::new();
+        run_observed(
+            &request,
+            NonZeroUsize::new(2).unwrap(),
+            &mut output,
+            &|_| panic!("private parser exception"),
+        )
+        .unwrap();
+        let observed = events(&output);
+        assert_eq!(observed.last().unwrap()["type"], "REFRESH_FAILED");
+        assert_eq!(
+            observed.last().unwrap()["payload"]["error"]["code"],
+            "INTERNAL_ANALYZER_FAILURE"
+        );
+        assert!(!observed.iter().any(|e| e["type"] == "REFRESH_COMPLETED"));
+    }
+    #[test]
+    fn blocked_protocol_writer_prevents_parsing_until_drain() {
+        struct Blocked {
+            bytes: Vec<u8>,
+            blocked: std::sync::mpsc::Sender<()>,
+            release: std::sync::mpsc::Receiver<()>,
+        }
+        impl Write for Blocked {
+            fn write(&mut self, bytes: &[u8]) -> io::Result<usize> {
+                if self.bytes.is_empty() {
+                    self.blocked.send(()).unwrap();
+                    self.release.recv_timeout(Duration::from_secs(1)).unwrap();
+                }
+                self.bytes.extend_from_slice(bytes);
+                Ok(bytes.len())
+            }
+            fn flush(&mut self) -> io::Result<()> {
+                Ok(())
+            }
+        }
+        let mut f = two_changed("backpressure");
+        let request = validated(&mut f);
+        let (blocked, observe_blocked) = std::sync::mpsc::channel();
+        let (release, observe_release) = std::sync::mpsc::channel();
+        let parses = Mutex::new(Vec::new());
+        std::thread::scope(|scope| {
+            let job = scope.spawn(|| {
+                let mut output = Blocked {
+                    bytes: Vec::new(),
+                    blocked,
+                    release: observe_release,
+                };
+                run_observed(&request, NonZeroUsize::new(2).unwrap(), &mut output, &|p| {
+                    parses.lock().unwrap().push(p.to_owned())
+                })
+                .unwrap();
+                output.bytes
+            });
+            observe_blocked
+                .recv_timeout(Duration::from_secs(1))
+                .unwrap();
+            assert!(parses.lock().unwrap().is_empty());
+            release.send(()).unwrap();
+            let output = job.join().unwrap();
+            assert_eq!(events(&output).last().unwrap()["type"], "REFRESH_COMPLETED");
+        });
+        let mut paths = parses.into_inner().unwrap();
+        paths.sort();
+        assert_eq!(paths, vec!["Added.java", "Caller.java"]);
+    }
+    #[test]
+    fn partial_protocol_write_error_never_returns_a_complete_observation() {
+        struct Broken {
+            bytes: Vec<u8>,
+        }
+        impl Write for Broken {
+            fn write(&mut self, bytes: &[u8]) -> io::Result<usize> {
+                if !self.bytes.is_empty() {
+                    return Err(io::Error::new(io::ErrorKind::BrokenPipe, "closed consumer"));
+                }
+                let len = bytes.len().min(11);
+                self.bytes.extend_from_slice(&bytes[..len]);
+                Ok(len)
+            }
+            fn flush(&mut self) -> io::Result<()> {
+                Ok(())
+            }
+        }
+        let mut f = two_changed("write-error");
+        let request = validated(&mut f);
+        let mut output = Broken { bytes: Vec::new() };
+        let parses = Mutex::new(Vec::new());
+        assert!(
+            run_observed(&request, NonZeroUsize::new(2).unwrap(), &mut output, &|p| {
+                parses.lock().unwrap().push(p.to_owned())
+            })
+            .is_err()
+        );
+        assert_eq!(output.bytes.len(), 11);
+        assert!(!output.bytes.ends_with(b"\n"));
+        assert!(parses.into_inner().unwrap().is_empty());
     }
     #[test]
     fn refresh_unknown_caller_resolves_without_parsing_caller() {

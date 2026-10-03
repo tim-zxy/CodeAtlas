@@ -10,6 +10,8 @@ This packet is the real Rust producer and strict Provider-side output contract. 
 
 ## Authority and observed predecessor
 
+Execution2026-10-03 Task4A: registered C2 supplies17 literal source transitions/fresh-process restart/full-target/task-local Canonical comparisons and private parser-count/completion-order/failure tests.15-class verification index/recipes/worker/offline collector and required root/CI runner exist; new48/48 and C2+C1106/106 pass. Task4 remains acceptance-pending: no measured/approved reservation or actual-port success until5/4B. CURRENT_STATUS records checkpoint gates/telemetry/cancellation limits and42 required profile failures. Older C2/tooling-absent wording is historical; no D/E or phase promotion.
+
 Execution2026-10-03: Task2 committed c9f91f0; Task3 Rust core locally verified (Cargo116/real Native+C1114), with real changed-only parser observations and strict C byte decoding. C2/full Task4 resource/worker/restart/Canonical differential registration remains missing. Scoped parser lifetimes/checked owned-workspace reservations establish no RSS/latency gate. Root27 profile failures/5/1B/4B remain open; no D/E or phase advancement.
 
 Execution update2026-10-03: revised native plan8fb12a6 confirmed;1A strict C helper/private preflight checkpoint is locally verified (90 focused/198 combined), not full Task1/C acceptance. C1 custom byte index27/five vectors now exists with unchanged expectations. Rust producer/C2 and4A verification corpus/5 approval/1B/4B actual-port gates remain absent. Root27 required-profile failures remain open; no advertised incremental capability/SQLite writer is added. Earlier plan/B-base/Fixture-pending wording is historical for integrated B and1A only.

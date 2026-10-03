@@ -1,0 +1,1 @@
+// Valid zero-fact source.

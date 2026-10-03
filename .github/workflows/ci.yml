@@ -79,12 +79,13 @@ jobs:
         run: cargo build --workspace
       - name: Run real-binary Java Fixtures
         run: pnpm test:native-analysis
-      - name: Enforce fresh read-seal and transport memory reservations
+      - name: Enforce fresh read-seal, transport and refresh-verification reservations
         if: always()
         env:
           CODEATLAS_REQUIRE_NATIVE_MEMORY_PROFILE: '1'
+          CODEATLAS_REQUIRE_NATIVE_REFRESH_VERIFICATION_PROFILE: '1'
           CODEATLAS_NATIVE_MEMORY_ARTIFACT_DIR: .superpowers/native-memory/corpus
-        run: node --test --test-concurrency=1 packages/runtime/test/native-metadata-corpus.test.mjs packages/providers/test/native-full-v3-memory.test.mjs
+        run: node --test --test-concurrency=1 packages/runtime/test/native-metadata-corpus.test.mjs packages/providers/test/native-full-v3-memory.test.mjs packages/runtime/test/native-refresh-verification-memory.test.mjs
       - name: Collect every required memory class
         if: always()
         run: pnpm test:native-memory
