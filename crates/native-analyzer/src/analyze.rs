@@ -11,7 +11,8 @@ use codeatlas_native_analyzer::analysis_state::write_canonical;
 use codeatlas_native_analyzer::java::JavaAnalyzer;
 use codeatlas_native_analyzer::java_relations::compilation_unit_id;
 use codeatlas_native_analyzer::language::{
-    LanguageAnalysis, RelationKind, RelationTarget, SiteStatistics, SyntaxCoverage,
+    LanguageAnalysis, RelationKind, RelationTarget, ResolvedRelation, SiteStatistics, SymbolFact,
+    SyntaxCoverage,
 };
 use codeatlas_native_analyzer::relation_index::{DeclarationIndex, package_container_fact_id};
 use codeatlas_native_analyzer::source_access::{SourceAccessError, read_verified_source};
@@ -297,20 +298,7 @@ fn run_parsed<W: Write>(
             }
             counts.source_files += 1;
             for symbol in &analysis.symbols {
-                let span = &symbol.span;
-                if !stream.emit("NODE", json!({
-                "providerId": "native",
-                "providerFactId": symbol.provider_fact_id,
-                "providerSnapshotId": request.snapshot_id,
-                "repositoryId": request.repository_id,
-                "revisionId": request.revision_id,
-                "providerKind": symbol.provider_kind,
-                "name": symbol.name,
-                "qualifiedName": symbol.qualified_name,
-                "sourceRange": {"sourceFileId": source_file["id"], "startLine": span.start_line,
-                    "startColumn": span.start_column, "endLine": span.end_line, "endColumn": span.end_column},
-                "confidence": {"score": 1, "method": "parser", "reasons": []}
-            }), false)? {
+                if !stream.emit("NODE", symbol_payload(&request, source_file, symbol), false)? {
                     return Ok(ExitCode::SUCCESS);
                 }
                 counts.nodes += 1;
@@ -544,16 +532,7 @@ fn run_relations<W: Write>(
             }
             counts.source_files += 1;
             for symbol in &analysis.symbols {
-                let span = &symbol.span;
-                if !stream.emit("NODE", json!({
-                    "providerId": "native", "providerFactId": symbol.provider_fact_id,
-                    "providerSnapshotId": request.snapshot_id, "repositoryId": request.repository_id,
-                    "revisionId": request.revision_id, "providerKind": symbol.provider_kind,
-                    "name": symbol.name, "qualifiedName": symbol.qualified_name,
-                    "sourceRange": {"sourceFileId": source_file["id"], "startLine": span.start_line,
-                        "startColumn": span.start_column, "endLine": span.end_line, "endColumn": span.end_column},
-                    "confidence": {"score": 1, "method": "parser", "reasons": []}
-                }), false)? {
+                if !stream.emit("NODE", symbol_payload(request, source_file, symbol), false)? {
                     return Ok(ExitCode::SUCCESS);
                 }
                 counts.nodes += 1;
@@ -601,36 +580,11 @@ fn run_relations<W: Write>(
                         );
                     }
                 }
-                let target = match relation.target {
-                    RelationTarget::Resolved {
-                        fact_id,
-                        resolution,
-                    } => json!({
-                        "state": "RESOLVED", "resolution": resolution,
-                        "target": {"factType": "NODE", "providerId": "native", "providerFactId": fact_id}
-                    }),
-                    RelationTarget::NonResolved {
-                        resolution,
-                        hint,
-                        candidates,
-                    } => json!({
-                        "state": "UNRESOLVED", "resolution": resolution, "originalHint": hint,
-                        "candidates": candidates.into_iter().map(|provider_fact_id| json!({
-                            "factType": "NODE", "providerId": "native", "providerFactId": provider_fact_id
-                        })).collect::<Vec<_>>()
-                    }),
-                };
-                let span = relation.span;
-                if !stream.emit("EDGE", json!({
-                    "providerId": "native", "providerFactId": relation.provider_fact_id,
-                    "providerSnapshotId": request.snapshot_id, "repositoryId": request.repository_id,
-                    "revisionId": request.revision_id, "providerKind": relation.provider_kind,
-                    "source": {"factType": "NODE", "providerId": "native", "providerFactId": relation.source_fact_id},
-                    "target": target,
-                    "sourceRange": {"sourceFileId": source_file["id"], "startLine": span.start_line,
-                        "startColumn": span.start_column, "endLine": span.end_line, "endColumn": span.end_column},
-                    "confidence": {"score": 1, "method": "parser", "reasons": []}
-                }), false)? {
+                if !stream.emit(
+                    "EDGE",
+                    relation_payload(request, source_file, relation),
+                    false,
+                )? {
                     return Ok(ExitCode::SUCCESS);
                 }
                 counts.edges += 1;
@@ -1099,6 +1053,24 @@ fn parse_source(
     cancelled: &AtomicBool,
     with_relations: bool,
 ) -> Result<LanguageAnalysis, ProcessingError> {
+    parse_source_observed(
+        root,
+        source_file,
+        deadline,
+        cancelled,
+        with_relations,
+        &|_| {},
+    )
+}
+
+fn parse_source_observed<F: Fn(&str) + Sync>(
+    root: &str,
+    source_file: &Value,
+    deadline: Instant,
+    cancelled: &AtomicBool,
+    with_relations: bool,
+    on_parse: &F,
+) -> Result<LanguageAnalysis, ProcessingError> {
     if Instant::now() >= deadline || cancelled.load(Ordering::Relaxed) {
         return Err(ProcessingError::Deadline);
     }
@@ -1119,6 +1091,7 @@ fn parse_source(
         return Err(ProcessingError::Deadline);
     }
     let mut analyzer = JavaAnalyzer::new().map_err(|_| ProcessingError::Parser)?;
+    on_parse(path);
     let analysis = if with_relations {
         analyzer.analyze_with_relations_until(
             path,
@@ -1308,26 +1281,7 @@ impl FullMetadata {
         if growth.saturating_add(id.len()).saturating_add(64) > self.available() {
             return Err(metadata_limit());
         }
-        // Hash the actual emitted payload, omitting only snapshot identity.
-        let mut hash = HashWriter(Sha256::new());
-        hash.write_all(b"{")?;
-        let mut first = true;
-        for (key, value) in payload.as_object().expect("fact object") {
-            if key == "providerSnapshotId" {
-                continue;
-            }
-            if !first {
-                hash.write_all(b",")?;
-            }
-            first = false;
-            serde_json::to_writer(&mut hash, key).map_err(io::Error::other)?;
-            hash.write_all(b":")?;
-            write_canonical(value, &mut hash)?;
-        }
-        hash.write_all(b"}")?;
-        let mut digest = String::with_capacity(64);
-        use std::fmt::Write as _;
-        write!(&mut digest, "{:x}", hash.0.finalize()).expect("string write");
+        let digest = fact_content_digest(payload);
         self.facts.try_reserve_exact(1).map_err(io::Error::other)?;
         self.facts.push(FactDigest {
             kind: if kind == "NODE" { "NODE" } else { "EDGE" },
@@ -1340,6 +1294,63 @@ impl FullMetadata {
         }
         Ok(())
     }
+}
+
+fn symbol_payload(request: &Request, file: &Value, symbol: &SymbolFact) -> Value {
+    let span = &symbol.span;
+    json!({"providerId":"native","providerFactId":symbol.provider_fact_id,
+        "providerSnapshotId":request.snapshot_id,"repositoryId":request.repository_id,
+        "revisionId":request.revision_id,"providerKind":symbol.provider_kind,
+        "name":symbol.name,"qualifiedName":symbol.qualified_name,
+        "sourceRange":{"sourceFileId":file["id"],"startLine":span.start_line,
+            "startColumn":span.start_column,"endLine":span.end_line,"endColumn":span.end_column},
+        "confidence":{"score":1,"method":"parser","reasons":[]}})
+}
+
+fn relation_payload(request: &Request, file: &Value, relation: ResolvedRelation) -> Value {
+    let target = match relation.target {
+        RelationTarget::Resolved {
+            fact_id,
+            resolution,
+        } => json!({"state":"RESOLVED","resolution":resolution,
+            "target":{"factType":"NODE","providerId":"native","providerFactId":fact_id}}),
+        RelationTarget::NonResolved {
+            resolution,
+            hint,
+            candidates,
+        } => json!({"state":"UNRESOLVED",
+            "resolution":resolution,"originalHint":hint,"candidates":candidates.into_iter().map(|id|
+                json!({"factType":"NODE","providerId":"native","providerFactId":id})).collect::<Vec<_>>()}),
+    };
+    let span = relation.span;
+    json!({"providerId":"native","providerFactId":relation.provider_fact_id,
+        "providerSnapshotId":request.snapshot_id,"repositoryId":request.repository_id,
+        "revisionId":request.revision_id,"providerKind":relation.provider_kind,
+        "source":{"factType":"NODE","providerId":"native","providerFactId":relation.source_fact_id},
+        "target":target,"sourceRange":{"sourceFileId":file["id"],"startLine":span.start_line,
+            "startColumn":span.start_column,"endLine":span.end_line,"endColumn":span.end_column},
+        "confidence":{"score":1,"method":"parser","reasons":[]}})
+}
+
+fn fact_content_digest(payload: &Value) -> String {
+    // Hash in constant auxiliary space; only the snapshot identity is omitted.
+    let mut hash = HashWriter(Sha256::new());
+    hash.write_all(b"{").expect("hash write");
+    let mut first = true;
+    for (key, value) in payload.as_object().expect("fact object") {
+        if key == "providerSnapshotId" {
+            continue;
+        }
+        if !first {
+            hash.write_all(b",").expect("hash write");
+        }
+        first = false;
+        serde_json::to_writer(&mut hash, key).expect("hash key");
+        hash.write_all(b":").expect("hash write");
+        write_canonical(value, &mut hash).expect("hash value");
+    }
+    hash.write_all(b"}").expect("hash write");
+    format!("{:x}", hash.0.finalize())
 }
 
 fn symbol_summary(symbol: &codeatlas_native_analyzer::language::SymbolFact) -> Value {
@@ -1770,6 +1781,69 @@ impl<'a, W: Write> EventWriter<'a, W> {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn retained_fact_digest_omits_only_snapshot() {
+        let mut payload = serde_json::json!({"providerSnapshotId":"old","name":"𝒜","n":1});
+        let expected = format!(
+            "{:x}",
+            sha2::Sha256::digest(
+                b"{\"n\":{\"$nativeNumber\":\"3ff0000000000000\"},\"name\":\"\xf0\x9d\x92\x9c\"}"
+            )
+        );
+        assert_eq!(super::fact_content_digest(&payload), expected);
+        payload["providerSnapshotId"] = serde_json::json!("new");
+        assert_eq!(super::fact_content_digest(&payload), expected);
+        payload["name"] = serde_json::json!("B");
+        assert_ne!(super::fact_content_digest(&payload), expected);
+    }
+
+    #[test]
+    fn retained_parse_observer_runs_only_after_verified_source() {
+        let root = std::env::temp_dir().join(format!(
+            "codeatlas-retained-observer-{}",
+            std::process::id()
+        ));
+        fs::create_dir_all(&root).unwrap();
+        let source = b"class A {}";
+        fs::write(root.join("A.java"), source).unwrap();
+        let mut file = serde_json::json!({"path":"A.java","languageHint":"java",
+            "classification":{"contentKind":"TEXT"},"contentFingerprint":"sha256:bad"});
+        let calls = AtomicUsize::new(0);
+        let observe = |path: &str| {
+            assert_eq!(path, "A.java");
+            calls.fetch_add(1, Ordering::Relaxed);
+        };
+        let deadline = std::time::Instant::now() + Duration::from_secs(10);
+        let cancelled = std::sync::atomic::AtomicBool::new(false);
+        assert!(
+            super::parse_source_observed(
+                root.to_str().unwrap(),
+                &file,
+                deadline,
+                &cancelled,
+                true,
+                &observe
+            )
+            .is_err()
+        );
+        assert_eq!(calls.load(Ordering::Relaxed), 0);
+        file["contentFingerprint"] =
+            serde_json::json!(format!("sha256:{:x}", sha2::Sha256::digest(source)));
+        assert!(
+            super::parse_source_observed(
+                root.to_str().unwrap(),
+                &file,
+                deadline,
+                &cancelled,
+                true,
+                &observe
+            )
+            .is_ok()
+        );
+        assert_eq!(calls.load(Ordering::Relaxed), 1);
+        fs::remove_file(root.join("A.java")).unwrap();
+        fs::remove_dir(root).unwrap();
+    }
     use sha2::Digest;
     use std::fs;
     use std::num::NonZeroUsize;

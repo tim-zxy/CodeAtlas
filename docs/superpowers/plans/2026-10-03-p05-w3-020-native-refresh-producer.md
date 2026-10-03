@@ -102,6 +102,8 @@ assert.equal(
 
 ## Task2: Retained decoding and shared fact recipes
 
+Execution record2026-10-03: retained/shared helpers verified locally after cbbb8a5; Cargo102, real Native31, fmt/Clippy/build/architecture pass. Root retains exactly27 missing-profile failures, not waived. Plan ruling: a single-summary decoder cannot verify regenerated FILE/SHARED semantic ledgers or allocation lifetimes; exact same-union forgery/shared-owner and charged-overflow tests remain Task3 obligations. Task2 tests instead prove structural foreign relation owner refusal, checked scalar conversion, real Java roundtrip/diagnostics and preserved extraction counts. See CURRENT_STATUS and plan-owned ledger for reproducible RED/GREEN evidence. No phase/parent completion.
+
 **Files:** Create `retained.rs`; modify library `lib.rs`, `analyze.rs` private helpers and associated inline Rust tests. Do not alter Java resolver semantics, published fixtures or version constants.
 
 **Consumes:** Summary v1, language structs, existing `DeclarationIndex` and canonical digest recipe.

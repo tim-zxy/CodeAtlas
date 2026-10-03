@@ -21,6 +21,14 @@
 
 ## Next action
 
+### Task2 retained/shared-helper unit verified locally (2026-10-03)
+
+After Task1A checkpoint `cbbb8a5`, Rust `retained.rs` restores validated symbols/sites/diagnostics and extraction statistics without source access, using checked usize conversion; only resolution buckets are reset. Full analysis now reuses private symbol/relation payload and streaming canonical fact-digest helpers. The private parser observer runs only after verified source access, immediately before Java analysis; no wire/schema/version/resolver semantics or published Fixture bytes changed. Retained decoding is not baseline semantic verification: Task3 must regenerate per-file/union ledgers and verify all shared owners before parsing. Its forged-owner and memory-accounting-overflow gates remain open.
+
+Fresh evidence: `cargo test --workspace` **102/102**; `cargo fmt --all --check` and `cargo clippy --workspace --all-targets -- -D warnings` pass; `cargo build --workspace` succeeds. The real `native-full-v3-binary`, `native-relations`, and `native-coverage-v2` Node suites pass **31/31**; architecture17 passes. Logs `task2-{retained-red,helper-red,helper-green,cargo-verified,clippy-verified,native,root-required}` are in the existing plan-owned workspace. RED demonstrated missing decoder/digest/observer before implementation. Existing source/fact/checksum expectations are unchanged.
+
+Required registered root (same two required flags and plan-owned artifacts as below): **933 total/905 pass/27fail/1 existing Windows skip**,152848.4525ms,exit1. All14 full-transport and13 read/seal missing-profile failure names match Task1A; there are no new root failures. No numeric profile is installed and no memory gate is waived. Next executable unit is Task3 baseline semantic verification/changed-only producer, then4A; Task5 numeric approval and1B/4B remain required. Task2 does not close C, parent REFRESH or Phase0.5; no push/PR/main change is made.
+
 ### Revised native plan approved; Task1A interface checkpoint verified (2026-10-03)
 
 The user confirms revision8fb12a6. Implemented locally: mandatory expected-budget fifth argument, owned bounded request snapshot/lowered input-line preflight, exact wire equality before output/sink access, private Runtime trusted-scalar/lazy-opener admission and empty distinct REFRESH_VERIFY profile array. No static reservation is installed, no real positive admission or measured memory acceptance is claimed. Existing raw27-case/five-vector corpus and all historical profile entries remain unchanged. Temporary isolated test profile modules only gain the new empty export; no old corpus/report/admission policy is modified.
