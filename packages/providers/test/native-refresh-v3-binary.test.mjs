@@ -63,6 +63,17 @@ const facts = (events, type) =>
     .map((e) => e.payload)
     .sort(byId);
 const metadata = (events, type) => events.filter((e) => e.type === type).map((e) => e.payload);
+function assertOperationIdentityOrder(events, requireAllCategories = false) {
+  for (const type of ['UPSERT_NODE', 'UPSERT_EDGE', 'REMOVE_NODE', 'REMOVE_EDGE']) {
+    const ids = metadata(events, type).map((p) => p.providerFactId);
+    if (requireAllCategories) assert.ok(ids.length >= 2, `${type}: cross-file operation coverage`);
+    for (let i = 1; i < ids.length; i++)
+      assert.ok(
+        Buffer.compare(Buffer.from(ids[i - 1]), Buffer.from(ids[i])) < 0,
+        `${type}: raw wire identities must be strictly ascending: ${ids[i - 1]} / ${ids[i]}`,
+      );
+  }
+}
 // Only snapshot identity is history-dependent; source, resolution and uncertainty remain.
 function semantic(fact) {
   const { providerSnapshotId: _snapshot, ...rest } = fact;
@@ -338,6 +349,7 @@ for (const row of transitions.cases) {
       for (const workers of [1, 2]) {
         const result = await refresh(request, base, workers);
         assert.equal(result.terminal.payload.outcome, row.outcome);
+        assertOperationIdentityOrder(result.events, row.id === 'cross-file-operation-order');
         assert.deepEqual(
           metadata(result.events, 'SOURCE_FILE')
             .map((f) => f.path)

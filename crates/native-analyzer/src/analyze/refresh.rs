@@ -40,6 +40,45 @@ fn value_charge(v: &Value) -> Result<usize, Failure> {
     };
     add(std::mem::size_of::<Value>(), heap)
 }
+fn retain_upsert(
+    pending: &mut Vec<(&'static str, Value)>,
+    kind: &'static str,
+    payload: Value,
+    reserved: &mut usize,
+    limit: usize,
+    metadata_bytes: usize,
+) -> Result<(), Failure> {
+    let payload_bytes = value_charge(&payload)?;
+    let slot = std::mem::size_of::<(&str, Value)>();
+    let capacity = pending.capacity();
+    let growing = pending.len() == capacity;
+    let new_array = if growing {
+        multiply(add(capacity, 1)?, slot)?
+    } else {
+        0
+    };
+    // reserved includes the old array; admit overlap with its replacement before allocation.
+    if add(
+        add(add(*reserved, payload_bytes)?, new_array)?,
+        metadata_bytes,
+    )? > limit
+    {
+        return Err(RESOURCE);
+    }
+    pending.try_reserve_exact(1).map_err(|_| RESOURCE)?;
+    let growth = multiply(
+        pending.capacity().checked_sub(capacity).ok_or(RESOURCE)?,
+        slot,
+    )?;
+    let resident = add(add(*reserved, payload_bytes)?, growth)?;
+    if add(resident, metadata_bytes)? > limit {
+        return Err(RESOURCE);
+    }
+    // Value's inline storage is conservatively charged in both payload and array.
+    *reserved = resident;
+    pending.push((kind, payload));
+    Ok(())
+}
 fn extraction_charge(a: &LanguageAnalysis) -> Result<usize, Failure> {
     // Reserve the retained structs and their bounded JSON fact projections.
     // One node payload has fewer than 32 properties including nested records;
@@ -335,9 +374,15 @@ fn run_with_observers<W: Write, F: Fn(&str) + Sync, G: Fn(&str) + Sync>(
         ] {
             state.insert(key.into(), value);
         }
+        // Bounded preview and serialization/growth/envelope overlap during ordered output.
+        reserved = add(reserved, multiply(3, MAX_LINE_BYTES)?)?;
+        if reserved >= limit {
+            return Err(RESOURCE);
+        }
         stream.full =
             Some(FullMetadata::new(Value::Object(state), limit - reserved).map_err(|_| RESOURCE)?);
         let mut target = Vec::<FactDigest>::new();
+        let mut pending = Vec::new();
         let mut counts = json!({"sourceFiles":0,"upsertedNodes":0,"removedNodes":0,"upsertedEdges":0,"removedEdges":0,"coverage":0,"diagnostics":0});
         for source in &changed {
             if !stream
@@ -386,23 +431,15 @@ fn run_with_observers<W: Write, F: Fn(&str) + Sync, G: Fn(&str) + Sync>(
                     .iter()
                     .any(|f| f.kind == kind && f.id == id && f.digest == digest)
                 {
-                    let event = if kind == "NODE" {
-                        "UPSERT_NODE"
-                    } else {
-                        "UPSERT_EDGE"
-                    };
-                    if !stream
-                        .emit(event, payload, false)
-                        .map_err(|_| ("INTERNAL_ANALYZER_FAILURE", "Output write failed"))?
-                    {
-                        return Err(RESOURCE);
-                    }
-                    let key = if kind == "NODE" {
-                        "upsertedNodes"
-                    } else {
-                        "upsertedEdges"
-                    };
-                    counts[key] = json!(counts[key].as_u64().unwrap() + 1);
+                    retain_upsert(
+                        &mut pending,
+                        kind,
+                        payload,
+                        &mut reserved,
+                        limit,
+                        stream.full.as_ref().unwrap().used_bytes(),
+                    )?;
+                    stream.full.as_mut().unwrap().memory_budget = limit - reserved;
                 }
                 Ok(())
             })?;
@@ -448,6 +485,40 @@ fn run_with_observers<W: Write, F: Fn(&str) + Sync, G: Fn(&str) + Sync>(
             {
                 return Ok(false);
             }
+        }
+        pending.sort_unstable_by(|(ka, a), (kb, b)| {
+            (ka, a["providerFactId"].as_str()).cmp(&(kb, b["providerFactId"].as_str()))
+        });
+        for (kind, payload) in pending {
+            check()?;
+            let event = if kind == "NODE" {
+                "UPSERT_NODE"
+            } else {
+                "UPSERT_EDGE"
+            };
+            // Verify the whole next line within the reserved scratch before EventWriter allocates it.
+            let envelope = json!({"protocolVersion":stream.protocol_version,"requestId":stream.request_id,
+                "sequence":stream.sequence,"type":event,"payload":null});
+            let mut bounded = LimitedBytes::new(MAX_LINE_BYTES + 3);
+            serde_json::to_writer(&mut bounded, &envelope).map_err(|_| RESOURCE)?;
+            serde_json::to_writer(&mut bounded, &payload).map_err(|_| RESOURCE)?;
+            // Replacing four-byte null with payload and adding LF gives the exact wire length.
+            if bounded.bytes.len() - 3 > MAX_LINE_BYTES {
+                return Err(RESOURCE);
+            }
+            drop(bounded);
+            if !stream
+                .emit(event, payload, false)
+                .map_err(|_| ("INTERNAL_ANALYZER_FAILURE", "Output write failed"))?
+            {
+                return Ok(false);
+            }
+            let key = if kind == "NODE" {
+                "upsertedNodes"
+            } else {
+                "upsertedEdges"
+            };
+            counts[key] = json!(counts[key].as_u64().unwrap() + 1);
         }
         prior.sort_unstable_by(|a, b| (a.kind, &a.id).cmp(&(b.kind, &b.id)));
         for old in &prior {
@@ -622,11 +693,77 @@ fn verify_baseline(
 #[cfg(test)]
 mod tests {
     use super::super::*;
-    use super::run_observed;
+    use super::{RESOURCE, retain_upsert, run_observed, value_charge};
     use codeatlas_native_analyzer::request_v3::decode_request_v3;
     use std::fs;
     use std::sync::Mutex;
 
+    #[test]
+    fn pending_upsert_budget_covers_payload_and_transient_capacity_growth() {
+        let payload = json!({"providerFactId":"fact-a"});
+        let charge = value_charge(&payload).unwrap();
+        let slot = std::mem::size_of::<(&str, Value)>();
+        let mut pending = Vec::new();
+        let mut reserved = 10;
+        assert_eq!(
+            retain_upsert(
+                &mut pending,
+                "NODE",
+                payload.clone(),
+                &mut reserved,
+                10 + charge + slot + 20 - 1,
+                20
+            ),
+            Err(RESOURCE)
+        );
+        assert!(pending.is_empty());
+        assert_eq!(reserved, 10);
+        retain_upsert(
+            &mut pending,
+            "NODE",
+            payload.clone(),
+            &mut reserved,
+            10 + charge + slot + 20,
+            20,
+        )
+        .unwrap();
+        assert_eq!(pending.len(), 1);
+        assert_eq!(reserved, 10 + charge + slot);
+        let before = reserved;
+        let peak = before + charge + 2 * slot + 20;
+        assert_eq!(
+            retain_upsert(
+                &mut pending,
+                "EDGE",
+                payload.clone(),
+                &mut reserved,
+                peak - 1,
+                20
+            ),
+            Err(RESOURCE)
+        );
+        assert_eq!(pending.len(), 1);
+        assert_eq!(reserved, before);
+        retain_upsert(&mut pending, "EDGE", payload, &mut reserved, peak, 20).unwrap();
+        assert_eq!(reserved, before + charge + slot);
+    }
+    #[test]
+    fn pending_upsert_accounting_overflow_refuses_without_retention() {
+        let mut pending = Vec::new();
+        let mut reserved = usize::MAX;
+        assert_eq!(
+            retain_upsert(
+                &mut pending,
+                "NODE",
+                json!({"providerFactId":"x"}),
+                &mut reserved,
+                usize::MAX,
+                0
+            ),
+            Err(RESOURCE)
+        );
+        assert!(pending.is_empty());
+    }
     struct Fixture {
         root: std::path::PathBuf,
         header: Value,
@@ -983,7 +1120,16 @@ mod tests {
             let mut parses = parses.into_inner().unwrap();
             parses.sort();
             assert_eq!(parses, vec!["Added.java", "Caller.java"]);
-            assert_eq!(events(&output).last().unwrap()["type"], "REFRESH_COMPLETED");
+            let observed = events(&output);
+            assert_eq!(observed.last().unwrap()["type"], "REFRESH_COMPLETED");
+            for kind in ["UPSERT_NODE", "UPSERT_EDGE", "REMOVE_NODE", "REMOVE_EDGE"] {
+                let ids = observed
+                    .iter()
+                    .filter(|e| e["type"] == kind)
+                    .map(|e| e["payload"]["providerFactId"].as_str().unwrap())
+                    .collect::<Vec<_>>();
+                assert!(ids.windows(2).all(|pair| pair[0] < pair[1]), "{kind}");
+            }
             outputs.push(output);
         }
         assert_eq!(outputs[0], outputs[1]);
@@ -1269,6 +1415,36 @@ mod tests {
         let (events, paths) = execute(&mut f);
         assert!(paths.is_empty());
         assert_eq!(events.last().unwrap()["type"], "REFRESH_COMPLETED");
+    }
+
+    #[test]
+    fn ordered_refresh_workspace_boundary_fails_closed_after_changed_only_parsing() {
+        let mut f = two_changed("ordered-workspace-boundary");
+        // Derive this Fixture's admission boundary; this is not a policy/RSS threshold.
+        let (mut low, mut high) = (1_u64, 256 * 1024 * 1024);
+        while low < high {
+            let middle = low + (high - low) / 2;
+            f.header["payload"]["resourceBudget"]["maxMemoryBytes"] = json!(middle);
+            let (observed, _) = execute(&mut f);
+            if observed.last().unwrap()["type"] == "REFRESH_COMPLETED" {
+                high = middle;
+            } else {
+                low = middle + 1;
+            }
+        }
+        f.header["payload"]["resourceBudget"]["maxMemoryBytes"] = json!(low);
+        let (success, _) = execute(&mut f);
+        assert_eq!(success.last().unwrap()["type"], "REFRESH_COMPLETED");
+        f.header["payload"]["resourceBudget"]["maxMemoryBytes"] = json!(low - 1);
+        let (failed, mut paths) = execute(&mut f);
+        paths.sort();
+        assert_eq!(paths, vec!["Added.java", "Caller.java"]);
+        assert_eq!(failed.last().unwrap()["type"], "REFRESH_FAILED");
+        assert_eq!(
+            failed.last().unwrap()["payload"]["error"]["code"],
+            "RESOURCE_LIMIT_EXCEEDED"
+        );
+        assert!(!failed.iter().any(|e| e["type"] == "REFRESH_COMPLETED"));
     }
 
     #[test]

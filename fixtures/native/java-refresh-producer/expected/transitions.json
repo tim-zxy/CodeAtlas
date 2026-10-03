@@ -352,6 +352,45 @@
       "relations": []
     },
     {
+      "id": "cross-file-operation-order",
+      "baseline": { "A.java": "OrderABefore.java", "Z.java": "OrderZBefore.java" },
+      "target": { "A.java": "OrderAAfter.java", "Z.java": "OrderZAfter.java" },
+      "changed": ["A.java", "Z.java"],
+      "outcome": "SUCCEEDED",
+      "relations": [
+        {
+          "file": "A.java",
+          "kind": "java.call",
+          "resolution": "EXACT",
+          "targets": ["Z.next"],
+          "count": 1
+        },
+        {
+          "file": "Z.java",
+          "kind": "java.call",
+          "resolution": "EXACT",
+          "targets": ["A.next"],
+          "count": 1
+        }
+      ],
+      "baselineRelations": [
+        {
+          "file": "A.java",
+          "kind": "java.call",
+          "resolution": "EXACT",
+          "targets": ["Z.old"],
+          "count": 1
+        },
+        {
+          "file": "Z.java",
+          "kind": "java.call",
+          "resolution": "EXACT",
+          "targets": ["A.old"],
+          "count": 1
+        }
+      ]
+    },
+    {
       "id": "zero-files-noop",
       "baseline": {},
       "target": {},

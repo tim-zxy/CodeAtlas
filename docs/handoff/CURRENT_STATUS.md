@@ -1,5 +1,47 @@
 # Current Status
 
+## C bounded operation ordering verified locally (2026-10-04)
+
+User “确认” approved the bounded conformance repair from `b7b55da434ad160178d64c122eaf4f6924fecc3b`. Rust now retains only deduplicated changed upserts, admits owned payload/capacity and transient old/new-array overlap with current metadata before retention, sorts in place by type/ID, and moves payloads into output. Existing sorted removals are unchanged. Conservative line-preview/serialization scratch is derived from the existing line ceiling; exact next-line length is checked without cloning the payload. Pending charges remain reserved until emission finishes. This can refuse small workspaces earlier; it does not raise a budget, claim an RSS bound, omit facts or reparse unchanged sources.
+
+The new `cross-file-operation-order` C2 transition has four independently authored Java snapshots and literal source-derived call targets. Raw-wire category assertions run before semantic sorting. Old binary failed UPSERT_NODE ordering (`ordering-wire-red`); fresh built binary passes all26 C2 cases (`ordering-fresh-build`, `ordering-wire-fresh-green`). New pending-payload/capacity tests first fail on missing helper (compile-time API RED, not a behavioral assertion), then pass equality/one-byte-below/growth-overlap/overflow checks. A real producer test derives this Fixture's workspace boundary and proves exact-budget success versus one-byte-below RESOURCE_LIMIT_EXCEEDED after parsing only Added/Caller, without a completed observation. Forced opposite worker completion, old shared-owner/restart/complete Provider and task-local Canonical comparisons still pass.
+
+| Fresh gate                                                                        | Result                                                                  |
+| --------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| Dedicated required original + verification memory suites                          | 75/75; all42 actual classes                                             |
+| Independent approved original collector                                           | 27/27;0fail                                                             |
+| Complete real Native + Fixture registry                                           | 136/136                                                                 |
+| Cargo workspace                                                                   | 125/125; fmt/build/Clippy with denied warnings pass                     |
+| Complete required root                                                            | 991total/990pass/0fail/1existing Windows skip;366896.5945ms             |
+| Build / IR types / architecture                                                   | 16projects/pass/17projects                                              |
+| Real client / handshake                                                           | 2/2 /4/4                                                                |
+| Full matched format +13 controlling documents, links, whitespace and immutability | pass;128 local links,9 frozen hashes,17 prior transition rows preserved |
+
+Node `v24.15.0`, V8 `13.6.233.17-node.48`, win32/x64, Zod4.6.1 and implementation digest `453a41edf654df5e1ded7ea6983637544cc7681d6e9ca64290acaca8de095d8a` remain exact. Approved READ_SEAL283,324,416/FULL_TRANSPORT283,324,416/REFRESH_VERIFY422,879,232 entries, original SQL surcharge, hash exclusion, nine frozen reports and corpus/worker recipes are unchanged; no recalibration or new numeric approval is required for this Rust/test-only repair. All17 old transition rows are deep-equal; the new row is additional, not an altered golden.
+
+Fresh dedicated peaks: READ_SEAL213,581,824/FULL_TRANSPORT165,462,016/REFRESH_VERIFY343,613,440 bytes; approved collector212,525,056. Root peaks: READ_SEAL248,987,648/FULL_TRANSPORT165,978,112/REFRESH_VERIFY330,002,432. Each remains within its matching approved reservation. These are finite absolute startup-inclusive maxRSS observations, not hard OS or phase-performance guarantees. Dedicated and root artifacts now use separate directories, preserving both successful class snapshots; all prior RED/failure/calibration artifacts remain.
+
+Reproduce in the existing installed workspace, with a new evidence directory/label rather than overwriting old artifacts:
+
+```powershell
+$env:CODEATLAS_REQUIRE_NATIVE_MEMORY_PROFILE='1'
+$env:CODEATLAS_REQUIRE_NATIVE_REFRESH_VERIFICATION_PROFILE='1'
+$env:CODEATLAS_NATIVE_MEMORY_ARTIFACT_DIR='.superpowers/sdd/2026-10-03-p05-w3-020-native-refresh-producer/ordering-reproduction-artifacts'
+node --test --test-concurrency=1 packages/runtime/test/native-metadata-corpus.test.mjs packages/providers/test/native-full-v3-memory.test.mjs packages/runtime/test/native-refresh-verification-memory.test.mjs
+node scripts/native-memory-observations.mjs approved .superpowers/sdd/2026-10-03-p05-w3-020-native-refresh-producer/ordering-reproduction-collector
+cargo fmt --all --check
+cargo build --workspace
+cargo clippy --workspace --all-targets -- -D warnings
+cargo test --workspace
+node --test packages/providers/test/native-refresh-v3-binary.test.mjs
+node scripts/check-architecture.mjs
+node node_modules/typescript/bin/tsc -p packages/ir/tsconfig.type-tests.json --noEmit
+```
+
+Full fresh exact registered constituents,16-project build and per-gate logs are retained in `.superpowers/sdd/2026-10-03-p05-w3-020-native-refresh-producer/ordering-*`; `ordering-gates.mjs` expands the registered root/Native/client/handshake scripts rather than inventing a reduced suite. It sets distinct `ordering-dedicated-artifacts`/`ordering-root-artifacts` paths. `ordering-consistency.mjs` checks exact Node identity, nine SHA-256 values,17 old transition rows and local document links. Prior `pnpm verify` wrapper no-TTY pre-gate failure remains a tooling limitation; fresh exact constituents pass, not a claim that the wrapper or hosted CI passed.
+
+The single whole-branch review's two Important findings were already repaired in `f12d3e9`; this separately approved follow-up resolves the remaining Minor ordering finding without a second review or spec waiver. C Task4B/5/6 and the producer/strict-verifier packet are locally complete after final document/commit checks. This is not production REFRESH transport/SQLite overlay publication, persisted differential Evaluation, incremental capability advertisement or Phase0.5 completion. Phase remains10/14 remotely integrated, original P05-W3-020/P05-W9-001/phase exits open. Next is integration choice, then a separately reviewed packet D design/plan; no push/PR/merge/main/D/E action occurred. Older open-ordering/numeric-hold notes below are historical.
+
 ## Corrected C approved profiles and green regression checkpoint (2026-10-04)
 
 Verified local product/evidence checkpoint: `f12d3e9` (`fix(native): verify refresh input and approve corrected memory profiles`), branch `codex/p05-w3-020-native-refresh-producer`. It commits only the28 named repair/profile/evidence/controlling-document files; unrelated EOL-only flags and local artifacts are preserved. No remote integration occurred.
