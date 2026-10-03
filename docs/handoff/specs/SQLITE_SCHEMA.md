@@ -1,11 +1,17 @@
 # SQLite Schema and Migration Specification
 
+Packet B local final validation (2026-10-02): real full-bootstrap/reopen/rollback and bounded state-read gates pass under the approved exact static profile. R010 remains version10/native_analysis_state/backupRequired false, LF-normalized checksum `sha256:ebf26d1df42a47418bb06173e4783d3fdf3503ca0f6e0a0f8b6893ebbc711fa2`; no migration, graph publication transaction or Canonical contract changes in the review correction. R001–R009 remain immutable. Current local gates and unavailable hosted evidence are recorded in CURRENT_STATUS; real REFRESH summary-patch activation remains later work.
+
+Packet B execution update (2026-10-02): Task 6 is locally committed as `0b2af73`, with 24 real bootstrap/lifecycle cases, 98/98 expanded focused tests and root 796 pass/0 fail/one existing Windows skip. Task 7 now advertises full v3 `[1,2,3]` after observed RED→GREEN descriptor tests; strict v1/v2, IR v1, capability list and explicit v3 REFRESH refusal are unchanged. The required bootstrap runner obtains the actual descriptor through the production client rather than using a future descriptor. Native integration CI selects Windows/x64 Node 24.15.0 because only that exact environment has reviewed full-transport admission; Ubuntu TypeScript and Windows Rust gates remain. This is configured coverage, not observed hosted CI or Linux bootstrap evidence. Final Task 7 gates/review remain pending; earlier unimplemented/profile-review-blocked wording is historical. Parent REFRESH and original Phase 0.5 exits stay open at 10/14 integrated, with no new milestone or deferred scope.
+
 ## Topology and rules
 
 Use one rebuildable repository database per repository and one workspace database per workspace. Use parameterized SQL and focused repositories, not an ORM. WAL/busy-timeout choices are configuration concerns; transaction ownership is centralized. Published migration files are immutable; fixes use new migrations.
 
 ```ts
-interface TransactionRunner { run<T>(fn: (tx: StorageTransaction) => Promise<T>): Promise<T>; }
+interface TransactionRunner {
+  run<T>(fn: (tx: StorageTransaction) => Promise<T>): Promise<T>;
+}
 interface CanonicalFactStore {
   applyAnalysisBatch(batch: ValidatedAnalysisBatch): Promise<void>;
   applyAnalysisPatch(patch: ValidatedAnalysisPatch): Promise<void>;
@@ -15,20 +21,20 @@ interface CanonicalFactStore {
 
 ## Repository migrations
 
-| Migration | Phase | Principal tables |
-|---|---:|---|
-| R001 repo_core | 0 | repository, repository_state |
-| R002 source_revision | 0 | revisions, source_files |
-| R003 provider_runtime | 0 | provider_snapshots, provider_capabilities |
-| R004 code_graph | 0 | canonical_nodes, canonical_edges, unresolved_targets |
-| R005 evidence | 0 | evidence, fact_evidence, provider_fact_bindings |
-| R006 analysis_coverage | 0 | analysis_coverage |
-| R007 diagnostics | 0 | analysis_diagnostics |
-| R008 indexed_fingerprint | 0.5 | repository_state indexed_content_fingerprint |
-| R009 active_support_candidates | 0.5 | active_support_candidates |
-| R010 native_analysis_state (reserved; not released) | 0.5 | derived Native analysis-state header/per-file summaries; physical schema requires detailed packet review |
-| R011 execution_graph | 1 | execution_nodes, execution_edges, execution_contexts |
-| R012 runtime_flow | 1 | runtime_flows, runtime_flow_steps |
+| Migration                                        | Phase | Principal tables                                                                           |
+| ------------------------------------------------ | ----: | ------------------------------------------------------------------------------------------ |
+| R001 repo_core                                   |     0 | repository, repository_state                                                               |
+| R002 source_revision                             |     0 | revisions, source_files                                                                    |
+| R003 provider_runtime                            |     0 | provider_snapshots, provider_capabilities                                                  |
+| R004 code_graph                                  |     0 | canonical_nodes, canonical_edges, unresolved_targets                                       |
+| R005 evidence                                    |     0 | evidence, fact_evidence, provider_fact_bindings                                            |
+| R006 analysis_coverage                           |     0 | analysis_coverage                                                                          |
+| R007 diagnostics                                 |     0 | analysis_diagnostics                                                                       |
+| R008 indexed_fingerprint                         |   0.5 | repository_state indexed_content_fingerprint                                               |
+| R009 active_support_candidates                   |   0.5 | active_support_candidates                                                                  |
+| R010 native_analysis_state (implemented locally) |   0.5 | native_analysis_state, native_analysis_file; empty derived tables without guessed backfill |
+| R011 execution_graph                             |     1 | execution_nodes, execution_edges, execution_contexts                                       |
+| R012 runtime_flow                                |     1 | runtime_flows, runtime_flow_steps                                                          |
 
 R001-R007 are the Phase 0 repository schema. `repository` is a single stable-ID row per database; `root_path` is a locator, not identity. Revisions retain kind-specific identity and fingerprints; a source-file ID may recur across revisions, while `(revision_id, path)` is unique. Provider snapshots retain requested revision/fingerprint and outcome, including partial or failed observations. Canonical node/edge IDs and FactKeys are Provider-independent and unique within a revision. Resolved edges reference same-revision nodes; unresolved edges retain their resolution and a separate hint/candidate array without selecting a target. Evidence and Provider bindings are separate from Canonical Facts. Coverage and bounded diagnostics belong to Provider snapshots. The exact column mapping and deliberate application-validation boundary are recorded in [`P0-W1-006 Repository Database Design`](../../superpowers/specs/2026-09-21-p0-w1-006-repository-db-design.md).
 
@@ -46,28 +52,29 @@ The accepted [cross-revision amendment](../../superpowers/specs/2026-09-30-p05-w
 
 [ADR-016](../adr/ADR-016-native-refresh-derived-analysis-state.md) reserves additive R010 and moves the unpublished Phase 1 reservations to R011/R012; prior reservation descriptions above are historical. No R010 SQL/manifest is released by design approval. Derived summaries are TypeScript-owned, bounded, versioned and rebuildable; migration must not backfill guessed extraction metadata. Full/patch Apply activates compatible summaries with graph/support/Evidence/coverage/indexed fingerprint in one Store transaction. Legacy/missing/incompatible state requires explicit bootstrap without graph mutation; full writes without valid summaries make the summary baseline unavailable. The exact physical schema and failure/upgrade Fixtures require the next reviewed storage/bootstrap packet. Published R001-R009 SQL/checksums stay unchanged.
 
+The [accepted P05-W3-020-B design](../../superpowers/specs/2026-10-01-p05-w3-020-state-bootstrap-design.md) and [native execution plan](../../superpowers/plans/2026-10-01-p05-w3-020-state-bootstrap.md) govern R010. Task 1 implements the two STRICT derived tables locally with normalized checksum `sha256:ebf26d1df42a47418bb06173e4783d3fdf3503ca0f6e0a0f8b6893ebbc711fa2`, no backfill and no source inventory FK. Prior reservation-only language above is historical. R001-R009 remain unchanged. Provider validation, bounded reads/staging, full bootstrap and transactional legacy invalidation remain later tasks; SQL `json_valid` alone is not authority to reuse or publish opaque summaries.
+
 ## Workspace migrations
 
-| Migration | Phase | Principal tables |
-|---|---:|---|
-| W001 workspace_core | 0 | workspace |
-| W002 repositories | 0 | repositories |
-| W003 revision_sets | 0 | revision_sets, revision_set_items |
-| W004 services | 1 | services, service_identities |
-| W005 contracts | 1 | contracts, contract_matches, contract_match_candidates |
-| W006 workspace_execution | 1 | workspace_execution_nodes, workspace_execution_edges |
-| W007 documents | 1 | documents, document_revisions, sections, blocks, links |
-| W008 claims | 1 | claims, claim_evidence |
-| W009 knowledge | 1 | knowledge_items, knowledge_revisions, knowledge_relations |
-| W010 lifecycle | 1 | source_changes, impacts, compilation_runs, publication_runs |
-| W011 evaluation | 1 | evaluation_runs, metrics, probe_results |
-| W012 usage | 2 | usage_events, feedback_events |
+| Migration                | Phase | Principal tables                                            |
+| ------------------------ | ----: | ----------------------------------------------------------- |
+| W001 workspace_core      |     0 | workspace                                                   |
+| W002 repositories        |     0 | repositories                                                |
+| W003 revision_sets       |     0 | revision_sets, revision_set_items                           |
+| W004 services            |     1 | services, service_identities                                |
+| W005 contracts           |     1 | contracts, contract_matches, contract_match_candidates      |
+| W006 workspace_execution |     1 | workspace_execution_nodes, workspace_execution_edges        |
+| W007 documents           |     1 | documents, document_revisions, sections, blocks, links      |
+| W008 claims              |     1 | claims, claim_evidence                                      |
+| W009 knowledge           |     1 | knowledge_items, knowledge_revisions, knowledge_relations   |
+| W010 lifecycle           |     1 | source_changes, impacts, compilation_runs, publication_runs |
+| W011 evaluation          |     1 | evaluation_runs, metrics, probe_results                     |
+| W012 usage               |     2 | usage_events, feedback_events                               |
 
 Phase 0 must not pre-create Phase 1 knowledge tables. Revision sets reject mutation after `frozen = 1`.
 W001-W003 are the Phase 0 workspace schema. `workspace` is a single stable-ID row per database; root paths are locators rather than identity. `repositories` registers stable repository IDs without copying repository facts or creating cross-database foreign keys. A `revision_set` selects at most one revision ID and fingerprint per registered repository. The exact mapping and freeze safeguards are recorded in [`P0-W1-007 Workspace Database Design`](../../superpowers/specs/2026-09-21-p0-w1-007-workspace-db-design.md).
 
 A RevisionSet may change while `frozen = 0`. Transition to `frozen = 1` is irreversible; SQLite triggers reject subsequent parent updates/deletes and item inserts/updates/deletes. The P0-W1-007 Fixture `p0-workspace-schema-v1` at `fixtures/storage/workspace-schema/cases.json` covers fresh-to-latest, all three sequential boundaries, exact table/trigger inventory, constraints/database isolation, and frozen-set immutability. Knowledge compilation remains a Phase 1 Application workflow and is not implemented by these migrations.
-
 
 ## Migration mechanics
 

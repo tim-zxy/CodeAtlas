@@ -57,6 +57,48 @@ fn serve_once_impl<R: Read, W: Write, E: Write>(
         .take((MAX_LINE_BYTES + 1) as u64)
         .read_to_end(&mut bytes)?;
 
+    // Recognizing a trustworthy header only selects the v3 validator. Never
+    // route an incomplete v3 ANALYZE header through the single-record v1/v2 path.
+    if let Some(first_lf) = bytes.iter().position(|byte| *byte == b'\n')
+        && let Ok(header) = serde_json::from_slice::<Value>(&bytes[..first_lf])
+        && safe_integer(&header["protocolVersion"]) == Some(3)
+        && matches!(header["type"].as_str(), Some("ANALYZE" | "REFRESH"))
+        && (header.get("sequence").is_some() || bytes[first_lf + 1..].contains(&b'\n'))
+        && let Some(request_id) = trustworthy_request_id(&header)
+    {
+        match codeatlas_native_analyzer::request_v3::decode_request_v3(&bytes) {
+            Err(error) => {
+                return write_event(
+                    output,
+                    request_failed_with_version(
+                        &request_id,
+                        error.code(),
+                        "Invalid protocol v3 request",
+                        3,
+                    ),
+                );
+            }
+            Ok(request) if request.header()["type"] == "REFRESH" => {
+                return write_event(
+                    output,
+                    request_failed_with_version(
+                        &request_id,
+                        "INVALID_REQUEST",
+                        "Protocol v3 REFRESH is unavailable",
+                        3,
+                    ),
+                );
+            }
+            Ok(request) => {
+                return crate::analyze::run_full_v3(
+                    request.header(),
+                    worker_count.unwrap_or(NonZeroUsize::new(1).expect("one worker")),
+                    output,
+                );
+            }
+        }
+    }
+
     if bytes.len() <= MAX_LINE_BYTES
         && bytes.last() == Some(&b'\n')
         && !bytes[..bytes.len() - 1].contains(&b'\n')
@@ -235,7 +277,7 @@ fn describe_completed(request_id: &str) -> Value {
             "providerId": "native",
             "providerVersion": env!("CARGO_PKG_VERSION"),
             "runtimeVersion": env!("CARGO_PKG_VERSION"),
-            "protocolVersions": [PROTOCOL_VERSION, 2],
+            "protocolVersions": [PROTOCOL_VERSION, 2, 3],
             "irSchemaVersions": [IR_SCHEMA_VERSION],
             "capabilities": ["protocol-handshake", "SYMBOL", "IMPORT", "CALL", "INHERITANCE", "REFERENCE"],
             "languages": [{
@@ -319,7 +361,7 @@ mod tests {
         assert!(diagnostics.is_empty());
         let event: Value = serde_json::from_slice(&output).unwrap();
         assert_eq!(event["type"], "DESCRIBE_COMPLETED");
-        assert_eq!(event["payload"]["protocolVersions"], json!([1, 2]));
+        assert_eq!(event["payload"]["protocolVersions"], json!([1, 2, 3]));
         assert_eq!(event["payload"]["irSchemaVersions"], json!([1]));
         assert_eq!(
             event["payload"]["capabilities"],
@@ -332,6 +374,94 @@ mod tests {
                 "REFERENCE"
             ])
         );
+    }
+
+    #[test]
+    fn validated_v3_refresh_has_an_explicit_unavailable_terminal() {
+        let input = include_bytes!("../../../fixtures/ipc/protocol-v3/valid-empty-refresh.jsonl");
+        let (exit, output, diagnostics) = run(input);
+        assert_eq!(exit, ExitCode::SUCCESS);
+        assert!(diagnostics.is_empty());
+        let event: Value = serde_json::from_slice(&output).unwrap();
+        assert_eq!(event["protocolVersion"], 3);
+        assert_eq!(event["requestId"], "req");
+        assert_eq!(event["sequence"], 0);
+        assert_eq!(event["type"], "REQUEST_FAILED");
+        assert_eq!(event["payload"]["error"]["code"], "INVALID_REQUEST");
+    }
+
+    #[test]
+    fn v3_dispatch_accepts_the_shared_safe_integer_representation() {
+        use sha2::Digest;
+        let input = include_str!("../../../fixtures/ipc/protocol-v3/valid-empty-refresh.jsonl");
+        let header = input
+            .lines()
+            .next()
+            .unwrap()
+            .replace("\"protocolVersion\":3", "\"protocolVersion\":3.0");
+        let prefix = format!("{header}\n");
+        let completion = json!({"protocolVersion":3,"requestId":"req","sequence":1,
+            "type":"REQUEST_COMPLETED","payload":{"summaryRecords":0,
+            "integrityChecksum":format!("{:x}",sha2::Sha256::digest(prefix.as_bytes()))}});
+        let bytes = format!("{prefix}{completion}\n");
+        assert!(codeatlas_native_analyzer::request_v3::decode_request_v3(bytes.as_bytes()).is_ok());
+        let (exit, output, diagnostics) = run(bytes.as_bytes());
+        assert_eq!(exit, ExitCode::SUCCESS);
+        assert!(diagnostics.is_empty());
+        let event: Value = serde_json::from_slice(&output).unwrap();
+        assert_eq!(event["protocolVersion"], 3);
+        assert_eq!(event["type"], "REQUEST_FAILED");
+        assert_eq!(event["payload"]["error"]["code"], "INVALID_REQUEST");
+    }
+
+    #[test]
+    fn incomplete_v3_header_cannot_enter_legacy_analysis() {
+        let input = include_bytes!("../../../fixtures/ipc/protocol-v3/valid-empty-refresh.jsonl");
+        let first_lf = input.iter().position(|byte| *byte == b'\n').unwrap();
+        let mut header: Value = serde_json::from_slice(&input[..first_lf]).unwrap();
+        header["type"] = json!("ANALYZE");
+        let mut bytes = serde_json::to_vec(&header).unwrap();
+        bytes.push(b'\n');
+        let (exit, output, diagnostics) = run(&bytes);
+        assert_eq!(exit, ExitCode::SUCCESS);
+        assert!(diagnostics.is_empty());
+        let event: Value = serde_json::from_slice(&output).unwrap();
+        assert_eq!(event["protocolVersion"], 3);
+        assert_eq!(event["type"], "REQUEST_FAILED");
+        assert_eq!(event["payload"]["error"]["code"], "PROTOCOL_CORRUPTION");
+    }
+
+    #[test]
+    fn full_v3_cannot_start_analysis_while_waiting_for_completion() {
+        struct InterruptedInput {
+            header: std::io::Cursor<Vec<u8>>,
+        }
+        impl std::io::Read for InterruptedInput {
+            fn read(&mut self, bytes: &mut [u8]) -> std::io::Result<usize> {
+                let n = self.header.read(bytes)?;
+                if n == 0 {
+                    Err(std::io::Error::other("completion never arrived"))
+                } else {
+                    Ok(n)
+                }
+            }
+        }
+        let cases: Value =
+            serde_json::from_str(include_str!("../../../fixtures/ipc/analysis-v3/cases.json"))
+                .unwrap();
+        let mut header = serde_json::to_vec(&cases["cases"][0]["request"]).unwrap();
+        header.push(b'\n');
+        let mut input = InterruptedInput {
+            header: std::io::Cursor::new(header),
+        };
+        let mut output = Vec::new();
+        let mut diagnostics = Vec::new();
+        let error = serve_once(&mut input, &mut output, &mut diagnostics).unwrap_err();
+        assert_eq!(error.to_string(), "completion never arrived");
+        // run_full_v3 emits START before reaching either parse path. A blocked
+        // input must not enter that path, emit facts, or claim a terminal.
+        assert!(output.is_empty());
+        assert!(diagnostics.is_empty());
     }
 
     #[test]

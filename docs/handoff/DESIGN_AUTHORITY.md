@@ -2,6 +2,18 @@
 
 ## Precedence
 
+Exact numeric approval and local final gates (2026-10-02): “批准” authorizes280,453,120 bytes plus twice retained SQL UTF-8 for the frozen candidate/exact86fa33c5 environment in CURRENT_STATUS. Matching static installation follows absent-profile RED, with candidate-policy provenance metadata; all historical profiles and the admission algorithm remain intact. Complete equivalent local gates pass: root839/0fail/1skip, Runtime51, required corpus41, collector27, real Native78, Rust94, TS16/type/architecture17/format. The pnpm wrapper remains unavailable at its pre-gate no-TTY installation protection; no hosted result is claimed. Original review's two Important findings are repaired in one pass, no re-review dispatched. This supersedes candidate-awaiting-approval/in-progress states below, not frozen contracts or original phase gates. Integration still requires explicit authority.
+
+Approved native stability plan executed through the Task3 review boundary (2026-10-02): offline tooling/CI preservation and immutable275-observation candidate plus27-class holdout are now present. The accepted policy produces a provisional280,453,120-byte reservation; it is **not numerically approved or installed**. CURRENT_STATUS records full identities/digests,37/37 tooling checks, independent verification and remaining root hold. Task4 requires explicit exact numeric approval and all original fresh gates; FROZEN contracts, previous profiles, retained-SQL charge and phase/deferred boundaries are unchanged. This supersedes plan-awaiting-review statements below.
+
+Memory-stability written amendment accepted (2026-10-02): the user's “确认” accepts the [written high-water/range policy](../superpowers/specs/2026-10-02-p05-w3-020-memory-profile-stability-proposal.md), superseding the maximum-only reservation-selection detail for future profiles. Existing frozen contracts and historical profiles remain unchanged. This accepts the formula/reporting contract, not a concrete numerical reservation or implementation. The [native plan](../superpowers/plans/2026-10-02-p05-w3-020-memory-profile-stability.md) awaits review, and separate exact numeric approval plus fresh gates remain mandatory. This supersedes the earlier policy-proposed language below; corrected-build admission is still unavailable.
+
+Measurement-stability direction approved (2026-10-02): the user authorized alternative2's detailed design. The [written detail](../superpowers/specs/2026-10-02-p05-w3-020-memory-profile-stability-proposal.md) proposes exact-identity high water plus observed within-group range and prior-approval floor. This is an evidence-backed EVOLVABLE admission-policy proposal, not an accepted formula, new numeric approval, FROZEN amendment or implementation authority. Until written review and subsequent numeric review, the existing policy remains authoritative and the corrected build remains unadmitted. No phase/IPC/IR/SQLite/security decision changes.
+
+Packet B admission quality hold (2026-10-02): fresh corpus evidence invalidated the newly approved212,692,992-byte profile for corrected build `86fa33c51ecf63383f3575877bedaf66c47661dee5222ea4e14e8a0dd74e5888`; that entry was withdrawn. Existing exact profiles, frozen contracts and fresh peak gate remain intact. The [measurement-stability proposal](../superpowers/specs/2026-10-02-p05-w3-020-memory-profile-stability-proposal.md) is not accepted and selects no new numeric margin/threshold. Completion and publication are held, not bypassed by a repeated green sample.
+
+Packet B Tasks 1–7 now locally implement accepted ADR-016's R010/full-only v3 path. Actual DESCRIBE publishes [1,2,3] only after real bootstrap gates; no incremental capability or successful REFRESH is published. Native CI uses the reviewed exact Windows/x64 Node 24.15.0 profile; other environments still refuse v3 Runtime bootstrap until measured/reviewed. Existing v1/v2, Canonical IR, application publication and phase/deferred boundaries remain unchanged. See CURRENT_STATUS for gate evidence and outstanding final review/publication status.
+
 When documents disagree, use this order:
 
 1. Accepted ADRs and amendments
@@ -52,7 +64,11 @@ An Engineering Agent may tune these only when Fixture or Evaluation evidence sup
 - Wiki profile layout, optional sections, and projection validation thresholds within the versioned contract, based on projection Fixtures and review.
 - analyzer worker count, cache budget, performance thresholds, and language capability maturity, based on reproducible benchmarks and Evaluation.
 
+Task 6 EVOLVABLE internal token refinement (2026-10-02) is recorded in ADR-016 and the accepted packet B design: a safe repository committed-snapshot count detects same-fingerprint legacy activation with absent derived state. Actual legacy Fixture RED→GREEN justifies the change; no wire/Canonical/migration/FROZEN contract changes. The initial Task 6 profile was approved and passed focused bootstrap gates. A subsequent write-lock Fixture exposed missing Store classification checks; the repair enforces the already required complete source-inventory recheck, without changing design or migration contracts. Runtime/Store remains provisional; the repaired exact Node build requires renewed reviewed calibration and is not admitted by the older profile. This is not completion or a new phase threshold.
+
 ## DEFERRED decisions
+
+Task 6 repaired-build profile approval (2026-10-02): the user approved 247,508,992 bytes plus twice retained SQL bytes for exact build `87b74e5e9050757eb30ebae478919fada586ece8299cf98588a79a17b28e7e63`. The paired unchanged raw reports and Windows environment/corpus identities are recorded in CURRENT_STATUS. This supersedes the pending-calibration wording above for this exact build only; all existing profiles remain intact and other builds/platforms refuse. No new phase threshold or FROZEN decision is changed.
 
 These are intentionally postponed to the assigned phase. They must not become dependencies, acceptance gates, or implementation scope in Phase 0, Phase 0.5, or Phase 1 without an approved roadmap and design amendment:
 

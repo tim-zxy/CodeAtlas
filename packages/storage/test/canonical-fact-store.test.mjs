@@ -132,6 +132,36 @@ function graph(db) {
   );
 }
 
+test('full apply refuses same-fingerprint source classification drift without publication', async () => {
+  await withDatabase(async (db) => {
+    const prepared = await candidate(
+      db,
+      'classification-drift',
+      result.request.payload.revision.contentFingerprint,
+    );
+    try {
+      db.prepare('UPDATE source_files SET sensitivity=? WHERE id=?').run(
+        'SECRET',
+        result.request.payload.sourceFiles[0].id,
+      );
+      const before = graph(db);
+      assert.throws(
+        () =>
+          new RepositoryCanonicalFactStore(db).applyAnalysisBatch(prepared.stage, {
+            repositoryId: prepared.snapshot.repositoryId,
+            revisionId: prepared.snapshot.requestedRevisionId,
+            contentFingerprint: prepared.snapshot.requestedRevisionFingerprint,
+            snapshot: prepared.snapshot,
+          }),
+        /source.*differs/i,
+      );
+      assert.deepEqual(graph(db), before);
+      assert.equal(db.isTransaction, false);
+    } finally {
+      prepared.stage.close();
+    }
+  });
+});
 test('patch stage rejects support whose Evidence names a different Provider Fact', async () => {
   await withDatabase(async (db) => {
     const initial = await candidate(

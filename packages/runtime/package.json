@@ -16,7 +16,10 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.json"
+    "build": "tsc -p tsconfig.json",
+    "test:native-bootstrap": "node --test --test-concurrency=1 test/native-full-bootstrap.test.mjs",
+    "test:native-metadata": "node --test --test-concurrency=1 test/native-analysis-state-read.test.mjs test/native-metadata-admission.test.mjs test/native-metadata-corpus.test.mjs ../storage/test/native-summary-stage.test.mjs",
+    "bench:native-metadata": "node ../../scripts/bench-native-metadata-memory.mjs"
   },
   "dependencies": {
     "@codeatlas/application": "workspace:*",

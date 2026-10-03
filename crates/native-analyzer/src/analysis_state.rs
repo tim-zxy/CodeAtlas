@@ -3,6 +3,7 @@ use crate::{java_relations::compilation_unit_id, request_v3::V3ContractError};
 use serde_json::{Value, json};
 use sha2::{Digest, Sha256};
 use std::collections::{BTreeMap, BTreeSet};
+use std::io::{self, Write};
 
 pub(crate) const CAPS: [&str; 5] = ["SYMBOL", "IMPORT", "CALL", "INHERITANCE", "REFERENCE"];
 pub(crate) fn object(v: &Value, keys: &[&str]) -> bool {
@@ -372,29 +373,44 @@ pub(crate) fn summary(v: &Value) -> bool {
         == facts.len()
 }
 
-fn canonical(v: &Value) -> String {
+/// Shared canonical recipe, writable to a bounded buffer or directly to SHA-256.
+/// serde_json's configured Map is key-ordered (preserve_order is not enabled).
+pub fn write_canonical<W: Write>(v: &Value, out: &mut W) -> io::Result<()> {
     match v {
-        Value::Number(n) => format!(
+        Value::Number(n) => write!(
+            out,
             "{{\"$nativeNumber\":\"{:016x}\"}}",
             n.as_f64().unwrap().to_bits()
         ),
-        Value::Array(a) => format!(
-            "[{}]",
-            a.iter().map(canonical).collect::<Vec<_>>().join(",")
-        ),
-        Value::Object(o) => {
-            let sorted: BTreeMap<_, _> = o.iter().collect();
-            format!(
-                "{{{}}}",
-                sorted
-                    .iter()
-                    .map(|(k, v)| format!("{}:{}", serde_json::to_string(k).unwrap(), canonical(v)))
-                    .collect::<Vec<_>>()
-                    .join(",")
-            )
+        Value::Array(a) => {
+            out.write_all(b"[")?;
+            for (i, value) in a.iter().enumerate() {
+                if i != 0 {
+                    out.write_all(b",")?;
+                }
+                write_canonical(value, out)?;
+            }
+            out.write_all(b"]")
         }
-        _ => serde_json::to_string(v).unwrap(),
+        Value::Object(o) => {
+            out.write_all(b"{")?;
+            for (i, (key, value)) in o.iter().enumerate() {
+                if i != 0 {
+                    out.write_all(b",")?;
+                }
+                serde_json::to_writer(&mut *out, key).map_err(io::Error::other)?;
+                out.write_all(b":")?;
+                write_canonical(value, out)?;
+            }
+            out.write_all(b"}")
+        }
+        _ => serde_json::to_writer(out, v).map_err(io::Error::other),
     }
+}
+fn canonical(v: &Value) -> String {
+    let mut bytes = Vec::new();
+    write_canonical(v, &mut bytes).expect("in-memory canonical write");
+    String::from_utf8(bytes).expect("JSON is UTF-8")
 }
 fn site_key(v: &Value) -> (&str, &str, u64, u64, u64, u64, &str, &str, Option<u64>) {
     let s = &v["span"];
@@ -507,6 +523,25 @@ pub fn validate_analysis_state(v: &Value) -> Result<(), V3ContractError> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn shared_full_output_state_vectors() {
+        // Summary validation only; fact correspondence is checked by the TS
+        // staged port, and real Rust writer framing belongs to packet B Task 5.
+        let vectors: Value = serde_json::from_str(include_str!(
+            "../../../fixtures/ipc/analysis-v3/payload-vectors.json"
+        ))
+        .unwrap();
+        let entries = vectors["vectors"].as_array().unwrap();
+        assert_eq!(entries.len(), 21);
+        for entry in entries {
+            assert_eq!(
+                validate_analysis_state(&entry["bundle"]).is_ok(),
+                entry["stateValid"].as_bool().unwrap(),
+                "{}",
+                entry["id"]
+            );
+        }
+    }
     #[test]
     fn independent_unicode_and_numeric_vectors() {
         let vectors: Value = serde_json::from_str(include_str!(

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "p05-native-analysis-state-store-v1",
+  "task": "P05-W3-020-B",
+  "governingSpec": "docs/superpowers/specs/2026-10-01-p05-w3-020-state-bootstrap-design.md",
+  "acceptance": "R010 creates empty derived tables without guessed backfill, preserves R009 data, enforces storage constraints and rolls back failed upgrades",
+  "cases": [
+    "fresh-r010-and-rerun",
+    "r009-upgrade-preserves-state",
+    "r010-failure-rolls-back",
+    "immutable-r001-r009",
+    "derived-constraints-and-source-independence",
+    "too-new-and-workspace-isolation"
+  ],
+  "readCases": [
+    "stale-indexed-state-survives-reconciliation",
+    "bounded-read-refuses-before-validator",
+    "duplicated-sql-columns-are-bounded-before-validator",
+    "column-digest-and-provenance-drift",
+    "compatibility-and-applicability-are-explicit",
+    "validation-port-required-and-operational-errors-propagate",
+    "read-snapshot-is-coherent-across-concurrent-writer",
+    "exclusive-sqlite-lock-is-not-a-missing-baseline"
+  ],
+  "memoryCases": [
+    "zero-file",
+    "empty-file",
+    "maximum-short-files",
+    "dense-numeric-sites",
+    "long-ascii",
+    "long-bmp",
+    "long-astral",
+    "repeated-shared-owners",
+    "duplicate-metadata",
+    "foreign-metadata",
+    "deep-unknown-input",
+    "oversized-sql-column",
+    "oversized-staged-fact"
+  ]
+}

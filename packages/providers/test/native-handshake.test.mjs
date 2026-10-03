@@ -197,7 +197,7 @@ test('real Rust process matches every handshake fixture and TypeScript schema', 
     if (fixtureCase.expected.errorCode) {
       assert.equal(event.payload.error.code, fixtureCase.expected.errorCode);
     } else {
-      assert.deepEqual(event.payload.protocolVersions, [1, 2]);
+      assert.deepEqual(event.payload.protocolVersions, [1, 2, 3]);
       assert.deepEqual(event.payload.irSchemaVersions, [1]);
     }
     if (requestResult.success) {

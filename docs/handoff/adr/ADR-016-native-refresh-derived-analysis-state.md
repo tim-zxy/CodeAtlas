@@ -22,6 +22,8 @@ Missing/incompatible legacy state requires an explicit full bootstrap with the o
 
 ## Security, rollback and phases
 
+EVOLVABLE internal activation guard refinement, 2026-10-02: Task 6 real legacy full Fixture proved that indexed pointer plus derived-header tuples do not detect a same-fingerprint legacy activation when headers are absent. Include a safe nonnegative repository committed ProviderSnapshot count, read atomically with that token; validated full/patch Apply appends one snapshot per commit and failed Apply/reconciliation append none. This is an internal comparison refinement, not an IPC/Canonical contract or migration change. The same test was observed RED then GREEN; accepted packet B design and B3 Fixture record the evidence. Node workspace admission still requires separately reviewed exact-build calibration. This note changes no FROZEN decision or phase exit.
+
 Local derived data is untrusted: validate strict schemas, paths, source-policy scope, fingerprints, provenance and size before reuse. Persist no raw source, AST, secrets, unrestricted environment or prompts. Rust receives versioned records, never SQLite or an unvalidated side-channel filename. Existing shell-free spawn, allowlisted environment, bounded JSONL, stderr logs and cancellation remain mandatory.
 
 Rollback disables v3 availability; v1/v2 full analysis remains available and the last good graph is retained. Derived additive tables may remain unused. Do not delete released migrations/history or fabricate summaries for legacy graphs. A full write without compatible summaries makes the summary baseline unavailable until explicit bootstrap.

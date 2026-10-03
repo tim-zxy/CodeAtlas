@@ -17,7 +17,8 @@
     "migrations"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.json"
+    "build": "tsc -p tsconfig.json",
+    "test:native-state": "node --test test/native-analysis-state.test.mjs"
   },
   "dependencies": {
     "@codeatlas/ir": "workspace:*"

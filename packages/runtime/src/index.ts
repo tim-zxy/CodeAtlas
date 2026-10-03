@@ -4,6 +4,8 @@ import { DefaultWorkspaceContextFactory } from './workspace-context.js';
 
 export { KnowledgeRuntime } from './knowledge-runtime.js';
 export { applyNativeFullAnalysis } from './full-analysis.js';
+export { applyNativeFullBootstrap, readNativeFullBaseline } from './native-full-bootstrap.js';
+export { createNativeStateValidationPort } from './native-analysis-validation.js';
 export { applyNativePatchAnalysis } from './patch-analysis.js';
 export type { PatchAnalysisMeasurement } from './patch-analysis.js';
 export {

@@ -20,6 +20,10 @@ import {
 
 import { RepositoryAnalysisStage } from './temp-stage.js';
 import { RepositoryPatchStage, type PatchSupport } from './patch-stage.js';
+import {
+  captureNativeActivationToken,
+  type NativeActivationToken,
+} from './native-analysis-state.js';
 
 export interface ExpectedAnalysis {
   readonly repositoryId: EntityId;
@@ -302,6 +306,7 @@ export class RepositoryCanonicalFactStore {
         )
         .run(targetRevisionId, targetContentFingerprint, repositoryId);
       if (changed.changes !== 1) throw new AnalysisPatchError('INVALID_PATCH');
+      this.clearNativeState(repositoryId);
       this.db.exec('COMMIT');
       return performance.now() - lockStarted;
     } catch (error) {
@@ -649,6 +654,41 @@ export class RepositoryCanonicalFactStore {
   }
 
   applyAnalysisBatch(stage: RepositoryAnalysisStage, expectedValue: ExpectedAnalysis): number {
+    return this.applyFullBatch(stage, expectedValue);
+  }
+
+  applyNativeAnalysisBatch(
+    stage: RepositoryAnalysisStage,
+    expected: ExpectedAnalysis,
+    baseline: NativeActivationToken,
+  ): number {
+    return this.applyFullBatch(stage, expected, baseline);
+  }
+
+  private hasNativeState(): boolean {
+    const version = this.db.prepare('PRAGMA user_version').get()?.user_version;
+    if (typeof version === 'number' && version < 10) return false;
+    assert(
+      this.db
+        .prepare(
+          "SELECT count(*) AS n FROM sqlite_master WHERE type='table' AND name IN ('native_analysis_state','native_analysis_file')",
+        )
+        .get()?.n === 2,
+      'Native state requires complete R010 schema',
+    );
+    return true;
+  }
+
+  private clearNativeState(repositoryId: string): void {
+    if (this.hasNativeState())
+      this.db.prepare('DELETE FROM native_analysis_state WHERE repository_id=?').run(repositoryId);
+  }
+
+  private applyFullBatch(
+    stage: RepositoryAnalysisStage,
+    expectedValue: ExpectedAnalysis,
+    baseline?: NativeActivationToken,
+  ): number {
     const expected = {
       repositoryId: EntityIdSchema.parse(expectedValue.repositoryId),
       revisionId: EntityIdSchema.parse(expectedValue.revisionId),
@@ -671,10 +711,30 @@ export class RepositoryCanonicalFactStore {
       capabilities: snapshot.capabilities,
     });
     this.validateCandidate(stage, expected);
+    const sealed = baseline === undefined ? undefined : stage.readSealedNativeState();
+    const checkNative = () => {
+      if (baseline === undefined || sealed === undefined) return;
+      assert(this.hasNativeState(), 'Native bootstrap requires R010');
+      assert(
+        sealed.expected.repositoryId === repositoryId &&
+          sealed.expected.revisionId === revisionId &&
+          sealed.expected.contentFingerprint === contentFingerprint &&
+          sealed.expected.providerId === snapshot.providerId &&
+          sealed.expected.providerVersion === snapshot.providerVersion,
+        'Sealed state differs from activation',
+      );
+      assert(
+        isDeepStrictEqual(captureNativeActivationToken(this.db, repositoryId), baseline),
+        'Native activation token changed',
+      );
+      this.validateCandidate(stage, expected);
+    };
+    checkNative();
 
     const lockStarted = performance.now();
     this.db.exec('BEGIN IMMEDIATE');
     try {
+      checkNative();
       const revision = this.db
         .prepare('SELECT content_fingerprint FROM revisions WHERE repository_id = ? AND id = ?')
         .get(repositoryId, revisionId) as { content_fingerprint: string } | undefined;
@@ -718,6 +778,33 @@ export class RepositoryCanonicalFactStore {
       this.writeFacts(stage, revisionId, repositoryId);
       this.writeSupport(stage);
       this.writeCoverageAndDiagnostics(stage, snapshot);
+      this.clearNativeState(repositoryId);
+      if (sealed) {
+        this.db
+          .prepare(
+            'INSERT INTO native_analysis_state (repository_id,provider_id,provider_snapshot_id,revision_id,content_fingerprint,header_json) VALUES (?,?,?,?,?,?)',
+          )
+          .run(
+            repositoryId,
+            snapshot.providerId,
+            snapshot.id,
+            revisionId,
+            contentFingerprint,
+            sealed.headerJson,
+          );
+        const insertFile = this.db.prepare(
+          'INSERT INTO native_analysis_file (repository_id,provider_id,source_file_id,source_path,content_fingerprint,summary_json) VALUES (?,?,?,?,?,?)',
+        );
+        for (const file of sealed.files)
+          insertFile.run(
+            repositoryId,
+            snapshot.providerId,
+            file.sourceFileId,
+            file.sourcePath,
+            file.contentFingerprint,
+            file.summaryJson,
+          );
+      }
       const changed = this.db
         .prepare(
           `UPDATE repository_state
@@ -755,12 +842,27 @@ export class RepositoryCanonicalFactStore {
       );
       const persisted = this.db
         .prepare(
-          'SELECT path, content_fingerprint FROM source_files WHERE repository_id = ? AND revision_id = ? AND id = ?',
+          'SELECT path, content_fingerprint, role, provenance, content_kind, language_hint, sensitivity FROM source_files WHERE repository_id = ? AND revision_id = ? AND id = ?',
         )
         .get(repositoryId, revisionId, file.id) as
-        { path: string; content_fingerprint: string } | undefined;
+        | {
+            path: string;
+            content_fingerprint: string;
+            role: string;
+            provenance: string;
+            content_kind: string;
+            language_hint: string | null;
+            sensitivity: string;
+          }
+        | undefined;
       assert(
-        persisted?.path === file.path && persisted?.content_fingerprint === file.contentFingerprint,
+        persisted?.path === file.path &&
+          persisted?.content_fingerprint === file.contentFingerprint &&
+          persisted?.role === file.classification.role &&
+          persisted?.provenance === file.classification.provenance &&
+          persisted?.content_kind === file.classification.contentKind &&
+          persisted?.language_hint === file.languageHint &&
+          persisted?.sensitivity === file.sensitivity,
         'Staged source file differs from persisted source',
       );
     }

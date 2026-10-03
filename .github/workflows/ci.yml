@@ -55,7 +55,8 @@ jobs:
 
   native-analysis:
     name: Native Java analysis integration
-    runs-on: ubuntu-latest
+    # Full bootstrap admission is reviewed only for this exact environment.
+    runs-on: windows-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -66,7 +67,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version: 24.15.0
           cache: pnpm
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -78,3 +79,19 @@ jobs:
         run: cargo build --workspace
       - name: Run real-binary Java Fixtures
         run: pnpm test:native-analysis
+      - name: Enforce fresh read-seal and transport memory reservations
+        if: always()
+        env:
+          CODEATLAS_REQUIRE_NATIVE_MEMORY_PROFILE: '1'
+          CODEATLAS_NATIVE_MEMORY_ARTIFACT_DIR: .superpowers/native-memory/corpus
+        run: node --test --test-concurrency=1 packages/runtime/test/native-metadata-corpus.test.mjs packages/providers/test/native-full-v3-memory.test.mjs
+      - name: Collect every required memory class
+        if: always()
+        run: pnpm test:native-memory
+      - name: Preserve memory observations including failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-memory-observations
+          path: .superpowers/native-memory
+          if-no-files-found: error

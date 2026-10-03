@@ -1,0 +1,2711 @@
+{
+  "schemaVersion": 1,
+  "purpose": "verification",
+  "mode": "candidate",
+  "environment": {
+    "node": "v24.15.0",
+    "v8": "13.6.233.17-node.48",
+    "platform": "win32",
+    "arch": "x64",
+    "zodVersion": "4.6.1",
+    "implementationDigest": "86fa33c51ecf63383f3575877bedaf66c47661dee5222ea4e14e8a0dd74e5888",
+    "corpusRevision": "p05-native-metadata-memory-v1"
+  },
+  "corpora": {
+    "READ_SEAL": {
+      "revision": "p05-native-metadata-memory-v1",
+      "digest": "0c599e6626202fe4a0b5d5866e2d89d01a4674e40b0efe0d0b20acf5b4085b29"
+    },
+    "FULL_TRANSPORT": {
+      "revision": "p05-native-full-v3-memory-v1",
+      "digest": "11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef"
+    }
+  },
+  "observations": [
+    {
+      "workspace": "READ_SEAL",
+      "observation": {
+        "name": "zero-file",
+        "environment": {
+          "node": "v24.15.0",
+          "v8": "13.6.233.17-node.48",
+          "platform": "win32",
+          "arch": "x64",
+          "zodVersion": "4.6.1",
+          "implementationDigest": "86fa33c51ecf63383f3575877bedaf66c47661dee5222ea4e14e8a0dd74e5888",
+          "corpusRevision": "p05-native-metadata-memory-v1"
+        },
+        "serializedBytes": 464,
+        "retainedReadSqlBytes": 564,
+        "retainedSealSqlBytes": 464,
+        "retainedReadStringChargeBytes": 1128,
+        "retainedSealStringChargeBytes": 928,
+        "corpusPayloadDigest": "d175b4792e51f4b32554047671fd7c18a3a2d3d5922ebbf79aabd8bb01c773ef",
+        "preparationMs": 18.489800000000002,
+        "readMs": 5.6036,
+        "sealMs": 1.604600000000005,
+        "readOutcome": "AVAILABLE",
+        "sealOutcome": "AVAILABLE",
+        "samples": [
+          {
+            "phase": "start",
+            "memory": {
+              "rss": 61841408,
+              "heapTotal": 20529152,
+              "heapUsed": 14606056,
+              "external": 2612105,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 60696
+          },
+          {
+            "phase": "prepared",
+            "memory": {
+              "rss": 64098304,
+              "heapTotal": 29966336,
+              "heapUsed": 15214736,
+              "external": 2512683,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 62596
+          },
+          {
+            "phase": "read",
+            "memory": {
+              "rss": 64634880,
+              "heapTotal": 30228480,
+              "heapUsed": 15702760,
+              "external": 2543282,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 63120
+          },
+          {
+            "phase": "seal",
+            "memory": {
+              "rss": 64704512,
+              "heapTotal": 30228480,
+              "heapUsed": 15801432,
+              "external": 2543282,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 63188
+          }
+        ],
+        "peakMethod": "resourceUsage.maxRSS",
+        "peakSourceUnits": "KiB",
+        "peakUnits": "bytes",
+        "peakResidentBytes": 65060864,
+        "persistentStateUnchanged": true,
+        "transactionClosed": true
+      }
+    },
+    {
+      "workspace": "READ_SEAL",
+      "observation": {
+        "name": "empty-file",
+        "environment": {
+          "node": "v24.15.0",
+          "v8": "13.6.233.17-node.48",
+          "platform": "win32",
+          "arch": "x64",
+          "zodVersion": "4.6.1",
+          "implementationDigest": "86fa33c51ecf63383f3575877bedaf66c47661dee5222ea4e14e8a0dd74e5888",
+          "corpusRevision": "p05-native-metadata-memory-v1"
+        },
+        "serializedBytes": 1076,
+        "retainedReadSqlBytes": 1194,
+        "retainedSealSqlBytes": 1592,
+        "retainedReadStringChargeBytes": 2388,
+        "retainedSealStringChargeBytes": 3184,
+        "corpusPayloadDigest": "70bc612213767bd9c0a1847f882ec374159c1b3aa85ba9a1a5fd581258bb3e97",
+        "preparationMs": 28.95859999999999,
+        "readMs": 4.975099999999998,
+        "sealMs": 2.4505000000000052,
+        "readOutcome": "AVAILABLE",
+        "sealOutcome": "AVAILABLE",
+        "samples": [
+          {
+            "phase": "start",
+            "memory": {
+              "rss": 62107648,
+              "heapTotal": 20791296,
+              "heapUsed": 13873264,
+              "external": 2530972,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 60952
+          },
+          {
+            "phase": "prepared",
+            "memory": {
+              "rss": 65380352,
+              "heapTotal": 31801344,
+              "heapUsed": 15050920,
+              "external": 2512683,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 63848
+          },
+          {
+            "phase": "read",
+            "memory": {
+              "rss": 65712128,
+              "heapTotal": 31801344,
+              "heapUsed": 15615824,
+              "external": 2543282,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 64172
+          },
+          {
+            "phase": "seal",
+            "memory": {
+              "rss": 65748992,
+              "heapTotal": 31801344,
+              "heapUsed": 15884928,
+              "external": 2543282,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 64208
+          }
+        ],
+        "peakMethod": "resourceUsage.maxRSS",
+        "peakSourceUnits": "KiB",
+        "peakUnits": "bytes",
+        "peakResidentBytes": 66174976,
+        "persistentStateUnchanged": true,
+        "transactionClosed": true
+      }
+    },
+    {
+      "workspace": "READ_SEAL",
+      "observation": {
+        "name": "maximum-short-files",
+        "environment": {
+          "node": "v24.15.0",
+          "v8": "13.6.233.17-node.48",
+          "platform": "win32",
+          "arch": "x64",
+          "zodVersion": "4.6.1",
+          "implementationDigest": "86fa33c51ecf63383f3575877bedaf66c47661dee5222ea4e14e8a0dd74e5888",
+          "corpusRevision": "p05-native-metadata-memory-v1"
+        },
+        "serializedBytes": 999419,
+        "retainedReadSqlBytes": 1039605,
+        "retainedSealSqlBytes": 1855145,
+        "retainedReadStringChargeBytes": 2079210,
+        "retainedSealStringChargeBytes": 3710290,
+        "corpusPayloadDigest": "12877886a09a9e58ee21ab9266fd24586658c7e0ab4caf313ca6f87818ad6726",
+        "preparationMs": 415.5707,
+        "readMs": 203.19040000000007,
+        "sealMs": 465.73760000000016,
+        "readOutcome": "AVAILABLE",
+        "sealOutcome": "AVAILABLE",
+        "samples": [
+          {
+            "phase": "start",
+            "memory": {
+              "rss": 61935616,
+              "heapTotal": 21053440,
+              "heapUsed": 13843176,
+              "external": 2530972,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 60680
+          },
+          {
+            "phase": "prepared",
+            "memory": {
+              "rss": 105918464,
+              "heapTotal": 55873536,
+              "heapUsed": 34719032,
+              "external": 2496263,
+              "arrayBuffers": 28915
+            },
+            "peakKiB": 118012
+          },
+          {
+            "phase": "read",
+            "memory": {
+              "rss": 152199168,
+              "heapTotal": 102563840,
+              "heapUsed": 61184248,
+              "external": 2526862,
+              "arrayBuffers": 28915
+            },
+            "peakKiB": 151792
+          },
+          {
+            "phase": "seal",
+            "memory": {
+              "rss": 159100928,
+              "heapTotal": 109395968,
+              "heapUsed": 55001720,
+              "external": 2526862,
+              "arrayBuffers": 28915
+            },
+            "peakKiB": 158768
+          }
+        ],
+        "peakMethod": "resourceUsage.maxRSS",
+        "peakSourceUnits": "KiB",
+        "peakUnits": "bytes",
+        "peakResidentBytes": 162578432,
+        "persistentStateUnchanged": true,
+        "transactionClosed": true
+      }
+    },
+    {
+      "workspace": "READ_SEAL",
+      "observation": {
+        "name": "dense-numeric-sites",
+        "environment": {
+          "node": "v24.15.0",
+          "v8": "13.6.233.17-node.48",
+          "platform": "win32",
+          "arch": "x64",
+          "zodVersion": "4.6.1",
+          "implementationDigest": "86fa33c51ecf63383f3575877bedaf66c47661dee5222ea4e14e8a0dd74e5888",
+          "corpusRevision": "p05-native-metadata-memory-v1"
+        },
+        "serializedBytes": 999788,
+        "retainedReadSqlBytes": 999906,
+        "retainedSealSqlBytes": 1661479,
+        "retainedReadStringChargeBytes": 1999812,
+        "retainedSealStringChargeBytes": 3322958,
+        "corpusPayloadDigest": "170f17e5e7b9cd05b85160a84e85182367124c5b15afc304134582e711793d72",
+        "preparationMs": 541.1826,
+        "readMs": 215.27859999999998,
+        "sealMs": 420.77599999999995,
+        "readOutcome": "AVAILABLE",
+        "sealOutcome": "AVAILABLE",
+        "samples": [
+          {
+            "phase": "start",
+            "memory": {
+              "rss": 61943808,
+              "heapTotal": 20529152,
+              "heapUsed": 14578488,
+              "external": 2612105,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 60736
+          },
+          {
+            "phase": "prepared",
+            "memory": {
+              "rss": 126816256,
+              "heapTotal": 107352064,
+              "heapUsed": 57351648,
+              "external": 2496263,
+              "arrayBuffers": 28915
+            },
+            "peakKiB": 127608
+          },
+          {
+            "phase": "read",
+            "memory": {
+              "rss": 158433280,
+              "heapTotal": 108457984,
+              "heapUsed": 60515792,
+              "external": 2526862,
+              "arrayBuffers": 28915
+            },
+            "peakKiB": 160016
+          },
+          {
+            "phase": "seal",
+            "memory": {
+              "rss": 207441920,
+              "heapTotal": 188059648,
+              "heapUsed": 87457512,
+              "external": 2526862,
+              "arrayBuffers": 28915
+            },
+            "peakKiB": 208188
+          }
+        ],
+        "peakMethod": "resourceUsage.maxRSS",
+        "peakSourceUnits": "KiB",
+        "peakUnits": "bytes",
+        "peakResidentBytes": 213184512,
+        "persistentStateUnchanged": true,
+        "transactionClosed": true
+      }
+    },
+    {
+      "workspace": "READ_SEAL",
+      "observation": {
+        "name": "long-ascii",
+        "environment": {
+          "node": "v24.15.0",
+          "v8": "13.6.233.17-node.48",
+          "platform": "win32",
+          "arch": "x64",
+          "zodVersion": "4.6.1",
+          "implementationDigest": "86fa33c51ecf63383f3575877bedaf66c47661dee5222ea4e14e8a0dd74e5888",
+          "corpusRevision": "p05-native-metadata-memory-v1"
+        },
+        "serializedBytes": 1000000,
+        "retainedReadSqlBytes": 1000118,
+        "retainedSealSqlBytes": 1000854,
+        "retainedReadStringChargeBytes": 2000236,
+        "retainedSealStringChargeBytes": 2001708,
+        "corpusPayloadDigest": "da097c8e5e42410698f2f08efce1ead23478d16a4115f85558aac21f27c849c3",
+        "preparationMs": 64.30869999999999,
+        "readMs": 18.263499999999993,
+        "sealMs": 15.906799999999976,
+        "readOutcome": "AVAILABLE",
+        "sealOutcome": "AVAILABLE",
+        "samples": [
+          {
+            "phase": "start",
+            "memory": {
+              "rss": 62017536,
+              "heapTotal": 20529152,
+              "heapUsed": 14629112,
+              "external": 2612105,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 61176
+          },
+          {
+            "phase": "prepared",
+            "memory": {
+              "rss": 78778368,
+              "heapTotal": 36069376,
+              "heapUsed": 17973048,
+              "external": 2512683,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 79664
+          },
+          {
+            "phase": "read",
+            "memory": {
+              "rss": 83038208,
+              "heapTotal": 40554496,
+              "heapUsed": 20919448,
+              "external": 2543282,
+              "arrayBuffers": 28915
+            },
+            "peakKiB": 86024
+          },
+          {
+            "phase": "seal",
+            "memory": {
+              "rss": 87359488,
+              "heapTotal": 60338176,
+              "heapUsed": 23876632,
+              "external": 2526862,
+              "arrayBuffers": 28915
+            },
+            "peakKiB": 89804
+          }
+        ],
+        "peakMethod": "resourceUsage.maxRSS",
+        "peakSourceUnits": "KiB",
+        "peakUnits": "bytes",
+        "peakResidentBytes": 91959296,
+        "persistentStateUnchanged": true,
+        "transactionClosed": true
+      }
+    },
+    {
+      "workspace": "READ_SEAL",
+      "observation": {
+        "name": "long-bmp",
+        "environment": {
+          "node": "v24.15.0",
+          "v8": "13.6.233.17-node.48",
+          "platform": "win32",
+          "arch": "x64",
+          "zodVersion": "4.6.1",
+          "implementationDigest": "86fa33c51ecf63383f3575877bedaf66c47661dee5222ea4e14e8a0dd74e5888",
+          "corpusRevision": "p05-native-metadata-memory-v1"
+        },
+        "serializedBytes": 999999,
+        "retainedReadSqlBytes": 1000117,
+        "retainedSealSqlBytes": 1000853,
+        "retainedReadStringChargeBytes": 2000234,
+        "retainedSealStringChargeBytes": 2001706,
+        "corpusPayloadDigest": "ee0395b39b8b7ba29ab8b493defb6a4d83dbe5f257ba23a86817017e8634387f",
+        "preparationMs": 54.26079999999999,
+        "readMs": 21.95829999999998,
+        "sealMs": 21.73539999999997,
+        "readOutcome": "AVAILABLE",
+        "sealOutcome": "AVAILABLE",
+        "samples": [
+          {
+            "phase": "start",
+            "memory": {
+              "rss": 61906944,
+              "heapTotal": 20004864,
+              "heapUsed": 14638824,
+              "external": 2612105,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 60676
+          },
+          {
+            "phase": "prepared",
+            "memory": {
+              "rss": 79200256,
+              "heapTotal": 35995648,
+              "heapUsed": 26030104,
+              "external": 2512683,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 80208
+          },
+          {
+            "phase": "read",
+            "memory": {
+              "rss": 82219008,
+              "heapTotal": 38760448,
+              "heapUsed": 20766568,
+              "external": 2543282,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 84716
+          },
+          {
+            "phase": "seal",
+            "memory": {
+              "rss": 85045248,
+              "heapTotal": 57962496,
+              "heapUsed": 21210200,
+              "external": 2543282,
+              "arrayBuffers": 28915
+            },
+            "peakKiB": 87964
+          }
+        ],
+        "peakMethod": "resourceUsage.maxRSS",
+        "peakSourceUnits": "KiB",
+        "peakUnits": "bytes",
+        "peakResidentBytes": 90075136,
+        "persistentStateUnchanged": true,
+        "transactionClosed": true
+      }
+    },
+    {
+      "workspace": "READ_SEAL",
+      "observation": {
+        "name": "long-astral",
+        "environment": {
+          "node": "v24.15.0",
+          "v8": "13.6.233.17-node.48",
+          "platform": "win32",
+          "arch": "x64",
+          "zodVersion": "4.6.1",
+          "implementationDigest": "86fa33c51ecf63383f3575877bedaf66c47661dee5222ea4e14e8a0dd74e5888",
+          "corpusRevision": "p05-native-metadata-memory-v1"
+        },
+        "serializedBytes": 999998,
+        "retainedReadSqlBytes": 1000116,
+        "retainedSealSqlBytes": 1000852,
+        "retainedReadStringChargeBytes": 2000232,
+        "retainedSealStringChargeBytes": 2001704,
+        "corpusPayloadDigest": "f88d7a31a833cba342f277e13451505673c54112fce67847337000546d33ccc4",
+        "preparationMs": 60.1482,
+        "readMs": 24.016400000000004,
+        "sealMs": 23.343999999999994,
+        "readOutcome": "AVAILABLE",
+        "sealOutcome": "AVAILABLE",
+        "samples": [
+          {
+            "phase": "start",
+            "memory": {
+              "rss": 62484480,
+              "heapTotal": 28655616,
+              "heapUsed": 13790032,
+              "external": 2522780,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 61904
+          },
+          {
+            "phase": "prepared",
+            "memory": {
+              "rss": 79085568,
+              "heapTotal": 35282944,
+              "heapUsed": 18141344,
+              "external": 2512683,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 80088
+          },
+          {
+            "phase": "read",
+            "memory": {
+              "rss": 81125376,
+              "heapTotal": 38596608,
+              "heapUsed": 20078456,
+              "external": 2543282,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 84984
+          },
+          {
+            "phase": "seal",
+            "memory": {
+              "rss": 85565440,
+              "heapTotal": 58335232,
+              "heapUsed": 21945752,
+              "external": 2543282,
+              "arrayBuffers": 28915
+            },
+            "peakKiB": 88492
+          }
+        ],
+        "peakMethod": "resourceUsage.maxRSS",
+        "peakSourceUnits": "KiB",
+        "peakUnits": "bytes",
+        "peakResidentBytes": 90615808,
+        "persistentStateUnchanged": true,
+        "transactionClosed": true
+      }
+    },
+    {
+      "workspace": "READ_SEAL",
+      "observation": {
+        "name": "repeated-shared-owners",
+        "environment": {
+          "node": "v24.15.0",
+          "v8": "13.6.233.17-node.48",
+          "platform": "win32",
+          "arch": "x64",
+          "zodVersion": "4.6.1",
+          "implementationDigest": "86fa33c51ecf63383f3575877bedaf66c47661dee5222ea4e14e8a0dd74e5888",
+          "corpusRevision": "p05-native-metadata-memory-v1"
+        },
+        "serializedBytes": 999650,
+        "retainedReadSqlBytes": 1019388,
+        "retainedSealSqlBytes": 1731073,
+        "retainedReadStringChargeBytes": 2038776,
+        "retainedSealStringChargeBytes": 3462146,
+        "corpusPayloadDigest": "7b066b50c3da15a6d610ecfef36627c2347afb9cf2600e2df76dc68566d172bf",
+        "preparationMs": 479.75239999999997,
+        "readMs": 215.5675,
+        "sealMs": 862.7595,
+        "readOutcome": "AVAILABLE",
+        "sealOutcome": "AVAILABLE",
+        "samples": [
+          {
+            "phase": "start",
+            "memory": {
+              "rss": 61669376,
+              "heapTotal": 20267008,
+              "heapUsed": 14576112,
+              "external": 2606764,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 60852
+          },
+          {
+            "phase": "prepared",
+            "memory": {
+              "rss": 107782144,
+              "heapTotal": 58757120,
+              "heapUsed": 35171712,
+              "external": 2496263,
+              "arrayBuffers": 28915
+            },
+            "peakKiB": 114484
+          },
+          {
+            "phase": "read",
+            "memory": {
+              "rss": 149856256,
+              "heapTotal": 100220928,
+              "heapUsed": 33918880,
+              "external": 2526862,
+              "arrayBuffers": 28915
+            },
+            "peakKiB": 152208
+          },
+          {
+            "phase": "seal",
+            "memory": {
+              "rss": 160911360,
+              "heapTotal": 109920256,
+              "heapUsed": 74095928,
+              "external": 2526862,
+              "arrayBuffers": 28915
+            },
+            "peakKiB": 159468
+          }
+        ],
+        "peakMethod": "resourceUsage.maxRSS",
+        "peakSourceUnits": "KiB",
+        "peakUnits": "bytes",
+        "peakResidentBytes": 163295232,
+        "persistentStateUnchanged": true,
+        "transactionClosed": true
+      }
+    },
+    {
+      "workspace": "READ_SEAL",
+      "observation": {
+        "name": "duplicate-metadata",
+        "environment": {
+          "node": "v24.15.0",
+          "v8": "13.6.233.17-node.48",
+          "platform": "win32",
+          "arch": "x64",
+          "zodVersion": "4.6.1",
+          "implementationDigest": "86fa33c51ecf63383f3575877bedaf66c47661dee5222ea4e14e8a0dd74e5888",
+          "corpusRevision": "p05-native-metadata-memory-v1"
+        },
+        "serializedBytes": 1688,
+        "retainedReadSqlBytes": 1844,
+        "retainedSealSqlBytes": 962,
+        "retainedReadStringChargeBytes": 3688,
+        "retainedSealStringChargeBytes": 1924,
+        "corpusPayloadDigest": "af54db0bc6667914639117987fa7ef0b490a6176f224e23c632f8ba62f8011c9",
+        "preparationMs": 25.22799999999998,
+        "readMs": 4.051500000000004,
+        "sealMs": 0.28069999999999595,
+        "readOutcome": "INVALID",
+        "sealOutcome": "INVALID",
+        "samples": [
+          {
+            "phase": "start",
+            "memory": {
+              "rss": 62435328,
+              "heapTotal": 20791296,
+              "heapUsed": 13896584,
+              "external": 2537955,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 61268
+          },
+          {
+            "phase": "prepared",
+            "memory": {
+              "rss": 65806336,
+              "heapTotal": 31014912,
+              "heapUsed": 15335056,
+              "external": 2512683,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 64264
+          },
+          {
+            "phase": "read",
+            "memory": {
+              "rss": 66101248,
+              "heapTotal": 31014912,
+              "heapUsed": 16006608,
+              "external": 2512683,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 64552
+          },
+          {
+            "phase": "seal",
+            "memory": {
+              "rss": 66113536,
+              "heapTotal": 31014912,
+              "heapUsed": 16026376,
+              "external": 2512683,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 64564
+          }
+        ],
+        "peakMethod": "resourceUsage.maxRSS",
+        "peakSourceUnits": "KiB",
+        "peakUnits": "bytes",
+        "peakResidentBytes": 66682880,
+        "persistentStateUnchanged": true,
+        "transactionClosed": true
+      }
+    },
+    {
+      "workspace": "READ_SEAL",
+      "observation": {
+        "name": "foreign-metadata",
+        "environment": {
+          "node": "v24.15.0",
+          "v8": "13.6.233.17-node.48",
+          "platform": "win32",
+          "arch": "x64",
+          "zodVersion": "4.6.1",
+          "implementationDigest": "86fa33c51ecf63383f3575877bedaf66c47661dee5222ea4e14e8a0dd74e5888",
+          "corpusRevision": "p05-native-metadata-memory-v1"
+        },
+        "serializedBytes": 1079,
+        "retainedReadSqlBytes": 1197,
+        "retainedSealSqlBytes": 1598,
+        "retainedReadStringChargeBytes": 2394,
+        "retainedSealStringChargeBytes": 3196,
+        "corpusPayloadDigest": "9ce66ddfa0d60b020a05a231a1830100daecf9bcec6fe8f5aa6432b556b0d97e",
+        "preparationMs": 22.928799999999995,
+        "readMs": 3.9081999999999937,
+        "sealMs": 1.1949999999999932,
+        "readOutcome": "INVALID",
+        "sealOutcome": "INVALID",
+        "samples": [
+          {
+            "phase": "start",
+            "memory": {
+              "rss": 62586880,
+              "heapTotal": 28917760,
+              "heapUsed": 13793064,
+              "external": 2522780,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 61364
+          },
+          {
+            "phase": "prepared",
+            "memory": {
+              "rss": 64978944,
+              "heapTotal": 29442048,
+              "heapUsed": 16930392,
+              "external": 2512683,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 63456
+          },
+          {
+            "phase": "read",
+            "memory": {
+              "rss": 65789952,
+              "heapTotal": 29442048,
+              "heapUsed": 17462848,
+              "external": 2512683,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 64248
+          },
+          {
+            "phase": "seal",
+            "memory": {
+              "rss": 66043904,
+              "heapTotal": 29442048,
+              "heapUsed": 17664712,
+              "external": 2512683,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 64496
+          }
+        ],
+        "peakMethod": "resourceUsage.maxRSS",
+        "peakSourceUnits": "KiB",
+        "peakUnits": "bytes",
+        "peakResidentBytes": 66519040,
+        "persistentStateUnchanged": true,
+        "transactionClosed": true
+      }
+    },
+    {
+      "workspace": "READ_SEAL",
+      "observation": {
+        "name": "deep-unknown-input",
+        "environment": {
+          "node": "v24.15.0",
+          "v8": "13.6.233.17-node.48",
+          "platform": "win32",
+          "arch": "x64",
+          "zodVersion": "4.6.1",
+          "implementationDigest": "86fa33c51ecf63383f3575877bedaf66c47661dee5222ea4e14e8a0dd74e5888",
+          "corpusRevision": "p05-native-metadata-memory-v1"
+        },
+        "serializedBytes": 10691,
+        "retainedReadSqlBytes": 10809,
+        "retainedSealSqlBytes": 11207,
+        "retainedReadStringChargeBytes": 21618,
+        "retainedSealStringChargeBytes": 22414,
+        "corpusPayloadDigest": "cedbb83c56189bb0e96e324ecb027bcddc84d08b805213f36d88021abce900c1",
+        "preparationMs": 28.55019999999999,
+        "readMs": 4.6229000000000156,
+        "sealMs": 1.4561999999999955,
+        "readOutcome": "INVALID",
+        "sealOutcome": "INVALID",
+        "samples": [
+          {
+            "phase": "start",
+            "memory": {
+              "rss": 62251008,
+              "heapTotal": 20267008,
+              "heapUsed": 14591064,
+              "external": 2612105,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 61112
+          },
+          {
+            "phase": "prepared",
+            "memory": {
+              "rss": 65683456,
+              "heapTotal": 30228480,
+              "heapUsed": 17130240,
+              "external": 2512683,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 64468
+          },
+          {
+            "phase": "read",
+            "memory": {
+              "rss": 66736128,
+              "heapTotal": 30228480,
+              "heapUsed": 17714472,
+              "external": 2512683,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 65172
+          },
+          {
+            "phase": "seal",
+            "memory": {
+              "rss": 67063808,
+              "heapTotal": 30228480,
+              "heapUsed": 17961584,
+              "external": 2512683,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 65492
+          }
+        ],
+        "peakMethod": "resourceUsage.maxRSS",
+        "peakSourceUnits": "KiB",
+        "peakUnits": "bytes",
+        "peakResidentBytes": 67338240,
+        "persistentStateUnchanged": true,
+        "transactionClosed": true
+      }
+    },
+    {
+      "workspace": "READ_SEAL",
+      "observation": {
+        "name": "oversized-sql-column",
+        "environment": {
+          "node": "v24.15.0",
+          "v8": "13.6.233.17-node.48",
+          "platform": "win32",
+          "arch": "x64",
+          "zodVersion": "4.6.1",
+          "implementationDigest": "86fa33c51ecf63383f3575877bedaf66c47661dee5222ea4e14e8a0dd74e5888",
+          "corpusRevision": "p05-native-metadata-memory-v1"
+        },
+        "serializedBytes": 1076,
+        "retainedReadSqlBytes": 16778400,
+        "retainedSealSqlBytes": 1592,
+        "retainedReadStringChargeBytes": 33556800,
+        "retainedSealStringChargeBytes": 3184,
+        "corpusPayloadDigest": "70bc612213767bd9c0a1847f882ec374159c1b3aa85ba9a1a5fd581258bb3e97",
+        "preparationMs": 116.33380000000002,
+        "readMs": 206.31380000000001,
+        "sealMs": 180.36510000000004,
+        "readOutcome": "RESOURCE_LIMIT_EXCEEDED",
+        "sealOutcome": "AVAILABLE",
+        "samples": [
+          {
+            "phase": "start",
+            "memory": {
+              "rss": 61804544,
+              "heapTotal": 20267008,
+              "heapUsed": 14588096,
+              "external": 2612105,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 61064
+          },
+          {
+            "phase": "prepared",
+            "memory": {
+              "rss": 138395648,
+              "heapTotal": 46747648,
+              "heapUsed": 32856112,
+              "external": 2512683,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 167928
+          },
+          {
+            "phase": "read",
+            "memory": {
+              "rss": 141090816,
+              "heapTotal": 46747648,
+              "heapUsed": 32887328,
+              "external": 2512683,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 203276
+          },
+          {
+            "phase": "seal",
+            "memory": {
+              "rss": 141737984,
+              "heapTotal": 46747648,
+              "heapUsed": 33497968,
+              "external": 2543282,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 203960
+          }
+        ],
+        "peakMethod": "resourceUsage.maxRSS",
+        "peakSourceUnits": "KiB",
+        "peakUnits": "bytes",
+        "peakResidentBytes": 208855040,
+        "persistentStateUnchanged": true,
+        "transactionClosed": true
+      }
+    },
+    {
+      "workspace": "READ_SEAL",
+      "observation": {
+        "name": "oversized-staged-fact",
+        "environment": {
+          "node": "v24.15.0",
+          "v8": "13.6.233.17-node.48",
+          "platform": "win32",
+          "arch": "x64",
+          "zodVersion": "4.6.1",
+          "implementationDigest": "86fa33c51ecf63383f3575877bedaf66c47661dee5222ea4e14e8a0dd74e5888",
+          "corpusRevision": "p05-native-metadata-memory-v1"
+        },
+        "serializedBytes": 1076,
+        "retainedReadSqlBytes": 1194,
+        "retainedSealSqlBytes": 1001664,
+        "retainedReadStringChargeBytes": 2388,
+        "retainedSealStringChargeBytes": 2003328,
+        "corpusPayloadDigest": "70bc612213767bd9c0a1847f882ec374159c1b3aa85ba9a1a5fd581258bb3e97",
+        "preparationMs": 30.465900000000005,
+        "readMs": 5.275099999999981,
+        "sealMs": 1.315100000000001,
+        "readOutcome": "AVAILABLE",
+        "sealOutcome": "RESOURCE_LIMIT_EXCEEDED",
+        "samples": [
+          {
+            "phase": "start",
+            "memory": {
+              "rss": 62128128,
+              "heapTotal": 20004864,
+              "heapUsed": 14560312,
+              "external": 2606764,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 60996
+          },
+          {
+            "phase": "prepared",
+            "memory": {
+              "rss": 68608000,
+              "heapTotal": 32497664,
+              "heapUsed": 17995320,
+              "external": 2512683,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 68016
+          },
+          {
+            "phase": "read",
+            "memory": {
+              "rss": 69062656,
+              "heapTotal": 32497664,
+              "heapUsed": 18559832,
+              "external": 2543282,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 68016
+          },
+          {
+            "phase": "seal",
+            "memory": {
+              "rss": 69128192,
+              "heapTotal": 32497664,
+              "heapUsed": 18597808,
+              "external": 2543282,
+              "arrayBuffers": 45335
+            },
+            "peakKiB": 68436
+          }
+        ],
+        "peakMethod": "resourceUsage.maxRSS",
+        "peakSourceUnits": "KiB",
+        "peakUnits": "bytes",
+        "peakResidentBytes": 70078464,
+        "persistentStateUnchanged": true,
+        "transactionClosed": true
+      }
+    },
+    {
+      "workspace": "FULL_TRANSPORT",
+      "observation": {
+        "name": "zero-file",
+        "environment": {
+          "node": "v24.15.0",
+          "v8": "13.6.233.17-node.48",
+          "platform": "win32",
+          "arch": "x64",
+          "zodVersion": "4.6.1",
+          "implementationDigest": "86fa33c51ecf63383f3575877bedaf66c47661dee5222ea4e14e8a0dd74e5888",
+          "corpusRevision": "p05-native-metadata-memory-v1"
+        },
+        "outcome": "SUCCEEDED",
+        "accepted": 1,
+        "maximumOverlap": 1,
+        "counts": {
+          "ANALYSIS_STARTED": 1
+        },
+        "samples": [
+          {
+            "phase": "startup",
+            "elapsedMs": 0.051000000000016144,
+            "memory": {
+              "rss": 61710336,
+              "heapTotal": 20267008,
+              "heapUsed": 14584656,
+              "external": 2603913,
+              "arrayBuffers": 37143
+            },
+            "peakKiB": 60556
+          },
+          {
+            "phase": "input-preparation",
+            "elapsedMs": 15.834599999999995,
+            "memory": {
+              "rss": 63496192,
+              "heapTotal": 29704192,
+              "heapUsed": 15145328,
+              "external": 2504491,
+              "arrayBuffers": 37143
+            },
+            "peakKiB": 62032
+          },
+          {
+            "phase": "ANALYSIS_STARTED",
+            "elapsedMs": 296.0339,
+            "memory": {
+              "rss": 64667648,
+              "heapTotal": 29966336,
+              "heapUsed": 11691984,
+              "external": 2527058,
+              "arrayBuffers": 29111
+            },
+            "peakKiB": 63152
+          },
+          {
+            "phase": "transport-complete",
+            "elapsedMs": 307.2026,
+            "memory": {
+              "rss": 64643072,
+              "heapTotal": 29966336,
+              "heapUsed": 12360480,
+              "external": 2527992,
+              "arrayBuffers": 30045
+            },
+            "peakKiB": 63304
+          },
+          {
+            "phase": "seal-complete",
+            "elapsedMs": 310.2696,
+            "memory": {
+              "rss": 64794624,
+              "heapTotal": 30490624,
+              "heapUsed": 12495288,
+              "external": 2527992,
+              "arrayBuffers": 30045
+            },
+            "peakKiB": 63304
+          }
+        ],
+        "requestHeaderBytes": 747,
+        "peakResidentBytes": 64987136,
+        "peakMethod": "resourceUsage.maxRSS",
+        "peakUnits": "bytes",
+        "scope": "Node transport + awaited TEMP staging + pure Provider seal; child peak excluded; no Apply"
+      }
+    },
+    {
+      "workspace": "FULL_TRANSPORT",
+      "observation": {
+        "name": "empty-file",
+        "environment": {
+          "node": "v24.15.0",
+          "v8": "13.6.233.17-node.48",
+          "platform": "win32",
+          "arch": "x64",
+          "zodVersion": "4.6.1",
+          "implementationDigest": "86fa33c51ecf63383f3575877bedaf66c47661dee5222ea4e14e8a0dd74e5888",
+          "corpusRevision": "p05-native-metadata-memory-v1"
+        },
+        "outcome": "SUCCEEDED",
+        "accepted": 4,
+        "maximumOverlap": 1,
+        "counts": {
+          "ANALYSIS_STARTED": 1,
+          "SOURCE_FILE": 1,
+          "COVERAGE": 1,
+          "ANALYSIS_SUMMARY": 1
+        },
+        "samples": [
+          {
+            "phase": "startup",
+            "elapsedMs": 0.041700000000020054,
+            "memory": {
+              "rss": 62226432,
+              "heapTotal": 20267008,
+              "heapUsed": 14642296,
+              "external": 2598572,
+              "arrayBuffers": 37143
+            },
+            "peakKiB": 61104
+          },
+          {
+            "phase": "input-preparation",
+            "elapsedMs": 19.561200000000014,
+            "memory": {
+              "rss": 64081920,
+              "heapTotal": 29966336,
+              "heapUsed": 15960872,
+              "external": 2504491,
+              "arrayBuffers": 37143
+            },
+            "peakKiB": 62580
+          },
+          {
+            "phase": "ANALYSIS_STARTED",
+            "elapsedMs": 305.1669,
+            "memory": {
+              "rss": 65789952,
+              "heapTotal": 30228480,
+              "heapUsed": 11794312,
+              "external": 2527058,
+              "arrayBuffers": 29111
+            },
+            "peakKiB": 64248
+          },
+          {
+            "phase": "SOURCE_FILE",
+            "elapsedMs": 306.1283,
+            "memory": {
+              "rss": 65802240,
+              "heapTotal": 30228480,
+              "heapUsed": 11938680,
+              "external": 2529359,
+              "arrayBuffers": 31412
+            },
+            "peakKiB": 64260
+          },
+          {
+            "phase": "COVERAGE",
+            "elapsedMs": 306.61830000000003,
+            "memory": {
+              "rss": 65806336,
+              "heapTotal": 30228480,
+              "heapUsed": 12043952,
+              "external": 2529359,
+              "arrayBuffers": 31412
+            },
+            "peakKiB": 64264
+          },
+          {
+            "phase": "ANALYSIS_SUMMARY",
+            "elapsedMs": 308.1213,
+            "memory": {
+              "rss": 65880064,
+              "heapTotal": 30228480,
+              "heapUsed": 12236768,
+              "external": 2529359,
+              "arrayBuffers": 31412
+            },
+            "peakKiB": 64336
+          },
+          {
+            "phase": "transport-complete",
+            "elapsedMs": 319.27860000000004,
+            "memory": {
+              "rss": 65945600,
+              "heapTotal": 30490624,
+              "heapUsed": 13035520,
+              "external": 2529359,
+              "arrayBuffers": 31412
+            },
+            "peakKiB": 64400
+          },
+          {
+            "phase": "seal-complete",
+            "elapsedMs": 323.0208,
+            "memory": {
+              "rss": 66068480,
+              "heapTotal": 30490624,
+              "heapUsed": 13182040,
+              "external": 2529359,
+              "arrayBuffers": 31412
+            },
+            "peakKiB": 64520
+          }
+        ],
+        "requestHeaderBytes": 979,
+        "peakResidentBytes": 66334720,
+        "peakMethod": "resourceUsage.maxRSS",
+        "peakUnits": "bytes",
+        "scope": "Node transport + awaited TEMP staging + pure Provider seal; child peak excluded; no Apply"
+      }
+    },
+    {
+      "workspace": "FULL_TRANSPORT",
+      "observation": {
+        "name": "maximum-short-files",
+        "environment": {
+          "node": "v24.15.0",
+          "v8": "13.6.233.17-node.48",
+          "platform": "win32",
+          "arch": "x64",
+          "zodVersion": "4.6.1",
+          "implementationDigest": "86fa33c51ecf63383f3575877bedaf66c47661dee5222ea4e14e8a0dd74e5888",
+          "corpusRevision": "p05-native-metadata-memory-v1"
+        },
+        "outcome": "SUCCEEDED",
+        "accepted": 4825,
+        "maximumOverlap": 1,
+        "counts": {
+          "ANALYSIS_STARTED": 1,
+          "SOURCE_FILE": 1608,
+          "COVERAGE": 1608,
+          "ANALYSIS_SUMMARY": 1608
+        },
+        "samples": [
+          {
+            "phase": "startup",
+            "elapsedMs": 0.04259999999999309,
+            "memory": {
+              "rss": 62148608,
+              "heapTotal": 20267008,
+              "heapUsed": 14625104,
+              "external": 2598572,
+              "arrayBuffers": 37143
+            },
+            "peakKiB": 61092
+          },
+          {
+            "phase": "input-preparation",
+            "elapsedMs": 233.10379999999998,
+            "memory": {
+              "rss": 98025472,
+              "heapTotal": 54853632,
+              "heapUsed": 28360664,
+              "external": 2496263,
+              "arrayBuffers": 28915
+            },
+            "peakKiB": 97452
+          },
+          {
+            "phase": "ANALYSIS_STARTED",
+            "elapsedMs": 764.1662,
+            "memory": {
+              "rss": 98267136,
+              "heapTotal": 54562816,
+              "heapUsed": 22366560,
+              "external": 2913610,
+              "arrayBuffers": 415663
+            },
+            "peakKiB": 100696
+          },
+          {
+            "phase": "SOURCE_FILE",
+            "elapsedMs": 825.6671,
+            "memory": {
+              "rss": 103882752,
+              "heapTotal": 54824960,
+              "heapUsed": 36653024,
+              "external": 3183946,
+              "arrayBuffers": 685999
+            },
+            "peakKiB": 103068
+          },
+          {
+            "phase": "COVERAGE",
+            "elapsedMs": 977.9283,
+            "memory": {
+              "rss": 107913216,
+              "heapTotal": 55873536,
+              "heapUsed": 37728384,
+              "external": 2993806,
+              "arrayBuffers": 495859
+            },
+            "peakKiB": 105384
+          },
+          {
+            "phase": "ANALYSIS_SUMMARY",
+            "elapsedMs": 1220.3397,
+            "memory": {
+              "rss": 110673920,
+              "heapTotal": 94670848,
+              "heapUsed": 42477416,
+              "external": 2835712,
+              "arrayBuffers": 337765
+            },
+            "peakKiB": 108080
+          },
+          {
+            "phase": "transport-complete",
+            "elapsedMs": 1226.5593,
+            "memory": {
+              "rss": 110809088,
+              "heapTotal": 94670848,
+              "heapUsed": 43049104,
+              "external": 2835712,
+              "arrayBuffers": 337765
+            },
+            "peakKiB": 108212
+          },
+          {
+            "phase": "seal-complete",
+            "elapsedMs": 1698.9143,
+            "memory": {
+              "rss": 154484736,
+              "heapTotal": 105680896,
+              "heapUsed": 39737952,
+              "external": 2559630,
+              "arrayBuffers": 61683
+            },
+            "peakKiB": 152920
+          }
+        ],
+        "requestHeaderBytes": 386552,
+        "peakResidentBytes": 156590080,
+        "peakMethod": "resourceUsage.maxRSS",
+        "peakUnits": "bytes",
+        "scope": "Node transport + awaited TEMP staging + pure Provider seal; child peak excluded; no Apply"
+      }
+    },
+    {
+      "workspace": "FULL_TRANSPORT",
+      "observation": {
+        "name": "dense-numeric-sites",
+        "environment": {
+          "node": "v24.15.0",
+          "v8": "13.6.233.17-node.48",
+          "platform": "win32",
+          "arch": "x64",
+          "zodVersion": "4.6.1",
+          "implementationDigest": "86fa33c51ecf63383f3575877bedaf66c47661dee5222ea4e14e8a0dd74e5888",
+          "corpusRevision": "p05-native-metadata-memory-v1"
+        },
+        "outcome": "SUCCEEDED",
+        "accepted": 1919,
+        "maximumOverlap": 1,
+        "counts": {
+          "ANALYSIS_STARTED": 1,
+          "SOURCE_FILE": 1,
+          "NODE": 1915,
+          "COVERAGE": 1,
+          "ANALYSIS_SUMMARY": 1
+        },
+        "samples": [
+          {
+            "phase": "startup",
+            "elapsedMs": 0.03899999999998727,
+            "memory": {
+              "rss": 62271488,
+              "heapTotal": 20267008,
+              "heapUsed": 14627336,
+              "external": 2603913,
+              "arrayBuffers": 37143
+            },
+            "peakKiB": 61172
+          },
+          {
+            "phase": "input-preparation",
+            "elapsedMs": 407.38659999999993,
+            "memory": {
+              "rss": 107474944,
+              "heapTotal": 62963712,
+              "heapUsed": 33083320,
+              "external": 2496263,
+              "arrayBuffers": 28915
+            },
+            "peakKiB": 105940
+          },
+          {
+            "phase": "ANALYSIS_STARTED",
+            "elapsedMs": 1117.1722,
+            "memory": {
+              "rss": 108421120,
+              "heapTotal": 62963712,
+              "heapUsed": 34354512,
+              "external": 2535250,
+              "arrayBuffers": 37303
+            },
+            "peakKiB": 105940
+          },
+          {
+            "phase": "SOURCE_FILE",
+            "elapsedMs": 1117.8938,
+            "memory": {
+              "rss": 108425216,
+              "heapTotal": 62963712,
+              "heapUsed": 34458376,
+              "external": 2600786,
+              "arrayBuffers": 102839
+            },
+            "peakKiB": 105940
+          },
+          {
+            "phase": "NODE",
+            "elapsedMs": 1290.0545000000002,
+            "memory": {
+              "rss": 132186112,
+              "heapTotal": 94990336,
+              "heapUsed": 58247544,
+              "external": 3264142,
+              "arrayBuffers": 766195
+            },
+            "peakKiB": 129088
+          },
+          {
+            "phase": "COVERAGE",
+            "elapsedMs": 1290.5461,
+            "memory": {
+              "rss": 132472832,
+              "heapTotal": 94990336,
+              "heapUsed": 58333808,
+              "external": 3264142,
+              "arrayBuffers": 766195
+            },
+            "peakKiB": 129368
+          },
+          {
+            "phase": "ANALYSIS_SUMMARY",
+            "elapsedMs": 1442.1294,
+            "memory": {
+              "rss": 165396480,
+              "heapTotal": 114384896,
+              "heapUsed": 74627872,
+              "external": 4534827,
+              "arrayBuffers": 2036880
+            },
+            "peakKiB": 162852
+          },
+          {
+            "phase": "transport-complete",
+            "elapsedMs": 1451.1854,
+            "memory": {
+              "rss": 152367104,
+              "heapTotal": 102776832,
+              "heapUsed": 36815464,
+              "external": 4534827,
+              "arrayBuffers": 2036880
+            },
+            "peakKiB": 162852
+          },
+          {
+            "phase": "seal-complete",
+            "elapsedMs": 1902.5837999999999,
+            "memory": {
+              "rss": 163840000,
+              "heapTotal": 166981632,
+              "heapUsed": 75662952,
+              "external": 2526862,
+              "arrayBuffers": 28915
+            },
+            "peakKiB": 162852
+          }
+        ],
+        "requestHeaderBytes": 979,
+        "peakResidentBytes": 166760448,
+        "peakMethod": "resourceUsage.maxRSS",
+        "peakUnits": "bytes",
+        "scope": "Node transport + awaited TEMP staging + pure Provider seal; child peak excluded; no Apply"
+      }
+    },
+    {
+      "workspace": "FULL_TRANSPORT",
+      "observation": {
+        "name": "long-ascii",
+        "environment": {
+          "node": "v24.15.0",
+          "v8": "13.6.233.17-node.48",
+          "platform": "win32",
+          "arch": "x64",
+          "zodVersion": "4.6.1",
+          "implementationDigest": "86fa33c51ecf63383f3575877bedaf66c47661dee5222ea4e14e8a0dd74e5888",
+          "corpusRevision": "p05-native-metadata-memory-v1"
+        },
+        "outcome": "SUCCEEDED",
+        "accepted": 5,
+        "maximumOverlap": 1,
+        "counts": {
+          "ANALYSIS_STARTED": 1,
+          "SOURCE_FILE": 1,
+          "NODE": 1,
+          "COVERAGE": 1,
+          "ANALYSIS_SUMMARY": 1
+        },
+        "samples": [
+          {
+            "phase": "startup",
+            "elapsedMs": 0.0408999999999935,
+            "memory": {
+              "rss": 62062592,
+              "heapTotal": 20267008,
+              "heapUsed": 14601424,
+              "external": 2598572,
+              "arrayBuffers": 37143
+            },
+            "peakKiB": 60888
+          },
+          {
+            "phase": "input-preparation",
+            "elapsedMs": 28.171999999999997,
+            "memory": {
+              "rss": 70524928,
+              "heapTotal": 36237312,
+              "heapUsed": 22809184,
+              "external": 2504491,
+              "arrayBuffers": 37143
+            },
+            "peakKiB": 69888
+          },
+          {
+            "phase": "ANALYSIS_STARTED",
+            "elapsedMs": 310.1588,
+            "memory": {
+              "rss": 66945024,
+              "heapTotal": 31014912,
+              "heapUsed": 11904216,
+              "external": 2527058,
+              "arrayBuffers": 29111
+            },
+            "peakKiB": 71080
+          },
+          {
+            "phase": "SOURCE_FILE",
+            "elapsedMs": 310.7679,
+            "memory": {
+              "rss": 66637824,
+              "heapTotal": 31014912,
+              "heapUsed": 12048040,
+              "external": 2528139,
+              "arrayBuffers": 30192
+            },
+            "peakKiB": 71080
+          },
+          {
+            "phase": "NODE",
+            "elapsedMs": 311.1623,
+            "memory": {
+              "rss": 66637824,
+              "heapTotal": 31014912,
+              "heapUsed": 12164184,
+              "external": 2528139,
+              "arrayBuffers": 30192
+            },
+            "peakKiB": 71080
+          },
+          {
+            "phase": "COVERAGE",
+            "elapsedMs": 311.5383,
+            "memory": {
+              "rss": 66789376,
+              "heapTotal": 31014912,
+              "heapUsed": 12263624,
+              "external": 2528139,
+              "arrayBuffers": 30192
+            },
+            "peakKiB": 71080
+          },
+          {
+            "phase": "ANALYSIS_SUMMARY",
+            "elapsedMs": 341.5087,
+            "memory": {
+              "rss": 84836352,
+              "heapTotal": 36024320,
+              "heapUsed": 19796464,
+              "external": 12392644,
+              "arrayBuffers": 9894697
+            },
+            "peakKiB": 82848
+          },
+          {
+            "phase": "transport-complete",
+            "elapsedMs": 344.9333,
+            "memory": {
+              "rss": 84914176,
+              "heapTotal": 36024320,
+              "heapUsed": 20395488,
+              "external": 12392644,
+              "arrayBuffers": 9894697
+            },
+            "peakKiB": 82924
+          },
+          {
+            "phase": "seal-complete",
+            "elapsedMs": 356.3549,
+            "memory": {
+              "rss": 77557760,
+              "heapTotal": 40288256,
+              "heapUsed": 21372832,
+              "external": 12392644,
+              "arrayBuffers": 29111
+            },
+            "peakKiB": 86880
+          }
+        ],
+        "requestHeaderBytes": 979,
+        "peakResidentBytes": 88965120,
+        "peakMethod": "resourceUsage.maxRSS",
+        "peakUnits": "bytes",
+        "scope": "Node transport + awaited TEMP staging + pure Provider seal; child peak excluded; no Apply"
+      }
+    },
+    {
+      "workspace": "FULL_TRANSPORT",
+      "observation": {
+        "name": "long-bmp",
+        "environment": {
+          "node": "v24.15.0",
+          "v8": "13.6.233.17-node.48",
+          "platform": "win32",
+          "arch": "x64",
+          "zodVersion": "4.6.1",
+          "implementationDigest": "86fa33c51ecf63383f3575877bedaf66c47661dee5222ea4e14e8a0dd74e5888",
+          "corpusRevision": "p05-native-metadata-memory-v1"
+        },
+        "outcome": "SUCCEEDED",
+        "accepted": 5,
+        "maximumOverlap": 1,
+        "counts": {
+          "ANALYSIS_STARTED": 1,
+          "SOURCE_FILE": 1,
+          "NODE": 1,
+          "COVERAGE": 1,
+          "ANALYSIS_SUMMARY": 1
+        },
+        "samples": [
+          {
+            "phase": "startup",
+            "elapsedMs": 0.04149999999998499,
+            "memory": {
+              "rss": 62218240,
+              "heapTotal": 20004864,
+              "heapUsed": 14622912,
+              "external": 2603913,
+              "arrayBuffers": 37143
+            },
+            "peakKiB": 61136
+          },
+          {
+            "phase": "input-preparation",
+            "elapsedMs": 28.77879999999999,
+            "memory": {
+              "rss": 68632576,
+              "heapTotal": 34508800,
+              "heapUsed": 20822720,
+              "external": 2504491,
+              "arrayBuffers": 37143
+            },
+            "peakKiB": 67672
+          },
+          {
+            "phase": "ANALYSIS_STARTED",
+            "elapsedMs": 349.99350000000004,
+            "memory": {
+              "rss": 66719744,
+              "heapTotal": 30490624,
+              "heapUsed": 11908424,
+              "external": 2527058,
+              "arrayBuffers": 29111
+            },
+            "peakKiB": 68988
+          },
+          {
+            "phase": "SOURCE_FILE",
+            "elapsedMs": 350.5946,
+            "memory": {
+              "rss": 66719744,
+              "heapTotal": 30490624,
+              "heapUsed": 12052272,
+              "external": 2528139,
+              "arrayBuffers": 30192
+            },
+            "peakKiB": 68988
+          },
+          {
+            "phase": "NODE",
+            "elapsedMs": 350.9877,
+            "memory": {
+              "rss": 66719744,
+              "heapTotal": 30490624,
+              "heapUsed": 12168416,
+              "external": 2528139,
+              "arrayBuffers": 30192
+            },
+            "peakKiB": 68988
+          },
+          {
+            "phase": "COVERAGE",
+            "elapsedMs": 351.35670000000005,
+            "memory": {
+              "rss": 66801664,
+              "heapTotal": 30490624,
+              "heapUsed": 12267856,
+              "external": 2528139,
+              "arrayBuffers": 30192
+            },
+            "peakKiB": 68988
+          },
+          {
+            "phase": "ANALYSIS_SUMMARY",
+            "elapsedMs": 379.75509999999997,
+            "memory": {
+              "rss": 82894848,
+              "heapTotal": 34365440,
+              "heapUsed": 18716728,
+              "external": 12392642,
+              "arrayBuffers": 9894695
+            },
+            "peakKiB": 80952
+          },
+          {
+            "phase": "transport-complete",
+            "elapsedMs": 384.26189999999997,
+            "memory": {
+              "rss": 82980864,
+              "heapTotal": 34365440,
+              "heapUsed": 19316016,
+              "external": 12392642,
+              "arrayBuffers": 9894695
+            },
+            "peakKiB": 81036
+          },
+          {
+            "phase": "seal-complete",
+            "elapsedMs": 399.7459,
+            "memory": {
+              "rss": 88793088,
+              "heapTotal": 39055360,
+              "heapUsed": 24487688,
+              "external": 12392642,
+              "arrayBuffers": 9894695
+            },
+            "peakKiB": 86712
+          }
+        ],
+        "requestHeaderBytes": 979,
+        "peakResidentBytes": 88866816,
+        "peakMethod": "resourceUsage.maxRSS",
+        "peakUnits": "bytes",
+        "scope": "Node transport + awaited TEMP staging + pure Provider seal; child peak excluded; no Apply"
+      }
+    },
+    {
+      "workspace": "FULL_TRANSPORT",
+      "observation": {
+        "name": "long-astral",
+        "environment": {
+          "node": "v24.15.0",
+          "v8": "13.6.233.17-node.48",
+          "platform": "win32",
+          "arch": "x64",
+          "zodVersion": "4.6.1",
+          "implementationDigest": "86fa33c51ecf63383f3575877bedaf66c47661dee5222ea4e14e8a0dd74e5888",
+          "corpusRevision": "p05-native-metadata-memory-v1"
+        },
+        "outcome": "SUCCEEDED",
+        "accepted": 5,
+        "maximumOverlap": 1,
+        "counts": {
+          "ANALYSIS_STARTED": 1,
+          "SOURCE_FILE": 1,
+          "NODE": 1,
+          "COVERAGE": 1,
+          "ANALYSIS_SUMMARY": 1
+        },
+        "samples": [
+          {
+            "phase": "startup",
+            "elapsedMs": 0.044599999999974216,
+            "memory": {
+              "rss": 62169088,
+              "heapTotal": 20267008,
+              "heapUsed": 14658824,
+              "external": 2598572,
+              "arrayBuffers": 37143
+            },
+            "peakKiB": 60924
+          },
+          {
+            "phase": "input-preparation",
+            "elapsedMs": 33.06299999999999,
+            "memory": {
+              "rss": 70414336,
+              "heapTotal": 36499456,
+              "heapUsed": 22853728,
+              "external": 2504491,
+              "arrayBuffers": 37143
+            },
+            "peakKiB": 69748
+          },
+          {
+            "phase": "ANALYSIS_STARTED",
+            "elapsedMs": 317.15369999999996,
+            "memory": {
+              "rss": 66478080,
+              "heapTotal": 31277056,
+              "heapUsed": 11902264,
+              "external": 2527058,
+              "arrayBuffers": 29111
+            },
+            "peakKiB": 70628
+          },
+          {
+            "phase": "SOURCE_FILE",
+            "elapsedMs": 317.95619999999997,
+            "memory": {
+              "rss": 66478080,
+              "heapTotal": 31277056,
+              "heapUsed": 12044832,
+              "external": 2528139,
+              "arrayBuffers": 30192
+            },
+            "peakKiB": 70628
+          },
+          {
+            "phase": "NODE",
+            "elapsedMs": 318.3674,
+            "memory": {
+              "rss": 66478080,
+              "heapTotal": 31277056,
+              "heapUsed": 12160976,
+              "external": 2528139,
+              "arrayBuffers": 30192
+            },
+            "peakKiB": 70628
+          },
+          {
+            "phase": "COVERAGE",
+            "elapsedMs": 318.74109999999996,
+            "memory": {
+              "rss": 66543616,
+              "heapTotal": 31277056,
+              "heapUsed": 12260416,
+              "external": 2528139,
+              "arrayBuffers": 30192
+            },
+            "peakKiB": 70628
+          },
+          {
+            "phase": "ANALYSIS_SUMMARY",
+            "elapsedMs": 354.2292,
+            "memory": {
+              "rss": 84750336,
+              "heapTotal": 36286464,
+              "heapUsed": 20762040,
+              "external": 12392640,
+              "arrayBuffers": 9894693
+            },
+            "peakKiB": 82764
+          },
+          {
+            "phase": "transport-complete",
+            "elapsedMs": 357.9459999999999,
+            "memory": {
+              "rss": 85098496,
+              "heapTotal": 36286464,
+              "heapUsed": 21360928,
+              "external": 12392640,
+              "arrayBuffers": 9894693
+            },
+            "peakKiB": 83104
+          },
+          {
+            "phase": "seal-complete",
+            "elapsedMs": 376.1655999999999,
+            "memory": {
+              "rss": 77991936,
+              "heapTotal": 40288256,
+              "heapUsed": 21411360,
+              "external": 12392640,
+              "arrayBuffers": 29111
+            },
+            "peakKiB": 87776
+          }
+        ],
+        "requestHeaderBytes": 979,
+        "peakResidentBytes": 89882624,
+        "peakMethod": "resourceUsage.maxRSS",
+        "peakUnits": "bytes",
+        "scope": "Node transport + awaited TEMP staging + pure Provider seal; child peak excluded; no Apply"
+      }
+    },
+    {
+      "workspace": "FULL_TRANSPORT",
+      "observation": {
+        "name": "repeated-shared-owners",
+        "environment": {
+          "node": "v24.15.0",
+          "v8": "13.6.233.17-node.48",
+          "platform": "win32",
+          "arch": "x64",
+          "zodVersion": "4.6.1",
+          "implementationDigest": "86fa33c51ecf63383f3575877bedaf66c47661dee5222ea4e14e8a0dd74e5888",
+          "corpusRevision": "p05-native-metadata-memory-v1"
+        },
+        "outcome": "SUCCEEDED",
+        "accepted": 3330,
+        "maximumOverlap": 1,
+        "counts": {
+          "ANALYSIS_STARTED": 1,
+          "SOURCE_FILE": 832,
+          "NODE": 833,
+          "COVERAGE": 832,
+          "ANALYSIS_SUMMARY": 832
+        },
+        "samples": [
+          {
+            "phase": "startup",
+            "elapsedMs": 0.04159999999998831,
+            "memory": {
+              "rss": 61665280,
+              "heapTotal": 20004864,
+              "heapUsed": 14629984,
+              "external": 2603913,
+              "arrayBuffers": 37143
+            },
+            "peakKiB": 60552
+          },
+          {
+            "phase": "input-preparation",
+            "elapsedMs": 329.1004,
+            "memory": {
+              "rss": 101216256,
+              "heapTotal": 57950208,
+              "heapUsed": 31218688,
+              "external": 2496263,
+              "arrayBuffers": 28915
+            },
+            "peakKiB": 100100
+          },
+          {
+            "phase": "ANALYSIS_STARTED",
+            "elapsedMs": 938.5053,
+            "memory": {
+              "rss": 100175872,
+              "heapTotal": 56266752,
+              "heapUsed": 28135904,
+              "external": 2726322,
+              "arrayBuffers": 228375
+            },
+            "peakKiB": 102636
+          },
+          {
+            "phase": "SOURCE_FILE",
+            "elapsedMs": 983.4808,
+            "memory": {
+              "rss": 107237376,
+              "heapTotal": 56791040,
+              "heapUsed": 39665296,
+              "external": 2922930,
+              "arrayBuffers": 424983
+            },
+            "peakKiB": 104724
+          },
+          {
+            "phase": "NODE",
+            "elapsedMs": 1046.7024,
+            "memory": {
+              "rss": 107855872,
+              "heapTotal": 58101760,
+              "heapUsed": 40128752,
+              "external": 2928270,
+              "arrayBuffers": 430323
+            },
+            "peakKiB": 105788
+          },
+          {
+            "phase": "COVERAGE",
+            "elapsedMs": 1118.9599,
+            "memory": {
+              "rss": 110465024,
+              "heapTotal": 58888192,
+              "heapUsed": 40703664,
+              "external": 2993806,
+              "arrayBuffers": 495859
+            },
+            "peakKiB": 107876
+          },
+          {
+            "phase": "ANALYSIS_SUMMARY",
+            "elapsedMs": 1275.1651,
+            "memory": {
+              "rss": 127332352,
+              "heapTotal": 93491200,
+              "heapUsed": 58852632,
+              "external": 3288718,
+              "arrayBuffers": 790771
+            },
+            "peakKiB": 124348
+          },
+          {
+            "phase": "transport-complete",
+            "elapsedMs": 1311.6357,
+            "memory": {
+              "rss": 128221184,
+              "heapTotal": 95326208,
+              "heapUsed": 39508728,
+              "external": 2773368,
+              "arrayBuffers": 275421
+            },
+            "peakKiB": 126784
+          },
+          {
+            "phase": "seal-complete",
+            "elapsedMs": 2140.5959,
+            "memory": {
+              "rss": 144691200,
+              "heapTotal": 93605888,
+              "heapUsed": 25586248,
+              "external": 2526862,
+              "arrayBuffers": 28915
+            },
+            "peakKiB": 144208
+          }
+        ],
+        "requestHeaderBytes": 199264,
+        "peakResidentBytes": 147668992,
+        "peakMethod": "resourceUsage.maxRSS",
+        "peakUnits": "bytes",
+        "scope": "Node transport + awaited TEMP staging + pure Provider seal; child peak excluded; no Apply"
+      }
+    },
+    {
+      "workspace": "FULL_TRANSPORT",
+      "observation": {
+        "name": "duplicate-metadata",
+        "environment": {
+          "node": "v24.15.0",
+          "v8": "13.6.233.17-node.48",
+          "platform": "win32",
+          "arch": "x64",
+          "zodVersion": "4.6.1",
+          "implementationDigest": "86fa33c51ecf63383f3575877bedaf66c47661dee5222ea4e14e8a0dd74e5888",
+          "corpusRevision": "p05-native-metadata-memory-v1"
+        },
+        "outcome": "PROTOCOL_VIOLATION",
+        "accepted": 2,
+        "maximumOverlap": 1,
+        "counts": {
+          "ANALYSIS_STARTED": 1,
+          "SOURCE_FILE": 1,
+          "failureMessage": "Native v3 source differs"
+        },
+        "samples": [
+          {
+            "phase": "startup",
+            "elapsedMs": 0.043100000000009686,
+            "memory": {
+              "rss": 62164992,
+              "heapTotal": 20529152,
+              "heapUsed": 13868856,
+              "external": 2514588,
+              "arrayBuffers": 37143
+            },
+            "peakKiB": 61012
+          },
+          {
+            "phase": "input-preparation",
+            "elapsedMs": 20.372000000000014,
+            "memory": {
+              "rss": 65363968,
+              "heapTotal": 31014912,
+              "heapUsed": 15282408,
+              "external": 2504491,
+              "arrayBuffers": 37143
+            },
+            "peakKiB": 63832
+          },
+          {
+            "phase": "ANALYSIS_STARTED",
+            "elapsedMs": 333.7365,
+            "memory": {
+              "rss": 66727936,
+              "heapTotal": 31277056,
+              "heapUsed": 11807856,
+              "external": 2527058,
+              "arrayBuffers": 29111
+            },
+            "peakKiB": 65164
+          },
+          {
+            "phase": "SOURCE_FILE",
+            "elapsedMs": 334.44140000000004,
+            "memory": {
+              "rss": 66740224,
+              "heapTotal": 31277056,
+              "heapUsed": 11949616,
+              "external": 2530726,
+              "arrayBuffers": 32779
+            },
+            "peakKiB": 65176
+          },
+          {
+            "phase": "refused",
+            "elapsedMs": 345.11789999999996,
+            "memory": {
+              "rss": 66498560,
+              "heapTotal": 31277056,
+              "heapUsed": 12049872,
+              "external": 2530726,
+              "arrayBuffers": 32779
+            },
+            "peakKiB": 65244
+          }
+        ],
+        "requestHeaderBytes": 979,
+        "peakResidentBytes": 66936832,
+        "peakMethod": "resourceUsage.maxRSS",
+        "peakUnits": "bytes",
+        "scope": "Node transport + awaited TEMP staging + pure Provider seal; child peak excluded; no Apply"
+      }
+    },
+    {
+      "workspace": "FULL_TRANSPORT",
+      "observation": {
+        "name": "foreign-metadata",
+        "environment": {
+          "node": "v24.15.0",
+          "v8": "13.6.233.17-node.48",
+          "platform": "win32",
+          "arch": "x64",
+          "zodVersion": "4.6.1",
+          "implementationDigest": "86fa33c51ecf63383f3575877bedaf66c47661dee5222ea4e14e8a0dd74e5888",
+          "corpusRevision": "p05-native-metadata-memory-v1"
+        },
+        "outcome": "PROTOCOL_VIOLATION",
+        "accepted": 1,
+        "maximumOverlap": 1,
+        "counts": {
+          "ANALYSIS_STARTED": 1,
+          "failureMessage": "Native v3 source differs"
+        },
+        "samples": [
+          {
+            "phase": "startup",
+            "elapsedMs": 0.043099999999981264,
+            "memory": {
+              "rss": 62046208,
+              "heapTotal": 20791296,
+              "heapUsed": 13886000,
+              "external": 2514588,
+              "arrayBuffers": 37143
+            },
+            "peakKiB": 61140
+          },
+          {
+            "phase": "input-preparation",
+            "elapsedMs": 20.102000000000004,
+            "memory": {
+              "rss": 65073152,
+              "heapTotal": 31014912,
+              "heapUsed": 15104016,
+              "external": 2504491,
+              "arrayBuffers": 37143
+            },
+            "peakKiB": 63548
+          },
+          {
+            "phase": "ANALYSIS_STARTED",
+            "elapsedMs": 292.72669999999994,
+            "memory": {
+              "rss": 66224128,
+              "heapTotal": 31801344,
+              "heapUsed": 11803240,
+              "external": 2527058,
+              "arrayBuffers": 29111
+            },
+            "peakKiB": 64672
+          },
+          {
+            "phase": "refused",
+            "elapsedMs": 304.08259999999996,
+            "memory": {
+              "rss": 66117632,
+              "heapTotal": 31801344,
+              "heapUsed": 12024312,
+              "external": 2529365,
+              "arrayBuffers": 31418
+            },
+            "peakKiB": 64836
+          }
+        ],
+        "requestHeaderBytes": 979,
+        "peakResidentBytes": 66576384,
+        "peakMethod": "resourceUsage.maxRSS",
+        "peakUnits": "bytes",
+        "scope": "Node transport + awaited TEMP staging + pure Provider seal; child peak excluded; no Apply"
+      }
+    },
+    {
+      "workspace": "FULL_TRANSPORT",
+      "observation": {
+        "name": "deep-unknown-input",
+        "environment": {
+          "node": "v24.15.0",
+          "v8": "13.6.233.17-node.48",
+          "platform": "win32",
+          "arch": "x64",
+          "zodVersion": "4.6.1",
+          "implementationDigest": "86fa33c51ecf63383f3575877bedaf66c47661dee5222ea4e14e8a0dd74e5888",
+          "corpusRevision": "p05-native-metadata-memory-v1"
+        },
+        "outcome": "PROTOCOL_VIOLATION",
+        "accepted": 3,
+        "maximumOverlap": 1,
+        "counts": {
+          "ANALYSIS_STARTED": 1,
+          "SOURCE_FILE": 1,
+          "COVERAGE": 1,
+          "failureMessage": "Native v3 event is invalid"
+        },
+        "samples": [
+          {
+            "phase": "startup",
+            "elapsedMs": 0.04259999999999309,
+            "memory": {
+              "rss": 62480384,
+              "heapTotal": 21053440,
+              "heapUsed": 13888680,
+              "external": 2514588,
+              "arrayBuffers": 37143
+            },
+            "peakKiB": 61332
+          },
+          {
+            "phase": "input-preparation",
+            "elapsedMs": 19.2697,
+            "memory": {
+              "rss": 65331200,
+              "heapTotal": 31801344,
+              "heapUsed": 15655128,
+              "external": 2504491,
+              "arrayBuffers": 37143
+            },
+            "peakKiB": 63804
+          },
+          {
+            "phase": "ANALYSIS_STARTED",
+            "elapsedMs": 293.5738,
+            "memory": {
+              "rss": 66605056,
+              "heapTotal": 31277056,
+              "heapUsed": 11806184,
+              "external": 2527058,
+              "arrayBuffers": 29111
+            },
+            "peakKiB": 65068
+          },
+          {
+            "phase": "SOURCE_FILE",
+            "elapsedMs": 294.2409,
+            "memory": {
+              "rss": 66646016,
+              "heapTotal": 31277056,
+              "heapUsed": 11950552,
+              "external": 2538974,
+              "arrayBuffers": 41027
+            },
+            "peakKiB": 65084
+          },
+          {
+            "phase": "COVERAGE",
+            "elapsedMs": 294.6008,
+            "memory": {
+              "rss": 66654208,
+              "heapTotal": 31277056,
+              "heapUsed": 12055824,
+              "external": 2538974,
+              "arrayBuffers": 41027
+            },
+            "peakKiB": 65092
+          },
+          {
+            "phase": "refused",
+            "elapsedMs": 304.3929,
+            "memory": {
+              "rss": 66953216,
+              "heapTotal": 31277056,
+              "heapUsed": 12318320,
+              "external": 2538974,
+              "arrayBuffers": 41027
+            },
+            "peakKiB": 65384
+          }
+        ],
+        "requestHeaderBytes": 979,
+        "peakResidentBytes": 67227648,
+        "peakMethod": "resourceUsage.maxRSS",
+        "peakUnits": "bytes",
+        "scope": "Node transport + awaited TEMP staging + pure Provider seal; child peak excluded; no Apply"
+      }
+    },
+    {
+      "workspace": "FULL_TRANSPORT",
+      "observation": {
+        "name": "oversized-staged-fact",
+        "environment": {
+          "node": "v24.15.0",
+          "v8": "13.6.233.17-node.48",
+          "platform": "win32",
+          "arch": "x64",
+          "zodVersion": "4.6.1",
+          "implementationDigest": "86fa33c51ecf63383f3575877bedaf66c47661dee5222ea4e14e8a0dd74e5888",
+          "corpusRevision": "p05-native-metadata-memory-v1"
+        },
+        "outcome": "OUTPUT_LIMIT_EXCEEDED",
+        "accepted": 3,
+        "maximumOverlap": 1,
+        "counts": {
+          "ANALYSIS_STARTED": 1,
+          "SOURCE_FILE": 1,
+          "COVERAGE": 1,
+          "failureMessage": "Native v3 line exceeds limit"
+        },
+        "samples": [
+          {
+            "phase": "startup",
+            "elapsedMs": 0.0438999999999794,
+            "memory": {
+              "rss": 62222336,
+              "heapTotal": 20791296,
+              "heapUsed": 13943248,
+              "external": 2514588,
+              "arrayBuffers": 37143
+            },
+            "peakKiB": 61064
+          },
+          {
+            "phase": "input-preparation",
+            "elapsedMs": 19.14179999999999,
+            "memory": {
+              "rss": 65146880,
+              "heapTotal": 31539200,
+              "heapUsed": 15029048,
+              "external": 2504491,
+              "arrayBuffers": 37143
+            },
+            "peakKiB": 63620
+          },
+          {
+            "phase": "ANALYSIS_STARTED",
+            "elapsedMs": 315.1462,
+            "memory": {
+              "rss": 66314240,
+              "heapTotal": 32063488,
+              "heapUsed": 11811536,
+              "external": 2527058,
+              "arrayBuffers": 29111
+            },
+            "peakKiB": 64960
+          },
+          {
+            "phase": "SOURCE_FILE",
+            "elapsedMs": 315.7414,
+            "memory": {
+              "rss": 66396160,
+              "heapTotal": 32063488,
+              "heapUsed": 11956256,
+              "external": 2527723,
+              "arrayBuffers": 29776
+            },
+            "peakKiB": 64960
+          },
+          {
+            "phase": "COVERAGE",
+            "elapsedMs": 316.0848,
+            "memory": {
+              "rss": 66433024,
+              "heapTotal": 32063488,
+              "heapUsed": 12061528,
+              "external": 2527723,
+              "arrayBuffers": 29776
+            },
+            "peakKiB": 64960
+          },
+          {
+            "phase": "refused",
+            "elapsedMs": 332.10929999999996,
+            "memory": {
+              "rss": 75620352,
+              "heapTotal": 32063488,
+              "heapUsed": 12262384,
+              "external": 11393835,
+              "arrayBuffers": 8895888
+            },
+            "peakKiB": 73848
+          }
+        ],
+        "requestHeaderBytes": 979,
+        "peakResidentBytes": 76103680,
+        "peakMethod": "resourceUsage.maxRSS",
+        "peakUnits": "bytes",
+        "scope": "Node transport + awaited TEMP staging + pure Provider seal; child peak excluded; no Apply"
+      }
+    },
+    {
+      "workspace": "FULL_TRANSPORT",
+      "observation": {
+        "name": "large-request",
+        "environment": {
+          "node": "v24.15.0",
+          "v8": "13.6.233.17-node.48",
+          "platform": "win32",
+          "arch": "x64",
+          "zodVersion": "4.6.1",
+          "implementationDigest": "86fa33c51ecf63383f3575877bedaf66c47661dee5222ea4e14e8a0dd74e5888",
+          "corpusRevision": "p05-native-metadata-memory-v1"
+        },
+        "outcome": "SUCCEEDED",
+        "accepted": 4,
+        "maximumOverlap": 1,
+        "counts": {
+          "ANALYSIS_STARTED": 1,
+          "SOURCE_FILE": 1,
+          "COVERAGE": 1,
+          "ANALYSIS_SUMMARY": 1
+        },
+        "samples": [
+          {
+            "phase": "startup",
+            "elapsedMs": 0.0408999999999935,
+            "memory": {
+              "rss": 61845504,
+              "heapTotal": 20267008,
+              "heapUsed": 14603904,
+              "external": 2598572,
+              "arrayBuffers": 37143
+            },
+            "peakKiB": 61088
+          },
+          {
+            "phase": "input-preparation",
+            "elapsedMs": 19.52260000000001,
+            "memory": {
+              "rss": 63610880,
+              "heapTotal": 30490624,
+              "heapUsed": 15951408,
+              "external": 2504491,
+              "arrayBuffers": 37143
+            },
+            "peakKiB": 62536
+          },
+          {
+            "phase": "ANALYSIS_STARTED",
+            "elapsedMs": 313.19190000000003,
+            "memory": {
+              "rss": 73269248,
+              "heapTotal": 33804288,
+              "heapUsed": 13815992,
+              "external": 3526860,
+              "arrayBuffers": 1028913
+            },
+            "peakKiB": 73000
+          },
+          {
+            "phase": "SOURCE_FILE",
+            "elapsedMs": 313.84950000000003,
+            "memory": {
+              "rss": 73338880,
+              "heapTotal": 33804288,
+              "heapUsed": 13964192,
+              "external": 3529161,
+              "arrayBuffers": 1031214
+            },
+            "peakKiB": 73000
+          },
+          {
+            "phase": "COVERAGE",
+            "elapsedMs": 314.2188,
+            "memory": {
+              "rss": 73437184,
+              "heapTotal": 33804288,
+              "heapUsed": 14069464,
+              "external": 3529161,
+              "arrayBuffers": 1031214
+            },
+            "peakKiB": 73000
+          },
+          {
+            "phase": "ANALYSIS_SUMMARY",
+            "elapsedMs": 315.69410000000005,
+            "memory": {
+              "rss": 73461760,
+              "heapTotal": 34066432,
+              "heapUsed": 14578504,
+              "external": 3529161,
+              "arrayBuffers": 1031214
+            },
+            "peakKiB": 73000
+          },
+          {
+            "phase": "transport-complete",
+            "elapsedMs": 325.44179999999994,
+            "memory": {
+              "rss": 73728000,
+              "heapTotal": 34066432,
+              "heapUsed": 14879288,
+              "external": 3529161,
+              "arrayBuffers": 1031214
+            },
+            "peakKiB": 73000
+          },
+          {
+            "phase": "seal-complete",
+            "elapsedMs": 330.2798,
+            "memory": {
+              "rss": 73879552,
+              "heapTotal": 34066432,
+              "heapUsed": 15205160,
+              "external": 3529161,
+              "arrayBuffers": 1031214
+            },
+            "peakKiB": 73000
+          }
+        ],
+        "requestHeaderBytes": 999802,
+        "peakResidentBytes": 75612160,
+        "peakMethod": "resourceUsage.maxRSS",
+        "peakUnits": "bytes",
+        "scope": "Node transport + awaited TEMP staging + pure Provider seal; child peak excluded; no Apply"
+      }
+    },
+    {
+      "workspace": "FULL_TRANSPORT",
+      "observation": {
+        "name": "slow-sink",
+        "environment": {
+          "node": "v24.15.0",
+          "v8": "13.6.233.17-node.48",
+          "platform": "win32",
+          "arch": "x64",
+          "zodVersion": "4.6.1",
+          "implementationDigest": "86fa33c51ecf63383f3575877bedaf66c47661dee5222ea4e14e8a0dd74e5888",
+          "corpusRevision": "p05-native-metadata-memory-v1"
+        },
+        "outcome": "SUCCEEDED",
+        "accepted": 4,
+        "maximumOverlap": 1,
+        "counts": {
+          "ANALYSIS_STARTED": 1,
+          "SOURCE_FILE": 1,
+          "COVERAGE": 1,
+          "ANALYSIS_SUMMARY": 1
+        },
+        "samples": [
+          {
+            "phase": "startup",
+            "elapsedMs": 0.04609999999999559,
+            "memory": {
+              "rss": 62316544,
+              "heapTotal": 20791296,
+              "heapUsed": 13896040,
+              "external": 2514588,
+              "arrayBuffers": 37143
+            },
+            "peakKiB": 61172
+          },
+          {
+            "phase": "input-preparation",
+            "elapsedMs": 19.038200000000018,
+            "memory": {
+              "rss": 65277952,
+              "heapTotal": 31277056,
+              "heapUsed": 14959240,
+              "external": 2504491,
+              "arrayBuffers": 37143
+            },
+            "peakKiB": 63748
+          },
+          {
+            "phase": "ANALYSIS_STARTED",
+            "elapsedMs": 290.2271,
+            "memory": {
+              "rss": 66408448,
+              "heapTotal": 31801344,
+              "heapUsed": 11817656,
+              "external": 2527058,
+              "arrayBuffers": 29111
+            },
+            "peakKiB": 64852
+          },
+          {
+            "phase": "SOURCE_FILE",
+            "elapsedMs": 290.9857,
+            "memory": {
+              "rss": 66408448,
+              "heapTotal": 31801344,
+              "heapUsed": 11962952,
+              "external": 2529359,
+              "arrayBuffers": 31412
+            },
+            "peakKiB": 64852
+          },
+          {
+            "phase": "COVERAGE",
+            "elapsedMs": 291.378,
+            "memory": {
+              "rss": 66408448,
+              "heapTotal": 31801344,
+              "heapUsed": 12070184,
+              "external": 2529359,
+              "arrayBuffers": 31412
+            },
+            "peakKiB": 64852
+          },
+          {
+            "phase": "ANALYSIS_SUMMARY",
+            "elapsedMs": 292.3754,
+            "memory": {
+              "rss": 66408448,
+              "heapTotal": 31801344,
+              "heapUsed": 12268416,
+              "external": 2529359,
+              "arrayBuffers": 31412
+            },
+            "peakKiB": 64852
+          },
+          {
+            "phase": "transport-complete",
+            "elapsedMs": 302.6503,
+            "memory": {
+              "rss": 66203648,
+              "heapTotal": 31801344,
+              "heapUsed": 12888176,
+              "external": 2529359,
+              "arrayBuffers": 31412
+            },
+            "peakKiB": 64852
+          },
+          {
+            "phase": "seal-complete",
+            "elapsedMs": 307.1649,
+            "memory": {
+              "rss": 66371584,
+              "heapTotal": 32063488,
+              "heapUsed": 13210616,
+              "external": 2529359,
+              "arrayBuffers": 31412
+            },
+            "peakKiB": 64852
+          }
+        ],
+        "requestHeaderBytes": 979,
+        "peakResidentBytes": 66502656,
+        "peakMethod": "resourceUsage.maxRSS",
+        "peakUnits": "bytes",
+        "scope": "Node transport + awaited TEMP staging + pure Provider seal; child peak excluded; no Apply"
+      }
+    }
+  ],
+  "failures": [],
+  "candidateEvidenceDigest": "02071679da6cd7d6ff1ce11dab4eae347e8404f8820052079ce52a49f3ab748d"
+}

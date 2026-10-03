@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFile, readdir } from 'node:fs/promises';
+import { readFile, readdir, mkdtemp, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
@@ -17,6 +19,40 @@ const fixtureIds = [
   'java-coverage-unsupported',
   'java-coverage-zero',
 ];
+
+test('native Java fixture checkouts retain committed bytes under either autocrlf setting', async (t) => {
+  const directory = await mkdtemp(path.join(tmpdir(), 'codeatlas-native-checkout-'));
+  t.after(() => rm(directory, { recursive: true, force: true }));
+  function git(args, encoding) {
+    const child = spawnSync('git', args, { cwd: repositoryRoot, encoding, windowsHide: true });
+    assert.equal(child.status, 0, child.stderr?.toString());
+    return child.stdout;
+  }
+  const files = git(['ls-files', '-z', 'fixtures/native/**/*.java'], 'utf8')
+    .split('\0')
+    .filter(Boolean);
+  assert.ok(files.length > 0);
+  for (const autocrlf of ['true', 'false']) {
+    const destination = path.join(directory, autocrlf);
+    git([
+      '-c',
+      `core.autocrlf=${autocrlf}`,
+      'checkout-index',
+      `--prefix=${destination.replaceAll('\\', '/')}/`,
+      '--',
+      ...files,
+    ]);
+    for (const file of files) {
+      const committed = git(['show', `HEAD:${file}`]);
+      assert.equal(committed.includes(Buffer.from('\r\n')), false, `${file}/committed-LF`);
+      assert.deepEqual(
+        await readFile(path.join(destination, file)),
+        committed,
+        `${file}/autocrlf=${autocrlf}`,
+      );
+    }
+  }
+});
 
 function nativeBinaryPath() {
   const target = process.env.CARGO_TARGET_DIR;

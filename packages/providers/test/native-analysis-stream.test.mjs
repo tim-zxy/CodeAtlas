@@ -72,19 +72,36 @@ test('streamNativeAnalysis awaits a slow sink and never overlaps event delivery'
   let inFlight = 0;
   let maximum = 0;
   let count = 0;
-  const result = await providers.streamNativeAnalysis(
+  const blocked = Promise.withResolvers();
+  const entered = Promise.withResolvers();
+  const stream = providers.streamNativeAnalysis(
     request,
     options('burst-output', { timeoutMs: 15_000 }),
     {
       async accept() {
         inFlight++;
         maximum = Math.max(maximum, inFlight);
-        await new Promise((resolve) => setTimeout(resolve, 1));
+        if (count === 0) {
+          entered.resolve();
+          await blocked.promise;
+        }
+        await new Promise((resolve) => setImmediate(resolve));
         count++;
         inFlight--;
       },
     },
   );
+  // Hold the real first accept until the test releases it. Timer resolution is
+  // not the contract: no second accept may overlap this pending sink promise.
+  try {
+    await Promise.race([entered.promise, stream]);
+    await new Promise((resolve) => setImmediate(resolve));
+    assert.equal(count, 0);
+    assert.equal(maximum, 1);
+  } finally {
+    blocked.resolve();
+  }
+  const result = await stream;
   assert.equal(maximum, 1);
   assert.equal(count, 1_001);
   assert.equal(result.terminal.type, 'ANALYSIS_COMPLETED');
