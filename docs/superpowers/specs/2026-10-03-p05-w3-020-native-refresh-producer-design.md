@@ -1,5 +1,7 @@
 # P05-W3-020-C Real Native REFRESH Producer Design
 
+2026-10-03 C1 hold: the [preflight amendment](2026-10-03-p05-w3-020-c1-memory-preflight-proposal.md) has direction approval and completed written detail, awaiting review. Private trusted-budget admission, a mandatory C decoder argument and separate verification-purpose calibration are proposed, not silently applied to the accepted contract below. Written amendment and revised native-plan review precede implementation; exact numeric approval remains separate.
+
 ## Review status and intent
 
 Written specification accepted on2026-10-03: the user answered “确认” after design commit `919d6b7`. The direction remains: reuse validated retained summaries, parse changed files, reconstruct the declaration index and re-resolve dependent relations without a persistent dependency index. Written approval permits the [implementation plan](../plans/2026-10-03-p05-w3-020-native-refresh-producer.md), which now awaits review; it does not permit product code before plan review. Preserve the previously selected native execution method.

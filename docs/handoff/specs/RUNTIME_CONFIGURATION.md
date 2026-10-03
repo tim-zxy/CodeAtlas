@@ -47,6 +47,8 @@ Under accepted ADR-016, Native v3 composition receives versioned summaries throu
 
 ## Native metadata admission
 
+C1 preflight direction approval (2026-10-03) permits [written review](../../superpowers/specs/2026-10-03-p05-w3-020-c1-memory-preflight-proposal.md), not implementation: a private verification owner would admit its trusted budget before lazy raw preparation, using a separate exact-build REFRESH_VERIFY profile. Its numeric value is absent; READ_SEAL/FULL_TRANSPORT cannot authorize it. No configuration knob, automatic calibration, worker setting, D transport or SQLite workflow is introduced.
+
 Packet B metadata admission is an exact built-implementation/Node/V8/platform/architecture/Zod profile, not a user-tunable reservation. The explicitly approved2026-10-02 profile reserves280,453,120 bytes plus twice retained SQL UTF-8 and records optional memoryPolicyRevision, memoryCandidateEvidenceDigest, observedPeakBytes and fluctuationAllowanceBytes. These fields identify offline immutable high-water/range evidence; Runtime still consumes a static reservation and never calibrates or reduces it automatically. Missing/changed identities fail closed before observation; bounded Provider request framing also precedes Runtime schema copies/database access. See CURRENT_STATUS and the accepted stability amendment for hashes, finite-sampling limitations and fresh gates. No new worker/cache knob or phase scope is introduced.
 
 ## Packaging

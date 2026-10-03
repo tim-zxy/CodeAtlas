@@ -8,9 +8,11 @@
 
 **Tech Stack:** Existing Node `>=24 <25`, TypeScript/Zod, Rust edition2024, Tree-sitter Java, SHA-256 and JSONL; `pnpm@11.19.0`. No new dependency.
 
-**Spec:** [Accepted packet C design](../specs/2026-10-03-p05-w3-020-native-refresh-producer-design.md), confirmed by the user after local design commit `919d6b7` on2026-10-03. This plan awaits review. Preserve the previously selected **native** execution method; no product implementation starts on spec approval alone.
+**Spec:** [Accepted packet C design](../specs/2026-10-03-p05-w3-020-native-refresh-producer-design.md), confirmed by the user after local design commit `919d6b7` on2026-10-03. The user subsequently approved this plan/native execution and PR#18 merge; exact merge73756f0 CI succeeded. Task1 is in progress and now held on the [proposed C1 memory preflight amendment](../specs/2026-10-03-p05-w3-020-c1-memory-preflight-proposal.md). The proposal is not accepted and does not silently modify any checklist/requirement below. Tasks2–6 remain unstarted; no completion is claimed.
 
 ## Global Constraints
+
+2026-10-03 direction-only update: the C1 preflight proposal now has written detail, awaiting review. Its proposed extension sequence is recorded there; do not rewrite/execute these six approved task bodies or mark C1 complete before written amendment acceptance and revised-plan review. Preserve native execution and separate numeric approval. No revised implementation plan is claimed ready by direction approval.
 
 - Read AGENTS/Handoff authorities, relevant ADR-010/014/015/016, specs and Fixture manifests before coding. Confirm B integration or explicitly authorized stacked base first; last observed PR#18 headff3f731 is CI green but open. This plan does not authorize remote merge or main mutation.
 - Execute C only: strict output contract, real producer and task-local evidence. D atomic overlay seal/SQLite coactivation/refresh transport admission and E persisted differential/phase benchmarks remain outside this plan. Phase0.5 remains10/14 integrated; do not check parent/phase exits.

@@ -1,5 +1,9 @@
 # Roadmap
 
+2026-10-03 C1 preflight direction accepted; [written amendment](../superpowers/specs/2026-10-03-p05-w3-020-c1-memory-preflight-proposal.md) awaits review before the existing native plan is revised. Resource-trust refinement adds no milestone/roadmap task or D/E implementation. Phase0.5 remains10/14 with original exits open.
+
+2026-10-03 C execution update: B merged at73756f0 with exact merge CI success; C native plan approved. C1 is held for the [preflight proposal](../superpowers/specs/2026-10-03-p05-w3-020-c1-memory-preflight-proposal.md), not complete. The proposed narrow verification-workspace review adds no roadmap task, milestone, D/E implementation or phase promotion;10/14 integrated remains unchanged. Prior plan-pending/B-open language is historical.
+
 2026-10-03 next-packet clarification: [P05-W3-020-C written producer design](../superpowers/specs/2026-10-03-p05-w3-020-native-refresh-producer-design.md) is accepted; its implementation plan awaits review. Strict output and real changed-file producer come before separately reviewed D atomic composition/admission and E persisted Evaluation. This changes no milestone, roadmap task count, phase boundary or deferred scope. PR #18 is open with exact ff3f731 CI success at last observation; only packet A is remotely integrated, so Phase0.5 remains10/14.
 
 Packet B final local state (2026-10-02): Tasks1–7, the single review's two Important corrections and the approved memory-stability plan pass complete equivalent local gates recorded in CURRENT_STATUS. No push/PR/merge/hosted result is claimed. This is a local full-bootstrap packet, not real REFRESH or phase completion; Phase0.5 remains10/14 integrated with Native REFRESH, queries, CLI and phase Evaluation open. Next action is integration handoff; later REFRESH work needs its separately reviewed detailed packet. Earlier B task/review-pending statements are historical.
