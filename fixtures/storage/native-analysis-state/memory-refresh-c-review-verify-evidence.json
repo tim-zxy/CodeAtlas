@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "workspace": "REFRESH_VERIFY",
+  "environment": {
+    "node": "v24.15.0",
+    "v8": "13.6.233.17-node.48",
+    "platform": "win32",
+    "arch": "x64",
+    "zodVersion": "4.6.1",
+    "implementationDigest": "453a41edf654df5e1ded7ea6983637544cc7681d6e9ca64290acaca8de095d8a",
+    "corpusRevision": "p05-native-metadata-memory-v1"
+  },
+  "corpus": {
+    "revision": "p05-native-refresh-verification-memory-v1",
+    "digest": "1969707b181cf5bbd2fd753d489c4ff3a39333f4d8166b43c13a62ec40dad232"
+  },
+  "reports": [
+    {
+      "path": "memory-refresh-c-review-verify-report.json",
+      "sha256": "d2b140fd87ecf321d05148f3f7535310339fc79b435e07f6961f07c6be214358"
+    }
+  ],
+  "priorApprovals": []
+}

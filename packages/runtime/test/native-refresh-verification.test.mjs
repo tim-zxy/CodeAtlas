@@ -91,67 +91,84 @@ test('private verification boundary is not a public Runtime SPI', () => {
   assert.equal(runtime.verifyNativeRefreshObservation, undefined);
 });
 
-test('approved C verification profile pins frozen evidence and exact-build provenance', async () => {
-  const { readFile } = await import('node:fs/promises');
-  const { createHash } = await import('node:crypto');
-  const { nativeRefreshVerificationProfiles } = await import('../dist/native-metadata-profiles.js');
-  const root = new URL('../../../fixtures/storage/native-analysis-state/', import.meta.url);
-  const raw = await readFile(new URL('memory-refresh-c-verify-candidate.json', root));
-  const candidate = JSON.parse(raw);
-  const profile = nativeRefreshVerificationProfiles.find(
-    (p) => p.implementationDigest === candidate.environment.implementationDigest,
-  );
-  assert.ok(profile, 'explicitly approved C verification evidence requires its release profile');
-  for (const [key, value] of Object.entries(candidate.environment))
-    assert.equal(profile[key], value);
-  assert.equal(profile.workspace, 'REFRESH_VERIFY');
-  assert.equal(profile.verificationCorpusRevision, candidate.corpus.revision);
-  assert.equal(profile.verificationCorpusDigest, candidate.corpus.digest);
-  assert.equal(
-    profile.memoryCandidateEvidenceDigest,
-    createHash('sha256').update(raw).digest('hex'),
-  );
-  assert.equal(
-    profile.memoryCandidateEvidenceDigest,
+for (const [prefix, candidateHash, holdoutHash, peak, allowance, reservation] of [
+  [
+    'memory-refresh-c-verify',
     'e21e3284928866f5e1007aa734d08365b60f2fe4ad4310ea8e39421e5bfd3b26',
-  );
-  assert.equal(profile.memoryPolicyRevision, candidate.policyRevision);
-  const m = Math.max(...candidate.groups.map((g) => g.high));
-  const j = Math.max(...candidate.groups.map((g) => g.high - g.low));
-  assert.equal(m, 352_083_968);
-  assert.equal(j, 70_627_328);
-  assert.equal(candidate.priorApprovalFloorBytes, null);
-  assert.equal(profile.observedPeakBytes, m);
-  assert.equal(profile.fluctuationAllowanceBytes, j);
-  assert.equal(profile.reservationBytes, m + j);
-  assert.equal(profile.reservationBytes, 422_711_296);
-  const report = await readFile(new URL('memory-refresh-c-verify-report.json', root));
-  assert.equal(profile.evidenceDigest, createHash('sha256').update(report).digest('hex'));
-  assert.equal(profile.evidenceDigest, candidate.reports[0].sha256);
-  const { buildVerificationCandidate } =
-    await import('../../../scripts/native-refresh-verification-memory.mjs');
-  const manifestPath = fileURLToPath(new URL('memory-refresh-c-verify-evidence.json', root));
-  if (Object.entries(candidate.environment).every(([k, v]) => nativeMetadataEnvironment()[k] === v))
-    assert.deepEqual(
-      await buildVerificationCandidate(manifestPath, fileURLToPath(root)),
-      candidate,
-    );
-  else
-    await assert.rejects(
-      buildVerificationCandidate(manifestPath, fileURLToPath(root)),
-      /Build environment mismatch/,
-    );
-  const holdoutRaw = await readFile(new URL('memory-refresh-c-verify-holdout.json', root));
-  assert.equal(
-    createHash('sha256').update(holdoutRaw).digest('hex'),
     '3d7e701aeeb6a836b034f2f6b62457b417a9eb08652843c25960ee29c5449d23',
-  );
-  const holdout = JSON.parse(holdoutRaw);
-  assert.equal(holdout.candidateSha256, profile.memoryCandidateEvidenceDigest);
-  assert.deepEqual(holdout.failures, []);
-  assert.equal(holdout.observations.length, 15);
-  assert.ok(holdout.observations.every((row) => row.peakResidentBytes <= profile.reservationBytes));
-});
+    352_083_968,
+    70_627_328,
+    422_711_296,
+  ],
+  [
+    'memory-refresh-c-review-verify',
+    '4758ab67e7388c789f21372edbe292b74002d932ad48f6ef7ffe882b36fd50a6',
+    '7d1c18e3bb8069d71e005321033b277a24b93624ab57299bc5c6f96616c24a7b',
+    351_821_824,
+    71_057_408,
+    422_879_232,
+  ],
+])
+  test(`approved C verification profile ${prefix} pins frozen evidence and exact-build provenance`, async () => {
+    const { readFile } = await import('node:fs/promises');
+    const { createHash } = await import('node:crypto');
+    const { nativeRefreshVerificationProfiles } =
+      await import('../dist/native-metadata-profiles.js');
+    const root = new URL('../../../fixtures/storage/native-analysis-state/', import.meta.url);
+    const raw = await readFile(new URL(`${prefix}-candidate.json`, root));
+    const candidate = JSON.parse(raw);
+    const profile = nativeRefreshVerificationProfiles.find(
+      (p) => p.implementationDigest === candidate.environment.implementationDigest,
+    );
+    assert.ok(profile, 'explicitly approved C verification evidence requires its release profile');
+    for (const [key, value] of Object.entries(candidate.environment))
+      assert.equal(profile[key], value);
+    assert.equal(profile.workspace, 'REFRESH_VERIFY');
+    assert.equal(profile.verificationCorpusRevision, candidate.corpus.revision);
+    assert.equal(profile.verificationCorpusDigest, candidate.corpus.digest);
+    assert.equal(
+      profile.memoryCandidateEvidenceDigest,
+      createHash('sha256').update(raw).digest('hex'),
+    );
+    assert.equal(profile.memoryCandidateEvidenceDigest, candidateHash);
+    assert.equal(profile.memoryPolicyRevision, candidate.policyRevision);
+    const m = Math.max(...candidate.groups.map((g) => g.high));
+    const j = Math.max(...candidate.groups.map((g) => g.high - g.low));
+    assert.equal(m, peak);
+    assert.equal(j, allowance);
+    assert.equal(candidate.priorApprovalFloorBytes, null);
+    assert.equal(profile.observedPeakBytes, m);
+    assert.equal(profile.fluctuationAllowanceBytes, j);
+    assert.equal(profile.reservationBytes, m + j);
+    assert.equal(profile.reservationBytes, reservation);
+    const report = await readFile(new URL(`${prefix}-report.json`, root));
+    assert.equal(profile.evidenceDigest, createHash('sha256').update(report).digest('hex'));
+    assert.equal(profile.evidenceDigest, candidate.reports[0].sha256);
+    const { buildVerificationCandidate } =
+      await import('../../../scripts/native-refresh-verification-memory.mjs');
+    const manifestPath = fileURLToPath(new URL(`${prefix}-evidence.json`, root));
+    if (
+      Object.entries(candidate.environment).every(([k, v]) => nativeMetadataEnvironment()[k] === v)
+    )
+      assert.deepEqual(
+        await buildVerificationCandidate(manifestPath, fileURLToPath(root)),
+        candidate,
+      );
+    else
+      await assert.rejects(
+        buildVerificationCandidate(manifestPath, fileURLToPath(root)),
+        /Build environment mismatch/,
+      );
+    const holdoutRaw = await readFile(new URL(`${prefix}-holdout.json`, root));
+    assert.equal(createHash('sha256').update(holdoutRaw).digest('hex'), holdoutHash);
+    const holdout = JSON.parse(holdoutRaw);
+    assert.equal(holdout.candidateSha256, profile.memoryCandidateEvidenceDigest);
+    assert.deepEqual(holdout.failures, []);
+    assert.equal(holdout.observations.length, 15);
+    assert.ok(
+      holdout.observations.every((row) => row.peakResidentBytes <= profile.reservationBytes),
+    );
+  });
 
 test('actual C reservation equality validates; one byte below refuses before lazy preparation', async () => {
   const { nativeRefreshVerificationProfiles } = await import('../dist/native-metadata-profiles.js');

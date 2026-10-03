@@ -1,5 +1,98 @@
 # Current Status
 
+## Corrected C approved profiles and green regression checkpoint (2026-10-04)
+
+Explicit approval installs READ_SEAL **283,324,416**, FULL_TRANSPORT **283,324,416** and REFRESH_VERIFY **422,879,232** bytes for exact build `453a41edf654df5e1ded7ea6983637544cc7681d6e9ca64290acaca8de095d8a`. The nine frozen review evidence files/hashes below, old reports/profiles, worker/corpus/input recipes, original twice-retained-SQL charge and hash exclusion remain unchanged. Verification owns no SQL. Installation is static data only; no new algorithm, dependency, schema, migration, phase threshold or production REFRESH workflow.
+
+Fresh corrected-build results, after genuine missing-profile RED for both new provenance cases:
+
+| Gate                                                                           | Result                                                                 |
+| ------------------------------------------------------------------------------ | ---------------------------------------------------------------------- |
+| Actual profile provenance/equality/one-byte-below/wire mismatch                | 38/38                                                                  |
+| Required original + verification memory suites                                 | 75/75; all 42 actual classes                                           |
+| Independent approved original collector                                        | 27/27; 0 failures                                                      |
+| Complete real Native + Fixture registry suites                                 | 135/135                                                                |
+| Cargo workspace                                                                | 122/122; fmt/build/Clippy with denied warnings pass                    |
+| Complete required root                                                         | 991 total / 990 pass / 0 fail / 1 existing Windows skip; 366192.0071ms |
+| Workspace build / IR types / architecture                                      | 16 projects / pass / 17 projects                                       |
+| Real client / handshake                                                        | 2/2 / 4/4                                                              |
+| Full matched formatting and explicit 13 normally ignored controlling documents | pass                                                                   |
+
+Dedicated actual READ_SEAL peak **213,180,416**, FULL_TRANSPORT **197,558,272** bytes; approved collector **246,194,176**. The dedicated verification pass observed **341,524,480**; the final root's 15 verification artifacts peak **337,620,992**, both below its separately approved reservation. Root original peaks are READ_SEAL **212,381,696** and FULL_TRANSPORT **167,587,840**. These are fresh absolute startup-inclusive maxRSS observations, not OS-enforced upper bounds or phase performance claims. The unchanged artifact writer names verification files by class; the root pass replaces those earlier successful class snapshots. Final raw class artifacts and both test logs are retained; no failed artifact or frozen calibration/holdout is deleted. The dedicated peak is separately recorded in the plan-owned receipt.
+
+Reproduce from the existing installed workspace without dependency purge, sequentially with a fresh artifact/collector directory:
+
+```powershell
+$env:CODEATLAS_REQUIRE_NATIVE_MEMORY_PROFILE='1'
+$env:CODEATLAS_REQUIRE_NATIVE_REFRESH_VERIFICATION_PROFILE='1'
+$env:CODEATLAS_NATIVE_MEMORY_ARTIFACT_DIR='.superpowers/sdd/2026-10-03-p05-w3-020-native-refresh-producer/renewal-actual-artifacts'
+node .superpowers/sdd/2026-10-03-p05-w3-020-native-refresh-producer/build.mjs
+node --test --test-concurrency=1 packages/runtime/test/native-metadata-admission.test.mjs packages/runtime/test/native-analysis-state-read.test.mjs packages/runtime/test/native-refresh-verification.test.mjs
+node .superpowers/sdd/2026-10-03-p05-w3-020-native-refresh-producer/renewal-gates.mjs
+```
+
+The last helper runs the exact registered required memory suites, approved original collector, Rust fmt/build/Clippy/tests, full `test:native-analysis` plus Fixture registry, architecture, separate IR types, client/handshake, complete root Node list and formatting. Logs are `renewal-build`, `renewal-profile-red`, `renewal-boundary`, `renewal-memory`, `renewal-collector`, `renewal-rust-*`, `renewal-native`, `renewal-architecture`, `renewal-ir-types`, `renewal-client`, `renewal-handshake`, `renewal-root`, `renewal-format`; raw current observations are under `renewal-actual-artifacts` and `renewal-collector-artifacts`. `pnpm verify` still fails before gates at `ERR_PNPM_ABORTED_REMOVE_MODULES_DIR_NO_TTY` (`renewal-pnpm-verify`); exact constituents passed, not the wrapper or hosted CI.
+
+The single review's two Important fixes have RED→GREEN regressions and now whole-green regression. **C final design-conformance/Task6 closure remains open** for the Minor deterministic traversal versus specified fact-identity ordering. This checkpoint closes the numeric/current-build admission hold, not that normative ordering obligation. Preserve the declared rule and original phase gates; recommend a narrowly reviewed bounded-ordering follow-up rather than silently weakening the spec. No second reviewer, calibration rerun, ordering implementation, remote push/PR/merge/main or D/E work is authorized by these numeric approvals. Phase0.5 remains10/14 integrated; parent REFRESH and original phase exits stay open. Earlier numeric-HOLD/uninstalled/42-failure notes below are historical, not current state. Local checkpoint commit follows the consistency checks; it is not full C acceptance.
+
+## Corrected C numeric approval; actual acceptance in progress (2026-10-04)
+
+The user's explicit “批准” after the risk disclosure approves READ_SEAL **283,324,416**, FULL_TRANSPORT **283,324,416** and REFRESH_VERIFY **422,879,232** bytes for exact implementation `453a41edf654df5e1ded7ea6983637544cc7681d6e9ca64290acaca8de095d8a` and the nine immutable review evidence files below. Two matching static entries are installed, retaining all historical entries. Fresh 16-project build and three-purpose admission confirm unchanged measured identity; original twice-retained-SQL charging is unchanged and verification owns no SQL. This supersedes numeric-HOLD/not-installed wording below only; actual acceptance is still in progress, not complete.
+
+New frozen paired/verification provenance tests first failed for missing approved profiles (`renewal-profile-red`), before installation. Required boundary, 42-class memory/approved collector, full real Native, root, Rust, architecture, formatting and consistency gates follow sequentially with fresh failure-inclusive artifacts. No old actual pass count is reused as current evidence. Minor deterministic operation traversal versus specified fact-identity ordering stays an explicit unresolved obligation before its related acceptance closes; no silent spec waiver, broader capability or Phase0.5 promotion. This approval does not authorize push/PR/merge/main or D/E implementation.
+
+## Current hold: corrected C build requires renewed numeric approval (2026-10-03)
+
+The single whole-branch review of `1d73e62..649173bb929fa56b8c96d3021777e3de837a1124` found no Critical issue, two Important strict-verifier defects and one Minor ordering discrepancy. Independent reproduction and four genuine RED regressions cover false SUCCEEDED/PARTIAL, caller valueOf substitution/oversized substitution and shadowed byteLength. The one repair pass enforces honest partial outcome and uses intrinsic typed-array length plus one bounded Buffer allocation/native typed-array copy; focused96/96 and real C1/C2/old Native/client/handshake/registry191/191 pass. Valid PARTIAL/zero-fact observations and all existing raw Fixtures remain unchanged. Minor: emitted operation order uses deterministic extraction/retained traversal rather than the declared fact-identity ordering; bounded ordering/assertion or governed spec clarification is deferred, not a silently weakened rule or graph-truth change.
+
+Corrected exact environment: Node `v24.15.0`, V8 `13.6.233.17-node.48`, `win32/x64`, Zod `4.6.1`, implementation digest `453a41edf654df5e1ded7ea6983637544cc7681d6e9ca64290acaca8de095d8a`, environment corpus `p05-native-metadata-memory-v1`. READ_SEAL corpus `0c599e6626202fe4a0b5d5866e2d89d01a4674e40b0efe0d0b20acf5b4085b29`; FULL_TRANSPORT corpus `11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef`; REFRESH_VERIFY corpus `p05-native-refresh-verification-memory-v1`/`1969707b181cf5bbd2fd753d489c4ff3a39333f4d8166b43c13a62ec40dad232`. Worker/corpus/inputs and sole profile hash exclusion are unchanged. All approvedf51a239… profiles and nine earlier reports remain immutable; they correctly refuse the current build, not transferable approval floors.
+
+Exact renewed approval request (not installed):
+
+| Purpose        | Proposed reservation bytes | Evidence                                                                                        |
+| -------------- | -------------------------: | ----------------------------------------------------------------------------------------------- |
+| READ_SEAL      |                283,324,416 | Original paired policy; M247,963,648 + J35,360,768, same-identity floor absent                  |
+| FULL_TRANSPORT |                283,324,416 | Same pooled paired candidate, separately scoped purpose approval; raw transport peak192,991,232 |
+| REFRESH_VERIFY |                422,879,232 | Separate M351,821,824 + J71,057,408, same-purpose/build floor absent                            |
+
+The original paired paths still add twice actual retained SQL UTF-8 bytes. Verification owns no SQL; it is not REFRESH process transport. No rounding, multiplier, old-build floor, holdout folding or automatic installation. Finite startup-inclusive resourceUsage.maxRSS sampling is not an OS-enforced bound or a phase performance threshold.
+
+Fresh corrected-build evidence:65READ_SEAL+70FULL_TRANSPORT calibration observations; separate75 verification observations; independent frozen paired27/27 (peak248,356,864) and verification15/15 (peak348,569,600), both0fail. Existing policy validators independently reproduce both saved candidate objects/arithmetic after holdouts. No retry-until-green/failed artifact deletion. Scope follows the accepted declared Fixture evidence root/manifests; required-gate refusal artifacts are retained separately, not relabeled as calibration or current admission.
+
+Immutable new files under `fixtures/storage/native-analysis-state/`:
+
+| File                                          | SHA-256                                                          |
+| --------------------------------------------- | ---------------------------------------------------------------- |
+| memory-refresh-c-review-read-seal.json        | 6126281a77c0f29aebfeaff2eca5db0ccdf791e715c8fb651b7fe057bcf93d0b |
+| memory-refresh-c-review-transport.json        | 517463fe7768ff823b427308734bf04e34ee71b6d6b7fb0d7cec08d715723db7 |
+| memory-refresh-c-review-evidence.json         | 6fbdd7663c24051c710ce246a8d54b1cfec4ba191b202007d79699bdaf00d856 |
+| memory-refresh-c-review-candidate.json        | 571b7ccc760d3a60a89da7156aaded26a2130daf11f8bd6d65517f14d902a986 |
+| memory-refresh-c-review-holdout.json          | a93b0ff1ada2bd3f134a9079808f6f76b73d4bd99013707a7bbdb260981c9164 |
+| memory-refresh-c-review-verify-report.json    | d2b140fd87ecf321d05148f3f7535310339fc79b435e07f6961f07c6be214358 |
+| memory-refresh-c-review-verify-evidence.json  | 5ef469db6bd2735289d5262788a14fa4c1c7d6b6c60190e016f7cb32408c16bc |
+| memory-refresh-c-review-verify-candidate.json | 4758ab67e7388c789f21372edbe292b74002d932ad48f6ef7ffe882b36fd50a6 |
+| memory-refresh-c-review-verify-holdout.json   | 7d1c18e3bb8069d71e005321033b277a24b93624ab57299bc5c6f96616c24a7b |
+
+Reproducible measurement commands (sequential fresh workers, no concurrent heavy suite/explicit GC; preserve raw stdout bytes for the two original benchmarks; use new paths rather than overwrite frozen evidence):
+
+```powershell
+node scripts/bench-native-metadata-memory.mjs
+node scripts/bench-native-full-v3-memory.mjs
+node scripts/native-memory-profile.mjs candidate fixtures/storage/native-analysis-state/memory-refresh-c-review-evidence.json fixtures/storage/native-analysis-state
+node scripts/native-memory-observations.mjs candidate .superpowers/sdd/2026-10-03-p05-w3-020-native-refresh-producer/review-holdout fixtures/storage/native-analysis-state/memory-refresh-c-review-candidate.json
+node scripts/native-refresh-verification-memory.mjs bench fixtures/storage/native-analysis-state/memory-refresh-c-review-verify-report.json
+node scripts/native-refresh-verification-memory.mjs candidate fixtures/storage/native-analysis-state/memory-refresh-c-review-verify-evidence.json fixtures/storage/native-analysis-state fixtures/storage/native-analysis-state/memory-refresh-c-review-verify-candidate.json
+node scripts/native-refresh-verification-memory.mjs collect fixtures/storage/native-analysis-state/memory-refresh-c-review-verify-candidate.json .superpowers/sdd/2026-10-03-p05-w3-020-native-refresh-producer/review-verify-holdout fixtures/storage/native-analysis-state/memory-refresh-c-review-verify-holdout.json
+```
+
+Fresh corrected regression: full required root989total/946pass/**42fail**/1 existing Windows skip,258973.0268ms,exit1. Failures are exactly14 original FULL_TRANSPORT +13 READ_SEAL +15 REFRESH_VERIFY missing-exact-profile gates; raw outputs retained in `task6-review-artifacts`. They are not passes or waived gates.16-project build, IR types, architecture17, Rust fmt/Clippy/Cargo122 and provisional real Native/registry191 pass. Logs: plan-owned `task6-review-red`, `task6-review-green`, `task6-review-build`, `task6-review-root-required`, `task6-review-read-seal`, `task6-review-transport`, `task6-review-paired-candidate`, `task6-review-paired-holdout`, `task6-review-verification-bench`, `task6-review-verification-candidate`, `task6-review-verification-holdout`, `task6-review-provisional-native`, `task6-review-cargo`, `task6-review-ir-types`, `task6-review-architecture`, `task6-review-clippy`. The wrapper's previously recorded no-TTY failure remains, not wrapper/hosted CI success.
+
+Reviewer exclusions were explicitly accepted as scope rulings: production transport/running-child cancellation/overlay sealing/atomic publication/persisted retry remain D; persisted differential/stale/phase benchmarks remain E; scoped joins give cooperative, not blocked-I/O hard-wall-clock guarantees; other platforms/hosted CI remain unadmitted/unobserved; unrelated EOL flags/local artifacts are preserved. Costs: these stronger production/phase/platform guarantees are not available yet, and local scratch/status consumes space/remains noisy. No Architecture Guardrail, FROZEN schema/identity/cap, numerical phase gate or deferred capability changed.
+
+Task6 is **incomplete**, waiting only for explicit corrected-build three-purpose/value approval before installation and required actual-port/collector/full root/full Native checks. Task1/4/5 completed649173b records below are historical evidence, not current corrected-build admission. Keep the one-review/one-fix-pass policy; do not dispatch a second reviewer, remeasure these frozen candidates, install numeric entries or commit the new profile/evidence/status as acceptance before fresh approved gates. Repair/data/docs are intentionally uncommitted; no push/PR/merge/main/D/E authority. Phase0.5 remains10/14 integrated, parent and original exits open.
+
+2026-10-03 single whole-branch review of649173b found two Important C verifier defects: contradictory SUCCEEDED/PARTIAL observation and Uint8Array.valueOf/shadowed-length snapshot bypass. Four genuine RED regressions now pass within96/96 after intrinsic actual-length/bounded native copy and partial-outcome validation; existing raw bytes/worker/corpus/profile/hash exclusion remain unchanged.16-project rebuild yields453a41edf654df5e1ded7ea6983637544cc7681d6e9ca64290acaca8de095d8a; all approvedf51a239… profiles correctly refuse this new build. Task6 remains incomplete pending full corrected regression, separate immutable memory-refresh-c-review-* measurements/holdouts, renewed exact numeric approval and actual gates. Prior649173b acceptance is historical, not current admission. One Minor operation-order/spec discrepancy is deferred and disclosed in CURRENT_STATUS; no schema/phase threshold/architecture or D/E scope change, no re-review/remote integration.
+
 2026-10-03 post-approval gates: actual profile provenance/budget36/36, required original+verification corpus75/75 (all42 fresh actual classes), approved original collector27/27, real Native/registry135/135, Cargo122/122,16-project build/IR types/architecture17/fmt/Clippy/client2/handshake4 pass. Required root985total/984pass/0fail/1 existing Windows skip,363153.5125ms. Task1B/4B and Task5 acceptance are verified; Task6's one whole-branch review remains pending. Three exact approved profiles/finite-sampling scope and frozen hashes below are unchanged. Wrapper `pnpm verify` fails before gates at its no-TTY dependency-purge protection; exact registered constituents ran separately, not wrapper success. No hosted CI, persisted E, D publication or parent/phase promotion. This supersedes earlier in-progress/approval-hold/empty-profile records.
 
 2026-10-03 numeric approval: the user's explicit “批准” approves READ_SEAL286,760,960, FULL_TRANSPORT286,760,960 and REFRESH_VERIFY422,711,296 bytes for the frozen Task5 evidence/exact implementationf51a239ca3f95c8d44a4dd858e569f614bd5767c491916789d8fc9731dac74f5. Separate static entries are installed;16-project rebuild preserves that identity. Original paired paths retain twice actual retained SQL UTF-8; verifier owns no SQL. Absent-profile RED and actual provenance/equality/one-byte-below gates pass36/36; four obsolete production-test budgets now use their matching installed reservation, retaining historical evidence assertions. Full required corpus/collector/C2/Cargo/root/final-review gates remain in progress;1B/4B/5/6 are not complete. Frozen evidence is unchanged and finite empirical maxRSS, not an OS bound. This supersedes prior numeric-HOLD/empty-profile wording only; phase10/14, original thresholds and D/E boundaries remain unchanged.

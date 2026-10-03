@@ -37,3 +37,12 @@ fixtures/storage/native-analysis-state/memory-refresh-c-verify-report.json -text
 fixtures/storage/native-analysis-state/memory-refresh-c-verify-evidence.json -text
 fixtures/storage/native-analysis-state/memory-refresh-c-verify-candidate.json -text
 fixtures/storage/native-analysis-state/memory-refresh-c-verify-holdout.json -text
+fixtures/storage/native-analysis-state/memory-refresh-c-review-read-seal.json -text
+fixtures/storage/native-analysis-state/memory-refresh-c-review-transport.json -text
+fixtures/storage/native-analysis-state/memory-refresh-c-review-evidence.json -text
+fixtures/storage/native-analysis-state/memory-refresh-c-review-candidate.json -text
+fixtures/storage/native-analysis-state/memory-refresh-c-review-holdout.json -text
+fixtures/storage/native-analysis-state/memory-refresh-c-review-verify-report.json -text
+fixtures/storage/native-analysis-state/memory-refresh-c-review-verify-evidence.json -text
+fixtures/storage/native-analysis-state/memory-refresh-c-review-verify-candidate.json -text
+fixtures/storage/native-analysis-state/memory-refresh-c-review-verify-holdout.json -text

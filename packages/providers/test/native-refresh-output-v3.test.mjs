@@ -94,6 +94,87 @@ for (const mode of ['noop', 'delete', 'shared-owner-transfer', 'partial', 'zero-
     assert.equal(r.terminal.payload.summaryRecords, c.targetFileCount);
     assert.equal(r.terminal.payload.outcome, mode === 'partial' ? 'PARTIAL' : 'SUCCEEDED');
   });
+
+test('refresh success cannot contradict target PARTIAL coverage', async () => {
+  const c = buildRefreshCase('partial');
+  c.records.at(-1).payload.outcome = 'SUCCEEDED';
+  c.eventBytes = finish(c.records);
+  await assert.rejects(decode(c), (e) => e.code === 'PROTOCOL_VIOLATION');
+});
+
+test('refresh snapshot validates original bytes without valueOf substitution', async () => {
+  const c = buildRefreshCase('zero-target');
+  let coercions = 0,
+    iterated = 0;
+  class CallerBytes extends Uint8Array {
+    valueOf() {
+      coercions++;
+      return c.requestBytes;
+    }
+  }
+  const lines = {
+    async *[Symbol.asyncIterator]() {
+      iterated++;
+      yield c.eventBytes;
+    },
+  };
+  await assert.rejects(
+    api.decodeNativeRefreshV3(
+      new CallerBytes([0]),
+      lines,
+      { async accept() {} },
+      api.NATIVE_CLIENT_HARD_LIMITS,
+      c.trustedMemoryBudgetBytes,
+    ),
+    (e) => e.code === 'INVALID_REQUEST',
+  );
+  assert.equal(coercions, 0);
+  assert.equal(iterated, 0);
+});
+
+test('refresh snapshot ignores oversized caller coercion and retains actual valid bytes', async () => {
+  const c = buildRefreshCase('zero-target');
+  let coercions = 0;
+  class CallerBytes extends Uint8Array {
+    valueOf() {
+      coercions++;
+      return new Uint8Array(1_000_001);
+    }
+  }
+  c.requestBytes = new CallerBytes(c.requestBytes);
+  assert.equal((await decode(c)).terminal.type, 'REFRESH_COMPLETED');
+  assert.equal(coercions, 0);
+});
+
+test('refresh input ceiling reads actual typed-array length, not a shadowed accessor', async () => {
+  const c = buildRefreshCase('zero-target');
+  let lengthReads = 0,
+    iterated = 0;
+  class CallerBytes extends Uint8Array {
+    get byteLength() {
+      lengthReads++;
+      return 1;
+    }
+  }
+  const lines = {
+    async *[Symbol.asyncIterator]() {
+      iterated++;
+      yield c.eventBytes;
+    },
+  };
+  await assert.rejects(
+    api.decodeNativeRefreshV3(
+      new CallerBytes(1_000_001),
+      lines,
+      { async accept() {} },
+      api.NATIVE_CLIENT_HARD_LIMITS,
+      c.trustedMemoryBudgetBytes,
+    ),
+    (e) => e.code === 'OUTPUT_LIMIT_EXCEEDED',
+  );
+  assert.equal(lengthReads, 0);
+  assert.equal(iterated, 0);
+});
 for (const [name, mutate] of [
   [
     'wrong-context',

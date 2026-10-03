@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "workspace": "REFRESH_VERIFY",
+  "status": "PROVISIONAL_REVIEW_REQUIRED",
+  "environment": {
+    "node": "v24.15.0",
+    "v8": "13.6.233.17-node.48",
+    "platform": "win32",
+    "arch": "x64",
+    "zodVersion": "4.6.1",
+    "implementationDigest": "453a41edf654df5e1ded7ea6983637544cc7681d6e9ca64290acaca8de095d8a",
+    "corpusRevision": "p05-native-metadata-memory-v1"
+  },
+  "corpus": {
+    "revision": "p05-native-refresh-verification-memory-v1",
+    "digest": "1969707b181cf5bbd2fd753d489c4ff3a39333f4d8166b43c13a62ec40dad232"
+  },
+  "policyRevision": "p05-native-memory-high-water-range-v1",
+  "manifest": {
+    "path": "memory-refresh-c-review-verify-evidence.json",
+    "sha256": "5ef469db6bd2735289d5262788a14fa4c1c7d6b6c60190e016f7cb32408c16bc"
+  },
+  "reports": [
+    {
+      "path": "memory-refresh-c-review-verify-report.json",
+      "sha256": "d2b140fd87ecf321d05148f3f7535310339fc79b435e07f6961f07c6be214358"
+    }
+  ],
+  "priorApprovals": [],
+  "groups": [
+    {
+      "key": "[\"REFRESH_VERIFY\",\"burst-output-buffer\",\"d08e4ba03ef8a3b1bc9a159e74a7499e469bc566e0b64901a66ffe320c749511\"]",
+      "low": 269185024,
+      "high": 275939328,
+      "count": 5
+    },
+    {
+      "key": "[\"REFRESH_VERIFY\",\"deep-unknown-input\",\"f459f66a6fea9d7e3771a253708aa1a1c67fadacfee9a35b2eb7314189643572\"]",
+      "low": 128487424,
+      "high": 128757760,
+      "count": 5
+    },
+    {
+      "key": "[\"REFRESH_VERIFY\",\"dense-retained-sites\",\"290a52334c54ef104cf8e5c4ecc224e5b1ebffe36c2845ea10d1f7906307a745\"]",
+      "low": 317390848,
+      "high": 322023424,
+      "count": 5
+    },
+    {
+      "key": "[\"REFRESH_VERIFY\",\"forged-owner\",\"561282a07f33f138c598bdf04e4553ac81fee2f11ebb04cf70c9dc0d5df238a7\"]",
+      "low": 246640640,
+      "high": 253452288,
+      "count": 5
+    },
+    {
+      "key": "[\"REFRESH_VERIFY\",\"large-patch-ledger\",\"a11f9631e5a86d90402822f9765cdc822782dd7faaf244d74cf0c7e02ec50568\"]",
+      "low": 335323136,
+      "high": 351821824,
+      "count": 5
+    },
+    {
+      "key": "[\"REFRESH_VERIFY\",\"long-ascii\",\"379f05ce7910d9639411274de88fdaf92c18f4a4ef87e955653c6d2fd517eb10\"]",
+      "low": 170680320,
+      "high": 199315456,
+      "count": 5
+    },
+    {
+      "key": "[\"REFRESH_VERIFY\",\"long-astral\",\"83f7f7c937c667f89476697e5a22bb1575f06e75724199b734645a86e65f4bfd\"]",
+      "low": 164057088,
+      "high": 173010944,
+      "count": 5
+    },
+    {
+      "key": "[\"REFRESH_VERIFY\",\"long-bmp\",\"09bd30586ccdacdd2a9af0ba41de2a3e674863160e2556f525fb5945e1fc42bc\"]",
+      "low": 163061760,
+      "high": 234119168,
+      "count": 5
+    },
+    {
+      "key": "[\"REFRESH_VERIFY\",\"maximum-short-files\",\"8499f1869f5d54399775145eb2f88bc03be94dcec9b5d917c4e8ef1b4e032922\"]",
+      "low": 242892800,
+      "high": 248418304,
+      "count": 5
+    },
+    {
+      "key": "[\"REFRESH_VERIFY\",\"maximum-target-summary\",\"7a776ecb450b3d9f1095eb2b6f704145ddbf7f9fe256f2609d5fe65a5f129643\"]",
+      "low": 305139712,
+      "high": 313794560,
+      "count": 5
+    },
+    {
+      "key": "[\"REFRESH_VERIFY\",\"oversized-input\",\"d79c64affb395ccf77f3810b1061b8b9d2d661943a4c6354bfd6f9ecea58e7e7\"]",
+      "low": 65060864,
+      "high": 66113536,
+      "count": 5
+    },
+    {
+      "key": "[\"REFRESH_VERIFY\",\"oversized-output\",\"e18f249372747e9d7256ea4740494f1f9f18281d7bd6177a6f9945f55c9dcd62\"]",
+      "low": 82190336,
+      "high": 83623936,
+      "count": 5
+    },
+    {
+      "key": "[\"REFRESH_VERIFY\",\"repeated-shared-owners\",\"ea4ce17fe2056ed5249eee3c0d4f347cf25e56bc50b98457692e66ce9614d34e\"]",
+      "low": 246890496,
+      "high": 249466880,
+      "count": 5
+    },
+    {
+      "key": "[\"REFRESH_VERIFY\",\"slow-sink\",\"0ca299040549cc9c82f7f6ba5e46f6a23ed35e3ac0e220e29aa76644812bc570\"]",
+      "low": 340041728,
+      "high": 348872704,
+      "count": 5
+    },
+    {
+      "key": "[\"REFRESH_VERIFY\",\"zero-target\",\"57be658de600d7b55d46cf9d43296f8aa8948a5cc91086b500ecbb2ca91fdab0\"]",
+      "low": 62009344,
+      "high": 63901696,
+      "count": 5
+    }
+  ],
+  "observedPeakBytes": 351821824,
+  "fluctuationAllowanceBytes": 71057408,
+  "priorApprovalFloorBytes": null,
+  "reservationBytes": 422879232
+}

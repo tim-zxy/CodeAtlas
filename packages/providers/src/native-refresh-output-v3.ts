@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
 import { isDeepStrictEqual } from 'node:util';
+import { isUint8Array } from 'node:util/types';
 import { z } from 'zod';
 import {
   ProviderNodeSchema,
@@ -161,12 +162,16 @@ export async function decodeNativeRefreshV3(
       limits[k] > NATIVE_CLIENT_HARD_LIMITS[k]
     )
       fail('INVALID_CONFIGURATION', 'Native refresh limits must lower ceilings');
-  if (!(requestBytes instanceof Uint8Array))
-    fail('INVALID_REQUEST', 'Native refresh bytes required');
-  if (requestBytes.byteLength > limits.maxStdinBytes)
+  if (!isUint8Array(requestBytes)) fail('INVALID_REQUEST', 'Native refresh bytes required');
+  const inputBytes = Object.getOwnPropertyDescriptor(
+    Object.getPrototypeOf(Uint8Array.prototype),
+    'byteLength',
+  )!.get!.call(requestBytes) as number;
+  if (inputBytes > limits.maxStdinBytes)
     fail('OUTPUT_LIMIT_EXCEEDED', 'Native refresh input exceeds limit');
   // One bounded owned copy removes mutable caller bytes/methods from decoding.
-  const owned = Buffer.from(requestBytes);
+  const owned = Buffer.allocUnsafe(inputBytes);
+  Uint8Array.prototype.set.call(owned, requestBytes);
   let lineStart = 0;
   for (let at = 0; at < owned.length; at++)
     if (owned[at] === 10) {
@@ -211,7 +216,7 @@ export async function decodeNativeRefreshV3(
   );
   const changed = new Map([...p.changes.added, ...p.changes.modified].map((f) => [f.id, f]));
   const seenSources = new Set<string>(),
-    coverage = new Map<string, unknown>();
+    coverage = new Map<string, z.infer<typeof NativeCapabilityCoverageV2Schema>>();
   const summaries: Summary[] = [],
     operations = new Map<string, Operation>();
   const before = ledger(baseline.summaries);
@@ -344,6 +349,8 @@ export async function decodeNativeRefreshV3(
     if (e.type === 'REFRESH_COMPLETED') {
       const c = e.payload,
         h = c.analysisState;
+      if (c.outcome === 'SUCCEEDED')
+        for (const row of coverage.values()) if (row.coverage === 'PARTIAL') invalid();
       if (
         !isDeepStrictEqual(
           {
