@@ -116,6 +116,8 @@ Execution record2026-10-03: retained/shared helpers verified locally after cbbb8
 
 ## Task3: Baseline verification, target resolution and real REFRESH dispatch
 
+Execution2026-10-03: core locally verified after c9f91f0, Cargo116/real Native+C1114, fmt/Clippy/build/architecture pass; root retains27 profile absence failures. FILE/SHARED/same-union/digest refusal, changed-only/zero parses, revision/drift/language/resource, terminal reservation and capacity regressions covered. Scoped workers join before reuse; private conservative capacity policy is not RSS evidence. Original10MB request unchanged with precise insufficient-worker-budget refusal. Task4 complete C2/worker/failure/differential gates remain mandatory, numeric approval/1B/4B/final review open; no parent/phase completion.
+
 **Files:** Create child `analyze/refresh.rs`; modify `analyze.rs` wrapper and `protocol.rs` valid-v3 REFRESH dispatch/related inline tests, plus the existing REFRESH-refusal assertion in `packages/providers/test/native-full-v3-binary.test.mjs`. Inline child tests own core parser/resource observations; reuse C1 contract/corpus.
 
 **Consumes:** ValidatedRequestV3.header()/baseline(), Task2 retained decoding/shared recipes, existing worker/source/error machinery and Task1 output contract.

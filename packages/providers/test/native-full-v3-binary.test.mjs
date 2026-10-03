@@ -65,6 +65,7 @@ function rawRun(bytes) {
   assert.equal(child.signal, null);
   return {
     status: child.status,
+    stdout: child.stdout,
     events: child.stdout.length
       ? child.stdout
           .toString('utf8')
@@ -382,7 +383,7 @@ test('real binary advertises full-v3 without incremental capability', async () =
   assert.ok(!result.events[0].payload.capabilities.includes('incremental-refresh'));
 });
 
-test('real binary explicitly rejects a validated v3 REFRESH without parsing', async () => {
+test('real binary refuses the schema-only REFRESH worker budget without parsing', async () => {
   const bytes = await readFile(
     path.join(root, 'fixtures/ipc/protocol-v3/valid-empty-refresh.jsonl'),
   );
@@ -395,7 +396,144 @@ test('real binary explicitly rejects a validated v3 REFRESH without parsing', as
   assert.equal(result.events[0].requestId, validated.header.requestId);
   assert.equal(result.events[0].sequence, 0);
   assert.equal(result.events[0].type, 'REQUEST_FAILED');
-  assert.equal(result.events[0].payload.error.code, 'INVALID_REQUEST');
+  assert.equal(result.events[0].payload.error.code, 'RESOURCE_LIMIT_EXCEEDED');
+});
+
+test('real empty REFRESH agrees with the strict C decoder and remains outside full-only output', async () => {
+  const raw = await readFile(
+    path.join(root, 'fixtures/ipc/protocol-v3/valid-empty-refresh.jsonl'),
+    'utf8',
+  );
+  const header = JSON.parse(raw.split('\n')[0]);
+  header.payload.repository.rootPath = root;
+  header.payload.resourceBudget.maxMemoryBytes = 64 * 1024 * 1024;
+  const { bytes } = fullRequestBytes(header);
+  const result = rawRun(bytes);
+  assert.equal(result.status, 0);
+  assert.equal(result.events[0].type, 'REFRESH_STARTED');
+  async function* chunks() {
+    for (let i = 0; i < result.stdout.length; i += 31) yield result.stdout.subarray(i, i + 31);
+  }
+  const observation = await api.decodeNativeRefreshV3(
+    bytes,
+    chunks(),
+    { async accept() {} },
+    api.NATIVE_CLIENT_HARD_LIMITS,
+    header.payload.resourceBudget.maxMemoryBytes,
+  );
+  assert.equal(observation.terminal.type, 'REFRESH_COMPLETED');
+  assert.equal(observation.terminal.payload.summaryRecords, 0);
+  assert.equal(api.NativeFullAnalysisEventV3Schema.safeParse(result.events[0]).success, false);
+});
+
+test('real added target re-resolves an unchanged caller through strict C bytes', async () => {
+  const temp = await mkdtemp(path.join(tmpdir(), 'codeatlas-refresh-core-'));
+  try {
+    const caller = 'class Caller { void run() { Added.go(); } }';
+    const added = 'class Added { static void go() {} }';
+    await writeFile(path.join(temp, 'Caller.java'), caller);
+    const full = await requestFor('java-call-basic', [
+      'SYMBOL',
+      'IMPORT',
+      'CALL',
+      'INHERITANCE',
+      'REFERENCE',
+    ]);
+    full.payload.repository.rootPath = temp;
+    full.payload.resourceBudget.maxMemoryBytes = 256 * 1024 * 1024;
+    const file = (name, source) => ({
+      ...full.payload.sourceFiles[0],
+      id: name,
+      path: name,
+      contentFingerprint: 'sha256:' + createHash('sha256').update(source).digest('hex'),
+    });
+    full.payload.sourceFiles = [file('Caller.java', caller)];
+    const baseline = rawRun(fullRequestBytes(full).bytes);
+    assert.equal(baseline.events.at(-1).type, 'ANALYSIS_COMPLETED');
+    await writeFile(path.join(temp, 'Added.java'), added);
+    const newFile = file('Added.java', added);
+    const { revision, sourceFiles, ...payload } = full.payload;
+    const header = {
+      protocolVersion: 3,
+      requestId: 'refresh-core',
+      sequence: 0,
+      type: 'REFRESH',
+      payload: {
+        ...payload,
+        providerSnapshotId: 'refresh-core-snapshot',
+        baseRevisionId: revision.id,
+        baseRevisionFingerprint: revision.contentFingerprint,
+        targetRevision: { ...revision, contentFingerprint: 'sha256:target-core' },
+        changes: { added: [newFile], modified: [], deleted: [] },
+        targetSourceFiles: [...sourceFiles, newFile],
+        baselineState: baseline.events.at(-1).payload.analysisState,
+      },
+    };
+    const records = [
+      header,
+      ...baseline.events
+        .filter((e) => e.type === 'ANALYSIS_SUMMARY')
+        .map((e, i) => ({
+          protocolVersion: 3,
+          requestId: header.requestId,
+          sequence: i + 1,
+          type: 'BASELINE_SUMMARY',
+          payload: e.payload,
+        })),
+    ];
+    const prefix = records.map((e) => JSON.stringify(e) + '\n').join('');
+    const bytes = Buffer.from(
+      prefix +
+        JSON.stringify({
+          protocolVersion: 3,
+          requestId: header.requestId,
+          sequence: records.length,
+          type: 'REQUEST_COMPLETED',
+          payload: {
+            summaryRecords: records.length - 1,
+            integrityChecksum: createHash('sha256').update(prefix).digest('hex'),
+          },
+        }) +
+        '\n',
+    );
+    api.decodeNativeRequestV3(bytes);
+    const result = rawRun(bytes);
+    async function* chunks() {
+      for (let i = 0; i < result.stdout.length; i += 31) yield result.stdout.subarray(i, i + 31);
+    }
+    const decoded = await api.decodeNativeRefreshV3(
+      bytes,
+      chunks(),
+      { async accept() {} },
+      api.NATIVE_CLIENT_HARD_LIMITS,
+      header.payload.resourceBudget.maxMemoryBytes,
+    );
+    assert.equal(decoded.terminal.type, 'REFRESH_COMPLETED');
+    assert.deepEqual(
+      result.events.filter((e) => e.type === 'SOURCE_FILE').map((e) => e.payload.path),
+      ['Added.java'],
+    );
+    assert.ok(
+      result.events.some(
+        (e) =>
+          e.type === 'UPSERT_EDGE' &&
+          e.payload.sourceRange.sourceFileId === 'Caller.java' &&
+          e.payload.target.state === 'RESOLVED',
+      ),
+    );
+    assert.equal(decoded.terminal.payload.summaryRecords, 2);
+    // Independent source-derived identity: Added.java/java.method/Added/go/()/ordinal0.
+    assert.ok(
+      result.events.some(
+        (e) =>
+          e.type === 'UPSERT_EDGE' &&
+          e.payload.target.target?.providerFactId ===
+            'java-symbol-v1:8b7dba6e53f8c3e348437bd513755eca8093bd49d570cdb42fe7152f1a2af1f3',
+      ),
+    );
+  } finally {
+    await rm(temp, { recursive: true, force: true });
+  }
 });
 
 for (const mode of ['missing', 'truncated', 'checksum', 'post-completion'])

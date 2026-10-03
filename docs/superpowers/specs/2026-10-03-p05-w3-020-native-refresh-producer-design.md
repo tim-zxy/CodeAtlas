@@ -10,6 +10,8 @@ This packet is the real Rust producer and strict Provider-side output contract. 
 
 ## Authority and observed predecessor
 
+Execution2026-10-03: Task2 committed c9f91f0; Task3 Rust core locally verified (Cargo116/real Native+C1114), with real changed-only parser observations and strict C byte decoding. C2/full Task4 resource/worker/restart/Canonical differential registration remains missing. Scoped parser lifetimes/checked owned-workspace reservations establish no RSS/latency gate. Root27 profile failures/5/1B/4B remain open; no D/E or phase advancement.
+
 Execution update2026-10-03: revised native plan8fb12a6 confirmed;1A strict C helper/private preflight checkpoint is locally verified (90 focused/198 combined), not full Task1/C acceptance. C1 custom byte index27/five vectors now exists with unchanged expectations. Rust producer/C2 and4A verification corpus/5 approval/1B/4B actual-port gates remain absent. Root27 required-profile failures remain open; no advertised incremental capability/SQLite writer is added. Earlier plan/B-base/Fixture-pending wording is historical for integrated B and1A only.
 
 Controlling decisions: [ADR-016](../../handoff/adr/ADR-016-native-refresh-derived-analysis-state.md), [Native IPC](../../handoff/specs/NATIVE_IPC.md), [Provider SPI](../../handoff/specs/PROVIDER_SPI.md), [scalability](../../specs/native-analyzer-scalability.md), [accepted architecture proposal](2026-09-30-p05-w3-020-native-refresh-design-change-proposal.md), packet [A](2026-09-30-p05-w3-020-v3-contract-design.md) and [B](2026-10-01-p05-w3-020-state-bootstrap-design.md). Preserve ADR-010/014/015 boundaries and all original [Phase Acceptance](../../handoff/PHASE_ACCEPTANCE.md) thresholds.

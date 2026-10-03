@@ -19,6 +19,16 @@ use codeatlas_native_analyzer::source_access::{SourceAccessError, read_verified_
 use serde_json::{Map, Value, json};
 use sha2::{Digest, Sha256};
 
+mod refresh;
+
+pub(crate) fn run_refresh_v3<W: Write>(
+    request: &codeatlas_native_analyzer::request_v3::ValidatedRequestV3,
+    workers: NonZeroUsize,
+    output: &mut W,
+) -> io::Result<ExitCode> {
+    refresh::run(request, workers, output)
+}
+
 const MAX_LINE_BYTES: usize = 1_000_000;
 const MAX_EVENT_COUNT: u64 = 10_000;
 const MAX_TOTAL_BYTES: u64 = 10_000_000;
@@ -1542,6 +1552,8 @@ struct EventWriter<'a, W: Write> {
     max_total_bytes: u64,
     digest: Sha256,
     full: Option<FullMetadata>,
+    failure_type: &'static str,
+    failed: bool,
 }
 impl<'a, W: Write> EventWriter<'a, W> {
     fn new(
@@ -1563,6 +1575,8 @@ impl<'a, W: Write> EventWriter<'a, W> {
             max_total_bytes: MAX_TOTAL_BYTES,
             digest: Sha256::new(),
             full: None,
+            failure_type: "ANALYSIS_FAILED",
+            failed: false,
         }
     }
     fn has_room(&self, additional_nonterminal: usize) -> bool {
@@ -1715,7 +1729,7 @@ impl<'a, W: Write> EventWriter<'a, W> {
             "sequence": self.sequence, "type": event_type, "payload": payload});
         let mut line = serde_json::to_vec(&event).map_err(io::Error::other)?;
         line.push(b'\n');
-        let reserve = if event_type == "ANALYSIS_FAILED" {
+        let reserve = if event_type == self.failure_type {
             0
         } else {
             self.failure_reservation()?
@@ -1727,8 +1741,9 @@ impl<'a, W: Write> EventWriter<'a, W> {
                 .saturating_add(reserve)
                 > self.max_total_bytes
             || self.sequence >= self.max_events
+            || (!terminal && !self.has_room(1))
         {
-            if event_type == "ANALYSIS_FAILED" {
+            if event_type == self.failure_type {
                 return Err(io::Error::other(
                     "Failure terminal exceeds IPC output limit",
                 ));
@@ -1761,7 +1776,7 @@ impl<'a, W: Write> EventWriter<'a, W> {
             ),
         );
         let event = json!({"protocolVersion": self.protocol_version, "requestId": self.request_id,
-            "sequence": self.max_events.saturating_sub(1), "type": "ANALYSIS_FAILED", "payload": payload});
+            "sequence": self.max_events.saturating_sub(1), "type": self.failure_type, "payload": payload});
         // All closed failure codes/messages fit within this margin. Reserve it
         // while streaming so a later resource failure still has a legal terminal.
         Ok(serde_json::to_vec(&event).map_err(io::Error::other)?.len() as u64 + 1 + 256)
@@ -1770,9 +1785,10 @@ impl<'a, W: Write> EventWriter<'a, W> {
         format!("sha256:{:x}", self.digest.clone().finalize())
     }
     fn fail(&mut self, context: &Value, code: &str, message: &str) -> io::Result<ExitCode> {
+        self.failed = true;
         let mut payload = context.as_object().expect("context object").clone();
         payload.insert("error".into(), error(code, message, false));
-        if !self.emit("ANALYSIS_FAILED", Value::Object(payload), true)? {
+        if !self.emit(self.failure_type, Value::Object(payload), true)? {
             return Err(io::Error::other("Failure terminal not emitted"));
         }
         Ok(ExitCode::SUCCESS)
