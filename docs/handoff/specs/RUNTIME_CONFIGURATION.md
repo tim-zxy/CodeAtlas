@@ -1,5 +1,7 @@
 # Runtime and Configuration Specification
 
+Packet D written-spec acceptance (2026-10-04): the latest user “确认” accepts the [composition specification](../../superpowers/specs/2026-10-04-p05-w3-020-native-refresh-composition-design.md). Its [D1–D6 executable plan](../../superpowers/plans/2026-10-04-p05-w3-020-native-refresh-composition.md) is written and awaiting separate review/native execution confirmation. No code, Fixture registration, memory calibration/profile installation, gate passage or phase promotion follows. Final-build exact-purpose measurement and separate numeric approval precede production acceptance; E and original phase exits remain open. Earlier direction-only/pending-spec/missing-plan notes below are historical.
+
 Packet D [written detail](../../superpowers/specs/2026-10-04-p05-w3-020-native-refresh-composition-design.md) awaits review: trusted scalar REFRESH_TRANSPORT admission precedes lazy preparation, SQL TEXT retention, serialization/stage/spawn; indexed summaries versus complete current inventory determine delta. New purpose requires final-build evidence and separate numeric approval, not borrowed FULL_TRANSPORT/REFRESH_VERIFY values. No worker/configuration knob, automatic full fallback or startup calibration is added.
 
 ## Phase 0 runtime bootstrap

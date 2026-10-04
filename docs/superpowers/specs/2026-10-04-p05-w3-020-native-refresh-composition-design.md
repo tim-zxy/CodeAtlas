@@ -1,6 +1,6 @@
 # P05-W3-020-D Native REFRESH Runtime and Store Composition
 
-Status: written design awaiting user review. The user's 2026-10-04 confirmation approves the recommended direction and writing this specification, not this artifact, an implementation plan, code, a numerical memory reservation or phase promotion.
+Status: written design accepted by the user's latest 2026-10-04 “确认”. The [implementation plan](../plans/2026-10-04-p05-w3-020-native-refresh-composition.md) is now written and awaits separate review. Specification approval authorizes planning, not code, a numerical memory reservation or phase promotion. Earlier direction-only and missing-plan statements below record the design-writing checkpoint, not current approval status.
 
 ## Intent, authority and predecessor evidence
 
