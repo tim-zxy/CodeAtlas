@@ -1,5 +1,7 @@
 # Runtime and Configuration Specification
 
+Packet D [written detail](../../superpowers/specs/2026-10-04-p05-w3-020-native-refresh-composition-design.md) awaits review: trusted scalar REFRESH_TRANSPORT admission precedes lazy preparation, SQL TEXT retention, serialization/stage/spawn; indexed summaries versus complete current inventory determine delta. New purpose requires final-build evidence and separate numeric approval, not borrowed FULL_TRANSPORT/REFRESH_VERIFY values. No worker/configuration knob, automatic full fallback or startup calibration is added.
+
 ## Phase 0 runtime bootstrap
 
 `RuntimeBuilder` constructs an immutable `KnowledgeRuntime` from explicit
@@ -27,10 +29,14 @@ Commands search upward for `.ekp/`. `ekp init` creates workspace metadata/config
 
 ```ts
 interface EffectiveConfig {
-  runtime: RuntimeConfig; indexing: IndexingConfig;
-  providers: ProviderConfig[]; plugins: PluginConfig[];
-  knowledge: KnowledgeConfig; llm: LlmConfig;
-  embedding: EmbeddingConfig; agents: AgentConfig;
+  runtime: RuntimeConfig;
+  indexing: IndexingConfig;
+  providers: ProviderConfig[];
+  plugins: PluginConfig[];
+  knowledge: KnowledgeConfig;
+  llm: LlmConfig;
+  embedding: EmbeddingConfig;
+  agents: AgentConfig;
   security: SecurityConfig;
 }
 ```

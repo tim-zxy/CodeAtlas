@@ -1,5 +1,7 @@
 # Design Traceability
 
+Packet C integrated2026-10-04 via PR #19/8093b2b, exact merge run37174747367 successful (CURRENT_STATUS). The separately reviewed [D composition specification](../superpowers/specs/2026-10-04-p05-w3-020-native-refresh-composition-design.md) is written and pending review; its D1-D6 table maps ADR/specs to proposed Fixture IDs, suites, gates and dependencies. D preparation/transport/overlay/apply/memory manifests, executable plan and exact-build numerical approval remain missing links, not executable/passing artifacts. E persists the original parent/phase differential and performance obligations; no phase gate closes here.
+
 2026-10-04 checkout-byte repair: C1 accepted exact corpus/evidence identity → unchanged six verification inputs (including `native-full-v3-corpus.mjs` and `native-refresh-v3-corpus.mjs`) → `.gitattributes` LF policy → registered `packages/runtime/test/native-refresh-verification.test.mjs` real Git autocrlf true/false checkout regression. Genuine unpinned checkout RED precedes two-rule GREEN; CURRENT_STATUS records fresh required-root and immutability evidence before integration. No digest exclusion, calibration, budget or phase gate changes. D/E pending traces remain open.
 
 ### C bounded ordering repair trace (2026-10-04)

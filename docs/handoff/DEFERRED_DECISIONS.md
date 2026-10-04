@@ -1,5 +1,7 @@
 # Deferred Decisions
 
+Packet D direction approval2026-10-04 permits the [written composition detail](../superpowers/specs/2026-10-04-p05-w3-020-native-refresh-composition-design.md), not coding. Existing summaries/active-support metadata are used without raw-fact/AST persistence, a second resolver, adaptive scheduler or later-phase language/framework/Knowledge/Wiki/Agent work. The earliest-phase table is unchanged; E remains a separately reviewed Phase0.5 subdivision, not deferred semantic scope.
+
 2026-10-03 accepted C1 resource amendment/revised-plan review does not advance deferred scope: private REFRESH_VERIFY is C observation validation only, not D process/Store composition or E persisted Evaluation. No adaptive scheduling, new language/framework, public Provider SPI or Knowledge/Wiki/Agent capability is introduced. Existing deferred table/earliest phases remain unchanged.
 
 2026-10-03 packet C design-only boundary: [real REFRESH producer detail](../superpowers/specs/2026-10-03-p05-w3-020-native-refresh-producer-design.md) is accepted; its implementation plan awaits review. Its deterministic bounded summary scan is not a persistent dependency index, adaptive scheduler, AST/CFG/PDG persistence or later-phase Knowledge/Wiki/Agent capability. The deferred table and earliest phases below are unchanged; D/E still require separate review before implementation.
