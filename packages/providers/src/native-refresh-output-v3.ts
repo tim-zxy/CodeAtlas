@@ -229,7 +229,7 @@ export async function decodeNativeRefreshV3(
     coverage: 0,
     diagnostics: 0,
   };
-  const diagnostics: unknown[] = [];
+  const diagnostics: z.infer<typeof ProviderSnapshotDiagnosticSchema>[] = [];
   const hash = createHash('sha256'),
     utf8 = new TextDecoder('utf-8', { fatal: true });
   let pending = Buffer.alloc(0),
@@ -480,18 +480,22 @@ export async function decodeNativeRefreshV3(
           if (!isDeepStrictEqual(c, coverage.get(key(s.sourceFile.id, c.capability)))) invalid();
       }
       const expectedDiagnostics = summaries.flatMap((s) => s.diagnostics);
-      if (diagnostics.length !== expectedDiagnostics.length) invalid();
       const diagnosticCounts = new Map<string, number>();
       for (const d of expectedDiagnostics) {
         const k = JSON.stringify(d);
+        if (d.sourceRange === null && diagnosticCounts.has(k)) invalid();
         diagnosticCounts.set(k, (diagnosticCounts.get(k) ?? 0) + 1);
       }
       for (const d of diagnostics) {
         const k = JSON.stringify(d),
           n = diagnosticCounts.get(k) ?? 0;
+        // A file-owned source-less diagnostic has exactly one origin and
+        // observation; genuinely run-global diagnostics remain stream-only.
+        if (d.sourceRange === null && !diagnosticCounts.has(k)) continue;
         if (n === 0) invalid();
         diagnosticCounts.set(k, n - 1);
       }
+      if ([...diagnosticCounts.values()].some((n) => n !== 0)) invalid();
       if (c.integrityChecksum !== `sha256:${hash.digest('hex')}`)
         fail('CHECKSUM_MISMATCH', 'Native refresh checksum differs');
       terminal = freeze(e);
