@@ -1,6 +1,6 @@
 # P05-W3-020-D Native REFRESH Runtime and Store Composition
 
-Status: written design accepted by the user's latest 2026-10-04 “确认”. The [implementation plan](../plans/2026-10-04-p05-w3-020-native-refresh-composition.md) is now written and awaits separate review. Specification approval authorizes planning, not code, a numerical memory reservation or phase promotion. Earlier direction-only and missing-plan statements below record the design-writing checkpoint, not current approval status.
+Status: written design and the [implementation plan](../plans/2026-10-04-p05-w3-020-native-refresh-composition.md) accepted by successive user confirmations on 2026-10-04; native inline D1–D6 implementation is authorized. D1 preparation is a provisional component checkpoint, not admitted Runtime acceptance. Numerical memory reservations still require separate D5 approval; no phase promotion or remote integration is authorized. Earlier direction-only, missing-plan and pending-review statements below are historical checkpoints.
 
 ## Intent, authority and predecessor evidence
 

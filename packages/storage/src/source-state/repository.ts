@@ -31,7 +31,7 @@ function parseRevision(row: Row): WorktreeRevision {
   }
 }
 
-function parseFile(row: Row): SourceFile {
+export function parseStoredSourceFile(row: Row): SourceFile {
   try {
     return parseIr(SourceFileSchema, {
       id: row.id,
@@ -115,7 +115,7 @@ export class RepositorySourceStateStore {
       const rows = this.database
         .prepare('SELECT * FROM source_files WHERE revision_id = ? ORDER BY path')
         .all(revision.id) as Row[];
-      return validateState({ revision, files: rows.map(parseFile) });
+      return validateState({ revision, files: rows.map(parseStoredSourceFile) });
     } catch (error) {
       if (error instanceof SourceStateError) throw error;
       return invalid();

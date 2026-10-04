@@ -38,6 +38,19 @@ export interface NativeRefreshVerificationProfile extends Pick<
   readonly peakUnits: 'bytes';
 }
 
+export interface NativeRefreshTransportProfile extends Omit<
+  NativeRefreshVerificationProfile,
+  'workspace' | 'verificationCorpusRevision' | 'verificationCorpusDigest'
+> {
+  readonly workspace: 'REFRESH_TRANSPORT';
+  readonly transportCorpusRevision: string;
+  readonly transportCorpusDigest: string;
+}
+
+// D1 checkpoint only. D5 final-build evidence and separate numeric approval are required.
+export const nativeRefreshTransportProfiles: readonly NativeRefreshTransportProfile[] =
+  Object.freeze([]);
+
 // Exact verification candidate approved on 2026-10-03; never borrow full/read evidence.
 export const nativeRefreshVerificationProfiles: readonly NativeRefreshVerificationProfile[] =
   Object.freeze([

@@ -115,7 +115,7 @@ async function isolatedFactory(t, variant) {
   if (variant === 'uncalibrated')
     await writeFile(
       join(root, 'dist', 'native-metadata-profiles.js'),
-      'export const nativeMetadataProfiles = Object.freeze([]);\nexport const nativeRefreshVerificationProfiles = Object.freeze([]);\n',
+      'export const nativeMetadataProfiles = Object.freeze([]);\nexport const nativeRefreshVerificationProfiles = Object.freeze([]);\nexport const nativeRefreshTransportProfiles = Object.freeze([]);\n',
     );
   if (variant === 'changed')
     await writeFile(join(root, 'dist', 'calibration-change.js'), 'export const changed = true;\n');
@@ -126,7 +126,7 @@ async function isolatedFactory(t, variant) {
     };
     await writeFile(
       join(root, 'dist', 'native-metadata-profiles.js'),
-      'export const nativeRefreshVerificationProfiles = Object.freeze([]);\nexport const nativeMetadataProfiles = Object.freeze([' +
+      'export const nativeRefreshTransportProfiles = Object.freeze([]);\nexport const nativeRefreshVerificationProfiles = Object.freeze([]);\nexport const nativeMetadataProfiles = Object.freeze([' +
         JSON.stringify(profile) +
         ']);\n',
     );

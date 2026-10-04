@@ -1,5 +1,8 @@
 import type { RepositoryAnalysisStage } from './temp-stage.js';
 import type { DatabaseSync } from 'node:sqlite';
+import type { SourceFile } from '@codeatlas/ir';
+import { parseStoredSourceFile } from '../source-state/repository.js';
+import { SourceStateError } from '../source-state/errors.js';
 
 export interface NativeStateLimits {
   readonly maxSerializedBytes: number;
@@ -69,6 +72,120 @@ export type NativeBaselineResult =
       readonly reason:
         'MISSING' | 'INCOMPATIBLE' | 'INVALID' | 'RESOURCE_LIMIT_EXCEEDED' | 'NOT_APPLICABLE';
     };
+
+export type NativeRefreshReadResult =
+  | (Extract<NativeBaselineResult, { status: 'AVAILABLE' }> & {
+      readonly targetSourceFiles: readonly SourceFile[];
+    })
+  | Extract<NativeBaselineResult, { status: 'UNAVAILABLE' }>;
+
+/** The indexed baseline and current complete inventory must share one read snapshot.
+ * Source reconciliation can advance current metadata without activating the graph.
+ */
+export function readNativeRefreshBaseline(
+  db: DatabaseSync,
+  expectedTarget: NativeStateExpectation,
+  validate: NativeStateValidationPort,
+  limits: NativeStateLimits,
+): NativeRefreshReadResult {
+  assertNativeStateLimits(limits);
+  if (typeof validate !== 'function') throw new TypeError('Native validation port is required');
+  const unavailable = (
+    reason: Extract<NativeBaselineResult, { status: 'UNAVAILABLE' }>['reason'],
+  ): NativeRefreshReadResult => ({ status: 'UNAVAILABLE', reason });
+  return transaction(db, () => {
+    const version = db.prepare('PRAGMA user_version').get()?.user_version;
+    if (!Number.isSafeInteger(version)) return unavailable('INVALID');
+    if ((version as number) < 10) return unavailable('MISSING');
+    if (
+      db
+        .prepare(
+          "SELECT count(*) AS n FROM sqlite_master WHERE type='table' AND name IN ('native_analysis_state','native_analysis_file','active_support_candidates')",
+        )
+        .get()?.n !== 3
+    )
+      return unavailable('INVALID');
+    const repo = expectedTarget.repositoryId;
+    const revisionId = expectedTarget.revisionId;
+    const retainedStrings =
+      size(
+        db,
+        `SELECT coalesce(sum(${sqlLengths(['id', 'repository_id', 'revision_id', 'path', 'content_fingerprint', 'role', 'provenance', 'content_kind', 'language_hint', 'sensitivity'])}),0) AS bytes FROM source_files WHERE repository_id=? AND revision_id=?`,
+        repo,
+        revisionId,
+      ) +
+      size(
+        db,
+        `SELECT coalesce(sum(${sqlLengths(['id', 'repository_id', 'kind', 'content_fingerprint', 'base_revision_id'])}),0) AS bytes FROM revisions WHERE repository_id=? AND id=?`,
+        repo,
+        revisionId,
+      ) +
+      size(
+        db,
+        `SELECT coalesce(sum(${sqlLengths(['indexed_revision_id', 'indexed_content_fingerprint'])}),0) AS bytes FROM repository_state WHERE repository_id=?`,
+        repo,
+      );
+    const count = db
+      .prepare('SELECT count(*) AS n FROM source_files WHERE repository_id=? AND revision_id=?')
+      .get(repo, revisionId)?.n;
+    if (
+      !Number.isSafeInteger(retainedStrings) ||
+      retainedStrings > limits.maxSerializedBytes ||
+      2 * retainedStrings >= limits.memoryBudgetBytes
+    )
+      return unavailable('RESOURCE_LIMIT_EXCEEDED');
+    if (
+      !Number.isSafeInteger(count) ||
+      (count as number) < 0 ||
+      (count as number) > retainedStrings
+    )
+      return unavailable('INVALID');
+    const indexed = pointer(db, repo);
+    if (!indexed?.indexed_revision_id || !indexed.indexed_content_fingerprint)
+      return unavailable('MISSING');
+    if (indexed.indexed_revision_id !== revisionId) return unavailable('NOT_APPLICABLE');
+    const revision = db
+      .prepare('SELECT kind,content_fingerprint FROM revisions WHERE repository_id=? AND id=?')
+      .get(repo, revisionId);
+    if (!revision || revision.kind !== 'WORKTREE') return unavailable('NOT_APPLICABLE');
+    if (revision.content_fingerprint !== expectedTarget.contentFingerprint)
+      return unavailable('INVALID');
+    const targetSourceFiles: SourceFile[] = [];
+    for (const row of db
+      .prepare('SELECT * FROM source_files WHERE repository_id=? AND revision_id=? ORDER BY path')
+      .iterate(repo, revisionId)) {
+      // Only pure row decoding is caught. SQLite read/I/O/lock errors propagate.
+      try {
+        targetSourceFiles.push(parseStoredSourceFile(row));
+      } catch (error) {
+        if (error instanceof SourceStateError) return unavailable('INVALID');
+        throw error;
+      }
+    }
+    if (targetSourceFiles.length !== count) return unavailable('INVALID');
+    const missingCandidate = db
+      .prepare(
+        `SELECT count(*) AS n FROM provider_fact_bindings b
+      JOIN evidence e ON e.id=b.evidence_id
+      LEFT JOIN active_support_candidates c ON c.evidence_id=e.id
+      WHERE e.repository_id=? AND e.revision_id=? AND e.provider_id=? AND e.status='ACTIVE' AND c.evidence_id IS NULL`,
+      )
+      .get(repo, revisionId, expectedTarget.providerId)?.n;
+    if (missingCandidate !== 0) return unavailable('MISSING');
+    const result = readNativeAnalysisState(
+      db,
+      { ...expectedTarget, contentFingerprint: indexed.indexed_content_fingerprint },
+      validate,
+      { ...limits, memoryBudgetBytes: limits.memoryBudgetBytes - 2 * retainedStrings },
+    );
+    if (result.status !== 'AVAILABLE') return result;
+    for (const file of targetSourceFiles) {
+      Object.freeze(file.classification);
+      Object.freeze(file);
+    }
+    return Object.freeze({ ...result, targetSourceFiles: Object.freeze(targetSourceFiles) });
+  });
+}
 
 export function assertNativeStateLimits(limits: NativeStateLimits): void {
   if (
