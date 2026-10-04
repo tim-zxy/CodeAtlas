@@ -5,6 +5,7 @@ export * from './native-analysis-state.js';
 export * from './native-analysis-validation.js';
 export * from './native-analysis-output-v3.js';
 export * from './native-refresh-output-v3.js';
+export * from './native-refresh-request-v3.js';
 export * from './native-ipc-v3.js';
 export * from './native-ipc-v3-bytes.js';
 export * from './coverage-summary.js';
