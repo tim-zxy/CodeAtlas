@@ -1,6 +1,7 @@
 import { isDeepStrictEqual } from 'node:util';
 import {
   ProviderSnapshotSchema,
+  SourceFileSchema,
   type CanonicalEdge,
   type CanonicalNode,
   type ProviderEdge,
@@ -9,11 +10,26 @@ import {
   type ProviderSnapshot,
   type SourceFile,
 } from '@codeatlas/ir';
+import { z } from 'zod';
 
 import { normalizeJavaEdge } from './canonical-normalizer.js';
 import { collectMergeSupports, type MergeSupport } from './fact-merger-input.js';
 import { CanonicalNormalizationError, normalizeJavaNode } from './java-node-normalizer.js';
 import type { NativeRequestEnvelope } from './native-ipc.js';
+import { boundedJson } from './native-request-json.js';
+
+const PatchContextSchema = z
+  .object({
+    repositoryId: z.string().min(1),
+    revisionId: z.string().min(1),
+    contentFingerprint: z.string().min(1),
+    snapshotId: z.string().min(1),
+    changedSourceFiles: z.array(SourceFileSchema).max(10_000),
+  })
+  .strict();
+
+/** Internal normalization context, not an IPC envelope or package-index API. */
+export type NativePatchNormalizationContext = z.infer<typeof PatchContextSchema>;
 
 export interface PatchNormalizationStage {
   assertContext(expected: {
@@ -56,13 +72,53 @@ export function normalizeStagedPatch(
       'Expected REFRESH',
     );
   }
-  const snapshot = ProviderSnapshotSchema.parse(snapshotValue);
   const target = request.payload.targetRevision;
+  normalizePatchContext(
+    stage,
+    {
+      repositoryId: request.payload.repository.id,
+      revisionId: target.id,
+      contentFingerprint: target.contentFingerprint,
+      snapshotId: request.payload.providerSnapshotId,
+      changedSourceFiles: [...request.payload.changes.added, ...request.payload.changes.modified],
+    },
+    snapshotValue,
+  );
+}
+
+/** Reuses the legacy normalization core without casting a v3 request to v1.
+ * Owned bounded context comes from trusted Runtime preparation; complete wire,
+ * ledger and ACTIVE support validation still precede any applicable seal.
+ */
+export function normalizeNativeStagedPatch(
+  stage: PatchNormalizationStage,
+  contextValue: NativePatchNormalizationContext,
+  snapshotValue: ProviderSnapshot,
+): void {
+  const owned = JSON.parse(
+    boundedJson({ context: contextValue, snapshot: snapshotValue }, 1_000_000),
+  );
+  const context = PatchContextSchema.safeParse(owned.context);
+  if (!context.success)
+    throw new CanonicalNormalizationError(
+      'INVALID_CONTEXT',
+      ['context'],
+      'Invalid Native patch context',
+    );
+  normalizePatchContext(stage, context.data, owned.snapshot);
+}
+
+function normalizePatchContext(
+  stage: PatchNormalizationStage,
+  context: NativePatchNormalizationContext,
+  snapshotValue: ProviderSnapshot,
+): void {
+  const snapshot = ProviderSnapshotSchema.parse(snapshotValue);
   if (
-    snapshot.id !== request.payload.providerSnapshotId ||
-    snapshot.repositoryId !== request.payload.repository.id ||
-    snapshot.requestedRevisionId !== target.id ||
-    snapshot.requestedRevisionFingerprint !== target.contentFingerprint ||
+    snapshot.id !== context.snapshotId ||
+    snapshot.repositoryId !== context.repositoryId ||
+    snapshot.requestedRevisionId !== context.revisionId ||
+    snapshot.requestedRevisionFingerprint !== context.contentFingerprint ||
     snapshot.outcome !== 'SUCCEEDED'
   )
     throw new CanonicalNormalizationError(
@@ -71,12 +127,12 @@ export function normalizeStagedPatch(
       'Snapshot differs from REFRESH',
     );
   stage.assertContext({
-    repositoryId: request.payload.repository.id,
-    revisionId: target.id,
-    contentFingerprint: target.contentFingerprint,
+    repositoryId: context.repositoryId,
+    revisionId: context.revisionId,
+    contentFingerprint: context.contentFingerprint,
     snapshotId: snapshot.id,
   });
-  const changed = [...request.payload.changes.added, ...request.payload.changes.modified];
+  const changed = context.changedSourceFiles;
   for (const file of changed) {
     if (!isDeepStrictEqual(stage.getChangedSourceFile(file.id), file)) {
       throw new CanonicalNormalizationError(
@@ -119,7 +175,7 @@ export function normalizeStagedPatch(
     stage.putNormalizedNode(pair);
     const [support] = collectMergeSupports({
       repositoryId: snapshot.repositoryId,
-      revisionId: target.id,
+      revisionId: context.revisionId,
       observations: [{ snapshot, nodes: [pair], edges: [] }],
     });
     stage.appendSupport(support!);
@@ -145,7 +201,7 @@ export function normalizeStagedPatch(
     stage.putNormalizedEdge(pair);
     const [support] = collectMergeSupports({
       repositoryId: snapshot.repositoryId,
-      revisionId: target.id,
+      revisionId: context.revisionId,
       observations: [{ snapshot, nodes: [], edges: [pair] }],
     });
     stage.appendSupport(support!);

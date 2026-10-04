@@ -1,6 +1,21 @@
 import type { RepositoryAnalysisStage } from './temp-stage.js';
+import type { PatchSupport } from './patch-stage.js';
 import type { DatabaseSync } from 'node:sqlite';
-import type { SourceFile } from '@codeatlas/ir';
+import {
+  CanonicalEdgeSchema,
+  CanonicalNodeSchema,
+  EvidenceSchema,
+  FactEvidenceSchema,
+  ProviderFactBindingSchema,
+  ProviderSnapshotSchema,
+  type CanonicalEdge,
+  type CanonicalNode,
+  type Evidence,
+  type FactEvidence,
+  type ProviderFactBinding,
+  type ProviderSnapshot,
+  type SourceFile,
+} from '@codeatlas/ir';
 import { parseStoredSourceFile } from '../source-state/repository.js';
 import { SourceStateError } from '../source-state/errors.js';
 
@@ -78,6 +93,267 @@ export type NativeRefreshReadResult =
       readonly targetSourceFiles: readonly SourceFile[];
     })
   | Extract<NativeBaselineResult, { status: 'UNAVAILABLE' }>;
+
+/** Exact per-support history, not a selected Canonical representative or raw fact.
+ * Snapshot observations are deliberately excluded: only provenance is exposed.
+ */
+export interface NativePatchActiveSupport {
+  readonly canonical: CanonicalNode | CanonicalEdge;
+  readonly evidence: Evidence;
+  readonly binding: ProviderFactBinding;
+  readonly factEvidence: FactEvidence;
+  readonly snapshot: Pick<
+    ProviderSnapshot,
+    | 'id'
+    | 'repositoryId'
+    | 'providerId'
+    | 'providerVersion'
+    | 'requestedRevisionId'
+    | 'requestedRevisionFingerprint'
+    | 'outcome'
+  >;
+}
+
+/** Provider-independent structural injection contract. Runtime supplies the
+ * accepted baseline/inventory and the mandatory Provider-owned validation port.
+ */
+export interface NativePatchContext {
+  readonly baseline: ValidatedNativeState;
+  readonly targetSourceFiles: readonly SourceFile[];
+}
+export interface NativePatchOverlayInput extends NativeStateLimits {
+  readonly expected: NativeStateExpectation;
+  readonly baseline: ValidatedNativeState;
+  readonly baselineToken: NativeActivationToken;
+  readonly snapshot: ProviderSnapshot;
+  readonly headerJson: string;
+  readonly files: Iterable<NativeStateJsonFile>;
+  readonly targetSourceFiles: Iterable<SourceFile>;
+  readonly changedSourceFiles: Iterable<SourceFile>;
+  readonly activeSupports: Iterable<NativePatchActiveSupport>;
+  readonly upsertNodes: Iterable<import('@codeatlas/ir').ProviderNode>;
+  readonly upsertEdges: Iterable<import('@codeatlas/ir').ProviderEdge>;
+  readonly removeNodes: Iterable<import('@codeatlas/ir').ProviderFactRef>;
+  readonly removeEdges: Iterable<import('@codeatlas/ir').ProviderFactRef>;
+  readonly normalizedNodes: Iterable<{
+    readonly provider: import('@codeatlas/ir').ProviderFactRef;
+    readonly canonical: CanonicalNode;
+  }>;
+  readonly normalizedEdges: Iterable<{
+    readonly provider: import('@codeatlas/ir').ProviderFactRef;
+    readonly canonical: CanonicalEdge;
+  }>;
+  readonly supports: Iterable<PatchSupport>;
+  readonly coverage: Iterable<unknown>;
+  readonly diagnostics: Iterable<unknown>;
+}
+export type NativePatchValidationPort = (input: NativePatchOverlayInput) => ValidatedNativeState;
+
+/** Storage-owned, bounded support view for the Provider overlay port. Includes
+ * other Providers so target validation cannot overlook their dangling support.
+ * This attests history only; source-range retirement/target checks belong to the
+ * overlay and Store. No graph, summary or activation pointer is written here.
+ */
+export function readNativePatchActiveSupports(
+  db: DatabaseSync,
+  expected: Pick<NativeStateExpectation, 'repositoryId' | 'revisionId'>,
+  limits: NativeStateLimits,
+): { readonly retainedSqlBytes: number; readonly supports: readonly NativePatchActiveSupport[] } {
+  assertNativeStateLimits(limits);
+  return transaction(db, () => {
+    const columns = {
+      evidence_id: 'e.id',
+      repository_id: 'e.repository_id',
+      revision_id: 'e.revision_id',
+      evidence_snapshot: 'e.provider_snapshot_id',
+      evidence_type: 'e.fact_type',
+      evidence_provider: 'e.provider_id',
+      evidence_fact: 'e.provider_fact_id',
+      status: 'e.status',
+      binding_type: 'b.fact_type',
+      binding_provider: 'b.provider_id',
+      binding_fact: 'b.provider_fact_id',
+      binding_snapshot: 'b.provider_snapshot_id',
+      binding_canonical: 'b.canonical_fact_id',
+      candidate_type: 'c.fact_type',
+      candidate_canonical: 'c.canonical_fact_id',
+      candidate_json: 'c.candidate_json',
+      link_type: 'f.fact_type',
+      link_canonical: 'f.canonical_fact_id',
+      snapshot_id: 's.id',
+      snapshot_repo: 's.repository_id',
+      snapshot_provider: 's.provider_id',
+      snapshot_version: 's.provider_version',
+      runtime_version: 's.runtime_version',
+      snapshot_revision: 's.requested_revision_id',
+      snapshot_fingerprint: 's.requested_revision_fingerprint',
+      snapshot_outcome: 's.outcome',
+      node_key: 'n.fact_key',
+      edge_key: 'g.fact_key',
+    };
+    // LEFT joins retain missing chains; inner joins would silently hide orphans.
+    const from = `FROM evidence e
+      LEFT JOIN provider_fact_bindings b ON b.evidence_id=e.id
+      LEFT JOIN active_support_candidates c ON c.evidence_id=e.id
+      LEFT JOIN fact_evidence f ON f.evidence_id=e.id
+      LEFT JOIN provider_snapshots s ON s.id=e.provider_snapshot_id
+      LEFT JOIN canonical_nodes n ON b.fact_type='NODE' AND n.id=b.canonical_fact_id
+        AND n.repository_id=e.repository_id AND n.revision_id=e.revision_id
+      LEFT JOIN canonical_edges g ON b.fact_type='EDGE' AND g.id=b.canonical_fact_id
+        AND g.repository_id=e.repository_id AND g.revision_id=e.revision_id
+      WHERE e.repository_id=? AND e.revision_id=? AND e.status='ACTIVE'`;
+    const args = [expected.repositoryId, expected.revisionId];
+    const length = sqlLengths(Object.values(columns));
+    const sizes = db
+      .prepare(
+        `SELECT count(*) AS n, coalesce(sum(${length}),0) AS bytes,
+      coalesce(max(${length}),0) AS maximum ${from}`,
+      )
+      .get(...args)!;
+    if (
+      ![sizes.n, sizes.bytes, sizes.maximum].every(
+        (n) => Number.isSafeInteger(n) && (n as number) >= 0,
+      )
+    )
+      throw new Error('Invalid native active support size');
+    const bytes = sizes.bytes as number,
+      count = sizes.n as number;
+    // Support rows are not the serialized summary bundle. Bound every retained
+    // row before TEXT; their aggregate uses the existing twice-SQL budget below.
+    if ((sizes.maximum as number) > limits.maxSerializedBytes)
+      throw new Error('Native active support resource limit exceeded');
+    assertNativeStringBudget(bytes, limits);
+    if (count > bytes) throw new Error('Invalid native active support count');
+    const invalid = (): never => {
+      throw new Error('Invalid native active support chain');
+    };
+    const supports: NativePatchActiveSupport[] = [],
+      evidenceIds = new Set<string>(),
+      identities = new Set<string>();
+    const rows = db
+      .prepare(
+        `SELECT ${Object.entries(columns)
+          .map(([alias, column]) => `${column} AS ${alias}`)
+          .join(',')},
+      s.started_at, s.completed_at ${from} ORDER BY e.provider_id,e.fact_type,e.provider_fact_id,e.id`,
+      )
+      .iterate(...args);
+    for (const row of rows) {
+      let support: NativePatchActiveSupport;
+      try {
+        const evidence = EvidenceSchema.parse({
+          id: row.evidence_id,
+          repositoryId: row.repository_id,
+          revisionId: row.revision_id,
+          providerSnapshotId: row.evidence_snapshot,
+          status: row.status,
+          providerFact: {
+            factType: row.evidence_type,
+            providerId: row.evidence_provider,
+            providerFactId: row.evidence_fact,
+          },
+        });
+        const binding = ProviderFactBindingSchema.parse({
+          evidenceId: evidence.id,
+          providerSnapshotId: row.binding_snapshot,
+          providerFact: {
+            factType: row.binding_type,
+            providerId: row.binding_provider,
+            providerFactId: row.binding_fact,
+          },
+          canonicalFact: { factType: row.binding_type, id: row.binding_canonical },
+        });
+        const factEvidence = FactEvidenceSchema.parse({
+          evidenceId: evidence.id,
+          fact: { factType: row.link_type, id: row.link_canonical },
+        });
+        if (typeof row.candidate_json !== 'string') invalid();
+        const canonical = (
+          evidence.providerFact.factType === 'NODE' ? CanonicalNodeSchema : CanonicalEdgeSchema
+        ).parse(JSON.parse(row.candidate_json as string));
+        if (!Number.isSafeInteger(row.started_at) || !Number.isSafeInteger(row.completed_at))
+          invalid();
+        // Reuse IR scalar/time schemas, not fabricated empty snapshot observations.
+        const schema = ProviderSnapshotSchema.shape;
+        const startedAt = schema.startedAt.parse(new Date(row.started_at as number).toISOString());
+        const completedAt = schema.completedAt.parse(
+          new Date(row.completed_at as number).toISOString(),
+        );
+        schema.runtimeVersion.parse(row.runtime_version);
+        if (completedAt < startedAt) invalid();
+        const snapshot = {
+          id: schema.id.parse(row.snapshot_id),
+          repositoryId: schema.repositoryId.parse(row.snapshot_repo),
+          providerId: schema.providerId.parse(row.snapshot_provider),
+          providerVersion: schema.providerVersion.parse(row.snapshot_version),
+          requestedRevisionId: schema.requestedRevisionId.parse(row.snapshot_revision),
+          requestedRevisionFingerprint: schema.requestedRevisionFingerprint.parse(
+            row.snapshot_fingerprint,
+          ),
+          outcome: schema.outcome.parse(row.snapshot_outcome),
+        };
+        if (
+          binding.providerFact.factType !== evidence.providerFact.factType ||
+          binding.providerFact.providerId !== evidence.providerFact.providerId ||
+          binding.providerFact.providerFactId !== evidence.providerFact.providerFactId ||
+          binding.providerSnapshotId !== evidence.providerSnapshotId ||
+          row.candidate_type !== binding.canonicalFact.factType ||
+          row.candidate_canonical !== binding.canonicalFact.id ||
+          canonical.id !== binding.canonicalFact.id ||
+          canonical.repositoryId !== expected.repositoryId ||
+          canonical.revisionId !== expected.revisionId ||
+          canonical.factKey !==
+            (binding.canonicalFact.factType === 'NODE' ? row.node_key : row.edge_key) ||
+          factEvidence.fact.factType !== binding.canonicalFact.factType ||
+          factEvidence.fact.id !== canonical.id ||
+          snapshot.repositoryId !== expected.repositoryId ||
+          snapshot.requestedRevisionId !== expected.revisionId ||
+          snapshot.providerId !== evidence.providerFact.providerId ||
+          snapshot.outcome !== 'SUCCEEDED'
+        )
+          invalid();
+        const identity = JSON.stringify(evidence.providerFact);
+        if (evidenceIds.has(evidence.id) || identities.has(identity)) invalid();
+        evidenceIds.add(evidence.id);
+        identities.add(identity);
+        support = { canonical, evidence, binding, factEvidence, snapshot };
+      } catch {
+        invalid();
+      }
+      supports.push(support!);
+    }
+    if (supports.length !== count) invalid();
+    // A Canonical fact with no ACTIVE binding cannot appear in the support join.
+    for (const [type, table] of [
+      ['NODE', 'canonical_nodes'],
+      ['EDGE', 'canonical_edges'],
+    ] as const) {
+      if (
+        db
+          .prepare(
+            `SELECT count(*) AS n FROM ${table} a
+        WHERE a.repository_id=? AND a.revision_id=? AND NOT EXISTS (
+          SELECT 1 FROM provider_fact_bindings b JOIN evidence e ON e.id=b.evidence_id
+          WHERE b.fact_type=? AND b.canonical_fact_id=a.id AND e.repository_id=a.repository_id
+            AND e.revision_id=a.revision_id AND e.status='ACTIVE')`,
+          )
+          .get(...args, type)?.n !== 0
+      )
+        invalid();
+    }
+    // All values are owned schema results. Freeze in place rather than making
+    // another complete copy of the bounded support view.
+    const result = { retainedSqlBytes: bytes, supports };
+    const pending: object[] = [result];
+    while (pending.length) {
+      const next = pending.pop()!;
+      Object.freeze(next);
+      for (const value of Object.values(next))
+        if (value !== null && typeof value === 'object') pending.push(value);
+    }
+    return result;
+  });
+}
 
 /** The indexed baseline and current complete inventory must share one read snapshot.
  * Source reconciliation can advance current metadata without activating the graph.
