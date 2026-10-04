@@ -1,12 +1,59 @@
 import assert from 'node:assert/strict';
+import { spawnSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { test } from 'node:test';
-import { cp, mkdir, mkdtemp, rm, symlink, writeFile } from 'node:fs/promises';
+import { cp, mkdir, mkdtemp, readFile, rm, symlink, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import * as runtime from '../dist/index.js';
 import { nativeMetadataEnvironment } from '../dist/native-metadata-admission.js';
 import { nativeMetadataProfiles } from '../dist/native-metadata-profiles.js';
+
+test('verification corpus checkouts preserve approved provenance under either autocrlf setting', async (t) => {
+  const directory = await mkdtemp(join(tmpdir(), 'codeatlas-verification-checkout-'));
+  t.after(() => rm(directory, { recursive: true, force: true }));
+  const repositoryRoot = fileURLToPath(new URL('../../../', import.meta.url));
+  const identityRoot = new URL('./helpers/', import.meta.url);
+  const inputs = [
+    '../../../../fixtures/ipc/refresh-v3/verification-memory-cases.json',
+    './native-refresh-verification-identity.mjs',
+    './native-refresh-verification-corpus.mjs',
+    './native-refresh-verification-worker.mjs',
+    '../../../providers/test/helpers/native-full-v3-corpus.mjs',
+    '../../../providers/test/helpers/native-refresh-v3-corpus.mjs',
+  ];
+  const files = inputs.map((input) =>
+    fileURLToPath(new URL(input, identityRoot)).slice(repositoryRoot.length).replaceAll('\\', '/'),
+  );
+  for (const autocrlf of ['true', 'false']) {
+    const destination = join(directory, autocrlf);
+    const child = spawnSync(
+      'git',
+      [
+        '-c',
+        `core.autocrlf=${autocrlf}`,
+        'checkout-index',
+        `--prefix=${destination.replaceAll('\\', '/')}/`,
+        '--',
+        ...files,
+      ],
+      { cwd: repositoryRoot, windowsHide: true },
+    );
+    assert.equal(child.status, 0, child.stderr?.toString());
+    const hash = createHash('sha256');
+    for (let index = 0; index < inputs.length; index++) {
+      hash.update(inputs[index] + '\0');
+      hash.update(await readFile(join(destination, files[index])));
+    }
+    // Independently frozen calibration/holdout identity, not recomputed from working bytes.
+    assert.equal(
+      hash.digest('hex'),
+      '1969707b181cf5bbd2fd753d489c4ff3a39333f4d8166b43c13a62ec40dad232',
+      `autocrlf=${autocrlf}`,
+    );
+  }
+});
 
 // Missing implementation yields an assertion about the required boundary, not an import crash.
 const api = await import('../dist/native-refresh-verification.js').catch((e) => {

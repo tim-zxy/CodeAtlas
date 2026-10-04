@@ -28,6 +28,8 @@ fixtures/ipc/refresh-v3/verification-memory-cases.json text eol=lf
 packages/runtime/test/helpers/native-refresh-verification-corpus.mjs text eol=lf
 packages/runtime/test/helpers/native-refresh-verification-identity.mjs text eol=lf
 packages/runtime/test/helpers/native-refresh-verification-worker.mjs text eol=lf
+packages/providers/test/helpers/native-full-v3-corpus.mjs text eol=lf
+packages/providers/test/helpers/native-refresh-v3-corpus.mjs text eol=lf
 fixtures/storage/native-analysis-state/memory-refresh-c-read-seal.json -text
 fixtures/storage/native-analysis-state/memory-refresh-c-transport.json -text
 fixtures/storage/native-analysis-state/memory-refresh-c-evidence.json -text

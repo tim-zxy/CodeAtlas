@@ -1,5 +1,7 @@
 # Design Traceability
 
+2026-10-04 checkout-byte repair: C1 accepted exact corpus/evidence identity → unchanged six verification inputs (including `native-full-v3-corpus.mjs` and `native-refresh-v3-corpus.mjs`) → `.gitattributes` LF policy → registered `packages/runtime/test/native-refresh-verification.test.mjs` real Git autocrlf true/false checkout regression. Genuine unpinned checkout RED precedes two-rule GREEN; CURRENT_STATUS records fresh required-root and immutability evidence before integration. No digest exclusion, calibration, budget or phase gate changes. D/E pending traces remain open.
+
 ### C bounded ordering repair trace (2026-10-04)
 
 | Requirement / authority                                                 | Fixture / test evidence                                                                                                                           | Gate / acceptance                                                                                                               |
