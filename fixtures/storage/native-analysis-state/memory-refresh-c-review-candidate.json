@@ -1,0 +1,305 @@
+{
+  "schemaVersion": 1,
+  "status": "PROVISIONAL_REVIEW_REQUIRED",
+  "policyRevision": "p05-native-memory-high-water-range-v1",
+  "environment": {
+    "node": "v24.15.0",
+    "v8": "13.6.233.17-node.48",
+    "platform": "win32",
+    "arch": "x64",
+    "zodVersion": "4.6.1",
+    "implementationDigest": "453a41edf654df5e1ded7ea6983637544cc7681d6e9ca64290acaca8de095d8a",
+    "corpusRevision": "p05-native-metadata-memory-v1"
+  },
+  "corpora": {
+    "READ_SEAL": {
+      "revision": "p05-native-metadata-memory-v1",
+      "digest": "0c599e6626202fe4a0b5d5866e2d89d01a4674e40b0efe0d0b20acf5b4085b29"
+    },
+    "FULL_TRANSPORT": {
+      "revision": "p05-native-full-v3-memory-v1",
+      "digest": "11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef"
+    }
+  },
+  "manifestDigest": "6fbdd7663c24051c710ce246a8d54b1cfec4ba191b202007d79699bdaf00d856",
+  "reportDigests": [
+    "517463fe7768ff823b427308734bf04e34ee71b6d6b7fb0d7cec08d715723db7",
+    "6126281a77c0f29aebfeaff2eca5db0ccdf791e715c8fb651b7fe057bcf93d0b"
+  ],
+  "groups": [
+    {
+      "key": "[\"FULL_TRANSPORT\",\"deep-unknown-input\",\"11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef\"]",
+      "workspace": "FULL_TRANSPORT",
+      "caseName": "deep-unknown-input",
+      "inputIdentity": "11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef",
+      "count": 5,
+      "low": 65753088,
+      "high": 68341760,
+      "range": 2588672
+    },
+    {
+      "key": "[\"FULL_TRANSPORT\",\"dense-numeric-sites\",\"11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef\"]",
+      "workspace": "FULL_TRANSPORT",
+      "caseName": "dense-numeric-sites",
+      "inputIdentity": "11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef",
+      "count": 5,
+      "low": 165814272,
+      "high": 192991232,
+      "range": 27176960
+    },
+    {
+      "key": "[\"FULL_TRANSPORT\",\"duplicate-metadata\",\"11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef\"]",
+      "workspace": "FULL_TRANSPORT",
+      "caseName": "duplicate-metadata",
+      "inputIdentity": "11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef",
+      "count": 5,
+      "low": 65302528,
+      "high": 68153344,
+      "range": 2850816
+    },
+    {
+      "key": "[\"FULL_TRANSPORT\",\"empty-file\",\"11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef\"]",
+      "workspace": "FULL_TRANSPORT",
+      "caseName": "empty-file",
+      "inputIdentity": "11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef",
+      "count": 5,
+      "low": 65548288,
+      "high": 65765376,
+      "range": 217088
+    },
+    {
+      "key": "[\"FULL_TRANSPORT\",\"foreign-metadata\",\"11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef\"]",
+      "workspace": "FULL_TRANSPORT",
+      "caseName": "foreign-metadata",
+      "inputIdentity": "11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef",
+      "count": 5,
+      "low": 65015808,
+      "high": 67629056,
+      "range": 2613248
+    },
+    {
+      "key": "[\"FULL_TRANSPORT\",\"large-request\",\"11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef\"]",
+      "workspace": "FULL_TRANSPORT",
+      "caseName": "large-request",
+      "inputIdentity": "11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef",
+      "count": 5,
+      "low": 71598080,
+      "high": 73781248,
+      "range": 2183168
+    },
+    {
+      "key": "[\"FULL_TRANSPORT\",\"long-ascii\",\"11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef\"]",
+      "workspace": "FULL_TRANSPORT",
+      "caseName": "long-ascii",
+      "inputIdentity": "11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef",
+      "count": 5,
+      "low": 86749184,
+      "high": 90161152,
+      "range": 3411968
+    },
+    {
+      "key": "[\"FULL_TRANSPORT\",\"long-astral\",\"11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef\"]",
+      "workspace": "FULL_TRANSPORT",
+      "caseName": "long-astral",
+      "inputIdentity": "11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef",
+      "count": 5,
+      "low": 88289280,
+      "high": 89260032,
+      "range": 970752
+    },
+    {
+      "key": "[\"FULL_TRANSPORT\",\"long-bmp\",\"11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef\"]",
+      "workspace": "FULL_TRANSPORT",
+      "caseName": "long-bmp",
+      "inputIdentity": "11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef",
+      "count": 5,
+      "low": 87875584,
+      "high": 90533888,
+      "range": 2658304
+    },
+    {
+      "key": "[\"FULL_TRANSPORT\",\"maximum-short-files\",\"11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef\"]",
+      "workspace": "FULL_TRANSPORT",
+      "caseName": "maximum-short-files",
+      "inputIdentity": "11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef",
+      "count": 5,
+      "low": 156901376,
+      "high": 157650944,
+      "range": 749568
+    },
+    {
+      "key": "[\"FULL_TRANSPORT\",\"oversized-staged-fact\",\"11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef\"]",
+      "workspace": "FULL_TRANSPORT",
+      "caseName": "oversized-staged-fact",
+      "inputIdentity": "11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef",
+      "count": 5,
+      "low": 73900032,
+      "high": 74493952,
+      "range": 593920
+    },
+    {
+      "key": "[\"FULL_TRANSPORT\",\"repeated-shared-owners\",\"11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef\"]",
+      "workspace": "FULL_TRANSPORT",
+      "caseName": "repeated-shared-owners",
+      "inputIdentity": "11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef",
+      "count": 5,
+      "low": 145653760,
+      "high": 147943424,
+      "range": 2289664
+    },
+    {
+      "key": "[\"FULL_TRANSPORT\",\"slow-sink\",\"11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef\"]",
+      "workspace": "FULL_TRANSPORT",
+      "caseName": "slow-sink",
+      "inputIdentity": "11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef",
+      "count": 5,
+      "low": 65159168,
+      "high": 67727360,
+      "range": 2568192
+    },
+    {
+      "key": "[\"FULL_TRANSPORT\",\"zero-file\",\"11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef\"]",
+      "workspace": "FULL_TRANSPORT",
+      "caseName": "zero-file",
+      "inputIdentity": "11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef",
+      "count": 5,
+      "low": 65093632,
+      "high": 66256896,
+      "range": 1163264
+    },
+    {
+      "key": "[\"READ_SEAL\",\"deep-unknown-input\",\"cedbb83c56189bb0e96e324ecb027bcddc84d08b805213f36d88021abce900c1\"]",
+      "workspace": "READ_SEAL",
+      "caseName": "deep-unknown-input",
+      "inputIdentity": "cedbb83c56189bb0e96e324ecb027bcddc84d08b805213f36d88021abce900c1",
+      "count": 5,
+      "low": 65003520,
+      "high": 66232320,
+      "range": 1228800
+    },
+    {
+      "key": "[\"READ_SEAL\",\"dense-numeric-sites\",\"170f17e5e7b9cd05b85160a84e85182367124c5b15afc304134582e711793d72\"]",
+      "workspace": "READ_SEAL",
+      "caseName": "dense-numeric-sites",
+      "inputIdentity": "170f17e5e7b9cd05b85160a84e85182367124c5b15afc304134582e711793d72",
+      "count": 5,
+      "low": 212602880,
+      "high": 247963648,
+      "range": 35360768
+    },
+    {
+      "key": "[\"READ_SEAL\",\"duplicate-metadata\",\"af54db0bc6667914639117987fa7ef0b490a6176f224e23c632f8ba62f8011c9\"]",
+      "workspace": "READ_SEAL",
+      "caseName": "duplicate-metadata",
+      "inputIdentity": "af54db0bc6667914639117987fa7ef0b490a6176f224e23c632f8ba62f8011c9",
+      "count": 5,
+      "low": 64581632,
+      "high": 65052672,
+      "range": 471040
+    },
+    {
+      "key": "[\"READ_SEAL\",\"empty-file\",\"70bc612213767bd9c0a1847f882ec374159c1b3aa85ba9a1a5fd581258bb3e97\"]",
+      "workspace": "READ_SEAL",
+      "caseName": "empty-file",
+      "inputIdentity": "70bc612213767bd9c0a1847f882ec374159c1b3aa85ba9a1a5fd581258bb3e97",
+      "count": 5,
+      "low": 64557056,
+      "high": 64946176,
+      "range": 389120
+    },
+    {
+      "key": "[\"READ_SEAL\",\"foreign-metadata\",\"9ce66ddfa0d60b020a05a231a1830100daecf9bcec6fe8f5aa6432b556b0d97e\"]",
+      "workspace": "READ_SEAL",
+      "caseName": "foreign-metadata",
+      "inputIdentity": "9ce66ddfa0d60b020a05a231a1830100daecf9bcec6fe8f5aa6432b556b0d97e",
+      "count": 5,
+      "low": 64188416,
+      "high": 64888832,
+      "range": 700416
+    },
+    {
+      "key": "[\"READ_SEAL\",\"long-ascii\",\"da097c8e5e42410698f2f08efce1ead23478d16a4115f85558aac21f27c849c3\"]",
+      "workspace": "READ_SEAL",
+      "caseName": "long-ascii",
+      "inputIdentity": "da097c8e5e42410698f2f08efce1ead23478d16a4115f85558aac21f27c849c3",
+      "count": 5,
+      "low": 89071616,
+      "high": 92061696,
+      "range": 2990080
+    },
+    {
+      "key": "[\"READ_SEAL\",\"long-astral\",\"f88d7a31a833cba342f277e13451505673c54112fce67847337000546d33ccc4\"]",
+      "workspace": "READ_SEAL",
+      "caseName": "long-astral",
+      "inputIdentity": "f88d7a31a833cba342f277e13451505673c54112fce67847337000546d33ccc4",
+      "count": 5,
+      "low": 89288704,
+      "high": 90071040,
+      "range": 782336
+    },
+    {
+      "key": "[\"READ_SEAL\",\"long-bmp\",\"ee0395b39b8b7ba29ab8b493defb6a4d83dbe5f257ba23a86817017e8634387f\"]",
+      "workspace": "READ_SEAL",
+      "caseName": "long-bmp",
+      "inputIdentity": "ee0395b39b8b7ba29ab8b493defb6a4d83dbe5f257ba23a86817017e8634387f",
+      "count": 5,
+      "low": 87203840,
+      "high": 87883776,
+      "range": 679936
+    },
+    {
+      "key": "[\"READ_SEAL\",\"maximum-short-files\",\"12877886a09a9e58ee21ab9266fd24586658c7e0ab4caf313ca6f87818ad6726\"]",
+      "workspace": "READ_SEAL",
+      "caseName": "maximum-short-files",
+      "inputIdentity": "12877886a09a9e58ee21ab9266fd24586658c7e0ab4caf313ca6f87818ad6726",
+      "count": 5,
+      "low": 160997376,
+      "high": 161832960,
+      "range": 835584
+    },
+    {
+      "key": "[\"READ_SEAL\",\"oversized-sql-column\",\"70bc612213767bd9c0a1847f882ec374159c1b3aa85ba9a1a5fd581258bb3e97\"]",
+      "workspace": "READ_SEAL",
+      "caseName": "oversized-sql-column",
+      "inputIdentity": "70bc612213767bd9c0a1847f882ec374159c1b3aa85ba9a1a5fd581258bb3e97",
+      "count": 5,
+      "low": 208052224,
+      "high": 208285696,
+      "range": 233472
+    },
+    {
+      "key": "[\"READ_SEAL\",\"oversized-staged-fact\",\"70bc612213767bd9c0a1847f882ec374159c1b3aa85ba9a1a5fd581258bb3e97\"]",
+      "workspace": "READ_SEAL",
+      "caseName": "oversized-staged-fact",
+      "inputIdentity": "70bc612213767bd9c0a1847f882ec374159c1b3aa85ba9a1a5fd581258bb3e97",
+      "count": 5,
+      "low": 68759552,
+      "high": 69251072,
+      "range": 491520
+    },
+    {
+      "key": "[\"READ_SEAL\",\"repeated-shared-owners\",\"7b066b50c3da15a6d610ecfef36627c2347afb9cf2600e2df76dc68566d172bf\"]",
+      "workspace": "READ_SEAL",
+      "caseName": "repeated-shared-owners",
+      "inputIdentity": "7b066b50c3da15a6d610ecfef36627c2347afb9cf2600e2df76dc68566d172bf",
+      "count": 5,
+      "low": 162131968,
+      "high": 164065280,
+      "range": 1933312
+    },
+    {
+      "key": "[\"READ_SEAL\",\"zero-file\",\"d175b4792e51f4b32554047671fd7c18a3a2d3d5922ebbf79aabd8bb01c773ef\"]",
+      "workspace": "READ_SEAL",
+      "caseName": "zero-file",
+      "inputIdentity": "d175b4792e51f4b32554047671fd7c18a3a2d3d5922ebbf79aabd8bb01c773ef",
+      "count": 5,
+      "low": 63361024,
+      "high": 64348160,
+      "range": 987136
+    }
+  ],
+  "observedPeakBytes": 247963648,
+  "fluctuationAllowanceBytes": 35360768,
+  "priorApprovalFloorBytes": null,
+  "reservationBytes": 283324416
+}

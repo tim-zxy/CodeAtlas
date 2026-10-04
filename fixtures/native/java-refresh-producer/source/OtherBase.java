@@ -1,0 +1,1 @@
+class OtherBase { void go() {} }

@@ -20,6 +20,84 @@ const environment = nativeMetadataEnvironment();
 const supported = nativeMetadataProfiles.some((profile) =>
   Object.entries(environment).every(([key, value]) => profile[key] === value),
 );
+const activeReservation =
+  nativeMetadataProfiles.find((profile) =>
+    Object.entries(environment).every(([key, value]) => profile[key] === value),
+  )?.reservationBytes ?? reviewedReservation;
+
+for (const [prefix, candidateHash, holdoutHash, peak, allowance, reservation] of [
+  [
+    'memory-refresh-c',
+    '9a19027b465309abf6ca1992c8fbdf07bc2a83f8dc9689b4a78994c025fbfdb0',
+    '0c8211ac1d657cecf4e06adf3add5197e55c47c0f1c8ecb82dd0dfff02e3b1fe',
+    249_556_992,
+    37_203_968,
+    286_760_960,
+  ],
+  [
+    'memory-refresh-c-review',
+    '571b7ccc760d3a60a89da7156aaded26a2130daf11f8bd6d65517f14d902a986',
+    'a93b0ff1ada2bd3f134a9079808f6f76b73d4bd99013707a7bbdb260981c9164',
+    247_963_648,
+    35_360_768,
+    283_324_416,
+  ],
+])
+  test(`approved C paired profile ${prefix} reproduces frozen evidence for both original purposes`, async () => {
+    const root = new URL('../../../fixtures/storage/native-analysis-state/', import.meta.url);
+    const raw = await readFile(new URL(`${prefix}-candidate.json`, root));
+    const candidate = JSON.parse(raw);
+    const profile = nativeMetadataProfiles.find(
+      (p) => p.implementationDigest === candidate.environment.implementationDigest,
+    );
+    assert.ok(profile, 'approved paired candidate requires an actual release profile');
+    const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
+    assert.equal(sha(raw), candidateHash);
+    assert.equal(profile.memoryCandidateEvidenceDigest, sha(raw));
+    for (const [key, value] of Object.entries(candidate.environment))
+      assert.equal(profile[key], value);
+    const { loadNativeMemoryCandidate } =
+      await import('../../../scripts/native-memory-profile.mjs');
+    assert.deepEqual(
+      (await loadNativeMemoryCandidate(new URL(`${prefix}-candidate.json`, root))).candidate,
+      candidate,
+    );
+    const m = Math.max(...candidate.groups.map((g) => g.high));
+    const j = Math.max(...candidate.groups.map((g) => g.high - g.low));
+    assert.equal(m, peak);
+    assert.equal(j, allowance);
+    assert.equal(candidate.priorApprovalFloorBytes, null);
+    assert.equal(profile.observedPeakBytes, m);
+    assert.equal(profile.fluctuationAllowanceBytes, j);
+    assert.equal(profile.reservationBytes, m + j);
+    assert.equal(profile.reservationBytes, reservation);
+    assert.equal(profile.memoryPolicyRevision, candidate.policyRevision);
+    const read = await readFile(new URL(`${prefix}-read-seal.json`, root));
+    const transport = await readFile(new URL(`${prefix}-transport.json`, root));
+    assert.equal(profile.evidenceDigest, sha(read));
+    assert.equal(profile.fullTransportEvidenceDigest, sha(transport));
+    assert.equal(profile.corpusDigest, candidate.corpora.READ_SEAL.digest);
+    assert.equal(profile.fullTransportCorpusRevision, candidate.corpora.FULL_TRANSPORT.revision);
+    assert.equal(profile.fullTransportCorpusDigest, candidate.corpora.FULL_TRANSPORT.digest);
+    assert.equal(
+      profile.fullTransportPeakBytes,
+      Math.max(...JSON.parse(transport).observations.map((o) => o.peakResidentBytes)),
+    );
+    assert.equal(JSON.parse(read).observations.length, 65);
+    assert.equal(JSON.parse(transport).observations.length, 70);
+    const holdoutRaw = await readFile(new URL(`${prefix}-holdout.json`, root));
+    assert.equal(sha(holdoutRaw), holdoutHash);
+    const holdout = JSON.parse(holdoutRaw);
+    assert.deepEqual(holdout.environment, candidate.environment);
+    assert.equal(holdout.candidateEvidenceDigest, profile.memoryCandidateEvidenceDigest);
+    assert.deepEqual(holdout.failures, []);
+    assert.equal(holdout.observations.length, 27);
+    assert.ok(
+      holdout.observations.every(
+        (r) => r.observation.peakResidentBytes <= profile.reservationBytes,
+      ),
+    );
+  });
 
 async function isolatedFactory(t, variant) {
   const directory = await mkdtemp(join(tmpdir(), 'codeatlas-metadata-admission-'));
@@ -37,7 +115,7 @@ async function isolatedFactory(t, variant) {
   if (variant === 'uncalibrated')
     await writeFile(
       join(root, 'dist', 'native-metadata-profiles.js'),
-      'export const nativeMetadataProfiles = Object.freeze([]);\n',
+      'export const nativeMetadataProfiles = Object.freeze([]);\nexport const nativeRefreshVerificationProfiles = Object.freeze([]);\n',
     );
   if (variant === 'changed')
     await writeFile(join(root, 'dist', 'calibration-change.js'), 'export const changed = true;\n');
@@ -48,7 +126,9 @@ async function isolatedFactory(t, variant) {
     };
     await writeFile(
       join(root, 'dist', 'native-metadata-profiles.js'),
-      'export const nativeMetadataProfiles = Object.freeze([' + JSON.stringify(profile) + ']);\n',
+      'export const nativeRefreshVerificationProfiles = Object.freeze([]);\nexport const nativeMetadataProfiles = Object.freeze([' +
+        JSON.stringify(profile) +
+        ']);\n',
     );
     return import(pathToFileURL(join(root, 'dist', 'native-metadata-admission.js')).href);
   }
@@ -98,7 +178,7 @@ test('reviewed matching Runtime admits at reservation and still validates strict
     files: [],
     expected: corpusExpected,
     maxSerializedBytes: 1_000_000,
-    memoryBudgetBytes: reviewedReservation,
+    memoryBudgetBytes: activeReservation,
   };
   const port = runtime.createNativeStateValidationPort();
   if (!supported) {
@@ -126,7 +206,7 @@ test('one byte below reviewed reservation refuses before Provider iterator acces
         headerJson: '{',
         expected: {},
         maxSerializedBytes: 1_000_000,
-        memoryBudgetBytes: reviewedReservation - 1,
+        memoryBudgetBytes: activeReservation - 1,
         files: {
           [Symbol.iterator]() {
             calls++;
@@ -171,7 +251,7 @@ test('production full-stage seal applies reviewed reservation after retained SQL
       JSON.stringify(summary.sourceFile),
       JSON.stringify(summary.coverage[0]),
     ].reduce((n, text) => n + Buffer.byteLength(text), 0);
-    const budget = { ...limits, memoryBudgetBytes: reviewedReservation + 2 * strings };
+    const budget = { ...limits, memoryBudgetBytes: activeReservation + 2 * strings };
     const port = runtime.createNativeStateValidationPort();
     assert.throws(
       () =>
@@ -250,9 +330,9 @@ test('reviewed full transport admits only at its matching reservation', () => {
     );
     return;
   }
-  assertNativeMetadataAdmission(reviewedReservation, 'FULL_TRANSPORT');
+  assertNativeMetadataAdmission(activeReservation, 'FULL_TRANSPORT');
   assert.throws(
-    () => assertNativeMetadataAdmission(reviewedReservation - 1, 'FULL_TRANSPORT'),
+    () => assertNativeMetadataAdmission(activeReservation - 1, 'FULL_TRANSPORT'),
     (e) => e.nativeStateReason === 'RESOURCE_LIMIT_EXCEEDED',
   );
 });

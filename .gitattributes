@@ -3,6 +3,7 @@ fixtures/ipc/handshake-v1/**/*.jsonl -text
 fixtures/ipc/protocol-v2/**/*.jsonl -text
 fixtures/ipc/protocol-v3/**/*.jsonl -text
 fixtures/ipc/analysis-v3/**/*.jsonl -text
+fixtures/ipc/refresh-v3/**/*.jsonl -text
 fixtures/native/**/*.java text eol=lf
 fixtures/storage/native-analysis-state/memory-baseline.json -text
 fixtures/storage/native-analysis-state/memory-baseline-task3.json -text
@@ -23,3 +24,27 @@ scripts/bench-native-full-v3-memory.mjs text eol=lf
 packages/providers/test/helpers/native-full-v3-memory-corpus.mjs text eol=lf
 packages/providers/test/helpers/native-full-v3-memory-worker.mjs text eol=lf
 packages/providers/test/fixtures/native-full-v3-memory-child.mjs text eol=lf
+fixtures/ipc/refresh-v3/verification-memory-cases.json text eol=lf
+packages/runtime/test/helpers/native-refresh-verification-corpus.mjs text eol=lf
+packages/runtime/test/helpers/native-refresh-verification-identity.mjs text eol=lf
+packages/runtime/test/helpers/native-refresh-verification-worker.mjs text eol=lf
+packages/providers/test/helpers/native-full-v3-corpus.mjs text eol=lf
+packages/providers/test/helpers/native-refresh-v3-corpus.mjs text eol=lf
+fixtures/storage/native-analysis-state/memory-refresh-c-read-seal.json -text
+fixtures/storage/native-analysis-state/memory-refresh-c-transport.json -text
+fixtures/storage/native-analysis-state/memory-refresh-c-evidence.json -text
+fixtures/storage/native-analysis-state/memory-refresh-c-candidate.json -text
+fixtures/storage/native-analysis-state/memory-refresh-c-holdout.json -text
+fixtures/storage/native-analysis-state/memory-refresh-c-verify-report.json -text
+fixtures/storage/native-analysis-state/memory-refresh-c-verify-evidence.json -text
+fixtures/storage/native-analysis-state/memory-refresh-c-verify-candidate.json -text
+fixtures/storage/native-analysis-state/memory-refresh-c-verify-holdout.json -text
+fixtures/storage/native-analysis-state/memory-refresh-c-review-read-seal.json -text
+fixtures/storage/native-analysis-state/memory-refresh-c-review-transport.json -text
+fixtures/storage/native-analysis-state/memory-refresh-c-review-evidence.json -text
+fixtures/storage/native-analysis-state/memory-refresh-c-review-candidate.json -text
+fixtures/storage/native-analysis-state/memory-refresh-c-review-holdout.json -text
+fixtures/storage/native-analysis-state/memory-refresh-c-review-verify-report.json -text
+fixtures/storage/native-analysis-state/memory-refresh-c-review-verify-evidence.json -text
+fixtures/storage/native-analysis-state/memory-refresh-c-review-verify-candidate.json -text
+fixtures/storage/native-analysis-state/memory-refresh-c-review-verify-holdout.json -text

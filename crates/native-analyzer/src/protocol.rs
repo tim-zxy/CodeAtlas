@@ -79,14 +79,10 @@ fn serve_once_impl<R: Read, W: Write, E: Write>(
                 );
             }
             Ok(request) if request.header()["type"] == "REFRESH" => {
-                return write_event(
+                return crate::analyze::run_refresh_v3(
+                    &request,
+                    worker_count.unwrap_or(NonZeroUsize::new(1).expect("one worker")),
                     output,
-                    request_failed_with_version(
-                        &request_id,
-                        "INVALID_REQUEST",
-                        "Protocol v3 REFRESH is unavailable",
-                        3,
-                    ),
                 );
             }
             Ok(request) => {
@@ -377,7 +373,30 @@ mod tests {
     }
 
     #[test]
-    fn validated_v3_refresh_has_an_explicit_unavailable_terminal() {
+    fn real_empty_refresh_with_admissible_budget_completes() {
+        use sha2::Digest;
+        let raw = include_str!("../../../fixtures/ipc/protocol-v3/valid-empty-refresh.jsonl");
+        let mut header: Value = serde_json::from_str(raw.lines().next().unwrap()).unwrap();
+        header["payload"]["repository"]["rootPath"] = json!(std::env::current_dir().unwrap());
+        header["payload"]["resourceBudget"]["maxMemoryBytes"] = json!(64 * 1024 * 1024);
+        let prefix = format!("{header}\n");
+        let completion = json!({"protocolVersion":3,"requestId":"req","sequence":1,"type":"REQUEST_COMPLETED",
+            "payload":{"summaryRecords":0,"integrityChecksum":format!("{:x}",sha2::Sha256::digest(prefix.as_bytes()))}});
+        let (exit, output, diagnostics) = run(format!("{prefix}{completion}\n").as_bytes());
+        assert_eq!(exit, ExitCode::SUCCESS);
+        assert!(diagnostics.is_empty());
+        let events: Vec<Value> = output
+            .split(|b| *b == b'\n')
+            .filter(|l| !l.is_empty())
+            .map(|l| serde_json::from_slice(l).unwrap())
+            .collect();
+        assert_eq!(events.first().unwrap()["type"], "REFRESH_STARTED");
+        assert_eq!(events.last().unwrap()["type"], "REFRESH_COMPLETED");
+        assert_eq!(events.last().unwrap()["payload"]["summaryRecords"], 0);
+    }
+
+    #[test]
+    fn schema_only_v3_refresh_refuses_insufficient_worker_budget() {
         let input = include_bytes!("../../../fixtures/ipc/protocol-v3/valid-empty-refresh.jsonl");
         let (exit, output, diagnostics) = run(input);
         assert_eq!(exit, ExitCode::SUCCESS);
@@ -387,7 +406,7 @@ mod tests {
         assert_eq!(event["requestId"], "req");
         assert_eq!(event["sequence"], 0);
         assert_eq!(event["type"], "REQUEST_FAILED");
-        assert_eq!(event["payload"]["error"]["code"], "INVALID_REQUEST");
+        assert_eq!(event["payload"]["error"]["code"], "RESOURCE_LIMIT_EXCEEDED");
     }
 
     #[test]
@@ -411,7 +430,7 @@ mod tests {
         let event: Value = serde_json::from_slice(&output).unwrap();
         assert_eq!(event["protocolVersion"], 3);
         assert_eq!(event["type"], "REQUEST_FAILED");
-        assert_eq!(event["payload"]["error"]["code"], "INVALID_REQUEST");
+        assert_eq!(event["payload"]["error"]["code"], "RESOURCE_LIMIT_EXCEEDED");
     }
 
     #[test]

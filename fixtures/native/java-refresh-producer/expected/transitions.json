@@ -1,0 +1,402 @@
+{
+  "schemaVersion": 1,
+  "suite": "../../../../packages/providers/test/native-refresh-v3-binary.test.mjs",
+  "cases": [
+    {
+      "id": "modify-call-target",
+      "baselineRelations": [
+        {
+          "file": "Caller.java",
+          "kind": "java.call",
+          "resolution": "EXACT",
+          "targets": ["Target.go"],
+          "count": 1
+        }
+      ],
+      "baseline": {
+        "Caller.java": "Caller.java",
+        "Target.java": "Target.java",
+        "Other.java": "Other.java"
+      },
+      "target": {
+        "Caller.java": "CallerOther.java",
+        "Target.java": "Target.java",
+        "Other.java": "Other.java"
+      },
+      "changed": ["Caller.java"],
+      "outcome": "SUCCEEDED",
+      "relations": [
+        {
+          "file": "Caller.java",
+          "kind": "java.call",
+          "resolution": "EXACT",
+          "targets": ["Other.go"],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "add-class-method-unknown-to-resolved",
+      "baselineRelations": [
+        {
+          "file": "Caller.java",
+          "kind": "java.call",
+          "resolution": "UNRESOLVED",
+          "targets": [],
+          "hint": "Target.go",
+          "count": 1
+        }
+      ],
+      "baseline": { "Caller.java": "Caller.java" },
+      "target": { "Caller.java": "Caller.java", "Target.java": "Target.java" },
+      "changed": ["Target.java"],
+      "outcome": "SUCCEEDED",
+      "relations": [
+        {
+          "file": "Caller.java",
+          "kind": "java.call",
+          "resolution": "EXACT",
+          "targets": ["Target.go"],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "delete-class-resolved-to-unknown",
+      "baselineRelations": [
+        {
+          "file": "Caller.java",
+          "kind": "java.call",
+          "resolution": "EXACT",
+          "targets": ["Target.go"],
+          "count": 1
+        }
+      ],
+      "baseline": { "Caller.java": "Caller.java", "Target.java": "Target.java" },
+      "target": { "Caller.java": "Caller.java" },
+      "changed": [],
+      "outcome": "SUCCEEDED",
+      "relations": [
+        {
+          "file": "Caller.java",
+          "kind": "java.call",
+          "resolution": "UNRESOLVED",
+          "targets": [],
+          "hint": "Target.go",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "delete-method-resolved-to-unknown",
+      "baselineRelations": [
+        {
+          "file": "Caller.java",
+          "kind": "java.call",
+          "resolution": "EXACT",
+          "targets": ["Target.go"],
+          "count": 1
+        }
+      ],
+      "baseline": { "Caller.java": "Caller.java", "Target.java": "Target.java" },
+      "target": { "Caller.java": "Caller.java", "Target.java": "TargetGone.java" },
+      "changed": ["Target.java"],
+      "outcome": "SUCCEEDED",
+      "relations": [
+        {
+          "file": "Caller.java",
+          "kind": "java.call",
+          "resolution": "UNRESOLVED",
+          "targets": [],
+          "hint": "Target.go",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "add-method-unknown-to-resolved",
+      "baselineRelations": [
+        {
+          "file": "Caller.java",
+          "kind": "java.call",
+          "resolution": "UNRESOLVED",
+          "targets": [],
+          "hint": "Target.go",
+          "count": 1
+        }
+      ],
+      "baseline": { "Caller.java": "Caller.java", "Target.java": "TargetGone.java" },
+      "target": { "Caller.java": "Caller.java", "Target.java": "Target.java" },
+      "changed": ["Target.java"],
+      "outcome": "SUCCEEDED",
+      "relations": [
+        {
+          "file": "Caller.java",
+          "kind": "java.call",
+          "resolution": "EXACT",
+          "targets": ["Target.go"],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "same-arity-overload-resolved-to-ambiguous",
+      "baselineRelations": [
+        {
+          "file": "Caller.java",
+          "kind": "java.call",
+          "resolution": "HEURISTIC",
+          "targets": ["Target.go"],
+          "count": 1
+        }
+      ],
+      "baseline": { "Caller.java": "CallerArg.java", "Target.java": "TargetArg.java" },
+      "target": { "Caller.java": "CallerArg.java", "Target.java": "TargetOverload.java" },
+      "changed": ["Target.java"],
+      "outcome": "SUCCEEDED",
+      "relations": [
+        {
+          "file": "Caller.java",
+          "kind": "java.call",
+          "resolution": "AMBIGUOUS",
+          "targets": ["Target.go", "Target.go"],
+          "hint": "Target.go",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "change-import",
+      "baselineRelations": [
+        {
+          "file": "Caller.java",
+          "kind": "java.import.normal",
+          "resolution": "EXACT",
+          "targets": ["p.Target"],
+          "count": 1
+        },
+        {
+          "file": "Caller.java",
+          "kind": "java.call",
+          "resolution": "EXACT",
+          "targets": ["p.Target.go"],
+          "count": 1
+        }
+      ],
+      "baseline": {
+        "Caller.java": "ImportP.java",
+        "P.java": "TargetP.java",
+        "Q.java": "TargetQ.java"
+      },
+      "target": {
+        "Caller.java": "ImportQ.java",
+        "P.java": "TargetP.java",
+        "Q.java": "TargetQ.java"
+      },
+      "changed": ["Caller.java"],
+      "outcome": "SUCCEEDED",
+      "relations": [
+        {
+          "file": "Caller.java",
+          "kind": "java.import.normal",
+          "resolution": "EXACT",
+          "targets": ["q.Target"],
+          "count": 1
+        },
+        {
+          "file": "Caller.java",
+          "kind": "java.call",
+          "resolution": "EXACT",
+          "targets": ["q.Target.go"],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "change-inheritance",
+      "baselineRelations": [
+        {
+          "file": "Child.java",
+          "kind": "java.inheritance",
+          "resolution": "EXACT",
+          "targets": ["Base"],
+          "count": 1
+        },
+        {
+          "file": "Child.java",
+          "kind": "java.call",
+          "resolution": "HEURISTIC",
+          "targets": ["Base.go"],
+          "count": 1
+        }
+      ],
+      "baseline": {
+        "Child.java": "ChildBase.java",
+        "Base.java": "Base.java",
+        "OtherBase.java": "OtherBase.java"
+      },
+      "target": {
+        "Child.java": "ChildOtherBase.java",
+        "Base.java": "Base.java",
+        "OtherBase.java": "OtherBase.java"
+      },
+      "changed": ["Child.java"],
+      "outcome": "SUCCEEDED",
+      "relations": [
+        {
+          "file": "Child.java",
+          "kind": "java.inheritance",
+          "resolution": "EXACT",
+          "targets": ["OtherBase"],
+          "count": 1
+        },
+        {
+          "file": "Child.java",
+          "kind": "java.call",
+          "resolution": "HEURISTIC",
+          "targets": ["OtherBase.go"],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "shared-first-owner-deletion",
+      "baseline": { "A.java": "SharedA.java", "B.java": "SharedB.java" },
+      "target": { "B.java": "SharedB.java" },
+      "changed": [],
+      "outcome": "SUCCEEDED",
+      "shared": { "name": "p", "count": 1, "operations": 0 },
+      "relations": []
+    },
+    {
+      "id": "shared-nonlast-owner-deletion",
+      "baseline": { "A.java": "SharedA.java", "B.java": "SharedB.java" },
+      "target": { "A.java": "SharedA.java" },
+      "changed": [],
+      "outcome": "SUCCEEDED",
+      "shared": { "name": "p", "count": 1, "operations": 0 },
+      "relations": []
+    },
+    {
+      "id": "shared-last-owner-deletion-zero-target",
+      "baseline": { "A.java": "SharedA.java" },
+      "target": {},
+      "changed": [],
+      "outcome": "SUCCEEDED",
+      "shared": { "name": "p", "count": 0, "operations": 1 },
+      "relations": []
+    },
+    {
+      "id": "duplicate-call-hints",
+      "baseline": { "Caller.java": "CallerTwice.java" },
+      "target": { "Caller.java": "CallerTwice.java", "Target.java": "Target.java" },
+      "changed": ["Target.java"],
+      "outcome": "SUCCEEDED",
+      "relations": [
+        {
+          "file": "Caller.java",
+          "kind": "java.call",
+          "resolution": "EXACT",
+          "targets": ["Target.go"],
+          "count": 2
+        }
+      ]
+    },
+    {
+      "id": "metadata-only-source-change",
+      "baseline": { "Caller.java": "Caller.java" },
+      "target": { "Caller.java": "Caller.java" },
+      "classificationChange": "TEST",
+      "changed": ["Caller.java"],
+      "outcome": "SUCCEEDED",
+      "relations": [
+        {
+          "file": "Caller.java",
+          "kind": "java.call",
+          "resolution": "UNRESOLVED",
+          "targets": [],
+          "hint": "Target.go",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "empty-file-noop",
+      "baseline": { "Empty.java": "Empty.java" },
+      "target": { "Empty.java": "Empty.java" },
+      "changed": [],
+      "outcome": "SUCCEEDED",
+      "relations": []
+    },
+    {
+      "id": "syntax-partial-retained-restart",
+      "baseline": {},
+      "target": { "Syntax.java": "Syntax.java" },
+      "changed": ["Syntax.java"],
+      "outcome": "PARTIAL",
+      "relations": []
+    },
+    {
+      "id": "unsupported-recognized-region-retained-restart",
+      "baseline": {},
+      "target": { "Unsupported.java": "Unsupported.java" },
+      "changed": ["Unsupported.java"],
+      "outcome": "PARTIAL",
+      "unsupported": {
+        "file": "Unsupported.java",
+        "capability": "CALL",
+        "eligibleSites": 1,
+        "unsupportedSites": 1,
+        "coveredSites": 0
+      },
+      "relations": []
+    },
+    {
+      "id": "cross-file-operation-order",
+      "baseline": { "A.java": "OrderABefore.java", "Z.java": "OrderZBefore.java" },
+      "target": { "A.java": "OrderAAfter.java", "Z.java": "OrderZAfter.java" },
+      "changed": ["A.java", "Z.java"],
+      "outcome": "SUCCEEDED",
+      "relations": [
+        {
+          "file": "A.java",
+          "kind": "java.call",
+          "resolution": "EXACT",
+          "targets": ["Z.next"],
+          "count": 1
+        },
+        {
+          "file": "Z.java",
+          "kind": "java.call",
+          "resolution": "EXACT",
+          "targets": ["A.next"],
+          "count": 1
+        }
+      ],
+      "baselineRelations": [
+        {
+          "file": "A.java",
+          "kind": "java.call",
+          "resolution": "EXACT",
+          "targets": ["Z.old"],
+          "count": 1
+        },
+        {
+          "file": "Z.java",
+          "kind": "java.call",
+          "resolution": "EXACT",
+          "targets": ["A.old"],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "zero-files-noop",
+      "baseline": {},
+      "target": {},
+      "changed": [],
+      "outcome": "SUCCEEDED",
+      "relations": []
+    }
+  ]
+}

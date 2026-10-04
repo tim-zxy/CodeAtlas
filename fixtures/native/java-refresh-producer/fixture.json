@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "p05-native-refresh-producer-v1",
+  "category": "code-intelligence",
+  "phase": "0.5",
+  "languages": ["java"],
+  "frameworks": [],
+  "capabilities": ["SYMBOL", "IMPORT", "CALL", "INHERITANCE", "REFERENCE"],
+  "inputs": { "source": "source/" },
+  "expected": { "transitions": "expected/transitions.json" },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

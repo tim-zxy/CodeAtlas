@@ -19,7 +19,8 @@
     "build": "tsc -p tsconfig.json",
     "bench:native-full-v3-memory": "node ../../scripts/bench-native-full-v3-memory.mjs",
     "test:native-full-v3": "node --test --test-concurrency=1 test/native-full-v3-binary.test.mjs",
-    "test": "node --test --test-concurrency=1 test/native-analysis-state.test.mjs test/native-ipc-v3.test.mjs test/native-analysis-output-v3.test.mjs test/native-full-v3-client.test.mjs test/native-full-v3-memory.test.mjs"
+    "test:native-refresh-v3": "node --test --test-concurrency=1 test/native-refresh-v3-binary.test.mjs",
+    "test": "node --test --test-concurrency=1 test/native-analysis-state.test.mjs test/native-ipc-v3.test.mjs test/native-analysis-output-v3.test.mjs test/native-refresh-output-v3.test.mjs test/native-full-v3-client.test.mjs test/native-full-v3-memory.test.mjs"
   },
   "dependencies": {
     "@codeatlas/ir": "workspace:*",

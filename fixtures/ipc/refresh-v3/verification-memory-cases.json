@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "workspace": "REFRESH_VERIFY",
+  "corpusRevision": "p05-native-refresh-verification-memory-v1",
+  "suite": "../../../packages/runtime/test/native-refresh-verification-memory.test.mjs",
+  "worker": "../../../packages/runtime/test/helpers/native-refresh-verification-worker.mjs",
+  "spec": "../../../docs/superpowers/specs/2026-10-03-p05-w3-020-c1-memory-preflight-proposal.md",
+  "acceptance": "../../../docs/handoff/PHASE_ACCEPTANCE.md",
+  "classes": [
+    "zero-target",
+    "maximum-short-files",
+    "dense-retained-sites",
+    "maximum-target-summary",
+    "large-patch-ledger",
+    "long-ascii",
+    "long-bmp",
+    "long-astral",
+    "repeated-shared-owners",
+    "forged-owner",
+    "deep-unknown-input",
+    "oversized-input",
+    "oversized-output",
+    "slow-sink",
+    "burst-output-buffer"
+  ]
+}

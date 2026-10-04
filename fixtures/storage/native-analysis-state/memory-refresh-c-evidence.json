@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "policyRevision": "p05-native-memory-high-water-range-v1",
+  "environment": {
+    "node": "v24.15.0",
+    "v8": "13.6.233.17-node.48",
+    "platform": "win32",
+    "arch": "x64",
+    "zodVersion": "4.6.1",
+    "implementationDigest": "f51a239ca3f95c8d44a4dd858e569f614bd5767c491916789d8fc9731dac74f5",
+    "corpusRevision": "p05-native-metadata-memory-v1"
+  },
+  "corpora": {
+    "READ_SEAL": {
+      "revision": "p05-native-metadata-memory-v1",
+      "digest": "0c599e6626202fe4a0b5d5866e2d89d01a4674e40b0efe0d0b20acf5b4085b29"
+    },
+    "FULL_TRANSPORT": {
+      "revision": "p05-native-full-v3-memory-v1",
+      "digest": "11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef"
+    }
+  },
+  "requiredCases": {
+    "READ_SEAL": [
+      "zero-file",
+      "empty-file",
+      "maximum-short-files",
+      "dense-numeric-sites",
+      "long-ascii",
+      "long-bmp",
+      "long-astral",
+      "repeated-shared-owners",
+      "duplicate-metadata",
+      "foreign-metadata",
+      "deep-unknown-input",
+      "oversized-sql-column",
+      "oversized-staged-fact"
+    ],
+    "FULL_TRANSPORT": [
+      "zero-file",
+      "empty-file",
+      "maximum-short-files",
+      "dense-numeric-sites",
+      "long-ascii",
+      "long-bmp",
+      "long-astral",
+      "repeated-shared-owners",
+      "duplicate-metadata",
+      "foreign-metadata",
+      "deep-unknown-input",
+      "oversized-staged-fact",
+      "large-request",
+      "slow-sink"
+    ]
+  },
+  "reports": [
+    {
+      "path": "memory-refresh-c-read-seal.json",
+      "sha256": "12516a229fea27f2488c2b3dc07cf291ab553af095ef0fd40b9860cbf03dc9d3",
+      "workspace": "READ_SEAL",
+      "purpose": "calibration",
+      "command": "node scripts/bench-native-metadata-memory.mjs",
+      "collectionConditions": "Sequential fresh processes after full16-project build on frozen Node identity; unchanged original tools/corpora, no explicit GC or concurrent heavy tests; local Windows."
+    },
+    {
+      "path": "memory-refresh-c-transport.json",
+      "sha256": "37e9493b205c996eab6b0c0d3fbdb0f58d9df482115ab2f9b2288fc18051a98e",
+      "workspace": "FULL_TRANSPORT",
+      "purpose": "calibration",
+      "command": "node scripts/bench-native-full-v3-memory.mjs",
+      "collectionConditions": "Sequential fresh processes after full16-project build on frozen Node identity; unchanged original tools/corpora, no explicit GC or concurrent heavy tests; local Windows."
+    }
+  ],
+  "priorApprovals": []
+}

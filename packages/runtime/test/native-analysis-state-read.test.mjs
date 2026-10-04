@@ -325,15 +325,19 @@ test('production read charges retained SQL strings before applying reviewed rese
       'repo',
       'WORKTREE',
     ].reduce((n, text) => n + Buffer.byteLength(text), 0);
-    const budget = { ...limits, memoryBudgetBytes: 280_453_120 + 2 * retained };
     const before = unchanged(db);
     const port = createNativeStateValidationPort();
     const { nativeMetadataEnvironment } = await import('../dist/native-metadata-admission.js');
     const { nativeMetadataProfiles } = await import('../dist/native-metadata-profiles.js');
     const environment = nativeMetadataEnvironment();
-    const supported = nativeMetadataProfiles.some((profile) =>
+    const profile = nativeMetadataProfiles.find((profile) =>
       Object.entries(environment).every(([key, value]) => profile[key] === value),
     );
+    const supported = Boolean(profile);
+    const budget = {
+      ...limits,
+      memoryBudgetBytes: (profile?.reservationBytes ?? 280_453_120) + 2 * retained,
+    };
     assert.deepEqual(
       read(db, expected, { ...budget, memoryBudgetBytes: budget.memoryBudgetBytes - 1 }, port),
       { status: 'UNAVAILABLE', reason: 'RESOURCE_LIMIT_EXCEEDED' },
