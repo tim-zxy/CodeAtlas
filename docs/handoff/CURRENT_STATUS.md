@@ -1,5 +1,20 @@
 # Current Status
 
+2026-10-19 workflow permission repaired; scoped source push and approved synthetic
+Release publication succeeded. Remote feature branch now containsf98de70 and
+delivery67e2acb; main remains unchanged. Same-repository fixture Release416886384
+has asset655180938, task8-adr019-approved-fixture.zip,240449945bytes, GitHub
+SHA2563afbea232bb7a78e98510d65b888270ba487f75101a2c1122ad6c2f6f1845c4e.
+Tag is p05-d5-fixture-91a9e2477f490b93ce76f5d5bb6b5becdc41b976282e511ad73db30ca128aa25,
+anchored to source67e2acb042746a42facda9d8ad2a6213cb2a6b44; this is a synthetic
+test prerelease, not a product release or Phase exit. The new static record is
+fixtures/ipc/refresh-v3/approved-transport.json, with5423 original inventory
+entries and real IDs. Strict record/env/source/descriptor comparison passes;
+focused approval/download contracts23/23 pass. Product/candidate/archive bytes
+are unchanged. Required clean-host actual22/hosted CI, PR and merge audit remain
+pending; do not promote Phase0.5 or start Phase1 coding. Earlier token failures
+and no-publication notices below are retained historical checkpoints.
+
 2026-10-19 login repaired; integration now blocked by token WORKFLOW permission,
 not missing approval or invalid credentials. Authenticated repo read succeeds
 as tim-zxy. Authorized push of local delivery67e2acb to the scoped feature branch

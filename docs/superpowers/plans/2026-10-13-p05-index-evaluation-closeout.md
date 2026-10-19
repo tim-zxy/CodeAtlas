@@ -241,6 +241,14 @@ assets, calibration/holdout bytes and pristine ZIP are not modified.
 
 ### 8.A Installed profile, actual local acceptance, publication and hosted CI
 
+2026-10-19 authorized publication receipt: source push succeeds after credential
+repair; same-repository Release416886384/asset655180938 contains the original ZIP,
+GitHub-reported SHA3afbea232bb7a78e98510d65b888270ba487f75101a2c1122ad6c2f6f1845c4e.
+Static approved-transport.json now uses real IDs and5423 original entries;
+strict record/env/independent-source/descriptor checks and focused23/23 pass.
+The archive/record bullet below is complete; hosted actual22, integration and
+original Phase audit remain open. No further routine authorization is required.
+
 2026-10-19 local verification receipt: user's “批准” accepts376422400 for
 candidate91a9e2477f490b93ce76f5d5bb6b5becdc41b976282e511ad73db30ca128aa25.
 Profile RED->GREEN28/28; pristine ZIP+local descriptor complete; original local
@@ -260,7 +268,7 @@ evidence; otherwise no Phase exit. Same existing Task8, not another task series.
       static transport entry, rebuild and verify equal/one-byte-low/provenance/
       unchanged catalog. Preserve historical entries/evidence scopes; no old
       candidate is silently reused for the new corpus.
-- [ ] Create/verify immutable synthetic ZIP and approval record with exact hashes,
+- [x] Create/verify immutable synthetic ZIP and approval record with exact hashes,
       complete evidence closure and real source/build provenance. Archive hash is
       outside the archive; no self-referential candidate identity. Freeze pristine
       measured/approved evidence BEFORE local actual output adds trial directories.

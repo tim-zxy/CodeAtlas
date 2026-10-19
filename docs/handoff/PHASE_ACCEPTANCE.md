@@ -1,5 +1,11 @@
 # Phase Acceptance
 
+2026-10-19 ADR-019 exact pack is published under the authorized same-repository
+Release416886384/asset655180938; approved-transport.json pins real IDs and the
+unchanged original5423-entry inventory. This closes publication/record evidence
+only. Required clean-host actual22, hosted exact-SHA checks and final original
+exit audit still precede Phase0.5 acceptance; no exit checkbox is changed here.
+
 2026-10-19 local actual22 passes:22 ACTUAL_ADMITTED/0failures and complete
 original strict outcome/peak/state/closure validation, maximum338006016 below
 approved376422400. Archive/candidate/holdout remain byte-exact. Complete local

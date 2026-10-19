@@ -1,5 +1,14 @@
 # Design Traceability
 
+2026-10-19 authorized publication maps ADR-019 to the real same-repository
+Release416886384/asset655180938 and static
+fixtures/ipc/refresh-v3/approved-transport.json. Source tag points to67e2acb;
+full5423-entry inventory/hash/candidate/raw/holdout/Native/source/environment
+closure matches the original local descriptor. Strict record/source checks and
+focused approval/download23/23 pass without changing the measured implementation.
+Missing links now are required clean-host actual22, hosted exact source/approval
+SHA, PR/merge and original Phase audit, not publication authority or fake IDs.
+
 2026-10-19 remote preflight after login repair: successful authenticated repo
 read maps to the repaired account; local delivery67e2acb maps to193 audited files.
 Push is explicitly rejected for missing workflow-write permission on ci.yml.
