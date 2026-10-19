@@ -27150,10 +27150,7 @@
   "layoutRevision": "p05-d5-exact-layout-v2",
   "native": {
     "build": {
-      "args": [
-        "build",
-        "--workspace"
-      ],
+      "args": ["build", "--workspace"],
       "command": "cargo"
     },
     "path": "native/codeatlas-native-analyzer.exe",

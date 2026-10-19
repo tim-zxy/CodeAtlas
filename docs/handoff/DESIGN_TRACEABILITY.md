@@ -1,5 +1,11 @@
 # Design Traceability
 
+2026-10-20 generated-record formatting defect -> original job118321049183 log/
+local formatter RED -> metadata-only Prettier correction -> full format GREEN,
+strict whole-data equality and unchanged v1/product/2329 catalog + operational
+verify PASS. Record SHA115d900c...75df3 changes, original candidate/ZIP/evidence
+identities do not. Fresh final-head CI/clean-host actual22 still required.
+
 2026-10-20 R2 approved candidate -> sourceba99fe1 -> real Release417778800/
 asset657493684 -> v2 approved-transport.json -> operational verify PASS and24/24
 approval/download contracts. ZIP SHA76f8dbc4...4d3a1/full5423 inventory match.

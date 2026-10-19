@@ -1,5 +1,16 @@
 # Current Status
 
+2026-10-20 final-record CI at0e500715a4f810512e92e9bc3efff96c00a4a61b detects only
+generated approved-transport.json formatting in TypeScript Check formatting;
+original job118321049183 log retained at task8-r2-pr-format-raw.log. Local formatter
+reproduces RED; format only that new record, then full repository format check
+passes. Strict parsed-record equality, unchanged original v1 backup SHA/product/
+full2329 dependencies and operational verify all pass; no helper/profile/Native/
+corpus/archive value changes or remeasurement. Final formatted record SHA256
+115d900c85179e4e3f87f3b1a86fe0db10a414c8369cda7803506c8f45175df3.
+Submit this metadata-only correction and require fresh accurate-head CI; prior
+format failure/canceled/superseded runs are not success or Phase acceptance.
+
 2026-10-20 authorized R2 publication succeeds: Release417778800/asset657493684,
 tagp05-d5-fixture-f9e08bade29fd6e28212751b279e86f49df959389db50af58f04958c41ed0844,
 sourceba99fe1e1ee3bd9d04d6588cc48a3e0162ad5907. GitHub asset stateuploaded,
