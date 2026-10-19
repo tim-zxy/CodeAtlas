@@ -1,5 +1,18 @@
 # Current Status
 
+2026-10-20 authorized R2 publication succeeds: Release417778800/asset657493684,
+tagp05-d5-fixture-f9e08bade29fd6e28212751b279e86f49df959389db50af58f04958c41ed0844,
+sourceba99fe1e1ee3bd9d04d6588cc48a3e0162ad5907. GitHub asset stateuploaded,
+size240450688 and SHA25676f8dbc4befbe6b5c6c1bc1ed4c6928b5e44d2ce18e24b004b80eb293c84d3a1
+match pristine local ZIP. New v2 approved-transport.json uses actual IDs and5423
+entries; strict source/archive verification through the operational verify entry
+passes, focused approval/download24/24 pass. Original v1 record is preserved
+byte-for-byte at approved-transport-layout-v1.json, SHA256
+d2a3aff3a8346c7bdbce0b2ac8978002239908ef9447a0d68a2df0ef6cf76837;
+old Release416886384/asset655180938 is unchanged. No replacement or fake IDs.
+Final v2 record submission/current-head required CI and clean-host actual22 remain
+pending; transitional ba99fe1 source/tag CI cannot count as final acceptance.
+
 2026-10-20 R2 complete local batch settles LOCAL_GATES_PASS_PENDING_HOSTED:
 17/17 commands exit0; final registered Native REFRESH703/703,0fail/skip,
 4648233.4793ms. Current root1582pass/1existing Windows skip, Native114, Rust133,

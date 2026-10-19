@@ -1,5 +1,12 @@
 # Design Traceability
 
+2026-10-20 R2 approved candidate -> sourceba99fe1 -> real Release417778800/
+asset657493684 -> v2 approved-transport.json -> operational verify PASS and24/24
+approval/download contracts. ZIP SHA76f8dbc4...4d3a1/full5423 inventory match.
+Original record retained at approved-transport-layout-v1.json with exact SHA
+d2a3aff3a8346c7bdbce0b2ac8978002239908ef9447a0d68a2df0ef6cf76837.
+Final accurate-head required CI/clean-host actual22 and merge/Phase audit remain.
+
 2026-10-20 R2 local proof closure -> task8-r2-final-gates-summary.json17/17 exit0,
 registered703/703 -> task8-r2-integration-preflight.json confirms all17 reports/
 actual22/actual31/five gates and immutable hashes/full2329 dependency membership.

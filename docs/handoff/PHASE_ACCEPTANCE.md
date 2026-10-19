@@ -1,5 +1,11 @@
 # Phase Acceptance
 
+2026-10-20 R2 real Release417778800/asset657493684 and v2 static approval record
+are verified against pristine ZIP/source/environment; focused contracts24/24.
+Original v1 record/Release/asset remain byte-identical. This completes publication
+evidence, not clean-host installation/actual22, final-head hosted CI, merge or
+original Phase audit. No original exit is checked by asset availability alone.
+
 2026-10-20 complete R2 local17/17 gates pass including final registered703/703;
 fresh post-suite identity/report audit passes. Original actual22/local31 and
 quantitative gates remain locally satisfied; required clean-host exact-ID actual22,
