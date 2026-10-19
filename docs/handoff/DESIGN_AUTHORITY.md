@@ -1,5 +1,25 @@
 # Design Authority
 
+2026-10-19 exact R2 numerical approval: user's “批准，顺序执行，不要再逐项询问确认”
+accepts REFRESH_TRANSPORT411660288bytes (M364818432/J46841856), solely for candidate
+f9e08bade29fd6e28212751b279e86f49df959389db50af58f04958c41ed0844 and corpus
+b36cb7a45338f641874b4868c4bf6c5b9693de467ce861a0fbb3cccdfd8bee3f, with independently
+verified original22/110/22. Install matching static entry and execute existing
+remaining batches continuously under prior scoped integration authority. Preserve
+old profiles, Release416886384/asset655180938, roots and raw capture bytes/status.
+No default/other-purpose value, SQL charge, quality gate or Phase boundary change.
+Approval is not actual22/hosted/merge/Phase evidence. Pending-value notes below
+are historical and superseded for this exact candidate only.
+
+2026-10-19 pending exact R2 numerical decision: independently verified original
+22/110/22 yields proposed REFRESH_TRANSPORT411660288bytes (M364818432/J46841856),
+candidate f9e08bade29fd6e28212751b279e86f49df959389db50af58f04958c41ed0844,
+corpus b36cb7a45338f641874b4868c4bf6c5b9693de467ce861a0fbb3cccdfd8bee3f.
+This is a PROPOSAL, not approval or installation; generic continue/batch authority
+does not approve this unseen value. Keep historical profiles/old asset untouched.
+CURRENT_STATUS and task8-r2-numeric-audit.json pin original evidence. No default,
+other-purpose reservation, numerical gate, SQL policy or Phase boundary change.
+
 2026-10-19 governed PR20 amendment ACCEPTED by subsequent user “确认”: the
 [cache/layout contract](../superpowers/specs/2026-10-19-p05-ci-build-cache-compatibility-proposal.md)
 authorizes only workspace dist/.tsbuildinfo exclusion under new generator v3 and

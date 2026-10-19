@@ -1,5 +1,113 @@
 # Current Status
 
+2026-10-20 R2 complete local batch settles LOCAL_GATES_PASS_PENDING_HOSTED:
+17/17 commands exit0; final registered Native REFRESH703/703,0fail/skip,
+4648233.4793ms. Current root1582pass/1existing Windows skip, Native114, Rust133,
+memory27, actual22 and actual31 all pass. Fresh post-suite integration audit
+task8-r2-integration-preflight.json confirms original actual22/31 reports, all
+ZIP/candidate/raw/holdout/Native hashes and unchanged full2329 dependencies/product.
+No repeated calibration or historical-proof substitution. Next scoped source
+submission/new nonoverwriting Release/real-ID v2 record/current PR CI. Transitional
+source/tag runs are not acceptance; only final exact record/head required CI and
+clean-host actual22 can authorize normal merge. No bypass or Phase promotion.
+
+2026-10-19T13:51Z R2 sequential local batch16 completed gates exit0; last registered
+Native REFRESH gate is RUNNING (driver10152/child30712). Current full root1582pass/
+0fail/1existing Windows skip,680881.1952ms; real Native114/114,77500.5711ms;
+memory collector27/27; Rust133/133, fmt/build/Clippy and architecture/boundary/format
+pass. Actual Evaluation31/31, missingRuns[]/failures[], overallPASS; all five
+original gates PASS with values1/1/1/1/0. Report SHA256
+e2fefab02ccc63e9cb702d465c3510454f5f98c511a564d4d297d3695e96c985,
+task8-r2-actual-evaluation/report/report.json. Keep evidence-layer distinctions;
+not every case claims live extraction. Local batch is not yet complete, nor
+clean-host/hosted/merge/Phase acceptance. No duplicate long test or push.
+
+2026-10-19T13:36Z R2 original guarded local actual22 completes PASS:22 rows all
+ACTUAL_ADMITTED scope,0failures,peak364314624<=approved411660288. Original report/
+export/state/precise-negative/transaction/TEMP validators and immutable ZIP/
+candidate/holdout post-checks pass; task8-r2-local-actual-summary.json and
+task8-r2-final-actual22.log retain fresh evidence (1295721ms). This is local only,
+not clean-host/hosted acceptance. Full16-project build and IR types exit0; same
+unique driver10152 is now running ordinary root child25216, summaryRUNNING.
+No duplicate gates, new publication, push, merge or Phase promotion.
+
+2026-10-19 R2 pristine pack completes with5423 entries/849961670 unpacked bytes,
+240450688 ZIP bytes,SHA25676f8dbc4befbe6b5c6c1bc1ed4c6928b5e44d2ce18e24b004b80eb293c84d3a1.
+Candidatef9e08bad...0844 and holdoutde167267...c334 match the verified originals.
+No Release publication yet. Canonical pack call exits0; descriptor/ZIP retained
+under task8-r2-approved-fixture.zip(.manifest.json) in the same closeout workspace.
+Original guarded actual22 and final ordinary/actual31/registered gates now execute
+in one sequential driver task8-r2-final-gates.mjs, session46372,parentPID10152,
+initial actual22 child5072. Current summary task8-r2-final-gates-summary.json is
+RUNNING, not success. No duplicate/concurrent long measurement, no profile drift.
+Authorized15-minute heartbeat is updated/ACTIVE for this exact remaining sequence;
+it preserves old Release/root/record and pauses only for new material decisions.
+No hosted check, merge, Phase promotion or completed parent is asserted.
+
+2026-10-19 R2 exact static profile installation verified: missing-current-entry
+RED1/1 -> admission/verification28/28 GREEN,74417.2555ms, Runtime build0.
+Latest reservation411660288 and exact candidate/corpus/raw/M/J provenance match
+the user's specific approval; historical entries remain. Independent product/
+full2329 frozen dependency recheck PASS. Pristine pack creation is running through
+canonical Windows arguments (session79901/PID26716); initial slash-form invocation
+correctly refused before output and its original diagnostic is retained.
+No helper/fixture/candidate/Native/default change and no new measurement. Local
+actual22 starts only after pristine ZIP/descriptor verification, then the existing
+sequential current gates/actual31/publication/required CI/normal merge/audit.
+
+2026-10-19 user explicitly approves exact R2 reservation411660288bytes and
+continuous remaining batches without routine reconfirmation. Candidatef9e08bad...0844,
+corpusb36cb7a4...ee3f and full original evidence digests below stay unchanged.
+Next: static-profile missing-entry RED -> install/build/equality/one-byte-low/
+provenance/catalog checks -> pristine pack -> original local actual22 -> current
+final gates/actual31 -> authorized real-ID publication/required CI/normal merge/
+original Phase audit. No new measurement, scope, default or old-asset replacement.
+This acceptance supersedes the numeric hold below, not remaining actual/CI gates.
+
+2026-10-19 R2 preparation and independent post-holdout audit complete. Original
+qualification22/22,110 calibration across22 classes/repetitions0..4 and independent
+holdout22/22 have0failures. Sequence NUMERIC_REVIEW_REQUIRED; parent/prepare exited.
+Read-only task8-r2-numeric-audit.mjs independently reconstructs exact candidate,
+validates full corpus/observations/cancellation provenance, copied holdout equality,
+all original hashes, unchanged frozen environment/catalog and SQL feasibility;
+exit0, VERIFIED_NUMERIC_REVIEW_REQUIRED receipt task8-r2-numeric-audit.json.
+Candidate f9e08bade29fd6e28212751b279e86f49df959389db50af58f04958c41ed0844;
+corpus b36cb7a45338f641874b4868c4bf6c5b9693de467ce861a0fbb3cccdfd8bee3f;
+raw ad2f319f01ad8f0ce8c1cab9ecef4b44789d9fdcee6cf17fdbdca6108ce4f960;
+holdout de16726765af7257b0110d89425f3d8ccc5915177da78731a1d648e2d8c0c334.
+Proposed REFRESH_TRANSPORT reservation411660288bytes = M364818432 + J46841856,
+all110 samples retained; independent holdout peak334299136. Maximum full SQL
+charge6567184, total418227472 <= unchanged D caller1_000_000_000. This diagnostic
+is not approval. Product0ea17dfc...2711d and Native9c59e427...fd2f unchanged.
+Exact new value is NOT APPROVED/INSTALLED; historical profile/Release/root intact.
+Heartbeat phase0-5-pr20-ci PAUSED at the authorized numerical decision boundary,
+on-disk verified. Await specific411660288 approval, then original static profile,
+pack/local actual22/final gates/actual31/new real-ID pack/clean-host CI/normal
+merge/Phase audit. No new publication, push, merge or Phase completion follows.
+Earlier preparing/running/no-candidate statements below are historical checkpoints.
+
+2026-10-19T08:42Z heartbeat checkpoint: post-review ordinary root/IR completes
+exit0/types0,1582pass/0fail/1existing Windows skip,884400.0089ms (driver885522ms),
+task8-cache-reviewed-root.log and -result.json. Frozen-head/environment/catalog
+preflight passed in the existing sequential driver; state now PREPARING_22_110_22.
+Host PIDs8000/31736 are alive; new R2 evidence/corpus exists. This is preparation
+in progress, not completed qualification/calibration/holdout or a numeric proposal.
+No duplicate process, concurrent long gate, profile install, push or Phase exit.
+Frozen source stays78edac6; docs-only receipt changes are outside its catalog.
+Earlier WAITING_FINAL_ROOT statements below are historical checkpoints.
+
+2026-10-19 tooling frozen in local checkpoint78edac6491ef4572ee1acfdca2d8c911bcbfba35
+(not pushed). Final scoped71/71 and catalog32/32 plus independent2329-byte/hash
+equality pass. Post-review ordinary root is still running, not claimed passing.
+Same-plan sequence PID8000/session2559 waits for its exact exit0 receipt, rechecks
+HEAD/environment/full dependency inventory, then exclusively prepares new R2
+22/110/22 evidence and stops at NUMERIC_REVIEW_REQUIRED. State is recorded in
+task8-r2-sequence-state.json; source pins in task8-r2-frozen-inputs.json. No R2
+root acquired while waiting; no concurrent measurement or new value installed.
+Authorized15-minute heartbeat phase0-5-pr20-ci is updated and ACTIVE for this
+exact sequence. It must not duplicate the process or retry old known-red CI.
+No remote/Phase completion; original gates and numerical decision remain open.
+
 2026-10-19 user confirms the narrow PR20 cache/layout amendment. Same closeout
 Tasks7/8 continue Native/inline: versioned generator v3 excludes only exact regular
 workspace dist/.tsbuildinfo; new exclusive v2 root C:\CodeAtlas-P05-D5-R2. Old root,

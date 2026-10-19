@@ -30,7 +30,7 @@ const activeReservation =
     Object.entries(environment).every(([key, value]) => profile[key] === value),
   )?.reservationBytes ?? reviewedReservation;
 
-test('approved exact-layout D reservation admits at equality and refuses one byte below', () => {
+test('approved R2 exact-layout D reservation admits at equality and refuses one byte below', () => {
   const expectedEnvironment = {
     node: 'v24.15.0',
     v8: '13.6.233.17-node.48',
@@ -42,38 +42,49 @@ test('approved exact-layout D reservation admits at equality and refuses one byt
   };
   if (!Object.entries(expectedEnvironment).every(([key, value]) => environment[key] === value)) {
     assert.throws(
-      () => assertNativeRefreshTransportAdmission(376_422_400),
+      () => assertNativeRefreshTransportAdmission(411_660_288),
       (error) => error.nativeStateReason === 'RESOURCE_LIMIT_EXCEEDED',
     );
     return;
   }
-  assert.equal(assertNativeRefreshTransportAdmission(376_422_400), 376_422_400);
-  assert.equal(assertNativeRefreshTransportAdmission(1_000_000_000), 376_422_400);
+  assert.equal(assertNativeRefreshTransportAdmission(411_660_288), 411_660_288);
+  assert.equal(assertNativeRefreshTransportAdmission(1_000_000_000), 411_660_288);
   assert.throws(
-    () => assertNativeRefreshTransportAdmission(376_422_399),
+    () => assertNativeRefreshTransportAdmission(411_660_287),
     (error) => error.nativeStateReason === 'RESOURCE_LIMIT_EXCEEDED',
   );
   assert.deepEqual(
     nativeRefreshTransportProfiles.find(
       (profile) =>
         profile.memoryCandidateEvidenceDigest ===
-        '91a9e2477f490b93ce76f5d5bb6b5becdc41b976282e511ad73db30ca128aa25',
+        'f9e08bade29fd6e28212751b279e86f49df959389db50af58f04958c41ed0844',
     ),
     {
       ...expectedEnvironment,
       workspace: 'REFRESH_TRANSPORT',
       transportCorpusRevision: 'p05-native-refresh-transport-memory-v1',
-      transportCorpusDigest: '1aa37f7ac114baa2e0262af19205d9b05c2fdb63ed8794432da9b38fa6dedcb2',
-      reservationBytes: 376_422_400,
-      evidenceDigest: '7c4d9b65d95453c6cc455a8d3770315de7f586c1f2cc6f23659f0153714262ec',
+      transportCorpusDigest: 'b36cb7a45338f641874b4868c4bf6c5b9693de467ce861a0fbb3cccdfd8bee3f',
+      reservationBytes: 411_660_288,
+      evidenceDigest: 'ad2f319f01ad8f0ce8c1cab9ecef4b44789d9fdcee6cf17fdbdca6108ce4f960',
       memoryPolicyRevision: 'p05-native-memory-high-water-range-v1',
       memoryCandidateEvidenceDigest:
-        '91a9e2477f490b93ce76f5d5bb6b5becdc41b976282e511ad73db30ca128aa25',
-      observedPeakBytes: 364_318_720,
-      fluctuationAllowanceBytes: 12_103_680,
+        'f9e08bade29fd6e28212751b279e86f49df959389db50af58f04958c41ed0844',
+      observedPeakBytes: 364_818_432,
+      fluctuationAllowanceBytes: 46_841_856,
       peakMethod: 'resourceUsage.maxRSS',
       peakUnits: 'bytes',
     },
+  );
+  assert.ok(
+    nativeRefreshTransportProfiles.some(
+      (profile) =>
+        profile.memoryCandidateEvidenceDigest ===
+          '91a9e2477f490b93ce76f5d5bb6b5becdc41b976282e511ad73db30ca128aa25' &&
+        profile.transportCorpusDigest ===
+          '1aa37f7ac114baa2e0262af19205d9b05c2fdb63ed8794432da9b38fa6dedcb2' &&
+        profile.reservationBytes === 376_422_400,
+    ),
+    'Historical v1 exact-layout approval remains bound to its original corpus',
   );
   assert.ok(
     nativeRefreshTransportProfiles.some(

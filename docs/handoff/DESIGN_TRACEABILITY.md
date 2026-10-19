@@ -1,5 +1,31 @@
 # Design Traceability
 
+2026-10-20 R2 local proof closure -> task8-r2-final-gates-summary.json17/17 exit0,
+registered703/703 -> task8-r2-integration-preflight.json confirms all17 reports/
+actual22/actual31/five gates and immutable hashes/full2329 dependency membership.
+Publication's real IDs/final record/head/clean-host actual22/required hosted jobs,
+normal merge and original Phase audit remain separate pending links.
+
+2026-10-19 R2 exact approved profile -> original guarded local collector ->
+task8-r2-local-actual-summary.json PASS22/0failures/peak364314624 and full original
+attempt exports/strict report/immutable post-checks. Build/types exit0. Current
+root/remaining registered gates/actual31/clean-host actual22/required CI and
+integration/Phase audit remain unfilled links; no offline or local substitution.
+
+2026-10-19 exact R2 approval -> current static transport entry -> genuine
+missing-entry RED -> admission/verification28/28 GREEN -> unchanged product and
+2329 catalog receipt task8-r2-profile-catalog-check.json. The original numeric
+decision link is resolved for candidatef9e08bad...0844 only. Pack/actual22/local+
+clean-host/current final gates/actual31/CI/merge/Phase links remain pending.
+
+2026-10-19 accepted cache/layout contract -> SAME Tasks7/8 R2 original22/110/22
+-> qualification.json/raw.json/independent holdout -> post-holdout read-only
+task8-r2-numeric-audit.json VERIFIED_NUMERIC_REVIEW_REQUIRED, exit0. Exact new
+candidate/raw/holdout/corpus digests and proposed411660288/M/J/SQL charge are in
+CURRENT_STATUS. Remaining links: specific numeric approval, static installation,
+original guarded actual22/local+clean-host, current final gates/actual31/required
+CI and integration/Phase audit. Offline evidence cannot fill those pending links.
+
 2026-10-19 accepted PR20 cache/layout contract -> SAME closeout Tasks7/8 ->
 replay discovery/reader/revalidator and catalog tests; layout/pack/runner tests
 cover distinct v1/v2 roots, strict revision pairing and preserved ownership.

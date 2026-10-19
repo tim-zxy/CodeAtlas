@@ -1,5 +1,30 @@
 # Phase Acceptance
 
+2026-10-20 complete R2 local17/17 gates pass including final registered703/703;
+fresh post-suite identity/report audit passes. Original actual22/local31 and
+quantitative gates remain locally satisfied; required clean-host exact-ID actual22,
+final exact-head hosted CI, normal integration and original Phase audit remain
+open. A transitional source/tag run or old Release success cannot fill them.
+
+2026-10-19 R2 guarded local actual22 passes all original validators:22 actual-scope
+rows,0failures,peak364314624<=411660288, complete original attempts exported and
+immutable ZIP/candidate/holdout preserved. This closes local transport acceptance
+only; current full batch/actual31/required clean-host actual22/hosted CI/integration/
+original Phase audit remain mandatory. No original exit checkbox is changed.
+
+2026-10-19 user's explicit R2 numerical approval accepts411660288; matching
+static entry/build and admission/verification28/28 pass with unchanged product/
+2329 dependencies. No phase checkbox changes: pack, local/clean-host actual22,
+current final gates, actual31, required CI and original audit remain open.
+Earlier proposed/unapproved notes below are historical for this candidate.
+
+2026-10-19 R2 pre-admission evidence:22 qualification/110 calibration/22 independent
+holdouts pass with0failures; independent post-holdout exact candidate reconstruction,
+raw/group/M/J/fullSQL/frozen-identity checks pass. Proposed411660288 remains
+unapproved and uninstalled. None of these offline results is guarded actual22,
+clean-host CI, original full Phase audit or any new checked exit. Preserve old
+and current raw failures/evidence; CURRENT_STATUS pins full digests and receipts.
+
 2026-10-19 accepted PR20 amendment changes private discovery/layout, not exits:
 new v3 exact workspace dist/.tsbuildinfo exclusion, historical v2 policy preserved,
 new v2 root C:\CodeAtlas-P05-D5-R2. Require real cache stability and retained raw

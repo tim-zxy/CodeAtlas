@@ -1,5 +1,32 @@
 # Evaluation Specification
 
+2026-10-20 complete R2 local batch17/17 passes; registered Native REFRESH703/703,
+4648233.4793ms. Post-suite integration audit independently rechecks complete gate
+receipts, actual22/local31, original candidate/raw/holdout/ZIP/Native hashes and
+unchanged2329 dependency/product identity. No further local measurement is needed
+solely for generated real-ID record/publication metadata. Required clean-host
+actual22/current hosted gates/normal merge/original Phase audit remain mandatory.
+
+2026-10-19 R2 current actual Evaluation31/31,0missing/0failures,overallPASS;
+five original gates1/1/1/1/0 allPASS. ReportSHA
+e2fefab02ccc63e9cb702d465c3510454f5f98c511a564d4d297d3695e96c985.
+Source/public-index/recorded-provider applicability remains explicit. Full root,
+Native114, memory27 and Rust133 pass; last registered Native REFRESH gate still
+runs. No local-to-hosted substitution, threshold change or Phase acceptance.
+
+2026-10-19 R2 original local actual22 report passes strict original outcome,
+state, SQL/transaction/TEMP and peak validation:22 ACTUAL_ADMITTED rows,0failures,
+peak364314624<=411660288. Complete original attempts are exported; immutable
+ZIP/candidate/holdout checks pass. Local scope is not clean-host/hosted evidence.
+Current ordinary/registered/actual31 and original Phase exits remain pending.
+
+2026-10-19 R2 original22/110/22 plus independent reconstruction are verified;
+user explicitly approves411660288, exact matching static profile installed.
+Admission/verification28/28 and unchanged2329-dependency/product identity pass.
+Keep original candidate/raw/holdout bytes and capture statuses. Pristine pack,
+guarded local actual22, required clean-host actual22/current gates/actual31 and
+integration/Phase audit remain required; no offline substitution or threshold change.
+
 2026-10-19 accepted PR20 cache/layout amendment: generator v3 excludes only
 exact workspace dist/.tsbuildinfo regular files; historical v2 policy stays exact.
 New layout v2 at C:\CodeAtlas-P05-D5-R2 requires fresh22 qualification,110 original

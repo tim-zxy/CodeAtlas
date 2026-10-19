@@ -1,5 +1,13 @@
 # Runtime and Configuration Specification
 
+2026-10-19 exact R2 approval installs REFRESH_TRANSPORT411660288bytes solely for
+candidatef9e08bad...0844/corpusb36cb7a4...ee3f, M364818432/J46841856. Historical
+376422400/378400768 entries retained. Genuine missing-current-entry RED then
+28/28 admission/verification GREEN, equality/one-byte-low/provenance preserved.
+Runtime build exits0; product0ea17dfc...2711d and full2329 frozen dependency catalog
+are unchanged after installation. Defaults/C256MiB/D1e9/SQL charges/other purposes
+unchanged. This is not guarded actual22, hosted CI or Phase exit.
+
 2026-10-19 accepted PR20 cache/layout correction grants no new reservation.
 Product defaults/caps/SQL charges, C256MiB and D-only1e9 input stay unchanged.
 New v2-layout/v3-catalog corpus needs original22/110/22 and its own exact numeric
