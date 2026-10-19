@@ -1,5 +1,6 @@
 # Exact D replay/source inventories must survive Windows checkout conversion.
 *.mjs text eol=lf
+*.ts text eol=lf
 *.ps1 text eol=lf
 *.rs text eol=lf
 *.toml text eol=lf

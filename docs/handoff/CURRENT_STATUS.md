@@ -1,5 +1,52 @@
 # Current Status
 
+2026-10-19T05:52Z settled PR20 diagnosis: run39197534643 overallFAIL. TypeScript
+and Rust PASS; original real-binary Java112/114 and required exact-pack stepFAIL.
+All683 REFRESH contracts, Storage rollback/ownership, existing purpose reservations
+and original memory collection pass. Original log task8-pr20-settled-native.log
+and uploaded artifact12165652221 are retained. ci-result.json says INSTALL failed
+before ACTUAL; this is not an admitted actual22 or peak-budget failure.
+Caller-TEMP alias reproduces both null parseObservation failures; canonical caller
+TEMP passes2/2 then original Native114/114,65207.3097ms. Real checkout regression
+proves TypeScript template CRLF drift RED -> LF GREEN2/2 without changing published
+SQL bytes. CI-only correction and new outside-catalog regression are local;
+no frozen helper/product/profile or pack change, and original2345 current hashes
+still match. Not pushed merely to repeat a known-blocked full CI run.
+Hosted catalog2329 lacks16 build caches and has7 source-EOL-sensitive JS hashes.
+Fresh LF/project build removes all JS drift; original build mode restores2345
+members, but independent MCP cache remains byte-different. Do not forge that
+cache or widen exceptions. The [cache/layout proposal](../superpowers/specs/2026-10-19-p05-ci-build-cache-compatibility-proposal.md)
+needs explicit review before original qualification/measurement/numeric/actual
+sequence can resume. Phase0.5 stays10/14 integrated, no merge or Phase1 code.
+Background follow-up pauses at this genuine new design decision; earlier
+running/log-unavailable states below are historical checkpoints.
+
+2026-10-19 explicit background authorization: the user's “授权” directly answers
+the scoped15-minute PR20 follow-up request (diagnose/fix CI and normal merge only
+after all required checks). Heartbeat phase0-5-pr20-ci is now ACTIVE, attached to
+this thread. This supersedes the earlier no-automation consent hold, not any
+failed CI or Phase gate. No new resource value, protection bypass or Phase1 code
+is authorized. Keep quiet on unchanged state; pause on completion or a genuinely
+new user decision. Preserve all existing evidence and current in-flight PR CI.
+
+2026-10-19 PR20 opened and attached: https://github.com/tim-zxy/CodeAtlas/pull/20,
+head a9478455ec11a9a38802b6cfe0b56d4e01ca79b9. Workflow-write permission is
+repaired; scoped pushes and real synthetic Release publication succeeded.
+Current PR run39197534643: TypeScript and Rust complete SUCCESS; Native
+Run real-binary Java Fixtures FAILED, later always() diagnostics still running.
+No merge, successful hosted actual22 or Phase promotion. Preserve that failure;
+do not guess a fix, weaken a gate or reuse local success as hosted acceptance.
+Duplicate push39197479890 reproduced the same failure and was canceled to obtain
+logs; ordinary cancellation did not stop its always() step, so only that failed
+duplicate was force-canceled. It is not passing evidence. Completed-run archive
+has no Native step log yet; direct job-log APIs report unavailable. PR diagnostics
+remain active and their full log must be read when settled before any fix.
+Local source/product/candidate/holdout/archive are unchanged. Background heartbeat
+creation was rejected because persistent scheduled execution needs separate
+explicit consent; NO automation was created and no indirect substitute is used.
+The existing in-session integration authority remains valid. Earlier credential
+holds and no-PR notices below are historical. Phase0.5 remains10/14 integrated.
+
 2026-10-19 workflow permission repaired; scoped source push and approved synthetic
 Release publication succeeded. Remote feature branch now containsf98de70 and
 delivery67e2acb; main remains unchanged. Same-repository fixture Release416886384

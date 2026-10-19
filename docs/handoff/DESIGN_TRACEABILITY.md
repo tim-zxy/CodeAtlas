@@ -1,5 +1,22 @@
 # Design Traceability
 
+2026-10-19 PR20 settled failure maps to original job log and artifact12165652221:
+Java112/114; INSTALL fails before actual22. Alias-TEMP RED reproduces both original
+stacks; canonical caller GREEN2/2 and full Native114/114 map to task8-pr20-temp-*
+and task8-pr20-canonical-native-green.log. Typed-source checkout RED/GREEN2/2 maps
+to new native-ci-context.test.mjs plus TypeScript LF policy/Native CI setup.
+All original2345 current dependency hashes remain exact. Clean LF project build
+has only16 missing caches; independent original build mode has only the MCP cache
+hash difference (task8-ci-independent-catalog.log). The new proposed cache/layout
+contract records the pending authority boundary, not a waived catalog or Phase.
+
+2026-10-19 PR20/current source a947845 maps to PR run39197534643: TypeScript/Rust
+SUCCESS, Native real-binary Fixtures FAILED with remaining diagnostics running.
+Canceled duplicate39197479890 is explicitly not acceptance evidence; available
+workflow archive does not contain the missing Native step log. Full settled PR
+logs, root-cause reproduction/fix if needed, clean-host actual22 and fresh exact
+source required checks remain open. No gate/threshold/profile or Phase change.
+
 2026-10-19 authorized publication maps ADR-019 to the real same-repository
 Release416886384/asset655180938 and static
 fixtures/ipc/refresh-v3/approved-transport.json. Source tag points to67e2acb;

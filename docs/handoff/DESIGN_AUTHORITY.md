@@ -1,5 +1,14 @@
 # Design Authority
 
+2026-10-19 governed PR20 hold: the [cache/layout proposal](../superpowers/specs/2026-10-19-p05-ci-build-cache-compatibility-proposal.md)
+is PROPOSED, not accepted. Original hosted INSTALL failure and independent clean
+builds justify review, not silent expansion of ADR-019's approved exceptions.
+No helper/catalog revision, new layout/corpus/calibration/profile or replacement
+Release is authorized yet. Unseen exact values remain a separate decision.
+CI caller-TEMP canonicalization and TypeScript LF checkout restore existing
+bytes/ownership requirements with RED/GREEN and Native114/114 evidence; they do
+not waive the cache hold. Original2345 current dependencies remain unchanged.
+
 2026-10-19 scoped integration approval: the user's “确认” following the
 consolidated four-step closeout plan authorizes this Phase0.5 delivery's local
 submission/push, publication of the already reviewed synthetic-only exact pack

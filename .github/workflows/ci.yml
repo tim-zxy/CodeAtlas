@@ -78,7 +78,14 @@ jobs:
       - name: Build Native Analyzer
         run: cargo build --workspace
       - name: Run real-binary Java Fixtures
-        run: pnpm test:native-analysis
+        shell: pwsh
+        run: |
+          $env:TEMP = node -e "process.stdout.write(require('node:fs').realpathSync.native(require('node:os').tmpdir()))"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $env:TMP = $env:TEMP
+          node --test --test-concurrency=1 packages/runtime/test/native-ci-context.test.mjs
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          pnpm test:native-analysis
       - name: Run Native REFRESH composition and replay contracts
         if: always()
         shell: pwsh

@@ -8,6 +8,13 @@ artifact publication/integration still require their separate material decisions
 
 ## Context and evidence
 
+2026-10-19 PR20 follow-up: the original hosted run completes FAILURE; original
+artifact12165652221 confirms INSTALL failed before ACTUAL. Clean-build experiments
+show the catalog binds16 compiler build-info caches, including a historically
+nonreproducible MCP cache. The [narrow cache/layout proposal](../../superpowers/specs/2026-10-19-p05-ci-build-cache-compatibility-proposal.md)
+awaits design review. This ADR's accepted three-exception rule is NOT amended
+by that proposal; old evidence and Release remain unchanged and Phase held.
+
 The current approved transport reservation378400768 exceeds every original
 frozen D invocation's268435456-byte C-recipe input. Independent22/22 refusals,
 0 accepted actual samples/11 retained failures and final batch16/17PASS/overall

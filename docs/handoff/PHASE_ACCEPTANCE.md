@@ -1,5 +1,10 @@
 # Phase Acceptance
 
+2026-10-19 PR20 completed FAIL: real Java Fixture112/114 and exact-pack INSTALL
+failure; no actual22 was admitted. CI-only TEMP/source-byte correction verifies
+locally with Native114/114 and new checkout2/2, while the build-cache catalog
+amendment remains proposed. No original exit checkbox is changed or Phase promoted.
+
 2026-10-19 ADR-019 exact pack is published under the authorized same-repository
 Release416886384/asset655180938; approved-transport.json pins real IDs and the
 unchanged original5423-entry inventory. This closes publication/record evidence
