@@ -1,5 +1,13 @@
 # Phase Acceptance
 
+2026-10-19 accepted PR20 amendment changes private discovery/layout, not exits:
+new v3 exact workspace dist/.tsbuildinfo exclusion, historical v2 policy preserved,
+new v2 root C:\CodeAtlas-P05-D5-R2. Require real cache stability and retained raw
+JS/map/declaration/package/source/Native drift refusals, legacy/version isolation,
+original22/110/22, independent reconstruction, separate exact numeric approval,
+local and required clean-host actual22, ordinary gates and actual31. No checkbox
+or threshold changes. Old failure/Release bytes remain historical, not passing.
+
 2026-10-19 PR20 completed FAIL: real Java Fixture112/114 and exact-pack INSTALL
 failure; no actual22 was admitted. CI-only TEMP/source-byte correction verifies
 locally with Native114/114 and new checkout2/2, while the build-cache catalog

@@ -143,6 +143,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: native-refresh-original-fallback
-          path: C:/CodeAtlas-P05-D5/evidence/corpus/replay
+          path: |
+            C:/CodeAtlas-P05-D5/evidence/corpus/replay
+            C:/CodeAtlas-P05-D5-R2/evidence/corpus/replay
           # Absent before acquisition is expected; the required actual step still fails.
           if-no-files-found: ignore

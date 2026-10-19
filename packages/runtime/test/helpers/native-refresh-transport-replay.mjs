@@ -231,7 +231,7 @@ async function revalidateReplayInputs(owner) {
     assert.equal(bytesHash(await readFile(pin.file)), pin.sha256, 'Immutable replay bytes changed');
   }
   await verifyRefreshReplayDependencyCatalog(
-    await discoverRefreshReplayDependencies(owner.dContext),
+    await discoverRefreshReplayDependencies(owner.dContext, owner.manifest.generator.revision),
     owner.binding.dependencyRoots,
     owner.manifest.generator.dependencies,
   );
@@ -273,7 +273,7 @@ async function readRefreshTransportReplays(manifestPath, bindingPath, names, dCo
     );
   }
   await verifyRefreshReplayDependencyCatalog(
-    await discoverRefreshReplayDependencies(fixtureContext),
+    await discoverRefreshReplayDependencies(fixtureContext, manifest.generator.revision),
     binding.dependencyRoots,
     manifest.generator.dependencies,
   );
@@ -2029,7 +2029,7 @@ export async function prepareRefreshTransportCorpus(outputDirectory, dContext) {
       schemaVersion: 2,
       workspace: 'REFRESH_TRANSPORT',
       corpus: { revision: 'p05-native-refresh-transport-memory-v1' },
-      generator: { revision: 'p05-refresh-replay-v2', dependencies: catalog.dependencies },
+      generator: { revision: 'p05-refresh-replay-v3', dependencies: catalog.dependencies },
       cases,
     };
     manifest.corpus.digest = identityHash('p05-refresh-replay-corpus-v2', manifest);
@@ -2179,12 +2179,16 @@ async function runMeasuredReplay(value, directory, { mode, repetition }, dContex
   return envelope;
 }
 
-export async function discoverRefreshReplayDependencies(dContext) {
+export async function discoverRefreshReplayDependencies(
+  dContext,
+  generatorRevision = 'p05-refresh-replay-v3',
+) {
   const fixtureContext =
     dContext === undefined ? undefined : snapshotDRefreshFixtureContext(dContext);
   const repositoryPath = fileURLToPath(new URL('../../../../', import.meta.url));
   return discoverRefreshReplayDependenciesAt({
     repositoryPath,
+    generatorRevision,
     nativeExecutablePath:
       fixtureContext?.executablePath ??
       path.join(
@@ -2200,7 +2204,12 @@ export async function discoverRefreshReplayDependenciesAt({
   repositoryPath,
   nativeExecutablePath,
   resolvePackageRoot = resolveInstalledPackage,
+  generatorRevision = 'p05-refresh-replay-v3',
 }) {
+  assert.ok(
+    ['p05-refresh-replay-v2', 'p05-refresh-replay-v3'].includes(generatorRevision),
+    'Unsupported replay generator revision',
+  );
   const repository = await realpath(repositoryPath);
   const native = await realpath(nativeExecutablePath);
   assert.ok((await lstat(nativeExecutablePath)).isFile(), 'Nonregular Native executable');
@@ -2217,7 +2226,16 @@ export async function discoverRefreshReplayDependenciesAt({
     const destination = path.join(root, relative);
     const info = await lstat(destination);
     assert.ok(!info.isSymbolicLink(), `Nonregular symbolic catalog path: ${destination}`);
-    if (skip(relative)) return [];
+    if (skip(relative)) {
+      // Only the new workspace cache exception adds a single-link file rule.
+      // Installed-package node_modules directories retain their original skip.
+      if (relative.endsWith('/dist/.tsbuildinfo'))
+        assert.ok(
+          info.isFile() && info.nlink === 1,
+          `Excluded catalog cache must be regular and unlinked: ${destination}`,
+        );
+      return [];
+    }
     if (info.isDirectory()) {
       const entries = await readdir(destination);
       const files = [];
@@ -2324,6 +2342,8 @@ export async function discoverRefreshReplayDependenciesAt({
         repository,
         `${relative}/dist`,
         (file) =>
+          (generatorRevision === 'p05-refresh-replay-v3' &&
+            file === `${relative}/dist/.tsbuildinfo`) ||
           file === 'packages/runtime/dist/native-metadata-profiles.js' ||
           file === 'packages/runtime/dist/native-metadata-profiles.js.map' ||
           file === 'packages/runtime/dist/native-metadata-profiles.d.ts.map',

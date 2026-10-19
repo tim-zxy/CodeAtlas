@@ -1,7 +1,8 @@
 # PR20 CI build-cache compatibility proposal
 
-Status: PROPOSED, awaiting explicit design review. This is not permission to
-change the catalog, regenerate evidence, install a value or publish another pack.
+Status: ACCEPTED2026-10-19 by the user's subsequent “确认”. Execute the narrow
+catalog/layout amendment and original requalification sequence. This does not
+approve an unseen numerical value or replacement artifact.
 It refines the existing ADR-019 / closeout Tasks7/8, not a new roadmap task.
 
 ## Reproduced evidence
@@ -89,7 +90,28 @@ cache merely to satisfy its hash is not an independent clean-build proof and is
 not recommended. A portable whole-build equivalence or OS-path normalization
 scheme would be a larger, unproved contract; it is outside this correction.
 
-Requested decision: accept this narrow catalog/layout amendment and its original
-qualification/measurement sequence. This does not approve an unseen reservation
-or a replacement artifact. Until accepted, do not edit frozen helpers, broaden
-exclusions, regenerate the corpus or mark the hosted failure passing.
+Accepted decision: implement this narrow catalog/layout amendment and its original
+qualification/measurement sequence. This does not approve an unseen reservation,
+a replacement artifact, or mark the original hosted failure passing.
+
+## Executable compatibility contract
+
+New preparation writes generator revision `p05-refresh-replay-v3` in the existing
+schemaVersion2 manifest and existing corpus-hash domain. Independent discovery
+defaults to v3; its private `generatorRevision` argument permits historical v2
+discovery without the cache exception. Readers/revalidation/installer select the
+policy from the validated manifest, never from declared dependency membership.
+Unknown operational generator revisions refuse. Structural historical records
+remain readable without rewriting their revision/hash or granting eligibility.
+The v3 exception is EXACTLY `<workspace>/dist/.tsbuildinfo`, not nested caches,
+other names, helper/script caches or installed-package files. All three existing
+profile-data exceptions remain unchanged. Cache paths must still be regular,
+nonlinked files; directories or links at the excepted path refuse.
+
+Operational new prepare/pack use v2 layout at `C:\CodeAtlas-P05-D5-R2` only.
+Approval parsing preserves both v1 and v2 without retagging; installation selects
+the literal root from the validated revision, and pairs v1 with generator v2,
+v2 with generator v3. Unknown revisions refuse. Neither operational outputs nor
+pack output may overlap either frozen layout. Existing-root/ownership/single-use
+rules still apply. The internal test-root seam remains test-only, not a CLI flag.
+Failure uploads retain both original v1 and new v2 mutable replay fallbacks.

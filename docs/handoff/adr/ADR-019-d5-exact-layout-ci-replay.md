@@ -12,8 +12,11 @@ artifact publication/integration still require their separate material decisions
 artifact12165652221 confirms INSTALL failed before ACTUAL. Clean-build experiments
 show the catalog binds16 compiler build-info caches, including a historically
 nonreproducible MCP cache. The [narrow cache/layout proposal](../../superpowers/specs/2026-10-19-p05-ci-build-cache-compatibility-proposal.md)
-awaits design review. This ADR's accepted three-exception rule is NOT amended
-by that proposal; old evidence and Release remain unchanged and Phase held.
+is accepted by the user's subsequent “确认”. New generator v3 additionally excludes
+only exact workspace dist/.tsbuildinfo regular files; v2 historical discovery
+keeps the original three exceptions. New layout v2 is C:\CodeAtlas-P05-D5-R2;
+old evidence/root/Release remain unchanged and Phase held. Original22/110/22,
+independent reconstruction and separate exact numeric approval remain mandatory.
 
 The current approved transport reservation378400768 exceeds every original
 frozen D invocation's268435456-byte C-recipe input. Independent22/22 refusals,

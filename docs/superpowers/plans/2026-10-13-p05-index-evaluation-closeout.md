@@ -1,5 +1,52 @@
 # Phase 0.5 index CLI and persisted Evaluation Implementation Plan
 
+## Task7/8 continuation — accepted PR20 cache/layout amendment, 2026-10-19
+
+**Spec:** [accepted narrow contract](../specs/2026-10-19-p05-ci-build-cache-compatibility-proposal.md).
+Same Tasks7/8, Native/inline, routine reconfirmation waived; preserve all evidence.
+This supplement supersedes new-generation v1-root/three-exception-only instructions
+below, not their historic receipts or any original acceptance/numeric gate.
+
+**Files/interfaces:** replay helper `discoverRefreshReplayDependencies(dContext,
+generatorRevision='p05-refresh-replay-v3')` and its At seam's generatorRevision
+option independently select v2/v3 membership. Existing manifest generator.revision
+carries v3 (schema2/hash domain unchanged). Reader/revalidator/pack installer use
+the manifest revision. Layout helper exports current refreshCiLayoutRevision=v2,
+refreshCiLayoutRoot=C:\CodeAtlas-P05-D5-R2, and
+refreshCiLayoutRootForRevision(revision) selecting only original v1/new v2.
+Approval parsing preserves revision; installer enforces matching generator.
+Runner/pack reject outputs inside either immutable layout; CI uploads both roots.
+
+- [ ] Tests first in native-refresh-transport-replay.test.mjs: real discovery
+  with cache add/change/remove stays equal under v3; v2 still binds it. Preserve
+  raw drift refusal for JS/maps/declarations/package/source/Native; nested and
+  non-workspace caches remain bound, linked/directory cache refuses. Unknown
+  generator refuses before discovery. Run filtered catalog suite: expected RED
+  on newly required stability, then GREEN with narrowly versioned implementation.
+- [ ] Tests first in test-native-refresh-ci-layout.mjs / ci-pack.mjs: validated
+  v1/v2 approvals retain distinct literal roots, unknown revisions refuse,
+  outputs in either root refuse without side effects; retain existing root,
+  alias, single-use, read-only packaging and hostile archive controls. Add only
+  fixed revision dispatch, no configurable layout or policy registry.
+- [ ] Verify focused replay catalog/layout/pack/runner contracts and clean LF
+  checkout discovery against independently built runtime artifacts (pinned Native).
+  Run current ordinary root/architecture gates before claiming final completion.
+  One fresh owned-batch review before final catalog freeze; fix Important/Critical
+  findings test-first. Do not alter production profile if product hash unchanged.
+- [ ] Freeze helper/scripts, then existing prepare at new absent exclusive root:
+  full22 qualification -> original110 calibration -> independent22 holdouts ->
+  independent candidate reconstruction. Expected complete receipts, no omitted
+  failures. Stop only for new exact numerical approval, never install implicitly.
+- [ ] After approval resume original static profile/pack/local actual22/real-ID
+  publication/required clean-host actual22/CI/normal merge and original phase audit.
+
+**Pre-flight/self-review:** catalog producer -> all reader/installer consumers use
+one explicit revision; structural parsing alone is not eligibility. Layout revision
+-> literal operational root -> original geometry remains exact. Review focus:
+legacy retagging, nested-cache over-exclusion, directory/link cache acceptance,
+cross-version pack geometry, accidental output into preserved v1. Each is assigned
+behavioral coverage above. No new task, resource value, threshold or Phase1 code.
+
 2026-10-19 integration execution authority: the user's “确认” after the consolidated
 status/remaining-work plan grants scoped submission/push, reviewed synthetic-pack
 Release publication, real-ID record/PR and merge subject to required hosted CI and

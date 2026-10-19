@@ -1,5 +1,10 @@
 # Work Breakdown
 
+2026-10-19 accepted cache/layout correction revises SAME closeout Tasks7/8:
+versioned narrow cache discovery -> distinct exclusive v2 layout -> tests/review
+-> new22/110/22/reconstruction -> separate numeric approval -> original actual/
+CI/integration audit. No new roadmap task or Phase1 implementation.
+
 2026-10-18 ADR-019 written review passed. SAME closeout Tasks7/8 now contain
 the self-reviewed executable D-context/layout/pack/required-CI supplement, with
 existing Native/batch and routine-plan-reconfirmation waiver. Numeric, host and

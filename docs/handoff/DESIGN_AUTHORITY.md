@@ -1,13 +1,14 @@
 # Design Authority
 
-2026-10-19 governed PR20 hold: the [cache/layout proposal](../superpowers/specs/2026-10-19-p05-ci-build-cache-compatibility-proposal.md)
-is PROPOSED, not accepted. Original hosted INSTALL failure and independent clean
-builds justify review, not silent expansion of ADR-019's approved exceptions.
-No helper/catalog revision, new layout/corpus/calibration/profile or replacement
-Release is authorized yet. Unseen exact values remain a separate decision.
+2026-10-19 governed PR20 amendment ACCEPTED by subsequent user “确认”: the
+[cache/layout contract](../superpowers/specs/2026-10-19-p05-ci-build-cache-compatibility-proposal.md)
+authorizes only workspace dist/.tsbuildinfo exclusion under new generator v3 and
+exclusive layout v2 at C:\CodeAtlas-P05-D5-R2, with original22/110/22 and independent
+reconstruction. Preserve legacy policy, roots, profiles and Release bytes. Unseen
+exact values remain a separate decision; no replacement asset is approved yet.
 CI caller-TEMP canonicalization and TypeScript LF checkout restore existing
 bytes/ownership requirements with RED/GREEN and Native114/114 evidence; they do
-not waive the cache hold. Original2345 current dependencies remain unchanged.
+not waive any required gate. Original2345 dependency evidence remains historical.
 
 2026-10-19 scoped integration approval: the user's “确认” following the
 consolidated four-step closeout plan authorizes this Phase0.5 delivery's local

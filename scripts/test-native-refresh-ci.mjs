@@ -181,6 +181,18 @@ test('actual result validation requires admitted scope and peak bounds even with
   );
 });
 
+for (const root of ['C:\\CodeAtlas-P05-D5', 'C:\\CodeAtlas-P05-D5-R2']) {
+  test(`CI commands refuse output into preserved layout before approval or build: ${root}`, async () => {
+    for (const command of ['prepare', 'verify', 'collect']) {
+      const args = command === 'prepare' ? [command, root] : [command, 'missing.zip', root];
+      await assert.rejects(
+        () => runner.runRefreshCiAt(args, process.cwd()),
+        /overlaps frozen layout/i,
+      );
+    }
+  });
+}
+
 test('prepare refuses an existing output before acquiring the dedicated root or running a build', async (t) => {
   const parent = await mkdtemp(path.join(tmpdir(), 'codeatlas-d5-prepare-'));
   t.after(() => rm(parent, { recursive: true, force: true }));

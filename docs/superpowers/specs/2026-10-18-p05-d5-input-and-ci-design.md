@@ -10,6 +10,13 @@ This refines existing P05-W3-020 D5/D6 and closeout Tasks7/8, not the roadmap.
 
 ## Intent and success
 
+2026-10-19 accepted amendment: the [versioned cache/layout contract](2026-10-19-p05-ci-build-cache-compatibility-proposal.md)
+supersedes new-generation v1 layout and three-exception-only wording below ONLY
+for generator v3 / layout v2. New root is C:\CodeAtlas-P05-D5-R2; preserve v1.
+Only exact workspace dist/.tsbuildinfo regular files join the exclusions.
+Historical v2 catalogs keep their original membership policy. No old identity,
+profile, numerical approval or actual result transfers to this new corpus.
+
 Make the required actual22 transport acceptance executable locally and in the
 existing Windows Native CI job without changing production admission, borrowing
 another corpus's approval, weakening failure verification or starting another

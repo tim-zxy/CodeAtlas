@@ -1,5 +1,9 @@
 # Roadmap
 
+2026-10-19 accepted PR20 cache/layout amendment remains existing Tasks7/8;
+no new milestone or task count. Fresh exact-layout-v2 transport evidence is
+required; Phase0.5 remains10/14 integrated, Phase1 DESIGN-READY only.
+
 2026-10-18 ADR-019 written contract accepted; revised existing Tasks7/8 execute
 Native/batch. Same10/14 integrated/four parents and original Phase0.5 exits;
 no new roadmap item or Phase1 implementation. Earlier pending notices are history.

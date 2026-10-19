@@ -1,5 +1,9 @@
 # Deferred Decisions
 
+2026-10-19 accepted PR20 cache/layout correction adds no deferred capability.
+Portable logical identity, general relocation, adaptive calibration/scheduler,
+Wiki/Knowledge/Agent and Phase1 coding remain outside this correction.
+
 2026-10-18 ADR-019 written contract accepted; revised existing plan introduces
 no deferred capability or new milestone. Native/batch execution stays in D5/D6
 with original phase/numerical/security/publication gates. Pending notes are history.

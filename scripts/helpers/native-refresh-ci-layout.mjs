@@ -7,7 +7,24 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { snapshotDRefreshFixtureContext } from '../../packages/runtime/test/helpers/native-refresh-d-context.mjs';
 
-export const refreshCiLayoutRoot = 'C:\\CodeAtlas-P05-D5';
+export const refreshCiLayoutRevision = 'p05-d5-exact-layout-v2';
+export function refreshCiLayoutRootForRevision(revision) {
+  if (revision === 'p05-d5-exact-layout-v1') return 'C:\\CodeAtlas-P05-D5';
+  assert.equal(revision, 'p05-d5-exact-layout-v2', 'Unsupported CI layout revision');
+  return 'C:\\CodeAtlas-P05-D5-R2';
+}
+export const refreshCiLayoutRoot = refreshCiLayoutRootForRevision(refreshCiLayoutRevision);
+
+export function assertRefreshCiOutputOutsideLayouts(output) {
+  canonicalPath(output);
+  for (const revision of ['p05-d5-exact-layout-v1', 'p05-d5-exact-layout-v2']) {
+    const relative = path.relative(refreshCiLayoutRootForRevision(revision), output);
+    assert.ok(
+      path.isAbsolute(relative) || relative === '..' || relative.startsWith('..' + path.sep),
+      'CI output overlaps frozen layout',
+    );
+  }
+}
 const ownedLayouts = new WeakMap();
 
 function canonicalPath(value) {

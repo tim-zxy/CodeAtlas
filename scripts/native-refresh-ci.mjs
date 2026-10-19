@@ -13,6 +13,7 @@ import {
   readRefreshCiPackLayout,
   refreshCiFixtureContext,
   refreshCiLayoutRoot,
+  assertRefreshCiOutputOutsideLayouts,
 } from './helpers/native-refresh-ci-layout.mjs';
 import {
   installRefreshCiPack,
@@ -55,13 +56,7 @@ export function checkRefreshCiCandidateBudget(callerBudgetBytes, candidateReserv
 async function prepareRefreshCiEvidence(outputInput, repositoryPath) {
   const output = path.resolve(outputInput);
   assert.equal(await realpath(path.dirname(output)), path.dirname(output));
-  const relativeOutput = path.relative(refreshCiLayoutRoot, output);
-  assert.ok(
-    path.isAbsolute(relativeOutput) ||
-      relativeOutput === '..' ||
-      relativeOutput.startsWith('..' + path.sep),
-    'Preparation output overlaps frozen layout',
-  );
+  assertRefreshCiOutputOutsideLayouts(output);
   await mkdir(output);
   let stage = 'BUILD';
   try {
@@ -277,11 +272,7 @@ export async function runRefreshCiAt(args, repositoryPath) {
     path.dirname(output),
     'CI output parent alias',
   );
-  const relative = path.relative(refreshCiLayoutRoot, output);
-  assert.ok(
-    path.isAbsolute(relative) || relative === '..' || relative.startsWith('..' + path.sep),
-    'CI output overlaps frozen layout',
-  );
+  assertRefreshCiOutputOutsideLayouts(output);
   await mkdir(output); // Never overwrite a prior success/failure receipt.
   let stage = 'APPROVAL';
   const save = (result) =>

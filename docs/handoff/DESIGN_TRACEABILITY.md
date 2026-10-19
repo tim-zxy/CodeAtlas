@@ -1,5 +1,12 @@
 # Design Traceability
 
+2026-10-19 accepted PR20 cache/layout contract -> SAME closeout Tasks7/8 ->
+replay discovery/reader/revalidator and catalog tests; layout/pack/runner tests
+cover distinct v1/v2 roots, strict revision pairing and preserved ownership.
+Evaluation requires new22/110/22/reconstruction/numeric approval/actual22 and
+hosted exact-SHA receipts. Current implementation/tests are pending, not missing
+links silently counted as done. Original case Manifest/goldens/gates unchanged.
+
 2026-10-19 PR20 settled failure maps to original job log and artifact12165652221:
 Java112/114; INSTALL fails before actual22. Alias-TEMP RED reproduces both original
 stacks; canonical caller GREEN2/2 and full Native114/114 map to task8-pr20-temp-*

@@ -20,7 +20,8 @@ import {
   createExclusiveRefreshCiRootAt,
   hashRefreshCiFile,
   refreshCiFixtureContext,
-  refreshCiLayoutRoot,
+  refreshCiLayoutRootForRevision,
+  assertRefreshCiOutputOutsideLayouts,
   verifyRefreshCiLayoutOwnership,
 } from './native-refresh-ci-layout.mjs';
 import { nativeMetadataEnvironment } from '../../packages/runtime/dist/native-metadata-admission.js';
@@ -324,6 +325,13 @@ export async function installRefreshCiPackAt(args, root) {
     manifest,
   );
   assert.deepEqual(manifest.corpus, approval.corpus, 'Pack corpus differs');
+  assert.equal(
+    manifest.generator.revision,
+    approval.layoutRevision === 'p05-d5-exact-layout-v1'
+      ? 'p05-refresh-replay-v2'
+      : 'p05-refresh-replay-v3',
+    'Pack generator/layout revision differs',
+  );
   assert.equal(binding.artifactRoot, path.dirname(manifestPath), 'Pack artifact geometry differs');
   assert.equal(
     binding.replayRoot,
@@ -333,7 +341,10 @@ export async function installRefreshCiPackAt(args, root) {
   const buildReceipt = await verifyRefreshCiNativeBuildAt(layout, args.repositoryPath);
   assert.deepEqual(buildReceipt.native, approval.native, 'Pack build provenance differs');
   const fixtureContext = refreshCiFixtureContext(layout);
-  const catalog = await discoverRefreshReplayDependencies(fixtureContext);
+  const catalog = await discoverRefreshReplayDependencies(
+    fixtureContext,
+    manifest.generator.revision,
+  );
   assert.equal(
     catalog.roots.find((entry) => entry.name === 'repository')?.path,
     await realpath(args.repositoryPath),
@@ -429,7 +440,11 @@ export async function installRefreshCiPackAt(args, root) {
 }
 
 export async function installRefreshCiPack(args) {
-  return installRefreshCiPackAt(args, refreshCiLayoutRoot);
+  const approval = validateRefreshCiApproval(args.approval);
+  return installRefreshCiPackAt(
+    { ...args, approval },
+    refreshCiLayoutRootForRevision(approval.layoutRevision),
+  );
 }
 
 export async function verifyRefreshCiNativeBuildAt(layout, repositoryPath) {
@@ -480,6 +495,7 @@ async function ownedPackInventory(layout) {
 }
 
 export async function createRefreshCiPack({ layout, candidatePath, holdoutPath, outputArchive }) {
+  assertRefreshCiOutputOutsideLayouts(outputArchive);
   await verifyRefreshCiLayoutOwnership(layout);
   // Refuse live SQLite state before copying review evidence or creating output.
   await ownedPackInventory(layout);
@@ -615,7 +631,7 @@ export function validateRefreshCiApproval(input) {
     'release',
   ]);
   assert.equal(value.schemaVersion, 1);
-  assert.equal(value.layoutRevision, 'p05-d5-exact-layout-v1');
+  refreshCiLayoutRootForRevision(value.layoutRevision);
   fields(value.environment, [
     'node',
     'v8',

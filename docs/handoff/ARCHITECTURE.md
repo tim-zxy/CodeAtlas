@@ -1,5 +1,10 @@
 # Architecture
 
+2026-10-19 accepted PR20 cache/layout amendment stays private Fixture/Evaluation
+tooling: exact regular workspace compiler-cache exclusion is versioned; new v2
+root is exclusive and old v1 remains immutable. No production admission, public
+configuration, schema, SQL, worker policy or FROZEN architecture change.
+
 2026-10-18 ADR-019 operational refinement stays private to development evidence:
 .NET ZIP materialization uses bounded read-only Windows-native decoded-integrity
 verification; immutable assets/pristine ZIP remain distinct from transient mutable

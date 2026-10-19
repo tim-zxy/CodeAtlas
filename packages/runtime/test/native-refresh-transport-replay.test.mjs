@@ -1812,6 +1812,145 @@ async function catalogFixture(t) {
   return { directory, repositoryPath, externalPath, nativeExecutablePath, files, options };
 }
 
+test('D5 v3 catalog ignores only exact regular workspace build caches across add/change/remove', async (t) => {
+  const f = await catalogFixture(t);
+  const original = await replay.discoverRefreshReplayDependenciesAt(f.options);
+  const file = path.join(f.repositoryPath, 'packages/a/dist/.tsbuildinfo');
+  for (const bytes of ['initial compiler history', 'different resolution history']) {
+    await writeFile(file, bytes);
+    const current = await replay.discoverRefreshReplayDependenciesAt(f.options);
+    await replay.verifyRefreshReplayDependencyCatalog(
+      current,
+      original.roots,
+      original.dependencies,
+    );
+  }
+  await rm(file);
+  const removed = await replay.discoverRefreshReplayDependenciesAt(f.options);
+  await replay.verifyRefreshReplayDependencyCatalog(removed, original.roots, original.dependencies);
+});
+
+test('D5 historical v2 discovery still binds compiler caches without reinterpreting old membership', async (t) => {
+  const f = await catalogFixture(t);
+  const options = { ...f.options, generatorRevision: 'p05-refresh-replay-v2' };
+  const file = path.join(f.repositoryPath, 'packages/a/dist/.tsbuildinfo');
+  await writeFile(file, 'original');
+  const original = await replay.discoverRefreshReplayDependenciesAt(options);
+  assert.ok(
+    original.dependencies.some((entry) => entry.path === 'repository/packages/a/dist/.tsbuildinfo'),
+  );
+  const current = await replay.discoverRefreshReplayDependenciesAt(f.options);
+  await assert.rejects(
+    replay.verifyRefreshReplayDependencyCatalog(current, original.roots, original.dependencies),
+  );
+  await writeFile(file, 'changed');
+  await assert.rejects(
+    replay.verifyRefreshReplayDependencyCatalog(
+      await replay.discoverRefreshReplayDependenciesAt(options),
+      original.roots,
+      original.dependencies,
+    ),
+  );
+  await rm(file);
+  await assert.rejects(
+    replay.verifyRefreshReplayDependencyCatalog(
+      await replay.discoverRefreshReplayDependenciesAt(options),
+      original.roots,
+      original.dependencies,
+    ),
+  );
+});
+
+test('D5 operational discovery refuses an unknown generator policy', async (t) => {
+  const f = await catalogFixture(t);
+  await assert.rejects(
+    replay.discoverRefreshReplayDependenciesAt({
+      ...f.options,
+      generatorRevision: 'unreviewed-policy',
+    }),
+    /generator|revision|policy/i,
+  );
+});
+
+for (const name of [
+  'packages/a/dist/nested/.tsbuildinfo',
+  'packages/a/dist/other.tsbuildinfo',
+  'packages/runtime/test/helpers/.tsbuildinfo',
+  'scripts/.tsbuildinfo',
+]) {
+  test(`D5 v3 catalog retains nonexcluded cache membership: ${name}`, async (t) => {
+    const f = await catalogFixture(t);
+    const original = await replay.discoverRefreshReplayDependenciesAt(f.options);
+    const file = path.join(f.repositoryPath, name);
+    await mkdir(path.dirname(file), { recursive: true });
+    await writeFile(file, 'not an excluded workspace compiler cache');
+    await assert.rejects(
+      replay.verifyRefreshReplayDependencyCatalog(
+        await replay.discoverRefreshReplayDependenciesAt(f.options),
+        original.roots,
+        original.dependencies,
+      ),
+    );
+  });
+}
+
+test('D5 v3 catalog still binds installed-package caches', async (t) => {
+  const f = await catalogFixture(t);
+  const original = await replay.discoverRefreshReplayDependenciesAt(f.options);
+  await writeFile(path.join(f.externalPath, '.tsbuildinfo'), 'installed package bytes');
+  await assert.rejects(
+    replay.verifyRefreshReplayDependencyCatalog(
+      await replay.discoverRefreshReplayDependenciesAt(f.options),
+      original.roots,
+      original.dependencies,
+    ),
+  );
+});
+
+test('D5 cache amendment preserves installed node_modules directory traversal policy for both revisions', async (t) => {
+  const f = await catalogFixture(t);
+  const original = await replay.discoverRefreshReplayDependenciesAt(f.options);
+  const nested = path.join(f.externalPath, 'node_modules', 'unreferenced');
+  await mkdir(nested, { recursive: true });
+  await writeFile(path.join(nested, 'index.js'), 'outside direct package inventory');
+  for (const generatorRevision of ['p05-refresh-replay-v2', 'p05-refresh-replay-v3']) {
+    const current = await replay.discoverRefreshReplayDependenciesAt({
+      ...f.options,
+      generatorRevision,
+    });
+    await replay.verifyRefreshReplayDependencyCatalog(
+      current,
+      original.roots,
+      original.dependencies,
+    );
+  }
+});
+
+test('D5 v3 excluded cache rejects a hard link instead of silently ignoring linked bytes', async (t) => {
+  const f = await catalogFixture(t);
+  const original = path.join(f.directory, 'compiler-cache');
+  await writeFile(original, 'real linked compiler-cache bytes');
+  const { link } = await import('node:fs/promises');
+  await link(original, path.join(f.repositoryPath, 'packages/a/dist/.tsbuildinfo'));
+  await assert.rejects(
+    replay.discoverRefreshReplayDependenciesAt(f.options),
+    /cache|regular|link/i,
+  );
+});
+
+for (const kind of ['directory', 'junction']) {
+  test(`D5 v3 cache exclusion refuses a ${kind} at the exact cache path`, async (t) => {
+    const f = await catalogFixture(t);
+    const file = path.join(f.repositoryPath, 'packages/a/dist/.tsbuildinfo');
+    if (kind === 'directory') await mkdir(file);
+    else await symlink(f.externalPath, file, 'junction');
+    await assert.rejects(
+      replay.discoverRefreshReplayDependenciesAt(f.options),
+      /cache|regular|symbolic/i,
+    );
+  });
+}
+
 test('D5 replay catalog enumerates independent sorted raw-byte membership', async (t) => {
   assert.equal(typeof replay.discoverRefreshReplayDependenciesAt, 'function');
   const f = await catalogFixture(t);
@@ -2018,11 +2157,18 @@ for (const file of [
   'packages/runtime/dist/index.js.map',
   'packages/runtime/dist/index.js',
   'packages/runtime/test/helpers/worker.mjs',
+  'packages/a/package.json',
+  'fixtures/native/java/source/Test.java',
 ]) {
   test(`D5 profile-map amendment still refuses raw drift: ${file}`, async (t) => {
     const f = await catalogFixture(t);
     const before = await replay.discoverRefreshReplayDependenciesAt(f.options);
-    await writeFile(path.join(f.repositoryPath, file), 'unapproved change');
+    await writeFile(
+      path.join(f.repositoryPath, file),
+      file.endsWith('/package.json')
+        ? '{"name":"@fixture/a","version":"2","dependencies":{"external":"1"}}\n'
+        : 'unapproved change',
+    );
     const after = await replay.discoverRefreshReplayDependenciesAt(f.options);
     await assert.rejects(
       replay.verifyRefreshReplayDependencyCatalog(after, before.roots, before.dependencies),

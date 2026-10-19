@@ -1,5 +1,25 @@
 # Current Status
 
+2026-10-19 user confirms the narrow PR20 cache/layout amendment. Same closeout
+Tasks7/8 continue Native/inline: versioned generator v3 excludes only exact regular
+workspace dist/.tsbuildinfo; new exclusive v2 root C:\CodeAtlas-P05-D5-R2. Old root,
+2345-entry evidence, profile and Release416886384/asset655180938 remain immutable.
+Versioned implementation now has genuine RED/GREEN: final catalog/raw-drift32/32,
+layout/pack/runner71/71, current root1582pass/0fail/1existing Windows skip and
+IR type check exit0 (task8-cache-* receipts in the existing closeout workspace).
+Architecture17 passes and product hash remains0ea17dfc...2711d. Fresh independent
+patched clean checkout/build matches all2329 v3 dependencies byte-for-byte,
+differences[] (task8-cache-independent-v2-catalog.json); no copied build caches.
+Fresh review's two Important findings are fixed in one test-first pass: preserve
+installed node_modules directory skip and reject hard-linked excluded caches.
+Original two-case RED and32/32 GREEN retained. No Critical/Minor; failed first
+reviewer startup is not counted as review. Post-review full root is running with
+its own task8-cache-reviewed-root receipt; fresh22/110/22/reconstruction remain
+pending, followed by separate exact numerical approval. No hosted success,
+merge or phase promotion follows.
+The pending-design hold below is historical; background stays paused while this
+owned batch runs, then follows its updated ledger rather than retrying old CI.
+
 2026-10-19T05:52Z settled PR20 diagnosis: run39197534643 overallFAIL. TypeScript
 and Rust PASS; original real-binary Java112/114 and required exact-pack stepFAIL.
 All683 REFRESH contracts, Storage rollback/ownership, existing purpose reservations

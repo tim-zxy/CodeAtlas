@@ -1,5 +1,10 @@
 # Runtime and Configuration Specification
 
+2026-10-19 accepted PR20 cache/layout correction grants no new reservation.
+Product defaults/caps/SQL charges, C256MiB and D-only1e9 input stay unchanged.
+New v2-layout/v3-catalog corpus needs original22/110/22 and its own exact numeric
+approval; old376422400 entry remains scoped solely to its historical corpus.
+
 2026-10-19 exact value approved and installed: REFRESH_TRANSPORT376422400bytes
 for candidate91a9e2477f490b93ce76f5d5bb6b5becdc41b976282e511ad73db30ca128aa25
 and fixed-layout corpus1aa37f7ac114baa2e0262af19205d9b05c2fdb63ed8794432da9b38fa6dedcb2.

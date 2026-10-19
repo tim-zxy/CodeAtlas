@@ -23,6 +23,30 @@ const layout = await import('./helpers/native-refresh-ci-layout.mjs').catch((err
 const native = Buffer.from('owned synthetic executable bytes\n');
 const nativeSha256 = createHash('sha256').update(native).digest('hex');
 
+test('versioned operational layouts preserve v1 and choose R2 for new generation', () => {
+  assert.equal(typeof layout.refreshCiLayoutRootForRevision, 'function');
+  assert.equal(
+    layout.refreshCiLayoutRootForRevision('p05-d5-exact-layout-v1'),
+    'C:\\CodeAtlas-P05-D5',
+  );
+  assert.equal(
+    layout.refreshCiLayoutRootForRevision('p05-d5-exact-layout-v2'),
+    'C:\\CodeAtlas-P05-D5-R2',
+  );
+  assert.equal(layout.refreshCiLayoutRoot, 'C:\\CodeAtlas-P05-D5-R2');
+  assert.equal(layout.refreshCiLayoutRevision, 'p05-d5-exact-layout-v2');
+  assert.throws(() => layout.refreshCiLayoutRootForRevision('other-layout'), /revision|layout/i);
+});
+
+test('operational output confinement preserves both frozen layouts', () => {
+  assert.equal(typeof layout.assertRefreshCiOutputOutsideLayouts, 'function');
+  for (const root of ['C:\\CodeAtlas-P05-D5', 'C:\\CodeAtlas-P05-D5-R2']) {
+    for (const output of [root, path.join(root, 'evidence', 'trial')])
+      assert.throws(() => layout.assertRefreshCiOutputOutsideLayouts(output), /overlap|layout/i);
+  }
+  layout.assertRefreshCiOutputOutsideLayouts('C:\\CodeAtlas-P05-D5-R20\\output');
+});
+
 async function fixture(t) {
   const parent = await mkdtemp(path.join(tmpdir(), 'codeatlas-ci-layout-'));
   t.after(() => rm(parent, { recursive: true, force: true }));

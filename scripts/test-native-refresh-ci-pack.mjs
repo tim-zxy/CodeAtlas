@@ -157,6 +157,27 @@ function record() {
   };
 }
 
+test('pack output refuses both frozen layouts before reading ownership or evidence', async () => {
+  for (const root of ['C:\\CodeAtlas-P05-D5', 'C:\\CodeAtlas-P05-D5-R2'])
+    await assert.rejects(
+      () =>
+        pack.createRefreshCiPack({
+          layout: {},
+          candidatePath: '',
+          holdoutPath: '',
+          outputArchive: path.join(root, 'new.zip'),
+        }),
+      /overlaps frozen layout/i,
+    );
+});
+
+test('pack approval parsing preserves historical v1 and current v2 without retagging evidence', () => {
+  for (const layoutRevision of ['p05-d5-exact-layout-v1', 'p05-d5-exact-layout-v2']) {
+    const input = { ...record(), layoutRevision };
+    assert.deepEqual(pack.validateRefreshCiApproval(input), input);
+  }
+});
+
 test('pack approval validator copies and freezes data without granting physical eligibility', () => {
   assert.equal(typeof pack.validateRefreshCiApproval, 'function');
   const input = record();

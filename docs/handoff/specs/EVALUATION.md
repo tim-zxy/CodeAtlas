@@ -1,5 +1,13 @@
 # Evaluation Specification
 
+2026-10-19 accepted PR20 cache/layout amendment: generator v3 excludes only
+exact workspace dist/.tsbuildinfo regular files; historical v2 policy stays exact.
+New layout v2 at C:\CodeAtlas-P05-D5-R2 requires fresh22 qualification,110 original
+calibration,22 independent holdouts and independent candidate reconstruction.
+Separate exact numeric approval and actual22 local/clean-host still required.
+No old approval/evidence is retagged; original Manifest/goldens/thresholds stay.
+The accepted contract is ../../superpowers/specs/2026-10-19-p05-ci-build-cache-compatibility-proposal.md.
+
 2026-10-19 original local collect-approved actual22 passes all strict validators:
 22 admitted rows,0failures,peak338006016<=376422400. Complete original attempts
 are exported with hashes; immutable ZIP/candidate/holdout post-checks pass.
