@@ -1,5 +1,18 @@
 # Current Status
 
+2026-10-19 login repaired; integration now blocked by token WORKFLOW permission,
+not missing approval or invalid credentials. Authenticated repo read succeeds
+as tim-zxy. Authorized push of local delivery67e2acb to the scoped feature branch
+is rejected by GitHub: refusing Personal Access Token creation/update of
+`.github/workflows/ci.yml` without `workflow` scope. Do not drop the required CI
+change, force push or bypass the permission with another ref-write route.
+No feature ref, Release, PR, hosted acceptance or merge was created. Remote main
+remains8093b2bcfd7160005461805cd7ce9e1e95a3bef5. Repair workflow-write permission
+on the selected repository credential, then resume the existing authorized
+publication/real-ID record/PR/required-green integration sequence. Local commit,
+pristine ZIP and all evidence are preserved; no measurements were repeated.
+The earlier HTTP401/authentication notice below is historical and superseded.
+
 2026-10-19 integration authorization received: the user's subsequent “确认”
 accepts the consolidated scoped submission/push, reviewed synthetic Release
 asset, real-ID approval record, PR and merge only after required hosted CI and

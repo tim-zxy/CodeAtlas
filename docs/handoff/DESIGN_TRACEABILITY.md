@@ -1,5 +1,12 @@
 # Design Traceability
 
+2026-10-19 remote preflight after login repair: successful authenticated repo
+read maps to the repaired account; local delivery67e2acb maps to193 audited files.
+Push is explicitly rejected for missing workflow-write permission on ci.yml.
+No feature ref, Release/asset IDs, PR, hosted result or merge exists; main remains
+8093b2bcfd7160005461805cd7ce9e1e95a3bef5. Earlier401 is superseded, not the
+required hosted/real-ID/Phase audit obligations. Do not bypass the CI/ref boundary.
+
 2026-10-19 integration boundary update: user's subsequent “确认” maps to the
 scoped integration approval in DESIGN_AUTHORITY. Local scope inspection identifies
 193 deliverable paths, excluding caches/scratch/unrelated EOL-only changes.
