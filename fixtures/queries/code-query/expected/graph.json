@@ -1,0 +1,110 @@
+{
+  "nodes": [
+    { "id": "query-node-isolated", "kind": "SYMBOL", "name": "isolated" },
+    { "id": "query-node-leaf", "kind": "SYMBOL", "name": "leaf" },
+    { "id": "query-node-left", "kind": "SYMBOL", "name": "left" },
+    { "id": "query-node-right", "kind": "SYMBOL", "name": "right" },
+    { "id": "query-node-root", "kind": "SYMBOL", "name": "root" },
+    { "id": "query-node-run-0", "kind": "SYMBOL", "name": "run" },
+    { "id": "query-node-run-1", "kind": "SYMBOL", "name": "run" },
+    { "id": "query-node-type", "kind": "TYPE", "name": "QueryGraph" }
+  ],
+  "edges": [
+    {
+      "id": "query-edge-01",
+      "kind": "CALL",
+      "source_node_id": "query-node-root",
+      "target_state": "RESOLVED",
+      "resolution": "EXACT",
+      "target_node_id": "query-node-left"
+    },
+    {
+      "id": "query-edge-02",
+      "kind": "CALL",
+      "source_node_id": "query-node-root",
+      "target_state": "RESOLVED",
+      "resolution": "EXACT",
+      "target_node_id": "query-node-right"
+    },
+    {
+      "id": "query-edge-03",
+      "kind": "CALL",
+      "source_node_id": "query-node-left",
+      "target_state": "RESOLVED",
+      "resolution": "EXACT",
+      "target_node_id": "query-node-leaf"
+    },
+    {
+      "id": "query-edge-04",
+      "kind": "CALL",
+      "source_node_id": "query-node-right",
+      "target_state": "RESOLVED",
+      "resolution": "EXACT",
+      "target_node_id": "query-node-leaf"
+    },
+    {
+      "id": "query-edge-05",
+      "kind": "CALL",
+      "source_node_id": "query-node-leaf",
+      "target_state": "RESOLVED",
+      "resolution": "EXACT",
+      "target_node_id": "query-node-root"
+    },
+    {
+      "id": "query-edge-06",
+      "kind": "CALL",
+      "source_node_id": "query-node-root",
+      "target_state": "UNRESOLVED",
+      "resolution": "AMBIGUOUS",
+      "target_node_id": null
+    },
+    {
+      "id": "query-edge-07",
+      "kind": "CALL",
+      "source_node_id": "query-node-root",
+      "target_state": "UNRESOLVED",
+      "resolution": "UNSUPPORTED",
+      "target_node_id": null
+    },
+    {
+      "id": "query-edge-08",
+      "kind": "CALL",
+      "source_node_id": "query-node-root",
+      "target_state": "RESOLVED",
+      "resolution": "HEURISTIC",
+      "target_node_id": "query-node-root"
+    },
+    {
+      "id": "query-edge-09",
+      "kind": "REFERENCE",
+      "source_node_id": "query-node-root",
+      "target_state": "RESOLVED",
+      "resolution": "EXACT",
+      "target_node_id": "query-node-type"
+    },
+    {
+      "id": "query-edge-10",
+      "kind": "IMPORT",
+      "source_node_id": "query-node-type",
+      "target_state": "UNRESOLVED",
+      "resolution": "UNRESOLVED",
+      "target_node_id": null
+    },
+    {
+      "id": "query-edge-11",
+      "kind": "INHERITANCE",
+      "source_node_id": "query-node-type",
+      "target_state": "UNRESOLVED",
+      "resolution": "UNRESOLVED",
+      "target_node_id": null
+    },
+    {
+      "id": "query-edge-12",
+      "kind": "OVERRIDE",
+      "source_node_id": "query-node-run-1",
+      "target_state": "RESOLVED",
+      "resolution": "EXACT",
+      "target_node_id": "query-node-run-0"
+    }
+  ]
+}

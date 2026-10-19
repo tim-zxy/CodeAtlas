@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "p05-code-query-cli-v1",
+  "category": "code-intelligence",
+  "phase": "0.5",
+  "languages": ["java"],
+  "frameworks": [],
+  "capabilities": ["SYMBOL_QUERY", "CODE_TRACE"],
+  "inputs": {
+    "source": "source/",
+    "observation": "inputs/observation.json",
+    "patch": "inputs/patch.json",
+    "cases": "inputs/cases.json"
+  },
+  "expected": {
+    "graph": "expected/graph.json",
+    "results": "expected/results.json",
+    "hashes": "expected/hashes.json"
+  },
+  "criticalFacts": [
+    { "id": "query-node-root", "type": "NODE", "importance": "CRITICAL" },
+    { "id": "query-edge-01", "type": "EDGE", "importance": "CRITICAL" }
+  ],
+  "qualityGates": {}
+}

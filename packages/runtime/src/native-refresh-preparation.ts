@@ -17,11 +17,23 @@ import {
 import { boundedJson } from '../../providers/dist/native-request-json.js';
 import {
   readNativeRefreshBaseline,
+  assertNativeStringBudget,
   AnalysisPatchError,
+  type NativeStateLimits,
   type NativeStateExpectation,
   type NativeRefreshReadResult,
 } from '../../storage/dist/index.js';
 import { assertNativeRefreshTransportAdmission } from './native-metadata-admission.js';
+import {
+  nativeSqlSourceRole,
+  nativeSqlSourceDomainFor,
+  bindNativeSqlSourceDomain,
+  beginNativeSqlSourceDomain,
+  replaceNativeSqlSourceDomain,
+  transferNativeSqlSourceDomain,
+  endNativeSqlSourceDomain,
+  proveNativeSqlDisposition,
+} from '../../storage/dist/analysis/native-apply-sql-observation.js';
 
 export interface NativeRefreshInvocationV3 {
   readonly requestId: string;
@@ -45,7 +57,11 @@ function freeze<T>(value: T): T {
   }
   return value;
 }
-function metadataLimits(memoryBudgetBytes: number, options: NativeClientOptions) {
+function metadataLimits(
+  memoryBudgetBytes: number,
+  options: NativeClientOptions,
+  workspaceReservationBytes = 0,
+): NativeStateLimits {
   const maxSerializedBytes =
     options.limits?.maxStdinBytes ?? NATIVE_CLIENT_HARD_LIMITS.maxStdinBytes;
   if (
@@ -57,7 +73,21 @@ function metadataLimits(memoryBudgetBytes: number, options: NativeClientOptions)
       'INVALID_CONFIGURATION',
       'Native refresh metadata limit is invalid',
     );
-  return { maxSerializedBytes, memoryBudgetBytes };
+  return { maxSerializedBytes, memoryBudgetBytes, workspaceReservationBytes };
+}
+
+/** Private shared mapping for preparation and the common kernel, not admission. */
+export function assertNativeRefreshSqlBudget(bytes: number, limits: NativeStateLimits): void {
+  try {
+    assertNativeStringBudget(bytes, limits);
+  } catch (error) {
+    if (error instanceof Error && error.message === 'Native metadata resource limit exceeded')
+      throw new NativeStateValidationError(
+        'RESOURCE_LIMIT_EXCEEDED',
+        'Native refresh retained SQL exceeds memory budget',
+      );
+    throw error;
+  }
 }
 function snapshotContext(
   value: NativeRefreshInvocationV3,
@@ -142,10 +172,54 @@ export function createNativeRefreshPreparation(
   baseline: NativeRefreshReadResult,
   memoryBudgetBytes: number,
   options: NativeClientOptions,
+  workspaceReservationBytes = 0,
 ) {
-  const limits = metadataLimits(memoryBudgetBytes, options);
+  const role = nativeSqlSourceRole();
+  let handle = nativeSqlSourceDomainFor(baseline);
+  let handedOff = false;
+  try {
+    // Parameter handoff retains the selected baseline even if context validation fails.
+    if (handle !== null && role !== null)
+      transferNativeSqlSourceDomain(handle, 'PREPARATION', role);
+    const prepared = createNativeRefreshPreparationOwned(
+      invocation,
+      baseline,
+      memoryBudgetBytes,
+      options,
+      workspaceReservationBytes,
+      (bytes) => {
+        if (role === null) return;
+        if (handle === null) handle = beginNativeSqlSourceDomain('PREPARATION', role, bytes);
+        else replaceNativeSqlSourceDomain(handle, bytes);
+      },
+    );
+    bindNativeSqlSourceDomain(prepared, handle);
+    handedOff = true;
+    return prepared;
+  } finally {
+    if (!handedOff && handle !== null) endNativeSqlSourceDomain(handle);
+  }
+}
+
+function createNativeRefreshPreparationOwned(
+  invocation: NativeRefreshInvocationV3,
+  baseline: NativeRefreshReadResult,
+  memoryBudgetBytes: number,
+  options: NativeClientOptions,
+  workspaceReservationBytes = 0,
+  onSourceCensus?: (bytes: number) => void,
+) {
+  const limits = metadataLimits(memoryBudgetBytes, options, workspaceReservationBytes);
   const context = snapshotContext(invocation, memoryBudgetBytes, limits.maxSerializedBytes);
   if (baseline.status === 'UNAVAILABLE') {
+    const role = nativeSqlSourceRole();
+    if (role !== null)
+      proveNativeSqlDisposition(
+        'PREPARATION',
+        role,
+        'PROVEN_NO_TEXT',
+        'Unavailable baseline has no SQL TEXT carrier; preparation refuses before source acquisition',
+      );
     if (['MISSING', 'INCOMPATIBLE', 'NOT_APPLICABLE'].includes(baseline.reason))
       throw new AnalysisPatchError('FULL_ANALYSIS_REQUIRED');
     throw new NativeStateValidationError(
@@ -153,6 +227,34 @@ export function createNativeRefreshPreparation(
       'Native refresh baseline unavailable',
     );
   }
+  // Only original SQL-derived fields retained through seal. Parsed bundle and
+  // request copies are workspace allocations, not repeated SQL representation
+  // charges. Stage separately owns/charges its detached Native context copy.
+  let retainedSqlBytes = 0;
+  const charge = (...values: (string | null | undefined)[]) => {
+    for (const value of values) if (value != null) retainedSqlBytes += Buffer.byteLength(value);
+  };
+  charge(baseline.state.headerJson, baseline.state.summaryDigest);
+  for (const file of baseline.state.files)
+    charge(file.sourceFileId, file.sourcePath, file.contentFingerprint, file.summaryJson);
+  for (const file of baseline.targetSourceFiles)
+    charge(
+      file.id,
+      file.repositoryId,
+      file.revisionId,
+      file.path,
+      file.contentFingerprint,
+      file.classification.role,
+      file.classification.provenance,
+      file.classification.contentKind,
+      file.languageHint,
+      file.sensitivity,
+    );
+  charge(baseline.token.indexedRevisionId, baseline.token.indexedContentFingerprint);
+  for (const state of baseline.token.states)
+    charge(state.providerId, state.snapshotId, state.summaryDigest);
+  onSourceCensus?.(retainedSqlBytes);
+  assertNativeRefreshSqlBudget(retainedSqlBytes, limits);
   const bundle = NativeAnalysisStateBundleV1Schema.parse({
     header: JSON.parse(baseline.state.headerJson),
     summaries: baseline.state.files.map((file) => JSON.parse(file.summaryJson)),
@@ -222,10 +324,12 @@ export function createNativeRefreshPreparation(
   return freeze({
     request,
     baseline: bundle,
+    baselineState: baseline.state,
     token: baseline.token,
     targetSourceFiles: structuredClone(target),
     descriptor: context.descriptor,
     trustedContext: context.trustedContext,
+    retainedSqlBytes,
     limits,
   });
 }
@@ -236,8 +340,8 @@ export function prepareNativeRefreshAnalysisV3(
   openContext: () => NativeRefreshInvocationV3,
   options: NativeClientOptions,
 ) {
-  assertNativeRefreshTransportAdmission(memoryBudgetBytes);
-  const limits = metadataLimits(memoryBudgetBytes, options);
+  const reservation = assertNativeRefreshTransportAdmission(memoryBudgetBytes);
+  const limits = metadataLimits(memoryBudgetBytes, options, reservation);
   const context = snapshotContext(openContext(), memoryBudgetBytes, limits.maxSerializedBytes);
   const baseline = readNativeRefreshBaseline(
     database,
@@ -245,5 +349,5 @@ export function prepareNativeRefreshAnalysisV3(
     validateNativeStateCandidate,
     limits,
   );
-  return createNativeRefreshPreparation(context, baseline, memoryBudgetBytes, options);
+  return createNativeRefreshPreparation(context, baseline, memoryBudgetBytes, options, reservation);
 }

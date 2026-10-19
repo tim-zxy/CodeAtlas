@@ -1,5 +1,24 @@
 # Architecture
 
+2026-10-18 ADR-019 operational refinement stays private to development evidence:
+.NET ZIP materialization uses bounded read-only Windows-native decoded-integrity
+verification; immutable assets/pristine ZIP remain distinct from transient mutable
+replay scratch. Complete original actual attempts export with source mapping and
+hashes; copied artifacts/read-only pack sources cannot gain restore/extract
+authority. No Provider/Canonical/IPC/SQLite/product setting or roadmap change.
+
+2026-10-18 written ADR-019 accepted; exact-layout test replay and explicit D
+input remain Fixture/Evaluation tooling. Existing FROZEN architecture is unchanged.
+The revised existing plan executes Native/batch with original material gates;
+earlier proposal-pending notices below are historical, not implementation proof.
+
+2026-10-18 proposed [ADR-019](adr/ADR-019-d5-exact-layout-ci-replay.md) confines
+D input feasibility and exact-layout CI replay to Fixture/Evaluation tooling.
+It does not change Canonical IR, IPC, TypeScript Store ownership, SQL charging,
+static admission or any FROZEN invariant below. The pinned synthetic test-pack
+path is not a production downloader or remote fallback. Written review pending;
+no implementation or new architecture acceptance is claimed.
+
 Packet D written-spec acceptance (2026-10-04): the latest user “确认” accepts the [composition specification](../superpowers/specs/2026-10-04-p05-w3-020-native-refresh-composition-design.md). Its [D1–D6 executable plan](../superpowers/plans/2026-10-04-p05-w3-020-native-refresh-composition.md) is written and awaiting separate review/native execution confirmation. No code, Fixture registration, memory calibration/profile installation, gate passage or phase promotion follows. Final-build exact-purpose measurement and separate numeric approval precede production acceptance; E and original phase exits remain open. Earlier direction-only/pending-spec/missing-plan notes below are historical.
 
 Packet D direction approved (2026-10-04); the [written Runtime/Store composition design](../superpowers/specs/2026-10-04-p05-w3-020-native-refresh-composition-design.md) awaits review. It proposes a distinct v3 streaming path and database-bound retained-support/delta overlay seal within the existing Store transaction, not raw Provider persistence or a second resolver/writer. ADR-016, strict v1/v2, Canonical/ProviderSnapshot v1 and R010 remain unchanged; no implementation or incremental capability is claimed.

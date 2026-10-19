@@ -19,14 +19,25 @@ use codeatlas_native_analyzer::source_access::{SourceAccessError, read_verified_
 use serde_json::{Map, Value, json};
 use sha2::{Digest, Sha256};
 
+mod observation;
 mod refresh;
+use observation::{ParseObservation, ParseObserver, ParseOperation, ParseOutcome};
 
-pub(crate) fn run_refresh_v3<W: Write>(
+pub(crate) fn run_refresh_v3<W: Write, E: Write + Send>(
     request: &codeatlas_native_analyzer::request_v3::ValidatedRequestV3,
     workers: NonZeroUsize,
     output: &mut W,
+    diagnostics: &mut E,
 ) -> io::Result<ExitCode> {
-    refresh::run(request, workers, output)
+    let observation = ParseObservation::new(
+        diagnostics,
+        request.header()["requestId"].as_str().unwrap(),
+        workers,
+        ParseOperation::Refresh,
+    );
+    let result = refresh::run_diagnostic(request, workers, output, &observation);
+    observation.finish();
+    result
 }
 
 const MAX_LINE_BYTES: usize = 1_000_000;
@@ -98,13 +109,14 @@ pub(crate) fn run<W: Write, E: Write>(
             return Ok(ExitCode::SUCCESS);
         }
     };
-    run_parsed(request, worker_count, output, None)
+    run_parsed(request, worker_count, output, None, None)
 }
 
-pub(crate) fn run_full_v3<W: Write>(
+pub(crate) fn run_full_v3<W: Write, E: Write + Send>(
     header: &Value,
     worker_count: NonZeroUsize,
     output: &mut W,
+    diagnostics: &mut E,
 ) -> io::Result<ExitCode> {
     let context = &header["payload"]["analysisStateContext"];
     let language = &context["language"];
@@ -146,7 +158,21 @@ pub(crate) fn run_full_v3<W: Write>(
     state.insert("sourceFileCount".into(), json!(request.source_files.len()));
     state.insert("summaryDigest".into(), json!("0".repeat(64)));
     drop(legacy);
-    run_parsed(request, worker_count, output, Some(Value::Object(state)))
+    let observation = ParseObservation::new(
+        diagnostics,
+        &request.id,
+        worker_count,
+        ParseOperation::Analyze,
+    );
+    let result = run_parsed(
+        request,
+        worker_count,
+        output,
+        Some(Value::Object(state)),
+        Some(&observation),
+    );
+    observation.finish();
+    result
 }
 
 fn run_parsed<W: Write>(
@@ -154,6 +180,7 @@ fn run_parsed<W: Write>(
     worker_count: NonZeroUsize,
     output: &mut W,
     state: Option<Value>,
+    observation: Option<&dyn ParseObserver>,
 ) -> io::Result<ExitCode> {
     if !request
         .capabilities
@@ -232,6 +259,9 @@ fn run_parsed<W: Write>(
         )?;
         return Ok(ExitCode::SUCCESS);
     }
+    if let Some(observer) = observation {
+        observer.begin();
+    }
     if !stream.emit("ANALYSIS_STARTED", context.clone(), false)? {
         return Ok(ExitCode::SUCCESS);
     }
@@ -240,7 +270,14 @@ fn run_parsed<W: Write>(
         .iter()
         .any(|capability| capability != "SYMBOL")
     {
-        return run_relations(&request, worker_count, &context, &mut stream, || {});
+        return run_relations(
+            &request,
+            worker_count,
+            &context,
+            &mut stream,
+            || {},
+            observation,
+        );
     }
     let started = Instant::now();
     let mut counts = Counts::default();
@@ -253,9 +290,18 @@ fn run_parsed<W: Write>(
             return stream.fail(&context, "BUDGET_EXCEEDED", "Analysis deadline exceeded");
         }
         let root = request.root.clone();
-        let Some(results) = timed_batch(chunk, remaining, move |file, deadline, cancelled| {
-            parse_source(&root, &file, deadline, cancelled, false)
-        }) else {
+        let Some(results) =
+            timed_batch(chunk, remaining, move |file, deadline, cancelled, slot| {
+                parse_source(
+                    &root,
+                    &file,
+                    deadline,
+                    cancelled,
+                    false,
+                    observation.map(|o| (o, slot)),
+                )
+            })
+        else {
             return stream.fail(&context, "BUDGET_EXCEEDED", "Analysis deadline exceeded");
         };
         for (source_file, result) in chunk.iter().zip(results) {
@@ -396,6 +442,7 @@ fn run_relations<W: Write>(
     context: &Value,
     stream: &mut EventWriter<'_, W>,
     before_second_pass: impl FnOnce(),
+    observation: Option<&dyn ParseObserver>,
 ) -> io::Result<ExitCode> {
     let started = Instant::now();
     let worker_bytes = (worker_count.get() as u64).saturating_mul(WORKER_RESERVATION_BYTES);
@@ -414,9 +461,18 @@ fn run_relations<W: Write>(
             return stream.fail(context, "BUDGET_EXCEEDED", "Analysis deadline exceeded");
         }
         let root = request.root.clone();
-        let Some(results) = timed_batch(chunk, remaining, move |file, deadline, cancelled| {
-            parse_source(&root, &file, deadline, cancelled, true)
-        }) else {
+        let Some(results) =
+            timed_batch(chunk, remaining, move |file, deadline, cancelled, slot| {
+                parse_source(
+                    &root,
+                    &file,
+                    deadline,
+                    cancelled,
+                    true,
+                    observation.map(|o| (o, slot)),
+                )
+            })
+        else {
             return stream.fail(context, "BUDGET_EXCEEDED", "Analysis deadline exceeded");
         };
         for (source_file, result) in chunk.iter().zip(results) {
@@ -464,9 +520,18 @@ fn run_relations<W: Write>(
             return stream.fail(context, "BUDGET_EXCEEDED", "Analysis deadline exceeded");
         }
         let root = request.root.clone();
-        let Some(results) = timed_batch(chunk, remaining, move |file, deadline, cancelled| {
-            parse_source(&root, &file, deadline, cancelled, true)
-        }) else {
+        let Some(results) =
+            timed_batch(chunk, remaining, move |file, deadline, cancelled, slot| {
+                parse_source(
+                    &root,
+                    &file,
+                    deadline,
+                    cancelled,
+                    true,
+                    observation.map(|o| (o, slot)),
+                )
+            })
+        else {
             return stream.fail(context, "BUDGET_EXCEEDED", "Analysis deadline exceeded");
         };
         for (source_file, result) in chunk.iter().zip(results) {
@@ -1005,41 +1070,42 @@ fn timed_batch<T, R, F>(
     process: F,
 ) -> Option<Vec<std::thread::Result<R>>>
 where
-    T: Clone + Send + 'static,
-    R: Send + 'static,
-    F: Fn(T, Instant, &AtomicBool) -> R + Send + Sync + 'static,
+    T: Clone + Send,
+    R: Send,
+    F: Fn(T, Instant, &AtomicBool, usize) -> R + Sync,
 {
     let deadline = Instant::now().checked_add(remaining)?;
     let cancelled = Arc::new(AtomicBool::new(false));
-    let process = Arc::new(process);
     let (sender, receiver) = std::sync::mpsc::sync_channel(files.len());
-    let mut handles = Vec::with_capacity(files.len());
-    for (index, file) in files.iter().cloned().enumerate() {
-        let sender = sender.clone();
-        let cancelled = Arc::clone(&cancelled);
-        let process = Arc::clone(&process);
-        handles.push(std::thread::spawn(move || {
-            let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
-                process(file, deadline, &cancelled)
+    std::thread::scope(|scope| {
+        let mut handles = Vec::with_capacity(files.len());
+        for (index, file) in files.iter().cloned().enumerate() {
+            let sender = sender.clone();
+            let cancelled = Arc::clone(&cancelled);
+            let process = &process;
+            handles.push(scope.spawn(move || {
+                let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                    process(file, deadline, &cancelled, index)
+                }));
+                let _ = sender.send((index, result));
             }));
-            let _ = sender.send((index, result));
-        }));
-    }
-    drop(sender);
-    let mut ordered: Vec<_> = std::iter::repeat_with(|| None).take(files.len()).collect();
-    for _ in files {
-        match receiver.recv_timeout(deadline.saturating_duration_since(Instant::now())) {
-            Ok((index, result)) => ordered[index] = Some(result),
-            Err(_) => {
-                cancelled.store(true, Ordering::Relaxed);
-                return None;
+        }
+        drop(sender);
+        let mut ordered: Vec<_> = std::iter::repeat_with(|| None).take(files.len()).collect();
+        for _ in files {
+            match receiver.recv_timeout(deadline.saturating_duration_since(Instant::now())) {
+                Ok((index, result)) => ordered[index] = Some(result),
+                Err(_) => {
+                    cancelled.store(true, Ordering::Relaxed);
+                    return None;
+                }
             }
         }
-    }
-    for handle in handles {
-        let _ = handle.join();
-    }
-    Some(ordered.into_iter().map(Option::unwrap).collect())
+        for handle in handles {
+            let _ = handle.join();
+        }
+        Some(ordered.into_iter().map(Option::unwrap).collect())
+    })
 }
 
 #[cfg(test)]
@@ -1062,15 +1128,35 @@ fn parse_source(
     deadline: Instant,
     cancelled: &AtomicBool,
     with_relations: bool,
+    observation: Option<(&dyn ParseObserver, usize)>,
 ) -> Result<LanguageAnalysis, ProcessingError> {
-    parse_source_observed(
+    let entered = AtomicBool::new(false);
+    let result = parse_source_observed(
         root,
         source_file,
         deadline,
         cancelled,
         with_relations,
-        &|_| {},
-    )
+        &|_| {
+            entered.store(true, Ordering::Relaxed);
+            if let Some((observer, slot)) = observation {
+                observer.started(source_file["id"].as_str().unwrap(), slot);
+            }
+        },
+    );
+    if entered.load(Ordering::Relaxed)
+        && let Some((observer, slot)) = observation
+    {
+        let outcome = match &result {
+            Ok(analysis) if matches!(analysis.coverage, SyntaxCoverage::Complete) => {
+                ParseOutcome::Succeeded
+            }
+            Ok(_) => ParseOutcome::Partial,
+            Err(_) => ParseOutcome::Failed,
+        };
+        observer.finished(source_file["id"].as_str().unwrap(), slot, outcome);
+    }
+    result
 }
 
 fn parse_source_observed<F: Fn(&str) + Sync>(
@@ -1966,6 +2052,7 @@ mod tests {
             || {
                 fs::write(&path, changed).unwrap();
             },
+            None,
         )
         .unwrap();
         let events: Vec<serde_json::Value> = output
@@ -2029,6 +2116,7 @@ mod tests {
             &context,
             &mut stream,
             || {},
+            None,
         )
         .unwrap();
         let events: Vec<serde_json::Value> = output
@@ -2088,7 +2176,7 @@ mod tests {
         let result = timed_batch(
             &[0usize, 1],
             Duration::from_millis(25),
-            |index, _, cancelled| {
+            |index, _, cancelled, _| {
                 if index == 0 {
                     while !cancelled.load(Ordering::Relaxed) {
                         std::thread::sleep(Duration::from_millis(5));
@@ -2099,6 +2187,24 @@ mod tests {
         );
         assert!(result.is_none());
         assert!(started.elapsed() < Duration::from_millis(500));
+    }
+
+    #[test]
+    fn observation_timeout_joins_cancelled_worker_before_borrowed_writer_returns() {
+        let settled = std::sync::atomic::AtomicBool::new(false);
+        let result = timed_batch(
+            &[0usize],
+            Duration::from_millis(25),
+            |_, _, cancelled, _| {
+                while !cancelled.load(Ordering::Relaxed) {
+                    std::thread::yield_now();
+                }
+                std::thread::sleep(Duration::from_millis(10));
+                settled.store(true, Ordering::Relaxed);
+            },
+        );
+        assert!(result.is_none());
+        assert!(settled.load(Ordering::Relaxed));
     }
 
     #[test]

@@ -29,7 +29,7 @@ enum RequestFailure {
     },
 }
 
-pub(crate) fn serve_once<R: Read, W: Write, E: Write>(
+pub(crate) fn serve_once<R: Read, W: Write, E: Write + Send>(
     input: &mut R,
     output: &mut W,
     diagnostics: &mut E,
@@ -37,7 +37,7 @@ pub(crate) fn serve_once<R: Read, W: Write, E: Write>(
     serve_once_impl(input, output, diagnostics, None)
 }
 
-pub(crate) fn serve_once_with_workers<R: Read, W: Write, E: Write>(
+pub(crate) fn serve_once_with_workers<R: Read, W: Write, E: Write + Send>(
     input: &mut R,
     output: &mut W,
     diagnostics: &mut E,
@@ -46,7 +46,7 @@ pub(crate) fn serve_once_with_workers<R: Read, W: Write, E: Write>(
     serve_once_impl(input, output, diagnostics, Some(worker_count))
 }
 
-fn serve_once_impl<R: Read, W: Write, E: Write>(
+fn serve_once_impl<R: Read, W: Write, E: Write + Send>(
     input: &mut R,
     output: &mut W,
     diagnostics: &mut E,
@@ -83,6 +83,7 @@ fn serve_once_impl<R: Read, W: Write, E: Write>(
                     &request,
                     worker_count.unwrap_or(NonZeroUsize::new(1).expect("one worker")),
                     output,
+                    diagnostics,
                 );
             }
             Ok(request) => {
@@ -90,6 +91,7 @@ fn serve_once_impl<R: Read, W: Write, E: Write>(
                     request.header(),
                     worker_count.unwrap_or(NonZeroUsize::new(1).expect("one worker")),
                     output,
+                    diagnostics,
                 );
             }
         }
@@ -384,7 +386,18 @@ mod tests {
             "payload":{"summaryRecords":0,"integrityChecksum":format!("{:x}",sha2::Sha256::digest(prefix.as_bytes()))}});
         let (exit, output, diagnostics) = run(format!("{prefix}{completion}\n").as_bytes());
         assert_eq!(exit, ExitCode::SUCCESS);
-        assert!(diagnostics.is_empty());
+        let trace: Vec<Value> = diagnostics
+            .split(|b| *b == b'\n')
+            .filter(|line| !line.is_empty())
+            .map(|line| serde_json::from_slice(line).unwrap())
+            .collect();
+        assert_eq!(trace.len(), 2);
+        assert_eq!(trace[0]["event"], "BEGIN");
+        assert_eq!(trace[0]["operation"], "REFRESH");
+        assert_eq!(trace[1]["event"], "END");
+        assert_eq!(trace[1]["complete"], true);
+        assert_eq!(trace[1]["started"], 0);
+        assert_eq!(trace[1]["finished"], 0);
         let events: Vec<Value> = output
             .split(|b| *b == b'\n')
             .filter(|l| !l.is_empty())

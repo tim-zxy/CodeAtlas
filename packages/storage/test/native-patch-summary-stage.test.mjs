@@ -13,9 +13,8 @@ import {
   validateNativeRefreshOverlay,
 } from '../../providers/dist/index.js';
 import { selectMergedGroup } from '../../providers/dist/fact-merger-selection.js';
-import { normalizeJavaNode } from '../../providers/dist/java-node-normalizer.js';
 import * as patchNormalization from '../../providers/dist/staged-patch.js';
-import { baseCase, stateDigest } from '../../providers/test/helpers/native-full-v3-corpus.mjs';
+import { emptyNativePatch } from './helpers/native-refresh-patch-fixture.mjs';
 
 const limits = { maxSerializedBytes: 1_000_000, memoryBudgetBytes: 16 * 1024 * 1024 };
 // Mechanical Storage retention checks only. Provider semantic/overlay acceptance
@@ -28,6 +27,109 @@ const summary = (id, path) => ({
   diagnostics: [],
   coverage: [],
   emittedFacts: [],
+});
+
+test('D5 Stage SQL high water survives cleanup without rereading SQL or counting owned copies as SQL', async (t) => {
+  const { db, stage } = setup(t);
+  assert.equal(typeof stage.readNativeRetentionMeasurement, 'function');
+  await stage.acceptNativeSummary(summary('file', '中文😀.java'));
+  const bytes = db
+    .prepare(
+      `SELECT sum(length(CAST(source_file_id AS BLOB)) +
+    length(CAST(source_path AS BLOB)) + length(CAST(content_fingerprint AS BLOB)) +
+    length(CAST(summary_json AS BLOB))) AS bytes FROM temp.patch_native_summary`,
+    )
+    .get().bytes;
+  stage.preflightNativeRows();
+  assert.deepEqual(stage.readNativeRetentionMeasurement(), {
+    scope: 'STAGE_SQL_ACCOUNTING_ONLY',
+    retainedSqlBytes: bytes,
+    retainedSqlStringChargeBytes: 2 * bytes,
+    retainedStringChargePeakBytes: 2 * bytes,
+  });
+  db.exec('DELETE FROM temp.patch_native_summary');
+  stage.preflightNativeRows();
+  stage.close();
+  const prepare = db.prepare;
+  db.prepare = () => assert.fail('Telemetry must not read SQL after cleanup');
+  try {
+    const measured = stage.readNativeRetentionMeasurement();
+    assert.equal(measured.retainedSqlBytes, bytes);
+    assert.ok(Object.isFrozen(measured));
+  } finally {
+    db.prepare = prepare;
+  }
+});
+
+test('D5 Stage telemetry preserves admitted SQL high water after budget refusal', async (t) => {
+  const value = summary('file', 'A.java');
+  const bytes = Buffer.byteLength(JSON.stringify(value)) + Buffer.byteLength('fileA.javafile-fp');
+  const { db, stage } = setup(t, { ...limits, memoryBudgetBytes: 2 * bytes });
+  assert.equal(typeof stage.readNativeRetentionMeasurement, 'function');
+  await stage.acceptNativeSummary(value);
+  const before = stage.readNativeRetentionMeasurement();
+  assert.equal(before.retainedSqlBytes, bytes);
+  await assert.rejects(stage.acceptNativeSummary(summary('second', 'B.java')), /resource/i);
+  assert.deepEqual(stage.readNativeRetentionMeasurement(), before);
+  assert.equal(db.prepare('SELECT count(*) AS n FROM temp.patch_native_summary').get().n, 1);
+});
+
+test('D5 Stage seal telemetry includes token and ACTIVE SQL overlap but separates detached representations', async (t) => {
+  const { db, stage, context, snapshot, terminal, expected, token } = await emptyNativePatch(
+    t,
+    true,
+    false,
+    ['f-0'],
+  );
+  assert.equal(typeof stage.readNativeRetentionMeasurement, 'function');
+  stage.confirmNativeSucceeded(terminal, snapshot);
+  const stageBytes = stage.preflightNativeRows().retainedSqlBytes;
+  const tokenBytes =
+    db
+      .prepare(
+        `SELECT sum(length(CAST(repository_id AS BLOB)) +
+    length(CAST(provider_id AS BLOB)) + length(CAST(provider_snapshot_id AS BLOB)) +
+    length(CAST(revision_id AS BLOB)) + length(CAST(content_fingerprint AS BLOB)) +
+    length(CAST(header_json AS BLOB))) AS bytes FROM native_analysis_state`,
+      )
+      .get().bytes +
+    db
+      .prepare(
+        `SELECT sum(coalesce(length(CAST(indexed_revision_id AS BLOB)),0) +
+    coalesce(length(CAST(indexed_content_fingerprint AS BLOB)),0)) AS bytes FROM repository_state`,
+      )
+      .get().bytes;
+  const activeBytes = storage.readNativePatchActiveSupports(db, expected, limits).retainedSqlBytes;
+  assert.ok(activeBytes > 0, 'This case must retain actual ACTIVE support SQL');
+  stage.sealNativePatchState(expected, token, validateNativeRefreshOverlay);
+  const measured = stage.readNativeRetentionMeasurement();
+  assert.equal(measured.retainedSqlBytes, stageBytes + tokenBytes + activeBytes);
+  assert.equal(measured.retainedSqlStringChargeBytes, 2 * measured.retainedSqlBytes);
+  const detachedBytes =
+    Buffer.byteLength(JSON.stringify(context)) +
+    Buffer.byteLength(JSON.stringify({ terminal, snapshot })) +
+    Buffer.byteLength(JSON.stringify({ expected, baselineToken: token }));
+  const sealedBytes = Buffer.byteLength(JSON.stringify(stage.readSealedNativeState()));
+  assert.equal(
+    measured.retainedStringChargePeakBytes,
+    2 * (stageBytes + tokenBytes + activeBytes + detachedBytes) + 3 * sealedBytes,
+  );
+  stage.assertNativeApplicable(
+    db,
+    {
+      repositoryId: expected.repositoryId,
+      revisionId: expected.revisionId,
+      contentFingerprint: expected.contentFingerprint,
+      snapshot,
+    },
+    token,
+  );
+  const applyMeasurement = stage.readNativeRetentionMeasurement();
+  assert.equal(applyMeasurement.retainedSqlBytes, measured.retainedSqlBytes);
+  assert.ok(
+    applyMeasurement.retainedStringChargePeakBytes >= measured.retainedStringChargePeakBytes,
+  );
+  assert.equal(db.isTransaction, false);
 });
 function setup(t, budget = limits) {
   const db = new DatabaseSync(':memory:');
@@ -376,220 +478,6 @@ test('native numeric row ceiling admits equality and refuses excess before TEXT 
 // Component-only real Storage/Provider composition, not admitted Runtime or
 // actual Rust production acceptance. Bootstrap uses the existing validated
 // full Store workflow; no SQL seeds graph, summaries or indexed pointers.
-async function emptyNativePatch(t, withSource = false, twoSources = false, retiredOwners = null) {
-  const db = new DatabaseSync(':memory:');
-  const plan = await storage.loadMigrationPlan(
-    new URL('../migrations/repository/manifest.json', import.meta.url),
-    'REPOSITORY',
-  );
-  for (const migration of plan.migrations) db.exec(migration.sql);
-  db.exec('PRAGMA user_version=10');
-  db.prepare('INSERT INTO repository (slot,id,root_path) VALUES (1,?,?)').run('r', '/r');
-  db.prepare('INSERT INTO repository_state (repository_id) VALUES (?)').run('r');
-  db.prepare(
-    'INSERT INTO revisions (id,repository_id,kind,content_fingerprint) VALUES (?,?,?,?)',
-  ).run('rev', 'r', 'WORKTREE', 'base');
-  const fixture = baseCase(retiredOwners ? 'shared' : withSource ? 'empty' : 'zero-file');
-  const bundle = fixture.bundle;
-  // Component-only corpus: its deliberately nullable synthetic CU facts are
-  // excluded from this owned test copy, just as in the Provider overlay suite.
-  // Frozen corpus helpers/goldens and production normalizers stay unchanged.
-  const nodes = retiredOwners
-    ? fixture.nodes.filter((n) => n.providerKind !== 'java.compilation_unit')
-    : [];
-  if (retiredOwners) {
-    for (const s of bundle.summaries)
-      s.emittedFacts = s.emittedFacts.filter(
-        (f) => !f.providerFactId.startsWith('java-compilation-unit-v1:'),
-      );
-    bundle.header.summaryDigest = stateDigest(bundle.summaries);
-  }
-  if (twoSources) {
-    const second = structuredClone(bundle.summaries[0]);
-    second.sourceFile.id = 'f-1';
-    second.sourceFile.path = 'src/1.java';
-    second.sourceFile.contentFingerprint = 'fp-1';
-    second.coverage[0].sourceFileId = 'f-1';
-    bundle.summaries.push(second);
-    bundle.header.sourceFileCount = 2;
-    bundle.header.summaryDigest = stateDigest(bundle.summaries);
-  }
-  const { schemaVersion, sourceFileCount, summaryDigest, ...expected } = bundle.header;
-  const oldSnapshot = {
-    id: 'snap',
-    repositoryId: 'r',
-    providerId: 'native',
-    providerVersion: '0.0.0',
-    runtimeVersion: '0.0.0',
-    requestedRevisionId: 'rev',
-    requestedRevisionFingerprint: 'base',
-    startedAt: '2026-01-01T00:00:00.000Z',
-    completedAt: '2026-01-01T00:00:01.000Z',
-    capabilities: [{ name: 'SYMBOL', support: 'SUPPORTED', coverage: 'COMPLETE' }],
-    diagnostics: [],
-    outcome: 'SUCCEEDED',
-  };
-  for (const s of bundle.summaries) {
-    const f = s.sourceFile;
-    db.prepare(
-      `INSERT INTO source_files (revision_id,id,repository_id,path,content_fingerprint,role,provenance,content_kind,language_hint,sensitivity)
-      VALUES (?,?,?,?,?,?,?,?,?,?)`,
-    ).run(
-      f.revisionId,
-      f.id,
-      f.repositoryId,
-      f.path,
-      f.contentFingerprint,
-      f.classification.role,
-      f.classification.provenance,
-      f.classification.contentKind,
-      f.languageHint,
-      f.sensitivity,
-    );
-  }
-  const fullStage = new storage.RepositoryAnalysisStage(db, limits);
-  const initialToken = storage.captureNativeActivationToken(db, 'r');
-  try {
-    for (const s of bundle.summaries) {
-      await fullStage.accept({ type: 'SOURCE_FILE', payload: s.sourceFile });
-      for (const coverage of s.coverage)
-        await fullStage.accept({ type: 'COVERAGE', payload: coverage });
-      await fullStage.acceptNativeSummary(s);
-    }
-    for (const node of nodes) {
-      await fullStage.accept({ type: 'NODE', payload: node });
-      fullStage.putNormalizedNode({
-        provider: {
-          factType: 'NODE',
-          providerId: node.providerId,
-          providerFactId: node.providerFactId,
-        },
-        canonical: normalizeJavaNode(node, new Map(fixture.sources.map((f) => [f.id, f]))),
-      });
-    }
-    if (nodes.length) mergeStagedAnalysis(fullStage, oldSnapshot);
-    fullStage.confirmSucceeded({
-      type: 'ANALYSIS_COMPLETED',
-      payload: {
-        outcome: 'SUCCEEDED',
-        repositoryId: 'r',
-        revisionId: 'rev',
-        revisionFingerprint: 'base',
-        providerSnapshotId: 'snap',
-        capabilities: oldSnapshot.capabilities,
-        counts: {
-          sourceFiles: bundle.summaries.length,
-          nodes: nodes.length,
-          edges: 0,
-          coverage: bundle.summaries.length,
-          diagnostics: 0,
-        },
-      },
-    });
-    fullStage.sealNativeState(
-      JSON.stringify(bundle.header),
-      expected,
-      validateNativeStateCandidate,
-      limits,
-    );
-    new storage.RepositoryCanonicalFactStore(db).applyNativeAnalysisBatch(
-      fullStage,
-      {
-        repositoryId: 'r',
-        revisionId: 'rev',
-        contentFingerprint: 'base',
-        snapshot: oldSnapshot,
-      },
-      initialToken,
-    );
-  } finally {
-    fullStage.close();
-  }
-  const baseline = storage.readNativeAnalysisState(
-    db,
-    expected,
-    validateNativeStateCandidate,
-    limits,
-  );
-  assert.equal(baseline.status, 'AVAILABLE');
-  const target = structuredClone(bundle);
-  const removedNodes = [];
-  if (retiredOwners) {
-    target.summaries = target.summaries.filter((s) => !retiredOwners.includes(s.sourceFile.id));
-    target.header.contentFingerprint = 'target';
-    target.header.sourceFileCount = target.summaries.length;
-    target.header.summaryDigest = stateDigest(target.summaries);
-    for (const owner of retiredOwners) db.prepare('DELETE FROM source_files WHERE id=?').run(owner);
-    db.prepare('UPDATE revisions SET content_fingerprint=? WHERE id=?').run('target', 'rev');
-    const retainedIds = new Set(
-      target.summaries.flatMap((s) => s.emittedFacts.map((f) => f.providerFactId)),
-    );
-    for (const node of nodes)
-      if (!retainedIds.has(node.providerFactId))
-        removedNodes.push({
-          factType: 'NODE',
-          providerId: 'native',
-          providerFactId: node.providerFactId,
-        });
-  }
-  const context = {
-    baseline: structuredClone(baseline.state),
-    targetSourceFiles: target.summaries.map((s) => s.sourceFile),
-  };
-  const stage = new RepositoryPatchStage(
-    db,
-    (group) => selectMergedGroup(group).fact,
-    limits,
-    context,
-  );
-  t.after(() => {
-    stage.close();
-    db.close();
-  });
-  const snapshot = {
-    ...oldSnapshot,
-    id: 'snap-next',
-    requestedRevisionFingerprint: target.header.contentFingerprint,
-  };
-  const terminal = {
-    type: 'REFRESH_COMPLETED',
-    payload: {
-      outcome: 'SUCCEEDED',
-      repositoryId: 'r',
-      revisionId: 'rev',
-      revisionFingerprint: target.header.contentFingerprint,
-      providerSnapshotId: snapshot.id,
-      capabilities: snapshot.capabilities,
-      counts: {
-        sourceFiles: 0,
-        upsertedNodes: 0,
-        removedNodes: removedNodes.length,
-        upsertedEdges: 0,
-        removedEdges: 0,
-        coverage: target.summaries.length,
-        diagnostics: 0,
-      },
-      summaryRecords: target.summaries.length,
-      analysisState: target.header,
-    },
-  };
-  for (const removal of removedNodes)
-    await stage.acceptNativeEvent({ type: 'REMOVE_NODE', payload: removal });
-  for (const s of target.summaries) {
-    await stage.acceptNativeSummary(s);
-    for (const coverage of s.coverage)
-      await stage.acceptNativeEvent({ type: 'COVERAGE', payload: coverage });
-  }
-  return {
-    db,
-    stage,
-    context,
-    snapshot,
-    terminal,
-    expected: { ...expected, contentFingerprint: target.header.contentFingerprint },
-    token: baseline.token,
-  };
-}
 
 test('actual support-chain seal preserves old shared Evidence after nonlast owner deletion', async (t) => {
   const { db, stage, context, snapshot, terminal, expected, token } = await emptyNativePatch(
@@ -1026,6 +914,264 @@ async function activeDatabase(t) {
   return { db, expected: { repositoryId: repo.id, revisionId: revision.id } };
 }
 
+// Independent numeric SQL oracle; never computes expectations from the observer.
+function activeSqlLength(db, expected) {
+  const columns = [
+    'e.id',
+    'e.repository_id',
+    'e.revision_id',
+    'e.provider_snapshot_id',
+    'e.fact_type',
+    'e.provider_id',
+    'e.provider_fact_id',
+    'e.status',
+    'b.fact_type',
+    'b.provider_id',
+    'b.provider_fact_id',
+    'b.provider_snapshot_id',
+    'b.canonical_fact_id',
+    'c.fact_type',
+    'c.canonical_fact_id',
+    'c.candidate_json',
+    'f.fact_type',
+    'f.canonical_fact_id',
+    's.id',
+    's.repository_id',
+    's.provider_id',
+    's.provider_version',
+    's.runtime_version',
+    's.requested_revision_id',
+    's.requested_revision_fingerprint',
+    's.outcome',
+    'n.fact_key',
+    'g.fact_key',
+  ];
+  return db
+    .prepare(
+      `SELECT coalesce(sum(${columns.map((c) => `coalesce(length(CAST(${c} AS BLOB)),0)`).join('+')}),0) AS bytes
+    FROM evidence e LEFT JOIN provider_fact_bindings b ON b.evidence_id=e.id
+    LEFT JOIN active_support_candidates c ON c.evidence_id=e.id
+    LEFT JOIN fact_evidence f ON f.evidence_id=e.id
+    LEFT JOIN provider_snapshots s ON s.id=e.provider_snapshot_id
+    LEFT JOIN canonical_nodes n ON b.fact_type='NODE' AND n.id=b.canonical_fact_id AND n.repository_id=e.repository_id AND n.revision_id=e.revision_id
+    LEFT JOIN canonical_edges g ON b.fact_type='EDGE' AND g.id=b.canonical_fact_id AND g.repository_id=e.repository_id AND g.revision_id=e.revision_id
+    WHERE e.repository_id=? AND e.revision_id=? AND e.status='ACTIVE'`,
+    )
+    .get(expected.repositoryId, expected.revisionId).bytes;
+}
+function corruptActiveCandidate(db) {
+  const row = db
+    .prepare(
+      "SELECT evidence_id,candidate_json FROM active_support_candidates WHERE fact_type='NODE' LIMIT 1",
+    )
+    .get();
+  const candidate = JSON.parse(row.candidate_json);
+  candidate.id = 'forged-' + 'x'.repeat(20_000);
+  db.prepare('UPDATE active_support_candidates SET candidate_json=? WHERE evidence_id=?').run(
+    JSON.stringify(candidate),
+    row.evidence_id,
+  );
+}
+
+test('D5 ACTIVE read reports admitted SQL before failing TEXT validation', async (t) => {
+  const { db, expected } = await activeDatabase(t);
+  corruptActiveCandidate(db);
+  const bytes = activeSqlLength(db, expected);
+  assert.ok(bytes > 20_000);
+  const events = [];
+  const prepare = db.prepare;
+  db.prepare = function (sql) {
+    if (sql.startsWith('SELECT e.id AS evidence_id')) events.push('TEXT');
+    return prepare.call(this, sql);
+  };
+  try {
+    assert.throws(
+      () =>
+        storage.readNativePatchActiveSupports(db, expected, limits, (admitted) => {
+          assert.equal(admitted, bytes);
+          events.push('ADMISSION');
+        }),
+      /Invalid native active support chain/,
+    );
+    assert.deepEqual(events, ['ADMISSION', 'TEXT']);
+    assert.equal(db.isTransaction, false);
+  } finally {
+    db.prepare = prepare;
+  }
+});
+
+test('D5 ACTIVE budget refusal does not report admission or materialize TEXT', async (t) => {
+  const { db, expected } = await activeDatabase(t);
+  const bytes = activeSqlLength(db, expected);
+  const prepare = db.prepare;
+  let admissions = 0;
+  db.prepare = function (sql) {
+    assert.ok(!sql.startsWith('SELECT e.id AS evidence_id'), 'Refusal must precede TEXT');
+    return prepare.call(this, sql);
+  };
+  try {
+    assert.throws(
+      () =>
+        storage.readNativePatchActiveSupports(
+          db,
+          expected,
+          { ...limits, memoryBudgetBytes: 2 * bytes - 1 },
+          () => {
+            admissions++;
+          },
+        ),
+      /resource/i,
+    );
+    assert.equal(admissions, 0);
+    assert.equal(db.isTransaction, false);
+  } finally {
+    db.prepare = prepare;
+  }
+});
+
+test('D5 ACTIVE admission observer failure closes its transaction before TEXT', async (t) => {
+  const { db, expected } = await activeDatabase(t);
+  const sentinel = new Error('owner observation failed');
+  const prepare = db.prepare;
+  db.prepare = function (sql) {
+    assert.ok(!sql.startsWith('SELECT e.id AS evidence_id'), 'Owner refusal must precede TEXT');
+    return prepare.call(this, sql);
+  };
+  try {
+    assert.throws(
+      () =>
+        storage.readNativePatchActiveSupports(db, expected, limits, () => {
+          throw sentinel;
+        }),
+      (error) => error === sentinel,
+    );
+    assert.equal(db.isTransaction, false);
+    db.exec('BEGIN');
+    assert.throws(
+      () =>
+        storage.readNativePatchActiveSupports(db, expected, limits, () => {
+          throw sentinel;
+        }),
+      (error) => error === sentinel,
+    );
+    assert.equal(db.isTransaction, true, 'The outer transaction remains caller-owned');
+    db.exec('ROLLBACK');
+  } finally {
+    db.prepare = prepare;
+  }
+});
+
+test('D5 ACTIVE successful observation adds no query and preserves support output', async (t) => {
+  const { db, expected } = await activeDatabase(t);
+  const expectedBytes = activeSqlLength(db, expected);
+  const prepare = db.prepare;
+  let queries = [];
+  db.prepare = function (sql) {
+    queries.push(sql);
+    return prepare.call(this, sql);
+  };
+  try {
+    const legacy = storage.readNativePatchActiveSupports(db, expected, limits);
+    const originalQueries = queries;
+    queries = [];
+    const observed = [];
+    const measured = storage.readNativePatchActiveSupports(db, expected, limits, (bytes) =>
+      observed.push(bytes),
+    );
+    assert.deepEqual(observed, [expectedBytes]);
+    assert.deepEqual(queries, originalQueries);
+    assert.deepEqual(measured, legacy);
+    assert.equal(db.isTransaction, false);
+  } finally {
+    db.prepare = prepare;
+  }
+});
+
+for (const phase of ['seal', 'Apply'])
+  test(`D5 Stage keeps ACTIVE admission after ${phase} fails decoding`, async (t) => {
+    const { db, stage, expected, token, snapshot, terminal } = await emptyNativePatch(
+      t,
+      true,
+      false,
+      ['f-0'],
+    );
+    stage.confirmNativeSucceeded(terminal, snapshot);
+    if (phase === 'Apply')
+      stage.sealNativePatchState(expected, token, validateNativeRefreshOverlay);
+    const before = stage.readNativeRetentionMeasurement();
+    corruptActiveCandidate(db);
+    const image = () =>
+      Object.fromEntries(
+        [
+          'canonical_nodes',
+          'canonical_edges',
+          'unresolved_targets',
+          'evidence',
+          'fact_evidence',
+          'provider_fact_bindings',
+          'active_support_candidates',
+          'provider_snapshots',
+          'analysis_coverage',
+          'analysis_diagnostics',
+          'native_analysis_state',
+          'native_analysis_file',
+          'repository_state',
+        ].map((table) => [
+          table,
+          db
+            .prepare(`SELECT * FROM ${table}`)
+            .all()
+            .map((row) => JSON.stringify(row))
+            .sort(),
+        ]),
+      );
+    const injectedImage = image();
+    const tempBytes = stage.preflightNativeRows().retainedSqlBytes;
+    const tokenBytes =
+      db
+        .prepare(
+          `SELECT sum(length(CAST(repository_id AS BLOB)) + length(CAST(provider_id AS BLOB)) +
+      length(CAST(provider_snapshot_id AS BLOB)) + length(CAST(revision_id AS BLOB)) +
+      length(CAST(content_fingerprint AS BLOB)) + length(CAST(header_json AS BLOB))) AS bytes FROM native_analysis_state`,
+        )
+        .get().bytes +
+      db
+        .prepare(
+          `SELECT sum(coalesce(length(CAST(indexed_revision_id AS BLOB)),0) +
+      coalesce(length(CAST(indexed_content_fingerprint AS BLOB)),0)) AS bytes FROM repository_state`,
+        )
+        .get().bytes;
+    const expectedBytes = tempBytes + tokenBytes + activeSqlLength(db, expected);
+    const attempt = () =>
+      phase === 'seal'
+        ? stage.sealNativePatchState(expected, token, validateNativeRefreshOverlay)
+        : stage.assertNativeApplicable(
+            db,
+            {
+              repositoryId: expected.repositoryId,
+              revisionId: expected.revisionId,
+              contentFingerprint: expected.contentFingerprint,
+              snapshot,
+            },
+            token,
+          );
+    assert.throws(attempt, /Invalid native active support chain/);
+    const measured = stage.readNativeRetentionMeasurement();
+    assert.equal(measured.retainedSqlBytes, expectedBytes);
+    assert.equal(measured.retainedSqlStringChargeBytes, 2 * expectedBytes);
+    assert.ok(measured.retainedSqlBytes > before.retainedSqlBytes);
+    assert.ok(measured.retainedStringChargePeakBytes >= 2 * expectedBytes);
+    assert.equal(db.isTransaction, false);
+    assert.deepEqual(image(), injectedImage);
+    stage.close();
+    assert.deepEqual(stage.readNativeRetentionMeasurement(), measured);
+    assert.deepEqual(image(), injectedImage);
+    assert.equal(
+      db.prepare("SELECT count(*) AS n FROM sqlite_temp_master WHERE name LIKE 'patch_%'").get().n,
+      0,
+    );
+  });
+
 test('bounded ACTIVE support view retains exact per-support candidates and historical provenance', async (t) => {
   const { db, expected } = await activeDatabase(t);
   assert.equal(typeof storage.readNativePatchActiveSupports, 'function');
@@ -1059,10 +1205,6 @@ test('provisional Native retained-node lookup bounds candidate SQL before TEXT d
       )
       .get();
     const value = JSON.parse(candidate.candidate_json);
-    value.name = 'x'.repeat(1_000_001);
-    db.prepare("UPDATE active_support_candidates SET candidate_json=? WHERE fact_type='NODE'").run(
-      JSON.stringify(value),
-    );
     stage.confirmSucceeded({
       type: 'REFRESH_COMPLETED',
       payload: {
@@ -1085,6 +1227,25 @@ test('provisional Native retained-node lookup bounds candidate SQL before TEXT d
     const fact = db
       .prepare("SELECT provider_fact_id FROM provider_fact_bindings WHERE fact_type='NODE' LIMIT 1")
       .get();
+    const retained = stage.getRetainedCanonicalNode('native', fact.provider_fact_id);
+    assert.ok(retained);
+    const candidateBytes = db
+      .prepare(
+        `SELECT sum(length(CAST(c.candidate_json AS BLOB))) AS bytes
+      FROM active_support_candidates c JOIN provider_fact_bindings b ON b.evidence_id=c.evidence_id
+      WHERE b.provider_id='native' AND b.provider_fact_id=? AND b.fact_type='NODE'`,
+      )
+      .get(fact.provider_fact_id).bytes;
+    assert.equal(stage.readNativeRetentionMeasurement().retainedSqlBytes, candidateBytes);
+    assert.equal(
+      stage.readNativeRetentionMeasurement().retainedSqlStringChargeBytes,
+      2 * candidateBytes,
+    );
+    const admitted = stage.readNativeRetentionMeasurement();
+    value.name = 'x'.repeat(1_000_001);
+    db.prepare("UPDATE active_support_candidates SET candidate_json=? WHERE fact_type='NODE'").run(
+      JSON.stringify(value),
+    );
     const prepare = db.prepare.bind(db),
       seen = [];
     db.prepare = (sql) => {
@@ -1096,9 +1257,78 @@ test('provisional Native retained-node lookup bounds candidate SQL before TEXT d
       /resource/i,
     );
     assert.ok(!seen.some((sql) => /^SELECT candidate.candidate_json/.test(sql)));
+    assert.deepEqual(stage.readNativeRetentionMeasurement(), admitted);
   } finally {
     stage.close();
   }
+});
+
+test('SQL charging preserves the workspace reservation at equality and one byte below', () => {
+  // Component arithmetic only: this literal is not a measured admission profile.
+  const reserved = { ...limits, workspaceReservationBytes: 101, memoryBudgetBytes: 107 };
+  assert.doesNotThrow(() => storage.assertNativeStringBudget(3, reserved));
+  assert.throws(
+    () => storage.assertNativeStringBudget(3, { ...reserved, memoryBudgetBytes: 106 }),
+    /resource/i,
+  );
+  assert.throws(
+    () => storage.assertNativeStringBudget(0, { ...reserved, memoryBudgetBytes: 100 }),
+    /resource/i,
+  );
+  assert.throws(
+    () =>
+      storage.assertNativeStringBudget(Number.MAX_SAFE_INTEGER, {
+        ...limits,
+        memoryBudgetBytes: Number.MAX_SAFE_INTEGER,
+      }),
+    /resource/i,
+  );
+  for (const reservation of [-1, NaN, Infinity, 0.5, Number.MAX_SAFE_INTEGER + 1])
+    assert.throws(
+      () => storage.assertNativeStateLimits({ ...limits, workspaceReservationBytes: reservation }),
+      /invalid native metadata limits/i,
+    );
+  assert.throws(
+    () =>
+      storage.assertNativeStringBudget(1, {
+        ...limits,
+        workspaceReservationBytes: Number.MAX_SAFE_INTEGER,
+        memoryBudgetBytes: Number.MAX_SAFE_INTEGER,
+      }),
+    /resource/i,
+  );
+});
+
+test('ACTIVE support reservation refusal precedes TEXT and leaves the transaction closed', async (t) => {
+  const { db, expected } = await activeDatabase(t);
+  const measured = storage.readNativePatchActiveSupports(db, expected, limits);
+  const reservation = 101;
+  const reserved = {
+    ...limits,
+    workspaceReservationBytes: reservation,
+    memoryBudgetBytes: reservation + 2 * measured.retainedSqlBytes,
+  };
+  assert.deepEqual(storage.readNativePatchActiveSupports(db, expected, reserved), measured);
+  const queries = [],
+    prepare = db.prepare.bind(db);
+  db.prepare = (sql) => {
+    queries.push(sql);
+    return prepare(sql);
+  };
+  assert.throws(
+    () =>
+      storage.readNativePatchActiveSupports(db, expected, {
+        ...reserved,
+        memoryBudgetBytes: reserved.memoryBudgetBytes - 1,
+      }),
+    /resource/i,
+  );
+  assert.ok(queries.some((sql) => /sum\(/i.test(sql) && /AS BLOB/i.test(sql)));
+  assert.equal(
+    queries.some((sql) => /SELECT\s+e\.id\s+AS/i.test(sql)),
+    false,
+  );
+  assert.equal(db.isTransaction, false);
 });
 
 test('ACTIVE support numeric preflight precedes TEXT and exact twice-SQL boundary is enforced', async (t) => {

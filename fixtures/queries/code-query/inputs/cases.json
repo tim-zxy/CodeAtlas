@@ -1,0 +1,18 @@
+{
+  "scenarios": ["current", "multi-provider", "stale", "not-indexed"],
+  "queryCases": [
+    "overload-search",
+    "symbol-understand",
+    "incoming-resolved-only",
+    "all-edge-kinds",
+    "bounded-diamond-cycle",
+    "ambiguous-candidate-order",
+    "isolated-root",
+    "depth-leaf-lookahead",
+    "node-edge-truncation",
+    "old-support-coverage",
+    "zero-write-reopen",
+    "malformed-owned-copy",
+    "unicode-byte-budget"
+  ]
+}

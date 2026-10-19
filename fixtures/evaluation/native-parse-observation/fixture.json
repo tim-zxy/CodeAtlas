@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "p05-native-parse-observation-v1",
+  "category": "code-intelligence",
+  "phase": "0.5",
+  "languages": ["java"],
+  "frameworks": [],
+  "capabilities": ["NATIVE_PARSE_OBSERVATION"],
+  "inputs": { "vectors": "inputs/vectors.json" },
+  "expected": { "results": "expected/results.json" },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

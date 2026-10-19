@@ -15,7 +15,7 @@ export const nativeRefreshVerificationCorpusRevision = 'p05-native-refresh-verif
 export const nativeRefreshTransportCorpusRevision = 'p05-native-refresh-transport-memory-v1';
 
 /** D-purpose admission, before any caller-controlled lazy preparation. */
-export function assertNativeRefreshTransportAdmission(memoryBudgetBytes: number): void {
+export function assertNativeRefreshTransportAdmission(memoryBudgetBytes: number): number {
   if (!Number.isSafeInteger(memoryBudgetBytes) || memoryBudgetBytes <= 0)
     throw new NativeClientError(
       'INVALID_CONFIGURATION',
@@ -52,6 +52,7 @@ export function assertNativeRefreshTransportAdmission(memoryBudgetBytes: number)
       'RESOURCE_LIMIT_EXCEEDED',
       'No admissible reviewed native refresh transport profile',
     );
+  return profile.reservationBytes;
 }
 
 export function nativeMetadataEnvironment() {

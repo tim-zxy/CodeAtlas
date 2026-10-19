@@ -92,6 +92,17 @@ limits are governed by the accepted
 
 ## Contract tests
 
+The approved [2026-10-14 snapshot-neutral selection amendment](../../superpowers/specs/2026-10-14-p05-snapshot-neutral-support-selection-proposal.md)
+refines equal-ranked real-support ties to `(providerId, providerFactId, snapshotId)`.
+Resolution/source-backed ranking and minimum confidence remain unchanged. Initial
+full-observation validation still accepts one snapshot per Provider; patch/refresh
+reselection may contain retained and new snapshots. Java pipeline compatibility
+uses `JAVA_NORMALIZER_VERSION='2'`; Canonical identity encoding stays v1. Storage
+marks a version-1 derived baseline `INCOMPATIBLE`, and refresh preparation requires
+explicit `FULL_ANALYSIS_REQUIRED` without mutation or automatic rebuilding. Actual
+admitted Native rebuilding remains an acceptance requirement, not a claim from
+the synthetic selector or offline baseline tests.
+
 Every provider must pass descriptor/schema, deterministic replay, cancellation, terminal-event, invalid-event, coverage, diagnostics, unresolved-target, and refresh semantics. Native/reference dual-support fixtures verify canonical fact lifetime.
 
 ## Native language extension

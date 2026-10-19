@@ -1,5 +1,56 @@
 # Security and Trust Boundary Specification
 
+2026-10-19 ADR-019 source-copy trust distinction: Cargo may hard-link its trusted
+local build output; checked regular-file identity/hash before/after copying is
+required. The independent fixed-root Native, archive and every owned/packed
+member still reject multiple links. No archive-selected build input is accepted.
+
+2026-10-18 evidence-backed ADR-019 refinement: .NET ZIP Entry.Open clamps forged
+lengths; hostile-fixture RED requires independent bounded System32/tar.exe
+read-only stdout/hash/exit validation while .NET keeps creation/materialization.
+Fixed argument arrays, allowlisted child environment, closed stdin, drained
+stderr and kill/join on overflow; NEVER native tar filesystem extraction. Missing
+verifier fails closed. No dependency install/custom production parser/cap change.
+Actual original-attempt exports preserve bytes and source mapping outside frozen
+inputs, but confer no inode/replay/restore authority. Transient mutable scratch
+stays on the fixed volume; export failure fails acceptance and always-upload has
+a scoped synthetic replay-root fallback. Read-only packaging across processes
+does not authorize root adoption, installation or repair. Remote/numeric gates stay.
+
+2026-10-18 written ADR-019 accepted: implement confined synthetic-pack tooling
+under its exact inventory/root/link/size/provenance guards. Host permissions and
+explicit artifact publication/remote authority remain required. No production
+remote fallback or security-policy weakening; prior pending notices are history.
+
+2026-10-18 proposed [ADR-019](../adr/ADR-019-d5-exact-layout-ci-replay.md) permits
+no current download/publication. Its reviewed synthetic-pack design requires
+read-only hash-pinned artifact retrieval, exact allowlisted inventory, exclusive
+dedicated root and path/link/size guards before execution. No user source/secrets,
+arbitrary archive code, unrestricted environment, production remote fallback or
+directory overwrite. Explicit artifact-publication authority remains separate.
+Written review pending; product trust boundaries below are unchanged.
+
+2026-10-15 accepted ADR-018/§9 rollout: request/source hashes and scalar parser
+diagnostics only, inherited ceilings, no raw source/path/request ID or new env key.
+The private Evaluation reader observes existing stderr consumption. Production
+protocol/admission/publication still ignores diagnostic meaning and retains
+existing error serialization/termination rules. Hashes are local correlation,
+not anonymity or authenticity; child/receipt/Source qualification remains required.
+
+2026-10-15 review update: original written ADR-018/design accepted; rollout still
+awaits revised-plan/corrected-count review. No code, default error serialization,
+environment, remote access or current production stderr treatment changed.
+The accepted design limits interpretation to owned development Evaluation and
+explicitly denies Provider/resource/publication authority to diagnostics.
+
+2026-10-15 pending design review: [ADR-018](../adr/ADR-018-native-evaluation-observations.md)
+proposes a private development-Evaluation interpretation of bounded hashed parser
+diagnostics. Its [written design](../../superpowers/specs/2026-10-15-p05-native-parse-observation-design.md)
+is not accepted or implemented. Current stderr/default-error/production decoding
+rules below remain unchanged. References are local correlation metadata, not a
+secrecy guarantee or Canonical Evidence. No remote transmission or new environment
+key is authorized; any FROZEN conflict requires explicit accepted amendment.
+
 ## Trust zones and defaults
 
 Local source and canonical databases remain local by default. Network use, remote LLMs, and remote embeddings require explicit independent configuration. MCP stdio is the Phase 1 default. Telemetry and usage events are separate; local usage recording never implies upload.

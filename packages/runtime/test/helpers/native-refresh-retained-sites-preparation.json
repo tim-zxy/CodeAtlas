@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "status": "GENERATED_SOURCE_PREPARATION_ONLY",
+  "calibrationEligible": false,
+  "generatorVersion": "native-refresh-retained-sites-v1",
+  "discoveryReceipt": "d5-retained-sites-second.log",
+  "accepted": {
+    "memberCount": 1982,
+    "sourceBytes": 29746,
+    "sourceSha256": "2f8986b41909c690553a675562b16b9783136f35067442571e4b99407cb5288a"
+  },
+  "next": {
+    "memberCount": 1983,
+    "sourceBytes": 29761,
+    "sourceSha256": "cc9e7dc53ac7fe3fe18029d06d585596145f1b9a18f3f13cee6ae7c050a4953f"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "baselineDigest": "c616f39a284c5f6db4cd5afb83a18d8ac2d1663a8ea7c9861dba549cfcc750b4",
+  "identityDomain": "SOURCE_BYTES_AND_DECLARED_JAVA_SEMANTICS",
+  "fileCount": 50,
+  "classes": 50,
+  "methods": 150,
+  "resolvedRunCalls": 50,
+  "baselineRunTarget": "first",
+  "scenarios": {
+    "COLD": {
+      "changedFiles": 0,
+      "secondTargets": 0,
+      "targetDigest": "c616f39a284c5f6db4cd5afb83a18d8ac2d1663a8ea7c9861dba549cfcc750b4"
+    },
+    "INCREMENTAL_1": {
+      "changedFiles": 1,
+      "secondTargets": 1,
+      "targetDigest": "2fc9982c8b1fe46018847720938359fe11f56883ce6a69f03c16c693982f1462"
+    },
+    "INCREMENTAL_5": {
+      "changedFiles": 5,
+      "secondTargets": 5,
+      "targetDigest": "1a923d7279620205e3788ae8c9a344a7ccdac7cab35647e0f59ce37aebfe4069"
+    },
+    "INCREMENTAL_50": {
+      "changedFiles": 50,
+      "secondTargets": 50,
+      "targetDigest": "057ad6ed60a260f0876b7a48107ec64d2c5fb2b58bcc5c792301fca91ad104bb"
+    }
+  }
+}

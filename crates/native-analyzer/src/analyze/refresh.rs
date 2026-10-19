@@ -125,13 +125,7 @@ fn extraction_charge(a: &LanguageAnalysis) -> Result<usize, Failure> {
     bytes = add(bytes, multiply(a.site_statistics.len(), TREE_ENTRY)?)?;
     add(bytes, std::mem::size_of::<RetainedFile>())
 }
-pub(super) fn run<W: Write>(
-    request: &ValidatedRequestV3,
-    workers: NonZeroUsize,
-    output: &mut W,
-) -> io::Result<ExitCode> {
-    run_observed(request, workers, output, &|_| {})
-}
+#[cfg(test)]
 fn run_observed<W: Write, F: Fn(&str) + Sync>(
     validated: &ValidatedRequestV3,
     workers: NonZeroUsize,
@@ -140,12 +134,40 @@ fn run_observed<W: Write, F: Fn(&str) + Sync>(
 ) -> io::Result<ExitCode> {
     run_with_observers(validated, workers, output, on_parse, &|_| {})
 }
+#[cfg(test)]
 fn run_with_observers<W: Write, F: Fn(&str) + Sync, G: Fn(&str) + Sync>(
     validated: &ValidatedRequestV3,
     workers: NonZeroUsize,
     output: &mut W,
     on_parse: &F,
     on_parsed: &G,
+) -> io::Result<ExitCode> {
+    run_with_diagnostic(validated, workers, output, on_parse, on_parsed, None)
+}
+
+pub(super) fn run_diagnostic<W: Write>(
+    validated: &ValidatedRequestV3,
+    workers: NonZeroUsize,
+    output: &mut W,
+    observation: &dyn ParseObserver,
+) -> io::Result<ExitCode> {
+    run_with_diagnostic(
+        validated,
+        workers,
+        output,
+        &|_| {},
+        &|_| {},
+        Some(observation),
+    )
+}
+
+fn run_with_diagnostic<W: Write, F: Fn(&str) + Sync, G: Fn(&str) + Sync>(
+    validated: &ValidatedRequestV3,
+    workers: NonZeroUsize,
+    output: &mut W,
+    on_parse: &F,
+    on_parsed: &G,
+    observation: Option<&dyn ParseObserver>,
 ) -> io::Result<ExitCode> {
     let header = validated.header();
     let p = &header["payload"];
@@ -296,6 +318,9 @@ fn run_with_observers<W: Write, F: Fn(&str) + Sync, G: Fn(&str) + Sync>(
         "revisionId":request.revision_id,"revisionFingerprint":request.revision_fingerprint});
     let mut stream = EventWriter::new(output, &request.id, &target_context, request.max_events, 3);
     stream.failure_type = "REFRESH_FAILED";
+    if let Some(observer) = observation {
+        observer.begin();
+    }
     if !stream.emit("REFRESH_STARTED", target_context.clone(), false)? {
         return Ok(ExitCode::SUCCESS);
     }
@@ -325,12 +350,23 @@ fn run_with_observers<W: Write, F: Fn(&str) + Sync, G: Fn(&str) + Sync>(
             let results = std::thread::scope(|scope| {
                 let jobs: Vec<_> = chunk
                     .iter()
-                    .map(|file| {
+                    .enumerate()
+                    .map(|(slot, file)| {
                         let cancel = &cancelled;
                         let root = &request.root;
                         scope.spawn(move || {
-                            let result =
-                                parse_source_observed(root, file, deadline, cancel, true, on_parse);
+                            let result = if let Some(observer) = observation {
+                                parse_source(
+                                    root,
+                                    file,
+                                    deadline,
+                                    cancel,
+                                    true,
+                                    Some((observer, slot)),
+                                )
+                            } else {
+                                parse_source_observed(root, file, deadline, cancel, true, on_parse)
+                            };
                             on_parsed(file["path"].as_str().unwrap());
                             result
                         })
@@ -839,6 +875,7 @@ mod tests {
             NonZeroUsize::new(1).unwrap(),
             &mut output,
             Some(state),
+            None,
         )
         .unwrap();
         let events = events(&output);

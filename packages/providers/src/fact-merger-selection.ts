@@ -37,8 +37,8 @@ function compareSupport(a: MergeSupport, b: MergeSupport): number {
   const right = b.binding.providerFact;
   return (
     compare(left.providerId, right.providerId) ||
-    compare(a.snapshotId, b.snapshotId) ||
-    compare(left.providerFactId, right.providerFactId)
+    compare(left.providerFactId, right.providerFactId) ||
+    compare(a.snapshotId, b.snapshotId)
   );
 }
 

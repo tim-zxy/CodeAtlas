@@ -1,5 +1,52 @@
 # Roadmap
 
+2026-10-18 ADR-019 written contract accepted; revised existing Tasks7/8 execute
+Native/batch. Same10/14 integrated/four parents and original Phase0.5 exits;
+no new roadmap item or Phase1 implementation. Earlier pending notices are history.
+
+2026-10-18 proposed [combined D input/CI design](../superpowers/specs/2026-10-18-p05-d5-input-and-ci-design.md)
+refines existing D5/D6 and closeout Tasks7/8 only. No new roadmap task, milestone,
+language/framework or future-phase dependency. Same10/14 integrated/four original
+parents; Phase1 remains DESIGN-READY. Written review/plan/numerical/artifact
+boundaries remain separate; no implementation or exit is inferred.
+
+2026-10-17 bounded catalog amendment accepted; existing Tasks7/8 execute
+continuously as compatibility correction, transport-only evidence rebuild,
+unified original acceptance and integration handoff. `test:native-refresh`
+now registers the D5 suites in local `verify`; execution/actual collector and
+hosted evidence remain separate. Same14 original tasks/10 integrated, no new
+milestone, Phase0 reopening or Phase1 implementation authorization.
+
+2026-10-17 settled local milestone evidence: actual31/21 report and all ordinary
+registered gates pass (root1581/Native114/Rust133). Five scoped quantitative checks
+are locally verified, not Phase acceptance. Remaining governed D5 catalog/current
+corpus/refusal/collector/registration and integration keep the SAME four parents
+open/10of14 integrated. No new roadmap work item or Phase1 coding follows.
+
+2026-10-17 exact four-purpose values approved and matching static entries installed;
+actual gates are running. D5 physical catalog detects two generated profile-map
+changes after normal rebuild; see the [bounded compatibility proposal](../superpowers/specs/2026-10-17-p05-profile-map-catalog-proposal.md).
+No silent exclusion/evidence migration or phase promotion. Same10/14 integrated,
+four original parents; unaffected Task8 checks continue sequentially.
+
+2026-10-16 existing Task7 current v2 qualification44/44 and four-purpose320/64
+measurements/holdouts are verified. Next is the original exact numeric gate,
+then existing Task8 actual exits, not a new milestone or repeated helper review.
+Phase0.5 stays10/14 integrated/four parents; Phase1 remains DESIGN-READY.
+
+2026-10-15 subsequent “继续” approves §9/revised Task5; observation implementation
+proceeds inside the same Phase0.5 plan. No new milestone/task or Phase1 promotion.
+
+2026-10-15 original written ADR-018 accepted; revised same-plan observation work
+and proposed code-evidenced FULL count correction await review. No roadmap task,
+milestone, phase scope or acceptance change; Phase0.5 remains10/14 integrated.
+
+2026-10-15 scope unchanged: proposed ADR-018/bounded parse-observation design
+completes evidence for existing Phase0.5 changed-only/Worker Consistency obligations,
+not a new milestone or task. Direction/detail-writing is approved; written review
+is pending. Phase0.5 remains10/14 integrated with four parent tasks and original
+exits open. No Phase1 implementation starts from this pending design.
+
 Packet D written-spec acceptance (2026-10-04): the latest user “确认” accepts the [composition specification](../superpowers/specs/2026-10-04-p05-w3-020-native-refresh-composition-design.md). Its [D1–D6 executable plan](../superpowers/plans/2026-10-04-p05-w3-020-native-refresh-composition.md) is written and awaiting separate review/native execution confirmation. No code, Fixture registration, memory calibration/profile installation, gate passage or phase promotion follows. Final-build exact-purpose measurement and separate numeric approval precede production acceptance; E and original phase exits remain open. Earlier direction-only/pending-spec/missing-plan notes below are historical.
 
 Packet C is integrated as PR #19 at8093b2b with all three exact merge-SHA jobs successful. Packet D's [written composition detail](../superpowers/specs/2026-10-04-p05-w3-020-native-refresh-composition-design.md) awaits review after direction approval. Its six design-level acceptance units add no roadmap task/milestone: Phase0.5 stays10/14 parent tasks; E persisted Evaluation, queries, CLI and original exits remain open.

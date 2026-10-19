@@ -5,6 +5,8 @@ import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 
 import { createBootstrapRuntimeBuilder, type KnowledgeRuntime } from '@codeatlas/runtime';
+import { runCodeQueryCommand } from './code-query-command.js';
+import { runIndexCommandLine } from './index-command.js';
 
 export async function buildCliRuntime(workspaceRoot = process.cwd()): Promise<KnowledgeRuntime> {
   return createBootstrapRuntimeBuilder().build({
@@ -21,8 +23,7 @@ export async function runCli(args = process.argv.slice(2)): Promise<number> {
     return 0;
   }
 
-  process.stderr.write('codeatlas CLI behavior is not implemented in P0-W0-003\n');
-  return 2;
+  return args[0] === 'index' ? runIndexCommandLine(args) : runCodeQueryCommand(args);
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

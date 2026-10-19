@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "fixtures": [
+    {
+      "fixtureId": "java-basic-symbol",
+      "directory": "fixtures/native/java-basic-symbol",
+      "fileCount": 5,
+      "sha256": "f94d08a9799b8e1f7ee766c22841038126e6f02f3420322fff97d8b6642ca073"
+    },
+    {
+      "fixtureId": "java-call-basic",
+      "directory": "fixtures/native/java-call-basic",
+      "fileCount": 7,
+      "sha256": "4e7599115b2607e0d154d4a6693479c4095be7878b48f7a0394620309ab53d7f"
+    },
+    {
+      "fixtureId": "java-overload",
+      "directory": "fixtures/native/java-overload",
+      "fileCount": 6,
+      "sha256": "05185047466da68d8f78541cd1d26267ad19cbd620970c7a047d19d4756011d8"
+    },
+    {
+      "fixtureId": "java-inheritance",
+      "directory": "fixtures/native/java-inheritance",
+      "fileCount": 9,
+      "sha256": "062c8f92bae6b7091546b540609db79c2836a9625f9d6929eb4dfadcf669f0d0"
+    },
+    {
+      "fixtureId": "java-unresolved-call",
+      "directory": "fixtures/native/java-unresolved-call",
+      "fileCount": 6,
+      "sha256": "0f6cf325e3e2a06b213055f13e23824f66752607c9663ee3fec3c971712dd0e4"
+    },
+    {
+      "fixtureId": "p05-native-refresh-producer-v1",
+      "directory": "fixtures/native/java-refresh-producer",
+      "fileCount": 28,
+      "sha256": "4678c75e1e162ce2b33a8e868e8b4636ae9a2ba9fdb4200bcafe203173030a00"
+    },
+    {
+      "fixtureId": "canonical-normalization",
+      "directory": "fixtures/normalization/canonical-normalization",
+      "fileCount": 4,
+      "sha256": "f4725334045d01e55b6c946d65505c314ac7470677dffc64ea046712c7f90a82"
+    },
+    {
+      "fixtureId": "two-provider-same-call",
+      "directory": "fixtures/normalization/two-provider-same-call",
+      "fileCount": 3,
+      "sha256": "a4bedc3c1d9ee09d656acd8ef418f096d86510d67897288e8205e9b47aaa88e4"
+    }
+  ]
+}

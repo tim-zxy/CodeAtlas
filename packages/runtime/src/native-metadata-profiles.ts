@@ -47,13 +47,80 @@ export interface NativeRefreshTransportProfile extends Omit<
   readonly transportCorpusDigest: string;
 }
 
-// D1 checkpoint only. D5 final-build evidence and separate numeric approval are required.
+// Exact D5 candidates, most recently approved environment first; retain history.
 export const nativeRefreshTransportProfiles: readonly NativeRefreshTransportProfile[] =
-  Object.freeze([]);
+  Object.freeze([
+    // Fixed-layout candidate separately approved by the user on 2026-10-19.
+    Object.freeze({
+      node: 'v24.15.0',
+      v8: '13.6.233.17-node.48',
+      platform: 'win32',
+      arch: 'x64',
+      zodVersion: '4.6.1',
+      implementationDigest: '0ea17dfcc71d7c2d3ffb1bc782ab47c63f6c2294041dc50e0a14e1362242711d',
+      corpusRevision: 'p05-native-metadata-memory-v1',
+      workspace: 'REFRESH_TRANSPORT',
+      transportCorpusRevision: 'p05-native-refresh-transport-memory-v1',
+      transportCorpusDigest: '1aa37f7ac114baa2e0262af19205d9b05c2fdb63ed8794432da9b38fa6dedcb2',
+      reservationBytes: 376_422_400,
+      evidenceDigest: '7c4d9b65d95453c6cc455a8d3770315de7f586c1f2cc6f23659f0153714262ec',
+      memoryPolicyRevision: 'p05-native-memory-high-water-range-v1',
+      memoryCandidateEvidenceDigest:
+        '91a9e2477f490b93ce76f5d5bb6b5becdc41b976282e511ad73db30ca128aa25',
+      observedPeakBytes: 364_318_720,
+      fluctuationAllowanceBytes: 12_103_680,
+      peakMethod: 'resourceUsage.maxRSS',
+      peakUnits: 'bytes',
+    }),
+    // Original physical corpus approved on 2026-10-17.
+    Object.freeze({
+      node: 'v24.15.0',
+      v8: '13.6.233.17-node.48',
+      platform: 'win32',
+      arch: 'x64',
+      zodVersion: '4.6.1',
+      implementationDigest: '0ea17dfcc71d7c2d3ffb1bc782ab47c63f6c2294041dc50e0a14e1362242711d',
+      corpusRevision: 'p05-native-metadata-memory-v1',
+      workspace: 'REFRESH_TRANSPORT',
+      transportCorpusRevision: 'p05-native-refresh-transport-memory-v1',
+      transportCorpusDigest: '7cba2555d81ab5cc775886378c32078cd4c9444a5496a0b7f37c7fda2464e6f8',
+      reservationBytes: 378_400_768,
+      evidenceDigest: 'b523727d279d240126629584a12b162363392bf02433103c286f412ba0c7e919',
+      memoryPolicyRevision: 'p05-native-memory-high-water-range-v1',
+      memoryCandidateEvidenceDigest:
+        'f52395c5c5a7a7a61ce8d3cc2910ee0f0b43f72f891987129811e8e97a3a8553',
+      observedPeakBytes: 347_574_272,
+      fluctuationAllowanceBytes: 30_826_496,
+      peakMethod: 'resourceUsage.maxRSS',
+      peakUnits: 'bytes',
+    }),
+  ]);
 
 // Exact verification candidate approved on 2026-10-03; never borrow full/read evidence.
 export const nativeRefreshVerificationProfiles: readonly NativeRefreshVerificationProfile[] =
   Object.freeze([
+    // Final-build verification candidate separately approved on 2026-10-17.
+    Object.freeze({
+      node: 'v24.15.0',
+      v8: '13.6.233.17-node.48',
+      platform: 'win32',
+      arch: 'x64',
+      zodVersion: '4.6.1',
+      implementationDigest: '0ea17dfcc71d7c2d3ffb1bc782ab47c63f6c2294041dc50e0a14e1362242711d',
+      corpusRevision: 'p05-native-metadata-memory-v1',
+      workspace: 'REFRESH_VERIFY',
+      verificationCorpusRevision: 'p05-native-refresh-verification-memory-v1',
+      verificationCorpusDigest: '1969707b181cf5bbd2fd753d489c4ff3a39333f4d8166b43c13a62ec40dad232',
+      reservationBytes: 362_946_560,
+      evidenceDigest: 'aa8d9d76a8ae5c5502954a92b414cead2f635123ce7b5f5054171ce8268108ea',
+      memoryPolicyRevision: 'p05-native-memory-high-water-range-v1',
+      memoryCandidateEvidenceDigest:
+        'b6ea5577e80d042f12362f6564fed204696531811ed7a5b23b6381c14b2dcdf3',
+      observedPeakBytes: 353_718_272,
+      fluctuationAllowanceBytes: 9_228_288,
+      peakMethod: 'resourceUsage.maxRSS',
+      peakUnits: 'bytes',
+    }),
     // Corrected-build verification candidate separately approved on 2026-10-04.
     Object.freeze({
       node: 'v24.15.0',
@@ -103,6 +170,30 @@ export const nativeRefreshVerificationProfiles: readonly NativeRefreshVerificati
 // Exact Windows environment only; mismatches remain fail-closed. Raw report
 // capture status is preserved; approval is recorded in CURRENT_STATUS.
 export const nativeMetadataProfiles: readonly NativeMetadataProfile[] = Object.freeze([
+  // Final-build joint READ_SEAL/FULL_TRANSPORT candidate approved on 2026-10-17.
+  Object.freeze({
+    node: 'v24.15.0',
+    v8: '13.6.233.17-node.48',
+    platform: 'win32',
+    arch: 'x64',
+    zodVersion: '4.6.1',
+    implementationDigest: '0ea17dfcc71d7c2d3ffb1bc782ab47c63f6c2294041dc50e0a14e1362242711d',
+    corpusRevision: 'p05-native-metadata-memory-v1',
+    corpusDigest: '0c599e6626202fe4a0b5d5866e2d89d01a4674e40b0efe0d0b20acf5b4085b29',
+    reservationBytes: 287_555_584,
+    evidenceDigest: '52879df274672e2c3e2096e71961ab5d1ba999b2ab51c81052f759de9467162b',
+    peakMethod: 'resourceUsage.maxRSS',
+    peakUnits: 'bytes',
+    fullTransportCorpusRevision: 'p05-native-full-v3-memory-v1',
+    fullTransportCorpusDigest: '11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef',
+    fullTransportEvidenceDigest: '0826493f6afccdc99059ad66a19d1286b8cbfa45d1c4febe89468678b2855b2c',
+    fullTransportPeakBytes: 195_641_344,
+    memoryPolicyRevision: 'p05-native-memory-high-water-range-v1',
+    memoryCandidateEvidenceDigest:
+      '81c3999ba9349dd6f740b5ec0e4744385b4c05fcaa90496be6db157b819c5283',
+    observedPeakBytes: 250_277_888,
+    fluctuationAllowanceBytes: 37_277_696,
+  }),
   // Corrected-build READ_SEAL and FULL_TRANSPORT separately approved on 2026-10-04.
   Object.freeze({
     node: 'v24.15.0',

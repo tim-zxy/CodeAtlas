@@ -1,5 +1,210 @@
 # Phase Acceptance
 
+2026-10-19 local actual22 passes:22 ACTUAL_ADMITTED/0failures and complete
+original strict outcome/peak/state/closure validation, maximum338006016 below
+approved376422400. Archive/candidate/holdout remain byte-exact. Complete local
+batch15/15 now passes, including final registered Native-refresh683/683; root/IR
+also passes1582/1existing skip. Actual Evaluation31/31 and all five original
+gates pass with original role/applicability distinctions, not general accuracy
+claims. Clean-host handoff and required hosted actual22 remain separate pending
+evidence. No Phase exit checkbox is changed; still10/14 integrated/four parents.
+
+2026-10-19 ADR-019 pre-admission evidence settled: registered683/683 and genuine
+fixed-layout22 qualification/110 calibration/22 independent holdouts pass;
+fresh read-only reconstruction also agrees. Subsequent user “批准” approves
+transport376422400bytes and the matching static profile is installed;28/28
+admission/identity/verification tests pass. Pristine archive creation/validation
+passes; immutable cross-host handoff, local/hosted actual22 and original final
+exits remain required. Approval/packing do not check any exit complete.
+No offline row becomes ACTUAL_ADMITTED, and Phase stays10/14/four parents open.
+CURRENT_STATUS and existing closeout logs pin full identities and reproduction.
+
+2026-10-19 ADR-019 acquisition coverage additionally requires normal Cargo
+multi-link build input to produce an independently pinned single-link Native
+copy, while owned/packed hard links still refuse. The scoped125/125 receipt does
+not replace the final registered gate, new22/110/22, exact numerical approval or
+local/hosted actual22. Original Phase exit criteria remain unchanged.
+
+2026-10-18 ADR-019 continuation does not check any Phase exit: required actual22
+CI wiring and installer/runner code exist, but new genuine22/110/22, exact numeric
+approval/profile, complete immutable handoff and local/hosted actual22 are pending.
+Current correction contracts include reviewed-environment preflight, independent
+decoded-length integrity, complete original-attempt export/fallback, and strict
+separation of read-only packaging vs extraction/restoration authority. Scoped
+unit/schema/ZIP vectors and archive verification never substitute for those gates.
+
+2026-10-18 written ADR-019 accepted; its exact-layout/D-input obligations now
+govern the revised existing plan. Nothing is checked complete by approval:
+new22/110/22, exact numeric decision, actual22/local/hosted evidence and original
+exits remain required. Prior pending-contract wording below is historical.
+
+2026-10-18 proposed [ADR-019](adr/ADR-019-d5-exact-layout-ci-replay.md) preserves
+all original exits while making D input and required actual22 CI reproducible at
+an exact layout. Before checking related exits require new22/110/22, separate
+numeric approval, original precise negative/SQL outcomes and actual22 from the
+same approved physical pack on a clean Windows runner, with exact source/Native/
+dependency/profile binding and failure-inclusive evidence. No fixture-equivalence
+shortcut, skipped CI gate or current phase promotion. Written design review
+pending; this paragraph is a proposed obligation mapping, not passing evidence.
+
+2026-10-17 subsequent unified-execution authorization accepts the exact proposed
+378400768bytes. Matching transport entry is installed; exact new candidate/raw/
+corpus binding, equality/one-byte-low and unchanged rebuilt identities pass2/2.
+Actual approved22 collection was cancelled after deterministic budget refusal:
+all22 frozen caller budgets268435456 are below reservation378400768. No actual
+sample is accepted. Unaffected final gates settled PASS; no original exit is checked
+from installation alone. Old provisional capture records stay intact. The
+required actual22 CI provenance/input contract also remains open; Storage/SQL
+CI registration and its161/161 local tests do not close that gate.
+
+Current final task10 batch settled16/17PASS, overallFAIL/exit1 because actual
+transport was cancelled, not waived. Current actual Evaluation31/31 has0missing/
+0failures and all five original numerical gatesPASS; complete root1581pass/
+0fail/1existing skip, Native114 and Rust133 pass. CURRENT_STATUS and the retained
+task10-final-gates-summary.json bind the exact report and commands. None of this
+closes D actual admission/portable CI or upgrades local evidence to Phase exit.
+
+2026-10-17 amended-catalog transport qualification22/22,110 calibration and22
+independent holdouts complete with0failures; complete D5 contract regression
+603/603 passes. New candidate378400768bytes is unapproved/uninstalled. Actual
+approved22-class collection, current final gates and original exit audit remain
+open. Neither measurement nor CI script registration checks a phase-exit box.
+
+2026-10-17 accepted D5 catalog compatibility amendment excludes exactly the
+profile JS and its two specified generated maps, not the declaration/other maps.
+New final transport all22 qualification,110 calibration observations and22
+independent holdouts, exact new-value approval if needed, actual collector and
+refusal checks remain mandatory. The registered `test:native-refresh` suite is
+part of `verify`; no original exit/threshold is removed or checked by registration.
+
+2026-10-17 ordinary current registered gates now pass, including complete root
+1581pass/0fail/1existing skip, Native114 and Rust133. Actual31/21 report and its
+five quantitative checks below remain locally PASS. Strict D5 frozen-catalog
+compatibility/current corpus/refusal/collector/registration are NOT complete.
+The [current evidence matrix](../../.superpowers/sdd/2026-10-13-p05-index-evaluation-closeout/task8-closeout-evidence.md)
+separates these scopes. No complete Phase exit, hosted integration or Phase1
+implementation is authorized; do not infer unchecked criteria from these counts.
+
+2026-10-17 local scoped quantitative acceptance is now evidenced by the fresh
+[actual report4](../../.superpowers/sdd/2026-10-13-p05-index-evaluation-closeout/task8-actual-evaluation4/report/report.json):
+all31 cases, all21 incremental obligations, no missing runs/failures; five original
+gates PASS at1.0/1.0/1.0/1.0/0. SHA256
+`d595da356c81b88ad49eb047c8063b1f8fb5e2f52dce925d5bf7cdd222b37922`.
+The five quantitative boxes below record LOCAL Fixture passage only. This
+supersedes older unchecked wording for those five checks, not the remaining
+criteria, D5's strict catalog/actual corpus gates, integration or Phase promotion.
+Final current full registered gates are running; no complete Phase exit is claimed.
+
+2026-10-17 four-purpose numeric approval/install is a prerequisite, not an exit:
+actual boundary/evidence checks pass4/4, independent frozen-catalog check fails
+on exactly two generated profile maps. Keep D5 and original exits unchecked;
+unaffected actual/root/Native checks proceed. The [compatibility proposal](../superpowers/specs/2026-10-17-p05-profile-map-catalog-proposal.md)
+does not approve a broader exclusion, evidence retagging or a threshold change.
+
+2026-10-16 written prefix amendment implemented and single review corrected;
+current v2 all22 qualification44/44,0fail/skip/cancelled,3664815.5491ms/exit0,
+reviewed focused113/113 and architecture17 evidence are in the existing ledger.
+Four-purpose320 calibration/64 independent holdouts pass with0fail; fresh-process
+host reproduction passes exit0, with0 current profiles. Exact purpose/value
+approval is still missing; see CURRENT_STATUS and its linked numerical review.
+No original actual-mode/phase gate is checked by this measurement. The
+[v2 design draft](../superpowers/specs/2026-10-04-p05-w3-020-native-refresh-composition-design.md#r2-cancellation-identity-amendment--written-review-draft-2026-10-16)
+changes only the private d-cancel received-output proof. All original22,
+other21 exact equalities, R1/source/state/closure/Apply guards, calibration and
+holdouts, exact numerical approval, actual gates and exits stay mandatory.
+No checkbox or numeric threshold changes. Earlier review-pending/v1 statements
+below are historical; the retained counterexample is not erased. Current private
+qualification does not establish numeric approval, actual gates or phase promotion.
+
+2026-10-16 D5 qualification remains blocked: the accepted R2 determinism check
+correctly refuses two same-input cancellation trials with different received
+stdout bytes/record counts. Original cancellation/no-Apply/closure/state checks
+pass, but do not waive that identity contract. The
+[pending proposal](../superpowers/specs/2026-10-16-p05-refresh-cancellation-identity-proposal.md)
+changes no checkbox, numerical threshold, original22 membership or phase exit.
+Do not promote Phase0.5 from the earlier44/44 finite passing sample; retain the
+later failed corpus and await the governed decision before further calibration.
+
+2026-10-16 full replay materializer/reader/owned restoration/parent integration
+passes20/20, including22 generated original seeds/44 fresh trials. R1 independent
+SQLite field oracles and eight fresh-core classes pass13/13 after genuine RED.
+All22 R1/effect controls pass22/22, not final eligibility. Current prerequisites
+100/100, affected regression201/201 and16 builds/IR types pass. Product corrections
+invalidate the older producer catalog; final qualification requires a fresh
+matching corpus and complete original regression gates. Do not use functional
+counts or expected coverage declarations as measured source/RSS evidence.
+All original four-purpose/holdout/exact numeric approval/public actual/root/
+Native/phase criteria remain mandatory. No gate, checkbox or10/14 count changes.
+
+2026-10-16 one whole-product review completed; two Important defects are corrected
+with genuine RED/GREEN, one Minor diagnostic classification deferred. STATUS exact
+UTF-8 output bound and Native read snapshot ownership do not change any original
+criterion. Final buildbc952524... still needs exact-build qualification. Settled
+root1581/1538pass/42fail/1existing skip and Native113/89pass/24fail retain precisely
+the original profile failures, independently audited with no extras; NOT green.
+Rust133/133/fmt/build/strict Clippy pass, but do not waive the held profile gates.
+Current installed catalog9roots/2331files is not full22 replay qualification.
+Actual CLI31/2 components/29fail/0NOT_RUN is
+failure evidence, not acceptance. Do not close Tasks1–6, D5 or Phase0.5 before
+Task7 exact evidence/approval and original Task8 actual exits. No weakened gate.
+
+2026-10-16 root1578/1535pass/42same failures/1skip and Native113/89pass/24same
+profile failures settle the pre-budget-fix checkpoint. Author reproduced/fixed
+the collector line+retained-evidence shared ceiling under design §4, RED1 ->
+pure8/8; post-fix verification and whole-product review remain pending. A review
+service quota failure is not a passed review. No actual-mode/phase gate is waived,
+no numeric value is selected and no freeze/profile/phase completion is claimed.
+
+2026-10-15 original worker rows are wired, not accepted by wiring alone. Same
+closed Source seed, feasible explicit1/2, real100-call traces/slot overlap/
+different order and complete canonical/support/coverage/R010/closure agreement
+must qualify both original peers; missing/infeasible peer keeps FAIL. Affected
+176/176 and build16/IR types pass, not full-root/public/D5/phase acceptance.
+Additive diagnostic Fixture is now bound into actual immutable corpus identity.
+Current actual CLI is complete FAIL31/2 components/29failed/0NOT_RUN, independently
+audited28 refusals/restorations and one infeasible worker, not a passed pair.
+Final current-identity root and original Task6–8 remain open; no
+gate/number/profile approval or phase promotion follows.
+
+2026-10-15 latest local verification: full diagnostic root1576/1533pass/42fail/
+1existing skip, independently matched to the original42 failure names; prior
+extra intermittent refusal-count failure remains retained/unresolved, not waived.
+Nine additive literal negative diagnostic streams and their rejection test were
+added afterward (capture6/6); the full root predates that extra test. Neither
+component success nor audit success qualifies public worker/D5 or phase exit.
+Final affected162/162 passes, including real Native components and original pins;
+architecture17, named JS/JSON formatting and CRLF-aware diff checks pass.
+Original gates,31/21 inventory,10/14 integration and four open parents unchanged.
+
+2026-10-15 §9/corrected plan approved by subsequent “继续”; implementation proceeds
+without changing original Exit Criteria. Real callback components/pure capture
+are not admitted public worker consistency or D5 proof. Preserve every original
+case, full22/four-purpose qualification, exact numeric approval and phase hold.
+
+2026-10-15 review progression only: original written ADR-018/design accepted;
+the new Task5 plan supplement and design §9 FULL count correction await review.
+Existing relation FULL parses twice, SYMBOL-only once, REFRESH changed set once;
+do not treat the mistaken original FULL assertion as a passed/waived gate. No
+phase criterion or numeric threshold changes, no new actual evidence or exit.
+
+2026-10-15 pending observation design: [proposed ADR-018](adr/ADR-018-native-evaluation-observations.md)
+and its [written specification](../superpowers/specs/2026-10-15-p05-native-parse-observation-design.md)
+detail real parse/worker observation, bounded lifecycle and negative controls for
+existing requirements. Direction approval is not written acceptance or a passed
+gate. Keep all31/21 cases, D5/full22, original quality thresholds and four-purpose
+qualification/holdouts/separate numeric approval. Two worker rows remain NOT_RUN;
+missing current-build profiles still prevent public positive qualification.
+Fresh registered root1571/1528pass/42fail/1skip and actual CLI2 components/27failed/
+2NOT_RUN are not green. Original Phase0.5 exits and four parent tasks remain open.
+
+2026-10-14 accepted snapshot-neutral selection refinement preserves all original
+Exit Criteria. Equal-ranked support uses providerId/providerFactId/snapshotId;
+Java normalizer compatibility is version2, not a new IR/IPC schema. Synthetic
+label/order regressions and offline old-baseline refusal pass, but do not replace
+actual admitted FULL/REFRESH publication, independent whole-state agreement,
+failure recovery, original performance gates or final exact-build profiles. No
+gate is lowered or task/Phase promoted by this amendment.
+
 Packet D written-spec acceptance (2026-10-04): the latest user “确认” accepts the [composition specification](../superpowers/specs/2026-10-04-p05-w3-020-native-refresh-composition-design.md). Its [D1–D6 executable plan](../superpowers/plans/2026-10-04-p05-w3-020-native-refresh-composition.md) is written and awaiting separate review/native execution confirmation. No code, Fixture registration, memory calibration/profile installation, gate passage or phase promotion follows. Final-build exact-purpose measurement and separate numeric approval precede production acceptance; E and original phase exits remain open. Earlier direction-only/pending-spec/missing-plan notes below are historical.
 
 Packet D's [written composition design](../superpowers/specs/2026-10-04-p05-w3-020-native-refresh-composition-design.md) is pending user review, not passing evidence. Proposed acceptance requires complete database-bound overlay and target inventory, actual v3 lifecycle/admission, same-WORKTREE/token guards before and under lock, exact reopened rollback/coactivation and retained Evidence/other-Provider support. All proposed Fixture/gate obligations are in its D1-D6 table; no existing phase checkbox, numerical threshold or incremental capability is changed.
@@ -78,6 +283,25 @@ Phase 0 explicitly does not require Java parsing.
 
 ## Phase 0.5 exit
 
+Accepted interpretation2026-10-15: user's “批准，继续执行” accepts ADR-017 and
+its written evidence-layer design. The subsequent user “确认” approves the revised
+existing plan for implementation. All31 required cases,21 incremental obligations, original gates
+and D5/full22 remain. Recorded component evidence is not live Native extraction;
+declared metadata is not a public Source role override. No checkbox changes and
+no actual acceptance follow. The pending written-review note below is historical.
+
+Pending interpretation proposal2026-10-15: [ADR-017](adr/ADR-017-phase05-evaluation-evidence-layers.md)
+and the [evidence-layer design](../superpowers/specs/2026-10-15-p05-evaluation-evidence-layers-design.md)
+await written review after direction approval. They propose truthful component/
+public-index applicability, not removal of a required case or phase criterion.
+All31 Evaluation cases, all21 declared incremental cases and existing thresholds
+remain mandatory; expected PARTIAL means retained state, never successful partial
+publication. No checkbox below is checked or altered by this documentation.
+
+Follow-up verification2026-10-13: automatic approval recovered; final format/Rust gates now pass including125 Rust tests. Native107/83pass/24 missing-profile bootstrap failures and approved memory27/27 refusal keep original exits unchecked. CURRENT_STATUS links reproducible commands and raw logs. The preceding service-unavailable note is historical; no criterion/threshold is lowered.
+
+2026-10-13 query/CLI evidence checkpoint: registered `p05-code-query-cli-v1` proves local symbol search/understand/bounded CODE_TRACE with scoped freshness, coverage, support refs and read-only recovery (feature/boundary179/179; CURRENT_STATUS lists raw logs). The understand/trace checkbox remains unchecked pending complete declared gates: final required root1132/1089pass/42 unchanged Native profile failures/1skip is not green; additional final verification was not executed because automatic approval review was unavailable. No numerical threshold, original exit or Phase promotion is changed.
+
 - [x] A Java repository is scanned with ignore, generated/vendor/test, binary, and include/exclude handling (P05-W2-001; three declared Source Fixtures and reproducible commands in `CURRENT_STATUS.md`).
 - [ ] Native analysis emits symbols, imports, direct calls, inheritance, references, diagnostics, and coverage through IPC v1.
 - [ ] Java extraction is behind a `LanguageAnalyzer` boundary; framework interpretation is absent from the language adapter.
@@ -94,11 +318,11 @@ Phase 0 explicitly does not require Java parsing.
 - [ ] P05-W1-011 patch application reselects from persisted active-support candidates after one Provider removal, rejects legacy missing candidates with a full-analysis fallback, and preserves graph/Evidence/bindings and activation ID/fingerprint on failed or stale-base patches (registered `p05-incremental-patch-apply-v1`; no new numeric gate).
 - [ ] P05-W1-011's registered Fixture proves same-`WORKTREE`-ID fingerprint advancement and controlled `FULL_ANALYSIS_REQUIRED` for different revision IDs or immutable targets, with exact old-graph/Evidence/binding/candidate/pointer preservation. This is an applicability boundary, not a replacement for the existing Phase 0.5 incremental-correctness or no-default-full-reparse gates.
 - [ ] `understand` and code-level `trace` return locations, relations, confidence, and coverage warnings.
-- [ ] Critical Symbol Recall is at least 95 percent.
-- [ ] Critical Direct Call Precision is at least 95 percent.
-- [ ] Critical Direct Call Recall is at least 90 percent.
-- [ ] Incremental correctness is 100 percent for declared fixtures.
-- [ ] Stale provider-binding facts equal zero.
+- [x] Critical Symbol Recall is at least 95 percent.
+- [x] Critical Direct Call Precision is at least 95 percent.
+- [x] Critical Direct Call Recall is at least 90 percent.
+- [x] Incremental correctness is 100 percent for declared fixtures.
+- [x] Stale provider-binding facts equal zero.
 
 ADR-016 adds a P05-W3-020 applicability check without replacing the gates above: compatible complete derived summaries and graph/support/Evidence/coverage/indexed fingerprint must activate atomically; legacy/incompatible state, stale/empty-latest-delta retry, malformed metadata, shared-container ownership and resource overflow retain the last good graph. Prove restart/dependent resolution with real Native streams and unchanged-file parse counts. The first contract packet only establishes strict cross-language schema/byte agreement and cannot check these runtime gates. No Fixture baseline or numerical threshold changes at design acceptance.
 

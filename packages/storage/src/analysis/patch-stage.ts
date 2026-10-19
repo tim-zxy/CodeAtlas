@@ -2,6 +2,17 @@ import type { DatabaseSync } from 'node:sqlite';
 import { isDeepStrictEqual } from 'node:util';
 import { boundedJson } from './bounded-json.js';
 import {
+  withNativeApplySqlFields,
+  withNativeApplySqlToken,
+  withNativeApplySqlSupports,
+  withNativeApplySqlSummaries,
+  yieldNativeApplySqlFields,
+  nativeStageAccountingCheckpoint,
+  nativeSqlEmptyPatchRead,
+  nativeSqlTargetRevisionRefusal,
+  type NativeStageBudgetComponents,
+} from './native-apply-sql-observation.js';
+import {
   assertNativeStateLimits,
   assertNativeStringBudget,
   captureNativeActivationToken,
@@ -189,6 +200,10 @@ export class RepositoryPatchStage {
   private nativeHeaderJson: string | undefined;
   private nativeSnapshot: ProviderSnapshot | undefined;
   private sealed: ValidatedNativeState | undefined;
+  private sealedBaselineToken: NativeActivationToken | undefined;
+  private nativeSealOwnedBytes = 0;
+  private nativeSqlPeakBytes = 0;
+  private nativeRetainedStringChargePeakBytes = 0;
   private validating = false;
   private context: {
     repositoryId: string;
@@ -228,6 +243,7 @@ export class RepositoryPatchStage {
       for (const file of owned.targetSourceFiles) SourceFileSchema.parse(file);
       this.nativeContext = freezeOwned(owned);
       this.nativeOwnedBytes = Buffer.byteLength(json);
+      this.nativeRetainedStringChargePeakBytes = 2 * this.nativeOwnedBytes;
     }
     db.exec(`
       CREATE TEMP TABLE patch_native_summary (
@@ -455,6 +471,13 @@ export class RepositoryPatchStage {
     if (observations > 10_000 || metadataBytes > this.nativeLimits.maxSerializedBytes)
       throw new Error('Native staged metadata resource limit exceeded');
     assertNativeStringBudget(retainedSqlBytes + this.nativeOwnedBytes, this.nativeLimits);
+    this.observeNativeRetention(retainedSqlBytes, 2 * (retainedSqlBytes + this.nativeOwnedBytes), {
+      source: 'ROW_PREFLIGHT',
+      stageSqlBytes: retainedSqlBytes,
+      additionalSqlAllowanceBytes: 0,
+      otherBudgetChargeBytes: 2 * this.nativeOwnedBytes,
+      resultCopyChargeBytes: 0,
+    });
     return { retainedSqlBytes };
   }
 
@@ -500,19 +523,26 @@ export class RepositoryPatchStage {
         .get(kind) as { n: number };
       if (!counts || counts[name] !== actual.n) throw new Error(`Patch ${name} count differs`);
     }
+    let completionEvents = false;
     for (const row of this.db
       .prepare(
         "SELECT kind, payload FROM temp.patch_event WHERE kind IN ('SOURCE_FILE', 'UPSERT_NODE', 'UPSERT_EDGE')",
       )
       .iterate() as IterableIterator<{ kind: PatchKind; payload: string }>) {
-      const value = JSON.parse(row.payload) as Record<string, unknown>;
-      if (
-        value.repositoryId !== payload.repositoryId ||
-        value.revisionId !== payload.revisionId ||
-        ('providerSnapshotId' in value && value.providerSnapshotId !== payload.providerSnapshotId)
-      )
-        throw new Error('Patch event context differs from terminal');
+      completionEvents = true;
+      withNativeApplySqlFields('STAGE_COMPLETION_EVENT_ROW', [row.kind, row.payload], () => {
+        const value = JSON.parse(row.payload) as Record<string, unknown>;
+        if (
+          value.repositoryId !== payload.repositoryId ||
+          value.revisionId !== payload.revisionId ||
+          ('providerSnapshotId' in value && value.providerSnapshotId !== payload.providerSnapshotId)
+        )
+          throw new Error('Patch event context differs from terminal');
+      });
     }
+    if (!completionEvents) nativeSqlEmptyPatchRead('COMPLETION_EVENT');
+    const { repositoryId, revisionId } = payload;
+    let completionRemovals = false;
     let activeBinding: ReturnType<DatabaseSync['prepare']> | undefined;
     for (const row of this.db
       .prepare(
@@ -523,21 +553,30 @@ export class RepositoryPatchStage {
       provider_id: string;
       provider_fact_id: string;
     }>) {
+      completionRemovals = true;
       activeBinding ??= this.db.prepare(`SELECT count(*) AS n
         FROM provider_fact_bindings AS binding
         JOIN evidence AS evidence ON evidence.id = binding.evidence_id
         WHERE binding.fact_type = ? AND binding.provider_id = ? AND binding.provider_fact_id = ?
           AND evidence.repository_id = ? AND evidence.revision_id = ? AND evidence.status = 'ACTIVE'`);
-      const result = activeBinding.get(
-        row.fact_type,
-        row.provider_id,
-        row.provider_fact_id,
-        payload.repositoryId,
-        payload.revisionId,
-      ) as { n: number };
-      if (result.n !== 1)
-        throw new Error('Patch removal requires exactly one active Provider binding');
+      const binding = activeBinding;
+      withNativeApplySqlFields(
+        'STAGE_COMPLETION_REMOVAL_ROW',
+        [row.fact_type, row.provider_id, row.provider_fact_id],
+        () => {
+          const result = binding.get(
+            row.fact_type,
+            row.provider_id,
+            row.provider_fact_id,
+            repositoryId,
+            revisionId,
+          ) as { n: number };
+          if (result.n !== 1)
+            throw new Error('Patch removal requires exactly one active Provider binding');
+        },
+      );
     }
+    if (!completionRemovals) nativeSqlEmptyPatchRead('COMPLETION_REMOVAL');
     this.context = {
       repositoryId: payload.repositoryId,
       revisionId: payload.revisionId,
@@ -585,6 +624,17 @@ export class RepositoryPatchStage {
       rows.retainedSqlBytes + this.nativeOwnedBytes + bytes,
       this.nativeLimits,
     );
+    this.observeNativeRetention(
+      rows.retainedSqlBytes,
+      2 * (rows.retainedSqlBytes + this.nativeOwnedBytes + bytes),
+      {
+        source: 'COMPLETION_ADMISSION',
+        stageSqlBytes: rows.retainedSqlBytes,
+        additionalSqlAllowanceBytes: 0,
+        otherBudgetChargeBytes: 2 * (this.nativeOwnedBytes + bytes),
+        resultCopyChargeBytes: 0,
+      },
+    );
     this.confirmSucceeded(terminal);
     this.nativeHeaderJson = headerJson;
     this.nativeSnapshot = freezeOwned(snapshot);
@@ -607,6 +657,7 @@ export class RepositoryPatchStage {
       !this.nativeLimits
     )
       throw new Error('Native patch stage is not complete');
+    const { nativeContext, nativeHeaderJson, nativeSnapshot, nativeLimits } = this;
     const expected = JSON.parse(boundedJson(expectedValue, 1_000_000)) as NativeStateExpectation;
     const baselineToken = JSON.parse(
       boundedJson(baselineValue, 1_000_000),
@@ -622,170 +673,120 @@ export class RepositoryPatchStage {
     const ownTransaction = !this.db.isTransaction;
     if (ownTransaction) this.db.exec('BEGIN');
     try {
-      const baseline = this.nativeContext.baseline;
-      // Verify retained indexed metadata and complete current inventory using
-      // numeric SQL predicates, not a second decoded/fabricated baseline.
-      if (
-        this.db
-          .prepare(
-            'SELECT count(*) AS n FROM native_analysis_state WHERE repository_id=? AND provider_id=? AND revision_id=? AND content_fingerprint=? AND header_json=?',
+      withNativeApplySqlSupports(() =>
+        withNativeApplySqlSummaries(() => {
+          const activation = this.checkNativeActivationContext(
+            expected,
+            baselineToken,
+            stageBytes,
+            scalarBytes,
+          );
+          const retained = activation.retainedStringBytes;
+          const baseline = nativeContext.baseline;
+          const inventory = nativeContext.targetSourceFiles;
+          const active = readNativePatchActiveSupports(
+            this.db,
+            expected,
+            {
+              ...nativeLimits,
+              memoryBudgetBytes: nativeLimits.memoryBudgetBytes - 2 * retained,
+            },
+            (bytes) =>
+              this.observeNativeRetention(
+                activation.retainedSqlBytes + bytes,
+                2 * (retained + bytes),
+                {
+                  source: 'SEAL_ACTIVE_ADMISSION',
+                  stageSqlBytes: stageBytes,
+                  additionalSqlAllowanceBytes: activation.retainedSqlBytes - stageBytes + bytes,
+                  otherBudgetChargeBytes: 2 * (retained - activation.retainedSqlBytes),
+                  resultCopyChargeBytes: 0,
+                },
+              ),
+          );
+          const retainedSqlBytes = activation.retainedSqlBytes + active.retainedSqlBytes;
+          this.validating = true;
+          let state: ValidatedNativeState;
+          try {
+            state = validate({
+              expected,
+              baseline,
+              baselineToken,
+              snapshot: nativeSnapshot,
+              headerJson: nativeHeaderJson,
+              files: this.readNativeSummaries(),
+              targetSourceFiles: inventory,
+              changedSourceFiles: this.readSourceFiles(),
+              activeSupports: active.supports,
+              upsertNodes: this.readUpsertNodes(),
+              upsertEdges: this.readUpsertEdges(),
+              removeNodes: this.readRemoveNodes(),
+              removeEdges: this.readRemoveEdges(),
+              normalizedNodes: this.readNormalizedNodes(),
+              normalizedEdges: this.readNormalizedEdges(),
+              supports: this.readSupports(),
+              coverage: this.readNativeCoverage(),
+              diagnostics: this.readDiagnostics(),
+              maxSerializedBytes: nativeLimits.maxSerializedBytes,
+              memoryBudgetBytes:
+                nativeLimits.memoryBudgetBytes - 2 * (retained + active.retainedSqlBytes),
+            });
+          } finally {
+            this.validating = false;
+          }
+          // Result, serialization and detached owned copy overlap here; the port's
+          // temporary maps have returned. Charge all three representations before
+          // copying, and never invoke accessors/toJSON from an injected result.
+          const resultBudget =
+            nativeLimits.memoryBudgetBytes - 2 * (retained + active.retainedSqlBytes);
+          const resultJson = boundedJson(state, Math.floor(resultBudget / 3));
+          const resultCopyChargeBytes = 3 * Buffer.byteLength(resultJson);
+          this.observeNativeRetention(
+            retainedSqlBytes,
+            2 * (retained + active.retainedSqlBytes) + resultCopyChargeBytes,
+            {
+              source: 'SEAL_RESULT_ADMISSION',
+              stageSqlBytes: stageBytes,
+              additionalSqlAllowanceBytes: retainedSqlBytes - stageBytes,
+              otherBudgetChargeBytes: 2 * (retained - activation.retainedSqlBytes),
+              resultCopyChargeBytes,
+            },
+          );
+          const owned = JSON.parse(resultJson) as ValidatedNativeState;
+          if (
+            Object.keys(owned).sort().join(',') !== 'expected,files,headerJson,summaryDigest' ||
+            !Array.isArray(owned.files) ||
+            !isDeepStrictEqual(owned.expected, expected) ||
+            owned.headerJson !== this.nativeHeaderJson
           )
-          .get(
-            expected.repositoryId,
-            expected.providerId,
-            expected.revisionId,
-            baseline.expected.contentFingerprint,
-            baseline.headerJson,
-          )!.n !== 1
-      )
-        throw new Error('Native indexed baseline changed');
-      if (
-        this.db
-          .prepare(
-            'SELECT count(*) AS n FROM native_analysis_file WHERE repository_id=? AND provider_id=?',
+            throw new Error('Native validation result differs from stage');
+          const count = this.db
+            .prepare('SELECT count(*) AS n FROM temp.patch_native_summary')
+            .get()!.n;
+          if (
+            owned.files.length !== count ||
+            new Set(owned.files.map((f) => f.sourceFileId)).size !== count ||
+            new Set(owned.files.map((f) => f.sourcePath)).size !== count ||
+            owned.summaryDigest !==
+              (JSON.parse(this.nativeHeaderJson) as { summaryDigest: unknown }).summaryDigest
           )
-          .get(expected.repositoryId, expected.providerId)!.n !== baseline.files.length
-      )
-        throw new Error('Native indexed baseline changed');
-      const match = this.db.prepare(
-        'SELECT count(*) AS n FROM native_analysis_file WHERE repository_id=? AND provider_id=? AND source_file_id=? AND source_path=? AND content_fingerprint=? AND summary_json=?',
+            throw new Error('Native validation result differs from stage');
+          const matches = this.db.prepare(
+            'SELECT count(*) AS n FROM temp.patch_native_summary WHERE source_file_id=? AND source_path=? AND content_fingerprint=? AND summary_json=?',
+          );
+          for (const f of owned.files)
+            if (
+              matches.get(f.sourceFileId, f.sourcePath, f.contentFingerprint, f.summaryJson)!.n !==
+              1
+            )
+              throw new Error('Native validation result differs from stage');
+          const sealed = freezeOwned(owned);
+          if (ownTransaction) this.db.exec('COMMIT');
+          this.sealed = sealed;
+          this.sealedBaselineToken = freezeOwned(baselineToken);
+          this.nativeSealOwnedBytes = Buffer.byteLength(resultJson) + scalarBytes;
+        }),
       );
-      for (const f of baseline.files)
-        if (
-          match.get(
-            expected.repositoryId,
-            expected.providerId,
-            f.sourceFileId,
-            f.sourcePath,
-            f.contentFingerprint,
-            f.summaryJson,
-          )!.n !== 1
-        )
-          throw new Error('Native indexed baseline changed');
-      if (
-        this.db
-          .prepare(
-            "SELECT count(*) AS n FROM revisions WHERE repository_id=? AND id=? AND kind='WORKTREE' AND content_fingerprint=?",
-          )
-          .get(expected.repositoryId, expected.revisionId, expected.contentFingerprint)!.n !== 1
-      )
-        throw new Error('Native target revision changed');
-      const inventory = this.nativeContext.targetSourceFiles;
-      if (
-        this.db
-          .prepare('SELECT count(*) AS n FROM source_files WHERE repository_id=? AND revision_id=?')
-          .get(expected.repositoryId, expected.revisionId)!.n !== inventory.length
-      )
-        throw new Error('Native target inventory changed');
-      const source = this.db
-        .prepare(`SELECT count(*) AS n FROM source_files WHERE repository_id=? AND revision_id=?
-        AND id=? AND path=? AND content_fingerprint=? AND role=? AND provenance=? AND content_kind=? AND language_hint IS ? AND sensitivity=?`);
-      for (const f of inventory)
-        if (
-          source.get(
-            expected.repositoryId,
-            expected.revisionId,
-            f.id,
-            f.path,
-            f.contentFingerprint,
-            f.classification.role,
-            f.classification.provenance,
-            f.classification.contentKind,
-            f.languageHint,
-            f.sensitivity,
-          )!.n !== 1
-        )
-          throw new Error('Native target inventory changed');
-      // The token reader materializes its header/pointer strings; reserve their
-      // actual SQL bytes first, independently of the owned preparation context.
-      const tokenLength = (columns: readonly string[]) =>
-        columns.map((c) => `coalesce(length(CAST(${c} AS BLOB)),0)`).join('+');
-      const tokenBytes =
-        (this.db
-          .prepare(
-            `SELECT coalesce(sum(${tokenLength(['repository_id', 'provider_id', 'provider_snapshot_id', 'revision_id', 'content_fingerprint', 'header_json'])}),0) AS bytes FROM native_analysis_state WHERE repository_id=?`,
-          )
-          .get(expected.repositoryId)!.bytes as number) +
-        (this.db
-          .prepare(
-            `SELECT coalesce(sum(${tokenLength(['indexed_revision_id', 'indexed_content_fingerprint'])}),0) AS bytes FROM repository_state WHERE repository_id=?`,
-          )
-          .get(expected.repositoryId)!.bytes as number);
-      const retained = stageBytes + this.nativeOwnedBytes + scalarBytes + tokenBytes;
-      assertNativeStringBudget(retained, this.nativeLimits);
-      if (
-        !isDeepStrictEqual(
-          captureNativeActivationToken(this.db, expected.repositoryId),
-          baselineToken,
-        )
-      )
-        throw new Error('Native activation token changed');
-      const active = readNativePatchActiveSupports(this.db, expected, {
-        ...this.nativeLimits,
-        memoryBudgetBytes: this.nativeLimits.memoryBudgetBytes - 2 * retained,
-      });
-      this.validating = true;
-      let state: ValidatedNativeState;
-      try {
-        state = validate({
-          expected,
-          baseline,
-          baselineToken,
-          snapshot: this.nativeSnapshot,
-          headerJson: this.nativeHeaderJson,
-          files: this.readNativeSummaries(),
-          targetSourceFiles: inventory,
-          changedSourceFiles: this.readSourceFiles(),
-          activeSupports: active.supports,
-          upsertNodes: this.readUpsertNodes(),
-          upsertEdges: this.readUpsertEdges(),
-          removeNodes: this.readRemoveNodes(),
-          removeEdges: this.readRemoveEdges(),
-          normalizedNodes: this.readNormalizedNodes(),
-          normalizedEdges: this.readNormalizedEdges(),
-          supports: this.readSupports(),
-          coverage: this.readNativeCoverage(),
-          diagnostics: this.readDiagnostics(),
-          maxSerializedBytes: this.nativeLimits.maxSerializedBytes,
-          memoryBudgetBytes:
-            this.nativeLimits.memoryBudgetBytes - 2 * (retained + active.retainedSqlBytes),
-        });
-      } finally {
-        this.validating = false;
-      }
-      // Result, serialization and detached owned copy overlap here; the port's
-      // temporary maps have returned. Charge all three representations before
-      // copying, and never invoke accessors/toJSON from an injected result.
-      const resultBudget =
-        this.nativeLimits.memoryBudgetBytes - 2 * (retained + active.retainedSqlBytes);
-      const owned = JSON.parse(
-        boundedJson(state, Math.floor(resultBudget / 3)),
-      ) as ValidatedNativeState;
-      if (
-        Object.keys(owned).sort().join(',') !== 'expected,files,headerJson,summaryDigest' ||
-        !Array.isArray(owned.files) ||
-        !isDeepStrictEqual(owned.expected, expected) ||
-        owned.headerJson !== this.nativeHeaderJson
-      )
-        throw new Error('Native validation result differs from stage');
-      const count = this.db.prepare('SELECT count(*) AS n FROM temp.patch_native_summary').get()!.n;
-      if (
-        owned.files.length !== count ||
-        new Set(owned.files.map((f) => f.sourceFileId)).size !== count ||
-        new Set(owned.files.map((f) => f.sourcePath)).size !== count ||
-        owned.summaryDigest !==
-          (JSON.parse(this.nativeHeaderJson) as { summaryDigest: unknown }).summaryDigest
-      )
-        throw new Error('Native validation result differs from stage');
-      const matches = this.db.prepare(
-        'SELECT count(*) AS n FROM temp.patch_native_summary WHERE source_file_id=? AND source_path=? AND content_fingerprint=? AND summary_json=?',
-      );
-      for (const f of owned.files)
-        if (matches.get(f.sourceFileId, f.sourcePath, f.contentFingerprint, f.summaryJson)!.n !== 1)
-          throw new Error('Native validation result differs from stage');
-      const sealed = freezeOwned(owned);
-      if (ownTransaction) this.db.exec('COMMIT');
-      this.sealed = sealed;
     } catch (error) {
       if (ownTransaction && this.db.isTransaction) this.db.exec('ROLLBACK');
       throw error;
@@ -798,6 +799,230 @@ export class RepositoryPatchStage {
     return this.sealed;
   }
 
+  estimatedTempBytes(): number {
+    this.assertOpen();
+    const pages = this.db.prepare('PRAGMA temp.page_count').get() as { page_count: number };
+    const size = this.db.prepare('PRAGMA temp.page_size').get() as { page_size: number };
+    return pages.page_count * size.page_size;
+  }
+
+  /** Owner-local accounting high water, not heap/RSS or complete Runtime retention.
+   * Scalar snapshots remain readable after cleanup; observation performs no SQL.
+   * Detached context/result charges are deliberately not classified as raw SQL.
+   */
+  readNativeRetentionMeasurement() {
+    if (!this.nativeLimits)
+      throw new Error('Native retention measurement requires declared limits');
+    const retainedSqlBytes = Math.max(
+      this.nativeSqlPeakBytes,
+      this.nativeStringBytes + this.nativeRowStringBytes,
+    );
+    return Object.freeze({
+      scope: 'STAGE_SQL_ACCOUNTING_ONLY' as const,
+      retainedSqlBytes,
+      retainedSqlStringChargeBytes: 2 * retainedSqlBytes,
+      retainedStringChargePeakBytes: this.nativeRetainedStringChargePeakBytes,
+    });
+  }
+
+  private observeNativeRetention(
+    sqlBytes: number,
+    retainedStringChargeBytes: number,
+    components: Omit<NativeStageBudgetComponents, 'scope'>,
+  ): void {
+    this.nativeSqlPeakBytes = Math.max(this.nativeSqlPeakBytes, sqlBytes);
+    this.nativeRetainedStringChargePeakBytes = Math.max(
+      this.nativeRetainedStringChargePeakBytes,
+      retainedStringChargeBytes,
+    );
+    nativeStageAccountingCheckpoint(this, sqlBytes, retainedStringChargeBytes, {
+      scope: 'STAGE_BUDGET_COMPONENTS_ONLY',
+      ...components,
+    });
+  }
+
+  private checkNativeActivationContext(
+    expected: NativeStateExpectation,
+    baselineToken: NativeActivationToken,
+    stageBytes: number,
+    scalarBytes: number,
+  ): { readonly retainedStringBytes: number; readonly retainedSqlBytes: number } {
+    if (!this.nativeContext || !this.nativeLimits) throw new Error('Native context required');
+    const baseline = this.nativeContext.baseline;
+    // Verify retained indexed metadata and complete current inventory using
+    // numeric SQL predicates, not a second decoded/fabricated baseline.
+    if (
+      this.db
+        .prepare(
+          'SELECT count(*) AS n FROM native_analysis_state WHERE repository_id=? AND provider_id=? AND revision_id=? AND content_fingerprint=? AND header_json=?',
+        )
+        .get(
+          expected.repositoryId,
+          expected.providerId,
+          expected.revisionId,
+          baseline.expected.contentFingerprint,
+          baseline.headerJson,
+        )!.n !== 1
+    )
+      throw new Error('Native indexed baseline changed');
+    if (
+      this.db
+        .prepare(
+          'SELECT count(*) AS n FROM native_analysis_file WHERE repository_id=? AND provider_id=?',
+        )
+        .get(expected.repositoryId, expected.providerId)!.n !== baseline.files.length
+    )
+      throw new Error('Native indexed baseline changed');
+    const match = this.db.prepare(
+      'SELECT count(*) AS n FROM native_analysis_file WHERE repository_id=? AND provider_id=? AND source_file_id=? AND source_path=? AND content_fingerprint=? AND summary_json=?',
+    );
+    for (const f of baseline.files)
+      if (
+        match.get(
+          expected.repositoryId,
+          expected.providerId,
+          f.sourceFileId,
+          f.sourcePath,
+          f.contentFingerprint,
+          f.summaryJson,
+        )!.n !== 1
+      )
+        throw new Error('Native indexed baseline changed');
+    if (
+      this.db
+        .prepare(
+          "SELECT count(*) AS n FROM revisions WHERE repository_id=? AND id=? AND kind='WORKTREE' AND content_fingerprint=?",
+        )
+        .get(expected.repositoryId, expected.revisionId, expected.contentFingerprint)!.n !== 1
+    ) {
+      nativeSqlTargetRevisionRefusal();
+      throw new Error('Native target revision changed');
+    }
+    const inventory = this.nativeContext.targetSourceFiles;
+    if (
+      this.db
+        .prepare('SELECT count(*) AS n FROM source_files WHERE repository_id=? AND revision_id=?')
+        .get(expected.repositoryId, expected.revisionId)!.n !== inventory.length
+    )
+      throw new Error('Native target inventory changed');
+    const source = this.db
+      .prepare(`SELECT count(*) AS n FROM source_files WHERE repository_id=? AND revision_id=?
+      AND id=? AND path=? AND content_fingerprint=? AND role=? AND provenance=? AND content_kind=? AND language_hint IS ? AND sensitivity=?`);
+    for (const f of inventory)
+      if (
+        source.get(
+          expected.repositoryId,
+          expected.revisionId,
+          f.id,
+          f.path,
+          f.contentFingerprint,
+          f.classification.role,
+          f.classification.provenance,
+          f.classification.contentKind,
+          f.languageHint,
+          f.sensitivity,
+        )!.n !== 1
+      )
+        throw new Error('Native target inventory changed');
+    // The token reader materializes its header/pointer strings; reserve their
+    // actual SQL bytes first, independently of the owned preparation context.
+    const tokenLength = (columns: readonly string[]) =>
+      columns.map((c) => `coalesce(length(CAST(${c} AS BLOB)),0)`).join('+');
+    const tokenBytes =
+      (this.db
+        .prepare(
+          `SELECT coalesce(sum(${tokenLength(['repository_id', 'provider_id', 'provider_snapshot_id', 'revision_id', 'content_fingerprint', 'header_json'])}),0) AS bytes FROM native_analysis_state WHERE repository_id=?`,
+        )
+        .get(expected.repositoryId)!.bytes as number) +
+      (this.db
+        .prepare(
+          `SELECT coalesce(sum(${tokenLength(['indexed_revision_id', 'indexed_content_fingerprint'])}),0) AS bytes FROM repository_state WHERE repository_id=?`,
+        )
+        .get(expected.repositoryId)!.bytes as number);
+    const retained = stageBytes + this.nativeOwnedBytes + scalarBytes + tokenBytes;
+    assertNativeStringBudget(retained, this.nativeLimits);
+    this.observeNativeRetention(stageBytes + tokenBytes, 2 * retained, {
+      source: 'TOKEN_ADMISSION',
+      stageSqlBytes: stageBytes,
+      additionalSqlAllowanceBytes: tokenBytes,
+      otherBudgetChargeBytes: 2 * (this.nativeOwnedBytes + scalarBytes),
+      resultCopyChargeBytes: 0,
+    });
+    withNativeApplySqlToken(() => {
+      if (
+        !isDeepStrictEqual(
+          captureNativeActivationToken(this.db, expected.repositoryId),
+          baselineToken,
+        )
+      )
+        throw new Error('Native activation token changed');
+    });
+    return { retainedStringBytes: retained, retainedSqlBytes: stageBytes + tokenBytes };
+  }
+
+  assertNativeApplicable(
+    db: DatabaseSync,
+    expected: {
+      repositoryId: string;
+      revisionId: string;
+      contentFingerprint: string;
+      snapshot: ProviderSnapshot;
+    },
+    baselineToken: NativeActivationToken,
+  ): void {
+    this.assertOpen();
+    if (db !== this.db) throw new Error('Patch stage belongs to another connection');
+    if (!this.sealed || !this.sealedBaselineToken || !this.nativeSnapshot)
+      throw new Error('Native patch state has not been sealed');
+    this.assertContext({ ...expected, snapshotId: expected.snapshot.id });
+    const token = JSON.parse(boundedJson(baselineToken, 1_000_000)) as NativeActivationToken;
+    if (!isDeepStrictEqual(token, this.sealedBaselineToken))
+      throw new Error('Native baseline token differs from seal');
+    if (
+      this.sealed.expected.repositoryId !== expected.repositoryId ||
+      this.sealed.expected.revisionId !== expected.revisionId ||
+      this.sealed.expected.contentFingerprint !== expected.contentFingerprint ||
+      this.sealed.expected.providerId !== expected.snapshot.providerId ||
+      this.sealed.expected.providerVersion !== expected.snapshot.providerVersion ||
+      !isDeepStrictEqual(this.nativeSnapshot, expected.snapshot)
+    )
+      throw new Error('Native sealed state differs from activation');
+    const stageBytes = this.preflightNativeRows().retainedSqlBytes;
+    const activation = this.checkNativeActivationContext(
+      this.sealed.expected,
+      token,
+      stageBytes,
+      this.nativeSealOwnedBytes + Buffer.byteLength(JSON.stringify(token)),
+    );
+    // Recheck numeric ACTIVE candidate/SQL bounds before the shared writer
+    // materializes candidate TEXT. This cannot borrow the old seal's freshness.
+    const sealedExpected = this.sealed.expected;
+    withNativeApplySqlSupports(() =>
+      readNativePatchActiveSupports(
+        this.db,
+        sealedExpected,
+        {
+          ...this.nativeLimits!,
+          memoryBudgetBytes:
+            this.nativeLimits!.memoryBudgetBytes - 2 * activation.retainedStringBytes,
+        },
+        (bytes) =>
+          this.observeNativeRetention(
+            activation.retainedSqlBytes + bytes,
+            2 * (activation.retainedStringBytes + bytes),
+            {
+              source: 'APPLY_ACTIVE_ADMISSION',
+              stageSqlBytes: stageBytes,
+              additionalSqlAllowanceBytes: activation.retainedSqlBytes - stageBytes + bytes,
+              otherBudgetChargeBytes:
+                2 * (activation.retainedStringBytes - activation.retainedSqlBytes),
+              resultCopyChargeBytes: 0,
+            },
+          ),
+      ),
+    );
+  }
+
   private *readNativeSummaries(): IterableIterator<NativeStateJsonFile> {
     this.preflightNativeRows();
     for (const row of this.db
@@ -805,12 +1030,21 @@ export class RepositoryPatchStage {
         'SELECT source_file_id,source_path,content_fingerprint,summary_json FROM temp.patch_native_summary ORDER BY source_path',
       )
       .iterate())
-      yield {
-        sourceFileId: row.source_file_id as string,
-        sourcePath: row.source_path as string,
-        contentFingerprint: row.content_fingerprint as string,
-        summaryJson: row.summary_json as string,
-      };
+      yield* yieldNativeApplySqlFields(
+        'STAGE_SUMMARY_ROW',
+        [
+          row.source_file_id as string,
+          row.source_path as string,
+          row.content_fingerprint as string,
+          row.summary_json as string,
+        ],
+        () => ({
+          sourceFileId: row.source_file_id as string,
+          sourcePath: row.source_path as string,
+          contentFingerprint: row.content_fingerprint as string,
+          summaryJson: row.summary_json as string,
+        }),
+      );
   }
 
   assertApplicable(
@@ -882,7 +1116,9 @@ export class RepositoryPatchStage {
         "SELECT payload FROM temp.patch_event WHERE kind = 'UPSERT_NODE' AND provider_fact_id = ?",
       )
       .get(id) as PatchRow | undefined;
-    return row ? ProviderNodeSchema.parse(JSON.parse(row.payload)) : null;
+    return withNativeApplySqlFields('STAGE_POINT_PROVIDER', [row?.payload], () =>
+      row ? ProviderNodeSchema.parse(JSON.parse(row.payload)) : null,
+    );
   }
 
   getSourceFile(id: string): SourceFile | null {
@@ -895,7 +1131,9 @@ export class RepositoryPatchStage {
     const row = this.db
       .prepare('SELECT payload FROM temp.patch_event WHERE source_id = ?')
       .get(id) as PatchRow | undefined;
-    return row ? SourceFileSchema.parse(JSON.parse(row.payload)) : null;
+    return withNativeApplySqlFields('STAGE_POINT_SOURCE_ID', [row?.payload], () =>
+      row ? SourceFileSchema.parse(JSON.parse(row.payload)) : null,
+    );
   }
 
   getSourceFileByPath(path: string): SourceFile | null {
@@ -904,9 +1142,9 @@ export class RepositoryPatchStage {
     const row = this.db
       .prepare('SELECT payload FROM temp.patch_event WHERE source_path = ?')
       .get(path) as PatchRow | undefined;
-    return row
-      ? SourceFileSchema.parse(JSON.parse(row.payload))
-      : this.getPersistedSource('path', path);
+    return withNativeApplySqlFields('STAGE_POINT_SOURCE_PATH', [row?.payload], () =>
+      row ? SourceFileSchema.parse(JSON.parse(row.payload)) : this.getPersistedSource('path', path),
+    );
   }
 
   private getPersistedSource(field: 'id' | 'path', value: string): SourceFile | null {
@@ -958,16 +1196,19 @@ export class RepositoryPatchStage {
         "SELECT payload FROM temp.patch_normalized WHERE fact_type = 'NODE' AND provider_fact_id = ?",
       )
       .get(id) as PatchRow | undefined;
-    if (!row) return null;
-    const pair = JSON.parse(row.payload);
-    return {
-      provider: ProviderFactRefSchema.parse(pair.provider),
-      canonical: CanonicalNodeSchema.parse(pair.canonical),
-    };
+    return withNativeApplySqlFields('STAGE_POINT_NORMALIZED', [row?.payload], () => {
+      if (!row) return null;
+      const pair = JSON.parse(row.payload);
+      return {
+        provider: ProviderFactRefSchema.parse(pair.provider),
+        canonical: CanonicalNodeSchema.parse(pair.canonical),
+      };
+    });
   }
   getRetainedCanonicalNode(providerId: string, providerFactId: string): CanonicalNode | null {
     this.assertOpen();
     if (!this.completed || !this.context) throw new Error('Patch stage is not complete');
+    const context = this.context;
     if (this.nativeLimits) {
       const stage = this.preflightNativeRows();
       const size = this.db
@@ -993,6 +1234,17 @@ export class RepositoryPatchStage {
         stage.retainedSqlBytes + this.nativeOwnedBytes + (size.bytes as number),
         this.nativeLimits,
       );
+      this.observeNativeRetention(
+        stage.retainedSqlBytes + (size.bytes as number),
+        2 * (stage.retainedSqlBytes + this.nativeOwnedBytes + (size.bytes as number)),
+        {
+          source: 'RETAINED_CANDIDATE_ADMISSION',
+          stageSqlBytes: stage.retainedSqlBytes,
+          additionalSqlAllowanceBytes: size.bytes as number,
+          otherBudgetChargeBytes: 2 * this.nativeOwnedBytes,
+          resultCopyChargeBytes: 0,
+        },
+      );
     }
     const rows = this.db
       .prepare(
@@ -1007,16 +1259,21 @@ export class RepositoryPatchStage {
       .all(providerId, providerFactId, this.context.repositoryId, this.context.revisionId) as {
       candidate_json: string;
     }[];
-    if (rows.length > 1) throw new Error('Provider node has ambiguous active support');
-    if (!rows.length) return null;
-    const node = CanonicalNodeSchema.parse(JSON.parse(rows[0]!.candidate_json));
-    if (
-      node.repositoryId !== this.context.repositoryId ||
-      node.revisionId !== this.context.revisionId
-    ) {
-      throw new Error('Retained Provider node context differs');
-    }
-    return node;
+    return withNativeApplySqlFields(
+      'STAGE_POINT_RETAINED',
+      (function* () {
+        for (const row of rows) yield row.candidate_json;
+      })(),
+      () => {
+        if (rows.length > 1) throw new Error('Provider node has ambiguous active support');
+        if (!rows.length) return null;
+        const node = CanonicalNodeSchema.parse(JSON.parse(rows[0]!.candidate_json));
+        if (node.repositoryId !== context.repositoryId || node.revisionId !== context.revisionId) {
+          throw new Error('Retained Provider node context differs');
+        }
+        return node;
+      },
+    );
   }
   *readNormalizedNodes(): IterableIterator<{
     readonly provider: ProviderFactRef;
@@ -1075,7 +1332,12 @@ export class RepositoryPatchStage {
         "SELECT payload FROM temp.patch_support ORDER BY CASE fact_type WHEN 'NODE' THEN 0 ELSE 1 END, fact_key, evidence_id",
       )
       .iterate() as IterableIterator<PatchRow>;
-    for (const row of rows) yield JSON.parse(row.payload) as PatchSupport;
+    for (const row of rows)
+      yield* yieldNativeApplySqlFields(
+        'STAGE_SUPPORT_ROW',
+        [row.payload],
+        () => JSON.parse(row.payload) as PatchSupport,
+      );
   }
 
   close(): void {
@@ -1094,7 +1356,14 @@ export class RepositoryPatchStage {
         'SELECT payload FROM temp.patch_event WHERE kind = ? ORDER BY source_path, provider_id, provider_fact_id, sequence',
       )
       .iterate(kind) as IterableIterator<PatchRow>;
-    for (const row of rows) yield schema.parse(JSON.parse(row.payload));
+    let selected = false;
+    for (const row of rows) {
+      selected = true;
+      yield* yieldNativeApplySqlFields('STAGE_EVENT_ROW', [row.payload], () =>
+        schema.parse(JSON.parse(row.payload)),
+      );
+    }
+    if (!selected) nativeSqlEmptyPatchRead(kind);
   }
 
   private putNormalized<T>(
@@ -1138,11 +1407,13 @@ export class RepositoryPatchStage {
       )
       .iterate(factType) as IterableIterator<PatchRow>;
     for (const row of rows) {
-      const pair = JSON.parse(row.payload);
-      yield {
-        provider: ProviderFactRefSchema.parse(pair.provider),
-        canonical: schema.parse(pair.canonical),
-      };
+      yield* yieldNativeApplySqlFields('STAGE_NORMALIZED_ROW', [row.payload], () => {
+        const pair = JSON.parse(row.payload);
+        return {
+          provider: ProviderFactRefSchema.parse(pair.provider),
+          canonical: schema.parse(pair.canonical),
+        };
+      });
     }
   }
 
@@ -1170,6 +1441,17 @@ export class RepositoryPatchStage {
     assertNativeStringBudget(
       this.nativeStringBytes + this.nativeRowStringBytes + this.nativeOwnedBytes + bytes,
       this.nativeLimits,
+    );
+    this.observeNativeRetention(
+      this.nativeStringBytes + this.nativeRowStringBytes,
+      2 * (this.nativeStringBytes + this.nativeRowStringBytes + this.nativeOwnedBytes + bytes),
+      {
+        source: 'ROW_INSERT_ADMISSION',
+        stageSqlBytes: this.nativeStringBytes + this.nativeRowStringBytes,
+        additionalSqlAllowanceBytes: 0,
+        otherBudgetChargeBytes: 2 * (this.nativeOwnedBytes + bytes),
+        resultCopyChargeBytes: 0,
+      },
     );
     return bytes;
   }

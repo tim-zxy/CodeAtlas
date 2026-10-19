@@ -1,0 +1,26 @@
+{
+  "expected": [
+    {
+      "id": "expected-file",
+      "repositoryId": "fixture-repo",
+      "revisionId": "fixture-revision",
+      "path": "src/One.java",
+      "contentFingerprint": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+      "classification": { "role": "SOURCE", "provenance": "AUTHORED", "contentKind": "TEXT" },
+      "languageHint": "java",
+      "sensitivity": "INTERNAL"
+    }
+  ],
+  "actual": [
+    {
+      "id": "actual-file",
+      "repositoryId": "fixture-repo",
+      "revisionId": "fixture-revision",
+      "path": "src/One.java",
+      "contentFingerprint": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+      "classification": { "role": "SOURCE", "provenance": "AUTHORED", "contentKind": "TEXT" },
+      "languageHint": "java",
+      "sensitivity": "INTERNAL"
+    }
+  ]
+}

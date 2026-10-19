@@ -9,6 +9,7 @@ import {
 import { decodeNativeRequestV3 } from './native-ipc-v3-bytes.js';
 import type { NativeRefreshRequestV3 } from './native-refresh-output-v3.js';
 import { boundedJson } from './native-request-json.js';
+import { createNativeRequestWorkspaceObservation } from './native-refresh-workspace-observation.js';
 
 /** Owned, LF-inclusive bounded input. This proves wire integrity, not Runtime admission. */
 export function encodeNativeRefreshRequestV3(
@@ -16,6 +17,31 @@ export function encodeNativeRefreshRequestV3(
   baselineValue: NativeAnalysisStateBundleV1,
   limits: NativeClientLimits,
   expectedMemoryBudgetBytes: number,
+): Uint8Array {
+  const observe = createNativeRequestWorkspaceObservation('ENCODER');
+  observe?.('BEGIN');
+  try {
+    return encodeNativeRefreshWorkspace(
+      requestValue,
+      baselineValue,
+      limits,
+      expectedMemoryBudgetBytes,
+      observe,
+    );
+  } catch (error) {
+    observe?.('FAILED');
+    throw error;
+  } finally {
+    observe?.('EXIT');
+  }
+}
+
+function encodeNativeRefreshWorkspace(
+  requestValue: NativeRefreshRequestV3,
+  baselineValue: NativeAnalysisStateBundleV1,
+  limits: NativeClientLimits,
+  expectedMemoryBudgetBytes: number,
+  observe: ReturnType<typeof createNativeRequestWorkspaceObservation>,
 ): Uint8Array {
   if (!Number.isSafeInteger(expectedMemoryBudgetBytes) || expectedMemoryBudgetBytes <= 0)
     throw new NativeClientError(
@@ -48,16 +74,19 @@ export function encodeNativeRefreshRequestV3(
   const records: Buffer[] = [],
     hash = createHash('sha256');
   let total = 0;
+  observe?.('RECORDS_READY', { recordCount: records.length, recordBytes: total });
   function append(value: unknown, checksum = true): string {
     const text =
       serialize(value, Math.min(limits.maxLineBytes, limits.maxStdinBytes - total) - 1) + '\n';
     const bytes = Buffer.from(text);
     total += bytes.length;
     records.push(bytes);
+    observe?.('RECORD_APPENDED', { recordCount: records.length, recordBytes: total });
     if (checksum) hash.update(bytes);
     return text;
   }
   const request = JSON.parse(append(requestValue)) as NativeRefreshRequestV3;
+  observe?.('REQUEST_PARSED');
   if (
     request?.type !== 'REFRESH' ||
     request.payload?.resourceBudget?.maxMemoryBytes !== expectedMemoryBudgetBytes
@@ -76,6 +105,7 @@ export function encodeNativeRefreshRequestV3(
     baseline.summaries.some((summary) => typeof summary?.sourceFile?.path !== 'string')
   )
     invalid();
+  observe?.('BASELINE_PARSED', { baselineSummaries: baseline.summaries.length });
   baseline.summaries.sort((a, b) =>
     Buffer.compare(Buffer.from(a.sourceFile.path), Buffer.from(b.sourceFile.path)),
   );
@@ -98,6 +128,10 @@ export function encodeNativeRefreshRequestV3(
     false,
   );
   const bytes = Buffer.concat(records, total);
+  observe?.('JOINED', {
+    joinedBytes: bytes.byteLength,
+    joinedBackingBytes: bytes.buffer.byteLength,
+  });
   try {
     decodeNativeRequestV3(bytes);
   } catch {

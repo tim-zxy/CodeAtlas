@@ -1,0 +1,31 @@
+{
+  "configuration": {
+    "configVersion": 1,
+    "source": { "include": ["**/*.java"], "exclude": ["vendor/**"] },
+    "indexing": { "nativeAnalyzer": { "parseWorkers": "AUTO" } },
+    "resourceBudget": { "maxDurationMs": 10, "maxMemoryBytes": 16, "maxEvents": 2 },
+    "transportLimits": {
+      "maxStdinBytes": 1000000,
+      "maxLineBytes": 1000000,
+      "maxStdoutBytes": 10000000,
+      "maxEvents": 10000,
+      "maxStderrBytes": 1000000
+    }
+  },
+  "status": {
+    "schemaVersion": 1,
+    "operation": "STATUS",
+    "databasePath": "fixture/repository.sqlite",
+    "repositoryId": "fixture-repo",
+    "budget": { "maxMetadataRows": 2, "maxResultBytes": 1000, "timeoutMs": 10 }
+  },
+  "write": {
+    "schemaVersion": 1,
+    "operation": "FULL",
+    "databasePath": "fixture/repository.sqlite",
+    "repositoryId": "fixture-repo",
+    "repositoryRoot": "fixture/repository",
+    "nativeExecutablePath": "fixture/analyzer",
+    "initialize": true
+  }
+}

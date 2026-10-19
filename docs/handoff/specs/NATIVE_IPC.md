@@ -1,5 +1,25 @@
 # Native IPC Wire Specification
 
+2026-10-15 accepted ADR-018/§9 rollout checkpoint: v3 analysis emits private bounded
+hashed diagnostics after admission begins. Stdout/schema/checksum/limits and
+legacy v1/v2 diagnostics remain unchanged. Development capture uses the existing
+stderr reader only; no Provider/resource/publication authority comes from these
+records. Current Status tracks incomplete rollout/qualification; no phase exit.
+
+2026-10-15 review update: original written ADR-018/design accepted; revised plan
+and proposed FULL count correction remain unapproved. No producer/consumer code
+or stdout/stderr production behavior changed. The accepted Evaluation-only
+diagnostic distinction does not give stderr Provider/publication authority.
+
+2026-10-15 review notice, not a wire-contract change: proposed
+[ADR-018](../adr/ADR-018-native-evaluation-observations.md) and
+[bounded observation design](../../superpowers/specs/2026-10-15-p05-native-parse-observation-design.md)
+describe private v3 parser diagnostics for development Evaluation. Only the
+direction/detail-writing is approved; written review and the revised plan precede
+implementation. Stdout v1/v2/v3, checksums, hard caps and production stderr-only
+diagnostic treatment remain authoritative. No parsed stderr has publication or
+Provider authority. Do not implement a second protocol under this pending notice.
+
 D2 provisional implementation update (2026-10-04): the accepted [composition plan/spec](../../superpowers/plans/2026-10-04-p05-w3-020-native-refresh-composition.md) now adds separate `encodeNativeRefreshRequestV3`/`streamNativeRefreshV3` in Providers. Bounded owned header/ordered baseline/completion LF/checksum input is packet-A validated before spawn; C validates the same byte snapshot with the independent trusted budget. Reused process lifecycle waits for writes, stdout/checksum, bounded stderr and acceptable exit; late exit/post-terminal/cancel/truncation cannot return success. Typed v1/v2 unions, error precedence and all hard caps remain unchanged. The returned terminal is observation only (including honest PARTIAL), never Apply authority. New process Fixture/gates and exact-build memory holds are recorded in CURRENT_STATUS; D3/D4/D5/D6/E remain open, with no incremental advertisement or phase acceptance. Earlier plan-pending statements are historical.
 
 Packet D written-spec acceptance (2026-10-04): the latest user “确认” accepts the [composition specification](../../superpowers/specs/2026-10-04-p05-w3-020-native-refresh-composition-design.md). Its [D1–D6 executable plan](../../superpowers/plans/2026-10-04-p05-w3-020-native-refresh-composition.md) is written and awaiting separate review/native execution confirmation. No code, Fixture registration, memory calibration/profile installation, gate passage or phase promotion follows. Final-build exact-purpose measurement and separate numeric approval precede production acceptance; E and original phase exits remain open. Earlier direction-only/pending-spec/missing-plan notes below are historical.

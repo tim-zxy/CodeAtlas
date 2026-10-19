@@ -1,5 +1,38 @@
 # Multi Language Native Analyzer and Scalability
 
+2026-10-15 subsequent “继续” approves §9 and the same-plan observation supplement.
+Bounded real v3 parser diagnostics/scoped jobs are locally implemented without
+changing the two-pass relation FULL algorithm, Source identity, scheduler/config
+or stdout. Private Evaluation capture/predicate is not actual public worker-pair
+qualification; Current Status retains open gates and fresh evidence. No numeric
+resource value, cache, adaptive scheduling or future language is introduced.
+
+2026-10-15 base observation design accepted; same-plan Task5 supplement and design
+§9 FULL-count correction await review. Preserve actual existing two-pass relation
+FULL, one-pass SYMBOL-only FULL and changed-only REFRESH; no cache or scheduling
+rewrite to fit the earlier incorrect count. Scoped worker/writer settlement must
+pass existing deadline/timeout compatibility before rollout. No new resource value.
+
+2026-10-15 observation direction accepted, written design pending: see
+[ADR-018](../handoff/adr/ADR-018-native-evaluation-observations.md) and
+[detailed proposal](../superpowers/specs/2026-10-15-p05-native-parse-observation-design.md).
+Real parser entry/settlement and worker slots must not be inferred from sorted
+stdout, configured counts or matching final graphs. Proposed diagnostics reuse
+existing callbacks and caps without scheduler/config changes; no implementation
+or resource values are authorized yet. Existing Worker Consistency and exact-build
+qualification remain open. No future language or adaptive scheduler is added.
+
+2026-10-14 approved compatibility amendment: the existing Java Canonical pipeline
+normalizer version advances1→2 for snapshot-neutral support selection; grammar,
+analyzer, resolver, IPC and IR identity encoding are unchanged. Old derived
+baselines refuse compatibility, require an explicit FULL command, and retain the
+last valid state. Worker settings remain non-semantic. The new Node implementation
+digest requires the already planned final four-purpose calibration/holdouts and
+separate numeric approval; historical profiles are not valid for this build.
+Offline compatibility and selector tests do not substitute for actual Native
+rebuild, incremental consistency or phase performance acceptance. See the
+[accepted amendment](../superpowers/specs/2026-10-14-p05-snapshot-neutral-support-selection-proposal.md).
+
 Packet D written-spec acceptance (2026-10-04): the latest user “确认” accepts the [composition specification](../superpowers/specs/2026-10-04-p05-w3-020-native-refresh-composition-design.md). Its [D1–D6 executable plan](../superpowers/plans/2026-10-04-p05-w3-020-native-refresh-composition.md) is written and awaiting separate review/native execution confirmation. No code, Fixture registration, memory calibration/profile installation, gate passage or phase promotion follows. Final-build exact-purpose measurement and separate numeric approval precede production acceptance; E and original phase exits remain open. Earlier direction-only/pending-spec/missing-plan notes below are historical.
 
 Packet D's [written composition detail](../superpowers/specs/2026-10-04-p05-w3-020-native-refresh-composition-design.md) is pending review after direction approval. Distinct REFRESH_TRANSPORT evidence covers actual preparation/process/staging/normalization/overlay/Apply; final-build compatibility remeasurement, independent holdout and explicit numerical approval precede admission. Existing hard caps, twice-retained-SQL charging, worker setting, memory policy and phase-performance thresholds remain unchanged; no new numeric value is selected.

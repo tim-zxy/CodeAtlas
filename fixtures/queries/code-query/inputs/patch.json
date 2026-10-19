@@ -1,0 +1,8 @@
+{
+  "providerId": "query-provider-b",
+  "snapshotId": "query-snapshot-b",
+  "baseFingerprint": "query-fingerprint-1",
+  "targetFingerprint": "query-fingerprint-2",
+  "operation": "ADD_SECOND_SUPPORT",
+  "capabilityCoverage": "PARTIAL"
+}

@@ -11,9 +11,14 @@ import * as runtime from '../dist/index.js';
 import { buildMemoryCase, corpusExpected } from './helpers/native-metadata-corpus.mjs';
 import {
   assertNativeMetadataAdmission,
+  assertNativeRefreshTransportAdmission,
   nativeMetadataEnvironment,
 } from '../dist/native-metadata-admission.js';
-import { nativeMetadataProfiles } from '../dist/native-metadata-profiles.js';
+import {
+  nativeMetadataProfiles,
+  nativeRefreshTransportProfiles,
+} from '../dist/native-metadata-profiles.js';
+import { preparedEmptyRefresh } from './helpers/native-refresh-d-fixture.mjs';
 
 const reviewedReservation = 280_453_120;
 const environment = nativeMetadataEnvironment();
@@ -24,6 +29,62 @@ const activeReservation =
   nativeMetadataProfiles.find((profile) =>
     Object.entries(environment).every(([key, value]) => profile[key] === value),
   )?.reservationBytes ?? reviewedReservation;
+
+test('approved exact-layout D reservation admits at equality and refuses one byte below', () => {
+  const expectedEnvironment = {
+    node: 'v24.15.0',
+    v8: '13.6.233.17-node.48',
+    platform: 'win32',
+    arch: 'x64',
+    zodVersion: '4.6.1',
+    implementationDigest: '0ea17dfcc71d7c2d3ffb1bc782ab47c63f6c2294041dc50e0a14e1362242711d',
+    corpusRevision: 'p05-native-metadata-memory-v1',
+  };
+  if (!Object.entries(expectedEnvironment).every(([key, value]) => environment[key] === value)) {
+    assert.throws(
+      () => assertNativeRefreshTransportAdmission(376_422_400),
+      (error) => error.nativeStateReason === 'RESOURCE_LIMIT_EXCEEDED',
+    );
+    return;
+  }
+  assert.equal(assertNativeRefreshTransportAdmission(376_422_400), 376_422_400);
+  assert.equal(assertNativeRefreshTransportAdmission(1_000_000_000), 376_422_400);
+  assert.throws(
+    () => assertNativeRefreshTransportAdmission(376_422_399),
+    (error) => error.nativeStateReason === 'RESOURCE_LIMIT_EXCEEDED',
+  );
+  assert.deepEqual(
+    nativeRefreshTransportProfiles.find(
+      (profile) =>
+        profile.memoryCandidateEvidenceDigest ===
+        '91a9e2477f490b93ce76f5d5bb6b5becdc41b976282e511ad73db30ca128aa25',
+    ),
+    {
+      ...expectedEnvironment,
+      workspace: 'REFRESH_TRANSPORT',
+      transportCorpusRevision: 'p05-native-refresh-transport-memory-v1',
+      transportCorpusDigest: '1aa37f7ac114baa2e0262af19205d9b05c2fdb63ed8794432da9b38fa6dedcb2',
+      reservationBytes: 376_422_400,
+      evidenceDigest: '7c4d9b65d95453c6cc455a8d3770315de7f586c1f2cc6f23659f0153714262ec',
+      memoryPolicyRevision: 'p05-native-memory-high-water-range-v1',
+      memoryCandidateEvidenceDigest:
+        '91a9e2477f490b93ce76f5d5bb6b5becdc41b976282e511ad73db30ca128aa25',
+      observedPeakBytes: 364_318_720,
+      fluctuationAllowanceBytes: 12_103_680,
+      peakMethod: 'resourceUsage.maxRSS',
+      peakUnits: 'bytes',
+    },
+  );
+  assert.ok(
+    nativeRefreshTransportProfiles.some(
+      (profile) =>
+        profile.memoryCandidateEvidenceDigest ===
+          'f52395c5c5a7a7a61ce8d3cc2910ee0f0b43f72f891987129811e8e97a3a8553' &&
+        profile.reservationBytes === 378_400_768,
+    ),
+    'Historical evidence remains bound to its original profile',
+  );
+});
 
 for (const [prefix, candidateHash, holdoutHash, peak, allowance, reservation] of [
   [
@@ -119,6 +180,40 @@ async function isolatedFactory(t, variant) {
     );
   if (variant === 'changed')
     await writeFile(join(root, 'dist', 'calibration-change.js'), 'export const changed = true;\n');
+  if (variant === 'refresh-reservation') {
+    // Synthetic isolated-module component contract only, not calibration or a
+    // profile installed into the product. No source/evidence files are replaced.
+    const profile = {
+      ...nativeMetadataEnvironment(),
+      workspace: 'REFRESH_TRANSPORT',
+      transportCorpusRevision: 'p05-native-refresh-transport-memory-v1',
+      transportCorpusDigest: 'a'.repeat(64),
+      evidenceDigest: 'b'.repeat(64),
+      memoryCandidateEvidenceDigest: 'c'.repeat(64),
+      memoryPolicyRevision: 'p05-native-memory-high-water-range-v1',
+      peakMethod: 'resourceUsage.maxRSS',
+      peakUnits: 'bytes',
+      observedPeakBytes: 1,
+      fluctuationAllowanceBytes: 0,
+      reservationBytes: 1_000_000_000,
+    };
+    await writeFile(
+      join(root, 'dist', 'native-metadata-profiles.js'),
+      'export const nativeMetadataProfiles = Object.freeze([]);\n' +
+        'export const nativeRefreshVerificationProfiles = Object.freeze([]);\n' +
+        'export const nativeRefreshTransportProfiles = Object.freeze([' +
+        JSON.stringify(profile) +
+        ']);\n',
+    );
+    return {
+      admission: await import(
+        pathToFileURL(join(root, 'dist', 'native-metadata-admission.js')).href
+      ),
+      preparation: await import(
+        pathToFileURL(join(root, 'dist', 'native-refresh-preparation.js')).href
+      ),
+    };
+  }
   if (variant === 'read-only-profile') {
     const profile = {
       ...nativeMetadataProfiles.find((profile) => !profile.fullTransportCorpusRevision),
@@ -136,6 +231,39 @@ async function isolatedFactory(t, variant) {
     await import(pathToFileURL(join(root, 'dist', 'native-analysis-validation.js')).href)
   ).createNativeStateValidationPort();
 }
+
+test('D5 guarded preparation carries its matched reservation into numeric SQL preflight', async (t) => {
+  const f = await preparedEmptyRefresh(t);
+  const { admission, preparation } = await isolatedFactory(t, 'refresh-reservation');
+  assert.equal(admission.assertNativeRefreshTransportAdmission(f.budget), f.budget);
+  const queries = [],
+    original = f.db.prepare.bind(f.db);
+  f.db.prepare = (sql) => {
+    queries.push(sql);
+    return original(sql);
+  };
+  let opened = 0;
+  assert.throws(
+    () =>
+      preparation.prepareNativeRefreshAnalysisV3(
+        f.db,
+        f.budget,
+        () => {
+          opened++;
+          return f.invocation;
+        },
+        f.options,
+      ),
+    (error) => error.nativeStateReason === 'RESOURCE_LIMIT_EXCEEDED',
+  );
+  assert.equal(opened, 1);
+  assert.ok(queries.some((sql) => /AS BLOB/i.test(sql)));
+  assert.equal(
+    queries.some((sql) => /^SELECT \* FROM source_files/i.test(sql)),
+    false,
+  );
+  assert.equal(f.db.isTransaction, false);
+});
 
 test('uncalibrated Runtime refuses before Provider decoding or iterator access', async (t) => {
   assert.equal(typeof runtime.createNativeStateValidationPort, 'function');

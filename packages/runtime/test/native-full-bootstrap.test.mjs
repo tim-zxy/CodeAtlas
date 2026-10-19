@@ -44,7 +44,7 @@ const context = {
     compatibilityVersion: '1',
   },
   resolverVersion: '1',
-  normalizerVersion: '1',
+  normalizerVersion: '2',
   policyFingerprint: 'fixture-policy',
 };
 // The required bootstrap runner selects v3 from the actual validated handshake.

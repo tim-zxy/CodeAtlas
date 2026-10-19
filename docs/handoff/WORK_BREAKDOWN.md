@@ -1,5 +1,93 @@
 # Work Breakdown
 
+2026-10-18 ADR-019 written review passed. SAME closeout Tasks7/8 now contain
+the self-reviewed executable D-context/layout/pack/required-CI supplement, with
+existing Native/batch and routine-plan-reconfirmation waiver. Numeric, host and
+remote boundaries remain. No added roadmap task or completed parent follows.
+
+2026-10-18 direction permits the [combined written D input/CI correction](../superpowers/specs/2026-10-18-p05-d5-input-and-ci-design.md).
+It awaits written review before revising the SAME closeout Tasks7/8 and D5/D6
+plan, not another roadmap task set. Proposed order: input propagation/boundaries,
+exclusive exact-layout installer/negative tests, final freeze/new22/110/22,
+separate numeric approval, installed-profile actual22/final gates, authorized
+synthetic-pack publication/required CI/integration. No coding or profile/Release
+change this turn. Phase count stays10/14 and the same four parents remain open.
+
+2026-10-17 accepted continuation stays inside P05-W3-020 and existing closeout
+Tasks7/8: exact two-map compatibility correction, true unmatched-build negatives,
+new transport22/110/22 evidence and unified D5/original acceptance. Ordinary
+testing/repair/documentation needs no per-helper confirmation. Registration in
+`test:native-refresh` does not itself close any parent; new exact numerical
+approval and authorized integration remain material boundaries.
+
+2026-10-17 ordinary local closeout validation is complete: current actual31/21
+report PASS, complete root1581pass/0fail/1existing skip, Native114, Rust133 and
+registered build/architecture/memory/format gates pass. Existing Task8 records
+that constituent execution; Task7 D5 compatibility/current corpus/refusal/collector/
+registration remain open. No additional task, completed parent/integration or
+Phase exit is inferred. Current evidence matrix and limitations are in CURRENT_STATUS.
+
+2026-10-17 existing closeout Task7 exact numeric approval is received; matching
+entries are installed. Four production-purpose boundary/evidence checks pass,
+but the strict generator catalog catches two changed generated profile maps.
+[Compatibility proposal](../superpowers/specs/2026-10-17-p05-profile-map-catalog-proposal.md)
+is not implemented authority. Continue unaffected Task8 gates, holding related D5
+and all original exits. No new task or milestone; integrated count stays10/14.
+
+2026-10-16 Task7 approved consolidated batches execute without routine prompts.
+Current v2 original22 preparation/read/restore/measured qualification passes44/44,
+3664815.5491ms/exit0, with reviewed focused113/113 and corrected origin-reuse/
+closed-result gaps. Complement472 plus exact nine permission-only host controls
+pass;16 builds/IR types, architecture17, handshake6 and Rust133 pass. Root42 and
+Native24 original profile refusals remain and are independently audited without
+new failures. Final reviewed code/inputs are frozen; existing four-purpose
+320 calibration/64 independent holdouts and fresh-process host reproduction pass,
+0fail. The existing numerical gate now proposes the four exact purpose/value
+pairs in CURRENT_STATUS/task7-numeric-review.md. No values are approved/installed.
+Exact numeric approval then Task8 actual exits remain in the same order.
+Phase0.5 stays10/14/four parents; no threshold/profile/integration/phase authority.
+Fresh evidence and original failures are retained in the current closeout ledger.
+
+2026-10-16 Task6 one whole-product review and one Important correction pass are
+recorded; no repeated query/helper review. Final builds16/IR types, boundaries40,
+Rust133/fmt/build/strict Clippy pass. Registered root42 and Native24 original
+profile failures remain, independently audited without additional failures;
+actual acceptance stays open. Resume existing Task7 D5 R1/full22 preparation/
+replay/verification (current real catalog9roots/2331files passes), then final
+four-purpose freeze/calibration/independent holdouts, separate exact numeric
+approval and Task8. No new roadmap items or changed10/14/four-parent accounting.
+User batch authority covers these approved ordinary steps without reconfirmation,
+not new numerical approval, profile installation, remote integration or promotion.
+
+2026-10-15 sequential batch: Task5 diagnostic corpus identity and original worker
+dispatch/pair qualification are wired locally. Affected176/176/build16/IR types
+pass; actual CLI31/2 components/29failed/0NOT_RUN is independently audited,
+not public acceptance. Final full root runs with both mandatory profile flags1;
+positive admission, remaining lifecycle/negative checks and Task6–8 stay open.
+No new task/phase/number/profile/remote approval or routine confirmation request.
+
+2026-10-15 next “继续” approves §9 and the Task5 observation supplement. Inline
+implementation is in progress; no new roadmap task. Rust callbacks/scoped owner,
+private stderr capture and source-bound parse predicate are local prerequisites;
+actual worker pair, full review/D5/freeze/measurement/exact numeric/exit gates stay
+open. Earlier pending-plan notes below are historical, not a new approval request.
+
+2026-10-15 latest review state: original written ADR-018/design accepted; same
+eight-task plan now contains the observation supplement inside Task5, awaiting
+review together with proposed design §9 FULL-count correction. This is not four
+new roadmap tasks or coding approval. Actual FULL two-pass code is not changed
+to satisfy the earlier once-per-file design error; retain all original gates.
+
+2026-10-15 closeout continuation: same eight-task plan, Phase0.5 still10/14
+integrated; P05-W3-020, P05-W5-001, P05-W8-001 and P05-W9-001 remain open. Task5
+sites/SQL lifetime/raw shared operations/declared Source metadata wiring and
+partial Task6 registration have fresh failure-inclusive evidence in CURRENT_STATUS.
+The actual parse/worker observation gap has direction approval only; review
+[ADR-018](adr/ADR-018-native-evaluation-observations.md) and the
+[written detail](../superpowers/specs/2026-10-15-p05-native-parse-observation-design.md)
+before revising the existing plan or implementing that contract. No new roadmap
+task, milestone, deferred capability or acceptance waiver is introduced.
+
 D2 native provisional transport checkpoint (2026-10-04): the approved existing P05-W3-020 D plan continues from D1 with bounded owned v3 request encoding and the reused all-stream/exit process owner; declared transport/legacy/real-C2 tests pass145/145. No parent task/milestone/phase count changes. D3 overlay, D4 activation, D5 reviewed exact-purpose memory admission and D6 registration/final gates are still required; D2 partial observations cannot publish a graph. CURRENT_STATUS records failed parallel probes and current root status. Earlier D2-pending statements are historical.
 
 Packet D's plan is approved for native inline execution2026-10-04. D1 preparation component checkpoint is in progress with passing declared preparation/R010/source tests (CURRENT_STATUS); D2-D6, required profile gates and E remain open. Preparation is not atomic Native patch activation or parent completion. No roadmap task/count changes; earlier plan-pending wording is historical.
@@ -196,15 +284,23 @@ Packet B local execution update (2026-10-02): Task 5 real Rust full-only produce
 
 ### P05-W5-001 Graph query and entry-less trace
 
+The user accepted the [2026-10-13 functional delivery review](PHASE05_FUNCTIONAL_DELIVERY_REVIEW.md)'s order and then the [written feature design](../superpowers/specs/2026-10-13-p05-code-query-cli-design.md): deliver this task with the read-only understand/code-trace portion of P05-W8-001 before closing the retained D5 admission work. This uses the existing active-store dependency, adds no roadmap task and does not waive D/E or indexing/Phase gates. The [five-task executable plan](../superpowers/plans/2026-10-13-p05-code-query-cli.md) awaits review before Native/inline implementation. No implementation/completion is asserted; full/incremental/status CLI remains required in this Phase.
+
 Depends on active canonical store. Implement get symbol, find symbols, incoming/outgoing edges, and bounded call traversal. Return confidence, coverage, freshness, and source references.
+
+2026-10-13 local product checkpoint: approved Native plan implements these queries and actual read-only CLI with registered `p05-code-query-cli-v1`; feature/boundary179/179 and architecture17 pass after single-review corrections. Task acceptance remains open: required root retains42 exact-profile failures and further declared verification awaits automatic approval availability. No checked parent/Phase exit; see CURRENT_STATUS for reproducible commands/logs and limitations.
 
 ### P05-W8-001 Index, understand, and trace CLI
 
 Expose full/incremental/status indexing, symbol understanding, and code-level trace. Explicitly label results as code traces, not `RuntimeFlow` or `BusinessFlow`.
 
+2026-10-13 batch closeout direction has an accepted [index/Evaluation written design](../superpowers/specs/2026-10-13-p05-index-evaluation-closeout-design.md); the user's subsequent “继续” accepts it. Its [eight-task implementation plan](../superpowers/plans/2026-10-13-p05-index-evaluation-closeout.md) awaits review before new product coding, with Native/inline retained. The accepted read-only query packet is not repeated. Proposed explicit initialization/binding/status and admitted full/refresh command contracts close real product gaps; they do not waive D5 or add tasks/milestones.
+
 ### P05-W9-001 Phase 0.5 evaluation suite
 
 Freeze symbol, call, overload, inheritance, unresolved, incremental, and provider-merge fixtures. Enforce the numeric gates in `PHASE_ACCEPTANCE.md`, write a machine-readable report with stage durations and peak memory for pinned cold/1-/5-/50-file scenarios, and block Phase 1 promotion on failure. No new numeric latency threshold is implied.
+
+The same written closeout design proposes independent reference/state/identity checks and scope-correct metrics while preserving Fixture Manifest v1, the six Phase0 metric names and original Phase0.5 gates. It is not registered or passing Evaluation evidence; missing runs/null denominators cannot become success. Product review precedes final four-purpose freeze/calibration, exact numeric approval and actual final acceptance.
 
 Include a Worker Consistency Fixture that varies effective worker count and parse completion order while comparing normalized Canonical Graph semantics, coverage, and stale-fact state. Report requested/effective worker mode and bounded-resource outcomes; no new numerical performance threshold is set.
 

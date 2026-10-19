@@ -16,7 +16,7 @@ import type {
   WorktreeRevision,
 } from '@codeatlas/ir';
 import { observeGitWorktree } from '@codeatlas/source';
-import type { ObservedFile, SourceScanRequest } from '@codeatlas/source';
+import type { ObservedFile, ObservedWorktree, SourceScanRequest } from '@codeatlas/source';
 
 import { detectWorktreeChanges } from './change-detector.js';
 import type { WorktreeChangeSet } from './change-detector.js';
@@ -45,6 +45,15 @@ export async function reconcileGitWorktree(
 ): Promise<ReconcileWorktreeResult> {
   const previous = store.load(request.repositoryId);
   const observation = await observeGitWorktree(request);
+  return reconcileObservedGitWorktree(observation, store, previous);
+}
+
+/** Reuse one observation with the original pre-observation optimistic base. */
+export function reconcileObservedGitWorktree(
+  observation: ObservedWorktree,
+  store: SourceStatePort,
+  previous: StoredWorktreeState | null,
+): ReconcileWorktreeResult {
   const revision = parseIr(WorktreeRevisionSchema, {
     id: previous?.revision.id ?? EntityIdSchema.parse(randomUUID()),
     repositoryId: observation.repositoryId,

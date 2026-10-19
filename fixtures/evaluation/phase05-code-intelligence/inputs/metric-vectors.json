@@ -1,0 +1,75 @@
+[
+  {
+    "name": "wrong-direct-target",
+    "input": {
+      "expected": {
+        "nodes": [
+          {
+            "id": "symbol",
+            "factKey": "symbol-key",
+            "repositoryId": "repo",
+            "revisionId": "rev",
+            "kind": "SYMBOL",
+            "symbolKind": "METHOD",
+            "name": "run",
+            "qualifiedName": null,
+            "sourceRange": null,
+            "confidence": { "score": 1, "method": "fixture", "reasons": [] }
+          }
+        ],
+        "edges": [
+          {
+            "id": "call",
+            "factKey": "call-key",
+            "repositoryId": "repo",
+            "revisionId": "rev",
+            "kind": "CALL",
+            "source": { "factType": "NODE", "id": "symbol" },
+            "target": {
+              "state": "RESOLVED",
+              "resolution": "EXACT",
+              "target": { "factType": "NODE", "id": "symbol" }
+            },
+            "sourceRange": null,
+            "confidence": { "score": 1, "method": "fixture", "reasons": [] }
+          }
+        ]
+      },
+      "actual": {
+        "nodes": [
+          {
+            "id": "symbol",
+            "factKey": "symbol-key",
+            "repositoryId": "repo",
+            "revisionId": "rev",
+            "kind": "SYMBOL",
+            "symbolKind": "METHOD",
+            "name": "run",
+            "qualifiedName": null,
+            "sourceRange": null,
+            "confidence": { "score": 1, "method": "fixture", "reasons": [] }
+          }
+        ],
+        "edges": [
+          {
+            "id": "call",
+            "factKey": "call-key",
+            "repositoryId": "repo",
+            "revisionId": "rev",
+            "kind": "CALL",
+            "source": { "factType": "NODE", "id": "symbol" },
+            "target": {
+              "state": "RESOLVED",
+              "resolution": "EXACT",
+              "target": { "factType": "NODE", "id": "other-symbol" }
+            },
+            "sourceRange": null,
+            "confidence": { "score": 1, "method": "fixture", "reasons": [] }
+          }
+        ]
+      },
+      "criticalSymbols": ["symbol-key"],
+      "criticalDirectCalls": ["call-key"]
+    }
+  }
+]

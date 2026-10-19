@@ -90,7 +90,7 @@ for (const name of packageNames) {
     } else if (name === 'storage') {
       assert.equal(
         source,
-        "export * from './migrations/index.js';\nexport * from './source-state/index.js';\nexport * from './analysis/activation-state.js';\nexport * from './analysis/temp-stage.js';\nexport * from './analysis/native-analysis-state.js';\nexport * from './analysis/patch-stage.js';\nexport * from './analysis/canonical-fact-store.js';\n",
+        "export * from './migrations/index.js';\nexport * from './source-state/index.js';\nexport * from './analysis/activation-state.js';\nexport * from './analysis/temp-stage.js';\nexport * from './analysis/native-analysis-state.js';\nexport * from './analysis/patch-stage.js';\nexport * from './analysis/canonical-fact-store.js';\nexport * from './queries/code-query.js';\nexport {\n  openRepositoryIndexSession,\n  StorageIndexSessionError,\n  type RepositoryIndexSession,\n} from './indexing/repository-index-session.js';\n",
       );
     } else if (name === 'application') {
       assert.match(source, /reconcileGitWorktree/);
@@ -108,7 +108,7 @@ for (const name of packageNames) {
     } else if (name === 'evaluation') {
       assert.equal(
         source,
-        "export * from './canonical-comparator.js';\nexport * from './comparator-error.js';\nexport * from './fixture-error.js';\nexport * from './fixture-manifest.js';\nexport * from './fixture-registry.js';\nexport * from './metric-engine.js';\nexport * from './quality-gates.js';\n",
+        "export * from './canonical-comparator.js';\nexport * from './comparator-error.js';\nexport * from './fixture-error.js';\nexport * from './fixture-manifest.js';\nexport * from './fixture-registry.js';\nexport * from './metric-engine.js';\nexport * from './quality-gates.js';\nexport * from './phase05-metrics.js';\nexport * from './phase05-report.js';\nexport * from './phase05-case-policy.js';\nexport * from './phase05-layered-report.js';\n",
       );
     } else if (name === 'source') {
       assert.match(source, /scanGitRepository/);

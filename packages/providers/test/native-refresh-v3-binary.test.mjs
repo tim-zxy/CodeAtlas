@@ -156,7 +156,74 @@ function run(bytes, workers) {
   assert.ifError(child.error);
   assert.equal(child.signal, null);
   assert.equal(child.status, 0);
-  assert.equal(child.stderr.length, 0, 'valid protocol produces no diagnostic log');
+  // ADR-018: valid v3 analysis now carries bounded hashed diagnostics only.
+  // Preserve stdout decoding/comparison; assert the new contract, not silence.
+  assert.ok(child.stderr.length <= api.NATIVE_CLIENT_HARD_LIMITS.maxStderrBytes);
+  const events = child.stdout
+    .toString('utf8')
+    .trim()
+    .split('\n')
+    .filter(Boolean)
+    .map((line) => JSON.parse(line));
+  const entered = events.some((e) => ['ANALYSIS_STARTED', 'REFRESH_STARTED'].includes(e.type));
+  if (!entered) assert.equal(child.stderr.length, 0, 'pre-admission refusals remain silent');
+  else {
+    const h = JSON.parse(Buffer.from(bytes).toString('utf8').split('\n')[0]);
+    const trace = new TextDecoder('utf-8', { fatal: true })
+      .decode(child.stderr)
+      .trimEnd()
+      .split('\n')
+      .map((line) => JSON.parse(line));
+    const ref = createHash('sha256')
+      .update(`codeatlas-parse-request-v1\0${h.protocolVersion}\0${h.requestId}`)
+      .digest('hex');
+    const variants = {
+      BEGIN: ['operation', 'workerLimit'],
+      PARSE_STARTED: ['sourceRefSha256', 'slot'],
+      PARSE_FINISHED: ['sourceRefSha256', 'slot', 'outcome'],
+      END: ['started', 'finished', 'complete', 'reason'],
+    };
+    for (const [index, row] of trace.entries()) {
+      assert.ok(Object.hasOwn(variants, row.event));
+      assert.deepEqual(
+        Object.keys(row).sort(),
+        [
+          'diagnosticSchema',
+          'kind',
+          'requestRefSha256',
+          'ordinal',
+          'event',
+          ...variants[row.event],
+        ].sort(),
+      );
+      assert.equal(row.diagnosticSchema, 1);
+      assert.equal(row.kind, 'NATIVE_PARSE_OBSERVATION');
+      assert.equal(row.requestRefSha256, ref);
+      assert.equal(row.ordinal, index);
+      if (row.sourceRefSha256 !== undefined) {
+        assert.match(row.sourceRefSha256, /^[a-f0-9]{64}$/);
+        assert.ok(Number.isInteger(row.slot) && row.slot >= 0 && row.slot < workers);
+      }
+    }
+    assert.equal(trace[0].event, 'BEGIN');
+    assert.equal(trace[0].operation, h.type);
+    assert.equal(trace[0].workerLimit, workers);
+    const end = trace.at(-1);
+    assert.equal(end.event, 'END');
+    assert.equal(end.started, trace.filter((r) => r.event === 'PARSE_STARTED').length);
+    assert.equal(end.finished, trace.filter((r) => r.event === 'PARSE_FINISHED').length);
+    if (['ANALYSIS_COMPLETED', 'REFRESH_COMPLETED'].includes(events.at(-1)?.type)) {
+      const count =
+        h.type === 'ANALYZE'
+          ? h.payload.sourceFiles.length *
+            (h.payload.requestedCapabilities.some((c) => c !== 'SYMBOL') ? 2 : 1)
+          : h.payload.changes.added.length + h.payload.changes.modified.length;
+      assert.equal(end.started, count);
+      assert.equal(end.finished, count);
+      assert.equal(end.complete, true);
+      assert.equal(end.reason, null);
+    }
+  }
   return child.stdout;
 }
 async function observe(full, workers) {

@@ -1,0 +1,17 @@
+{
+  "requestRefSha256": "d7677eef779325059101ec5cf4776fbee39ee0d357f54908e0a42a840d67b51e",
+  "sourceRefSha256": "b394862265af9819bbee488acc937a00b2ce5cf9d85a828302408bf35214a8be",
+  "parseCounts": [1, 2, 100, 1, 0],
+  "emptyRefreshInvocations": [],
+  "rejectedStreams": {
+    "invalid-utf8": true,
+    "missing-line-feed": true,
+    "malformed-recognized-record": true,
+    "missing-begin": true,
+    "missing-end": true,
+    "duplicate-begin": true,
+    "foreign-request": true,
+    "capacity-loss-footer": true,
+    "finish-without-entry": true
+  }
+}

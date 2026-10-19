@@ -4,6 +4,16 @@ Status: accepted by user on 2026-09-30, with the same-revision boundary amended 
 
 ## Intent and boundary
 
+The accepted [2026-10-14 selection amendment](2026-10-14-p05-snapshot-neutral-support-selection-proposal.md)
+governs the reused active-support selector: equal-ranked candidates use
+providerId/providerFactId/snapshotId so retained/new snapshot labels do not select
+different package positions. Real candidates, confidence, Evidence/bindings,
+identity and atomic rollback remain unchanged. The existing Native Java pipeline
+version2 invalidates old-policy derived baselines before incremental preparation;
+explicit FULL_ANALYSIS_REQUIRED does not clear the last valid graph or initiate
+an automatic FULL. R009 is unchanged; no historical candidate backfill or schema
+migration is added. Actual Native acceptance remains in P05-W3-020/closeout.
+
 Complete the Phase 0.5 storage/application half of incremental indexing. Given a complete, validated Provider patch, update Canonical code facts, Evidence, bindings, and the indexed revision/fingerprint in one transaction. A failed, partial, corrupt, stale-base, or unrepresentable patch must leave the last committed graph and activation pointer unchanged. This task does not implement Rust `REFRESH`, file dependency selection, a watcher, graph query, or a new quality threshold. P05-W3-020 later produces real Native patches and proves incremental correctness.
 
 The governing contracts are `WORK_BREAKDOWN.md` P05-W1-011, `PHASE_ACCEPTANCE.md`, `SQLITE_SCHEMA.md`, `CANONICAL_IR.md`, `PROVIDER_SPI.md`, `NATIVE_IPC.md`, `EVALUATION.md`, ADR-002/003/004/010/011/012/014/015, and the P05-W1-010 and P05-W4-002 accepted designs. Preserve Provider-independent Canonical IR, SQLite authority, Evidence history, the application-owned write boundary, strict IPC v1, and the existing FactMerger selection policy.

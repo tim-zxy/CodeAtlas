@@ -5,6 +5,7 @@ import type { Readable } from 'node:stream';
 import { boundedJson, writeFullRequestRecords } from './native-request-json.js';
 import { NativeRequestHeaderV3Schema } from './native-ipc-v3.js';
 import { encodeNativeRefreshRequestV3 } from './native-refresh-request-v3.js';
+import { createNativeRequestWorkspaceObservation } from './native-refresh-workspace-observation.js';
 import type { NativeAnalysisStateBundleV1 } from './native-analysis-state.js';
 import {
   decodeNativeRefreshV3,
@@ -377,6 +378,36 @@ export async function streamNativeRefreshV3(
   terminal: Extract<NativeRefreshTerminalV3, { type: 'REFRESH_COMPLETED' }>;
   stderr: string;
 }> {
+  const observe = createNativeRequestWorkspaceObservation('CLIENT');
+  observe?.('BEGIN');
+  try {
+    return await streamNativeRefreshWorkspace(
+      requestValue,
+      baseline,
+      optionsValue,
+      sink,
+      expectedMemoryBudgetBytes,
+      observe,
+    );
+  } catch (error) {
+    observe?.('FAILED');
+    throw error;
+  } finally {
+    observe?.('EXIT');
+  }
+}
+
+async function streamNativeRefreshWorkspace(
+  requestValue: NativeRefreshRequestV3,
+  baseline: NativeAnalysisStateBundleV1,
+  optionsValue: NativeClientOptions,
+  sink: { accept(event: NativeRefreshEventV3): Promise<void> },
+  expectedMemoryBudgetBytes: number,
+  observe: ReturnType<typeof createNativeRequestWorkspaceObservation>,
+): Promise<{
+  terminal: Extract<NativeRefreshTerminalV3, { type: 'REFRESH_COMPLETED' }>;
+  stderr: string;
+}> {
   const options = validateOptions(optionsValue);
   if (!sink || typeof sink.accept !== 'function')
     throw new NativeClientError('INVALID_CONFIGURATION', 'Native refresh sink is invalid');
@@ -385,6 +416,7 @@ export async function streamNativeRefreshV3(
   const bytes = Buffer.from(
     encodeNativeRefreshRequestV3(requestValue, baseline, options.limits, expectedMemoryBudgetBytes),
   );
+  observe?.('COPY', { clientBytes: bytes.byteLength, clientBackingBytes: bytes.buffer.byteLength });
   // Already byte-validated by packet A; parse only this bounded owned header.
   const request = JSON.parse(
     bytes.subarray(0, bytes.indexOf(10)).toString('utf8'),
@@ -398,6 +430,7 @@ export async function streamNativeRefreshV3(
       records.push(bytes.subarray(start, at + 1));
       start = at + 1;
     }
+  observe?.('RECORDS_READY', { recordCount: records.length });
   const result = await runProcess<
     Extract<NativeRefreshTerminalV3, { type: 'REFRESH_COMPLETED' }>,
     NativeRefreshRequestV3
@@ -719,6 +752,11 @@ function runProcess<
     terminate();
   };
 
+  // A cancelled writer can settle before its pending pipe write reports EOF/EPIPE.
+  // The process owner must observe those errors until the child closes.
+  const stdinError = () =>
+    recordFailure(clientError('PROCESS_FAILED', 'Native request could not be written', request));
+  child.stdin.on('error', stdinError);
   const stdoutPromise = decode(child.stdout, request, options.limits, stop.signal).catch(
     (error: unknown) => {
       recordFailure(asClientError(error, request));
@@ -746,6 +784,7 @@ function runProcess<
     });
     child.once('close', (exitCode, signal) => {
       closed = true;
+      child.stdin.removeListener('error', stdinError);
       resolve({ exitCode, signal });
     });
   });

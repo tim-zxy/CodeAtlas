@@ -1,0 +1,6 @@
+{
+  "wrong-direct-target": {
+    "symbol": { "tp": 1, "fp": 0, "fn": 0, "recall": 1 },
+    "directCall": { "tp": 0, "fp": 1, "fn": 1, "precision": 0, "recall": 0 }
+  }
+}
