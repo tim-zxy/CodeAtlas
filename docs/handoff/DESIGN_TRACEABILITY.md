@@ -1,5 +1,14 @@
 # Design Traceability
 
+2026-10-20 PR21 push39348380807 -> offline dense-upsert preparation TIMEOUT ->
+full original job118386417261 raw log and artifacts12238352551/12238671014 ->
+single unchanged local reproduction and separately labelled diagnostics ->
+bounded Native process scalar tracing in only the offline test child. Existing
+helper/product/Native/corpus/profile/2329 dependency identities remain unchanged;
+diagnostic output has no fact/publication/admission authority. Cause still
+UNKNOWN; no current-CI/Phase success follows from earlier audit or later passing
+local samples. Integration stays held without timeout/gate changes or rerun-to-green.
+
 2026-10-20 [integrated Phase0.5 audit](PHASE05_EXIT_AUDIT.md) supplies the final
 21-exit plus ADR-016 trace map. P05-W3-020 -> refresh-v3 real composition/replay/
 rollback703 and hosted exact-pack22; P05-W5-001 -> code-query Fixture and physical

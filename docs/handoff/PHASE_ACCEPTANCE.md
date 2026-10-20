@@ -333,6 +333,12 @@ Phase 0 explicitly does not require Java parsing.
 
 ## Phase 0.5 exit
 
+2026-10-20 later mandatory-CI HOLD: PR21 push39348380807 has offline dense-upsert
+preparation TIMEOUT (702/703), despite the PR group passing. Existing checked
+source obligations below do not waive this failed check or authorize promotion.
+Keep formal closeout held; CURRENT_STATUS and PHASE05_EXIT_AUDIT retain original
+failure, diagnostic-only evidence and unchanged resource/timeout/gate policies.
+
 2026-10-20 [integrated exit audit](PHASE05_EXIT_AUDIT.md) regrades all21 original
 checks below and ADR-016 applicability PASS from actual code/registered Fixtures,
 original31/21 Evaluation,17 complete local gates and exact-head PR/push CI with

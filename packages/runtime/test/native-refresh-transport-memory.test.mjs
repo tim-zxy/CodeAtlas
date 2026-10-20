@@ -2920,8 +2920,21 @@ for (const [name, sourceTransition, outcome] of [
 ])
   test(`D5 preparation worker proves real source/Apply/reopen: ${name}`, async (t) => {
     await worker();
+    // Keep the unchanged deadline and source recipe; preserve process boundaries
+    // for the offline dense discovery's observed CI timeout, not acceptance data.
+    const denseDiagnostic = new URL('./fixtures/native-dense-diagnostic.mjs', import.meta.url);
     const child = spawnSync(process.execPath, [workerPath, 'offline', name, '0'], {
       encoding: 'utf8',
+      ...(name === 'd-dense-upsert'
+        ? {
+            env: {
+              ...process.env,
+              NODE_OPTIONS: [process.env.NODE_OPTIONS, `--import=${denseDiagnostic.href}`]
+                .filter(Boolean)
+                .join(' '),
+            },
+          }
+        : {}),
       // Offline source-pair/full-bootstrap replay, not a Native request deadline.
       timeout: [
         'd-retained-sites',
@@ -2936,6 +2949,11 @@ for (const [name, sourceTransition, outcome] of [
         : 60_000,
       windowsHide: true,
     });
+    if (name === 'd-dense-upsert') {
+      for (const line of (child.stderr ?? '').split(/\r?\n/)) {
+        if (line.startsWith('[DENSE_NATIVE_DIAGNOSTIC]')) t.diagnostic(line);
+      }
+    }
     assert.equal(child.error, undefined, String(child.error));
     assert.equal(child.status, 0, child.stdout + child.stderr);
     const result = JSON.parse(child.stdout);

@@ -1,5 +1,28 @@
 # Current Status
 
+2026-10-20 PR21 integration HOLD: exact81f1a45 PR run39348409337 passes, but push
+run39348380807/job118386417261 settles FAILURE:702/703 REFRESH tests, one offline
+d-dense-upsert preparation TIMEOUT; other required steps including actual22 pass.
+Complete raw log task8-pr21-push-native-settled-raw.log and artifacts12238352551/
+12238671014 are retained. Timeout occurs inside dense producer-discovery
+under the unchanged10000ms fixture budget; the failed iteration and stream/exit
+phase timing was not retained, so the underlying cause is UNKNOWN, not a proved
+environmental defect. Single unmodified reproduction passes1/1 (48897.601ms);
+one scratch scalar diagnostic passes1/1 (38267.6017ms). Neither is a fix or
+substitute for the failed run. A loader-path diagnostic setup failure is retained.
+
+Add bounded scalar process tracing ONLY to this offline test's Node child, not
+the worker/helper/product/calibration/actual22 path: at most64 Native records,
+no payload/path/request-ID capture, no extra stream reader, no request/timeout/
+budget/scheduler/retry change. Targeted validation passes1/1 (33934.0464ms), with
+original dense output hash/1986 accepted and1987 resource refusal preserved.
+Full independently discovered2329 dependencies and production0ea17dfc...2711d
+remain unchanged (task8-pr21-diagnostic-identity.log). Next accurate-head CI is
+diagnosis plus required validation, not a claimed timeout fix. Keep integration/
+Phase1 held while this failure remains unexplained; do not retry until green.
+The preceding technical audit's source evidence remains historical, not current
+permission to merge despite a failed mandatory check.
+
 2026-10-20 integrated technical exit audit PASS: [Phase0.5 exit audit](PHASE05_EXIT_AUDIT.md)
 maps all21 original exits and ADR-016 applicability to actual code, registered
 Fixtures, complete local gates, actual31 and hosted original actual22. PR artifact

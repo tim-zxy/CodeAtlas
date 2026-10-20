@@ -1,5 +1,13 @@
 # Phase 0.5 integrated exit audit — 2026-10-20
 
+Current integration HOLD: later PR21 push39348380807 at81f1a45 has one mandatory
+Native test failure (offline dense-upsert preparation TIMEOUT,702/703). Original
+complete log and failure artifacts are preserved; CURRENT_STATUS records the
+single unmodified/diagnostic local observations and the bounded test-only trace.
+Underlying cause is not yet established. The passing source audit below does not
+waive this failure, prove a fix, authorize merge or advance Phase1. No deadline or
+numerical gate is raised. Closeout remains pending diagnosis and current gates.
+
 ## Decision and scope
 
 All 21 original Phase 0.5 exit checks pass on the product integrated by
