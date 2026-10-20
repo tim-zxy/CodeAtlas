@@ -1,0 +1,58 @@
+{
+  "unindexed": {
+    "schemaVersion": 1,
+    "kind": "INDEX_STATUS",
+    "status": {
+      "source": null,
+      "indexed": { "revisionId": null, "contentFingerprint": null },
+      "freshness": {
+        "basis": "PERSISTED_SOURCE",
+        "worktree": "NOT_OBSERVED",
+        "state": "NOT_INDEXED"
+      },
+      "baseline": { "state": "MISSING" },
+      "coverage": { "scope": "PERSISTED_NATIVE_SNAPSHOT", "snapshotId": null, "capabilities": [] }
+    }
+  },
+  "effects": { "databaseInitialized": null, "sourceReconciled": null, "graphCommit": "UNKNOWN" },
+  "full": {
+    "schemaVersion": 1,
+    "kind": "INDEX_OPERATION",
+    "operation": "FULL",
+    "outcome": "SUCCEEDED",
+    "databaseInitialized": true,
+    "sourceReconciled": true,
+    "graphCommitted": true,
+    "status": {
+      "source": {
+        "id": "rev-fixture",
+        "repositoryId": "fixture-repo",
+        "kind": "WORKTREE",
+        "contentFingerprint": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+        "baseRevisionId": null
+      },
+      "indexed": {
+        "revisionId": "rev-fixture",
+        "contentFingerprint": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      "freshness": { "basis": "PERSISTED_SOURCE", "worktree": "NOT_OBSERVED", "state": "CURRENT" },
+      "baseline": { "state": "PRESENT_UNVERIFIED" },
+      "coverage": {
+        "scope": "PERSISTED_NATIVE_SNAPSHOT",
+        "snapshotId": "snapshot-fixture",
+        "capabilities": [{ "name": "CALL", "complete": 1, "partial": 0, "none": 0, "unknown": 0 }]
+      }
+    },
+    "timings": {
+      "scanMs": 1.5,
+      "transportMs": 1,
+      "normalizeMs": 0,
+      "mergeMs": 0,
+      "dbApplyMs": 1,
+      "dbLockMs": 0,
+      "totalMs": 3,
+      "unavailableReasons": {}
+    },
+    "workers": { "requested": "AUTO", "effectiveCount": 1 }
+  }
+}

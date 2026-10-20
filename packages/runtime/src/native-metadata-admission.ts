@@ -7,10 +7,53 @@ import { NativeClientError, NativeStateValidationError } from '../../providers/d
 import {
   nativeMetadataProfiles,
   nativeRefreshVerificationProfiles,
+  nativeRefreshTransportProfiles,
 } from './native-metadata-profiles.js';
 
 export const nativeMetadataCorpusRevision = 'p05-native-metadata-memory-v1';
 export const nativeRefreshVerificationCorpusRevision = 'p05-native-refresh-verification-memory-v1';
+export const nativeRefreshTransportCorpusRevision = 'p05-native-refresh-transport-memory-v1';
+
+/** D-purpose admission, before any caller-controlled lazy preparation. */
+export function assertNativeRefreshTransportAdmission(memoryBudgetBytes: number): number {
+  if (!Number.isSafeInteger(memoryBudgetBytes) || memoryBudgetBytes <= 0)
+    throw new NativeClientError(
+      'INVALID_CONFIGURATION',
+      'Native refresh trusted budget must be positive and safe',
+    );
+  const environment = nativeMetadataEnvironment();
+  const profile = nativeRefreshTransportProfiles.find(
+    (candidate) =>
+      candidate.workspace === 'REFRESH_TRANSPORT' &&
+      Object.entries(environment).every(
+        ([key, value]) => candidate[key as keyof typeof candidate] === value,
+      ),
+  );
+  if (
+    !profile ||
+    profile.transportCorpusRevision !== nativeRefreshTransportCorpusRevision ||
+    !/^[a-f0-9]{64}$/.test(profile.transportCorpusDigest) ||
+    !/^[a-f0-9]{64}$/.test(profile.evidenceDigest) ||
+    !/^[a-f0-9]{64}$/.test(profile.memoryCandidateEvidenceDigest) ||
+    profile.memoryPolicyRevision !== 'p05-native-memory-high-water-range-v1' ||
+    profile.peakMethod !== 'resourceUsage.maxRSS' ||
+    profile.peakUnits !== 'bytes' ||
+    !Number.isSafeInteger(profile.reservationBytes) ||
+    profile.reservationBytes <= 0 ||
+    !Number.isSafeInteger(profile.observedPeakBytes) ||
+    profile.observedPeakBytes <= 0 ||
+    !Number.isSafeInteger(profile.fluctuationAllowanceBytes) ||
+    profile.fluctuationAllowanceBytes < 0 ||
+    !Number.isSafeInteger(profile.observedPeakBytes + profile.fluctuationAllowanceBytes) ||
+    profile.observedPeakBytes + profile.fluctuationAllowanceBytes > profile.reservationBytes ||
+    memoryBudgetBytes < profile.reservationBytes
+  )
+    throw new NativeStateValidationError(
+      'RESOURCE_LIMIT_EXCEEDED',
+      'No admissible reviewed native refresh transport profile',
+    );
+  return profile.reservationBytes;
+}
 
 export function nativeMetadataEnvironment() {
   const hash = createHash('sha256');

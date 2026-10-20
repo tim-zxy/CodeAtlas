@@ -30,6 +30,8 @@ if (
   process.exit(10);
 // No source work or response is possible before complete input integrity is verified.
 process.stderr.write(`verified-request:${raw.length}\n`);
+if (mode === 'delay-before-output')
+  await new Promise((resolve) => setTimeout(resolve, request.payload.resourceBudget.maxDurationMs));
 if (mode === 'hang') await new Promise(() => setInterval(() => {}, 1000));
 if (mode === 'stderr-overflow') process.stderr.write('x'.repeat(2000));
 let output = await readFile(

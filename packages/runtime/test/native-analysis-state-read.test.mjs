@@ -9,6 +9,33 @@ import * as providers from '../../providers/dist/index.js';
 import { createNativeStateValidationPort } from '../dist/index.js';
 const validateNativeStateCandidate = providers.validateNativeStateCandidate;
 
+test('offline old selection baseline refuses without changing retained state', async (t) => {
+  await withBaseline(t, async (db) => {
+    const rows = unchanged(db);
+    const pointer = db.prepare('SELECT * FROM repository_state').all();
+    assert.deepEqual(
+      read(db, { ...expected, normalizerVersion: providers.JAVA_NORMALIZER_VERSION }),
+      { status: 'UNAVAILABLE', reason: 'INCOMPATIBLE' },
+    );
+    assert.deepEqual(unchanged(db), rows);
+    assert.deepEqual(db.prepare('SELECT * FROM repository_state').all(), pointer);
+  });
+});
+
+test('offline rebuilt selection baseline is available under current compatibility version', async (t) => {
+  await withBaseline(t, async (db) => {
+    db.prepare('UPDATE native_analysis_state SET header_json=?').run(
+      JSON.stringify({ ...header, normalizerVersion: '2' }),
+    );
+    const rows = unchanged(db);
+    assert.equal(
+      read(db, { ...expected, normalizerVersion: providers.JAVA_NORMALIZER_VERSION }).status,
+      'AVAILABLE',
+    );
+    assert.deepEqual(unchanged(db), rows);
+  });
+});
+
 const header = {
   schemaVersion: 1,
   repositoryId: 'repo',

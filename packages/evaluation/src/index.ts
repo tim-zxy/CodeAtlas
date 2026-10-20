@@ -5,3 +5,7 @@ export * from './fixture-manifest.js';
 export * from './fixture-registry.js';
 export * from './metric-engine.js';
 export * from './quality-gates.js';
+export * from './phase05-metrics.js';
+export * from './phase05-report.js';
+export * from './phase05-case-policy.js';
+export * from './phase05-layered-report.js';

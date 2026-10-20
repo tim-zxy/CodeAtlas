@@ -44,7 +44,7 @@ const context = {
     compatibilityVersion: '1',
   },
   resolverVersion: '1',
-  normalizerVersion: '1',
+  normalizerVersion: '2',
   policyFingerprint: 'fixture-policy',
 };
 // The required bootstrap runner selects v3 from the actual validated handshake.
@@ -706,7 +706,7 @@ caseTest('read-only-profile-refuses-before-observation', async (t) => {
   const profile = { ...nativeMetadataEnvironment(), reservationBytes: 247_508_992 };
   await writeFile(
     path.join(isolated, 'dist', 'native-metadata-profiles.js'),
-    'export const nativeRefreshVerificationProfiles = Object.freeze([]);\nexport const nativeMetadataProfiles = Object.freeze([' +
+    'export const nativeRefreshTransportProfiles = Object.freeze([]);\nexport const nativeRefreshVerificationProfiles = Object.freeze([]);\nexport const nativeMetadataProfiles = Object.freeze([' +
       JSON.stringify(profile) +
       ']);\n',
   );

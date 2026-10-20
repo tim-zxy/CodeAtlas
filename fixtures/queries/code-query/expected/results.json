@@ -1,0 +1,36 @@
+{
+  "searchRun": ["query-node-run-0", "query-node-run-1"],
+  "understandRootIncoming": ["query-edge-05", "query-edge-08"],
+  "understandRootOutgoing": [
+    "query-edge-01",
+    "query-edge-02",
+    "query-edge-06",
+    "query-edge-07",
+    "query-edge-08",
+    "query-edge-09"
+  ],
+  "traceRootNodes": [
+    { "id": "query-node-root", "depth": 0 },
+    { "id": "query-node-left", "depth": 1 },
+    { "id": "query-node-right", "depth": 1 },
+    { "id": "query-node-leaf", "depth": 2 }
+  ],
+  "traceRootEdges": [
+    "query-edge-01",
+    "query-edge-02",
+    "query-edge-06",
+    "query-edge-07",
+    "query-edge-08",
+    "query-edge-03",
+    "query-edge-04",
+    "query-edge-05"
+  ],
+  "ambiguousCandidates": ["query-node-run-1", "query-node-run-0"],
+  "singleSupportConfidence": { "score": 1, "method": "fixture-observation", "reasons": [] },
+  "twoSupportConfidence": {
+    "score": 1,
+    "method": "fact-merger-min-v1",
+    "reasons": ["minimum active support score"]
+  },
+  "alwaysWarnings": ["REPOSITORY_COVERAGE_UNPROVEN", "WORKTREE_NOT_OBSERVED"]
+}

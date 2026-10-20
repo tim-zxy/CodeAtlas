@@ -1,4 +1,6 @@
 import { DatabaseSync } from 'node:sqlite';
+import { AsyncLocalStorage } from 'node:async_hooks';
+import { types } from 'node:util';
 import {
   CommitIdentitySchema,
   EntityIdSchema,
@@ -10,8 +12,40 @@ import {
 import type { CommitIdentity, EntityId, SourceFile, WorktreeRevision } from '@codeatlas/ir';
 import { SourceStateError } from './errors.js';
 import type { StoredWorktreeState } from './types.js';
+import {
+  beginNativeSqlSourceDomain,
+  replaceNativeSqlSourceDomain,
+  endNativeSqlSourceDomain,
+  nativeSqlSourceRole,
+  type NativeSqlDomainHandle,
+} from '../analysis/native-apply-sql-observation.js';
 
 type Row = Record<string, unknown>;
+
+const sourceReadOwners = new AsyncLocalStorage<Set<NativeSqlDomainHandle>>();
+
+/** Private leaf instrumentation: caller owns returned SQL aliases until settlement. */
+export function withNativeSourceStateReadLifetime<T>(operation: () => T): T {
+  if (nativeSqlSourceRole() === null) return operation();
+  const owners = new Set<NativeSqlDomainHandle>();
+  const close = () => {
+    for (const handle of owners) endNativeSqlSourceDomain(handle);
+    owners.clear();
+  };
+  return sourceReadOwners.run(owners, () => {
+    let pending = false;
+    try {
+      const result = operation();
+      if (types.isPromise(result)) {
+        pending = true;
+        return result.finally(close) as T;
+      }
+      return result;
+    } finally {
+      if (!pending) close();
+    }
+  });
+}
 
 function invalid(): never {
   throw new SourceStateError('SOURCE_STATE_INVALID');
@@ -31,7 +65,7 @@ function parseRevision(row: Row): WorktreeRevision {
   }
 }
 
-function parseFile(row: Row): SourceFile {
+export function parseStoredSourceFile(row: Row): SourceFile {
   try {
     return parseIr(SourceFileSchema, {
       id: row.id,
@@ -84,27 +118,44 @@ function sameState(left: StoredWorktreeState | null, right: StoredWorktreeState 
 export class RepositorySourceStateStore {
   constructor(private readonly database: DatabaseSync) {}
 
-  private assertRegistered(repositoryId: EntityId): void {
+  private assertRegistered(repositoryId: EntityId, observe?: (row: Row | undefined) => void): void {
     const row = this.database.prepare('SELECT id FROM repository WHERE id = ?').get(repositoryId);
+    observe?.(row);
     if (row === undefined) {
       throw new SourceStateError('REPOSITORY_NOT_REGISTERED');
     }
-    if (
-      this.database
-        .prepare('SELECT repository_id FROM repository_state WHERE repository_id = ?')
-        .get(repositoryId) === undefined
-    ) {
+    const state = this.database
+      .prepare('SELECT repository_id FROM repository_state WHERE repository_id = ?')
+      .get(repositoryId);
+    observe?.(state);
+    if (state === undefined) {
       invalid();
     }
   }
 
   load(repositoryId: EntityId): StoredWorktreeState | null {
+    const owners = sourceReadOwners.getStore();
+    const role = nativeSqlSourceRole();
+    let handle: NativeSqlDomainHandle | null = null;
+    let retained = 0;
+    let handedOff = false;
+    const observe = (row: Row | undefined) => {
+      if (!owners || role === null || row === undefined) return;
+      for (const value of Object.values(row))
+        if (typeof value === 'string') retained += Buffer.byteLength(value);
+      if (handle === null) handle = beginNativeSqlSourceDomain('BASELINE_READ', role, retained);
+      else replaceNativeSqlSourceDomain(handle, retained);
+    };
     try {
       const id = parseIr(EntityIdSchema, repositoryId);
-      this.assertRegistered(id);
+      this.assertRegistered(id, observe);
+      // Registration's local raw rows do not escape its private assertion.
+      retained = 0;
+      if (handle !== null) replaceNativeSqlSourceDomain(handle, 0);
       const revisions = this.database
         .prepare("SELECT * FROM revisions WHERE repository_id = ? AND kind = 'WORKTREE'")
         .all(id) as Row[];
+      for (const row of revisions) observe(row);
       if (revisions.length > 1) {
         throw new SourceStateError('WORKTREE_AMBIGUOUS');
       }
@@ -115,10 +166,18 @@ export class RepositorySourceStateStore {
       const rows = this.database
         .prepare('SELECT * FROM source_files WHERE revision_id = ? ORDER BY path')
         .all(revision.id) as Row[];
-      return validateState({ revision, files: rows.map(parseFile) });
+      for (const row of rows) observe(row);
+      const state = validateState({ revision, files: rows.map(parseStoredSourceFile) });
+      if (handle !== null) {
+        owners!.add(handle);
+        handedOff = true;
+      }
+      return state;
     } catch (error) {
       if (error instanceof SourceStateError) throw error;
       return invalid();
+    } finally {
+      if (handle !== null && !handedOff) endNativeSqlSourceDomain(handle);
     }
   }
 
@@ -141,6 +200,12 @@ export class RepositorySourceStateStore {
   }
 
   replace(expected: StoredWorktreeState | null, next: StoredWorktreeState): void {
+    if (sourceReadOwners.getStore())
+      return withNativeSourceStateReadLifetime(() => this.replaceOwned(expected, next));
+    return this.replaceOwned(expected, next);
+  }
+
+  private replaceOwned(expected: StoredWorktreeState | null, next: StoredWorktreeState): void {
     let started = false;
     try {
       const validatedNext = validateState(next);

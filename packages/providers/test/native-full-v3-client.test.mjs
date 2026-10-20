@@ -191,6 +191,15 @@ test('full-v3 large input completes drain-aware writing to a delayed reader', as
   assert.equal(result.terminal.type, 'ANALYSIS_COMPLETED');
 });
 
+test('full-v3 cancellation with an in-flight pipe write remains a typed refusal', async () => {
+  const large = structuredClone(request);
+  large.payload.repository.rootPath = '/' + 'x'.repeat(300_000);
+  const controller = new AbortController();
+  const pending = run('slow-stdin', { signal: controller.signal }, undefined, large);
+  controller.abort();
+  await assert.rejects(pending, code('CANCELLED'));
+});
+
 for (const { id: mode, expectedCode: expected } of manifest.transportCases)
   test(`full-v3 ${mode} never exposes a successful result`, async () => {
     let returned = false;
@@ -219,17 +228,30 @@ test('full-v3 enforces each lowered byte/event cap and rejects raised ceilings',
     );
 });
 
-test('full-v3 timeout and cancellation kill the one-shot process without a terminal', async () => {
+test('full-v3 timeout and cancellation kill the one-shot process without a terminal', async (t) => {
   await assert.rejects(run('hang', { timeoutMs: 250 }), code('TIMEOUT'));
   const controller = new AbortController();
   controller.abort();
   await assert.rejects(run('valid', { signal: controller.signal }), code('CANCELLED'));
   const active = new AbortController();
+  let sinkEntries = 0;
+  const started = performance.now();
+  t.after(() =>
+    t.diagnostic(
+      JSON.stringify({
+        sinkEntries,
+        cancelled: active.signal.aborted,
+        elapsedMs: performance.now() - started,
+        requestBudgetMs: request.payload.resourceBudget.maxDurationMs,
+      }),
+    ),
+  );
   const promise = run(
     'valid',
     { signal: active.signal },
     {
       async accept() {
+        sinkEntries++;
         active.abort();
       },
     },
@@ -253,14 +275,27 @@ test('full-v3 rejects invalid requests, sinks and unsafe spawn options before ex
 test(
   'full-v3 cancellation interrupts a permanently blocked sink and closes the child',
   { timeout: 2000 },
-  async () => {
+  async (t) => {
     const controller = new AbortController();
+    let sinkEntries = 0;
+    const started = performance.now();
+    t.after(() =>
+      t.diagnostic(
+        JSON.stringify({
+          sinkEntries,
+          cancelled: controller.signal.aborted,
+          elapsedMs: performance.now() - started,
+          requestBudgetMs: request.payload.resourceBudget.maxDurationMs,
+        }),
+      ),
+    );
     await assert.rejects(
       run(
         'valid',
         { signal: controller.signal },
         {
           async accept() {
+            sinkEntries++;
             controller.abort();
             await new Promise(() => {});
           },
@@ -270,3 +305,23 @@ test(
     );
   },
 );
+
+test('full-v3 budget exhaustion before sink entry is TIMEOUT, not cancellation', async () => {
+  const controller = new AbortController();
+  let sinkEntries = 0;
+  await assert.rejects(
+    run(
+      'delay-before-output',
+      { signal: controller.signal },
+      {
+        async accept() {
+          sinkEntries++;
+          controller.abort();
+        },
+      },
+    ),
+    code('TIMEOUT'),
+  );
+  assert.equal(sinkEntries, 0);
+  assert.equal(controller.signal.aborted, false);
+});

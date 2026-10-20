@@ -78,7 +78,25 @@ jobs:
       - name: Build Native Analyzer
         run: cargo build --workspace
       - name: Run real-binary Java Fixtures
-        run: pnpm test:native-analysis
+        shell: pwsh
+        run: |
+          $env:TEMP = node -e "process.stdout.write(require('node:fs').realpathSync.native(require('node:os').tmpdir()))"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $env:TMP = $env:TEMP
+          node --test --test-concurrency=1 packages/runtime/test/native-ci-context.test.mjs
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          pnpm test:native-analysis
+      - name: Run Native REFRESH composition and replay contracts
+        if: always()
+        shell: pwsh
+        run: |
+          $env:TEMP = Join-Path $env:GITHUB_WORKSPACE '.superpowers/native-memory/refresh-regression'
+          $env:TMP = $env:TEMP
+          New-Item -ItemType Directory -Path $env:TEMP -Force | Out-Null
+          pnpm test:native-refresh
+      - name: Run Native REFRESH Storage rollback and ownership contracts
+        if: always()
+        run: node --test --test-concurrency=1 packages/storage/test/native-refresh-patch-store.test.mjs packages/storage/test/native-apply-sql-observation.test.mjs packages/storage/test/native-sql-lifetime-observation.test.mjs
       - name: Enforce fresh read-seal, transport and refresh-verification reservations
         if: always()
         env:
@@ -89,6 +107,30 @@ jobs:
       - name: Collect every required memory class
         if: always()
         run: pnpm test:native-memory
+      - name: Require approved exact-pack Native REFRESH actual22
+        if: always()
+        shell: pwsh
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          @'
+          import { mkdir, readFile, writeFile } from 'node:fs/promises';
+          import path from 'node:path';
+          import { downloadRefreshCiArchive } from './scripts/helpers/native-refresh-ci-pack.mjs';
+          const parent = path.resolve('.superpowers/native-memory');
+          await mkdir(parent, { recursive: true });
+          const output = path.join(parent, 'exact-pack');
+          await mkdir(output);
+          try {
+            const approval = JSON.parse(await readFile('fixtures/ipc/refresh-v3/approved-transport.json', 'utf8'));
+            await downloadRefreshCiArchive(approval, path.join(output, 'approved.zip'), process.env.GITHUB_REPOSITORY);
+          } catch {
+            await writeFile(path.join(output, 'download-failure.json'), JSON.stringify({ success: false, code: 'D5_PINNED_ASSET_FAILED' }) + '\n', { flag: 'wx' });
+            process.exitCode = 1;
+          }
+          '@ | node --input-type=module
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          node scripts/native-refresh-ci.mjs collect .superpowers/native-memory/exact-pack/approved.zip .superpowers/native-memory/exact-pack/acceptance
       - name: Preserve memory observations including failures
         if: always()
         uses: actions/upload-artifact@v4
@@ -96,3 +138,13 @@ jobs:
           name: native-memory-observations
           path: .superpowers/native-memory
           if-no-files-found: error
+      - name: Preserve original fixed-volume REFRESH scratch on export failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-refresh-original-fallback
+          path: |
+            C:/CodeAtlas-P05-D5/evidence/corpus/replay
+            C:/CodeAtlas-P05-D5-R2/evidence/corpus/replay
+          # Absent before acquisition is expected; the required actual step still fails.
+          if-no-files-found: ignore

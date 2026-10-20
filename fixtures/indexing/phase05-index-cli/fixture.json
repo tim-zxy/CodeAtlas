@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "p05-index-cli-contract-v1",
+  "category": "code-intelligence",
+  "phase": "0.5",
+  "languages": ["java"],
+  "frameworks": [],
+  "capabilities": ["INDEX_CONTRACT"],
+  "inputs": { "requests": "inputs/requests.json" },
+  "expected": { "results": "expected/results.json" },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

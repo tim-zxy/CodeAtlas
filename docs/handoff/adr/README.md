@@ -1,6 +1,6 @@
 # Architecture Decision Records
 
-All records are Accepted unless explicitly superseded by a later record. Amendments must name affected specs, migrations, fixtures, and compatibility behavior.
+All records are Accepted unless their Status explicitly states otherwise or they are superseded by a later record. Proposed records do not authorize implementation. Amendments must name affected specs, migrations, fixtures, and compatibility behavior.
 
 - ADR-001 Local-first runtime
 - ADR-002 Provider-independent Canonical IR
@@ -18,4 +18,7 @@ All records are Accepted unless explicitly superseded by a later record. Amendme
 - ADR-014 Multi Language Native Analyzer and Performance Architecture
 - ADR-015 Versioned Native IPC Coverage Statistics (Accepted)
 - ADR-016 Native REFRESH Derived Analysis State (architecture Accepted; detailed packets reviewed separately)
+- ADR-017 Phase 0.5 Evaluation Evidence Layers (Accepted 2026-10-15; revised Native implementation plan approved)
+- ADR-018 Native Evaluation Diagnostic Observation (Accepted including FULL count correction and revised Native plan; implementation/qualification in progress)
+- ADR-019 D5 Feasible Inputs and Exact-layout CI Replay (Accepted2026-10-18; Native/batch revised existing plan, numeric/publication gates retained)
 

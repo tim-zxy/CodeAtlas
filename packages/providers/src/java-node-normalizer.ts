@@ -16,7 +16,7 @@ import {
 export type CanonicalNormalizationErrorCode =
   'UNSUPPORTED_KIND' | 'INVALID_FACT' | 'INVALID_CONTEXT' | 'MISSING_REFERENCE';
 
-export const JAVA_NORMALIZER_VERSION = '1';
+export const JAVA_NORMALIZER_VERSION = '2';
 
 export interface SourceFileLookup {
   get(id: string): SourceFile | null | undefined;

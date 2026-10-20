@@ -11,7 +11,7 @@ fn main() -> ExitCode {
         (None, None, None) => protocol::serve_once(
             &mut std::io::stdin().lock(),
             &mut std::io::stdout().lock(),
-            &mut std::io::stderr().lock(),
+            &mut std::io::stderr(),
         )
         .unwrap_or_else(|_| ExitCode::from(2)),
         (Some(argument), None, None) if argument == OsStr::new("--smoke") => {
@@ -30,7 +30,7 @@ fn main() -> ExitCode {
             protocol::serve_once_with_workers(
                 &mut std::io::stdin().lock(),
                 &mut std::io::stdout().lock(),
-                &mut std::io::stderr().lock(),
+                &mut std::io::stderr(),
                 count,
             )
             .unwrap_or_else(|_| ExitCode::from(2))

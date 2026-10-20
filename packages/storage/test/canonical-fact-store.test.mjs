@@ -680,6 +680,8 @@ test('patch apply removes a last-supported node with no dependent edges', async 
 });
 
 test('patch apply supersedes an upserted Provider edge with a new Evidence candidate', async () => {
+  const { observeNativeApplySql } =
+    await import('../dist/analysis/native-apply-sql-observation.js');
   await withDatabase(async (db) => {
     const store = new RepositoryCanonicalFactStore(db);
     const initial = await candidate(
@@ -752,14 +754,65 @@ test('patch apply supersedes an upserted Provider edge with a new Evidence candi
       });
       stage.putNormalizedEdge(pair);
       stage.appendSupport(support);
-      store.applyAnalysisPatch(stage, {
-        repositoryId: snapshot.repositoryId,
-        baseRevisionId: snapshot.requestedRevisionId,
-        baseContentFingerprint: initial.snapshot.requestedRevisionFingerprint,
-        targetRevisionId: snapshot.requestedRevisionId,
-        targetContentFingerprint: target,
-        snapshot,
-      });
+      const rawId = db
+        .prepare('SELECT canonical_fact_id FROM provider_fact_bindings WHERE evidence_id=?')
+        .get(old.evidence_id).canonical_fact_id;
+      const rawRevision = db
+        .prepare('SELECT kind,content_fingerprint FROM revisions WHERE id=?')
+        .get(snapshot.requestedRevisionId);
+      const rawPointer = db
+        .prepare(
+          'SELECT indexed_revision_id,indexed_content_fingerprint FROM repository_state WHERE repository_id=?',
+        )
+        .get(snapshot.repositoryId);
+      const ambient = [...Object.values(rawRevision), ...Object.values(rawPointer)].reduce(
+        (sum, field) => sum + Buffer.byteLength(field),
+        0,
+      );
+      const records = [];
+      const observed = observeNativeApplySql(
+        (r) => records.push(r),
+        () =>
+          store.applyAnalysisPatch(stage, {
+            repositoryId: snapshot.repositoryId,
+            baseRevisionId: snapshot.requestedRevisionId,
+            baseContentFingerprint: initial.snapshot.requestedRevisionFingerprint,
+            targetRevisionId: snapshot.requestedRevisionId,
+            targetContentFingerprint: target,
+            snapshot,
+          }),
+      );
+      assert.equal(observed.threw, false);
+      assert.equal(observed.captureFailed, false);
+      const release = records.findIndex(
+        (r) => r.phase === 'STORE_AFFECTED_ID' && r.boundary === 'EXIT',
+      );
+      const group = records.findIndex(
+        (r) => r.phase === 'STORE_CANDIDATE_GROUP' && r.boundary === 'ENTER',
+      );
+      assert.ok(
+        release > 0 && group > release,
+        'Parsed support must replace the raw SQL owner before reselection',
+      );
+      assert.equal(
+        records[release - 1].retainedSqlBytes - records[release].retainedSqlBytes,
+        Buffer.byteLength(rawId),
+      );
+      const rawGroup = db
+        .prepare(
+          `SELECT a.candidate_json,b.provider_id,b.provider_fact_id,b.provider_snapshot_id,b.evidence_id FROM provider_fact_bindings b JOIN active_support_candidates a ON a.evidence_id=b.evidence_id WHERE b.evidence_id=?`,
+        )
+        .get(support.evidence.id);
+      const groupBytes = Object.values(rawGroup).reduce(
+        (sum, field) => sum + Buffer.byteLength(field),
+        0,
+      );
+      assert.equal(records[group].retainedSqlBytes, ambient + groupBytes);
+      assert.equal(
+        records.filter((r) => r.phase === 'STORE_AFFECTED_ID' && r.boundary === 'EXIT').length,
+        1,
+      );
+      assert.equal(records.at(-1).retainedSqlBytes, 0);
       assert.equal(
         db.prepare('SELECT status FROM evidence WHERE id = ?').get(old.evidence_id).status,
         'SUPERSEDED',

@@ -1,5 +1,11 @@
 # Code Intelligence Provider SPI
 
+D2 provisional implementation update (2026-10-04): Providers expose separate bounded v3 refresh encoding/stream observation under the accepted [D composition plan](../../superpowers/plans/2026-10-04-p05-w3-020-native-refresh-composition.md); existing provider-independent public SPI and strict legacy request unions are unchanged. Sink events are provisional until complete checksum/write/stderr/exit settlement. A PARTIAL terminal is an observation, not an applicable candidate; Runtime admission, database-bound seal and validated Application/Store activation remain distinct mandatory steps. CURRENT_STATUS and DESIGN_TRACEABILITY record real-source/fault-only transport evidence and open D3-D6 gates. No Canonical identity, SQLite ownership, Knowledge scope or capability advertisement changes. Earlier plan-pending statements are historical.
+
+Packet D written-spec acceptance (2026-10-04): the latest user “确认” accepts the [composition specification](../../superpowers/specs/2026-10-04-p05-w3-020-native-refresh-composition-design.md). Its [D1–D6 executable plan](../../superpowers/plans/2026-10-04-p05-w3-020-native-refresh-composition.md) is written and awaiting separate review/native execution confirmation. No code, Fixture registration, memory calibration/profile installation, gate passage or phase promotion follows. Final-build exact-purpose measurement and separate numeric approval precede production acceptance; E and original phase exits remain open. Earlier direction-only/pending-spec/missing-plan notes below are historical.
+
+The [packet D draft](../../superpowers/specs/2026-10-04-p05-w3-020-native-refresh-composition-design.md) proposes an injected database-bound overlay validator over validated retained ledgers, exact ACTIVE per-support provenance and actual delta payloads. Do not invert a selected Canonical representative into a Native fact or pass a delta to the full-only validator. Providers remain observers and Storage remains independent of Providers; no public SPI/schema change or implementation is authorized by direction approval.
+
 2026-10-04 bounded ordering conformance verified after user “确认” (base b7b55da): deduplicated changed upserts are admitted under checked payload/capacity-growth/metadata/output-overlap accounting, sorted by type/ID and emitted; existing sorted removals, TS decoder and budgets are unchanged. New cross-file C2 raw-wire regression has genuine old-code RED→fresh-binary GREEN; all17 prior transitions and nine frozen reports are preserved. Fresh required memory75/75, collector27/27, Native/registry136/136, Cargo125/125,16-project build/type/architecture17/client2/handshake4 and root991total/990pass/0fail/1existing Windows skip pass, with unchanged approved Node453a41… identity. CURRENT_STATUS records exact commands, peaks and final consistency evidence. The ordering finding and C local Task4B/5/6 acceptance close; remote integration/hosted CI remain unobserved. Earlier ordering/numeric-hold wording is historical. No new ADR/FROZEN decision, protocol/IR/migration/threshold, second review, recalibration or D/E authority. Phase0.5 remains10/14 integrated; parent and original phase Exit Criteria stay open.
 
 2026-10-04 corrected numeric checkpoint verified: approved READ_SEAL283,324,416/FULL_TRANSPORT283,324,416/REFRESH_VERIFY422,879,232 entries preserve453a41… and frozen evidence. Fresh boundary38/38, required memory75/75 (all42classes), collector27/27, real Native/registry135/135, Cargo122/122,16build/type/architecture17/client2/handshake4 and required root991total/990pass/0fail/1skip pass. Exact verification constituents passed; pnpm wrapper still fails its no-TTY pre-gate guard, hosted CI unobserved. CURRENT_STATUS records commands/artifacts/peaks. This supersedes prior numeric hold/in-progress/42-failure states only. C final design-conformance/Task6 remains open for normative fact-identity ordering; no silent waiver or Phase0.5/parent closure. Save only a local verified checkpoint; no ordering implementation, second review, remeasurement, remote/main or D/E authority.
@@ -85,6 +91,17 @@ limits are governed by the accepted
 [`P05-W4-002 design`](../../superpowers/specs/2026-09-28-p05-w4-002-fact-merger-design.md).
 
 ## Contract tests
+
+The approved [2026-10-14 snapshot-neutral selection amendment](../../superpowers/specs/2026-10-14-p05-snapshot-neutral-support-selection-proposal.md)
+refines equal-ranked real-support ties to `(providerId, providerFactId, snapshotId)`.
+Resolution/source-backed ranking and minimum confidence remain unchanged. Initial
+full-observation validation still accepts one snapshot per Provider; patch/refresh
+reselection may contain retained and new snapshots. Java pipeline compatibility
+uses `JAVA_NORMALIZER_VERSION='2'`; Canonical identity encoding stays v1. Storage
+marks a version-1 derived baseline `INCOMPATIBLE`, and refresh preparation requires
+explicit `FULL_ANALYSIS_REQUIRED` without mutation or automatic rebuilding. Actual
+admitted Native rebuilding remains an acceptance requirement, not a claim from
+the synthetic selector or offline baseline tests.
 
 Every provider must pass descriptor/schema, deterministic replay, cancellation, terminal-event, invalid-event, coverage, diagnostics, unresolved-target, and refresh semantics. Native/reference dual-support fixtures verify canonical fact lifetime.
 

@@ -1,0 +1,75 @@
+{
+  "missingRun": {
+    "schemaVersion": 1,
+    "identity": {
+      "implementationDigest": "1111111111111111111111111111111111111111111111111111111111111111",
+      "nativeExecutableSha256": "2222222222222222222222222222222222222222222222222222222222222222",
+      "fixtureDigest": "3333333333333333333333333333333333333333333333333333333333333333",
+      "configDigest": "4444444444444444444444444444444444444444444444444444444444444444",
+      "corpusDigest": "5555555555555555555555555555555555555555555555555555555555555555",
+      "environment": {
+        "node": "synthetic-node",
+        "v8": "synthetic-v8",
+        "platform": "test",
+        "arch": "fixture"
+      }
+    },
+    "requiredRuns": [
+      {
+        "fixtureId": "synthetic-fixture",
+        "scenario": "INCREMENTAL_1",
+        "repetition": 1,
+        "requestedWorkers": 1,
+        "expectedEffectiveWorkers": 1,
+        "completionOrderId": null
+      }
+    ],
+    "observations": []
+  },
+  "observation": {
+    "runKey": {
+      "fixtureId": "synthetic-fixture",
+      "scenario": "INCREMENTAL_1",
+      "repetition": 1,
+      "requestedWorkers": 1,
+      "expectedEffectiveWorkers": 1,
+      "completionOrderId": null
+    },
+    "status": "SUCCEEDED",
+    "effectiveWorkers": 1,
+    "sourceDigest": "6666666666666666666666666666666666666666666666666666666666666666",
+    "artifactDigests": {
+      "canonical": "7777777777777777777777777777777777777777777777777777777777777777"
+    },
+    "facts": {
+      "symbol": { "tp": 10, "fp": 0, "fn": 0, "recall": 1 },
+      "directCall": { "tp": 10, "fp": 0, "fn": 0, "precision": 1, "recall": 1 },
+      "comparison": { "entries": [] },
+      "criticalFailures": []
+    },
+    "graphEqual": true,
+    "coverageEqual": true,
+    "supportEqual": true,
+    "staleBindings": 0,
+    "closure": { "transactionClosed": true, "tempClosed": true, "childClosed": true },
+    "timings": {
+      "scan": { "value": 1, "unavailableReason": null },
+      "parse": { "value": null, "unavailableReason": "Not exposed" },
+      "resolve": { "value": null, "unavailableReason": "Not exposed" },
+      "ipc": { "value": 1, "unavailableReason": null },
+      "normalize": { "value": 1, "unavailableReason": null },
+      "merge": { "value": 1, "unavailableReason": null },
+      "dbApply": { "value": 1, "unavailableReason": null },
+      "dbLock": { "value": 1, "unavailableReason": null },
+      "total": { "value": 10, "unavailableReason": null }
+    },
+    "peak": {
+      "value": null,
+      "units": "bytes",
+      "method": "not-measured",
+      "scope": "NODE_ONLY_EXCLUDES_NATIVE",
+      "unavailableReason": "Unavailable synthetic observation"
+    },
+    "failure": null
+  }
+}

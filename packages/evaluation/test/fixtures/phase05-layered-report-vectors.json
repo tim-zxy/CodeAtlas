@@ -1,0 +1,215 @@
+{
+  "policy": [
+    ["p05-code-intelligence-evaluation-v1", "COLD", null, "NATIVE_INDEX", "PUBLISHED"],
+    ["p05-code-intelligence-evaluation-v1", "INCREMENTAL_1", null, "NATIVE_INDEX", "PUBLISHED"],
+    ["p05-code-intelligence-evaluation-v1", "INCREMENTAL_5", null, "NATIVE_INDEX", "PUBLISHED"],
+    ["p05-code-intelligence-evaluation-v1", "INCREMENTAL_50", null, "NATIVE_INDEX", "PUBLISHED"],
+    ["java-basic-symbol", "GOLDEN", null, "NATIVE_INDEX", "PUBLISHED"],
+    ["java-call-basic", "GOLDEN", null, "NATIVE_INDEX", "PUBLISHED"],
+    ["java-overload", "GOLDEN", null, "NATIVE_INDEX", "PUBLISHED"],
+    ["java-inheritance", "GOLDEN", null, "NATIVE_INDEX", "PUBLISHED"],
+    ["java-unresolved-call", "GOLDEN", null, "NATIVE_INDEX", "PUBLISHED"],
+    [
+      "p05-native-refresh-producer-v1/modify-call-target",
+      "TRANSITION",
+      null,
+      "NATIVE_INDEX",
+      "PUBLISHED"
+    ],
+    [
+      "p05-native-refresh-producer-v1/add-class-method-unknown-to-resolved",
+      "TRANSITION",
+      null,
+      "NATIVE_INDEX",
+      "PUBLISHED"
+    ],
+    [
+      "p05-native-refresh-producer-v1/delete-class-resolved-to-unknown",
+      "TRANSITION",
+      null,
+      "NATIVE_INDEX",
+      "PUBLISHED"
+    ],
+    [
+      "p05-native-refresh-producer-v1/delete-method-resolved-to-unknown",
+      "TRANSITION",
+      null,
+      "NATIVE_INDEX",
+      "PUBLISHED"
+    ],
+    [
+      "p05-native-refresh-producer-v1/add-method-unknown-to-resolved",
+      "TRANSITION",
+      null,
+      "NATIVE_INDEX",
+      "PUBLISHED"
+    ],
+    [
+      "p05-native-refresh-producer-v1/same-arity-overload-resolved-to-ambiguous",
+      "TRANSITION",
+      null,
+      "NATIVE_INDEX",
+      "PUBLISHED"
+    ],
+    [
+      "p05-native-refresh-producer-v1/change-import",
+      "TRANSITION",
+      null,
+      "NATIVE_INDEX",
+      "PUBLISHED"
+    ],
+    [
+      "p05-native-refresh-producer-v1/change-inheritance",
+      "TRANSITION",
+      null,
+      "NATIVE_INDEX",
+      "PUBLISHED"
+    ],
+    [
+      "p05-native-refresh-producer-v1/shared-first-owner-deletion",
+      "TRANSITION",
+      null,
+      "NATIVE_INDEX",
+      "PUBLISHED"
+    ],
+    [
+      "p05-native-refresh-producer-v1/shared-nonlast-owner-deletion",
+      "TRANSITION",
+      null,
+      "NATIVE_INDEX",
+      "PUBLISHED"
+    ],
+    [
+      "p05-native-refresh-producer-v1/shared-last-owner-deletion-zero-target",
+      "TRANSITION",
+      null,
+      "NATIVE_INDEX",
+      "PUBLISHED"
+    ],
+    [
+      "p05-native-refresh-producer-v1/duplicate-call-hints",
+      "TRANSITION",
+      null,
+      "NATIVE_INDEX",
+      "PUBLISHED"
+    ],
+    [
+      "p05-native-refresh-producer-v1/metadata-only-source-change",
+      "TRANSITION",
+      null,
+      "DECLARED_SOURCE_NATIVE",
+      "PUBLISHED"
+    ],
+    [
+      "p05-native-refresh-producer-v1/empty-file-noop",
+      "TRANSITION",
+      null,
+      "NATIVE_INDEX",
+      "PUBLISHED"
+    ],
+    [
+      "p05-native-refresh-producer-v1/syntax-partial-retained-restart",
+      "TRANSITION",
+      null,
+      "NATIVE_INDEX",
+      "PARTIAL_RETAINED"
+    ],
+    [
+      "p05-native-refresh-producer-v1/unsupported-recognized-region-retained-restart",
+      "TRANSITION",
+      null,
+      "NATIVE_INDEX",
+      "PARTIAL_RETAINED"
+    ],
+    [
+      "p05-native-refresh-producer-v1/cross-file-operation-order",
+      "TRANSITION",
+      null,
+      "NATIVE_INDEX",
+      "PUBLISHED"
+    ],
+    [
+      "p05-native-refresh-producer-v1/zero-files-noop",
+      "TRANSITION",
+      null,
+      "NATIVE_INDEX",
+      "PUBLISHED"
+    ],
+    ["canonical-normalization", "GOLDEN", null, "RECORDED_PROVIDER_SQLITE", "CONTRACT_MATCH"],
+    [
+      "two-provider-same-call",
+      "PROVIDER_MERGE",
+      null,
+      "RECORDED_PROVIDER_SQLITE",
+      "CONTRACT_MATCH"
+    ],
+    [
+      "p05-code-intelligence-evaluation-v1",
+      "WORKER_CONSISTENCY",
+      "REQUIRED_WORKER_ORDER_1",
+      "NATIVE_INDEX",
+      "PUBLISHED"
+    ],
+    [
+      "p05-code-intelligence-evaluation-v1",
+      "WORKER_CONSISTENCY",
+      "REQUIRED_WORKER_ORDER_2",
+      "NATIVE_INDEX",
+      "PUBLISHED"
+    ]
+  ],
+  "identity": {
+    "implementationDigest": "1111111111111111111111111111111111111111111111111111111111111111",
+    "nativeExecutableSha256": "2222222222222222222222222222222222222222222222222222222222222222",
+    "fixtureDigest": "3333333333333333333333333333333333333333333333333333333333333333",
+    "configDigest": "4444444444444444444444444444444444444444444444444444444444444444",
+    "corpusDigest": "5555555555555555555555555555555555555555555555555555555555555555",
+    "environment": {
+      "node": "synthetic",
+      "v8": "synthetic",
+      "platform": "synthetic",
+      "arch": "synthetic"
+    }
+  },
+  "checks": {
+    "canonical-normalization": [
+      "pairGolden",
+      "persistedGolden",
+      "supportCandidates",
+      "sourceActivation",
+      "coverage",
+      "reopenedImages",
+      "receipts"
+    ],
+    "two-provider-same-call": [
+      "fullGolden",
+      "oneGolden",
+      "zeroGolden",
+      "reverseOrder",
+      "supportCandidates",
+      "evidenceHistory",
+      "sourceActivation",
+      "coverage",
+      "reopenedImages",
+      "rejectedPatchRecovery",
+      "receipts"
+    ],
+    "metadata": [
+      "sourceMetadataTransition",
+      "originalRelations",
+      "fullRefreshAgreement",
+      "nativeStateCoactivation",
+      "activeSupportHistory",
+      "restart",
+      "rawOperations",
+      "receipts"
+    ]
+  },
+  "metrics": {
+    "symbol": { "tp": 10, "fp": 0, "fn": 0, "recall": 1 },
+    "directCall": { "tp": 10, "fp": 0, "fn": 0, "precision": 1, "recall": 1 },
+    "comparison": { "entries": [] },
+    "criticalFailures": []
+  },
+  "stages": ["scan", "parse", "resolve", "ipc", "normalize", "merge", "dbApply", "dbLock", "total"]
+}

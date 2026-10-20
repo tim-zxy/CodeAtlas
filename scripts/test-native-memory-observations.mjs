@@ -186,7 +186,7 @@ test('missing required approved profile fails and retains valid raw rows', async
     );
   await writeFile(
     path.join(runtime, 'dist', 'native-metadata-profiles.js'),
-    'export const nativeMetadataProfiles = Object.freeze([]);\nexport const nativeRefreshVerificationProfiles = Object.freeze([]);\n',
+    'export const nativeMetadataProfiles = Object.freeze([]);\nexport const nativeRefreshVerificationProfiles = Object.freeze([]);\nexport const nativeRefreshTransportProfiles = Object.freeze([]);\n',
   );
   const isolatedApi = await import(
     pathToFileURL(path.join(isolated, 'scripts', 'native-memory-observations.mjs')).href

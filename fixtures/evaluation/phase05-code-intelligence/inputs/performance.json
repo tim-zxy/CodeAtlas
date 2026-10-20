@@ -1,0 +1,6 @@
+{
+  "schemaVersion": 1,
+  "fileCount": 50,
+  "template": "package evaluation.performance;\nclass Unit{{unit}} {\n  void first() {}\n  void second() {}\n  void run() { {{target}}(); }\n}\n",
+  "scenarios": { "COLD": 0, "INCREMENTAL_1": 1, "INCREMENTAL_5": 5, "INCREMENTAL_50": 50 }
+}

@@ -1,0 +1,8 @@
+{
+  "source/QueryGraph.java": "3e1f388142411d0f4311c46fac5022b94712b0f80821a441ef0fced1b076a356",
+  "inputs/observation.json": "1b263a25135a434bc5be8778f8f668e571972c731ceb6222bc25ad74f145630f",
+  "inputs/patch.json": "404ef128357536fa69da85e169b6d85abcee0f8a949e06451b102c47c390a28c",
+  "inputs/cases.json": "5e7665660f83e956c1d1bd6bbe5e69278840c7f1a44ab9d6fcfada78ae495360",
+  "expected/graph.json": "eff489e8e5e520c1f0eaa4b43e48ea9e6f6a31127bfbf68d9b578726c1a8943a",
+  "expected/results.json": "b99200de51a83faae91b61f258086f9cc1ecf0dca21db5d244acc5ece2c656f8"
+}

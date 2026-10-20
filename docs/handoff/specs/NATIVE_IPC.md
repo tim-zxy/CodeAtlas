@@ -1,5 +1,31 @@
 # Native IPC Wire Specification
 
+2026-10-15 accepted ADR-018/§9 rollout checkpoint: v3 analysis emits private bounded
+hashed diagnostics after admission begins. Stdout/schema/checksum/limits and
+legacy v1/v2 diagnostics remain unchanged. Development capture uses the existing
+stderr reader only; no Provider/resource/publication authority comes from these
+records. Current Status tracks incomplete rollout/qualification; no phase exit.
+
+2026-10-15 review update: original written ADR-018/design accepted; revised plan
+and proposed FULL count correction remain unapproved. No producer/consumer code
+or stdout/stderr production behavior changed. The accepted Evaluation-only
+diagnostic distinction does not give stderr Provider/publication authority.
+
+2026-10-15 review notice, not a wire-contract change: proposed
+[ADR-018](../adr/ADR-018-native-evaluation-observations.md) and
+[bounded observation design](../../superpowers/specs/2026-10-15-p05-native-parse-observation-design.md)
+describe private v3 parser diagnostics for development Evaluation. Only the
+direction/detail-writing is approved; written review and the revised plan precede
+implementation. Stdout v1/v2/v3, checksums, hard caps and production stderr-only
+diagnostic treatment remain authoritative. No parsed stderr has publication or
+Provider authority. Do not implement a second protocol under this pending notice.
+
+D2 provisional implementation update (2026-10-04): the accepted [composition plan/spec](../../superpowers/plans/2026-10-04-p05-w3-020-native-refresh-composition.md) now adds separate `encodeNativeRefreshRequestV3`/`streamNativeRefreshV3` in Providers. Bounded owned header/ordered baseline/completion LF/checksum input is packet-A validated before spawn; C validates the same byte snapshot with the independent trusted budget. Reused process lifecycle waits for writes, stdout/checksum, bounded stderr and acceptable exit; late exit/post-terminal/cancel/truncation cannot return success. Typed v1/v2 unions, error precedence and all hard caps remain unchanged. The returned terminal is observation only (including honest PARTIAL), never Apply authority. New process Fixture/gates and exact-build memory holds are recorded in CURRENT_STATUS; D3/D4/D5/D6/E remain open, with no incremental advertisement or phase acceptance. Earlier plan-pending statements are historical.
+
+Packet D written-spec acceptance (2026-10-04): the latest user “确认” accepts the [composition specification](../../superpowers/specs/2026-10-04-p05-w3-020-native-refresh-composition-design.md). Its [D1–D6 executable plan](../../superpowers/plans/2026-10-04-p05-w3-020-native-refresh-composition.md) is written and awaiting separate review/native execution confirmation. No code, Fixture registration, memory calibration/profile installation, gate passage or phase promotion follows. Final-build exact-purpose measurement and separate numeric approval precede production acceptance; E and original phase exits remain open. Earlier direction-only/pending-spec/missing-plan notes below are historical.
+
+Packet C real v3 REFRESH is integrated through PR #19; packet D's [proposed process composition](../../superpowers/specs/2026-10-04-p05-w3-020-native-refresh-composition-design.md) awaits written review. A distinct v3 observer would reuse C's strict decoder, awaited sink and existing process lifecycle, validate owned header/baseline/completion bytes before spawn and withhold success until all process streams/exit settle. Legacy v1/v2, all hard caps and incremental advertisement remain unchanged; D transport is not implemented by this note.
+
 2026-10-04 bounded ordering conformance verified after user “确认” (base b7b55da): deduplicated changed upserts are admitted under checked payload/capacity-growth/metadata/output-overlap accounting, sorted by type/ID and emitted; existing sorted removals, TS decoder and budgets are unchanged. New cross-file C2 raw-wire regression has genuine old-code RED→fresh-binary GREEN; all17 prior transitions and nine frozen reports are preserved. Fresh required memory75/75, collector27/27, Native/registry136/136, Cargo125/125,16-project build/type/architecture17/client2/handshake4 and root991total/990pass/0fail/1existing Windows skip pass, with unchanged approved Node453a41… identity. CURRENT_STATUS records exact commands, peaks and final consistency evidence. The ordering finding and C local Task4B/5/6 acceptance close; remote integration/hosted CI remain unobserved. Earlier ordering/numeric-hold wording is historical. No new ADR/FROZEN decision, protocol/IR/migration/threshold, second review, recalibration or D/E authority. Phase0.5 remains10/14 integrated; parent and original phase Exit Criteria stay open.
 
 2026-10-04 corrected numeric checkpoint verified: approved READ_SEAL283,324,416/FULL_TRANSPORT283,324,416/REFRESH_VERIFY422,879,232 entries preserve453a41… and frozen evidence. Fresh boundary38/38, required memory75/75 (all42classes), collector27/27, real Native/registry135/135, Cargo122/122,16build/type/architecture17/client2/handshake4 and required root991total/990pass/0fail/1skip pass. Exact verification constituents passed; pnpm wrapper still fails its no-TTY pre-gate guard, hosted CI unobserved. CURRENT_STATUS records commands/artifacts/peaks. This supersedes prior numeric hold/in-progress/42-failure states only. C final design-conformance/Task6 remains open for normative fact-identity ordering; no silent waiver or Phase0.5/parent closure. Save only a local verified checkpoint; no ordering implementation, second review, remeasurement, remote/main or D/E authority.

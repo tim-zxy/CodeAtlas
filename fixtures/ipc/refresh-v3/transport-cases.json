@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "p05-native-v3-refresh-transport-v1",
+  "task": "P05-W3-020-D2",
+  "cases": [
+    "owned_baseline_records_and_completion_checksum",
+    "real_refresh_matches_independent_transition",
+    "awaited_sink_has_one_delivery",
+    "limits_equal_and_one_byte_over",
+    "late_exit_and_post_terminal_refuse",
+    "cancel_blocked_sink_and_write_failure",
+    "partial_and_truncated_refuse_apply"
+  ],
+  "faults": [
+    { "mode": "late-exit", "code": "PROCESS_FAILED" },
+    { "mode": "post-terminal", "code": "PROTOCOL_VIOLATION" },
+    { "mode": "truncated", "code": "PROTOCOL_VIOLATION" },
+    { "mode": "bad-checksum", "code": "CHECKSUM_MISMATCH" },
+    { "mode": "analyzer-failed", "code": "ANALYZER_FAILED" },
+    { "mode": "early-close", "code": "PROTOCOL_VIOLATION" }
+  ]
+}

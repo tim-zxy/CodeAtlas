@@ -1,0 +1,193 @@
+{
+  "repositoryId": "query-repository",
+  "revisionId": "query-revision",
+  "fingerprint": "query-fingerprint-1",
+  "sourceFileId": "query-source",
+  "path": "QueryGraph.java",
+  "providerId": "query-provider-a",
+  "snapshotId": "query-snapshot-a",
+  "nodes": [
+    {
+      "id": "type",
+      "kind": "TYPE",
+      "subkind": "CLASS",
+      "name": "QueryGraph",
+      "qualifiedName": "QueryGraph",
+      "line": 0,
+      "column": 6,
+      "endColumn": 16
+    },
+    {
+      "id": "root",
+      "kind": "SYMBOL",
+      "subkind": "METHOD",
+      "name": "root",
+      "qualifiedName": "QueryGraph.root",
+      "line": 1,
+      "column": 7,
+      "endColumn": 11
+    },
+    {
+      "id": "left",
+      "kind": "SYMBOL",
+      "subkind": "METHOD",
+      "name": "left",
+      "qualifiedName": "QueryGraph.left",
+      "line": 2,
+      "column": 7,
+      "endColumn": 11
+    },
+    {
+      "id": "right",
+      "kind": "SYMBOL",
+      "subkind": "METHOD",
+      "name": "right",
+      "qualifiedName": "QueryGraph.right",
+      "line": 3,
+      "column": 7,
+      "endColumn": 12
+    },
+    {
+      "id": "leaf",
+      "kind": "SYMBOL",
+      "subkind": "METHOD",
+      "name": "leaf",
+      "qualifiedName": "QueryGraph.leaf",
+      "line": 4,
+      "column": 7,
+      "endColumn": 11
+    },
+    {
+      "id": "run-0",
+      "kind": "SYMBOL",
+      "subkind": "METHOD",
+      "name": "run",
+      "qualifiedName": "QueryGraph.run",
+      "line": 5,
+      "column": 7,
+      "endColumn": 10
+    },
+    {
+      "id": "run-1",
+      "kind": "SYMBOL",
+      "subkind": "METHOD",
+      "name": "run",
+      "qualifiedName": "QueryGraph.run",
+      "line": 6,
+      "column": 7,
+      "endColumn": 10
+    },
+    {
+      "id": "isolated",
+      "kind": "SYMBOL",
+      "subkind": "METHOD",
+      "name": "isolated",
+      "qualifiedName": "QueryGraph.isolated",
+      "line": 7,
+      "column": 7,
+      "endColumn": 15
+    }
+  ],
+  "edges": [
+    {
+      "id": "01",
+      "kind": "CALL",
+      "source": "root",
+      "target": "left",
+      "resolution": "EXACT",
+      "line": 1
+    },
+    {
+      "id": "02",
+      "kind": "CALL",
+      "source": "root",
+      "target": "right",
+      "resolution": "EXACT",
+      "line": 1
+    },
+    {
+      "id": "03",
+      "kind": "CALL",
+      "source": "left",
+      "target": "leaf",
+      "resolution": "EXACT",
+      "line": 2
+    },
+    {
+      "id": "04",
+      "kind": "CALL",
+      "source": "right",
+      "target": "leaf",
+      "resolution": "EXACT",
+      "line": 3
+    },
+    {
+      "id": "05",
+      "kind": "CALL",
+      "source": "leaf",
+      "target": "root",
+      "resolution": "EXACT",
+      "line": 4
+    },
+    {
+      "id": "06",
+      "kind": "CALL",
+      "source": "root",
+      "hint": "unknown()",
+      "candidates": ["run-1", "run-0"],
+      "resolution": "AMBIGUOUS",
+      "line": 1
+    },
+    {
+      "id": "07",
+      "kind": "CALL",
+      "source": "root",
+      "hint": "external()",
+      "candidates": [],
+      "resolution": "UNSUPPORTED",
+      "line": 1
+    },
+    {
+      "id": "08",
+      "kind": "CALL",
+      "source": "root",
+      "target": "root",
+      "resolution": "HEURISTIC",
+      "line": 1
+    },
+    {
+      "id": "09",
+      "kind": "REFERENCE",
+      "source": "root",
+      "target": "type",
+      "resolution": "EXACT",
+      "line": 1
+    },
+    {
+      "id": "10",
+      "kind": "IMPORT",
+      "source": "type",
+      "hint": "external.Library",
+      "candidates": [],
+      "resolution": "UNRESOLVED",
+      "line": 0
+    },
+    {
+      "id": "11",
+      "kind": "INHERITANCE",
+      "source": "type",
+      "hint": "Base",
+      "candidates": [],
+      "resolution": "UNRESOLVED",
+      "line": 0
+    },
+    {
+      "id": "12",
+      "kind": "OVERRIDE",
+      "source": "run-1",
+      "target": "run-0",
+      "resolution": "EXACT",
+      "line": 6
+    }
+  ]
+}

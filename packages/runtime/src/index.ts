@@ -3,6 +3,8 @@ import { RuntimeBuilder, type RuntimeDependencies } from './runtime-builder.js';
 import { DefaultWorkspaceContextFactory } from './workspace-context.js';
 
 export { KnowledgeRuntime } from './knowledge-runtime.js';
+export * from './code-query.js';
+export * from './index-command.js';
 export { applyNativeFullAnalysis } from './full-analysis.js';
 export { applyNativeFullBootstrap, readNativeFullBaseline } from './native-full-bootstrap.js';
 export { createNativeStateValidationPort } from './native-analysis-validation.js';

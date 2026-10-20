@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "p05-code-intelligence-evaluation-v1",
+  "category": "code-intelligence",
+  "phase": "0.5",
+  "languages": ["java"],
+  "frameworks": [],
+  "capabilities": ["SOURCE_IDENTITY_ALIGNMENT", "SCOPED_FACT_METRICS"],
+  "inputs": {
+    "sourceBinding": "inputs/source-binding.json",
+    "metricVectors": "inputs/metric-vectors.json",
+    "scenarios": "inputs/scenarios.json",
+    "performance": "inputs/performance.json"
+  },
+  "expected": {
+    "sourceBinding": "expected/source-binding.json",
+    "metricVectors": "expected/metric-vectors.json",
+    "critical": "expected/critical.json",
+    "performance": "expected/performance.json"
+  },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

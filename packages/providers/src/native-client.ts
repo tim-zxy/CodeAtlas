@@ -4,6 +4,15 @@ import { isAbsolute } from 'node:path';
 import type { Readable } from 'node:stream';
 import { boundedJson, writeFullRequestRecords } from './native-request-json.js';
 import { NativeRequestHeaderV3Schema } from './native-ipc-v3.js';
+import { encodeNativeRefreshRequestV3 } from './native-refresh-request-v3.js';
+import { createNativeRequestWorkspaceObservation } from './native-refresh-workspace-observation.js';
+import type { NativeAnalysisStateBundleV1 } from './native-analysis-state.js';
+import {
+  decodeNativeRefreshV3,
+  type NativeRefreshRequestV3,
+  type NativeRefreshEventV3,
+  type NativeRefreshTerminalV3,
+} from './native-refresh-output-v3.js';
 import {
   decodeNativeFullAnalysisV3,
   type NativeFullAnalyzeRequestV3,
@@ -358,6 +367,107 @@ export async function streamNativeFullAnalysisV3(
   return deepFreeze({ terminal: result.output, stderr: result.stderr });
 }
 
+/** Provisional refresh observation. Admission/sealing/activation belong to Runtime/Store. */
+export async function streamNativeRefreshV3(
+  requestValue: NativeRefreshRequestV3,
+  baseline: NativeAnalysisStateBundleV1,
+  optionsValue: NativeClientOptions,
+  sink: { accept(event: NativeRefreshEventV3): Promise<void> },
+  expectedMemoryBudgetBytes: number,
+): Promise<{
+  terminal: Extract<NativeRefreshTerminalV3, { type: 'REFRESH_COMPLETED' }>;
+  stderr: string;
+}> {
+  const observe = createNativeRequestWorkspaceObservation('CLIENT');
+  observe?.('BEGIN');
+  try {
+    return await streamNativeRefreshWorkspace(
+      requestValue,
+      baseline,
+      optionsValue,
+      sink,
+      expectedMemoryBudgetBytes,
+      observe,
+    );
+  } catch (error) {
+    observe?.('FAILED');
+    throw error;
+  } finally {
+    observe?.('EXIT');
+  }
+}
+
+async function streamNativeRefreshWorkspace(
+  requestValue: NativeRefreshRequestV3,
+  baseline: NativeAnalysisStateBundleV1,
+  optionsValue: NativeClientOptions,
+  sink: { accept(event: NativeRefreshEventV3): Promise<void> },
+  expectedMemoryBudgetBytes: number,
+  observe: ReturnType<typeof createNativeRequestWorkspaceObservation>,
+): Promise<{
+  terminal: Extract<NativeRefreshTerminalV3, { type: 'REFRESH_COMPLETED' }>;
+  stderr: string;
+}> {
+  const options = validateOptions(optionsValue);
+  if (!sink || typeof sink.accept !== 'function')
+    throw new NativeClientError('INVALID_CONFIGURATION', 'Native refresh sink is invalid');
+  if (options.signal?.aborted)
+    throw new NativeClientError('CANCELLED', 'Native request was cancelled');
+  const bytes = Buffer.from(
+    encodeNativeRefreshRequestV3(requestValue, baseline, options.limits, expectedMemoryBudgetBytes),
+  );
+  observe?.('COPY', { clientBytes: bytes.byteLength, clientBackingBytes: bytes.buffer.byteLength });
+  // Already byte-validated by packet A; parse only this bounded owned header.
+  const request = JSON.parse(
+    bytes.subarray(0, bytes.indexOf(10)).toString('utf8'),
+  ) as NativeRefreshRequestV3;
+  const timeoutMs = effectiveTimeout(request, options.timeoutMs);
+  if (timeoutMs <= 0) throw clientError('TIMEOUT', 'Native request timed out', request);
+  const records: Buffer[] = [];
+  let start = 0;
+  for (let at = 0; at < bytes.length; at++)
+    if (bytes[at] === 10) {
+      records.push(bytes.subarray(start, at + 1));
+      start = at + 1;
+    }
+  observe?.('RECORDS_READY', { recordCount: records.length });
+  const result = await runProcess<
+    Extract<NativeRefreshTerminalV3, { type: 'REFRESH_COMPLETED' }>,
+    NativeRefreshRequestV3
+  >(
+    records,
+    options,
+    request,
+    timeoutMs,
+    async (stdout, _request, limits, signal) =>
+      (
+        await decodeNativeRefreshV3(
+          bytes,
+          stdout,
+          {
+            async accept(event) {
+              if (signal.aborted) throw signal.reason;
+              let rejectStop: (reason: unknown) => void = () => {};
+              const interrupted = new Promise<never>((_, reject) => {
+                rejectStop = reject;
+              });
+              const abort = () => rejectStop(signal.reason);
+              signal.addEventListener('abort', abort, { once: true });
+              try {
+                await Promise.race([sink.accept(event), interrupted]);
+              } finally {
+                signal.removeEventListener('abort', abort);
+              }
+            },
+          },
+          limits,
+          expectedMemoryBudgetBytes,
+        )
+      ).terminal,
+  );
+  return deepFreeze({ terminal: result.output, stderr: result.stderr });
+}
+
 /** Reuse transport framing limits before Runtime copies input or observes SQLite. */
 export function preflightNativeFullAnalysisV3(
   requestValue: NativeFullAnalyzeRequestV3,
@@ -585,7 +695,8 @@ function validateOptions(value: NativeClientOptions): ValidatedOptions {
 
 function runProcess<
   TOutput = DecodedOutput,
-  TRequest extends AnyNativeRequest | NativeFullAnalyzeRequestV3 = AnyNativeRequest,
+  TRequest extends AnyNativeRequest | NativeFullAnalyzeRequestV3 | NativeRefreshRequestV3 =
+    AnyNativeRequest,
 >(
   requestBytes: Buffer | readonly Buffer[],
   options: ValidatedOptions,
@@ -641,6 +752,11 @@ function runProcess<
     terminate();
   };
 
+  // A cancelled writer can settle before its pending pipe write reports EOF/EPIPE.
+  // The process owner must observe those errors until the child closes.
+  const stdinError = () =>
+    recordFailure(clientError('PROCESS_FAILED', 'Native request could not be written', request));
+  child.stdin.on('error', stdinError);
   const stdoutPromise = decode(child.stdout, request, options.limits, stop.signal).catch(
     (error: unknown) => {
       recordFailure(asClientError(error, request));
@@ -668,6 +784,7 @@ function runProcess<
     });
     child.once('close', (exitCode, signal) => {
       closed = true;
+      child.stdin.removeListener('error', stdinError);
       resolve({ exitCode, signal });
     });
   });
@@ -715,7 +832,7 @@ function childEnvironment(
 }
 
 function effectiveTimeout(
-  request: AnyNativeRequest | NativeFullAnalyzeRequestV3,
+  request: AnyNativeRequest | NativeFullAnalyzeRequestV3 | NativeRefreshRequestV3,
   invocationTimeoutMs: number,
 ): number {
   if (request.type !== 'ANALYZE' && request.type !== 'REFRESH') return invocationTimeoutMs;

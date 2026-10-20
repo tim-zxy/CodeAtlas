@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "id": "p05-native-refresh-apply-v1",
+  "task": "P05-W3-020-D4",
+  "governingSpec": "docs/superpowers/specs/2026-10-04-p05-w3-020-native-refresh-composition-design.md",
+  "status": "ci-registered-awaiting-complete-actual-acceptance",
+  "suite": "packages/storage/test/native-refresh-patch-store.test.mjs",
+  "runtimeSuite": "packages/runtime/test/native-refresh-composition.test.mjs",
+  "relatedTransportAcceptance": {
+    "authority": "docs/handoff/adr/ADR-019-d5-exact-layout-ci-replay.md",
+    "installerSuite": "scripts/test-native-refresh-ci-pack.mjs",
+    "layoutSuite": "scripts/test-native-refresh-ci-layout.mjs",
+    "runnerSuite": "scripts/test-native-refresh-ci.mjs",
+    "entry": "scripts/native-refresh-ci.mjs collect",
+    "status": "registered-not-complete-actual22-or-hosted-acceptance",
+    "originalArtifactRetention": "byte-exact-settled-attempt-export-and-fixed-replay-root-upload-fallback"
+  },
+  "sourceFixture": "p05-native-refresh-producer-v1",
+  "sourceCases": "fixtures/native/java-refresh-producer/expected/transitions.json",
+  "sourceWorkers": [1, 2],
+  "sourceRollbackBoundaries": [
+    "support_retirement",
+    "snapshot_insertion",
+    "upsert_candidate_insertion",
+    "summary_deletion",
+    "summary_file_insertion",
+    "pointer_update"
+  ],
+  "sourceRollbackTiming": "AFTER",
+  "runtimeComponentCases": [
+    "admission_before_opener_or_database",
+    "validated_baseline_state_retention",
+    "real_rust_zero_file_refresh_application_store_reopen",
+    "store_failure_stage_finally_cleanup",
+    "transport_failure_stage_finally_cleanup",
+    "pre_spawn_cancellation_stage_finally_cleanup",
+    "actual_rust_normalization_temp_trigger_failure_cleanup_exact_reopen",
+    "actual_rust_overlay_seal_temp_summary_corruption_cleanup_exact_reopen"
+  ],
+  "componentCases": [
+    "empty_refresh_coactivation_and_reopen",
+    "legacy_entry_refuses_native_stage",
+    "snapshot_insertion_rollback_reopen",
+    "summary_deletion_rollback_reopen",
+    "summary_header_insertion_rollback_reopen",
+    "pointer_update_rollback_reopen",
+    "mismatched_token_prelock_refusal",
+    "shared_nonlast_owner_deletion_reopen",
+    "shared_last_owner_deletion_reopen",
+    "same_fingerprint_two_native_attempts",
+    "complete_classification_prelock_and_locked_refusal",
+    "support_retirement_rollback_reopen",
+    "same_fingerprint_legacy_patch_invalidates_native_state_reopen",
+    "legacy_invalidation_rollback_exact_image_reopen",
+    "other_provider_shared_nonlast_owner_preservation_reopen",
+    "other_provider_last_owner_reselection_reopen",
+    "dangling_other_provider_seal_refusal_exact_image_reopen",
+    "other_provider_reselection_rollback_exact_image_reopen",
+    "same_fingerprint_native_legacy_activation_prelock_and_locked_refusal_reopen",
+    "same_fingerprint_other_provider_legacy_activation_prelock_and_locked_refusal_reopen",
+    "other_provider_candidate_dangling_between_precheck_and_lock_refusal_reopen"
+  ],
+  "limitations": [
+    "Disk Store/Provider cases use an owned independent corpus. The separate offline Runtime suite also runs actual Rust full bootstrap and all 18 existing C source transitions with workers 1 and 2, including two PARTIAL refusals. Its test-only bootstrap composes existing Application/Provider/Store primitives, not an admitted production entry.",
+    "The shared corpus excludes its synthetic nullable compilation-unit facts in an owned copy; frozen producer corpus and production normalizers are unchanged.",
+    "Other-Provider cases use collectMergeSupports to seed component-only provenance rows before capturing the Native baseline/token, following canonical-fact-store.test.mjs. They are not another Provider's production publication workflow. Dangling support is refused at overlay seal; the unsealed Store entry also refuses, not a bypassed locked-writer proof.",
+    "Separate race cases use a real second-connection legacy Patch commit at the same fingerprint. The locked dangling case instead corrupts the existing other-Provider candidate just before BEGIN IMMEDIATE and proves locked Store refusal preserves that competing connection's image; it is not a supported publication path or a mutation while another writer holds the lock.",
+    "Storage rollback/ownership and SQL observation suites are explicitly registered in Native CI. This case index is not a metric Fixture Manifest and registration does not prove full D4, D5, D6 or phase acceptance. Local actual transport and final acceptance remain separately required."
+  ],
+  "remainingAcceptance": [
+    "complete_d4_failure_matrix_and_acceptance_audit",
+    "admitted_runtime_application_composition_after_d5_numeric_approval",
+    "fresh_required_root_timing_and_exact_profile_gates",
+    "fixture_and_required_runner_registration"
+  ]
+}

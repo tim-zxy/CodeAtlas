@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "p05-native-refresh-overlay-v1",
+  "task": "P05-W3-020-D3",
+  "governingSpec": "docs/superpowers/specs/2026-10-04-p05-w3-020-native-refresh-composition-design.md",
+  "cases": [
+    "complete_summaries_include_unchanged_and_zero_fact",
+    "v1_categorical_coverage_stays_strict",
+    "numeric_preflight_precedes_TEXT",
+    "seal_freezes_every_mutator",
+    "ledger_equals_native_active_supports",
+    "shared_owner_transfer_preserves_old_support",
+    "retained_nodes_resolve_dependent_upsert",
+    "forged_orphan_mixed_snapshot_refuse",
+    "deleted_old_range_only_for_retirement",
+    "complete_target_result_is_unique",
+    "source_less_and_global_diagnostic_correspondence",
+    "bounded_multi_representation_and_wire_count"
+  ],
+  "suites": {
+    "storage": "packages/storage/test/native-patch-summary-stage.test.mjs",
+    "provider": "packages/providers/test/native-refresh-overlay.test.mjs"
+  },
+  "coverage": {
+    "complete_summaries_include_unchanged_and_zero_fact": "Storage complete-summary retention and actual zero-fact Store bootstrap to Provider seal",
+    "v1_categorical_coverage_stays_strict": "Storage legacy rejection and separate Native statistics acceptance",
+    "numeric_preflight_precedes_TEXT": "Storage payload and individual indexed-column limits, twice retained SQL overlap, support and candidate reads",
+    "seal_freezes_every_mutator": "Storage all-mutator refusal, reentrant validation refusal and TEMP-only cleanup",
+    "ledger_equals_native_active_supports": "Provider exact-ledger cases and actual full Store Apply to coupled Storage/Provider seal with three R009 support chains",
+    "shared_owner_transfer_preserves_old_support": "Coupled nonlast/last owner deletion seal preserves exact persistent graph, Evidence, candidates, snapshots and indexed state; Provider shared transfer component cases",
+    "retained_nodes_resolve_dependent_upsert": "Internal bounded Native context adapter reuses legacy core; actual retained candidates resolve a provisional dependent upsert, and absent target ledger refuses seal",
+    "forged_orphan_mixed_snapshot_refuse": "Provider identity/snapshot forgeries and Storage actual support-chain corruptions",
+    "deleted_old_range_only_for_retirement": "Provider lawful Native retirement versus unrelated Provider dangling ranges; Storage returns unchanged historical provenance",
+    "complete_target_result_is_unique": "Storage injected duplicate/omitted target refusal and successful exact two-file seal",
+    "source_less_and_global_diagnostic_correspondence": "Provider C decoder and overlay exact local, file-owned source-less and run-global observations",
+    "bounded_multi_representation_and_wire_count": "Provider 2,500 raw upserts plus normalized/support/history representations stay within existing per-representation and byte limits; actual 10,000 wire observations admit equality, next observation and infinite iterator refuse"
+  },
+  "status": "component-index-only-unregistered",
+  "limitations": [
+    "This index does not register or execute a Fixture; mandatory registry/root integration remains D6.",
+    "Provider overlay component fixtures are independently constructed, not real Rust activation evidence.",
+    "Coupled support-chain and 2,500-upsert capacity cases use an independently constructed component corpus, not real Rust producer activation or measured maxRSS admission.",
+    "Mandatory C wire proof and Rust semantic baseline proof remain production predecessors; D4 atomic Apply and D5 exact-purpose numeric admission are not demonstrated here."
+  ]
+}

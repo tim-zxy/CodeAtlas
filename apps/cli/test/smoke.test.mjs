@@ -18,5 +18,5 @@ test('CLI rejects an unsupported invocation', () => {
 
   assert.equal(result.status, 2);
   assert.equal(result.stdout, '');
-  assert.match(result.stderr, /not implemented in P0-W0-003/);
+  assert.equal(JSON.parse(result.stderr).code, 'INVALID_QUERY');
 });

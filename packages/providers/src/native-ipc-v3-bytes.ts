@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto';
+import { createNativeRequestWorkspaceObservation } from './native-refresh-workspace-observation.js';
 import { type NativeAnalysisStateBundleV1 } from './native-analysis-state.js';
 import {
   NativeV3ContractError,
@@ -12,6 +13,22 @@ export function decodeNativeRequestV3(bytes: Uint8Array): {
   header: NativeRequestHeaderV3;
   baseline: NativeAnalysisStateBundleV1 | null;
 } {
+  const observe = createNativeRequestWorkspaceObservation('PREVALIDATION');
+  observe?.('BEGIN');
+  try {
+    return decodeNativeRequestWorkspace(bytes, observe);
+  } catch (error) {
+    observe?.('FAILED');
+    throw error;
+  } finally {
+    observe?.('EXIT');
+  }
+}
+
+function decodeNativeRequestWorkspace(
+  bytes: Uint8Array,
+  observe: ReturnType<typeof createNativeRequestWorkspaceObservation>,
+): { header: NativeRequestHeaderV3; baseline: NativeAnalysisStateBundleV1 | null } {
   const fail = (code: ConstructorParameters<typeof NativeV3ContractError>[0]): never => {
     throw new NativeV3ContractError(code);
   };
@@ -29,7 +46,9 @@ export function decodeNativeRequestV3(bytes: Uint8Array): {
   } catch {
     return fail('PROTOCOL_CORRUPTION');
   }
+  observe?.('TEXT_DECODED', { textCodeUnits: text.length });
   const lines = text.slice(0, -1).split('\n');
+  observe?.('LINES_SPLIT', { lineCount: lines.length });
   if (lines.some((line) => !line.trim())) fail('PROTOCOL_CORRUPTION');
   let records: NativeRequestRecordV3[];
   try {
@@ -37,6 +56,7 @@ export function decodeNativeRequestV3(bytes: Uint8Array): {
   } catch {
     return fail('PROTOCOL_CORRUPTION');
   }
+  observe?.('RECORDS_PARSED', { parsedRecordCount: records.length });
   if (records.some((r, i) => r?.type === 'REQUEST_COMPLETED' && i !== records.length - 1))
     fail('PROTOCOL_CORRUPTION');
   const header = validateNativeRequestRecordsV3(records);
@@ -47,7 +67,7 @@ export function decodeNativeRequestV3(bytes: Uint8Array): {
   const checksum = createHash('sha256').update(bytes.subarray(0, prefixEnd)).digest('hex');
   if (last.type === 'REQUEST_COMPLETED' && checksum !== last.payload.integrityChecksum)
     fail('PROTOCOL_CORRUPTION');
-  return {
+  const result = {
     header,
     baseline:
       header.type === 'ANALYZE'
@@ -57,4 +77,6 @@ export function decodeNativeRequestV3(bytes: Uint8Array): {
             summaries: records.flatMap((r) => (r.type === 'BASELINE_SUMMARY' ? [r.payload] : [])),
           },
   };
+  observe?.('VALIDATED', { baselineSummaries: result.baseline?.summaries.length ?? 0 });
+  return result;
 }

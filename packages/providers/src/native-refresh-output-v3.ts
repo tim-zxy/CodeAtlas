@@ -17,6 +17,7 @@ import {
 } from './native-ipc.js';
 import { NativeCapabilityCoverageV2Schema } from './native-ipc-v2.js';
 import { decodeNativeRequestV3 } from './native-ipc-v3-bytes.js';
+import { createNativeRefreshWorkspaceObservation } from './native-refresh-workspace-observation.js';
 import type { NativeRequestHeaderV3 } from './native-ipc-v3.js';
 import {
   NativeFileAnalysisSummaryV1Schema,
@@ -146,6 +147,32 @@ export async function decodeNativeRefreshV3(
   limits: NativeClientLimits,
   expectedMemoryBudgetBytes: number,
 ): Promise<{ terminal: Extract<NativeRefreshTerminalV3, { type: 'REFRESH_COMPLETED' }> }> {
+  const observe = createNativeRefreshWorkspaceObservation();
+  try {
+    return await decodeNativeRefreshWorkspace(
+      requestBytes,
+      lines,
+      sink,
+      limits,
+      expectedMemoryBudgetBytes,
+      observe,
+    );
+  } catch (error) {
+    observe?.('FAILED');
+    throw error;
+  } finally {
+    observe?.('EXIT');
+  }
+}
+
+async function decodeNativeRefreshWorkspace(
+  requestBytes: Uint8Array,
+  lines: AsyncIterable<Uint8Array>,
+  sink: { accept(event: NativeRefreshEventV3): Promise<void> },
+  limits: NativeClientLimits,
+  expectedMemoryBudgetBytes: number,
+  observe: ReturnType<typeof createNativeRefreshWorkspaceObservation>,
+): Promise<{ terminal: Extract<NativeRefreshTerminalV3, { type: 'REFRESH_COMPLETED' }> }> {
   const fail = (
     code: ConstructorParameters<typeof NativeClientError>[0],
     message: string,
@@ -172,6 +199,10 @@ export async function decodeNativeRefreshV3(
   // One bounded owned copy removes mutable caller bytes/methods from decoding.
   const owned = Buffer.allocUnsafe(inputBytes);
   Uint8Array.prototype.set.call(owned, requestBytes);
+  observe?.('INPUT_COPY', {
+    ownedInputBytes: owned.byteLength,
+    ownedInputBackingBytes: owned.buffer.byteLength,
+  });
   let lineStart = 0;
   for (let at = 0; at < owned.length; at++)
     if (owned[at] === 10) {
@@ -229,7 +260,7 @@ export async function decodeNativeRefreshV3(
     coverage: 0,
     diagnostics: 0,
   };
-  const diagnostics: unknown[] = [];
+  const diagnostics: z.infer<typeof ProviderSnapshotDiagnosticSchema>[] = [];
   const hash = createHash('sha256'),
     utf8 = new TextDecoder('utf-8', { fatal: true });
   let pending = Buffer.alloc(0),
@@ -237,7 +268,22 @@ export async function decodeNativeRefreshV3(
     sequence = 0,
     metadataBytes = 0;
   let terminal: NativeRefreshTerminalV3 | undefined;
+  const report = (phase: Parameters<NonNullable<typeof observe>>[0], fields = {}) =>
+    observe?.(phase, {
+      baselineSummaries: baseline.summaries.length,
+      targetFiles: files.size,
+      changedFiles: changed.size,
+      baselineLedger: before.size,
+      operations: operations.size,
+      summaries: summaries.length,
+      coverage: coverage.size,
+      diagnostics: diagnostics.length,
+      pendingBytes: pending.byteLength,
+      ...fields,
+    });
+  report('STATE_READY');
   const consume = async (raw: Uint8Array) => {
+    report('LINE_BEGIN', { lineBytes: raw.byteLength });
     if (
       raw.byteLength > limits.maxLineBytes ||
       sequence >= Math.min(limits.maxEvents, p.resourceBudget.maxEvents)
@@ -266,6 +312,7 @@ export async function decodeNativeRefreshV3(
     )
       invalid();
     sequence++;
+    report('EVENT_PARSED');
     if (e.type === 'REFRESH_STARTED' || e.type === 'REFRESH_FAILED') {
       const { error: _error, ...actual } =
         e.type === 'REFRESH_FAILED' ? e.payload : { ...e.payload, error: undefined };
@@ -389,6 +436,7 @@ export async function decodeNativeRefreshV3(
       if (metadataBytes + Buffer.byteLength(JSON.stringify(h)) > 1_000_000)
         fail('OUTPUT_LIMIT_EXCEEDED', 'Native refresh metadata exceeds limit');
       const after = ledger(summaries);
+      report('TARGET_LEDGER', { targetLedger: after.size });
       for (const k of new Set([...before.keys(), ...after.keys(), ...operations.keys()])) {
         const old = before.get(k),
           next = after.get(k),
@@ -480,18 +528,22 @@ export async function decodeNativeRefreshV3(
           if (!isDeepStrictEqual(c, coverage.get(key(s.sourceFile.id, c.capability)))) invalid();
       }
       const expectedDiagnostics = summaries.flatMap((s) => s.diagnostics);
-      if (diagnostics.length !== expectedDiagnostics.length) invalid();
       const diagnosticCounts = new Map<string, number>();
       for (const d of expectedDiagnostics) {
         const k = JSON.stringify(d);
+        if (d.sourceRange === null && diagnosticCounts.has(k)) invalid();
         diagnosticCounts.set(k, (diagnosticCounts.get(k) ?? 0) + 1);
       }
       for (const d of diagnostics) {
         const k = JSON.stringify(d),
           n = diagnosticCounts.get(k) ?? 0;
+        // A file-owned source-less diagnostic has exactly one origin and
+        // observation; genuinely run-global diagnostics remain stream-only.
+        if (d.sourceRange === null && !diagnosticCounts.has(k)) continue;
         if (n === 0) invalid();
         diagnosticCounts.set(k, n - 1);
       }
+      if ([...diagnosticCounts.values()].some((n) => n !== 0)) invalid();
       if (c.integrityChecksum !== `sha256:${hash.digest('hex')}`)
         fail('CHECKSUM_MISMATCH', 'Native refresh checksum differs');
       terminal = freeze(e);
@@ -499,10 +551,13 @@ export async function decodeNativeRefreshV3(
     else {
       hash.update(raw);
       hash.update('\n');
+      report('SINK_BEGIN');
       await sink.accept(freeze(e));
+      report('SINK_SETTLED');
     }
   };
   for await (const chunk of lines) {
+    report('CHUNK', { chunkBytes: chunk.byteLength });
     total += chunk.byteLength;
     if (total > limits.maxStdoutBytes)
       fail('OUTPUT_LIMIT_EXCEEDED', 'Native refresh stdout exceeds limit');
@@ -516,6 +571,7 @@ export async function decodeNativeRefreshV3(
         fail('OUTPUT_LIMIT_EXCEEDED', 'Native refresh line exceeds limit');
       if (lf < 0) {
         pending = Buffer.concat([pending, part]);
+        report('FRAGMENT_BUFFERED');
         break;
       }
       await consume(pending.length ? Buffer.concat([pending, part]) : part);

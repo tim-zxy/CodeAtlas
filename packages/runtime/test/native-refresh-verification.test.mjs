@@ -95,7 +95,7 @@ async function isolated(t, fullOnly) {
   await writeFile(
     join(root, 'dist', 'native-metadata-profiles.js'),
     `export const nativeMetadataProfiles = Object.freeze(${JSON.stringify(profiles)});\n` +
-      'export const nativeRefreshVerificationProfiles = Object.freeze([]);\n',
+      'export const nativeRefreshVerificationProfiles = Object.freeze([]);\nexport const nativeRefreshTransportProfiles = Object.freeze([]);\n',
   );
   return import(pathToFileURL(join(root, 'dist', 'native-refresh-verification.js')).href);
 }

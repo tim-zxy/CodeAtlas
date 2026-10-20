@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "p05-native-refresh-preparation-v1",
+  "task": "P05-W3-020-D1",
+  "governingSpec": "docs/superpowers/specs/2026-10-04-p05-w3-020-native-refresh-composition-design.md",
+  "cases": [
+    "refuses_before_opener_or_SQL",
+    "indexed_delta_survives_failed_apply_and_empty_rescan",
+    "complete_metadata_and_stable_identity",
+    "same_worktree_legacy_and_corruption_reasons",
+    "empty_delta_is_observed_not_skipped"
+  ]
+}

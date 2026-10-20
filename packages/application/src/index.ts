@@ -9,3 +9,7 @@ export type {
   StoredWorktreeState,
 } from './reconcile-worktree.js';
 export type { WorktreeChangeSet } from './change-detector.js';
+export * from './code-query-contract.js';
+export * from './code-query.js';
+export * from './index-command-contract.js';
+export * from './index-command.js';

@@ -1,5 +1,52 @@
 # Deferred Decisions
 
+2026-10-19 accepted PR20 cache/layout correction adds no deferred capability.
+Portable logical identity, general relocation, adaptive calibration/scheduler,
+Wiki/Knowledge/Agent and Phase1 coding remain outside this correction.
+
+2026-10-18 ADR-019 written contract accepted; revised existing plan introduces
+no deferred capability or new milestone. Native/batch execution stays in D5/D6
+with original phase/numerical/security/publication gates. Pending notes are history.
+
+2026-10-18 proposed D input/exact-layout CI correction is current-phase
+Fixture/Evaluation closure under ADR-019, not an earlier deferred capability.
+No general logical relocation framework, adaptive calibration/scheduler, extra
+language/framework, Knowledge/Wiki/Agent, external runner service or Phase1
+implementation is introduced. Written review pending; assigned phases below
+remain unchanged.
+
+2026-10-16 written cancellation-prefix design is accepted and same-plan Task7
+implementation/full qualification and320/64 measurements/holdouts are verified;
+the original exact numeric gate remains open. Earlier pending-review notes below
+are historical. This is current-phase
+correctness work, not a DEFERRED capability or added milestone. No language,
+framework, Wiki, Knowledge, Agent, scheduler or resource-number scope advances.
+
+2026-10-16 current-phase pending decision, NOT a DEFERRED capability: D5's
+[cancellation identity proposal](../superpowers/specs/2026-10-16-p05-refresh-cancellation-identity-proposal.md)
+awaits review after real count instability. It adds no language/framework/Wiki/
+Knowledge/Agent/scheduler scope, milestone or number; all assigned future-phase
+deferrals below remain unchanged. Current qualification cannot be waived.
+
+2026-10-15 §9/revised Task5 approval advances only existing observation work, not
+deferred scope. No cache/adaptive scheduler/language/framework/semantic feature
+or resource number is introduced. Earlier pending-review wording is historical.
+
+2026-10-15 written-base approval and proposed FULL-count correction do not advance
+deferred scope. The revised Task5 observation packet awaits review, introduces no
+parser cache, adaptive scheduler or later-phase capability, and selects no numbers.
+
+2026-10-15 proposed ADR-018 keeps deferred scope unchanged: bounded real parser
+diagnostics serve existing Phase0.5 Evaluation only. No new language/framework,
+adaptive scheduling, public observation API, Knowledge/Wiki/Agent or non-Git
+workflow is introduced. Direction approval only permits written detail; proposed
+ADR/spec review and existing resource/phase gates remain separate. The earliest
+phase table below is unchanged.
+
+Packet D written-spec acceptance (2026-10-04): the latest user “确认” accepts the [composition specification](../superpowers/specs/2026-10-04-p05-w3-020-native-refresh-composition-design.md). Its [D1–D6 executable plan](../superpowers/plans/2026-10-04-p05-w3-020-native-refresh-composition.md) is written and awaiting separate review/native execution confirmation. No code, Fixture registration, memory calibration/profile installation, gate passage or phase promotion follows. Final-build exact-purpose measurement and separate numeric approval precede production acceptance; E and original phase exits remain open. Earlier direction-only/pending-spec/missing-plan notes below are historical.
+
+Packet D direction approval2026-10-04 permits the [written composition detail](../superpowers/specs/2026-10-04-p05-w3-020-native-refresh-composition-design.md), not coding. Existing summaries/active-support metadata are used without raw-fact/AST persistence, a second resolver, adaptive scheduler or later-phase language/framework/Knowledge/Wiki/Agent work. The earliest-phase table is unchanged; E remains a separately reviewed Phase0.5 subdivision, not deferred semantic scope.
+
 2026-10-03 accepted C1 resource amendment/revised-plan review does not advance deferred scope: private REFRESH_VERIFY is C observation validation only, not D process/Store composition or E persisted Evaluation. No adaptive scheduling, new language/framework, public Provider SPI or Knowledge/Wiki/Agent capability is introduced. Existing deferred table/earliest phases remain unchanged.
 
 2026-10-03 packet C design-only boundary: [real REFRESH producer detail](../superpowers/specs/2026-10-03-p05-w3-020-native-refresh-producer-design.md) is accepted; its implementation plan awaits review. Its deterministic bounded summary scan is not a persistent dependency index, adaptive scheduler, AST/CFG/PDG persistence or later-phase Knowledge/Wiki/Agent capability. The deferred table and earliest phases below are unchanged; D/E still require separate review before implementation.

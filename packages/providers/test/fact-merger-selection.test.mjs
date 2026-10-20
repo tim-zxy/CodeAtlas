@@ -60,6 +60,39 @@ function support(pair, providerId, score = 1, changes = {}) {
 }
 const allNodes = () => nodes.map((pair) => support(pair, 'gamma'));
 
+for (const [retainedId, changedId] of [
+  ['snapshot-a', 'snapshot-z'],
+  ['snapshot-z', 'snapshot-a'],
+]) {
+  test(`retained/new package partition matches FULL regardless of snapshot labels ${retainedId}`, () => {
+    const a = nodes.find((pair) => pair.provider.providerFactId === 'pkg-a');
+    const b = nodes.find((pair) => pair.provider.providerFactId === 'pkg-b');
+    const collect = (id, pairs) =>
+      collectMergeSupports({
+        repositoryId: 'repo-fixture',
+        revisionId: 'rev-fixture',
+        observations: [{ snapshot: snapshot('native', id), nodes: pairs, edges: [] }],
+      });
+    const full = selectMergedFacts(collect('snapshot-full', [a, b]));
+    const active = [...collect(retainedId, [a]), ...collect(changedId, [b])];
+    for (const ordered of [active, [...active].reverse()]) {
+      const selected = selectMergedFacts(ordered);
+      assert.deepEqual(selected.nodes, full.nodes);
+      assert.equal(selected.nodes[0].sourceRange.sourceFileId, 'file-A.java');
+      assert.deepEqual(selected.nodes[0].confidence, {
+        score: 1,
+        method: 'fact-merger-min-v1',
+        reasons: ['minimum active support score'],
+      });
+      assert.equal(selected.explanations[0].selectedEvidenceId, active[0].evidence.id);
+      assert.deepEqual(
+        selected.explanations[0].supports.map((item) => item.evidenceId).sort(),
+        active.map((item) => item.evidence.id).sort(),
+      );
+    }
+  });
+}
+
 test('same-key support merges independent of ordering with conservative confidence', () => {
   const a = support(node, 'alpha', 0.8);
   const b = support(node, 'beta', 0.6);

@@ -1,0 +1,81 @@
+{
+  "requestId": "req",
+  "sourceId": "private-source-id",
+  "counts": [
+    { "operation": "ANALYZE", "capabilities": ["SYMBOL"], "selected": 1, "changed": 0 },
+    {
+      "operation": "ANALYZE",
+      "capabilities": ["SYMBOL", "IMPORT", "CALL", "INHERITANCE", "REFERENCE"],
+      "selected": 1,
+      "changed": 0
+    },
+    {
+      "operation": "ANALYZE",
+      "capabilities": ["SYMBOL", "IMPORT", "CALL", "INHERITANCE", "REFERENCE"],
+      "selected": 50,
+      "changed": 0
+    },
+    { "operation": "REFRESH", "capabilities": ["SYMBOL"], "selected": 50, "changed": 1 },
+    { "operation": "REFRESH", "capabilities": ["SYMBOL"], "selected": 50, "changed": 0 }
+  ],
+  "invalidStreams": [
+    {
+      "id": "invalid-utf8",
+      "hex": "c30a"
+    },
+    {
+      "id": "missing-line-feed",
+      "stderr": "{\"diagnosticSchema\":1,\"kind\":\"NATIVE_PARSE_OBSERVATION\",\"requestRefSha256\":\"d7677eef779325059101ec5cf4776fbee39ee0d357f54908e0a42a840d67b51e\",\"ordinal\":0,\"event\":\"BEGIN\",\"operation\":\"REFRESH\",\"workerLimit\":2}"
+    },
+    {
+      "id": "malformed-recognized-record",
+      "stderr": "{\"kind\":\"NATIVE_PARSE_OBSERVATION\"\n"
+    },
+    {
+      "id": "missing-begin",
+      "stderr": "{\"diagnosticSchema\":1,\"kind\":\"NATIVE_PARSE_OBSERVATION\",\"requestRefSha256\":\"d7677eef779325059101ec5cf4776fbee39ee0d357f54908e0a42a840d67b51e\",\"ordinal\":0,\"event\":\"END\",\"started\":0,\"finished\":0,\"complete\":true,\"reason\":null}\n"
+    },
+    {
+      "id": "missing-end",
+      "stderr": "{\"diagnosticSchema\":1,\"kind\":\"NATIVE_PARSE_OBSERVATION\",\"requestRefSha256\":\"d7677eef779325059101ec5cf4776fbee39ee0d357f54908e0a42a840d67b51e\",\"ordinal\":0,\"event\":\"BEGIN\",\"operation\":\"REFRESH\",\"workerLimit\":2}\n"
+    },
+    {
+      "id": "duplicate-begin",
+      "stderr": "{\"diagnosticSchema\":1,\"kind\":\"NATIVE_PARSE_OBSERVATION\",\"requestRefSha256\":\"d7677eef779325059101ec5cf4776fbee39ee0d357f54908e0a42a840d67b51e\",\"ordinal\":0,\"event\":\"BEGIN\",\"operation\":\"REFRESH\",\"workerLimit\":2}\n{\"diagnosticSchema\":1,\"kind\":\"NATIVE_PARSE_OBSERVATION\",\"requestRefSha256\":\"d7677eef779325059101ec5cf4776fbee39ee0d357f54908e0a42a840d67b51e\",\"ordinal\":1,\"event\":\"BEGIN\",\"operation\":\"REFRESH\",\"workerLimit\":2}\n"
+    },
+    {
+      "id": "foreign-request",
+      "stderr": "{\"diagnosticSchema\":1,\"kind\":\"NATIVE_PARSE_OBSERVATION\",\"requestRefSha256\":\"d7677eef779325059101ec5cf4776fbee39ee0d357f54908e0a42a840d67b51e\",\"ordinal\":0,\"event\":\"BEGIN\",\"operation\":\"REFRESH\",\"workerLimit\":2}\n{\"diagnosticSchema\":1,\"kind\":\"NATIVE_PARSE_OBSERVATION\",\"requestRefSha256\":\"0000000000000000000000000000000000000000000000000000000000000000\",\"ordinal\":1,\"event\":\"END\",\"started\":0,\"finished\":0,\"complete\":true,\"reason\":null}\n"
+    },
+    {
+      "id": "capacity-loss-footer",
+      "stderr": "{\"diagnosticSchema\":1,\"kind\":\"NATIVE_PARSE_OBSERVATION\",\"requestRefSha256\":\"d7677eef779325059101ec5cf4776fbee39ee0d357f54908e0a42a840d67b51e\",\"ordinal\":0,\"event\":\"BEGIN\",\"operation\":\"REFRESH\",\"workerLimit\":2}\n{\"diagnosticSchema\":1,\"kind\":\"NATIVE_PARSE_OBSERVATION\",\"requestRefSha256\":\"d7677eef779325059101ec5cf4776fbee39ee0d357f54908e0a42a840d67b51e\",\"ordinal\":1,\"event\":\"END\",\"started\":0,\"finished\":0,\"complete\":false,\"reason\":\"LIMIT_REACHED\"}\n"
+    },
+    {
+      "id": "finish-without-entry",
+      "stderr": "{\"diagnosticSchema\":1,\"kind\":\"NATIVE_PARSE_OBSERVATION\",\"requestRefSha256\":\"d7677eef779325059101ec5cf4776fbee39ee0d357f54908e0a42a840d67b51e\",\"ordinal\":0,\"event\":\"BEGIN\",\"operation\":\"ANALYZE\",\"workerLimit\":2}\n{\"diagnosticSchema\":1,\"kind\":\"NATIVE_PARSE_OBSERVATION\",\"requestRefSha256\":\"d7677eef779325059101ec5cf4776fbee39ee0d357f54908e0a42a840d67b51e\",\"ordinal\":1,\"event\":\"PARSE_FINISHED\",\"sourceRefSha256\":\"b394862265af9819bbee488acc937a00b2ce5cf9d85a828302408bf35214a8be\",\"slot\":0,\"outcome\":\"SUCCEEDED\"}\n{\"diagnosticSchema\":1,\"kind\":\"NATIVE_PARSE_OBSERVATION\",\"requestRefSha256\":\"d7677eef779325059101ec5cf4776fbee39ee0d357f54908e0a42a840d67b51e\",\"ordinal\":2,\"event\":\"END\",\"started\":0,\"finished\":1,\"complete\":true,\"reason\":null}\n"
+    }
+  ],
+  "emptyRefresh": [
+    {
+      "diagnosticSchema": 1,
+      "kind": "NATIVE_PARSE_OBSERVATION",
+      "requestRefSha256": "d7677eef779325059101ec5cf4776fbee39ee0d357f54908e0a42a840d67b51e",
+      "ordinal": 0,
+      "event": "BEGIN",
+      "operation": "REFRESH",
+      "workerLimit": 2
+    },
+    {
+      "diagnosticSchema": 1,
+      "kind": "NATIVE_PARSE_OBSERVATION",
+      "requestRefSha256": "d7677eef779325059101ec5cf4776fbee39ee0d357f54908e0a42a840d67b51e",
+      "ordinal": 1,
+      "event": "END",
+      "started": 0,
+      "finished": 0,
+      "complete": true,
+      "reason": null
+    }
+  ]
+}
