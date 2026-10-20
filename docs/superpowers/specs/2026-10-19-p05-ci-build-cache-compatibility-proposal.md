@@ -5,6 +5,15 @@ catalog/layout amendment and original requalification sequence. This does not
 approve an unseen numerical value or replacement artifact.
 It refines the existing ADR-019 / closeout Tasks7/8, not a new roadmap task.
 
+2026-10-20 accepted literal-root extension: ADR-019 now adds layout-v3 at
+C:\CodeAtlas-P05-D5-R3 for the explicitly approved new-build qualification.
+New prepare selects v3, and historical records still select their unchanged v1
+or v2 root. Protect all three roots from overlapping output and preserve old
+assets/evidence. The narrow generator-v3 cache policy below remains unchanged;
+v1 retains its original generator-v2 interpretation. No other rule or new numeric
+value is changed by root approval. The v2-only operational wording below describes
+the preceding accepted generation, not permission to overwrite/adopt that root.
+
 ## Reproduced evidence
 
 PR20 at a947845, run39197534643, completes with TypeScript/Rust SUCCESS and Native

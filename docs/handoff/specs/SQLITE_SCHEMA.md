@@ -1,5 +1,15 @@
 # SQLite Schema and Migration Specification
 
+2026-10-20 Native normalization source reuse does not change Storage readers,
+DDL, migrations, numeric-before-TEXT checks or twice-actual-SQL-UTF8 accounting.
+Provider may reuse its existing owned, validated and Stage-equality-checked
+changed-source context without fetching new SQL TEXT. Unchanged-source fallback
+still uses the guarded reader. No SQL preflight result is cached; growing TEMP
+tables retain insert admission, reader preflight, mandatory overlay seal and
+locked Apply revalidation. Corruption must refuse before publication, preserving
+the last committed image. The updated product requires new exact-build admission
+evidence, not reuse of the old reservation; original failures remain recorded.
+
 2026-10-14 internal Evaluation read adapter: `analysis/evaluation-state.ts` owns
 fixed R010-layout projections for the complete indexed graph, Source rows,
 Evidence/Binding/FactEvidence/R009 candidates, snapshots/capabilities/diagnostics,

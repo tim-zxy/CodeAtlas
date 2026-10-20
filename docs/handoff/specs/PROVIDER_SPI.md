@@ -1,5 +1,20 @@
 # Code Intelligence Provider SPI
 
+2026-10-20 approved bounded Native REFRESH normalization optimization: reuse
+only the changed SourceFile objects in the existing detached, strict-schema,
+1,000,000-byte-bounded normalization context, after the unchanged Stage equality
+and exact source-count checks. Resolve by id/path without a new retained map or
+SQL-result/preflight cache; misses use the original guarded Stage lookup.
+Legacy normalization remains unchanged. Every actual Stage TEXT read retains
+numeric preflight and original SQL ownership accounting; all insert, overlay seal,
+locked Apply and rollback checks remain mandatory. Context aliases do not add
+another SQL representation or authorize publication. Source/Evidence/Canonical
+identities and JAVA_NORMALIZER_VERSION remain unchanged. This changes the frozen
+product identity: previous memory profiles/corpus/actual reports are historical,
+not admission for the new build. Requalification, measurement, independent
+holdouts and separate exact-value approval are required before actual acceptance.
+See CURRENT_STATUS for RED/GREEN evidence and remaining integration HOLD.
+
 D2 provisional implementation update (2026-10-04): Providers expose separate bounded v3 refresh encoding/stream observation under the accepted [D composition plan](../../superpowers/plans/2026-10-04-p05-w3-020-native-refresh-composition.md); existing provider-independent public SPI and strict legacy request unions are unchanged. Sink events are provisional until complete checksum/write/stderr/exit settlement. A PARTIAL terminal is an observation, not an applicable candidate; Runtime admission, database-bound seal and validated Application/Store activation remain distinct mandatory steps. CURRENT_STATUS and DESIGN_TRACEABILITY record real-source/fault-only transport evidence and open D3-D6 gates. No Canonical identity, SQLite ownership, Knowledge scope or capability advertisement changes. Earlier plan-pending statements are historical.
 
 Packet D written-spec acceptance (2026-10-04): the latest user “确认” accepts the [composition specification](../../superpowers/specs/2026-10-04-p05-w3-020-native-refresh-composition-design.md). Its [D1–D6 executable plan](../../superpowers/plans/2026-10-04-p05-w3-020-native-refresh-composition.md) is written and awaiting separate review/native execution confirmation. No code, Fixture registration, memory calibration/profile installation, gate passage or phase promotion follows. Final-build exact-purpose measurement and separate numeric approval precede production acceptance; E and original phase exits remain open. Earlier direction-only/pending-spec/missing-plan notes below are historical.

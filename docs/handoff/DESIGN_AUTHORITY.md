@@ -1,5 +1,32 @@
 # Design Authority
 
+2026-10-20 user explicitly accepts the bounded offline-bootstrap correction:
+new authorized products may qualify/calibrate/verify an unapproved candidate
+without first having a reviewed exact-product reservation. Preparation still
+requires the reviewed Node/V8/platform/arch/Zod runtime; only implementationDigest
+is excluded from this offline startup prerequisite, not from evidence identity
+or actual admission. Unknown exact reference is explicitly null in SQL-only
+qualification diagnostics, never zero or borrowed historical bytes. All22/110/22,
+numeric candidate+actual SQL feasibility, independent holdout and concrete-value
+approval remain mandatory. Production actual matching/refusal is unchanged.
+
+2026-10-20 separate layout decision: user's explicit “同意新增 R3，按原规则顺序执行”
+accepts ADR-019's bounded literal v3 layout at C:\CodeAtlas-P05-D5-R3. Old v1/R2
+roots/records/assets/failures remain immutable; no adoption or replacement.
+Original qualification/measurement/holdout/clean-host gates and separate concrete
+resource-value approval remain. This supersedes only the no-new-layout approval
+statement in the preceding bounded source-reuse decision, not its safety limits.
+
+2026-10-20 the user's latest confirmation accepts the bounded Native normalization
+source-reuse direction and sequential implementation/requalification, retaining
+all safety checks, rollback and original acceptance gates. This is an internal
+performance change, not a FROZEN IR/IPC/storage/authority/lifecycle amendment.
+Provider SPI and SQLite Schema specify the no-new-cache, guarded-fallback boundary.
+Any newly discovered trust/accounting conflict stops that change for governance.
+The changed product cannot borrow previous exact-build admission; new measured
+values still require separate explicit approval. No new value, fixed-layout
+revision, asset replacement, Phase promotion or timeout increase is approved.
+
 2026-10-19 exact R2 numerical approval: user's “批准，顺序执行，不要再逐项询问确认”
 accepts REFRESH_TRANSPORT411660288bytes (M364818432/J46841856), solely for candidate
 f9e08bade29fd6e28212751b279e86f49df959389db50af58f04958c41ed0844 and corpus

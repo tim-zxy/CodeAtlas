@@ -35,6 +35,7 @@ import {
 } from './native-refresh-transport-memory.mjs';
 
 export function checkRefreshCiCandidateBudget(callerBudgetBytes, candidateReservationBytes, rows) {
+  assert.ok(Number.isSafeInteger(candidateReservationBytes) && candidateReservationBytes > 0);
   assert.equal(rows.length, refreshTransportCases.length * 5);
   const maximumRows = refreshTransportCases.map((name) => {
     const matches = rows.filter((row) => row.name === name);
@@ -67,7 +68,11 @@ async function prepareRefreshCiEvidence(outputInput, repositoryPath) {
       nativeRefreshTransportProfiles.some(
         (profile) =>
           profile.workspace === 'REFRESH_TRANSPORT' &&
-          Object.entries(environment).every(([key, value]) => profile[key] === value),
+          // Offline evidence creates a new product's approval; it cannot require
+          // that approval first. Actual admission still matches the full digest.
+          Object.entries(environment)
+            .filter(([key]) => key !== 'implementationDigest')
+            .every(([key, value]) => profile[key] === value),
       ),
       'Missing reviewed D environment',
     );

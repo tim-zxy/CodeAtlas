@@ -1,5 +1,15 @@
 # Evaluation Specification
 
+2026-10-20 accepted offline-bootstrap boundary: missing exact-product references
+do not block offline evidence generation on the reviewed runtime. Such qualification
+reports only actual SQL feasibility with null reservation/combined charge and
+OFFLINE_SQL_ONLY_PENDING_CANDIDATE. No sample is approved or peak-compliant by
+that diagnostic. Original22 qualification/110 calibration/22 independent holdouts,
+final positive-safe numeric candidate plus all110 actual maximum SQL checks,
+concrete-value approval and clean-host actual22 remain mandatory. Full build /
+environment/corpus/dependency/Native binding is unchanged, as is production
+actual-mode refusal. Historical reference bytes are not transplanted.
+
 2026-10-20 complete R2 local batch17/17 passes; registered Native REFRESH703/703,
 4648233.4793ms. Post-suite integration audit independently rechecks complete gate
 receipts, actual22/local31, original candidate/raw/holdout/ZIP/Native hashes and

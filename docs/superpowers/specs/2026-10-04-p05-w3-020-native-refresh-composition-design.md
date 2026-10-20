@@ -921,3 +921,22 @@ E still owns persisted incremental-versus-full Canonical differential Evaluation
 No FROZEN conflict/new ADR or migration is identified: this details ADR-016's TypeScript-owned atomic composition without changing identity/lifecycle/wire/storage boundaries. A required conflict, insufficient summary proof, cap increase or cross-revision carry-forward stops the affected unit for an ADR/Design Change Proposal with Fixture evidence and synchronized authorities. EVOLVABLE tuning still requires measured evidence; none is performed here. No deferred decision changes.
 
 Self-review: existing and proposed APIs/Fixtures are distinguished; the retained ledger is bound to actual per-support provenance rather than invented raw facts; target summaries are not treated as delta SOURCE_FILE events; delete-aware validation does not authorize dangling unrelated support; terminal success waits for process completion; scalar/purpose admission precedes preparation and SQL retention; numeric installation is a separate hold; no capability/phase completion or implementation permission follows from direction approval. Written-spec approval permits implementation planning only; the plan and execution method then require their own review.
+## 2026-10-20 accepted bounded implementation refinement
+
+User confirmation accepts Native-only reuse of changed SourceFile objects in
+the existing bounded detached normalization context after exact Stage equality
+and count checks. Id/path misses retain guarded Stage fallback; legacy behavior,
+all actual SQL-read numeric preflights, INSERT charges, overlay seal, locked Apply,
+publication/rollback and original gates are unchanged. No new retained index or
+SQL/preflight cache is introduced. Context aliases are not new SQL allocations.
+This is an internal implementation refinement, not a new public contract/ADR.
+Current-build exact admission requires renewed qualification/measurement and
+independent holdouts with separate numerical approval; old evidence is retained
+historically. CURRENT_STATUS/Traceability record focused proof and remaining gates.
+
+Separate explicit R3 approval adds only ADR-019's literal layout-v3 root
+C:\CodeAtlas-P05-D5-R3 for new evidence. Preserve v1/v2 routing/records/physical
+roots; generator-v3 policy is unchanged. Reuse original exclusive acquisition,
+confinement, archive/dependency/physical identity, qualification and clean-host
+acceptance rules. No relocation flag, historical corpus rebinding, old-profile
+transplant or root adoption is permitted; exact new numbers require approval.

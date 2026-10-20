@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { DatabaseSync } from 'node:sqlite';
 
 import * as providers from '../dist/index.js';
+import { normalizeNativeStagedPatch } from '../dist/staged-patch.js';
 import { RepositoryPatchStage } from '../../storage/dist/index.js';
 
 const childHelper = fileURLToPath(new URL('./fixtures/native-client-child.mjs', import.meta.url));
@@ -104,7 +105,7 @@ test('streamNativeRefresh awaits a slow sink before delivering the next event', 
   assert.deepEqual(seen, ['REFRESH_STARTED', 'DIAGNOSTIC', 'DIAGNOSTIC']);
 });
 
-test('normalizeStagedPatch reuses canonical normalizers and persists original support candidates', async () => {
+async function normalizeGoldenPatch(native = false, beforeNormalize = () => {}) {
   const analysis = JSON.parse(
     await readFile(
       new URL(
@@ -115,7 +116,11 @@ test('normalizeStagedPatch reuses canonical normalizers and persists original su
     ),
   );
   const db = new DatabaseSync(':memory:');
-  const stage = new RepositoryPatchStage(db, (group) => group[0].canonical);
+  const stage = new RepositoryPatchStage(
+    db,
+    (group) => group[0].canonical,
+    native ? { maxSerializedBytes: 1_000_000, memoryBudgetBytes: 16 * 1024 * 1024 } : undefined,
+  );
   try {
     const sourceFiles = analysis.events.filter((event) => event.type === 'SOURCE_FILE');
     const nodes = analysis.events.filter((event) => event.type === 'NODE');
@@ -170,7 +175,26 @@ test('normalizeStagedPatch reuses canonical normalizers and persists original su
       diagnostics: [],
       outcome: 'SUCCEEDED',
     };
-    providers.normalizeStagedPatch(stage, patchRequest, snapshot);
+    let sourceReads = 0;
+    const prepare = db.prepare.bind(db);
+    db.prepare = (sql) => {
+      if (/^SELECT payload FROM temp.patch_event WHERE source_(id|path) =/.test(sql)) sourceReads++;
+      return prepare(sql);
+    };
+    beforeNormalize({ db, stage });
+    if (native)
+      normalizeNativeStagedPatch(
+        stage,
+        {
+          repositoryId: snapshot.repositoryId,
+          revisionId: snapshot.requestedRevisionId,
+          contentFingerprint: snapshot.requestedRevisionFingerprint,
+          snapshotId: snapshot.id,
+          changedSourceFiles: patchRequest.payload.changes.modified,
+        },
+        snapshot,
+      );
+    else providers.normalizeStagedPatch(stage, patchRequest, snapshot);
     const expected = providers.normalizeNativeAnalysis(analysis);
     assert.deepEqual([...stage.readNormalizedNodes()], expected.nodes);
     assert.deepEqual([...stage.readNormalizedEdges()], expected.edges);
@@ -179,10 +203,69 @@ test('normalizeStagedPatch reuses canonical normalizers and persists original su
     assert.ok(
       supports.every((support) => support.canonical.id === support.binding.canonicalFact.id),
     );
+    return {
+      sourceReads,
+      supports,
+      nodes: [...stage.readNormalizedNodes()],
+      edges: [...stage.readNormalizedEdges()],
+    };
   } finally {
     stage.close();
     db.close();
   }
+}
+
+test('normalizeStagedPatch reuses canonical normalizers and persists original support candidates', async () => {
+  await normalizeGoldenPatch();
+});
+
+test('native normalization reads each changed source once and preserves the complete legacy candidates and Evidence', async () => {
+  const legacy = await normalizeGoldenPatch();
+  const native = await normalizeGoldenPatch(true);
+  // Two changed files, ten nodes and five edges: SQL source reads must not
+  // grow with fact count after the mandatory changed-source equality checks.
+  assert.equal(native.sourceReads, 2);
+  assert.ok(legacy.sourceReads > native.sourceReads);
+  assert.deepEqual(native.nodes, legacy.nodes);
+  assert.deepEqual(native.edges, legacy.edges);
+  assert.deepEqual(native.supports, legacy.supports);
+});
+
+test('native source reuse still refuses absent or changed SOURCE_FILE events', async () => {
+  for (const sql of [
+    "DELETE FROM temp.patch_event WHERE source_id = 'file-A.java'",
+    `UPDATE temp.patch_event SET payload = json_set(payload, '$.path', 'wrong.java')
+      WHERE source_id = 'file-A.java'`,
+  ])
+    await assert.rejects(
+      normalizeGoldenPatch(true, ({ db }) => db.exec(sql)),
+      /Changed source/,
+    );
+});
+
+test('native source reuse retains numeric-before-TEXT refusal after a normalization write', async () => {
+  await assert.rejects(
+    normalizeGoldenPatch(true, ({ db, stage }) => {
+      const put = stage.putNormalizedNode.bind(stage);
+      let inserted = false;
+      stage.putNormalizedNode = (pair) => {
+        put(pair);
+        if (!inserted) {
+          inserted = true;
+          db.prepare('INSERT INTO temp.patch_event(kind,payload) VALUES (?,?)').run(
+            'DIAGNOSTIC',
+            'x'.repeat(1_000_001),
+          );
+          const prepare = db.prepare.bind(db);
+          db.prepare = (sql) => {
+            assert.ok(!/^SELECT payload FROM/.test(sql), 'corrupt TEXT must not be fetched');
+            return prepare(sql);
+          };
+        }
+      };
+    }),
+    /resource/i,
+  );
 });
 
 test('normalizeStagedPatch resolves an upserted edge against retained active Provider nodes', async () => {

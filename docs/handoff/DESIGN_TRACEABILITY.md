@@ -1,5 +1,30 @@
 # Design Traceability
 
+2026-10-20 explicit offline-bootstrap approval -> ADR-019 and Runtime/Evaluation
+specs -> prepare reviewed-runtime-only startup + full exact evidence identity ->
+qualification unknown-reference SQL-only diagnostic -> unchanged110 calibration /
+positive numeric candidate+maximum SQL feasibility/22 holdouts/numeric approval ->
+unchanged actual production profile gate. Targeted RED2/GREEN4 covers unknown
+headroom, invalid final candidates, build-checkpoint reachability and foreign
+runtime refusal. Complete current tool regression and new immutable qualification
+are separate obligations; no old numerical evidence becomes current admission.
+
+2026-10-20 explicit R3 approval -> ADR-019 layout-v3 -> literal three-version
+route/confinement in native-refresh-ci-layout.mjs -> layout/pack/runner refusal
+RED5/GREEN7 and additive R3 original-failure upload path. Historical v1/v2
+records remain unretagged. New-source full ordinary root1586/1475pass/108fail/
+3skip is retained, including42 missing-profile gates and66 awaiting host-level
+classification. No new pack, actual22, qualification or Phase passage is inferred.
+
+2026-10-20 accepted Native source-reuse direction -> Provider SPI/SQLite Schema
+unchanged guarded SQL/ownership boundary -> staged-patch.ts Native-only owned
+context lookup -> staged-patch.test.mjs RED16vs2 then GREEN exact candidates /
+Evidence, source mismatch and post-write corruption refusal -> original Native
+summary/patch Store rollback/race/reopen regressions101/101. CPU profile is only
+cost-location evidence. New product identity requires new qualification and
+memory evidence before actual acceptance; old actual22/31 and profiles are not
+silently rebound. PR21/current required CI/Phase closeout remain held.
+
 2026-10-20 PR21 push39348380807 -> offline dense-upsert preparation TIMEOUT ->
 full original job118386417261 raw log and artifacts12238352551/12238671014 ->
 single unchanged local reproduction and separately labelled diagnostics ->

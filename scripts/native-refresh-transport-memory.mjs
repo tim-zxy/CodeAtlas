@@ -61,7 +61,7 @@ export function checkRefreshTransportInputFeasibility(
   rows,
 ) {
   positive(callerBudgetBytes);
-  positive(referenceReservationBytes);
+  if (referenceReservationBytes !== null) positive(referenceReservationBytes);
   assert.deepEqual(rows.map((row) => row.name).sort(), [...refreshTransportCases].sort());
   let maximumSqlChargeBytes = 0;
   for (const row of rows) {
@@ -73,6 +73,16 @@ export function checkRefreshTransportInputFeasibility(
       'Incomplete SQL charge',
     );
     maximumSqlChargeBytes = Math.max(maximumSqlChargeBytes, row.retainedSqlStringChargeBytes);
+  }
+  if (referenceReservationBytes === null) {
+    assert.ok(maximumSqlChargeBytes <= callerBudgetBytes, 'D caller input cannot cover SQL');
+    return {
+      kind: 'OFFLINE_SQL_ONLY_PENDING_CANDIDATE',
+      callerBudgetBytes,
+      referenceReservationBytes: null,
+      maximumSqlChargeBytes,
+      maximumAccountedBytes: null,
+    };
   }
   const maximumAccountedBytes = referenceReservationBytes + maximumSqlChargeBytes;
   positive(maximumAccountedBytes);

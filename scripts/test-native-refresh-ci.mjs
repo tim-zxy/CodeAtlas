@@ -181,7 +181,7 @@ test('actual result validation requires admitted scope and peak bounds even with
   );
 });
 
-for (const root of ['C:\\CodeAtlas-P05-D5', 'C:\\CodeAtlas-P05-D5-R2']) {
+for (const root of ['C:\\CodeAtlas-P05-D5', 'C:\\CodeAtlas-P05-D5-R2', 'C:\\CodeAtlas-P05-D5-R3']) {
   test(`CI commands refuse output into preserved layout before approval or build: ${root}`, async () => {
     for (const command of ['prepare', 'verify', 'collect']) {
       const args = command === 'prepare' ? [command, root] : [command, 'missing.zip', root];
@@ -238,6 +238,37 @@ test('D feasibility refuses SQL charges beyond the caller input before calibrati
     memory.checkRefreshTransportInputFeasibility(1_000_000_000, 400_000_000, rows),
   );
   assert.throws(() => memory.checkRefreshTransportInputFeasibility(1_000_000_000, 400_000_000, []));
+});
+
+test('offline qualification with no exact-build reference reports SQL-only feasibility without invented headroom', () => {
+  const rows = refreshTransportCases.map((name) => ({
+    name,
+    retainedSqlBytes: 5,
+    retainedSqlStringChargeBytes: 10,
+  }));
+  assert.deepEqual(memory.checkRefreshTransportInputFeasibility(100, null, rows), {
+    kind: 'OFFLINE_SQL_ONLY_PENDING_CANDIDATE',
+    callerBudgetBytes: 100,
+    referenceReservationBytes: null,
+    maximumSqlChargeBytes: 10,
+    maximumAccountedBytes: null,
+  });
+  assert.throws(() => memory.checkRefreshTransportInputFeasibility(9, null, rows));
+  rows[0].retainedSqlStringChargeBytes = 9;
+  assert.throws(() => memory.checkRefreshTransportInputFeasibility(100, null, rows));
+});
+
+test('final candidate feasibility never accepts the offline unknown-reservation sentinel', () => {
+  const rows = refreshTransportCases.flatMap((name) =>
+    [0, 1, 2, 3, 4].map((repetition) => ({
+      name,
+      repetition,
+      retainedSqlBytes: 5,
+      retainedSqlStringChargeBytes: 10,
+    })),
+  );
+  for (const reservation of [null, undefined, 0, -1, NaN, Infinity, 1.5])
+    assert.throws(() => runner.checkRefreshCiCandidateBudget(1_000, reservation, rows));
 });
 
 test('provisional candidate feasibility retains the largest SQL charge from every calibration repetition', () => {

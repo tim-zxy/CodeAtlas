@@ -1149,3 +1149,23 @@ old D5 corpus current after script/helper bytes change. No new roadmap task.
 - All five Review Focus risks have named Task2-5 tests. Packet covers all accepted spec sections; no missing numeric value is filled in. Pure metrics and indexing are separate deliverables but the actual runner depends on the public index entry and the same final identity, so this coordinated plan does not create two independent execution/review loops.
 
 Revised-plan review has passed with the user's explicit “确认”. Preserve Native/inline method; resume Tasks4–6 continuously, qualify/measure under Task7 and stop for its new exact numeric decision. Task1–3 are not reimplemented; their held actual acceptance closes under Task8. Otherwise stop only for genuine governed conflicts or unsafe/external actions. Do not ask “continue?” between tasks or report a helper as the completed phase.
+## 2026-10-20 approved bounded continuation of existing Tasks7/8
+
+User approves Native-only source reuse with safety/identity equivalence checks,
+exclusive literal layout-v3 at C:\CodeAtlas-P05-D5-R3 preserving v1/v2, and
+offline-bootstrap correction for new products. These are existing closeout work,
+not new roadmap tasks or a Phase promotion. Scoped RED/GREEN and single-seat
+reviews precede final source/catalog freeze. The ordinary root is retained with
+42 missing-profile failures;66 sandbox failures plus2 extra link skips are proved
+on host, not deleted or relabeled as whole-root PASS.
+
+Complete current tool regression, freeze final product/helper/Native/dependencies,
+then execute original fresh paired READ_SEAL/FULL_TRANSPORT, REFRESH_VERIFY and
+R3 REFRESH_TRANSPORT qualification/measurement/independent holdout serially, with
+all original counters/limits/ownership/provenance and independent reconstruction.
+Offline startup keeps reviewed runtime but does not require an already approved
+product; unknown reference diagnostics retain null, never historical values/zero.
+Final D candidate+SQL check requires safe positive numeric bytes over all110 rows.
+Stop at new concrete numerical approval; no static entry/actual admission until
+approved. After approval, original actual22/31, all gates/accurate-head CI/normal
+integration and exit audit still apply. Existing raw failures/roots/assets remain.
