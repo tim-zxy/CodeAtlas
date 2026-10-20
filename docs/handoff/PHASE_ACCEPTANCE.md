@@ -333,6 +333,14 @@ Phase 0 explicitly does not require Java parsing.
 
 ## Phase 0.5 exit
 
+2026-10-20 [integrated exit audit](PHASE05_EXIT_AUDIT.md) regrades all21 original
+checks below and ADR-016 applicability PASS from actual code/registered Fixtures,
+original31/21 Evaluation,17 complete local gates and exact-head PR/push CI with
+clean-host actual22. Checkmarks record this evidence, not earlier checkpoint
+claims. Product integrated at ee0a919; normal closeout-document integration is
+pending before Phase1 detailed planning. Original thresholds and limitations in
+the audit remain unchanged; no Phase1 implementation or deferred scope follows.
+
 Accepted interpretation2026-10-15: user's “批准，继续执行” accepts ADR-017 and
 its written evidence-layer design. The subsequent user “确认” approves the revised
 existing plan for implementation. All31 required cases,21 incremental obligations, original gates
@@ -353,21 +361,21 @@ Follow-up verification2026-10-13: automatic approval recovered; final format/Rus
 2026-10-13 query/CLI evidence checkpoint: registered `p05-code-query-cli-v1` proves local symbol search/understand/bounded CODE_TRACE with scoped freshness, coverage, support refs and read-only recovery (feature/boundary179/179; CURRENT_STATUS lists raw logs). The understand/trace checkbox remains unchecked pending complete declared gates: final required root1132/1089pass/42 unchanged Native profile failures/1skip is not green; additional final verification was not executed because automatic approval review was unavailable. No numerical threshold, original exit or Phase promotion is changed.
 
 - [x] A Java repository is scanned with ignore, generated/vendor/test, binary, and include/exclude handling (P05-W2-001; three declared Source Fixtures and reproducible commands in `CURRENT_STATUS.md`).
-- [ ] Native analysis emits symbols, imports, direct calls, inheritance, references, diagnostics, and coverage through IPC v1.
-- [ ] Java extraction is behind a `LanguageAnalyzer` boundary; framework interpretation is absent from the language adapter.
-- [ ] Provider facts normalize into canonical facts while unresolved targets remain unresolved.
-- [ ] Canonical facts, evidence, and provider bindings persist correctly.
-- [ ] Full-analysis failure preserves the previous active graph and activation ID/fingerprint; a retained graph is not reported current solely because a mutable `WORKTREE` ID matches.
-- [ ] One-file add, modify, and delete changes use validated incremental patches.
-- [ ] Changed-file refresh does not silently reparse an unchanged repository; restart uses file fingerprints and does not require persisted ASTs.
-- [ ] Cold, 1-file, 5-file, and 50-file scenarios report stage durations and peak memory with pinned inputs; any numeric performance threshold requires a reviewed baseline.
-- [ ] Worker Consistency on pinned inputs preserves normalized Canonical Graph semantics, coverage, and stale-fact state across worker counts/completion orders; in-flight files, output, and staging remain bounded under declared budgets.
-- [ ] Analyzer outcomes distinguish timeout/budget failure, parser exception, unsupported language/capability, syntax-error/partial coverage, and successful zero-fact analysis without publishing partial graph state.
-- [ ] P05-W3-003 v2 `ANALYZE` coverage records report source-grounded eligible/covered/unsupported/partial site counts and relation-resolution distribution per file/capability; strict v1 remains usable with numeric statistics explicitly unavailable. Exact Fixtures and failure recovery pass; no new numerical gate is implied (ADR-015).
-- [ ] Removed provider support leaves no stale binding; a fact remains while another provider still supports it.
-- [ ] P05-W1-011 patch application reselects from persisted active-support candidates after one Provider removal, rejects legacy missing candidates with a full-analysis fallback, and preserves graph/Evidence/bindings and activation ID/fingerprint on failed or stale-base patches (registered `p05-incremental-patch-apply-v1`; no new numeric gate).
-- [ ] P05-W1-011's registered Fixture proves same-`WORKTREE`-ID fingerprint advancement and controlled `FULL_ANALYSIS_REQUIRED` for different revision IDs or immutable targets, with exact old-graph/Evidence/binding/candidate/pointer preservation. This is an applicability boundary, not a replacement for the existing Phase 0.5 incremental-correctness or no-default-full-reparse gates.
-- [ ] `understand` and code-level `trace` return locations, relations, confidence, and coverage warnings.
+- [x] Native analysis emits symbols, imports, direct calls, inheritance, references, diagnostics, and coverage through IPC v1.
+- [x] Java extraction is behind a `LanguageAnalyzer` boundary; framework interpretation is absent from the language adapter.
+- [x] Provider facts normalize into canonical facts while unresolved targets remain unresolved.
+- [x] Canonical facts, evidence, and provider bindings persist correctly.
+- [x] Full-analysis failure preserves the previous active graph and activation ID/fingerprint; a retained graph is not reported current solely because a mutable `WORKTREE` ID matches.
+- [x] One-file add, modify, and delete changes use validated incremental patches.
+- [x] Changed-file refresh does not silently reparse an unchanged repository; restart uses file fingerprints and does not require persisted ASTs.
+- [x] Cold, 1-file, 5-file, and 50-file scenarios report stage durations and peak memory with pinned inputs; any numeric performance threshold requires a reviewed baseline.
+- [x] Worker Consistency on pinned inputs preserves normalized Canonical Graph semantics, coverage, and stale-fact state across worker counts/completion orders; in-flight files, output, and staging remain bounded under declared budgets.
+- [x] Analyzer outcomes distinguish timeout/budget failure, parser exception, unsupported language/capability, syntax-error/partial coverage, and successful zero-fact analysis without publishing partial graph state.
+- [x] P05-W3-003 v2 `ANALYZE` coverage records report source-grounded eligible/covered/unsupported/partial site counts and relation-resolution distribution per file/capability; strict v1 remains usable with numeric statistics explicitly unavailable. Exact Fixtures and failure recovery pass; no new numerical gate is implied (ADR-015).
+- [x] Removed provider support leaves no stale binding; a fact remains while another provider still supports it.
+- [x] P05-W1-011 patch application reselects from persisted active-support candidates after one Provider removal, rejects legacy missing candidates with a full-analysis fallback, and preserves graph/Evidence/bindings and activation ID/fingerprint on failed or stale-base patches (registered `p05-incremental-patch-apply-v1`; no new numeric gate).
+- [x] P05-W1-011's registered Fixture proves same-`WORKTREE`-ID fingerprint advancement and controlled `FULL_ANALYSIS_REQUIRED` for different revision IDs or immutable targets, with exact old-graph/Evidence/binding/candidate/pointer preservation. This is an applicability boundary, not a replacement for the existing Phase 0.5 incremental-correctness or no-default-full-reparse gates.
+- [x] `understand` and code-level `trace` return locations, relations, confidence, and coverage warnings.
 - [x] Critical Symbol Recall is at least 95 percent.
 - [x] Critical Direct Call Precision is at least 95 percent.
 - [x] Critical Direct Call Recall is at least 90 percent.

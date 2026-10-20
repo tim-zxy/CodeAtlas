@@ -1,5 +1,14 @@
 # Work Breakdown
 
+2026-10-20 final four product parents P05-W3-020/P05-W5-001/P05-W8-001/P05-W9-001
+are integrated by PR20 at ee0a919;14/14 Phase0.5 product tasks. The
+[exit audit](PHASE05_EXIT_AUDIT.md) supplies original21-exit/ADR-016 code-to-Fixture
+and actual evidence mapping. Query and index/Evaluation plans' held actual gates
+are resolved by current17 local gates/31 actual cases/hosted actual22, not by
+historical checkpoint claims. Closeout-document integration is still pending.
+Next is Phase1 detailed design after formal closeout, never immediate coding.
+Earlier implementation-pending/four-open-parent notes remain historical evidence.
+
 2026-10-19 accepted cache/layout correction revises SAME closeout Tasks7/8:
 versioned narrow cache discovery -> distinct exclusive v2 layout -> tests/review
 -> new22/110/22/reconstruction -> separate numeric approval -> original actual/

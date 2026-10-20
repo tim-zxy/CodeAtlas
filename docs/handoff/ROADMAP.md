@@ -1,5 +1,12 @@
 # Roadmap
 
+2026-10-20 integrated product state:14/14 Phase0.5 tasks, including the final four
+parents via PR20/ee0a919. [Original exit audit](PHASE05_EXIT_AUDIT.md) passes21/21
+plus ADR-016 applicability with exact-head hosted/local/actual evidence. Normal
+closeout-document integration remains pending; Phase1 stays DESIGN-READY and
+requires detailed task design/review, not immediate coding. No milestone/scope,
+numerical gate or deferred capability changes. Earlier10/14 notes are historical.
+
 2026-10-19 accepted PR20 cache/layout amendment remains existing Tasks7/8;
 no new milestone or task count. Fresh exact-layout-v2 transport evidence is
 required; Phase0.5 remains10/14 integrated, Phase1 DESIGN-READY only.

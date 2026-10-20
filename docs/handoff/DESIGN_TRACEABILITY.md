@@ -1,5 +1,18 @@
 # Design Traceability
 
+2026-10-20 [integrated Phase0.5 audit](PHASE05_EXIT_AUDIT.md) supplies the final
+21-exit plus ADR-016 trace map. P05-W3-020 -> refresh-v3 real composition/replay/
+rollback703 and hosted exact-pack22; P05-W5-001 -> code-query Fixture and physical
+Application/Store read boundary; P05-W8-001 -> index-cli/query-cli and original
+actual CLI recovery; P05-W9-001 -> original required31/21, five unchanged gates,
+pinned cold/1/5/50 and distinct real worker1/2 completion order. Exact source
+bdee0df passes PR39329229206/push39329221766 and normal mergeee0a919; product
+parents14/14. Hosted artifact12228172902/actual report5dfc309c...65cc1 revalidates
+22/22 with original full corpus identity and admitted/closed raw receipts.
+Normal closeout-document integration is pending; Phase1 is detailed design only
+after formal closeout. No missing trace is filled by component-as-Native claims,
+old/canceled CI, new numerical thresholds or local-main overwrite.
+
 2026-10-20 generated-record formatting defect -> original job118321049183 log/
 local formatter RED -> metadata-only Prettier correction -> full format GREEN,
 strict whole-data equality and unchanged v1/product/2329 catalog + operational

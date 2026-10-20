@@ -1,5 +1,30 @@
 # Current Status
 
+2026-10-20 integrated technical exit audit PASS: [Phase0.5 exit audit](PHASE05_EXIT_AUDIT.md)
+maps all21 original exits and ADR-016 applicability to actual code, registered
+Fixtures, complete local gates, actual31 and hosted original actual22. PR artifact
+12228172902 fully downloaded; existing strict validator rechecks22/22, all raw
+receipts admitted/closed,0failures,peak363589632<=411660288. Archive/approval hashes
+match. task8-r2-hosted-audit.json also rechecks original31/31,five gates1/1/1/1/0
+and real workers1/2 with distinct captured completion-order hashes. This is
+read-only original evidence validation, not new measurement or retried samples.
+Four remaining product parents are integrated through PR20:14/14 product tasks.
+Normal closeout-document verification/integration is pending before Phase1
+detailed design review; no Phase1 coding. Local main synchronization limitation,
+finite telemetry scope and reviewed Minor duplicate-init diagnostic are explicitly
+retained in the audit; no hidden fix, waiver, reset or evidence deletion.
+
+2026-10-20 PR20 is normally merged at ee0a9199c02ed51f54521bf87489439a5e54e491
+(2026-10-20T00:13:44Z). Exact head bdee0df36e00232b98c68ffaf40d9ffa49fa7e4d
+passes TypeScript/Rust/Native in both PR run39329229206 and push run39329221766;
+both Native jobs pass the required clean-host exact-pack actual22 step. Original
+logs and hosted artifact IDs are retained in the SAME closeout ledger. No bypass,
+force push, repeated long test or canceled-run success is used. Remote main is
+fetched; local main's ff-only update refuses overlapping dirty paths, which are
+preserved untouched. Final raw-artifact/Exit Criteria/four-parent audit and
+synchronized closeout documentation are next; Phase acceptance is not inferred
+from CI or merge alone. Phase1 remains design-only until that audit passes.
+
 2026-10-20 final-record CI at0e500715a4f810512e92e9bc3efff96c00a4a61b detects only
 generated approved-transport.json formatting in TypeScript Check formatting;
 original job118321049183 log retained at task8-r2-pr-format-raw.log. Local formatter
