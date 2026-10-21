@@ -1,10 +1,18 @@
-// Offline test diagnostics only; never loaded by production or memory collectors.
+// Test-only lifecycle observer. Default sink is the original offline diagnostic.
 import childProcess from 'node:child_process';
 import { syncBuiltinESMExports } from 'node:module';
 import { basename } from 'node:path';
 import { performance } from 'node:perf_hooks';
 
 const spawn = childProcess.spawn;
+let diagnosticSink = (row) =>
+  process.stderr.write('[DENSE_NATIVE_DIAGNOSTIC]' + JSON.stringify(row) + '\n');
+
+// The approved ACTUAL test preload selects a separate sidecar before any spawn.
+export function setNativeDiagnosticSink(sink) {
+  diagnosticSink = sink;
+}
+
 let observed = 0;
 childProcess.spawn = function (...args) {
   const child = Reflect.apply(spawn, this, args);
@@ -69,7 +77,7 @@ childProcess.spawn = function (...args) {
   });
   child.once('close', () => {
     row.closeMs = elapsed();
-    process.stderr.write('[DENSE_NATIVE_DIAGNOSTIC]' + JSON.stringify(row) + '\n');
+    diagnosticSink(row);
   });
   return child;
 };

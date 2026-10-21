@@ -1,5 +1,20 @@
 # Design Authority
 
+2026-10-21 latest "批准一轮" authorizes one consolidated diagnostic push and its
+PR+push required CI pair, not repeated rounds or rerun-to-green. Additional cloud
+execution/writes still require confirmation; read-only monitoring/evidence from
+this pair is included. Preserve original failure and frozen input
+identities; a successful diagnostic window is not causal proof or a timeout fix.
+
+2026-10-21 bounded ACTUAL diagnostic scope approved: test-only Native lifecycle
+times/byte counts, max64 records per Node process, no payload/path/requestID/env
+contents, separate retained sidecar without a second stdout reader. Product,
+helpers, Native, corpus, admission, profiles, budgets and10000/60000ms bounds
+remain frozen. This is observation, not a correction or replacement acceptance.
+Latest user instruction restricts continuation to local work: obtain explicit
+confirmation before any further cloud action, including a CI-triggering push or
+rerun. Earlier general integration authority does not override this restriction.
+
 2026-10-21 separate concrete-value approval authorizes exact R4 reservations:
 READ_SEAL/FULL_TRANSPORT222334976=M210853888+J11481088;
 REFRESH_VERIFY354004992=M346435584+J7569408;

@@ -1,5 +1,20 @@
 # Phase 0.5 index CLI and persisted Evaluation Implementation Plan
 
+2026-10-21 subsequent "批准一轮" grants the one consolidated diagnostic push /
+PR+push pair proposed below. Before push: scoped read-only review, exact8-file
+diff/index checks, unchanged frozen2329closure and normal commit. After push:
+record exact head and only its two Actions runs; read-only monitoring, no rerun
+or extra round. Retain original failure and expose causality gaps even if green.
+
+2026-10-21 SAME Tasks7/8 bounded diagnostic continuation: original push actual22
+Native TIMEOUT is classified, not fixed. User approves test-only lifecycle
+sidecars, local RED/GREEN, stream/non-sensitive64-record bounds and unchanged
+full2329catalog proof. No product/helper/Native/corpus/profile/timeout change.
+Latest instruction requires separate confirmation before ANY new cloud action;
+do not push, rerun or start CI automatically. At most one consolidated PR+push
+diagnostic pair may be proposed after local verification, never retry-to-green.
+If no causative failure is captured, disclose the evidence gap and stop.
+
 2026-10-21 user approves the written bounded allocation-review correction and
 exclusive R4, sequentially in existing Tasks7/8. Execute: comparator allocation
 RED -> scalar-codepoint GREEN with original digest vectors; four-version layout

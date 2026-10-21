@@ -1,5 +1,18 @@
 # Phase 0.5 integrated exit audit — 2026-10-20
 
+2026-10-21 one diagnostic PR+push round is now explicitly approved, superseding
+the pending-confirmation sentence below only for that pair. No automatic rerun,
+merge/Phase acceptance or old-timeout-fix claim follows from this authorization.
+
+2026-10-21 current HOLD supersedes older hosted-pending notes below: exact1dfe01a
+PR39561981641 attempt2 passes3/3 jobs with strict original actual22 audit PASS;
+push39561976606 fails actual22 on d-overlay-retention Native TIMEOUT,21valid rows.
+Original receipt is admitted with closed transaction/TEMP, not a memory-limit or
+outer60000ms failure. Missing lifecycle timing prevents a deeper cause/fix claim.
+Approved test-only bounded ACTUAL diagnostics are local work in progress, not
+acceptance. User now requires confirmation before any additional cloud action.
+No new CI or merge; all historical failures and original evidence remain.
+
 2026-10-21 immutable R4 publication and exact-ID approval record verified.
 New Release419263735/asset661693932 is candidate-namespaced at
 [p05-d5-fixture-b56cf2ee](https://github.com/tim-zxy/CodeAtlas/releases/tag/p05-d5-fixture-b56cf2eea5b33f853cf06e5daca36cc28f07db33a51fc04a733e961b1f26b2cd),

@@ -1,5 +1,29 @@
 # Current Status
 
+2026-10-21 user explicitly approves ONE consolidated diagnostic cloud round:
+one scoped commit/push, its PR+push required workflows only, no automatic rerun
+or additional cloud batch. This supersedes only the pending-confirmation note
+below. Local diagnostic contracts pass7/7; frozen2329catalog/product/Native and
+approved record remain unchanged. Original hosted TIMEOUT remains unexplained;
+new diagnostic success alone cannot prove a fix or authorize Phase promotion.
+
+2026-10-21 exact-head hosted acceptance remains HOLD. At1dfe01a, PR39561981641
+attempt2 passes all3 jobs and strict original-artifact audit22/22, peak323022848;
+push39561976606 fails only actual22: d-overlay-retention's original admitted
+receipt reports Native TIMEOUT at the unchanged10000ms bound. Node worker exits0,
+transaction/TEMP close and the failed result equals the seed;21 other rows pass.
+Deeper Native timing is absent, so neither a host/flaky diagnosis nor a fix is
+established. All original success/failure logs and artifacts remain preserved.
+
+User approves bounded test-only ACTUAL lifecycle diagnostics, but subsequently
+requires confirmation BEFORE ANY additional cloud operation to conserve Actions.
+Local-only implementation reuses the offline observer, selects an exclusive
+scalar JSONL sidecar (max64 Native records per Node process), and preserves both
+streams, timeouts, budgets and all2329 frozen dependencies. No push/new CI/rerun
+is authorized by this local continuation. Local evidence and the scratch trial's
+restoration limitation are recorded in the SAME progress ledger. Phase closeout,
+PR21 merge and Phase1 remain HOLD; diagnostic observations are not calibration.
+
 2026-10-21 immutable R4 publication and exact-ID approval record verified.
 New Release419263735/asset661693932 is candidate-namespaced at
 [p05-d5-fixture-b56cf2ee](https://github.com/tim-zxy/CodeAtlas/releases/tag/p05-d5-fixture-b56cf2eea5b33f853cf06e5daca36cc28f07db33a51fc04a733e961b1f26b2cd),
