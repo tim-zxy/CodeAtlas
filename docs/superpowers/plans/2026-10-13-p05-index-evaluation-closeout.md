@@ -1,5 +1,15 @@
 # Phase 0.5 index CLI and persisted Evaluation Implementation Plan
 
+2026-10-21 user approves the written bounded allocation-review correction and
+exclusive R4, sequentially in existing Tasks7/8. Execute: comparator allocation
+RED -> scalar-codepoint GREEN with original digest vectors; four-version layout
+confinement/parser/refusal tests; same single scoped review; full affected
+Provider/Storage/layout/replay regression; clean independent rebuild; only then
+freeze source and run original22 qualification/320 four-purpose calibration/64
+independent holdouts, independently audit and stop for NEW concrete values.
+No extra milestone, formula/headroom/timeout change, old-profile transplant,
+R3 adoption/overwrite or early Phase1. Old root/measurements/failed samples stay.
+
 ## Task7/8 continuation — accepted PR20 cache/layout amendment, 2026-10-19
 
 **Spec:** [accepted narrow contract](../specs/2026-10-19-p05-ci-build-cache-compatibility-proposal.md).

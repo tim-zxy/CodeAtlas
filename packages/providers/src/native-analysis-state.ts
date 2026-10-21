@@ -74,11 +74,16 @@ function validUnicode(value: unknown): boolean {
   return true;
 }
 function unicodeOrder(a: string, b: string): number {
-  const left = Array.from(a, (s) => s.codePointAt(0)!);
-  const right = Array.from(b, (s) => s.codePointAt(0)!);
-  for (let i = 0; i < Math.min(left.length, right.length); i++)
-    if (left[i] !== right[i]) return left[i]! - right[i]!;
-  return left.length - right.length;
+  let i = 0,
+    j = 0;
+  while (i < a.length && j < b.length) {
+    const left = a.codePointAt(i)!;
+    const right = b.codePointAt(j)!;
+    if (left !== right) return left - right;
+    i += left > 0xffff ? 2 : 1;
+    j += right > 0xffff ? 2 : 1;
+  }
+  return i < a.length ? 1 : j < b.length ? -1 : 0;
 }
 function canonical(value: unknown): string {
   if (typeof value === 'number') {

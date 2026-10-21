@@ -1,5 +1,11 @@
 # Runtime and Configuration Specification
 
+2026-10-21 accepted R4 allocation-review batch changes only private Provider
+comparison and development evidence layout. Runtime budgets/SQL twice-charge /
+profile identity/absence refusal/10000 and60000ms deadlines stay unchanged.
+New implementation must not consume R3 approvals; original fresh four-purpose
+calibration/holdout and explicit concrete approval precede current admission.
+
 2026-10-20 approved offline evidence bootstrap is not Runtime admission. The
 development prepare command may generate evidence for a new product on the
 reviewed Node/V8/platform/arch/Zod runtime without an existing exact-product

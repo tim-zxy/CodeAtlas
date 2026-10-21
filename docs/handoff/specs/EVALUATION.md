@@ -1,5 +1,12 @@
 # Evaluation Specification
 
+2026-10-21 accepted allocation-review continuation uses exclusive literal R4
+under ADR-019, preserving old roots/reports/valid high samples. Comparator
+call-path array-allocation regression and identical Unicode/canonical vectors
+prove the bounded correction, not a fixed RSS saving or historical timeout cause.
+New clean build/original22 qualification/320 calibration/64 independent holdouts /
+concrete-value approval and current actual22/31/hosted gates remain mandatory.
+
 2026-10-20 accepted offline-bootstrap boundary: missing exact-product references
 do not block offline evidence generation on the reviewed runtime. Such qualification
 reports only actual SQL feasibility with null reservation/combined charge and

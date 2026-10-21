@@ -181,7 +181,12 @@ test('actual result validation requires admitted scope and peak bounds even with
   );
 });
 
-for (const root of ['C:\\CodeAtlas-P05-D5', 'C:\\CodeAtlas-P05-D5-R2', 'C:\\CodeAtlas-P05-D5-R3']) {
+for (const root of [
+  'C:\\CodeAtlas-P05-D5',
+  'C:\\CodeAtlas-P05-D5-R2',
+  'C:\\CodeAtlas-P05-D5-R3',
+  'C:\\CodeAtlas-P05-D5-R4',
+]) {
   test(`CI commands refuse output into preserved layout before approval or build: ${root}`, async () => {
     for (const command of ['prepare', 'verify', 'collect']) {
       const args = command === 'prepare' ? [command, root] : [command, 'missing.zip', root];

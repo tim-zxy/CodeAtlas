@@ -1,5 +1,32 @@
 # Design Traceability
 
+2026-10-21 accepted allocation review -> scalar private unicodeOrder -> public
+summary-digest allocation RED814/GREEN0 and original Unicode/canonical vectors ->
+full Provider/Storage correspondence/safety gates. ADR-019v4 -> literal R4 route /
+four-root confinement/approval parser/runner refusal tests and original-failure
+upload. New product clean rebuild/qualification/measurement/numeric gates remain.
+
+2026-10-20 accepted diagnostic direction -> original read/seal/canonical call-path
+inspection + two fixed scratch-only probes -> temporary Unicode comparator
+arrays identified as an allocation target -> written allocation-review proposal
+(private scalar comparator + proposed exclusive R4; not implemented). Diagnostic
+profiles do not select numerical evidence or reinterpret the original failure.
+
+2026-10-20 R3 guarded actual22 PASS -> complete root1590/1588pass/1fail/1skip ->
+retained READ_SEAL-22416 dense peak250535936>219095040 -> complete raw-row /
+payload/SQL/product2329 audit and original gate deterministic refusal ->
+accepted memory-stability withdrawal rule -> remove only unshipped d402 paired
+entry and withdrawal regression RED2/GREEN4. D/VERIFY and historical entries
+stay unchanged. Root failure remains FAIL; no remaining-gate/hosted/Phase claim.
+
+2026-10-20 four exact R3 values approved -> same Tasks7/8 -> immutable320 calibration /
+64 holdouts plus22 qualification and task8-r3-numeric-audit.json -> additive exact
+native-metadata-profiles.ts entries -> native-r3-approved-profiles.test.mjs genuine
+missing-profile RED4/GREEN4, candidate/raw/corpus/M/J bindings and one-byte-below
+refusal. Profile-only rebuild must retain d402c9a4…56e1 and all2329 dependencies.
+Older R2 assertions remain historical, not a blanket prohibition on new approvals.
+Actual22/31 and full current local/hosted gates remain separate and required.
+
 2026-10-20 explicit offline-bootstrap approval -> ADR-019 and Runtime/Evaluation
 specs -> prepare reviewed-runtime-only startup + full exact evidence identity ->
 qualification unknown-reference SQL-only diagnostic -> unchanged110 calibration /

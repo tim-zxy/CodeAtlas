@@ -1,5 +1,43 @@
 # Design Authority
 
+2026-10-21 explicit “批准” accepts the written allocation review's private scalar
+Unicode comparison and exclusive R4 under ADR-019. Preserve exact code-point
+ordering/canonical bytes and every validation, guard, timeout and budget. This
+changes product identity: no R3 profile/evidence transfers into new admission.
+Run original clean rebuild/qualification/four-purpose measurement/independent
+holdout and separate concrete-value approval, then all actual/CI/Phase gates.
+Same Tasks7/8 only; no new numerical value or Phase1 coding is approved.
+
+2026-10-20 user's “同意” accepts bounded allocation/measurement investigation and
+review, not an unseen correction/value/layout. The written
+[allocation review](../superpowers/specs/2026-10-20-p05-read-seal-allocation-review.md)
+recommends exact-equivalent private Unicode comparison without temporary arrays,
+plus exclusive R4 for the necessarily changed product's original evidence gates.
+Both are proposed, not approved or implemented. Current failure/withdrawal and
+unchanged safety/semantic/numerical/phase boundaries remain authoritative.
+
+2026-10-20 fresh exceedance invokes the accepted memory-stability proposal's
+withdrawal/review rule: unshipped d402c9a4 paired219095040 is insufficient for
+valid same-input fresh peak250535936. Withdraw that new entry only; preserve
+historical evidence/profile values and all other entries. Approval remains a
+historical floor, not permission to reactivate an insufficient profile. No
+new larger value or policy change is approved by the original four-value reply.
+Recurrent exceedance after the accepted range policy requires measurement /
+allocation-design review, not automatic numeric ratcheting or retries to green.
+
+2026-10-20 exact four-purpose numerical approval: user's subsequent “批准” accepts
+READ_SEAL219095040/FULL_TRANSPORT219095040/REFRESH_VERIFY379609088 /
+REFRESH_TRANSPORT392286208 bytes for the audited new productd402c9a4…56e1 only.
+Candidate hashes are496e45715e8eb117d22a5c99c5b194e14acff1d6e62d96627a6c0685529aeaf4
+(paired),d0ff3457a2290fae027fe76a5131d55fb92a8ced8b20283ab5ef9581f2883f61
+(verify),e2fd1c7818ca2c5062c65da717e1d3f38c44344029aa7af1389a5afb8b09eb85
+(R3 transport). Original22 qualification/320 calibration/64 independent holdouts
+and full independent audit are recorded in CURRENT_STATUS and same-plan ledger.
+Install matching static entries and proceed under existing scoped integration
+authority; preserve all historical profiles/assets/failed evidence. No default,
+SQL surcharge, timeout, quality threshold or phase-boundary change follows.
+Numerical approval is not actual acceptance, CI passage or Phase promotion.
+
 2026-10-20 user explicitly accepts the bounded offline-bootstrap correction:
 new authorized products may qualify/calibrate/verify an unapproved candidate
 without first having a reviewed exact-product reservation. Preparation still

@@ -147,5 +147,6 @@ jobs:
             C:/CodeAtlas-P05-D5/evidence/corpus/replay
             C:/CodeAtlas-P05-D5-R2/evidence/corpus/replay
             C:/CodeAtlas-P05-D5-R3/evidence/corpus/replay
+            C:/CodeAtlas-P05-D5-R4/evidence/corpus/replay
           # Absent before acquisition is expected; the required actual step still fails.
           if-no-files-found: ignore

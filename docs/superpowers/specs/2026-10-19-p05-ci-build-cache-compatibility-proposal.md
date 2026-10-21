@@ -1,5 +1,10 @@
 # PR20 CI build-cache compatibility proposal
 
+2026-10-21 accepted R4 allocation-review continuation: versioned layout-v4 is
+exclusive C:\CodeAtlas-P05-D5-R4; v1/v2/v3 retain their original physical meaning.
+No new dependency exclusion: v4 keeps the same generator-v3 closure policy and
+independent byte comparison. New product evidence cannot reuse old approvals.
+
 Status: ACCEPTED2026-10-19 by the user's subsequent “确认”. Execute the narrow
 catalog/layout amendment and original requalification sequence. This does not
 approve an unseen numerical value or replacement artifact.

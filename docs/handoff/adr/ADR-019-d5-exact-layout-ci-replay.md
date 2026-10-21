@@ -1,5 +1,14 @@
 # ADR 019 D5 Feasible Inputs and Exact-layout CI Replay
 
+2026-10-21 user's explicit “批准” accepts the written allocation review and
+exclusive literal layout-v4 C:\CodeAtlas-P05-D5-R4 for changed-product evidence.
+New prepare selects v4, while v1/v2/v3 routes/records/roots remain unchanged.
+v2/v3/v4 use generator-v3 discovery; v1 retains generator-v2. Protect all four
+roots from output overlap; add only R4 to original-failure upload. No adoption,
+overwrite, relocation flag, budget/timeout/gate weakening or Phase advance.
+Original22 qualification/320 calibration/64 independent holdouts, clean rebuild,
+separate new numerical approval and actual clean-host acceptance remain required.
+
 Status: Accepted2026-10-18 by the subsequent user “确认” after written-spec review.
 This accepts the exact D test input/layout/pinned synthetic-pack contract. The
 existing plan is revised for previously authorized Native/batch execution with

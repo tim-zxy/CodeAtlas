@@ -7,12 +7,13 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { snapshotDRefreshFixtureContext } from '../../packages/runtime/test/helpers/native-refresh-d-context.mjs';
 
-export const refreshCiLayoutRevision = 'p05-d5-exact-layout-v3';
+export const refreshCiLayoutRevision = 'p05-d5-exact-layout-v4';
 export function refreshCiLayoutRootForRevision(revision) {
   if (revision === 'p05-d5-exact-layout-v1') return 'C:\\CodeAtlas-P05-D5';
   if (revision === 'p05-d5-exact-layout-v2') return 'C:\\CodeAtlas-P05-D5-R2';
-  assert.equal(revision, 'p05-d5-exact-layout-v3', 'Unsupported CI layout revision');
-  return 'C:\\CodeAtlas-P05-D5-R3';
+  if (revision === 'p05-d5-exact-layout-v3') return 'C:\\CodeAtlas-P05-D5-R3';
+  assert.equal(revision, 'p05-d5-exact-layout-v4', 'Unsupported CI layout revision');
+  return 'C:\\CodeAtlas-P05-D5-R4';
 }
 export const refreshCiLayoutRoot = refreshCiLayoutRootForRevision(refreshCiLayoutRevision);
 
@@ -22,6 +23,7 @@ export function assertRefreshCiOutputOutsideLayouts(output) {
     'p05-d5-exact-layout-v1',
     'p05-d5-exact-layout-v2',
     'p05-d5-exact-layout-v3',
+    'p05-d5-exact-layout-v4',
   ]) {
     const relative = path.relative(refreshCiLayoutRootForRevision(revision), output);
     assert.ok(

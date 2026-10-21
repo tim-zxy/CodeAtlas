@@ -1,5 +1,11 @@
 # Code Intelligence Provider SPI
 
+2026-10-21 approved allocation correction: private Native canonical Unicode
+ordering uses scalar code-point scanning, with identical order/digest bytes and
+unchanged schema/Stage/ownership checks. No arrays per comparison, cache, public
+API or locale/UTF16 substitution. Original Unicode/golden/correspondence tests
+remain; the changed product requires renewed exact-build memory evidence.
+
 2026-10-20 approved bounded Native REFRESH normalization optimization: reuse
 only the changed SourceFile objects in the existing detached, strict-schema,
 1,000,000-byte-bounded normalization context, after the unchanged Stage equality

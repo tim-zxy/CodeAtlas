@@ -158,7 +158,12 @@ function record() {
 }
 
 test('pack output refuses all frozen layouts before reading ownership or evidence', async () => {
-  for (const root of ['C:\\CodeAtlas-P05-D5', 'C:\\CodeAtlas-P05-D5-R2', 'C:\\CodeAtlas-P05-D5-R3'])
+  for (const root of [
+    'C:\\CodeAtlas-P05-D5',
+    'C:\\CodeAtlas-P05-D5-R2',
+    'C:\\CodeAtlas-P05-D5-R3',
+    'C:\\CodeAtlas-P05-D5-R4',
+  ])
     await assert.rejects(
       () =>
         pack.createRefreshCiPack({
@@ -171,11 +176,12 @@ test('pack output refuses all frozen layouts before reading ownership or evidenc
     );
 });
 
-test('pack approval parsing preserves v1 and v2 and accepts v3 without retagging evidence', () => {
+test('pack approval parsing preserves v1 to v3 and accepts v4 without retagging evidence', () => {
   for (const layoutRevision of [
     'p05-d5-exact-layout-v1',
     'p05-d5-exact-layout-v2',
     'p05-d5-exact-layout-v3',
+    'p05-d5-exact-layout-v4',
   ]) {
     const input = { ...record(), layoutRevision };
     assert.deepEqual(pack.validateRefreshCiApproval(input), input);

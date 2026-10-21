@@ -1,5 +1,67 @@
 # Current Status
 
+2026-10-21 private comparator correction and exclusive R4 explicitly approved.
+Public summary-digest regression detects814 comparator array allocations before
+the scalar scan and0 after; original Unicode/canonical vectors pass5/5. No digest
+format or validation change. Layout route/confinement RED2 then scoped layout /
+pack/runner8/8 GREEN. Full current regression and independent clean rebuild
+precede source freeze and original R4 four-purpose evidence/numeric gate. No
+R4 acquisition, new profile/actual/CI success or Phase promotion yet. All old
+R3 high samples/withdrawn pair/raw evidence/roots/assets remain immutable.
+
+2026-10-20 user accepts bounded allocation/measurement investigation. Two fixed,
+separately scoped scratch probes are retained, not acceptance samples. Exit-time
+heap sampling is inconclusive for temporary objects; the phase-allocation probe
+identifies repeated code-point array allocation under unicodeOrder/canonical
+with unchanged original worker/Storage checks. Diagnostic sampled allocation
+volume is not resident peak or proof of the old excursion's complete cause.
+[Allocation review](../superpowers/specs/2026-10-20-p05-read-seal-allocation-review.md)
+proposes a private constant-space Unicode comparator with identical ordering /
+digest semantics and necessary new exclusive R4 evidence layout. This is written
+review pending: no product correction, R4 acquisition, formula change, new value,
+recalibration, publication or push has occurred. Shared R3 entry remains withdrawn.
+
+2026-10-20 fresh-memory HOLD supersedes the installation status below. R3 pack
+seals5423 entries/240451555 bytes, SHA256
+d558d1397d1ee627143e23c9f425d2ac618030ef518dd9d18ddb975b43b38035.
+Original guarded actual22 passes22/22,0fail,peak343531520<=392286208; build16
+and IR types pass. Complete required root settles1590/1588pass/1fail/1existing
+skip,934855.7081ms: READ_SEAL dense-numeric-sites fresh peak250535936 exceeds
+approved219095040. All raw13 observations persist in READ_SEAL-22416.json,
+SHA55cacb8bb321789fa2e8acf34683ac2b0417f588df90b679b0c0d867d74ff450.
+task8-r3-fresh-exceedance-audit.json confirms unchanged2329 closure/product/input /
+SQL, valid row and deterministic original gate refusal; read/seal AVAILABLE,
+state unchanged/transaction closed. Calibration peaks215318528..216506368 and
+independent holdout215728128 do not invalidate this later higher sample.
+Seal-phase allocation counters differ; deeper causality remains UNKNOWN.
+Under accepted memory-stability policy, withdraw only the newly installed
+unshipped paired READ_SEAL/FULL_TRANSPORT219095040 entry, retaining its complete
+historical record in the audit. Withdrawal RED2/GREEN4 verifies fail-closed
+current paired admission; D/VERIFY entries and all preexisting profiles remain.
+No automatic reservation ratchet, GC forcing, lower density, rerun-to-green,
+recalibration, remote publication or push. Original18-gate batch stopped at root;
+remaining gates are NOT run/passed. Release/PR21/Phase0.5/Phase1 remain HOLD for
+measurement/allocation-design review, not another unrecorded favourable sample.
+
+2026-10-20 user explicitly approves all four audited R3 values: READ_SEAL and
+FULL_TRANSPORT219095040 bytes each (M216506368/J2588672), REFRESH_VERIFY379609088
+(M357806080/J21803008), REFRESH_TRANSPORT392286208 (M360677376/J31608832).
+Only productd402c9a4b7279fb7c31407a8a2d21f19dfd020dfed783166a17eb0d305a156e1
+and the exact candidates496e4571…aeaf4/d0ff3457…3f61/e2fd1c78…eb85 are approved.
+Full regression470/470 and independent clean catalog2329/2329 preceded source
+freeze ba5ce5a; fresh qualification22/calibration320/independent holdout64 have
+zero failures. task8-r3-numeric-audit.json records full raw/candidate/hash/SQL /
+closure reconstruction PASS. Matching static entries are now installed after
+four missing-profile REDs; four purpose/equality/one-byte-below tests pass4/4.
+Historical R2 test's unrelated-build blanket refusal reproduced RED then GREEN
+after restricting its equality check to its original environment; its complete
+historical profile assertions remain unconditional. This is not a changed
+admission rule. All older profile records, roots, raw failures and assets remain.
+Post-install identity checks and original actual22/31/full ordinary/registered
+Native gates, new exact-pack hosted acceptance and normal PR21 integration remain
+required. Phase0.5 formal closeout/Phase1 remain HOLD; old waiting-for-numeric
+approval statements below are superseded only for these exact candidates.
+
 2026-10-20 approved sequential handoff: complete current five-tool regression and
 independent clean rebuild first; only on their actual success, current format /
 architecture and exact reviewed-diff checks may create an unpushed source-freeze

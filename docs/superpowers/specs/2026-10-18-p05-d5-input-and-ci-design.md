@@ -1,5 +1,11 @@
 # D5 feasible inputs and exact-layout CI replay
 
+2026-10-21 approved written allocation review adds exclusive literal layout-v4
+C:\CodeAtlas-P05-D5-R4 for the changed exact product. Preserve v1/v2/v3 literal
+routing/records/roots/assets without adoption or overwrite; v4 uses unchanged
+generator-v3 discovery. All ownership/confinement/qualification/measurement /
+independent holdout/new numerical approval/actual clean-host gates remain.
+
 Status: ACCEPTED2026-10-18 by the user's subsequent “确认” after written-spec
 review. This accepts the exact D test input/layout/pinned synthetic-pack contract,
 not an unseen numerical reservation or artifact publication. The SAME closeout
