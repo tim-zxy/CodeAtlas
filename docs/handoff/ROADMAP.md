@@ -1,5 +1,12 @@
 # Roadmap
 
+2026-10-21 R4 replacement build has all18 local gates and independent original
+actual22/31/full2329closure audit PASS; see [current exit evidence](PHASE05_EXIT_AUDIT.md).
+This continues SAME Tasks7/8, no new product parent/milestone. Original14/14
+product integration via PR20 remains history. PR21 formal closeout still waits
+R4 real-ID publication, final-head clean-host/required CI and normal integration.
+Phase1 remains DESIGN-READY/HOLD: detailed design review only after acceptance.
+
 2026-10-20 integrated product state:14/14 Phase0.5 tasks, including the final four
 parents via PR20/ee0a919. [Original exit audit](PHASE05_EXIT_AUDIT.md) passes21/21
 plus ADR-016 applicability with exact-head hosted/local/actual evidence. Normal

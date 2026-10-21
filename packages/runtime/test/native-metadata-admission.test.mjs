@@ -20,6 +20,7 @@ import {
 } from '../dist/native-metadata-profiles.js';
 import { preparedEmptyRefresh } from './helpers/native-refresh-d-fixture.mjs';
 import './native-r3-approved-profiles.test.mjs';
+import './native-r4-approved-profiles.test.mjs';
 
 const reviewedReservation = 280_453_120;
 const environment = nativeMetadataEnvironment();

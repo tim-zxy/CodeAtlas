@@ -1,5 +1,40 @@
 # Current Status
 
+2026-10-21 R4 fresh local acceptance supersedes earlier local-gate status.
+All18 sequential gates exit0: root1595 tests/1594pass/0fail/1existing skip,
+Native114, registered REFRESH707/707, memory27, actualEvaluation31/31 with
+five gate values1/1/1/1/0, build16/IRtypes/architecture17/boundaries/format /
+Rust checks. Guarded actual22 has22 original admitted receipts,0fail, closed
+transactions/TEMP and peak359440384<=approved394211328. Worker1/2 graph /
+coverage/support match with stale0 and distinct observed completion-order hashes.
+Read-only task8-r4-local-gates-audit.json PASS independently binds every gate,
+original22/31 reports, immutable ZIP/candidate/holdout, environment/Native and
+full2329closure. ZIP240451498 bytes/5423entries SHA256
+916d069a3f4ee7bdae2d4525389e6c345d5df7a24e1a27727663332c4fc7f30a;
+actual31 report SHA256
+77f8dab1b2ca3dfcd627de767767951bd1c7e4413a4b89e650db3d47b569bf67.
+This is LOCAL_GATES_PASS_PENDING_HOSTED, not Phase acceptance. Next: real-ID
+immutable R4 publication/static record, final-head PR+push required CI including
+clean-host exact-pack actual22, then normal PR21 integration. Prior failures /
+withdrawn entries stay historical; no sole-cause or universal timeout-fix claim.
+
+2026-10-21 R4 exact numerical approval and profile installation supersede the
+pending-value status below. User explicitly approves READ_SEAL/FULL_TRANSPORT
+222334976 (M210853888+J11481088), REFRESH_VERIFY354004992
+(M346435584+J7569408), REFRESH_TRANSPORT394211328
+(M369008640+J25202688) bytes for product3d503771a3c0b78982d60d80a17e39f6ec2a426f97e5ffa23ccdbd0b503ac5a0 only.
+Original qualification22/calibration320/independentholdout64 have zero failures;
+independent numeric audit PASS. Permanent R4 admission regression RED4/GREEN4
+checks equality, one-byte-short refusal and exact candidate/raw/corpus/M/J binding.
+Post-install audit PASS preserves Native/full2329closure/all historical entries /
+all candidate and holdout hashes. Evidence: task8-r4-numeric-audit.json,
+task8-r4-profile-red.log, task8-r4-profile-green.log and task8-r4-post-profile.json
+in the same-plan evidence directory. New canonical pack/guarded actual22 and
+complete sequential local gates are next, not yet passed. No R4 Release/push /
+hosted acceptance or Phase promotion; PR21 and Phase1 remain HOLD. Historical
+failures remain failures, not replaced by these calibration or admission passes.
+
+
 2026-10-21 private comparator correction and exclusive R4 explicitly approved.
 Public summary-digest regression detects814 comparator array allocations before
 the scalar scan and0 after; original Unicode/canonical vectors pass5/5. No digest

@@ -1,5 +1,23 @@
 # Phase Acceptance
 
+2026-10-21 R4 fresh local acceptance supersedes earlier local-gate status.
+All18 sequential gates exit0: root1595 tests/1594pass/0fail/1existing skip,
+Native114, registered REFRESH707/707, memory27, actualEvaluation31/31 with
+five gate values1/1/1/1/0, build16/IRtypes/architecture17/boundaries/format /
+Rust checks. Guarded actual22 has22 original admitted receipts,0fail, closed
+transactions/TEMP and peak359440384<=approved394211328. Worker1/2 graph /
+coverage/support match with stale0 and distinct observed completion-order hashes.
+Read-only task8-r4-local-gates-audit.json PASS independently binds every gate,
+original22/31 reports, immutable ZIP/candidate/holdout, environment/Native and
+full2329closure. ZIP240451498 bytes/5423entries SHA256
+916d069a3f4ee7bdae2d4525389e6c345d5df7a24e1a27727663332c4fc7f30a;
+actual31 report SHA256
+77f8dab1b2ca3dfcd627de767767951bd1c7e4413a4b89e650db3d47b569bf67.
+This is LOCAL_GATES_PASS_PENDING_HOSTED, not Phase acceptance. Next: real-ID
+immutable R4 publication/static record, final-head PR+push required CI including
+clean-host exact-pack actual22, then normal PR21 integration. Prior failures /
+withdrawn entries stay historical; no sole-cause or universal timeout-fix claim.
+
 2026-10-20 R2 real Release417778800/asset657493684 and v2 static approval record
 are verified against pristine ZIP/source/environment; focused contracts24/24.
 Original v1 record/Release/asset remain byte-identical. This completes publication

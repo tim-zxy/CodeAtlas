@@ -1,5 +1,22 @@
 # Design Traceability
 
+2026-10-21 R4 replacement build has all18 local gates and independent original
+actual22/31/full2329closure audit PASS; see [current exit evidence](PHASE05_EXIT_AUDIT.md).
+This continues SAME Tasks7/8, no new product parent/milestone. Original14/14
+product integration via PR20 remains history. PR21 formal closeout still waits
+R4 real-ID publication, final-head clean-host/required CI and normal integration.
+Phase1 remains DESIGN-READY/HOLD: detailed design review only after acceptance.
+
+2026-10-21 R4 concrete approval trace: same Tasks7/8 original22 qualification /
+320 calibration /64 independentholdout -> task8-r4-numeric-audit.json PASS ->
+user “批准” -> native-metadata-profiles.ts three exact R4 entries ->
+native-r4-approved-profiles.test.mjs RED4/GREEN4 (registered by admission suite)
+-> task8-r4-post-profile.json PASS: same product/Native/2329closure, all old
+entries and candidate/holdout identities unchanged. Approved READ/FULL222334976,
+VERIFY354004992, TRANSPORT394211328 bytes. Full fresh actual/local/hosted /
+normal PR21 integration and exit audit remain required; no Phase promotion.
+
+
 2026-10-21 accepted allocation review -> scalar private unicodeOrder -> public
 summary-digest allocation RED814/GREEN0 and original Unicode/canonical vectors ->
 full Provider/Storage correspondence/safety gates. ADR-019v4 -> literal R4 route /

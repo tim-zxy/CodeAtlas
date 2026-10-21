@@ -1,5 +1,17 @@
 # Design Authority
 
+2026-10-21 separate concrete-value approval authorizes exact R4 reservations:
+READ_SEAL/FULL_TRANSPORT222334976=M210853888+J11481088;
+REFRESH_VERIFY354004992=M346435584+J7569408;
+REFRESH_TRANSPORT394211328=M369008640+J25202688 bytes. They apply only to
+product3d503771a3c0b78982d60d80a17e39f6ec2a426f97e5ffa23ccdbd0b503ac5a0
+and the independently audited original R4 candidate/raw/corpus identities.
+Three static entries installed after real admission RED4; GREEN4 and immutable
+post-profile audit PASS do not waive fresh full local/actual/hosted/normal-merge
+acceptance. Existing policy/formula/SQL charge/timeout/quality gates unchanged.
+R3 withdrawn shared entry and every prior failure remain retained history.
+
+
 2026-10-21 explicit “批准” accepts the written allocation review's private scalar
 Unicode comparison and exclusive R4 under ADR-019. Preserve exact code-point
 ordering/canonical bytes and every validation, guard, timeout and budget. This
