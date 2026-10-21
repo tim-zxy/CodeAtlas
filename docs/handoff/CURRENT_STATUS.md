@@ -1,5 +1,24 @@
 # Current Status
 
+2026-10-21 immutable R4 publication and exact-ID approval record verified.
+New Release419263735/asset661693932 is candidate-namespaced at
+[p05-d5-fixture-b56cf2ee](https://github.com/tim-zxy/CodeAtlas/releases/tag/p05-d5-fixture-b56cf2eea5b33f853cf06e5daca36cc28f07db33a51fc04a733e961b1f26b2cd),
+source checkpoint b585aa5f9adb2c6accea845af9a4c49119b112f5. Uploaded ZIP digest /
+size agree with original local pack. Static v4 record now binds exact candidate,
+corpus, environment, Native, all5423entries and real IDs; formatted record SHA256
+df1413dbca611fb10eebe9cd0cdf181e2506eec7cebd7cec4f6e64b75738b09f.
+Prior v2 approved-transport.json bytes are preserved as
+approved-transport-layout-v2.json, SHA256
+115d900c85179e4e3f87f3b1a86fe0db10a414c8369cda7803506c8f45175df3;
+v1 backup/assets/all roots unchanged. Relevant record contracts28/28 and
+post-publication preflight PASS retain product/Native/full2329closure and local
+acceptance. Source/tag checkpoint CI is transitional, not final acceptance.
+Only final record head PR+push required CI and clean-host exact-ID download /
+verification/exclusive R4 installation/guarded actual22 can permit normal PR21
+integration. No hosted/merge/Phase promotion claim yet. Evidence:
+task8-r4-published-record.json, task8-r4-record-contracts.log and
+task8-r4-record-preflight.json in the SAME evidence directory.
+
 2026-10-21 R4 fresh local acceptance supersedes earlier local-gate status.
 All18 sequential gates exit0: root1595 tests/1594pass/0fail/1existing skip,
 Native114, registered REFRESH707/707, memory27, actualEvaluation31/31 with
