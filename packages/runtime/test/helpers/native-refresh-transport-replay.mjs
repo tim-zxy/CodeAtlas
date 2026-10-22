@@ -844,10 +844,11 @@ export async function runRefreshTransportCommand(args, dContext) {
             profile.workspace === 'REFRESH_TRANSPORT' &&
             Object.entries(identity.environment).every(([key, value]) => profile[key] === value),
         );
-        assert.ok(references.length > 0, 'Missing known reviewed D feasibility reference');
         const feasibility = checkRefreshTransportInputFeasibility(
           fixtureContext.memoryBudgetBytes,
-          Math.max(...references.map((profile) => profile.reservationBytes)),
+          references.length > 0
+            ? Math.max(...references.map((profile) => profile.reservationBytes))
+            : null,
           qualificationRows,
         );
         await writeReplayArtifact(

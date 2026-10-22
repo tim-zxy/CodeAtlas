@@ -1,10 +1,51 @@
 # ADR 019 D5 Feasible Inputs and Exact-layout CI Replay
 
+2026-10-21 user's explicit “批准” accepts the written allocation review and
+exclusive literal layout-v4 C:\CodeAtlas-P05-D5-R4 for changed-product evidence.
+New prepare selects v4, while v1/v2/v3 routes/records/roots remain unchanged.
+v2/v3/v4 use generator-v3 discovery; v1 retains generator-v2. Protect all four
+roots from output overlap; add only R4 to original-failure upload. No adoption,
+overwrite, relocation flag, budget/timeout/gate weakening or Phase advance.
+Original22 qualification/320 calibration/64 independent holdouts, clean rebuild,
+separate new numerical approval and actual clean-host acceptance remain required.
+
 Status: Accepted2026-10-18 by the subsequent user “确认” after written-spec review.
 This accepts the exact D test input/layout/pinned synthetic-pack contract. The
 existing plan is revised for previously authorized Native/batch execution with
 routine revised-plan reconfirmation waived. New numerical reservation and remote
 artifact publication/integration still require their separate material decisions.
+
+2026-10-20 offline-bootstrap amendment accepted by the user's explicit response:
+“同意有界离线引导修正，继续顺序执行”. The old prepare exact-approved-build
+prerequisite prevents evidence generation for a changed product. Keep reviewed
+Node/V8/platform/arch/Zod environment refusal, but permit a new implementation
+digest for offline preparation only. Every raw/candidate/holdout record and
+dependency comparison still binds that full new digest. If qualification has no
+exact-build approved reference, record SQL-only feasibility with null reference
+and null combined charge, bounded actual SQL and no claim of workspace headroom.
+Do not select another product's reservation. After110 calibration observations,
+the positive numeric candidate plus actual maximum SQL charge must fit the caller;
+unknown/nonpositive/unsafe candidates refuse. Original22-case qualification and
+22 independent candidate holdouts, separate concrete approval and clean-host
+actual22 remain. Actual production admission is not changed or bypassed.
+Legacy known-reference diagnostic data keeps its exact meaning. This changes
+only the internal offline evidence bootstrap, not a budget/formula/quality gate,
+timeout/default/IPC/schema/migration or FROZEN storage/publication authority.
+
+2026-10-20 bounded layout extension accepted: user explicitly approves adding
+exclusive `p05-d5-exact-layout-v3` at `C:\CodeAtlas-P05-D5-R3` for the newly
+authorized product optimization's qualification, measurement and clean-host
+acceptance. Preserve literal v1/v2 roots, records, assets and failed attempts;
+never adopt, move or overwrite them. Current prepare selects v3; versioned
+approval parsing/install selects its record's original literal root. v2/v3 use
+the existing generator-v3 discovery policy; v1 keeps generator-v2 history.
+Confinement protects all three layouts, and failure upload also retains R3.
+No new relocation/config option, source rebinding, budget/timeout/threshold or
+numeric reservation follows. New Release IDs and exact values remain real,
+separately verified evidence, not copied v2 eligibility. Existing-root refusal,
+single-link ownership, full22/110/22, independent reconstruction and original
+actual/CI/Phase gates remain. Existing scoped publication/integration authority
+continues; neither layout approval nor a passing unit test is Phase acceptance.
 
 ## Context and evidence
 

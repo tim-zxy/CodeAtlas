@@ -19,6 +19,8 @@ import {
   nativeRefreshTransportProfiles,
 } from '../dist/native-metadata-profiles.js';
 import { preparedEmptyRefresh } from './helpers/native-refresh-d-fixture.mjs';
+import './native-r3-approved-profiles.test.mjs';
+import './native-r4-approved-profiles.test.mjs';
 
 const reviewedReservation = 280_453_120;
 const environment = nativeMetadataEnvironment();
@@ -40,19 +42,14 @@ test('approved R2 exact-layout D reservation admits at equality and refuses one 
     implementationDigest: '0ea17dfcc71d7c2d3ffb1bc782ab47c63f6c2294041dc50e0a14e1362242711d',
     corpusRevision: 'p05-native-metadata-memory-v1',
   };
-  if (!Object.entries(expectedEnvironment).every(([key, value]) => environment[key] === value)) {
+  if (Object.entries(expectedEnvironment).every(([key, value]) => environment[key] === value)) {
+    assert.equal(assertNativeRefreshTransportAdmission(411_660_288), 411_660_288);
+    assert.equal(assertNativeRefreshTransportAdmission(1_000_000_000), 411_660_288);
     assert.throws(
-      () => assertNativeRefreshTransportAdmission(411_660_288),
+      () => assertNativeRefreshTransportAdmission(411_660_287),
       (error) => error.nativeStateReason === 'RESOURCE_LIMIT_EXCEEDED',
     );
-    return;
   }
-  assert.equal(assertNativeRefreshTransportAdmission(411_660_288), 411_660_288);
-  assert.equal(assertNativeRefreshTransportAdmission(1_000_000_000), 411_660_288);
-  assert.throws(
-    () => assertNativeRefreshTransportAdmission(411_660_287),
-    (error) => error.nativeStateReason === 'RESOURCE_LIMIT_EXCEEDED',
-  );
   assert.deepEqual(
     nativeRefreshTransportProfiles.find(
       (profile) =>

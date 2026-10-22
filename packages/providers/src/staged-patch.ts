@@ -105,13 +105,14 @@ export function normalizeNativeStagedPatch(
       ['context'],
       'Invalid Native patch context',
     );
-  normalizePatchContext(stage, context.data, owned.snapshot);
+  normalizePatchContext(stage, context.data, owned.snapshot, true);
 }
 
 function normalizePatchContext(
   stage: PatchNormalizationStage,
   context: NativePatchNormalizationContext,
   snapshotValue: ProviderSnapshot,
+  reuseOwnedSources = false,
 ): void {
   const snapshot = ProviderSnapshotSchema.parse(snapshotValue);
   if (
@@ -157,8 +158,16 @@ function normalizePatchContext(
     }
   }
   const files = {
-    get: (id: string) => stage.getSourceFile(id) ?? undefined,
-    getByPath: (path: string) => stage.getSourceFileByPath(path) ?? undefined,
+    // Native context is already bounded, detached and checked against Stage.
+    // Reuse those objects, not a cache of SQL preflight results or raw TEXT.
+    get: (id: string) =>
+      (reuseOwnedSources ? changed.find((file) => file.id === id) : undefined) ??
+      stage.getSourceFile(id) ??
+      undefined,
+    getByPath: (path: string) =>
+      (reuseOwnedSources ? changed.find((file) => file.path === path) : undefined) ??
+      stage.getSourceFileByPath(path) ??
+      undefined,
   };
   for (const node of stage.readUpsertNodes()) {
     if (node.providerId !== snapshot.providerId) {

@@ -1,5 +1,11 @@
 # D5 feasible inputs and exact-layout CI replay
 
+2026-10-21 approved written allocation review adds exclusive literal layout-v4
+C:\CodeAtlas-P05-D5-R4 for the changed exact product. Preserve v1/v2/v3 literal
+routing/records/roots/assets without adoption or overwrite; v4 uses unchanged
+generator-v3 discovery. All ownership/confinement/qualification/measurement /
+independent holdout/new numerical approval/actual clean-host gates remain.
+
 Status: ACCEPTED2026-10-18 by the user's subsequent “确认” after written-spec
 review. This accepts the exact D test input/layout/pinned synthetic-pack contract,
 not an unseen numerical reservation or artifact publication. The SAME closeout
@@ -125,7 +131,17 @@ Evidence: this host inherits `C:\WINDOWS` while native realpath returns
 Do not normalize frozen options or relax equality: new controls are generated
 with this one reviewed spelling, while legacy C and parent process.env are untouched.
 
-Preflight requires Windows/x64, exact reviewed Node/V8/Zod/build environment and
+2026-10-20 accepted offline-bootstrap refinement: offline prepare requires the
+reviewed Node/V8/Zod/platform/arch runtime, not an already approved product digest.
+Full new build identity remains mandatory for qualification/raw/candidate/holdout
+and actual admission. When no exact-build approved reference exists, qualification
+checks actual SQL alone and records null reservation/combined charge with
+OFFLINE_SQL_ONLY_PENDING_CANDIDATE; it never borrows historical bytes or claims
+admission. Final candidate feasibility still requires positive safe numeric bytes
+plus the real maximum SQL charge across all110 observations, before independent
+holdout/explicit numeric review. Production actual exact-profile refusal stays.
+
+Preflight requires Windows/x64, reviewed Node/V8/Zod runtime environment and
 an absent dedicated root with a real non-aliased parent. Create exclusively;
 reject an existing directory, drive remap, junction, symlink, hardlink or path
 spelling mismatch. Never adopt, recursively erase or repair an existing root.

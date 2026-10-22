@@ -1,5 +1,21 @@
 # Work Breakdown
 
+2026-10-21 R4 replacement build has all18 local gates and independent original
+actual22/31/full2329closure audit PASS; see [current exit evidence](PHASE05_EXIT_AUDIT.md).
+This continues SAME Tasks7/8, no new product parent/milestone. Original14/14
+product integration via PR20 remains history. PR21 formal closeout still waits
+R4 real-ID publication, final-head clean-host/required CI and normal integration.
+Phase1 remains DESIGN-READY/HOLD: detailed design review only after acceptance.
+
+2026-10-20 final four product parents P05-W3-020/P05-W5-001/P05-W8-001/P05-W9-001
+are integrated by PR20 at ee0a919;14/14 Phase0.5 product tasks. The
+[exit audit](PHASE05_EXIT_AUDIT.md) supplies original21-exit/ADR-016 code-to-Fixture
+and actual evidence mapping. Query and index/Evaluation plans' held actual gates
+are resolved by current17 local gates/31 actual cases/hosted actual22, not by
+historical checkpoint claims. Closeout-document integration is still pending.
+Next is Phase1 detailed design after formal closeout, never immediate coding.
+Earlier implementation-pending/four-open-parent notes remain historical evidence.
+
 2026-10-19 accepted cache/layout correction revises SAME closeout Tasks7/8:
 versioned narrow cache discovery -> distinct exclusive v2 layout -> tests/review
 -> new22/110/22/reconstruction -> separate numeric approval -> original actual/

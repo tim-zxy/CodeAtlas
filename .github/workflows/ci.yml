@@ -130,7 +130,22 @@ jobs:
           }
           '@ | node --input-type=module
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          node scripts/native-refresh-ci.mjs collect .superpowers/native-memory/exact-pack/approved.zip .superpowers/native-memory/exact-pack/acceptance
+          node --test --test-concurrency=1 packages/runtime/test/native-actual-diagnostic.test.mjs
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $env:CODEATLAS_ACTUAL_DIAGNOSTIC_DIR = Join-Path $env:GITHUB_WORKSPACE '.superpowers/native-memory/actual-diagnostic'
+          New-Item -ItemType Directory -Path $env:CODEATLAS_ACTUAL_DIAGNOSTIC_DIR -ErrorAction Stop | Out-Null
+          $diagnosticImport = node --input-type=module -e "process.stdout.write(new URL('./packages/runtime/test/fixtures/native-actual-diagnostic.mjs', import.meta.url).href)"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $previousNodeOptions = $env:NODE_OPTIONS
+          try {
+            $env:NODE_OPTIONS = "$previousNodeOptions --import=$diagnosticImport".Trim()
+            node scripts/native-refresh-ci.mjs collect .superpowers/native-memory/exact-pack/approved.zip .superpowers/native-memory/exact-pack/acceptance
+            $collectExitCode = $LASTEXITCODE
+          } finally {
+            $env:NODE_OPTIONS = $previousNodeOptions
+            Remove-Item Env:CODEATLAS_ACTUAL_DIAGNOSTIC_DIR
+          }
+          exit $collectExitCode
       - name: Preserve memory observations including failures
         if: always()
         uses: actions/upload-artifact@v4
@@ -146,5 +161,7 @@ jobs:
           path: |
             C:/CodeAtlas-P05-D5/evidence/corpus/replay
             C:/CodeAtlas-P05-D5-R2/evidence/corpus/replay
+            C:/CodeAtlas-P05-D5-R3/evidence/corpus/replay
+            C:/CodeAtlas-P05-D5-R4/evidence/corpus/replay
           # Absent before acquisition is expected; the required actual step still fails.
           if-no-files-found: ignore

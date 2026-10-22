@@ -1,5 +1,278 @@
 # Current Status
 
+2026-10-21 user explicitly approves ONE consolidated diagnostic cloud round:
+one scoped commit/push, its PR+push required workflows only, no automatic rerun
+or additional cloud batch. This supersedes only the pending-confirmation note
+below. Local diagnostic contracts pass7/7; frozen2329catalog/product/Native and
+approved record remain unchanged. Original hosted TIMEOUT remains unexplained;
+new diagnostic success alone cannot prove a fix or authorize Phase promotion.
+
+2026-10-21 exact-head hosted acceptance remains HOLD. At1dfe01a, PR39561981641
+attempt2 passes all3 jobs and strict original-artifact audit22/22, peak323022848;
+push39561976606 fails only actual22: d-overlay-retention's original admitted
+receipt reports Native TIMEOUT at the unchanged10000ms bound. Node worker exits0,
+transaction/TEMP close and the failed result equals the seed;21 other rows pass.
+Deeper Native timing is absent, so neither a host/flaky diagnosis nor a fix is
+established. All original success/failure logs and artifacts remain preserved.
+
+User approves bounded test-only ACTUAL lifecycle diagnostics, but subsequently
+requires confirmation BEFORE ANY additional cloud operation to conserve Actions.
+Local-only implementation reuses the offline observer, selects an exclusive
+scalar JSONL sidecar (max64 Native records per Node process), and preserves both
+streams, timeouts, budgets and all2329 frozen dependencies. No push/new CI/rerun
+is authorized by this local continuation. Local evidence and the scratch trial's
+restoration limitation are recorded in the SAME progress ledger. Phase closeout,
+PR21 merge and Phase1 remain HOLD; diagnostic observations are not calibration.
+
+2026-10-21 immutable R4 publication and exact-ID approval record verified.
+New Release419263735/asset661693932 is candidate-namespaced at
+[p05-d5-fixture-b56cf2ee](https://github.com/tim-zxy/CodeAtlas/releases/tag/p05-d5-fixture-b56cf2eea5b33f853cf06e5daca36cc28f07db33a51fc04a733e961b1f26b2cd),
+source checkpoint b585aa5f9adb2c6accea845af9a4c49119b112f5. Uploaded ZIP digest /
+size agree with original local pack. Static v4 record now binds exact candidate,
+corpus, environment, Native, all5423entries and real IDs; formatted record SHA256
+df1413dbca611fb10eebe9cd0cdf181e2506eec7cebd7cec4f6e64b75738b09f.
+Prior v2 approved-transport.json bytes are preserved as
+approved-transport-layout-v2.json, SHA256
+115d900c85179e4e3f87f3b1a86fe0db10a414c8369cda7803506c8f45175df3;
+v1 backup/assets/all roots unchanged. Relevant record contracts28/28 and
+post-publication preflight PASS retain product/Native/full2329closure and local
+acceptance. Source/tag checkpoint CI is transitional, not final acceptance.
+Only final record head PR+push required CI and clean-host exact-ID download /
+verification/exclusive R4 installation/guarded actual22 can permit normal PR21
+integration. No hosted/merge/Phase promotion claim yet. Evidence:
+task8-r4-published-record.json, task8-r4-record-contracts.log and
+task8-r4-record-preflight.json in the SAME evidence directory.
+
+2026-10-21 R4 fresh local acceptance supersedes earlier local-gate status.
+All18 sequential gates exit0: root1595 tests/1594pass/0fail/1existing skip,
+Native114, registered REFRESH707/707, memory27, actualEvaluation31/31 with
+five gate values1/1/1/1/0, build16/IRtypes/architecture17/boundaries/format /
+Rust checks. Guarded actual22 has22 original admitted receipts,0fail, closed
+transactions/TEMP and peak359440384<=approved394211328. Worker1/2 graph /
+coverage/support match with stale0 and distinct observed completion-order hashes.
+Read-only task8-r4-local-gates-audit.json PASS independently binds every gate,
+original22/31 reports, immutable ZIP/candidate/holdout, environment/Native and
+full2329closure. ZIP240451498 bytes/5423entries SHA256
+916d069a3f4ee7bdae2d4525389e6c345d5df7a24e1a27727663332c4fc7f30a;
+actual31 report SHA256
+77f8dab1b2ca3dfcd627de767767951bd1c7e4413a4b89e650db3d47b569bf67.
+This is LOCAL_GATES_PASS_PENDING_HOSTED, not Phase acceptance. Next: real-ID
+immutable R4 publication/static record, final-head PR+push required CI including
+clean-host exact-pack actual22, then normal PR21 integration. Prior failures /
+withdrawn entries stay historical; no sole-cause or universal timeout-fix claim.
+
+2026-10-21 R4 exact numerical approval and profile installation supersede the
+pending-value status below. User explicitly approves READ_SEAL/FULL_TRANSPORT
+222334976 (M210853888+J11481088), REFRESH_VERIFY354004992
+(M346435584+J7569408), REFRESH_TRANSPORT394211328
+(M369008640+J25202688) bytes for product3d503771a3c0b78982d60d80a17e39f6ec2a426f97e5ffa23ccdbd0b503ac5a0 only.
+Original qualification22/calibration320/independentholdout64 have zero failures;
+independent numeric audit PASS. Permanent R4 admission regression RED4/GREEN4
+checks equality, one-byte-short refusal and exact candidate/raw/corpus/M/J binding.
+Post-install audit PASS preserves Native/full2329closure/all historical entries /
+all candidate and holdout hashes. Evidence: task8-r4-numeric-audit.json,
+task8-r4-profile-red.log, task8-r4-profile-green.log and task8-r4-post-profile.json
+in the same-plan evidence directory. New canonical pack/guarded actual22 and
+complete sequential local gates are next, not yet passed. No R4 Release/push /
+hosted acceptance or Phase promotion; PR21 and Phase1 remain HOLD. Historical
+failures remain failures, not replaced by these calibration or admission passes.
+
+
+2026-10-21 private comparator correction and exclusive R4 explicitly approved.
+Public summary-digest regression detects814 comparator array allocations before
+the scalar scan and0 after; original Unicode/canonical vectors pass5/5. No digest
+format or validation change. Layout route/confinement RED2 then scoped layout /
+pack/runner8/8 GREEN. Full current regression and independent clean rebuild
+precede source freeze and original R4 four-purpose evidence/numeric gate. No
+R4 acquisition, new profile/actual/CI success or Phase promotion yet. All old
+R3 high samples/withdrawn pair/raw evidence/roots/assets remain immutable.
+
+2026-10-20 user accepts bounded allocation/measurement investigation. Two fixed,
+separately scoped scratch probes are retained, not acceptance samples. Exit-time
+heap sampling is inconclusive for temporary objects; the phase-allocation probe
+identifies repeated code-point array allocation under unicodeOrder/canonical
+with unchanged original worker/Storage checks. Diagnostic sampled allocation
+volume is not resident peak or proof of the old excursion's complete cause.
+[Allocation review](../superpowers/specs/2026-10-20-p05-read-seal-allocation-review.md)
+proposes a private constant-space Unicode comparator with identical ordering /
+digest semantics and necessary new exclusive R4 evidence layout. This is written
+review pending: no product correction, R4 acquisition, formula change, new value,
+recalibration, publication or push has occurred. Shared R3 entry remains withdrawn.
+
+2026-10-20 fresh-memory HOLD supersedes the installation status below. R3 pack
+seals5423 entries/240451555 bytes, SHA256
+d558d1397d1ee627143e23c9f425d2ac618030ef518dd9d18ddb975b43b38035.
+Original guarded actual22 passes22/22,0fail,peak343531520<=392286208; build16
+and IR types pass. Complete required root settles1590/1588pass/1fail/1existing
+skip,934855.7081ms: READ_SEAL dense-numeric-sites fresh peak250535936 exceeds
+approved219095040. All raw13 observations persist in READ_SEAL-22416.json,
+SHA55cacb8bb321789fa2e8acf34683ac2b0417f588df90b679b0c0d867d74ff450.
+task8-r3-fresh-exceedance-audit.json confirms unchanged2329 closure/product/input /
+SQL, valid row and deterministic original gate refusal; read/seal AVAILABLE,
+state unchanged/transaction closed. Calibration peaks215318528..216506368 and
+independent holdout215728128 do not invalidate this later higher sample.
+Seal-phase allocation counters differ; deeper causality remains UNKNOWN.
+Under accepted memory-stability policy, withdraw only the newly installed
+unshipped paired READ_SEAL/FULL_TRANSPORT219095040 entry, retaining its complete
+historical record in the audit. Withdrawal RED2/GREEN4 verifies fail-closed
+current paired admission; D/VERIFY entries and all preexisting profiles remain.
+No automatic reservation ratchet, GC forcing, lower density, rerun-to-green,
+recalibration, remote publication or push. Original18-gate batch stopped at root;
+remaining gates are NOT run/passed. Release/PR21/Phase0.5/Phase1 remain HOLD for
+measurement/allocation-design review, not another unrecorded favourable sample.
+
+2026-10-20 user explicitly approves all four audited R3 values: READ_SEAL and
+FULL_TRANSPORT219095040 bytes each (M216506368/J2588672), REFRESH_VERIFY379609088
+(M357806080/J21803008), REFRESH_TRANSPORT392286208 (M360677376/J31608832).
+Only productd402c9a4b7279fb7c31407a8a2d21f19dfd020dfed783166a17eb0d305a156e1
+and the exact candidates496e4571…aeaf4/d0ff3457…3f61/e2fd1c78…eb85 are approved.
+Full regression470/470 and independent clean catalog2329/2329 preceded source
+freeze ba5ce5a; fresh qualification22/calibration320/independent holdout64 have
+zero failures. task8-r3-numeric-audit.json records full raw/candidate/hash/SQL /
+closure reconstruction PASS. Matching static entries are now installed after
+four missing-profile REDs; four purpose/equality/one-byte-below tests pass4/4.
+Historical R2 test's unrelated-build blanket refusal reproduced RED then GREEN
+after restricting its equality check to its original environment; its complete
+historical profile assertions remain unconditional. This is not a changed
+admission rule. All older profile records, roots, raw failures and assets remain.
+Post-install identity checks and original actual22/31/full ordinary/registered
+Native gates, new exact-pack hosted acceptance and normal PR21 integration remain
+required. Phase0.5 formal closeout/Phase1 remain HOLD; old waiting-for-numeric
+approval statements below are superseded only for these exact candidates.
+
+2026-10-20 approved sequential handoff: complete current five-tool regression and
+independent clean rebuild first; only on their actual success, current format /
+architecture and exact reviewed-diff checks may create an unpushed source-freeze
+commit. Then freeze complete environment/Native/dependency inputs and run the
+existing R3 prepare22/110/22 plus remaining three-purpose original calibration /
+independent holdouts serially, stopping at NUMERIC_REVIEW_REQUIRED. No old approval
+is reused, no concurrent build/test is allowed during measurement, and any failure
+stops with raw evidence intact. This is execution in progress, not a completion,
+new reservation, current actual/CI passage or Phase promotion claim. The live
+same-ledger sequence state and exclusive logs supply the subsequent exact results.
+
+2026-10-20 user accepts bounded offline bootstrap correction. prepare now keeps
+reviewed Node/V8/platform/arch/Zod runtime checks while allowing a new product
+digest for offline evidence only; full digest remains in every evidence binding.
+Qualification with no exact-build reference checks actual SQL and records null
+reference/combined charge, OFFLINE_SQL_ONLY_PENDING_CANDIDATE, not invented zero
+headroom or a historical reservation. Final candidate feasibility explicitly
+rejects null/nonpositive/unsafe bytes and retains all110-row SQL accounting.
+Actual production matching/refusal, original22/110/22 and new-value approval stay.
+Targeted RED2/GREEN4 passes,1209.6554ms: SQL-only unknown reference, final candidate
+refusal, real prepare build checkpoint and foreign-runtime refusal. Complete five
+tool-suite regression is running, task8-bootstrap-regression.log; no new root,
+qualification/calibration/profile/asset, push or CI yet. Source-reuse/R3 changes
+remain in the same unpushed batch; phase acceptance still HOLD.
+
+2026-10-20 host diagnostic settles66/66 pass,0fail/skip,329070.5731ms,exit0;
+task8-source-reuse-host-selection.json pins exactly all66 non-profile failures
+from the original root. Two additional sandbox symlink skips pass2/2 on host;
+only the original Windows leaf-symlink skip remains. This supplements rather
+than rewrites the original1475pass/108fail/3skip root.42 required memory failures
+remain unapproved. R3 full layout/pack/runner suite settles72/71pass/1fail,
+47073.2192ms,exit1: the public prepare build-checkpoint test receives
+Missing reviewed D environment instead of reaching BUILD_CHECKPOINT.
+This independently reproduces the offline new-build bootstrap circularity;
+do not weaken that test or claim complete R3 gates. No fixed root acquired.
+
+Pending separate bounded offline-bootstrap direction: current exact new-build
+D references=0 while matching-runtime historical references=3. prepare currently
+requires an exact approved product before build; bench also requires an exact
+reference after qualification but before calibration. Thus new product evidence
+cannot be generated by the operational path. Proposed offline-only bootstrap
+must retain original22/110/22, final candidate-plus-real-SQL feasibility and
+explicit numerical approval; actual admission must still reject the new build.
+No historical value transplant or speculative guard removal is authorized yet.
+
+2026-10-20 R3 explicitly approved for new-build evidence: ADR-019 now selects
+exclusive C:\CodeAtlas-P05-D5-R3, preserving original v1/v2 routing and all old
+roots/assets. Three-layout confinement, approval parsing and CI refusal controls
+first reproduce5 failures/2passes, then7/7 pass after the bounded version-map
+extension; raw task8-source-reuse-r3-red.log/green.log retained. The original
+R3 RED refuses unauthorized mkdir under sandbox before root acquisition; no
+failed test grants existing-root adoption. Root has not been acquired yet.
+No new numerical value/profile/asset or actual acceptance follows these tests.
+
+Current full ordinary root finishes1586 tests:1475pass/108fail/3skip,
+520511.3659ms,exit1 (task8-source-reuse-root.log), NOT green.42 failures explicitly
+report missing matching reviewed memory profiles. Remaining66 include sandbox
+Git config permission denial, symlink/hardlink/rename EPERM and downstream
+assertions; do not label all environmental without reproduction. Exact66-name
+host-permission diagnostic is running once, preserving original root and all42
+unapproved gate failures. New product digest d402c9a4b7279fb7c31407a8a2d21f19dfd020dfed783166a17eb0d305a156e1;
+Node/V8/platform/Zod unchanged. New-build admission is still unavailable.
+Scoped read-only source-reuse review finds no defects; excluded runtime/memory /
+historical-timeout claims remain mandatory subsequent verification, not waived.
+
+2026-10-20 approved source-reuse change in progress: one CPU diagnostic identifies
+20894.877ms preflight self time within31378.244ms, primarily repeated changed-source
+lookups during normalization. This is diagnostic-only, not memory acceptance or
+proof of either original CI timeout's cause. User confirms bounded optimization
+with unchanged safety/rollback/gates and renewed exact-build qualification.
+Regression first fails16 source SQL reads versus2 required; minimal Native-only
+reuse of already-owned validated context then passes. Legacy path unchanged;
+no new map/raw-SQL/preflight cache, timeout, cap, profile or schema change.
+Focused Provider/Storage/Store regression passes101/101,0fail,15138.9237ms,
+including complete candidate/Evidence parity, missing/drifted source refusal,
+numeric-before-TEXT corruption refusal, overlay/race/rollback/reopen tests.
+Command: node --disable-warning=ExperimentalWarning --test --test-concurrency=1
+packages/providers/test/staged-patch.test.mjs
+packages/storage/test/native-patch-summary-stage.test.mjs
+packages/storage/test/native-refresh-patch-store.test.mjs.
+Provider tsc passes. Complete current-build gates and logical ownership audit
+remain pending. The old product/profile/corpus evidence is not current admission;
+requalification/measurement/independent holdouts/new numerical approval and
+accurate-head hosted acceptance remain required. PR21 and Phase1 stay HOLD.
+
+2026-10-20 PR21 integration HOLD: exact81f1a45 PR run39348409337 passes, but push
+run39348380807/job118386417261 settles FAILURE:702/703 REFRESH tests, one offline
+d-dense-upsert preparation TIMEOUT; other required steps including actual22 pass.
+Complete raw log task8-pr21-push-native-settled-raw.log and artifacts12238352551/
+12238671014 are retained. Timeout occurs inside dense producer-discovery
+under the unchanged10000ms fixture budget; the failed iteration and stream/exit
+phase timing was not retained, so the underlying cause is UNKNOWN, not a proved
+environmental defect. Single unmodified reproduction passes1/1 (48897.601ms);
+one scratch scalar diagnostic passes1/1 (38267.6017ms). Neither is a fix or
+substitute for the failed run. A loader-path diagnostic setup failure is retained.
+
+Add bounded scalar process tracing ONLY to this offline test's Node child, not
+the worker/helper/product/calibration/actual22 path: at most64 Native records,
+no payload/path/request-ID capture, no extra stream reader, no request/timeout/
+budget/scheduler/retry change. Targeted validation passes1/1 (33934.0464ms), with
+original dense output hash/1986 accepted and1987 resource refusal preserved.
+Full independently discovered2329 dependencies and production0ea17dfc...2711d
+remain unchanged (task8-pr21-diagnostic-identity.log). Next accurate-head CI is
+diagnosis plus required validation, not a claimed timeout fix. Keep integration/
+Phase1 held while this failure remains unexplained; do not retry until green.
+The preceding technical audit's source evidence remains historical, not current
+permission to merge despite a failed mandatory check.
+
+2026-10-20 integrated technical exit audit PASS: [Phase0.5 exit audit](PHASE05_EXIT_AUDIT.md)
+maps all21 original exits and ADR-016 applicability to actual code, registered
+Fixtures, complete local gates, actual31 and hosted original actual22. PR artifact
+12228172902 fully downloaded; existing strict validator rechecks22/22, all raw
+receipts admitted/closed,0failures,peak363589632<=411660288. Archive/approval hashes
+match. task8-r2-hosted-audit.json also rechecks original31/31,five gates1/1/1/1/0
+and real workers1/2 with distinct captured completion-order hashes. This is
+read-only original evidence validation, not new measurement or retried samples.
+Four remaining product parents are integrated through PR20:14/14 product tasks.
+Normal closeout-document verification/integration is pending before Phase1
+detailed design review; no Phase1 coding. Local main synchronization limitation,
+finite telemetry scope and reviewed Minor duplicate-init diagnostic are explicitly
+retained in the audit; no hidden fix, waiver, reset or evidence deletion.
+
+2026-10-20 PR20 is normally merged at ee0a9199c02ed51f54521bf87489439a5e54e491
+(2026-10-20T00:13:44Z). Exact head bdee0df36e00232b98c68ffaf40d9ffa49fa7e4d
+passes TypeScript/Rust/Native in both PR run39329229206 and push run39329221766;
+both Native jobs pass the required clean-host exact-pack actual22 step. Original
+logs and hosted artifact IDs are retained in the SAME closeout ledger. No bypass,
+force push, repeated long test or canceled-run success is used. Remote main is
+fetched; local main's ff-only update refuses overlapping dirty paths, which are
+preserved untouched. Final raw-artifact/Exit Criteria/four-parent audit and
+synchronized closeout documentation are next; Phase acceptance is not inferred
+from CI or merge alone. Phase1 remains design-only until that audit passes.
+
 2026-10-20 final-record CI at0e500715a4f810512e92e9bc3efff96c00a4a61b detects only
 generated approved-transport.json formatting in TypeScript Check formatting;
 original job118321049183 log retained at task8-r2-pr-format-raw.log. Local formatter

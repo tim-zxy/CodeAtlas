@@ -175,6 +175,55 @@ test('shared fact accepts equal SHARED support only', () => {
   assert.equal(api.NativeAnalysisStateBundleV1Schema.safeParse(bundle([a, b])).success, false);
 });
 
+test('summary digest keeps code-point prefix order without comparator arrays', () => {
+  const names = ['A', 'AA', 'A𝒜', 'Z', 'é', '中', '\ue000', '𐀀', '𝒜', '𝒜A', '😀', '􏿿'];
+  const values = names.map((name, i) =>
+    emptySummary({ ...vectors.sourceFile, id: `f-${i}`, path: name }),
+  );
+  // Independent reference uses the old complete code-point array semantics.
+  const order = (a, b) => {
+    const left = Array.from(a, (s) => s.codePointAt(0));
+    const right = Array.from(b, (s) => s.codePointAt(0));
+    for (let i = 0; i < Math.min(left.length, right.length); i++)
+      if (left[i] !== right[i]) return left[i] - right[i];
+    return left.length - right.length;
+  };
+  const expected = values.toSorted((a, b) => order(a.sourceFile.path, b.sourceFile.path));
+  const bytes = expected.map((s) =>
+    vectors.canonicalEmptyFile
+      .slice(1, -1)
+      .replace('"f-a"', JSON.stringify(s.sourceFile.id))
+      .replace('"src/A.java"', JSON.stringify(s.sourceFile.path)),
+  );
+  let comparatorArrays = 0;
+  // Pairwise digest equality also covers equal strings and both prefix directions.
+  for (const a of values)
+    for (const b of values) {
+      const pair = [a, b].toSorted((x, y) => order(x.sourceFile.path, y.sourceFile.path));
+      const reference = pair.map((s) =>
+        vectors.canonicalEmptyFile
+          .slice(1, -1)
+          .replace('"f-a"', JSON.stringify(s.sourceFile.id))
+          .replace('"src/A.java"', JSON.stringify(s.sourceFile.path)),
+      );
+      assert.equal(api.computeNativeSummaryDigest([a, b]), hash(`[${reference.join(',')}]`));
+    }
+  const from = Array.from;
+  Array.from = function (...args) {
+    if (typeof args[0] === 'string' && /at unicodeOrder\b/.test(new Error().stack))
+      comparatorArrays++;
+    return Reflect.apply(from, this, args);
+  };
+  let actual;
+  try {
+    actual = api.computeNativeSummaryDigest([...values].reverse());
+  } finally {
+    Array.from = from;
+  }
+  assert.equal(actual, hash(`[${bytes.join(',')}]`));
+  assert.equal(comparatorArrays, 0, 'Unicode comparisons must not allocate whole-string arrays');
+});
+
 test('canonical vectors preserve Unicode and snapshot-independent semantic digest', () => {
   assert.equal(typeof api.computeNativeSummaryDigest, 'function');
   assert.equal(api.computeNativeSummaryDigest([]), vectors.emptyDigest);

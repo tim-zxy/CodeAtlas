@@ -1,5 +1,30 @@
 # Phase 0.5 index CLI and persisted Evaluation Implementation Plan
 
+2026-10-21 subsequent "批准一轮" grants the one consolidated diagnostic push /
+PR+push pair proposed below. Before push: scoped read-only review, exact8-file
+diff/index checks, unchanged frozen2329closure and normal commit. After push:
+record exact head and only its two Actions runs; read-only monitoring, no rerun
+or extra round. Retain original failure and expose causality gaps even if green.
+
+2026-10-21 SAME Tasks7/8 bounded diagnostic continuation: original push actual22
+Native TIMEOUT is classified, not fixed. User approves test-only lifecycle
+sidecars, local RED/GREEN, stream/non-sensitive64-record bounds and unchanged
+full2329catalog proof. No product/helper/Native/corpus/profile/timeout change.
+Latest instruction requires separate confirmation before ANY new cloud action;
+do not push, rerun or start CI automatically. At most one consolidated PR+push
+diagnostic pair may be proposed after local verification, never retry-to-green.
+If no causative failure is captured, disclose the evidence gap and stop.
+
+2026-10-21 user approves the written bounded allocation-review correction and
+exclusive R4, sequentially in existing Tasks7/8. Execute: comparator allocation
+RED -> scalar-codepoint GREEN with original digest vectors; four-version layout
+confinement/parser/refusal tests; same single scoped review; full affected
+Provider/Storage/layout/replay regression; clean independent rebuild; only then
+freeze source and run original22 qualification/320 four-purpose calibration/64
+independent holdouts, independently audit and stop for NEW concrete values.
+No extra milestone, formula/headroom/timeout change, old-profile transplant,
+R3 adoption/overwrite or early Phase1. Old root/measurements/failed samples stay.
+
 ## Task7/8 continuation — accepted PR20 cache/layout amendment, 2026-10-19
 
 **Spec:** [accepted narrow contract](../specs/2026-10-19-p05-ci-build-cache-compatibility-proposal.md).
@@ -1149,3 +1174,23 @@ old D5 corpus current after script/helper bytes change. No new roadmap task.
 - All five Review Focus risks have named Task2-5 tests. Packet covers all accepted spec sections; no missing numeric value is filled in. Pure metrics and indexing are separate deliverables but the actual runner depends on the public index entry and the same final identity, so this coordinated plan does not create two independent execution/review loops.
 
 Revised-plan review has passed with the user's explicit “确认”. Preserve Native/inline method; resume Tasks4–6 continuously, qualify/measure under Task7 and stop for its new exact numeric decision. Task1–3 are not reimplemented; their held actual acceptance closes under Task8. Otherwise stop only for genuine governed conflicts or unsafe/external actions. Do not ask “continue?” between tasks or report a helper as the completed phase.
+## 2026-10-20 approved bounded continuation of existing Tasks7/8
+
+User approves Native-only source reuse with safety/identity equivalence checks,
+exclusive literal layout-v3 at C:\CodeAtlas-P05-D5-R3 preserving v1/v2, and
+offline-bootstrap correction for new products. These are existing closeout work,
+not new roadmap tasks or a Phase promotion. Scoped RED/GREEN and single-seat
+reviews precede final source/catalog freeze. The ordinary root is retained with
+42 missing-profile failures;66 sandbox failures plus2 extra link skips are proved
+on host, not deleted or relabeled as whole-root PASS.
+
+Complete current tool regression, freeze final product/helper/Native/dependencies,
+then execute original fresh paired READ_SEAL/FULL_TRANSPORT, REFRESH_VERIFY and
+R3 REFRESH_TRANSPORT qualification/measurement/independent holdout serially, with
+all original counters/limits/ownership/provenance and independent reconstruction.
+Offline startup keeps reviewed runtime but does not require an already approved
+product; unknown reference diagnostics retain null, never historical values/zero.
+Final D candidate+SQL check requires safe positive numeric bytes over all110 rows.
+Stop at new concrete numerical approval; no static entry/actual admission until
+approved. After approval, original actual22/31, all gates/accurate-head CI/normal
+integration and exit audit still apply. Existing raw failures/roots/assets remain.

@@ -1,5 +1,115 @@
 # Design Traceability
 
+2026-10-21 immutable R4 publication and exact-ID approval record verified.
+New Release419263735/asset661693932 is candidate-namespaced at
+[p05-d5-fixture-b56cf2ee](https://github.com/tim-zxy/CodeAtlas/releases/tag/p05-d5-fixture-b56cf2eea5b33f853cf06e5daca36cc28f07db33a51fc04a733e961b1f26b2cd),
+source checkpoint b585aa5f9adb2c6accea845af9a4c49119b112f5. Uploaded ZIP digest /
+size agree with original local pack. Static v4 record now binds exact candidate,
+corpus, environment, Native, all5423entries and real IDs; formatted record SHA256
+df1413dbca611fb10eebe9cd0cdf181e2506eec7cebd7cec4f6e64b75738b09f.
+Prior v2 approved-transport.json bytes are preserved as
+approved-transport-layout-v2.json, SHA256
+115d900c85179e4e3f87f3b1a86fe0db10a414c8369cda7803506c8f45175df3;
+v1 backup/assets/all roots unchanged. Relevant record contracts28/28 and
+post-publication preflight PASS retain product/Native/full2329closure and local
+acceptance. Source/tag checkpoint CI is transitional, not final acceptance.
+Only final record head PR+push required CI and clean-host exact-ID download /
+verification/exclusive R4 installation/guarded actual22 can permit normal PR21
+integration. No hosted/merge/Phase promotion claim yet. Evidence:
+task8-r4-published-record.json, task8-r4-record-contracts.log and
+task8-r4-record-preflight.json in the SAME evidence directory.
+
+2026-10-21 R4 replacement build has all18 local gates and independent original
+actual22/31/full2329closure audit PASS; see [current exit evidence](PHASE05_EXIT_AUDIT.md).
+This continues SAME Tasks7/8, no new product parent/milestone. Original14/14
+product integration via PR20 remains history. PR21 formal closeout still waits
+R4 real-ID publication, final-head clean-host/required CI and normal integration.
+Phase1 remains DESIGN-READY/HOLD: detailed design review only after acceptance.
+
+2026-10-21 R4 concrete approval trace: same Tasks7/8 original22 qualification /
+320 calibration /64 independentholdout -> task8-r4-numeric-audit.json PASS ->
+user “批准” -> native-metadata-profiles.ts three exact R4 entries ->
+native-r4-approved-profiles.test.mjs RED4/GREEN4 (registered by admission suite)
+-> task8-r4-post-profile.json PASS: same product/Native/2329closure, all old
+entries and candidate/holdout identities unchanged. Approved READ/FULL222334976,
+VERIFY354004992, TRANSPORT394211328 bytes. Full fresh actual/local/hosted /
+normal PR21 integration and exit audit remain required; no Phase promotion.
+
+
+2026-10-21 accepted allocation review -> scalar private unicodeOrder -> public
+summary-digest allocation RED814/GREEN0 and original Unicode/canonical vectors ->
+full Provider/Storage correspondence/safety gates. ADR-019v4 -> literal R4 route /
+four-root confinement/approval parser/runner refusal tests and original-failure
+upload. New product clean rebuild/qualification/measurement/numeric gates remain.
+
+2026-10-20 accepted diagnostic direction -> original read/seal/canonical call-path
+inspection + two fixed scratch-only probes -> temporary Unicode comparator
+arrays identified as an allocation target -> written allocation-review proposal
+(private scalar comparator + proposed exclusive R4; not implemented). Diagnostic
+profiles do not select numerical evidence or reinterpret the original failure.
+
+2026-10-20 R3 guarded actual22 PASS -> complete root1590/1588pass/1fail/1skip ->
+retained READ_SEAL-22416 dense peak250535936>219095040 -> complete raw-row /
+payload/SQL/product2329 audit and original gate deterministic refusal ->
+accepted memory-stability withdrawal rule -> remove only unshipped d402 paired
+entry and withdrawal regression RED2/GREEN4. D/VERIFY and historical entries
+stay unchanged. Root failure remains FAIL; no remaining-gate/hosted/Phase claim.
+
+2026-10-20 four exact R3 values approved -> same Tasks7/8 -> immutable320 calibration /
+64 holdouts plus22 qualification and task8-r3-numeric-audit.json -> additive exact
+native-metadata-profiles.ts entries -> native-r3-approved-profiles.test.mjs genuine
+missing-profile RED4/GREEN4, candidate/raw/corpus/M/J bindings and one-byte-below
+refusal. Profile-only rebuild must retain d402c9a4…56e1 and all2329 dependencies.
+Older R2 assertions remain historical, not a blanket prohibition on new approvals.
+Actual22/31 and full current local/hosted gates remain separate and required.
+
+2026-10-20 explicit offline-bootstrap approval -> ADR-019 and Runtime/Evaluation
+specs -> prepare reviewed-runtime-only startup + full exact evidence identity ->
+qualification unknown-reference SQL-only diagnostic -> unchanged110 calibration /
+positive numeric candidate+maximum SQL feasibility/22 holdouts/numeric approval ->
+unchanged actual production profile gate. Targeted RED2/GREEN4 covers unknown
+headroom, invalid final candidates, build-checkpoint reachability and foreign
+runtime refusal. Complete current tool regression and new immutable qualification
+are separate obligations; no old numerical evidence becomes current admission.
+
+2026-10-20 explicit R3 approval -> ADR-019 layout-v3 -> literal three-version
+route/confinement in native-refresh-ci-layout.mjs -> layout/pack/runner refusal
+RED5/GREEN7 and additive R3 original-failure upload path. Historical v1/v2
+records remain unretagged. New-source full ordinary root1586/1475pass/108fail/
+3skip is retained, including42 missing-profile gates and66 awaiting host-level
+classification. No new pack, actual22, qualification or Phase passage is inferred.
+
+2026-10-20 accepted Native source-reuse direction -> Provider SPI/SQLite Schema
+unchanged guarded SQL/ownership boundary -> staged-patch.ts Native-only owned
+context lookup -> staged-patch.test.mjs RED16vs2 then GREEN exact candidates /
+Evidence, source mismatch and post-write corruption refusal -> original Native
+summary/patch Store rollback/race/reopen regressions101/101. CPU profile is only
+cost-location evidence. New product identity requires new qualification and
+memory evidence before actual acceptance; old actual22/31 and profiles are not
+silently rebound. PR21/current required CI/Phase closeout remain held.
+
+2026-10-20 PR21 push39348380807 -> offline dense-upsert preparation TIMEOUT ->
+full original job118386417261 raw log and artifacts12238352551/12238671014 ->
+single unchanged local reproduction and separately labelled diagnostics ->
+bounded Native process scalar tracing in only the offline test child. Existing
+helper/product/Native/corpus/profile/2329 dependency identities remain unchanged;
+diagnostic output has no fact/publication/admission authority. Cause still
+UNKNOWN; no current-CI/Phase success follows from earlier audit or later passing
+local samples. Integration stays held without timeout/gate changes or rerun-to-green.
+
+2026-10-20 [integrated Phase0.5 audit](PHASE05_EXIT_AUDIT.md) supplies the final
+21-exit plus ADR-016 trace map. P05-W3-020 -> refresh-v3 real composition/replay/
+rollback703 and hosted exact-pack22; P05-W5-001 -> code-query Fixture and physical
+Application/Store read boundary; P05-W8-001 -> index-cli/query-cli and original
+actual CLI recovery; P05-W9-001 -> original required31/21, five unchanged gates,
+pinned cold/1/5/50 and distinct real worker1/2 completion order. Exact source
+bdee0df passes PR39329229206/push39329221766 and normal mergeee0a919; product
+parents14/14. Hosted artifact12228172902/actual report5dfc309c...65cc1 revalidates
+22/22 with original full corpus identity and admitted/closed raw receipts.
+Normal closeout-document integration is pending; Phase1 is detailed design only
+after formal closeout. No missing trace is filled by component-as-Native claims,
+old/canceled CI, new numerical thresholds or local-main overwrite.
+
 2026-10-20 generated-record formatting defect -> original job118321049183 log/
 local formatter RED -> metadata-only Prettier correction -> full format GREEN,
 strict whole-data equality and unchanged v1/product/2329 catalog + operational

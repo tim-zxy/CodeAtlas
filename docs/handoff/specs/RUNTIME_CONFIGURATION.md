@@ -1,5 +1,20 @@
 # Runtime and Configuration Specification
 
+2026-10-21 accepted R4 allocation-review batch changes only private Provider
+comparison and development evidence layout. Runtime budgets/SQL twice-charge /
+profile identity/absence refusal/10000 and60000ms deadlines stay unchanged.
+New implementation must not consume R3 approvals; original fresh four-purpose
+calibration/holdout and explicit concrete approval precede current admission.
+
+2026-10-20 approved offline evidence bootstrap is not Runtime admission. The
+development prepare command may generate evidence for a new product on the
+reviewed Node/V8/platform/arch/Zod runtime without an existing exact-product
+profile. Qualification records unknown reference/combined charge as null, not
+zero; final numeric candidate+real SQL feasibility and independent holdouts still
+precede explicit numerical approval. Runtime actual mode still requires its full
+matching product/environment/purpose/corpus profile before observation. No new
+config/default, budget, timeout, hidden admission switch or profile transplant.
+
 2026-10-19 exact R2 approval installs REFRESH_TRANSPORT411660288bytes solely for
 candidatef9e08bad...0844/corpusb36cb7a4...ee3f, M364818432/J46841856. Historical
 376422400/378400768 entries retained. Genuine missing-current-entry RED then

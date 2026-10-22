@@ -1,5 +1,42 @@
 # Phase Acceptance
 
+2026-10-21 immutable R4 publication and exact-ID approval record verified.
+New Release419263735/asset661693932 is candidate-namespaced at
+[p05-d5-fixture-b56cf2ee](https://github.com/tim-zxy/CodeAtlas/releases/tag/p05-d5-fixture-b56cf2eea5b33f853cf06e5daca36cc28f07db33a51fc04a733e961b1f26b2cd),
+source checkpoint b585aa5f9adb2c6accea845af9a4c49119b112f5. Uploaded ZIP digest /
+size agree with original local pack. Static v4 record now binds exact candidate,
+corpus, environment, Native, all5423entries and real IDs; formatted record SHA256
+df1413dbca611fb10eebe9cd0cdf181e2506eec7cebd7cec4f6e64b75738b09f.
+Prior v2 approved-transport.json bytes are preserved as
+approved-transport-layout-v2.json, SHA256
+115d900c85179e4e3f87f3b1a86fe0db10a414c8369cda7803506c8f45175df3;
+v1 backup/assets/all roots unchanged. Relevant record contracts28/28 and
+post-publication preflight PASS retain product/Native/full2329closure and local
+acceptance. Source/tag checkpoint CI is transitional, not final acceptance.
+Only final record head PR+push required CI and clean-host exact-ID download /
+verification/exclusive R4 installation/guarded actual22 can permit normal PR21
+integration. No hosted/merge/Phase promotion claim yet. Evidence:
+task8-r4-published-record.json, task8-r4-record-contracts.log and
+task8-r4-record-preflight.json in the SAME evidence directory.
+
+2026-10-21 R4 fresh local acceptance supersedes earlier local-gate status.
+All18 sequential gates exit0: root1595 tests/1594pass/0fail/1existing skip,
+Native114, registered REFRESH707/707, memory27, actualEvaluation31/31 with
+five gate values1/1/1/1/0, build16/IRtypes/architecture17/boundaries/format /
+Rust checks. Guarded actual22 has22 original admitted receipts,0fail, closed
+transactions/TEMP and peak359440384<=approved394211328. Worker1/2 graph /
+coverage/support match with stale0 and distinct observed completion-order hashes.
+Read-only task8-r4-local-gates-audit.json PASS independently binds every gate,
+original22/31 reports, immutable ZIP/candidate/holdout, environment/Native and
+full2329closure. ZIP240451498 bytes/5423entries SHA256
+916d069a3f4ee7bdae2d4525389e6c345d5df7a24e1a27727663332c4fc7f30a;
+actual31 report SHA256
+77f8dab1b2ca3dfcd627de767767951bd1c7e4413a4b89e650db3d47b569bf67.
+This is LOCAL_GATES_PASS_PENDING_HOSTED, not Phase acceptance. Next: real-ID
+immutable R4 publication/static record, final-head PR+push required CI including
+clean-host exact-pack actual22, then normal PR21 integration. Prior failures /
+withdrawn entries stay historical; no sole-cause or universal timeout-fix claim.
+
 2026-10-20 R2 real Release417778800/asset657493684 and v2 static approval record
 are verified against pristine ZIP/source/environment; focused contracts24/24.
 Original v1 record/Release/asset remain byte-identical. This completes publication
@@ -333,6 +370,20 @@ Phase 0 explicitly does not require Java parsing.
 
 ## Phase 0.5 exit
 
+2026-10-20 later mandatory-CI HOLD: PR21 push39348380807 has offline dense-upsert
+preparation TIMEOUT (702/703), despite the PR group passing. Existing checked
+source obligations below do not waive this failed check or authorize promotion.
+Keep formal closeout held; CURRENT_STATUS and PHASE05_EXIT_AUDIT retain original
+failure, diagnostic-only evidence and unchanged resource/timeout/gate policies.
+
+2026-10-20 [integrated exit audit](PHASE05_EXIT_AUDIT.md) regrades all21 original
+checks below and ADR-016 applicability PASS from actual code/registered Fixtures,
+original31/21 Evaluation,17 complete local gates and exact-head PR/push CI with
+clean-host actual22. Checkmarks record this evidence, not earlier checkpoint
+claims. Product integrated at ee0a919; normal closeout-document integration is
+pending before Phase1 detailed planning. Original thresholds and limitations in
+the audit remain unchanged; no Phase1 implementation or deferred scope follows.
+
 Accepted interpretation2026-10-15: user's “批准，继续执行” accepts ADR-017 and
 its written evidence-layer design. The subsequent user “确认” approves the revised
 existing plan for implementation. All31 required cases,21 incremental obligations, original gates
@@ -353,21 +404,21 @@ Follow-up verification2026-10-13: automatic approval recovered; final format/Rus
 2026-10-13 query/CLI evidence checkpoint: registered `p05-code-query-cli-v1` proves local symbol search/understand/bounded CODE_TRACE with scoped freshness, coverage, support refs and read-only recovery (feature/boundary179/179; CURRENT_STATUS lists raw logs). The understand/trace checkbox remains unchecked pending complete declared gates: final required root1132/1089pass/42 unchanged Native profile failures/1skip is not green; additional final verification was not executed because automatic approval review was unavailable. No numerical threshold, original exit or Phase promotion is changed.
 
 - [x] A Java repository is scanned with ignore, generated/vendor/test, binary, and include/exclude handling (P05-W2-001; three declared Source Fixtures and reproducible commands in `CURRENT_STATUS.md`).
-- [ ] Native analysis emits symbols, imports, direct calls, inheritance, references, diagnostics, and coverage through IPC v1.
-- [ ] Java extraction is behind a `LanguageAnalyzer` boundary; framework interpretation is absent from the language adapter.
-- [ ] Provider facts normalize into canonical facts while unresolved targets remain unresolved.
-- [ ] Canonical facts, evidence, and provider bindings persist correctly.
-- [ ] Full-analysis failure preserves the previous active graph and activation ID/fingerprint; a retained graph is not reported current solely because a mutable `WORKTREE` ID matches.
-- [ ] One-file add, modify, and delete changes use validated incremental patches.
-- [ ] Changed-file refresh does not silently reparse an unchanged repository; restart uses file fingerprints and does not require persisted ASTs.
-- [ ] Cold, 1-file, 5-file, and 50-file scenarios report stage durations and peak memory with pinned inputs; any numeric performance threshold requires a reviewed baseline.
-- [ ] Worker Consistency on pinned inputs preserves normalized Canonical Graph semantics, coverage, and stale-fact state across worker counts/completion orders; in-flight files, output, and staging remain bounded under declared budgets.
-- [ ] Analyzer outcomes distinguish timeout/budget failure, parser exception, unsupported language/capability, syntax-error/partial coverage, and successful zero-fact analysis without publishing partial graph state.
-- [ ] P05-W3-003 v2 `ANALYZE` coverage records report source-grounded eligible/covered/unsupported/partial site counts and relation-resolution distribution per file/capability; strict v1 remains usable with numeric statistics explicitly unavailable. Exact Fixtures and failure recovery pass; no new numerical gate is implied (ADR-015).
-- [ ] Removed provider support leaves no stale binding; a fact remains while another provider still supports it.
-- [ ] P05-W1-011 patch application reselects from persisted active-support candidates after one Provider removal, rejects legacy missing candidates with a full-analysis fallback, and preserves graph/Evidence/bindings and activation ID/fingerprint on failed or stale-base patches (registered `p05-incremental-patch-apply-v1`; no new numeric gate).
-- [ ] P05-W1-011's registered Fixture proves same-`WORKTREE`-ID fingerprint advancement and controlled `FULL_ANALYSIS_REQUIRED` for different revision IDs or immutable targets, with exact old-graph/Evidence/binding/candidate/pointer preservation. This is an applicability boundary, not a replacement for the existing Phase 0.5 incremental-correctness or no-default-full-reparse gates.
-- [ ] `understand` and code-level `trace` return locations, relations, confidence, and coverage warnings.
+- [x] Native analysis emits symbols, imports, direct calls, inheritance, references, diagnostics, and coverage through IPC v1.
+- [x] Java extraction is behind a `LanguageAnalyzer` boundary; framework interpretation is absent from the language adapter.
+- [x] Provider facts normalize into canonical facts while unresolved targets remain unresolved.
+- [x] Canonical facts, evidence, and provider bindings persist correctly.
+- [x] Full-analysis failure preserves the previous active graph and activation ID/fingerprint; a retained graph is not reported current solely because a mutable `WORKTREE` ID matches.
+- [x] One-file add, modify, and delete changes use validated incremental patches.
+- [x] Changed-file refresh does not silently reparse an unchanged repository; restart uses file fingerprints and does not require persisted ASTs.
+- [x] Cold, 1-file, 5-file, and 50-file scenarios report stage durations and peak memory with pinned inputs; any numeric performance threshold requires a reviewed baseline.
+- [x] Worker Consistency on pinned inputs preserves normalized Canonical Graph semantics, coverage, and stale-fact state across worker counts/completion orders; in-flight files, output, and staging remain bounded under declared budgets.
+- [x] Analyzer outcomes distinguish timeout/budget failure, parser exception, unsupported language/capability, syntax-error/partial coverage, and successful zero-fact analysis without publishing partial graph state.
+- [x] P05-W3-003 v2 `ANALYZE` coverage records report source-grounded eligible/covered/unsupported/partial site counts and relation-resolution distribution per file/capability; strict v1 remains usable with numeric statistics explicitly unavailable. Exact Fixtures and failure recovery pass; no new numerical gate is implied (ADR-015).
+- [x] Removed provider support leaves no stale binding; a fact remains while another provider still supports it.
+- [x] P05-W1-011 patch application reselects from persisted active-support candidates after one Provider removal, rejects legacy missing candidates with a full-analysis fallback, and preserves graph/Evidence/bindings and activation ID/fingerprint on failed or stale-base patches (registered `p05-incremental-patch-apply-v1`; no new numeric gate).
+- [x] P05-W1-011's registered Fixture proves same-`WORKTREE`-ID fingerprint advancement and controlled `FULL_ANALYSIS_REQUIRED` for different revision IDs or immutable targets, with exact old-graph/Evidence/binding/candidate/pointer preservation. This is an applicability boundary, not a replacement for the existing Phase 0.5 incremental-correctness or no-default-full-reparse gates.
+- [x] `understand` and code-level `trace` return locations, relations, confidence, and coverage warnings.
 - [x] Critical Symbol Recall is at least 95 percent.
 - [x] Critical Direct Call Precision is at least 95 percent.
 - [x] Critical Direct Call Recall is at least 90 percent.
