@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "p1-cross-repo-v1",
+  "category": "runtime-graph",
+  "phase": "1",
+  "languages": ["java"],
+  "frameworks": [],
+  "capabilities": ["WORKSPACE_EXECUTION"],
+  "inputs": {
+    "vectors": "inputs.json"
+  },
+  "expected": {
+    "contract": "expected.json"
+  },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

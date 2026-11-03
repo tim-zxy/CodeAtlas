@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "p1-canonical-syntax-mapping-v1",
+  "category": "code-intelligence",
+  "phase": "1",
+  "languages": [],
+  "frameworks": [],
+  "capabilities": ["CANONICAL_SYNTAX_FIXED_POLICY_COMPONENT_ONLY"],
+  "inputs": {
+    "cases": "cases.json",
+    "provenance": "provenance.json"
+  },
+  "expected": {
+    "cases": "cases.json"
+  },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

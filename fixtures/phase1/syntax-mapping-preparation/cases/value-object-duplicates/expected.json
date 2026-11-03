@@ -1,0 +1,94 @@
+{
+  "kind": "MAPPING_PROJECTION_EXPECTATION",
+  "semanticDisposition": "PROJECTABLE_WITHOUT_POLICY",
+  "projection": {
+    "repositoryId": "repo-fixture",
+    "revisionId": "rev-a",
+    "sourceFileId": "source-fixture",
+    "sourceFingerprint": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+    "sourceRange": {
+      "sourceFileId": "source-fixture",
+      "startLine": 1,
+      "startColumn": 0,
+      "endLine": 1,
+      "endColumn": 5
+    },
+    "syntaxKind": "ASSIGNMENT",
+    "owner": {
+      "scope": "REPOSITORY",
+      "repositoryId": "repo-fixture",
+      "entity": {
+        "kind": "CODE_NODE",
+        "id": "node-owner",
+        "revisionId": "rev-a"
+      }
+    },
+    "payload": {
+      "targetName": "x",
+      "value": {
+        "kind": "OBJECT",
+        "entries": [
+          {
+            "name": "same",
+            "value": {
+              "kind": "NUMBER",
+              "value": 1
+            }
+          },
+          {
+            "name": "same",
+            "value": {
+              "kind": "NUMBER",
+              "value": 2
+            }
+          }
+        ]
+      }
+    }
+  },
+  "requiredEntities": [
+    {
+      "kind": "SOURCE_FILE",
+      "id": "source-fixture",
+      "revisionId": "rev-a"
+    },
+    {
+      "kind": "CODE_NODE",
+      "id": "node-owner",
+      "revisionId": "rev-a"
+    }
+  ],
+  "keyMeaning": {
+    "owner": {
+      "kind": "CODE_NODE",
+      "id": "node-owner"
+    },
+    "payload": {
+      "targetName": "x",
+      "value": {
+        "kind": "OBJECT",
+        "entries": [
+          {
+            "name": "same",
+            "value": {
+              "kind": "NUMBER",
+              "value": 1
+            }
+          },
+          {
+            "name": "same",
+            "value": {
+              "kind": "NUMBER",
+              "value": 2
+            }
+          }
+        ]
+      }
+    }
+  },
+  "admission": "BLOCKED_POLICY",
+  "canonicalEnvelope": null,
+  "keyCanonicalText": "{\"owner\":{\"id\":\"node-owner\",\"kind\":\"CODE_NODE\"},\"payload\":{\"targetName\":\"x\",\"value\":{\"entries\":[{\"name\":\"same\",\"value\":{\"kind\":\"NUMBER\",\"value\":1}},{\"name\":\"same\",\"value\":{\"kind\":\"NUMBER\",\"value\":2}}],\"kind\":\"OBJECT\"}}}",
+  "payloadDigest": "d9eac2783db50759b0c5b9b9e802c77dbaa3d8aad84ac07b8bd5ea658e1a979d",
+  "syntaxKey": "syntax-key-v1:46fe6db4fe0e19e25104ab8e031d8ca19b249df2a3931bd1297fc1792de01b04"
+}

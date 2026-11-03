@@ -1,0 +1,13 @@
+{
+  "kind": "OFFLINE_CORPUS_CONTRACT_ONLY",
+  "classes": [
+    "python-static",
+    "java-owner",
+    "mixed-provisional",
+    "dynamic-malformed",
+    "nested-source",
+    "bounded-output",
+    "changed-only-restart",
+    "initial-absent"
+  ]
+}

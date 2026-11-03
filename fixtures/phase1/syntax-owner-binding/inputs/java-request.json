@@ -1,0 +1,86 @@
+{
+  "protocolVersion": 4,
+  "requestId": "syntax:request",
+  "sequence": 0,
+  "type": "OBSERVE_SYNTAX",
+  "payload": {
+    "irSchemaVersion": 1,
+    "repository": {
+      "id": "repo:one",
+      "rootPath": "/fixture/repo"
+    },
+    "providerId": "native",
+    "providerVersion": "0.0.0",
+    "providerSnapshotId": "snapshot:one",
+    "extractorVersion": "syntax-v1",
+    "languages": [
+      {
+        "languageId": "java",
+        "grammarVersion": "0.23.5",
+        "analyzerVersion": "0.0.0",
+        "compatibilityVersion": "syntax-v1"
+      }
+    ],
+    "sourceFiles": [
+      {
+        "id": "file:one",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "path": "src/Handler.java",
+        "contentFingerprint": "source:one",
+        "classification": {
+          "role": "SOURCE",
+          "provenance": "AUTHORED",
+          "contentKind": "TEXT"
+        },
+        "languageHint": "java",
+        "sensitivity": "INTERNAL"
+      }
+    ],
+    "removedSourceFiles": [],
+    "owners": [
+      {
+        "sourceFileId": "file:one",
+        "providerNodeRef": {
+          "factType": "NODE",
+          "providerId": "native",
+          "providerFactId": "java:handler"
+        },
+        "canonicalRef": {
+          "scope": "REPOSITORY",
+          "repositoryId": "repo:one",
+          "entity": {
+            "kind": "CODE_NODE",
+            "id": "code:handler",
+            "revisionId": "revision:worktree"
+          }
+        }
+      }
+    ],
+    "deadlineEpochMs": null,
+    "resourceBudget": {
+      "maxDurationMs": 1000,
+      "maxMemoryBytes": 65536,
+      "maxEvents": 20,
+      "maxInputBytes": 65536,
+      "maxOutputBytes": 65536,
+      "maxDepth": 64
+    },
+    "expectedActivationBasis": {
+      "repositoryId": "repo:one",
+      "revisionId": "revision:worktree",
+      "contentFingerprint": "content:first",
+      "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "targetSource": {
+      "repositoryId": "repo:one",
+      "revisionId": "revision:worktree",
+      "contentFingerprint": "content:first"
+    },
+    "ownerBinding": {
+      "kind": "ACTIVE_CODE",
+      "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ownerMapDigest": "7f76f944cca5ab0b03be6097a1208ab030137e93100055b2be0456ff24b58a28"
+    }
+  }
+}

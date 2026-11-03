@@ -1,0 +1,4 @@
+{
+  "scenario": "origin-immutable",
+  "base": "base-input.json"
+}

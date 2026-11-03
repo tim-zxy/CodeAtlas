@@ -1,0 +1,62 @@
+{
+  "kind": "MAPPING_PROJECTION_EXPECTATION",
+  "semanticDisposition": "PROJECTABLE_WITHOUT_POLICY",
+  "projection": {
+    "repositoryId": "repo-fixture",
+    "revisionId": "rev-a",
+    "sourceFileId": "source-fixture",
+    "sourceFingerprint": "0af6a6b64794de7e02c5e17c7d532d8fa22b7e5fce51b803a46439e6637cb269",
+    "sourceRange": {
+      "sourceFileId": "source-fixture",
+      "startLine": 0,
+      "startColumn": 0,
+      "endLine": 0,
+      "endColumn": 13
+    },
+    "syntaxKind": "ARTIFACT",
+    "owner": null,
+    "payload": {
+      "mediaType": "application/yaml",
+      "logicalPath": "artifact.yml",
+      "contentDigest": "0af6a6b64794de7e02c5e17c7d532d8fa22b7e5fce51b803a46439e6637cb269",
+      "declaredValues": [
+        {
+          "name": "name",
+          "value": {
+            "kind": "STRING",
+            "value": "fixture"
+          }
+        }
+      ]
+    }
+  },
+  "requiredEntities": [
+    {
+      "kind": "SOURCE_FILE",
+      "id": "source-fixture",
+      "revisionId": "rev-a"
+    }
+  ],
+  "keyMeaning": {
+    "owner": null,
+    "payload": {
+      "mediaType": "application/yaml",
+      "logicalPath": "artifact.yml",
+      "contentDigest": "0af6a6b64794de7e02c5e17c7d532d8fa22b7e5fce51b803a46439e6637cb269",
+      "declaredValues": [
+        {
+          "name": "name",
+          "value": {
+            "kind": "STRING",
+            "value": "fixture"
+          }
+        }
+      ]
+    }
+  },
+  "admission": "BLOCKED_POLICY",
+  "canonicalEnvelope": null,
+  "keyCanonicalText": "{\"owner\":null,\"payload\":{\"contentDigest\":\"0af6a6b64794de7e02c5e17c7d532d8fa22b7e5fce51b803a46439e6637cb269\",\"declaredValues\":[{\"name\":\"name\",\"value\":{\"kind\":\"STRING\",\"value\":\"fixture\"}}],\"logicalPath\":\"artifact.yml\",\"mediaType\":\"application/yaml\"}}",
+  "payloadDigest": "33762973cf58f84afb8cfc3398f5ca611e1312ab5288053d69ea9fa32946335c",
+  "syntaxKey": "syntax-key-v1:05f6f96348df7ff1ab2a6dcc3d9a88c8e95198514c8671f73a72fb51c8290cee"
+}

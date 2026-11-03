@@ -1,0 +1,638 @@
+{
+  "schemaVersion": 1,
+  "kind": "EXPLICIT_FIXTURE_CONTEXT_CORRECTION",
+  "design": "docs/superpowers/specs/2026-10-25-phase1-r011-history-stage-contract.md#5-ownerraw桥接与最终stage精确生命周期",
+  "sourceAudit": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/consolidated-local-baseline-applicability.json",
+  "contexts": [
+    {
+      "logicalPath": "stage-observation-independent/mixed.json",
+      "sha256": "165fee9f7588c62662d745c9dda49baab4ab641a18779a1c2e83dcdff13d8b1c",
+      "byteLength": 28706
+    },
+    {
+      "logicalPath": "stage-observation-independent/mixed-request.jsonl",
+      "sha256": "a1bea975a6e30feefdcd2f33e07afa3d9cd168b86b6fc35b754d2d481e6bd0c0",
+      "byteLength": 2119
+    },
+    {
+      "logicalPath": "stage-observation-independent/mixed-output.jsonl",
+      "sha256": "52a66409eea2414fdaecba57e7667073276504c2ed1c461074eaeebab0c282a0",
+      "byteLength": 8037
+    },
+    {
+      "logicalPath": "stage-freeze-independent/mixed.json",
+      "sha256": "da5e095fac2d6b6cbf1654b42ecf9d189d8c26979566942cbd90c559f164d50b",
+      "byteLength": 45206
+    },
+    {
+      "logicalPath": "store-row-independent/mixed.json",
+      "sha256": "cf9a87f4b1b4d15449fae925f460cd51fea332e8528ecd15d71bc148daa2ee66",
+      "byteLength": 102082
+    }
+  ],
+  "cases": [
+    {
+      "id": "preparing-prepareowner",
+      "input": "cases/preparing-prepareowner/input.json",
+      "inputSha256": "f24d0f949e3a963d7d5763a622182b36aead810dab8d33d29a36a80b364fc57e",
+      "expected": "cases/preparing-prepareowner/expected.json",
+      "expectedSha256": "c79eeaee72f32f0ccffea258c0e9ab3bed37f9b9d69a601b358fbacbb51d3730",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "preparing-acceptobservation",
+      "input": "cases/preparing-acceptobservation/input.json",
+      "inputSha256": "26a34fde4fcb51ef3977d1d4ae585716b362d976489974ecd70c1d9b9cbe4a21",
+      "expected": "cases/preparing-acceptobservation/expected.json",
+      "expectedSha256": "ffaf2c928df0ee39345f6ec02bcbd3db25134d5f78eff9665373650a695ca8ed",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "preparing-freeze",
+      "input": "cases/preparing-freeze/input.json",
+      "inputSha256": "772c44783152980af87b9d1283ef26319543a9bccbb23d6f7e7c4b592bbc9e6b",
+      "expected": "cases/preparing-freeze/expected.json",
+      "expectedSha256": "ffaf2c928df0ee39345f6ec02bcbd3db25134d5f78eff9665373650a695ca8ed",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "preparing-apply",
+      "input": "cases/preparing-apply/input.json",
+      "inputSha256": "f4650e6d769e5cbf98df15a7258a67a60283e6d0b3e2eebae7842e85a1dbc218",
+      "expected": "cases/preparing-apply/expected.json",
+      "expectedSha256": "ffaf2c928df0ee39345f6ec02bcbd3db25134d5f78eff9665373650a695ca8ed",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "preparing-close",
+      "input": "cases/preparing-close/input.json",
+      "inputSha256": "99dfa7db4e32921940a96342481757547fd7d141dea8170768a0a08b8318d789",
+      "expected": "cases/preparing-close/expected.json",
+      "expectedSha256": "993a082b31ae85e1e232423c3b4f4b1f957738f02686de30a95618dea077b7a0",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "owner_frozen-prepareowner",
+      "input": "cases/owner_frozen-prepareowner/input.json",
+      "inputSha256": "1ddc22703472474dda26c6dcd7035280060b39f3943a4a48f25b6e5d623b3a6c",
+      "expected": "cases/owner_frozen-prepareowner/expected.json",
+      "expectedSha256": "a086f62b4bc6360dc1ea1c56207b135a0643b2304b2d31085dd97fda751d8b8d",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "owner_frozen-acceptobservation",
+      "input": "cases/owner_frozen-acceptobservation/input.json",
+      "inputSha256": "923c8950314e79dcc84670f75ec22ad60ce4da1982eaa8d2effb792b34f488f9",
+      "expected": "cases/owner_frozen-acceptobservation/expected.json",
+      "expectedSha256": "90c5b5c2574dfb163d410aefb0d795ce019357be65fddf46b22e447e30e04344",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "owner_frozen-freeze",
+      "input": "cases/owner_frozen-freeze/input.json",
+      "inputSha256": "2cc5f596e9d172c90d18ee89c49261cbfbebfd5088d00b21e20778dcb28ffc93",
+      "expected": "cases/owner_frozen-freeze/expected.json",
+      "expectedSha256": "a086f62b4bc6360dc1ea1c56207b135a0643b2304b2d31085dd97fda751d8b8d",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "owner_frozen-apply",
+      "input": "cases/owner_frozen-apply/input.json",
+      "inputSha256": "92b64211281c698e6b6874c84f8c3696bf99cf0268f8077a0376ee3808c637e9",
+      "expected": "cases/owner_frozen-apply/expected.json",
+      "expectedSha256": "a086f62b4bc6360dc1ea1c56207b135a0643b2304b2d31085dd97fda751d8b8d",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "owner_frozen-close",
+      "input": "cases/owner_frozen-close/input.json",
+      "inputSha256": "9eb77d5f02c57bde4a2e4d9c13dbb60d71b6f283af2f10a619b3c3c493b92882",
+      "expected": "cases/owner_frozen-close/expected.json",
+      "expectedSha256": "993a082b31ae85e1e232423c3b4f4b1f957738f02686de30a95618dea077b7a0",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "observed-prepareowner",
+      "input": "cases/observed-prepareowner/input.json",
+      "inputSha256": "e1e500b1e00f1e990a0c71d815278aa720feafe3961a2e04cf7ba0b81bad9345",
+      "expected": "cases/observed-prepareowner/expected.json",
+      "expectedSha256": "6d8c663a2585165a7cb1580af18e576cf093ba44c6ee43eb0bb09a445ddfc8f9",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "observed-acceptobservation",
+      "input": "cases/observed-acceptobservation/input.json",
+      "inputSha256": "d5713da9bc33b0b6dd8034c7212dfb4f82228a3d9fb27874ad11a7073cf7bdc2",
+      "expected": "cases/observed-acceptobservation/expected.json",
+      "expectedSha256": "6d8c663a2585165a7cb1580af18e576cf093ba44c6ee43eb0bb09a445ddfc8f9",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "observed-freeze",
+      "input": "cases/observed-freeze/input.json",
+      "inputSha256": "beb5c5de5ae13967d4227a53b9d4e12e36b32f0d1e7965b37b6232ec8b285907",
+      "expected": "cases/observed-freeze/expected.json",
+      "expectedSha256": "7d0444bb588f1d75d275b81e0778cffbca0e46343a995281ca56f093af8af84d",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "observed-apply",
+      "input": "cases/observed-apply/input.json",
+      "inputSha256": "d7f0a0c9f899b215c20040e9ad2ff8c94604db69942de2dc852af68f0e1426b2",
+      "expected": "cases/observed-apply/expected.json",
+      "expectedSha256": "6d8c663a2585165a7cb1580af18e576cf093ba44c6ee43eb0bb09a445ddfc8f9",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "observed-close",
+      "input": "cases/observed-close/input.json",
+      "inputSha256": "00af53be76b2e83c5ea3d43b528b37673e338c2a007e5ccff9e0caef88fd5bf0",
+      "expected": "cases/observed-close/expected.json",
+      "expectedSha256": "993a082b31ae85e1e232423c3b4f4b1f957738f02686de30a95618dea077b7a0",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "frozen-prepareowner",
+      "input": "cases/frozen-prepareowner/input.json",
+      "inputSha256": "8ed977ea099febb442c150459b5b6688bd1b49c988050075cdd02c77eb90b694",
+      "expected": "cases/frozen-prepareowner/expected.json",
+      "expectedSha256": "ece5812bbdd968d50fd0168fc719f4ea6d4226403e0049847223e56f9f3dec6f",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "frozen-acceptobservation",
+      "input": "cases/frozen-acceptobservation/input.json",
+      "inputSha256": "6b23f601aa2bb1227a7efcc84a91e1b68d75f3c3e919b0bd3ab63234f18ab882",
+      "expected": "cases/frozen-acceptobservation/expected.json",
+      "expectedSha256": "ece5812bbdd968d50fd0168fc719f4ea6d4226403e0049847223e56f9f3dec6f",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "frozen-freeze",
+      "input": "cases/frozen-freeze/input.json",
+      "inputSha256": "3eac983b76b9173d310ade0aa42c679d17e4d664f254af1d2a52543ff0cdb9c9",
+      "expected": "cases/frozen-freeze/expected.json",
+      "expectedSha256": "ece5812bbdd968d50fd0168fc719f4ea6d4226403e0049847223e56f9f3dec6f",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "frozen-apply",
+      "input": "cases/frozen-apply/input.json",
+      "inputSha256": "52e5b9fb7a7b7940d5a9c7b6d2a9fd361ffa646f9f1b48d54cbba19660c20575",
+      "expected": "cases/frozen-apply/expected.json",
+      "expectedSha256": "241442ff4e1d2547ca98c85bc1137e947971bf75ff10fb48bfe199ded2466a55",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "frozen-close",
+      "input": "cases/frozen-close/input.json",
+      "inputSha256": "7bf7eca2a0de2d39f962d0ac03492fe584949af6028289af0b7fbd83b818cb70",
+      "expected": "cases/frozen-close/expected.json",
+      "expectedSha256": "993a082b31ae85e1e232423c3b4f4b1f957738f02686de30a95618dea077b7a0",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "applying-prepareowner",
+      "input": "cases/applying-prepareowner/input.json",
+      "inputSha256": "c9d7698e2e6680dabbb8dace884251f6326924d28ebea7a49848436c0a4c9c85",
+      "expected": "cases/applying-prepareowner/expected.json",
+      "expectedSha256": "8fa551858c379ea858c2ad679b3b7f15dc34e869bb29ed54787dc872de5c98ad",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "applying-acceptobservation",
+      "input": "cases/applying-acceptobservation/input.json",
+      "inputSha256": "58060f22b2a0251628e5c884aac1033cb41cd31f6b9679770f0c46723f0c22bc",
+      "expected": "cases/applying-acceptobservation/expected.json",
+      "expectedSha256": "8fa551858c379ea858c2ad679b3b7f15dc34e869bb29ed54787dc872de5c98ad",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "applying-freeze",
+      "input": "cases/applying-freeze/input.json",
+      "inputSha256": "21dadda7764271a49c35841ede55452a50d062f2ed6f14513e39d10c2f4f5204",
+      "expected": "cases/applying-freeze/expected.json",
+      "expectedSha256": "8fa551858c379ea858c2ad679b3b7f15dc34e869bb29ed54787dc872de5c98ad",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "applying-apply",
+      "input": "cases/applying-apply/input.json",
+      "inputSha256": "e22c5056bee149a56e41f96b1154f6727f4c3f7c52049eba64445ee8c731e4ad",
+      "expected": "cases/applying-apply/expected.json",
+      "expectedSha256": "8fa551858c379ea858c2ad679b3b7f15dc34e869bb29ed54787dc872de5c98ad",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "applying-close",
+      "input": "cases/applying-close/input.json",
+      "inputSha256": "0437bec6d6a28ed28a5cfec1a55a5bb2061b9c6a6208ff93d4b0987b300921b6",
+      "expected": "cases/applying-close/expected.json",
+      "expectedSha256": "8fa551858c379ea858c2ad679b3b7f15dc34e869bb29ed54787dc872de5c98ad",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "consumed-prepareowner",
+      "input": "cases/consumed-prepareowner/input.json",
+      "inputSha256": "dbae28f474222ee67184716d18228bf1519e56e145a0113a4d23347aa4509d4f",
+      "expected": "cases/consumed-prepareowner/expected.json",
+      "expectedSha256": "5bdd1b2d2d0de4b36c3a42c4015ceab6bccec21e81680efd4e2b0727aff86ffa",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "consumed-acceptobservation",
+      "input": "cases/consumed-acceptobservation/input.json",
+      "inputSha256": "6c26ae718c7480f1c0aad59fb04213295f1e101613ad6ebc4a7a5776cefa3d34",
+      "expected": "cases/consumed-acceptobservation/expected.json",
+      "expectedSha256": "5bdd1b2d2d0de4b36c3a42c4015ceab6bccec21e81680efd4e2b0727aff86ffa",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "consumed-freeze",
+      "input": "cases/consumed-freeze/input.json",
+      "inputSha256": "e94bc584309dc2f7bfba2d3e6af39a82573e2a724905b270743b76178e5acd1d",
+      "expected": "cases/consumed-freeze/expected.json",
+      "expectedSha256": "5bdd1b2d2d0de4b36c3a42c4015ceab6bccec21e81680efd4e2b0727aff86ffa",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "consumed-apply",
+      "input": "cases/consumed-apply/input.json",
+      "inputSha256": "a5d731311f909426f4f9ef0857727347b7f6a3914fe1daff163b1dbfa34fd945",
+      "expected": "cases/consumed-apply/expected.json",
+      "expectedSha256": "5bdd1b2d2d0de4b36c3a42c4015ceab6bccec21e81680efd4e2b0727aff86ffa",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "consumed-close",
+      "input": "cases/consumed-close/input.json",
+      "inputSha256": "2abecea4ec95534b4f94fda7bb7065b2a9f39883d278a38888b3c16d76ef69ce",
+      "expected": "cases/consumed-close/expected.json",
+      "expectedSha256": "993a082b31ae85e1e232423c3b4f4b1f957738f02686de30a95618dea077b7a0",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "invalid-prepareowner",
+      "input": "cases/invalid-prepareowner/input.json",
+      "inputSha256": "2e7fbc5699dcaa70d89ee5059b843a62145fc70734271a2a99738453c08201dd",
+      "expected": "cases/invalid-prepareowner/expected.json",
+      "expectedSha256": "3704ef4b43a87fa6cb4b6d234bc59f27d03e2578faabc1548b7c613bcbccb8b1",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "invalid-acceptobservation",
+      "input": "cases/invalid-acceptobservation/input.json",
+      "inputSha256": "5d732905546ac8a9b9c4bd830db21e4cfb4a36b0f72ef68f85b5d3c4c6c88e1c",
+      "expected": "cases/invalid-acceptobservation/expected.json",
+      "expectedSha256": "3704ef4b43a87fa6cb4b6d234bc59f27d03e2578faabc1548b7c613bcbccb8b1",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "invalid-freeze",
+      "input": "cases/invalid-freeze/input.json",
+      "inputSha256": "64a5ef9d1ba98240eb536b8a4a2039331c8c3f60b2d7e57f714bf025e9952499",
+      "expected": "cases/invalid-freeze/expected.json",
+      "expectedSha256": "3704ef4b43a87fa6cb4b6d234bc59f27d03e2578faabc1548b7c613bcbccb8b1",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "invalid-apply",
+      "input": "cases/invalid-apply/input.json",
+      "inputSha256": "49133fdc124f132cc4dca6a58771987ecaa0c684f7b0bc46ca6f96081fa83760",
+      "expected": "cases/invalid-apply/expected.json",
+      "expectedSha256": "3704ef4b43a87fa6cb4b6d234bc59f27d03e2578faabc1548b7c613bcbccb8b1",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "invalid-close",
+      "input": "cases/invalid-close/input.json",
+      "inputSha256": "dc9dfc85d2f705905c46e838d27a849bf6cdebe46972b27e4a274ae2c529e29e",
+      "expected": "cases/invalid-close/expected.json",
+      "expectedSha256": "993a082b31ae85e1e232423c3b4f4b1f957738f02686de30a95618dea077b7a0",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "closed-prepareowner",
+      "input": "cases/closed-prepareowner/input.json",
+      "inputSha256": "c4de5e9572c7e7b8164bad4259e8c555ed76671baec3b3397a9991e3b70ae242",
+      "expected": "cases/closed-prepareowner/expected.json",
+      "expectedSha256": "4452eef50198ef090a3c7be88e552a97008c68917dbed6d912a9340357d1c3be",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "closed-acceptobservation",
+      "input": "cases/closed-acceptobservation/input.json",
+      "inputSha256": "54d0bb73b522d75fa9abefc4231eebdac4baa247bc2871a5b2b584d4e62f5ecc",
+      "expected": "cases/closed-acceptobservation/expected.json",
+      "expectedSha256": "4452eef50198ef090a3c7be88e552a97008c68917dbed6d912a9340357d1c3be",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "closed-freeze",
+      "input": "cases/closed-freeze/input.json",
+      "inputSha256": "250fb797b3faf9e78eda807aa42a3d5579bbb8b1e5ec67d953151515e387ee87",
+      "expected": "cases/closed-freeze/expected.json",
+      "expectedSha256": "4452eef50198ef090a3c7be88e552a97008c68917dbed6d912a9340357d1c3be",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "closed-apply",
+      "input": "cases/closed-apply/input.json",
+      "inputSha256": "daf9b7edc6c817d741f384ce862eaae1d8f0396284fc7a95d36b0f35d7c64038",
+      "expected": "cases/closed-apply/expected.json",
+      "expectedSha256": "4452eef50198ef090a3c7be88e552a97008c68917dbed6d912a9340357d1c3be",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    },
+    {
+      "id": "closed-close",
+      "input": "cases/closed-close/input.json",
+      "inputSha256": "6e0f7b110844e44a90bf6a91fe7de9768162319ecf1dc37e23de56f8081963ee",
+      "expected": "cases/closed-close/expected.json",
+      "expectedSha256": "993a082b31ae85e1e232423c3b4f4b1f957738f02686de30a95618dea077b7a0",
+      "context": "mixed-source-only-full",
+      "qualification": "DECLARED_COMPONENT_ONLY",
+      "originalBaseControl": {
+        "path": "base-input.json",
+        "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+        "nativePreparation": "FULL_ANALYSIS_REQUIRED"
+      },
+      "contextCorrection": "Explicit supplementary Native Source/owner/raw context; original alpha/unknown-language base retained as negative control; original method/state/expected unchanged."
+    }
+  ],
+  "notNativeRuntimeQualification": true,
+  "remainingStageBoundaryCases": 26,
+  "remainingStoreCases": 43
+}

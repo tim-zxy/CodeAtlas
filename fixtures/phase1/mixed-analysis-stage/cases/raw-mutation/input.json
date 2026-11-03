@@ -1,0 +1,4 @@
+{
+  "scenario": "raw-mutation",
+  "base": "base-input.json"
+}

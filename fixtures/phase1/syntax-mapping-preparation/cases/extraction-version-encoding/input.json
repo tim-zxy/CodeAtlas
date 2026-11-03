@@ -1,0 +1,6 @@
+{
+  "kind": "IDENTITY_ENCODING_INPUT",
+  "domain": "syntax-extraction-v1",
+  "fields": ["extractor|v1", "", "UNAPPROVED_ENCODING_ONLY"],
+  "policyVersion": "UNAPPROVED_ENCODING_ONLY"
+}

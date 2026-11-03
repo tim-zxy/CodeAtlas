@@ -1,0 +1,565 @@
+{
+  "scope": {
+    "kind": "DECLARED_NATIVE_OBSERVATION_SCOPE",
+    "mode": "OBSERVATION_REQUIRED",
+    "targetSource": {
+      "repositoryId": "repo:history",
+      "revisionId": "revision:worktree",
+      "contentFingerprint": "content:scope:S02-python-modified-a"
+    },
+    "diff": [
+      {
+        "kind": "MODIFIED",
+        "before": {
+          "id": "a",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "a.py",
+          "contentFingerprint": "content:a",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "python",
+          "sensitivity": "INTERNAL"
+        },
+        "after": {
+          "id": "a",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "a.py",
+          "contentFingerprint": "content:changed:a",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "python",
+          "sensitivity": "INTERNAL"
+        }
+      },
+      {
+        "kind": "UNCHANGED",
+        "before": {
+          "id": "b",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "b.py",
+          "contentFingerprint": "content:b",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "python",
+          "sensitivity": "INTERNAL"
+        },
+        "after": {
+          "id": "b",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "b.py",
+          "contentFingerprint": "content:b",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "python",
+          "sensitivity": "INTERNAL"
+        }
+      },
+      {
+        "kind": "REMOVED",
+        "before": {
+          "id": "doc",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "notes.md",
+          "contentFingerprint": "content:doc",
+          "classification": {
+            "role": "OTHER",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": null,
+          "sensitivity": "INTERNAL"
+        },
+        "after": null
+      },
+      {
+        "kind": "UNCHANGED",
+        "before": {
+          "id": "j",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "J.java",
+          "contentFingerprint": "content:j",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "java",
+          "sensitivity": "INTERNAL"
+        },
+        "after": {
+          "id": "j",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "J.java",
+          "contentFingerprint": "content:j",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "java",
+          "sensitivity": "INTERNAL"
+        }
+      },
+      {
+        "kind": "UNCHANGED",
+        "before": {
+          "id": "k",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "K.java",
+          "contentFingerprint": "content:k",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "java",
+          "sensitivity": "INTERNAL"
+        },
+        "after": {
+          "id": "k",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "K.java",
+          "contentFingerprint": "content:k",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "java",
+          "sensitivity": "INTERNAL"
+        }
+      }
+    ],
+    "requiredUnits": [
+      {
+        "kind": "PYTHON_FILE",
+        "sourceFileIds": ["a"],
+        "previousUnitId": "py:a"
+      }
+    ],
+    "removedSourceFileIds": ["doc"],
+    "provenance": {
+      "kind": "DECLARED_INPUT",
+      "historyActivationId": "activation:old"
+    }
+  },
+  "raw": {
+    "kind": "DECLARED_DELTA_RAW_OBSERVATION",
+    "metadata": {
+      "targetSource": {
+        "repositoryId": "repo:history",
+        "revisionId": "revision:worktree",
+        "contentFingerprint": "content:scope:S02-python-modified-a"
+      },
+      "inventory": [
+        {
+          "id": "j",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "J.java",
+          "contentFingerprint": "content:j",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "java",
+          "sensitivity": "INTERNAL"
+        },
+        {
+          "id": "k",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "K.java",
+          "contentFingerprint": "content:k",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "java",
+          "sensitivity": "INTERNAL"
+        },
+        {
+          "id": "a",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "a.py",
+          "contentFingerprint": "content:changed:a",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "python",
+          "sensitivity": "INTERNAL"
+        },
+        {
+          "id": "b",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "b.py",
+          "contentFingerprint": "content:b",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "python",
+          "sensitivity": "INTERNAL"
+        }
+      ],
+      "snapshot": {
+        "id": "snapshot:r0:R09-other-removal-and-python-modify",
+        "providerId": "native",
+        "providerVersion": "0.0.0",
+        "runtimeVersion": "fixture-runtime",
+        "startedAt": "2026-10-24T00:00:00.000Z",
+        "completedAt": "2026-10-24T00:00:00.003Z"
+      },
+      "tool": {
+        "target": "fixture-target",
+        "profile": "test"
+      },
+      "java": null,
+      "codeSyntax": {
+        "providerVersion": "0.0.0",
+        "runtimeVersion": "fixture-runtime",
+        "tool": {
+          "target": "fixture-target",
+          "profile": "test"
+        },
+        "startedAt": "2026-10-24T00:00:00.001Z",
+        "settledAt": "2026-10-24T00:00:00.002Z"
+      }
+    },
+    "java": null,
+    "codeSyntax": {
+      "request": {
+        "protocolVersion": 5,
+        "requestId": "r0:R09-other-removal-and-python-modify",
+        "sequence": 0,
+        "type": "OBSERVE_CODE_SYNTAX",
+        "payload": {
+          "irSchemaVersion": 1,
+          "repository": {
+            "id": "repo:history",
+            "rootPath": "/fixture/r0"
+          },
+          "providerId": "native",
+          "providerVersion": "0.0.0",
+          "providerSnapshotId": "snapshot:r0:R09-other-removal-and-python-modify",
+          "extractorVersion": "syntax-v1",
+          "languages": [
+            {
+              "languageId": "python",
+              "grammarVersion": "0.25.0",
+              "analyzerVersion": "0.0.0",
+              "compatibilityVersion": "syntax-v1"
+            }
+          ],
+          "sourceFiles": [
+            {
+              "id": "a",
+              "repositoryId": "repo:history",
+              "revisionId": "revision:worktree",
+              "path": "a.py",
+              "contentFingerprint": "content:changed:a",
+              "classification": {
+                "role": "SOURCE",
+                "provenance": "AUTHORED",
+                "contentKind": "TEXT"
+              },
+              "languageHint": "python",
+              "sensitivity": "INTERNAL"
+            }
+          ],
+          "removedSourceFiles": [],
+          "owners": [],
+          "deadlineEpochMs": null,
+          "resourceBudget": {
+            "maxDurationMs": 1000,
+            "maxMemoryBytes": 65536,
+            "maxEvents": 20,
+            "maxInputBytes": 65536,
+            "maxOutputBytes": 65536,
+            "maxDepth": 64,
+            "maxItems": 1000
+          },
+          "expectedActivationBasis": {
+            "repositoryId": "repo:history",
+            "revisionId": "revision:worktree",
+            "contentFingerprint": "content:old",
+            "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "targetSource": {
+            "repositoryId": "repo:history",
+            "revisionId": "revision:worktree",
+            "contentFingerprint": "content:scope:S02-python-modified-a"
+          },
+          "ownerBinding": {
+            "kind": "PROVISIONAL_CODE",
+            "stageDigest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "ownerMapDigest": "360ec803e40a2188a8d1bb39af7a4b237e1d381112f84c4476fe3088b23518b3"
+          },
+          "codeContract": "PYTHON_SYNTAX_CODE_V1"
+        }
+      },
+      "events": [
+        {
+          "type": "OBSERVATION_STARTED",
+          "payload": {
+            "expectedActivationBasis": {
+              "repositoryId": "repo:history",
+              "revisionId": "revision:worktree",
+              "contentFingerprint": "content:old",
+              "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "targetSource": {
+              "repositoryId": "repo:history",
+              "revisionId": "revision:worktree",
+              "contentFingerprint": "content:scope:S02-python-modified-a"
+            },
+            "ownerBinding": {
+              "kind": "PROVISIONAL_CODE",
+              "stageDigest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+              "ownerMapDigest": "360ec803e40a2188a8d1bb39af7a4b237e1d381112f84c4476fe3088b23518b3"
+            },
+            "extractorVersion": "syntax-v1",
+            "codeContract": "PYTHON_SYNTAX_CODE_V1",
+            "requestChecksum": "ab98973f713170d9561ec8d75f282681a92caabc5741916b1c37b07bc224baed"
+          },
+          "protocolVersion": 5,
+          "requestId": "r0:R09-other-removal-and-python-modify",
+          "sequence": 0
+        },
+        {
+          "type": "NODE",
+          "payload": {
+            "providerId": "native",
+            "providerSnapshotId": "snapshot:r0:R09-other-removal-and-python-modify",
+            "repositoryId": "repo:history",
+            "revisionId": "revision:worktree",
+            "providerFactId": "python:module:a",
+            "providerKind": "python.module",
+            "name": "a.py",
+            "qualifiedName": "a.py",
+            "sourceRange": {
+              "sourceFileId": "a",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 0,
+              "endColumn": 0
+            },
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            }
+          },
+          "protocolVersion": 5,
+          "requestId": "r0:R09-other-removal-and-python-modify",
+          "sequence": 1
+        },
+        {
+          "type": "CODE_COVERAGE",
+          "payload": {
+            "sourceFileId": "a",
+            "sourceFingerprint": "content:changed:a",
+            "codeContract": "PYTHON_SYNTAX_CODE_V1",
+            "facet": "MODULE",
+            "status": "COMPLETE",
+            "limitations": [],
+            "statistics": {
+              "eligibleSites": 1,
+              "coveredSites": 1,
+              "unsupportedSites": 0,
+              "partialSites": 0,
+              "resolutionCounts": {
+                "EXACT": 0,
+                "HEURISTIC": 0,
+                "AMBIGUOUS": 0,
+                "UNRESOLVED": 0,
+                "UNSUPPORTED": 0
+              }
+            }
+          },
+          "protocolVersion": 5,
+          "requestId": "r0:R09-other-removal-and-python-modify",
+          "sequence": 2
+        },
+        {
+          "type": "CODE_COVERAGE",
+          "payload": {
+            "sourceFileId": "a",
+            "sourceFingerprint": "content:changed:a",
+            "codeContract": "PYTHON_SYNTAX_CODE_V1",
+            "facet": "FUNCTION",
+            "status": "COMPLETE",
+            "limitations": [],
+            "statistics": {
+              "eligibleSites": 0,
+              "coveredSites": 0,
+              "unsupportedSites": 0,
+              "partialSites": 0,
+              "resolutionCounts": {
+                "EXACT": 0,
+                "HEURISTIC": 0,
+                "AMBIGUOUS": 0,
+                "UNRESOLVED": 0,
+                "UNSUPPORTED": 0
+              }
+            }
+          },
+          "protocolVersion": 5,
+          "requestId": "r0:R09-other-removal-and-python-modify",
+          "sequence": 3
+        },
+        {
+          "type": "CODE_COVERAGE",
+          "payload": {
+            "sourceFileId": "a",
+            "sourceFingerprint": "content:changed:a",
+            "codeContract": "PYTHON_SYNTAX_CODE_V1",
+            "facet": "IMPORT",
+            "status": "COMPLETE",
+            "limitations": [],
+            "statistics": {
+              "eligibleSites": 0,
+              "coveredSites": 0,
+              "unsupportedSites": 0,
+              "partialSites": 0,
+              "resolutionCounts": {
+                "EXACT": 0,
+                "HEURISTIC": 0,
+                "AMBIGUOUS": 0,
+                "UNRESOLVED": 0,
+                "UNSUPPORTED": 0
+              }
+            }
+          },
+          "protocolVersion": 5,
+          "requestId": "r0:R09-other-removal-and-python-modify",
+          "sequence": 4
+        },
+        {
+          "type": "CODE_COVERAGE",
+          "payload": {
+            "sourceFileId": "a",
+            "sourceFingerprint": "content:changed:a",
+            "codeContract": "PYTHON_SYNTAX_CODE_V1",
+            "facet": "REFERENCE",
+            "status": "COMPLETE",
+            "limitations": [],
+            "statistics": {
+              "eligibleSites": 0,
+              "coveredSites": 0,
+              "unsupportedSites": 0,
+              "partialSites": 0,
+              "resolutionCounts": {
+                "EXACT": 0,
+                "HEURISTIC": 0,
+                "AMBIGUOUS": 0,
+                "UNRESOLVED": 0,
+                "UNSUPPORTED": 0
+              }
+            }
+          },
+          "protocolVersion": 5,
+          "requestId": "r0:R09-other-removal-and-python-modify",
+          "sequence": 5
+        },
+        {
+          "type": "SYNTAX_COVERAGE",
+          "payload": {
+            "sourceFileId": "a",
+            "sourceFingerprint": "content:changed:a",
+            "status": "COMPLETE",
+            "limitations": []
+          },
+          "protocolVersion": 5,
+          "requestId": "r0:R09-other-removal-and-python-modify",
+          "sequence": 6
+        },
+        {
+          "type": "OBSERVATION_COMPLETED",
+          "payload": {
+            "expectedActivationBasis": {
+              "repositoryId": "repo:history",
+              "revisionId": "revision:worktree",
+              "contentFingerprint": "content:old",
+              "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "targetSource": {
+              "repositoryId": "repo:history",
+              "revisionId": "revision:worktree",
+              "contentFingerprint": "content:scope:S02-python-modified-a"
+            },
+            "ownerBinding": {
+              "kind": "PROVISIONAL_CODE",
+              "stageDigest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+              "ownerMapDigest": "360ec803e40a2188a8d1bb39af7a4b237e1d381112f84c4476fe3088b23518b3"
+            },
+            "extractorVersion": "syntax-v1",
+            "codeContract": "PYTHON_SYNTAX_CODE_V1",
+            "requestChecksum": "ab98973f713170d9561ec8d75f282681a92caabc5741916b1c37b07bc224baed",
+            "codeOutcome": "COMPLETE",
+            "syntaxOutcome": "COMPLETE",
+            "outcome": "SUCCEEDED",
+            "counts": {
+              "nodes": 1,
+              "edges": 0,
+              "syntax": 0,
+              "codeCoverage": 4,
+              "syntaxCoverage": 1,
+              "diagnostics": 0
+            },
+            "checksum": "b0b6e3e435c65d7b0067379b5dbc1f9cde8b5526f911a6af32197d6dae0e8338"
+          },
+          "protocolVersion": 5,
+          "requestId": "r0:R09-other-removal-and-python-modify",
+          "sequence": 7
+        }
+      ],
+      "codeOutcome": "COMPLETE",
+      "syntaxOutcome": "COMPLETE",
+      "outcome": "SUCCEEDED",
+      "counts": {
+        "nodes": 1,
+        "edges": 0,
+        "syntax": 0,
+        "codeCoverage": 4,
+        "syntaxCoverage": 1,
+        "diagnostics": 0
+      },
+      "checksum": "b0b6e3e435c65d7b0067379b5dbc1f9cde8b5526f911a6af32197d6dae0e8338",
+      "requestChecksum": "ab98973f713170d9561ec8d75f282681a92caabc5741916b1c37b07bc224baed"
+    },
+    "provenance": {
+      "kind": "DECLARED_INPUT",
+      "requestIdentity": "ab98973f713170d9561ec8d75f282681a92caabc5741916b1c37b07bc224baed",
+      "outputIdentity": "5243e129044e6115f85162acb3f121daa23a16dc795482c919fd1b6c8f983b98"
+    }
+  }
+}

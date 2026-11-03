@@ -1,0 +1,63 @@
+{
+  "kind": "INDEPENDENT_SOURCE_LITERAL_REBOUND_LIBRARY_ORACLE",
+  "sourceSha256": "38d4338d71f7b9a6e3b097fc6cf857951170f256ed51cceda181747ca2ee33f8",
+  "spans": {
+    "module": [
+      0,
+      105
+    ],
+    "import": [
+      20,
+      27
+    ],
+    "assignment": [
+      28,
+      43
+    ],
+    "invocation": [
+      34,
+      43
+    ],
+    "decoration": [
+      44,
+      64
+    ],
+    "argument": [
+      53,
+      63
+    ],
+    "function": [
+      65,
+      104
+    ],
+    "functionName": [
+      69,
+      85
+    ]
+  },
+  "counts": {
+    "nodes": 2,
+    "edges": 1,
+    "syntax": 5,
+    "coverage": 1,
+    "diagnostics": 0
+  },
+  "outcome": "PARTIAL",
+  "limitations": [
+    "SYNTHETIC_UNIT_REPO_AND_STAGE_CONTEXT",
+    "EXISTING_UNIT_BUDGETS_ONLY",
+    "NO_ACTUAL_NATIVE_CLI_OR_PROFILE_QUALIFICATION",
+    "NO_SYNTAX_CANONICAL_SUPPORT_OR_STORE_ACTIVATION"
+  ],
+  "caseClass": "python-static",
+  "expectedActivation": "PRESENT",
+  "dependencyDigests": {
+    "holdout/app.py": "38d4338d71f7b9a6e3b097fc6cf857951170f256ed51cceda181747ca2ee33f8",
+    "holdout/request.json": "47ba8d41fe395aa7ddc5dec21abbd68effb237182a86c96e585a060c2c3dc593",
+    "holdout/context.json": "7f5053231c0d5e22972f718918d82313f7130d199c0bd0284cc5963e6c1b21cf",
+    "holdout/basis.json": "a6225613ce512b3569de2518503a147a9b05cc6e812c01fa8ecdd8c2ca379c99",
+    "holdout/events.jsonl": "fd28dba8c9e163b7b9a25d43e3148e58dee4197060e5dd65600a53d89708703d",
+    "holdout/normalized.json": "5a1a4aa89d4bba918091cc05bd1e12d25d4be1573db3f307bafe0f9c8174f2cd",
+    "holdout/authoring.json": "6bbfe401936d65f6b674e0af5fa4b0330edf76c2fa9f347a75d21f77646de93c"
+  }
+}

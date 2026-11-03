@@ -1,0 +1,30 @@
+[
+  {
+    "providerFactId": "java-symbol-v1:84c315d9b44cbf111bac036f48d835e1912f8fd7caebfa058b29cc8de43f59cb",
+    "providerKind": "java.class",
+    "name": "Endpoint_holdout",
+    "qualifiedName": "Endpoint_holdout",
+    "signature": "",
+    "isStatic": false,
+    "span": {
+      "startLine": 0,
+      "startColumn": 6,
+      "endLine": 0,
+      "endColumn": 22
+    }
+  },
+  {
+    "providerFactId": "java-symbol-v1:2248a87751eb60c3fb5f535587735ca2fec064ba06b1e2041208934547907cb9",
+    "providerKind": "java.method",
+    "name": "handle_holdout",
+    "qualifiedName": "Endpoint_holdout.handle_holdout",
+    "signature": "()",
+    "isStatic": false,
+    "span": {
+      "startLine": 0,
+      "startColumn": 49,
+      "endLine": 0,
+      "endColumn": 63
+    }
+  }
+]

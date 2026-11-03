@@ -1,5 +1,35 @@
 # Phase 0.5 integrated exit audit — 2026-10-20
 
+## Final acceptance reconciliation — 2026-10-22
+
+Phase0.5 accepted with retained [P05-RISK-001/P05-ENV-001](PHASE05_RESIDUAL_ISSUES.md).
+PR21 normal merge433015700c7c701a6493f7f8fa5eace00e773913 is REST-verified on main;
+merge tree equals tested cc5a8cb exactly. Original21 exits/ADR applicability,
+18 local gates,31-row Evaluation, six exact-head required CI jobs and22 original
+hosted receipts support acceptance; no criteria changed. Final four parents and
+SAME Tasks7/8 closeout are integrated. Historical timeout is unresolved, not fixed.
+Automatic main workflow39708335128 remains in_progress at last read; no postmerge
+pass claim or retry. [Merge evidence and scope](PHASE05_CLOSEOUT.md). Earlier HOLD
+notes below are preserved history, not current phase/integration blockers.
+
+2026-10-22 latest disposition: user accepts historical timeout as an unresolved
+[follow-up risk](PHASE05_RESIDUAL_ISSUES.md), not a gate change or fix. Fresh
+server checks confirm cc5a8cb both workflows/all six jobs SUCCESS and PR21 clean /
+mergeable. Normal merge command was rejected before execution by safety approval
+pending explicit main-CI side-effect confirmation. Integration/final acceptance
+remain HOLD; no merge or new CI occurred. [Current details](PHASE05_CLOSEOUT.md).
+
+## Current reconciliation — 2026-10-22
+
+See [local closeout and residual decisions](PHASE05_CLOSEOUT.md). Latest tested
+head cc5a8cb has both required workflow groups completed/SUCCESS, six successful
+jobs and strict original hosted22/22 receipt audit PASS. The earlier failures
+below remain history, not the current run status. Technical gate evidence does
+not by itself complete normal PR21 integration or formal Phase acceptance.
+Historical timeout causality remains UNKNOWN; promotion stays HOLD pending
+explicit disposition/integration. No threshold is waived and no new cloud run,
+merge or Phase1 implementation is performed by this local reconciliation.
+
 2026-10-21 one diagnostic PR+push round is now explicitly approved, superseding
 the pending-confirmation sentence below only for that pair. No automatic rerun,
 merge/Phase acceptance or old-timeout-fix claim follows from this authorization.

@@ -1,0 +1,4 @@
+{
+  "scenario": "clone-lease",
+  "base": "base-input.json"
+}

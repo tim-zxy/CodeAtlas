@@ -1,0 +1,1126 @@
+{
+  "schemaVersion": 1,
+  "qualification": "LOGICAL_RESOURCE_COMPONENT_REFERENCE_NOT_PROFILE",
+  "bindings": [
+    {
+      "id": "depth-one-below",
+      "family": "BOUNDARY",
+      "input": "cases/depth-one-below/input.json",
+      "expected": "cases/depth-one-below/expected.json",
+      "inputSha256": "747ab727556bd93732a90ec57136c2297721c2de025f62fcbe0d400da6e2b770",
+      "expectedSha256": "57300d857968d95dc765dd23e40fd6696fdcfb43da98f119452bc0c3872d08f0"
+    },
+    {
+      "id": "safe-integer-overflow",
+      "family": "BOUNDARY",
+      "input": "cases/safe-integer-overflow/input.json",
+      "expected": "cases/safe-integer-overflow/expected.json",
+      "inputSha256": "2d8d45b5f8c6361fc6528e315004c861a1ee5fb43ed450476069b1dead5c5417",
+      "expectedSha256": "57300d857968d95dc765dd23e40fd6696fdcfb43da98f119452bc0c3872d08f0"
+    },
+    {
+      "id": "cumulative-insufficient",
+      "family": "BOUNDARY",
+      "input": "cases/cumulative-insufficient/input.json",
+      "expected": "cases/cumulative-insufficient/expected.json",
+      "inputSha256": "6e7991f10a8bce3f389639cd651cb7f8e8d65470c154396d99c34d1d7266111c",
+      "expectedSha256": "57300d857968d95dc765dd23e40fd6696fdcfb43da98f119452bc0c3872d08f0"
+    }
+  ],
+  "source": {
+    "path": "fixtures/phase1/mixed-analysis-store/deletion-independent-context.json",
+    "sha256": "77c9ef7c12df24e6cb57f3217373936d485f200e36c93c8a09eedc94be768983"
+  },
+  "depth": {
+    "rootZeroBased": true,
+    "depthByRoot": {
+      "ownedDetailedCapture": 8,
+      "fixedRuleInput": 8,
+      "h0ScopePacket": 7,
+      "frozenResult": 7,
+      "ownedCaptureReturn": 9
+    },
+    "exact": 9,
+    "oneBelow": 8,
+    "roots": {
+      "ownedDetailedCapture": {
+        "view": {
+          "history": {
+            "codeIdentity": "0cae471886f237ff5e174f2ac56fc5b33b60000e4ccb91193a14efb9686691e9",
+            "observation": null,
+            "originRegistryDigest": "3920e79ec36acd41d633e00f6da67a9874f49b5dd1a64cb8799beb6ad5a3db71",
+            "parent": null,
+            "schemaVersion": 1,
+            "sourceIdentity": "9c79526dfa480941f0b3f6fb924f48b3b8997667e51d34e67f5529a4738d96a0",
+            "state": {
+              "basis": {
+                "codeActivationDigest": "0cae471886f237ff5e174f2ac56fc5b33b60000e4ccb91193a14efb9686691e9",
+                "contentFingerprint": "capture-fingerprint",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree"
+              },
+              "contracts": [
+                {
+                  "contract": "fixture-v1",
+                  "extractor": "fixture-v1",
+                  "normalizer": "fixture-v1",
+                  "policy": "fixture-v1",
+                  "providerId": "native"
+                }
+              ],
+              "coverage": [
+                {
+                  "coverage": "COMPLETE",
+                  "facet": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                  "originSnapshotId": "snapshot:alpha",
+                  "unitId": "py:one"
+                },
+                {
+                  "coverage": "COMPLETE",
+                  "facet": "PYTHON_SYNTAX_CODE_V1",
+                  "originSnapshotId": "snapshot:alpha",
+                  "unitId": "py:one"
+                }
+              ],
+              "edges": [],
+              "inventory": [
+                {
+                  "classification": {
+                    "contentKind": "TEXT",
+                    "provenance": "AUTHORED",
+                    "role": "SOURCE"
+                  },
+                  "contentFingerprint": "source-fingerprint",
+                  "id": "source:one",
+                  "languageHint": "python",
+                  "path": "src/observation.txt",
+                  "repositoryId": "capture-repo",
+                  "revisionId": "capture-worktree",
+                  "sensitivity": "PUBLIC"
+                }
+              ],
+              "nodes": [],
+              "repositoryLocatorDigest": "00f7217f0d1a535342bd3dad39a25b2c1d2ae98d69476a4e575f4406bc214595",
+              "snapshots": [
+                {
+                  "capabilities": [
+                    {
+                      "coverage": "COMPLETE",
+                      "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                      "support": "SUPPORTED"
+                    },
+                    {
+                      "coverage": "COMPLETE",
+                      "name": "PYTHON_SYNTAX_CODE_V1",
+                      "support": "SUPPORTED"
+                    }
+                  ],
+                  "completedAt": "2026-10-23T00:00:01.000Z",
+                  "diagnostics": [],
+                  "id": "snapshot:alpha",
+                  "outcome": "SUCCEEDED",
+                  "providerId": "native",
+                  "providerVersion": "fixture-v1",
+                  "repositoryId": "capture-repo",
+                  "requestedRevisionFingerprint": "capture-fingerprint",
+                  "requestedRevisionId": "capture-worktree",
+                  "runtimeVersion": "fixture-v1",
+                  "startedAt": "2026-10-23T00:00:00.000Z"
+                }
+              ],
+              "supports": [],
+              "syntaxOrigins": [],
+              "units": [
+                {
+                  "id": "py:one",
+                  "kind": "PYTHON_FILE",
+                  "providerId": "native",
+                  "sourceFileIds": ["source:one"]
+                }
+              ]
+            },
+            "syntaxMembers": [],
+            "transitions": null
+          }
+        },
+        "archive": [
+          {
+            "codeIdentity": "0cae471886f237ff5e174f2ac56fc5b33b60000e4ccb91193a14efb9686691e9",
+            "observation": null,
+            "originRegistryDigest": "3920e79ec36acd41d633e00f6da67a9874f49b5dd1a64cb8799beb6ad5a3db71",
+            "parent": null,
+            "schemaVersion": 1,
+            "sourceIdentity": "9c79526dfa480941f0b3f6fb924f48b3b8997667e51d34e67f5529a4738d96a0",
+            "state": {
+              "basis": {
+                "codeActivationDigest": "0cae471886f237ff5e174f2ac56fc5b33b60000e4ccb91193a14efb9686691e9",
+                "contentFingerprint": "capture-fingerprint",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree"
+              },
+              "contracts": [
+                {
+                  "contract": "fixture-v1",
+                  "extractor": "fixture-v1",
+                  "normalizer": "fixture-v1",
+                  "policy": "fixture-v1",
+                  "providerId": "native"
+                }
+              ],
+              "coverage": [
+                {
+                  "coverage": "COMPLETE",
+                  "facet": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                  "originSnapshotId": "snapshot:alpha",
+                  "unitId": "py:one"
+                },
+                {
+                  "coverage": "COMPLETE",
+                  "facet": "PYTHON_SYNTAX_CODE_V1",
+                  "originSnapshotId": "snapshot:alpha",
+                  "unitId": "py:one"
+                }
+              ],
+              "edges": [],
+              "inventory": [
+                {
+                  "classification": {
+                    "contentKind": "TEXT",
+                    "provenance": "AUTHORED",
+                    "role": "SOURCE"
+                  },
+                  "contentFingerprint": "source-fingerprint",
+                  "id": "source:one",
+                  "languageHint": "python",
+                  "path": "src/observation.txt",
+                  "repositoryId": "capture-repo",
+                  "revisionId": "capture-worktree",
+                  "sensitivity": "PUBLIC"
+                }
+              ],
+              "nodes": [],
+              "repositoryLocatorDigest": "00f7217f0d1a535342bd3dad39a25b2c1d2ae98d69476a4e575f4406bc214595",
+              "snapshots": [
+                {
+                  "capabilities": [
+                    {
+                      "coverage": "COMPLETE",
+                      "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                      "support": "SUPPORTED"
+                    },
+                    {
+                      "coverage": "COMPLETE",
+                      "name": "PYTHON_SYNTAX_CODE_V1",
+                      "support": "SUPPORTED"
+                    }
+                  ],
+                  "completedAt": "2026-10-23T00:00:01.000Z",
+                  "diagnostics": [],
+                  "id": "snapshot:alpha",
+                  "outcome": "SUCCEEDED",
+                  "providerId": "native",
+                  "providerVersion": "fixture-v1",
+                  "repositoryId": "capture-repo",
+                  "requestedRevisionFingerprint": "capture-fingerprint",
+                  "requestedRevisionId": "capture-worktree",
+                  "runtimeVersion": "fixture-v1",
+                  "startedAt": "2026-10-23T00:00:00.000Z"
+                }
+              ],
+              "supports": [],
+              "syntaxOrigins": [],
+              "units": [
+                {
+                  "id": "py:one",
+                  "kind": "PYTHON_FILE",
+                  "providerId": "native",
+                  "sourceFileIds": ["source:one"]
+                }
+              ]
+            },
+            "syntaxMembers": [],
+            "transitions": null
+          }
+        ]
+      },
+      "fixedRuleInput": {
+        "mode": "DELTA",
+        "target": {
+          "source": {
+            "repositoryId": "capture-repo",
+            "revisionId": "capture-worktree",
+            "contentFingerprint": "capture-fingerprint-deleted"
+          },
+          "repositoryLocatorDigest": "00f7217f0d1a535342bd3dad39a25b2c1d2ae98d69476a4e575f4406bc214595",
+          "inventory": [],
+          "contracts": [
+            {
+              "contract": "fixture-v1",
+              "extractor": "fixture-v1",
+              "normalizer": "fixture-v1",
+              "policy": "fixture-v1",
+              "providerId": "native"
+            }
+          ]
+        },
+        "capture": {
+          "history": {
+            "codeIdentity": "0cae471886f237ff5e174f2ac56fc5b33b60000e4ccb91193a14efb9686691e9",
+            "observation": null,
+            "originRegistryDigest": "3920e79ec36acd41d633e00f6da67a9874f49b5dd1a64cb8799beb6ad5a3db71",
+            "parent": null,
+            "schemaVersion": 1,
+            "sourceIdentity": "9c79526dfa480941f0b3f6fb924f48b3b8997667e51d34e67f5529a4738d96a0",
+            "state": {
+              "basis": {
+                "codeActivationDigest": "0cae471886f237ff5e174f2ac56fc5b33b60000e4ccb91193a14efb9686691e9",
+                "contentFingerprint": "capture-fingerprint",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree"
+              },
+              "contracts": [
+                {
+                  "contract": "fixture-v1",
+                  "extractor": "fixture-v1",
+                  "normalizer": "fixture-v1",
+                  "policy": "fixture-v1",
+                  "providerId": "native"
+                }
+              ],
+              "coverage": [
+                {
+                  "coverage": "COMPLETE",
+                  "facet": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                  "originSnapshotId": "snapshot:alpha",
+                  "unitId": "py:one"
+                },
+                {
+                  "coverage": "COMPLETE",
+                  "facet": "PYTHON_SYNTAX_CODE_V1",
+                  "originSnapshotId": "snapshot:alpha",
+                  "unitId": "py:one"
+                }
+              ],
+              "edges": [],
+              "inventory": [
+                {
+                  "classification": {
+                    "contentKind": "TEXT",
+                    "provenance": "AUTHORED",
+                    "role": "SOURCE"
+                  },
+                  "contentFingerprint": "source-fingerprint",
+                  "id": "source:one",
+                  "languageHint": "python",
+                  "path": "src/observation.txt",
+                  "repositoryId": "capture-repo",
+                  "revisionId": "capture-worktree",
+                  "sensitivity": "PUBLIC"
+                }
+              ],
+              "nodes": [],
+              "repositoryLocatorDigest": "00f7217f0d1a535342bd3dad39a25b2c1d2ae98d69476a4e575f4406bc214595",
+              "snapshots": [
+                {
+                  "capabilities": [
+                    {
+                      "coverage": "COMPLETE",
+                      "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                      "support": "SUPPORTED"
+                    },
+                    {
+                      "coverage": "COMPLETE",
+                      "name": "PYTHON_SYNTAX_CODE_V1",
+                      "support": "SUPPORTED"
+                    }
+                  ],
+                  "completedAt": "2026-10-23T00:00:01.000Z",
+                  "diagnostics": [],
+                  "id": "snapshot:alpha",
+                  "outcome": "SUCCEEDED",
+                  "providerId": "native",
+                  "providerVersion": "fixture-v1",
+                  "repositoryId": "capture-repo",
+                  "requestedRevisionFingerprint": "capture-fingerprint",
+                  "requestedRevisionId": "capture-worktree",
+                  "runtimeVersion": "fixture-v1",
+                  "startedAt": "2026-10-23T00:00:00.000Z"
+                }
+              ],
+              "supports": [],
+              "syntaxOrigins": [],
+              "units": [
+                {
+                  "id": "py:one",
+                  "kind": "PYTHON_FILE",
+                  "providerId": "native",
+                  "sourceFileIds": ["source:one"]
+                }
+              ]
+            },
+            "syntaxMembers": [],
+            "transitions": null
+          },
+          "ancestors": [],
+          "snapshots": [
+            {
+              "capabilities": [
+                {
+                  "coverage": "COMPLETE",
+                  "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                  "support": "SUPPORTED"
+                },
+                {
+                  "coverage": "COMPLETE",
+                  "name": "PYTHON_SYNTAX_CODE_V1",
+                  "support": "SUPPORTED"
+                }
+              ],
+              "completedAt": "2026-10-23T00:00:01.000Z",
+              "diagnostics": [],
+              "id": "snapshot:alpha",
+              "outcome": "SUCCEEDED",
+              "providerId": "native",
+              "providerVersion": "fixture-v1",
+              "repositoryId": "capture-repo",
+              "requestedRevisionFingerprint": "capture-fingerprint",
+              "requestedRevisionId": "capture-worktree",
+              "runtimeVersion": "fixture-v1",
+              "startedAt": "2026-10-23T00:00:00.000Z"
+            }
+          ],
+          "origins": [],
+          "projections": []
+        },
+        "rawBundle": null
+      },
+      "h0ScopePacket": {
+        "history": {
+          "activationId": "activation:7d25e7ff824bd7dba6b0d80963bda292de5d532129d60fe3a4cf986704ca8c46",
+          "parent": null,
+          "state": {
+            "basis": {
+              "codeActivationDigest": "0cae471886f237ff5e174f2ac56fc5b33b60000e4ccb91193a14efb9686691e9",
+              "contentFingerprint": "capture-fingerprint",
+              "repositoryId": "capture-repo",
+              "revisionId": "capture-worktree"
+            },
+            "contracts": [
+              {
+                "contract": "fixture-v1",
+                "extractor": "fixture-v1",
+                "normalizer": "fixture-v1",
+                "policy": "fixture-v1",
+                "providerId": "native"
+              }
+            ],
+            "coverage": [
+              {
+                "coverage": "COMPLETE",
+                "facet": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                "originSnapshotId": "snapshot:alpha",
+                "unitId": "py:one"
+              },
+              {
+                "coverage": "COMPLETE",
+                "facet": "PYTHON_SYNTAX_CODE_V1",
+                "originSnapshotId": "snapshot:alpha",
+                "unitId": "py:one"
+              }
+            ],
+            "edges": [],
+            "inventory": [
+              {
+                "classification": {
+                  "contentKind": "TEXT",
+                  "provenance": "AUTHORED",
+                  "role": "SOURCE"
+                },
+                "contentFingerprint": "source-fingerprint",
+                "id": "source:one",
+                "languageHint": "python",
+                "path": "src/observation.txt",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "sensitivity": "PUBLIC"
+              }
+            ],
+            "nodes": [],
+            "repositoryLocatorDigest": "00f7217f0d1a535342bd3dad39a25b2c1d2ae98d69476a4e575f4406bc214595",
+            "snapshots": [
+              {
+                "capabilities": [
+                  {
+                    "coverage": "COMPLETE",
+                    "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                    "support": "SUPPORTED"
+                  },
+                  {
+                    "coverage": "COMPLETE",
+                    "name": "PYTHON_SYNTAX_CODE_V1",
+                    "support": "SUPPORTED"
+                  }
+                ],
+                "completedAt": "2026-10-23T00:00:01.000Z",
+                "diagnostics": [],
+                "id": "snapshot:alpha",
+                "outcome": "SUCCEEDED",
+                "providerId": "native",
+                "providerVersion": "fixture-v1",
+                "repositoryId": "capture-repo",
+                "requestedRevisionFingerprint": "capture-fingerprint",
+                "requestedRevisionId": "capture-worktree",
+                "runtimeVersion": "fixture-v1",
+                "startedAt": "2026-10-23T00:00:00.000Z"
+              }
+            ],
+            "supports": [],
+            "syntaxOrigins": [],
+            "units": [
+              {
+                "id": "py:one",
+                "kind": "PYTHON_FILE",
+                "providerId": "native",
+                "sourceFileIds": ["source:one"]
+              }
+            ]
+          }
+        },
+        "current": {
+          "basis": {
+            "codeActivationDigest": "0cae471886f237ff5e174f2ac56fc5b33b60000e4ccb91193a14efb9686691e9",
+            "contentFingerprint": "capture-fingerprint",
+            "repositoryId": "capture-repo",
+            "revisionId": "capture-worktree"
+          },
+          "contracts": [
+            {
+              "contract": "fixture-v1",
+              "extractor": "fixture-v1",
+              "normalizer": "fixture-v1",
+              "policy": "fixture-v1",
+              "providerId": "native"
+            }
+          ],
+          "coverage": [
+            {
+              "coverage": "COMPLETE",
+              "facet": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+              "originSnapshotId": "snapshot:alpha",
+              "unitId": "py:one"
+            },
+            {
+              "coverage": "COMPLETE",
+              "facet": "PYTHON_SYNTAX_CODE_V1",
+              "originSnapshotId": "snapshot:alpha",
+              "unitId": "py:one"
+            }
+          ],
+          "edges": [],
+          "inventory": [
+            {
+              "classification": {
+                "contentKind": "TEXT",
+                "provenance": "AUTHORED",
+                "role": "SOURCE"
+              },
+              "contentFingerprint": "source-fingerprint",
+              "id": "source:one",
+              "languageHint": "python",
+              "path": "src/observation.txt",
+              "repositoryId": "capture-repo",
+              "revisionId": "capture-worktree",
+              "sensitivity": "PUBLIC"
+            }
+          ],
+          "nodes": [],
+          "repositoryLocatorDigest": "00f7217f0d1a535342bd3dad39a25b2c1d2ae98d69476a4e575f4406bc214595",
+          "snapshots": [
+            {
+              "capabilities": [
+                {
+                  "coverage": "COMPLETE",
+                  "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                  "support": "SUPPORTED"
+                },
+                {
+                  "coverage": "COMPLETE",
+                  "name": "PYTHON_SYNTAX_CODE_V1",
+                  "support": "SUPPORTED"
+                }
+              ],
+              "completedAt": "2026-10-23T00:00:01.000Z",
+              "diagnostics": [],
+              "id": "snapshot:alpha",
+              "outcome": "SUCCEEDED",
+              "providerId": "native",
+              "providerVersion": "fixture-v1",
+              "repositoryId": "capture-repo",
+              "requestedRevisionFingerprint": "capture-fingerprint",
+              "requestedRevisionId": "capture-worktree",
+              "runtimeVersion": "fixture-v1",
+              "startedAt": "2026-10-23T00:00:00.000Z"
+            }
+          ],
+          "supports": [],
+          "syntaxOrigins": [],
+          "units": [
+            {
+              "id": "py:one",
+              "kind": "PYTHON_FILE",
+              "providerId": "native",
+              "sourceFileIds": ["source:one"]
+            }
+          ]
+        },
+        "target": {
+          "source": {
+            "repositoryId": "capture-repo",
+            "revisionId": "capture-worktree",
+            "contentFingerprint": "capture-fingerprint-deleted"
+          },
+          "repositoryLocatorDigest": "00f7217f0d1a535342bd3dad39a25b2c1d2ae98d69476a4e575f4406bc214595",
+          "inventory": [],
+          "contracts": [
+            {
+              "contract": "fixture-v1",
+              "extractor": "fixture-v1",
+              "normalizer": "fixture-v1",
+              "policy": "fixture-v1",
+              "providerId": "native"
+            }
+          ]
+        },
+        "observation": null
+      },
+      "frozenResult": {
+        "manifest": {
+          "schemaVersion": 1,
+          "parent": {
+            "activationId": "activation:7d25e7ff824bd7dba6b0d80963bda292de5d532129d60fe3a4cf986704ca8c46",
+            "repositoryId": "capture-repo",
+            "revisionId": "capture-worktree"
+          },
+          "state": {
+            "basis": {
+              "codeActivationDigest": "50357fc3b1c26e72f1714d73e62ccccee002adb56d2822df6a8afd066b41974a",
+              "contentFingerprint": "capture-fingerprint-deleted",
+              "repositoryId": "capture-repo",
+              "revisionId": "capture-worktree"
+            },
+            "contracts": [
+              {
+                "contract": "fixture-v1",
+                "extractor": "fixture-v1",
+                "normalizer": "fixture-v1",
+                "policy": "fixture-v1",
+                "providerId": "native"
+              }
+            ],
+            "coverage": [],
+            "edges": [],
+            "inventory": [],
+            "nodes": [],
+            "repositoryLocatorDigest": "00f7217f0d1a535342bd3dad39a25b2c1d2ae98d69476a4e575f4406bc214595",
+            "snapshots": [
+              {
+                "capabilities": [
+                  {
+                    "coverage": "COMPLETE",
+                    "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                    "support": "SUPPORTED"
+                  },
+                  {
+                    "coverage": "COMPLETE",
+                    "name": "PYTHON_SYNTAX_CODE_V1",
+                    "support": "SUPPORTED"
+                  }
+                ],
+                "completedAt": "2026-10-23T00:00:01.000Z",
+                "diagnostics": [],
+                "id": "snapshot:alpha",
+                "outcome": "SUCCEEDED",
+                "providerId": "native",
+                "providerVersion": "fixture-v1",
+                "repositoryId": "capture-repo",
+                "requestedRevisionFingerprint": "capture-fingerprint",
+                "requestedRevisionId": "capture-worktree",
+                "runtimeVersion": "fixture-v1",
+                "startedAt": "2026-10-23T00:00:00.000Z"
+              }
+            ],
+            "supports": [],
+            "syntaxOrigins": [],
+            "units": []
+          },
+          "observation": null,
+          "transitions": {
+            "kind": "TRANSITION_DRAFT",
+            "activationId": "activation:7d25e7ff824bd7dba6b0d80963bda292de5d532129d60fe3a4cf986704ca8c46",
+            "oldBasis": {
+              "codeActivationDigest": "0cae471886f237ff5e174f2ac56fc5b33b60000e4ccb91193a14efb9686691e9",
+              "contentFingerprint": "capture-fingerprint",
+              "repositoryId": "capture-repo",
+              "revisionId": "capture-worktree"
+            },
+            "targetSource": {
+              "repositoryId": "capture-repo",
+              "revisionId": "capture-worktree",
+              "contentFingerprint": "capture-fingerprint-deleted"
+            },
+            "historyDigest": "b29fad3691d4cc737fc444ce04d025d37860c43311d7c67893368e8759ae7dc0",
+            "ledgerDigest": "9c49ecb916b91f827d21a0badb7ee3eb1ce02f5dc7529093be11eeb9f7d3489a",
+            "diff": [
+              {
+                "kind": "REMOVED",
+                "before": {
+                  "classification": {
+                    "contentKind": "TEXT",
+                    "provenance": "AUTHORED",
+                    "role": "SOURCE"
+                  },
+                  "contentFingerprint": "source-fingerprint",
+                  "id": "source:one",
+                  "languageHint": "python",
+                  "path": "src/observation.txt",
+                  "repositoryId": "capture-repo",
+                  "revisionId": "capture-worktree",
+                  "sensitivity": "PUBLIC"
+                },
+                "after": null
+              }
+            ],
+            "supportDecisions": [],
+            "addedEvidenceIds": [],
+            "survivingFactKeys": [],
+            "coverageOrigins": [],
+            "syntaxRequirements": []
+          },
+          "syntaxMembers": [],
+          "codeIdentity": "50357fc3b1c26e72f1714d73e62ccccee002adb56d2822df6a8afd066b41974a",
+          "sourceIdentity": "9a99716b1331858af1b9ae8165aeec7ca36b6a3fe64b28c804d01bb414e1cfa2",
+          "originRegistryDigest": "3920e79ec36acd41d633e00f6da67a9874f49b5dd1a64cb8799beb6ad5a3db71"
+        },
+        "activationId": "activation:69b04748aac19416555eea7d5650abffe253c80d5263a0056bd2a566f1824987",
+        "origins": [],
+        "projections": [],
+        "members": [],
+        "basis": {
+          "codeActivationDigest": "50357fc3b1c26e72f1714d73e62ccccee002adb56d2822df6a8afd066b41974a",
+          "contentFingerprint": "capture-fingerprint-deleted",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree"
+        }
+      },
+      "ownedCaptureReturn": {
+        "data": {
+          "view": {
+            "history": {
+              "codeIdentity": "0cae471886f237ff5e174f2ac56fc5b33b60000e4ccb91193a14efb9686691e9",
+              "observation": null,
+              "originRegistryDigest": "3920e79ec36acd41d633e00f6da67a9874f49b5dd1a64cb8799beb6ad5a3db71",
+              "parent": null,
+              "schemaVersion": 1,
+              "sourceIdentity": "9c79526dfa480941f0b3f6fb924f48b3b8997667e51d34e67f5529a4738d96a0",
+              "state": {
+                "basis": {
+                  "codeActivationDigest": "0cae471886f237ff5e174f2ac56fc5b33b60000e4ccb91193a14efb9686691e9",
+                  "contentFingerprint": "capture-fingerprint",
+                  "repositoryId": "capture-repo",
+                  "revisionId": "capture-worktree"
+                },
+                "contracts": [
+                  {
+                    "contract": "fixture-v1",
+                    "extractor": "fixture-v1",
+                    "normalizer": "fixture-v1",
+                    "policy": "fixture-v1",
+                    "providerId": "native"
+                  }
+                ],
+                "coverage": [
+                  {
+                    "coverage": "COMPLETE",
+                    "facet": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                    "originSnapshotId": "snapshot:alpha",
+                    "unitId": "py:one"
+                  },
+                  {
+                    "coverage": "COMPLETE",
+                    "facet": "PYTHON_SYNTAX_CODE_V1",
+                    "originSnapshotId": "snapshot:alpha",
+                    "unitId": "py:one"
+                  }
+                ],
+                "edges": [],
+                "inventory": [
+                  {
+                    "classification": {
+                      "contentKind": "TEXT",
+                      "provenance": "AUTHORED",
+                      "role": "SOURCE"
+                    },
+                    "contentFingerprint": "source-fingerprint",
+                    "id": "source:one",
+                    "languageHint": "python",
+                    "path": "src/observation.txt",
+                    "repositoryId": "capture-repo",
+                    "revisionId": "capture-worktree",
+                    "sensitivity": "PUBLIC"
+                  }
+                ],
+                "nodes": [],
+                "repositoryLocatorDigest": "00f7217f0d1a535342bd3dad39a25b2c1d2ae98d69476a4e575f4406bc214595",
+                "snapshots": [
+                  {
+                    "capabilities": [
+                      {
+                        "coverage": "COMPLETE",
+                        "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                        "support": "SUPPORTED"
+                      },
+                      {
+                        "coverage": "COMPLETE",
+                        "name": "PYTHON_SYNTAX_CODE_V1",
+                        "support": "SUPPORTED"
+                      }
+                    ],
+                    "completedAt": "2026-10-23T00:00:01.000Z",
+                    "diagnostics": [],
+                    "id": "snapshot:alpha",
+                    "outcome": "SUCCEEDED",
+                    "providerId": "native",
+                    "providerVersion": "fixture-v1",
+                    "repositoryId": "capture-repo",
+                    "requestedRevisionFingerprint": "capture-fingerprint",
+                    "requestedRevisionId": "capture-worktree",
+                    "runtimeVersion": "fixture-v1",
+                    "startedAt": "2026-10-23T00:00:00.000Z"
+                  }
+                ],
+                "supports": [],
+                "syntaxOrigins": [],
+                "units": [
+                  {
+                    "id": "py:one",
+                    "kind": "PYTHON_FILE",
+                    "providerId": "native",
+                    "sourceFileIds": ["source:one"]
+                  }
+                ]
+              },
+              "syntaxMembers": [],
+              "transitions": null
+            }
+          },
+          "archive": [
+            {
+              "codeIdentity": "0cae471886f237ff5e174f2ac56fc5b33b60000e4ccb91193a14efb9686691e9",
+              "observation": null,
+              "originRegistryDigest": "3920e79ec36acd41d633e00f6da67a9874f49b5dd1a64cb8799beb6ad5a3db71",
+              "parent": null,
+              "schemaVersion": 1,
+              "sourceIdentity": "9c79526dfa480941f0b3f6fb924f48b3b8997667e51d34e67f5529a4738d96a0",
+              "state": {
+                "basis": {
+                  "codeActivationDigest": "0cae471886f237ff5e174f2ac56fc5b33b60000e4ccb91193a14efb9686691e9",
+                  "contentFingerprint": "capture-fingerprint",
+                  "repositoryId": "capture-repo",
+                  "revisionId": "capture-worktree"
+                },
+                "contracts": [
+                  {
+                    "contract": "fixture-v1",
+                    "extractor": "fixture-v1",
+                    "normalizer": "fixture-v1",
+                    "policy": "fixture-v1",
+                    "providerId": "native"
+                  }
+                ],
+                "coverage": [
+                  {
+                    "coverage": "COMPLETE",
+                    "facet": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                    "originSnapshotId": "snapshot:alpha",
+                    "unitId": "py:one"
+                  },
+                  {
+                    "coverage": "COMPLETE",
+                    "facet": "PYTHON_SYNTAX_CODE_V1",
+                    "originSnapshotId": "snapshot:alpha",
+                    "unitId": "py:one"
+                  }
+                ],
+                "edges": [],
+                "inventory": [
+                  {
+                    "classification": {
+                      "contentKind": "TEXT",
+                      "provenance": "AUTHORED",
+                      "role": "SOURCE"
+                    },
+                    "contentFingerprint": "source-fingerprint",
+                    "id": "source:one",
+                    "languageHint": "python",
+                    "path": "src/observation.txt",
+                    "repositoryId": "capture-repo",
+                    "revisionId": "capture-worktree",
+                    "sensitivity": "PUBLIC"
+                  }
+                ],
+                "nodes": [],
+                "repositoryLocatorDigest": "00f7217f0d1a535342bd3dad39a25b2c1d2ae98d69476a4e575f4406bc214595",
+                "snapshots": [
+                  {
+                    "capabilities": [
+                      {
+                        "coverage": "COMPLETE",
+                        "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                        "support": "SUPPORTED"
+                      },
+                      {
+                        "coverage": "COMPLETE",
+                        "name": "PYTHON_SYNTAX_CODE_V1",
+                        "support": "SUPPORTED"
+                      }
+                    ],
+                    "completedAt": "2026-10-23T00:00:01.000Z",
+                    "diagnostics": [],
+                    "id": "snapshot:alpha",
+                    "outcome": "SUCCEEDED",
+                    "providerId": "native",
+                    "providerVersion": "fixture-v1",
+                    "repositoryId": "capture-repo",
+                    "requestedRevisionFingerprint": "capture-fingerprint",
+                    "requestedRevisionId": "capture-worktree",
+                    "runtimeVersion": "fixture-v1",
+                    "startedAt": "2026-10-23T00:00:00.000Z"
+                  }
+                ],
+                "supports": [],
+                "syntaxOrigins": [],
+                "units": [
+                  {
+                    "id": "py:one",
+                    "kind": "PYTHON_FILE",
+                    "providerId": "native",
+                    "sourceFileIds": ["source:one"]
+                  }
+                ]
+              },
+              "syntaxMembers": [],
+              "transitions": null
+            }
+          ]
+        },
+        "identity": "owned-capture-identity",
+        "committedSnapshotCount": 1,
+        "usage": {
+          "rows": 0,
+          "serializedBytes": 0,
+          "items": 0,
+          "retainedLogicalBytes": 0
+        }
+      }
+    }
+  },
+  "overflow": {
+    "limit": 9007199254740991,
+    "reportedAdditionalSerializedBytes": 9007199254740991,
+    "minimumAlreadyRequiredSerializedBytes": 7,
+    "exactSum": "9007199254740998",
+    "mustExceed": true,
+    "pureRowsMustStayZero": true,
+    "reference": "Existing pure rules require rows=0; independently saturate serializedBytes only. The fixed CAPTURE TEMP key already costs its UTF8 bytes before Java usage import, so BigInt proves no remaining capacity. No candidate usage or profile chosen."
+  },
+  "doesNotCloseItemsBytesOrWholeOperationAccounting": true,
+  "cumulative": {
+    "fullFrozenResult": {
+      "manifest": {
+        "schemaVersion": 1,
+        "parent": {
+          "activationId": "activation:7d25e7ff824bd7dba6b0d80963bda292de5d532129d60fe3a4cf986704ca8c46",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree"
+        },
+        "state": {
+          "basis": {
+            "codeActivationDigest": "50357fc3b1c26e72f1714d73e62ccccee002adb56d2822df6a8afd066b41974a",
+            "contentFingerprint": "capture-fingerprint-deleted",
+            "repositoryId": "capture-repo",
+            "revisionId": "capture-worktree"
+          },
+          "contracts": [
+            {
+              "contract": "fixture-v1",
+              "extractor": "fixture-v1",
+              "normalizer": "fixture-v1",
+              "policy": "fixture-v1",
+              "providerId": "native"
+            }
+          ],
+          "coverage": [],
+          "edges": [],
+          "inventory": [],
+          "nodes": [],
+          "repositoryLocatorDigest": "00f7217f0d1a535342bd3dad39a25b2c1d2ae98d69476a4e575f4406bc214595",
+          "snapshots": [
+            {
+              "capabilities": [
+                {
+                  "coverage": "COMPLETE",
+                  "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                  "support": "SUPPORTED"
+                },
+                {
+                  "coverage": "COMPLETE",
+                  "name": "PYTHON_SYNTAX_CODE_V1",
+                  "support": "SUPPORTED"
+                }
+              ],
+              "completedAt": "2026-10-23T00:00:01.000Z",
+              "diagnostics": [],
+              "id": "snapshot:alpha",
+              "outcome": "SUCCEEDED",
+              "providerId": "native",
+              "providerVersion": "fixture-v1",
+              "repositoryId": "capture-repo",
+              "requestedRevisionFingerprint": "capture-fingerprint",
+              "requestedRevisionId": "capture-worktree",
+              "runtimeVersion": "fixture-v1",
+              "startedAt": "2026-10-23T00:00:00.000Z"
+            }
+          ],
+          "supports": [],
+          "syntaxOrigins": [],
+          "units": []
+        },
+        "observation": null,
+        "transitions": {
+          "kind": "TRANSITION_DRAFT",
+          "activationId": "activation:7d25e7ff824bd7dba6b0d80963bda292de5d532129d60fe3a4cf986704ca8c46",
+          "oldBasis": {
+            "codeActivationDigest": "0cae471886f237ff5e174f2ac56fc5b33b60000e4ccb91193a14efb9686691e9",
+            "contentFingerprint": "capture-fingerprint",
+            "repositoryId": "capture-repo",
+            "revisionId": "capture-worktree"
+          },
+          "targetSource": {
+            "repositoryId": "capture-repo",
+            "revisionId": "capture-worktree",
+            "contentFingerprint": "capture-fingerprint-deleted"
+          },
+          "historyDigest": "b29fad3691d4cc737fc444ce04d025d37860c43311d7c67893368e8759ae7dc0",
+          "ledgerDigest": "9c49ecb916b91f827d21a0badb7ee3eb1ce02f5dc7529093be11eeb9f7d3489a",
+          "diff": [
+            {
+              "kind": "REMOVED",
+              "before": {
+                "classification": {
+                  "contentKind": "TEXT",
+                  "provenance": "AUTHORED",
+                  "role": "SOURCE"
+                },
+                "contentFingerprint": "source-fingerprint",
+                "id": "source:one",
+                "languageHint": "python",
+                "path": "src/observation.txt",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "sensitivity": "PUBLIC"
+              },
+              "after": null
+            }
+          ],
+          "supportDecisions": [],
+          "addedEvidenceIds": [],
+          "survivingFactKeys": [],
+          "coverageOrigins": [],
+          "syntaxRequirements": []
+        },
+        "syntaxMembers": [],
+        "codeIdentity": "50357fc3b1c26e72f1714d73e62ccccee002adb56d2822df6a8afd066b41974a",
+        "sourceIdentity": "9a99716b1331858af1b9ae8165aeec7ca36b6a3fe64b28c804d01bb414e1cfa2",
+        "originRegistryDigest": "3920e79ec36acd41d633e00f6da67a9874f49b5dd1a64cb8799beb6ad5a3db71"
+      },
+      "activationId": "activation:69b04748aac19416555eea7d5650abffe253c80d5263a0056bd2a566f1824987",
+      "origins": [],
+      "projections": [],
+      "members": [],
+      "basis": {
+        "codeActivationDigest": "50357fc3b1c26e72f1714d73e62ccccee002adb56d2822df6a8afd066b41974a",
+        "contentFingerprint": "capture-fingerprint-deleted",
+        "repositoryId": "capture-repo",
+        "revisionId": "capture-worktree"
+      },
+      "code": {
+        "targetSource": {
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "contentFingerprint": "capture-fingerprint-deleted"
+        },
+        "committedSnapshotCount": 1,
+        "nodes": [],
+        "edges": [],
+        "evidence": [],
+        "bindings": [],
+        "factEvidence": [],
+        "candidates": [],
+        "snapshots": [
+          {
+            "capabilities": [
+              {
+                "coverage": "COMPLETE",
+                "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                "support": "SUPPORTED"
+              },
+              {
+                "coverage": "COMPLETE",
+                "name": "PYTHON_SYNTAX_CODE_V1",
+                "support": "SUPPORTED"
+              }
+            ],
+            "completedAt": "2026-10-23T00:00:01.000Z",
+            "diagnostics": [],
+            "id": "snapshot:alpha",
+            "outcome": "SUCCEEDED",
+            "providerId": "native",
+            "providerVersion": "fixture-v1",
+            "repositoryId": "capture-repo",
+            "requestedRevisionFingerprint": "capture-fingerprint",
+            "requestedRevisionId": "capture-worktree",
+            "runtimeVersion": "fixture-v1",
+            "startedAt": "2026-10-23T00:00:00.000Z"
+          }
+        ],
+        "coverage": [
+          {
+            "providerSnapshotId": "snapshot:alpha",
+            "capabilityName": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+            "sourceFileId": "source:one",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:alpha",
+            "capabilityName": "PYTHON_SYNTAX_CODE_V1",
+            "sourceFileId": "source:one",
+            "status": "COMPLETE"
+          }
+        ]
+      },
+      "usage": {
+        "rows": 0,
+        "serializedBytes": 0,
+        "items": 0,
+        "retainedLogicalBytes": 0
+      }
+    },
+    "isolatedResultItems": 149,
+    "isolatedResultWeight": 3335,
+    "minimumPriorOwnedItems": 326,
+    "minimumPriorPinnedWeight": 6400,
+    "reference": "One owned detailed capture and the returned data representation each include at least the closed detailed root. Both occur before a lease. This lower bound exceeds isolated frozen-result capacity; a correctly carried ledger refuses before BEGIN, while a reset would pass initial own(result,false). No candidate usage read.",
+    "doesNotReplaceWholeOperationExactTotals": true,
+    "usagePlaceholders": "Numbers are shape-only placeholders: node count and decoded logical weight are independent of numeric value. Do not use this reference for serialized-byte totals or copy candidate counters."
+  }
+}

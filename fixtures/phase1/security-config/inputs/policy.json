@@ -1,0 +1,51 @@
+{
+  "operation": "QUERY",
+  "phase": "PRIMARY",
+  "scope": {
+    "workspaceId": "workspace:one",
+    "repositoryId": "repo:one"
+  },
+  "callerCapabilities": [
+    "QUERY",
+    "INDEX",
+    "UPDATE_KNOWLEDGE",
+    "READ_SOURCE",
+    "REPROJECT_WIKI",
+    "LOCAL_LLM",
+    "LOCAL_EMBEDDING",
+    "REMOTE_LLM",
+    "REMOTE_EMBEDDING"
+  ],
+  "permissionContext": {
+    "workspaceId": "workspace:one",
+    "repositoryIds": ["repo:one"],
+    "allowedOperations": [
+      "QUERY",
+      "INDEX",
+      "UPDATE_KNOWLEDGE",
+      "READ_SOURCE",
+      "REPROJECT_WIKI",
+      "LOCAL_LLM",
+      "LOCAL_EMBEDDING",
+      "REMOTE_LLM",
+      "REMOTE_EMBEDDING"
+    ]
+  },
+  "source": {
+    "path": "src/Service.java",
+    "classification": "INTERNAL",
+    "form": "DERIVED",
+    "secretDetected": false,
+    "policyBlocked": false,
+    "derivedAccessAllowed": true
+  },
+  "destination": "LOCAL",
+  "settings": {
+    "localOnly": true,
+    "remoteLlmEnabled": false,
+    "remoteEmbeddingEnabled": false,
+    "allowRemoteFallback": false,
+    "allowSensitiveRemote": false,
+    "allowRawSourceRemote": false
+  }
+}

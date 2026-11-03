@@ -1,0 +1,8 @@
+{
+  "version": 2,
+  "initialDomain": "codeatlas-syntax-initial-v2",
+  "originDomain": "codeatlas-syntax-origin-v2",
+  "projectionDomain": "codeatlas-syntax-projection-v2",
+  "legacyRefusesV2": true,
+  "retainedMeaningUnchanged": true
+}

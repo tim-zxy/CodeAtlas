@@ -489,3 +489,6 @@ export const nativeMetadataProfiles: readonly NativeMetadataProfile[] = Object.f
     peakUnits: 'bytes',
   }),
 ]);
+
+// Syntax preparation only. No measurement/numeric profile has been approved.
+export const nativeSyntaxObservationProfiles: readonly unknown[] = Object.freeze([]);

@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "p1-declared-raw-history-candidate-v1",
+  "category": "code-intelligence",
+  "phase": "1",
+  "languages": [],
+  "frameworks": [],
+  "capabilities": ["DECLARED_RAW_HISTORY_CANDIDATE_ONLY"],
+  "inputs": {
+    "cases": "cases.json",
+    "provenance": "provenance.json"
+  },
+  "expected": {
+    "cases": "cases.json"
+  },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

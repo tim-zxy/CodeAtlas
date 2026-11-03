@@ -1,0 +1,9 @@
+# Mixed provisional Java/Python Source reference
+
+This library-only reference composes SHA-pinned independently authored java-owner/python-static expectations and byte-identical original mixed-provisional Source. The recipe reads no product/parser/observed output. Java keeps file:one;Python becomes file:two. Python provider IDs and module Canonical identity follow the unchanged path-based recipe;function/import Canonical tuples are independently recomputed where SourceFile ID participates. Java declaration-owner vectors remain pinned.
+
+Request Source order is app.py then Endpoint.java;output follows existing path ordering,Endpoint.java then app.py. The full14-record PARTIAL stream includes2 Python Code nodes,1 import,7 Syntax observations and2 coverage records. Java emits no Code nodes/edges;its2 declaration vectors are owner references only. The existing a-active/content:previous,target content:first,c-stage,d-normalization basis and unit controls remain synthetic and do not authenticate Runtime capture/Store/profile.
+
+A complete five-record failure reference models changed Python after Java output:started,Java Syntax declarations/decoration and coverage,then SYNTAX_FAILED SOURCE_CHANGED. No completion or atomic Apply is allowed. Cross-file owner references and wrong source assignment are refused;input order reversal must not change the output model or sorted owner-map identity.
+
+All new JSON/metadata is formatted and hashed before first new mixed library comparison. Old roots stay unchanged. No whole Java Code graph,FactMerger/support lifetime,atomic Code+Syntax Store,actual process/memory/context/resource qualification or capability maturity follows. Eight of sixteen Source cases have bounded reference oracles after this pair;remaining8 and all P1-04/05/phase gates stay open.

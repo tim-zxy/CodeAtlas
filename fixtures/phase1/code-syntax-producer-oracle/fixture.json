@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "p1-code-syntax-producer-oracle-v1",
+  "category": "code-intelligence",
+  "phase": "1",
+  "languages": [],
+  "frameworks": [],
+  "capabilities": ["CODE_SYNTAX_LIBRARY_ORACLE_ONLY"],
+  "inputs": {
+    "cases": "cases.json",
+    "sources": "cases/",
+    "legacy": "legacy-v4/"
+  },
+  "expected": {
+    "decisions": "expected/decisions.json"
+  },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

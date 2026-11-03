@@ -1,0 +1,4 @@
+{
+  "scenario": "same-id-content-conflict",
+  "base": "base-input.json"
+}

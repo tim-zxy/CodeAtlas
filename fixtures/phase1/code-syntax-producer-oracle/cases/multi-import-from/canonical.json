@@ -1,0 +1,172 @@
+{
+  "nodePairs": [
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+        "factKey": "node-fact-v1:9f87fdd184180db6f32fe351dc70bd34a7f1d2baebfa5f06eb7714f1cb1f3dc5",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "app.py",
+        "qualifiedName": "app.py",
+        "sourceRange": null,
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "MODULE"
+      }
+    }
+  ],
+  "edgePairs": [
+    {
+      "provider": {
+        "factType": "EDGE",
+        "providerId": "native",
+        "providerFactId": "python-edge-v1:873c399179717457aa25dd90d1c702ff5964f85a3b3d4014c9d799b5dab97d1c"
+      },
+      "canonical": {
+        "id": "canonical-edge-v1:4fe198750657b0f236e8142009f91449a47335d11474b96f5dafcadbe565d2fb",
+        "factKey": "edge-fact-v1:1eb9830e9765c05dfea994af846cdc5f238a7d1e4bee548884aff87203a6a063",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "kind": "IMPORT",
+        "source": {
+          "factType": "NODE",
+          "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+        },
+        "target": {
+          "state": "UNRESOLVED",
+          "resolution": "UNRESOLVED",
+          "originalHint": "other",
+          "candidates": []
+        },
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 0,
+          "startColumn": 17,
+          "endLine": 0,
+          "endColumn": 22
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        }
+      }
+    },
+    {
+      "provider": {
+        "factType": "EDGE",
+        "providerId": "native",
+        "providerFactId": "python-edge-v1:37bdc236f427d4e4dc22c574e10b48a36d14083aa7f3f4ae471776631d75fa67"
+      },
+      "canonical": {
+        "id": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b",
+        "factKey": "edge-fact-v1:4a62f7e32fef238335777788b0a79f7ca94e221cf803955bce28151f1a3b608a",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "kind": "IMPORT",
+        "source": {
+          "factType": "NODE",
+          "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+        },
+        "target": {
+          "state": "UNRESOLVED",
+          "resolution": "UNRESOLVED",
+          "originalHint": "pkg",
+          "candidates": []
+        },
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 0,
+          "startColumn": 7,
+          "endLine": 0,
+          "endColumn": 15
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        }
+      }
+    },
+    {
+      "provider": {
+        "factType": "EDGE",
+        "providerId": "native",
+        "providerFactId": "python-edge-v1:d0fc28420f86ffcd88e8d09c8ee95757eab2361f509409c4f26c3a0ee3bbbef9"
+      },
+      "canonical": {
+        "id": "canonical-edge-v1:68e672a548c6e379c4d4ff9b0673082e7a62b9c8b8be870234cb9a45b6716689",
+        "factKey": "edge-fact-v1:880ff8ad96abbc53f85a0e6f707447fa0e8a85863505be1b692d02ad0fd085bc",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "kind": "IMPORT",
+        "source": {
+          "factType": "NODE",
+          "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+        },
+        "target": {
+          "state": "UNRESOLVED",
+          "resolution": "UNRESOLVED",
+          "originalHint": "lib.first",
+          "candidates": []
+        },
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 1,
+          "startColumn": 16,
+          "endLine": 1,
+          "endColumn": 26
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        }
+      }
+    },
+    {
+      "provider": {
+        "factType": "EDGE",
+        "providerId": "native",
+        "providerFactId": "python-edge-v1:75b63b823ec4bbd62d3d59c13b1694c7bb340dceb36b2bc6788c6a92fa147fb5"
+      },
+      "canonical": {
+        "id": "canonical-edge-v1:5d7ca7047907204b76be950678b14078e875c406696d89d782e845d6462a75dc",
+        "factKey": "edge-fact-v1:c0c1be903dd2ee25bc8d7f1da31b281e3ab4b5f62c3d2b0da98c0457c227edb1",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "kind": "IMPORT",
+        "source": {
+          "factType": "NODE",
+          "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+        },
+        "target": {
+          "state": "UNRESOLVED",
+          "resolution": "UNRESOLVED",
+          "originalHint": "lib.second",
+          "candidates": []
+        },
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 1,
+          "startColumn": 28,
+          "endLine": 1,
+          "endColumn": 34
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        }
+      }
+    }
+  ]
+}

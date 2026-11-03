@@ -1,0 +1,57 @@
+{
+  "files": [
+    {
+      "path": "Main.java",
+      "languageHint": "java",
+      "role": "SOURCE",
+      "contentFingerprint": "sha256:120b3a6597dbb526195b51ab28ea69b6486258e8317fe2695fc8263b1d1b932f",
+      "sizeBytes": 14
+    },
+    {
+      "path": "app.py",
+      "languageHint": "python",
+      "role": "SOURCE",
+      "contentFingerprint": "sha256:a40c04aa22c369fa354406d31613f110878d800e33ddd428e124b513762b3635",
+      "sizeBytes": 24
+    },
+    {
+      "path": "notes.txt",
+      "languageHint": null,
+      "role": "OTHER",
+      "contentFingerprint": "sha256:444e0fffbd825e9610ff5b199485707a0c895339ae80c15cc8a8aee41b106fda",
+      "sizeBytes": 6
+    },
+    {
+      "path": "stub.pyi",
+      "languageHint": null,
+      "role": "OTHER",
+      "contentFingerprint": "sha256:82dd165f38b554be19ccaf36fe40c11ba36408080577004c39a19313a4960571",
+      "sizeBytes": 15
+    },
+    {
+      "path": "tests/test_app.py",
+      "languageHint": "python",
+      "role": "TEST",
+      "contentFingerprint": "sha256:d9046b71b5dbeebe775097ccddc957b32d1b837b171d7ddda63446e66b29d17d",
+      "sizeBytes": 25
+    },
+    {
+      "path": "文档.txt",
+      "languageHint": null,
+      "role": "OTHER",
+      "contentFingerprint": "sha256:70a1610f8f66a178a00932d433461ef2e1c6aa979c957e66896ee9ef1c9629e6",
+      "sizeBytes": 7
+    }
+  ],
+  "prelude": {
+    "readCharge": 5,
+    "bufferCharge": 2,
+    "metadata": {
+      "n": "abc"
+    },
+    "serializedDelta": 5,
+    "itemsDelta": 3,
+    "retainedDelta": 6
+  },
+  "notes": "Independent literal Sources and budget arithmetic, not product output. Git is a fixed in-process double."
+}

@@ -1,0 +1,1200 @@
+{
+  "declaration": "Hand-declared structural contexts copied from accepted B-F2-C inputs; not real Source capture. Syntax confidence explicitly set to approved syntax-surface-support-v1 in test setup.",
+  "cases": [
+    {
+      "name": "spring-route",
+      "framework": "spring",
+      "language": "java",
+      "records": [
+        {
+          "id": "import",
+          "kind": "IMPORT_BINDING",
+          "payload": {
+            "language": "java",
+            "importKind": "JAVA_TYPE",
+            "qualifiedName": "org.springframework.web.bind.annotation.GetMapping",
+            "importedName": "GetMapping",
+            "boundName": "GetMapping"
+          },
+          "scope": "module",
+          "owner": "module",
+          "line": 1
+        },
+        {
+          "id": "site",
+          "kind": "DECORATION",
+          "payload": {
+            "callee": {
+              "state": "NON_RESOLVED",
+              "name": "GetMapping",
+              "target": null,
+              "candidates": [],
+              "resolution": "UNRESOLVED"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "STRING",
+                  "value": "/x"
+                },
+                "sourceRange": {
+                  "sourceFileId": "file:one",
+                  "startLine": 45,
+                  "startColumn": 0,
+                  "endLine": 45,
+                  "endColumn": 10
+                }
+              }
+            ]
+          },
+          "scope": "type",
+          "owner": "function",
+          "line": 45
+        }
+      ]
+    },
+    {
+      "name": "spring-prefix",
+      "framework": "spring",
+      "language": "java",
+      "records": [
+        {
+          "id": "import",
+          "kind": "IMPORT_BINDING",
+          "payload": {
+            "language": "java",
+            "importKind": "JAVA_TYPE",
+            "qualifiedName": "org.springframework.web.bind.annotation.GetMapping",
+            "importedName": "GetMapping",
+            "boundName": "GetMapping"
+          },
+          "scope": "module",
+          "owner": "module",
+          "line": 1
+        },
+        {
+          "id": "prefix-import",
+          "kind": "IMPORT_BINDING",
+          "payload": {
+            "language": "java",
+            "importKind": "JAVA_TYPE",
+            "qualifiedName": "org.springframework.web.bind.annotation.RequestMapping",
+            "importedName": "RequestMapping",
+            "boundName": "RequestMapping"
+          },
+          "scope": "module",
+          "owner": "module",
+          "line": 2
+        },
+        {
+          "id": "prefix",
+          "kind": "DECORATION",
+          "payload": {
+            "callee": {
+              "state": "NON_RESOLVED",
+              "name": "RequestMapping",
+              "target": null,
+              "candidates": [],
+              "resolution": "UNRESOLVED"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "STRING",
+                  "value": "/api"
+                },
+                "sourceRange": {
+                  "sourceFileId": "file:one",
+                  "startLine": 21,
+                  "startColumn": 0,
+                  "endLine": 21,
+                  "endColumn": 10
+                }
+              }
+            ]
+          },
+          "scope": "module",
+          "owner": "type",
+          "line": 21
+        },
+        {
+          "id": "site",
+          "kind": "DECORATION",
+          "payload": {
+            "callee": {
+              "state": "NON_RESOLVED",
+              "name": "GetMapping",
+              "target": null,
+              "candidates": [],
+              "resolution": "UNRESOLVED"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "STRING",
+                  "value": "/x"
+                },
+                "sourceRange": {
+                  "sourceFileId": "file:one",
+                  "startLine": 45,
+                  "startColumn": 0,
+                  "endLine": 45,
+                  "endColumn": 10
+                }
+              }
+            ]
+          },
+          "scope": "type",
+          "owner": "function",
+          "line": 45
+        }
+      ]
+    },
+    {
+      "name": "spring-cron",
+      "framework": "spring",
+      "language": "java",
+      "records": [
+        {
+          "id": "import",
+          "kind": "IMPORT_BINDING",
+          "payload": {
+            "language": "java",
+            "importKind": "JAVA_TYPE",
+            "qualifiedName": "org.springframework.scheduling.annotation.Scheduled",
+            "importedName": "Scheduled",
+            "boundName": "Scheduled"
+          },
+          "scope": "module",
+          "owner": "module",
+          "line": 1
+        },
+        {
+          "id": "site",
+          "kind": "DECORATION",
+          "payload": {
+            "callee": {
+              "state": "NON_RESOLVED",
+              "name": "Scheduled",
+              "target": null,
+              "candidates": [],
+              "resolution": "UNRESOLVED"
+            },
+            "arguments": [
+              {
+                "name": "cron",
+                "value": {
+                  "kind": "STRING",
+                  "value": "0 * * * * *"
+                },
+                "sourceRange": {
+                  "sourceFileId": "file:one",
+                  "startLine": 45,
+                  "startColumn": 0,
+                  "endLine": 45,
+                  "endColumn": 10
+                }
+              }
+            ]
+          },
+          "scope": "type",
+          "owner": "function",
+          "line": 45
+        }
+      ]
+    },
+    {
+      "name": "mongo-read",
+      "framework": "mongo",
+      "language": "java",
+      "records": [
+        {
+          "id": "import",
+          "kind": "IMPORT_BINDING",
+          "payload": {
+            "language": "java",
+            "importKind": "JAVA_TYPE",
+            "qualifiedName": "org.springframework.data.mongodb.core.MongoTemplate",
+            "importedName": "MongoTemplate",
+            "boundName": "MongoTemplate"
+          },
+          "scope": "module",
+          "owner": "module",
+          "line": 1
+        },
+        {
+          "id": "decl",
+          "kind": "DECLARATION",
+          "payload": {
+            "declarationForm": "TYPED_BINDING",
+            "declaredName": "template",
+            "declaredType": "MongoTemplate",
+            "parameterNames": [],
+            "modifiers": []
+          },
+          "scope": "type",
+          "owner": "type",
+          "line": 25
+        },
+        {
+          "id": "site",
+          "kind": "INVOCATION",
+          "payload": {
+            "callee": {
+              "state": "NON_RESOLVED",
+              "name": "template.find",
+              "target": null,
+              "candidates": [],
+              "resolution": "UNRESOLVED"
+            },
+            "receiver": {
+              "kind": "REFERENCE",
+              "name": "template",
+              "resolution": "UNRESOLVED",
+              "candidates": []
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "UNKNOWN",
+                  "reason": "DYNAMIC"
+                },
+                "sourceRange": {
+                  "sourceFileId": "file:one",
+                  "startLine": 50,
+                  "startColumn": 0,
+                  "endLine": 50,
+                  "endColumn": 10
+                }
+              },
+              {
+                "name": null,
+                "value": {
+                  "kind": "UNKNOWN",
+                  "reason": "DYNAMIC"
+                },
+                "sourceRange": {
+                  "sourceFileId": "file:one",
+                  "startLine": 50,
+                  "startColumn": 0,
+                  "endLine": 50,
+                  "endColumn": 10
+                }
+              },
+              {
+                "name": null,
+                "value": {
+                  "kind": "STRING",
+                  "value": "items"
+                },
+                "sourceRange": {
+                  "sourceFileId": "file:one",
+                  "startLine": 50,
+                  "startColumn": 0,
+                  "endLine": 50,
+                  "endColumn": 10
+                }
+              }
+            ]
+          },
+          "scope": "function",
+          "owner": "function",
+          "line": 50
+        }
+      ]
+    },
+    {
+      "name": "mongo-write",
+      "framework": "mongo",
+      "language": "java",
+      "records": [
+        {
+          "id": "import",
+          "kind": "IMPORT_BINDING",
+          "payload": {
+            "language": "java",
+            "importKind": "JAVA_TYPE",
+            "qualifiedName": "org.springframework.data.mongodb.core.MongoTemplate",
+            "importedName": "MongoTemplate",
+            "boundName": "MongoTemplate"
+          },
+          "scope": "module",
+          "owner": "module",
+          "line": 1
+        },
+        {
+          "id": "decl",
+          "kind": "DECLARATION",
+          "payload": {
+            "declarationForm": "TYPED_BINDING",
+            "declaredName": "template",
+            "declaredType": "MongoTemplate",
+            "parameterNames": [],
+            "modifiers": []
+          },
+          "scope": "type",
+          "owner": "type",
+          "line": 25
+        },
+        {
+          "id": "site",
+          "kind": "INVOCATION",
+          "payload": {
+            "callee": {
+              "state": "NON_RESOLVED",
+              "name": "template.save",
+              "target": null,
+              "candidates": [],
+              "resolution": "UNRESOLVED"
+            },
+            "receiver": {
+              "kind": "REFERENCE",
+              "name": "template",
+              "resolution": "UNRESOLVED",
+              "candidates": []
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "UNKNOWN",
+                  "reason": "DYNAMIC"
+                },
+                "sourceRange": {
+                  "sourceFileId": "file:one",
+                  "startLine": 50,
+                  "startColumn": 0,
+                  "endLine": 50,
+                  "endColumn": 10
+                }
+              },
+              {
+                "name": null,
+                "value": {
+                  "kind": "STRING",
+                  "value": "items"
+                },
+                "sourceRange": {
+                  "sourceFileId": "file:one",
+                  "startLine": 50,
+                  "startColumn": 0,
+                  "endLine": 50,
+                  "endColumn": 10
+                }
+              }
+            ]
+          },
+          "scope": "function",
+          "owner": "function",
+          "line": 50
+        }
+      ]
+    },
+    {
+      "name": "kafka-listener",
+      "framework": "kafka",
+      "language": "java",
+      "records": [
+        {
+          "id": "import",
+          "kind": "IMPORT_BINDING",
+          "payload": {
+            "language": "java",
+            "importKind": "JAVA_TYPE",
+            "qualifiedName": "org.springframework.kafka.annotation.KafkaListener",
+            "importedName": "KafkaListener",
+            "boundName": "KafkaListener"
+          },
+          "scope": "module",
+          "owner": "module",
+          "line": 1
+        },
+        {
+          "id": "site",
+          "kind": "DECORATION",
+          "payload": {
+            "callee": {
+              "state": "NON_RESOLVED",
+              "name": "KafkaListener",
+              "target": null,
+              "candidates": [],
+              "resolution": "UNRESOLVED"
+            },
+            "arguments": [
+              {
+                "name": "topics",
+                "value": {
+                  "kind": "STRING",
+                  "value": "orders"
+                },
+                "sourceRange": {
+                  "sourceFileId": "file:one",
+                  "startLine": 45,
+                  "startColumn": 0,
+                  "endLine": 45,
+                  "endColumn": 10
+                }
+              }
+            ]
+          },
+          "scope": "type",
+          "owner": "function",
+          "line": 45
+        }
+      ]
+    },
+    {
+      "name": "kafka-topics",
+      "framework": "kafka",
+      "language": "java",
+      "records": [
+        {
+          "id": "import",
+          "kind": "IMPORT_BINDING",
+          "payload": {
+            "language": "java",
+            "importKind": "JAVA_TYPE",
+            "qualifiedName": "org.springframework.kafka.annotation.KafkaListener",
+            "importedName": "KafkaListener",
+            "boundName": "KafkaListener"
+          },
+          "scope": "module",
+          "owner": "module",
+          "line": 1
+        },
+        {
+          "id": "site",
+          "kind": "DECORATION",
+          "payload": {
+            "callee": {
+              "state": "NON_RESOLVED",
+              "name": "KafkaListener",
+              "target": null,
+              "candidates": [],
+              "resolution": "UNRESOLVED"
+            },
+            "arguments": [
+              {
+                "name": "topics",
+                "value": {
+                  "kind": "ARRAY",
+                  "items": [
+                    {
+                      "kind": "STRING",
+                      "value": "orders"
+                    },
+                    {
+                      "kind": "STRING",
+                      "value": "audit"
+                    }
+                  ]
+                },
+                "sourceRange": {
+                  "sourceFileId": "file:one",
+                  "startLine": 45,
+                  "startColumn": 0,
+                  "endLine": 45,
+                  "endColumn": 10
+                }
+              }
+            ]
+          },
+          "scope": "type",
+          "owner": "function",
+          "line": 45
+        }
+      ]
+    },
+    {
+      "name": "kafka-send",
+      "framework": "kafka",
+      "language": "java",
+      "records": [
+        {
+          "id": "import",
+          "kind": "IMPORT_BINDING",
+          "payload": {
+            "language": "java",
+            "importKind": "JAVA_TYPE",
+            "qualifiedName": "org.springframework.kafka.core.KafkaTemplate",
+            "importedName": "KafkaTemplate",
+            "boundName": "KafkaTemplate"
+          },
+          "scope": "module",
+          "owner": "module",
+          "line": 1
+        },
+        {
+          "id": "decl",
+          "kind": "DECLARATION",
+          "payload": {
+            "declarationForm": "TYPED_BINDING",
+            "declaredName": "sender",
+            "declaredType": "KafkaTemplate",
+            "parameterNames": [],
+            "modifiers": []
+          },
+          "scope": "type",
+          "owner": "type",
+          "line": 25
+        },
+        {
+          "id": "site",
+          "kind": "INVOCATION",
+          "payload": {
+            "callee": {
+              "state": "NON_RESOLVED",
+              "name": "sender.send",
+              "target": null,
+              "candidates": [],
+              "resolution": "UNRESOLVED"
+            },
+            "receiver": {
+              "kind": "REFERENCE",
+              "name": "sender",
+              "resolution": "UNRESOLVED",
+              "candidates": []
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "STRING",
+                  "value": "orders"
+                },
+                "sourceRange": {
+                  "sourceFileId": "file:one",
+                  "startLine": 50,
+                  "startColumn": 0,
+                  "endLine": 50,
+                  "endColumn": 10
+                }
+              },
+              {
+                "name": null,
+                "value": {
+                  "kind": "UNKNOWN",
+                  "reason": "DYNAMIC"
+                },
+                "sourceRange": {
+                  "sourceFileId": "file:one",
+                  "startLine": 50,
+                  "startColumn": 0,
+                  "endLine": 50,
+                  "endColumn": 10
+                }
+              }
+            ]
+          },
+          "scope": "function",
+          "owner": "function",
+          "line": 50
+        }
+      ]
+    },
+    {
+      "name": "fastapi-direct",
+      "framework": "fastapi",
+      "language": "python",
+      "records": [
+        {
+          "id": "import",
+          "kind": "IMPORT_BINDING",
+          "payload": {
+            "language": "python",
+            "importKind": "PYTHON_SYMBOL",
+            "qualifiedName": "fastapi.FastAPI",
+            "importedName": "FastAPI",
+            "boundName": "FastAPI"
+          },
+          "scope": "module",
+          "owner": "module",
+          "line": 1
+        },
+        {
+          "id": "app-assign",
+          "kind": "ASSIGNMENT",
+          "payload": {
+            "targetName": "app",
+            "value": {
+              "kind": "UNKNOWN",
+              "reason": "CALL_RESULT"
+            },
+            "assignmentForm": "DIRECT_VALUE",
+            "valueRange": {
+              "sourceFileId": "file:one",
+              "startLine": 10,
+              "startColumn": 4,
+              "endLine": 10,
+              "endColumn": 10
+            }
+          },
+          "scope": "module",
+          "owner": "module",
+          "line": 10
+        },
+        {
+          "id": "app-ctor",
+          "kind": "INVOCATION",
+          "payload": {
+            "callee": {
+              "state": "NON_RESOLVED",
+              "name": "FastAPI",
+              "target": null,
+              "candidates": [],
+              "resolution": "UNRESOLVED"
+            },
+            "receiver": null,
+            "arguments": []
+          },
+          "scope": "module",
+          "owner": "module",
+          "line": 10,
+          "range": {
+            "sourceFileId": "file:one",
+            "startLine": 10,
+            "startColumn": 4,
+            "endLine": 10,
+            "endColumn": 10
+          }
+        },
+        {
+          "id": "site",
+          "kind": "DECORATION",
+          "payload": {
+            "callee": {
+              "state": "NON_RESOLVED",
+              "name": "app.get",
+              "target": null,
+              "candidates": [],
+              "resolution": "UNRESOLVED"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "STRING",
+                  "value": "/x"
+                },
+                "sourceRange": {
+                  "sourceFileId": "file:one",
+                  "startLine": 39,
+                  "startColumn": 0,
+                  "endLine": 39,
+                  "endColumn": 10
+                }
+              }
+            ]
+          },
+          "scope": "module",
+          "owner": "function",
+          "line": 39
+        }
+      ]
+    },
+    {
+      "name": "fastapi-router",
+      "framework": "fastapi",
+      "language": "python",
+      "records": [
+        {
+          "id": "import",
+          "kind": "IMPORT_BINDING",
+          "payload": {
+            "language": "python",
+            "importKind": "PYTHON_SYMBOL",
+            "qualifiedName": "fastapi.FastAPI",
+            "importedName": "FastAPI",
+            "boundName": "FastAPI"
+          },
+          "scope": "module",
+          "owner": "module",
+          "line": 1
+        },
+        {
+          "id": "router-import",
+          "kind": "IMPORT_BINDING",
+          "payload": {
+            "language": "python",
+            "importKind": "PYTHON_SYMBOL",
+            "qualifiedName": "fastapi.APIRouter",
+            "importedName": "APIRouter",
+            "boundName": "APIRouter"
+          },
+          "scope": "module",
+          "owner": "module",
+          "line": 2
+        },
+        {
+          "id": "app-assign",
+          "kind": "ASSIGNMENT",
+          "payload": {
+            "targetName": "app",
+            "value": {
+              "kind": "UNKNOWN",
+              "reason": "CALL_RESULT"
+            },
+            "assignmentForm": "DIRECT_VALUE",
+            "valueRange": {
+              "sourceFileId": "file:one",
+              "startLine": 10,
+              "startColumn": 4,
+              "endLine": 10,
+              "endColumn": 10
+            }
+          },
+          "scope": "module",
+          "owner": "module",
+          "line": 10
+        },
+        {
+          "id": "app-ctor",
+          "kind": "INVOCATION",
+          "payload": {
+            "callee": {
+              "state": "NON_RESOLVED",
+              "name": "FastAPI",
+              "target": null,
+              "candidates": [],
+              "resolution": "UNRESOLVED"
+            },
+            "receiver": null,
+            "arguments": []
+          },
+          "scope": "module",
+          "owner": "module",
+          "line": 10,
+          "range": {
+            "sourceFileId": "file:one",
+            "startLine": 10,
+            "startColumn": 4,
+            "endLine": 10,
+            "endColumn": 10
+          }
+        },
+        {
+          "id": "router-assign",
+          "kind": "ASSIGNMENT",
+          "payload": {
+            "targetName": "router",
+            "value": {
+              "kind": "UNKNOWN",
+              "reason": "CALL_RESULT"
+            },
+            "assignmentForm": "DIRECT_VALUE",
+            "valueRange": {
+              "sourceFileId": "file:one",
+              "startLine": 11,
+              "startColumn": 4,
+              "endLine": 11,
+              "endColumn": 10
+            }
+          },
+          "scope": "module",
+          "owner": "module",
+          "line": 11
+        },
+        {
+          "id": "router-ctor",
+          "kind": "INVOCATION",
+          "payload": {
+            "callee": {
+              "state": "NON_RESOLVED",
+              "name": "APIRouter",
+              "target": null,
+              "candidates": [],
+              "resolution": "UNRESOLVED"
+            },
+            "receiver": null,
+            "arguments": [
+              {
+                "name": "prefix",
+                "value": {
+                  "kind": "STRING",
+                  "value": "/v1"
+                },
+                "sourceRange": {
+                  "sourceFileId": "file:one",
+                  "startLine": 11,
+                  "startColumn": 0,
+                  "endLine": 11,
+                  "endColumn": 10
+                }
+              }
+            ]
+          },
+          "scope": "module",
+          "owner": "module",
+          "line": 11,
+          "range": {
+            "sourceFileId": "file:one",
+            "startLine": 11,
+            "startColumn": 4,
+            "endLine": 11,
+            "endColumn": 10
+          }
+        },
+        {
+          "id": "site",
+          "kind": "DECORATION",
+          "payload": {
+            "callee": {
+              "state": "NON_RESOLVED",
+              "name": "router.get",
+              "target": null,
+              "candidates": [],
+              "resolution": "UNRESOLVED"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "STRING",
+                  "value": "/x"
+                },
+                "sourceRange": {
+                  "sourceFileId": "file:one",
+                  "startLine": 39,
+                  "startColumn": 0,
+                  "endLine": 39,
+                  "endColumn": 10
+                }
+              }
+            ]
+          },
+          "scope": "module",
+          "owner": "function",
+          "line": 39
+        },
+        {
+          "id": "include",
+          "kind": "INVOCATION",
+          "payload": {
+            "callee": {
+              "state": "NON_RESOLVED",
+              "name": "app.include_router",
+              "target": null,
+              "candidates": [],
+              "resolution": "UNRESOLVED"
+            },
+            "receiver": {
+              "kind": "REFERENCE",
+              "name": "app",
+              "resolution": "UNRESOLVED",
+              "candidates": []
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "REFERENCE",
+                  "name": "router",
+                  "resolution": "UNRESOLVED",
+                  "candidates": []
+                },
+                "sourceRange": {
+                  "sourceFileId": "file:one",
+                  "startLine": 120,
+                  "startColumn": 0,
+                  "endLine": 120,
+                  "endColumn": 10
+                }
+              },
+              {
+                "name": "prefix",
+                "value": {
+                  "kind": "STRING",
+                  "value": "/api"
+                },
+                "sourceRange": {
+                  "sourceFileId": "file:one",
+                  "startLine": 120,
+                  "startColumn": 0,
+                  "endLine": 120,
+                  "endColumn": 10
+                }
+              }
+            ]
+          },
+          "scope": "module",
+          "owner": "module",
+          "line": 120
+        }
+      ]
+    },
+    {
+      "name": "spring-dynamic",
+      "framework": "spring",
+      "language": "java",
+      "records": [
+        {
+          "id": "import",
+          "kind": "IMPORT_BINDING",
+          "payload": {
+            "language": "java",
+            "importKind": "JAVA_TYPE",
+            "qualifiedName": "org.springframework.web.bind.annotation.GetMapping",
+            "importedName": "GetMapping",
+            "boundName": "GetMapping"
+          },
+          "scope": "module",
+          "owner": "module",
+          "line": 1
+        },
+        {
+          "id": "site",
+          "kind": "DECORATION",
+          "payload": {
+            "callee": {
+              "state": "NON_RESOLVED",
+              "name": "GetMapping",
+              "target": null,
+              "candidates": [],
+              "resolution": "UNRESOLVED"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "UNKNOWN",
+                  "reason": "DYNAMIC"
+                },
+                "sourceRange": {
+                  "sourceFileId": "file:one",
+                  "startLine": 45,
+                  "startColumn": 0,
+                  "endLine": 45,
+                  "endColumn": 10
+                }
+              }
+            ]
+          },
+          "scope": "type",
+          "owner": "function",
+          "line": 45
+        }
+      ]
+    },
+    {
+      "name": "mongo-dynamic",
+      "framework": "mongo",
+      "language": "java",
+      "records": [
+        {
+          "id": "import",
+          "kind": "IMPORT_BINDING",
+          "payload": {
+            "language": "java",
+            "importKind": "JAVA_TYPE",
+            "qualifiedName": "org.springframework.data.mongodb.core.MongoTemplate",
+            "importedName": "MongoTemplate",
+            "boundName": "MongoTemplate"
+          },
+          "scope": "module",
+          "owner": "module",
+          "line": 1
+        },
+        {
+          "id": "decl",
+          "kind": "DECLARATION",
+          "payload": {
+            "declarationForm": "TYPED_BINDING",
+            "declaredName": "template",
+            "declaredType": "MongoTemplate",
+            "parameterNames": [],
+            "modifiers": []
+          },
+          "scope": "type",
+          "owner": "type",
+          "line": 25
+        },
+        {
+          "id": "site",
+          "kind": "INVOCATION",
+          "payload": {
+            "callee": {
+              "state": "NON_RESOLVED",
+              "name": "template.find",
+              "target": null,
+              "candidates": [],
+              "resolution": "UNRESOLVED"
+            },
+            "receiver": {
+              "kind": "REFERENCE",
+              "name": "template",
+              "resolution": "UNRESOLVED",
+              "candidates": []
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "UNKNOWN",
+                  "reason": "DYNAMIC"
+                },
+                "sourceRange": {
+                  "sourceFileId": "file:one",
+                  "startLine": 50,
+                  "startColumn": 0,
+                  "endLine": 50,
+                  "endColumn": 10
+                }
+              },
+              {
+                "name": null,
+                "value": {
+                  "kind": "UNKNOWN",
+                  "reason": "DYNAMIC"
+                },
+                "sourceRange": {
+                  "sourceFileId": "file:one",
+                  "startLine": 50,
+                  "startColumn": 0,
+                  "endLine": 50,
+                  "endColumn": 10
+                }
+              },
+              {
+                "name": null,
+                "value": {
+                  "kind": "UNKNOWN",
+                  "reason": "DYNAMIC"
+                },
+                "sourceRange": {
+                  "sourceFileId": "file:one",
+                  "startLine": 50,
+                  "startColumn": 0,
+                  "endLine": 50,
+                  "endColumn": 10
+                }
+              }
+            ]
+          },
+          "scope": "function",
+          "owner": "function",
+          "line": 50
+        }
+      ]
+    },
+    {
+      "name": "fastapi-reassign",
+      "framework": "fastapi",
+      "language": "python",
+      "records": [
+        {
+          "id": "import",
+          "kind": "IMPORT_BINDING",
+          "payload": {
+            "language": "python",
+            "importKind": "PYTHON_SYMBOL",
+            "qualifiedName": "fastapi.FastAPI",
+            "importedName": "FastAPI",
+            "boundName": "FastAPI"
+          },
+          "scope": "module",
+          "owner": "module",
+          "line": 1
+        },
+        {
+          "id": "app-assign",
+          "kind": "ASSIGNMENT",
+          "payload": {
+            "targetName": "app",
+            "value": {
+              "kind": "UNKNOWN",
+              "reason": "CALL_RESULT"
+            },
+            "assignmentForm": "DIRECT_VALUE",
+            "valueRange": {
+              "sourceFileId": "file:one",
+              "startLine": 10,
+              "startColumn": 4,
+              "endLine": 10,
+              "endColumn": 10
+            }
+          },
+          "scope": "module",
+          "owner": "module",
+          "line": 10
+        },
+        {
+          "id": "app-ctor",
+          "kind": "INVOCATION",
+          "payload": {
+            "callee": {
+              "state": "NON_RESOLVED",
+              "name": "FastAPI",
+              "target": null,
+              "candidates": [],
+              "resolution": "UNRESOLVED"
+            },
+            "receiver": null,
+            "arguments": []
+          },
+          "scope": "module",
+          "owner": "module",
+          "line": 10,
+          "range": {
+            "sourceFileId": "file:one",
+            "startLine": 10,
+            "startColumn": 4,
+            "endLine": 10,
+            "endColumn": 10
+          }
+        },
+        {
+          "id": "site",
+          "kind": "DECORATION",
+          "payload": {
+            "callee": {
+              "state": "NON_RESOLVED",
+              "name": "app.get",
+              "target": null,
+              "candidates": [],
+              "resolution": "UNRESOLVED"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "STRING",
+                  "value": "/x"
+                },
+                "sourceRange": {
+                  "sourceFileId": "file:one",
+                  "startLine": 39,
+                  "startColumn": 0,
+                  "endLine": 39,
+                  "endColumn": 10
+                }
+              }
+            ]
+          },
+          "scope": "module",
+          "owner": "function",
+          "line": 39
+        },
+        {
+          "id": "write",
+          "kind": "ASSIGNMENT",
+          "payload": {
+            "targetName": "app",
+            "value": {
+              "kind": "UNKNOWN",
+              "reason": "DYNAMIC"
+            },
+            "assignmentForm": "OTHER",
+            "valueRange": null
+          },
+          "scope": "module",
+          "owner": "module",
+          "line": 140
+        }
+      ]
+    }
+  ]
+}

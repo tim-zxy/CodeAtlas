@@ -1,0 +1,21 @@
+{
+  "complete": [
+    "MATCHED",
+    "MATCHED"
+  ],
+  "noProvider": [
+    "UNRESOLVED",
+    "UNRESOLVED"
+  ],
+  "oneCallerMissing": [
+    "MATCHED",
+    "UNRESOLVED"
+  ],
+  "oppositeResponse": [
+    "CONFLICTED",
+    "CONFLICTED"
+  ],
+  "policy": "declared-http-schema-v1",
+  "scoreMethod": "contract-support-bound-v1",
+  "noImplicitSchema": true
+}

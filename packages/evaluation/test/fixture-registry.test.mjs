@@ -1,4 +1,6 @@
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { readFile } from 'node:fs/promises';
 import { mkdtemp, mkdir, rm, symlink, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
@@ -171,4 +173,37 @@ test('committed registry Fixture is discoverable', async () => {
   const fixture = found.find(({ manifest }) => manifest.id === 'p0-fixture-registry-v1');
   assert.ok(fixture);
   assert.equal(fixture.manifestPath, 'registry-v1/fixture.json');
+});
+
+// Full-repository registration has one responsibility point.
+test('repository Fixture registry has the approved unique inventory', async () => {
+  const found = await discoverFixtures(resolve('fixtures'));
+  assert.equal(found.length, 70);
+  assert.equal(found.filter(({ manifest }) => manifest.phase === '1').length, 44);
+  assert.equal(new Set(found.map(({ manifest }) => manifest.id)).size, found.length);
+});
+
+test('exact frozen JSON format exceptions retain approved bytes', async () => {
+  const scope = JSON.parse(
+    await readFile('docs/superpowers/specs/2026-11-03-phase1-ci-frozen-fixtures.json', 'utf8'),
+  );
+  assert.equal(scope.status, 'APPROVED_ACTIVE');
+  assert.equal(scope.files.length, 54);
+  const ignore = (await readFile('.prettierignore', 'utf8')).replace(/\r\n?/g, '\n');
+  const paths = ignore
+    .split('# BEGIN approved frozen JSON\n')[1]
+    ?.split('# END approved frozen JSON')[0]
+    .trim()
+    .split('\n');
+  assert.deepEqual(
+    paths,
+    scope.files.map(({ path }) => '/' + path),
+  );
+  assert.equal(new Set(paths).size, 54);
+  for (const item of scope.files) {
+    assert.match(item.path, /^fixtures\/phase1\/[a-z0-9/._-]+\.json$/);
+    const bytes = await readFile(item.path);
+    assert.equal(bytes.length, item.bytes, item.path);
+    assert.equal(createHash('sha256').update(bytes).digest('hex'), item.sha256, item.path);
+  }
 });

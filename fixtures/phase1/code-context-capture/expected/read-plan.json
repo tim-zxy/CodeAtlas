@@ -1,0 +1,3540 @@
+{
+  "no-source-not-indexed": {
+    "schemaVersion": 1,
+    "bootstrapNumericRows": 43,
+    "committedCountRows": 1,
+    "coverageDistinctRows": 0,
+    "reads": [
+      {
+        "table": "repository",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 30
+      },
+      {
+        "table": "repository_state",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 12
+      },
+      {
+        "table": "revisions",
+        "censusRows": 1,
+        "locatorRows": 0,
+        "payloadRows": 0,
+        "rawTextBytes": 0
+      },
+      {
+        "table": "source_files",
+        "censusRows": 1,
+        "locatorRows": 0,
+        "payloadRows": 0,
+        "rawTextBytes": 0
+      }
+    ],
+    "payloadRows": 2,
+    "payloadTextBytes": 42,
+    "framedBytes": 151,
+    "logicalReservation": {
+      "headerContextUtf8": 54,
+      "phases": [
+        {
+          "phase": "locator:domain",
+          "logicalUtf8": 86
+        },
+        {
+          "phase": "locator:LOCATOR:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 141
+        },
+        {
+          "phase": "locator:LOCATOR:[\"capture-repo\"]",
+          "rawTextBytes": 0,
+          "logicalUtf8": 349
+        },
+        {
+          "phase": "view",
+          "logicalUtf8": 382
+        }
+      ],
+      "peakLogicalUtf8": 382
+    },
+    "limits": {
+      "maxRows": 52,
+      "maxSerializedBytes": 193,
+      "memoryBudgetBytes": 764
+    }
+  },
+  "source-only": {
+    "schemaVersion": 1,
+    "bootstrapNumericRows": 43,
+    "committedCountRows": 1,
+    "coverageDistinctRows": 0,
+    "reads": [
+      {
+        "table": "repository",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 30
+      },
+      {
+        "table": "repository_state",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 12
+      },
+      {
+        "table": "revisions",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 55
+      },
+      {
+        "table": "source_files",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 99
+      }
+    ],
+    "payloadRows": 4,
+    "payloadTextBytes": 196,
+    "framedBytes": 733,
+    "logicalReservation": {
+      "headerContextUtf8": 214,
+      "phases": [
+        {
+          "phase": "locator:domain",
+          "logicalUtf8": 246
+        },
+        {
+          "phase": "locator:LOCATOR:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 301
+        },
+        {
+          "phase": "locator:LOCATOR:[\"capture-repo\"]",
+          "rawTextBytes": 0,
+          "logicalUtf8": 509
+        },
+        {
+          "phase": "source:domain",
+          "logicalUtf8": 308
+        },
+        {
+          "phase": "source:TARGET:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 361
+        },
+        {
+          "phase": "source:TARGET:[\"capture-worktree\"]",
+          "rawTextBytes": 0,
+          "logicalUtf8": 890
+        },
+        {
+          "phase": "source:SOURCE_FILE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 381
+        },
+        {
+          "phase": "source:SOURCE_FILE:[\"source:one\"]",
+          "rawTextBytes": 99,
+          "logicalUtf8": 1443
+        },
+        {
+          "phase": "view",
+          "logicalUtf8": 757
+        }
+      ],
+      "peakLogicalUtf8": 1443
+    },
+    "limits": {
+      "maxRows": 56,
+      "maxSerializedBytes": 929,
+      "memoryBudgetBytes": 2886
+    }
+  },
+  "complete": {
+    "schemaVersion": 1,
+    "bootstrapNumericRows": 43,
+    "committedCountRows": 1,
+    "coverageDistinctRows": 1,
+    "reads": [
+      {
+        "table": "repository",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 30
+      },
+      {
+        "table": "repository_state",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 47
+      },
+      {
+        "table": "revisions",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 55
+      },
+      {
+        "table": "source_files",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 99
+      },
+      {
+        "table": "canonical_nodes",
+        "censusRows": 1,
+        "locatorRows": 2,
+        "payloadRows": 2,
+        "rawTextBytes": 365
+      },
+      {
+        "table": "canonical_edges",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 180
+      },
+      {
+        "table": "unresolved_targets",
+        "censusRows": 1,
+        "locatorRows": 0,
+        "payloadRows": 0,
+        "rawTextBytes": 0
+      },
+      {
+        "table": "evidence",
+        "censusRows": 1,
+        "locatorRows": 3,
+        "payloadRows": 3,
+        "rawTextBytes": 479
+      },
+      {
+        "table": "provider_fact_bindings",
+        "censusRows": 1,
+        "locatorRows": 3,
+        "payloadRows": 3,
+        "rawTextBytes": 398
+      },
+      {
+        "table": "fact_evidence",
+        "censusRows": 1,
+        "locatorRows": 3,
+        "payloadRows": 3,
+        "rawTextBytes": 288
+      },
+      {
+        "table": "active_support_candidates",
+        "censusRows": 1,
+        "locatorRows": 3,
+        "payloadRows": 3,
+        "rawTextBytes": 1422
+      },
+      {
+        "table": "provider_snapshots",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 95
+      },
+      {
+        "table": "provider_capabilities",
+        "censusRows": 1,
+        "locatorRows": 2,
+        "payloadRows": 2,
+        "rawTextBytes": 72
+      },
+      {
+        "table": "analysis_coverage",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 38
+      }
+    ],
+    "payloadRows": 23,
+    "payloadTextBytes": 3568,
+    "framedBytes": 8404,
+    "logicalReservation": {
+      "headerContextUtf8": 249,
+      "phases": [
+        {
+          "phase": "locator:domain",
+          "logicalUtf8": 281
+        },
+        {
+          "phase": "locator:LOCATOR:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 336
+        },
+        {
+          "phase": "locator:LOCATOR:[\"capture-repo\"]",
+          "rawTextBytes": 0,
+          "logicalUtf8": 544
+        },
+        {
+          "phase": "source:domain",
+          "logicalUtf8": 343
+        },
+        {
+          "phase": "source:TARGET:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 396
+        },
+        {
+          "phase": "source:TARGET:[\"capture-worktree\"]",
+          "rawTextBytes": 0,
+          "logicalUtf8": 925
+        },
+        {
+          "phase": "source:SOURCE_FILE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 416
+        },
+        {
+          "phase": "source:SOURCE_FILE:[\"source:one\"]",
+          "rawTextBytes": 99,
+          "logicalUtf8": 1478
+        },
+        {
+          "phase": "code:domain",
+          "logicalUtf8": 406
+        },
+        {
+          "phase": "code:HEADER:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 460
+        },
+        {
+          "phase": "code:HEADER:[\"capture-repo\"]",
+          "rawTextBytes": 0,
+          "logicalUtf8": 1027
+        },
+        {
+          "phase": "code:NODE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 452
+        },
+        {
+          "phase": "code:NODE:[\"node:a\"]",
+          "rawTextBytes": 183,
+          "logicalUtf8": 1870
+        },
+        {
+          "phase": "code:NODE:[\"node:b\"]",
+          "rawTextBytes": 182,
+          "logicalUtf8": 1865
+        },
+        {
+          "phase": "code:EDGE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 452
+        },
+        {
+          "phase": "code:EDGE:[\"edge:call\"]",
+          "rawTextBytes": 180,
+          "logicalUtf8": 2069
+        },
+        {
+          "phase": "code:EVIDENCE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 468
+        },
+        {
+          "phase": "code:EVIDENCE:[\"provider-evidence-v1:59fef4b91f19622379616d5dbb506b807615f38d1c6520a5480f222f5de98716\"]",
+          "rawTextBytes": 165,
+          "logicalUtf8": 2080
+        },
+        {
+          "phase": "code:EVIDENCE:[\"provider-evidence-v1:78582cdf3d126ea6f78f7a44b19977c96522d10173ff19bbb540c7ef428bba90\"]",
+          "rawTextBytes": 157,
+          "logicalUtf8": 2040
+        },
+        {
+          "phase": "code:EVIDENCE:[\"provider-evidence-v1:8d81f5f47bd8c6704765ff7901264e00ec6941694e2e1a0f6e2d516535d0d2d5\"]",
+          "rawTextBytes": 157,
+          "logicalUtf8": 2040
+        },
+        {
+          "phase": "code:BINDING:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 464
+        },
+        {
+          "phase": "code:BINDING:[\"provider-evidence-v1:59fef4b91f19622379616d5dbb506b807615f38d1c6520a5480f222f5de98716\",\"EDGE\",\"edge:call\"]",
+          "rawTextBytes": 140,
+          "logicalUtf8": 2045
+        },
+        {
+          "phase": "code:BINDING:[\"provider-evidence-v1:78582cdf3d126ea6f78f7a44b19977c96522d10173ff19bbb540c7ef428bba90\",\"NODE\",\"node:a\"]",
+          "rawTextBytes": 129,
+          "logicalUtf8": 1978
+        },
+        {
+          "phase": "code:BINDING:[\"provider-evidence-v1:8d81f5f47bd8c6704765ff7901264e00ec6941694e2e1a0f6e2d516535d0d2d5\",\"NODE\",\"node:b\"]",
+          "rawTextBytes": 129,
+          "logicalUtf8": 1978
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 488
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:[\"provider-evidence-v1:59fef4b91f19622379616d5dbb506b807615f38d1c6520a5480f222f5de98716\",\"EDGE\",\"edge:call\"]",
+          "rawTextBytes": 98,
+          "logicalUtf8": 1477
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:[\"provider-evidence-v1:78582cdf3d126ea6f78f7a44b19977c96522d10173ff19bbb540c7ef428bba90\",\"NODE\",\"node:a\"]",
+          "rawTextBytes": 95,
+          "logicalUtf8": 1450
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:[\"provider-evidence-v1:8d81f5f47bd8c6704765ff7901264e00ec6941694e2e1a0f6e2d516535d0d2d5\",\"NODE\",\"node:b\"]",
+          "rawTextBytes": 95,
+          "logicalUtf8": 1450
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 504
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:[\"provider-evidence-v1:59fef4b91f19622379616d5dbb506b807615f38d1c6520a5480f222f5de98716\",\"EDGE\",\"edge:call\"]",
+          "rawTextBytes": 519,
+          "logicalUtf8": 3382
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:[\"provider-evidence-v1:78582cdf3d126ea6f78f7a44b19977c96522d10173ff19bbb540c7ef428bba90\",\"NODE\",\"node:a\"]",
+          "rawTextBytes": 452,
+          "logicalUtf8": 3101
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:[\"provider-evidence-v1:8d81f5f47bd8c6704765ff7901264e00ec6941694e2e1a0f6e2d516535d0d2d5\",\"NODE\",\"node:b\"]",
+          "rawTextBytes": 451,
+          "logicalUtf8": 3096
+        },
+        {
+          "phase": "code:SNAPSHOT:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 468
+        },
+        {
+          "phase": "code:SNAPSHOT:[\"snapshot:alpha\"]",
+          "rawTextBytes": 167,
+          "logicalUtf8": 2076
+        },
+        {
+          "phase": "code:COVERAGE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 468
+        },
+        {
+          "phase": "code:COVERAGE:[\"snapshot:alpha\",\"SYMBOL\",\"SOURCE\",\"source:one\",\"COMPLETE\"]",
+          "rawTextBytes": 38,
+          "logicalUtf8": 1137
+        },
+        {
+          "phase": "view",
+          "logicalUtf8": 1027
+        }
+      ],
+      "peakLogicalUtf8": 3382
+    },
+    "limits": {
+      "maxRows": 105,
+      "maxSerializedBytes": 11972,
+      "memoryBudgetBytes": 6764
+    }
+  },
+  "same-header-losing-support-A": {
+    "schemaVersion": 1,
+    "bootstrapNumericRows": 43,
+    "committedCountRows": 1,
+    "coverageDistinctRows": 1,
+    "reads": [
+      {
+        "table": "repository",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 30
+      },
+      {
+        "table": "repository_state",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 47
+      },
+      {
+        "table": "revisions",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 55
+      },
+      {
+        "table": "source_files",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 99
+      },
+      {
+        "table": "canonical_nodes",
+        "censusRows": 1,
+        "locatorRows": 2,
+        "payloadRows": 2,
+        "rawTextBytes": 423
+      },
+      {
+        "table": "canonical_edges",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 209
+      },
+      {
+        "table": "unresolved_targets",
+        "censusRows": 1,
+        "locatorRows": 0,
+        "payloadRows": 0,
+        "rawTextBytes": 0
+      },
+      {
+        "table": "evidence",
+        "censusRows": 1,
+        "locatorRows": 6,
+        "payloadRows": 6,
+        "rawTextBytes": 952
+      },
+      {
+        "table": "provider_fact_bindings",
+        "censusRows": 1,
+        "locatorRows": 6,
+        "payloadRows": 6,
+        "rawTextBytes": 790
+      },
+      {
+        "table": "fact_evidence",
+        "censusRows": 1,
+        "locatorRows": 6,
+        "payloadRows": 6,
+        "rawTextBytes": 576
+      },
+      {
+        "table": "active_support_candidates",
+        "censusRows": 1,
+        "locatorRows": 6,
+        "payloadRows": 6,
+        "rawTextBytes": 2847
+      },
+      {
+        "table": "provider_snapshots",
+        "censusRows": 1,
+        "locatorRows": 2,
+        "payloadRows": 2,
+        "rawTextBytes": 188
+      },
+      {
+        "table": "provider_capabilities",
+        "censusRows": 1,
+        "locatorRows": 2,
+        "payloadRows": 2,
+        "rawTextBytes": 72
+      },
+      {
+        "table": "provider_capabilities",
+        "censusRows": 1,
+        "locatorRows": 2,
+        "payloadRows": 2,
+        "rawTextBytes": 70
+      },
+      {
+        "table": "analysis_coverage",
+        "censusRows": 1,
+        "locatorRows": 2,
+        "payloadRows": 2,
+        "rawTextBytes": 75
+      }
+    ],
+    "payloadRows": 39,
+    "payloadTextBytes": 6433,
+    "framedBytes": 14423,
+    "logicalReservation": {
+      "headerContextUtf8": 249,
+      "phases": [
+        {
+          "phase": "locator:domain",
+          "logicalUtf8": 281
+        },
+        {
+          "phase": "locator:LOCATOR:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 336
+        },
+        {
+          "phase": "locator:LOCATOR:[\"capture-repo\"]",
+          "rawTextBytes": 0,
+          "logicalUtf8": 544
+        },
+        {
+          "phase": "source:domain",
+          "logicalUtf8": 343
+        },
+        {
+          "phase": "source:TARGET:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 396
+        },
+        {
+          "phase": "source:TARGET:[\"capture-worktree\"]",
+          "rawTextBytes": 0,
+          "logicalUtf8": 925
+        },
+        {
+          "phase": "source:SOURCE_FILE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 416
+        },
+        {
+          "phase": "source:SOURCE_FILE:[\"source:one\"]",
+          "rawTextBytes": 99,
+          "logicalUtf8": 1478
+        },
+        {
+          "phase": "code:domain",
+          "logicalUtf8": 406
+        },
+        {
+          "phase": "code:HEADER:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 460
+        },
+        {
+          "phase": "code:HEADER:[\"capture-repo\"]",
+          "rawTextBytes": 0,
+          "logicalUtf8": 1027
+        },
+        {
+          "phase": "code:NODE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 452
+        },
+        {
+          "phase": "code:NODE:[\"node:a\"]",
+          "rawTextBytes": 212,
+          "logicalUtf8": 2011
+        },
+        {
+          "phase": "code:NODE:[\"node:b\"]",
+          "rawTextBytes": 211,
+          "logicalUtf8": 2006
+        },
+        {
+          "phase": "code:EDGE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 452
+        },
+        {
+          "phase": "code:EDGE:[\"edge:call\"]",
+          "rawTextBytes": 209,
+          "logicalUtf8": 2210
+        },
+        {
+          "phase": "code:EVIDENCE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 468
+        },
+        {
+          "phase": "code:EVIDENCE:[\"provider-evidence-v1:59fef4b91f19622379616d5dbb506b807615f38d1c6520a5480f222f5de98716\"]",
+          "rawTextBytes": 165,
+          "logicalUtf8": 2080
+        },
+        {
+          "phase": "code:EVIDENCE:[\"provider-evidence-v1:78582cdf3d126ea6f78f7a44b19977c96522d10173ff19bbb540c7ef428bba90\"]",
+          "rawTextBytes": 157,
+          "logicalUtf8": 2040
+        },
+        {
+          "phase": "code:EVIDENCE:[\"provider-evidence-v1:88e0535b18b036cc9c26bc6ca75df44e5c6a5bb5a47e4f9c61ec24c247ca9154\"]",
+          "rawTextBytes": 163,
+          "logicalUtf8": 2070
+        },
+        {
+          "phase": "code:EVIDENCE:[\"provider-evidence-v1:8d81f5f47bd8c6704765ff7901264e00ec6941694e2e1a0f6e2d516535d0d2d5\"]",
+          "rawTextBytes": 157,
+          "logicalUtf8": 2040
+        },
+        {
+          "phase": "code:EVIDENCE:[\"provider-evidence-v1:948dfb857b101983c9926eb27bce66f35ae0eb2c8d7ce5decdd0546b497cac91\"]",
+          "rawTextBytes": 155,
+          "logicalUtf8": 2030
+        },
+        {
+          "phase": "code:EVIDENCE:[\"provider-evidence-v1:b82e0df34b4bad8ee3f10419c6619225e60fe390ca55b9f302c874bb1b684083\"]",
+          "rawTextBytes": 155,
+          "logicalUtf8": 2030
+        },
+        {
+          "phase": "code:BINDING:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 464
+        },
+        {
+          "phase": "code:BINDING:[\"provider-evidence-v1:59fef4b91f19622379616d5dbb506b807615f38d1c6520a5480f222f5de98716\",\"EDGE\",\"edge:call\"]",
+          "rawTextBytes": 140,
+          "logicalUtf8": 2045
+        },
+        {
+          "phase": "code:BINDING:[\"provider-evidence-v1:78582cdf3d126ea6f78f7a44b19977c96522d10173ff19bbb540c7ef428bba90\",\"NODE\",\"node:a\"]",
+          "rawTextBytes": 129,
+          "logicalUtf8": 1978
+        },
+        {
+          "phase": "code:BINDING:[\"provider-evidence-v1:88e0535b18b036cc9c26bc6ca75df44e5c6a5bb5a47e4f9c61ec24c247ca9154\",\"EDGE\",\"edge:call\"]",
+          "rawTextBytes": 138,
+          "logicalUtf8": 2035
+        },
+        {
+          "phase": "code:BINDING:[\"provider-evidence-v1:8d81f5f47bd8c6704765ff7901264e00ec6941694e2e1a0f6e2d516535d0d2d5\",\"NODE\",\"node:b\"]",
+          "rawTextBytes": 129,
+          "logicalUtf8": 1978
+        },
+        {
+          "phase": "code:BINDING:[\"provider-evidence-v1:948dfb857b101983c9926eb27bce66f35ae0eb2c8d7ce5decdd0546b497cac91\",\"NODE\",\"node:b\"]",
+          "rawTextBytes": 127,
+          "logicalUtf8": 1968
+        },
+        {
+          "phase": "code:BINDING:[\"provider-evidence-v1:b82e0df34b4bad8ee3f10419c6619225e60fe390ca55b9f302c874bb1b684083\",\"NODE\",\"node:a\"]",
+          "rawTextBytes": 127,
+          "logicalUtf8": 1968
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 488
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:[\"provider-evidence-v1:59fef4b91f19622379616d5dbb506b807615f38d1c6520a5480f222f5de98716\",\"EDGE\",\"edge:call\"]",
+          "rawTextBytes": 98,
+          "logicalUtf8": 1477
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:[\"provider-evidence-v1:78582cdf3d126ea6f78f7a44b19977c96522d10173ff19bbb540c7ef428bba90\",\"NODE\",\"node:a\"]",
+          "rawTextBytes": 95,
+          "logicalUtf8": 1450
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:[\"provider-evidence-v1:88e0535b18b036cc9c26bc6ca75df44e5c6a5bb5a47e4f9c61ec24c247ca9154\",\"EDGE\",\"edge:call\"]",
+          "rawTextBytes": 98,
+          "logicalUtf8": 1477
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:[\"provider-evidence-v1:8d81f5f47bd8c6704765ff7901264e00ec6941694e2e1a0f6e2d516535d0d2d5\",\"NODE\",\"node:b\"]",
+          "rawTextBytes": 95,
+          "logicalUtf8": 1450
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:[\"provider-evidence-v1:948dfb857b101983c9926eb27bce66f35ae0eb2c8d7ce5decdd0546b497cac91\",\"NODE\",\"node:b\"]",
+          "rawTextBytes": 95,
+          "logicalUtf8": 1450
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:[\"provider-evidence-v1:b82e0df34b4bad8ee3f10419c6619225e60fe390ca55b9f302c874bb1b684083\",\"NODE\",\"node:a\"]",
+          "rawTextBytes": 95,
+          "logicalUtf8": 1450
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 504
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:[\"provider-evidence-v1:59fef4b91f19622379616d5dbb506b807615f38d1c6520a5480f222f5de98716\",\"EDGE\",\"edge:call\"]",
+          "rawTextBytes": 519,
+          "logicalUtf8": 3382
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:[\"provider-evidence-v1:78582cdf3d126ea6f78f7a44b19977c96522d10173ff19bbb540c7ef428bba90\",\"NODE\",\"node:a\"]",
+          "rawTextBytes": 452,
+          "logicalUtf8": 3101
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:[\"provider-evidence-v1:88e0535b18b036cc9c26bc6ca75df44e5c6a5bb5a47e4f9c61ec24c247ca9154\",\"EDGE\",\"edge:call\"]",
+          "rawTextBytes": 519,
+          "logicalUtf8": 3382
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:[\"provider-evidence-v1:8d81f5f47bd8c6704765ff7901264e00ec6941694e2e1a0f6e2d516535d0d2d5\",\"NODE\",\"node:b\"]",
+          "rawTextBytes": 451,
+          "logicalUtf8": 3096
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:[\"provider-evidence-v1:948dfb857b101983c9926eb27bce66f35ae0eb2c8d7ce5decdd0546b497cac91\",\"NODE\",\"node:b\"]",
+          "rawTextBytes": 451,
+          "logicalUtf8": 3096
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:[\"provider-evidence-v1:b82e0df34b4bad8ee3f10419c6619225e60fe390ca55b9f302c874bb1b684083\",\"NODE\",\"node:a\"]",
+          "rawTextBytes": 455,
+          "logicalUtf8": 3116
+        },
+        {
+          "phase": "code:SNAPSHOT:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 468
+        },
+        {
+          "phase": "code:SNAPSHOT:[\"snapshot:alpha\"]",
+          "rawTextBytes": 167,
+          "logicalUtf8": 2076
+        },
+        {
+          "phase": "code:SNAPSHOT:[\"snapshot:beta\"]",
+          "rawTextBytes": 163,
+          "logicalUtf8": 2060
+        },
+        {
+          "phase": "code:COVERAGE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 468
+        },
+        {
+          "phase": "code:COVERAGE:[\"snapshot:alpha\",\"SYMBOL\",\"SOURCE\",\"source:one\",\"COMPLETE\"]",
+          "rawTextBytes": 38,
+          "logicalUtf8": 1137
+        },
+        {
+          "phase": "code:COVERAGE:[\"snapshot:beta\",\"SYMBOL\",\"SOURCE\",\"source:one\",\"COMPLETE\"]",
+          "rawTextBytes": 37,
+          "logicalUtf8": 1128
+        },
+        {
+          "phase": "view",
+          "logicalUtf8": 1027
+        }
+      ],
+      "peakLogicalUtf8": 3382
+    },
+    "limits": {
+      "maxRows": 138,
+      "maxSerializedBytes": 20856,
+      "memoryBudgetBytes": 6764
+    }
+  },
+  "same-header-losing-support-B": {
+    "schemaVersion": 1,
+    "bootstrapNumericRows": 43,
+    "committedCountRows": 1,
+    "coverageDistinctRows": 1,
+    "reads": [
+      {
+        "table": "repository",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 30
+      },
+      {
+        "table": "repository_state",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 47
+      },
+      {
+        "table": "revisions",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 55
+      },
+      {
+        "table": "source_files",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 99
+      },
+      {
+        "table": "canonical_nodes",
+        "censusRows": 1,
+        "locatorRows": 2,
+        "payloadRows": 2,
+        "rawTextBytes": 423
+      },
+      {
+        "table": "canonical_edges",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 209
+      },
+      {
+        "table": "unresolved_targets",
+        "censusRows": 1,
+        "locatorRows": 0,
+        "payloadRows": 0,
+        "rawTextBytes": 0
+      },
+      {
+        "table": "evidence",
+        "censusRows": 1,
+        "locatorRows": 6,
+        "payloadRows": 6,
+        "rawTextBytes": 952
+      },
+      {
+        "table": "provider_fact_bindings",
+        "censusRows": 1,
+        "locatorRows": 6,
+        "payloadRows": 6,
+        "rawTextBytes": 790
+      },
+      {
+        "table": "fact_evidence",
+        "censusRows": 1,
+        "locatorRows": 6,
+        "payloadRows": 6,
+        "rawTextBytes": 576
+      },
+      {
+        "table": "active_support_candidates",
+        "censusRows": 1,
+        "locatorRows": 6,
+        "payloadRows": 6,
+        "rawTextBytes": 2847
+      },
+      {
+        "table": "provider_snapshots",
+        "censusRows": 1,
+        "locatorRows": 2,
+        "payloadRows": 2,
+        "rawTextBytes": 188
+      },
+      {
+        "table": "provider_capabilities",
+        "censusRows": 1,
+        "locatorRows": 2,
+        "payloadRows": 2,
+        "rawTextBytes": 72
+      },
+      {
+        "table": "provider_capabilities",
+        "censusRows": 1,
+        "locatorRows": 2,
+        "payloadRows": 2,
+        "rawTextBytes": 70
+      },
+      {
+        "table": "analysis_coverage",
+        "censusRows": 1,
+        "locatorRows": 2,
+        "payloadRows": 2,
+        "rawTextBytes": 75
+      }
+    ],
+    "payloadRows": 39,
+    "payloadTextBytes": 6433,
+    "framedBytes": 14423,
+    "logicalReservation": {
+      "headerContextUtf8": 249,
+      "phases": [
+        {
+          "phase": "locator:domain",
+          "logicalUtf8": 281
+        },
+        {
+          "phase": "locator:LOCATOR:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 336
+        },
+        {
+          "phase": "locator:LOCATOR:[\"capture-repo\"]",
+          "rawTextBytes": 0,
+          "logicalUtf8": 544
+        },
+        {
+          "phase": "source:domain",
+          "logicalUtf8": 343
+        },
+        {
+          "phase": "source:TARGET:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 396
+        },
+        {
+          "phase": "source:TARGET:[\"capture-worktree\"]",
+          "rawTextBytes": 0,
+          "logicalUtf8": 925
+        },
+        {
+          "phase": "source:SOURCE_FILE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 416
+        },
+        {
+          "phase": "source:SOURCE_FILE:[\"source:one\"]",
+          "rawTextBytes": 99,
+          "logicalUtf8": 1478
+        },
+        {
+          "phase": "code:domain",
+          "logicalUtf8": 406
+        },
+        {
+          "phase": "code:HEADER:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 460
+        },
+        {
+          "phase": "code:HEADER:[\"capture-repo\"]",
+          "rawTextBytes": 0,
+          "logicalUtf8": 1027
+        },
+        {
+          "phase": "code:NODE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 452
+        },
+        {
+          "phase": "code:NODE:[\"node:a\"]",
+          "rawTextBytes": 212,
+          "logicalUtf8": 2011
+        },
+        {
+          "phase": "code:NODE:[\"node:b\"]",
+          "rawTextBytes": 211,
+          "logicalUtf8": 2006
+        },
+        {
+          "phase": "code:EDGE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 452
+        },
+        {
+          "phase": "code:EDGE:[\"edge:call\"]",
+          "rawTextBytes": 209,
+          "logicalUtf8": 2210
+        },
+        {
+          "phase": "code:EVIDENCE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 468
+        },
+        {
+          "phase": "code:EVIDENCE:[\"provider-evidence-v1:59fef4b91f19622379616d5dbb506b807615f38d1c6520a5480f222f5de98716\"]",
+          "rawTextBytes": 165,
+          "logicalUtf8": 2080
+        },
+        {
+          "phase": "code:EVIDENCE:[\"provider-evidence-v1:78582cdf3d126ea6f78f7a44b19977c96522d10173ff19bbb540c7ef428bba90\"]",
+          "rawTextBytes": 157,
+          "logicalUtf8": 2040
+        },
+        {
+          "phase": "code:EVIDENCE:[\"provider-evidence-v1:88e0535b18b036cc9c26bc6ca75df44e5c6a5bb5a47e4f9c61ec24c247ca9154\"]",
+          "rawTextBytes": 163,
+          "logicalUtf8": 2070
+        },
+        {
+          "phase": "code:EVIDENCE:[\"provider-evidence-v1:8d81f5f47bd8c6704765ff7901264e00ec6941694e2e1a0f6e2d516535d0d2d5\"]",
+          "rawTextBytes": 157,
+          "logicalUtf8": 2040
+        },
+        {
+          "phase": "code:EVIDENCE:[\"provider-evidence-v1:948dfb857b101983c9926eb27bce66f35ae0eb2c8d7ce5decdd0546b497cac91\"]",
+          "rawTextBytes": 155,
+          "logicalUtf8": 2030
+        },
+        {
+          "phase": "code:EVIDENCE:[\"provider-evidence-v1:b82e0df34b4bad8ee3f10419c6619225e60fe390ca55b9f302c874bb1b684083\"]",
+          "rawTextBytes": 155,
+          "logicalUtf8": 2030
+        },
+        {
+          "phase": "code:BINDING:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 464
+        },
+        {
+          "phase": "code:BINDING:[\"provider-evidence-v1:59fef4b91f19622379616d5dbb506b807615f38d1c6520a5480f222f5de98716\",\"EDGE\",\"edge:call\"]",
+          "rawTextBytes": 140,
+          "logicalUtf8": 2045
+        },
+        {
+          "phase": "code:BINDING:[\"provider-evidence-v1:78582cdf3d126ea6f78f7a44b19977c96522d10173ff19bbb540c7ef428bba90\",\"NODE\",\"node:a\"]",
+          "rawTextBytes": 129,
+          "logicalUtf8": 1978
+        },
+        {
+          "phase": "code:BINDING:[\"provider-evidence-v1:88e0535b18b036cc9c26bc6ca75df44e5c6a5bb5a47e4f9c61ec24c247ca9154\",\"EDGE\",\"edge:call\"]",
+          "rawTextBytes": 138,
+          "logicalUtf8": 2035
+        },
+        {
+          "phase": "code:BINDING:[\"provider-evidence-v1:8d81f5f47bd8c6704765ff7901264e00ec6941694e2e1a0f6e2d516535d0d2d5\",\"NODE\",\"node:b\"]",
+          "rawTextBytes": 129,
+          "logicalUtf8": 1978
+        },
+        {
+          "phase": "code:BINDING:[\"provider-evidence-v1:948dfb857b101983c9926eb27bce66f35ae0eb2c8d7ce5decdd0546b497cac91\",\"NODE\",\"node:b\"]",
+          "rawTextBytes": 127,
+          "logicalUtf8": 1968
+        },
+        {
+          "phase": "code:BINDING:[\"provider-evidence-v1:b82e0df34b4bad8ee3f10419c6619225e60fe390ca55b9f302c874bb1b684083\",\"NODE\",\"node:a\"]",
+          "rawTextBytes": 127,
+          "logicalUtf8": 1968
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 488
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:[\"provider-evidence-v1:59fef4b91f19622379616d5dbb506b807615f38d1c6520a5480f222f5de98716\",\"EDGE\",\"edge:call\"]",
+          "rawTextBytes": 98,
+          "logicalUtf8": 1477
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:[\"provider-evidence-v1:78582cdf3d126ea6f78f7a44b19977c96522d10173ff19bbb540c7ef428bba90\",\"NODE\",\"node:a\"]",
+          "rawTextBytes": 95,
+          "logicalUtf8": 1450
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:[\"provider-evidence-v1:88e0535b18b036cc9c26bc6ca75df44e5c6a5bb5a47e4f9c61ec24c247ca9154\",\"EDGE\",\"edge:call\"]",
+          "rawTextBytes": 98,
+          "logicalUtf8": 1477
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:[\"provider-evidence-v1:8d81f5f47bd8c6704765ff7901264e00ec6941694e2e1a0f6e2d516535d0d2d5\",\"NODE\",\"node:b\"]",
+          "rawTextBytes": 95,
+          "logicalUtf8": 1450
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:[\"provider-evidence-v1:948dfb857b101983c9926eb27bce66f35ae0eb2c8d7ce5decdd0546b497cac91\",\"NODE\",\"node:b\"]",
+          "rawTextBytes": 95,
+          "logicalUtf8": 1450
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:[\"provider-evidence-v1:b82e0df34b4bad8ee3f10419c6619225e60fe390ca55b9f302c874bb1b684083\",\"NODE\",\"node:a\"]",
+          "rawTextBytes": 95,
+          "logicalUtf8": 1450
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 504
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:[\"provider-evidence-v1:59fef4b91f19622379616d5dbb506b807615f38d1c6520a5480f222f5de98716\",\"EDGE\",\"edge:call\"]",
+          "rawTextBytes": 519,
+          "logicalUtf8": 3382
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:[\"provider-evidence-v1:78582cdf3d126ea6f78f7a44b19977c96522d10173ff19bbb540c7ef428bba90\",\"NODE\",\"node:a\"]",
+          "rawTextBytes": 452,
+          "logicalUtf8": 3101
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:[\"provider-evidence-v1:88e0535b18b036cc9c26bc6ca75df44e5c6a5bb5a47e4f9c61ec24c247ca9154\",\"EDGE\",\"edge:call\"]",
+          "rawTextBytes": 519,
+          "logicalUtf8": 3382
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:[\"provider-evidence-v1:8d81f5f47bd8c6704765ff7901264e00ec6941694e2e1a0f6e2d516535d0d2d5\",\"NODE\",\"node:b\"]",
+          "rawTextBytes": 451,
+          "logicalUtf8": 3096
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:[\"provider-evidence-v1:948dfb857b101983c9926eb27bce66f35ae0eb2c8d7ce5decdd0546b497cac91\",\"NODE\",\"node:b\"]",
+          "rawTextBytes": 451,
+          "logicalUtf8": 3096
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:[\"provider-evidence-v1:b82e0df34b4bad8ee3f10419c6619225e60fe390ca55b9f302c874bb1b684083\",\"NODE\",\"node:a\"]",
+          "rawTextBytes": 455,
+          "logicalUtf8": 3116
+        },
+        {
+          "phase": "code:SNAPSHOT:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 468
+        },
+        {
+          "phase": "code:SNAPSHOT:[\"snapshot:alpha\"]",
+          "rawTextBytes": 167,
+          "logicalUtf8": 2076
+        },
+        {
+          "phase": "code:SNAPSHOT:[\"snapshot:beta\"]",
+          "rawTextBytes": 163,
+          "logicalUtf8": 2060
+        },
+        {
+          "phase": "code:COVERAGE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 468
+        },
+        {
+          "phase": "code:COVERAGE:[\"snapshot:alpha\",\"SYMBOL\",\"SOURCE\",\"source:one\",\"COMPLETE\"]",
+          "rawTextBytes": 38,
+          "logicalUtf8": 1137
+        },
+        {
+          "phase": "code:COVERAGE:[\"snapshot:beta\",\"SYMBOL\",\"SOURCE\",\"source:one\",\"COMPLETE\"]",
+          "rawTextBytes": 37,
+          "logicalUtf8": 1128
+        },
+        {
+          "phase": "view",
+          "logicalUtf8": 1027
+        }
+      ],
+      "peakLogicalUtf8": 3382
+    },
+    "limits": {
+      "maxRows": 138,
+      "maxSerializedBytes": 20856,
+      "memoryBudgetBytes": 6764
+    }
+  },
+  "same-header-coverage-A": {
+    "schemaVersion": 1,
+    "bootstrapNumericRows": 43,
+    "committedCountRows": 1,
+    "coverageDistinctRows": 1,
+    "reads": [
+      {
+        "table": "repository",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 30
+      },
+      {
+        "table": "repository_state",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 47
+      },
+      {
+        "table": "revisions",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 55
+      },
+      {
+        "table": "source_files",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 99
+      },
+      {
+        "table": "canonical_nodes",
+        "censusRows": 1,
+        "locatorRows": 2,
+        "payloadRows": 2,
+        "rawTextBytes": 365
+      },
+      {
+        "table": "canonical_edges",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 180
+      },
+      {
+        "table": "unresolved_targets",
+        "censusRows": 1,
+        "locatorRows": 0,
+        "payloadRows": 0,
+        "rawTextBytes": 0
+      },
+      {
+        "table": "evidence",
+        "censusRows": 1,
+        "locatorRows": 3,
+        "payloadRows": 3,
+        "rawTextBytes": 479
+      },
+      {
+        "table": "provider_fact_bindings",
+        "censusRows": 1,
+        "locatorRows": 3,
+        "payloadRows": 3,
+        "rawTextBytes": 398
+      },
+      {
+        "table": "fact_evidence",
+        "censusRows": 1,
+        "locatorRows": 3,
+        "payloadRows": 3,
+        "rawTextBytes": 288
+      },
+      {
+        "table": "active_support_candidates",
+        "censusRows": 1,
+        "locatorRows": 3,
+        "payloadRows": 3,
+        "rawTextBytes": 1422
+      },
+      {
+        "table": "provider_snapshots",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 95
+      },
+      {
+        "table": "provider_capabilities",
+        "censusRows": 1,
+        "locatorRows": 2,
+        "payloadRows": 2,
+        "rawTextBytes": 72
+      },
+      {
+        "table": "analysis_coverage",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 38
+      }
+    ],
+    "payloadRows": 23,
+    "payloadTextBytes": 3568,
+    "framedBytes": 8404,
+    "logicalReservation": {
+      "headerContextUtf8": 249,
+      "phases": [
+        {
+          "phase": "locator:domain",
+          "logicalUtf8": 281
+        },
+        {
+          "phase": "locator:LOCATOR:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 336
+        },
+        {
+          "phase": "locator:LOCATOR:[\"capture-repo\"]",
+          "rawTextBytes": 0,
+          "logicalUtf8": 544
+        },
+        {
+          "phase": "source:domain",
+          "logicalUtf8": 343
+        },
+        {
+          "phase": "source:TARGET:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 396
+        },
+        {
+          "phase": "source:TARGET:[\"capture-worktree\"]",
+          "rawTextBytes": 0,
+          "logicalUtf8": 925
+        },
+        {
+          "phase": "source:SOURCE_FILE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 416
+        },
+        {
+          "phase": "source:SOURCE_FILE:[\"source:one\"]",
+          "rawTextBytes": 99,
+          "logicalUtf8": 1478
+        },
+        {
+          "phase": "code:domain",
+          "logicalUtf8": 406
+        },
+        {
+          "phase": "code:HEADER:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 460
+        },
+        {
+          "phase": "code:HEADER:[\"capture-repo\"]",
+          "rawTextBytes": 0,
+          "logicalUtf8": 1027
+        },
+        {
+          "phase": "code:NODE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 452
+        },
+        {
+          "phase": "code:NODE:[\"node:a\"]",
+          "rawTextBytes": 183,
+          "logicalUtf8": 1870
+        },
+        {
+          "phase": "code:NODE:[\"node:b\"]",
+          "rawTextBytes": 182,
+          "logicalUtf8": 1865
+        },
+        {
+          "phase": "code:EDGE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 452
+        },
+        {
+          "phase": "code:EDGE:[\"edge:call\"]",
+          "rawTextBytes": 180,
+          "logicalUtf8": 2069
+        },
+        {
+          "phase": "code:EVIDENCE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 468
+        },
+        {
+          "phase": "code:EVIDENCE:[\"provider-evidence-v1:59fef4b91f19622379616d5dbb506b807615f38d1c6520a5480f222f5de98716\"]",
+          "rawTextBytes": 165,
+          "logicalUtf8": 2080
+        },
+        {
+          "phase": "code:EVIDENCE:[\"provider-evidence-v1:78582cdf3d126ea6f78f7a44b19977c96522d10173ff19bbb540c7ef428bba90\"]",
+          "rawTextBytes": 157,
+          "logicalUtf8": 2040
+        },
+        {
+          "phase": "code:EVIDENCE:[\"provider-evidence-v1:8d81f5f47bd8c6704765ff7901264e00ec6941694e2e1a0f6e2d516535d0d2d5\"]",
+          "rawTextBytes": 157,
+          "logicalUtf8": 2040
+        },
+        {
+          "phase": "code:BINDING:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 464
+        },
+        {
+          "phase": "code:BINDING:[\"provider-evidence-v1:59fef4b91f19622379616d5dbb506b807615f38d1c6520a5480f222f5de98716\",\"EDGE\",\"edge:call\"]",
+          "rawTextBytes": 140,
+          "logicalUtf8": 2045
+        },
+        {
+          "phase": "code:BINDING:[\"provider-evidence-v1:78582cdf3d126ea6f78f7a44b19977c96522d10173ff19bbb540c7ef428bba90\",\"NODE\",\"node:a\"]",
+          "rawTextBytes": 129,
+          "logicalUtf8": 1978
+        },
+        {
+          "phase": "code:BINDING:[\"provider-evidence-v1:8d81f5f47bd8c6704765ff7901264e00ec6941694e2e1a0f6e2d516535d0d2d5\",\"NODE\",\"node:b\"]",
+          "rawTextBytes": 129,
+          "logicalUtf8": 1978
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 488
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:[\"provider-evidence-v1:59fef4b91f19622379616d5dbb506b807615f38d1c6520a5480f222f5de98716\",\"EDGE\",\"edge:call\"]",
+          "rawTextBytes": 98,
+          "logicalUtf8": 1477
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:[\"provider-evidence-v1:78582cdf3d126ea6f78f7a44b19977c96522d10173ff19bbb540c7ef428bba90\",\"NODE\",\"node:a\"]",
+          "rawTextBytes": 95,
+          "logicalUtf8": 1450
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:[\"provider-evidence-v1:8d81f5f47bd8c6704765ff7901264e00ec6941694e2e1a0f6e2d516535d0d2d5\",\"NODE\",\"node:b\"]",
+          "rawTextBytes": 95,
+          "logicalUtf8": 1450
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 504
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:[\"provider-evidence-v1:59fef4b91f19622379616d5dbb506b807615f38d1c6520a5480f222f5de98716\",\"EDGE\",\"edge:call\"]",
+          "rawTextBytes": 519,
+          "logicalUtf8": 3382
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:[\"provider-evidence-v1:78582cdf3d126ea6f78f7a44b19977c96522d10173ff19bbb540c7ef428bba90\",\"NODE\",\"node:a\"]",
+          "rawTextBytes": 452,
+          "logicalUtf8": 3101
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:[\"provider-evidence-v1:8d81f5f47bd8c6704765ff7901264e00ec6941694e2e1a0f6e2d516535d0d2d5\",\"NODE\",\"node:b\"]",
+          "rawTextBytes": 451,
+          "logicalUtf8": 3096
+        },
+        {
+          "phase": "code:SNAPSHOT:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 468
+        },
+        {
+          "phase": "code:SNAPSHOT:[\"snapshot:alpha\"]",
+          "rawTextBytes": 167,
+          "logicalUtf8": 2076
+        },
+        {
+          "phase": "code:COVERAGE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 468
+        },
+        {
+          "phase": "code:COVERAGE:[\"snapshot:alpha\",\"SYMBOL\",\"SOURCE\",\"source:one\",\"COMPLETE\"]",
+          "rawTextBytes": 38,
+          "logicalUtf8": 1137
+        },
+        {
+          "phase": "view",
+          "logicalUtf8": 1027
+        }
+      ],
+      "peakLogicalUtf8": 3382
+    },
+    "limits": {
+      "maxRows": 105,
+      "maxSerializedBytes": 11972,
+      "memoryBudgetBytes": 6764
+    }
+  },
+  "same-header-coverage-B": {
+    "schemaVersion": 1,
+    "bootstrapNumericRows": 43,
+    "committedCountRows": 1,
+    "coverageDistinctRows": 1,
+    "reads": [
+      {
+        "table": "repository",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 30
+      },
+      {
+        "table": "repository_state",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 47
+      },
+      {
+        "table": "revisions",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 55
+      },
+      {
+        "table": "source_files",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 99
+      },
+      {
+        "table": "canonical_nodes",
+        "censusRows": 1,
+        "locatorRows": 2,
+        "payloadRows": 2,
+        "rawTextBytes": 365
+      },
+      {
+        "table": "canonical_edges",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 180
+      },
+      {
+        "table": "unresolved_targets",
+        "censusRows": 1,
+        "locatorRows": 0,
+        "payloadRows": 0,
+        "rawTextBytes": 0
+      },
+      {
+        "table": "evidence",
+        "censusRows": 1,
+        "locatorRows": 3,
+        "payloadRows": 3,
+        "rawTextBytes": 479
+      },
+      {
+        "table": "provider_fact_bindings",
+        "censusRows": 1,
+        "locatorRows": 3,
+        "payloadRows": 3,
+        "rawTextBytes": 398
+      },
+      {
+        "table": "fact_evidence",
+        "censusRows": 1,
+        "locatorRows": 3,
+        "payloadRows": 3,
+        "rawTextBytes": 288
+      },
+      {
+        "table": "active_support_candidates",
+        "censusRows": 1,
+        "locatorRows": 3,
+        "payloadRows": 3,
+        "rawTextBytes": 1422
+      },
+      {
+        "table": "provider_snapshots",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 95
+      },
+      {
+        "table": "provider_capabilities",
+        "censusRows": 1,
+        "locatorRows": 2,
+        "payloadRows": 2,
+        "rawTextBytes": 72
+      },
+      {
+        "table": "analysis_coverage",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 37
+      }
+    ],
+    "payloadRows": 23,
+    "payloadTextBytes": 3567,
+    "framedBytes": 8402,
+    "logicalReservation": {
+      "headerContextUtf8": 249,
+      "phases": [
+        {
+          "phase": "locator:domain",
+          "logicalUtf8": 281
+        },
+        {
+          "phase": "locator:LOCATOR:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 336
+        },
+        {
+          "phase": "locator:LOCATOR:[\"capture-repo\"]",
+          "rawTextBytes": 0,
+          "logicalUtf8": 544
+        },
+        {
+          "phase": "source:domain",
+          "logicalUtf8": 343
+        },
+        {
+          "phase": "source:TARGET:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 396
+        },
+        {
+          "phase": "source:TARGET:[\"capture-worktree\"]",
+          "rawTextBytes": 0,
+          "logicalUtf8": 925
+        },
+        {
+          "phase": "source:SOURCE_FILE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 416
+        },
+        {
+          "phase": "source:SOURCE_FILE:[\"source:one\"]",
+          "rawTextBytes": 99,
+          "logicalUtf8": 1478
+        },
+        {
+          "phase": "code:domain",
+          "logicalUtf8": 406
+        },
+        {
+          "phase": "code:HEADER:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 460
+        },
+        {
+          "phase": "code:HEADER:[\"capture-repo\"]",
+          "rawTextBytes": 0,
+          "logicalUtf8": 1027
+        },
+        {
+          "phase": "code:NODE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 452
+        },
+        {
+          "phase": "code:NODE:[\"node:a\"]",
+          "rawTextBytes": 183,
+          "logicalUtf8": 1870
+        },
+        {
+          "phase": "code:NODE:[\"node:b\"]",
+          "rawTextBytes": 182,
+          "logicalUtf8": 1865
+        },
+        {
+          "phase": "code:EDGE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 452
+        },
+        {
+          "phase": "code:EDGE:[\"edge:call\"]",
+          "rawTextBytes": 180,
+          "logicalUtf8": 2069
+        },
+        {
+          "phase": "code:EVIDENCE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 468
+        },
+        {
+          "phase": "code:EVIDENCE:[\"provider-evidence-v1:59fef4b91f19622379616d5dbb506b807615f38d1c6520a5480f222f5de98716\"]",
+          "rawTextBytes": 165,
+          "logicalUtf8": 2080
+        },
+        {
+          "phase": "code:EVIDENCE:[\"provider-evidence-v1:78582cdf3d126ea6f78f7a44b19977c96522d10173ff19bbb540c7ef428bba90\"]",
+          "rawTextBytes": 157,
+          "logicalUtf8": 2040
+        },
+        {
+          "phase": "code:EVIDENCE:[\"provider-evidence-v1:8d81f5f47bd8c6704765ff7901264e00ec6941694e2e1a0f6e2d516535d0d2d5\"]",
+          "rawTextBytes": 157,
+          "logicalUtf8": 2040
+        },
+        {
+          "phase": "code:BINDING:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 464
+        },
+        {
+          "phase": "code:BINDING:[\"provider-evidence-v1:59fef4b91f19622379616d5dbb506b807615f38d1c6520a5480f222f5de98716\",\"EDGE\",\"edge:call\"]",
+          "rawTextBytes": 140,
+          "logicalUtf8": 2045
+        },
+        {
+          "phase": "code:BINDING:[\"provider-evidence-v1:78582cdf3d126ea6f78f7a44b19977c96522d10173ff19bbb540c7ef428bba90\",\"NODE\",\"node:a\"]",
+          "rawTextBytes": 129,
+          "logicalUtf8": 1978
+        },
+        {
+          "phase": "code:BINDING:[\"provider-evidence-v1:8d81f5f47bd8c6704765ff7901264e00ec6941694e2e1a0f6e2d516535d0d2d5\",\"NODE\",\"node:b\"]",
+          "rawTextBytes": 129,
+          "logicalUtf8": 1978
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 488
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:[\"provider-evidence-v1:59fef4b91f19622379616d5dbb506b807615f38d1c6520a5480f222f5de98716\",\"EDGE\",\"edge:call\"]",
+          "rawTextBytes": 98,
+          "logicalUtf8": 1477
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:[\"provider-evidence-v1:78582cdf3d126ea6f78f7a44b19977c96522d10173ff19bbb540c7ef428bba90\",\"NODE\",\"node:a\"]",
+          "rawTextBytes": 95,
+          "logicalUtf8": 1450
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:[\"provider-evidence-v1:8d81f5f47bd8c6704765ff7901264e00ec6941694e2e1a0f6e2d516535d0d2d5\",\"NODE\",\"node:b\"]",
+          "rawTextBytes": 95,
+          "logicalUtf8": 1450
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 504
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:[\"provider-evidence-v1:59fef4b91f19622379616d5dbb506b807615f38d1c6520a5480f222f5de98716\",\"EDGE\",\"edge:call\"]",
+          "rawTextBytes": 519,
+          "logicalUtf8": 3382
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:[\"provider-evidence-v1:78582cdf3d126ea6f78f7a44b19977c96522d10173ff19bbb540c7ef428bba90\",\"NODE\",\"node:a\"]",
+          "rawTextBytes": 452,
+          "logicalUtf8": 3101
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:[\"provider-evidence-v1:8d81f5f47bd8c6704765ff7901264e00ec6941694e2e1a0f6e2d516535d0d2d5\",\"NODE\",\"node:b\"]",
+          "rawTextBytes": 451,
+          "logicalUtf8": 3096
+        },
+        {
+          "phase": "code:SNAPSHOT:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 468
+        },
+        {
+          "phase": "code:SNAPSHOT:[\"snapshot:alpha\"]",
+          "rawTextBytes": 167,
+          "logicalUtf8": 2076
+        },
+        {
+          "phase": "code:COVERAGE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 468
+        },
+        {
+          "phase": "code:COVERAGE:[\"snapshot:alpha\",\"SYMBOL\",\"SOURCE\",\"source:one\",\"PARTIAL\"]",
+          "rawTextBytes": 37,
+          "logicalUtf8": 1128
+        },
+        {
+          "phase": "view",
+          "logicalUtf8": 1027
+        }
+      ],
+      "peakLogicalUtf8": 3382
+    },
+    "limits": {
+      "maxRows": 105,
+      "maxSerializedBytes": 11969,
+      "memoryBudgetBytes": 6764
+    }
+  },
+  "empty-code-with-coverage": {
+    "schemaVersion": 1,
+    "bootstrapNumericRows": 43,
+    "committedCountRows": 1,
+    "coverageDistinctRows": 1,
+    "reads": [
+      {
+        "table": "repository",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 30
+      },
+      {
+        "table": "repository_state",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 47
+      },
+      {
+        "table": "revisions",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 55
+      },
+      {
+        "table": "source_files",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 99
+      },
+      {
+        "table": "canonical_nodes",
+        "censusRows": 1,
+        "locatorRows": 0,
+        "payloadRows": 0,
+        "rawTextBytes": 0
+      },
+      {
+        "table": "canonical_edges",
+        "censusRows": 1,
+        "locatorRows": 0,
+        "payloadRows": 0,
+        "rawTextBytes": 0
+      },
+      {
+        "table": "evidence",
+        "censusRows": 1,
+        "locatorRows": 0,
+        "payloadRows": 0,
+        "rawTextBytes": 0
+      },
+      {
+        "table": "provider_fact_bindings",
+        "censusRows": 1,
+        "locatorRows": 0,
+        "payloadRows": 0,
+        "rawTextBytes": 0
+      },
+      {
+        "table": "fact_evidence",
+        "censusRows": 1,
+        "locatorRows": 0,
+        "payloadRows": 0,
+        "rawTextBytes": 0
+      },
+      {
+        "table": "active_support_candidates",
+        "censusRows": 1,
+        "locatorRows": 0,
+        "payloadRows": 0,
+        "rawTextBytes": 0
+      },
+      {
+        "table": "provider_snapshots",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 95
+      },
+      {
+        "table": "provider_capabilities",
+        "censusRows": 1,
+        "locatorRows": 2,
+        "payloadRows": 2,
+        "rawTextBytes": 72
+      },
+      {
+        "table": "analysis_coverage",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 27
+      }
+    ],
+    "payloadRows": 8,
+    "payloadTextBytes": 425,
+    "framedBytes": 1859,
+    "logicalReservation": {
+      "headerContextUtf8": 249,
+      "phases": [
+        {
+          "phase": "locator:domain",
+          "logicalUtf8": 281
+        },
+        {
+          "phase": "locator:LOCATOR:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 336
+        },
+        {
+          "phase": "locator:LOCATOR:[\"capture-repo\"]",
+          "rawTextBytes": 0,
+          "logicalUtf8": 544
+        },
+        {
+          "phase": "source:domain",
+          "logicalUtf8": 343
+        },
+        {
+          "phase": "source:TARGET:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 396
+        },
+        {
+          "phase": "source:TARGET:[\"capture-worktree\"]",
+          "rawTextBytes": 0,
+          "logicalUtf8": 925
+        },
+        {
+          "phase": "source:SOURCE_FILE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 416
+        },
+        {
+          "phase": "source:SOURCE_FILE:[\"source:one\"]",
+          "rawTextBytes": 99,
+          "logicalUtf8": 1478
+        },
+        {
+          "phase": "code:domain",
+          "logicalUtf8": 406
+        },
+        {
+          "phase": "code:HEADER:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 460
+        },
+        {
+          "phase": "code:HEADER:[\"capture-repo\"]",
+          "rawTextBytes": 0,
+          "logicalUtf8": 1027
+        },
+        {
+          "phase": "code:NODE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 452
+        },
+        {
+          "phase": "code:EDGE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 452
+        },
+        {
+          "phase": "code:EVIDENCE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 468
+        },
+        {
+          "phase": "code:BINDING:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 464
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 488
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 504
+        },
+        {
+          "phase": "code:SNAPSHOT:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 468
+        },
+        {
+          "phase": "code:SNAPSHOT:[\"snapshot:alpha\"]",
+          "rawTextBytes": 167,
+          "logicalUtf8": 2076
+        },
+        {
+          "phase": "code:COVERAGE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 468
+        },
+        {
+          "phase": "code:COVERAGE:[\"snapshot:alpha\",\"SYMBOL\",\"NONE\",\"\",\"UNKNOWN\"]",
+          "rawTextBytes": 27,
+          "logicalUtf8": 1034
+        },
+        {
+          "phase": "view",
+          "logicalUtf8": 1027
+        }
+      ],
+      "peakLogicalUtf8": 2076
+    },
+    "limits": {
+      "maxRows": 74,
+      "maxSerializedBytes": 2284,
+      "memoryBudgetBytes": 4152
+    }
+  },
+  "coverage-multiplicity": {
+    "schemaVersion": 1,
+    "bootstrapNumericRows": 43,
+    "committedCountRows": 1,
+    "coverageDistinctRows": 1,
+    "reads": [
+      {
+        "table": "repository",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 30
+      },
+      {
+        "table": "repository_state",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 47
+      },
+      {
+        "table": "revisions",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 55
+      },
+      {
+        "table": "source_files",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 99
+      },
+      {
+        "table": "canonical_nodes",
+        "censusRows": 1,
+        "locatorRows": 2,
+        "payloadRows": 2,
+        "rawTextBytes": 365
+      },
+      {
+        "table": "canonical_edges",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 180
+      },
+      {
+        "table": "unresolved_targets",
+        "censusRows": 1,
+        "locatorRows": 0,
+        "payloadRows": 0,
+        "rawTextBytes": 0
+      },
+      {
+        "table": "evidence",
+        "censusRows": 1,
+        "locatorRows": 3,
+        "payloadRows": 3,
+        "rawTextBytes": 479
+      },
+      {
+        "table": "provider_fact_bindings",
+        "censusRows": 1,
+        "locatorRows": 3,
+        "payloadRows": 3,
+        "rawTextBytes": 398
+      },
+      {
+        "table": "fact_evidence",
+        "censusRows": 1,
+        "locatorRows": 3,
+        "payloadRows": 3,
+        "rawTextBytes": 288
+      },
+      {
+        "table": "active_support_candidates",
+        "censusRows": 1,
+        "locatorRows": 3,
+        "payloadRows": 3,
+        "rawTextBytes": 1422
+      },
+      {
+        "table": "provider_snapshots",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 95
+      },
+      {
+        "table": "provider_capabilities",
+        "censusRows": 1,
+        "locatorRows": 2,
+        "payloadRows": 2,
+        "rawTextBytes": 72
+      },
+      {
+        "table": "analysis_coverage",
+        "censusRows": 1,
+        "locatorRows": 4,
+        "payloadRows": 4,
+        "rawTextBytes": 140
+      }
+    ],
+    "payloadRows": 26,
+    "payloadTextBytes": 3670,
+    "framedBytes": 8802,
+    "logicalReservation": {
+      "headerContextUtf8": 249,
+      "phases": [
+        {
+          "phase": "locator:domain",
+          "logicalUtf8": 281
+        },
+        {
+          "phase": "locator:LOCATOR:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 336
+        },
+        {
+          "phase": "locator:LOCATOR:[\"capture-repo\"]",
+          "rawTextBytes": 0,
+          "logicalUtf8": 544
+        },
+        {
+          "phase": "source:domain",
+          "logicalUtf8": 343
+        },
+        {
+          "phase": "source:TARGET:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 396
+        },
+        {
+          "phase": "source:TARGET:[\"capture-worktree\"]",
+          "rawTextBytes": 0,
+          "logicalUtf8": 925
+        },
+        {
+          "phase": "source:SOURCE_FILE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 416
+        },
+        {
+          "phase": "source:SOURCE_FILE:[\"source:one\"]",
+          "rawTextBytes": 99,
+          "logicalUtf8": 1478
+        },
+        {
+          "phase": "code:domain",
+          "logicalUtf8": 406
+        },
+        {
+          "phase": "code:HEADER:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 460
+        },
+        {
+          "phase": "code:HEADER:[\"capture-repo\"]",
+          "rawTextBytes": 0,
+          "logicalUtf8": 1027
+        },
+        {
+          "phase": "code:NODE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 452
+        },
+        {
+          "phase": "code:NODE:[\"node:a\"]",
+          "rawTextBytes": 183,
+          "logicalUtf8": 1870
+        },
+        {
+          "phase": "code:NODE:[\"node:b\"]",
+          "rawTextBytes": 182,
+          "logicalUtf8": 1865
+        },
+        {
+          "phase": "code:EDGE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 452
+        },
+        {
+          "phase": "code:EDGE:[\"edge:call\"]",
+          "rawTextBytes": 180,
+          "logicalUtf8": 2069
+        },
+        {
+          "phase": "code:EVIDENCE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 468
+        },
+        {
+          "phase": "code:EVIDENCE:[\"provider-evidence-v1:59fef4b91f19622379616d5dbb506b807615f38d1c6520a5480f222f5de98716\"]",
+          "rawTextBytes": 165,
+          "logicalUtf8": 2080
+        },
+        {
+          "phase": "code:EVIDENCE:[\"provider-evidence-v1:78582cdf3d126ea6f78f7a44b19977c96522d10173ff19bbb540c7ef428bba90\"]",
+          "rawTextBytes": 157,
+          "logicalUtf8": 2040
+        },
+        {
+          "phase": "code:EVIDENCE:[\"provider-evidence-v1:8d81f5f47bd8c6704765ff7901264e00ec6941694e2e1a0f6e2d516535d0d2d5\"]",
+          "rawTextBytes": 157,
+          "logicalUtf8": 2040
+        },
+        {
+          "phase": "code:BINDING:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 464
+        },
+        {
+          "phase": "code:BINDING:[\"provider-evidence-v1:59fef4b91f19622379616d5dbb506b807615f38d1c6520a5480f222f5de98716\",\"EDGE\",\"edge:call\"]",
+          "rawTextBytes": 140,
+          "logicalUtf8": 2045
+        },
+        {
+          "phase": "code:BINDING:[\"provider-evidence-v1:78582cdf3d126ea6f78f7a44b19977c96522d10173ff19bbb540c7ef428bba90\",\"NODE\",\"node:a\"]",
+          "rawTextBytes": 129,
+          "logicalUtf8": 1978
+        },
+        {
+          "phase": "code:BINDING:[\"provider-evidence-v1:8d81f5f47bd8c6704765ff7901264e00ec6941694e2e1a0f6e2d516535d0d2d5\",\"NODE\",\"node:b\"]",
+          "rawTextBytes": 129,
+          "logicalUtf8": 1978
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 488
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:[\"provider-evidence-v1:59fef4b91f19622379616d5dbb506b807615f38d1c6520a5480f222f5de98716\",\"EDGE\",\"edge:call\"]",
+          "rawTextBytes": 98,
+          "logicalUtf8": 1477
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:[\"provider-evidence-v1:78582cdf3d126ea6f78f7a44b19977c96522d10173ff19bbb540c7ef428bba90\",\"NODE\",\"node:a\"]",
+          "rawTextBytes": 95,
+          "logicalUtf8": 1450
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:[\"provider-evidence-v1:8d81f5f47bd8c6704765ff7901264e00ec6941694e2e1a0f6e2d516535d0d2d5\",\"NODE\",\"node:b\"]",
+          "rawTextBytes": 95,
+          "logicalUtf8": 1450
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 504
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:[\"provider-evidence-v1:59fef4b91f19622379616d5dbb506b807615f38d1c6520a5480f222f5de98716\",\"EDGE\",\"edge:call\"]",
+          "rawTextBytes": 519,
+          "logicalUtf8": 3382
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:[\"provider-evidence-v1:78582cdf3d126ea6f78f7a44b19977c96522d10173ff19bbb540c7ef428bba90\",\"NODE\",\"node:a\"]",
+          "rawTextBytes": 452,
+          "logicalUtf8": 3101
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:[\"provider-evidence-v1:8d81f5f47bd8c6704765ff7901264e00ec6941694e2e1a0f6e2d516535d0d2d5\",\"NODE\",\"node:b\"]",
+          "rawTextBytes": 451,
+          "logicalUtf8": 3096
+        },
+        {
+          "phase": "code:SNAPSHOT:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 468
+        },
+        {
+          "phase": "code:SNAPSHOT:[\"snapshot:alpha\"]",
+          "rawTextBytes": 167,
+          "logicalUtf8": 2076
+        },
+        {
+          "phase": "code:COVERAGE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 468
+        },
+        {
+          "phase": "code:COVERAGE:[\"snapshot:alpha\",\"SYMBOL\",\"NONE\",\"\",\"UNKNOWN\"]",
+          "rawTextBytes": 27,
+          "logicalUtf8": 1034
+        },
+        {
+          "phase": "code:COVERAGE:[\"snapshot:alpha\",\"SYMBOL\",\"SOURCE\",\"source:one\",\"COMPLETE\"]",
+          "rawTextBytes": 38,
+          "logicalUtf8": 1137
+        },
+        {
+          "phase": "code:COVERAGE:[\"snapshot:alpha\",\"SYMBOL\",\"SOURCE\",\"source:one\",\"PARTIAL\"]",
+          "rawTextBytes": 37,
+          "logicalUtf8": 1128
+        },
+        {
+          "phase": "view",
+          "logicalUtf8": 1027
+        }
+      ],
+      "peakLogicalUtf8": 3382
+    },
+    "limits": {
+      "maxRows": 111,
+      "maxSerializedBytes": 12472,
+      "memoryBudgetBytes": 6764
+    }
+  },
+  "stale-target-source": {
+    "schemaVersion": 1,
+    "bootstrapNumericRows": 43,
+    "committedCountRows": 1,
+    "coverageDistinctRows": 1,
+    "reads": [
+      {
+        "table": "repository",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 30
+      },
+      {
+        "table": "repository_state",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 47
+      },
+      {
+        "table": "revisions",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 60
+      },
+      {
+        "table": "source_files",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 98
+      },
+      {
+        "table": "canonical_nodes",
+        "censusRows": 1,
+        "locatorRows": 2,
+        "payloadRows": 2,
+        "rawTextBytes": 365
+      },
+      {
+        "table": "canonical_edges",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 180
+      },
+      {
+        "table": "unresolved_targets",
+        "censusRows": 1,
+        "locatorRows": 0,
+        "payloadRows": 0,
+        "rawTextBytes": 0
+      },
+      {
+        "table": "evidence",
+        "censusRows": 1,
+        "locatorRows": 3,
+        "payloadRows": 3,
+        "rawTextBytes": 479
+      },
+      {
+        "table": "provider_fact_bindings",
+        "censusRows": 1,
+        "locatorRows": 3,
+        "payloadRows": 3,
+        "rawTextBytes": 398
+      },
+      {
+        "table": "fact_evidence",
+        "censusRows": 1,
+        "locatorRows": 3,
+        "payloadRows": 3,
+        "rawTextBytes": 288
+      },
+      {
+        "table": "active_support_candidates",
+        "censusRows": 1,
+        "locatorRows": 3,
+        "payloadRows": 3,
+        "rawTextBytes": 1422
+      },
+      {
+        "table": "provider_snapshots",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 95
+      },
+      {
+        "table": "provider_capabilities",
+        "censusRows": 1,
+        "locatorRows": 2,
+        "payloadRows": 2,
+        "rawTextBytes": 72
+      },
+      {
+        "table": "analysis_coverage",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 38
+      }
+    ],
+    "payloadRows": 23,
+    "payloadTextBytes": 3572,
+    "framedBytes": 8408,
+    "logicalReservation": {
+      "headerContextUtf8": 259,
+      "phases": [
+        {
+          "phase": "locator:domain",
+          "logicalUtf8": 291
+        },
+        {
+          "phase": "locator:LOCATOR:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 346
+        },
+        {
+          "phase": "locator:LOCATOR:[\"capture-repo\"]",
+          "rawTextBytes": 0,
+          "logicalUtf8": 554
+        },
+        {
+          "phase": "source:domain",
+          "logicalUtf8": 353
+        },
+        {
+          "phase": "source:TARGET:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 406
+        },
+        {
+          "phase": "source:TARGET:[\"capture-worktree\"]",
+          "rawTextBytes": 0,
+          "logicalUtf8": 955
+        },
+        {
+          "phase": "source:SOURCE_FILE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 426
+        },
+        {
+          "phase": "source:SOURCE_FILE:[\"source:one\"]",
+          "rawTextBytes": 98,
+          "logicalUtf8": 1483
+        },
+        {
+          "phase": "code:domain",
+          "logicalUtf8": 416
+        },
+        {
+          "phase": "code:HEADER:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 470
+        },
+        {
+          "phase": "code:HEADER:[\"capture-repo\"]",
+          "rawTextBytes": 0,
+          "logicalUtf8": 1037
+        },
+        {
+          "phase": "code:NODE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 462
+        },
+        {
+          "phase": "code:NODE:[\"node:a\"]",
+          "rawTextBytes": 183,
+          "logicalUtf8": 1880
+        },
+        {
+          "phase": "code:NODE:[\"node:b\"]",
+          "rawTextBytes": 182,
+          "logicalUtf8": 1875
+        },
+        {
+          "phase": "code:EDGE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 462
+        },
+        {
+          "phase": "code:EDGE:[\"edge:call\"]",
+          "rawTextBytes": 180,
+          "logicalUtf8": 2079
+        },
+        {
+          "phase": "code:EVIDENCE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 478
+        },
+        {
+          "phase": "code:EVIDENCE:[\"provider-evidence-v1:59fef4b91f19622379616d5dbb506b807615f38d1c6520a5480f222f5de98716\"]",
+          "rawTextBytes": 165,
+          "logicalUtf8": 2090
+        },
+        {
+          "phase": "code:EVIDENCE:[\"provider-evidence-v1:78582cdf3d126ea6f78f7a44b19977c96522d10173ff19bbb540c7ef428bba90\"]",
+          "rawTextBytes": 157,
+          "logicalUtf8": 2050
+        },
+        {
+          "phase": "code:EVIDENCE:[\"provider-evidence-v1:8d81f5f47bd8c6704765ff7901264e00ec6941694e2e1a0f6e2d516535d0d2d5\"]",
+          "rawTextBytes": 157,
+          "logicalUtf8": 2050
+        },
+        {
+          "phase": "code:BINDING:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 474
+        },
+        {
+          "phase": "code:BINDING:[\"provider-evidence-v1:59fef4b91f19622379616d5dbb506b807615f38d1c6520a5480f222f5de98716\",\"EDGE\",\"edge:call\"]",
+          "rawTextBytes": 140,
+          "logicalUtf8": 2055
+        },
+        {
+          "phase": "code:BINDING:[\"provider-evidence-v1:78582cdf3d126ea6f78f7a44b19977c96522d10173ff19bbb540c7ef428bba90\",\"NODE\",\"node:a\"]",
+          "rawTextBytes": 129,
+          "logicalUtf8": 1988
+        },
+        {
+          "phase": "code:BINDING:[\"provider-evidence-v1:8d81f5f47bd8c6704765ff7901264e00ec6941694e2e1a0f6e2d516535d0d2d5\",\"NODE\",\"node:b\"]",
+          "rawTextBytes": 129,
+          "logicalUtf8": 1988
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 498
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:[\"provider-evidence-v1:59fef4b91f19622379616d5dbb506b807615f38d1c6520a5480f222f5de98716\",\"EDGE\",\"edge:call\"]",
+          "rawTextBytes": 98,
+          "logicalUtf8": 1487
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:[\"provider-evidence-v1:78582cdf3d126ea6f78f7a44b19977c96522d10173ff19bbb540c7ef428bba90\",\"NODE\",\"node:a\"]",
+          "rawTextBytes": 95,
+          "logicalUtf8": 1460
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:[\"provider-evidence-v1:8d81f5f47bd8c6704765ff7901264e00ec6941694e2e1a0f6e2d516535d0d2d5\",\"NODE\",\"node:b\"]",
+          "rawTextBytes": 95,
+          "logicalUtf8": 1460
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 514
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:[\"provider-evidence-v1:59fef4b91f19622379616d5dbb506b807615f38d1c6520a5480f222f5de98716\",\"EDGE\",\"edge:call\"]",
+          "rawTextBytes": 519,
+          "logicalUtf8": 3392
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:[\"provider-evidence-v1:78582cdf3d126ea6f78f7a44b19977c96522d10173ff19bbb540c7ef428bba90\",\"NODE\",\"node:a\"]",
+          "rawTextBytes": 452,
+          "logicalUtf8": 3111
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:[\"provider-evidence-v1:8d81f5f47bd8c6704765ff7901264e00ec6941694e2e1a0f6e2d516535d0d2d5\",\"NODE\",\"node:b\"]",
+          "rawTextBytes": 451,
+          "logicalUtf8": 3106
+        },
+        {
+          "phase": "code:SNAPSHOT:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 478
+        },
+        {
+          "phase": "code:SNAPSHOT:[\"snapshot:alpha\"]",
+          "rawTextBytes": 167,
+          "logicalUtf8": 2086
+        },
+        {
+          "phase": "code:COVERAGE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 478
+        },
+        {
+          "phase": "code:COVERAGE:[\"snapshot:alpha\",\"SYMBOL\",\"SOURCE\",\"source:one\",\"COMPLETE\"]",
+          "rawTextBytes": 38,
+          "logicalUtf8": 1147
+        },
+        {
+          "phase": "view",
+          "logicalUtf8": 1042
+        }
+      ],
+      "peakLogicalUtf8": 3392
+    },
+    "limits": {
+      "maxRows": 105,
+      "maxSerializedBytes": 11980,
+      "memoryBudgetBytes": 6784
+    }
+  },
+  "unicode-order": {
+    "schemaVersion": 1,
+    "bootstrapNumericRows": 43,
+    "committedCountRows": 1,
+    "coverageDistinctRows": 1,
+    "reads": [
+      {
+        "table": "repository",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 30
+      },
+      {
+        "table": "repository_state",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 47
+      },
+      {
+        "table": "revisions",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 55
+      },
+      {
+        "table": "source_files",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 99
+      },
+      {
+        "table": "canonical_nodes",
+        "censusRows": 1,
+        "locatorRows": 2,
+        "payloadRows": 2,
+        "rawTextBytes": 404
+      },
+      {
+        "table": "canonical_edges",
+        "censusRows": 1,
+        "locatorRows": 0,
+        "payloadRows": 0,
+        "rawTextBytes": 0
+      },
+      {
+        "table": "evidence",
+        "censusRows": 1,
+        "locatorRows": 2,
+        "payloadRows": 2,
+        "rawTextBytes": 319
+      },
+      {
+        "table": "provider_fact_bindings",
+        "censusRows": 1,
+        "locatorRows": 2,
+        "payloadRows": 2,
+        "rawTextBytes": 268
+      },
+      {
+        "table": "fact_evidence",
+        "censusRows": 1,
+        "locatorRows": 2,
+        "payloadRows": 2,
+        "rawTextBytes": 195
+      },
+      {
+        "table": "active_support_candidates",
+        "censusRows": 1,
+        "locatorRows": 2,
+        "payloadRows": 2,
+        "rawTextBytes": 951
+      },
+      {
+        "table": "provider_snapshots",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 95
+      },
+      {
+        "table": "provider_capabilities",
+        "censusRows": 1,
+        "locatorRows": 2,
+        "payloadRows": 2,
+        "rawTextBytes": 72
+      },
+      {
+        "table": "analysis_coverage",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 38
+      }
+    ],
+    "payloadRows": 18,
+    "payloadTextBytes": 2573,
+    "framedBytes": 6250,
+    "logicalReservation": {
+      "headerContextUtf8": 249,
+      "phases": [
+        {
+          "phase": "locator:domain",
+          "logicalUtf8": 281
+        },
+        {
+          "phase": "locator:LOCATOR:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 336
+        },
+        {
+          "phase": "locator:LOCATOR:[\"capture-repo\"]",
+          "rawTextBytes": 0,
+          "logicalUtf8": 544
+        },
+        {
+          "phase": "source:domain",
+          "logicalUtf8": 343
+        },
+        {
+          "phase": "source:TARGET:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 396
+        },
+        {
+          "phase": "source:TARGET:[\"capture-worktree\"]",
+          "rawTextBytes": 0,
+          "logicalUtf8": 925
+        },
+        {
+          "phase": "source:SOURCE_FILE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 416
+        },
+        {
+          "phase": "source:SOURCE_FILE:[\"source:one\"]",
+          "rawTextBytes": 99,
+          "logicalUtf8": 1478
+        },
+        {
+          "phase": "code:domain",
+          "logicalUtf8": 406
+        },
+        {
+          "phase": "code:HEADER:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 460
+        },
+        {
+          "phase": "code:HEADER:[\"capture-repo\"]",
+          "rawTextBytes": 0,
+          "logicalUtf8": 1027
+        },
+        {
+          "phase": "code:NODE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 452
+        },
+        {
+          "phase": "code:NODE:[\"node:\"]",
+          "rawTextBytes": 203,
+          "logicalUtf8": 1982
+        },
+        {
+          "phase": "code:NODE:[\"node:𐀀\"]",
+          "rawTextBytes": 201,
+          "logicalUtf8": 1976
+        },
+        {
+          "phase": "code:EDGE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 452
+        },
+        {
+          "phase": "code:EVIDENCE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 468
+        },
+        {
+          "phase": "code:EVIDENCE:[\"provider-evidence-v1:c554fe069e6e56109d7e17755af65949418550d9790b35eb17c8942819cea452\"]",
+          "rawTextBytes": 160,
+          "logicalUtf8": 2055
+        },
+        {
+          "phase": "code:EVIDENCE:[\"provider-evidence-v1:ca2ee8be63d78a5d209491a9d57c34c7adf593bd8edf049f1038978b1e864858\"]",
+          "rawTextBytes": 159,
+          "logicalUtf8": 2050
+        },
+        {
+          "phase": "code:BINDING:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 464
+        },
+        {
+          "phase": "code:BINDING:[\"provider-evidence-v1:c554fe069e6e56109d7e17755af65949418550d9790b35eb17c8942819cea452\",\"NODE\",\"node:𐀀\"]",
+          "rawTextBytes": 135,
+          "logicalUtf8": 2020
+        },
+        {
+          "phase": "code:BINDING:[\"provider-evidence-v1:ca2ee8be63d78a5d209491a9d57c34c7adf593bd8edf049f1038978b1e864858\",\"NODE\",\"node:\"]",
+          "rawTextBytes": 133,
+          "logicalUtf8": 2006
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 488
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:[\"provider-evidence-v1:c554fe069e6e56109d7e17755af65949418550d9790b35eb17c8942819cea452\",\"NODE\",\"node:𐀀\"]",
+          "rawTextBytes": 98,
+          "logicalUtf8": 1477
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:[\"provider-evidence-v1:ca2ee8be63d78a5d209491a9d57c34c7adf593bd8edf049f1038978b1e864858\",\"NODE\",\"node:\"]",
+          "rawTextBytes": 97,
+          "logicalUtf8": 1468
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 504
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:[\"provider-evidence-v1:c554fe069e6e56109d7e17755af65949418550d9790b35eb17c8942819cea452\",\"NODE\",\"node:𐀀\"]",
+          "rawTextBytes": 475,
+          "logicalUtf8": 3224
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:[\"provider-evidence-v1:ca2ee8be63d78a5d209491a9d57c34c7adf593bd8edf049f1038978b1e864858\",\"NODE\",\"node:\"]",
+          "rawTextBytes": 476,
+          "logicalUtf8": 3225
+        },
+        {
+          "phase": "code:SNAPSHOT:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 468
+        },
+        {
+          "phase": "code:SNAPSHOT:[\"snapshot:alpha\"]",
+          "rawTextBytes": 167,
+          "logicalUtf8": 2076
+        },
+        {
+          "phase": "code:COVERAGE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 468
+        },
+        {
+          "phase": "code:COVERAGE:[\"snapshot:alpha\",\"SYMBOL\",\"SOURCE\",\"source:one\",\"COMPLETE\"]",
+          "rawTextBytes": 38,
+          "logicalUtf8": 1137
+        },
+        {
+          "phase": "view",
+          "logicalUtf8": 1027
+        }
+      ],
+      "peakLogicalUtf8": 3225
+    },
+    "limits": {
+      "maxRows": 94,
+      "maxSerializedBytes": 8823,
+      "memoryBudgetBytes": 6450
+    }
+  },
+  "typed-node-edge-id": {
+    "schemaVersion": 1,
+    "bootstrapNumericRows": 43,
+    "committedCountRows": 1,
+    "coverageDistinctRows": 1,
+    "reads": [
+      {
+        "table": "repository",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 30
+      },
+      {
+        "table": "repository_state",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 47
+      },
+      {
+        "table": "revisions",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 55
+      },
+      {
+        "table": "source_files",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 99
+      },
+      {
+        "table": "canonical_nodes",
+        "censusRows": 1,
+        "locatorRows": 2,
+        "payloadRows": 2,
+        "rawTextBytes": 365
+      },
+      {
+        "table": "canonical_edges",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 177
+      },
+      {
+        "table": "unresolved_targets",
+        "censusRows": 1,
+        "locatorRows": 0,
+        "payloadRows": 0,
+        "rawTextBytes": 0
+      },
+      {
+        "table": "evidence",
+        "censusRows": 1,
+        "locatorRows": 3,
+        "payloadRows": 3,
+        "rawTextBytes": 476
+      },
+      {
+        "table": "provider_fact_bindings",
+        "censusRows": 1,
+        "locatorRows": 3,
+        "payloadRows": 3,
+        "rawTextBytes": 392
+      },
+      {
+        "table": "fact_evidence",
+        "censusRows": 1,
+        "locatorRows": 3,
+        "payloadRows": 3,
+        "rawTextBytes": 285
+      },
+      {
+        "table": "active_support_candidates",
+        "censusRows": 1,
+        "locatorRows": 3,
+        "payloadRows": 3,
+        "rawTextBytes": 1416
+      },
+      {
+        "table": "provider_snapshots",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 95
+      },
+      {
+        "table": "provider_capabilities",
+        "censusRows": 1,
+        "locatorRows": 2,
+        "payloadRows": 2,
+        "rawTextBytes": 72
+      },
+      {
+        "table": "analysis_coverage",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 38
+      }
+    ],
+    "payloadRows": 23,
+    "payloadTextBytes": 3547,
+    "framedBytes": 8371,
+    "logicalReservation": {
+      "headerContextUtf8": 249,
+      "phases": [
+        {
+          "phase": "locator:domain",
+          "logicalUtf8": 281
+        },
+        {
+          "phase": "locator:LOCATOR:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 336
+        },
+        {
+          "phase": "locator:LOCATOR:[\"capture-repo\"]",
+          "rawTextBytes": 0,
+          "logicalUtf8": 544
+        },
+        {
+          "phase": "source:domain",
+          "logicalUtf8": 343
+        },
+        {
+          "phase": "source:TARGET:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 396
+        },
+        {
+          "phase": "source:TARGET:[\"capture-worktree\"]",
+          "rawTextBytes": 0,
+          "logicalUtf8": 925
+        },
+        {
+          "phase": "source:SOURCE_FILE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 416
+        },
+        {
+          "phase": "source:SOURCE_FILE:[\"source:one\"]",
+          "rawTextBytes": 99,
+          "logicalUtf8": 1478
+        },
+        {
+          "phase": "code:domain",
+          "logicalUtf8": 406
+        },
+        {
+          "phase": "code:HEADER:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 460
+        },
+        {
+          "phase": "code:HEADER:[\"capture-repo\"]",
+          "rawTextBytes": 0,
+          "logicalUtf8": 1027
+        },
+        {
+          "phase": "code:NODE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 452
+        },
+        {
+          "phase": "code:NODE:[\"node:a\"]",
+          "rawTextBytes": 183,
+          "logicalUtf8": 1870
+        },
+        {
+          "phase": "code:NODE:[\"node:b\"]",
+          "rawTextBytes": 182,
+          "logicalUtf8": 1865
+        },
+        {
+          "phase": "code:EDGE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 452
+        },
+        {
+          "phase": "code:EDGE:[\"node:a\"]",
+          "rawTextBytes": 177,
+          "logicalUtf8": 2042
+        },
+        {
+          "phase": "code:EVIDENCE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 468
+        },
+        {
+          "phase": "code:EVIDENCE:[\"provider-evidence-v1:3be9d9b24a7ba051a4ab6d9b351c257b300a8913218a3d631c1c8023c1c11d9d\"]",
+          "rawTextBytes": 162,
+          "logicalUtf8": 2065
+        },
+        {
+          "phase": "code:EVIDENCE:[\"provider-evidence-v1:78582cdf3d126ea6f78f7a44b19977c96522d10173ff19bbb540c7ef428bba90\"]",
+          "rawTextBytes": 157,
+          "logicalUtf8": 2040
+        },
+        {
+          "phase": "code:EVIDENCE:[\"provider-evidence-v1:8d81f5f47bd8c6704765ff7901264e00ec6941694e2e1a0f6e2d516535d0d2d5\"]",
+          "rawTextBytes": 157,
+          "logicalUtf8": 2040
+        },
+        {
+          "phase": "code:BINDING:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 464
+        },
+        {
+          "phase": "code:BINDING:[\"provider-evidence-v1:3be9d9b24a7ba051a4ab6d9b351c257b300a8913218a3d631c1c8023c1c11d9d\",\"EDGE\",\"node:a\"]",
+          "rawTextBytes": 134,
+          "logicalUtf8": 2003
+        },
+        {
+          "phase": "code:BINDING:[\"provider-evidence-v1:78582cdf3d126ea6f78f7a44b19977c96522d10173ff19bbb540c7ef428bba90\",\"NODE\",\"node:a\"]",
+          "rawTextBytes": 129,
+          "logicalUtf8": 1978
+        },
+        {
+          "phase": "code:BINDING:[\"provider-evidence-v1:8d81f5f47bd8c6704765ff7901264e00ec6941694e2e1a0f6e2d516535d0d2d5\",\"NODE\",\"node:b\"]",
+          "rawTextBytes": 129,
+          "logicalUtf8": 1978
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 488
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:[\"provider-evidence-v1:3be9d9b24a7ba051a4ab6d9b351c257b300a8913218a3d631c1c8023c1c11d9d\",\"EDGE\",\"node:a\"]",
+          "rawTextBytes": 95,
+          "logicalUtf8": 1450
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:[\"provider-evidence-v1:78582cdf3d126ea6f78f7a44b19977c96522d10173ff19bbb540c7ef428bba90\",\"NODE\",\"node:a\"]",
+          "rawTextBytes": 95,
+          "logicalUtf8": 1450
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:[\"provider-evidence-v1:8d81f5f47bd8c6704765ff7901264e00ec6941694e2e1a0f6e2d516535d0d2d5\",\"NODE\",\"node:b\"]",
+          "rawTextBytes": 95,
+          "logicalUtf8": 1450
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 504
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:[\"provider-evidence-v1:3be9d9b24a7ba051a4ab6d9b351c257b300a8913218a3d631c1c8023c1c11d9d\",\"EDGE\",\"node:a\"]",
+          "rawTextBytes": 513,
+          "logicalUtf8": 3340
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:[\"provider-evidence-v1:78582cdf3d126ea6f78f7a44b19977c96522d10173ff19bbb540c7ef428bba90\",\"NODE\",\"node:a\"]",
+          "rawTextBytes": 452,
+          "logicalUtf8": 3101
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:[\"provider-evidence-v1:8d81f5f47bd8c6704765ff7901264e00ec6941694e2e1a0f6e2d516535d0d2d5\",\"NODE\",\"node:b\"]",
+          "rawTextBytes": 451,
+          "logicalUtf8": 3096
+        },
+        {
+          "phase": "code:SNAPSHOT:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 468
+        },
+        {
+          "phase": "code:SNAPSHOT:[\"snapshot:alpha\"]",
+          "rawTextBytes": 167,
+          "logicalUtf8": 2076
+        },
+        {
+          "phase": "code:COVERAGE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 468
+        },
+        {
+          "phase": "code:COVERAGE:[\"snapshot:alpha\",\"SYMBOL\",\"SOURCE\",\"source:one\",\"COMPLETE\"]",
+          "rawTextBytes": 38,
+          "logicalUtf8": 1137
+        },
+        {
+          "phase": "view",
+          "logicalUtf8": 1027
+        }
+      ],
+      "peakLogicalUtf8": 3340
+    },
+    "limits": {
+      "maxRows": 105,
+      "maxSerializedBytes": 11918,
+      "memoryBudgetBytes": 6680
+    }
+  },
+  "history-snapshot-set": {
+    "schemaVersion": 1,
+    "bootstrapNumericRows": 43,
+    "committedCountRows": 1,
+    "coverageDistinctRows": 1,
+    "reads": [
+      {
+        "table": "repository",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 30
+      },
+      {
+        "table": "repository_state",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 47
+      },
+      {
+        "table": "revisions",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 55
+      },
+      {
+        "table": "source_files",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 99
+      },
+      {
+        "table": "canonical_nodes",
+        "censusRows": 1,
+        "locatorRows": 2,
+        "payloadRows": 2,
+        "rawTextBytes": 365
+      },
+      {
+        "table": "canonical_edges",
+        "censusRows": 1,
+        "locatorRows": 1,
+        "payloadRows": 1,
+        "rawTextBytes": 180
+      },
+      {
+        "table": "unresolved_targets",
+        "censusRows": 1,
+        "locatorRows": 0,
+        "payloadRows": 0,
+        "rawTextBytes": 0
+      },
+      {
+        "table": "evidence",
+        "censusRows": 1,
+        "locatorRows": 3,
+        "payloadRows": 3,
+        "rawTextBytes": 491
+      },
+      {
+        "table": "provider_fact_bindings",
+        "censusRows": 1,
+        "locatorRows": 3,
+        "payloadRows": 3,
+        "rawTextBytes": 410
+      },
+      {
+        "table": "fact_evidence",
+        "censusRows": 1,
+        "locatorRows": 3,
+        "payloadRows": 3,
+        "rawTextBytes": 288
+      },
+      {
+        "table": "active_support_candidates",
+        "censusRows": 1,
+        "locatorRows": 3,
+        "payloadRows": 3,
+        "rawTextBytes": 1422
+      },
+      {
+        "table": "provider_snapshots",
+        "censusRows": 1,
+        "locatorRows": 2,
+        "payloadRows": 2,
+        "rawTextBytes": 194
+      },
+      {
+        "table": "provider_capabilities",
+        "censusRows": 1,
+        "locatorRows": 2,
+        "payloadRows": 2,
+        "rawTextBytes": 72
+      },
+      {
+        "table": "provider_capabilities",
+        "censusRows": 1,
+        "locatorRows": 2,
+        "payloadRows": 2,
+        "rawTextBytes": 80
+      },
+      {
+        "table": "analysis_coverage",
+        "censusRows": 1,
+        "locatorRows": 2,
+        "payloadRows": 2,
+        "rawTextBytes": 80
+      }
+    ],
+    "payloadRows": 27,
+    "payloadTextBytes": 3813,
+    "framedBytes": 9097,
+    "logicalReservation": {
+      "headerContextUtf8": 249,
+      "phases": [
+        {
+          "phase": "locator:domain",
+          "logicalUtf8": 281
+        },
+        {
+          "phase": "locator:LOCATOR:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 336
+        },
+        {
+          "phase": "locator:LOCATOR:[\"capture-repo\"]",
+          "rawTextBytes": 0,
+          "logicalUtf8": 544
+        },
+        {
+          "phase": "source:domain",
+          "logicalUtf8": 343
+        },
+        {
+          "phase": "source:TARGET:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 396
+        },
+        {
+          "phase": "source:TARGET:[\"capture-worktree\"]",
+          "rawTextBytes": 0,
+          "logicalUtf8": 925
+        },
+        {
+          "phase": "source:SOURCE_FILE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 416
+        },
+        {
+          "phase": "source:SOURCE_FILE:[\"source:one\"]",
+          "rawTextBytes": 99,
+          "logicalUtf8": 1478
+        },
+        {
+          "phase": "code:domain",
+          "logicalUtf8": 406
+        },
+        {
+          "phase": "code:HEADER:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 460
+        },
+        {
+          "phase": "code:HEADER:[\"capture-repo\"]",
+          "rawTextBytes": 0,
+          "logicalUtf8": 1027
+        },
+        {
+          "phase": "code:NODE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 452
+        },
+        {
+          "phase": "code:NODE:[\"node:a\"]",
+          "rawTextBytes": 183,
+          "logicalUtf8": 1870
+        },
+        {
+          "phase": "code:NODE:[\"node:b\"]",
+          "rawTextBytes": 182,
+          "logicalUtf8": 1865
+        },
+        {
+          "phase": "code:EDGE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 452
+        },
+        {
+          "phase": "code:EDGE:[\"edge:call\"]",
+          "rawTextBytes": 180,
+          "logicalUtf8": 2069
+        },
+        {
+          "phase": "code:EVIDENCE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 468
+        },
+        {
+          "phase": "code:EVIDENCE:[\"provider-evidence-v1:53a9997f307e3be11982c87844e6f9bc7cdb1cf72332daf24f8073db11cef731\"]",
+          "rawTextBytes": 161,
+          "logicalUtf8": 2060
+        },
+        {
+          "phase": "code:EVIDENCE:[\"provider-evidence-v1:bee75b8774725a7c077beec7c0a22f473316405ed4710e7f653f7ed216f24a4d\"]",
+          "rawTextBytes": 169,
+          "logicalUtf8": 2100
+        },
+        {
+          "phase": "code:EVIDENCE:[\"provider-evidence-v1:ebae9132c275e904ac2d772b909bca918b37e33c841493c56a0a883cc58d0a85\"]",
+          "rawTextBytes": 161,
+          "logicalUtf8": 2060
+        },
+        {
+          "phase": "code:BINDING:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 464
+        },
+        {
+          "phase": "code:BINDING:[\"provider-evidence-v1:53a9997f307e3be11982c87844e6f9bc7cdb1cf72332daf24f8073db11cef731\",\"NODE\",\"node:b\"]",
+          "rawTextBytes": 133,
+          "logicalUtf8": 1998
+        },
+        {
+          "phase": "code:BINDING:[\"provider-evidence-v1:bee75b8774725a7c077beec7c0a22f473316405ed4710e7f653f7ed216f24a4d\",\"EDGE\",\"edge:call\"]",
+          "rawTextBytes": 144,
+          "logicalUtf8": 2065
+        },
+        {
+          "phase": "code:BINDING:[\"provider-evidence-v1:ebae9132c275e904ac2d772b909bca918b37e33c841493c56a0a883cc58d0a85\",\"NODE\",\"node:a\"]",
+          "rawTextBytes": 133,
+          "logicalUtf8": 1998
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 488
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:[\"provider-evidence-v1:53a9997f307e3be11982c87844e6f9bc7cdb1cf72332daf24f8073db11cef731\",\"NODE\",\"node:b\"]",
+          "rawTextBytes": 95,
+          "logicalUtf8": 1450
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:[\"provider-evidence-v1:bee75b8774725a7c077beec7c0a22f473316405ed4710e7f653f7ed216f24a4d\",\"EDGE\",\"edge:call\"]",
+          "rawTextBytes": 98,
+          "logicalUtf8": 1477
+        },
+        {
+          "phase": "code:FACT_EVIDENCE:[\"provider-evidence-v1:ebae9132c275e904ac2d772b909bca918b37e33c841493c56a0a883cc58d0a85\",\"NODE\",\"node:a\"]",
+          "rawTextBytes": 95,
+          "logicalUtf8": 1450
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 504
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:[\"provider-evidence-v1:53a9997f307e3be11982c87844e6f9bc7cdb1cf72332daf24f8073db11cef731\",\"NODE\",\"node:b\"]",
+          "rawTextBytes": 451,
+          "logicalUtf8": 3096
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:[\"provider-evidence-v1:bee75b8774725a7c077beec7c0a22f473316405ed4710e7f653f7ed216f24a4d\",\"EDGE\",\"edge:call\"]",
+          "rawTextBytes": 519,
+          "logicalUtf8": 3382
+        },
+        {
+          "phase": "code:SUPPORT_CANDIDATE:[\"provider-evidence-v1:ebae9132c275e904ac2d772b909bca918b37e33c841493c56a0a883cc58d0a85\",\"NODE\",\"node:a\"]",
+          "rawTextBytes": 452,
+          "logicalUtf8": 3101
+        },
+        {
+          "phase": "code:SNAPSHOT:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 468
+        },
+        {
+          "phase": "code:SNAPSHOT:[\"snapshot:alpha\"]",
+          "rawTextBytes": 167,
+          "logicalUtf8": 2076
+        },
+        {
+          "phase": "code:SNAPSHOT:[\"snapshot:alpha-new\"]",
+          "rawTextBytes": 179,
+          "logicalUtf8": 2120
+        },
+        {
+          "phase": "code:COVERAGE:group",
+          "rawTextBytes": 0,
+          "logicalUtf8": 468
+        },
+        {
+          "phase": "code:COVERAGE:[\"snapshot:alpha\",\"SYMBOL\",\"SOURCE\",\"source:one\",\"COMPLETE\"]",
+          "rawTextBytes": 38,
+          "logicalUtf8": 1137
+        },
+        {
+          "phase": "code:COVERAGE:[\"snapshot:alpha-new\",\"SYMBOL\",\"SOURCE\",\"source:one\",\"COMPLETE\"]",
+          "rawTextBytes": 42,
+          "logicalUtf8": 1173
+        },
+        {
+          "phase": "view",
+          "logicalUtf8": 1027
+        }
+      ],
+      "peakLogicalUtf8": 3382
+    },
+    "limits": {
+      "maxRows": 114,
+      "maxSerializedBytes": 12910,
+      "memoryBudgetBytes": 6764
+    }
+  }
+}

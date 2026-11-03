@@ -1,0 +1,7 @@
+{
+  "validContext": true,
+  "validDetection": true,
+  "validCandidate": true,
+  "v1RefusesV2": true,
+  "totalFactsLimit": 10000
+}

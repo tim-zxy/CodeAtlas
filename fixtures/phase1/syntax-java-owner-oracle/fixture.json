@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "p1-syntax-java-owner-oracle-v1",
+  "category": "runtime-graph",
+  "phase": "1",
+  "languages": [],
+  "frameworks": [],
+  "capabilities": ["BOUNDED_LIBRARY_FULL_OUTPUT_ORACLE_ONLY"],
+  "inputs": {
+    "calibrationSource": "calibration/Endpoint.java",
+    "calibrationRequest": "calibration/request.json",
+    "calibrationRequestBytes": "calibration/request.jsonl",
+    "calibrationContext": "calibration/context.json",
+    "calibrationSymbols": "calibration/symbols.json",
+    "calibrationProviderNodes": "calibration/provider-nodes.json",
+    "calibrationMissingRequest": "calibration/request-no-method.json",
+    "calibrationMissingContext": "calibration/context-no-method.json",
+    "calibrationForeignRequest": "calibration/request-foreign-owner.json",
+    "calibrationForeignContext": "calibration/context-foreign-owner.json",
+    "calibrationAuthoring": "calibration/authoring.json",
+    "holdoutSource": "holdout/Endpoint.java",
+    "holdoutRequest": "holdout/request.json",
+    "holdoutRequestBytes": "holdout/request.jsonl",
+    "holdoutContext": "holdout/context.json",
+    "holdoutSymbols": "holdout/symbols.json",
+    "holdoutProviderNodes": "holdout/provider-nodes.json",
+    "holdoutMissingRequest": "holdout/request-no-method.json",
+    "holdoutMissingContext": "holdout/context-no-method.json",
+    "holdoutForeignRequest": "holdout/request-foreign-owner.json",
+    "holdoutForeignContext": "holdout/context-foreign-owner.json",
+    "holdoutAuthoring": "holdout/authoring.json"
+  },
+  "expected": {
+    "calibrationStream": "calibration/events.jsonl",
+    "calibrationOwnerlessStream": "calibration/events-no-method.jsonl",
+    "calibrationCanonicalNodes": "calibration/canonical-nodes.json",
+    "holdoutStream": "holdout/events.jsonl",
+    "holdoutOwnerlessStream": "holdout/events-no-method.jsonl",
+    "holdoutCanonicalNodes": "holdout/canonical-nodes.json"
+  },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

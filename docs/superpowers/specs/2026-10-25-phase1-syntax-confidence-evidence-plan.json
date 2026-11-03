@@ -1,0 +1,604 @@
+{
+  "schemaVersion": 1,
+  "status": "EVIDENCE_PLAN_ONLY",
+  "basis": {
+    "fixtureId": "p1-syntax-mapping-preparation-v1",
+    "provenanceSha256": "6a4640f0d3431339b72cd66b2cc8b9dd14c90f979d33ec87ba2f42235bff400a",
+    "mappingContract": "docs/superpowers/specs/2026-10-25-phase1-syntax-mapping-confidence-design.md"
+  },
+  "rows": [
+    {
+      "caseId": "decoration-java",
+      "provenanceClass": "SOURCE_LITERAL_EXPECTATION",
+      "sourceRefs": [
+        "sources/Endpoint.java"
+      ],
+      "sourceHashes": {
+        "sources/Endpoint.java": "fa9a07e5b149109de9313e541101b3363a014b87e18f469e91643781ed2833c1"
+      },
+      "syntaxKind": "DECORATION",
+      "ownerState": "PRESENT",
+      "resolutionClasses": [
+        "UNRESOLVED"
+      ],
+      "hasUnknown": false,
+      "dynamicGrounding": "STATIC_SYNTAX_ONLY",
+      "expectedSemanticDisposition": "PROJECTABLE_WITHOUT_POLICY",
+      "observedSemanticDisposition": null
+    },
+    {
+      "caseId": "invocation-python",
+      "provenanceClass": "SOURCE_LITERAL_EXPECTATION",
+      "sourceRefs": [
+        "sources/dynamic.py"
+      ],
+      "sourceHashes": {
+        "sources/dynamic.py": "9e3012e6aaee68ca614e04a2aad0097292c86ef767f320fc61445527f910e69e"
+      },
+      "syntaxKind": "INVOCATION",
+      "ownerState": "PRESENT",
+      "resolutionClasses": [
+        "UNRESOLVED"
+      ],
+      "hasUnknown": false,
+      "dynamicGrounding": "STATIC_SYNTAX_ONLY",
+      "expectedSemanticDisposition": "PROJECTABLE_WITHOUT_POLICY",
+      "observedSemanticDisposition": null
+    },
+    {
+      "caseId": "declaration-java",
+      "provenanceClass": "SOURCE_LITERAL_EXPECTATION",
+      "sourceRefs": [
+        "sources/Endpoint.java"
+      ],
+      "sourceHashes": {
+        "sources/Endpoint.java": "fa9a07e5b149109de9313e541101b3363a014b87e18f469e91643781ed2833c1"
+      },
+      "syntaxKind": "DECLARATION",
+      "ownerState": "PRESENT",
+      "resolutionClasses": [
+        "NO_REFERENCE"
+      ],
+      "hasUnknown": false,
+      "dynamicGrounding": "STATIC_SYNTAX_ONLY",
+      "expectedSemanticDisposition": "PROJECTABLE_WITHOUT_POLICY",
+      "observedSemanticDisposition": null
+    },
+    {
+      "caseId": "assignment-python",
+      "provenanceClass": "SOURCE_LITERAL_EXPECTATION",
+      "sourceRefs": [
+        "sources/app.py"
+      ],
+      "sourceHashes": {
+        "sources/app.py": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50"
+      },
+      "syntaxKind": "ASSIGNMENT",
+      "ownerState": "PRESENT",
+      "resolutionClasses": [
+        "EXACT"
+      ],
+      "hasUnknown": false,
+      "dynamicGrounding": "STATIC_SYNTAX_ONLY",
+      "expectedSemanticDisposition": "PROJECTABLE_WITHOUT_POLICY",
+      "observedSemanticDisposition": null
+    },
+    {
+      "caseId": "artifact-ownerless",
+      "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+      "sourceRefs": [
+        "sources/artifact.yml"
+      ],
+      "sourceHashes": {
+        "sources/artifact.yml": "0af6a6b64794de7e02c5e17c7d532d8fa22b7e5fce51b803a46439e6637cb269"
+      },
+      "syntaxKind": "ARTIFACT",
+      "ownerState": "NULL",
+      "resolutionClasses": [
+        "NO_REFERENCE"
+      ],
+      "hasUnknown": false,
+      "dynamicGrounding": "STATIC_SYNTAX_ONLY",
+      "expectedSemanticDisposition": "PROJECTABLE_WITHOUT_POLICY",
+      "observedSemanticDisposition": null
+    },
+    {
+      "caseId": "value-string",
+      "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+      "sourceRefs": [
+        "sources/app.py"
+      ],
+      "sourceHashes": {
+        "sources/app.py": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50"
+      },
+      "syntaxKind": "ASSIGNMENT",
+      "ownerState": "PRESENT",
+      "resolutionClasses": [
+        "NO_REFERENCE"
+      ],
+      "hasUnknown": false,
+      "dynamicGrounding": "STATIC_SYNTAX_ONLY",
+      "expectedSemanticDisposition": "PROJECTABLE_WITHOUT_POLICY",
+      "observedSemanticDisposition": null
+    },
+    {
+      "caseId": "value-number",
+      "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+      "sourceRefs": [
+        "sources/app.py"
+      ],
+      "sourceHashes": {
+        "sources/app.py": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50"
+      },
+      "syntaxKind": "ASSIGNMENT",
+      "ownerState": "PRESENT",
+      "resolutionClasses": [
+        "NO_REFERENCE"
+      ],
+      "hasUnknown": false,
+      "dynamicGrounding": "STATIC_SYNTAX_ONLY",
+      "expectedSemanticDisposition": "PROJECTABLE_WITHOUT_POLICY",
+      "observedSemanticDisposition": null
+    },
+    {
+      "caseId": "value-boolean",
+      "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+      "sourceRefs": [
+        "sources/app.py"
+      ],
+      "sourceHashes": {
+        "sources/app.py": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50"
+      },
+      "syntaxKind": "ASSIGNMENT",
+      "ownerState": "PRESENT",
+      "resolutionClasses": [
+        "NO_REFERENCE"
+      ],
+      "hasUnknown": false,
+      "dynamicGrounding": "STATIC_SYNTAX_ONLY",
+      "expectedSemanticDisposition": "PROJECTABLE_WITHOUT_POLICY",
+      "observedSemanticDisposition": null
+    },
+    {
+      "caseId": "value-null",
+      "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+      "sourceRefs": [
+        "sources/app.py"
+      ],
+      "sourceHashes": {
+        "sources/app.py": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50"
+      },
+      "syntaxKind": "ASSIGNMENT",
+      "ownerState": "PRESENT",
+      "resolutionClasses": [
+        "NO_REFERENCE"
+      ],
+      "hasUnknown": false,
+      "dynamicGrounding": "STATIC_SYNTAX_ONLY",
+      "expectedSemanticDisposition": "PROJECTABLE_WITHOUT_POLICY",
+      "observedSemanticDisposition": null
+    },
+    {
+      "caseId": "value-reference-exact",
+      "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+      "sourceRefs": [
+        "sources/app.py"
+      ],
+      "sourceHashes": {
+        "sources/app.py": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50"
+      },
+      "syntaxKind": "ASSIGNMENT",
+      "ownerState": "PRESENT",
+      "resolutionClasses": [
+        "EXACT"
+      ],
+      "hasUnknown": false,
+      "dynamicGrounding": "STATIC_SYNTAX_ONLY",
+      "expectedSemanticDisposition": "PROJECTABLE_WITHOUT_POLICY",
+      "observedSemanticDisposition": null
+    },
+    {
+      "caseId": "value-reference-heuristic",
+      "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+      "sourceRefs": [
+        "sources/app.py"
+      ],
+      "sourceHashes": {
+        "sources/app.py": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50"
+      },
+      "syntaxKind": "ASSIGNMENT",
+      "ownerState": "PRESENT",
+      "resolutionClasses": [
+        "HEURISTIC"
+      ],
+      "hasUnknown": false,
+      "dynamicGrounding": "STATIC_SYNTAX_ONLY",
+      "expectedSemanticDisposition": "PROJECTABLE_WITHOUT_POLICY",
+      "observedSemanticDisposition": null
+    },
+    {
+      "caseId": "value-array",
+      "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+      "sourceRefs": [
+        "sources/app.py"
+      ],
+      "sourceHashes": {
+        "sources/app.py": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50"
+      },
+      "syntaxKind": "ASSIGNMENT",
+      "ownerState": "PRESENT",
+      "resolutionClasses": [
+        "NO_REFERENCE"
+      ],
+      "hasUnknown": false,
+      "dynamicGrounding": "STATIC_SYNTAX_ONLY",
+      "expectedSemanticDisposition": "PROJECTABLE_WITHOUT_POLICY",
+      "observedSemanticDisposition": null
+    },
+    {
+      "caseId": "value-object-duplicates",
+      "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+      "sourceRefs": [
+        "sources/app.py"
+      ],
+      "sourceHashes": {
+        "sources/app.py": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50"
+      },
+      "syntaxKind": "ASSIGNMENT",
+      "ownerState": "PRESENT",
+      "resolutionClasses": [
+        "NO_REFERENCE"
+      ],
+      "hasUnknown": false,
+      "dynamicGrounding": "STATIC_SYNTAX_ONLY",
+      "expectedSemanticDisposition": "PROJECTABLE_WITHOUT_POLICY",
+      "observedSemanticDisposition": null
+    },
+    {
+      "caseId": "value-unknown",
+      "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+      "sourceRefs": [
+        "sources/app.py"
+      ],
+      "sourceHashes": {
+        "sources/app.py": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50"
+      },
+      "syntaxKind": "ASSIGNMENT",
+      "ownerState": "PRESENT",
+      "resolutionClasses": [
+        "NO_REFERENCE"
+      ],
+      "hasUnknown": true,
+      "dynamicGrounding": "UNDETERMINED",
+      "expectedSemanticDisposition": "PROJECTABLE_WITHOUT_POLICY",
+      "observedSemanticDisposition": null
+    },
+    {
+      "caseId": "reference-ambiguous-two",
+      "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+      "sourceRefs": [
+        "sources/app.py"
+      ],
+      "sourceHashes": {
+        "sources/app.py": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50"
+      },
+      "syntaxKind": "ASSIGNMENT",
+      "ownerState": "PRESENT",
+      "resolutionClasses": [
+        "AMBIGUOUS"
+      ],
+      "hasUnknown": false,
+      "dynamicGrounding": "STATIC_SYNTAX_ONLY",
+      "expectedSemanticDisposition": "PROJECTABLE_WITHOUT_POLICY",
+      "observedSemanticDisposition": null
+    },
+    {
+      "caseId": "callee-collapse-one",
+      "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+      "sourceRefs": [
+        "sources/app.py"
+      ],
+      "sourceHashes": {
+        "sources/app.py": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50"
+      },
+      "syntaxKind": "INVOCATION",
+      "ownerState": "PRESENT",
+      "resolutionClasses": [
+        "AMBIGUOUS"
+      ],
+      "hasUnknown": false,
+      "dynamicGrounding": "STATIC_SYNTAX_ONLY",
+      "expectedSemanticDisposition": "PROJECTABLE_WITHOUT_POLICY",
+      "observedSemanticDisposition": null
+    },
+    {
+      "caseId": "value-collapse-reject",
+      "provenanceClass": "NEGATIVE_ONLY",
+      "sourceRefs": [
+        "sources/app.py"
+      ],
+      "sourceHashes": {
+        "sources/app.py": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50"
+      },
+      "syntaxKind": "ASSIGNMENT",
+      "ownerState": "PRESENT",
+      "resolutionClasses": [
+        "AMBIGUOUS"
+      ],
+      "hasUnknown": false,
+      "dynamicGrounding": "STATIC_SYNTAX_ONLY",
+      "expectedSemanticDisposition": "REJECTED",
+      "observedSemanticDisposition": null
+    },
+    {
+      "caseId": "reference-unresolved-zero",
+      "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+      "sourceRefs": [
+        "sources/app.py"
+      ],
+      "sourceHashes": {
+        "sources/app.py": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50"
+      },
+      "syntaxKind": "ASSIGNMENT",
+      "ownerState": "PRESENT",
+      "resolutionClasses": [
+        "UNRESOLVED"
+      ],
+      "hasUnknown": false,
+      "dynamicGrounding": "STATIC_SYNTAX_ONLY",
+      "expectedSemanticDisposition": "PROJECTABLE_WITHOUT_POLICY",
+      "observedSemanticDisposition": null
+    },
+    {
+      "caseId": "reference-unsupported-zero",
+      "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+      "sourceRefs": [
+        "sources/app.py"
+      ],
+      "sourceHashes": {
+        "sources/app.py": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50"
+      },
+      "syntaxKind": "ASSIGNMENT",
+      "ownerState": "PRESENT",
+      "resolutionClasses": [
+        "UNSUPPORTED"
+      ],
+      "hasUnknown": false,
+      "dynamicGrounding": "STATIC_SYNTAX_ONLY",
+      "expectedSemanticDisposition": "PROJECTABLE_WITHOUT_POLICY",
+      "observedSemanticDisposition": null
+    },
+    {
+      "caseId": "reference-missing-binding",
+      "provenanceClass": "NEGATIVE_ONLY",
+      "sourceRefs": [
+        "sources/app.py"
+      ],
+      "sourceHashes": {
+        "sources/app.py": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50"
+      },
+      "syntaxKind": "ASSIGNMENT",
+      "ownerState": "PRESENT",
+      "resolutionClasses": [
+        "EXACT"
+      ],
+      "hasUnknown": false,
+      "dynamicGrounding": "STATIC_SYNTAX_ONLY",
+      "expectedSemanticDisposition": "REJECTED",
+      "observedSemanticDisposition": null
+    },
+    {
+      "caseId": "reference-not-selected",
+      "provenanceClass": "NEGATIVE_ONLY",
+      "sourceRefs": [
+        "sources/app.py"
+      ],
+      "sourceHashes": {
+        "sources/app.py": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50"
+      },
+      "syntaxKind": "ASSIGNMENT",
+      "ownerState": "PRESENT",
+      "resolutionClasses": [
+        "EXACT"
+      ],
+      "hasUnknown": false,
+      "dynamicGrounding": "STATIC_SYNTAX_ONLY",
+      "expectedSemanticDisposition": "REJECTED",
+      "observedSemanticDisposition": null
+    },
+    {
+      "caseId": "reference-loser-binding",
+      "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+      "sourceRefs": [
+        "sources/app.py"
+      ],
+      "sourceHashes": {
+        "sources/app.py": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50"
+      },
+      "syntaxKind": "ASSIGNMENT",
+      "ownerState": "PRESENT",
+      "resolutionClasses": [
+        "EXACT"
+      ],
+      "hasUnknown": false,
+      "dynamicGrounding": "STATIC_SYNTAX_ONLY",
+      "expectedSemanticDisposition": "PROJECTABLE_WITHOUT_POLICY",
+      "observedSemanticDisposition": null
+    },
+    {
+      "caseId": "reference-same-name-different-id",
+      "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+      "sourceRefs": [
+        "sources/app.py"
+      ],
+      "sourceHashes": {
+        "sources/app.py": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50"
+      },
+      "syntaxKind": "ASSIGNMENT",
+      "ownerState": "PRESENT",
+      "resolutionClasses": [
+        "AMBIGUOUS"
+      ],
+      "hasUnknown": false,
+      "dynamicGrounding": "STATIC_SYNTAX_ONLY",
+      "expectedSemanticDisposition": "PROJECTABLE_WITHOUT_POLICY",
+      "observedSemanticDisposition": null
+    },
+    {
+      "caseId": "owner-not-selected",
+      "provenanceClass": "NEGATIVE_ONLY",
+      "sourceRefs": [
+        "sources/app.py"
+      ],
+      "sourceHashes": {
+        "sources/app.py": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50"
+      },
+      "syntaxKind": "ASSIGNMENT",
+      "ownerState": "PRESENT",
+      "resolutionClasses": [
+        "NO_REFERENCE"
+      ],
+      "hasUnknown": false,
+      "dynamicGrounding": "STATIC_SYNTAX_ONLY",
+      "expectedSemanticDisposition": "REJECTED",
+      "observedSemanticDisposition": null
+    },
+    {
+      "caseId": "source-fingerprint-drift",
+      "provenanceClass": "NEGATIVE_ONLY",
+      "sourceRefs": [
+        "sources/app.py"
+      ],
+      "sourceHashes": {
+        "sources/app.py": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50"
+      },
+      "syntaxKind": "ASSIGNMENT",
+      "ownerState": "PRESENT",
+      "resolutionClasses": [
+        "NO_REFERENCE"
+      ],
+      "hasUnknown": false,
+      "dynamicGrounding": "STATIC_SYNTAX_ONLY",
+      "expectedSemanticDisposition": "REJECTED",
+      "observedSemanticDisposition": null
+    },
+    {
+      "caseId": "source-range-foreign",
+      "provenanceClass": "NEGATIVE_ONLY",
+      "sourceRefs": [
+        "sources/app.py"
+      ],
+      "sourceHashes": {
+        "sources/app.py": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50"
+      },
+      "syntaxKind": "ASSIGNMENT",
+      "ownerState": "PRESENT",
+      "resolutionClasses": [
+        "NO_REFERENCE"
+      ],
+      "hasUnknown": false,
+      "dynamicGrounding": "STATIC_SYNTAX_ONLY",
+      "expectedSemanticDisposition": "REJECTED",
+      "observedSemanticDisposition": null
+    },
+    {
+      "caseId": "owner-cross-revision",
+      "provenanceClass": "NEGATIVE_ONLY",
+      "sourceRefs": [
+        "sources/app.py"
+      ],
+      "sourceHashes": {
+        "sources/app.py": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50"
+      },
+      "syntaxKind": "ASSIGNMENT",
+      "ownerState": "PRESENT",
+      "resolutionClasses": [
+        "NO_REFERENCE"
+      ],
+      "hasUnknown": false,
+      "dynamicGrounding": "STATIC_SYNTAX_ONLY",
+      "expectedSemanticDisposition": "REJECTED",
+      "observedSemanticDisposition": null
+    },
+    {
+      "caseId": "provider-renamed-key-stable",
+      "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+      "sourceRefs": [
+        "sources/app.py"
+      ],
+      "sourceHashes": {
+        "sources/app.py": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50"
+      },
+      "syntaxKind": "ASSIGNMENT",
+      "ownerState": "PRESENT",
+      "resolutionClasses": [
+        "EXACT"
+      ],
+      "hasUnknown": false,
+      "dynamicGrounding": "STATIC_SYNTAX_ONLY",
+      "expectedSemanticDisposition": "PROJECTABLE_WITHOUT_POLICY",
+      "observedSemanticDisposition": null
+    },
+    {
+      "caseId": "revision-rebound-key-stable",
+      "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+      "sourceRefs": [
+        "sources/app.py"
+      ],
+      "sourceHashes": {
+        "sources/app.py": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50"
+      },
+      "syntaxKind": "ASSIGNMENT",
+      "ownerState": "PRESENT",
+      "resolutionClasses": [
+        "EXACT"
+      ],
+      "hasUnknown": false,
+      "dynamicGrounding": "STATIC_SYNTAX_ONLY",
+      "expectedSemanticDisposition": "PROJECTABLE_WITHOUT_POLICY",
+      "observedSemanticDisposition": null
+    },
+    {
+      "caseId": "payload-changed-key",
+      "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+      "sourceRefs": [
+        "sources/app.py"
+      ],
+      "sourceHashes": {
+        "sources/app.py": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50"
+      },
+      "syntaxKind": "ASSIGNMENT",
+      "ownerState": "PRESENT",
+      "resolutionClasses": [
+        "EXACT"
+      ],
+      "hasUnknown": false,
+      "dynamicGrounding": "STATIC_SYNTAX_ONLY",
+      "expectedSemanticDisposition": "PROJECTABLE_WITHOUT_POLICY",
+      "observedSemanticDisposition": null
+    },
+    {
+      "caseId": "policy-missing",
+      "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+      "sourceRefs": [
+        "sources/app.py"
+      ],
+      "sourceHashes": {
+        "sources/app.py": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50"
+      },
+      "syntaxKind": "ASSIGNMENT",
+      "ownerState": "PRESENT",
+      "resolutionClasses": [
+        "EXACT"
+      ],
+      "hasUnknown": false,
+      "dynamicGrounding": "STATIC_SYNTAX_ONLY",
+      "expectedSemanticDisposition": "PROJECTABLE_WITHOUT_POLICY",
+      "observedSemanticDisposition": null
+    }
+  ],
+  "numericalPolicy": null,
+  "thresholds": null,
+  "measurements": null,
+  "nextDecision": "REVIEW_EVIDENCE_PROTOCOL_BEFORE_ANY_EXECUTION"
+}

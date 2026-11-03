@@ -1,0 +1,236 @@
+[
+  {
+    "id": "no-source-not-indexed-locator",
+    "family": "EXISTING_C3A_TRANSCRIPT",
+    "input": "cases/no-source-not-indexed-locator/input.json",
+    "expected": "cases/no-source-not-indexed-locator/expected.json"
+  },
+  {
+    "id": "source-only-locator",
+    "family": "EXISTING_C3A_TRANSCRIPT",
+    "input": "cases/source-only-locator/input.json",
+    "expected": "cases/source-only-locator/expected.json"
+  },
+  {
+    "id": "source-only-source",
+    "family": "EXISTING_C3A_TRANSCRIPT",
+    "input": "cases/source-only-source/input.json",
+    "expected": "cases/source-only-source/expected.json"
+  },
+  {
+    "id": "complete-locator",
+    "family": "EXISTING_C3A_TRANSCRIPT",
+    "input": "cases/complete-locator/input.json",
+    "expected": "cases/complete-locator/expected.json"
+  },
+  {
+    "id": "complete-source",
+    "family": "EXISTING_C3A_TRANSCRIPT",
+    "input": "cases/complete-source/input.json",
+    "expected": "cases/complete-source/expected.json"
+  },
+  {
+    "id": "complete-code",
+    "family": "EXISTING_C3A_TRANSCRIPT",
+    "input": "cases/complete-code/input.json",
+    "expected": "cases/complete-code/expected.json"
+  },
+  {
+    "id": "same-header-losing-support-A-locator",
+    "family": "EXISTING_C3A_TRANSCRIPT",
+    "input": "cases/same-header-losing-support-A-locator/input.json",
+    "expected": "cases/same-header-losing-support-A-locator/expected.json"
+  },
+  {
+    "id": "same-header-losing-support-A-source",
+    "family": "EXISTING_C3A_TRANSCRIPT",
+    "input": "cases/same-header-losing-support-A-source/input.json",
+    "expected": "cases/same-header-losing-support-A-source/expected.json"
+  },
+  {
+    "id": "same-header-losing-support-A-code",
+    "family": "EXISTING_C3A_TRANSCRIPT",
+    "input": "cases/same-header-losing-support-A-code/input.json",
+    "expected": "cases/same-header-losing-support-A-code/expected.json"
+  },
+  {
+    "id": "same-header-losing-support-B-locator",
+    "family": "EXISTING_C3A_TRANSCRIPT",
+    "input": "cases/same-header-losing-support-B-locator/input.json",
+    "expected": "cases/same-header-losing-support-B-locator/expected.json"
+  },
+  {
+    "id": "same-header-losing-support-B-source",
+    "family": "EXISTING_C3A_TRANSCRIPT",
+    "input": "cases/same-header-losing-support-B-source/input.json",
+    "expected": "cases/same-header-losing-support-B-source/expected.json"
+  },
+  {
+    "id": "same-header-losing-support-B-code",
+    "family": "EXISTING_C3A_TRANSCRIPT",
+    "input": "cases/same-header-losing-support-B-code/input.json",
+    "expected": "cases/same-header-losing-support-B-code/expected.json"
+  },
+  {
+    "id": "same-header-coverage-A-locator",
+    "family": "EXISTING_C3A_TRANSCRIPT",
+    "input": "cases/same-header-coverage-A-locator/input.json",
+    "expected": "cases/same-header-coverage-A-locator/expected.json"
+  },
+  {
+    "id": "same-header-coverage-A-source",
+    "family": "EXISTING_C3A_TRANSCRIPT",
+    "input": "cases/same-header-coverage-A-source/input.json",
+    "expected": "cases/same-header-coverage-A-source/expected.json"
+  },
+  {
+    "id": "same-header-coverage-A-code",
+    "family": "EXISTING_C3A_TRANSCRIPT",
+    "input": "cases/same-header-coverage-A-code/input.json",
+    "expected": "cases/same-header-coverage-A-code/expected.json"
+  },
+  {
+    "id": "same-header-coverage-B-locator",
+    "family": "EXISTING_C3A_TRANSCRIPT",
+    "input": "cases/same-header-coverage-B-locator/input.json",
+    "expected": "cases/same-header-coverage-B-locator/expected.json"
+  },
+  {
+    "id": "same-header-coverage-B-source",
+    "family": "EXISTING_C3A_TRANSCRIPT",
+    "input": "cases/same-header-coverage-B-source/input.json",
+    "expected": "cases/same-header-coverage-B-source/expected.json"
+  },
+  {
+    "id": "same-header-coverage-B-code",
+    "family": "EXISTING_C3A_TRANSCRIPT",
+    "input": "cases/same-header-coverage-B-code/input.json",
+    "expected": "cases/same-header-coverage-B-code/expected.json"
+  },
+  {
+    "id": "empty-code-with-coverage-locator",
+    "family": "EXISTING_C3A_TRANSCRIPT",
+    "input": "cases/empty-code-with-coverage-locator/input.json",
+    "expected": "cases/empty-code-with-coverage-locator/expected.json"
+  },
+  {
+    "id": "empty-code-with-coverage-source",
+    "family": "EXISTING_C3A_TRANSCRIPT",
+    "input": "cases/empty-code-with-coverage-source/input.json",
+    "expected": "cases/empty-code-with-coverage-source/expected.json"
+  },
+  {
+    "id": "empty-code-with-coverage-code",
+    "family": "EXISTING_C3A_TRANSCRIPT",
+    "input": "cases/empty-code-with-coverage-code/input.json",
+    "expected": "cases/empty-code-with-coverage-code/expected.json"
+  },
+  {
+    "id": "coverage-multiplicity-locator",
+    "family": "EXISTING_C3A_TRANSCRIPT",
+    "input": "cases/coverage-multiplicity-locator/input.json",
+    "expected": "cases/coverage-multiplicity-locator/expected.json"
+  },
+  {
+    "id": "coverage-multiplicity-source",
+    "family": "EXISTING_C3A_TRANSCRIPT",
+    "input": "cases/coverage-multiplicity-source/input.json",
+    "expected": "cases/coverage-multiplicity-source/expected.json"
+  },
+  {
+    "id": "coverage-multiplicity-code",
+    "family": "EXISTING_C3A_TRANSCRIPT",
+    "input": "cases/coverage-multiplicity-code/input.json",
+    "expected": "cases/coverage-multiplicity-code/expected.json"
+  },
+  {
+    "id": "stale-target-source-locator",
+    "family": "EXISTING_C3A_TRANSCRIPT",
+    "input": "cases/stale-target-source-locator/input.json",
+    "expected": "cases/stale-target-source-locator/expected.json"
+  },
+  {
+    "id": "stale-target-source-source",
+    "family": "EXISTING_C3A_TRANSCRIPT",
+    "input": "cases/stale-target-source-source/input.json",
+    "expected": "cases/stale-target-source-source/expected.json"
+  },
+  {
+    "id": "stale-target-source-code",
+    "family": "EXISTING_C3A_TRANSCRIPT",
+    "input": "cases/stale-target-source-code/input.json",
+    "expected": "cases/stale-target-source-code/expected.json"
+  },
+  {
+    "id": "unicode-order-locator",
+    "family": "EXISTING_C3A_TRANSCRIPT",
+    "input": "cases/unicode-order-locator/input.json",
+    "expected": "cases/unicode-order-locator/expected.json"
+  },
+  {
+    "id": "unicode-order-source",
+    "family": "EXISTING_C3A_TRANSCRIPT",
+    "input": "cases/unicode-order-source/input.json",
+    "expected": "cases/unicode-order-source/expected.json"
+  },
+  {
+    "id": "unicode-order-code",
+    "family": "EXISTING_C3A_TRANSCRIPT",
+    "input": "cases/unicode-order-code/input.json",
+    "expected": "cases/unicode-order-code/expected.json"
+  },
+  {
+    "id": "typed-node-edge-id-locator",
+    "family": "EXISTING_C3A_TRANSCRIPT",
+    "input": "cases/typed-node-edge-id-locator/input.json",
+    "expected": "cases/typed-node-edge-id-locator/expected.json"
+  },
+  {
+    "id": "typed-node-edge-id-source",
+    "family": "EXISTING_C3A_TRANSCRIPT",
+    "input": "cases/typed-node-edge-id-source/input.json",
+    "expected": "cases/typed-node-edge-id-source/expected.json"
+  },
+  {
+    "id": "typed-node-edge-id-code",
+    "family": "EXISTING_C3A_TRANSCRIPT",
+    "input": "cases/typed-node-edge-id-code/input.json",
+    "expected": "cases/typed-node-edge-id-code/expected.json"
+  },
+  {
+    "id": "history-snapshot-set-locator",
+    "family": "EXISTING_C3A_TRANSCRIPT",
+    "input": "cases/history-snapshot-set-locator/input.json",
+    "expected": "cases/history-snapshot-set-locator/expected.json"
+  },
+  {
+    "id": "history-snapshot-set-source",
+    "family": "EXISTING_C3A_TRANSCRIPT",
+    "input": "cases/history-snapshot-set-source/input.json",
+    "expected": "cases/history-snapshot-set-source/expected.json"
+  },
+  {
+    "id": "history-snapshot-set-code",
+    "family": "EXISTING_C3A_TRANSCRIPT",
+    "input": "cases/history-snapshot-set-code/input.json",
+    "expected": "cases/history-snapshot-set-code/expected.json"
+  },
+  {
+    "id": "numeric-unicode-order",
+    "family": "FIXED_ENCODER_EDGE",
+    "input": "cases/numeric-unicode-order/input.json",
+    "expected": "cases/numeric-unicode-order/expected.json"
+  },
+  {
+    "id": "coverage-multiplicity",
+    "family": "FIXED_ENCODER_EDGE",
+    "input": "cases/coverage-multiplicity/input.json",
+    "expected": "cases/coverage-multiplicity/expected.json"
+  },
+  {
+    "id": "empty-nine-groups",
+    "family": "FIXED_ENCODER_EDGE",
+    "input": "cases/empty-nine-groups/input.json",
+    "expected": "cases/empty-nine-groups/expected.json"
+  }
+]

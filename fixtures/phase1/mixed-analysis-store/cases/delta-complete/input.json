@@ -1,0 +1,4 @@
+{
+  "scenario": "delta-complete",
+  "base": "base-input.json"
+}

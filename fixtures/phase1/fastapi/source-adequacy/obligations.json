@@ -1,0 +1,24 @@
+{
+  "status": "SOURCE_REVIEW_NOT_EXECUTED",
+  "source": "routes.py",
+  "obligations": [
+    {
+      "id": "FASTAPI-ROUTER",
+      "requires": "Proven constructor, router registration and prefix literals yield GET /api/v1/items with the handler owner."
+    },
+    {
+      "id": "FASTAPI-DEPENDENCY",
+      "requires": "Parameter-default Depends(provider) needs the parameter/default role and provider identity; merely seeing an invocation is insufficient."
+    },
+    {
+      "id": "FASTAPI-ANNOTATION-CONTROL",
+      "requires": "Reuse depends-default.py and depends-annotation.py: the latter annotation expression is not automatically a parameter-default injection binding."
+    }
+  ],
+  "limits": [
+    "Independent source-level obligations, not predicted raw output or an approved numeric baseline.",
+    "No Rust/Native/Python/Java execution has been performed for these sources.",
+    "COMPLETE/PARTIAL actual observations must be preserved; sources are parsed as text, not imported or run.",
+    "This file is not consumed as Canonical IR, a production admission flag, or a substitute for original critical probes."
+  ]
+}

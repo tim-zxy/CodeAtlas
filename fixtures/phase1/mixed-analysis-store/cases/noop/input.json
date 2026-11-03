@@ -1,0 +1,4 @@
+{
+  "scenario": "noop",
+  "base": "base-input.json"
+}

@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "p1-syntax-mapping-preparation-v1",
+  "category": "code-intelligence",
+  "phase": "1",
+  "languages": [],
+  "frameworks": [],
+  "capabilities": ["SYNTAX_MAPPING_PREPARATION_ONLY"],
+  "inputs": {
+    "cases": "cases.json",
+    "sources": "sources/",
+    "provenance": "provenance.json"
+  },
+  "expected": {
+    "cases": "cases.json"
+  },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

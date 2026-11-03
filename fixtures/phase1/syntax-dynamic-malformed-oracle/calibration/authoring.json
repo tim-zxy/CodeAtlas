@@ -1,0 +1,28 @@
+{
+  "kind": "INDEPENDENT_LITERAL_DYNAMIC_MALFORMED_REFERENCE",
+  "sourceSha256": "14d108c35f7699d58e5052d166147ad8573e628a521a95caa79c5c9f249e8635",
+  "spans": {
+    "decoration": [0, 37],
+    "argument": [9, 36],
+    "function": [38, 78],
+    "functionName": [42, 56],
+    "invocation": [70, 78]
+  },
+  "recordCount": 9,
+  "counts": {
+    "nodes": 2,
+    "edges": 0,
+    "syntax": 3,
+    "coverage": 1,
+    "diagnostics": 1
+  },
+  "outcome": "PARTIAL",
+  "parserRecoveryHypothesis": "MISSING_CLOSE_PAREN_FUNCTION_DEFINITION",
+  "limitations": [
+    "SYNTHETIC_UNIT_CONTEXT_AND_OLD_CONTROLS",
+    "RECOVERED_SYNTAX_IS_NOT_VALID_SOURCE",
+    "NO_DYNAMIC_VALUE_INFERENCE",
+    "NO_ACTUAL_NATIVE_CLI_OR_PROFILE",
+    "NO_CANONICAL_SYNTAX_SUPPORT_OR_STORE"
+  ]
+}

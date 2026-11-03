@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "p1-r011-history-capture-v1",
+  "category": "code-intelligence",
+  "phase": "1",
+  "languages": [],
+  "frameworks": [],
+  "capabilities": ["R011_HISTORY_STORAGE_CAPTURE_ONLY"],
+  "inputs": {
+    "cases": "cases.json",
+    "provenance": "provenance.json",
+    "bindingHistory": "binding-history/inputs.json"
+  },
+  "expected": {
+    "cases": "cases.json",
+    "bindingHistory": "binding-history/expected.json"
+  },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

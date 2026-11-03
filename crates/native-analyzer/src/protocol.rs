@@ -57,6 +57,46 @@ fn serve_once_impl<R: Read, W: Write, E: Write + Send>(
         .take((MAX_LINE_BYTES + 1) as u64)
         .read_to_end(&mut bytes)?;
 
+    // Isolated v5 route; never delegate malformed v5 to a legacy decoder.
+    if let Some(first) = bytes.split(|byte| *byte == b'\n').next()
+        && let Ok(header) = serde_json::from_slice::<Value>(first)
+        && safe_integer(&header["protocolVersion"]) == Some(5)
+    {
+        if worker_count.is_some() {
+            writeln!(
+                diagnostics,
+                "parse-workers is unavailable for Code/Syntax observation"
+            )?;
+            return Ok(ExitCode::from(2));
+        }
+        codeatlas_native_analyzer::code_syntax::serve_code_syntax_request_from_budget(
+            &bytes,
+            &std::sync::atomic::AtomicBool::new(false),
+            output,
+        )?;
+        return Ok(ExitCode::SUCCESS);
+    }
+
+    // Explicit v4 selection precedes every legacy ANALYZE/DESCRIBE path.
+    if let Some(first) = bytes.split(|byte| *byte == b'\n').next()
+        && let Ok(header) = serde_json::from_slice::<Value>(first)
+        && safe_integer(&header["protocolVersion"]) == Some(4)
+    {
+        if worker_count.is_some() {
+            writeln!(
+                diagnostics,
+                "parse-workers is unavailable for Syntax observation"
+            )?;
+            return Ok(ExitCode::from(2));
+        }
+        codeatlas_native_analyzer::syntax::serve_syntax_request_from_budget(
+            &bytes,
+            &std::sync::atomic::AtomicBool::new(false),
+            output,
+        )?;
+        return Ok(ExitCode::SUCCESS);
+    }
+
     // Recognizing a trustworthy header only selects the v3 validator. Never
     // route an incomplete v3 ANALYZE header through the single-record v1/v2 path.
     if let Some(first_lf) = bytes.iter().position(|byte| *byte == b'\n')
@@ -631,5 +671,166 @@ mod tests {
             &mut diagnostics,
         );
         assert!(result.is_err());
+    }
+}
+
+#[cfg(test)]
+mod syntax_v4_tests {
+    use super::*;
+    use sha2::{Digest, Sha256};
+    fn request() -> Vec<u8> {
+        let mut r: Value = serde_json::from_str(include_str!(
+            "../../../fixtures/phase1/syntax-budget-contract/inputs/python-initial-request.jsonl"
+        ))
+        .unwrap();
+        let p = &mut r["payload"];
+        p["sourceFiles"] = json!([]);
+        let t = &p["targetSource"];
+        let values = [
+            t["repositoryId"].as_str().unwrap(),
+            t["revisionId"].as_str().unwrap(),
+            t["contentFingerprint"].as_str().unwrap(),
+            "NONE",
+            "PROVISIONAL_CODE",
+            p["ownerBinding"]["stageDigest"].as_str().unwrap(),
+            p["providerId"].as_str().unwrap(),
+            p["providerSnapshotId"].as_str().unwrap(),
+            "0",
+            "0",
+        ];
+        let mut h = Sha256::new();
+        h.update(b"codeatlas-native-syntax-owner-map-v1\0");
+        for v in values {
+            h.update(v.len().to_string());
+            h.update(b":");
+            h.update(v);
+        }
+        p["ownerBinding"]["ownerMapDigest"] = format!("{:x}", h.finalize()).into();
+        let mut raw = serde_json::to_vec(&r).unwrap();
+        raw.push(b'\n');
+        raw
+    }
+    #[test]
+    fn explicit_v4_zero_source_dispatch_is_in_memory_only() {
+        let mut output = vec![];
+        let mut diag = vec![];
+        let input = request();
+        assert_eq!(
+            serve_once(&mut input.as_slice(), &mut output, &mut diag).unwrap(),
+            ExitCode::SUCCESS
+        );
+        let es: Vec<Value> = output
+            .split_inclusive(|b| *b == b'\n')
+            .map(|b| serde_json::from_slice(b).unwrap())
+            .collect();
+        assert_eq!(es.len(), 2);
+        assert_eq!(es[0]["type"], "SYNTAX_STARTED");
+        assert_eq!(es[1]["type"], "SYNTAX_COMPLETED");
+        assert!(diag.is_empty());
+    }
+    #[test]
+    fn version4_analyze_never_falls_into_old_analyze() {
+        let mut input =
+            br#"{"protocolVersion":4,"requestId":"unit:v4","type":"ANALYZE","payload":{}}
+"#
+            .as_slice();
+        let mut output = vec![];
+        serve_once(&mut input, &mut output, &mut vec![]).unwrap();
+        let e: Value = serde_json::from_slice(&output).unwrap();
+        assert_eq!(e["protocolVersion"], 4);
+        assert_eq!(e["type"], "REQUEST_FAILED");
+        assert_eq!(e["payload"]["code"], "INVALID_REQUEST");
+        assert!(e["payload"].get("error").is_none());
+    }
+    #[test]
+    fn v4_missing_traversal_allowance_fails_before_any_source() {
+        let mut r: Value = serde_json::from_slice(&request()).unwrap();
+        r["payload"]["resourceBudget"]
+            .as_object_mut()
+            .unwrap()
+            .remove("maxItems");
+        let mut b = serde_json::to_vec(&r).unwrap();
+        b.push(b'\n');
+        let mut output = vec![];
+        serve_once(&mut b.as_slice(), &mut output, &mut vec![]).unwrap();
+        let e: Value = serde_json::from_slice(&output).unwrap();
+        assert_eq!(e["protocolVersion"], 4);
+        assert_eq!(e["payload"]["code"], "INVALID_REQUEST");
+    }
+    #[test]
+    fn v4_parse_workers_flag_never_silently_changes_syntax_policy() {
+        let input = request();
+        let mut output = vec![];
+        let result = serve_once_with_workers(
+            &mut input.as_slice(),
+            &mut output,
+            &mut vec![],
+            NonZeroUsize::new(1).unwrap(),
+        )
+        .unwrap();
+        assert_eq!(result, ExitCode::from(2));
+        assert!(output.is_empty());
+    }
+    #[test]
+    fn v4_does_not_advertise_unqualified_language_or_protocol() {
+        let e = describe_completed("unit:describe");
+        assert_eq!(e["payload"]["protocolVersions"], json!([1, 2, 3]));
+        assert_eq!(e["payload"]["languages"].as_array().unwrap().len(), 1);
+        assert_eq!(e["payload"]["languages"][0]["languageId"], "java");
+    }
+}
+
+#[cfg(test)]
+mod mixed_v5_tests {
+    use super::*;
+    fn request() -> Vec<u8> {
+        let mut r: Value = serde_json::from_str(include_str!("../../../fixtures/phase1/code-syntax-producer-oracle/cases/no-files/request.template.jsonl")).unwrap();
+        r["payload"]["repository"]["rootPath"] =
+            std::env::temp_dir().to_string_lossy().into_owned().into();
+        let mut raw = serde_json::to_vec(&r).unwrap();
+        raw.push(b'\n');
+        raw
+    }
+    #[test]
+    fn ar_v5_dispatch_uses_existing_library_without_a_child() {
+        let mut out = vec![];
+        assert_eq!(
+            serve_once(&mut request().as_slice(), &mut out, &mut vec![]).unwrap(),
+            ExitCode::SUCCESS
+        );
+        let events: Vec<Value> = out
+            .split(|b| *b == b'\n')
+            .filter(|b| !b.is_empty())
+            .map(|b| serde_json::from_slice(b).unwrap())
+            .collect();
+        assert_eq!(events.len(), 2);
+        assert_eq!(events[0]["protocolVersion"], 5);
+        assert_eq!(events[0]["type"], "OBSERVATION_STARTED");
+        assert_eq!(events[1]["type"], "OBSERVATION_COMPLETED");
+    }
+    #[test]
+    fn ar_bad_v5_never_falls_through_to_legacy() {
+        let raw =
+            b"{\"protocolVersion\":5,\"requestId\":\"ar:v5\",\"type\":\"OBSERVE_CODE_SYNTAX\"}\n";
+        let mut out = vec![];
+        serve_once(&mut raw.as_slice(), &mut out, &mut vec![]).unwrap();
+        let event: Value = serde_json::from_slice(&out).unwrap();
+        assert_eq!(event["protocolVersion"], 5);
+        assert_eq!(event["type"], "REQUEST_FAILED");
+    }
+    #[test]
+    fn ar_v5_workers_are_refused_without_output() {
+        let mut out = vec![];
+        assert_eq!(
+            serve_once_with_workers(
+                &mut request().as_slice(),
+                &mut out,
+                &mut vec![],
+                NonZeroUsize::new(1).unwrap()
+            )
+            .unwrap(),
+            ExitCode::from(2)
+        );
+        assert!(out.is_empty());
     }
 }

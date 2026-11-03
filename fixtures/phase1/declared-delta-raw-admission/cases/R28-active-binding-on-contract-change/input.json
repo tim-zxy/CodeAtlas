@@ -1,0 +1,1100 @@
+{
+  "history": {
+    "activationId": "activation:old",
+    "parent": null,
+    "state": {
+      "basis": {
+        "repositoryId": "repo:history",
+        "revisionId": "revision:worktree",
+        "contentFingerprint": "content:old",
+        "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "repositoryLocatorDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "inventory": [
+        {
+          "id": "j",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "J.java",
+          "contentFingerprint": "content:j",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "java",
+          "sensitivity": "INTERNAL"
+        },
+        {
+          "id": "k",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "K.java",
+          "contentFingerprint": "content:k",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "java",
+          "sensitivity": "INTERNAL"
+        },
+        {
+          "id": "a",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "a.py",
+          "contentFingerprint": "content:a",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "python",
+          "sensitivity": "INTERNAL"
+        },
+        {
+          "id": "b",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "b.py",
+          "contentFingerprint": "content:b",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "python",
+          "sensitivity": "INTERNAL"
+        },
+        {
+          "id": "doc",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "notes.md",
+          "contentFingerprint": "content:doc",
+          "classification": {
+            "role": "OTHER",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": null,
+          "sensitivity": "INTERNAL"
+        }
+      ],
+      "contracts": [
+        {
+          "providerId": "external",
+          "extractor": "extract:1",
+          "normalizer": "normalize:1",
+          "contract": "contract:1",
+          "policy": "policy:1"
+        },
+        {
+          "providerId": "native",
+          "extractor": "extract:1",
+          "normalizer": "normalize:1",
+          "contract": "contract:1",
+          "policy": "policy:1"
+        }
+      ],
+      "units": [
+        {
+          "id": "external:b",
+          "providerId": "external",
+          "kind": "PROVIDER_SCOPE",
+          "sourceFileIds": ["b"]
+        },
+        {
+          "id": "java",
+          "providerId": "native",
+          "kind": "JAVA_GROUP",
+          "sourceFileIds": ["j", "k"]
+        },
+        {
+          "id": "py:a",
+          "providerId": "native",
+          "kind": "PYTHON_FILE",
+          "sourceFileIds": ["a"]
+        },
+        {
+          "id": "py:b",
+          "providerId": "native",
+          "kind": "PYTHON_FILE",
+          "sourceFileIds": ["b"]
+        }
+      ],
+      "snapshots": [
+        {
+          "id": "snapshot:external",
+          "repositoryId": "repo:history",
+          "providerId": "external",
+          "providerVersion": "1",
+          "runtimeVersion": "fixture",
+          "requestedRevisionId": "revision:worktree",
+          "requestedRevisionFingerprint": "content:old",
+          "startedAt": "2026-10-24T00:00:00.000Z",
+          "completedAt": "2026-10-24T00:00:00.001Z",
+          "capabilities": [
+            {
+              "name": "EXTERNAL_CODE",
+              "support": "SUPPORTED",
+              "coverage": "COMPLETE"
+            }
+          ],
+          "diagnostics": [],
+          "outcome": "SUCCEEDED"
+        },
+        {
+          "id": "snapshot:old",
+          "repositoryId": "repo:history",
+          "providerId": "native",
+          "providerVersion": "1",
+          "runtimeVersion": "fixture",
+          "requestedRevisionId": "revision:worktree",
+          "requestedRevisionFingerprint": "content:old",
+          "startedAt": "2026-10-24T00:00:00.000Z",
+          "completedAt": "2026-10-24T00:00:00.001Z",
+          "capabilities": [
+            {
+              "name": "JAVA_CODE_V2",
+              "support": "SUPPORTED",
+              "coverage": "COMPLETE"
+            },
+            {
+              "name": "PYTHON_SYNTAX_CODE_V1",
+              "support": "SUPPORTED",
+              "coverage": "COMPLETE"
+            },
+            {
+              "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+              "support": "SUPPORTED",
+              "coverage": "COMPLETE"
+            }
+          ],
+          "diagnostics": [],
+          "outcome": "SUCCEEDED"
+        }
+      ],
+      "nodes": [
+        {
+          "id": "node:a",
+          "factKey": "fact:a",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "name": "a",
+          "qualifiedName": "a",
+          "sourceRange": null,
+          "confidence": {
+            "score": 0.7,
+            "method": "fact-merger-min-v1",
+            "reasons": ["minimum active support score"]
+          },
+          "kind": "MODULE"
+        },
+        {
+          "id": "node:b",
+          "factKey": "fact:b",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "name": "b",
+          "qualifiedName": "b",
+          "sourceRange": null,
+          "confidence": {
+            "score": 1,
+            "method": "fixture-parser",
+            "reasons": []
+          },
+          "kind": "MODULE"
+        },
+        {
+          "id": "node:java",
+          "factKey": "fact:java",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "name": "java",
+          "qualifiedName": "java",
+          "sourceRange": null,
+          "confidence": {
+            "score": 1,
+            "method": "fixture-parser",
+            "reasons": []
+          },
+          "kind": "PACKAGE"
+        }
+      ],
+      "edges": [],
+      "supports": [
+        {
+          "factType": "NODE",
+          "canonical": {
+            "id": "node:a",
+            "factKey": "fact:a",
+            "repositoryId": "repo:history",
+            "revisionId": "revision:worktree",
+            "name": "a",
+            "qualifiedName": "a",
+            "sourceRange": null,
+            "confidence": {
+              "score": 0.7,
+              "method": "fixture-parser",
+              "reasons": []
+            },
+            "kind": "MODULE"
+          },
+          "snapshotId": "snapshot:external",
+          "evidence": {
+            "id": "provider-evidence-v1:a33a7dd05dec6e9bef2bcbb95876a833ef4a2f5297cc430fd4d9ea5113d46bf7",
+            "repositoryId": "repo:history",
+            "revisionId": "revision:worktree",
+            "providerSnapshotId": "snapshot:external",
+            "providerFact": {
+              "factType": "NODE",
+              "providerId": "external",
+              "providerFactId": "opaque:a"
+            },
+            "status": "ACTIVE"
+          },
+          "factEvidence": {
+            "fact": {
+              "factType": "NODE",
+              "id": "node:a"
+            },
+            "evidenceId": "provider-evidence-v1:a33a7dd05dec6e9bef2bcbb95876a833ef4a2f5297cc430fd4d9ea5113d46bf7"
+          },
+          "binding": {
+            "providerFact": {
+              "factType": "NODE",
+              "providerId": "external",
+              "providerFactId": "opaque:a"
+            },
+            "providerSnapshotId": "snapshot:external",
+            "canonicalFact": {
+              "factType": "NODE",
+              "id": "node:a"
+            },
+            "evidenceId": "provider-evidence-v1:a33a7dd05dec6e9bef2bcbb95876a833ef4a2f5297cc430fd4d9ea5113d46bf7"
+          },
+          "dependencyUnitIds": ["external:b"],
+          "valueDigest": "084ecd562415220145288841bfb2c1d348871d854010e399b8498e20d2df8084"
+        },
+        {
+          "factType": "NODE",
+          "canonical": {
+            "id": "node:a",
+            "factKey": "fact:a",
+            "repositoryId": "repo:history",
+            "revisionId": "revision:worktree",
+            "name": "a",
+            "qualifiedName": "a",
+            "sourceRange": null,
+            "confidence": {
+              "score": 1,
+              "method": "fixture-parser",
+              "reasons": []
+            },
+            "kind": "MODULE"
+          },
+          "snapshotId": "snapshot:old",
+          "evidence": {
+            "id": "provider-evidence-v1:005dde9efa16bb48819c9e2b7a297c53e3258bbf50a2ee75049ba8e711abf6b9",
+            "repositoryId": "repo:history",
+            "revisionId": "revision:worktree",
+            "providerSnapshotId": "snapshot:old",
+            "providerFact": {
+              "factType": "NODE",
+              "providerId": "native",
+              "providerFactId": "opaque:a"
+            },
+            "status": "ACTIVE"
+          },
+          "factEvidence": {
+            "fact": {
+              "factType": "NODE",
+              "id": "node:a"
+            },
+            "evidenceId": "provider-evidence-v1:005dde9efa16bb48819c9e2b7a297c53e3258bbf50a2ee75049ba8e711abf6b9"
+          },
+          "binding": {
+            "providerFact": {
+              "factType": "NODE",
+              "providerId": "native",
+              "providerFactId": "opaque:a"
+            },
+            "providerSnapshotId": "snapshot:old",
+            "canonicalFact": {
+              "factType": "NODE",
+              "id": "node:a"
+            },
+            "evidenceId": "provider-evidence-v1:005dde9efa16bb48819c9e2b7a297c53e3258bbf50a2ee75049ba8e711abf6b9"
+          },
+          "dependencyUnitIds": ["py:a"],
+          "valueDigest": "d6ed6b03a28c0b2087b61f7393aa3a8f788ee0e98b717f3313470bba68e6638f"
+        },
+        {
+          "factType": "NODE",
+          "canonical": {
+            "id": "node:b",
+            "factKey": "fact:b",
+            "repositoryId": "repo:history",
+            "revisionId": "revision:worktree",
+            "name": "b",
+            "qualifiedName": "b",
+            "sourceRange": null,
+            "confidence": {
+              "score": 1,
+              "method": "fixture-parser",
+              "reasons": []
+            },
+            "kind": "MODULE"
+          },
+          "snapshotId": "snapshot:old",
+          "evidence": {
+            "id": "provider-evidence-v1:c78336bd33570d302e7b5321df48c0c4dd73fb99a1da888d09118423cf538ff7",
+            "repositoryId": "repo:history",
+            "revisionId": "revision:worktree",
+            "providerSnapshotId": "snapshot:old",
+            "providerFact": {
+              "factType": "NODE",
+              "providerId": "native",
+              "providerFactId": "opaque:b"
+            },
+            "status": "ACTIVE"
+          },
+          "factEvidence": {
+            "fact": {
+              "factType": "NODE",
+              "id": "node:b"
+            },
+            "evidenceId": "provider-evidence-v1:c78336bd33570d302e7b5321df48c0c4dd73fb99a1da888d09118423cf538ff7"
+          },
+          "binding": {
+            "providerFact": {
+              "factType": "NODE",
+              "providerId": "native",
+              "providerFactId": "opaque:b"
+            },
+            "providerSnapshotId": "snapshot:old",
+            "canonicalFact": {
+              "factType": "NODE",
+              "id": "node:b"
+            },
+            "evidenceId": "provider-evidence-v1:c78336bd33570d302e7b5321df48c0c4dd73fb99a1da888d09118423cf538ff7"
+          },
+          "dependencyUnitIds": ["py:b"],
+          "valueDigest": "5bdc3d8e86d46214ca041cf2f0e36eccaa45f277df2a36875416617e927c3d2a"
+        },
+        {
+          "factType": "NODE",
+          "canonical": {
+            "id": "node:java",
+            "factKey": "fact:java",
+            "repositoryId": "repo:history",
+            "revisionId": "revision:worktree",
+            "name": "java",
+            "qualifiedName": "java",
+            "sourceRange": null,
+            "confidence": {
+              "score": 1,
+              "method": "fixture-parser",
+              "reasons": []
+            },
+            "kind": "PACKAGE"
+          },
+          "snapshotId": "snapshot:old",
+          "evidence": {
+            "id": "provider-evidence-v1:2eeafa1054c52f1dfec8c4aaf580a0970cca5f255c7b3dd7713894ddf554469f",
+            "repositoryId": "repo:history",
+            "revisionId": "revision:worktree",
+            "providerSnapshotId": "snapshot:old",
+            "providerFact": {
+              "factType": "NODE",
+              "providerId": "native",
+              "providerFactId": "opaque:java"
+            },
+            "status": "ACTIVE"
+          },
+          "factEvidence": {
+            "fact": {
+              "factType": "NODE",
+              "id": "node:java"
+            },
+            "evidenceId": "provider-evidence-v1:2eeafa1054c52f1dfec8c4aaf580a0970cca5f255c7b3dd7713894ddf554469f"
+          },
+          "binding": {
+            "providerFact": {
+              "factType": "NODE",
+              "providerId": "native",
+              "providerFactId": "opaque:java"
+            },
+            "providerSnapshotId": "snapshot:old",
+            "canonicalFact": {
+              "factType": "NODE",
+              "id": "node:java"
+            },
+            "evidenceId": "provider-evidence-v1:2eeafa1054c52f1dfec8c4aaf580a0970cca5f255c7b3dd7713894ddf554469f"
+          },
+          "dependencyUnitIds": ["java"],
+          "valueDigest": "9dafb81e8ed26d7273104eb310aa91840985858389bdf3d6735827594d351515"
+        }
+      ],
+      "coverage": [
+        {
+          "unitId": "external:b",
+          "facet": "EXTERNAL_CODE",
+          "originSnapshotId": "snapshot:external",
+          "coverage": "COMPLETE"
+        },
+        {
+          "unitId": "java",
+          "facet": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+          "originSnapshotId": "snapshot:old",
+          "coverage": "COMPLETE"
+        },
+        {
+          "unitId": "java",
+          "facet": "JAVA_CODE_V2",
+          "originSnapshotId": "snapshot:old",
+          "coverage": "COMPLETE"
+        },
+        {
+          "unitId": "py:a",
+          "facet": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+          "originSnapshotId": "snapshot:old",
+          "coverage": "COMPLETE"
+        },
+        {
+          "unitId": "py:a",
+          "facet": "PYTHON_SYNTAX_CODE_V1",
+          "originSnapshotId": "snapshot:old",
+          "coverage": "COMPLETE"
+        },
+        {
+          "unitId": "py:b",
+          "facet": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+          "originSnapshotId": "snapshot:old",
+          "coverage": "COMPLETE"
+        },
+        {
+          "unitId": "py:b",
+          "facet": "PYTHON_SYNTAX_CODE_V1",
+          "originSnapshotId": "snapshot:old",
+          "coverage": "COMPLETE"
+        }
+      ],
+      "syntaxOrigins": [
+        {
+          "id": "syntax:a",
+          "unitId": "py:a",
+          "originSnapshotId": "snapshot:old",
+          "valueDigest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "basis": {
+            "repositoryId": "repo:history",
+            "revisionId": "revision:worktree",
+            "contentFingerprint": "content:old",
+            "codeActivationDigest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+          }
+        }
+      ]
+    }
+  },
+  "current": {
+    "basis": {
+      "repositoryId": "repo:history",
+      "revisionId": "revision:worktree",
+      "contentFingerprint": "content:old",
+      "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "repositoryLocatorDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "inventory": [
+      {
+        "id": "j",
+        "repositoryId": "repo:history",
+        "revisionId": "revision:worktree",
+        "path": "J.java",
+        "contentFingerprint": "content:j",
+        "classification": {
+          "role": "SOURCE",
+          "provenance": "AUTHORED",
+          "contentKind": "TEXT"
+        },
+        "languageHint": "java",
+        "sensitivity": "INTERNAL"
+      },
+      {
+        "id": "k",
+        "repositoryId": "repo:history",
+        "revisionId": "revision:worktree",
+        "path": "K.java",
+        "contentFingerprint": "content:k",
+        "classification": {
+          "role": "SOURCE",
+          "provenance": "AUTHORED",
+          "contentKind": "TEXT"
+        },
+        "languageHint": "java",
+        "sensitivity": "INTERNAL"
+      },
+      {
+        "id": "a",
+        "repositoryId": "repo:history",
+        "revisionId": "revision:worktree",
+        "path": "a.py",
+        "contentFingerprint": "content:a",
+        "classification": {
+          "role": "SOURCE",
+          "provenance": "AUTHORED",
+          "contentKind": "TEXT"
+        },
+        "languageHint": "python",
+        "sensitivity": "INTERNAL"
+      },
+      {
+        "id": "b",
+        "repositoryId": "repo:history",
+        "revisionId": "revision:worktree",
+        "path": "b.py",
+        "contentFingerprint": "content:b",
+        "classification": {
+          "role": "SOURCE",
+          "provenance": "AUTHORED",
+          "contentKind": "TEXT"
+        },
+        "languageHint": "python",
+        "sensitivity": "INTERNAL"
+      },
+      {
+        "id": "doc",
+        "repositoryId": "repo:history",
+        "revisionId": "revision:worktree",
+        "path": "notes.md",
+        "contentFingerprint": "content:doc",
+        "classification": {
+          "role": "OTHER",
+          "provenance": "AUTHORED",
+          "contentKind": "TEXT"
+        },
+        "languageHint": null,
+        "sensitivity": "INTERNAL"
+      }
+    ],
+    "contracts": [
+      {
+        "providerId": "external",
+        "extractor": "extract:1",
+        "normalizer": "normalize:1",
+        "contract": "contract:1",
+        "policy": "policy:1"
+      },
+      {
+        "providerId": "native",
+        "extractor": "extract:1",
+        "normalizer": "normalize:1",
+        "contract": "contract:1",
+        "policy": "policy:1"
+      }
+    ],
+    "units": [
+      {
+        "id": "external:b",
+        "providerId": "external",
+        "kind": "PROVIDER_SCOPE",
+        "sourceFileIds": ["b"]
+      },
+      {
+        "id": "java",
+        "providerId": "native",
+        "kind": "JAVA_GROUP",
+        "sourceFileIds": ["j", "k"]
+      },
+      {
+        "id": "py:a",
+        "providerId": "native",
+        "kind": "PYTHON_FILE",
+        "sourceFileIds": ["a"]
+      },
+      {
+        "id": "py:b",
+        "providerId": "native",
+        "kind": "PYTHON_FILE",
+        "sourceFileIds": ["b"]
+      }
+    ],
+    "snapshots": [
+      {
+        "id": "snapshot:external",
+        "repositoryId": "repo:history",
+        "providerId": "external",
+        "providerVersion": "1",
+        "runtimeVersion": "fixture",
+        "requestedRevisionId": "revision:worktree",
+        "requestedRevisionFingerprint": "content:old",
+        "startedAt": "2026-10-24T00:00:00.000Z",
+        "completedAt": "2026-10-24T00:00:00.001Z",
+        "capabilities": [
+          {
+            "name": "EXTERNAL_CODE",
+            "support": "SUPPORTED",
+            "coverage": "COMPLETE"
+          }
+        ],
+        "diagnostics": [],
+        "outcome": "SUCCEEDED"
+      },
+      {
+        "id": "snapshot:old",
+        "repositoryId": "repo:history",
+        "providerId": "native",
+        "providerVersion": "1",
+        "runtimeVersion": "fixture",
+        "requestedRevisionId": "revision:worktree",
+        "requestedRevisionFingerprint": "content:old",
+        "startedAt": "2026-10-24T00:00:00.000Z",
+        "completedAt": "2026-10-24T00:00:00.001Z",
+        "capabilities": [
+          {
+            "name": "JAVA_CODE_V2",
+            "support": "SUPPORTED",
+            "coverage": "COMPLETE"
+          },
+          {
+            "name": "PYTHON_SYNTAX_CODE_V1",
+            "support": "SUPPORTED",
+            "coverage": "COMPLETE"
+          },
+          {
+            "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+            "support": "SUPPORTED",
+            "coverage": "COMPLETE"
+          }
+        ],
+        "diagnostics": [],
+        "outcome": "SUCCEEDED"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "node:a",
+        "factKey": "fact:a",
+        "repositoryId": "repo:history",
+        "revisionId": "revision:worktree",
+        "name": "a",
+        "qualifiedName": "a",
+        "sourceRange": null,
+        "confidence": {
+          "score": 0.7,
+          "method": "fact-merger-min-v1",
+          "reasons": ["minimum active support score"]
+        },
+        "kind": "MODULE"
+      },
+      {
+        "id": "node:b",
+        "factKey": "fact:b",
+        "repositoryId": "repo:history",
+        "revisionId": "revision:worktree",
+        "name": "b",
+        "qualifiedName": "b",
+        "sourceRange": null,
+        "confidence": {
+          "score": 1,
+          "method": "fixture-parser",
+          "reasons": []
+        },
+        "kind": "MODULE"
+      },
+      {
+        "id": "node:java",
+        "factKey": "fact:java",
+        "repositoryId": "repo:history",
+        "revisionId": "revision:worktree",
+        "name": "java",
+        "qualifiedName": "java",
+        "sourceRange": null,
+        "confidence": {
+          "score": 1,
+          "method": "fixture-parser",
+          "reasons": []
+        },
+        "kind": "PACKAGE"
+      }
+    ],
+    "edges": [],
+    "supports": [
+      {
+        "factType": "NODE",
+        "canonical": {
+          "id": "node:a",
+          "factKey": "fact:a",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "name": "a",
+          "qualifiedName": "a",
+          "sourceRange": null,
+          "confidence": {
+            "score": 0.7,
+            "method": "fixture-parser",
+            "reasons": []
+          },
+          "kind": "MODULE"
+        },
+        "snapshotId": "snapshot:external",
+        "evidence": {
+          "id": "provider-evidence-v1:a33a7dd05dec6e9bef2bcbb95876a833ef4a2f5297cc430fd4d9ea5113d46bf7",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "providerSnapshotId": "snapshot:external",
+          "providerFact": {
+            "factType": "NODE",
+            "providerId": "external",
+            "providerFactId": "opaque:a"
+          },
+          "status": "ACTIVE"
+        },
+        "factEvidence": {
+          "fact": {
+            "factType": "NODE",
+            "id": "node:a"
+          },
+          "evidenceId": "provider-evidence-v1:a33a7dd05dec6e9bef2bcbb95876a833ef4a2f5297cc430fd4d9ea5113d46bf7"
+        },
+        "binding": {
+          "providerFact": {
+            "factType": "NODE",
+            "providerId": "external",
+            "providerFactId": "opaque:a"
+          },
+          "providerSnapshotId": "snapshot:external",
+          "canonicalFact": {
+            "factType": "NODE",
+            "id": "node:a"
+          },
+          "evidenceId": "provider-evidence-v1:a33a7dd05dec6e9bef2bcbb95876a833ef4a2f5297cc430fd4d9ea5113d46bf7"
+        },
+        "dependencyUnitIds": ["external:b"],
+        "valueDigest": "084ecd562415220145288841bfb2c1d348871d854010e399b8498e20d2df8084"
+      },
+      {
+        "factType": "NODE",
+        "canonical": {
+          "id": "node:a",
+          "factKey": "fact:a",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "name": "a",
+          "qualifiedName": "a",
+          "sourceRange": null,
+          "confidence": {
+            "score": 1,
+            "method": "fixture-parser",
+            "reasons": []
+          },
+          "kind": "MODULE"
+        },
+        "snapshotId": "snapshot:old",
+        "evidence": {
+          "id": "provider-evidence-v1:005dde9efa16bb48819c9e2b7a297c53e3258bbf50a2ee75049ba8e711abf6b9",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "providerSnapshotId": "snapshot:old",
+          "providerFact": {
+            "factType": "NODE",
+            "providerId": "native",
+            "providerFactId": "opaque:a"
+          },
+          "status": "ACTIVE"
+        },
+        "factEvidence": {
+          "fact": {
+            "factType": "NODE",
+            "id": "node:a"
+          },
+          "evidenceId": "provider-evidence-v1:005dde9efa16bb48819c9e2b7a297c53e3258bbf50a2ee75049ba8e711abf6b9"
+        },
+        "binding": {
+          "providerFact": {
+            "factType": "NODE",
+            "providerId": "native",
+            "providerFactId": "opaque:a"
+          },
+          "providerSnapshotId": "snapshot:old",
+          "canonicalFact": {
+            "factType": "NODE",
+            "id": "node:a"
+          },
+          "evidenceId": "provider-evidence-v1:005dde9efa16bb48819c9e2b7a297c53e3258bbf50a2ee75049ba8e711abf6b9"
+        },
+        "dependencyUnitIds": ["py:a"],
+        "valueDigest": "d6ed6b03a28c0b2087b61f7393aa3a8f788ee0e98b717f3313470bba68e6638f"
+      },
+      {
+        "factType": "NODE",
+        "canonical": {
+          "id": "node:b",
+          "factKey": "fact:b",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "name": "b",
+          "qualifiedName": "b",
+          "sourceRange": null,
+          "confidence": {
+            "score": 1,
+            "method": "fixture-parser",
+            "reasons": []
+          },
+          "kind": "MODULE"
+        },
+        "snapshotId": "snapshot:old",
+        "evidence": {
+          "id": "provider-evidence-v1:c78336bd33570d302e7b5321df48c0c4dd73fb99a1da888d09118423cf538ff7",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "providerSnapshotId": "snapshot:old",
+          "providerFact": {
+            "factType": "NODE",
+            "providerId": "native",
+            "providerFactId": "opaque:b"
+          },
+          "status": "ACTIVE"
+        },
+        "factEvidence": {
+          "fact": {
+            "factType": "NODE",
+            "id": "node:b"
+          },
+          "evidenceId": "provider-evidence-v1:c78336bd33570d302e7b5321df48c0c4dd73fb99a1da888d09118423cf538ff7"
+        },
+        "binding": {
+          "providerFact": {
+            "factType": "NODE",
+            "providerId": "native",
+            "providerFactId": "opaque:b"
+          },
+          "providerSnapshotId": "snapshot:old",
+          "canonicalFact": {
+            "factType": "NODE",
+            "id": "node:b"
+          },
+          "evidenceId": "provider-evidence-v1:c78336bd33570d302e7b5321df48c0c4dd73fb99a1da888d09118423cf538ff7"
+        },
+        "dependencyUnitIds": ["py:b"],
+        "valueDigest": "5bdc3d8e86d46214ca041cf2f0e36eccaa45f277df2a36875416617e927c3d2a"
+      },
+      {
+        "factType": "NODE",
+        "canonical": {
+          "id": "node:java",
+          "factKey": "fact:java",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "name": "java",
+          "qualifiedName": "java",
+          "sourceRange": null,
+          "confidence": {
+            "score": 1,
+            "method": "fixture-parser",
+            "reasons": []
+          },
+          "kind": "PACKAGE"
+        },
+        "snapshotId": "snapshot:old",
+        "evidence": {
+          "id": "provider-evidence-v1:2eeafa1054c52f1dfec8c4aaf580a0970cca5f255c7b3dd7713894ddf554469f",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "providerSnapshotId": "snapshot:old",
+          "providerFact": {
+            "factType": "NODE",
+            "providerId": "native",
+            "providerFactId": "opaque:java"
+          },
+          "status": "ACTIVE"
+        },
+        "factEvidence": {
+          "fact": {
+            "factType": "NODE",
+            "id": "node:java"
+          },
+          "evidenceId": "provider-evidence-v1:2eeafa1054c52f1dfec8c4aaf580a0970cca5f255c7b3dd7713894ddf554469f"
+        },
+        "binding": {
+          "providerFact": {
+            "factType": "NODE",
+            "providerId": "native",
+            "providerFactId": "opaque:java"
+          },
+          "providerSnapshotId": "snapshot:old",
+          "canonicalFact": {
+            "factType": "NODE",
+            "id": "node:java"
+          },
+          "evidenceId": "provider-evidence-v1:2eeafa1054c52f1dfec8c4aaf580a0970cca5f255c7b3dd7713894ddf554469f"
+        },
+        "dependencyUnitIds": ["java"],
+        "valueDigest": "9dafb81e8ed26d7273104eb310aa91840985858389bdf3d6735827594d351515"
+      }
+    ],
+    "coverage": [
+      {
+        "unitId": "external:b",
+        "facet": "EXTERNAL_CODE",
+        "originSnapshotId": "snapshot:external",
+        "coverage": "COMPLETE"
+      },
+      {
+        "unitId": "java",
+        "facet": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+        "originSnapshotId": "snapshot:old",
+        "coverage": "COMPLETE"
+      },
+      {
+        "unitId": "java",
+        "facet": "JAVA_CODE_V2",
+        "originSnapshotId": "snapshot:old",
+        "coverage": "COMPLETE"
+      },
+      {
+        "unitId": "py:a",
+        "facet": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+        "originSnapshotId": "snapshot:old",
+        "coverage": "COMPLETE"
+      },
+      {
+        "unitId": "py:a",
+        "facet": "PYTHON_SYNTAX_CODE_V1",
+        "originSnapshotId": "snapshot:old",
+        "coverage": "COMPLETE"
+      },
+      {
+        "unitId": "py:b",
+        "facet": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+        "originSnapshotId": "snapshot:old",
+        "coverage": "COMPLETE"
+      },
+      {
+        "unitId": "py:b",
+        "facet": "PYTHON_SYNTAX_CODE_V1",
+        "originSnapshotId": "snapshot:old",
+        "coverage": "COMPLETE"
+      }
+    ],
+    "syntaxOrigins": [
+      {
+        "id": "syntax:a",
+        "unitId": "py:a",
+        "originSnapshotId": "snapshot:old",
+        "valueDigest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "basis": {
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "contentFingerprint": "content:old",
+          "codeActivationDigest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+        }
+      }
+    ]
+  },
+  "expectedActivationId": "activation:old",
+  "expectedOldBasis": {
+    "repositoryId": "repo:history",
+    "revisionId": "revision:worktree",
+    "contentFingerprint": "content:old",
+    "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "target": {
+    "source": {
+      "repositoryId": "repo:history",
+      "revisionId": "revision:worktree",
+      "contentFingerprint": "content:old"
+    },
+    "repositoryLocatorDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "inventory": [
+      {
+        "id": "j",
+        "repositoryId": "repo:history",
+        "revisionId": "revision:worktree",
+        "path": "J.java",
+        "contentFingerprint": "content:j",
+        "classification": {
+          "role": "SOURCE",
+          "provenance": "AUTHORED",
+          "contentKind": "TEXT"
+        },
+        "languageHint": "java",
+        "sensitivity": "INTERNAL"
+      },
+      {
+        "id": "k",
+        "repositoryId": "repo:history",
+        "revisionId": "revision:worktree",
+        "path": "K.java",
+        "contentFingerprint": "content:k",
+        "classification": {
+          "role": "SOURCE",
+          "provenance": "AUTHORED",
+          "contentKind": "TEXT"
+        },
+        "languageHint": "java",
+        "sensitivity": "INTERNAL"
+      },
+      {
+        "id": "a",
+        "repositoryId": "repo:history",
+        "revisionId": "revision:worktree",
+        "path": "a.py",
+        "contentFingerprint": "content:a",
+        "classification": {
+          "role": "SOURCE",
+          "provenance": "AUTHORED",
+          "contentKind": "TEXT"
+        },
+        "languageHint": "python",
+        "sensitivity": "INTERNAL"
+      },
+      {
+        "id": "b",
+        "repositoryId": "repo:history",
+        "revisionId": "revision:worktree",
+        "path": "b.py",
+        "contentFingerprint": "content:b",
+        "classification": {
+          "role": "SOURCE",
+          "provenance": "AUTHORED",
+          "contentKind": "TEXT"
+        },
+        "languageHint": "python",
+        "sensitivity": "INTERNAL"
+      },
+      {
+        "id": "doc",
+        "repositoryId": "repo:history",
+        "revisionId": "revision:worktree",
+        "path": "notes.md",
+        "contentFingerprint": "content:doc",
+        "classification": {
+          "role": "OTHER",
+          "provenance": "AUTHORED",
+          "contentKind": "TEXT"
+        },
+        "languageHint": null,
+        "sensitivity": "INTERNAL"
+      }
+    ],
+    "contracts": [
+      {
+        "providerId": "external",
+        "extractor": "extract:1",
+        "normalizer": "normalize:1",
+        "contract": "contract:1",
+        "policy": "policy:1"
+      },
+      {
+        "providerId": "native",
+        "extractor": "extract:scope",
+        "normalizer": "normalize:1",
+        "contract": "contract:1",
+        "policy": "policy:1"
+      }
+    ]
+  },
+  "observation": null
+}

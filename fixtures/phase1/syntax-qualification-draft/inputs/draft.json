@@ -1,0 +1,434 @@
+{
+  "schemaVersion": 1,
+  "kind": "SYNTAX_QUALIFICATION_DRAFT",
+  "status": "DRAFT",
+  "corpus": {
+    "path": "fixtures/phase1/syntax-observation-corpus/catalog.json",
+    "sha256": "c5288fc42e9c3b11f0723da8a50c9c47a28155ee445cfaf2a4e5dd2d89022d08"
+  },
+  "cases": [
+    {
+      "id": "calibration:python-static",
+      "request": {
+        "path": "fixtures/phase1/syntax-present-activation-oracle/calibration/request.jsonl",
+        "sha256": "161b0487e858d335f2e7afbe17b468df958815d0986889f6152b4a1ddc125b45"
+      },
+      "context": {
+        "path": "fixtures/phase1/syntax-present-activation-oracle/calibration/context.json",
+        "sha256": "92701214b45ec9381efc9eb99bf15de341afb2c03317699e9e393f891ce75908"
+      },
+      "expected": {
+        "path": "fixtures/phase1/syntax-present-activation-oracle/calibration/events.jsonl",
+        "sha256": "155a1402aac6725d121598156fd694f113b8ad07f2a345342896777840252ea1"
+      },
+      "sources": [
+        {
+          "sourceFileId": "file:one",
+          "artifact": {
+            "path": "fixtures/phase1/syntax-present-activation-oracle/calibration/app.py",
+            "sha256": "9e3012e6aaee68ca614e04a2aad0097292c86ef767f320fc61445527f910e69e"
+          }
+        }
+      ],
+      "retainedPaths": []
+    },
+    {
+      "id": "calibration:java-owner",
+      "request": {
+        "path": "fixtures/phase1/syntax-java-owner-oracle/calibration/request.jsonl",
+        "sha256": "22c6e3846a17e3eb718a98bddef234cc35dafefa89d8296e13b688afbafa8be0"
+      },
+      "context": {
+        "path": "fixtures/phase1/syntax-java-owner-oracle/calibration/context.json",
+        "sha256": "38d56d5e862f5489dc20a85faf10ba1d8512e1b41cea25ef920b44905276411a"
+      },
+      "expected": {
+        "path": "fixtures/phase1/syntax-java-owner-oracle/calibration/events.jsonl",
+        "sha256": "02502a7b76c72c723c7a4578d8099973a453cf7150fabbeb0e37fab668c4d177"
+      },
+      "sources": [
+        {
+          "sourceFileId": "file:one",
+          "artifact": {
+            "path": "fixtures/phase1/syntax-java-owner-oracle/calibration/Endpoint.java",
+            "sha256": "fa9a07e5b149109de9313e541101b3363a014b87e18f469e91643781ed2833c1"
+          }
+        }
+      ],
+      "retainedPaths": []
+    },
+    {
+      "id": "calibration:mixed-provisional",
+      "request": {
+        "path": "fixtures/phase1/syntax-mixed-provisional-oracle/calibration/request.jsonl",
+        "sha256": "66b23693e700bda45c2e5843a93aed80808108f95904d2b8caebe2cf540ec03e"
+      },
+      "context": {
+        "path": "fixtures/phase1/syntax-mixed-provisional-oracle/calibration/context.json",
+        "sha256": "02a3bdacab6b71f9456a32f5cf569bc38935635716dbc7cbb04c153bf449ab3f"
+      },
+      "expected": {
+        "path": "fixtures/phase1/syntax-mixed-provisional-oracle/calibration/events.jsonl",
+        "sha256": "2c02903cdf211b7c21c067794c5d100d9b5889ae880ef5a59eaabb7471a7e23c"
+      },
+      "sources": [
+        {
+          "sourceFileId": "file:two",
+          "artifact": {
+            "path": "fixtures/phase1/syntax-mixed-provisional-oracle/calibration/app.py",
+            "sha256": "9e3012e6aaee68ca614e04a2aad0097292c86ef767f320fc61445527f910e69e"
+          }
+        },
+        {
+          "sourceFileId": "file:one",
+          "artifact": {
+            "path": "fixtures/phase1/syntax-mixed-provisional-oracle/calibration/Endpoint.java",
+            "sha256": "fa9a07e5b149109de9313e541101b3363a014b87e18f469e91643781ed2833c1"
+          }
+        }
+      ],
+      "retainedPaths": []
+    },
+    {
+      "id": "calibration:dynamic-malformed",
+      "request": {
+        "path": "fixtures/phase1/syntax-dynamic-malformed-oracle/calibration/request.jsonl",
+        "sha256": "dd51192314168cb2b4f5f175c376dc15274e95eeff4e952186c00d4441f58267"
+      },
+      "context": {
+        "path": "fixtures/phase1/syntax-dynamic-malformed-oracle/calibration/context.json",
+        "sha256": "039e2c705848ab1a771ffd1814891005cc592dcec882a3c6afadf155b8eb1065"
+      },
+      "expected": {
+        "path": "fixtures/phase1/syntax-dynamic-malformed-oracle/calibration/events.jsonl",
+        "sha256": "0650f0e6b63e7570848970f735043c6d6f1e1ce23cfd52dc13fa6171a332a110"
+      },
+      "sources": [
+        {
+          "sourceFileId": "file:one",
+          "artifact": {
+            "path": "fixtures/phase1/syntax-dynamic-malformed-oracle/calibration/app.py",
+            "sha256": "14d108c35f7699d58e5052d166147ad8573e628a521a95caa79c5c9f249e8635"
+          }
+        }
+      ],
+      "retainedPaths": []
+    },
+    {
+      "id": "calibration:nested-source",
+      "request": {
+        "path": "fixtures/phase1/syntax-nested-source-oracle/calibration/request.jsonl",
+        "sha256": "6517047526f9b7422357621c11e57a6bf1ed586b6ba298d0cd504a8bb65b805e"
+      },
+      "context": {
+        "path": "fixtures/phase1/syntax-nested-source-oracle/calibration/context.json",
+        "sha256": "ee242a4dd23f5507f7b5c88dd056ca1dd4a7d244d3e22ad064cf94e1f34b9cf2"
+      },
+      "expected": {
+        "path": "fixtures/phase1/syntax-nested-source-oracle/calibration/events.jsonl",
+        "sha256": "fca148f03d243be30e4cc0f9bc68aab40071732cab544c2e532996d94c485d8f"
+      },
+      "sources": [
+        {
+          "sourceFileId": "file:one",
+          "artifact": {
+            "path": "fixtures/phase1/syntax-nested-source-oracle/calibration/app.py",
+            "sha256": "3659a0d37476d1a1a2e611d2db7df72c6a7415f102cebc3d4bf457504a069aef"
+          }
+        }
+      ],
+      "retainedPaths": []
+    },
+    {
+      "id": "calibration:bounded-output",
+      "request": {
+        "path": "fixtures/phase1/syntax-bounded-output-oracle/calibration/request.jsonl",
+        "sha256": "b3e24f73bd013dfee265aeb044d6c4a798d10e746a9d696a4987d94a7642cb51"
+      },
+      "context": {
+        "path": "fixtures/phase1/syntax-bounded-output-oracle/calibration/context.json",
+        "sha256": "7e982fd10560576d018209f6fad593dfd18c852896d74a11d4384c45e39e810d"
+      },
+      "expected": {
+        "path": "fixtures/phase1/syntax-bounded-output-oracle/calibration/events.jsonl",
+        "sha256": "2704751f4b7069be6cf1a30da2fdecf1beba9675da660873d02f19c259adb0a2"
+      },
+      "sources": [
+        {
+          "sourceFileId": "file:one",
+          "artifact": {
+            "path": "fixtures/phase1/syntax-bounded-output-oracle/calibration/app.py",
+            "sha256": "6b6ff073e3c5238d8378b6bd39fabaf4d0581587a1d7042812d371a279aabff2"
+          }
+        }
+      ],
+      "retainedPaths": []
+    },
+    {
+      "id": "calibration:changed-only-restart",
+      "request": {
+        "path": "fixtures/phase1/syntax-changed-only-oracle/calibration/request.jsonl",
+        "sha256": "36630178d4a77ee60666b7a11b1bb30598f6d7c25f3b6fb8fdc3338f60487472"
+      },
+      "context": {
+        "path": "fixtures/phase1/syntax-changed-only-oracle/calibration/context.json",
+        "sha256": "09e6213db6789e09d846e4302834d885ee4d21c9cd71b3463fd4ca30c1dca515"
+      },
+      "expected": {
+        "path": "fixtures/phase1/syntax-changed-only-oracle/calibration/events.jsonl",
+        "sha256": "e58ec2bf490fced7dac93c5ee1b228d6667a1e985c3765c41990b842da851d15"
+      },
+      "sources": [
+        {
+          "sourceFileId": "file:one",
+          "artifact": {
+            "path": "fixtures/phase1/syntax-changed-only-oracle/calibration/app.py",
+            "sha256": "1da406f1465171b6d3a7e14d7613bbc55cff7791af29f6cb54f11d48b94e2a78"
+          }
+        }
+      ],
+      "retainedPaths": ["retained.py"]
+    },
+    {
+      "id": "calibration:initial-absent",
+      "request": {
+        "path": "fixtures/phase1/syntax-initial-absence-oracle/calibration/request.jsonl",
+        "sha256": "8d4be2b7a04b1eab7c7394ceccae0f8ab1e2050206c27be35534744c90120649"
+      },
+      "context": {
+        "path": "fixtures/phase1/syntax-initial-absence-oracle/calibration/context.json",
+        "sha256": "4a739127044466f4ea6c7ffaa2c0b9492c83083034c03ac67d57f214f55bc8b1"
+      },
+      "expected": {
+        "path": "fixtures/phase1/syntax-initial-absence-oracle/calibration/events.jsonl",
+        "sha256": "327d37cf1798d6f652fb6745f014be663c74e2065ab09f411e2eae6afc2e0401"
+      },
+      "sources": [
+        {
+          "sourceFileId": "file:one",
+          "artifact": {
+            "path": "fixtures/phase1/syntax-initial-absence-oracle/calibration/app.py",
+            "sha256": "9e3012e6aaee68ca614e04a2aad0097292c86ef767f320fc61445527f910e69e"
+          }
+        }
+      ],
+      "retainedPaths": []
+    },
+    {
+      "id": "holdout:python-static",
+      "request": {
+        "path": "fixtures/phase1/syntax-present-activation-oracle/holdout/request.jsonl",
+        "sha256": "33b5f45283656f5e01906e38a53cd2f2e14f23968b96e71d559164de0306c844"
+      },
+      "context": {
+        "path": "fixtures/phase1/syntax-present-activation-oracle/holdout/context.json",
+        "sha256": "b3ce341b0cee08ec614ec2a8a79f0f0ce91db7cd603fbbe3449e20d91e387042"
+      },
+      "expected": {
+        "path": "fixtures/phase1/syntax-present-activation-oracle/holdout/events.jsonl",
+        "sha256": "c06ff2a0082440f1a3761d050b93d357931257d84645f0cfe55e158bd0f59859"
+      },
+      "sources": [
+        {
+          "sourceFileId": "file:one",
+          "artifact": {
+            "path": "fixtures/phase1/syntax-present-activation-oracle/holdout/app.py",
+            "sha256": "38d4338d71f7b9a6e3b097fc6cf857951170f256ed51cceda181747ca2ee33f8"
+          }
+        }
+      ],
+      "retainedPaths": []
+    },
+    {
+      "id": "holdout:java-owner",
+      "request": {
+        "path": "fixtures/phase1/syntax-java-owner-oracle/holdout/request.jsonl",
+        "sha256": "741997e5e5e0e03cbdf3500532037c3888a6f96f9277d34afad5b50c4c783fd5"
+      },
+      "context": {
+        "path": "fixtures/phase1/syntax-java-owner-oracle/holdout/context.json",
+        "sha256": "f234d2a0de2daa7b01e1415e97954e7441c7a3d1ae927376c9d88d88fdfec90a"
+      },
+      "expected": {
+        "path": "fixtures/phase1/syntax-java-owner-oracle/holdout/events.jsonl",
+        "sha256": "4a23c38a1cc2fece499980695e01d558b2ac8730df4135aaa9d9a02d0545539e"
+      },
+      "sources": [
+        {
+          "sourceFileId": "file:one",
+          "artifact": {
+            "path": "fixtures/phase1/syntax-java-owner-oracle/holdout/Endpoint.java",
+            "sha256": "7a5f8528afb97200aa88f34389b95d1577910a9f7addb7c5548c781e0e5124cb"
+          }
+        }
+      ],
+      "retainedPaths": []
+    },
+    {
+      "id": "holdout:mixed-provisional",
+      "request": {
+        "path": "fixtures/phase1/syntax-mixed-provisional-oracle/holdout/request.jsonl",
+        "sha256": "a13638e8bdd79393f248ad32576af4cf2271ab69473fc745b28804a460fad5bf"
+      },
+      "context": {
+        "path": "fixtures/phase1/syntax-mixed-provisional-oracle/holdout/context.json",
+        "sha256": "e1f694214a6f6ef72faab88fb7313110f59e77929bb86e941c618d1db41e13c5"
+      },
+      "expected": {
+        "path": "fixtures/phase1/syntax-mixed-provisional-oracle/holdout/events.jsonl",
+        "sha256": "3bbf7fe065c28142389b23c495b8e9fdf46c28d29feff9b16100beca96202833"
+      },
+      "sources": [
+        {
+          "sourceFileId": "file:two",
+          "artifact": {
+            "path": "fixtures/phase1/syntax-mixed-provisional-oracle/holdout/app.py",
+            "sha256": "38d4338d71f7b9a6e3b097fc6cf857951170f256ed51cceda181747ca2ee33f8"
+          }
+        },
+        {
+          "sourceFileId": "file:one",
+          "artifact": {
+            "path": "fixtures/phase1/syntax-mixed-provisional-oracle/holdout/Endpoint.java",
+            "sha256": "7a5f8528afb97200aa88f34389b95d1577910a9f7addb7c5548c781e0e5124cb"
+          }
+        }
+      ],
+      "retainedPaths": []
+    },
+    {
+      "id": "holdout:dynamic-malformed",
+      "request": {
+        "path": "fixtures/phase1/syntax-dynamic-malformed-oracle/holdout/request.jsonl",
+        "sha256": "fe320135d5293b14900954834554155348a9bd4c73c70e07ad268471532677e7"
+      },
+      "context": {
+        "path": "fixtures/phase1/syntax-dynamic-malformed-oracle/holdout/context.json",
+        "sha256": "83c91998f59b14a4fb6280f8ce8975b06958f2b504cfd251f6e071f619ed0c9d"
+      },
+      "expected": {
+        "path": "fixtures/phase1/syntax-dynamic-malformed-oracle/holdout/events.jsonl",
+        "sha256": "c0b346afcfed5827b81a588d620af11fc81f1582c1dc71c54434647ec7c28b99"
+      },
+      "sources": [
+        {
+          "sourceFileId": "file:one",
+          "artifact": {
+            "path": "fixtures/phase1/syntax-dynamic-malformed-oracle/holdout/app.py",
+            "sha256": "2074398c2609b7db4003feff33bc5b9d131aabd0c11f994af0b48e238e1cf3ab"
+          }
+        }
+      ],
+      "retainedPaths": []
+    },
+    {
+      "id": "holdout:nested-source",
+      "request": {
+        "path": "fixtures/phase1/syntax-nested-source-oracle/holdout/request.jsonl",
+        "sha256": "370dfde2cf90ba64cb765aabf21f555b1386a220ca459918f818c0cc2b63b981"
+      },
+      "context": {
+        "path": "fixtures/phase1/syntax-nested-source-oracle/holdout/context.json",
+        "sha256": "6aa8075a94b1b1764b5159cfba8e8fca852deca90434e3b80b51a0800e5aaf74"
+      },
+      "expected": {
+        "path": "fixtures/phase1/syntax-nested-source-oracle/holdout/events.jsonl",
+        "sha256": "91025539de18abe389e2a8507f64d1a6fe09ce9769dfde4410fdce9c62c06caa"
+      },
+      "sources": [
+        {
+          "sourceFileId": "file:one",
+          "artifact": {
+            "path": "fixtures/phase1/syntax-nested-source-oracle/holdout/app.py",
+            "sha256": "8aa1338a581bd101243cf2fa72b4039865ab5332b68b4880813e25acd624c238"
+          }
+        }
+      ],
+      "retainedPaths": []
+    },
+    {
+      "id": "holdout:bounded-output",
+      "request": {
+        "path": "fixtures/phase1/syntax-bounded-output-oracle/holdout/request.jsonl",
+        "sha256": "f1a642a6d0eee3de2a158aafe5bbe58aa7fdfe91af52f8b48954b5dbf1a23427"
+      },
+      "context": {
+        "path": "fixtures/phase1/syntax-bounded-output-oracle/holdout/context.json",
+        "sha256": "9b2dc4bc3962ec96b2dd41a675ba15c8f77e44eeac785d1cb450e6d667a9da1b"
+      },
+      "expected": {
+        "path": "fixtures/phase1/syntax-bounded-output-oracle/holdout/events.jsonl",
+        "sha256": "cdecff472f677363aea921803a8a5c36f92f98afa2e999b0ce24719293064fdb"
+      },
+      "sources": [
+        {
+          "sourceFileId": "file:one",
+          "artifact": {
+            "path": "fixtures/phase1/syntax-bounded-output-oracle/holdout/app.py",
+            "sha256": "cb1f387387a358c01522d36be610f973dd71642693d1930a786d3d566a0236c7"
+          }
+        }
+      ],
+      "retainedPaths": []
+    },
+    {
+      "id": "holdout:changed-only-restart",
+      "request": {
+        "path": "fixtures/phase1/syntax-changed-only-oracle/holdout/request.jsonl",
+        "sha256": "98baf24d67d2481adaad0a5455ed0de09ac65f243b628fe36d524ae0dcab6f4e"
+      },
+      "context": {
+        "path": "fixtures/phase1/syntax-changed-only-oracle/holdout/context.json",
+        "sha256": "1026139db27fbe07f819e76db80b8b6c20b865406cc605eda8ae3817955197ed"
+      },
+      "expected": {
+        "path": "fixtures/phase1/syntax-changed-only-oracle/holdout/events.jsonl",
+        "sha256": "faefbb408069d5a3163b2b70fa92680ad359d057e806dfca5e9ca1738e039064"
+      },
+      "sources": [
+        {
+          "sourceFileId": "file:one",
+          "artifact": {
+            "path": "fixtures/phase1/syntax-changed-only-oracle/holdout/app.py",
+            "sha256": "8642750a29ca09745ad9e9aae69cabebc992afc90dfee80aef84ba1875c3598d"
+          }
+        }
+      ],
+      "retainedPaths": ["retained.py"]
+    },
+    {
+      "id": "holdout:initial-absent",
+      "request": {
+        "path": "fixtures/phase1/syntax-initial-absence-oracle/holdout/request.jsonl",
+        "sha256": "d98b89686b5bd7288103dea0072ec7e2682c4948d0f41e86b3afad2745e97d4e"
+      },
+      "context": {
+        "path": "fixtures/phase1/syntax-initial-absence-oracle/holdout/context.json",
+        "sha256": "7f5053231c0d5e22972f718918d82313f7130d199c0bd0284cc5963e6c1b21cf"
+      },
+      "expected": {
+        "path": "fixtures/phase1/syntax-initial-absence-oracle/holdout/events.jsonl",
+        "sha256": "fd28dba8c9e163b7b9a25d43e3148e58dee4197060e5dd65600a53d89708703d"
+      },
+      "sources": [
+        {
+          "sourceFileId": "file:one",
+          "artifact": {
+            "path": "fixtures/phase1/syntax-initial-absence-oracle/holdout/app.py",
+            "sha256": "38d4338d71f7b9a6e3b097fc6cf857951170f256ed51cceda181747ca2ee33f8"
+          }
+        }
+      ],
+      "retainedPaths": []
+    }
+  ],
+  "tooling": {
+    "nodeExecutable": null,
+    "nativeExecutable": null,
+    "hostBuild": null,
+    "cargoLock": null,
+    "rustToolchain": null,
+    "grammarSet": null,
+    "collector": null
+  }
+}

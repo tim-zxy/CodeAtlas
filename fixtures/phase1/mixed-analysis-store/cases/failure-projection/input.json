@@ -1,0 +1,5 @@
+{
+  "point": "projection",
+  "base": "base-input.json",
+  "processExit": true
+}

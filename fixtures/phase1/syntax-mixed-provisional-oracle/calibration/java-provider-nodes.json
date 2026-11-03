@@ -1,0 +1,46 @@
+[
+  {
+    "providerId": "native",
+    "providerFactId": "java-symbol-v1:c406b4884df2f824f51e3e7c272d7f301a7536f25355a8c60b2639f6577cfd9a",
+    "providerSnapshotId": "snapshot:one",
+    "repositoryId": "repo:one",
+    "revisionId": "revision:worktree",
+    "providerKind": "java.class",
+    "name": "Endpoint_fixture",
+    "qualifiedName": "Endpoint_fixture",
+    "sourceRange": {
+      "sourceFileId": "file:one",
+      "startLine": 0,
+      "startColumn": 6,
+      "endLine": 0,
+      "endColumn": 22
+    },
+    "confidence": {
+      "score": 1,
+      "method": "parser",
+      "reasons": []
+    }
+  },
+  {
+    "providerId": "native",
+    "providerFactId": "java-symbol-v1:b8c92f6128ad32140ffbfd26647dfe9812bf5d995203ee42546dc024b336470e",
+    "providerSnapshotId": "snapshot:one",
+    "repositoryId": "repo:one",
+    "revisionId": "revision:worktree",
+    "providerKind": "java.method",
+    "name": "handle_fixture",
+    "qualifiedName": "Endpoint_fixture.handle_fixture",
+    "sourceRange": {
+      "sourceFileId": "file:one",
+      "startLine": 0,
+      "startColumn": 49,
+      "endLine": 0,
+      "endColumn": 63
+    },
+    "confidence": {
+      "score": 1,
+      "method": "parser",
+      "reasons": []
+    }
+  }
+]

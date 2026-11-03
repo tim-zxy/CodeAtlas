@@ -30,3 +30,8 @@ export type { MergedCanonicalAnalysis } from './fact-merger.js';
 export { FactMergeError } from './fact-merger-input.js';
 export type { FactMergeErrorCode, MergeInput, MergeObservation } from './fact-merger-input.js';
 export type { MergeExplanation, MergeSupportSummary } from './fact-merger-selection.js';
+export * from './native-syntax-ipc.js';
+export * from './python-normalizer.js';
+export * from './native-syntax-owner-binding.js';
+export { validateCodeSyntaxObservationStream } from './native-code-syntax-ipc.js';
+export type { ValidatedCodeSyntaxObservation } from './native-code-syntax-ipc.js';

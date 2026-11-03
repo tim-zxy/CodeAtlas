@@ -1,0 +1,47 @@
+{
+  "modules": {
+    "module-file-proof": true,
+    "no-file-proof": false,
+    "wrong-path": false,
+    "wrong-fingerprint": false,
+    "foreign-source": false,
+    "duplicate-source": false,
+    "type-null-not-module": false
+  },
+  "sources": {
+    "python-direct.py": {
+      "directCalls": ["FastAPI", "APIRouter"],
+      "decoratorScope": "MODULE",
+      "callResult": "UNKNOWN"
+    },
+    "python-nested.py": {
+      "appDirectCall": "wrap",
+      "notDirect": ["FastAPI-inner", "conditional-FastAPI", "bracketed-FastAPI"],
+      "callResult": "UNKNOWN"
+    },
+    "python-scopes.py": {
+      "outerDefaultScope": "MODULE",
+      "innerDecoratorScope": "outer",
+      "unsupportedScopes": ["class", "lambda", "comprehension"]
+    },
+    "java-typed.java": {
+      "typedNames": ["template", "local"],
+      "callableNames": ["getTemplate", "run"]
+    },
+    "java-scopes.java": {
+      "typedNames": ["field", "local", "work"],
+      "lambdaScope": null
+    }
+  },
+  "identity": {
+    "keyDomain": "syntax-key-v2",
+    "extractionDomain": "syntax-extraction-v2",
+    "initialDomain": "codeatlas-syntax-initial-v2",
+    "versions": [
+      "syntax-v1",
+      "syntax-canonical-mapper-v2",
+      "syntax-surface-support-v1",
+      "SYNTAX_BINDING_V2"
+    ]
+  }
+}

@@ -1,0 +1,261 @@
+{
+  "no-source-not-indexed": {
+    "schemaVersion": 1,
+    "kind": "REPOSITORY_CODE_CAPTURE",
+    "repositoryId": "capture-repo",
+    "repositoryLocatorDigest": "00f7217f0d1a535342bd3dad39a25b2c1d2ae98d69476a4e575f4406bc214595",
+    "activeBasis": null,
+    "targetSource": null,
+    "sourceInventoryDigest": null,
+    "sourceFileCount": 0,
+    "committedSnapshotCount": 0,
+    "historicalSourceProof": "UNAVAILABLE"
+  },
+  "source-only": {
+    "schemaVersion": 1,
+    "kind": "REPOSITORY_CODE_CAPTURE",
+    "repositoryId": "capture-repo",
+    "repositoryLocatorDigest": "00f7217f0d1a535342bd3dad39a25b2c1d2ae98d69476a4e575f4406bc214595",
+    "activeBasis": null,
+    "targetSource": {
+      "repositoryId": "capture-repo",
+      "revisionId": "capture-worktree",
+      "contentFingerprint": "capture-fingerprint"
+    },
+    "sourceInventoryDigest": "579ed8e5b7d340a22e3160318a2379f2af94930ab53b8927b1c8c73e3cf0ee49",
+    "sourceFileCount": 1,
+    "committedSnapshotCount": 0,
+    "historicalSourceProof": "UNAVAILABLE"
+  },
+  "complete": {
+    "schemaVersion": 1,
+    "kind": "REPOSITORY_CODE_CAPTURE",
+    "repositoryId": "capture-repo",
+    "repositoryLocatorDigest": "00f7217f0d1a535342bd3dad39a25b2c1d2ae98d69476a4e575f4406bc214595",
+    "activeBasis": {
+      "repositoryId": "capture-repo",
+      "revisionId": "capture-worktree",
+      "contentFingerprint": "capture-fingerprint",
+      "codeActivationDigest": "ac1b5f475836b85ec1fa5769f8839e27917a730fd04918dde3a63258c9119e7d"
+    },
+    "targetSource": {
+      "repositoryId": "capture-repo",
+      "revisionId": "capture-worktree",
+      "contentFingerprint": "capture-fingerprint"
+    },
+    "sourceInventoryDigest": "579ed8e5b7d340a22e3160318a2379f2af94930ab53b8927b1c8c73e3cf0ee49",
+    "sourceFileCount": 1,
+    "committedSnapshotCount": 1,
+    "historicalSourceProof": "UNAVAILABLE"
+  },
+  "same-header-losing-support-A": {
+    "schemaVersion": 1,
+    "kind": "REPOSITORY_CODE_CAPTURE",
+    "repositoryId": "capture-repo",
+    "repositoryLocatorDigest": "00f7217f0d1a535342bd3dad39a25b2c1d2ae98d69476a4e575f4406bc214595",
+    "activeBasis": {
+      "repositoryId": "capture-repo",
+      "revisionId": "capture-worktree",
+      "contentFingerprint": "capture-fingerprint",
+      "codeActivationDigest": "77a669428a29fb9610e5c2b92c551a3cedefb68caefbf7038100da27ffd90dc0"
+    },
+    "targetSource": {
+      "repositoryId": "capture-repo",
+      "revisionId": "capture-worktree",
+      "contentFingerprint": "capture-fingerprint"
+    },
+    "sourceInventoryDigest": "579ed8e5b7d340a22e3160318a2379f2af94930ab53b8927b1c8c73e3cf0ee49",
+    "sourceFileCount": 1,
+    "committedSnapshotCount": 2,
+    "historicalSourceProof": "UNAVAILABLE"
+  },
+  "same-header-losing-support-B": {
+    "schemaVersion": 1,
+    "kind": "REPOSITORY_CODE_CAPTURE",
+    "repositoryId": "capture-repo",
+    "repositoryLocatorDigest": "00f7217f0d1a535342bd3dad39a25b2c1d2ae98d69476a4e575f4406bc214595",
+    "activeBasis": {
+      "repositoryId": "capture-repo",
+      "revisionId": "capture-worktree",
+      "contentFingerprint": "capture-fingerprint",
+      "codeActivationDigest": "c6f5a1de681051fd349b6922a54219a7731eb7b78bc3983e7d7f0eb20050c393"
+    },
+    "targetSource": {
+      "repositoryId": "capture-repo",
+      "revisionId": "capture-worktree",
+      "contentFingerprint": "capture-fingerprint"
+    },
+    "sourceInventoryDigest": "579ed8e5b7d340a22e3160318a2379f2af94930ab53b8927b1c8c73e3cf0ee49",
+    "sourceFileCount": 1,
+    "committedSnapshotCount": 2,
+    "historicalSourceProof": "UNAVAILABLE"
+  },
+  "same-header-coverage-A": {
+    "schemaVersion": 1,
+    "kind": "REPOSITORY_CODE_CAPTURE",
+    "repositoryId": "capture-repo",
+    "repositoryLocatorDigest": "00f7217f0d1a535342bd3dad39a25b2c1d2ae98d69476a4e575f4406bc214595",
+    "activeBasis": {
+      "repositoryId": "capture-repo",
+      "revisionId": "capture-worktree",
+      "contentFingerprint": "capture-fingerprint",
+      "codeActivationDigest": "ac1b5f475836b85ec1fa5769f8839e27917a730fd04918dde3a63258c9119e7d"
+    },
+    "targetSource": {
+      "repositoryId": "capture-repo",
+      "revisionId": "capture-worktree",
+      "contentFingerprint": "capture-fingerprint"
+    },
+    "sourceInventoryDigest": "579ed8e5b7d340a22e3160318a2379f2af94930ab53b8927b1c8c73e3cf0ee49",
+    "sourceFileCount": 1,
+    "committedSnapshotCount": 1,
+    "historicalSourceProof": "UNAVAILABLE"
+  },
+  "same-header-coverage-B": {
+    "schemaVersion": 1,
+    "kind": "REPOSITORY_CODE_CAPTURE",
+    "repositoryId": "capture-repo",
+    "repositoryLocatorDigest": "00f7217f0d1a535342bd3dad39a25b2c1d2ae98d69476a4e575f4406bc214595",
+    "activeBasis": {
+      "repositoryId": "capture-repo",
+      "revisionId": "capture-worktree",
+      "contentFingerprint": "capture-fingerprint",
+      "codeActivationDigest": "a265e48791d816a771fed4440ac030dedec5b7ef68bd901e7e63c82f3a3ff155"
+    },
+    "targetSource": {
+      "repositoryId": "capture-repo",
+      "revisionId": "capture-worktree",
+      "contentFingerprint": "capture-fingerprint"
+    },
+    "sourceInventoryDigest": "579ed8e5b7d340a22e3160318a2379f2af94930ab53b8927b1c8c73e3cf0ee49",
+    "sourceFileCount": 1,
+    "committedSnapshotCount": 1,
+    "historicalSourceProof": "UNAVAILABLE"
+  },
+  "empty-code-with-coverage": {
+    "schemaVersion": 1,
+    "kind": "REPOSITORY_CODE_CAPTURE",
+    "repositoryId": "capture-repo",
+    "repositoryLocatorDigest": "00f7217f0d1a535342bd3dad39a25b2c1d2ae98d69476a4e575f4406bc214595",
+    "activeBasis": {
+      "repositoryId": "capture-repo",
+      "revisionId": "capture-worktree",
+      "contentFingerprint": "capture-fingerprint",
+      "codeActivationDigest": "6aae7f22b396d742a7807af8bc36e36bca8b950a310569529c793ffa928acd77"
+    },
+    "targetSource": {
+      "repositoryId": "capture-repo",
+      "revisionId": "capture-worktree",
+      "contentFingerprint": "capture-fingerprint"
+    },
+    "sourceInventoryDigest": "579ed8e5b7d340a22e3160318a2379f2af94930ab53b8927b1c8c73e3cf0ee49",
+    "sourceFileCount": 1,
+    "committedSnapshotCount": 1,
+    "historicalSourceProof": "UNAVAILABLE"
+  },
+  "coverage-multiplicity": {
+    "schemaVersion": 1,
+    "kind": "REPOSITORY_CODE_CAPTURE",
+    "repositoryId": "capture-repo",
+    "repositoryLocatorDigest": "00f7217f0d1a535342bd3dad39a25b2c1d2ae98d69476a4e575f4406bc214595",
+    "activeBasis": {
+      "repositoryId": "capture-repo",
+      "revisionId": "capture-worktree",
+      "contentFingerprint": "capture-fingerprint",
+      "codeActivationDigest": "25d07ff8d65a4c4e64050ac05c6c39f2017c1e3fd2aa29c736f03bd8a917de6b"
+    },
+    "targetSource": {
+      "repositoryId": "capture-repo",
+      "revisionId": "capture-worktree",
+      "contentFingerprint": "capture-fingerprint"
+    },
+    "sourceInventoryDigest": "579ed8e5b7d340a22e3160318a2379f2af94930ab53b8927b1c8c73e3cf0ee49",
+    "sourceFileCount": 1,
+    "committedSnapshotCount": 1,
+    "historicalSourceProof": "UNAVAILABLE"
+  },
+  "stale-target-source": {
+    "schemaVersion": 1,
+    "kind": "REPOSITORY_CODE_CAPTURE",
+    "repositoryId": "capture-repo",
+    "repositoryLocatorDigest": "00f7217f0d1a535342bd3dad39a25b2c1d2ae98d69476a4e575f4406bc214595",
+    "activeBasis": {
+      "repositoryId": "capture-repo",
+      "revisionId": "capture-worktree",
+      "contentFingerprint": "capture-fingerprint",
+      "codeActivationDigest": "ac1b5f475836b85ec1fa5769f8839e27917a730fd04918dde3a63258c9119e7d"
+    },
+    "targetSource": {
+      "repositoryId": "capture-repo",
+      "revisionId": "capture-worktree",
+      "contentFingerprint": "source-newer-fingerprint"
+    },
+    "sourceInventoryDigest": "a9f9344fb2c7e3a74595508c6ecb4bef8688a0832081b65019439ad4316af0a6",
+    "sourceFileCount": 1,
+    "committedSnapshotCount": 1,
+    "historicalSourceProof": "UNAVAILABLE"
+  },
+  "unicode-order": {
+    "schemaVersion": 1,
+    "kind": "REPOSITORY_CODE_CAPTURE",
+    "repositoryId": "capture-repo",
+    "repositoryLocatorDigest": "00f7217f0d1a535342bd3dad39a25b2c1d2ae98d69476a4e575f4406bc214595",
+    "activeBasis": {
+      "repositoryId": "capture-repo",
+      "revisionId": "capture-worktree",
+      "contentFingerprint": "capture-fingerprint",
+      "codeActivationDigest": "5bad73b08fe370c9c8447c1732377d6faaecaa6a4a3515c0305dd5e8ff0d7b88"
+    },
+    "targetSource": {
+      "repositoryId": "capture-repo",
+      "revisionId": "capture-worktree",
+      "contentFingerprint": "capture-fingerprint"
+    },
+    "sourceInventoryDigest": "579ed8e5b7d340a22e3160318a2379f2af94930ab53b8927b1c8c73e3cf0ee49",
+    "sourceFileCount": 1,
+    "committedSnapshotCount": 1,
+    "historicalSourceProof": "UNAVAILABLE"
+  },
+  "typed-node-edge-id": {
+    "schemaVersion": 1,
+    "kind": "REPOSITORY_CODE_CAPTURE",
+    "repositoryId": "capture-repo",
+    "repositoryLocatorDigest": "00f7217f0d1a535342bd3dad39a25b2c1d2ae98d69476a4e575f4406bc214595",
+    "activeBasis": {
+      "repositoryId": "capture-repo",
+      "revisionId": "capture-worktree",
+      "contentFingerprint": "capture-fingerprint",
+      "codeActivationDigest": "5f6b5bb98307d8404d4ca64406fa9b616e6d3d79fba406dbebab256605e47a7e"
+    },
+    "targetSource": {
+      "repositoryId": "capture-repo",
+      "revisionId": "capture-worktree",
+      "contentFingerprint": "capture-fingerprint"
+    },
+    "sourceInventoryDigest": "579ed8e5b7d340a22e3160318a2379f2af94930ab53b8927b1c8c73e3cf0ee49",
+    "sourceFileCount": 1,
+    "committedSnapshotCount": 1,
+    "historicalSourceProof": "UNAVAILABLE"
+  },
+  "history-snapshot-set": {
+    "schemaVersion": 1,
+    "kind": "REPOSITORY_CODE_CAPTURE",
+    "repositoryId": "capture-repo",
+    "repositoryLocatorDigest": "00f7217f0d1a535342bd3dad39a25b2c1d2ae98d69476a4e575f4406bc214595",
+    "activeBasis": {
+      "repositoryId": "capture-repo",
+      "revisionId": "capture-worktree",
+      "contentFingerprint": "capture-fingerprint",
+      "codeActivationDigest": "a2c59f0243bf652e987f19fbdacb3332d4a5d65ed2e6da36bd9611181ca2147c"
+    },
+    "targetSource": {
+      "repositoryId": "capture-repo",
+      "revisionId": "capture-worktree",
+      "contentFingerprint": "capture-fingerprint"
+    },
+    "sourceInventoryDigest": "579ed8e5b7d340a22e3160318a2379f2af94930ab53b8927b1c8c73e3cf0ee49",
+    "sourceFileCount": 1,
+    "committedSnapshotCount": 2,
+    "historicalSourceProof": "UNAVAILABLE"
+  }
+}

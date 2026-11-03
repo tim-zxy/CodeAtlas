@@ -1,0 +1,278 @@
+[
+  {
+    "family": "H01",
+    "id": "H01-absent",
+    "input": "cases/H01-absent/input.json",
+    "expected": "cases/H01-absent/expected.json"
+  },
+  {
+    "family": "H01",
+    "id": "H01-legacy",
+    "input": "cases/H01-legacy/input.json",
+    "expected": "cases/H01-legacy/expected.json"
+  },
+  {
+    "family": "H01",
+    "id": "H01-no-current",
+    "input": "cases/H01-no-current/input.json",
+    "expected": "cases/H01-no-current/expected.json"
+  },
+  {
+    "family": "H02",
+    "id": "H02-present",
+    "input": "cases/H02-present/input.json",
+    "expected": "cases/H02-present/expected.json"
+  },
+  {
+    "family": "H02",
+    "id": "H02-self-parent",
+    "input": "cases/H02-self-parent/input.json",
+    "expected": "cases/H02-self-parent/expected.json"
+  },
+  {
+    "family": "H02",
+    "id": "H02-binding",
+    "input": "cases/H02-binding/input.json",
+    "expected": "cases/H02-binding/expected.json"
+  },
+  {
+    "family": "H02",
+    "id": "H02-missing-candidate",
+    "input": "cases/H02-missing-candidate/input.json",
+    "expected": "cases/H02-missing-candidate/expected.json"
+  },
+  {
+    "family": "H02",
+    "id": "H02-duplicate",
+    "input": "cases/H02-duplicate/input.json",
+    "expected": "cases/H02-duplicate/expected.json"
+  },
+  {
+    "family": "H03",
+    "id": "H03-original",
+    "input": "cases/H03-original/input.json",
+    "expected": "cases/H03-original/expected.json"
+  },
+  {
+    "family": "H03",
+    "id": "H03-winner-substitution",
+    "input": "cases/H03-winner-substitution/input.json",
+    "expected": "cases/H03-winner-substitution/expected.json"
+  },
+  {
+    "family": "H04",
+    "id": "H04-confidence",
+    "input": "cases/H04-confidence/input.json",
+    "expected": "cases/H04-confidence/expected.json"
+  },
+  {
+    "family": "H04",
+    "id": "H04-snapshot",
+    "input": "cases/H04-snapshot/input.json",
+    "expected": "cases/H04-snapshot/expected.json"
+  },
+  {
+    "family": "H04",
+    "id": "H04-coverage",
+    "input": "cases/H04-coverage/input.json",
+    "expected": "cases/H04-coverage/expected.json"
+  },
+  {
+    "family": "H05",
+    "id": "H05-metadata",
+    "input": "cases/H05-metadata/input.json",
+    "expected": "cases/H05-metadata/expected.json"
+  },
+  {
+    "family": "H06",
+    "id": "H06-revision",
+    "input": "cases/H06-revision/input.json",
+    "expected": "cases/H06-revision/expected.json"
+  },
+  {
+    "family": "H06",
+    "id": "H06-locator",
+    "input": "cases/H06-locator/input.json",
+    "expected": "cases/H06-locator/expected.json"
+  },
+  {
+    "family": "H06",
+    "id": "H06-classification",
+    "input": "cases/H06-classification/input.json",
+    "expected": "cases/H06-classification/expected.json"
+  },
+  {
+    "family": "H06",
+    "id": "H06-secret",
+    "input": "cases/H06-secret/input.json",
+    "expected": "cases/H06-secret/expected.json"
+  },
+  {
+    "family": "H06",
+    "id": "H06-binary",
+    "input": "cases/H06-binary/input.json",
+    "expected": "cases/H06-binary/expected.json"
+  },
+  {
+    "family": "H06",
+    "id": "H06-language",
+    "input": "cases/H06-language/input.json",
+    "expected": "cases/H06-language/expected.json"
+  },
+  {
+    "family": "H06",
+    "id": "H06-path-swap",
+    "input": "cases/H06-path-swap/input.json",
+    "expected": "cases/H06-path-swap/expected.json"
+  },
+  {
+    "family": "H06",
+    "id": "H06-forged-removed",
+    "input": "cases/H06-forged-removed/input.json",
+    "expected": "cases/H06-forged-removed/expected.json"
+  },
+  {
+    "family": "H07",
+    "id": "H07-python",
+    "input": "cases/H07-python/input.json",
+    "expected": "cases/H07-python/expected.json"
+  },
+  {
+    "family": "H08",
+    "id": "H08-java",
+    "input": "cases/H08-java/input.json",
+    "expected": "cases/H08-java/expected.json"
+  },
+  {
+    "family": "H09",
+    "id": "H09-both",
+    "input": "cases/H09-both/input.json",
+    "expected": "cases/H09-both/expected.json"
+  },
+  {
+    "family": "H09",
+    "id": "H09-removal",
+    "input": "cases/H09-removal/input.json",
+    "expected": "cases/H09-removal/expected.json"
+  },
+  {
+    "family": "H10",
+    "id": "H10-survivor",
+    "input": "cases/H10-survivor/input.json",
+    "expected": "cases/H10-survivor/expected.json"
+  },
+  {
+    "family": "H11",
+    "id": "H11-changed",
+    "input": "cases/H11-changed/input.json",
+    "expected": "cases/H11-changed/expected.json"
+  },
+  {
+    "family": "H11",
+    "id": "H11-removed",
+    "input": "cases/H11-removed/input.json",
+    "expected": "cases/H11-removed/expected.json"
+  },
+  {
+    "family": "H11",
+    "id": "H11-unknown",
+    "input": "cases/H11-unknown/input.json",
+    "expected": "cases/H11-unknown/expected.json"
+  },
+  {
+    "family": "H11",
+    "id": "H11-contract",
+    "input": "cases/H11-contract/input.json",
+    "expected": "cases/H11-contract/expected.json"
+  },
+  {
+    "family": "H12",
+    "id": "H12-partial",
+    "input": "cases/H12-partial/input.json",
+    "expected": "cases/H12-partial/expected.json"
+  },
+  {
+    "family": "H12",
+    "id": "H12-failed",
+    "input": "cases/H12-failed/input.json",
+    "expected": "cases/H12-failed/expected.json"
+  },
+  {
+    "family": "H12",
+    "id": "H12-cancelled",
+    "input": "cases/H12-cancelled/input.json",
+    "expected": "cases/H12-cancelled/expected.json"
+  },
+  {
+    "family": "H12",
+    "id": "H12-false-origin",
+    "input": "cases/H12-false-origin/input.json",
+    "expected": "cases/H12-false-origin/expected.json"
+  },
+  {
+    "family": "H12",
+    "id": "H12-out-of-scope",
+    "input": "cases/H12-out-of-scope/input.json",
+    "expected": "cases/H12-out-of-scope/expected.json"
+  },
+  {
+    "family": "H13",
+    "id": "H13-no-op",
+    "input": "cases/H13-no-op/input.json",
+    "expected": "cases/H13-no-op/expected.json"
+  },
+  {
+    "family": "H13",
+    "id": "H13-extra-observation",
+    "input": "cases/H13-extra-observation/input.json",
+    "expected": "cases/H13-extra-observation/expected.json"
+  },
+  {
+    "family": "H14",
+    "id": "H14-zero-facts",
+    "input": "cases/H14-zero-facts/input.json",
+    "expected": "cases/H14-zero-facts/expected.json"
+  },
+  {
+    "family": "H14",
+    "id": "H14-missing-coverage",
+    "input": "cases/H14-missing-coverage/input.json",
+    "expected": "cases/H14-missing-coverage/expected.json"
+  },
+  {
+    "family": "H15",
+    "id": "H15-old-basis",
+    "input": "cases/H15-old-basis/input.json",
+    "expected": "cases/H15-old-basis/expected.json"
+  },
+  {
+    "family": "H15",
+    "id": "H15-wrong-basis",
+    "input": "cases/H15-wrong-basis/input.json",
+    "expected": "cases/H15-wrong-basis/expected.json"
+  },
+  {
+    "family": "H16",
+    "id": "H16-stale",
+    "input": "cases/H16-stale/input.json",
+    "expected": "cases/H16-stale/expected.json"
+  },
+  {
+    "family": "H16",
+    "id": "H16-declared-only",
+    "input": "cases/H16-declared-only/input.json",
+    "expected": "cases/H16-declared-only/expected.json"
+  },
+  {
+    "family": "H17",
+    "id": "H17-unicode",
+    "input": "cases/H17-unicode/input.json",
+    "expected": "cases/H17-unicode/expected.json"
+  },
+  {
+    "family": "H18",
+    "id": "H18-digest",
+    "input": "cases/H18-digest/input.json",
+    "expected": "cases/H18-digest/expected.json"
+  }
+]

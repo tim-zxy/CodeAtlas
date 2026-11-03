@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "p1-syntax-budget-contract-v1",
+  "category": "runtime-graph",
+  "phase": "1",
+  "languages": [],
+  "frameworks": [],
+  "capabilities": [
+    "SYNTAX_REQUEST_BUDGET_CONTRACT_ONLY"
+  ],
+  "inputs": {
+    "javaRequest": "inputs/java-request.json",
+    "javaBytes": "inputs/java-request.jsonl",
+    "javaEvents": "inputs/java-events.jsonl",
+    "pythonRequest": "inputs/python-request.json",
+    "pythonBytes": "inputs/python-request.jsonl",
+    "pythonEvents": "inputs/python-events.jsonl",
+    "java-provisionalRequest": "inputs/java-provisional-request.json",
+    "java-provisionalBytes": "inputs/java-provisional-request.jsonl",
+    "java-provisionalEvents": "inputs/java-provisional-events.jsonl",
+    "python-initialRequest": "inputs/python-initial-request.json",
+    "python-initialBytes": "inputs/python-initial-request.jsonl",
+    "python-initialEvents": "inputs/python-initial-events.jsonl"
+  },
+  "expected": {
+    "outcomes": "expected/outcomes.json"
+  },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

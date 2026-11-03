@@ -1,0 +1,138 @@
+{
+  "targetSource": {
+    "repositoryId": "repo:python",
+    "revisionId": "revision:worktree",
+    "contentFingerprint": "content:python"
+  },
+  "providerId": "native",
+  "providerSnapshotId": "snapshot:python",
+  "sourceFiles": [
+    {
+      "id": "py:file",
+      "repositoryId": "repo:python",
+      "revisionId": "revision:worktree",
+      "path": "src/app.py",
+      "contentFingerprint": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "classification": {
+        "role": "SOURCE",
+        "provenance": "AUTHORED",
+        "contentKind": "TEXT"
+      },
+      "languageHint": "python",
+      "sensitivity": "INTERNAL"
+    }
+  ],
+  "nodes": [
+    {
+      "providerId": "native",
+      "providerSnapshotId": "snapshot:python",
+      "repositoryId": "repo:python",
+      "revisionId": "revision:worktree",
+      "providerFactId": "py:module",
+      "providerKind": "python.module",
+      "name": "src/app.py",
+      "qualifiedName": "src/app.py",
+      "sourceRange": {
+        "sourceFileId": "py:file",
+        "startLine": 0,
+        "startColumn": 0,
+        "endLine": 6,
+        "endColumn": 0
+      },
+      "confidence": {
+        "score": 1,
+        "method": "parser",
+        "reasons": []
+      }
+    },
+    {
+      "providerId": "native",
+      "providerSnapshotId": "snapshot:python",
+      "repositoryId": "repo:python",
+      "revisionId": "revision:worktree",
+      "providerFactId": "py:endpoint",
+      "providerKind": "python.symbol",
+      "name": "endpoint",
+      "qualifiedName": "src/app.py::endpoint",
+      "sourceRange": {
+        "sourceFileId": "py:file",
+        "startLine": 3,
+        "startColumn": 4,
+        "endLine": 3,
+        "endColumn": 12
+      },
+      "confidence": {
+        "score": 1,
+        "method": "parser",
+        "reasons": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "providerId": "native",
+      "providerSnapshotId": "snapshot:python",
+      "repositoryId": "repo:python",
+      "revisionId": "revision:worktree",
+      "providerFactId": "py:import",
+      "providerKind": "python.import",
+      "source": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "py:module"
+      },
+      "target": {
+        "state": "UNRESOLVED",
+        "resolution": "UNRESOLVED",
+        "originalHint": "fastapi.APIRouter",
+        "candidates": []
+      },
+      "sourceRange": {
+        "sourceFileId": "py:file",
+        "startLine": 0,
+        "startColumn": 0,
+        "endLine": 0,
+        "endColumn": 28
+      },
+      "confidence": {
+        "score": 1,
+        "method": "parser",
+        "reasons": []
+      }
+    },
+    {
+      "providerId": "native",
+      "providerSnapshotId": "snapshot:python",
+      "repositoryId": "repo:python",
+      "revisionId": "revision:worktree",
+      "providerFactId": "py:reference",
+      "providerKind": "python.reference",
+      "source": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "py:endpoint"
+      },
+      "target": {
+        "state": "RESOLVED",
+        "resolution": "EXACT",
+        "target": {
+          "factType": "NODE",
+          "providerId": "native",
+          "providerFactId": "py:module"
+        }
+      },
+      "sourceRange": {
+        "sourceFileId": "py:file",
+        "startLine": 4,
+        "startColumn": 4,
+        "endLine": 4,
+        "endColumn": 7
+      },
+      "confidence": {
+        "score": 1,
+        "method": "parser",
+        "reasons": []
+      }
+    }
+  ]
+}

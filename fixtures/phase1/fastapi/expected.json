@@ -1,0 +1,24 @@
+{
+  "policy": "runtime-declaration-support-v1",
+  "notClaimed": ["REAL_NATIVE", "DEPLOYMENT", "EVALUATION_BASELINE"],
+  "cases": [
+    {
+      "name": "fastapi-direct",
+      "bindings": [],
+      "domainIds": ["runtime:31996e1fd219c2c0881e523f78785fd8772293387ef5fc6fdcec3e1b7795c660"],
+      "entries": 1
+    },
+    {
+      "name": "fastapi-router",
+      "bindings": [],
+      "domainIds": ["runtime:78c42c919b0f9a0ac8acefc7822d38bf4dc1001b92594a7b44afa8ae1c1e0139"],
+      "entries": 1
+    },
+    {
+      "name": "fastapi-reassign",
+      "bindings": [],
+      "domainIds": [],
+      "entries": 0
+    }
+  ]
+}

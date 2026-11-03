@@ -1,0 +1,5 @@
+{
+  "point": "history",
+  "base": "base-input.json",
+  "processExit": true
+}

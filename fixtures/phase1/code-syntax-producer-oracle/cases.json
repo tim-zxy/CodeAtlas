@@ -1,0 +1,128 @@
+[
+  {
+    "id": "no-files",
+    "request": "cases/no-files/request.template.jsonl",
+    "events": "cases/no-files/events.template.jsonl",
+    "canonical": "cases/no-files/canonical.json",
+    "sources": []
+  },
+  {
+    "id": "empty-python",
+    "request": "cases/empty-python/request.template.jsonl",
+    "events": "cases/empty-python/events.template.jsonl",
+    "canonical": "cases/empty-python/canonical.json",
+    "sources": ["cases/empty-python/sources/app.py"]
+  },
+  {
+    "id": "comment-python",
+    "request": "cases/comment-python/request.template.jsonl",
+    "events": "cases/comment-python/events.template.jsonl",
+    "canonical": "cases/comment-python/canonical.json",
+    "sources": ["cases/comment-python/sources/app.py"]
+  },
+  {
+    "id": "wildcard-python",
+    "request": "cases/wildcard-python/request.template.jsonl",
+    "events": "cases/wildcard-python/events.template.jsonl",
+    "canonical": "cases/wildcard-python/canonical.json",
+    "sources": ["cases/wildcard-python/sources/app.py"]
+  },
+  {
+    "id": "class-python",
+    "request": "cases/class-python/request.template.jsonl",
+    "events": "cases/class-python/events.template.jsonl",
+    "canonical": "cases/class-python/canonical.json",
+    "sources": ["cases/class-python/sources/app.py"]
+  },
+  {
+    "id": "nested-python",
+    "request": "cases/nested-python/request.template.jsonl",
+    "events": "cases/nested-python/events.template.jsonl",
+    "canonical": "cases/nested-python/canonical.json",
+    "sources": ["cases/nested-python/sources/app.py"]
+  },
+  {
+    "id": "malformed-python",
+    "request": "cases/malformed-python/request.template.jsonl",
+    "events": "cases/malformed-python/events.template.jsonl",
+    "canonical": "cases/malformed-python/canonical.json",
+    "sources": ["cases/malformed-python/sources/app.py"]
+  },
+  {
+    "id": "dynamic-python",
+    "request": "cases/dynamic-python/request.template.jsonl",
+    "events": "cases/dynamic-python/events.template.jsonl",
+    "canonical": "cases/dynamic-python/canonical.json",
+    "sources": ["cases/dynamic-python/sources/app.py"]
+  },
+  {
+    "id": "alias-reference-python",
+    "request": "cases/alias-reference-python/request.template.jsonl",
+    "events": "cases/alias-reference-python/events.template.jsonl",
+    "canonical": "cases/alias-reference-python/canonical.json",
+    "sources": ["cases/alias-reference-python/sources/app.py"]
+  },
+  {
+    "id": "async-python",
+    "request": "cases/async-python/request.template.jsonl",
+    "events": "cases/async-python/events.template.jsonl",
+    "canonical": "cases/async-python/canonical.json",
+    "sources": ["cases/async-python/sources/app.py"]
+  },
+  {
+    "id": "java-only",
+    "request": "cases/java-only/request.template.jsonl",
+    "events": "cases/java-only/events.template.jsonl",
+    "canonical": "cases/java-only/canonical.json",
+    "sources": ["cases/java-only/sources/Endpoint.java"]
+  },
+  {
+    "id": "mixed",
+    "request": "cases/mixed/request.template.jsonl",
+    "events": "cases/mixed/events.template.jsonl",
+    "canonical": "cases/mixed/canonical.json",
+    "sources": ["cases/mixed/sources/Endpoint.java", "cases/mixed/sources/app.py"]
+  },
+  {
+    "id": "multi-import-from",
+    "request": "cases/multi-import-from/request.template.jsonl",
+    "events": "cases/multi-import-from/events.template.jsonl",
+    "canonical": "cases/multi-import-from/canonical.json",
+    "sources": ["cases/multi-import-from/sources/app.py"]
+  },
+  {
+    "id": "nested-repeated-values",
+    "request": "cases/nested-repeated-values/request.template.jsonl",
+    "events": "cases/nested-repeated-values/events.template.jsonl",
+    "canonical": "cases/nested-repeated-values/canonical.json",
+    "sources": ["cases/nested-repeated-values/sources/app.py"]
+  },
+  {
+    "id": "class-owner-gap",
+    "request": "cases/class-owner-gap/request.template.jsonl",
+    "events": "cases/class-owner-gap/events.template.jsonl",
+    "canonical": "cases/class-owner-gap/canonical.json",
+    "sources": ["cases/class-owner-gap/sources/app.py"]
+  },
+  {
+    "id": "unicode-control",
+    "request": "cases/unicode-control/request.template.jsonl",
+    "events": "cases/unicode-control/events.template.jsonl",
+    "canonical": "cases/unicode-control/canonical.json",
+    "sources": ["cases/unicode-control/sources/app.py"]
+  },
+  {
+    "id": "two-python-files",
+    "request": "cases/two-python-files/request.template.jsonl",
+    "events": "cases/two-python-files/events.template.jsonl",
+    "canonical": "cases/two-python-files/canonical.json",
+    "sources": ["cases/two-python-files/sources/a.py", "cases/two-python-files/sources/b.py"]
+  },
+  {
+    "id": "discarded-dictionary",
+    "request": "cases/discarded-dictionary/request.template.jsonl",
+    "events": "cases/discarded-dictionary/events.template.jsonl",
+    "canonical": "cases/discarded-dictionary/canonical.json",
+    "sources": ["cases/discarded-dictionary/sources/app.py"]
+  }
+]

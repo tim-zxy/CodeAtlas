@@ -1,0 +1,24 @@
+{
+  "java": {
+    "outcome": "SUCCEEDED",
+    "counts": {
+      "nodes": 0,
+      "edges": 0,
+      "syntax": 1,
+      "coverage": 1,
+      "diagnostics": 0
+    },
+    "checksum": "503736a00248542cfe534de7de82ab6f3d1ece8b966b21c1c26804b0c93318f0"
+  },
+  "python": {
+    "outcome": "SUCCEEDED",
+    "counts": {
+      "nodes": 1,
+      "edges": 0,
+      "syntax": 1,
+      "coverage": 1,
+      "diagnostics": 0
+    },
+    "checksum": "c6dc4b562d5712fe2bab6c6b660fa4b88b4d92b1ee0f40f0581cc116bff90966"
+  }
+}

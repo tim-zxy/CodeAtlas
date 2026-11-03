@@ -1,0 +1,955 @@
+{
+  "nodePairs": [
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "python-symbol-v1:e7ad9e4ebd4f681b7d0aacd7528544044bd8c144798d7abb345b208a730ff7ce"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:0c34bb91eda98c224a314c52995589c10a7b6f9329e09350b2228051744edbc0",
+        "factKey": "node-fact-v1:071800b35e5a1fce3b082012f119bfda4cfc761029c6ca0e83d0b62919b685f9",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "item_holdout_16",
+        "qualifiedName": "app.py::item_holdout_16",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 48,
+          "startColumn": 4,
+          "endLine": 48,
+          "endColumn": 19
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION"
+      }
+    },
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "python-symbol-v1:d92eea173fc1b055970276711f7717dd694b91dd3f2b0401b9299882c615a4a0"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:bb4032c1a91165c57c019b40b744a5a6384641fa00d4d3ac15088745ac330748",
+        "factKey": "node-fact-v1:0ac729219c16523f458489c26da4cd850ad2a3e964cdd2f34d87a30f55cc456a",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "item_holdout_29",
+        "qualifiedName": "app.py::item_holdout_29",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 87,
+          "startColumn": 4,
+          "endLine": 87,
+          "endColumn": 19
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION"
+      }
+    },
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "python-symbol-v1:e193df1be63eeee102de808ea72e8c851758497e026df5564252a73c6d90bbbb"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:5973ed7f25bf9d9c60d99a2df797ee9040f6b307c8b658d9e550f386669f033f",
+        "factKey": "node-fact-v1:10e1507193faa7bbff7ed7e41e84e4102054ed9fac33d63dad242411f6644dd2",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "item_holdout_0",
+        "qualifiedName": "app.py::item_holdout_0",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 0,
+          "startColumn": 4,
+          "endLine": 0,
+          "endColumn": 18
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION"
+      }
+    },
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "python-symbol-v1:2d29e670ed13076cf6c9a6335ee94a6637af313e8e763b58199f620c6fdc1e29"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:f89679c5e5401a1043689823eb3d91e1c310717360afefa2278692d64d2a560e",
+        "factKey": "node-fact-v1:215ce263b5bde43d0c183728cc9e3200890c71e01c6768c26cbbdd54c30f73e3",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "item_holdout_4",
+        "qualifiedName": "app.py::item_holdout_4",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 12,
+          "startColumn": 4,
+          "endLine": 12,
+          "endColumn": 18
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION"
+      }
+    },
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "python-symbol-v1:0ea8ece9401f469f88fedeeb351447a988d3e4a13f4305c726dbfda7bca5e52a"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:89ed6ae0b90e8fd8d54b19bd615d53ec55f553d93b41d68b9a9dec8a4da4d5d0",
+        "factKey": "node-fact-v1:35d747a1560838663c3015a0b8ffaec2a8839fb769e1a308023bbbdd385d4025",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "item_holdout_26",
+        "qualifiedName": "app.py::item_holdout_26",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 78,
+          "startColumn": 4,
+          "endLine": 78,
+          "endColumn": 19
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION"
+      }
+    },
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "python-symbol-v1:d69a6e61e3c6ad7b6983c7eab0734ff9591f693ebd526e2d4e3094fc397a0fcb"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:cabf132cb0d822f6f8ac307e650cf0f7acbeb957977452a19f979ae47f4408d6",
+        "factKey": "node-fact-v1:3708315e0a635ebbb7e890ed7b9022ddefeae433f8a6986e64b0335aeedc7216",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "item_holdout_14",
+        "qualifiedName": "app.py::item_holdout_14",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 42,
+          "startColumn": 4,
+          "endLine": 42,
+          "endColumn": 19
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION"
+      }
+    },
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "python-symbol-v1:39f1697ed11669292ced8e303464d26e533bee373185a36c1a76c8c09be5b46e"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:65a482137467d6f4fb5cd05068e213be41863db14ef4f369910dd1fce0b7aecf",
+        "factKey": "node-fact-v1:393f9617e26cf1067d0e9f7736e235c690742ca56dbbbea114ea9d11dea6078d",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "item_holdout_15",
+        "qualifiedName": "app.py::item_holdout_15",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 45,
+          "startColumn": 4,
+          "endLine": 45,
+          "endColumn": 19
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION"
+      }
+    },
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "python-symbol-v1:42a8ec9529c78be799f51cd8cd8483afdab5e77d1eefc57460b7cf3678ee3289"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:2e6eeae651a08de379043a6a25b05553d2fb755985fa6188ec9e4330c68eb0ba",
+        "factKey": "node-fact-v1:40eef73de9f04b6bb8df3a29e1471ac5c98995b5370e5b6125490d9beed67ec3",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "item_holdout_7",
+        "qualifiedName": "app.py::item_holdout_7",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 21,
+          "startColumn": 4,
+          "endLine": 21,
+          "endColumn": 18
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION"
+      }
+    },
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "python-symbol-v1:5a8f99e7e178e1bbb20380030c8a758929d2d97c188f8ea57d27f67cdb402ba3"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:683192ec3d2db8922e313eaa552d759d04eb3b23c9343bd6397c9d33e747072a",
+        "factKey": "node-fact-v1:60482f9f833561a0b7326fb206d7c05d4a7d085edc4bc40e958a538c06ef0bc3",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "item_holdout_31",
+        "qualifiedName": "app.py::item_holdout_31",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 93,
+          "startColumn": 4,
+          "endLine": 93,
+          "endColumn": 19
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION"
+      }
+    },
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "python-symbol-v1:c6b003e63ece398bebc16e3bceb8f35e9fdec2607157d3b280902999c12f61e1"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:cf2670d669358ed82bbdf59b6b8e31528bd28bcaecdc0cb17ba8c86476655287",
+        "factKey": "node-fact-v1:69d0af9b727d7a05c70044d6f9406772ae5bc14f4b701866955e0c3c113bfc14",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "item_holdout_21",
+        "qualifiedName": "app.py::item_holdout_21",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 63,
+          "startColumn": 4,
+          "endLine": 63,
+          "endColumn": 19
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION"
+      }
+    },
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "python-symbol-v1:38f413ca3c62611e7b48fbb59d909ee2df6a51391f48c3a8e56094bb5e609fd9"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:f79a12e94a0387988da7f398a4f38aa8e38fd703a8c60dd659a5e623bf281904",
+        "factKey": "node-fact-v1:6a4a439c183c4d99e58bcb9d6281d7edf05c46cf6d303ab8b6d5b5f56328d42b",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "item_holdout_20",
+        "qualifiedName": "app.py::item_holdout_20",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 60,
+          "startColumn": 4,
+          "endLine": 60,
+          "endColumn": 19
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION"
+      }
+    },
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "python-symbol-v1:19c2c267320749ca418be0b13920a1bd5feba5b2f61c5acc788b0c01c6a17176"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:24fc09bd65375c7b2e94a2209f403d6b02ec46f3f23574b99587bfd8ad11e48f",
+        "factKey": "node-fact-v1:753b8adee0a117a7752b216c5bc90c507be29e80c39bc27352c345176b2982c2",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "item_holdout_19",
+        "qualifiedName": "app.py::item_holdout_19",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 57,
+          "startColumn": 4,
+          "endLine": 57,
+          "endColumn": 19
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION"
+      }
+    },
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "python-symbol-v1:7cb804fc33240a99b8fc1cc3c82c4a63d6c724971248f76367e6f2bb7899032a"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:27e3739e758e188e9f76468862063646515b79a0bbf146405f87234a85a60bdc",
+        "factKey": "node-fact-v1:8ff79161b7a4c1ea3df0eecedafd4bff6380db3f4e1488df6f30500259aa93cc",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "item_holdout_27",
+        "qualifiedName": "app.py::item_holdout_27",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 81,
+          "startColumn": 4,
+          "endLine": 81,
+          "endColumn": 19
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION"
+      }
+    },
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "python-symbol-v1:c1e19b8e3ec221993343fd2d69b2699cbee1298dec4c2ec71cc07abfcf454a7a"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:2146798a58f8fe5148183bb6279c95283cdb3a2d60acb4833b837f53dc2ddd50",
+        "factKey": "node-fact-v1:9b424f0bf439f715c58b24009d7fe58af0976e2a844c41d64e37244d63cdf197",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "item_holdout_9",
+        "qualifiedName": "app.py::item_holdout_9",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 27,
+          "startColumn": 4,
+          "endLine": 27,
+          "endColumn": 18
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION"
+      }
+    },
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "python-symbol-v1:916b0dbec3c84355a56075a9f2ce0a4686bd620b77fe9625eb3e5ed0742ca968"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:9ad785e540d10eacdbd4e1c71f9b4c54853042e1256688674731c4b64b3dae9b",
+        "factKey": "node-fact-v1:9cf34318967c608eae5b3869de17b553808ff8e3a0070403afbfde48103d31f2",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "item_holdout_18",
+        "qualifiedName": "app.py::item_holdout_18",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 54,
+          "startColumn": 4,
+          "endLine": 54,
+          "endColumn": 19
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION"
+      }
+    },
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+        "factKey": "node-fact-v1:9f87fdd184180db6f32fe351dc70bd34a7f1d2baebfa5f06eb7714f1cb1f3dc5",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "app.py",
+        "qualifiedName": "app.py",
+        "sourceRange": null,
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "MODULE"
+      }
+    },
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "python-symbol-v1:df5f64c77199ed0ed9bab811855897cec97482c7a5d3f9fac04a23ce67b9254f"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:5cb530fd9c1d632fbf6240212d501fd49e875e1b1dcb43c9afd042d36aabd42e",
+        "factKey": "node-fact-v1:a0805f3ba78f6f3a7e40f7a53bd1ecbd8744a2ffb825f581f13038cf9d37063b",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "item_holdout_1",
+        "qualifiedName": "app.py::item_holdout_1",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 3,
+          "startColumn": 4,
+          "endLine": 3,
+          "endColumn": 18
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION"
+      }
+    },
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "python-symbol-v1:98e42bca203cb5397fcaae2b656910e47cf6cb3959fb639387822930994ec57a"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:037cec83ba7ebb19b28887b4e9265cb33ae99a386ad7441c420efc7c32630dc8",
+        "factKey": "node-fact-v1:a4372bea296847deee0bb1807508bcb72653fe4bcf842f7dac1752fc205d962b",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "item_holdout_17",
+        "qualifiedName": "app.py::item_holdout_17",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 51,
+          "startColumn": 4,
+          "endLine": 51,
+          "endColumn": 19
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION"
+      }
+    },
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "python-symbol-v1:1c44ca5e8318485414af134e1c6affba2d60aabe97d43b9f1b3853c6fa120ff7"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:709b242d80ad58be1e0b94f4b77cc0f3207c1b03259c55dae1521a51cf558d8c",
+        "factKey": "node-fact-v1:ba9060f876813b45e50894c9e7c8213c6c6f65cccbdd7dcac0042a0a626e8564",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "item_holdout_13",
+        "qualifiedName": "app.py::item_holdout_13",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 39,
+          "startColumn": 4,
+          "endLine": 39,
+          "endColumn": 19
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION"
+      }
+    },
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "python-symbol-v1:ded6986464125a86f93bceb1aafb3895de66c6822ed1a7467cb1dd643f98f453"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:29eb79d2b60281536c7ccb79bdb52ef4ac2b684691e76596dfb9b52f8de1867f",
+        "factKey": "node-fact-v1:bbfea6c590d6829c40304840ba440fd1d60f8cf3c23b7fd115ed7fd8999c8c46",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "item_holdout_22",
+        "qualifiedName": "app.py::item_holdout_22",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 66,
+          "startColumn": 4,
+          "endLine": 66,
+          "endColumn": 19
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION"
+      }
+    },
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "python-symbol-v1:e494fdc1871de269361e63514ee747ac401e03f296d0908303146dd77f5b8a7a"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:f289da2bd20e165d753c2f52fe7aa76768feb56c20fcce163d60b5c9fad3a938",
+        "factKey": "node-fact-v1:c04f4f9cf634a8ee787e95a55bb6f12d5555daae1cb30cea2309e745ad9e02ec",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "item_holdout_25",
+        "qualifiedName": "app.py::item_holdout_25",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 75,
+          "startColumn": 4,
+          "endLine": 75,
+          "endColumn": 19
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION"
+      }
+    },
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "python-symbol-v1:6397fe2928ccedaf9546a9e36307014331494b7292ad6194171bf372cba28ed6"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:a26e65b58d79c4f50d7c8b93882342b19c6e46c1a9ef7e29666aa2be69fc8fef",
+        "factKey": "node-fact-v1:ca5cff43b33ff69bff6d41b16e4f0cf05717759659a2f5c9c835fefd7c766316",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "item_holdout_2",
+        "qualifiedName": "app.py::item_holdout_2",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 6,
+          "startColumn": 4,
+          "endLine": 6,
+          "endColumn": 18
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION"
+      }
+    },
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "python-symbol-v1:1becf23d8889f2abb1c28be6f5300523d169fda0333ed62d59ba994b7f5110d4"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:ec476f82d3897386631b772bdfdc513e328dc6747d0fa2361dcd83c51865ab01",
+        "factKey": "node-fact-v1:cbaff7bddbaac6d72d7a4d00f60fe2b841083bce2f0fa8b76e323df55ed64cf5",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "item_holdout_28",
+        "qualifiedName": "app.py::item_holdout_28",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 84,
+          "startColumn": 4,
+          "endLine": 84,
+          "endColumn": 19
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION"
+      }
+    },
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "python-symbol-v1:93bd9b6a8e81aa873378ed51f864ea6621cff52ee27bbcc3bd3071a942602928"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:7e9035c4288ccaabe7c1efa41e636b6ed90252ec4ee9b9b9bbb63cd673f4b6aa",
+        "factKey": "node-fact-v1:cedfd0393e91721e8fa8fbb0d699e49ab2133b15fad997f970ec35096506644c",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "item_holdout_11",
+        "qualifiedName": "app.py::item_holdout_11",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 33,
+          "startColumn": 4,
+          "endLine": 33,
+          "endColumn": 19
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION"
+      }
+    },
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "python-symbol-v1:f888f3eeb8593eff6a2ada9b67f4292888f782525aff7ab6f728720bb5d9e504"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:c0b4042a935eb60b1b487d151824343b96c7282f934189612ab358e6d0252b0d",
+        "factKey": "node-fact-v1:cf984476e223e7b3434650d83a8a3eff5ab96e62b97c8ce57f35e682128e05c1",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "item_holdout_12",
+        "qualifiedName": "app.py::item_holdout_12",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 36,
+          "startColumn": 4,
+          "endLine": 36,
+          "endColumn": 19
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION"
+      }
+    },
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "python-symbol-v1:874379d4371ea188bdc8ad7d5d570857e59164c6e0cf3d04bbe462f62d93281e"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:cb2faacdb18222852ca4c42d78ad3d38af26cc0c5a3a5f3bd392864af6f47116",
+        "factKey": "node-fact-v1:d4b064364f2100ea7540cb0d25569aca476a56a49882d51773764e5bb27e8890",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "item_holdout_23",
+        "qualifiedName": "app.py::item_holdout_23",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 69,
+          "startColumn": 4,
+          "endLine": 69,
+          "endColumn": 19
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION"
+      }
+    },
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "python-symbol-v1:98b06e3cd6e029ff8e665aad1fcb07f774be0a645564e548c1f90ab9f36c2261"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:0dfb5fffcabe39907892fec523f96d3e0a5cc5c81db08e1ede4d688111bbdbfa",
+        "factKey": "node-fact-v1:e17b3ab91f74de3eddb75918a9a71a56186d76129ff9f9ab5f88e97fc4df1d65",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "item_holdout_10",
+        "qualifiedName": "app.py::item_holdout_10",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 30,
+          "startColumn": 4,
+          "endLine": 30,
+          "endColumn": 19
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION"
+      }
+    },
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "python-symbol-v1:03fa513a9f3d42b8139bb3b993a2e7763c7594605a816aaebd84d0006849b66c"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:e91f65bce96c0e9aaf4244566e36c3730f5bae33e9e5766f0d12240018ab9be1",
+        "factKey": "node-fact-v1:e207911ccc4f1991445bf3011dfa895c90e22d9abbc045e0d1193e3ac04d74db",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "item_holdout_8",
+        "qualifiedName": "app.py::item_holdout_8",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 24,
+          "startColumn": 4,
+          "endLine": 24,
+          "endColumn": 18
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION"
+      }
+    },
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "python-symbol-v1:cf2f365d409c630f5bab041338a5152cde8b4d08756030d2514cf7865477a791"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:e02eed3176adfaa72c4f85425417c922126d27266e96862aefe94c1c6b976662",
+        "factKey": "node-fact-v1:f30cc9b94f617a49adef60d14054ffd169e432a79924034186edf8bf7de33337",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "item_holdout_30",
+        "qualifiedName": "app.py::item_holdout_30",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 90,
+          "startColumn": 4,
+          "endLine": 90,
+          "endColumn": 19
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION"
+      }
+    },
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "python-symbol-v1:c3b9eda67ad365c1136621886bb63486cfe5225d042d20b613f33a87992add5c"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:22696bf1d3d5db9dec2c31ea87f42a7ed22bc30134175736f785b966898620a2",
+        "factKey": "node-fact-v1:f7238d999871e1f5fd733da3e914bac1a7a1f7ea1765f9a20dd31714b81d5e09",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "item_holdout_5",
+        "qualifiedName": "app.py::item_holdout_5",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 15,
+          "startColumn": 4,
+          "endLine": 15,
+          "endColumn": 18
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION"
+      }
+    },
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "python-symbol-v1:136999774b238dcb3b8305be150cd3caae4efc2bd0fd5ebab4497816e9de29e0"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:867822baf43ca0dd2880c650bd1a8d4c162e97cbbd16da0662b7265e7c9055f9",
+        "factKey": "node-fact-v1:f9e6f03ff1063de8a7fe646a6dc58201317b67e3c22894a9a1f1e73c477341dd",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "item_holdout_3",
+        "qualifiedName": "app.py::item_holdout_3",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 9,
+          "startColumn": 4,
+          "endLine": 9,
+          "endColumn": 18
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION"
+      }
+    },
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "python-symbol-v1:18d9569b4f3189a6ec6a50ef9aa3769ad7ffbb3818f5df447327ad79835eaf80"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:88c5934138811314be6cee9694b36dd8e84a7dac6e13ff6fa6c5813d8aef26d4",
+        "factKey": "node-fact-v1:fb9edae91561f10f5b73507bae26700eac0f330f7a3ced5c99a6b1be4d341512",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "item_holdout_6",
+        "qualifiedName": "app.py::item_holdout_6",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 18,
+          "startColumn": 4,
+          "endLine": 18,
+          "endColumn": 18
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION"
+      }
+    },
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "python-symbol-v1:3d53d8ea5d458b9828c6225ca840e7e11635c7118f9354e1beb3aff0f1d9827e"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:6d7c0762ef137c5ed3043f5a78f636d1de788a4921fb9cff1676053bb8609b33",
+        "factKey": "node-fact-v1:fec0762d5ae4fc04c40411aa01ba4dcbe010812387c577dee8163c576710e09b",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "item_holdout_24",
+        "qualifiedName": "app.py::item_holdout_24",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 72,
+          "startColumn": 4,
+          "endLine": 72,
+          "endColumn": 19
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION"
+      }
+    }
+  ],
+  "edgePairs": []
+}

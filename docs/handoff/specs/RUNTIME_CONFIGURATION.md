@@ -1,3 +1,27 @@
+## A5固定混合执行链本地交付完成 — 2026-10-29
+
+获批T1–T4已完成，A5_FIXED_EXECUTION_LOCAL_EXIT：[A5实施结果与作者审查](../../superpowers/plans/2026-10-29-phase1-mixed-execution-closure.md#实施结果与作者审查2026-10-29)；[唯一结果索引](../../../.superpowers/sdd/2026-10-29-phase1-mixed-execution/results.json)。显式Native配置v2、Stage内NO_OP、既有空FULL、固定私有Source→v2/v5→Stage→Store及真实本地结算已接入。最终271 PASS/1原C1 TODO，注册35/35，Storage/Runtime构建、17项目架构及范围格式通过。原Stage/Store方法体、公开路由、IR/wire/SQL schema与原Fixture参考保持。
+
+完整物理资格/采集/profile与公开混合路由仍NOT_READY；qualificationRef仅candidate引用，无真实Git/Native/helper/collector、数值/依赖、CI或Git写入。父任务4/21、P1-04/05/Phase1及原风险保持OPEN。下方设计待审/未实施文字为历史快照，由本补记限定范围替代。
+
+## A5整包实施已批准 — 2026-10-29
+
+用户明确批准[A5设计](../../superpowers/specs/2026-10-29-phase1-mixed-execution-design.md)及T1–T4顺序本地实施。新增私有显式配置/NO_OP/空FULL/固定调用链和本地Store结算视图；不授予公开混合路由或真实资源资格。状态ACCEPTED_FOR_LOCAL_IMPLEMENTATION，暂无新实现验收结论。无真实Git/Native/helper/collector、新profile/数值/依赖、CI或Git写入授权。
+
+## A4 有界SourceState本地交付完成 — 2026-10-29
+
+B1–B3获批范围已完成，A4_BOUNDED_SOURCE_LOCAL_EXIT：[实现/作者审查与证据](../../superpowers/plans/2026-10-29-phase1-bounded-source-state.md#实施结果与作者审查2026-10-29)。有界UTF-8 SQL前付、同账本/全局cap、CAS前根绑定与既有固定链组合已验；195 PASS/1原C1 TODO、注册35/35、架构17与三包构建/范围格式通过。无公开route/配置新键/迁移/profile；生产路由/配置来源/全链资源资格和父任务仍OPEN。下方批准前/实施中快照仅为历史。
+
+## A4 有界SourceState整包已批准 — 2026-10-29
+
+用户明确批准[A4详细设计](../../superpowers/specs/2026-10-29-phase1-bounded-source-state-design.md)与B1–B3本地顺序实施。新增仅限实例绑定/前付SQL、同账本与预算cap、CAS前根核对及既有组件组合；原公开Store/CAS、IR/SQL schema、资格catalog和Mandatory Gates保持。状态ACCEPTED_FOR_LOCAL_IMPLEMENTATION，实施/验证尚未完成；无真实Git/Native/helper/collector、生产新配置/数值/依赖、CI或Git写入授权。父任务与原风险不变。
+
+## 2026-10-22 accepted Phase1 first-batch authority
+
+P1-02 implements explicit immutable EffectiveConfig merging and YAML v1 inputs with the separately approved exact yaml@2.8.2 dependency. Secrets remain references, source/destination/write policies independent, no unapproved numeric default or network side effect.
+
+Authority: ADR-020 and the user confirmation; architecture acceptance is not implementation evidence.
+
 # Runtime and Configuration Specification
 
 2026-10-21 accepted R4 allocation-review batch changes only private Provider
@@ -143,3 +167,40 @@ Packet B metadata admission is an exact built-implementation/Node/V8/platform/ar
 ## Packaging
 
 Phase 1 distributes a TypeScript npm package plus platform-specific Rust binary packages; users need no Rust toolchain. Product, provider protocol, Canonical IR, database schema, config, workflow, and prompt versions evolve independently with explicit compatibility checks.
+
+
+## P1-00..02 implemented contract record — 2026-10-22
+
+Exact EffectiveConfig keys, YAML compatibility, precedence and explicit bootstrap composition are recorded in [first-batch contracts](../../superpowers/specs/2026-10-22-phase1-first-batch-contracts.md), under accepted ADR-020. Only the three declared contract Fixtures are in scope; later product/model/E2E acceptance remains open.
+
+
+## Accepted Syntax admission preparation — 2026-10-22
+
+The user separately approves [purpose/record/accounting preparation](../../superpowers/specs/2026-10-22-phase1-syntax-admission-proposal.md). [Fresh review](../../superpowers/reviews/2026-10-22-phase1-syntax-admission-preparation-review.md) records632 scoped tests/3 builds/architecture17, strict raw-evidence/holdout/component-budget validation and Runtime refusal before lazy preparation. The internal Syntax catalog is empty. New Fixtures are contract-only; OS acquisition conformance uses only Node helpers. Actual Native candidate/harness/full oracles, measurement approval, numeric installation and joint P1-04/05 acceptance remain open. All old profile entries/selectors, strict IPC1..3/R010 and semantic publication boundaries remain; no new dependency/number/cloud authority.
+
+
+## Accepted Syntax traversal budget — 2026-10-22
+
+User explicitly approves [traversal refinement](../../superpowers/specs/2026-10-22-phase1-syntax-traversal-budget-proposal.md): unpublished v4 requires explicit maxItems, reusing EffectiveConfig, with aggregate Syntax visitor accounting independent of maxEvents. New budget-contract root replaces current request consumers; both earlier roots stay byte-identical history. No numeric default/profile/run authority; old IPC1..3/IR/SQLite/guards unchanged. Native4 dispatch remains unadvertised until actual evaluated evidence.
+
+
+## Operation allowance evidence — 2026-10-22
+
+AdmittedSyntaxObservationInput explicitly supplies maxItems from trusted operation/EffectiveConfig. validateSyntaxOperationBudget performs structural validation and refuses a larger prepared request allowance; it cannot install/authenticate a profile. Empty internal catalog still refuses before preparation/getter/Source/binary. Pure guard equality and one-below tests do not qualify a positive admitted composition. No default or numeric entry added. See [review](../../superpowers/reviews/2026-10-22-phase1-syntax-dispatch-budget-review.md).
+
+
+## Accepted C3-A capture contract;implementation plan review — 2026-10-23
+
+User accepts [C3-A written detail](../../superpowers/specs/2026-10-23-phase1-code-context-capture-dcp.md):SQLite-owned boundedCode/support/mandatorycoverage/Source identities,private connection-bound handle,recheck/release and explicit unavailable history. [Concrete plan](../../superpowers/plans/2026-10-23-phase1-code-context-capture.md) is pending review;no implementation,Fixture registration or tests. Domain-separated Code identity includes allCanonical content,allACTIVEsupports/R009candidates,conservative same-indexed-revision snapshot/coverage set and actual committed-count/indexed fields;coverage multiplicities retained,physicalrowid/root/observationtime excluded from Code semantics. Rootlocator/Source identities are separate.
+
+Current R010/UTF-8 only capture contract;no R001..R010 SQL/checksum change,no new schema/IR/wire/profile/default/threshold. No history/removal,stage/atomicStore or realNative grant. B/C/normalizer/outcome/R011/accounting require their own contracts. A implementation still awaits plan review. C1symlinkgate and all P1-04/05/phase gates remainOPEN;oldC2slots spent,no new run or cloud authority.
+
+
+## C3-A implemented contract checkpoint — 2026-10-23
+
+C3-A concrete plan is explicitly confirmed and implemented inline in the original C worktree. Storage adds bounded real R010/UTF-8 Code/support/candidate/coverage/Source capture,private connection/incarnation-bound handles,recheck and release. Fixture p1-code-context-capture-v1 retains its seven-file before-product freeze;actual SQL row/TEXT deliveries match independent read plans. No production Runtime/Apply route,history/removal proof,stage lease,Source policy,normalizer,outcome,migration,dependency,profile/default or numeric Quality Gate changes. B/C,actual Native/accounting,root/integration/CI and all P1-04/05/Phase1 exits remain OPEN. C1 real-file-symlink EPERM stays TODO/OPEN;four old C2 acquisition slots remain spent and timeout root cause UNKNOWN. No Native/acquisition-helper/cloud/Git-stage/commit/worktree-or-legacy-evidence cleanup operation. Fresh verification is recorded in the linked implementation review and final receipt;historical measurements are not transferred.
+
+[Implementation review](../../superpowers/reviews/2026-10-23-phase1-code-context-capture-implementation-review.md);receipt:.superpowers/sdd/2026-10-23-phase1-code-context-capture/implementation-verification.json. Read controls are logical UTF-8 retention accounting,not V8/SQLite RSS or a production reservation. SQLite window counts preserve every raw coverage row charge and exact multiset identity;physical coverage id is schema-checked but excluded from semantic hashes. A private never-executed statement detects same-object close/open without SQL delivery or new persistent state.
+
+
+Final local32-file regression:422PASS/0FAIL/1explicitTODO (423 total;new capture suite100PASS);Storage TypeScript build and architecture17 pass;Fixture registry46/exact20Phase1,Syntax catalog0. The TODO is the existing C1 real-file-symlink EPERM gate,not an A failure or a waived Phase gate. Evidence:.superpowers/sdd/2026-10-23-phase1-code-context-capture/A4-final-schema-matching-regression.log;implementation-verification.json.

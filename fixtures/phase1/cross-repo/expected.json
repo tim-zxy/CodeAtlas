@@ -1,0 +1,20 @@
+{
+  "cases": [
+    {
+      "name": "http-consumer-to-provider",
+      "sourceRepo": "repo:a",
+      "targetRepo": "repo:b",
+      "transitionKind": "HTTP",
+      "edges": 1,
+      "contextsPreserved": true
+    },
+    {
+      "name": "message-producer-to-listener",
+      "sourceRepo": "repo:b",
+      "targetRepo": "repo:a",
+      "transitionKind": "PUBLISH",
+      "edges": 1,
+      "contextsPreserved": true
+    }
+  ]
+}

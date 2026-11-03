@@ -1,0 +1,1005 @@
+[
+  {
+    "id": "complete-short",
+    "value": {
+      "kind": "MIXED_PROCESS_ACQUISITION_CONFORMANCE",
+      "schemaVersion": 1,
+      "mode": "SHORT_DESCENDANT",
+      "measurementEligible": false,
+      "status": "COMPLETE",
+      "completeCleanup": true,
+      "error": null,
+      "collector": {
+        "pid": 500,
+        "peakAtReportBytes": 8192,
+        "lifetimeComplete": false
+      },
+      "host": {
+        "pid": 101,
+        "childPid": 102,
+        "childExitCode": 0,
+        "childSignal": null,
+        "childClosed": true,
+        "outcome": "DONE",
+        "childStdout": "DONE"
+      },
+      "processes": [
+        {
+          "instance": 1,
+          "pid": 101,
+          "creationFileTime": "133000000000000001",
+          "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "createSequence": 1,
+          "exitSequence": 4,
+          "osExited": true,
+          "handleReleased": true,
+          "queryStatus": "FINAL",
+          "finalPeakBytes": 4096,
+          "peakUnits": "bytes",
+          "initialBreakpoint": true,
+          "unexpectedException": false,
+          "imagePath": "C:/fixture/node.exe"
+        },
+        {
+          "instance": 2,
+          "pid": 102,
+          "creationFileTime": "133000000000000002",
+          "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "createSequence": 2,
+          "exitSequence": 3,
+          "osExited": true,
+          "handleReleased": true,
+          "queryStatus": "FINAL",
+          "finalPeakBytes": 4096,
+          "peakUnits": "bytes",
+          "initialBreakpoint": true,
+          "unexpectedException": false,
+          "imagePath": "C:/fixture/node.exe"
+        }
+      ]
+    }
+  },
+  {
+    "id": "missing-create",
+    "value": {
+      "kind": "MIXED_PROCESS_ACQUISITION_CONFORMANCE",
+      "schemaVersion": 1,
+      "mode": "SHORT_DESCENDANT",
+      "measurementEligible": false,
+      "status": "COMPLETE",
+      "completeCleanup": true,
+      "error": null,
+      "collector": {
+        "pid": 500,
+        "peakAtReportBytes": 8192,
+        "lifetimeComplete": false
+      },
+      "host": {
+        "pid": 101,
+        "childPid": 102,
+        "childExitCode": 0,
+        "childSignal": null,
+        "childClosed": true,
+        "outcome": "DONE",
+        "childStdout": "DONE"
+      },
+      "processes": [
+        {
+          "instance": 1,
+          "pid": 101,
+          "creationFileTime": "133000000000000001",
+          "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "createSequence": 1,
+          "exitSequence": 4,
+          "osExited": true,
+          "handleReleased": true,
+          "queryStatus": "FINAL",
+          "finalPeakBytes": 4096,
+          "peakUnits": "bytes",
+          "initialBreakpoint": true,
+          "unexpectedException": false,
+          "imagePath": "C:/fixture/node.exe"
+        },
+        {
+          "instance": 2,
+          "pid": 102,
+          "creationFileTime": "133000000000000002",
+          "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "exitSequence": 3,
+          "osExited": true,
+          "handleReleased": true,
+          "queryStatus": "FINAL",
+          "finalPeakBytes": 4096,
+          "peakUnits": "bytes",
+          "initialBreakpoint": true,
+          "unexpectedException": false,
+          "imagePath": "C:/fixture/node.exe"
+        }
+      ]
+    }
+  },
+  {
+    "id": "missing-exit",
+    "value": {
+      "kind": "MIXED_PROCESS_ACQUISITION_CONFORMANCE",
+      "schemaVersion": 1,
+      "mode": "SHORT_DESCENDANT",
+      "measurementEligible": false,
+      "status": "COMPLETE",
+      "completeCleanup": true,
+      "error": null,
+      "collector": {
+        "pid": 500,
+        "peakAtReportBytes": 8192,
+        "lifetimeComplete": false
+      },
+      "host": {
+        "pid": 101,
+        "childPid": 102,
+        "childExitCode": 0,
+        "childSignal": null,
+        "childClosed": true,
+        "outcome": "DONE",
+        "childStdout": "DONE"
+      },
+      "processes": [
+        {
+          "instance": 1,
+          "pid": 101,
+          "creationFileTime": "133000000000000001",
+          "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "createSequence": 1,
+          "exitSequence": 4,
+          "osExited": true,
+          "handleReleased": true,
+          "queryStatus": "FINAL",
+          "finalPeakBytes": 4096,
+          "peakUnits": "bytes",
+          "initialBreakpoint": true,
+          "unexpectedException": false,
+          "imagePath": "C:/fixture/node.exe"
+        },
+        {
+          "instance": 2,
+          "pid": 102,
+          "creationFileTime": "133000000000000002",
+          "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "createSequence": 2,
+          "exitSequence": null,
+          "osExited": true,
+          "handleReleased": true,
+          "queryStatus": "FINAL",
+          "finalPeakBytes": 4096,
+          "peakUnits": "bytes",
+          "initialBreakpoint": true,
+          "unexpectedException": false,
+          "imagePath": "C:/fixture/node.exe"
+        }
+      ]
+    }
+  },
+  {
+    "id": "pid-mismatch",
+    "value": {
+      "kind": "MIXED_PROCESS_ACQUISITION_CONFORMANCE",
+      "schemaVersion": 1,
+      "mode": "SHORT_DESCENDANT",
+      "measurementEligible": false,
+      "status": "COMPLETE",
+      "completeCleanup": true,
+      "error": null,
+      "collector": {
+        "pid": 500,
+        "peakAtReportBytes": 8192,
+        "lifetimeComplete": false
+      },
+      "host": {
+        "pid": 101,
+        "childPid": 999,
+        "childExitCode": 0,
+        "childSignal": null,
+        "childClosed": true,
+        "outcome": "DONE",
+        "childStdout": "DONE"
+      },
+      "processes": [
+        {
+          "instance": 1,
+          "pid": 101,
+          "creationFileTime": "133000000000000001",
+          "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "createSequence": 1,
+          "exitSequence": 4,
+          "osExited": true,
+          "handleReleased": true,
+          "queryStatus": "FINAL",
+          "finalPeakBytes": 4096,
+          "peakUnits": "bytes",
+          "initialBreakpoint": true,
+          "unexpectedException": false,
+          "imagePath": "C:/fixture/node.exe"
+        },
+        {
+          "instance": 2,
+          "pid": 102,
+          "creationFileTime": "133000000000000002",
+          "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "createSequence": 2,
+          "exitSequence": 3,
+          "osExited": true,
+          "handleReleased": true,
+          "queryStatus": "FINAL",
+          "finalPeakBytes": 4096,
+          "peakUnits": "bytes",
+          "initialBreakpoint": true,
+          "unexpectedException": false,
+          "imagePath": "C:/fixture/node.exe"
+        }
+      ]
+    }
+  },
+  {
+    "id": "same-instance",
+    "value": {
+      "kind": "MIXED_PROCESS_ACQUISITION_CONFORMANCE",
+      "schemaVersion": 1,
+      "mode": "SHORT_DESCENDANT",
+      "measurementEligible": false,
+      "status": "COMPLETE",
+      "completeCleanup": true,
+      "error": null,
+      "collector": {
+        "pid": 500,
+        "peakAtReportBytes": 8192,
+        "lifetimeComplete": false
+      },
+      "host": {
+        "pid": 101,
+        "childPid": 102,
+        "childExitCode": 0,
+        "childSignal": null,
+        "childClosed": true,
+        "outcome": "DONE",
+        "childStdout": "DONE"
+      },
+      "processes": [
+        {
+          "instance": 1,
+          "pid": 101,
+          "creationFileTime": "133000000000000001",
+          "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "createSequence": 1,
+          "exitSequence": 4,
+          "osExited": true,
+          "handleReleased": true,
+          "queryStatus": "FINAL",
+          "finalPeakBytes": 4096,
+          "peakUnits": "bytes",
+          "initialBreakpoint": true,
+          "unexpectedException": false,
+          "imagePath": "C:/fixture/node.exe"
+        },
+        {
+          "instance": 1,
+          "pid": 102,
+          "creationFileTime": "133000000000000002",
+          "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "createSequence": 2,
+          "exitSequence": 3,
+          "osExited": true,
+          "handleReleased": true,
+          "queryStatus": "FINAL",
+          "finalPeakBytes": 4096,
+          "peakUnits": "bytes",
+          "initialBreakpoint": true,
+          "unexpectedException": false,
+          "imagePath": "C:/fixture/node.exe"
+        }
+      ]
+    }
+  },
+  {
+    "id": "creation-mismatch",
+    "value": {
+      "kind": "MIXED_PROCESS_ACQUISITION_CONFORMANCE",
+      "schemaVersion": 1,
+      "mode": "SHORT_DESCENDANT",
+      "measurementEligible": false,
+      "status": "COMPLETE",
+      "completeCleanup": true,
+      "error": null,
+      "collector": {
+        "pid": 500,
+        "peakAtReportBytes": 8192,
+        "lifetimeComplete": false
+      },
+      "host": {
+        "pid": 101,
+        "childPid": 102,
+        "childExitCode": 0,
+        "childSignal": null,
+        "childClosed": true,
+        "outcome": "DONE",
+        "childStdout": "DONE"
+      },
+      "processes": [
+        {
+          "instance": 1,
+          "pid": 101,
+          "creationFileTime": "133000000000000001",
+          "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "createSequence": 1,
+          "exitSequence": 4,
+          "osExited": true,
+          "handleReleased": true,
+          "queryStatus": "FINAL",
+          "finalPeakBytes": 4096,
+          "peakUnits": "bytes",
+          "initialBreakpoint": true,
+          "unexpectedException": false,
+          "imagePath": "C:/fixture/node.exe"
+        },
+        {
+          "instance": 2,
+          "pid": 102,
+          "creationFileTime": "not-filetime",
+          "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "createSequence": 2,
+          "exitSequence": 3,
+          "osExited": true,
+          "handleReleased": true,
+          "queryStatus": "FINAL",
+          "finalPeakBytes": 4096,
+          "peakUnits": "bytes",
+          "initialBreakpoint": true,
+          "unexpectedException": false,
+          "imagePath": "C:/fixture/node.exe"
+        }
+      ]
+    }
+  },
+  {
+    "id": "early-query",
+    "value": {
+      "kind": "MIXED_PROCESS_ACQUISITION_CONFORMANCE",
+      "schemaVersion": 1,
+      "mode": "SHORT_DESCENDANT",
+      "measurementEligible": false,
+      "status": "COMPLETE",
+      "completeCleanup": true,
+      "error": null,
+      "collector": {
+        "pid": 500,
+        "peakAtReportBytes": 8192,
+        "lifetimeComplete": false
+      },
+      "host": {
+        "pid": 101,
+        "childPid": 102,
+        "childExitCode": 0,
+        "childSignal": null,
+        "childClosed": true,
+        "outcome": "DONE",
+        "childStdout": "DONE"
+      },
+      "processes": [
+        {
+          "instance": 1,
+          "pid": 101,
+          "creationFileTime": "133000000000000001",
+          "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "createSequence": 1,
+          "exitSequence": 4,
+          "osExited": true,
+          "handleReleased": true,
+          "queryStatus": "FINAL",
+          "finalPeakBytes": 4096,
+          "peakUnits": "bytes",
+          "initialBreakpoint": true,
+          "unexpectedException": false,
+          "imagePath": "C:/fixture/node.exe"
+        },
+        {
+          "instance": 2,
+          "pid": 102,
+          "creationFileTime": "133000000000000002",
+          "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "createSequence": 2,
+          "exitSequence": 3,
+          "osExited": true,
+          "handleReleased": true,
+          "queryStatus": "RUNNING",
+          "finalPeakBytes": 4096,
+          "peakUnits": "bytes",
+          "initialBreakpoint": true,
+          "unexpectedException": false,
+          "imagePath": "C:/fixture/node.exe"
+        }
+      ]
+    }
+  },
+  {
+    "id": "zero-peak",
+    "value": {
+      "kind": "MIXED_PROCESS_ACQUISITION_CONFORMANCE",
+      "schemaVersion": 1,
+      "mode": "SHORT_DESCENDANT",
+      "measurementEligible": false,
+      "status": "COMPLETE",
+      "completeCleanup": true,
+      "error": null,
+      "collector": {
+        "pid": 500,
+        "peakAtReportBytes": 8192,
+        "lifetimeComplete": false
+      },
+      "host": {
+        "pid": 101,
+        "childPid": 102,
+        "childExitCode": 0,
+        "childSignal": null,
+        "childClosed": true,
+        "outcome": "DONE",
+        "childStdout": "DONE"
+      },
+      "processes": [
+        {
+          "instance": 1,
+          "pid": 101,
+          "creationFileTime": "133000000000000001",
+          "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "createSequence": 1,
+          "exitSequence": 4,
+          "osExited": true,
+          "handleReleased": true,
+          "queryStatus": "FINAL",
+          "finalPeakBytes": 4096,
+          "peakUnits": "bytes",
+          "initialBreakpoint": true,
+          "unexpectedException": false,
+          "imagePath": "C:/fixture/node.exe"
+        },
+        {
+          "instance": 2,
+          "pid": 102,
+          "creationFileTime": "133000000000000002",
+          "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "createSequence": 2,
+          "exitSequence": 3,
+          "osExited": true,
+          "handleReleased": true,
+          "queryStatus": "FINAL",
+          "finalPeakBytes": 0,
+          "peakUnits": "bytes",
+          "initialBreakpoint": true,
+          "unexpectedException": false,
+          "imagePath": "C:/fixture/node.exe"
+        }
+      ]
+    }
+  },
+  {
+    "id": "wrong-unit",
+    "value": {
+      "kind": "MIXED_PROCESS_ACQUISITION_CONFORMANCE",
+      "schemaVersion": 1,
+      "mode": "SHORT_DESCENDANT",
+      "measurementEligible": false,
+      "status": "COMPLETE",
+      "completeCleanup": true,
+      "error": null,
+      "collector": {
+        "pid": 500,
+        "peakAtReportBytes": 8192,
+        "lifetimeComplete": false
+      },
+      "host": {
+        "pid": 101,
+        "childPid": 102,
+        "childExitCode": 0,
+        "childSignal": null,
+        "childClosed": true,
+        "outcome": "DONE",
+        "childStdout": "DONE"
+      },
+      "processes": [
+        {
+          "instance": 1,
+          "pid": 101,
+          "creationFileTime": "133000000000000001",
+          "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "createSequence": 1,
+          "exitSequence": 4,
+          "osExited": true,
+          "handleReleased": true,
+          "queryStatus": "FINAL",
+          "finalPeakBytes": 4096,
+          "peakUnits": "bytes",
+          "initialBreakpoint": true,
+          "unexpectedException": false,
+          "imagePath": "C:/fixture/node.exe"
+        },
+        {
+          "instance": 2,
+          "pid": 102,
+          "creationFileTime": "133000000000000002",
+          "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "createSequence": 2,
+          "exitSequence": 3,
+          "osExited": true,
+          "handleReleased": true,
+          "queryStatus": "FINAL",
+          "finalPeakBytes": 4096,
+          "peakUnits": "KiB",
+          "initialBreakpoint": true,
+          "unexpectedException": false,
+          "imagePath": "C:/fixture/node.exe"
+        }
+      ]
+    }
+  },
+  {
+    "id": "unreleased",
+    "value": {
+      "kind": "MIXED_PROCESS_ACQUISITION_CONFORMANCE",
+      "schemaVersion": 1,
+      "mode": "SHORT_DESCENDANT",
+      "measurementEligible": false,
+      "status": "COMPLETE",
+      "completeCleanup": true,
+      "error": null,
+      "collector": {
+        "pid": 500,
+        "peakAtReportBytes": 8192,
+        "lifetimeComplete": false
+      },
+      "host": {
+        "pid": 101,
+        "childPid": 102,
+        "childExitCode": 0,
+        "childSignal": null,
+        "childClosed": true,
+        "outcome": "DONE",
+        "childStdout": "DONE"
+      },
+      "processes": [
+        {
+          "instance": 1,
+          "pid": 101,
+          "creationFileTime": "133000000000000001",
+          "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "createSequence": 1,
+          "exitSequence": 4,
+          "osExited": true,
+          "handleReleased": true,
+          "queryStatus": "FINAL",
+          "finalPeakBytes": 4096,
+          "peakUnits": "bytes",
+          "initialBreakpoint": true,
+          "unexpectedException": false,
+          "imagePath": "C:/fixture/node.exe"
+        },
+        {
+          "instance": 2,
+          "pid": 102,
+          "creationFileTime": "133000000000000002",
+          "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "createSequence": 2,
+          "exitSequence": 3,
+          "osExited": true,
+          "handleReleased": false,
+          "queryStatus": "FINAL",
+          "finalPeakBytes": 4096,
+          "peakUnits": "bytes",
+          "initialBreakpoint": true,
+          "unexpectedException": false,
+          "imagePath": "C:/fixture/node.exe"
+        }
+      ]
+    }
+  },
+  {
+    "id": "fake-approved",
+    "value": {
+      "kind": "MIXED_PROCESS_ACQUISITION_CONFORMANCE",
+      "schemaVersion": 1,
+      "mode": "SHORT_DESCENDANT",
+      "measurementEligible": false,
+      "status": "APPROVED",
+      "completeCleanup": true,
+      "error": null,
+      "collector": {
+        "pid": 500,
+        "peakAtReportBytes": 8192,
+        "lifetimeComplete": false
+      },
+      "host": {
+        "pid": 101,
+        "childPid": 102,
+        "childExitCode": 0,
+        "childSignal": null,
+        "childClosed": true,
+        "outcome": "DONE",
+        "childStdout": "DONE"
+      },
+      "processes": [
+        {
+          "instance": 1,
+          "pid": 101,
+          "creationFileTime": "133000000000000001",
+          "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "createSequence": 1,
+          "exitSequence": 4,
+          "osExited": true,
+          "handleReleased": true,
+          "queryStatus": "FINAL",
+          "finalPeakBytes": 4096,
+          "peakUnits": "bytes",
+          "initialBreakpoint": true,
+          "unexpectedException": false,
+          "imagePath": "C:/fixture/node.exe"
+        },
+        {
+          "instance": 2,
+          "pid": 102,
+          "creationFileTime": "133000000000000002",
+          "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "createSequence": 2,
+          "exitSequence": 3,
+          "osExited": true,
+          "handleReleased": true,
+          "queryStatus": "FINAL",
+          "finalPeakBytes": 4096,
+          "peakUnits": "bytes",
+          "initialBreakpoint": true,
+          "unexpectedException": false,
+          "imagePath": "C:/fixture/node.exe"
+        }
+      ]
+    }
+  },
+  {
+    "id": "fake-eligibility",
+    "value": {
+      "kind": "MIXED_PROCESS_ACQUISITION_CONFORMANCE",
+      "schemaVersion": 1,
+      "mode": "SHORT_DESCENDANT",
+      "measurementEligible": true,
+      "status": "COMPLETE",
+      "completeCleanup": true,
+      "error": null,
+      "collector": {
+        "pid": 500,
+        "peakAtReportBytes": 8192,
+        "lifetimeComplete": false
+      },
+      "host": {
+        "pid": 101,
+        "childPid": 102,
+        "childExitCode": 0,
+        "childSignal": null,
+        "childClosed": true,
+        "outcome": "DONE",
+        "childStdout": "DONE"
+      },
+      "processes": [
+        {
+          "instance": 1,
+          "pid": 101,
+          "creationFileTime": "133000000000000001",
+          "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "createSequence": 1,
+          "exitSequence": 4,
+          "osExited": true,
+          "handleReleased": true,
+          "queryStatus": "FINAL",
+          "finalPeakBytes": 4096,
+          "peakUnits": "bytes",
+          "initialBreakpoint": true,
+          "unexpectedException": false,
+          "imagePath": "C:/fixture/node.exe"
+        },
+        {
+          "instance": 2,
+          "pid": 102,
+          "creationFileTime": "133000000000000002",
+          "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "createSequence": 2,
+          "exitSequence": 3,
+          "osExited": true,
+          "handleReleased": true,
+          "queryStatus": "FINAL",
+          "finalPeakBytes": 4096,
+          "peakUnits": "bytes",
+          "initialBreakpoint": true,
+          "unexpectedException": false,
+          "imagePath": "C:/fixture/node.exe"
+        }
+      ]
+    }
+  },
+  {
+    "id": "unknown-field",
+    "value": {
+      "kind": "MIXED_PROCESS_ACQUISITION_CONFORMANCE",
+      "schemaVersion": 1,
+      "mode": "SHORT_DESCENDANT",
+      "measurementEligible": false,
+      "status": "COMPLETE",
+      "completeCleanup": true,
+      "error": null,
+      "collector": {
+        "pid": 500,
+        "peakAtReportBytes": 8192,
+        "lifetimeComplete": false
+      },
+      "host": {
+        "pid": 101,
+        "childPid": 102,
+        "childExitCode": 0,
+        "childSignal": null,
+        "childClosed": true,
+        "outcome": "DONE",
+        "childStdout": "DONE"
+      },
+      "processes": [
+        {
+          "instance": 1,
+          "pid": 101,
+          "creationFileTime": "133000000000000001",
+          "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "createSequence": 1,
+          "exitSequence": 4,
+          "osExited": true,
+          "handleReleased": true,
+          "queryStatus": "FINAL",
+          "finalPeakBytes": 4096,
+          "peakUnits": "bytes",
+          "initialBreakpoint": true,
+          "unexpectedException": false,
+          "imagePath": "C:/fixture/node.exe"
+        },
+        {
+          "instance": 2,
+          "pid": 102,
+          "creationFileTime": "133000000000000002",
+          "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "createSequence": 2,
+          "exitSequence": 3,
+          "osExited": true,
+          "handleReleased": true,
+          "queryStatus": "FINAL",
+          "finalPeakBytes": 4096,
+          "peakUnits": "bytes",
+          "initialBreakpoint": true,
+          "unexpectedException": false,
+          "imagePath": "C:/fixture/node.exe"
+        }
+      ],
+      "reservationBytes": 8192
+    }
+  },
+  {
+    "id": "cancelled",
+    "value": {
+      "kind": "MIXED_PROCESS_ACQUISITION_CONFORMANCE",
+      "schemaVersion": 1,
+      "mode": "CANCEL_DESCENDANT",
+      "measurementEligible": false,
+      "status": "INELIGIBLE",
+      "completeCleanup": true,
+      "error": null,
+      "collector": {
+        "pid": 500,
+        "peakAtReportBytes": 8192,
+        "lifetimeComplete": false
+      },
+      "host": {
+        "pid": 101,
+        "childPid": 102,
+        "childExitCode": 1,
+        "childSignal": null,
+        "childClosed": true,
+        "outcome": "CANCELLED",
+        "childStdout": ""
+      },
+      "processes": [
+        {
+          "instance": 1,
+          "pid": 101,
+          "creationFileTime": "133000000000000001",
+          "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "createSequence": 1,
+          "exitSequence": 4,
+          "osExited": true,
+          "handleReleased": true,
+          "queryStatus": "FINAL",
+          "finalPeakBytes": 4096,
+          "peakUnits": "bytes",
+          "initialBreakpoint": true,
+          "unexpectedException": false,
+          "imagePath": "C:/fixture/node.exe"
+        },
+        {
+          "instance": 2,
+          "pid": 102,
+          "creationFileTime": "133000000000000002",
+          "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "createSequence": 2,
+          "exitSequence": 3,
+          "osExited": true,
+          "handleReleased": true,
+          "queryStatus": "FINAL",
+          "finalPeakBytes": 4096,
+          "peakUnits": "bytes",
+          "initialBreakpoint": true,
+          "unexpectedException": false,
+          "imagePath": "C:/fixture/node.exe"
+        }
+      ]
+    }
+  },
+  {
+    "id": "injected-final-failure",
+    "value": {
+      "kind": "MIXED_PROCESS_ACQUISITION_CONFORMANCE",
+      "schemaVersion": 1,
+      "mode": "FINAL_QUERY_FAILURE",
+      "measurementEligible": false,
+      "status": "INELIGIBLE",
+      "completeCleanup": true,
+      "error": "INJECTED_FINAL_QUERY_FAILURE",
+      "collector": {
+        "pid": 500,
+        "peakAtReportBytes": 8192,
+        "lifetimeComplete": false
+      },
+      "host": {
+        "pid": 101,
+        "childPid": null,
+        "childExitCode": null,
+        "childSignal": null,
+        "childClosed": false,
+        "outcome": "DONE",
+        "childStdout": ""
+      },
+      "processes": [
+        {
+          "instance": 1,
+          "pid": 101,
+          "creationFileTime": "133000000000000001",
+          "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "createSequence": 1,
+          "exitSequence": 2,
+          "osExited": true,
+          "handleReleased": true,
+          "queryStatus": "INJECTED",
+          "finalPeakBytes": null,
+          "peakUnits": "bytes",
+          "initialBreakpoint": true,
+          "unexpectedException": false,
+          "imagePath": "C:/fixture/node.exe"
+        }
+      ]
+    }
+  },
+  {
+    "id": "missing-image-path",
+    "value": {
+      "kind": "MIXED_PROCESS_ACQUISITION_CONFORMANCE",
+      "schemaVersion": 1,
+      "mode": "SHORT_DESCENDANT",
+      "measurementEligible": false,
+      "status": "COMPLETE",
+      "completeCleanup": true,
+      "error": null,
+      "collector": {
+        "pid": 500,
+        "peakAtReportBytes": 8192,
+        "lifetimeComplete": false
+      },
+      "host": {
+        "pid": 101,
+        "childPid": 102,
+        "childExitCode": 0,
+        "childSignal": null,
+        "childClosed": true,
+        "outcome": "DONE",
+        "childStdout": "DONE"
+      },
+      "processes": [
+        {
+          "instance": 1,
+          "pid": 101,
+          "creationFileTime": "133000000000000001",
+          "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "createSequence": 1,
+          "exitSequence": 4,
+          "osExited": true,
+          "handleReleased": true,
+          "queryStatus": "FINAL",
+          "finalPeakBytes": 4096,
+          "peakUnits": "bytes",
+          "initialBreakpoint": true,
+          "unexpectedException": false,
+          "imagePath": "C:/fixture/node.exe"
+        },
+        {
+          "instance": 2,
+          "pid": 102,
+          "creationFileTime": "133000000000000002",
+          "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "createSequence": 2,
+          "exitSequence": 3,
+          "osExited": true,
+          "handleReleased": true,
+          "queryStatus": "FINAL",
+          "finalPeakBytes": 4096,
+          "peakUnits": "bytes",
+          "initialBreakpoint": true,
+          "unexpectedException": false
+        }
+      ]
+    }
+  },
+  {
+    "id": "empty-image-path",
+    "value": {
+      "kind": "MIXED_PROCESS_ACQUISITION_CONFORMANCE",
+      "schemaVersion": 1,
+      "mode": "SHORT_DESCENDANT",
+      "measurementEligible": false,
+      "status": "COMPLETE",
+      "completeCleanup": true,
+      "error": null,
+      "collector": {
+        "pid": 500,
+        "peakAtReportBytes": 8192,
+        "lifetimeComplete": false
+      },
+      "host": {
+        "pid": 101,
+        "childPid": 102,
+        "childExitCode": 0,
+        "childSignal": null,
+        "childClosed": true,
+        "outcome": "DONE",
+        "childStdout": "DONE"
+      },
+      "processes": [
+        {
+          "instance": 1,
+          "pid": 101,
+          "creationFileTime": "133000000000000001",
+          "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "createSequence": 1,
+          "exitSequence": 4,
+          "osExited": true,
+          "handleReleased": true,
+          "queryStatus": "FINAL",
+          "finalPeakBytes": 4096,
+          "peakUnits": "bytes",
+          "initialBreakpoint": true,
+          "unexpectedException": false,
+          "imagePath": "C:/fixture/node.exe"
+        },
+        {
+          "instance": 2,
+          "pid": 102,
+          "creationFileTime": "133000000000000002",
+          "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "createSequence": 2,
+          "exitSequence": 3,
+          "osExited": true,
+          "handleReleased": true,
+          "queryStatus": "FINAL",
+          "finalPeakBytes": 4096,
+          "peakUnits": "bytes",
+          "initialBreakpoint": true,
+          "unexpectedException": false,
+          "imagePath": ""
+        }
+      ]
+    }
+  }
+]

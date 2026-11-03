@@ -1,0 +1,24 @@
+{
+  "status": "SOURCE_REVIEW_NOT_EXECUTED",
+  "source": "KafkaSource.java",
+  "obligations": [
+    {
+      "id": "KAFKA-TYPED-INITIALIZER",
+      "requires": "One source variable has a typed declaration and an initializer; source locations/owner must prove correspondence before any definition folding."
+    },
+    {
+      "id": "KAFKA-SEND-LISTENER",
+      "requires": "Proven KafkaTemplate.send and imported KafkaListener have separate producer/consumer owners."
+    },
+    {
+      "id": "KAFKA-NAMESPACE",
+      "requires": "A literal topic does not prove deployment namespace or payload/key schema compatibility."
+    }
+  ],
+  "limits": [
+    "Independent source-level obligations, not predicted raw output or an approved numeric baseline.",
+    "No Rust/Native/Python/Java execution has been performed for these sources.",
+    "COMPLETE/PARTIAL actual observations must be preserved; sources are parsed as text, not imported or run.",
+    "This file is not consumed as Canonical IR, a production admission flag, or a substitute for original critical probes."
+  ]
+}

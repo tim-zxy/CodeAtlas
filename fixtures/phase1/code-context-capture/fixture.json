@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "p1-code-context-capture-v1",
+  "category": "runtime-graph",
+  "phase": "1",
+  "languages": [],
+  "frameworks": [],
+  "capabilities": ["SQLITE_CAPTURE_CONTRACT_ONLY"],
+  "inputs": {
+    "cases": "inputs/cases.json",
+    "authoring": "authoring.mjs"
+  },
+  "expected": {
+    "views": "expected/views.json",
+    "transcripts": "expected/transcripts.json",
+    "readPlan": "expected/read-plan.json"
+  },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

@@ -1,0 +1,98 @@
+{
+  "kind": "MAPPING_PROJECTION_EXPECTATION",
+  "semanticDisposition": "PROJECTABLE_WITHOUT_POLICY",
+  "projection": {
+    "repositoryId": "repo-fixture",
+    "revisionId": "rev-a",
+    "sourceFileId": "source-fixture",
+    "sourceFingerprint": "fa9a07e5b149109de9313e541101b3363a014b87e18f469e91643781ed2833c1",
+    "sourceRange": {
+      "sourceFileId": "source-fixture",
+      "startLine": 0,
+      "startColumn": 25,
+      "endLine": 0,
+      "endColumn": 43
+    },
+    "syntaxKind": "DECORATION",
+    "owner": {
+      "scope": "REPOSITORY",
+      "repositoryId": "repo-fixture",
+      "entity": {
+        "kind": "CODE_NODE",
+        "id": "node-owner",
+        "revisionId": "rev-a"
+      }
+    },
+    "payload": {
+      "callee": {
+        "state": "NON_RESOLVED",
+        "name": "Route",
+        "target": null,
+        "candidates": []
+      },
+      "arguments": [
+        {
+          "name": null,
+          "value": {
+            "kind": "STRING",
+            "value": "/fixture"
+          },
+          "sourceRange": {
+            "sourceFileId": "source-fixture",
+            "startLine": 0,
+            "startColumn": 32,
+            "endLine": 0,
+            "endColumn": 42
+          }
+        }
+      ]
+    }
+  },
+  "requiredEntities": [
+    {
+      "kind": "SOURCE_FILE",
+      "id": "source-fixture",
+      "revisionId": "rev-a"
+    },
+    {
+      "kind": "CODE_NODE",
+      "id": "node-owner",
+      "revisionId": "rev-a"
+    }
+  ],
+  "keyMeaning": {
+    "owner": {
+      "kind": "CODE_NODE",
+      "id": "node-owner"
+    },
+    "payload": {
+      "callee": {
+        "state": "NON_RESOLVED",
+        "name": "Route",
+        "target": null,
+        "candidates": []
+      },
+      "arguments": [
+        {
+          "name": null,
+          "value": {
+            "kind": "STRING",
+            "value": "/fixture"
+          },
+          "sourceRange": {
+            "sourceFileId": "source-fixture",
+            "startLine": 0,
+            "startColumn": 32,
+            "endLine": 0,
+            "endColumn": 42
+          }
+        }
+      ]
+    }
+  },
+  "admission": "BLOCKED_POLICY",
+  "canonicalEnvelope": null,
+  "keyCanonicalText": "{\"owner\":{\"id\":\"node-owner\",\"kind\":\"CODE_NODE\"},\"payload\":{\"arguments\":[{\"name\":null,\"sourceRange\":{\"endColumn\":42,\"endLine\":0,\"sourceFileId\":\"source-fixture\",\"startColumn\":32,\"startLine\":0},\"value\":{\"kind\":\"STRING\",\"value\":\"/fixture\"}}],\"callee\":{\"candidates\":[],\"name\":\"Route\",\"state\":\"NON_RESOLVED\",\"target\":null}}}",
+  "payloadDigest": "cbc3b5a3aecbe6576793c5abf698f114d2ccb18cdb41b50c06d1239cf984a6f2",
+  "syntaxKey": "syntax-key-v1:64fe2681361da6680e299239cfa417472ef623652188b44441120e6253c70b17"
+}

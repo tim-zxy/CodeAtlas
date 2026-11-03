@@ -1,0 +1,64 @@
+{
+  "protocolVersion": 4,
+  "requestId": "syntax:request",
+  "sequence": 0,
+  "type": "OBSERVE_SYNTAX",
+  "payload": {
+    "irSchemaVersion": 1,
+    "repository": {
+      "id": "repo:one",
+      "rootPath": "/fixture/repo"
+    },
+    "providerId": "native",
+    "providerVersion": "0.0.0",
+    "providerSnapshotId": "snapshot:one",
+    "extractorVersion": "syntax-v1",
+    "languages": [
+      {
+        "languageId": "python",
+        "grammarVersion": "0.25.0",
+        "analyzerVersion": "0.0.0",
+        "compatibilityVersion": "syntax-v1"
+      }
+    ],
+    "sourceFiles": [
+      {
+        "id": "file:one",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "path": "app.py",
+        "contentFingerprint": "sha256:cb1f387387a358c01522d36be610f973dd71642693d1930a786d3d566a0236c7",
+        "classification": {
+          "role": "SOURCE",
+          "provenance": "AUTHORED",
+          "contentKind": "TEXT"
+        },
+        "languageHint": "python",
+        "sensitivity": "INTERNAL"
+      }
+    ],
+    "removedSourceFiles": [],
+    "owners": [],
+    "deadlineEpochMs": null,
+    "resourceBudget": {
+      "maxDurationMs": 1000,
+      "maxMemoryBytes": 65536,
+      "maxEvents": 1000,
+      "maxInputBytes": 65536,
+      "maxOutputBytes": 65536,
+      "maxDepth": 64,
+      "maxItems": 1000
+    },
+    "expectedActivationBasis": null,
+    "targetSource": {
+      "repositoryId": "repo:one",
+      "revisionId": "revision:worktree",
+      "contentFingerprint": "content:first"
+    },
+    "ownerBinding": {
+      "kind": "PROVISIONAL_CODE",
+      "stageDigest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "ownerMapDigest": "686dc843f882093a74daf5c315c04721925fed87287d082109037a93110d12a3"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "observation": [
+    "java-only",
+    "mixed",
+    "python-only"
+  ],
+  "owner": [
+    "full-python",
+    "delta-python-modified",
+    "delta-delete-only"
+  ],
+  "source": "Original frozen stage-observation-independent JSONL and owner-scope-independent references; never product output"
+}

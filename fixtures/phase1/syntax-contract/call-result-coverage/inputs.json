@@ -1,0 +1,56 @@
+{
+  "cases": [
+    {
+      "id": "direct",
+      "path": "direct.py"
+    },
+    {
+      "id": "wrapped",
+      "path": "wrapped.py"
+    },
+    {
+      "id": "argument-list",
+      "path": "argument-list.py"
+    },
+    {
+      "id": "mixed",
+      "path": "mixed.py"
+    },
+    {
+      "id": "conditional",
+      "path": "conditional.py"
+    },
+    {
+      "id": "parenthesized",
+      "path": "parenthesized.py"
+    },
+    {
+      "id": "class",
+      "path": "class.py"
+    },
+    {
+      "id": "wildcard",
+      "path": "wildcard.py"
+    },
+    {
+      "id": "syntax-error",
+      "path": "syntax-error.py"
+    },
+    {
+      "id": "dynamic-callee",
+      "path": "dynamic-callee.py"
+    },
+    {
+      "id": "splat",
+      "path": "splat.py"
+    },
+    {
+      "id": "escaped",
+      "path": "escaped.py"
+    },
+    {
+      "id": "dictionary",
+      "path": "dictionary.py"
+    }
+  ]
+}

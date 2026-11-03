@@ -1,0 +1,5 @@
+{
+  "point": "native-state-clear",
+  "base": "base-input.json",
+  "processExit": true
+}

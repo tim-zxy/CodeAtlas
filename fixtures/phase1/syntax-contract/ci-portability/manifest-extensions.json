@@ -1,0 +1,104 @@
+{
+  "fixtures/phase1/r011-history-capture/fixture.json": {
+    "origin": ".superpowers/sdd/2026-10-25-phase1-r011-history-capture/fixture-v4-before-support-order/fixtures/phase1/r011-history-capture/fixture.json",
+    "sha256": "5489fb5b499870fa4ae679a24c99613971445a6420558dd76681e71243d1ff95",
+    "added": {
+      "inputs": {
+        "bindingHistory": "binding-history/inputs.json"
+      },
+      "expected": {
+        "bindingHistory": "binding-history/expected.json"
+      }
+    }
+  },
+  "fixtures/phase1/syntax-contract/fixture.json": {
+    "origin": ".superpowers/sdd/2026-10-29-phase1-binding-contract/before/fixtures/phase1/syntax-contract/fixture.json",
+    "sha256": "38d415dbbb4718c8ddb65e54da62e1aa58f3d86eb74ecebacac7776322973c0b",
+    "added": {
+      "inputs": {
+        "bindingContract": "binding-contract/inputs.json",
+        "bindingObservation": "binding-observation/inputs.json",
+        "bindingSource_python_direct_py": "binding-observation/sources/python-direct.py",
+        "bindingSource_python_nested_py": "binding-observation/sources/python-nested.py",
+        "bindingSource_python_scopes_py": "binding-observation/sources/python-scopes.py",
+        "bindingSource_java_typed_java": "binding-observation/sources/java-typed.java",
+        "bindingSource_java_scopes_java": "binding-observation/sources/java-scopes.java",
+        "bindingHistory": "binding-history/inputs.json",
+        "bindingHistorySource": "binding-history/source.py",
+        "callResultCoverage": "call-result-coverage/inputs.json",
+        "callResultSource_argument_list": "call-result-coverage/argument-list.py",
+        "callResultSource_class": "call-result-coverage/class.py",
+        "callResultSource_conditional": "call-result-coverage/conditional.py",
+        "callResultSource_dictionary": "call-result-coverage/dictionary.py",
+        "callResultSource_direct": "call-result-coverage/direct.py",
+        "callResultSource_dynamic_callee": "call-result-coverage/dynamic-callee.py",
+        "callResultSource_escaped": "call-result-coverage/escaped.py",
+        "callResultSource_mixed": "call-result-coverage/mixed.py",
+        "callResultSource_parenthesized": "call-result-coverage/parenthesized.py",
+        "callResultSource_splat": "call-result-coverage/splat.py",
+        "callResultSource_syntax_error": "call-result-coverage/syntax-error.py",
+        "callResultSource_wildcard": "call-result-coverage/wildcard.py",
+        "callResultSource_wrapped": "call-result-coverage/wrapped.py",
+        "bindingSufficiency": "binding-sufficiency/inputs.json",
+        "bindingPipeline": "binding-pipeline/",
+        "surfaceSourceJ6": "surface-closure/sources/SourceSafety.java",
+        "surfaceClosure": "surface-closure/inputs.json",
+        "surfaceRecordedLibrary": "surface-closure/recorded-library-inputs.json.gz",
+        "surfaceRecordedLoader": "surface-closure/corpus.mjs",
+        "ciHistoricalInputs": "ci-portability/"
+      },
+      "expected": {
+        "bindingContract": "binding-contract/expected.json",
+        "bindingObservation": "binding-observation/expected.json",
+        "bindingHistory": "binding-history/expected.json",
+        "callResultCoverage": "call-result-coverage/expected.json",
+        "bindingSufficiency": "binding-sufficiency/expected.json",
+        "bindingPipeline": "binding-pipeline/expected.json",
+        "bindingPipelineStream": "binding-pipeline/stream-expected.json",
+        "bindingPipelineMapper": "binding-pipeline/mapper-expected.json",
+        "bindingPipelineHistory": "binding-pipeline/history-expected.json",
+        "surfaceClosure": "surface-closure/expected.json"
+      }
+    }
+  },
+  "fixtures/phase1/plugin-context/fixture.json": {
+    "origin": ".superpowers/sdd/2026-10-29-phase1-framework-detection/before/fixtures/phase1/plugin-context/fixture.json",
+    "sha256": "6f776bebbcde649611b2c258cdee848cad2f5f474b69b7c8a83d6611ca5522bc",
+    "added": {
+      "inputs": {
+        "frameworkDetection": "inputs/framework-detection.json",
+        "bindingSufficiency": "binding-sufficiency/inputs.json",
+        "bindingExtraction": "binding-extraction/inputs.json",
+        "runtimeCandidate": "runtime-candidate/inputs.json"
+      },
+      "expected": {
+        "frameworkDetection": "expected/framework-detection.json",
+        "bindingSufficiency": "binding-sufficiency/expected.json",
+        "bindingExtraction": "binding-extraction/expected.json",
+        "runtimeCandidate": "runtime-candidate/expected.json"
+      }
+    }
+  },
+  "fixtures/phase1/ir-contract/fixture.json": {
+    "origin": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/isolated-tests/codeatlas-portable-9DZClg/fixtures/phase1/ir-contract/fixture.json",
+    "sha256": "6f71fc4ade6824068abe6aa0d0c3816bd00a2d79c3acb0122ed3ff243d383573",
+    "added": {
+      "inputs": {
+        "declaredExecution": "declared-execution/inputs.json"
+      },
+      "expected": {
+        "declaredExecution": "declared-execution/expected.json"
+      }
+    }
+  },
+  "fixtures/evaluation/phase05-code-intelligence/fixture.json": {
+    "origin": ".superpowers/sdd/2026-10-31-phase1-b-remaining-execution/integration-preparation/before/fixtures/evaluation/phase05-code-intelligence/fixture.json",
+    "sha256": "b66d8672c12f66e9185ceb0668c68bbef3bcbabf92411245e103af06b8a8d975",
+    "added": {
+      "inputs": {
+        "schemaCompatibility": "inputs/schema-compatibility.json"
+      },
+      "expected": {}
+    }
+  }
+}

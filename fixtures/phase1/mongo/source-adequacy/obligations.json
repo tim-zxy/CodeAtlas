@@ -1,0 +1,20 @@
+{
+  "status": "SOURCE_REVIEW_NOT_EXECUTED",
+  "source": "MongoSource.java",
+  "obligations": [
+    {
+      "id": "MONGO-READ-WRITE",
+      "requires": "Static events collection and proven MongoTemplate receiver distinguish READ and WRITE."
+    },
+    {
+      "id": "MONGO-WATCH",
+      "requires": "watch -> returned iterable -> forEach -> handle needs an actual result/handler relationship; no same-name receiver or ordinary WRITE may substitute."
+    }
+  ],
+  "limits": [
+    "Independent source-level obligations, not predicted raw output or an approved numeric baseline.",
+    "No Rust/Native/Python/Java execution has been performed for these sources.",
+    "COMPLETE/PARTIAL actual observations must be preserved; sources are parsed as text, not imported or run.",
+    "This file is not consumed as Canonical IR, a production admission flag, or a substitute for original critical probes."
+  ]
+}

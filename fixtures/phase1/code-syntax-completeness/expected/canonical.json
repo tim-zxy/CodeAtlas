@@ -1,0 +1,664 @@
+{
+  "no-files": {
+    "nodePairs": [],
+    "edgePairs": []
+  },
+  "empty-python": {
+    "nodePairs": [
+      {
+        "provider": {
+          "factType": "NODE",
+          "providerId": "native",
+          "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb"
+        },
+        "canonical": {
+          "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+          "factKey": "node-fact-v1:9f87fdd184180db6f32fe351dc70bd34a7f1d2baebfa5f06eb7714f1cb1f3dc5",
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "name": "app.py",
+          "qualifiedName": "app.py",
+          "sourceRange": null,
+          "confidence": {
+            "score": 1,
+            "method": "parser",
+            "reasons": []
+          },
+          "kind": "MODULE"
+        }
+      }
+    ],
+    "edgePairs": []
+  },
+  "comment-python": {
+    "nodePairs": [
+      {
+        "provider": {
+          "factType": "NODE",
+          "providerId": "native",
+          "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb"
+        },
+        "canonical": {
+          "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+          "factKey": "node-fact-v1:9f87fdd184180db6f32fe351dc70bd34a7f1d2baebfa5f06eb7714f1cb1f3dc5",
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "name": "app.py",
+          "qualifiedName": "app.py",
+          "sourceRange": null,
+          "confidence": {
+            "score": 1,
+            "method": "parser",
+            "reasons": []
+          },
+          "kind": "MODULE"
+        }
+      }
+    ],
+    "edgePairs": []
+  },
+  "wildcard-python": {
+    "nodePairs": [
+      {
+        "provider": {
+          "factType": "NODE",
+          "providerId": "native",
+          "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb"
+        },
+        "canonical": {
+          "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+          "factKey": "node-fact-v1:9f87fdd184180db6f32fe351dc70bd34a7f1d2baebfa5f06eb7714f1cb1f3dc5",
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "name": "app.py",
+          "qualifiedName": "app.py",
+          "sourceRange": null,
+          "confidence": {
+            "score": 1,
+            "method": "parser",
+            "reasons": []
+          },
+          "kind": "MODULE"
+        }
+      }
+    ],
+    "edgePairs": []
+  },
+  "class-python": {
+    "nodePairs": [
+      {
+        "provider": {
+          "factType": "NODE",
+          "providerId": "native",
+          "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb"
+        },
+        "canonical": {
+          "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+          "factKey": "node-fact-v1:9f87fdd184180db6f32fe351dc70bd34a7f1d2baebfa5f06eb7714f1cb1f3dc5",
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "name": "app.py",
+          "qualifiedName": "app.py",
+          "sourceRange": null,
+          "confidence": {
+            "score": 1,
+            "method": "parser",
+            "reasons": []
+          },
+          "kind": "MODULE"
+        }
+      }
+    ],
+    "edgePairs": []
+  },
+  "nested-python": {
+    "nodePairs": [
+      {
+        "provider": {
+          "factType": "NODE",
+          "providerId": "native",
+          "providerFactId": "python-symbol-v1:7cd74888a9dfe78f34d61698c8941fcabd098b838e1ea5074632b5bbdbde0200"
+        },
+        "canonical": {
+          "id": "canonical-node-v1:392d353928fad72cecb6bfdd1df115a2738e949eef016a71abdb3f05fb5440b3",
+          "factKey": "node-fact-v1:52fae057df062de49b1e14d9544be1e7cfa2c16233081cc756154e0ffa215e17",
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "name": "inner_fixture",
+          "qualifiedName": "app.py::outer_fixture.inner_fixture",
+          "sourceRange": {
+            "sourceFileId": "file:one",
+            "startLine": 1,
+            "startColumn": 8,
+            "endLine": 1,
+            "endColumn": 21
+          },
+          "confidence": {
+            "score": 1,
+            "method": "parser",
+            "reasons": []
+          },
+          "kind": "SYMBOL",
+          "symbolKind": "FUNCTION"
+        }
+      },
+      {
+        "provider": {
+          "factType": "NODE",
+          "providerId": "native",
+          "providerFactId": "python-symbol-v1:c6e69c155536d9a72f9c2070cb19f7356f8c1856cdb675f9de1a768f683c9783"
+        },
+        "canonical": {
+          "id": "canonical-node-v1:dfa99e569f26938727b6a9250f1d193813d6bc97578a19bdd52ee1e2d1b558bf",
+          "factKey": "node-fact-v1:66c7fed1fedc645e6c235d08a85ffa649ee70d9ac04aced5e57d473f320e17ea",
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "name": "outer_fixture",
+          "qualifiedName": "app.py::outer_fixture",
+          "sourceRange": {
+            "sourceFileId": "file:one",
+            "startLine": 0,
+            "startColumn": 4,
+            "endLine": 0,
+            "endColumn": 17
+          },
+          "confidence": {
+            "score": 1,
+            "method": "parser",
+            "reasons": []
+          },
+          "kind": "SYMBOL",
+          "symbolKind": "FUNCTION"
+        }
+      },
+      {
+        "provider": {
+          "factType": "NODE",
+          "providerId": "native",
+          "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb"
+        },
+        "canonical": {
+          "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+          "factKey": "node-fact-v1:9f87fdd184180db6f32fe351dc70bd34a7f1d2baebfa5f06eb7714f1cb1f3dc5",
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "name": "app.py",
+          "qualifiedName": "app.py",
+          "sourceRange": null,
+          "confidence": {
+            "score": 1,
+            "method": "parser",
+            "reasons": []
+          },
+          "kind": "MODULE"
+        }
+      }
+    ],
+    "edgePairs": []
+  },
+  "malformed-python": {
+    "nodePairs": [
+      {
+        "provider": {
+          "factType": "NODE",
+          "providerId": "native",
+          "providerFactId": "python-symbol-v1:cdddb41f1bba7e1339eb9fa293477518167ea3342ff89e3cb9bc159d10767a98"
+        },
+        "canonical": {
+          "id": "canonical-node-v1:4659fe2007e4a7af30da5baf7853f8907b5230e2e3d3f4980ce12b8c3f45b637",
+          "factKey": "node-fact-v1:01d5c10774aa1493d05db659c5043dde3d8b32f6c11d15c7c19ab4a36eab1bd0",
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "name": "broken_fixture",
+          "qualifiedName": "app.py::broken_fixture",
+          "sourceRange": {
+            "sourceFileId": "file:one",
+            "startLine": 1,
+            "startColumn": 4,
+            "endLine": 1,
+            "endColumn": 18
+          },
+          "confidence": {
+            "score": 1,
+            "method": "parser",
+            "reasons": []
+          },
+          "kind": "SYMBOL",
+          "symbolKind": "FUNCTION"
+        }
+      },
+      {
+        "provider": {
+          "factType": "NODE",
+          "providerId": "native",
+          "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb"
+        },
+        "canonical": {
+          "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+          "factKey": "node-fact-v1:9f87fdd184180db6f32fe351dc70bd34a7f1d2baebfa5f06eb7714f1cb1f3dc5",
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "name": "app.py",
+          "qualifiedName": "app.py",
+          "sourceRange": null,
+          "confidence": {
+            "score": 1,
+            "method": "parser",
+            "reasons": []
+          },
+          "kind": "MODULE"
+        }
+      }
+    ],
+    "edgePairs": []
+  },
+  "dynamic-python": {
+    "nodePairs": [
+      {
+        "provider": {
+          "factType": "NODE",
+          "providerId": "native",
+          "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb"
+        },
+        "canonical": {
+          "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+          "factKey": "node-fact-v1:9f87fdd184180db6f32fe351dc70bd34a7f1d2baebfa5f06eb7714f1cb1f3dc5",
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "name": "app.py",
+          "qualifiedName": "app.py",
+          "sourceRange": null,
+          "confidence": {
+            "score": 1,
+            "method": "parser",
+            "reasons": []
+          },
+          "kind": "MODULE"
+        }
+      },
+      {
+        "provider": {
+          "factType": "NODE",
+          "providerId": "native",
+          "providerFactId": "python-symbol-v1:a0f621d2c8b7d32c8d0eef16fad12a36a9413d8da0964ecfdb8cfcf6ba41fa3e"
+        },
+        "canonical": {
+          "id": "canonical-node-v1:5dd2cc1346e8b7d6d2cd4aeb0d0b5f38d421a6e8f103db28a589bee28e928a58",
+          "factKey": "node-fact-v1:ec196d9890cfc5d33e6f068fedd94a4ff10c02a50329ad715ae0643810fa7e1d",
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "name": "endpoint_fixture",
+          "qualifiedName": "app.py::endpoint_fixture",
+          "sourceRange": {
+            "sourceFileId": "file:one",
+            "startLine": 3,
+            "startColumn": 4,
+            "endLine": 3,
+            "endColumn": 20
+          },
+          "confidence": {
+            "score": 1,
+            "method": "parser",
+            "reasons": []
+          },
+          "kind": "SYMBOL",
+          "symbolKind": "FUNCTION"
+        }
+      }
+    ],
+    "edgePairs": [
+      {
+        "provider": {
+          "factType": "EDGE",
+          "providerId": "native",
+          "providerFactId": "python-edge-v1:d9f46b09f64fa4a9a04166589c6187f860e20f52132988a447840c0fb6301cec"
+        },
+        "canonical": {
+          "id": "canonical-edge-v1:822b7a26b4eac4999066aab24e899ee06faa3ba32360fda7359238be5094eba5",
+          "factKey": "edge-fact-v1:e3030ee0e1cdcba1c76b3bf18c1722469987b5ce4ce987e7c4ad7d543b6763da",
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "kind": "IMPORT",
+          "source": {
+            "factType": "NODE",
+            "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+          },
+          "target": {
+            "state": "UNRESOLVED",
+            "resolution": "UNRESOLVED",
+            "originalHint": "fastapi.FastAPI",
+            "candidates": []
+          },
+          "sourceRange": {
+            "sourceFileId": "file:one",
+            "startLine": 0,
+            "startColumn": 20,
+            "endLine": 0,
+            "endColumn": 27
+          },
+          "confidence": {
+            "score": 1,
+            "method": "parser",
+            "reasons": []
+          }
+        }
+      }
+    ]
+  },
+  "alias-reference-python": {
+    "nodePairs": [
+      {
+        "provider": {
+          "factType": "NODE",
+          "providerId": "native",
+          "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb"
+        },
+        "canonical": {
+          "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+          "factKey": "node-fact-v1:9f87fdd184180db6f32fe351dc70bd34a7f1d2baebfa5f06eb7714f1cb1f3dc5",
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "name": "app.py",
+          "qualifiedName": "app.py",
+          "sourceRange": null,
+          "confidence": {
+            "score": 1,
+            "method": "parser",
+            "reasons": []
+          },
+          "kind": "MODULE"
+        }
+      }
+    ],
+    "edgePairs": [
+      {
+        "provider": {
+          "factType": "EDGE",
+          "providerId": "native",
+          "providerFactId": "python-edge-v1:778fbe8c61c6ddb3ac42c06c7d6014fd8a250b2b36c53529c4dad1a70fdef970"
+        },
+        "canonical": {
+          "id": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f",
+          "factKey": "edge-fact-v1:1a0f6116e03a3e0ec190dcae40a69e4c6dc7b8306c921c480ee61a134faefbb1",
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "kind": "REFERENCE",
+          "source": {
+            "factType": "NODE",
+            "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+          },
+          "target": {
+            "state": "UNRESOLVED",
+            "resolution": "UNRESOLVED",
+            "originalHint": "p",
+            "candidates": []
+          },
+          "sourceRange": {
+            "sourceFileId": "file:one",
+            "startLine": 1,
+            "startColumn": 4,
+            "endLine": 1,
+            "endColumn": 5
+          },
+          "confidence": {
+            "score": 1,
+            "method": "parser",
+            "reasons": []
+          }
+        }
+      },
+      {
+        "provider": {
+          "factType": "EDGE",
+          "providerId": "native",
+          "providerFactId": "python-edge-v1:37bdc236f427d4e4dc22c574e10b48a36d14083aa7f3f4ae471776631d75fa67"
+        },
+        "canonical": {
+          "id": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b",
+          "factKey": "edge-fact-v1:4a62f7e32fef238335777788b0a79f7ca94e221cf803955bce28151f1a3b608a",
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "kind": "IMPORT",
+          "source": {
+            "factType": "NODE",
+            "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+          },
+          "target": {
+            "state": "UNRESOLVED",
+            "resolution": "UNRESOLVED",
+            "originalHint": "pkg",
+            "candidates": []
+          },
+          "sourceRange": {
+            "sourceFileId": "file:one",
+            "startLine": 0,
+            "startColumn": 7,
+            "endLine": 0,
+            "endColumn": 15
+          },
+          "confidence": {
+            "score": 1,
+            "method": "parser",
+            "reasons": []
+          }
+        }
+      }
+    ]
+  },
+  "async-python": {
+    "nodePairs": [
+      {
+        "provider": {
+          "factType": "NODE",
+          "providerId": "native",
+          "providerFactId": "python-symbol-v1:aaffba91aa190063253e6b3682741be44e1c4438bb7f0100642761433481e6fb"
+        },
+        "canonical": {
+          "id": "canonical-node-v1:49808a2f6e357dd1d21b8684807fa9273ab86c0aad2841c1701f8f1bc7fba7b3",
+          "factKey": "node-fact-v1:2b6044834b2037a0c595bc76bfc2f76463a732070370a5b66a0c1ccd34fb0a79",
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "name": "f",
+          "qualifiedName": "app.py::f",
+          "sourceRange": {
+            "sourceFileId": "file:one",
+            "startLine": 0,
+            "startColumn": 10,
+            "endLine": 0,
+            "endColumn": 11
+          },
+          "confidence": {
+            "score": 1,
+            "method": "parser",
+            "reasons": []
+          },
+          "kind": "SYMBOL",
+          "symbolKind": "FUNCTION"
+        }
+      },
+      {
+        "provider": {
+          "factType": "NODE",
+          "providerId": "native",
+          "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb"
+        },
+        "canonical": {
+          "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+          "factKey": "node-fact-v1:9f87fdd184180db6f32fe351dc70bd34a7f1d2baebfa5f06eb7714f1cb1f3dc5",
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "name": "app.py",
+          "qualifiedName": "app.py",
+          "sourceRange": null,
+          "confidence": {
+            "score": 1,
+            "method": "parser",
+            "reasons": []
+          },
+          "kind": "MODULE"
+        }
+      }
+    ],
+    "edgePairs": []
+  },
+  "java-only": {
+    "nodePairs": [],
+    "edgePairs": []
+  },
+  "mixed": {
+    "nodePairs": [
+      {
+        "provider": {
+          "factType": "NODE",
+          "providerId": "native",
+          "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb"
+        },
+        "canonical": {
+          "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+          "factKey": "node-fact-v1:9f87fdd184180db6f32fe351dc70bd34a7f1d2baebfa5f06eb7714f1cb1f3dc5",
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "name": "app.py",
+          "qualifiedName": "app.py",
+          "sourceRange": null,
+          "confidence": {
+            "score": 1,
+            "method": "parser",
+            "reasons": []
+          },
+          "kind": "MODULE"
+        }
+      }
+    ],
+    "edgePairs": [
+      {
+        "provider": {
+          "factType": "EDGE",
+          "providerId": "native",
+          "providerFactId": "python-edge-v1:778fbe8c61c6ddb3ac42c06c7d6014fd8a250b2b36c53529c4dad1a70fdef970"
+        },
+        "canonical": {
+          "id": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f",
+          "factKey": "edge-fact-v1:1a0f6116e03a3e0ec190dcae40a69e4c6dc7b8306c921c480ee61a134faefbb1",
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "kind": "REFERENCE",
+          "source": {
+            "factType": "NODE",
+            "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+          },
+          "target": {
+            "state": "UNRESOLVED",
+            "resolution": "UNRESOLVED",
+            "originalHint": "p",
+            "candidates": []
+          },
+          "sourceRange": {
+            "sourceFileId": "file:one",
+            "startLine": 1,
+            "startColumn": 4,
+            "endLine": 1,
+            "endColumn": 5
+          },
+          "confidence": {
+            "score": 1,
+            "method": "parser",
+            "reasons": []
+          }
+        }
+      },
+      {
+        "provider": {
+          "factType": "EDGE",
+          "providerId": "native",
+          "providerFactId": "python-edge-v1:37bdc236f427d4e4dc22c574e10b48a36d14083aa7f3f4ae471776631d75fa67"
+        },
+        "canonical": {
+          "id": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b",
+          "factKey": "edge-fact-v1:4a62f7e32fef238335777788b0a79f7ca94e221cf803955bce28151f1a3b608a",
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "kind": "IMPORT",
+          "source": {
+            "factType": "NODE",
+            "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+          },
+          "target": {
+            "state": "UNRESOLVED",
+            "resolution": "UNRESOLVED",
+            "originalHint": "pkg",
+            "candidates": []
+          },
+          "sourceRange": {
+            "sourceFileId": "file:one",
+            "startLine": 0,
+            "startColumn": 7,
+            "endLine": 0,
+            "endColumn": 15
+          },
+          "confidence": {
+            "score": 1,
+            "method": "parser",
+            "reasons": []
+          }
+        }
+      }
+    ]
+  },
+  "javaCodeV2": {
+    "nodePairs": [
+      {
+        "provider": {
+          "factType": "NODE",
+          "providerId": "native",
+          "providerFactId": "java:unit"
+        },
+        "canonical": {
+          "id": "canonical-node-v1:b8cc9d8484f5c608ab4fd16c8fa699f60df84e2f488d03111e93b5101cc5d8d2",
+          "factKey": "node-fact-v1:426cb60ee0500370996dbbdfd7ef72985b743b06382ef7df9e6b79699e1138a7",
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "name": "Box.java",
+          "qualifiedName": "Box.java",
+          "sourceRange": null,
+          "confidence": {
+            "score": 1,
+            "method": "parser",
+            "reasons": []
+          },
+          "kind": "MODULE"
+        }
+      },
+      {
+        "provider": {
+          "factType": "NODE",
+          "providerId": "native",
+          "providerFactId": "java:Box"
+        },
+        "canonical": {
+          "id": "canonical-node-v1:d4d1141ea168c690fb883ecbbaba0e7057a010eb7ef98d8cef6fc9172cbd42d8",
+          "factKey": "node-fact-v1:fa07e81351801d888b39e1742617736c6fe9d1f50c0ee59f63680270f36e3856",
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "name": "Box",
+          "qualifiedName": "Box",
+          "sourceRange": {
+            "sourceFileId": "java:file",
+            "startLine": 0,
+            "startColumn": 6,
+            "endLine": 0,
+            "endColumn": 9
+          },
+          "confidence": {
+            "score": 1,
+            "method": "parser",
+            "reasons": []
+          },
+          "kind": "TYPE",
+          "typeKind": "CLASS"
+        }
+      }
+    ],
+    "edgePairs": []
+  }
+}

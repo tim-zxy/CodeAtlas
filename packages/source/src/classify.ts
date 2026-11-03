@@ -26,15 +26,17 @@ function sameFile(
   );
 }
 
-export function classifySample(
+function classifySampleCore(
   path: RepositoryRelativePath,
   sample: Buffer,
   sizeBytes: number,
+  mixed = false,
 ): Pick<ScannedFile, 'languageHint' | 'classification'> {
   const parts = path.split('/');
   const lower = parts.map((part) => part.toLowerCase());
   const basename = parts.at(-1)!;
   const isJava = basename.toLowerCase().endsWith('.java');
+  const isPython = mixed && basename.toLowerCase().endsWith('.py');
   const testRole = lower.some((part) => ['test', 'tests', '__tests__'].includes(part));
   const provenance = lower.includes('vendor')
     ? 'VENDOR'
@@ -51,9 +53,9 @@ export function classifySample(
     }
   }
   return {
-    languageHint: isJava ? 'java' : null,
+    languageHint: isJava ? 'java' : isPython ? 'python' : null,
     classification: {
-      role: testRole ? 'TEST' : isJava ? 'SOURCE' : 'OTHER',
+      role: testRole ? 'TEST' : isJava || isPython ? 'SOURCE' : 'OTHER',
       provenance,
       contentKind,
     },
@@ -98,4 +100,15 @@ export async function classifyFile(
     }
     throw new SourceScanError('FILE_READ_FAILED', 'Cannot classify source file');
   }
+}
+
+export function classifySample(path: RepositoryRelativePath, sample: Buffer, sizeBytes: number) {
+  return classifySampleCore(path, sample, sizeBytes);
+}
+export function classifyMixedSample(
+  path: RepositoryRelativePath,
+  sample: Buffer,
+  sizeBytes: number,
+) {
+  return classifySampleCore(path, sample, sizeBytes, true);
 }

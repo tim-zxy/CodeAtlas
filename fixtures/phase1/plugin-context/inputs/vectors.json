@@ -1,0 +1,196 @@
+{
+  "context": {
+    "contextVersion": 2,
+    "basis": {
+      "repositoryId": "repo:one",
+      "revisionId": "revision:worktree",
+      "contentFingerprint": "content:first",
+      "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "nodes": [
+      {
+        "id": "code:handler",
+        "factKey": "node-key:handler",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "kind": "SYMBOL",
+        "symbolKind": "METHOD",
+        "name": "handler",
+        "qualifiedName": "Handler.handler",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 0,
+          "startColumn": 0,
+          "endLine": 1,
+          "endColumn": 2
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        }
+      }
+    ],
+    "edges": [],
+    "sourceFiles": [
+      {
+        "id": "file:one",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "path": "src/Handler.java",
+        "contentFingerprint": "source:one",
+        "classification": {
+          "role": "SOURCE",
+          "provenance": "AUTHORED",
+          "contentKind": "TEXT"
+        },
+        "languageHint": "java",
+        "sensitivity": "INTERNAL"
+      }
+    ],
+    "syntaxEvidence": [
+      {
+        "id": "syntax:decoration",
+        "syntaxKey": "syntax-key:one",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "sourceFingerprint": "source:one",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 0,
+          "startColumn": 0,
+          "endLine": 1,
+          "endColumn": 2
+        },
+        "owner": {
+          "scope": "REPOSITORY",
+          "repositoryId": "repo:one",
+          "entity": {
+            "kind": "CODE_NODE",
+            "id": "code:handler",
+            "revisionId": "revision:worktree"
+          }
+        },
+        "syntaxKind": "DECORATION",
+        "payload": {
+          "callee": {
+            "state": "RESOLVED",
+            "name": "Route",
+            "target": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:handler",
+                "revisionId": "revision:worktree"
+              }
+            },
+            "candidates": []
+          },
+          "arguments": [
+            {
+              "name": "path",
+              "value": {
+                "kind": "STRING",
+                "value": "/items"
+              },
+              "sourceRange": {
+                "sourceFileId": "file:one",
+                "startLine": 0,
+                "startColumn": 0,
+                "endLine": 1,
+                "endColumn": 2
+              }
+            }
+          ]
+        },
+        "supportRefs": [
+          {
+            "basis": {
+              "repositoryId": "repo:one",
+              "revisionId": "revision:worktree",
+              "contentFingerprint": "content:first",
+              "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:handler",
+              "revisionId": "revision:worktree"
+            },
+            "valueDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ],
+        "confidence": {
+          "score": 1,
+          "method": "SOURCE_LITERAL",
+          "reasons": ["EXPLICIT_SOURCE"]
+        },
+        "extractionVersion": "syntax-v1"
+      }
+    ],
+    "supportInventory": [
+      {
+        "basis": {
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "contentFingerprint": "content:first",
+          "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "code:handler",
+          "revisionId": "revision:worktree"
+        },
+        "valueDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      }
+    ],
+    "configuration": {}
+  },
+  "descriptor": {
+    "contextVersion": 2,
+    "pluginId": "fixture-plugin",
+    "pluginVersion": "1",
+    "languages": ["java"],
+    "frameworks": ["fixture"],
+    "requiredProviderCapabilities": ["SYMBOL"],
+    "producedSemanticCapabilities": ["ENTRY_POINT"],
+    "configurationSchema": {
+      "schema": "fixture.config",
+      "version": 1
+    },
+    "trustClass": "BUILT_IN"
+  },
+  "detection": {
+    "matched": true,
+    "support": [
+      {
+        "kind": "SYNTAX",
+        "id": "syntax:decoration"
+      }
+    ],
+    "diagnostics": []
+  },
+  "candidate": {
+    "capability": "ENTRY_POINT",
+    "value": {
+      "schema": "fixture.entry-point-candidate",
+      "version": 1,
+      "payload": {
+        "route": "/items"
+      }
+    },
+    "support": [
+      {
+        "kind": "CANONICAL",
+        "ref": {
+          "factType": "NODE",
+          "id": "code:handler"
+        }
+      },
+      {
+        "kind": "SYNTAX",
+        "id": "syntax:decoration"
+      }
+    ]
+  }
+}

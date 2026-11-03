@@ -1,3 +1,4 @@
+import type { MixedSourceAccount } from './mixed-source-verification.js';
 import { EntityIdSchema, RepositoryRelativePathSchema } from '@codeatlas/ir';
 
 import { classifyFile } from './classify.js';
@@ -18,10 +19,12 @@ export interface ScanDependencies {
 export async function scanWithDependencies(
   request: SourceScanRequest,
   dependencies: ScanDependencies,
+  account?: MixedSourceAccount,
 ): Promise<SourceScanResult> {
   try {
     const parsedId = EntityIdSchema.safeParse(request?.repositoryId);
     if (!parsedId.success) throw new SourceScanError('INVALID_INPUT', 'Invalid repository ID');
+    account?.checkpoint();
     const policy = compilePathPolicy(request.config);
     const context = await dependencies.discoverGitContext(
       request.startingPath,
@@ -35,8 +38,10 @@ export async function scanWithDependencies(
         pending.map((candidate) => candidate.path),
       );
       for (const candidate of pending) {
+        account?.checkpoint();
         if (!selectPath(candidate.path, policy, ignored.has(candidate.path))) continue;
         const observed = await dependencies.classifyFile(candidate.absolutePath, candidate.path);
+        account?.own({ path: candidate.path, ...observed });
         files.push(
           Object.freeze({
             path: candidate.path,
@@ -69,7 +74,7 @@ export async function scanWithDependencies(
       files: Object.freeze(files),
     });
   } catch (error) {
-    if (error instanceof SourceScanError) throw error;
+    if (account || error instanceof SourceScanError) throw error;
     throw new SourceScanError('FILE_READ_FAILED', 'Source scan failed');
   }
 }

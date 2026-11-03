@@ -1,0 +1,407 @@
+{
+  "basis": {
+    "repositoryId": "repo-fixture",
+    "revisionId": "rev-a",
+    "contentFingerprint": "mapping-target",
+    "codeActivationDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  },
+  "sourceFile": {
+    "id": "source-fixture",
+    "repositoryId": "repo-fixture",
+    "revisionId": "rev-a",
+    "path": "sources/Endpoint.java",
+    "contentFingerprint": "fa9a07e5b149109de9313e541101b3363a014b87e18f469e91643781ed2833c1",
+    "classification": {
+      "role": "SOURCE",
+      "provenance": "AUTHORED",
+      "contentKind": "TEXT"
+    },
+    "languageHint": "java",
+    "sensitivity": "PUBLIC"
+  },
+  "raw": {
+    "providerSyntaxId": "syntax-declared",
+    "sourceFileId": "source-fixture",
+    "sourceFingerprint": "fa9a07e5b149109de9313e541101b3363a014b87e18f469e91643781ed2833c1",
+    "sourceRange": {
+      "sourceFileId": "source-fixture",
+      "startLine": 0,
+      "startColumn": 25,
+      "endLine": 0,
+      "endColumn": 68
+    },
+    "owner": {
+      "factType": "NODE",
+      "providerId": "fixture.provider",
+      "providerFactId": "owner"
+    },
+    "syntaxKind": "DECLARATION",
+    "payload": {
+      "declaredType": "void",
+      "parameterNames": [],
+      "modifiers": []
+    }
+  },
+  "selectedNodes": [
+    {
+      "id": "node-owner",
+      "factKey": "mapping:node-owner",
+      "repositoryId": "repo-fixture",
+      "revisionId": "rev-a",
+      "kind": "SYMBOL",
+      "symbolKind": "FUNCTION",
+      "name": "owner",
+      "qualifiedName": "owner",
+      "sourceRange": {
+        "sourceFileId": "source-fixture",
+        "startLine": 0,
+        "startColumn": 25,
+        "endLine": 0,
+        "endColumn": 68
+      },
+      "confidence": {
+        "score": 1,
+        "method": "independent-fixture",
+        "reasons": []
+      }
+    },
+    {
+      "id": "node-a",
+      "factKey": "mapping:node-a",
+      "repositoryId": "repo-fixture",
+      "revisionId": "rev-a",
+      "kind": "SYMBOL",
+      "symbolKind": "FUNCTION",
+      "name": "p",
+      "qualifiedName": "p",
+      "sourceRange": {
+        "sourceFileId": "source-fixture",
+        "startLine": 0,
+        "startColumn": 25,
+        "endLine": 0,
+        "endColumn": 68
+      },
+      "confidence": {
+        "score": 1,
+        "method": "independent-fixture",
+        "reasons": []
+      }
+    },
+    {
+      "id": "node-b",
+      "factKey": "mapping:node-b",
+      "repositoryId": "repo-fixture",
+      "revisionId": "rev-a",
+      "kind": "SYMBOL",
+      "symbolKind": "FUNCTION",
+      "name": "p",
+      "qualifiedName": "p",
+      "sourceRange": {
+        "sourceFileId": "source-fixture",
+        "startLine": 0,
+        "startColumn": 25,
+        "endLine": 0,
+        "endColumn": 68
+      },
+      "confidence": {
+        "score": 1,
+        "method": "independent-fixture",
+        "reasons": []
+      }
+    }
+  ],
+  "bindings": [
+    {
+      "providerFact": {
+        "factType": "NODE",
+        "providerId": "fixture.provider",
+        "providerFactId": "owner"
+      },
+      "providerSnapshotId": "syntax-map-snapshot",
+      "canonicalFact": {
+        "factType": "NODE",
+        "id": "node-owner"
+      },
+      "evidenceId": "mapping-evidence-0"
+    },
+    {
+      "providerFact": {
+        "factType": "NODE",
+        "providerId": "fixture.provider",
+        "providerFactId": "a"
+      },
+      "providerSnapshotId": "syntax-map-snapshot",
+      "canonicalFact": {
+        "factType": "NODE",
+        "id": "node-a"
+      },
+      "evidenceId": "mapping-evidence-1"
+    },
+    {
+      "providerFact": {
+        "factType": "NODE",
+        "providerId": "fixture.provider",
+        "providerFactId": "b"
+      },
+      "providerSnapshotId": "syntax-map-snapshot",
+      "canonicalFact": {
+        "factType": "NODE",
+        "id": "node-b"
+      },
+      "evidenceId": "mapping-evidence-2"
+    },
+    {
+      "providerFact": {
+        "factType": "NODE",
+        "providerId": "fixture.provider",
+        "providerFactId": "loser"
+      },
+      "providerSnapshotId": "syntax-map-snapshot",
+      "canonicalFact": {
+        "factType": "NODE",
+        "id": "node-a"
+      },
+      "evidenceId": "mapping-evidence-3"
+    }
+  ],
+  "supports": [
+    {
+      "factType": "NODE",
+      "canonical": {
+        "id": "node-owner",
+        "factKey": "mapping:node-owner",
+        "repositoryId": "repo-fixture",
+        "revisionId": "rev-a",
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION",
+        "name": "owner",
+        "qualifiedName": "owner",
+        "sourceRange": {
+          "sourceFileId": "source-fixture",
+          "startLine": 0,
+          "startColumn": 25,
+          "endLine": 0,
+          "endColumn": 68
+        },
+        "confidence": {
+          "score": 1,
+          "method": "independent-fixture",
+          "reasons": []
+        }
+      },
+      "evidence": {
+        "id": "mapping-evidence-0",
+        "repositoryId": "repo-fixture",
+        "revisionId": "rev-a",
+        "providerSnapshotId": "syntax-map-snapshot",
+        "providerFact": {
+          "factType": "NODE",
+          "providerId": "fixture.provider",
+          "providerFactId": "owner"
+        },
+        "status": "ACTIVE"
+      },
+      "binding": {
+        "providerFact": {
+          "factType": "NODE",
+          "providerId": "fixture.provider",
+          "providerFactId": "owner"
+        },
+        "providerSnapshotId": "syntax-map-snapshot",
+        "canonicalFact": {
+          "factType": "NODE",
+          "id": "node-owner"
+        },
+        "evidenceId": "mapping-evidence-0"
+      },
+      "factEvidence": {
+        "fact": {
+          "factType": "NODE",
+          "id": "node-owner"
+        },
+        "evidenceId": "mapping-evidence-0"
+      },
+      "dependencyUnitIds": ["mapping-unit"],
+      "valueDigest": "06ffacb7fcc35df60eaf1b362c71f99d57f9e9e4ae27a985a298503b8a65020c"
+    },
+    {
+      "factType": "NODE",
+      "canonical": {
+        "id": "node-a",
+        "factKey": "mapping:node-a",
+        "repositoryId": "repo-fixture",
+        "revisionId": "rev-a",
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION",
+        "name": "p",
+        "qualifiedName": "p",
+        "sourceRange": {
+          "sourceFileId": "source-fixture",
+          "startLine": 0,
+          "startColumn": 25,
+          "endLine": 0,
+          "endColumn": 68
+        },
+        "confidence": {
+          "score": 1,
+          "method": "independent-fixture",
+          "reasons": []
+        }
+      },
+      "evidence": {
+        "id": "mapping-evidence-1",
+        "repositoryId": "repo-fixture",
+        "revisionId": "rev-a",
+        "providerSnapshotId": "syntax-map-snapshot",
+        "providerFact": {
+          "factType": "NODE",
+          "providerId": "fixture.provider",
+          "providerFactId": "a"
+        },
+        "status": "ACTIVE"
+      },
+      "binding": {
+        "providerFact": {
+          "factType": "NODE",
+          "providerId": "fixture.provider",
+          "providerFactId": "a"
+        },
+        "providerSnapshotId": "syntax-map-snapshot",
+        "canonicalFact": {
+          "factType": "NODE",
+          "id": "node-a"
+        },
+        "evidenceId": "mapping-evidence-1"
+      },
+      "factEvidence": {
+        "fact": {
+          "factType": "NODE",
+          "id": "node-a"
+        },
+        "evidenceId": "mapping-evidence-1"
+      },
+      "dependencyUnitIds": ["mapping-unit"],
+      "valueDigest": "b2a27104d22c25f8c63fced87f8ff7c2d37fc41d4ca0073f5e6611646204fb29"
+    },
+    {
+      "factType": "NODE",
+      "canonical": {
+        "id": "node-b",
+        "factKey": "mapping:node-b",
+        "repositoryId": "repo-fixture",
+        "revisionId": "rev-a",
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION",
+        "name": "p",
+        "qualifiedName": "p",
+        "sourceRange": {
+          "sourceFileId": "source-fixture",
+          "startLine": 0,
+          "startColumn": 25,
+          "endLine": 0,
+          "endColumn": 68
+        },
+        "confidence": {
+          "score": 1,
+          "method": "independent-fixture",
+          "reasons": []
+        }
+      },
+      "evidence": {
+        "id": "mapping-evidence-2",
+        "repositoryId": "repo-fixture",
+        "revisionId": "rev-a",
+        "providerSnapshotId": "syntax-map-snapshot",
+        "providerFact": {
+          "factType": "NODE",
+          "providerId": "fixture.provider",
+          "providerFactId": "b"
+        },
+        "status": "ACTIVE"
+      },
+      "binding": {
+        "providerFact": {
+          "factType": "NODE",
+          "providerId": "fixture.provider",
+          "providerFactId": "b"
+        },
+        "providerSnapshotId": "syntax-map-snapshot",
+        "canonicalFact": {
+          "factType": "NODE",
+          "id": "node-b"
+        },
+        "evidenceId": "mapping-evidence-2"
+      },
+      "factEvidence": {
+        "fact": {
+          "factType": "NODE",
+          "id": "node-b"
+        },
+        "evidenceId": "mapping-evidence-2"
+      },
+      "dependencyUnitIds": ["mapping-unit"],
+      "valueDigest": "1515bc87dd48951a55c581e9632b9be74f556294a73d1af05ef79c8577d0de52"
+    },
+    {
+      "factType": "NODE",
+      "canonical": {
+        "id": "node-a",
+        "factKey": "mapping:node-a",
+        "repositoryId": "repo-fixture",
+        "revisionId": "rev-a",
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION",
+        "name": "p",
+        "qualifiedName": "p",
+        "sourceRange": {
+          "sourceFileId": "source-fixture",
+          "startLine": 0,
+          "startColumn": 25,
+          "endLine": 0,
+          "endColumn": 68
+        },
+        "confidence": {
+          "score": 1,
+          "method": "independent-fixture",
+          "reasons": []
+        }
+      },
+      "evidence": {
+        "id": "mapping-evidence-3",
+        "repositoryId": "repo-fixture",
+        "revisionId": "rev-a",
+        "providerSnapshotId": "syntax-map-snapshot",
+        "providerFact": {
+          "factType": "NODE",
+          "providerId": "fixture.provider",
+          "providerFactId": "loser"
+        },
+        "status": "ACTIVE"
+      },
+      "binding": {
+        "providerFact": {
+          "factType": "NODE",
+          "providerId": "fixture.provider",
+          "providerFactId": "loser"
+        },
+        "providerSnapshotId": "syntax-map-snapshot",
+        "canonicalFact": {
+          "factType": "NODE",
+          "id": "node-a"
+        },
+        "evidenceId": "mapping-evidence-3"
+      },
+      "factEvidence": {
+        "fact": {
+          "factType": "NODE",
+          "id": "node-a"
+        },
+        "evidenceId": "mapping-evidence-3"
+      },
+      "dependencyUnitIds": ["mapping-unit"],
+      "valueDigest": "b2a27104d22c25f8c63fced87f8ff7c2d37fc41d4ca0073f5e6611646204fb29"
+    }
+  ],
+  "extractorVersion": "syntax-v1",
+  "score": 0.5
+}

@@ -1,0 +1,90 @@
+{
+  "domain": "codeatlas-code-activation-v1",
+  "groups": [
+    {
+      "tag": "HEADER",
+      "entries": [
+        {
+          "key": ["capture-repo"],
+          "value": {
+            "committedSnapshotCount": 1,
+            "indexedContentFingerprint": "capture-fingerprint",
+            "indexedRevisionId": "capture-worktree",
+            "repositoryId": "capture-repo"
+          }
+        }
+      ]
+    },
+    {
+      "tag": "NODE",
+      "entries": []
+    },
+    {
+      "tag": "EDGE",
+      "entries": []
+    },
+    {
+      "tag": "EVIDENCE",
+      "entries": []
+    },
+    {
+      "tag": "BINDING",
+      "entries": []
+    },
+    {
+      "tag": "FACT_EVIDENCE",
+      "entries": []
+    },
+    {
+      "tag": "SUPPORT_CANDIDATE",
+      "entries": []
+    },
+    {
+      "tag": "SNAPSHOT",
+      "entries": [
+        {
+          "key": ["snapshot:alpha"],
+          "value": {
+            "capabilities": [
+              {
+                "coverage": "COMPLETE",
+                "name": "CALL",
+                "support": "SUPPORTED"
+              },
+              {
+                "coverage": "COMPLETE",
+                "name": "SYMBOL",
+                "support": "SUPPORTED"
+              }
+            ],
+            "snapshot": {
+              "id": "snapshot:alpha",
+              "outcome": "SUCCEEDED",
+              "providerId": "alpha",
+              "providerVersion": "fixture-v1",
+              "repositoryId": "capture-repo",
+              "requestedRevisionFingerprint": "capture-fingerprint",
+              "requestedRevisionId": "capture-worktree",
+              "runtimeVersion": "fixture-v1"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "tag": "COVERAGE",
+      "entries": [
+        {
+          "key": ["snapshot:alpha", "SYMBOL", "NONE", "", "UNKNOWN"],
+          "value": {
+            "capabilityName": "SYMBOL",
+            "multiplicity": 1,
+            "providerSnapshotId": "snapshot:alpha",
+            "sourceFileId": null,
+            "status": "UNKNOWN"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "status": "SOURCE_REVIEW_NOT_EXECUTED",
+  "source": "SpringSource.java",
+  "obligations": [
+    {
+      "id": "SPRING-ROUTE",
+      "requires": "Class /api and method /items map to GET /api/items with the method owner and both syntax supports."
+    },
+    {
+      "id": "SPRING-JOB",
+      "requires": "Scheduled binds refresh as a job, without inferring an execution schedule occurred."
+    },
+    {
+      "id": "SPRING-FEIGN",
+      "requires": "The statically named inventory client and interface method provide consumer declaration evidence; absence of observed owner/import precision remains unknown."
+    },
+    {
+      "id": "SPRING-INJECTION",
+      "requires": "A constructor parameter and @Autowired are source evidence to inspect; do not claim a dependency binding from a matching variable name alone."
+    }
+  ],
+  "limits": [
+    "Independent source-level obligations, not predicted raw output or an approved numeric baseline.",
+    "No Rust/Native/Python/Java execution has been performed for these sources.",
+    "COMPLETE/PARTIAL actual observations must be preserved; sources are parsed as text, not imported or run.",
+    "This file is not consumed as Canonical IR, a production admission flag, or a substitute for original critical probes."
+  ]
+}

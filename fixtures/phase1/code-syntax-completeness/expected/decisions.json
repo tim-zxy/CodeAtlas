@@ -1,0 +1,182 @@
+{
+  "no-files": {
+    "codeOutcome": "NOT_APPLICABLE",
+    "syntaxOutcome": "COMPLETE",
+    "outcome": "SUCCEEDED",
+    "counts": {
+      "nodes": 0,
+      "edges": 0,
+      "syntax": 0,
+      "codeCoverage": 0,
+      "syntaxCoverage": 0,
+      "diagnostics": 0
+    },
+    "checksum": "2938cb2c1bbd9fe598ea3b049344ba0b4afff50c40493e580d11952de6df0d9f",
+    "requestChecksum": "6f457d2ef9cf21ef38a042a91070ad6443165f4abb0a1da8f95d722ba00c66c5"
+  },
+  "empty-python": {
+    "codeOutcome": "COMPLETE",
+    "syntaxOutcome": "COMPLETE",
+    "outcome": "SUCCEEDED",
+    "counts": {
+      "nodes": 1,
+      "edges": 0,
+      "syntax": 0,
+      "codeCoverage": 4,
+      "syntaxCoverage": 1,
+      "diagnostics": 0
+    },
+    "checksum": "4e334f61b9aa69517d98cd3e6d39bf01852d8296b45579f6cf48a078c3ea4026",
+    "requestChecksum": "c6dc889c7d8b1dc840b1da2c548c00e6af57b5b735a0bb2e03aa5f808d474ec8"
+  },
+  "comment-python": {
+    "codeOutcome": "COMPLETE",
+    "syntaxOutcome": "COMPLETE",
+    "outcome": "SUCCEEDED",
+    "counts": {
+      "nodes": 1,
+      "edges": 0,
+      "syntax": 0,
+      "codeCoverage": 4,
+      "syntaxCoverage": 1,
+      "diagnostics": 0
+    },
+    "checksum": "3b58945f055b12635bbc41c3fc8897059f44ce5b2c3d662f91e3988ea7df8d7d",
+    "requestChecksum": "07b67ecc9f5fcc4cd585a69783b449bb077f7eb3d351adde645b09801bf4dfce"
+  },
+  "wildcard-python": {
+    "codeOutcome": "PARTIAL",
+    "syntaxOutcome": "PARTIAL",
+    "outcome": "PARTIAL",
+    "counts": {
+      "nodes": 1,
+      "edges": 0,
+      "syntax": 0,
+      "codeCoverage": 4,
+      "syntaxCoverage": 1,
+      "diagnostics": 0
+    },
+    "checksum": "5c2a14af15a62ce2022b22b6ab980d0956213f60fc3ec0fc67b970226b200adc",
+    "requestChecksum": "8021a952664ed0f79c3e89826a2dc0a79829511a4166d095b5d8a3d319bb6207"
+  },
+  "class-python": {
+    "codeOutcome": "PARTIAL",
+    "syntaxOutcome": "PARTIAL",
+    "outcome": "PARTIAL",
+    "counts": {
+      "nodes": 1,
+      "edges": 0,
+      "syntax": 0,
+      "codeCoverage": 4,
+      "syntaxCoverage": 1,
+      "diagnostics": 0
+    },
+    "checksum": "d34e00a5acc8aad2c79a477d526c6ee7b487d0376b7ecb7096f98097c4311337",
+    "requestChecksum": "fa0ae2c862557f934852cac9c37fa9f0ca6b5686889b734c696367a338b8812e"
+  },
+  "nested-python": {
+    "codeOutcome": "COMPLETE",
+    "syntaxOutcome": "COMPLETE",
+    "outcome": "SUCCEEDED",
+    "counts": {
+      "nodes": 3,
+      "edges": 0,
+      "syntax": 2,
+      "codeCoverage": 4,
+      "syntaxCoverage": 1,
+      "diagnostics": 0
+    },
+    "checksum": "419e57fde8c83878c6700d5895da6e20702ff70cf710aabca38fa16ef45a4192",
+    "requestChecksum": "05dea646ba95b41171adf811bf0a64c3b4d021fca0018b553238cdd1cd3af157"
+  },
+  "malformed-python": {
+    "codeOutcome": "PARTIAL",
+    "syntaxOutcome": "PARTIAL",
+    "outcome": "PARTIAL",
+    "counts": {
+      "nodes": 2,
+      "edges": 0,
+      "syntax": 3,
+      "codeCoverage": 4,
+      "syntaxCoverage": 1,
+      "diagnostics": 1
+    },
+    "checksum": "820b8074a64854ace53b938bd749d6165b351a0a3e7555a19201eae3ae138f31",
+    "requestChecksum": "9bbe6d1ac74f3ca6e62e38a4d8f31bdf1854dc84fd5b7c6131da780881645d47"
+  },
+  "dynamic-python": {
+    "codeOutcome": "COMPLETE",
+    "syntaxOutcome": "PARTIAL",
+    "outcome": "PARTIAL",
+    "counts": {
+      "nodes": 2,
+      "edges": 1,
+      "syntax": 5,
+      "codeCoverage": 4,
+      "syntaxCoverage": 1,
+      "diagnostics": 0
+    },
+    "checksum": "8f058505e7a7b40e3e85c7eb0edbf659377ff80d486dad2c5ccee25162eb7321",
+    "requestChecksum": "6ea8cd2d077167725a281a6978e470be7a467286e670be0091f74a4e3cbe893c"
+  },
+  "alias-reference-python": {
+    "codeOutcome": "COMPLETE",
+    "syntaxOutcome": "COMPLETE",
+    "outcome": "SUCCEEDED",
+    "counts": {
+      "nodes": 1,
+      "edges": 2,
+      "syntax": 2,
+      "codeCoverage": 4,
+      "syntaxCoverage": 1,
+      "diagnostics": 0
+    },
+    "checksum": "06977feadbf421cd0e6eb4507c3bf78d3dbcec046a3bac52059301a4e5424ffb",
+    "requestChecksum": "ff73f9e334fc3d90e0f71c998a249b18b1041b8645c544ef9222f56afb88a04b"
+  },
+  "async-python": {
+    "codeOutcome": "COMPLETE",
+    "syntaxOutcome": "COMPLETE",
+    "outcome": "SUCCEEDED",
+    "counts": {
+      "nodes": 2,
+      "edges": 0,
+      "syntax": 1,
+      "codeCoverage": 4,
+      "syntaxCoverage": 1,
+      "diagnostics": 0
+    },
+    "checksum": "57149296640bcd2dc3ad3350fbcfe050bfe031db631ad7666c64812a5f683b56",
+    "requestChecksum": "8d89d51913d7d20d5d22e6db88131f2785fa2aac04413f25e29f14d6da583ca3"
+  },
+  "java-only": {
+    "codeOutcome": "NOT_APPLICABLE",
+    "syntaxOutcome": "COMPLETE",
+    "outcome": "SUCCEEDED",
+    "counts": {
+      "nodes": 0,
+      "edges": 0,
+      "syntax": 1,
+      "codeCoverage": 0,
+      "syntaxCoverage": 1,
+      "diagnostics": 0
+    },
+    "checksum": "445c2dffb4eb9a655f442c7b1c5d7bb10d40e2bf601ead7c73f067ee8e761974",
+    "requestChecksum": "7b0d6db542fea54b84642c6855f695e92cad4262d4ce13c150e1d5d9c5cdcf7d"
+  },
+  "mixed": {
+    "codeOutcome": "COMPLETE",
+    "syntaxOutcome": "COMPLETE",
+    "outcome": "SUCCEEDED",
+    "counts": {
+      "nodes": 1,
+      "edges": 2,
+      "syntax": 3,
+      "codeCoverage": 4,
+      "syntaxCoverage": 2,
+      "diagnostics": 0
+    },
+    "checksum": "64946a89d6e47a76ad153f6be08131ee4a5ce278ae41835d142a40b045abd638",
+    "requestChecksum": "5d8b9a1c839997c86f9ea5f0e7ae825e0739cb62682339096c3d97f7c4d372f6"
+  }
+}

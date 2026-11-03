@@ -1,0 +1,5078 @@
+{
+  "schemaVersion": 1,
+  "qualification": "INDEPENDENT_REAL_RUNTIME_FULL_ZERO_UNIT_VALIDATION_AND_COMPOSITION_COST_NOT_COMPLETE_STAGE_STORE",
+  "provenance": "Only fixed semantic input and independent Provider/Code/history models feed ordered Runtime ownership/encoding/import ledger; numeric receipt is derived at finish. Generated before real Runtime invocation, never from returned usage/output.",
+  "cases": [
+    {
+      "id": "other-only-unindexed",
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-stage/zero-provider-resource-reference.json",
+        "sha256": "dc34ccf9d1917b3f7c9868990b33d5532e10695b427c8f1dad108faa00e70153",
+        "caseId": "other-only-unindexed"
+      },
+      "stageSource": {
+        "path": "fixtures/phase1/mixed-analysis-stage/zero-stage-resource-reference.json",
+        "sha256": "f25a27f744a4b837824b49316e998f60045d89da485db6df55fbe195a81d733b",
+        "caseId": "other-only-unindexed"
+      },
+      "raw": {
+        "metadata": {
+          "targetSource": {
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "contentFingerprint": "content:first"
+          },
+          "inventory": [
+            {
+              "id": "file:one",
+              "repositoryId": "repo:one",
+              "revisionId": "revision:worktree",
+              "path": "README.txt",
+              "contentFingerprint": "sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+              "classification": {
+                "role": "OTHER",
+                "provenance": "AUTHORED",
+                "contentKind": "TEXT"
+              },
+              "languageHint": null,
+              "sensitivity": "INTERNAL"
+            }
+          ],
+          "snapshot": {
+            "id": "snapshot:one",
+            "providerId": "native",
+            "providerVersion": "0.0.0",
+            "runtimeVersion": "fixture-runtime",
+            "startedAt": "2026-10-24T00:00:00.000Z",
+            "completedAt": "2026-10-24T00:00:00.003Z"
+          },
+          "tool": { "target": "fixture-target", "profile": "test" },
+          "java": null,
+          "codeSyntax": {
+            "providerVersion": "0.0.0",
+            "runtimeVersion": "fixture-runtime",
+            "tool": { "target": "fixture-target", "profile": "test" },
+            "startedAt": "2026-10-24T00:00:00.001Z",
+            "settledAt": "2026-10-24T00:00:00.002Z"
+          }
+        },
+        "requestText": "{\"protocolVersion\":5,\"requestId\":\"contract:no-files\",\"sequence\":0,\"type\":\"OBSERVE_CODE_SYNTAX\",\"payload\":{\"irSchemaVersion\":1,\"repository\":{\"id\":\"repo:one\",\"rootPath\":\"C:/b1b-component-fixture\"},\"providerId\":\"native\",\"providerVersion\":\"0.0.0\",\"providerSnapshotId\":\"snapshot:one\",\"extractorVersion\":\"syntax-v1\",\"languages\":[{\"languageId\":\"python\",\"grammarVersion\":\"0.25.0\",\"analyzerVersion\":\"0.0.0\",\"compatibilityVersion\":\"syntax-v1\"}],\"sourceFiles\":[],\"removedSourceFiles\":[],\"owners\":[],\"deadlineEpochMs\":null,\"resourceBudget\":{\"maxDurationMs\":1000,\"maxMemoryBytes\":65536,\"maxEvents\":20,\"maxInputBytes\":65536,\"maxOutputBytes\":65536,\"maxDepth\":64,\"maxItems\":1000},\"expectedActivationBasis\":null,\"targetSource\":{\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"contentFingerprint\":\"content:first\"},\"ownerBinding\":{\"kind\":\"PROVISIONAL_CODE\",\"stageDigest\":\"65d106ac319426ffbc79bd6c47ec3cf15efbd6a93910c20ab8598d84f963b34f\",\"ownerMapDigest\":\"ec67b4bfa57f7f6eee79543c36eff95ad15536bfc45606f25c55c4bbe5766b62\"},\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\"}}\n",
+        "outputText": "{\"protocolVersion\":5,\"requestId\":\"contract:no-files\",\"sequence\":0,\"type\":\"OBSERVATION_STARTED\",\"payload\":{\"expectedActivationBasis\":null,\"targetSource\":{\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"contentFingerprint\":\"content:first\"},\"ownerBinding\":{\"kind\":\"PROVISIONAL_CODE\",\"stageDigest\":\"65d106ac319426ffbc79bd6c47ec3cf15efbd6a93910c20ab8598d84f963b34f\",\"ownerMapDigest\":\"ec67b4bfa57f7f6eee79543c36eff95ad15536bfc45606f25c55c4bbe5766b62\"},\"extractorVersion\":\"syntax-v1\",\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\",\"requestChecksum\":\"f3f34abd7363a39f38799001110ff73a4d1faacbf892b5f37129e7d6487453a9\"}}\n{\"protocolVersion\":5,\"requestId\":\"contract:no-files\",\"sequence\":1,\"type\":\"OBSERVATION_COMPLETED\",\"payload\":{\"expectedActivationBasis\":null,\"targetSource\":{\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"contentFingerprint\":\"content:first\"},\"ownerBinding\":{\"kind\":\"PROVISIONAL_CODE\",\"stageDigest\":\"65d106ac319426ffbc79bd6c47ec3cf15efbd6a93910c20ab8598d84f963b34f\",\"ownerMapDigest\":\"ec67b4bfa57f7f6eee79543c36eff95ad15536bfc45606f25c55c4bbe5766b62\"},\"extractorVersion\":\"syntax-v1\",\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\",\"requestChecksum\":\"f3f34abd7363a39f38799001110ff73a4d1faacbf892b5f37129e7d6487453a9\",\"codeOutcome\":\"NOT_APPLICABLE\",\"syntaxOutcome\":\"COMPLETE\",\"outcome\":\"SUCCEEDED\",\"counts\":{\"nodes\":0,\"edges\":0,\"syntax\":0,\"codeCoverage\":0,\"syntaxCoverage\":0,\"diagnostics\":0},\"checksum\":\"6550a40b6925e03de0e64edd3b71f42d4bbbd16c81350bbfefcf32c6f4c4cfd8\"}}\n"
+      },
+      "validation": {
+        "input": {
+          "mode": "FULL",
+          "target": {
+            "source": {
+              "repositoryId": "repo:one",
+              "revisionId": "revision:worktree",
+              "contentFingerprint": "content:first"
+            },
+            "repositoryLocatorDigest": "be4f443420f269e1872f380f6f29ebe00eb40b3be70bb3df08a27a9691b576ac",
+            "inventory": [
+              {
+                "id": "file:one",
+                "repositoryId": "repo:one",
+                "revisionId": "revision:worktree",
+                "path": "README.txt",
+                "contentFingerprint": "sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+                "classification": {
+                  "role": "OTHER",
+                  "provenance": "AUTHORED",
+                  "contentKind": "TEXT"
+                },
+                "languageHint": null,
+                "sensitivity": "INTERNAL"
+              }
+            ],
+            "contracts": [
+              {
+                "providerId": "native",
+                "extractor": "syntax-v1",
+                "normalizer": "fixture-v1",
+                "contract": "PYTHON_SYNTAX_CODE_V1",
+                "policy": "syntax-surface-support-v1"
+              }
+            ]
+          },
+          "capture": {
+            "parent": null,
+            "snapshotIds": [],
+            "snapshots": [],
+            "coverage": [],
+            "activeProviderIds": []
+          },
+          "scope": { "units": [], "removedSourceFileIds": [] },
+          "owner": {
+            "stageDigest": "65d106ac319426ffbc79bd6c47ec3cf15efbd6a93910c20ab8598d84f963b34f",
+            "java": null
+          }
+        },
+        "result": {
+          "raw": {
+            "kind": "DECLARED_FULL_RAW_OBSERVATION",
+            "metadata": {
+              "targetSource": {
+                "repositoryId": "repo:one",
+                "revisionId": "revision:worktree",
+                "contentFingerprint": "content:first"
+              },
+              "inventory": [
+                {
+                  "id": "file:one",
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:worktree",
+                  "path": "README.txt",
+                  "contentFingerprint": "sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+                  "classification": {
+                    "role": "OTHER",
+                    "provenance": "AUTHORED",
+                    "contentKind": "TEXT"
+                  },
+                  "languageHint": null,
+                  "sensitivity": "INTERNAL"
+                }
+              ],
+              "snapshot": {
+                "id": "snapshot:one",
+                "providerId": "native",
+                "providerVersion": "0.0.0",
+                "runtimeVersion": "fixture-runtime",
+                "startedAt": "2026-10-24T00:00:00.000Z",
+                "completedAt": "2026-10-24T00:00:00.003Z"
+              },
+              "tool": { "target": "fixture-target", "profile": "test" },
+              "java": null,
+              "codeSyntax": {
+                "providerVersion": "0.0.0",
+                "runtimeVersion": "fixture-runtime",
+                "tool": { "target": "fixture-target", "profile": "test" },
+                "startedAt": "2026-10-24T00:00:00.001Z",
+                "settledAt": "2026-10-24T00:00:00.002Z"
+              }
+            },
+            "java": null,
+            "codeSyntax": {
+              "request": {
+                "protocolVersion": 5,
+                "requestId": "contract:no-files",
+                "sequence": 0,
+                "type": "OBSERVE_CODE_SYNTAX",
+                "payload": {
+                  "irSchemaVersion": 1,
+                  "repository": { "id": "repo:one", "rootPath": "C:/b1b-component-fixture" },
+                  "providerId": "native",
+                  "providerVersion": "0.0.0",
+                  "providerSnapshotId": "snapshot:one",
+                  "extractorVersion": "syntax-v1",
+                  "languages": [
+                    {
+                      "languageId": "python",
+                      "grammarVersion": "0.25.0",
+                      "analyzerVersion": "0.0.0",
+                      "compatibilityVersion": "syntax-v1"
+                    }
+                  ],
+                  "sourceFiles": [],
+                  "removedSourceFiles": [],
+                  "owners": [],
+                  "deadlineEpochMs": null,
+                  "resourceBudget": {
+                    "maxDurationMs": 1000,
+                    "maxMemoryBytes": 65536,
+                    "maxEvents": 20,
+                    "maxInputBytes": 65536,
+                    "maxOutputBytes": 65536,
+                    "maxDepth": 64,
+                    "maxItems": 1000
+                  },
+                  "expectedActivationBasis": null,
+                  "targetSource": {
+                    "repositoryId": "repo:one",
+                    "revisionId": "revision:worktree",
+                    "contentFingerprint": "content:first"
+                  },
+                  "ownerBinding": {
+                    "kind": "PROVISIONAL_CODE",
+                    "stageDigest": "65d106ac319426ffbc79bd6c47ec3cf15efbd6a93910c20ab8598d84f963b34f",
+                    "ownerMapDigest": "ec67b4bfa57f7f6eee79543c36eff95ad15536bfc45606f25c55c4bbe5766b62"
+                  },
+                  "codeContract": "PYTHON_SYNTAX_CODE_V1"
+                }
+              },
+              "events": [
+                {
+                  "protocolVersion": 5,
+                  "requestId": "contract:no-files",
+                  "sequence": 0,
+                  "type": "OBSERVATION_STARTED",
+                  "payload": {
+                    "expectedActivationBasis": null,
+                    "targetSource": {
+                      "repositoryId": "repo:one",
+                      "revisionId": "revision:worktree",
+                      "contentFingerprint": "content:first"
+                    },
+                    "ownerBinding": {
+                      "kind": "PROVISIONAL_CODE",
+                      "stageDigest": "65d106ac319426ffbc79bd6c47ec3cf15efbd6a93910c20ab8598d84f963b34f",
+                      "ownerMapDigest": "ec67b4bfa57f7f6eee79543c36eff95ad15536bfc45606f25c55c4bbe5766b62"
+                    },
+                    "extractorVersion": "syntax-v1",
+                    "codeContract": "PYTHON_SYNTAX_CODE_V1",
+                    "requestChecksum": "f3f34abd7363a39f38799001110ff73a4d1faacbf892b5f37129e7d6487453a9"
+                  }
+                },
+                {
+                  "protocolVersion": 5,
+                  "requestId": "contract:no-files",
+                  "sequence": 1,
+                  "type": "OBSERVATION_COMPLETED",
+                  "payload": {
+                    "expectedActivationBasis": null,
+                    "targetSource": {
+                      "repositoryId": "repo:one",
+                      "revisionId": "revision:worktree",
+                      "contentFingerprint": "content:first"
+                    },
+                    "ownerBinding": {
+                      "kind": "PROVISIONAL_CODE",
+                      "stageDigest": "65d106ac319426ffbc79bd6c47ec3cf15efbd6a93910c20ab8598d84f963b34f",
+                      "ownerMapDigest": "ec67b4bfa57f7f6eee79543c36eff95ad15536bfc45606f25c55c4bbe5766b62"
+                    },
+                    "extractorVersion": "syntax-v1",
+                    "codeContract": "PYTHON_SYNTAX_CODE_V1",
+                    "requestChecksum": "f3f34abd7363a39f38799001110ff73a4d1faacbf892b5f37129e7d6487453a9",
+                    "codeOutcome": "NOT_APPLICABLE",
+                    "syntaxOutcome": "COMPLETE",
+                    "outcome": "SUCCEEDED",
+                    "counts": {
+                      "nodes": 0,
+                      "edges": 0,
+                      "syntax": 0,
+                      "codeCoverage": 0,
+                      "syntaxCoverage": 0,
+                      "diagnostics": 0
+                    },
+                    "checksum": "6550a40b6925e03de0e64edd3b71f42d4bbbd16c81350bbfefcf32c6f4c4cfd8"
+                  }
+                }
+              ],
+              "codeOutcome": "NOT_APPLICABLE",
+              "syntaxOutcome": "COMPLETE",
+              "outcome": "SUCCEEDED",
+              "counts": {
+                "nodes": 0,
+                "edges": 0,
+                "syntax": 0,
+                "codeCoverage": 0,
+                "syntaxCoverage": 0,
+                "diagnostics": 0
+              },
+              "checksum": "6550a40b6925e03de0e64edd3b71f42d4bbbd16c81350bbfefcf32c6f4c4cfd8",
+              "requestChecksum": "f3f34abd7363a39f38799001110ff73a4d1faacbf892b5f37129e7d6487453a9"
+            },
+            "provenance": {
+              "kind": "DECLARED_INPUT",
+              "requestIdentity": "f3f34abd7363a39f38799001110ff73a4d1faacbf892b5f37129e7d6487453a9",
+              "outputIdentity": "295a2a89ed359a286cd3398af63496b584a4d599ec3d651baf22e75e19952572"
+            }
+          },
+          "usage": {
+            "rows": 0,
+            "serializedBytes": 67274,
+            "items": 2519,
+            "retainedLogicalBytes": 77389
+          }
+        },
+        "cost": {
+          "rows": 0,
+          "serializedBytes": 67274,
+          "items": 2519,
+          "retainedLogicalBytes": 77389,
+          "maxDepth": 7,
+          "memoryBudgetBytes": 154778
+        },
+        "ledger": [
+          {
+            "label": "validation packet initial",
+            "items": 76,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 1436,
+            "depth": 5
+          },
+          {
+            "label": "validation packet traversal",
+            "items": 76,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 5
+          },
+          {
+            "label": "validation packet encoding",
+            "items": 0,
+            "serializedBytes": 3738,
+            "retainedLogicalBytes": 3738,
+            "depth": 0
+          },
+          {
+            "label": "validation packet parsed",
+            "items": 76,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 1436,
+            "depth": 5
+          },
+          {
+            "label": "reserved metadata",
+            "items": 37,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 700,
+            "depth": 4
+          },
+          {
+            "label": "parsed metadata",
+            "items": 37,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 700,
+            "depth": 4
+          },
+          {
+            "label": "target metadata",
+            "items": 37,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 700,
+            "depth": 4
+          },
+          {
+            "label": "parsed target metadata",
+            "items": 37,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 700,
+            "depth": 4
+          },
+          {
+            "label": "inventory path bytes",
+            "items": 0,
+            "serializedBytes": 10,
+            "retainedLogicalBytes": 10,
+            "depth": 0
+          },
+          {
+            "label": "inventory identity bytes",
+            "items": 0,
+            "serializedBytes": 8,
+            "retainedLogicalBytes": 8,
+            "depth": 0
+          },
+          {
+            "label": "metadata inventory",
+            "items": 13,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 247,
+            "depth": 3
+          },
+          {
+            "label": "complete inventory equality",
+            "items": 27,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 494,
+            "depth": 4
+          },
+          {
+            "label": "contract and scope records",
+            "items": 10,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 114,
+            "depth": 3
+          },
+          {
+            "label": "request owned byte representations",
+            "items": 0,
+            "serializedBytes": 2114,
+            "retainedLogicalBytes": 2114,
+            "depth": 0
+          },
+          {
+            "label": "output owned byte representations",
+            "items": 0,
+            "serializedBytes": 2968,
+            "retainedLogicalBytes": 2968,
+            "depth": 0
+          },
+          {
+            "label": "real full Provider pipeline",
+            "items": 1927,
+            "serializedBytes": 58436,
+            "retainedLogicalBytes": 58436,
+            "depth": 7
+          },
+          {
+            "label": "provisional binding complete check",
+            "items": 13,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 283,
+            "depth": 2
+          },
+          {
+            "label": "complete pure Runtime result",
+            "items": 153,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 3305,
+            "depth": 7
+          }
+        ]
+      },
+      "composition": {
+        "input": {
+          "mode": "FULL",
+          "target": {
+            "source": {
+              "repositoryId": "repo:one",
+              "revisionId": "revision:worktree",
+              "contentFingerprint": "content:first"
+            },
+            "repositoryLocatorDigest": "be4f443420f269e1872f380f6f29ebe00eb40b3be70bb3df08a27a9691b576ac",
+            "inventory": [
+              {
+                "id": "file:one",
+                "repositoryId": "repo:one",
+                "revisionId": "revision:worktree",
+                "path": "README.txt",
+                "contentFingerprint": "sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+                "classification": {
+                  "role": "OTHER",
+                  "provenance": "AUTHORED",
+                  "contentKind": "TEXT"
+                },
+                "languageHint": null,
+                "sensitivity": "INTERNAL"
+              }
+            ],
+            "contracts": [
+              {
+                "providerId": "native",
+                "extractor": "syntax-v1",
+                "normalizer": "fixture-v1",
+                "contract": "PYTHON_SYNTAX_CODE_V1",
+                "policy": "syntax-surface-support-v1"
+              }
+            ]
+          },
+          "capture": {
+            "parent": null,
+            "snapshotIds": [],
+            "snapshots": [],
+            "coverage": [],
+            "activeProviderIds": []
+          },
+          "qualificationRef": "component-fixture:not-runtime-qualified"
+        },
+        "assembledLedger": [
+          { "label": "manifest declared input", "items": 64, "serializedBytes": 1712, "depth": 6 },
+          { "label": "manifest copied input", "items": 64, "serializedBytes": 1712, "depth": 6 },
+          {
+            "label": "manifest schema parsed input",
+            "items": 64,
+            "serializedBytes": 1712,
+            "depth": 6
+          },
+          { "label": "assembled empty pairs", "items": 1, "serializedBytes": 2, "depth": 0 },
+          { "label": "complete history state", "items": 51, "serializedBytes": 1317, "depth": 5 },
+          { "label": "current members", "items": 1, "serializedBytes": 2, "depth": 0 },
+          {
+            "label": "codeatlas-activation-source-v1 value",
+            "items": 13,
+            "serializedBytes": 317,
+            "depth": 3
+          },
+          {
+            "label": "codeatlas-activation-source-v1 canonical copy",
+            "items": 13,
+            "serializedBytes": 317,
+            "depth": 3
+          },
+          {
+            "label": "codeatlas-activation-source-v1 framing",
+            "items": 0,
+            "serializedBytes": 31,
+            "depth": 0
+          },
+          {
+            "label": "codeatlas-activation-origins-v1 value",
+            "items": 18,
+            "serializedBytes": 444,
+            "depth": 4
+          },
+          {
+            "label": "codeatlas-activation-origins-v1 canonical copy",
+            "items": 18,
+            "serializedBytes": 444,
+            "depth": 4
+          },
+          {
+            "label": "codeatlas-activation-origins-v1 framing",
+            "items": 0,
+            "serializedBytes": 32,
+            "depth": 0
+          },
+          {
+            "label": "complete history manifest",
+            "items": 68,
+            "serializedBytes": 1998,
+            "depth": 6
+          },
+          {
+            "label": "codeatlas-activation-history-v1 value",
+            "items": 68,
+            "serializedBytes": 1998,
+            "depth": 6
+          },
+          {
+            "label": "codeatlas-activation-history-v1 canonical copy",
+            "items": 68,
+            "serializedBytes": 1998,
+            "depth": 6
+          },
+          {
+            "label": "codeatlas-activation-history-v1 framing",
+            "items": 0,
+            "serializedBytes": 32,
+            "depth": 0
+          },
+          {
+            "label": "complete history candidate",
+            "items": 73,
+            "serializedBytes": 2147,
+            "depth": 7
+          }
+        ],
+        "result": {
+          "manifest": {
+            "schemaVersion": 1,
+            "parent": null,
+            "state": {
+              "basis": {
+                "repositoryId": "repo:one",
+                "revisionId": "revision:worktree",
+                "contentFingerprint": "content:first",
+                "codeActivationDigest": "05c90d730a51179ef1eaaafa8d8f04157205493c30028fcad0ec174d8f4fed71"
+              },
+              "repositoryLocatorDigest": "be4f443420f269e1872f380f6f29ebe00eb40b3be70bb3df08a27a9691b576ac",
+              "inventory": [
+                {
+                  "id": "file:one",
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:worktree",
+                  "path": "README.txt",
+                  "contentFingerprint": "sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+                  "classification": {
+                    "role": "OTHER",
+                    "provenance": "AUTHORED",
+                    "contentKind": "TEXT"
+                  },
+                  "languageHint": null,
+                  "sensitivity": "INTERNAL"
+                }
+              ],
+              "contracts": [
+                {
+                  "providerId": "native",
+                  "extractor": "syntax-v1",
+                  "normalizer": "fixture-v1",
+                  "contract": "PYTHON_SYNTAX_CODE_V1",
+                  "policy": "syntax-surface-support-v1"
+                }
+              ],
+              "units": [],
+              "snapshots": [
+                {
+                  "id": "snapshot:one",
+                  "providerId": "native",
+                  "providerVersion": "0.0.0",
+                  "runtimeVersion": "fixture-runtime",
+                  "startedAt": "2026-10-24T00:00:00.000Z",
+                  "completedAt": "2026-10-24T00:00:00.003Z",
+                  "repositoryId": "repo:one",
+                  "requestedRevisionId": "revision:worktree",
+                  "requestedRevisionFingerprint": "content:first",
+                  "capabilities": [
+                    {
+                      "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                      "support": "SUPPORTED",
+                      "coverage": "COMPLETE"
+                    }
+                  ],
+                  "diagnostics": [],
+                  "outcome": "SUCCEEDED"
+                }
+              ],
+              "nodes": [],
+              "edges": [],
+              "supports": [],
+              "coverage": [],
+              "syntaxOrigins": []
+            },
+            "observation": {
+              "snapshotId": "snapshot:one",
+              "requestIdentity": "f3f34abd7363a39f38799001110ff73a4d1faacbf892b5f37129e7d6487453a9",
+              "outputIdentity": "295a2a89ed359a286cd3398af63496b584a4d599ec3d651baf22e75e19952572",
+              "javaProvenance": null,
+              "scope": { "unitIds": [], "removedSourceFileIds": [] },
+              "qualificationRef": "component-fixture:not-runtime-qualified"
+            },
+            "transitions": null,
+            "syntaxMembers": [],
+            "codeIdentity": "05c90d730a51179ef1eaaafa8d8f04157205493c30028fcad0ec174d8f4fed71",
+            "sourceIdentity": "b611998bff26a6faffec54c1eef933b727395f2031905a323d2823bdc5214017",
+            "originRegistryDigest": "3e3a11884b489fda6ba2fe989aa8d72930d50a08426b7c888a14767531d20ce4"
+          },
+          "activationId": "activation:30c9e69fe4598e3d473efffd1db2fab71689f10bab0a4a5553e64a0e7efe4267",
+          "origins": [],
+          "projections": [],
+          "members": [],
+          "basis": {
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "contentFingerprint": "content:first",
+            "codeActivationDigest": "05c90d730a51179ef1eaaafa8d8f04157205493c30028fcad0ec174d8f4fed71"
+          },
+          "code": {
+            "targetSource": {
+              "repositoryId": "repo:one",
+              "revisionId": "revision:worktree",
+              "contentFingerprint": "content:first"
+            },
+            "committedSnapshotCount": 1,
+            "nodes": [],
+            "edges": [],
+            "evidence": [],
+            "bindings": [],
+            "factEvidence": [],
+            "candidates": [],
+            "snapshots": [
+              {
+                "id": "snapshot:one",
+                "providerId": "native",
+                "providerVersion": "0.0.0",
+                "runtimeVersion": "fixture-runtime",
+                "startedAt": "2026-10-24T00:00:00.000Z",
+                "completedAt": "2026-10-24T00:00:00.003Z",
+                "repositoryId": "repo:one",
+                "requestedRevisionId": "revision:worktree",
+                "requestedRevisionFingerprint": "content:first",
+                "capabilities": [
+                  {
+                    "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                    "support": "SUPPORTED",
+                    "coverage": "COMPLETE"
+                  }
+                ],
+                "diagnostics": [],
+                "outcome": "SUCCEEDED"
+              }
+            ],
+            "coverage": []
+          },
+          "usage": {
+            "rows": 0,
+            "serializedBytes": 85783,
+            "items": 3168,
+            "retainedLogicalBytes": 96160
+          }
+        },
+        "cost": {
+          "rows": 0,
+          "serializedBytes": 85783,
+          "items": 3168,
+          "retainedLogicalBytes": 96160,
+          "maxDepth": 7,
+          "memoryBudgetBytes": 192320
+        },
+        "ledger": [
+          {
+            "label": "composition declarations initial",
+            "items": 72,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 1385,
+            "depth": 5
+          },
+          {
+            "label": "composition declarations traversal",
+            "items": 72,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 5
+          },
+          {
+            "label": "composition declarations encoding",
+            "items": 0,
+            "serializedBytes": 3588,
+            "retainedLogicalBytes": 3588,
+            "depth": 0
+          },
+          {
+            "label": "composition declarations parsed",
+            "items": 72,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 1385,
+            "depth": 5
+          },
+          {
+            "label": "request owned byte representations",
+            "items": 0,
+            "serializedBytes": 2114,
+            "retainedLogicalBytes": 2114,
+            "depth": 0
+          },
+          {
+            "label": "output owned byte representations",
+            "items": 0,
+            "serializedBytes": 2968,
+            "retainedLogicalBytes": 2968,
+            "depth": 0
+          },
+          {
+            "label": "real full Provider pipeline",
+            "items": 1927,
+            "serializedBytes": 58436,
+            "retainedLogicalBytes": 58436,
+            "depth": 7
+          },
+          {
+            "label": "NODE ordered input",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "NODE ordered rows",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "EDGE ordered input",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "EDGE ordered rows",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "EVIDENCE ordered input",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "EVIDENCE ordered rows",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "BINDING ordered input",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "BINDING ordered rows",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "FACT_EVIDENCE ordered input",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "FACT_EVIDENCE ordered rows",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "SUPPORT_CANDIDATE ordered input",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "SUPPORT_CANDIDATE ordered rows",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "complete future Code input",
+            "items": 31,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 527,
+            "depth": 5
+          },
+          {
+            "label": "future Code nine-group identity",
+            "items": 203,
+            "serializedBytes": 877,
+            "retainedLogicalBytes": 4389,
+            "depth": 5
+          },
+          {
+            "label": "complete declared history state",
+            "items": 50,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 1023,
+            "depth": 5
+          },
+          {
+            "label": "real empty Syntax/history assembly",
+            "items": 584,
+            "serializedBytes": 16215,
+            "retainedLogicalBytes": 16215,
+            "depth": 7
+          },
+          {
+            "label": "final history manifest validation",
+            "items": 31,
+            "serializedBytes": 1585,
+            "retainedLogicalBytes": 1650,
+            "depth": 4
+          },
+          {
+            "label": "complete pure Runtime result",
+            "items": 114,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 2480,
+            "depth": 7
+          }
+        ]
+      }
+    },
+    {
+      "id": "empty-unindexed",
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-stage/zero-provider-resource-reference.json",
+        "sha256": "dc34ccf9d1917b3f7c9868990b33d5532e10695b427c8f1dad108faa00e70153",
+        "caseId": "empty-unindexed"
+      },
+      "stageSource": {
+        "path": "fixtures/phase1/mixed-analysis-stage/zero-stage-resource-reference.json",
+        "sha256": "f25a27f744a4b837824b49316e998f60045d89da485db6df55fbe195a81d733b",
+        "caseId": "empty-unindexed"
+      },
+      "raw": {
+        "metadata": {
+          "targetSource": {
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "contentFingerprint": "content:first"
+          },
+          "inventory": [],
+          "snapshot": {
+            "id": "snapshot:one",
+            "providerId": "native",
+            "providerVersion": "0.0.0",
+            "runtimeVersion": "fixture-runtime",
+            "startedAt": "2026-10-24T00:00:00.000Z",
+            "completedAt": "2026-10-24T00:00:00.003Z"
+          },
+          "tool": { "target": "fixture-target", "profile": "test" },
+          "java": null,
+          "codeSyntax": {
+            "providerVersion": "0.0.0",
+            "runtimeVersion": "fixture-runtime",
+            "tool": { "target": "fixture-target", "profile": "test" },
+            "startedAt": "2026-10-24T00:00:00.001Z",
+            "settledAt": "2026-10-24T00:00:00.002Z"
+          }
+        },
+        "requestText": "{\"protocolVersion\":5,\"requestId\":\"contract:no-files\",\"sequence\":0,\"type\":\"OBSERVE_CODE_SYNTAX\",\"payload\":{\"irSchemaVersion\":1,\"repository\":{\"id\":\"repo:one\",\"rootPath\":\"C:/b1b-component-fixture\"},\"providerId\":\"native\",\"providerVersion\":\"0.0.0\",\"providerSnapshotId\":\"snapshot:one\",\"extractorVersion\":\"syntax-v1\",\"languages\":[{\"languageId\":\"python\",\"grammarVersion\":\"0.25.0\",\"analyzerVersion\":\"0.0.0\",\"compatibilityVersion\":\"syntax-v1\"}],\"sourceFiles\":[],\"removedSourceFiles\":[],\"owners\":[],\"deadlineEpochMs\":null,\"resourceBudget\":{\"maxDurationMs\":1000,\"maxMemoryBytes\":65536,\"maxEvents\":20,\"maxInputBytes\":65536,\"maxOutputBytes\":65536,\"maxDepth\":64,\"maxItems\":1000},\"expectedActivationBasis\":null,\"targetSource\":{\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"contentFingerprint\":\"content:first\"},\"ownerBinding\":{\"kind\":\"PROVISIONAL_CODE\",\"stageDigest\":\"5eadb766ec0c50c5c927ef663fd8706f8178fd1f7995f0ba0a482599b6b2f10a\",\"ownerMapDigest\":\"583f91cf01463f68063454fc4cc6c0e98aef792075da3aa82634d97312c804c5\"},\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\"}}\n",
+        "outputText": "{\"protocolVersion\":5,\"requestId\":\"contract:no-files\",\"sequence\":0,\"type\":\"OBSERVATION_STARTED\",\"payload\":{\"expectedActivationBasis\":null,\"targetSource\":{\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"contentFingerprint\":\"content:first\"},\"ownerBinding\":{\"kind\":\"PROVISIONAL_CODE\",\"stageDigest\":\"5eadb766ec0c50c5c927ef663fd8706f8178fd1f7995f0ba0a482599b6b2f10a\",\"ownerMapDigest\":\"583f91cf01463f68063454fc4cc6c0e98aef792075da3aa82634d97312c804c5\"},\"extractorVersion\":\"syntax-v1\",\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\",\"requestChecksum\":\"ea00aea9196af461460da54f91ce850726a1aeeb00c156a839cec14280e104d8\"}}\n{\"protocolVersion\":5,\"requestId\":\"contract:no-files\",\"sequence\":1,\"type\":\"OBSERVATION_COMPLETED\",\"payload\":{\"expectedActivationBasis\":null,\"targetSource\":{\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"contentFingerprint\":\"content:first\"},\"ownerBinding\":{\"kind\":\"PROVISIONAL_CODE\",\"stageDigest\":\"5eadb766ec0c50c5c927ef663fd8706f8178fd1f7995f0ba0a482599b6b2f10a\",\"ownerMapDigest\":\"583f91cf01463f68063454fc4cc6c0e98aef792075da3aa82634d97312c804c5\"},\"extractorVersion\":\"syntax-v1\",\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\",\"requestChecksum\":\"ea00aea9196af461460da54f91ce850726a1aeeb00c156a839cec14280e104d8\",\"codeOutcome\":\"NOT_APPLICABLE\",\"syntaxOutcome\":\"COMPLETE\",\"outcome\":\"SUCCEEDED\",\"counts\":{\"nodes\":0,\"edges\":0,\"syntax\":0,\"codeCoverage\":0,\"syntaxCoverage\":0,\"diagnostics\":0},\"checksum\":\"d3695d5dcb1e16df79c9b31b061be0c3b9968c74171d2415799cc8e1ef85c23d\"}}\n"
+      },
+      "validation": {
+        "input": {
+          "mode": "FULL",
+          "target": {
+            "source": {
+              "repositoryId": "repo:one",
+              "revisionId": "revision:worktree",
+              "contentFingerprint": "content:first"
+            },
+            "repositoryLocatorDigest": "be4f443420f269e1872f380f6f29ebe00eb40b3be70bb3df08a27a9691b576ac",
+            "inventory": [],
+            "contracts": [
+              {
+                "providerId": "native",
+                "extractor": "syntax-v1",
+                "normalizer": "fixture-v1",
+                "contract": "PYTHON_SYNTAX_CODE_V1",
+                "policy": "syntax-surface-support-v1"
+              }
+            ]
+          },
+          "capture": {
+            "parent": null,
+            "snapshotIds": [],
+            "snapshots": [],
+            "coverage": [],
+            "activeProviderIds": []
+          },
+          "scope": { "units": [], "removedSourceFileIds": [] },
+          "owner": {
+            "stageDigest": "5eadb766ec0c50c5c927ef663fd8706f8178fd1f7995f0ba0a482599b6b2f10a",
+            "java": null
+          }
+        },
+        "result": {
+          "raw": {
+            "kind": "DECLARED_FULL_RAW_OBSERVATION",
+            "metadata": {
+              "targetSource": {
+                "repositoryId": "repo:one",
+                "revisionId": "revision:worktree",
+                "contentFingerprint": "content:first"
+              },
+              "inventory": [],
+              "snapshot": {
+                "id": "snapshot:one",
+                "providerId": "native",
+                "providerVersion": "0.0.0",
+                "runtimeVersion": "fixture-runtime",
+                "startedAt": "2026-10-24T00:00:00.000Z",
+                "completedAt": "2026-10-24T00:00:00.003Z"
+              },
+              "tool": { "target": "fixture-target", "profile": "test" },
+              "java": null,
+              "codeSyntax": {
+                "providerVersion": "0.0.0",
+                "runtimeVersion": "fixture-runtime",
+                "tool": { "target": "fixture-target", "profile": "test" },
+                "startedAt": "2026-10-24T00:00:00.001Z",
+                "settledAt": "2026-10-24T00:00:00.002Z"
+              }
+            },
+            "java": null,
+            "codeSyntax": {
+              "request": {
+                "protocolVersion": 5,
+                "requestId": "contract:no-files",
+                "sequence": 0,
+                "type": "OBSERVE_CODE_SYNTAX",
+                "payload": {
+                  "irSchemaVersion": 1,
+                  "repository": { "id": "repo:one", "rootPath": "C:/b1b-component-fixture" },
+                  "providerId": "native",
+                  "providerVersion": "0.0.0",
+                  "providerSnapshotId": "snapshot:one",
+                  "extractorVersion": "syntax-v1",
+                  "languages": [
+                    {
+                      "languageId": "python",
+                      "grammarVersion": "0.25.0",
+                      "analyzerVersion": "0.0.0",
+                      "compatibilityVersion": "syntax-v1"
+                    }
+                  ],
+                  "sourceFiles": [],
+                  "removedSourceFiles": [],
+                  "owners": [],
+                  "deadlineEpochMs": null,
+                  "resourceBudget": {
+                    "maxDurationMs": 1000,
+                    "maxMemoryBytes": 65536,
+                    "maxEvents": 20,
+                    "maxInputBytes": 65536,
+                    "maxOutputBytes": 65536,
+                    "maxDepth": 64,
+                    "maxItems": 1000
+                  },
+                  "expectedActivationBasis": null,
+                  "targetSource": {
+                    "repositoryId": "repo:one",
+                    "revisionId": "revision:worktree",
+                    "contentFingerprint": "content:first"
+                  },
+                  "ownerBinding": {
+                    "kind": "PROVISIONAL_CODE",
+                    "stageDigest": "5eadb766ec0c50c5c927ef663fd8706f8178fd1f7995f0ba0a482599b6b2f10a",
+                    "ownerMapDigest": "583f91cf01463f68063454fc4cc6c0e98aef792075da3aa82634d97312c804c5"
+                  },
+                  "codeContract": "PYTHON_SYNTAX_CODE_V1"
+                }
+              },
+              "events": [
+                {
+                  "protocolVersion": 5,
+                  "requestId": "contract:no-files",
+                  "sequence": 0,
+                  "type": "OBSERVATION_STARTED",
+                  "payload": {
+                    "expectedActivationBasis": null,
+                    "targetSource": {
+                      "repositoryId": "repo:one",
+                      "revisionId": "revision:worktree",
+                      "contentFingerprint": "content:first"
+                    },
+                    "ownerBinding": {
+                      "kind": "PROVISIONAL_CODE",
+                      "stageDigest": "5eadb766ec0c50c5c927ef663fd8706f8178fd1f7995f0ba0a482599b6b2f10a",
+                      "ownerMapDigest": "583f91cf01463f68063454fc4cc6c0e98aef792075da3aa82634d97312c804c5"
+                    },
+                    "extractorVersion": "syntax-v1",
+                    "codeContract": "PYTHON_SYNTAX_CODE_V1",
+                    "requestChecksum": "ea00aea9196af461460da54f91ce850726a1aeeb00c156a839cec14280e104d8"
+                  }
+                },
+                {
+                  "protocolVersion": 5,
+                  "requestId": "contract:no-files",
+                  "sequence": 1,
+                  "type": "OBSERVATION_COMPLETED",
+                  "payload": {
+                    "expectedActivationBasis": null,
+                    "targetSource": {
+                      "repositoryId": "repo:one",
+                      "revisionId": "revision:worktree",
+                      "contentFingerprint": "content:first"
+                    },
+                    "ownerBinding": {
+                      "kind": "PROVISIONAL_CODE",
+                      "stageDigest": "5eadb766ec0c50c5c927ef663fd8706f8178fd1f7995f0ba0a482599b6b2f10a",
+                      "ownerMapDigest": "583f91cf01463f68063454fc4cc6c0e98aef792075da3aa82634d97312c804c5"
+                    },
+                    "extractorVersion": "syntax-v1",
+                    "codeContract": "PYTHON_SYNTAX_CODE_V1",
+                    "requestChecksum": "ea00aea9196af461460da54f91ce850726a1aeeb00c156a839cec14280e104d8",
+                    "codeOutcome": "NOT_APPLICABLE",
+                    "syntaxOutcome": "COMPLETE",
+                    "outcome": "SUCCEEDED",
+                    "counts": {
+                      "nodes": 0,
+                      "edges": 0,
+                      "syntax": 0,
+                      "codeCoverage": 0,
+                      "syntaxCoverage": 0,
+                      "diagnostics": 0
+                    },
+                    "checksum": "d3695d5dcb1e16df79c9b31b061be0c3b9968c74171d2415799cc8e1ef85c23d"
+                  }
+                }
+              ],
+              "codeOutcome": "NOT_APPLICABLE",
+              "syntaxOutcome": "COMPLETE",
+              "outcome": "SUCCEEDED",
+              "counts": {
+                "nodes": 0,
+                "edges": 0,
+                "syntax": 0,
+                "codeCoverage": 0,
+                "syntaxCoverage": 0,
+                "diagnostics": 0
+              },
+              "checksum": "d3695d5dcb1e16df79c9b31b061be0c3b9968c74171d2415799cc8e1ef85c23d",
+              "requestChecksum": "ea00aea9196af461460da54f91ce850726a1aeeb00c156a839cec14280e104d8"
+            },
+            "provenance": {
+              "kind": "DECLARED_INPUT",
+              "requestIdentity": "ea00aea9196af461460da54f91ce850726a1aeeb00c156a839cec14280e104d8",
+              "outputIdentity": "35abf8a662b3584b167c9abfb9c3aab6d45bde138dd9e46bc76e422ef420e4db"
+            }
+          },
+          "usage": {
+            "rows": 0,
+            "serializedBytes": 61573,
+            "items": 2181,
+            "retainedLogicalBytes": 68724
+          }
+        },
+        "cost": {
+          "rows": 0,
+          "serializedBytes": 61573,
+          "items": 2181,
+          "retainedLogicalBytes": 68724,
+          "maxDepth": 7,
+          "memoryBudgetBytes": 137448
+        },
+        "ledger": [
+          {
+            "label": "validation packet initial",
+            "items": 52,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 942,
+            "depth": 4
+          },
+          {
+            "label": "validation packet traversal",
+            "items": 52,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 4
+          },
+          {
+            "label": "validation packet encoding",
+            "items": 0,
+            "serializedBytes": 2478,
+            "retainedLogicalBytes": 2478,
+            "depth": 0
+          },
+          {
+            "label": "validation packet parsed",
+            "items": 52,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 942,
+            "depth": 4
+          },
+          {
+            "label": "reserved metadata",
+            "items": 25,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 453,
+            "depth": 3
+          },
+          {
+            "label": "parsed metadata",
+            "items": 25,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 453,
+            "depth": 3
+          },
+          {
+            "label": "target metadata",
+            "items": 25,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 453,
+            "depth": 3
+          },
+          {
+            "label": "parsed target metadata",
+            "items": 25,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 453,
+            "depth": 3
+          },
+          {
+            "label": "metadata inventory",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "complete inventory equality",
+            "items": 3,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 1
+          },
+          {
+            "label": "contract and scope records",
+            "items": 10,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 114,
+            "depth": 3
+          },
+          {
+            "label": "request owned byte representations",
+            "items": 0,
+            "serializedBytes": 2114,
+            "retainedLogicalBytes": 2114,
+            "depth": 0
+          },
+          {
+            "label": "output owned byte representations",
+            "items": 0,
+            "serializedBytes": 2968,
+            "retainedLogicalBytes": 2968,
+            "depth": 0
+          },
+          {
+            "label": "real full Provider pipeline",
+            "items": 1757,
+            "serializedBytes": 54013,
+            "retainedLogicalBytes": 54013,
+            "depth": 7
+          },
+          {
+            "label": "provisional binding complete check",
+            "items": 13,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 283,
+            "depth": 2
+          },
+          {
+            "label": "complete pure Runtime result",
+            "items": 141,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 3058,
+            "depth": 7
+          }
+        ]
+      },
+      "composition": {
+        "input": {
+          "mode": "FULL",
+          "target": {
+            "source": {
+              "repositoryId": "repo:one",
+              "revisionId": "revision:worktree",
+              "contentFingerprint": "content:first"
+            },
+            "repositoryLocatorDigest": "be4f443420f269e1872f380f6f29ebe00eb40b3be70bb3df08a27a9691b576ac",
+            "inventory": [],
+            "contracts": [
+              {
+                "providerId": "native",
+                "extractor": "syntax-v1",
+                "normalizer": "fixture-v1",
+                "contract": "PYTHON_SYNTAX_CODE_V1",
+                "policy": "syntax-surface-support-v1"
+              }
+            ]
+          },
+          "capture": {
+            "parent": null,
+            "snapshotIds": [],
+            "snapshots": [],
+            "coverage": [],
+            "activeProviderIds": []
+          },
+          "qualificationRef": "component-fixture:not-runtime-qualified"
+        },
+        "assembledLedger": [
+          { "label": "manifest declared input", "items": 52, "serializedBytes": 1397, "depth": 6 },
+          { "label": "manifest copied input", "items": 52, "serializedBytes": 1397, "depth": 6 },
+          {
+            "label": "manifest schema parsed input",
+            "items": 52,
+            "serializedBytes": 1397,
+            "depth": 6
+          },
+          { "label": "assembled empty pairs", "items": 1, "serializedBytes": 2, "depth": 0 },
+          { "label": "complete history state", "items": 39, "serializedBytes": 1002, "depth": 5 },
+          { "label": "current members", "items": 1, "serializedBytes": 2, "depth": 0 },
+          {
+            "label": "codeatlas-activation-source-v1 value",
+            "items": 1,
+            "serializedBytes": 2,
+            "depth": 0
+          },
+          {
+            "label": "codeatlas-activation-source-v1 canonical copy",
+            "items": 1,
+            "serializedBytes": 2,
+            "depth": 0
+          },
+          {
+            "label": "codeatlas-activation-source-v1 framing",
+            "items": 0,
+            "serializedBytes": 31,
+            "depth": 0
+          },
+          {
+            "label": "codeatlas-activation-origins-v1 value",
+            "items": 18,
+            "serializedBytes": 444,
+            "depth": 4
+          },
+          {
+            "label": "codeatlas-activation-origins-v1 canonical copy",
+            "items": 18,
+            "serializedBytes": 444,
+            "depth": 4
+          },
+          {
+            "label": "codeatlas-activation-origins-v1 framing",
+            "items": 0,
+            "serializedBytes": 32,
+            "depth": 0
+          },
+          {
+            "label": "complete history manifest",
+            "items": 56,
+            "serializedBytes": 1683,
+            "depth": 6
+          },
+          {
+            "label": "codeatlas-activation-history-v1 value",
+            "items": 56,
+            "serializedBytes": 1683,
+            "depth": 6
+          },
+          {
+            "label": "codeatlas-activation-history-v1 canonical copy",
+            "items": 56,
+            "serializedBytes": 1683,
+            "depth": 6
+          },
+          {
+            "label": "codeatlas-activation-history-v1 framing",
+            "items": 0,
+            "serializedBytes": 32,
+            "depth": 0
+          },
+          {
+            "label": "complete history candidate",
+            "items": 61,
+            "serializedBytes": 1832,
+            "depth": 7
+          }
+        ],
+        "result": {
+          "manifest": {
+            "schemaVersion": 1,
+            "parent": null,
+            "state": {
+              "basis": {
+                "repositoryId": "repo:one",
+                "revisionId": "revision:worktree",
+                "contentFingerprint": "content:first",
+                "codeActivationDigest": "05c90d730a51179ef1eaaafa8d8f04157205493c30028fcad0ec174d8f4fed71"
+              },
+              "repositoryLocatorDigest": "be4f443420f269e1872f380f6f29ebe00eb40b3be70bb3df08a27a9691b576ac",
+              "inventory": [],
+              "contracts": [
+                {
+                  "providerId": "native",
+                  "extractor": "syntax-v1",
+                  "normalizer": "fixture-v1",
+                  "contract": "PYTHON_SYNTAX_CODE_V1",
+                  "policy": "syntax-surface-support-v1"
+                }
+              ],
+              "units": [],
+              "snapshots": [
+                {
+                  "id": "snapshot:one",
+                  "providerId": "native",
+                  "providerVersion": "0.0.0",
+                  "runtimeVersion": "fixture-runtime",
+                  "startedAt": "2026-10-24T00:00:00.000Z",
+                  "completedAt": "2026-10-24T00:00:00.003Z",
+                  "repositoryId": "repo:one",
+                  "requestedRevisionId": "revision:worktree",
+                  "requestedRevisionFingerprint": "content:first",
+                  "capabilities": [
+                    {
+                      "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                      "support": "SUPPORTED",
+                      "coverage": "COMPLETE"
+                    }
+                  ],
+                  "diagnostics": [],
+                  "outcome": "SUCCEEDED"
+                }
+              ],
+              "nodes": [],
+              "edges": [],
+              "supports": [],
+              "coverage": [],
+              "syntaxOrigins": []
+            },
+            "observation": {
+              "snapshotId": "snapshot:one",
+              "requestIdentity": "ea00aea9196af461460da54f91ce850726a1aeeb00c156a839cec14280e104d8",
+              "outputIdentity": "35abf8a662b3584b167c9abfb9c3aab6d45bde138dd9e46bc76e422ef420e4db",
+              "javaProvenance": null,
+              "scope": { "unitIds": [], "removedSourceFileIds": [] },
+              "qualificationRef": "component-fixture:not-runtime-qualified"
+            },
+            "transitions": null,
+            "syntaxMembers": [],
+            "codeIdentity": "05c90d730a51179ef1eaaafa8d8f04157205493c30028fcad0ec174d8f4fed71",
+            "sourceIdentity": "9a99716b1331858af1b9ae8165aeec7ca36b6a3fe64b28c804d01bb414e1cfa2",
+            "originRegistryDigest": "3e3a11884b489fda6ba2fe989aa8d72930d50a08426b7c888a14767531d20ce4"
+          },
+          "activationId": "activation:32ff691266291b5cf021247f96c6795974d6da70885894d156ec62d9a1872a0a",
+          "origins": [],
+          "projections": [],
+          "members": [],
+          "basis": {
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "contentFingerprint": "content:first",
+            "codeActivationDigest": "05c90d730a51179ef1eaaafa8d8f04157205493c30028fcad0ec174d8f4fed71"
+          },
+          "code": {
+            "targetSource": {
+              "repositoryId": "repo:one",
+              "revisionId": "revision:worktree",
+              "contentFingerprint": "content:first"
+            },
+            "committedSnapshotCount": 1,
+            "nodes": [],
+            "edges": [],
+            "evidence": [],
+            "bindings": [],
+            "factEvidence": [],
+            "candidates": [],
+            "snapshots": [
+              {
+                "id": "snapshot:one",
+                "providerId": "native",
+                "providerVersion": "0.0.0",
+                "runtimeVersion": "fixture-runtime",
+                "startedAt": "2026-10-24T00:00:00.000Z",
+                "completedAt": "2026-10-24T00:00:00.003Z",
+                "repositoryId": "repo:one",
+                "requestedRevisionId": "revision:worktree",
+                "requestedRevisionFingerprint": "content:first",
+                "capabilities": [
+                  {
+                    "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                    "support": "SUPPORTED",
+                    "coverage": "COMPLETE"
+                  }
+                ],
+                "diagnostics": [],
+                "outcome": "SUCCEEDED"
+              }
+            ],
+            "coverage": []
+          },
+          "usage": {
+            "rows": 0,
+            "serializedBytes": 76320,
+            "items": 2770,
+            "retainedLogicalBytes": 85215
+          }
+        },
+        "cost": {
+          "rows": 0,
+          "serializedBytes": 76320,
+          "items": 2770,
+          "retainedLogicalBytes": 85215,
+          "maxDepth": 7,
+          "memoryBudgetBytes": 170430
+        },
+        "ledger": [
+          {
+            "label": "composition declarations initial",
+            "items": 48,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 891,
+            "depth": 4
+          },
+          {
+            "label": "composition declarations traversal",
+            "items": 48,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 4
+          },
+          {
+            "label": "composition declarations encoding",
+            "items": 0,
+            "serializedBytes": 2328,
+            "retainedLogicalBytes": 2328,
+            "depth": 0
+          },
+          {
+            "label": "composition declarations parsed",
+            "items": 48,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 891,
+            "depth": 4
+          },
+          {
+            "label": "request owned byte representations",
+            "items": 0,
+            "serializedBytes": 2114,
+            "retainedLogicalBytes": 2114,
+            "depth": 0
+          },
+          {
+            "label": "output owned byte representations",
+            "items": 0,
+            "serializedBytes": 2968,
+            "retainedLogicalBytes": 2968,
+            "depth": 0
+          },
+          {
+            "label": "real full Provider pipeline",
+            "items": 1757,
+            "serializedBytes": 54013,
+            "retainedLogicalBytes": 54013,
+            "depth": 7
+          },
+          {
+            "label": "NODE ordered input",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "NODE ordered rows",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "EDGE ordered input",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "EDGE ordered rows",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "EVIDENCE ordered input",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "EVIDENCE ordered rows",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "BINDING ordered input",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "BINDING ordered rows",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "FACT_EVIDENCE ordered input",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "FACT_EVIDENCE ordered rows",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "SUPPORT_CANDIDATE ordered input",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "SUPPORT_CANDIDATE ordered rows",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "complete future Code input",
+            "items": 31,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 527,
+            "depth": 5
+          },
+          {
+            "label": "future Code nine-group identity",
+            "items": 203,
+            "serializedBytes": 877,
+            "retainedLogicalBytes": 4389,
+            "depth": 5
+          },
+          {
+            "label": "complete declared history state",
+            "items": 38,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 776,
+            "depth": 5
+          },
+          {
+            "label": "real empty Syntax/history assembly",
+            "items": 464,
+            "serializedBytes": 13065,
+            "retainedLogicalBytes": 13065,
+            "depth": 7
+          },
+          {
+            "label": "final history manifest validation",
+            "items": 19,
+            "serializedBytes": 955,
+            "retainedLogicalBytes": 1020,
+            "depth": 4
+          },
+          {
+            "label": "complete pure Runtime result",
+            "items": 102,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 2233,
+            "depth": 7
+          }
+        ]
+      }
+    },
+    {
+      "id": "legacy-empty-available",
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-stage/zero-provider-resource-reference.json",
+        "sha256": "dc34ccf9d1917b3f7c9868990b33d5532e10695b427c8f1dad108faa00e70153",
+        "caseId": "legacy-empty-available"
+      },
+      "stageSource": {
+        "path": "fixtures/phase1/mixed-analysis-stage/zero-stage-resource-reference.json",
+        "sha256": "f25a27f744a4b837824b49316e998f60045d89da485db6df55fbe195a81d733b",
+        "caseId": "legacy-empty-available"
+      },
+      "raw": {
+        "metadata": {
+          "targetSource": {
+            "repositoryId": "r",
+            "revisionId": "rev",
+            "contentFingerprint": "base"
+          },
+          "inventory": [],
+          "snapshot": {
+            "id": "snapshot:one",
+            "providerId": "native",
+            "providerVersion": "0.0.0",
+            "runtimeVersion": "fixture-runtime",
+            "startedAt": "2026-10-24T00:00:00.000Z",
+            "completedAt": "2026-10-24T00:00:00.003Z"
+          },
+          "tool": { "target": "fixture-target", "profile": "test" },
+          "java": null,
+          "codeSyntax": {
+            "providerVersion": "0.0.0",
+            "runtimeVersion": "fixture-runtime",
+            "tool": { "target": "fixture-target", "profile": "test" },
+            "startedAt": "2026-10-24T00:00:00.001Z",
+            "settledAt": "2026-10-24T00:00:00.002Z"
+          }
+        },
+        "requestText": "{\"protocolVersion\":5,\"requestId\":\"contract:no-files\",\"sequence\":0,\"type\":\"OBSERVE_CODE_SYNTAX\",\"payload\":{\"irSchemaVersion\":1,\"repository\":{\"id\":\"r\",\"rootPath\":\"/r\"},\"providerId\":\"native\",\"providerVersion\":\"0.0.0\",\"providerSnapshotId\":\"snapshot:one\",\"extractorVersion\":\"syntax-v1\",\"languages\":[{\"languageId\":\"python\",\"grammarVersion\":\"0.25.0\",\"analyzerVersion\":\"0.0.0\",\"compatibilityVersion\":\"syntax-v1\"}],\"sourceFiles\":[],\"removedSourceFiles\":[],\"owners\":[],\"deadlineEpochMs\":null,\"resourceBudget\":{\"maxDurationMs\":1000,\"maxMemoryBytes\":65536,\"maxEvents\":20,\"maxInputBytes\":65536,\"maxOutputBytes\":65536,\"maxDepth\":64,\"maxItems\":1000},\"expectedActivationBasis\":null,\"targetSource\":{\"repositoryId\":\"r\",\"revisionId\":\"rev\",\"contentFingerprint\":\"base\"},\"ownerBinding\":{\"kind\":\"PROVISIONAL_CODE\",\"stageDigest\":\"70ba3943c530faaac9a61f137d1a03840d696827f096bae33963b591c07844b7\",\"ownerMapDigest\":\"60c4b1f68a14bf6b1b0414d58e1c5e5a3f467ed3050fefe383f85d3d033bf8e8\"},\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\"}}\n",
+        "outputText": "{\"protocolVersion\":5,\"requestId\":\"contract:no-files\",\"sequence\":0,\"type\":\"OBSERVATION_STARTED\",\"payload\":{\"expectedActivationBasis\":null,\"targetSource\":{\"repositoryId\":\"r\",\"revisionId\":\"rev\",\"contentFingerprint\":\"base\"},\"ownerBinding\":{\"kind\":\"PROVISIONAL_CODE\",\"stageDigest\":\"70ba3943c530faaac9a61f137d1a03840d696827f096bae33963b591c07844b7\",\"ownerMapDigest\":\"60c4b1f68a14bf6b1b0414d58e1c5e5a3f467ed3050fefe383f85d3d033bf8e8\"},\"extractorVersion\":\"syntax-v1\",\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\",\"requestChecksum\":\"02ba71b3b1c7b1b12749865bed355b5c694e1de3ff9fdb89e95dce5fc83a0d52\"}}\n{\"protocolVersion\":5,\"requestId\":\"contract:no-files\",\"sequence\":1,\"type\":\"OBSERVATION_COMPLETED\",\"payload\":{\"expectedActivationBasis\":null,\"targetSource\":{\"repositoryId\":\"r\",\"revisionId\":\"rev\",\"contentFingerprint\":\"base\"},\"ownerBinding\":{\"kind\":\"PROVISIONAL_CODE\",\"stageDigest\":\"70ba3943c530faaac9a61f137d1a03840d696827f096bae33963b591c07844b7\",\"ownerMapDigest\":\"60c4b1f68a14bf6b1b0414d58e1c5e5a3f467ed3050fefe383f85d3d033bf8e8\"},\"extractorVersion\":\"syntax-v1\",\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\",\"requestChecksum\":\"02ba71b3b1c7b1b12749865bed355b5c694e1de3ff9fdb89e95dce5fc83a0d52\",\"codeOutcome\":\"NOT_APPLICABLE\",\"syntaxOutcome\":\"COMPLETE\",\"outcome\":\"SUCCEEDED\",\"counts\":{\"nodes\":0,\"edges\":0,\"syntax\":0,\"codeCoverage\":0,\"syntaxCoverage\":0,\"diagnostics\":0},\"checksum\":\"1e856e1364fdb346cb913da0c18e5305c79d757c5665215d0f88e4c6bd84a5ce\"}}\n"
+      },
+      "validation": {
+        "input": {
+          "mode": "FULL",
+          "target": {
+            "source": { "repositoryId": "r", "revisionId": "rev", "contentFingerprint": "base" },
+            "repositoryLocatorDigest": "89b334a45872720bb324e270130b21bc4d472bb297298b0d45685db1c0571ff7",
+            "inventory": [],
+            "contracts": [
+              {
+                "providerId": "native",
+                "extractor": "syntax-v1",
+                "normalizer": "fixture-v1",
+                "contract": "PYTHON_SYNTAX_CODE_V1",
+                "policy": "syntax-surface-support-v1"
+              }
+            ]
+          },
+          "capture": {
+            "parent": {
+              "activationId": "activation:1079a965802acb90666b73177b06023ec10236efd6776120808a701ff966aa87",
+              "repositoryId": "r",
+              "revisionId": "rev"
+            },
+            "snapshotIds": ["snap"],
+            "snapshots": [
+              {
+                "capabilities": [
+                  { "coverage": "COMPLETE", "name": "SYMBOL", "support": "SUPPORTED" }
+                ],
+                "completedAt": "2026-01-01T00:00:01.000Z",
+                "diagnostics": [],
+                "id": "snap",
+                "outcome": "SUCCEEDED",
+                "providerId": "native",
+                "providerVersion": "0.0.0",
+                "repositoryId": "r",
+                "requestedRevisionFingerprint": "base",
+                "requestedRevisionId": "rev",
+                "runtimeVersion": "0.0.0",
+                "startedAt": "2026-01-01T00:00:00.000Z"
+              }
+            ],
+            "coverage": [],
+            "activeProviderIds": []
+          },
+          "scope": { "units": [], "removedSourceFileIds": [] },
+          "owner": {
+            "stageDigest": "70ba3943c530faaac9a61f137d1a03840d696827f096bae33963b591c07844b7",
+            "java": null
+          }
+        },
+        "result": {
+          "raw": {
+            "kind": "DECLARED_FULL_RAW_OBSERVATION",
+            "metadata": {
+              "targetSource": {
+                "repositoryId": "r",
+                "revisionId": "rev",
+                "contentFingerprint": "base"
+              },
+              "inventory": [],
+              "snapshot": {
+                "id": "snapshot:one",
+                "providerId": "native",
+                "providerVersion": "0.0.0",
+                "runtimeVersion": "fixture-runtime",
+                "startedAt": "2026-10-24T00:00:00.000Z",
+                "completedAt": "2026-10-24T00:00:00.003Z"
+              },
+              "tool": { "target": "fixture-target", "profile": "test" },
+              "java": null,
+              "codeSyntax": {
+                "providerVersion": "0.0.0",
+                "runtimeVersion": "fixture-runtime",
+                "tool": { "target": "fixture-target", "profile": "test" },
+                "startedAt": "2026-10-24T00:00:00.001Z",
+                "settledAt": "2026-10-24T00:00:00.002Z"
+              }
+            },
+            "java": null,
+            "codeSyntax": {
+              "request": {
+                "protocolVersion": 5,
+                "requestId": "contract:no-files",
+                "sequence": 0,
+                "type": "OBSERVE_CODE_SYNTAX",
+                "payload": {
+                  "irSchemaVersion": 1,
+                  "repository": { "id": "r", "rootPath": "/r" },
+                  "providerId": "native",
+                  "providerVersion": "0.0.0",
+                  "providerSnapshotId": "snapshot:one",
+                  "extractorVersion": "syntax-v1",
+                  "languages": [
+                    {
+                      "languageId": "python",
+                      "grammarVersion": "0.25.0",
+                      "analyzerVersion": "0.0.0",
+                      "compatibilityVersion": "syntax-v1"
+                    }
+                  ],
+                  "sourceFiles": [],
+                  "removedSourceFiles": [],
+                  "owners": [],
+                  "deadlineEpochMs": null,
+                  "resourceBudget": {
+                    "maxDurationMs": 1000,
+                    "maxMemoryBytes": 65536,
+                    "maxEvents": 20,
+                    "maxInputBytes": 65536,
+                    "maxOutputBytes": 65536,
+                    "maxDepth": 64,
+                    "maxItems": 1000
+                  },
+                  "expectedActivationBasis": null,
+                  "targetSource": {
+                    "repositoryId": "r",
+                    "revisionId": "rev",
+                    "contentFingerprint": "base"
+                  },
+                  "ownerBinding": {
+                    "kind": "PROVISIONAL_CODE",
+                    "stageDigest": "70ba3943c530faaac9a61f137d1a03840d696827f096bae33963b591c07844b7",
+                    "ownerMapDigest": "60c4b1f68a14bf6b1b0414d58e1c5e5a3f467ed3050fefe383f85d3d033bf8e8"
+                  },
+                  "codeContract": "PYTHON_SYNTAX_CODE_V1"
+                }
+              },
+              "events": [
+                {
+                  "protocolVersion": 5,
+                  "requestId": "contract:no-files",
+                  "sequence": 0,
+                  "type": "OBSERVATION_STARTED",
+                  "payload": {
+                    "expectedActivationBasis": null,
+                    "targetSource": {
+                      "repositoryId": "r",
+                      "revisionId": "rev",
+                      "contentFingerprint": "base"
+                    },
+                    "ownerBinding": {
+                      "kind": "PROVISIONAL_CODE",
+                      "stageDigest": "70ba3943c530faaac9a61f137d1a03840d696827f096bae33963b591c07844b7",
+                      "ownerMapDigest": "60c4b1f68a14bf6b1b0414d58e1c5e5a3f467ed3050fefe383f85d3d033bf8e8"
+                    },
+                    "extractorVersion": "syntax-v1",
+                    "codeContract": "PYTHON_SYNTAX_CODE_V1",
+                    "requestChecksum": "02ba71b3b1c7b1b12749865bed355b5c694e1de3ff9fdb89e95dce5fc83a0d52"
+                  }
+                },
+                {
+                  "protocolVersion": 5,
+                  "requestId": "contract:no-files",
+                  "sequence": 1,
+                  "type": "OBSERVATION_COMPLETED",
+                  "payload": {
+                    "expectedActivationBasis": null,
+                    "targetSource": {
+                      "repositoryId": "r",
+                      "revisionId": "rev",
+                      "contentFingerprint": "base"
+                    },
+                    "ownerBinding": {
+                      "kind": "PROVISIONAL_CODE",
+                      "stageDigest": "70ba3943c530faaac9a61f137d1a03840d696827f096bae33963b591c07844b7",
+                      "ownerMapDigest": "60c4b1f68a14bf6b1b0414d58e1c5e5a3f467ed3050fefe383f85d3d033bf8e8"
+                    },
+                    "extractorVersion": "syntax-v1",
+                    "codeContract": "PYTHON_SYNTAX_CODE_V1",
+                    "requestChecksum": "02ba71b3b1c7b1b12749865bed355b5c694e1de3ff9fdb89e95dce5fc83a0d52",
+                    "codeOutcome": "NOT_APPLICABLE",
+                    "syntaxOutcome": "COMPLETE",
+                    "outcome": "SUCCEEDED",
+                    "counts": {
+                      "nodes": 0,
+                      "edges": 0,
+                      "syntax": 0,
+                      "codeCoverage": 0,
+                      "syntaxCoverage": 0,
+                      "diagnostics": 0
+                    },
+                    "checksum": "1e856e1364fdb346cb913da0c18e5305c79d757c5665215d0f88e4c6bd84a5ce"
+                  }
+                }
+              ],
+              "codeOutcome": "NOT_APPLICABLE",
+              "syntaxOutcome": "COMPLETE",
+              "outcome": "SUCCEEDED",
+              "counts": {
+                "nodes": 0,
+                "edges": 0,
+                "syntax": 0,
+                "codeCoverage": 0,
+                "syntaxCoverage": 0,
+                "diagnostics": 0
+              },
+              "checksum": "1e856e1364fdb346cb913da0c18e5305c79d757c5665215d0f88e4c6bd84a5ce",
+              "requestChecksum": "02ba71b3b1c7b1b12749865bed355b5c694e1de3ff9fdb89e95dce5fc83a0d52"
+            },
+            "provenance": {
+              "kind": "DECLARED_INPUT",
+              "requestIdentity": "02ba71b3b1c7b1b12749865bed355b5c694e1de3ff9fdb89e95dce5fc83a0d52",
+              "outputIdentity": "d7dd071c44372b87c84d77ff8c0a7ad19ad41928c9e245ab087610d7a6907d2d"
+            }
+          },
+          "usage": {
+            "rows": 0,
+            "serializedBytes": 59633,
+            "items": 2244,
+            "retainedLogicalBytes": 67153
+          }
+        },
+        "cost": {
+          "rows": 0,
+          "serializedBytes": 59633,
+          "items": 2244,
+          "retainedLogicalBytes": 67153,
+          "maxDepth": 7,
+          "memoryBudgetBytes": 134306
+        },
+        "ledger": [
+          {
+            "label": "validation packet initial",
+            "items": 73,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 1276,
+            "depth": 6
+          },
+          {
+            "label": "validation packet traversal",
+            "items": 73,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 6
+          },
+          {
+            "label": "validation packet encoding",
+            "items": 0,
+            "serializedBytes": 3364,
+            "retainedLogicalBytes": 3364,
+            "depth": 0
+          },
+          {
+            "label": "validation packet parsed",
+            "items": 73,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 1276,
+            "depth": 6
+          },
+          {
+            "label": "reserved metadata",
+            "items": 25,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 423,
+            "depth": 3
+          },
+          {
+            "label": "parsed metadata",
+            "items": 25,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 423,
+            "depth": 3
+          },
+          {
+            "label": "target metadata",
+            "items": 25,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 423,
+            "depth": 3
+          },
+          {
+            "label": "parsed target metadata",
+            "items": 25,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 423,
+            "depth": 3
+          },
+          {
+            "label": "metadata inventory",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "complete inventory equality",
+            "items": 3,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 1
+          },
+          {
+            "label": "contract and scope records",
+            "items": 10,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 114,
+            "depth": 3
+          },
+          {
+            "label": "request owned byte representations",
+            "items": 0,
+            "serializedBytes": 1996,
+            "retainedLogicalBytes": 1996,
+            "depth": 0
+          },
+          {
+            "label": "output owned byte representations",
+            "items": 0,
+            "serializedBytes": 2848,
+            "retainedLogicalBytes": 2848,
+            "depth": 0
+          },
+          {
+            "label": "real full Provider pipeline",
+            "items": 1757,
+            "serializedBytes": 51425,
+            "retainedLogicalBytes": 51425,
+            "depth": 7
+          },
+          {
+            "label": "provisional binding complete check",
+            "items": 13,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 253,
+            "depth": 2
+          },
+          {
+            "label": "complete pure Runtime result",
+            "items": 141,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 2909,
+            "depth": 7
+          }
+        ]
+      },
+      "composition": {
+        "input": {
+          "mode": "FULL",
+          "target": {
+            "source": { "repositoryId": "r", "revisionId": "rev", "contentFingerprint": "base" },
+            "repositoryLocatorDigest": "89b334a45872720bb324e270130b21bc4d472bb297298b0d45685db1c0571ff7",
+            "inventory": [],
+            "contracts": [
+              {
+                "providerId": "native",
+                "extractor": "syntax-v1",
+                "normalizer": "fixture-v1",
+                "contract": "PYTHON_SYNTAX_CODE_V1",
+                "policy": "syntax-surface-support-v1"
+              }
+            ]
+          },
+          "capture": {
+            "parent": {
+              "activationId": "activation:1079a965802acb90666b73177b06023ec10236efd6776120808a701ff966aa87",
+              "repositoryId": "r",
+              "revisionId": "rev"
+            },
+            "snapshotIds": ["snap"],
+            "snapshots": [
+              {
+                "capabilities": [
+                  { "coverage": "COMPLETE", "name": "SYMBOL", "support": "SUPPORTED" }
+                ],
+                "completedAt": "2026-01-01T00:00:01.000Z",
+                "diagnostics": [],
+                "id": "snap",
+                "outcome": "SUCCEEDED",
+                "providerId": "native",
+                "providerVersion": "0.0.0",
+                "repositoryId": "r",
+                "requestedRevisionFingerprint": "base",
+                "requestedRevisionId": "rev",
+                "runtimeVersion": "0.0.0",
+                "startedAt": "2026-01-01T00:00:00.000Z"
+              }
+            ],
+            "coverage": [],
+            "activeProviderIds": []
+          },
+          "qualificationRef": "component-fixture:not-runtime-qualified"
+        },
+        "assembledLedger": [
+          { "label": "manifest declared input", "items": 72, "serializedBytes": 1835, "depth": 6 },
+          { "label": "manifest copied input", "items": 72, "serializedBytes": 1835, "depth": 6 },
+          {
+            "label": "manifest schema parsed input",
+            "items": 72,
+            "serializedBytes": 1835,
+            "depth": 6
+          },
+          { "label": "assembled empty pairs", "items": 1, "serializedBytes": 2, "depth": 0 },
+          { "label": "complete history state", "items": 56, "serializedBytes": 1312, "depth": 5 },
+          { "label": "current members", "items": 1, "serializedBytes": 2, "depth": 0 },
+          {
+            "label": "codeatlas-activation-source-v1 value",
+            "items": 1,
+            "serializedBytes": 2,
+            "depth": 0
+          },
+          {
+            "label": "codeatlas-activation-source-v1 canonical copy",
+            "items": 1,
+            "serializedBytes": 2,
+            "depth": 0
+          },
+          {
+            "label": "codeatlas-activation-source-v1 framing",
+            "items": 0,
+            "serializedBytes": 31,
+            "depth": 0
+          },
+          {
+            "label": "codeatlas-activation-origins-v1 value",
+            "items": 35,
+            "serializedBytes": 784,
+            "depth": 4
+          },
+          {
+            "label": "codeatlas-activation-origins-v1 canonical copy",
+            "items": 35,
+            "serializedBytes": 784,
+            "depth": 4
+          },
+          {
+            "label": "codeatlas-activation-origins-v1 framing",
+            "items": 0,
+            "serializedBytes": 32,
+            "depth": 0
+          },
+          {
+            "label": "complete history manifest",
+            "items": 76,
+            "serializedBytes": 2121,
+            "depth": 6
+          },
+          {
+            "label": "codeatlas-activation-history-v1 value",
+            "items": 76,
+            "serializedBytes": 2121,
+            "depth": 6
+          },
+          {
+            "label": "codeatlas-activation-history-v1 canonical copy",
+            "items": 76,
+            "serializedBytes": 2121,
+            "depth": 6
+          },
+          {
+            "label": "codeatlas-activation-history-v1 framing",
+            "items": 0,
+            "serializedBytes": 32,
+            "depth": 0
+          },
+          {
+            "label": "complete history candidate",
+            "items": 81,
+            "serializedBytes": 2270,
+            "depth": 7
+          }
+        ],
+        "result": {
+          "manifest": {
+            "schemaVersion": 1,
+            "parent": {
+              "activationId": "activation:1079a965802acb90666b73177b06023ec10236efd6776120808a701ff966aa87",
+              "repositoryId": "r",
+              "revisionId": "rev"
+            },
+            "state": {
+              "basis": {
+                "repositoryId": "r",
+                "revisionId": "rev",
+                "contentFingerprint": "base",
+                "codeActivationDigest": "ce567f356e99e943c5f96fdab595a0bf132f81f6431bb23c92be4c6551008581"
+              },
+              "repositoryLocatorDigest": "89b334a45872720bb324e270130b21bc4d472bb297298b0d45685db1c0571ff7",
+              "inventory": [],
+              "contracts": [
+                {
+                  "providerId": "native",
+                  "extractor": "syntax-v1",
+                  "normalizer": "fixture-v1",
+                  "contract": "PYTHON_SYNTAX_CODE_V1",
+                  "policy": "syntax-surface-support-v1"
+                }
+              ],
+              "units": [],
+              "snapshots": [
+                {
+                  "capabilities": [
+                    { "coverage": "COMPLETE", "name": "SYMBOL", "support": "SUPPORTED" }
+                  ],
+                  "completedAt": "2026-01-01T00:00:01.000Z",
+                  "diagnostics": [],
+                  "id": "snap",
+                  "outcome": "SUCCEEDED",
+                  "providerId": "native",
+                  "providerVersion": "0.0.0",
+                  "repositoryId": "r",
+                  "requestedRevisionFingerprint": "base",
+                  "requestedRevisionId": "rev",
+                  "runtimeVersion": "0.0.0",
+                  "startedAt": "2026-01-01T00:00:00.000Z"
+                },
+                {
+                  "id": "snapshot:one",
+                  "providerId": "native",
+                  "providerVersion": "0.0.0",
+                  "runtimeVersion": "fixture-runtime",
+                  "startedAt": "2026-10-24T00:00:00.000Z",
+                  "completedAt": "2026-10-24T00:00:00.003Z",
+                  "repositoryId": "r",
+                  "requestedRevisionId": "rev",
+                  "requestedRevisionFingerprint": "base",
+                  "capabilities": [
+                    {
+                      "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                      "support": "SUPPORTED",
+                      "coverage": "COMPLETE"
+                    }
+                  ],
+                  "diagnostics": [],
+                  "outcome": "SUCCEEDED"
+                }
+              ],
+              "nodes": [],
+              "edges": [],
+              "supports": [],
+              "coverage": [],
+              "syntaxOrigins": []
+            },
+            "observation": {
+              "snapshotId": "snapshot:one",
+              "requestIdentity": "02ba71b3b1c7b1b12749865bed355b5c694e1de3ff9fdb89e95dce5fc83a0d52",
+              "outputIdentity": "d7dd071c44372b87c84d77ff8c0a7ad19ad41928c9e245ab087610d7a6907d2d",
+              "javaProvenance": null,
+              "scope": { "unitIds": [], "removedSourceFileIds": [] },
+              "qualificationRef": "component-fixture:not-runtime-qualified"
+            },
+            "transitions": null,
+            "syntaxMembers": [],
+            "codeIdentity": "ce567f356e99e943c5f96fdab595a0bf132f81f6431bb23c92be4c6551008581",
+            "sourceIdentity": "9a99716b1331858af1b9ae8165aeec7ca36b6a3fe64b28c804d01bb414e1cfa2",
+            "originRegistryDigest": "be581db2062018763b2774a37bb553baf8a5b1a82a6ba04184e5b973e7dbc8ee"
+          },
+          "activationId": "activation:54da2b810ea45b77d2c64f59f3f362489382b7db127fbd37531d0af4df7e98a2",
+          "origins": [],
+          "projections": [],
+          "members": [],
+          "basis": {
+            "repositoryId": "r",
+            "revisionId": "rev",
+            "contentFingerprint": "base",
+            "codeActivationDigest": "ce567f356e99e943c5f96fdab595a0bf132f81f6431bb23c92be4c6551008581"
+          },
+          "code": {
+            "targetSource": {
+              "repositoryId": "r",
+              "revisionId": "rev",
+              "contentFingerprint": "base"
+            },
+            "committedSnapshotCount": 2,
+            "nodes": [],
+            "edges": [],
+            "evidence": [],
+            "bindings": [],
+            "factEvidence": [],
+            "candidates": [],
+            "snapshots": [
+              {
+                "capabilities": [
+                  { "coverage": "COMPLETE", "name": "SYMBOL", "support": "SUPPORTED" }
+                ],
+                "completedAt": "2026-01-01T00:00:01.000Z",
+                "diagnostics": [],
+                "id": "snap",
+                "outcome": "SUCCEEDED",
+                "providerId": "native",
+                "providerVersion": "0.0.0",
+                "repositoryId": "r",
+                "requestedRevisionFingerprint": "base",
+                "requestedRevisionId": "rev",
+                "runtimeVersion": "0.0.0",
+                "startedAt": "2026-01-01T00:00:00.000Z"
+              },
+              {
+                "id": "snapshot:one",
+                "providerId": "native",
+                "providerVersion": "0.0.0",
+                "runtimeVersion": "fixture-runtime",
+                "startedAt": "2026-10-24T00:00:00.000Z",
+                "completedAt": "2026-10-24T00:00:00.003Z",
+                "repositoryId": "r",
+                "requestedRevisionId": "rev",
+                "requestedRevisionFingerprint": "base",
+                "capabilities": [
+                  {
+                    "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                    "support": "SUPPORTED",
+                    "coverage": "COMPLETE"
+                  }
+                ],
+                "diagnostics": [],
+                "outcome": "SUCCEEDED"
+              }
+            ],
+            "coverage": []
+          },
+          "usage": {
+            "rows": 0,
+            "serializedBytes": 79363,
+            "items": 3200,
+            "retainedLogicalBytes": 91007
+          }
+        },
+        "cost": {
+          "rows": 0,
+          "serializedBytes": 79363,
+          "items": 3200,
+          "retainedLogicalBytes": 91007,
+          "maxDepth": 7,
+          "memoryBudgetBytes": 182014
+        },
+        "ledger": [
+          {
+            "label": "composition declarations initial",
+            "items": 69,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 1225,
+            "depth": 6
+          },
+          {
+            "label": "composition declarations traversal",
+            "items": 69,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 6
+          },
+          {
+            "label": "composition declarations encoding",
+            "items": 0,
+            "serializedBytes": 3214,
+            "retainedLogicalBytes": 3214,
+            "depth": 0
+          },
+          {
+            "label": "composition declarations parsed",
+            "items": 69,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 1225,
+            "depth": 6
+          },
+          {
+            "label": "request owned byte representations",
+            "items": 0,
+            "serializedBytes": 1996,
+            "retainedLogicalBytes": 1996,
+            "depth": 0
+          },
+          {
+            "label": "output owned byte representations",
+            "items": 0,
+            "serializedBytes": 2848,
+            "retainedLogicalBytes": 2848,
+            "depth": 0
+          },
+          {
+            "label": "real full Provider pipeline",
+            "items": 1757,
+            "serializedBytes": 51425,
+            "retainedLogicalBytes": 51425,
+            "depth": 7
+          },
+          {
+            "label": "NODE ordered input",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "NODE ordered rows",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "EDGE ordered input",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "EDGE ordered rows",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "EVIDENCE ordered input",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "EVIDENCE ordered rows",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "BINDING ordered input",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "BINDING ordered rows",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "FACT_EVIDENCE ordered input",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "FACT_EVIDENCE ordered rows",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "SUPPORT_CANDIDATE ordered input",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "SUPPORT_CANDIDATE ordered rows",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "complete future Code input",
+            "items": 48,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 744,
+            "depth": 5
+          },
+          {
+            "label": "future Code nine-group identity",
+            "items": 291,
+            "serializedBytes": 1124,
+            "retainedLogicalBytes": 5766,
+            "depth": 5
+          },
+          {
+            "label": "complete declared history state",
+            "items": 55,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 993,
+            "depth": 5
+          },
+          {
+            "label": "real empty Syntax/history assembly",
+            "items": 655,
+            "serializedBytes": 17121,
+            "retainedLogicalBytes": 17121,
+            "depth": 7
+          },
+          {
+            "label": "final history manifest validation",
+            "items": 36,
+            "serializedBytes": 1635,
+            "retainedLogicalBytes": 1700,
+            "depth": 4
+          },
+          {
+            "label": "complete pure Runtime result",
+            "items": 139,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 2750,
+            "depth": 7
+          }
+        ]
+      }
+    },
+    {
+      "id": "orphan-empty-unavailable",
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-stage/zero-provider-resource-reference.json",
+        "sha256": "dc34ccf9d1917b3f7c9868990b33d5532e10695b427c8f1dad108faa00e70153",
+        "caseId": "orphan-empty-unavailable"
+      },
+      "stageSource": {
+        "path": "fixtures/phase1/mixed-analysis-stage/zero-stage-resource-reference.json",
+        "sha256": "f25a27f744a4b837824b49316e998f60045d89da485db6df55fbe195a81d733b",
+        "caseId": "orphan-empty-unavailable"
+      },
+      "raw": {
+        "metadata": {
+          "targetSource": {
+            "repositoryId": "r",
+            "revisionId": "rev",
+            "contentFingerprint": "base"
+          },
+          "inventory": [],
+          "snapshot": {
+            "id": "snapshot:one",
+            "providerId": "native",
+            "providerVersion": "0.0.0",
+            "runtimeVersion": "fixture-runtime",
+            "startedAt": "2026-10-24T00:00:00.000Z",
+            "completedAt": "2026-10-24T00:00:00.003Z"
+          },
+          "tool": { "target": "fixture-target", "profile": "test" },
+          "java": null,
+          "codeSyntax": {
+            "providerVersion": "0.0.0",
+            "runtimeVersion": "fixture-runtime",
+            "tool": { "target": "fixture-target", "profile": "test" },
+            "startedAt": "2026-10-24T00:00:00.001Z",
+            "settledAt": "2026-10-24T00:00:00.002Z"
+          }
+        },
+        "requestText": "{\"protocolVersion\":5,\"requestId\":\"contract:no-files\",\"sequence\":0,\"type\":\"OBSERVE_CODE_SYNTAX\",\"payload\":{\"irSchemaVersion\":1,\"repository\":{\"id\":\"r\",\"rootPath\":\"/r\"},\"providerId\":\"native\",\"providerVersion\":\"0.0.0\",\"providerSnapshotId\":\"snapshot:one\",\"extractorVersion\":\"syntax-v1\",\"languages\":[{\"languageId\":\"python\",\"grammarVersion\":\"0.25.0\",\"analyzerVersion\":\"0.0.0\",\"compatibilityVersion\":\"syntax-v1\"}],\"sourceFiles\":[],\"removedSourceFiles\":[],\"owners\":[],\"deadlineEpochMs\":null,\"resourceBudget\":{\"maxDurationMs\":1000,\"maxMemoryBytes\":65536,\"maxEvents\":20,\"maxInputBytes\":65536,\"maxOutputBytes\":65536,\"maxDepth\":64,\"maxItems\":1000},\"expectedActivationBasis\":null,\"targetSource\":{\"repositoryId\":\"r\",\"revisionId\":\"rev\",\"contentFingerprint\":\"base\"},\"ownerBinding\":{\"kind\":\"PROVISIONAL_CODE\",\"stageDigest\":\"07cd0d69070d0fa35a74771c4c6c636c03d4e2e6b007bc9a60d39b664ba0742a\",\"ownerMapDigest\":\"8f6a00eb82508e6eb2e08e39a35d9b42cc9e86412d15f9eaf33ffa045eb2b9ce\"},\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\"}}\n",
+        "outputText": "{\"protocolVersion\":5,\"requestId\":\"contract:no-files\",\"sequence\":0,\"type\":\"OBSERVATION_STARTED\",\"payload\":{\"expectedActivationBasis\":null,\"targetSource\":{\"repositoryId\":\"r\",\"revisionId\":\"rev\",\"contentFingerprint\":\"base\"},\"ownerBinding\":{\"kind\":\"PROVISIONAL_CODE\",\"stageDigest\":\"07cd0d69070d0fa35a74771c4c6c636c03d4e2e6b007bc9a60d39b664ba0742a\",\"ownerMapDigest\":\"8f6a00eb82508e6eb2e08e39a35d9b42cc9e86412d15f9eaf33ffa045eb2b9ce\"},\"extractorVersion\":\"syntax-v1\",\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\",\"requestChecksum\":\"32bab9521524a13eecbd9f96cee9559d8d498fdb5906905957d7b4a9f9acd64d\"}}\n{\"protocolVersion\":5,\"requestId\":\"contract:no-files\",\"sequence\":1,\"type\":\"OBSERVATION_COMPLETED\",\"payload\":{\"expectedActivationBasis\":null,\"targetSource\":{\"repositoryId\":\"r\",\"revisionId\":\"rev\",\"contentFingerprint\":\"base\"},\"ownerBinding\":{\"kind\":\"PROVISIONAL_CODE\",\"stageDigest\":\"07cd0d69070d0fa35a74771c4c6c636c03d4e2e6b007bc9a60d39b664ba0742a\",\"ownerMapDigest\":\"8f6a00eb82508e6eb2e08e39a35d9b42cc9e86412d15f9eaf33ffa045eb2b9ce\"},\"extractorVersion\":\"syntax-v1\",\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\",\"requestChecksum\":\"32bab9521524a13eecbd9f96cee9559d8d498fdb5906905957d7b4a9f9acd64d\",\"codeOutcome\":\"NOT_APPLICABLE\",\"syntaxOutcome\":\"COMPLETE\",\"outcome\":\"SUCCEEDED\",\"counts\":{\"nodes\":0,\"edges\":0,\"syntax\":0,\"codeCoverage\":0,\"syntaxCoverage\":0,\"diagnostics\":0},\"checksum\":\"b671ee01fac27db30bd467d3b7cfbfba3706e86212ac3a5c09c46ef64d2cf072\"}}\n"
+      },
+      "validation": {
+        "input": {
+          "mode": "FULL",
+          "target": {
+            "source": { "repositoryId": "r", "revisionId": "rev", "contentFingerprint": "base" },
+            "repositoryLocatorDigest": "89b334a45872720bb324e270130b21bc4d472bb297298b0d45685db1c0571ff7",
+            "inventory": [],
+            "contracts": [
+              {
+                "providerId": "native",
+                "extractor": "syntax-v1",
+                "normalizer": "fixture-v1",
+                "contract": "PYTHON_SYNTAX_CODE_V1",
+                "policy": "syntax-surface-support-v1"
+              }
+            ]
+          },
+          "capture": {
+            "parent": null,
+            "snapshotIds": ["snap"],
+            "snapshots": [
+              {
+                "capabilities": [
+                  { "coverage": "COMPLETE", "name": "SYMBOL", "support": "SUPPORTED" }
+                ],
+                "completedAt": "2026-01-01T00:00:01.000Z",
+                "diagnostics": [],
+                "id": "snap",
+                "outcome": "SUCCEEDED",
+                "providerId": "native",
+                "providerVersion": "0.0.0",
+                "repositoryId": "r",
+                "requestedRevisionFingerprint": "base",
+                "requestedRevisionId": "rev",
+                "runtimeVersion": "0.0.0",
+                "startedAt": "2026-01-01T00:00:00.000Z"
+              }
+            ],
+            "coverage": [],
+            "activeProviderIds": []
+          },
+          "scope": { "units": [], "removedSourceFileIds": [] },
+          "owner": {
+            "stageDigest": "07cd0d69070d0fa35a74771c4c6c636c03d4e2e6b007bc9a60d39b664ba0742a",
+            "java": null
+          }
+        },
+        "result": {
+          "raw": {
+            "kind": "DECLARED_FULL_RAW_OBSERVATION",
+            "metadata": {
+              "targetSource": {
+                "repositoryId": "r",
+                "revisionId": "rev",
+                "contentFingerprint": "base"
+              },
+              "inventory": [],
+              "snapshot": {
+                "id": "snapshot:one",
+                "providerId": "native",
+                "providerVersion": "0.0.0",
+                "runtimeVersion": "fixture-runtime",
+                "startedAt": "2026-10-24T00:00:00.000Z",
+                "completedAt": "2026-10-24T00:00:00.003Z"
+              },
+              "tool": { "target": "fixture-target", "profile": "test" },
+              "java": null,
+              "codeSyntax": {
+                "providerVersion": "0.0.0",
+                "runtimeVersion": "fixture-runtime",
+                "tool": { "target": "fixture-target", "profile": "test" },
+                "startedAt": "2026-10-24T00:00:00.001Z",
+                "settledAt": "2026-10-24T00:00:00.002Z"
+              }
+            },
+            "java": null,
+            "codeSyntax": {
+              "request": {
+                "protocolVersion": 5,
+                "requestId": "contract:no-files",
+                "sequence": 0,
+                "type": "OBSERVE_CODE_SYNTAX",
+                "payload": {
+                  "irSchemaVersion": 1,
+                  "repository": { "id": "r", "rootPath": "/r" },
+                  "providerId": "native",
+                  "providerVersion": "0.0.0",
+                  "providerSnapshotId": "snapshot:one",
+                  "extractorVersion": "syntax-v1",
+                  "languages": [
+                    {
+                      "languageId": "python",
+                      "grammarVersion": "0.25.0",
+                      "analyzerVersion": "0.0.0",
+                      "compatibilityVersion": "syntax-v1"
+                    }
+                  ],
+                  "sourceFiles": [],
+                  "removedSourceFiles": [],
+                  "owners": [],
+                  "deadlineEpochMs": null,
+                  "resourceBudget": {
+                    "maxDurationMs": 1000,
+                    "maxMemoryBytes": 65536,
+                    "maxEvents": 20,
+                    "maxInputBytes": 65536,
+                    "maxOutputBytes": 65536,
+                    "maxDepth": 64,
+                    "maxItems": 1000
+                  },
+                  "expectedActivationBasis": null,
+                  "targetSource": {
+                    "repositoryId": "r",
+                    "revisionId": "rev",
+                    "contentFingerprint": "base"
+                  },
+                  "ownerBinding": {
+                    "kind": "PROVISIONAL_CODE",
+                    "stageDigest": "07cd0d69070d0fa35a74771c4c6c636c03d4e2e6b007bc9a60d39b664ba0742a",
+                    "ownerMapDigest": "8f6a00eb82508e6eb2e08e39a35d9b42cc9e86412d15f9eaf33ffa045eb2b9ce"
+                  },
+                  "codeContract": "PYTHON_SYNTAX_CODE_V1"
+                }
+              },
+              "events": [
+                {
+                  "protocolVersion": 5,
+                  "requestId": "contract:no-files",
+                  "sequence": 0,
+                  "type": "OBSERVATION_STARTED",
+                  "payload": {
+                    "expectedActivationBasis": null,
+                    "targetSource": {
+                      "repositoryId": "r",
+                      "revisionId": "rev",
+                      "contentFingerprint": "base"
+                    },
+                    "ownerBinding": {
+                      "kind": "PROVISIONAL_CODE",
+                      "stageDigest": "07cd0d69070d0fa35a74771c4c6c636c03d4e2e6b007bc9a60d39b664ba0742a",
+                      "ownerMapDigest": "8f6a00eb82508e6eb2e08e39a35d9b42cc9e86412d15f9eaf33ffa045eb2b9ce"
+                    },
+                    "extractorVersion": "syntax-v1",
+                    "codeContract": "PYTHON_SYNTAX_CODE_V1",
+                    "requestChecksum": "32bab9521524a13eecbd9f96cee9559d8d498fdb5906905957d7b4a9f9acd64d"
+                  }
+                },
+                {
+                  "protocolVersion": 5,
+                  "requestId": "contract:no-files",
+                  "sequence": 1,
+                  "type": "OBSERVATION_COMPLETED",
+                  "payload": {
+                    "expectedActivationBasis": null,
+                    "targetSource": {
+                      "repositoryId": "r",
+                      "revisionId": "rev",
+                      "contentFingerprint": "base"
+                    },
+                    "ownerBinding": {
+                      "kind": "PROVISIONAL_CODE",
+                      "stageDigest": "07cd0d69070d0fa35a74771c4c6c636c03d4e2e6b007bc9a60d39b664ba0742a",
+                      "ownerMapDigest": "8f6a00eb82508e6eb2e08e39a35d9b42cc9e86412d15f9eaf33ffa045eb2b9ce"
+                    },
+                    "extractorVersion": "syntax-v1",
+                    "codeContract": "PYTHON_SYNTAX_CODE_V1",
+                    "requestChecksum": "32bab9521524a13eecbd9f96cee9559d8d498fdb5906905957d7b4a9f9acd64d",
+                    "codeOutcome": "NOT_APPLICABLE",
+                    "syntaxOutcome": "COMPLETE",
+                    "outcome": "SUCCEEDED",
+                    "counts": {
+                      "nodes": 0,
+                      "edges": 0,
+                      "syntax": 0,
+                      "codeCoverage": 0,
+                      "syntaxCoverage": 0,
+                      "diagnostics": 0
+                    },
+                    "checksum": "b671ee01fac27db30bd467d3b7cfbfba3706e86212ac3a5c09c46ef64d2cf072"
+                  }
+                }
+              ],
+              "codeOutcome": "NOT_APPLICABLE",
+              "syntaxOutcome": "COMPLETE",
+              "outcome": "SUCCEEDED",
+              "counts": {
+                "nodes": 0,
+                "edges": 0,
+                "syntax": 0,
+                "codeCoverage": 0,
+                "syntaxCoverage": 0,
+                "diagnostics": 0
+              },
+              "checksum": "b671ee01fac27db30bd467d3b7cfbfba3706e86212ac3a5c09c46ef64d2cf072",
+              "requestChecksum": "32bab9521524a13eecbd9f96cee9559d8d498fdb5906905957d7b4a9f9acd64d"
+            },
+            "provenance": {
+              "kind": "DECLARED_INPUT",
+              "requestIdentity": "32bab9521524a13eecbd9f96cee9559d8d498fdb5906905957d7b4a9f9acd64d",
+              "outputIdentity": "35666f03b62be7c9216fd611e6a98c1ce2c32988c330288765963174305db811"
+            }
+          },
+          "usage": {
+            "rows": 0,
+            "serializedBytes": 59377,
+            "items": 2235,
+            "retainedLogicalBytes": 66671
+          }
+        },
+        "cost": {
+          "rows": 0,
+          "serializedBytes": 59377,
+          "items": 2235,
+          "retainedLogicalBytes": 66671,
+          "maxDepth": 7,
+          "memoryBudgetBytes": 133342
+        },
+        "ledger": [
+          {
+            "label": "validation packet initial",
+            "items": 70,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 1163,
+            "depth": 6
+          },
+          {
+            "label": "validation packet traversal",
+            "items": 70,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 6
+          },
+          {
+            "label": "validation packet encoding",
+            "items": 0,
+            "serializedBytes": 3108,
+            "retainedLogicalBytes": 3108,
+            "depth": 0
+          },
+          {
+            "label": "validation packet parsed",
+            "items": 70,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 1163,
+            "depth": 6
+          },
+          {
+            "label": "reserved metadata",
+            "items": 25,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 423,
+            "depth": 3
+          },
+          {
+            "label": "parsed metadata",
+            "items": 25,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 423,
+            "depth": 3
+          },
+          {
+            "label": "target metadata",
+            "items": 25,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 423,
+            "depth": 3
+          },
+          {
+            "label": "parsed target metadata",
+            "items": 25,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 423,
+            "depth": 3
+          },
+          {
+            "label": "metadata inventory",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "complete inventory equality",
+            "items": 3,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 1
+          },
+          {
+            "label": "contract and scope records",
+            "items": 10,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 114,
+            "depth": 3
+          },
+          {
+            "label": "request owned byte representations",
+            "items": 0,
+            "serializedBytes": 1996,
+            "retainedLogicalBytes": 1996,
+            "depth": 0
+          },
+          {
+            "label": "output owned byte representations",
+            "items": 0,
+            "serializedBytes": 2848,
+            "retainedLogicalBytes": 2848,
+            "depth": 0
+          },
+          {
+            "label": "real full Provider pipeline",
+            "items": 1757,
+            "serializedBytes": 51425,
+            "retainedLogicalBytes": 51425,
+            "depth": 7
+          },
+          {
+            "label": "provisional binding complete check",
+            "items": 13,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 253,
+            "depth": 2
+          },
+          {
+            "label": "complete pure Runtime result",
+            "items": 141,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 2909,
+            "depth": 7
+          }
+        ]
+      },
+      "composition": {
+        "input": {
+          "mode": "FULL",
+          "target": {
+            "source": { "repositoryId": "r", "revisionId": "rev", "contentFingerprint": "base" },
+            "repositoryLocatorDigest": "89b334a45872720bb324e270130b21bc4d472bb297298b0d45685db1c0571ff7",
+            "inventory": [],
+            "contracts": [
+              {
+                "providerId": "native",
+                "extractor": "syntax-v1",
+                "normalizer": "fixture-v1",
+                "contract": "PYTHON_SYNTAX_CODE_V1",
+                "policy": "syntax-surface-support-v1"
+              }
+            ]
+          },
+          "capture": {
+            "parent": null,
+            "snapshotIds": ["snap"],
+            "snapshots": [
+              {
+                "capabilities": [
+                  { "coverage": "COMPLETE", "name": "SYMBOL", "support": "SUPPORTED" }
+                ],
+                "completedAt": "2026-01-01T00:00:01.000Z",
+                "diagnostics": [],
+                "id": "snap",
+                "outcome": "SUCCEEDED",
+                "providerId": "native",
+                "providerVersion": "0.0.0",
+                "repositoryId": "r",
+                "requestedRevisionFingerprint": "base",
+                "requestedRevisionId": "rev",
+                "runtimeVersion": "0.0.0",
+                "startedAt": "2026-01-01T00:00:00.000Z"
+              }
+            ],
+            "coverage": [],
+            "activeProviderIds": []
+          },
+          "qualificationRef": "component-fixture:not-runtime-qualified"
+        },
+        "assembledLedger": [
+          { "label": "manifest declared input", "items": 69, "serializedBytes": 1707, "depth": 6 },
+          { "label": "manifest copied input", "items": 69, "serializedBytes": 1707, "depth": 6 },
+          {
+            "label": "manifest schema parsed input",
+            "items": 69,
+            "serializedBytes": 1707,
+            "depth": 6
+          },
+          { "label": "assembled empty pairs", "items": 1, "serializedBytes": 2, "depth": 0 },
+          { "label": "complete history state", "items": 56, "serializedBytes": 1312, "depth": 5 },
+          { "label": "current members", "items": 1, "serializedBytes": 2, "depth": 0 },
+          {
+            "label": "codeatlas-activation-source-v1 value",
+            "items": 1,
+            "serializedBytes": 2,
+            "depth": 0
+          },
+          {
+            "label": "codeatlas-activation-source-v1 canonical copy",
+            "items": 1,
+            "serializedBytes": 2,
+            "depth": 0
+          },
+          {
+            "label": "codeatlas-activation-source-v1 framing",
+            "items": 0,
+            "serializedBytes": 31,
+            "depth": 0
+          },
+          {
+            "label": "codeatlas-activation-origins-v1 value",
+            "items": 35,
+            "serializedBytes": 784,
+            "depth": 4
+          },
+          {
+            "label": "codeatlas-activation-origins-v1 canonical copy",
+            "items": 35,
+            "serializedBytes": 784,
+            "depth": 4
+          },
+          {
+            "label": "codeatlas-activation-origins-v1 framing",
+            "items": 0,
+            "serializedBytes": 32,
+            "depth": 0
+          },
+          {
+            "label": "complete history manifest",
+            "items": 73,
+            "serializedBytes": 1993,
+            "depth": 6
+          },
+          {
+            "label": "codeatlas-activation-history-v1 value",
+            "items": 73,
+            "serializedBytes": 1993,
+            "depth": 6
+          },
+          {
+            "label": "codeatlas-activation-history-v1 canonical copy",
+            "items": 73,
+            "serializedBytes": 1993,
+            "depth": 6
+          },
+          {
+            "label": "codeatlas-activation-history-v1 framing",
+            "items": 0,
+            "serializedBytes": 32,
+            "depth": 0
+          },
+          {
+            "label": "complete history candidate",
+            "items": 78,
+            "serializedBytes": 2142,
+            "depth": 7
+          }
+        ],
+        "result": {
+          "manifest": {
+            "schemaVersion": 1,
+            "parent": null,
+            "state": {
+              "basis": {
+                "repositoryId": "r",
+                "revisionId": "rev",
+                "contentFingerprint": "base",
+                "codeActivationDigest": "ce567f356e99e943c5f96fdab595a0bf132f81f6431bb23c92be4c6551008581"
+              },
+              "repositoryLocatorDigest": "89b334a45872720bb324e270130b21bc4d472bb297298b0d45685db1c0571ff7",
+              "inventory": [],
+              "contracts": [
+                {
+                  "providerId": "native",
+                  "extractor": "syntax-v1",
+                  "normalizer": "fixture-v1",
+                  "contract": "PYTHON_SYNTAX_CODE_V1",
+                  "policy": "syntax-surface-support-v1"
+                }
+              ],
+              "units": [],
+              "snapshots": [
+                {
+                  "capabilities": [
+                    { "coverage": "COMPLETE", "name": "SYMBOL", "support": "SUPPORTED" }
+                  ],
+                  "completedAt": "2026-01-01T00:00:01.000Z",
+                  "diagnostics": [],
+                  "id": "snap",
+                  "outcome": "SUCCEEDED",
+                  "providerId": "native",
+                  "providerVersion": "0.0.0",
+                  "repositoryId": "r",
+                  "requestedRevisionFingerprint": "base",
+                  "requestedRevisionId": "rev",
+                  "runtimeVersion": "0.0.0",
+                  "startedAt": "2026-01-01T00:00:00.000Z"
+                },
+                {
+                  "id": "snapshot:one",
+                  "providerId": "native",
+                  "providerVersion": "0.0.0",
+                  "runtimeVersion": "fixture-runtime",
+                  "startedAt": "2026-10-24T00:00:00.000Z",
+                  "completedAt": "2026-10-24T00:00:00.003Z",
+                  "repositoryId": "r",
+                  "requestedRevisionId": "rev",
+                  "requestedRevisionFingerprint": "base",
+                  "capabilities": [
+                    {
+                      "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                      "support": "SUPPORTED",
+                      "coverage": "COMPLETE"
+                    }
+                  ],
+                  "diagnostics": [],
+                  "outcome": "SUCCEEDED"
+                }
+              ],
+              "nodes": [],
+              "edges": [],
+              "supports": [],
+              "coverage": [],
+              "syntaxOrigins": []
+            },
+            "observation": {
+              "snapshotId": "snapshot:one",
+              "requestIdentity": "32bab9521524a13eecbd9f96cee9559d8d498fdb5906905957d7b4a9f9acd64d",
+              "outputIdentity": "35666f03b62be7c9216fd611e6a98c1ce2c32988c330288765963174305db811",
+              "javaProvenance": null,
+              "scope": { "unitIds": [], "removedSourceFileIds": [] },
+              "qualificationRef": "component-fixture:not-runtime-qualified"
+            },
+            "transitions": null,
+            "syntaxMembers": [],
+            "codeIdentity": "ce567f356e99e943c5f96fdab595a0bf132f81f6431bb23c92be4c6551008581",
+            "sourceIdentity": "9a99716b1331858af1b9ae8165aeec7ca36b6a3fe64b28c804d01bb414e1cfa2",
+            "originRegistryDigest": "be581db2062018763b2774a37bb553baf8a5b1a82a6ba04184e5b973e7dbc8ee"
+          },
+          "activationId": "activation:5cf1435d757b9a9ca943e14353dcbe6a56e8983812da4adc3b81a7b537ea9f48",
+          "origins": [],
+          "projections": [],
+          "members": [],
+          "basis": {
+            "repositoryId": "r",
+            "revisionId": "rev",
+            "contentFingerprint": "base",
+            "codeActivationDigest": "ce567f356e99e943c5f96fdab595a0bf132f81f6431bb23c92be4c6551008581"
+          },
+          "code": {
+            "targetSource": {
+              "repositoryId": "r",
+              "revisionId": "rev",
+              "contentFingerprint": "base"
+            },
+            "committedSnapshotCount": 2,
+            "nodes": [],
+            "edges": [],
+            "evidence": [],
+            "bindings": [],
+            "factEvidence": [],
+            "candidates": [],
+            "snapshots": [
+              {
+                "capabilities": [
+                  { "coverage": "COMPLETE", "name": "SYMBOL", "support": "SUPPORTED" }
+                ],
+                "completedAt": "2026-01-01T00:00:01.000Z",
+                "diagnostics": [],
+                "id": "snap",
+                "outcome": "SUCCEEDED",
+                "providerId": "native",
+                "providerVersion": "0.0.0",
+                "repositoryId": "r",
+                "requestedRevisionFingerprint": "base",
+                "requestedRevisionId": "rev",
+                "runtimeVersion": "0.0.0",
+                "startedAt": "2026-01-01T00:00:00.000Z"
+              },
+              {
+                "id": "snapshot:one",
+                "providerId": "native",
+                "providerVersion": "0.0.0",
+                "runtimeVersion": "fixture-runtime",
+                "startedAt": "2026-10-24T00:00:00.000Z",
+                "completedAt": "2026-10-24T00:00:00.003Z",
+                "repositoryId": "r",
+                "requestedRevisionId": "rev",
+                "requestedRevisionFingerprint": "base",
+                "capabilities": [
+                  {
+                    "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                    "support": "SUPPORTED",
+                    "coverage": "COMPLETE"
+                  }
+                ],
+                "diagnostics": [],
+                "outcome": "SUCCEEDED"
+              }
+            ],
+            "coverage": []
+          },
+          "usage": {
+            "rows": 0,
+            "serializedBytes": 78211,
+            "items": 3167,
+            "retainedLogicalBytes": 89516
+          }
+        },
+        "cost": {
+          "rows": 0,
+          "serializedBytes": 78211,
+          "items": 3167,
+          "retainedLogicalBytes": 89516,
+          "maxDepth": 7,
+          "memoryBudgetBytes": 179032
+        },
+        "ledger": [
+          {
+            "label": "composition declarations initial",
+            "items": 66,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 1112,
+            "depth": 6
+          },
+          {
+            "label": "composition declarations traversal",
+            "items": 66,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 6
+          },
+          {
+            "label": "composition declarations encoding",
+            "items": 0,
+            "serializedBytes": 2958,
+            "retainedLogicalBytes": 2958,
+            "depth": 0
+          },
+          {
+            "label": "composition declarations parsed",
+            "items": 66,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 1112,
+            "depth": 6
+          },
+          {
+            "label": "request owned byte representations",
+            "items": 0,
+            "serializedBytes": 1996,
+            "retainedLogicalBytes": 1996,
+            "depth": 0
+          },
+          {
+            "label": "output owned byte representations",
+            "items": 0,
+            "serializedBytes": 2848,
+            "retainedLogicalBytes": 2848,
+            "depth": 0
+          },
+          {
+            "label": "real full Provider pipeline",
+            "items": 1757,
+            "serializedBytes": 51425,
+            "retainedLogicalBytes": 51425,
+            "depth": 7
+          },
+          {
+            "label": "NODE ordered input",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "NODE ordered rows",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "EDGE ordered input",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "EDGE ordered rows",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "EVIDENCE ordered input",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "EVIDENCE ordered rows",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "BINDING ordered input",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "BINDING ordered rows",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "FACT_EVIDENCE ordered input",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "FACT_EVIDENCE ordered rows",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "SUPPORT_CANDIDATE ordered input",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "SUPPORT_CANDIDATE ordered rows",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "complete future Code input",
+            "items": 48,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 744,
+            "depth": 5
+          },
+          {
+            "label": "future Code nine-group identity",
+            "items": 291,
+            "serializedBytes": 1124,
+            "retainedLogicalBytes": 5766,
+            "depth": 5
+          },
+          {
+            "label": "complete declared history state",
+            "items": 55,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 993,
+            "depth": 5
+          },
+          {
+            "label": "real empty Syntax/history assembly",
+            "items": 634,
+            "serializedBytes": 16225,
+            "retainedLogicalBytes": 16225,
+            "depth": 7
+          },
+          {
+            "label": "final history manifest validation",
+            "items": 36,
+            "serializedBytes": 1635,
+            "retainedLogicalBytes": 1700,
+            "depth": 4
+          },
+          {
+            "label": "complete pure Runtime result",
+            "items": 136,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 2637,
+            "depth": 7
+          }
+        ]
+      }
+    },
+    {
+      "id": "global-other-revision-snapshot",
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-stage/zero-provider-resource-reference.json",
+        "sha256": "dc34ccf9d1917b3f7c9868990b33d5532e10695b427c8f1dad108faa00e70153",
+        "caseId": "global-other-revision-snapshot"
+      },
+      "stageSource": {
+        "path": "fixtures/phase1/mixed-analysis-stage/zero-stage-resource-reference.json",
+        "sha256": "f25a27f744a4b837824b49316e998f60045d89da485db6df55fbe195a81d733b",
+        "caseId": "global-other-revision-snapshot"
+      },
+      "raw": {
+        "metadata": {
+          "targetSource": {
+            "repositoryId": "r",
+            "revisionId": "rev",
+            "contentFingerprint": "base"
+          },
+          "inventory": [],
+          "snapshot": {
+            "id": "snapshot:one",
+            "providerId": "native",
+            "providerVersion": "0.0.0",
+            "runtimeVersion": "fixture-runtime",
+            "startedAt": "2026-10-24T00:00:00.000Z",
+            "completedAt": "2026-10-24T00:00:00.003Z"
+          },
+          "tool": { "target": "fixture-target", "profile": "test" },
+          "java": null,
+          "codeSyntax": {
+            "providerVersion": "0.0.0",
+            "runtimeVersion": "fixture-runtime",
+            "tool": { "target": "fixture-target", "profile": "test" },
+            "startedAt": "2026-10-24T00:00:00.001Z",
+            "settledAt": "2026-10-24T00:00:00.002Z"
+          }
+        },
+        "requestText": "{\"protocolVersion\":5,\"requestId\":\"contract:no-files\",\"sequence\":0,\"type\":\"OBSERVE_CODE_SYNTAX\",\"payload\":{\"irSchemaVersion\":1,\"repository\":{\"id\":\"r\",\"rootPath\":\"/r\"},\"providerId\":\"native\",\"providerVersion\":\"0.0.0\",\"providerSnapshotId\":\"snapshot:one\",\"extractorVersion\":\"syntax-v1\",\"languages\":[{\"languageId\":\"python\",\"grammarVersion\":\"0.25.0\",\"analyzerVersion\":\"0.0.0\",\"compatibilityVersion\":\"syntax-v1\"}],\"sourceFiles\":[],\"removedSourceFiles\":[],\"owners\":[],\"deadlineEpochMs\":null,\"resourceBudget\":{\"maxDurationMs\":1000,\"maxMemoryBytes\":65536,\"maxEvents\":20,\"maxInputBytes\":65536,\"maxOutputBytes\":65536,\"maxDepth\":64,\"maxItems\":1000},\"expectedActivationBasis\":null,\"targetSource\":{\"repositoryId\":\"r\",\"revisionId\":\"rev\",\"contentFingerprint\":\"base\"},\"ownerBinding\":{\"kind\":\"PROVISIONAL_CODE\",\"stageDigest\":\"5b24002e54ffe6ad26da5bed5d4494ef6a6fc4046c2d1de986bddc3693b2e37e\",\"ownerMapDigest\":\"aa523008f3acd4dcfc0133e538942e6f47eb9ddd27b2eb8ec7393c53c7206606\"},\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\"}}\n",
+        "outputText": "{\"protocolVersion\":5,\"requestId\":\"contract:no-files\",\"sequence\":0,\"type\":\"OBSERVATION_STARTED\",\"payload\":{\"expectedActivationBasis\":null,\"targetSource\":{\"repositoryId\":\"r\",\"revisionId\":\"rev\",\"contentFingerprint\":\"base\"},\"ownerBinding\":{\"kind\":\"PROVISIONAL_CODE\",\"stageDigest\":\"5b24002e54ffe6ad26da5bed5d4494ef6a6fc4046c2d1de986bddc3693b2e37e\",\"ownerMapDigest\":\"aa523008f3acd4dcfc0133e538942e6f47eb9ddd27b2eb8ec7393c53c7206606\"},\"extractorVersion\":\"syntax-v1\",\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\",\"requestChecksum\":\"c0fed2329857ff45b1f14a4e24e3d950c2827c37fc75422486c0aaab7736789e\"}}\n{\"protocolVersion\":5,\"requestId\":\"contract:no-files\",\"sequence\":1,\"type\":\"OBSERVATION_COMPLETED\",\"payload\":{\"expectedActivationBasis\":null,\"targetSource\":{\"repositoryId\":\"r\",\"revisionId\":\"rev\",\"contentFingerprint\":\"base\"},\"ownerBinding\":{\"kind\":\"PROVISIONAL_CODE\",\"stageDigest\":\"5b24002e54ffe6ad26da5bed5d4494ef6a6fc4046c2d1de986bddc3693b2e37e\",\"ownerMapDigest\":\"aa523008f3acd4dcfc0133e538942e6f47eb9ddd27b2eb8ec7393c53c7206606\"},\"extractorVersion\":\"syntax-v1\",\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\",\"requestChecksum\":\"c0fed2329857ff45b1f14a4e24e3d950c2827c37fc75422486c0aaab7736789e\",\"codeOutcome\":\"NOT_APPLICABLE\",\"syntaxOutcome\":\"COMPLETE\",\"outcome\":\"SUCCEEDED\",\"counts\":{\"nodes\":0,\"edges\":0,\"syntax\":0,\"codeCoverage\":0,\"syntaxCoverage\":0,\"diagnostics\":0},\"checksum\":\"2fe14fa58f46fd8db9dd7aea33575c4269e46cf65dfee710160094831979e00a\"}}\n"
+      },
+      "validation": {
+        "input": {
+          "mode": "FULL",
+          "target": {
+            "source": { "repositoryId": "r", "revisionId": "rev", "contentFingerprint": "base" },
+            "repositoryLocatorDigest": "89b334a45872720bb324e270130b21bc4d472bb297298b0d45685db1c0571ff7",
+            "inventory": [],
+            "contracts": [
+              {
+                "providerId": "native",
+                "extractor": "syntax-v1",
+                "normalizer": "fixture-v1",
+                "contract": "PYTHON_SYNTAX_CODE_V1",
+                "policy": "syntax-surface-support-v1"
+              }
+            ]
+          },
+          "capture": {
+            "parent": {
+              "activationId": "activation:23b99724efe3a73475284f05bcfef634661e5d5958bf28653e68879bf556b861",
+              "repositoryId": "r",
+              "revisionId": "rev"
+            },
+            "snapshotIds": ["snap", "snap:other"],
+            "snapshots": [
+              {
+                "capabilities": [
+                  { "coverage": "COMPLETE", "name": "SYMBOL", "support": "SUPPORTED" }
+                ],
+                "completedAt": "2026-01-01T00:00:01.000Z",
+                "diagnostics": [],
+                "id": "snap",
+                "outcome": "SUCCEEDED",
+                "providerId": "native",
+                "providerVersion": "0.0.0",
+                "repositoryId": "r",
+                "requestedRevisionFingerprint": "base",
+                "requestedRevisionId": "rev",
+                "runtimeVersion": "0.0.0",
+                "startedAt": "2026-01-01T00:00:00.000Z"
+              }
+            ],
+            "coverage": [],
+            "activeProviderIds": []
+          },
+          "scope": { "units": [], "removedSourceFileIds": [] },
+          "owner": {
+            "stageDigest": "5b24002e54ffe6ad26da5bed5d4494ef6a6fc4046c2d1de986bddc3693b2e37e",
+            "java": null
+          }
+        },
+        "result": {
+          "raw": {
+            "kind": "DECLARED_FULL_RAW_OBSERVATION",
+            "metadata": {
+              "targetSource": {
+                "repositoryId": "r",
+                "revisionId": "rev",
+                "contentFingerprint": "base"
+              },
+              "inventory": [],
+              "snapshot": {
+                "id": "snapshot:one",
+                "providerId": "native",
+                "providerVersion": "0.0.0",
+                "runtimeVersion": "fixture-runtime",
+                "startedAt": "2026-10-24T00:00:00.000Z",
+                "completedAt": "2026-10-24T00:00:00.003Z"
+              },
+              "tool": { "target": "fixture-target", "profile": "test" },
+              "java": null,
+              "codeSyntax": {
+                "providerVersion": "0.0.0",
+                "runtimeVersion": "fixture-runtime",
+                "tool": { "target": "fixture-target", "profile": "test" },
+                "startedAt": "2026-10-24T00:00:00.001Z",
+                "settledAt": "2026-10-24T00:00:00.002Z"
+              }
+            },
+            "java": null,
+            "codeSyntax": {
+              "request": {
+                "protocolVersion": 5,
+                "requestId": "contract:no-files",
+                "sequence": 0,
+                "type": "OBSERVE_CODE_SYNTAX",
+                "payload": {
+                  "irSchemaVersion": 1,
+                  "repository": { "id": "r", "rootPath": "/r" },
+                  "providerId": "native",
+                  "providerVersion": "0.0.0",
+                  "providerSnapshotId": "snapshot:one",
+                  "extractorVersion": "syntax-v1",
+                  "languages": [
+                    {
+                      "languageId": "python",
+                      "grammarVersion": "0.25.0",
+                      "analyzerVersion": "0.0.0",
+                      "compatibilityVersion": "syntax-v1"
+                    }
+                  ],
+                  "sourceFiles": [],
+                  "removedSourceFiles": [],
+                  "owners": [],
+                  "deadlineEpochMs": null,
+                  "resourceBudget": {
+                    "maxDurationMs": 1000,
+                    "maxMemoryBytes": 65536,
+                    "maxEvents": 20,
+                    "maxInputBytes": 65536,
+                    "maxOutputBytes": 65536,
+                    "maxDepth": 64,
+                    "maxItems": 1000
+                  },
+                  "expectedActivationBasis": null,
+                  "targetSource": {
+                    "repositoryId": "r",
+                    "revisionId": "rev",
+                    "contentFingerprint": "base"
+                  },
+                  "ownerBinding": {
+                    "kind": "PROVISIONAL_CODE",
+                    "stageDigest": "5b24002e54ffe6ad26da5bed5d4494ef6a6fc4046c2d1de986bddc3693b2e37e",
+                    "ownerMapDigest": "aa523008f3acd4dcfc0133e538942e6f47eb9ddd27b2eb8ec7393c53c7206606"
+                  },
+                  "codeContract": "PYTHON_SYNTAX_CODE_V1"
+                }
+              },
+              "events": [
+                {
+                  "protocolVersion": 5,
+                  "requestId": "contract:no-files",
+                  "sequence": 0,
+                  "type": "OBSERVATION_STARTED",
+                  "payload": {
+                    "expectedActivationBasis": null,
+                    "targetSource": {
+                      "repositoryId": "r",
+                      "revisionId": "rev",
+                      "contentFingerprint": "base"
+                    },
+                    "ownerBinding": {
+                      "kind": "PROVISIONAL_CODE",
+                      "stageDigest": "5b24002e54ffe6ad26da5bed5d4494ef6a6fc4046c2d1de986bddc3693b2e37e",
+                      "ownerMapDigest": "aa523008f3acd4dcfc0133e538942e6f47eb9ddd27b2eb8ec7393c53c7206606"
+                    },
+                    "extractorVersion": "syntax-v1",
+                    "codeContract": "PYTHON_SYNTAX_CODE_V1",
+                    "requestChecksum": "c0fed2329857ff45b1f14a4e24e3d950c2827c37fc75422486c0aaab7736789e"
+                  }
+                },
+                {
+                  "protocolVersion": 5,
+                  "requestId": "contract:no-files",
+                  "sequence": 1,
+                  "type": "OBSERVATION_COMPLETED",
+                  "payload": {
+                    "expectedActivationBasis": null,
+                    "targetSource": {
+                      "repositoryId": "r",
+                      "revisionId": "rev",
+                      "contentFingerprint": "base"
+                    },
+                    "ownerBinding": {
+                      "kind": "PROVISIONAL_CODE",
+                      "stageDigest": "5b24002e54ffe6ad26da5bed5d4494ef6a6fc4046c2d1de986bddc3693b2e37e",
+                      "ownerMapDigest": "aa523008f3acd4dcfc0133e538942e6f47eb9ddd27b2eb8ec7393c53c7206606"
+                    },
+                    "extractorVersion": "syntax-v1",
+                    "codeContract": "PYTHON_SYNTAX_CODE_V1",
+                    "requestChecksum": "c0fed2329857ff45b1f14a4e24e3d950c2827c37fc75422486c0aaab7736789e",
+                    "codeOutcome": "NOT_APPLICABLE",
+                    "syntaxOutcome": "COMPLETE",
+                    "outcome": "SUCCEEDED",
+                    "counts": {
+                      "nodes": 0,
+                      "edges": 0,
+                      "syntax": 0,
+                      "codeCoverage": 0,
+                      "syntaxCoverage": 0,
+                      "diagnostics": 0
+                    },
+                    "checksum": "2fe14fa58f46fd8db9dd7aea33575c4269e46cf65dfee710160094831979e00a"
+                  }
+                }
+              ],
+              "codeOutcome": "NOT_APPLICABLE",
+              "syntaxOutcome": "COMPLETE",
+              "outcome": "SUCCEEDED",
+              "counts": {
+                "nodes": 0,
+                "edges": 0,
+                "syntax": 0,
+                "codeCoverage": 0,
+                "syntaxCoverage": 0,
+                "diagnostics": 0
+              },
+              "checksum": "2fe14fa58f46fd8db9dd7aea33575c4269e46cf65dfee710160094831979e00a",
+              "requestChecksum": "c0fed2329857ff45b1f14a4e24e3d950c2827c37fc75422486c0aaab7736789e"
+            },
+            "provenance": {
+              "kind": "DECLARED_INPUT",
+              "requestIdentity": "c0fed2329857ff45b1f14a4e24e3d950c2827c37fc75422486c0aaab7736789e",
+              "outputIdentity": "e27d7be9b44a29b2dd7f7715a5688fbae2d95cfdfd3dde93cc04f16dead7210f"
+            }
+          },
+          "usage": {
+            "rows": 0,
+            "serializedBytes": 59659,
+            "items": 2247,
+            "retainedLogicalBytes": 67199
+          }
+        },
+        "cost": {
+          "rows": 0,
+          "serializedBytes": 59659,
+          "items": 2247,
+          "retainedLogicalBytes": 67199,
+          "maxDepth": 7,
+          "memoryBudgetBytes": 134398
+        },
+        "ledger": [
+          {
+            "label": "validation packet initial",
+            "items": 74,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 1286,
+            "depth": 6
+          },
+          {
+            "label": "validation packet traversal",
+            "items": 74,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 6
+          },
+          {
+            "label": "validation packet encoding",
+            "items": 0,
+            "serializedBytes": 3390,
+            "retainedLogicalBytes": 3390,
+            "depth": 0
+          },
+          {
+            "label": "validation packet parsed",
+            "items": 74,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 1286,
+            "depth": 6
+          },
+          {
+            "label": "reserved metadata",
+            "items": 25,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 423,
+            "depth": 3
+          },
+          {
+            "label": "parsed metadata",
+            "items": 25,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 423,
+            "depth": 3
+          },
+          {
+            "label": "target metadata",
+            "items": 25,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 423,
+            "depth": 3
+          },
+          {
+            "label": "parsed target metadata",
+            "items": 25,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 423,
+            "depth": 3
+          },
+          {
+            "label": "metadata inventory",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "complete inventory equality",
+            "items": 3,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 1
+          },
+          {
+            "label": "contract and scope records",
+            "items": 10,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 114,
+            "depth": 3
+          },
+          {
+            "label": "request owned byte representations",
+            "items": 0,
+            "serializedBytes": 1996,
+            "retainedLogicalBytes": 1996,
+            "depth": 0
+          },
+          {
+            "label": "output owned byte representations",
+            "items": 0,
+            "serializedBytes": 2848,
+            "retainedLogicalBytes": 2848,
+            "depth": 0
+          },
+          {
+            "label": "real full Provider pipeline",
+            "items": 1757,
+            "serializedBytes": 51425,
+            "retainedLogicalBytes": 51425,
+            "depth": 7
+          },
+          {
+            "label": "provisional binding complete check",
+            "items": 13,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 253,
+            "depth": 2
+          },
+          {
+            "label": "complete pure Runtime result",
+            "items": 141,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 2909,
+            "depth": 7
+          }
+        ]
+      },
+      "composition": {
+        "input": {
+          "mode": "FULL",
+          "target": {
+            "source": { "repositoryId": "r", "revisionId": "rev", "contentFingerprint": "base" },
+            "repositoryLocatorDigest": "89b334a45872720bb324e270130b21bc4d472bb297298b0d45685db1c0571ff7",
+            "inventory": [],
+            "contracts": [
+              {
+                "providerId": "native",
+                "extractor": "syntax-v1",
+                "normalizer": "fixture-v1",
+                "contract": "PYTHON_SYNTAX_CODE_V1",
+                "policy": "syntax-surface-support-v1"
+              }
+            ]
+          },
+          "capture": {
+            "parent": {
+              "activationId": "activation:23b99724efe3a73475284f05bcfef634661e5d5958bf28653e68879bf556b861",
+              "repositoryId": "r",
+              "revisionId": "rev"
+            },
+            "snapshotIds": ["snap", "snap:other"],
+            "snapshots": [
+              {
+                "capabilities": [
+                  { "coverage": "COMPLETE", "name": "SYMBOL", "support": "SUPPORTED" }
+                ],
+                "completedAt": "2026-01-01T00:00:01.000Z",
+                "diagnostics": [],
+                "id": "snap",
+                "outcome": "SUCCEEDED",
+                "providerId": "native",
+                "providerVersion": "0.0.0",
+                "repositoryId": "r",
+                "requestedRevisionFingerprint": "base",
+                "requestedRevisionId": "rev",
+                "runtimeVersion": "0.0.0",
+                "startedAt": "2026-01-01T00:00:00.000Z"
+              }
+            ],
+            "coverage": [],
+            "activeProviderIds": []
+          },
+          "qualificationRef": "component-fixture:not-runtime-qualified"
+        },
+        "assembledLedger": [
+          { "label": "manifest declared input", "items": 72, "serializedBytes": 1835, "depth": 6 },
+          { "label": "manifest copied input", "items": 72, "serializedBytes": 1835, "depth": 6 },
+          {
+            "label": "manifest schema parsed input",
+            "items": 72,
+            "serializedBytes": 1835,
+            "depth": 6
+          },
+          { "label": "assembled empty pairs", "items": 1, "serializedBytes": 2, "depth": 0 },
+          { "label": "complete history state", "items": 56, "serializedBytes": 1312, "depth": 5 },
+          { "label": "current members", "items": 1, "serializedBytes": 2, "depth": 0 },
+          {
+            "label": "codeatlas-activation-source-v1 value",
+            "items": 1,
+            "serializedBytes": 2,
+            "depth": 0
+          },
+          {
+            "label": "codeatlas-activation-source-v1 canonical copy",
+            "items": 1,
+            "serializedBytes": 2,
+            "depth": 0
+          },
+          {
+            "label": "codeatlas-activation-source-v1 framing",
+            "items": 0,
+            "serializedBytes": 31,
+            "depth": 0
+          },
+          {
+            "label": "codeatlas-activation-origins-v1 value",
+            "items": 35,
+            "serializedBytes": 784,
+            "depth": 4
+          },
+          {
+            "label": "codeatlas-activation-origins-v1 canonical copy",
+            "items": 35,
+            "serializedBytes": 784,
+            "depth": 4
+          },
+          {
+            "label": "codeatlas-activation-origins-v1 framing",
+            "items": 0,
+            "serializedBytes": 32,
+            "depth": 0
+          },
+          {
+            "label": "complete history manifest",
+            "items": 76,
+            "serializedBytes": 2121,
+            "depth": 6
+          },
+          {
+            "label": "codeatlas-activation-history-v1 value",
+            "items": 76,
+            "serializedBytes": 2121,
+            "depth": 6
+          },
+          {
+            "label": "codeatlas-activation-history-v1 canonical copy",
+            "items": 76,
+            "serializedBytes": 2121,
+            "depth": 6
+          },
+          {
+            "label": "codeatlas-activation-history-v1 framing",
+            "items": 0,
+            "serializedBytes": 32,
+            "depth": 0
+          },
+          {
+            "label": "complete history candidate",
+            "items": 81,
+            "serializedBytes": 2270,
+            "depth": 7
+          }
+        ],
+        "result": {
+          "manifest": {
+            "schemaVersion": 1,
+            "parent": {
+              "activationId": "activation:23b99724efe3a73475284f05bcfef634661e5d5958bf28653e68879bf556b861",
+              "repositoryId": "r",
+              "revisionId": "rev"
+            },
+            "state": {
+              "basis": {
+                "repositoryId": "r",
+                "revisionId": "rev",
+                "contentFingerprint": "base",
+                "codeActivationDigest": "8ee5dc27023ce61c30f02358c6e8cbb97ee8ae2343e9460defbd7e3085d5323d"
+              },
+              "repositoryLocatorDigest": "89b334a45872720bb324e270130b21bc4d472bb297298b0d45685db1c0571ff7",
+              "inventory": [],
+              "contracts": [
+                {
+                  "providerId": "native",
+                  "extractor": "syntax-v1",
+                  "normalizer": "fixture-v1",
+                  "contract": "PYTHON_SYNTAX_CODE_V1",
+                  "policy": "syntax-surface-support-v1"
+                }
+              ],
+              "units": [],
+              "snapshots": [
+                {
+                  "capabilities": [
+                    { "coverage": "COMPLETE", "name": "SYMBOL", "support": "SUPPORTED" }
+                  ],
+                  "completedAt": "2026-01-01T00:00:01.000Z",
+                  "diagnostics": [],
+                  "id": "snap",
+                  "outcome": "SUCCEEDED",
+                  "providerId": "native",
+                  "providerVersion": "0.0.0",
+                  "repositoryId": "r",
+                  "requestedRevisionFingerprint": "base",
+                  "requestedRevisionId": "rev",
+                  "runtimeVersion": "0.0.0",
+                  "startedAt": "2026-01-01T00:00:00.000Z"
+                },
+                {
+                  "id": "snapshot:one",
+                  "providerId": "native",
+                  "providerVersion": "0.0.0",
+                  "runtimeVersion": "fixture-runtime",
+                  "startedAt": "2026-10-24T00:00:00.000Z",
+                  "completedAt": "2026-10-24T00:00:00.003Z",
+                  "repositoryId": "r",
+                  "requestedRevisionId": "rev",
+                  "requestedRevisionFingerprint": "base",
+                  "capabilities": [
+                    {
+                      "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                      "support": "SUPPORTED",
+                      "coverage": "COMPLETE"
+                    }
+                  ],
+                  "diagnostics": [],
+                  "outcome": "SUCCEEDED"
+                }
+              ],
+              "nodes": [],
+              "edges": [],
+              "supports": [],
+              "coverage": [],
+              "syntaxOrigins": []
+            },
+            "observation": {
+              "snapshotId": "snapshot:one",
+              "requestIdentity": "c0fed2329857ff45b1f14a4e24e3d950c2827c37fc75422486c0aaab7736789e",
+              "outputIdentity": "e27d7be9b44a29b2dd7f7715a5688fbae2d95cfdfd3dde93cc04f16dead7210f",
+              "javaProvenance": null,
+              "scope": { "unitIds": [], "removedSourceFileIds": [] },
+              "qualificationRef": "component-fixture:not-runtime-qualified"
+            },
+            "transitions": null,
+            "syntaxMembers": [],
+            "codeIdentity": "8ee5dc27023ce61c30f02358c6e8cbb97ee8ae2343e9460defbd7e3085d5323d",
+            "sourceIdentity": "9a99716b1331858af1b9ae8165aeec7ca36b6a3fe64b28c804d01bb414e1cfa2",
+            "originRegistryDigest": "be581db2062018763b2774a37bb553baf8a5b1a82a6ba04184e5b973e7dbc8ee"
+          },
+          "activationId": "activation:1403cec8b06b195c2b2652f96847573d1b501f98003b8acb888b63b9c91e5282",
+          "origins": [],
+          "projections": [],
+          "members": [],
+          "basis": {
+            "repositoryId": "r",
+            "revisionId": "rev",
+            "contentFingerprint": "base",
+            "codeActivationDigest": "8ee5dc27023ce61c30f02358c6e8cbb97ee8ae2343e9460defbd7e3085d5323d"
+          },
+          "code": {
+            "targetSource": {
+              "repositoryId": "r",
+              "revisionId": "rev",
+              "contentFingerprint": "base"
+            },
+            "committedSnapshotCount": 3,
+            "nodes": [],
+            "edges": [],
+            "evidence": [],
+            "bindings": [],
+            "factEvidence": [],
+            "candidates": [],
+            "snapshots": [
+              {
+                "capabilities": [
+                  { "coverage": "COMPLETE", "name": "SYMBOL", "support": "SUPPORTED" }
+                ],
+                "completedAt": "2026-01-01T00:00:01.000Z",
+                "diagnostics": [],
+                "id": "snap",
+                "outcome": "SUCCEEDED",
+                "providerId": "native",
+                "providerVersion": "0.0.0",
+                "repositoryId": "r",
+                "requestedRevisionFingerprint": "base",
+                "requestedRevisionId": "rev",
+                "runtimeVersion": "0.0.0",
+                "startedAt": "2026-01-01T00:00:00.000Z"
+              },
+              {
+                "id": "snapshot:one",
+                "providerId": "native",
+                "providerVersion": "0.0.0",
+                "runtimeVersion": "fixture-runtime",
+                "startedAt": "2026-10-24T00:00:00.000Z",
+                "completedAt": "2026-10-24T00:00:00.003Z",
+                "repositoryId": "r",
+                "requestedRevisionId": "rev",
+                "requestedRevisionFingerprint": "base",
+                "capabilities": [
+                  {
+                    "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                    "support": "SUPPORTED",
+                    "coverage": "COMPLETE"
+                  }
+                ],
+                "diagnostics": [],
+                "outcome": "SUCCEEDED"
+              }
+            ],
+            "coverage": []
+          },
+          "usage": {
+            "rows": 0,
+            "serializedBytes": 79389,
+            "items": 3203,
+            "retainedLogicalBytes": 91053
+          }
+        },
+        "cost": {
+          "rows": 0,
+          "serializedBytes": 79389,
+          "items": 3203,
+          "retainedLogicalBytes": 91053,
+          "maxDepth": 7,
+          "memoryBudgetBytes": 182106
+        },
+        "ledger": [
+          {
+            "label": "composition declarations initial",
+            "items": 70,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 1235,
+            "depth": 6
+          },
+          {
+            "label": "composition declarations traversal",
+            "items": 70,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 6
+          },
+          {
+            "label": "composition declarations encoding",
+            "items": 0,
+            "serializedBytes": 3240,
+            "retainedLogicalBytes": 3240,
+            "depth": 0
+          },
+          {
+            "label": "composition declarations parsed",
+            "items": 70,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 1235,
+            "depth": 6
+          },
+          {
+            "label": "request owned byte representations",
+            "items": 0,
+            "serializedBytes": 1996,
+            "retainedLogicalBytes": 1996,
+            "depth": 0
+          },
+          {
+            "label": "output owned byte representations",
+            "items": 0,
+            "serializedBytes": 2848,
+            "retainedLogicalBytes": 2848,
+            "depth": 0
+          },
+          {
+            "label": "real full Provider pipeline",
+            "items": 1757,
+            "serializedBytes": 51425,
+            "retainedLogicalBytes": 51425,
+            "depth": 7
+          },
+          {
+            "label": "NODE ordered input",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "NODE ordered rows",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "EDGE ordered input",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "EDGE ordered rows",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "EVIDENCE ordered input",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "EVIDENCE ordered rows",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "BINDING ordered input",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "BINDING ordered rows",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "FACT_EVIDENCE ordered input",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "FACT_EVIDENCE ordered rows",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "SUPPORT_CANDIDATE ordered input",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "SUPPORT_CANDIDATE ordered rows",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "complete future Code input",
+            "items": 48,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 744,
+            "depth": 5
+          },
+          {
+            "label": "future Code nine-group identity",
+            "items": 291,
+            "serializedBytes": 1124,
+            "retainedLogicalBytes": 5766,
+            "depth": 5
+          },
+          {
+            "label": "complete declared history state",
+            "items": 55,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 993,
+            "depth": 5
+          },
+          {
+            "label": "real empty Syntax/history assembly",
+            "items": 655,
+            "serializedBytes": 17121,
+            "retainedLogicalBytes": 17121,
+            "depth": 7
+          },
+          {
+            "label": "final history manifest validation",
+            "items": 36,
+            "serializedBytes": 1635,
+            "retainedLogicalBytes": 1700,
+            "depth": 4
+          },
+          {
+            "label": "complete pure Runtime result",
+            "items": 139,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 2750,
+            "depth": 7
+          }
+        ]
+      }
+    },
+    {
+      "id": "two-current-snapshots",
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-stage/zero-provider-resource-reference.json",
+        "sha256": "dc34ccf9d1917b3f7c9868990b33d5532e10695b427c8f1dad108faa00e70153",
+        "caseId": "two-current-snapshots"
+      },
+      "stageSource": {
+        "path": "fixtures/phase1/mixed-analysis-stage/zero-stage-resource-reference.json",
+        "sha256": "f25a27f744a4b837824b49316e998f60045d89da485db6df55fbe195a81d733b",
+        "caseId": "two-current-snapshots"
+      },
+      "raw": {
+        "metadata": {
+          "targetSource": {
+            "repositoryId": "r",
+            "revisionId": "rev",
+            "contentFingerprint": "base"
+          },
+          "inventory": [],
+          "snapshot": {
+            "id": "snapshot:one",
+            "providerId": "native",
+            "providerVersion": "0.0.0",
+            "runtimeVersion": "fixture-runtime",
+            "startedAt": "2026-10-24T00:00:00.000Z",
+            "completedAt": "2026-10-24T00:00:00.003Z"
+          },
+          "tool": { "target": "fixture-target", "profile": "test" },
+          "java": null,
+          "codeSyntax": {
+            "providerVersion": "0.0.0",
+            "runtimeVersion": "fixture-runtime",
+            "tool": { "target": "fixture-target", "profile": "test" },
+            "startedAt": "2026-10-24T00:00:00.001Z",
+            "settledAt": "2026-10-24T00:00:00.002Z"
+          }
+        },
+        "requestText": "{\"protocolVersion\":5,\"requestId\":\"contract:no-files\",\"sequence\":0,\"type\":\"OBSERVE_CODE_SYNTAX\",\"payload\":{\"irSchemaVersion\":1,\"repository\":{\"id\":\"r\",\"rootPath\":\"/r\"},\"providerId\":\"native\",\"providerVersion\":\"0.0.0\",\"providerSnapshotId\":\"snapshot:one\",\"extractorVersion\":\"syntax-v1\",\"languages\":[{\"languageId\":\"python\",\"grammarVersion\":\"0.25.0\",\"analyzerVersion\":\"0.0.0\",\"compatibilityVersion\":\"syntax-v1\"}],\"sourceFiles\":[],\"removedSourceFiles\":[],\"owners\":[],\"deadlineEpochMs\":null,\"resourceBudget\":{\"maxDurationMs\":1000,\"maxMemoryBytes\":65536,\"maxEvents\":20,\"maxInputBytes\":65536,\"maxOutputBytes\":65536,\"maxDepth\":64,\"maxItems\":1000},\"expectedActivationBasis\":null,\"targetSource\":{\"repositoryId\":\"r\",\"revisionId\":\"rev\",\"contentFingerprint\":\"base\"},\"ownerBinding\":{\"kind\":\"PROVISIONAL_CODE\",\"stageDigest\":\"a2265817dcc1d51fd23be16b1c568ccc3556e6df07c19887eaa67957ad517ff3\",\"ownerMapDigest\":\"7b5a6f29721826f48275804890e1a8c268fdfa22efa24c7fc5b366b831387404\"},\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\"}}\n",
+        "outputText": "{\"protocolVersion\":5,\"requestId\":\"contract:no-files\",\"sequence\":0,\"type\":\"OBSERVATION_STARTED\",\"payload\":{\"expectedActivationBasis\":null,\"targetSource\":{\"repositoryId\":\"r\",\"revisionId\":\"rev\",\"contentFingerprint\":\"base\"},\"ownerBinding\":{\"kind\":\"PROVISIONAL_CODE\",\"stageDigest\":\"a2265817dcc1d51fd23be16b1c568ccc3556e6df07c19887eaa67957ad517ff3\",\"ownerMapDigest\":\"7b5a6f29721826f48275804890e1a8c268fdfa22efa24c7fc5b366b831387404\"},\"extractorVersion\":\"syntax-v1\",\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\",\"requestChecksum\":\"5b7a6548358b56d3e5d320f1b127ce016dceba35b9c919234f3ca5a408fd4272\"}}\n{\"protocolVersion\":5,\"requestId\":\"contract:no-files\",\"sequence\":1,\"type\":\"OBSERVATION_COMPLETED\",\"payload\":{\"expectedActivationBasis\":null,\"targetSource\":{\"repositoryId\":\"r\",\"revisionId\":\"rev\",\"contentFingerprint\":\"base\"},\"ownerBinding\":{\"kind\":\"PROVISIONAL_CODE\",\"stageDigest\":\"a2265817dcc1d51fd23be16b1c568ccc3556e6df07c19887eaa67957ad517ff3\",\"ownerMapDigest\":\"7b5a6f29721826f48275804890e1a8c268fdfa22efa24c7fc5b366b831387404\"},\"extractorVersion\":\"syntax-v1\",\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\",\"requestChecksum\":\"5b7a6548358b56d3e5d320f1b127ce016dceba35b9c919234f3ca5a408fd4272\",\"codeOutcome\":\"NOT_APPLICABLE\",\"syntaxOutcome\":\"COMPLETE\",\"outcome\":\"SUCCEEDED\",\"counts\":{\"nodes\":0,\"edges\":0,\"syntax\":0,\"codeCoverage\":0,\"syntaxCoverage\":0,\"diagnostics\":0},\"checksum\":\"0c177dd43b6f43b507d0d3814f6bcd7fb14e9cb09e66e36bf5a676b4360c76b6\"}}\n"
+      },
+      "validation": {
+        "input": {
+          "mode": "FULL",
+          "target": {
+            "source": { "repositoryId": "r", "revisionId": "rev", "contentFingerprint": "base" },
+            "repositoryLocatorDigest": "89b334a45872720bb324e270130b21bc4d472bb297298b0d45685db1c0571ff7",
+            "inventory": [],
+            "contracts": [
+              {
+                "providerId": "native",
+                "extractor": "syntax-v1",
+                "normalizer": "fixture-v1",
+                "contract": "PYTHON_SYNTAX_CODE_V1",
+                "policy": "syntax-surface-support-v1"
+              }
+            ]
+          },
+          "capture": {
+            "parent": {
+              "activationId": "activation:9adaa3ffb9e3c2978394da10cade694fcf0299de2eda82d0be3daa104bc3c109",
+              "repositoryId": "r",
+              "revisionId": "rev"
+            },
+            "snapshotIds": ["snap", "snap:two"],
+            "snapshots": [
+              {
+                "capabilities": [
+                  { "coverage": "COMPLETE", "name": "SYMBOL", "support": "SUPPORTED" }
+                ],
+                "completedAt": "2026-01-01T00:00:01.000Z",
+                "diagnostics": [],
+                "id": "snap",
+                "outcome": "SUCCEEDED",
+                "providerId": "native",
+                "providerVersion": "0.0.0",
+                "repositoryId": "r",
+                "requestedRevisionFingerprint": "base",
+                "requestedRevisionId": "rev",
+                "runtimeVersion": "0.0.0",
+                "startedAt": "2026-01-01T00:00:00.000Z"
+              },
+              {
+                "capabilities": [
+                  { "coverage": "COMPLETE", "name": "SYMBOL", "support": "SUPPORTED" }
+                ],
+                "completedAt": "2026-01-01T00:00:01.000Z",
+                "diagnostics": [],
+                "id": "snap:two",
+                "outcome": "SUCCEEDED",
+                "providerId": "native",
+                "providerVersion": "0.0.0",
+                "repositoryId": "r",
+                "requestedRevisionFingerprint": "base",
+                "requestedRevisionId": "rev",
+                "runtimeVersion": "0.0.0",
+                "startedAt": "2026-01-01T00:00:00.000Z"
+              }
+            ],
+            "coverage": [],
+            "activeProviderIds": []
+          },
+          "scope": { "units": [], "removedSourceFileIds": [] },
+          "owner": {
+            "stageDigest": "a2265817dcc1d51fd23be16b1c568ccc3556e6df07c19887eaa67957ad517ff3",
+            "java": null
+          }
+        },
+        "result": {
+          "raw": {
+            "kind": "DECLARED_FULL_RAW_OBSERVATION",
+            "metadata": {
+              "targetSource": {
+                "repositoryId": "r",
+                "revisionId": "rev",
+                "contentFingerprint": "base"
+              },
+              "inventory": [],
+              "snapshot": {
+                "id": "snapshot:one",
+                "providerId": "native",
+                "providerVersion": "0.0.0",
+                "runtimeVersion": "fixture-runtime",
+                "startedAt": "2026-10-24T00:00:00.000Z",
+                "completedAt": "2026-10-24T00:00:00.003Z"
+              },
+              "tool": { "target": "fixture-target", "profile": "test" },
+              "java": null,
+              "codeSyntax": {
+                "providerVersion": "0.0.0",
+                "runtimeVersion": "fixture-runtime",
+                "tool": { "target": "fixture-target", "profile": "test" },
+                "startedAt": "2026-10-24T00:00:00.001Z",
+                "settledAt": "2026-10-24T00:00:00.002Z"
+              }
+            },
+            "java": null,
+            "codeSyntax": {
+              "request": {
+                "protocolVersion": 5,
+                "requestId": "contract:no-files",
+                "sequence": 0,
+                "type": "OBSERVE_CODE_SYNTAX",
+                "payload": {
+                  "irSchemaVersion": 1,
+                  "repository": { "id": "r", "rootPath": "/r" },
+                  "providerId": "native",
+                  "providerVersion": "0.0.0",
+                  "providerSnapshotId": "snapshot:one",
+                  "extractorVersion": "syntax-v1",
+                  "languages": [
+                    {
+                      "languageId": "python",
+                      "grammarVersion": "0.25.0",
+                      "analyzerVersion": "0.0.0",
+                      "compatibilityVersion": "syntax-v1"
+                    }
+                  ],
+                  "sourceFiles": [],
+                  "removedSourceFiles": [],
+                  "owners": [],
+                  "deadlineEpochMs": null,
+                  "resourceBudget": {
+                    "maxDurationMs": 1000,
+                    "maxMemoryBytes": 65536,
+                    "maxEvents": 20,
+                    "maxInputBytes": 65536,
+                    "maxOutputBytes": 65536,
+                    "maxDepth": 64,
+                    "maxItems": 1000
+                  },
+                  "expectedActivationBasis": null,
+                  "targetSource": {
+                    "repositoryId": "r",
+                    "revisionId": "rev",
+                    "contentFingerprint": "base"
+                  },
+                  "ownerBinding": {
+                    "kind": "PROVISIONAL_CODE",
+                    "stageDigest": "a2265817dcc1d51fd23be16b1c568ccc3556e6df07c19887eaa67957ad517ff3",
+                    "ownerMapDigest": "7b5a6f29721826f48275804890e1a8c268fdfa22efa24c7fc5b366b831387404"
+                  },
+                  "codeContract": "PYTHON_SYNTAX_CODE_V1"
+                }
+              },
+              "events": [
+                {
+                  "protocolVersion": 5,
+                  "requestId": "contract:no-files",
+                  "sequence": 0,
+                  "type": "OBSERVATION_STARTED",
+                  "payload": {
+                    "expectedActivationBasis": null,
+                    "targetSource": {
+                      "repositoryId": "r",
+                      "revisionId": "rev",
+                      "contentFingerprint": "base"
+                    },
+                    "ownerBinding": {
+                      "kind": "PROVISIONAL_CODE",
+                      "stageDigest": "a2265817dcc1d51fd23be16b1c568ccc3556e6df07c19887eaa67957ad517ff3",
+                      "ownerMapDigest": "7b5a6f29721826f48275804890e1a8c268fdfa22efa24c7fc5b366b831387404"
+                    },
+                    "extractorVersion": "syntax-v1",
+                    "codeContract": "PYTHON_SYNTAX_CODE_V1",
+                    "requestChecksum": "5b7a6548358b56d3e5d320f1b127ce016dceba35b9c919234f3ca5a408fd4272"
+                  }
+                },
+                {
+                  "protocolVersion": 5,
+                  "requestId": "contract:no-files",
+                  "sequence": 1,
+                  "type": "OBSERVATION_COMPLETED",
+                  "payload": {
+                    "expectedActivationBasis": null,
+                    "targetSource": {
+                      "repositoryId": "r",
+                      "revisionId": "rev",
+                      "contentFingerprint": "base"
+                    },
+                    "ownerBinding": {
+                      "kind": "PROVISIONAL_CODE",
+                      "stageDigest": "a2265817dcc1d51fd23be16b1c568ccc3556e6df07c19887eaa67957ad517ff3",
+                      "ownerMapDigest": "7b5a6f29721826f48275804890e1a8c268fdfa22efa24c7fc5b366b831387404"
+                    },
+                    "extractorVersion": "syntax-v1",
+                    "codeContract": "PYTHON_SYNTAX_CODE_V1",
+                    "requestChecksum": "5b7a6548358b56d3e5d320f1b127ce016dceba35b9c919234f3ca5a408fd4272",
+                    "codeOutcome": "NOT_APPLICABLE",
+                    "syntaxOutcome": "COMPLETE",
+                    "outcome": "SUCCEEDED",
+                    "counts": {
+                      "nodes": 0,
+                      "edges": 0,
+                      "syntax": 0,
+                      "codeCoverage": 0,
+                      "syntaxCoverage": 0,
+                      "diagnostics": 0
+                    },
+                    "checksum": "0c177dd43b6f43b507d0d3814f6bcd7fb14e9cb09e66e36bf5a676b4360c76b6"
+                  }
+                }
+              ],
+              "codeOutcome": "NOT_APPLICABLE",
+              "syntaxOutcome": "COMPLETE",
+              "outcome": "SUCCEEDED",
+              "counts": {
+                "nodes": 0,
+                "edges": 0,
+                "syntax": 0,
+                "codeCoverage": 0,
+                "syntaxCoverage": 0,
+                "diagnostics": 0
+              },
+              "checksum": "0c177dd43b6f43b507d0d3814f6bcd7fb14e9cb09e66e36bf5a676b4360c76b6",
+              "requestChecksum": "5b7a6548358b56d3e5d320f1b127ce016dceba35b9c919234f3ca5a408fd4272"
+            },
+            "provenance": {
+              "kind": "DECLARED_INPUT",
+              "requestIdentity": "5b7a6548358b56d3e5d320f1b127ce016dceba35b9c919234f3ca5a408fd4272",
+              "outputIdentity": "2ebccb0429d3f21ba959fda46445d0cebd1ffce9bf6277c4c29cbc09d206879f"
+            }
+          },
+          "usage": {
+            "rows": 0,
+            "serializedBytes": 60403,
+            "items": 2298,
+            "retainedLogicalBytes": 68501
+          }
+        },
+        "cost": {
+          "rows": 0,
+          "serializedBytes": 60403,
+          "items": 2298,
+          "retainedLogicalBytes": 68501,
+          "maxDepth": 7,
+          "memoryBudgetBytes": 137002
+        },
+        "ledger": [
+          {
+            "label": "validation packet initial",
+            "items": 91,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 1565,
+            "depth": 6
+          },
+          {
+            "label": "validation packet traversal",
+            "items": 91,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 6
+          },
+          {
+            "label": "validation packet encoding",
+            "items": 0,
+            "serializedBytes": 4134,
+            "retainedLogicalBytes": 4134,
+            "depth": 0
+          },
+          {
+            "label": "validation packet parsed",
+            "items": 91,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 1565,
+            "depth": 6
+          },
+          {
+            "label": "reserved metadata",
+            "items": 25,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 423,
+            "depth": 3
+          },
+          {
+            "label": "parsed metadata",
+            "items": 25,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 423,
+            "depth": 3
+          },
+          {
+            "label": "target metadata",
+            "items": 25,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 423,
+            "depth": 3
+          },
+          {
+            "label": "parsed target metadata",
+            "items": 25,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 423,
+            "depth": 3
+          },
+          {
+            "label": "metadata inventory",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "complete inventory equality",
+            "items": 3,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 1
+          },
+          {
+            "label": "contract and scope records",
+            "items": 10,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 114,
+            "depth": 3
+          },
+          {
+            "label": "request owned byte representations",
+            "items": 0,
+            "serializedBytes": 1996,
+            "retainedLogicalBytes": 1996,
+            "depth": 0
+          },
+          {
+            "label": "output owned byte representations",
+            "items": 0,
+            "serializedBytes": 2848,
+            "retainedLogicalBytes": 2848,
+            "depth": 0
+          },
+          {
+            "label": "real full Provider pipeline",
+            "items": 1757,
+            "serializedBytes": 51425,
+            "retainedLogicalBytes": 51425,
+            "depth": 7
+          },
+          {
+            "label": "provisional binding complete check",
+            "items": 13,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 253,
+            "depth": 2
+          },
+          {
+            "label": "complete pure Runtime result",
+            "items": 141,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 2909,
+            "depth": 7
+          }
+        ]
+      },
+      "composition": {
+        "input": {
+          "mode": "FULL",
+          "target": {
+            "source": { "repositoryId": "r", "revisionId": "rev", "contentFingerprint": "base" },
+            "repositoryLocatorDigest": "89b334a45872720bb324e270130b21bc4d472bb297298b0d45685db1c0571ff7",
+            "inventory": [],
+            "contracts": [
+              {
+                "providerId": "native",
+                "extractor": "syntax-v1",
+                "normalizer": "fixture-v1",
+                "contract": "PYTHON_SYNTAX_CODE_V1",
+                "policy": "syntax-surface-support-v1"
+              }
+            ]
+          },
+          "capture": {
+            "parent": {
+              "activationId": "activation:9adaa3ffb9e3c2978394da10cade694fcf0299de2eda82d0be3daa104bc3c109",
+              "repositoryId": "r",
+              "revisionId": "rev"
+            },
+            "snapshotIds": ["snap", "snap:two"],
+            "snapshots": [
+              {
+                "capabilities": [
+                  { "coverage": "COMPLETE", "name": "SYMBOL", "support": "SUPPORTED" }
+                ],
+                "completedAt": "2026-01-01T00:00:01.000Z",
+                "diagnostics": [],
+                "id": "snap",
+                "outcome": "SUCCEEDED",
+                "providerId": "native",
+                "providerVersion": "0.0.0",
+                "repositoryId": "r",
+                "requestedRevisionFingerprint": "base",
+                "requestedRevisionId": "rev",
+                "runtimeVersion": "0.0.0",
+                "startedAt": "2026-01-01T00:00:00.000Z"
+              },
+              {
+                "capabilities": [
+                  { "coverage": "COMPLETE", "name": "SYMBOL", "support": "SUPPORTED" }
+                ],
+                "completedAt": "2026-01-01T00:00:01.000Z",
+                "diagnostics": [],
+                "id": "snap:two",
+                "outcome": "SUCCEEDED",
+                "providerId": "native",
+                "providerVersion": "0.0.0",
+                "repositoryId": "r",
+                "requestedRevisionFingerprint": "base",
+                "requestedRevisionId": "rev",
+                "runtimeVersion": "0.0.0",
+                "startedAt": "2026-01-01T00:00:00.000Z"
+              }
+            ],
+            "coverage": [],
+            "activeProviderIds": []
+          },
+          "qualificationRef": "component-fixture:not-runtime-qualified"
+        },
+        "assembledLedger": [
+          { "label": "manifest declared input", "items": 89, "serializedBytes": 2209, "depth": 6 },
+          { "label": "manifest copied input", "items": 89, "serializedBytes": 2209, "depth": 6 },
+          {
+            "label": "manifest schema parsed input",
+            "items": 89,
+            "serializedBytes": 2209,
+            "depth": 6
+          },
+          { "label": "assembled empty pairs", "items": 1, "serializedBytes": 2, "depth": 0 },
+          { "label": "complete history state", "items": 73, "serializedBytes": 1686, "depth": 5 },
+          { "label": "current members", "items": 1, "serializedBytes": 2, "depth": 0 },
+          {
+            "label": "codeatlas-activation-source-v1 value",
+            "items": 1,
+            "serializedBytes": 2,
+            "depth": 0
+          },
+          {
+            "label": "codeatlas-activation-source-v1 canonical copy",
+            "items": 1,
+            "serializedBytes": 2,
+            "depth": 0
+          },
+          {
+            "label": "codeatlas-activation-source-v1 framing",
+            "items": 0,
+            "serializedBytes": 31,
+            "depth": 0
+          },
+          {
+            "label": "codeatlas-activation-origins-v1 value",
+            "items": 52,
+            "serializedBytes": 1158,
+            "depth": 4
+          },
+          {
+            "label": "codeatlas-activation-origins-v1 canonical copy",
+            "items": 52,
+            "serializedBytes": 1158,
+            "depth": 4
+          },
+          {
+            "label": "codeatlas-activation-origins-v1 framing",
+            "items": 0,
+            "serializedBytes": 32,
+            "depth": 0
+          },
+          {
+            "label": "complete history manifest",
+            "items": 93,
+            "serializedBytes": 2495,
+            "depth": 6
+          },
+          {
+            "label": "codeatlas-activation-history-v1 value",
+            "items": 93,
+            "serializedBytes": 2495,
+            "depth": 6
+          },
+          {
+            "label": "codeatlas-activation-history-v1 canonical copy",
+            "items": 93,
+            "serializedBytes": 2495,
+            "depth": 6
+          },
+          {
+            "label": "codeatlas-activation-history-v1 framing",
+            "items": 0,
+            "serializedBytes": 32,
+            "depth": 0
+          },
+          {
+            "label": "complete history candidate",
+            "items": 98,
+            "serializedBytes": 2644,
+            "depth": 7
+          }
+        ],
+        "result": {
+          "manifest": {
+            "schemaVersion": 1,
+            "parent": {
+              "activationId": "activation:9adaa3ffb9e3c2978394da10cade694fcf0299de2eda82d0be3daa104bc3c109",
+              "repositoryId": "r",
+              "revisionId": "rev"
+            },
+            "state": {
+              "basis": {
+                "repositoryId": "r",
+                "revisionId": "rev",
+                "contentFingerprint": "base",
+                "codeActivationDigest": "207b7ec5de129b1d3e1fe96069252d016f898a32d587bbb8f21e0051f4bac6e1"
+              },
+              "repositoryLocatorDigest": "89b334a45872720bb324e270130b21bc4d472bb297298b0d45685db1c0571ff7",
+              "inventory": [],
+              "contracts": [
+                {
+                  "providerId": "native",
+                  "extractor": "syntax-v1",
+                  "normalizer": "fixture-v1",
+                  "contract": "PYTHON_SYNTAX_CODE_V1",
+                  "policy": "syntax-surface-support-v1"
+                }
+              ],
+              "units": [],
+              "snapshots": [
+                {
+                  "capabilities": [
+                    { "coverage": "COMPLETE", "name": "SYMBOL", "support": "SUPPORTED" }
+                  ],
+                  "completedAt": "2026-01-01T00:00:01.000Z",
+                  "diagnostics": [],
+                  "id": "snap",
+                  "outcome": "SUCCEEDED",
+                  "providerId": "native",
+                  "providerVersion": "0.0.0",
+                  "repositoryId": "r",
+                  "requestedRevisionFingerprint": "base",
+                  "requestedRevisionId": "rev",
+                  "runtimeVersion": "0.0.0",
+                  "startedAt": "2026-01-01T00:00:00.000Z"
+                },
+                {
+                  "capabilities": [
+                    { "coverage": "COMPLETE", "name": "SYMBOL", "support": "SUPPORTED" }
+                  ],
+                  "completedAt": "2026-01-01T00:00:01.000Z",
+                  "diagnostics": [],
+                  "id": "snap:two",
+                  "outcome": "SUCCEEDED",
+                  "providerId": "native",
+                  "providerVersion": "0.0.0",
+                  "repositoryId": "r",
+                  "requestedRevisionFingerprint": "base",
+                  "requestedRevisionId": "rev",
+                  "runtimeVersion": "0.0.0",
+                  "startedAt": "2026-01-01T00:00:00.000Z"
+                },
+                {
+                  "id": "snapshot:one",
+                  "providerId": "native",
+                  "providerVersion": "0.0.0",
+                  "runtimeVersion": "fixture-runtime",
+                  "startedAt": "2026-10-24T00:00:00.000Z",
+                  "completedAt": "2026-10-24T00:00:00.003Z",
+                  "repositoryId": "r",
+                  "requestedRevisionId": "rev",
+                  "requestedRevisionFingerprint": "base",
+                  "capabilities": [
+                    {
+                      "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                      "support": "SUPPORTED",
+                      "coverage": "COMPLETE"
+                    }
+                  ],
+                  "diagnostics": [],
+                  "outcome": "SUCCEEDED"
+                }
+              ],
+              "nodes": [],
+              "edges": [],
+              "supports": [],
+              "coverage": [],
+              "syntaxOrigins": []
+            },
+            "observation": {
+              "snapshotId": "snapshot:one",
+              "requestIdentity": "5b7a6548358b56d3e5d320f1b127ce016dceba35b9c919234f3ca5a408fd4272",
+              "outputIdentity": "2ebccb0429d3f21ba959fda46445d0cebd1ffce9bf6277c4c29cbc09d206879f",
+              "javaProvenance": null,
+              "scope": { "unitIds": [], "removedSourceFileIds": [] },
+              "qualificationRef": "component-fixture:not-runtime-qualified"
+            },
+            "transitions": null,
+            "syntaxMembers": [],
+            "codeIdentity": "207b7ec5de129b1d3e1fe96069252d016f898a32d587bbb8f21e0051f4bac6e1",
+            "sourceIdentity": "9a99716b1331858af1b9ae8165aeec7ca36b6a3fe64b28c804d01bb414e1cfa2",
+            "originRegistryDigest": "5d297bbcab0d869f0aee42ae027501268a9696f6ce22d5e4fb2907fb58658aa1"
+          },
+          "activationId": "activation:63aca8c8a92d6713d61ba943486f3c3c21f3c8f5fc0a63d58c3a9217c204e3a6",
+          "origins": [],
+          "projections": [],
+          "members": [],
+          "basis": {
+            "repositoryId": "r",
+            "revisionId": "rev",
+            "contentFingerprint": "base",
+            "codeActivationDigest": "207b7ec5de129b1d3e1fe96069252d016f898a32d587bbb8f21e0051f4bac6e1"
+          },
+          "code": {
+            "targetSource": {
+              "repositoryId": "r",
+              "revisionId": "rev",
+              "contentFingerprint": "base"
+            },
+            "committedSnapshotCount": 3,
+            "nodes": [],
+            "edges": [],
+            "evidence": [],
+            "bindings": [],
+            "factEvidence": [],
+            "candidates": [],
+            "snapshots": [
+              {
+                "capabilities": [
+                  { "coverage": "COMPLETE", "name": "SYMBOL", "support": "SUPPORTED" }
+                ],
+                "completedAt": "2026-01-01T00:00:01.000Z",
+                "diagnostics": [],
+                "id": "snap",
+                "outcome": "SUCCEEDED",
+                "providerId": "native",
+                "providerVersion": "0.0.0",
+                "repositoryId": "r",
+                "requestedRevisionFingerprint": "base",
+                "requestedRevisionId": "rev",
+                "runtimeVersion": "0.0.0",
+                "startedAt": "2026-01-01T00:00:00.000Z"
+              },
+              {
+                "capabilities": [
+                  { "coverage": "COMPLETE", "name": "SYMBOL", "support": "SUPPORTED" }
+                ],
+                "completedAt": "2026-01-01T00:00:01.000Z",
+                "diagnostics": [],
+                "id": "snap:two",
+                "outcome": "SUCCEEDED",
+                "providerId": "native",
+                "providerVersion": "0.0.0",
+                "repositoryId": "r",
+                "requestedRevisionFingerprint": "base",
+                "requestedRevisionId": "rev",
+                "runtimeVersion": "0.0.0",
+                "startedAt": "2026-01-01T00:00:00.000Z"
+              },
+              {
+                "id": "snapshot:one",
+                "providerId": "native",
+                "providerVersion": "0.0.0",
+                "runtimeVersion": "fixture-runtime",
+                "startedAt": "2026-10-24T00:00:00.000Z",
+                "completedAt": "2026-10-24T00:00:00.003Z",
+                "repositoryId": "r",
+                "requestedRevisionId": "rev",
+                "requestedRevisionFingerprint": "base",
+                "capabilities": [
+                  {
+                    "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                    "support": "SUPPORTED",
+                    "coverage": "COMPLETE"
+                  }
+                ],
+                "diagnostics": [],
+                "outcome": "SUCCEEDED"
+              }
+            ],
+            "coverage": []
+          },
+          "usage": {
+            "rows": 0,
+            "serializedBytes": 84943,
+            "items": 3597,
+            "retainedLogicalBytes": 99847
+          }
+        },
+        "cost": {
+          "rows": 0,
+          "serializedBytes": 84943,
+          "items": 3597,
+          "retainedLogicalBytes": 99847,
+          "maxDepth": 7,
+          "memoryBudgetBytes": 199694
+        },
+        "ledger": [
+          {
+            "label": "composition declarations initial",
+            "items": 87,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 1514,
+            "depth": 6
+          },
+          {
+            "label": "composition declarations traversal",
+            "items": 87,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 6
+          },
+          {
+            "label": "composition declarations encoding",
+            "items": 0,
+            "serializedBytes": 3984,
+            "retainedLogicalBytes": 3984,
+            "depth": 0
+          },
+          {
+            "label": "composition declarations parsed",
+            "items": 87,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 1514,
+            "depth": 6
+          },
+          {
+            "label": "request owned byte representations",
+            "items": 0,
+            "serializedBytes": 1996,
+            "retainedLogicalBytes": 1996,
+            "depth": 0
+          },
+          {
+            "label": "output owned byte representations",
+            "items": 0,
+            "serializedBytes": 2848,
+            "retainedLogicalBytes": 2848,
+            "depth": 0
+          },
+          {
+            "label": "real full Provider pipeline",
+            "items": 1757,
+            "serializedBytes": 51425,
+            "retainedLogicalBytes": 51425,
+            "depth": 7
+          },
+          {
+            "label": "NODE ordered input",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "NODE ordered rows",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "EDGE ordered input",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "EDGE ordered rows",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "EVIDENCE ordered input",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "EVIDENCE ordered rows",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "BINDING ordered input",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "BINDING ordered rows",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "FACT_EVIDENCE ordered input",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "FACT_EVIDENCE ordered rows",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "SUPPORT_CANDIDATE ordered input",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "SUPPORT_CANDIDATE ordered rows",
+            "items": 1,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "complete future Code input",
+            "items": 65,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 1025,
+            "depth": 5
+          },
+          {
+            "label": "future Code nine-group identity",
+            "items": 379,
+            "serializedBytes": 1446,
+            "retainedLogicalBytes": 7646,
+            "depth": 5
+          },
+          {
+            "label": "complete declared history state",
+            "items": 72,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 1274,
+            "depth": 5
+          },
+          {
+            "label": "real empty Syntax/history assembly",
+            "items": 825,
+            "serializedBytes": 20861,
+            "retainedLogicalBytes": 20861,
+            "depth": 7
+          },
+          {
+            "label": "final history manifest validation",
+            "items": 53,
+            "serializedBytes": 2383,
+            "retainedLogicalBytes": 2448,
+            "depth": 4
+          },
+          {
+            "label": "complete pure Runtime result",
+            "items": 173,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 3312,
+            "depth": 7
+          }
+        ]
+      }
+    }
+  ]
+}

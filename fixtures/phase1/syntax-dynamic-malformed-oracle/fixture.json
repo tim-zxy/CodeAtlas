@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "p1-syntax-dynamic-malformed-oracle-v1",
+  "category": "runtime-graph",
+  "phase": "1",
+  "languages": [],
+  "frameworks": [],
+  "capabilities": ["BOUNDED_LIBRARY_FULL_OUTPUT_ORACLE_ONLY"],
+  "inputs": {
+    "calibrationSource": "calibration/app.py",
+    "calibrationRequest": "calibration/request.json",
+    "calibrationRequestBytes": "calibration/request.jsonl",
+    "calibrationContext": "calibration/context.json",
+    "calibrationBasis": "calibration/basis.json",
+    "calibrationAuthoring": "calibration/authoring.json",
+    "holdoutSource": "holdout/app.py",
+    "holdoutRequest": "holdout/request.json",
+    "holdoutRequestBytes": "holdout/request.jsonl",
+    "holdoutContext": "holdout/context.json",
+    "holdoutBasis": "holdout/basis.json",
+    "holdoutAuthoring": "holdout/authoring.json"
+  },
+  "expected": {
+    "calibrationStream": "calibration/events.jsonl",
+    "calibrationCanonicalCode": "calibration/normalized.json",
+    "holdoutStream": "holdout/events.jsonl",
+    "holdoutCanonicalCode": "holdout/normalized.json"
+  },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

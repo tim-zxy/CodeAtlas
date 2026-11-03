@@ -1,0 +1,38 @@
+{
+  "policy": "runtime-declaration-support-v1",
+  "notClaimed": ["REAL_NATIVE", "DEPLOYMENT", "EVALUATION_BASELINE"],
+  "cases": [
+    {
+      "name": "mongo-read",
+      "bindings": [
+        {
+          "kind": "DATA_READ",
+          "targetId": "runtime:27bffba4b7c5d28579d75a54cbd647de53e80b5c4eca735caf8ebea4b08b46dd",
+          "factKey": "framework-binding:606412b822c4f2190cf9f7666f6c77309590c5ca8f025b1a37f00553815f1545",
+          "id": "binding:49d7f33618019718f19c72f85d530706109f3e885c1f0f7d10159aa076bd0ff2"
+        }
+      ],
+      "domainIds": ["runtime:27bffba4b7c5d28579d75a54cbd647de53e80b5c4eca735caf8ebea4b08b46dd"],
+      "entries": 0
+    },
+    {
+      "name": "mongo-write",
+      "bindings": [
+        {
+          "kind": "DATA_WRITE",
+          "targetId": "runtime:27bffba4b7c5d28579d75a54cbd647de53e80b5c4eca735caf8ebea4b08b46dd",
+          "factKey": "framework-binding:01b80f01c7e5f5bab73e4a95a6ef1dffa4c6f546f2109fdcc7c7c1dd99f01cb5",
+          "id": "binding:edea3e3bdd27c48fae81143d3ecb560ae55a7fe14e28036db722434ce5588330"
+        }
+      ],
+      "domainIds": ["runtime:27bffba4b7c5d28579d75a54cbd647de53e80b5c4eca735caf8ebea4b08b46dd"],
+      "entries": 0
+    },
+    {
+      "name": "mongo-dynamic",
+      "bindings": [],
+      "domainIds": [],
+      "entries": 0
+    }
+  ]
+}

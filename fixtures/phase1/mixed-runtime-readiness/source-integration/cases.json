@@ -1,0 +1,55 @@
+{
+  "sourcePaths": [
+    "Main.java",
+    "app.py",
+    "tests/test_app.py",
+    "notes.txt",
+    "stub.pyi",
+    "文档.txt",
+    "build/hidden.py",
+    ".env"
+  ],
+  "selected": [
+    "Main.java",
+    "app.py",
+    "notes.txt",
+    "stub.pyi",
+    "tests/test_app.py",
+    "文档.txt"
+  ],
+  "classification": [
+    {
+      "path": "app.py",
+      "legacyLanguage": null,
+      "mixedLanguage": "python",
+      "role": "SOURCE"
+    },
+    {
+      "path": "tests/test_app.py",
+      "legacyLanguage": null,
+      "mixedLanguage": "python",
+      "role": "TEST"
+    },
+    {
+      "path": "stub.pyi",
+      "legacyLanguage": null,
+      "mixedLanguage": null,
+      "role": "OTHER"
+    }
+  ],
+  "selectionChanges": [
+    "added",
+    "removed",
+    "bytes",
+    "ignored",
+    "excluded",
+    "head",
+    "branch"
+  ],
+  "gitFailures": [
+    "exit",
+    "overflow",
+    "cancel",
+    "timeout"
+  ]
+}

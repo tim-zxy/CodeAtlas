@@ -1,0 +1,5 @@
+{
+  "state": "FROZEN",
+  "method": "acceptObservation",
+  "base": "base-input.json"
+}

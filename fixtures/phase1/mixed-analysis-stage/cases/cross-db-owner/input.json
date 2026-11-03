@@ -1,0 +1,4 @@
+{
+  "scenario": "cross-db-owner",
+  "base": "base-input.json"
+}

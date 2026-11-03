@@ -1,0 +1,82 @@
+{
+  "envelope": {
+    "schema": "codeatlas.syntax-evidence",
+    "version": 1,
+    "payload": {
+      "id": "syntax:7e7b6de5edc04432f5c9554eded951b49e9bff70dc6c8283b0048c4c39065a01",
+      "repositoryId": "repo-fixture",
+      "revisionId": "rev-a",
+      "sourceFingerprint": "9e3012e6aaee68ca614e04a2aad0097292c86ef767f320fc61445527f910e69e",
+      "sourceRange": {
+        "sourceFileId": "source-fixture",
+        "startLine": 1,
+        "startColumn": 0,
+        "endLine": 1,
+        "endColumn": 15
+      },
+      "syntaxKind": "INVOCATION",
+      "owner": {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo-fixture",
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "node-owner",
+          "revisionId": "rev-a"
+        }
+      },
+      "payload": {
+        "callee": {
+          "state": "NON_RESOLVED",
+          "name": "FastAPI",
+          "target": null,
+          "candidates": []
+        },
+        "receiver": null,
+        "arguments": []
+      },
+      "syntaxKey": "syntax-key-v1:bf6c91179692685d6737033466e3b69f204ef273700325a710558e4381d9aedc",
+      "supportRefs": [
+        {
+          "basis": {
+            "repositoryId": "repo-fixture",
+            "revisionId": "rev-a",
+            "contentFingerprint": "mapping-target",
+            "codeActivationDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "entity": {
+            "kind": "CODE_NODE",
+            "id": "node-owner",
+            "revisionId": "rev-a"
+          },
+          "valueDigest": "3c05fd8692f222f8ad87ece3df7abe4726e3191ee1c640ab5520fdddf30837d7"
+        },
+        {
+          "basis": {
+            "repositoryId": "repo-fixture",
+            "revisionId": "rev-a",
+            "contentFingerprint": "mapping-target",
+            "codeActivationDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "entity": {
+            "kind": "SOURCE_FILE",
+            "id": "source-fixture",
+            "revisionId": "rev-a"
+          },
+          "valueDigest": "624fe0f63d4bbb87924f7d443a664ff6159f2468a74326bff7dd9ebc5ecd9b49"
+        }
+      ],
+      "confidence": {
+        "score": 0.5,
+        "method": "syntax-surface-support-v1",
+        "reasons": [
+          "DECLARED_SOURCE_CONTEXT_MATCHED",
+          "SYNTAX_PAYLOAD_VALIDATED",
+          "REQUIRED_SUPPORTS_CLOSED",
+          "NON_EXACT_CALLEE_RESOLUTION_PRESERVED"
+        ]
+      },
+      "extractionVersion": "syntax-extraction-v1:a294595a10ef89fc89aa2fa923caf5e692ebf5b86e2a7c3ececfe2756b5dcfbc"
+    }
+  },
+  "confidenceMeaning": "NORMATIVE_NOT_PROBABILITY"
+}

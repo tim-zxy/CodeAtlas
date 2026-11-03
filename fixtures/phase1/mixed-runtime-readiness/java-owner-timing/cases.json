@@ -1,0 +1,12 @@
+{
+  "ids": [
+    "java-only",
+    "mixed"
+  ],
+  "lateCompletedAt": "2026-10-30T00:00:00.000Z",
+  "invalidEarlyV5At": "2020-01-01T00:00:00.000Z",
+  "note": "Independent original literals and standard-library canonical hash derivation, before product changes",
+  "finalCodeSyntaxStartedAt": "2026-10-24T00:00:00.002Z",
+  "finalCodeSyntaxSettledAt": "2026-10-24T00:00:00.003Z",
+  "finalCompletedAt": "2026-10-24T00:00:00.004Z"
+}

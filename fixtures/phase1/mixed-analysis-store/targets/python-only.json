@@ -1,0 +1,1035 @@
+{
+  "sample": {
+    "id": "python-only",
+    "repository": {
+      "id": "repo:one",
+      "rootPath": "C:/b1b-component-fixture"
+    },
+    "revision": {
+      "id": "revision:worktree",
+      "repositoryId": "repo:one",
+      "kind": "WORKTREE",
+      "contentFingerprint": "content:first",
+      "baseRevisionId": null
+    },
+    "files": [
+      {
+        "id": "file:one",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "path": "app.py",
+        "contentFingerprint": "sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+        "classification": {
+          "role": "SOURCE",
+          "provenance": "AUTHORED",
+          "contentKind": "TEXT"
+        },
+        "languageHint": "python",
+        "sensitivity": "INTERNAL"
+      }
+    ],
+    "runs": [
+      {
+        "snapshot": {
+          "id": "snapshot:one",
+          "providerId": "native",
+          "providerVersion": "0.0.0",
+          "runtimeVersion": "fixture-runtime",
+          "startedAt": "2026-10-24T00:00:00.000Z",
+          "completedAt": "2026-10-24T00:00:00.003Z",
+          "repositoryId": "repo:one",
+          "requestedRevisionId": "revision:worktree",
+          "requestedRevisionFingerprint": "content:first",
+          "capabilities": [
+            {
+              "name": "PYTHON_SYNTAX_CODE_V1",
+              "support": "SUPPORTED",
+              "coverage": "COMPLETE"
+            },
+            {
+              "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+              "support": "SUPPORTED",
+              "coverage": "COMPLETE"
+            }
+          ],
+          "diagnostics": [],
+          "outcome": "SUCCEEDED"
+        },
+        "nodes": [
+          {
+            "provider": {
+              "factType": "NODE",
+              "providerId": "native",
+              "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb"
+            },
+            "canonical": {
+              "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+              "factKey": "node-fact-v1:9f87fdd184180db6f32fe351dc70bd34a7f1d2baebfa5f06eb7714f1cb1f3dc5",
+              "repositoryId": "repo:one",
+              "revisionId": "revision:worktree",
+              "name": "app.py",
+              "qualifiedName": "app.py",
+              "sourceRange": null,
+              "confidence": {
+                "score": 1,
+                "method": "parser",
+                "reasons": []
+              },
+              "kind": "MODULE"
+            }
+          }
+        ],
+        "edges": [
+          {
+            "provider": {
+              "factType": "EDGE",
+              "providerId": "native",
+              "providerFactId": "python-edge-v1:778fbe8c61c6ddb3ac42c06c7d6014fd8a250b2b36c53529c4dad1a70fdef970"
+            },
+            "canonical": {
+              "id": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f",
+              "factKey": "edge-fact-v1:1a0f6116e03a3e0ec190dcae40a69e4c6dc7b8306c921c480ee61a134faefbb1",
+              "repositoryId": "repo:one",
+              "revisionId": "revision:worktree",
+              "kind": "REFERENCE",
+              "source": {
+                "factType": "NODE",
+                "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+              },
+              "target": {
+                "state": "UNRESOLVED",
+                "resolution": "UNRESOLVED",
+                "originalHint": "p",
+                "candidates": []
+              },
+              "sourceRange": {
+                "sourceFileId": "file:one",
+                "startLine": 1,
+                "startColumn": 4,
+                "endLine": 1,
+                "endColumn": 5
+              },
+              "confidence": {
+                "score": 1,
+                "method": "parser",
+                "reasons": []
+              }
+            }
+          },
+          {
+            "provider": {
+              "factType": "EDGE",
+              "providerId": "native",
+              "providerFactId": "python-edge-v1:37bdc236f427d4e4dc22c574e10b48a36d14083aa7f3f4ae471776631d75fa67"
+            },
+            "canonical": {
+              "id": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b",
+              "factKey": "edge-fact-v1:4a62f7e32fef238335777788b0a79f7ca94e221cf803955bce28151f1a3b608a",
+              "repositoryId": "repo:one",
+              "revisionId": "revision:worktree",
+              "kind": "IMPORT",
+              "source": {
+                "factType": "NODE",
+                "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+              },
+              "target": {
+                "state": "UNRESOLVED",
+                "resolution": "UNRESOLVED",
+                "originalHint": "pkg",
+                "candidates": []
+              },
+              "sourceRange": {
+                "sourceFileId": "file:one",
+                "startLine": 0,
+                "startColumn": 7,
+                "endLine": 0,
+                "endColumn": 15
+              },
+              "confidence": {
+                "score": 1,
+                "method": "parser",
+                "reasons": []
+              }
+            }
+          }
+        ],
+        "coverage": [
+          {
+            "capability": "PYTHON_SYNTAX_CODE_V1",
+            "sourceFileId": "file:one",
+            "coverage": "COMPLETE"
+          },
+          {
+            "capability": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+            "sourceFileId": "file:one",
+            "coverage": "COMPLETE"
+          }
+        ]
+      }
+    ],
+    "activeRunIndexes": [0],
+    "canonicalNodes": [
+      {
+        "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+        "factKey": "node-fact-v1:9f87fdd184180db6f32fe351dc70bd34a7f1d2baebfa5f06eb7714f1cb1f3dc5",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "app.py",
+        "qualifiedName": "app.py",
+        "sourceRange": null,
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "MODULE"
+      }
+    ],
+    "canonicalEdges": [
+      {
+        "id": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f",
+        "factKey": "edge-fact-v1:1a0f6116e03a3e0ec190dcae40a69e4c6dc7b8306c921c480ee61a134faefbb1",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "kind": "REFERENCE",
+        "source": {
+          "factType": "NODE",
+          "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+        },
+        "target": {
+          "state": "UNRESOLVED",
+          "resolution": "UNRESOLVED",
+          "originalHint": "p",
+          "candidates": []
+        },
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 1,
+          "startColumn": 4,
+          "endLine": 1,
+          "endColumn": 5
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        }
+      },
+      {
+        "id": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b",
+        "factKey": "edge-fact-v1:4a62f7e32fef238335777788b0a79f7ca94e221cf803955bce28151f1a3b608a",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "kind": "IMPORT",
+        "source": {
+          "factType": "NODE",
+          "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+        },
+        "target": {
+          "state": "UNRESOLVED",
+          "resolution": "UNRESOLVED",
+          "originalHint": "pkg",
+          "candidates": []
+        },
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 0,
+          "startColumn": 7,
+          "endLine": 0,
+          "endColumn": 15
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        }
+      }
+    ]
+  },
+  "basis": {
+    "repositoryId": "repo:one",
+    "revisionId": "revision:worktree",
+    "contentFingerprint": "content:first",
+    "codeActivationDigest": "3021c2cbb9f304f71165a914a9c02c5a413c3f91a27dc20e75a6871cecdee35a"
+  },
+  "codeTranscript": "codeatlas-code-activation-v1\u000026:{\"count\":1,\"tag\":\"HEADER\"}167:{\"key\":[\"repo:one\"],\"value\":{\"committedSnapshotCount\":1,\"indexedContentFingerprint\":\"content:first\",\"indexedRevisionId\":\"revision:worktree\",\"repositoryId\":\"repo:one\"}}24:{\"count\":1,\"tag\":\"NODE\"}475:{\"key\":[\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\"],\"value\":{\"confidence\":{\"method\":\"parser\",\"reasons\":[],\"score\":1},\"factKey\":\"node-fact-v1:9f87fdd184180db6f32fe351dc70bd34a7f1d2baebfa5f06eb7714f1cb1f3dc5\",\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\",\"kind\":\"MODULE\",\"name\":\"app.py\",\"qualifiedName\":\"app.py\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sourceRange\":null}}24:{\"count\":2,\"tag\":\"EDGE\"}728:{\"key\":[\"canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f\"],\"value\":{\"confidence\":{\"method\":\"parser\",\"reasons\":[],\"score\":1},\"factKey\":\"edge-fact-v1:1a0f6116e03a3e0ec190dcae40a69e4c6dc7b8306c921c480ee61a134faefbb1\",\"id\":\"canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f\",\"kind\":\"REFERENCE\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"source\":{\"factType\":\"NODE\",\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\"},\"sourceRange\":{\"endColumn\":5,\"endLine\":1,\"sourceFileId\":\"file:one\",\"startColumn\":4,\"startLine\":1},\"target\":{\"candidates\":[],\"originalHint\":\"p\",\"resolution\":\"UNRESOLVED\",\"state\":\"UNRESOLVED\"}}}728:{\"key\":[\"canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b\"],\"value\":{\"confidence\":{\"method\":\"parser\",\"reasons\":[],\"score\":1},\"factKey\":\"edge-fact-v1:4a62f7e32fef238335777788b0a79f7ca94e221cf803955bce28151f1a3b608a\",\"id\":\"canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b\",\"kind\":\"IMPORT\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"source\":{\"factType\":\"NODE\",\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\"},\"sourceRange\":{\"endColumn\":15,\"endLine\":0,\"sourceFileId\":\"file:one\",\"startColumn\":7,\"startLine\":0},\"target\":{\"candidates\":[],\"originalHint\":\"pkg\",\"resolution\":\"UNRESOLVED\",\"state\":\"UNRESOLVED\"}}}28:{\"count\":3,\"tag\":\"EVIDENCE\"}471:{\"key\":[\"provider-evidence-v1:3e560c7e388bc9af57d1f0df7bc120dc63f963b7ae66ad8f3435919178b9a774\"],\"value\":{\"id\":\"provider-evidence-v1:3e560c7e388bc9af57d1f0df7bc120dc63f963b7ae66ad8f3435919178b9a774\",\"providerFact\":{\"factType\":\"NODE\",\"providerFactId\":\"python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb\",\"providerId\":\"native\"},\"providerSnapshotId\":\"snapshot:one\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"status\":\"ACTIVE\"}}469:{\"key\":[\"provider-evidence-v1:67c5d5eb19460c19712256f8c2468fe6024dc841a52daead2855da4908625010\"],\"value\":{\"id\":\"provider-evidence-v1:67c5d5eb19460c19712256f8c2468fe6024dc841a52daead2855da4908625010\",\"providerFact\":{\"factType\":\"EDGE\",\"providerFactId\":\"python-edge-v1:37bdc236f427d4e4dc22c574e10b48a36d14083aa7f3f4ae471776631d75fa67\",\"providerId\":\"native\"},\"providerSnapshotId\":\"snapshot:one\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"status\":\"ACTIVE\"}}469:{\"key\":[\"provider-evidence-v1:f62ec04b071dc54dbfc1bdd6c44f5a418d570203cf31812a9db348059ac2db99\"],\"value\":{\"id\":\"provider-evidence-v1:f62ec04b071dc54dbfc1bdd6c44f5a418d570203cf31812a9db348059ac2db99\",\"providerFact\":{\"factType\":\"EDGE\",\"providerFactId\":\"python-edge-v1:778fbe8c61c6ddb3ac42c06c7d6014fd8a250b2b36c53529c4dad1a70fdef970\",\"providerId\":\"native\"},\"providerSnapshotId\":\"snapshot:one\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"status\":\"ACTIVE\"}}27:{\"count\":3,\"tag\":\"BINDING\"}620:{\"key\":[\"provider-evidence-v1:3e560c7e388bc9af57d1f0df7bc120dc63f963b7ae66ad8f3435919178b9a774\",\"NODE\",\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\"],\"value\":{\"canonicalFact\":{\"factType\":\"NODE\",\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\"},\"evidenceId\":\"provider-evidence-v1:3e560c7e388bc9af57d1f0df7bc120dc63f963b7ae66ad8f3435919178b9a774\",\"providerFact\":{\"factType\":\"NODE\",\"providerFactId\":\"python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb\",\"providerId\":\"native\"},\"providerSnapshotId\":\"snapshot:one\"}}618:{\"key\":[\"provider-evidence-v1:67c5d5eb19460c19712256f8c2468fe6024dc841a52daead2855da4908625010\",\"EDGE\",\"canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b\"],\"value\":{\"canonicalFact\":{\"factType\":\"EDGE\",\"id\":\"canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b\"},\"evidenceId\":\"provider-evidence-v1:67c5d5eb19460c19712256f8c2468fe6024dc841a52daead2855da4908625010\",\"providerFact\":{\"factType\":\"EDGE\",\"providerFactId\":\"python-edge-v1:37bdc236f427d4e4dc22c574e10b48a36d14083aa7f3f4ae471776631d75fa67\",\"providerId\":\"native\"},\"providerSnapshotId\":\"snapshot:one\"}}618:{\"key\":[\"provider-evidence-v1:f62ec04b071dc54dbfc1bdd6c44f5a418d570203cf31812a9db348059ac2db99\",\"EDGE\",\"canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f\"],\"value\":{\"canonicalFact\":{\"factType\":\"EDGE\",\"id\":\"canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f\"},\"evidenceId\":\"provider-evidence-v1:f62ec04b071dc54dbfc1bdd6c44f5a418d570203cf31812a9db348059ac2db99\",\"providerFact\":{\"factType\":\"EDGE\",\"providerFactId\":\"python-edge-v1:778fbe8c61c6ddb3ac42c06c7d6014fd8a250b2b36c53529c4dad1a70fdef970\",\"providerId\":\"native\"},\"providerSnapshotId\":\"snapshot:one\"}}33:{\"count\":3,\"tag\":\"FACT_EVIDENCE\"}417:{\"key\":[\"provider-evidence-v1:3e560c7e388bc9af57d1f0df7bc120dc63f963b7ae66ad8f3435919178b9a774\",\"NODE\",\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\"],\"value\":{\"evidenceId\":\"provider-evidence-v1:3e560c7e388bc9af57d1f0df7bc120dc63f963b7ae66ad8f3435919178b9a774\",\"fact\":{\"factType\":\"NODE\",\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\"}}}417:{\"key\":[\"provider-evidence-v1:67c5d5eb19460c19712256f8c2468fe6024dc841a52daead2855da4908625010\",\"EDGE\",\"canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b\"],\"value\":{\"evidenceId\":\"provider-evidence-v1:67c5d5eb19460c19712256f8c2468fe6024dc841a52daead2855da4908625010\",\"fact\":{\"factType\":\"EDGE\",\"id\":\"canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b\"}}}417:{\"key\":[\"provider-evidence-v1:f62ec04b071dc54dbfc1bdd6c44f5a418d570203cf31812a9db348059ac2db99\",\"EDGE\",\"canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f\"],\"value\":{\"evidenceId\":\"provider-evidence-v1:f62ec04b071dc54dbfc1bdd6c44f5a418d570203cf31812a9db348059ac2db99\",\"fact\":{\"factType\":\"EDGE\",\"id\":\"canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f\"}}}37:{\"count\":3,\"tag\":\"SUPPORT_CANDIDATE\"}806:{\"key\":[\"provider-evidence-v1:3e560c7e388bc9af57d1f0df7bc120dc63f963b7ae66ad8f3435919178b9a774\",\"NODE\",\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\"],\"value\":{\"candidate\":{\"confidence\":{\"method\":\"parser\",\"reasons\":[],\"score\":1},\"factKey\":\"node-fact-v1:9f87fdd184180db6f32fe351dc70bd34a7f1d2baebfa5f06eb7714f1cb1f3dc5\",\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\",\"kind\":\"MODULE\",\"name\":\"app.py\",\"qualifiedName\":\"app.py\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sourceRange\":null},\"canonicalFactId\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\",\"evidenceId\":\"provider-evidence-v1:3e560c7e388bc9af57d1f0df7bc120dc63f963b7ae66ad8f3435919178b9a774\",\"factType\":\"NODE\"}}1059:{\"key\":[\"provider-evidence-v1:67c5d5eb19460c19712256f8c2468fe6024dc841a52daead2855da4908625010\",\"EDGE\",\"canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b\"],\"value\":{\"candidate\":{\"confidence\":{\"method\":\"parser\",\"reasons\":[],\"score\":1},\"factKey\":\"edge-fact-v1:4a62f7e32fef238335777788b0a79f7ca94e221cf803955bce28151f1a3b608a\",\"id\":\"canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b\",\"kind\":\"IMPORT\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"source\":{\"factType\":\"NODE\",\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\"},\"sourceRange\":{\"endColumn\":15,\"endLine\":0,\"sourceFileId\":\"file:one\",\"startColumn\":7,\"startLine\":0},\"target\":{\"candidates\":[],\"originalHint\":\"pkg\",\"resolution\":\"UNRESOLVED\",\"state\":\"UNRESOLVED\"}},\"canonicalFactId\":\"canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b\",\"evidenceId\":\"provider-evidence-v1:67c5d5eb19460c19712256f8c2468fe6024dc841a52daead2855da4908625010\",\"factType\":\"EDGE\"}}1059:{\"key\":[\"provider-evidence-v1:f62ec04b071dc54dbfc1bdd6c44f5a418d570203cf31812a9db348059ac2db99\",\"EDGE\",\"canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f\"],\"value\":{\"candidate\":{\"confidence\":{\"method\":\"parser\",\"reasons\":[],\"score\":1},\"factKey\":\"edge-fact-v1:1a0f6116e03a3e0ec190dcae40a69e4c6dc7b8306c921c480ee61a134faefbb1\",\"id\":\"canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f\",\"kind\":\"REFERENCE\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"source\":{\"factType\":\"NODE\",\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\"},\"sourceRange\":{\"endColumn\":5,\"endLine\":1,\"sourceFileId\":\"file:one\",\"startColumn\":4,\"startLine\":1},\"target\":{\"candidates\":[],\"originalHint\":\"p\",\"resolution\":\"UNRESOLVED\",\"state\":\"UNRESOLVED\"}},\"canonicalFactId\":\"canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f\",\"evidenceId\":\"provider-evidence-v1:f62ec04b071dc54dbfc1bdd6c44f5a418d570203cf31812a9db348059ac2db99\",\"factType\":\"EDGE\"}}28:{\"count\":1,\"tag\":\"SNAPSHOT\"}468:{\"key\":[\"snapshot:one\"],\"value\":{\"capabilities\":[{\"coverage\":\"COMPLETE\",\"name\":\"FRAMEWORK_SYNTAX_OBSERVATION_V1\",\"support\":\"SUPPORTED\"},{\"coverage\":\"COMPLETE\",\"name\":\"PYTHON_SYNTAX_CODE_V1\",\"support\":\"SUPPORTED\"}],\"snapshot\":{\"id\":\"snapshot:one\",\"outcome\":\"SUCCEEDED\",\"providerId\":\"native\",\"providerVersion\":\"0.0.0\",\"repositoryId\":\"repo:one\",\"requestedRevisionFingerprint\":\"content:first\",\"requestedRevisionId\":\"revision:worktree\",\"runtimeVersion\":\"fixture-runtime\"}}}28:{\"count\":2,\"tag\":\"COVERAGE\"}249:{\"key\":[\"snapshot:one\",\"FRAMEWORK_SYNTAX_OBSERVATION_V1\",\"SOURCE\",\"file:one\",\"COMPLETE\"],\"value\":{\"capabilityName\":\"FRAMEWORK_SYNTAX_OBSERVATION_V1\",\"multiplicity\":1,\"providerSnapshotId\":\"snapshot:one\",\"sourceFileId\":\"file:one\",\"status\":\"COMPLETE\"}}229:{\"key\":[\"snapshot:one\",\"PYTHON_SYNTAX_CODE_V1\",\"SOURCE\",\"file:one\",\"COMPLETE\"],\"value\":{\"capabilityName\":\"PYTHON_SYNTAX_CODE_V1\",\"multiplicity\":1,\"providerSnapshotId\":\"snapshot:one\",\"sourceFileId\":\"file:one\",\"status\":\"COMPLETE\"}}",
+  "manifest": {
+    "schemaVersion": 1,
+    "parent": null,
+    "state": {
+      "basis": {
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "contentFingerprint": "content:first",
+        "codeActivationDigest": "3021c2cbb9f304f71165a914a9c02c5a413c3f91a27dc20e75a6871cecdee35a"
+      },
+      "repositoryLocatorDigest": "be4f443420f269e1872f380f6f29ebe00eb40b3be70bb3df08a27a9691b576ac",
+      "inventory": [
+        {
+          "id": "file:one",
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "path": "app.py",
+          "contentFingerprint": "sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "python",
+          "sensitivity": "INTERNAL"
+        }
+      ],
+      "contracts": [
+        {
+          "providerId": "native",
+          "extractor": "syntax-v1",
+          "normalizer": "fixture-v1",
+          "contract": "PYTHON_SYNTAX_CODE_V1",
+          "policy": "syntax-surface-support-v1"
+        }
+      ],
+      "units": [
+        {
+          "id": "history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802",
+          "providerId": "native",
+          "kind": "PYTHON_FILE",
+          "sourceFileIds": ["file:one"]
+        }
+      ],
+      "snapshots": [
+        {
+          "id": "snapshot:one",
+          "providerId": "native",
+          "providerVersion": "0.0.0",
+          "runtimeVersion": "fixture-runtime",
+          "startedAt": "2026-10-24T00:00:00.000Z",
+          "completedAt": "2026-10-24T00:00:00.003Z",
+          "repositoryId": "repo:one",
+          "requestedRevisionId": "revision:worktree",
+          "requestedRevisionFingerprint": "content:first",
+          "capabilities": [
+            {
+              "name": "PYTHON_SYNTAX_CODE_V1",
+              "support": "SUPPORTED",
+              "coverage": "COMPLETE"
+            },
+            {
+              "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+              "support": "SUPPORTED",
+              "coverage": "COMPLETE"
+            }
+          ],
+          "diagnostics": [],
+          "outcome": "SUCCEEDED"
+        }
+      ],
+      "nodes": [
+        {
+          "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+          "factKey": "node-fact-v1:9f87fdd184180db6f32fe351dc70bd34a7f1d2baebfa5f06eb7714f1cb1f3dc5",
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "name": "app.py",
+          "qualifiedName": "app.py",
+          "sourceRange": null,
+          "confidence": {
+            "score": 1,
+            "method": "parser",
+            "reasons": []
+          },
+          "kind": "MODULE"
+        }
+      ],
+      "edges": [
+        {
+          "id": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f",
+          "factKey": "edge-fact-v1:1a0f6116e03a3e0ec190dcae40a69e4c6dc7b8306c921c480ee61a134faefbb1",
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "kind": "REFERENCE",
+          "source": {
+            "factType": "NODE",
+            "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+          },
+          "target": {
+            "state": "UNRESOLVED",
+            "resolution": "UNRESOLVED",
+            "originalHint": "p",
+            "candidates": []
+          },
+          "sourceRange": {
+            "sourceFileId": "file:one",
+            "startLine": 1,
+            "startColumn": 4,
+            "endLine": 1,
+            "endColumn": 5
+          },
+          "confidence": {
+            "score": 1,
+            "method": "parser",
+            "reasons": []
+          }
+        },
+        {
+          "id": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b",
+          "factKey": "edge-fact-v1:4a62f7e32fef238335777788b0a79f7ca94e221cf803955bce28151f1a3b608a",
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "kind": "IMPORT",
+          "source": {
+            "factType": "NODE",
+            "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+          },
+          "target": {
+            "state": "UNRESOLVED",
+            "resolution": "UNRESOLVED",
+            "originalHint": "pkg",
+            "candidates": []
+          },
+          "sourceRange": {
+            "sourceFileId": "file:one",
+            "startLine": 0,
+            "startColumn": 7,
+            "endLine": 0,
+            "endColumn": 15
+          },
+          "confidence": {
+            "score": 1,
+            "method": "parser",
+            "reasons": []
+          }
+        }
+      ],
+      "supports": [
+        {
+          "factType": "EDGE",
+          "canonical": {
+            "confidence": {
+              "method": "parser",
+              "reasons": [],
+              "score": 1
+            },
+            "factKey": "edge-fact-v1:4a62f7e32fef238335777788b0a79f7ca94e221cf803955bce28151f1a3b608a",
+            "id": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b",
+            "kind": "IMPORT",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "source": {
+              "factType": "NODE",
+              "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+            },
+            "sourceRange": {
+              "endColumn": 15,
+              "endLine": 0,
+              "sourceFileId": "file:one",
+              "startColumn": 7,
+              "startLine": 0
+            },
+            "target": {
+              "candidates": [],
+              "originalHint": "pkg",
+              "resolution": "UNRESOLVED",
+              "state": "UNRESOLVED"
+            }
+          },
+          "evidence": {
+            "id": "provider-evidence-v1:67c5d5eb19460c19712256f8c2468fe6024dc841a52daead2855da4908625010",
+            "providerFact": {
+              "factType": "EDGE",
+              "providerFactId": "python-edge-v1:37bdc236f427d4e4dc22c574e10b48a36d14083aa7f3f4ae471776631d75fa67",
+              "providerId": "native"
+            },
+            "providerSnapshotId": "snapshot:one",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "status": "ACTIVE"
+          },
+          "binding": {
+            "canonicalFact": {
+              "factType": "EDGE",
+              "id": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b"
+            },
+            "evidenceId": "provider-evidence-v1:67c5d5eb19460c19712256f8c2468fe6024dc841a52daead2855da4908625010",
+            "providerFact": {
+              "factType": "EDGE",
+              "providerFactId": "python-edge-v1:37bdc236f427d4e4dc22c574e10b48a36d14083aa7f3f4ae471776631d75fa67",
+              "providerId": "native"
+            },
+            "providerSnapshotId": "snapshot:one"
+          },
+          "factEvidence": {
+            "evidenceId": "provider-evidence-v1:67c5d5eb19460c19712256f8c2468fe6024dc841a52daead2855da4908625010",
+            "fact": {
+              "factType": "EDGE",
+              "id": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b"
+            }
+          },
+          "dependencyUnitIds": [
+            "history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802"
+          ],
+          "valueDigest": "9385c46790615700a8c37d6bedac723beac8b7b729a9e284ae4a5cd8ed264346"
+        },
+        {
+          "factType": "EDGE",
+          "canonical": {
+            "confidence": {
+              "method": "parser",
+              "reasons": [],
+              "score": 1
+            },
+            "factKey": "edge-fact-v1:1a0f6116e03a3e0ec190dcae40a69e4c6dc7b8306c921c480ee61a134faefbb1",
+            "id": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f",
+            "kind": "REFERENCE",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "source": {
+              "factType": "NODE",
+              "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+            },
+            "sourceRange": {
+              "endColumn": 5,
+              "endLine": 1,
+              "sourceFileId": "file:one",
+              "startColumn": 4,
+              "startLine": 1
+            },
+            "target": {
+              "candidates": [],
+              "originalHint": "p",
+              "resolution": "UNRESOLVED",
+              "state": "UNRESOLVED"
+            }
+          },
+          "evidence": {
+            "id": "provider-evidence-v1:f62ec04b071dc54dbfc1bdd6c44f5a418d570203cf31812a9db348059ac2db99",
+            "providerFact": {
+              "factType": "EDGE",
+              "providerFactId": "python-edge-v1:778fbe8c61c6ddb3ac42c06c7d6014fd8a250b2b36c53529c4dad1a70fdef970",
+              "providerId": "native"
+            },
+            "providerSnapshotId": "snapshot:one",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "status": "ACTIVE"
+          },
+          "binding": {
+            "canonicalFact": {
+              "factType": "EDGE",
+              "id": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f"
+            },
+            "evidenceId": "provider-evidence-v1:f62ec04b071dc54dbfc1bdd6c44f5a418d570203cf31812a9db348059ac2db99",
+            "providerFact": {
+              "factType": "EDGE",
+              "providerFactId": "python-edge-v1:778fbe8c61c6ddb3ac42c06c7d6014fd8a250b2b36c53529c4dad1a70fdef970",
+              "providerId": "native"
+            },
+            "providerSnapshotId": "snapshot:one"
+          },
+          "factEvidence": {
+            "evidenceId": "provider-evidence-v1:f62ec04b071dc54dbfc1bdd6c44f5a418d570203cf31812a9db348059ac2db99",
+            "fact": {
+              "factType": "EDGE",
+              "id": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f"
+            }
+          },
+          "dependencyUnitIds": [
+            "history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802"
+          ],
+          "valueDigest": "38b06f943da7bed91ea6d61814614c52b05435b6f1fe2d8e0ca908afc2c95b48"
+        },
+        {
+          "factType": "NODE",
+          "canonical": {
+            "confidence": {
+              "method": "parser",
+              "reasons": [],
+              "score": 1
+            },
+            "factKey": "node-fact-v1:9f87fdd184180db6f32fe351dc70bd34a7f1d2baebfa5f06eb7714f1cb1f3dc5",
+            "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+            "kind": "MODULE",
+            "name": "app.py",
+            "qualifiedName": "app.py",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "sourceRange": null
+          },
+          "evidence": {
+            "id": "provider-evidence-v1:3e560c7e388bc9af57d1f0df7bc120dc63f963b7ae66ad8f3435919178b9a774",
+            "providerFact": {
+              "factType": "NODE",
+              "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb",
+              "providerId": "native"
+            },
+            "providerSnapshotId": "snapshot:one",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "status": "ACTIVE"
+          },
+          "binding": {
+            "canonicalFact": {
+              "factType": "NODE",
+              "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+            },
+            "evidenceId": "provider-evidence-v1:3e560c7e388bc9af57d1f0df7bc120dc63f963b7ae66ad8f3435919178b9a774",
+            "providerFact": {
+              "factType": "NODE",
+              "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb",
+              "providerId": "native"
+            },
+            "providerSnapshotId": "snapshot:one"
+          },
+          "factEvidence": {
+            "evidenceId": "provider-evidence-v1:3e560c7e388bc9af57d1f0df7bc120dc63f963b7ae66ad8f3435919178b9a774",
+            "fact": {
+              "factType": "NODE",
+              "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+            }
+          },
+          "dependencyUnitIds": [
+            "history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802"
+          ],
+          "valueDigest": "ba5a61549de8650dee23ee17800fdd2edc7f14a35382b2d047555f6b4c437c2b"
+        }
+      ],
+      "coverage": [
+        {
+          "unitId": "history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802",
+          "facet": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+          "originSnapshotId": "snapshot:one",
+          "coverage": "COMPLETE"
+        },
+        {
+          "unitId": "history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802",
+          "facet": "PYTHON_SYNTAX_CODE_V1",
+          "originSnapshotId": "snapshot:one",
+          "coverage": "COMPLETE"
+        }
+      ],
+      "syntaxOrigins": [
+        {
+          "id": "syntax-origin:26a100738c6f908e97c53c87c5488803effe43419c198446a800e8f45ef1ce13",
+          "unitId": "history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802",
+          "originSnapshotId": "snapshot:one",
+          "valueDigest": "26a100738c6f908e97c53c87c5488803effe43419c198446a800e8f45ef1ce13",
+          "basis": {
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "contentFingerprint": "content:first",
+            "codeActivationDigest": "3021c2cbb9f304f71165a914a9c02c5a413c3f91a27dc20e75a6871cecdee35a"
+          }
+        },
+        {
+          "id": "syntax-origin:36bbfb67e83ee588dfbdfae88c5cfc4f389089572e3272880b6bab3db064058e",
+          "unitId": "history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802",
+          "originSnapshotId": "snapshot:one",
+          "valueDigest": "36bbfb67e83ee588dfbdfae88c5cfc4f389089572e3272880b6bab3db064058e",
+          "basis": {
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "contentFingerprint": "content:first",
+            "codeActivationDigest": "3021c2cbb9f304f71165a914a9c02c5a413c3f91a27dc20e75a6871cecdee35a"
+          }
+        }
+      ]
+    },
+    "observation": {
+      "snapshotId": "snapshot:one",
+      "requestIdentity": "ff73f9e334fc3d90e0f71c998a249b18b1041b8645c544ef9222f56afb88a04b",
+      "outputIdentity": "843cb721824e208c23a52172abe57b4c1702642ac6f647e4456ad6ce34cab96c",
+      "javaProvenance": null,
+      "scope": {
+        "unitIds": [
+          "history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802"
+        ],
+        "removedSourceFileIds": []
+      },
+      "qualificationRef": "component-fixture:not-runtime-qualified"
+    },
+    "transitions": null,
+    "syntaxMembers": [
+      {
+        "originId": "syntax-origin:26a100738c6f908e97c53c87c5488803effe43419c198446a800e8f45ef1ce13",
+        "projectionId": "syntax:f48196c0ee1288fbc3c6638fe0c0d26f6097c778fd25ccb4e6d607bbe4bbadc5",
+        "unitId": "history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802"
+      },
+      {
+        "originId": "syntax-origin:36bbfb67e83ee588dfbdfae88c5cfc4f389089572e3272880b6bab3db064058e",
+        "projectionId": "syntax:8db0440e9ce36dc50775525305821226b0a1eb32382f9b90546914d78638117a",
+        "unitId": "history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802"
+      }
+    ],
+    "codeIdentity": "3021c2cbb9f304f71165a914a9c02c5a413c3f91a27dc20e75a6871cecdee35a",
+    "sourceIdentity": "cc0ecaaaa6b704961b2e286ece3eec7f2e0bbefc21d88b6f4592e2796af1fa73",
+    "originRegistryDigest": "bf343be61b7fe2e074b1a24d27e5c3801f49e4a514a02a8583692971ac587ee7"
+  },
+  "activationId": "activation:d4d5cdacd27ff6fdc6d856c6822663c5938ba689f1c9828d71fcb86c7c3c3b92",
+  "origins": [
+    {
+      "id": "syntax-origin:26a100738c6f908e97c53c87c5488803effe43419c198446a800e8f45ef1ce13",
+      "repository_id": "repo:one",
+      "revision_id": "revision:worktree",
+      "origin_snapshot_id": "snapshot:one",
+      "origin_digest": "26a100738c6f908e97c53c87c5488803effe43419c198446a800e8f45ef1ce13",
+      "origin_json": "{\"envelope\":{\"payload\":{\"confidence\":{\"method\":\"syntax-surface-support-v1\",\"reasons\":[\"DECLARED_SOURCE_CONTEXT_MATCHED\",\"SYNTAX_PAYLOAD_VALIDATED\",\"REQUIRED_SUPPORTS_CLOSED\",\"NON_EXACT_VALUE_REFERENCE_PRESERVED\"],\"score\":0.5},\"extractionVersion\":\"syntax-extraction-v1:a294595a10ef89fc89aa2fa923caf5e692ebf5b86e2a7c3ececfe2756b5dcfbc\",\"id\":\"syntax:0f0d1d5bedadd5fa2a9829e6ccfcc4bc974d84b22194f5136ee45b7551b9a3a0\",\"owner\":{\"entity\":{\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\",\"kind\":\"CODE_NODE\",\"revisionId\":\"revision:worktree\"},\"repositoryId\":\"repo:one\",\"scope\":\"REPOSITORY\"},\"payload\":{\"targetName\":\"p\",\"value\":{\"candidates\":[],\"kind\":\"REFERENCE\",\"name\":\"pkg\",\"resolution\":\"UNRESOLVED\"}},\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sourceFingerprint\":\"sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50\",\"sourceRange\":{\"endColumn\":15,\"endLine\":0,\"sourceFileId\":\"file:one\",\"startColumn\":7,\"startLine\":0},\"supportRefs\":[{\"basis\":{\"codeActivationDigest\":\"3021c2cbb9f304f71165a914a9c02c5a413c3f91a27dc20e75a6871cecdee35a\",\"contentFingerprint\":\"content:first\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\"},\"entity\":{\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\",\"kind\":\"CODE_NODE\",\"revisionId\":\"revision:worktree\"},\"valueDigest\":\"5f5a1d70c2e495c1a02acac4eacf28b73af6081f5acf0736ecab9db6eb49e330\"},{\"basis\":{\"codeActivationDigest\":\"3021c2cbb9f304f71165a914a9c02c5a413c3f91a27dc20e75a6871cecdee35a\",\"contentFingerprint\":\"content:first\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\"},\"entity\":{\"id\":\"file:one\",\"kind\":\"SOURCE_FILE\",\"revisionId\":\"revision:worktree\"},\"valueDigest\":\"f437fd4ed7110ca5b2493abdbfec53f42dbe689d54e09a78bab1c11e119da186\"}],\"syntaxKey\":\"syntax-key-v1:2ae55d76e5366c073fa095980413399d4cc53b8e9e548699cf911d9d65df5396\",\"syntaxKind\":\"ASSIGNMENT\"},\"schema\":\"codeatlas.syntax-evidence\",\"version\":1},\"originSnapshot\":{\"capabilities\":[{\"coverage\":\"COMPLETE\",\"name\":\"PYTHON_SYNTAX_CODE_V1\",\"support\":\"SUPPORTED\"},{\"coverage\":\"COMPLETE\",\"name\":\"FRAMEWORK_SYNTAX_OBSERVATION_V1\",\"support\":\"SUPPORTED\"}],\"completedAt\":\"2026-10-24T00:00:00.003Z\",\"diagnostics\":[],\"id\":\"snapshot:one\",\"outcome\":\"SUCCEEDED\",\"providerId\":\"native\",\"providerVersion\":\"0.0.0\",\"repositoryId\":\"repo:one\",\"requestedRevisionFingerprint\":\"content:first\",\"requestedRevisionId\":\"revision:worktree\",\"runtimeVersion\":\"fixture-runtime\",\"startedAt\":\"2026-10-24T00:00:00.000Z\"},\"providerSyntaxId\":\"python-syntax-v1:c328aab87bcc189e5124b10f4df68846ebbb0f010c92ab10efe4976b011d9e9b\",\"schemaVersion\":1,\"sourceFile\":{\"classification\":{\"contentKind\":\"TEXT\",\"provenance\":\"AUTHORED\",\"role\":\"SOURCE\"},\"contentFingerprint\":\"sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50\",\"id\":\"file:one\",\"languageHint\":\"python\",\"path\":\"app.py\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sensitivity\":\"INTERNAL\"},\"unitId\":\"history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802\"}"
+    },
+    {
+      "id": "syntax-origin:36bbfb67e83ee588dfbdfae88c5cfc4f389089572e3272880b6bab3db064058e",
+      "repository_id": "repo:one",
+      "revision_id": "revision:worktree",
+      "origin_snapshot_id": "snapshot:one",
+      "origin_digest": "36bbfb67e83ee588dfbdfae88c5cfc4f389089572e3272880b6bab3db064058e",
+      "origin_json": "{\"envelope\":{\"payload\":{\"confidence\":{\"method\":\"syntax-surface-support-v1\",\"reasons\":[\"DECLARED_SOURCE_CONTEXT_MATCHED\",\"SYNTAX_PAYLOAD_VALIDATED\",\"REQUIRED_SUPPORTS_CLOSED\",\"NON_EXACT_VALUE_REFERENCE_PRESERVED\"],\"score\":0.5},\"extractionVersion\":\"syntax-extraction-v1:a294595a10ef89fc89aa2fa923caf5e692ebf5b86e2a7c3ececfe2756b5dcfbc\",\"id\":\"syntax:5fd8f463d5fa3f966c163f09772e2da9097a657b79006118f3b48ce3d78b3a95\",\"owner\":{\"entity\":{\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\",\"kind\":\"CODE_NODE\",\"revisionId\":\"revision:worktree\"},\"repositoryId\":\"repo:one\",\"scope\":\"REPOSITORY\"},\"payload\":{\"targetName\":\"x\",\"value\":{\"candidates\":[],\"kind\":\"REFERENCE\",\"name\":\"p\",\"resolution\":\"UNRESOLVED\"}},\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sourceFingerprint\":\"sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50\",\"sourceRange\":{\"endColumn\":5,\"endLine\":1,\"sourceFileId\":\"file:one\",\"startColumn\":0,\"startLine\":1},\"supportRefs\":[{\"basis\":{\"codeActivationDigest\":\"3021c2cbb9f304f71165a914a9c02c5a413c3f91a27dc20e75a6871cecdee35a\",\"contentFingerprint\":\"content:first\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\"},\"entity\":{\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\",\"kind\":\"CODE_NODE\",\"revisionId\":\"revision:worktree\"},\"valueDigest\":\"5f5a1d70c2e495c1a02acac4eacf28b73af6081f5acf0736ecab9db6eb49e330\"},{\"basis\":{\"codeActivationDigest\":\"3021c2cbb9f304f71165a914a9c02c5a413c3f91a27dc20e75a6871cecdee35a\",\"contentFingerprint\":\"content:first\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\"},\"entity\":{\"id\":\"file:one\",\"kind\":\"SOURCE_FILE\",\"revisionId\":\"revision:worktree\"},\"valueDigest\":\"f437fd4ed7110ca5b2493abdbfec53f42dbe689d54e09a78bab1c11e119da186\"}],\"syntaxKey\":\"syntax-key-v1:8a144109b18053ce891b8c3555cb805bb4d18993842770768b7728df64c49f65\",\"syntaxKind\":\"ASSIGNMENT\"},\"schema\":\"codeatlas.syntax-evidence\",\"version\":1},\"originSnapshot\":{\"capabilities\":[{\"coverage\":\"COMPLETE\",\"name\":\"PYTHON_SYNTAX_CODE_V1\",\"support\":\"SUPPORTED\"},{\"coverage\":\"COMPLETE\",\"name\":\"FRAMEWORK_SYNTAX_OBSERVATION_V1\",\"support\":\"SUPPORTED\"}],\"completedAt\":\"2026-10-24T00:00:00.003Z\",\"diagnostics\":[],\"id\":\"snapshot:one\",\"outcome\":\"SUCCEEDED\",\"providerId\":\"native\",\"providerVersion\":\"0.0.0\",\"repositoryId\":\"repo:one\",\"requestedRevisionFingerprint\":\"content:first\",\"requestedRevisionId\":\"revision:worktree\",\"runtimeVersion\":\"fixture-runtime\",\"startedAt\":\"2026-10-24T00:00:00.000Z\"},\"providerSyntaxId\":\"python-syntax-v1:77e2f151a2fce77c4b023ae5f92d2038c8518c892aeec5dfe07e38871abd89c7\",\"schemaVersion\":1,\"sourceFile\":{\"classification\":{\"contentKind\":\"TEXT\",\"provenance\":\"AUTHORED\",\"role\":\"SOURCE\"},\"contentFingerprint\":\"sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50\",\"id\":\"file:one\",\"languageHint\":\"python\",\"path\":\"app.py\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sensitivity\":\"INTERNAL\"},\"unitId\":\"history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802\"}"
+    }
+  ],
+  "projections": [
+    {
+      "id": "syntax:f48196c0ee1288fbc3c6638fe0c0d26f6097c778fd25ccb4e6d607bbe4bbadc5",
+      "repository_id": "repo:one",
+      "origin_id": "syntax-origin:26a100738c6f908e97c53c87c5488803effe43419c198446a800e8f45ef1ce13",
+      "projection_digest": "f48196c0ee1288fbc3c6638fe0c0d26f6097c778fd25ccb4e6d607bbe4bbadc5",
+      "envelope_json": "{\"payload\":{\"confidence\":{\"method\":\"syntax-surface-support-v1\",\"reasons\":[\"DECLARED_SOURCE_CONTEXT_MATCHED\",\"SYNTAX_PAYLOAD_VALIDATED\",\"REQUIRED_SUPPORTS_CLOSED\",\"NON_EXACT_VALUE_REFERENCE_PRESERVED\"],\"score\":0.5},\"extractionVersion\":\"syntax-extraction-v1:a294595a10ef89fc89aa2fa923caf5e692ebf5b86e2a7c3ececfe2756b5dcfbc\",\"id\":\"syntax:f48196c0ee1288fbc3c6638fe0c0d26f6097c778fd25ccb4e6d607bbe4bbadc5\",\"owner\":{\"entity\":{\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\",\"kind\":\"CODE_NODE\",\"revisionId\":\"revision:worktree\"},\"repositoryId\":\"repo:one\",\"scope\":\"REPOSITORY\"},\"payload\":{\"targetName\":\"p\",\"value\":{\"candidates\":[],\"kind\":\"REFERENCE\",\"name\":\"pkg\",\"resolution\":\"UNRESOLVED\"}},\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sourceFingerprint\":\"sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50\",\"sourceRange\":{\"endColumn\":15,\"endLine\":0,\"sourceFileId\":\"file:one\",\"startColumn\":7,\"startLine\":0},\"supportRefs\":[{\"basis\":{\"codeActivationDigest\":\"3021c2cbb9f304f71165a914a9c02c5a413c3f91a27dc20e75a6871cecdee35a\",\"contentFingerprint\":\"content:first\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\"},\"entity\":{\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\",\"kind\":\"CODE_NODE\",\"revisionId\":\"revision:worktree\"},\"valueDigest\":\"5f5a1d70c2e495c1a02acac4eacf28b73af6081f5acf0736ecab9db6eb49e330\"},{\"basis\":{\"codeActivationDigest\":\"3021c2cbb9f304f71165a914a9c02c5a413c3f91a27dc20e75a6871cecdee35a\",\"contentFingerprint\":\"content:first\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\"},\"entity\":{\"id\":\"file:one\",\"kind\":\"SOURCE_FILE\",\"revisionId\":\"revision:worktree\"},\"valueDigest\":\"f437fd4ed7110ca5b2493abdbfec53f42dbe689d54e09a78bab1c11e119da186\"}],\"syntaxKey\":\"syntax-key-v1:2ae55d76e5366c073fa095980413399d4cc53b8e9e548699cf911d9d65df5396\",\"syntaxKind\":\"ASSIGNMENT\"},\"schema\":\"codeatlas.syntax-evidence\",\"version\":1}"
+    },
+    {
+      "id": "syntax:8db0440e9ce36dc50775525305821226b0a1eb32382f9b90546914d78638117a",
+      "repository_id": "repo:one",
+      "origin_id": "syntax-origin:36bbfb67e83ee588dfbdfae88c5cfc4f389089572e3272880b6bab3db064058e",
+      "projection_digest": "8db0440e9ce36dc50775525305821226b0a1eb32382f9b90546914d78638117a",
+      "envelope_json": "{\"payload\":{\"confidence\":{\"method\":\"syntax-surface-support-v1\",\"reasons\":[\"DECLARED_SOURCE_CONTEXT_MATCHED\",\"SYNTAX_PAYLOAD_VALIDATED\",\"REQUIRED_SUPPORTS_CLOSED\",\"NON_EXACT_VALUE_REFERENCE_PRESERVED\"],\"score\":0.5},\"extractionVersion\":\"syntax-extraction-v1:a294595a10ef89fc89aa2fa923caf5e692ebf5b86e2a7c3ececfe2756b5dcfbc\",\"id\":\"syntax:8db0440e9ce36dc50775525305821226b0a1eb32382f9b90546914d78638117a\",\"owner\":{\"entity\":{\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\",\"kind\":\"CODE_NODE\",\"revisionId\":\"revision:worktree\"},\"repositoryId\":\"repo:one\",\"scope\":\"REPOSITORY\"},\"payload\":{\"targetName\":\"x\",\"value\":{\"candidates\":[],\"kind\":\"REFERENCE\",\"name\":\"p\",\"resolution\":\"UNRESOLVED\"}},\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sourceFingerprint\":\"sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50\",\"sourceRange\":{\"endColumn\":5,\"endLine\":1,\"sourceFileId\":\"file:one\",\"startColumn\":0,\"startLine\":1},\"supportRefs\":[{\"basis\":{\"codeActivationDigest\":\"3021c2cbb9f304f71165a914a9c02c5a413c3f91a27dc20e75a6871cecdee35a\",\"contentFingerprint\":\"content:first\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\"},\"entity\":{\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\",\"kind\":\"CODE_NODE\",\"revisionId\":\"revision:worktree\"},\"valueDigest\":\"5f5a1d70c2e495c1a02acac4eacf28b73af6081f5acf0736ecab9db6eb49e330\"},{\"basis\":{\"codeActivationDigest\":\"3021c2cbb9f304f71165a914a9c02c5a413c3f91a27dc20e75a6871cecdee35a\",\"contentFingerprint\":\"content:first\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\"},\"entity\":{\"id\":\"file:one\",\"kind\":\"SOURCE_FILE\",\"revisionId\":\"revision:worktree\"},\"valueDigest\":\"f437fd4ed7110ca5b2493abdbfec53f42dbe689d54e09a78bab1c11e119da186\"}],\"syntaxKey\":\"syntax-key-v1:8a144109b18053ce891b8c3555cb805bb4d18993842770768b7728df64c49f65\",\"syntaxKind\":\"ASSIGNMENT\"},\"schema\":\"codeatlas.syntax-evidence\",\"version\":1}"
+    }
+  ],
+  "members": [
+    {
+      "originId": "syntax-origin:26a100738c6f908e97c53c87c5488803effe43419c198446a800e8f45ef1ce13",
+      "projectionId": "syntax:f48196c0ee1288fbc3c6638fe0c0d26f6097c778fd25ccb4e6d607bbe4bbadc5",
+      "unitId": "history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802"
+    },
+    {
+      "originId": "syntax-origin:36bbfb67e83ee588dfbdfae88c5cfc4f389089572e3272880b6bab3db064058e",
+      "projectionId": "syntax:8db0440e9ce36dc50775525305821226b0a1eb32382f9b90546914d78638117a",
+      "unitId": "history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802"
+    }
+  ],
+  "codeGroups": {
+    "HEADER": [
+      {
+        "committedSnapshotCount": 1,
+        "indexedContentFingerprint": "content:first",
+        "indexedRevisionId": "revision:worktree",
+        "repositoryId": "repo:one"
+      }
+    ],
+    "NODE": [
+      {
+        "confidence": {
+          "method": "parser",
+          "reasons": [],
+          "score": 1
+        },
+        "factKey": "node-fact-v1:9f87fdd184180db6f32fe351dc70bd34a7f1d2baebfa5f06eb7714f1cb1f3dc5",
+        "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+        "kind": "MODULE",
+        "name": "app.py",
+        "qualifiedName": "app.py",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "sourceRange": null
+      }
+    ],
+    "EDGE": [
+      {
+        "confidence": {
+          "method": "parser",
+          "reasons": [],
+          "score": 1
+        },
+        "factKey": "edge-fact-v1:1a0f6116e03a3e0ec190dcae40a69e4c6dc7b8306c921c480ee61a134faefbb1",
+        "id": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f",
+        "kind": "REFERENCE",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "source": {
+          "factType": "NODE",
+          "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+        },
+        "sourceRange": {
+          "endColumn": 5,
+          "endLine": 1,
+          "sourceFileId": "file:one",
+          "startColumn": 4,
+          "startLine": 1
+        },
+        "target": {
+          "candidates": [],
+          "originalHint": "p",
+          "resolution": "UNRESOLVED",
+          "state": "UNRESOLVED"
+        }
+      },
+      {
+        "confidence": {
+          "method": "parser",
+          "reasons": [],
+          "score": 1
+        },
+        "factKey": "edge-fact-v1:4a62f7e32fef238335777788b0a79f7ca94e221cf803955bce28151f1a3b608a",
+        "id": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b",
+        "kind": "IMPORT",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "source": {
+          "factType": "NODE",
+          "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+        },
+        "sourceRange": {
+          "endColumn": 15,
+          "endLine": 0,
+          "sourceFileId": "file:one",
+          "startColumn": 7,
+          "startLine": 0
+        },
+        "target": {
+          "candidates": [],
+          "originalHint": "pkg",
+          "resolution": "UNRESOLVED",
+          "state": "UNRESOLVED"
+        }
+      }
+    ],
+    "EVIDENCE": [
+      {
+        "id": "provider-evidence-v1:3e560c7e388bc9af57d1f0df7bc120dc63f963b7ae66ad8f3435919178b9a774",
+        "providerFact": {
+          "factType": "NODE",
+          "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb",
+          "providerId": "native"
+        },
+        "providerSnapshotId": "snapshot:one",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "status": "ACTIVE"
+      },
+      {
+        "id": "provider-evidence-v1:67c5d5eb19460c19712256f8c2468fe6024dc841a52daead2855da4908625010",
+        "providerFact": {
+          "factType": "EDGE",
+          "providerFactId": "python-edge-v1:37bdc236f427d4e4dc22c574e10b48a36d14083aa7f3f4ae471776631d75fa67",
+          "providerId": "native"
+        },
+        "providerSnapshotId": "snapshot:one",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "status": "ACTIVE"
+      },
+      {
+        "id": "provider-evidence-v1:f62ec04b071dc54dbfc1bdd6c44f5a418d570203cf31812a9db348059ac2db99",
+        "providerFact": {
+          "factType": "EDGE",
+          "providerFactId": "python-edge-v1:778fbe8c61c6ddb3ac42c06c7d6014fd8a250b2b36c53529c4dad1a70fdef970",
+          "providerId": "native"
+        },
+        "providerSnapshotId": "snapshot:one",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "status": "ACTIVE"
+      }
+    ],
+    "BINDING": [
+      {
+        "canonicalFact": {
+          "factType": "NODE",
+          "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+        },
+        "evidenceId": "provider-evidence-v1:3e560c7e388bc9af57d1f0df7bc120dc63f963b7ae66ad8f3435919178b9a774",
+        "providerFact": {
+          "factType": "NODE",
+          "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb",
+          "providerId": "native"
+        },
+        "providerSnapshotId": "snapshot:one"
+      },
+      {
+        "canonicalFact": {
+          "factType": "EDGE",
+          "id": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b"
+        },
+        "evidenceId": "provider-evidence-v1:67c5d5eb19460c19712256f8c2468fe6024dc841a52daead2855da4908625010",
+        "providerFact": {
+          "factType": "EDGE",
+          "providerFactId": "python-edge-v1:37bdc236f427d4e4dc22c574e10b48a36d14083aa7f3f4ae471776631d75fa67",
+          "providerId": "native"
+        },
+        "providerSnapshotId": "snapshot:one"
+      },
+      {
+        "canonicalFact": {
+          "factType": "EDGE",
+          "id": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f"
+        },
+        "evidenceId": "provider-evidence-v1:f62ec04b071dc54dbfc1bdd6c44f5a418d570203cf31812a9db348059ac2db99",
+        "providerFact": {
+          "factType": "EDGE",
+          "providerFactId": "python-edge-v1:778fbe8c61c6ddb3ac42c06c7d6014fd8a250b2b36c53529c4dad1a70fdef970",
+          "providerId": "native"
+        },
+        "providerSnapshotId": "snapshot:one"
+      }
+    ],
+    "FACT_EVIDENCE": [
+      {
+        "evidenceId": "provider-evidence-v1:3e560c7e388bc9af57d1f0df7bc120dc63f963b7ae66ad8f3435919178b9a774",
+        "fact": {
+          "factType": "NODE",
+          "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+        }
+      },
+      {
+        "evidenceId": "provider-evidence-v1:67c5d5eb19460c19712256f8c2468fe6024dc841a52daead2855da4908625010",
+        "fact": {
+          "factType": "EDGE",
+          "id": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b"
+        }
+      },
+      {
+        "evidenceId": "provider-evidence-v1:f62ec04b071dc54dbfc1bdd6c44f5a418d570203cf31812a9db348059ac2db99",
+        "fact": {
+          "factType": "EDGE",
+          "id": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f"
+        }
+      }
+    ],
+    "SUPPORT_CANDIDATE": [
+      {
+        "candidate": {
+          "confidence": {
+            "method": "parser",
+            "reasons": [],
+            "score": 1
+          },
+          "factKey": "node-fact-v1:9f87fdd184180db6f32fe351dc70bd34a7f1d2baebfa5f06eb7714f1cb1f3dc5",
+          "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+          "kind": "MODULE",
+          "name": "app.py",
+          "qualifiedName": "app.py",
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "sourceRange": null
+        },
+        "canonicalFactId": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+        "evidenceId": "provider-evidence-v1:3e560c7e388bc9af57d1f0df7bc120dc63f963b7ae66ad8f3435919178b9a774",
+        "factType": "NODE"
+      },
+      {
+        "candidate": {
+          "confidence": {
+            "method": "parser",
+            "reasons": [],
+            "score": 1
+          },
+          "factKey": "edge-fact-v1:4a62f7e32fef238335777788b0a79f7ca94e221cf803955bce28151f1a3b608a",
+          "id": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b",
+          "kind": "IMPORT",
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "source": {
+            "factType": "NODE",
+            "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+          },
+          "sourceRange": {
+            "endColumn": 15,
+            "endLine": 0,
+            "sourceFileId": "file:one",
+            "startColumn": 7,
+            "startLine": 0
+          },
+          "target": {
+            "candidates": [],
+            "originalHint": "pkg",
+            "resolution": "UNRESOLVED",
+            "state": "UNRESOLVED"
+          }
+        },
+        "canonicalFactId": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b",
+        "evidenceId": "provider-evidence-v1:67c5d5eb19460c19712256f8c2468fe6024dc841a52daead2855da4908625010",
+        "factType": "EDGE"
+      },
+      {
+        "candidate": {
+          "confidence": {
+            "method": "parser",
+            "reasons": [],
+            "score": 1
+          },
+          "factKey": "edge-fact-v1:1a0f6116e03a3e0ec190dcae40a69e4c6dc7b8306c921c480ee61a134faefbb1",
+          "id": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f",
+          "kind": "REFERENCE",
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "source": {
+            "factType": "NODE",
+            "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+          },
+          "sourceRange": {
+            "endColumn": 5,
+            "endLine": 1,
+            "sourceFileId": "file:one",
+            "startColumn": 4,
+            "startLine": 1
+          },
+          "target": {
+            "candidates": [],
+            "originalHint": "p",
+            "resolution": "UNRESOLVED",
+            "state": "UNRESOLVED"
+          }
+        },
+        "canonicalFactId": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f",
+        "evidenceId": "provider-evidence-v1:f62ec04b071dc54dbfc1bdd6c44f5a418d570203cf31812a9db348059ac2db99",
+        "factType": "EDGE"
+      }
+    ],
+    "SNAPSHOT": [
+      {
+        "capabilities": [
+          {
+            "coverage": "COMPLETE",
+            "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+            "support": "SUPPORTED"
+          },
+          {
+            "coverage": "COMPLETE",
+            "name": "PYTHON_SYNTAX_CODE_V1",
+            "support": "SUPPORTED"
+          }
+        ],
+        "snapshot": {
+          "id": "snapshot:one",
+          "outcome": "SUCCEEDED",
+          "providerId": "native",
+          "providerVersion": "0.0.0",
+          "repositoryId": "repo:one",
+          "requestedRevisionFingerprint": "content:first",
+          "requestedRevisionId": "revision:worktree",
+          "runtimeVersion": "fixture-runtime"
+        }
+      }
+    ],
+    "COVERAGE": [
+      {
+        "capabilityName": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+        "multiplicity": 1,
+        "providerSnapshotId": "snapshot:one",
+        "sourceFileId": "file:one",
+        "status": "COMPLETE"
+      },
+      {
+        "capabilityName": "PYTHON_SYNTAX_CODE_V1",
+        "multiplicity": 1,
+        "providerSnapshotId": "snapshot:one",
+        "sourceFileId": "file:one",
+        "status": "COMPLETE"
+      }
+    ]
+  }
+}

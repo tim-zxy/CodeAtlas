@@ -103,6 +103,11 @@ impl JavaAnalyzer {
         let mut collector = SymbolCollector::new(relative_path, source, max_result_bytes);
         collector.collect(root);
         if collector.over_budget {
+            #[cfg(test)]
+            eprintln!(
+                "AB_GUARD java.code.result_bytes current={} limit={}",
+                collector.result_bytes, collector.max_result_bytes
+            );
             return Err(AnalyzerError::ResourceLimit);
         }
         if exhausted() {

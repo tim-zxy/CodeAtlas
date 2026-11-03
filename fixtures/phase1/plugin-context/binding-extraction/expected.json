@@ -1,0 +1,1218 @@
+{
+  "binding": {
+    "java-type": {
+      "state": "BOUND",
+      "qualifiedName": "org.springframework.web.bind.annotation.GetMapping",
+      "support": ["import", "scope:module", "scope:type"]
+    },
+    "python-symbol-alias": {
+      "state": "BOUND",
+      "qualifiedName": "fastapi.FastAPI",
+      "support": ["import", "scope:module"]
+    },
+    "python-module": {
+      "state": "BOUND",
+      "qualifiedName": "fastapi.FastAPI",
+      "support": ["import", "scope:module"]
+    },
+    "python-dotted-module": {
+      "state": "UNPROVEN"
+    },
+    "python-dotted-shortcut-rejected": {
+      "state": "UNPROVEN"
+    },
+    "later-local": {
+      "state": "UNPROVEN"
+    },
+    "member-write": {
+      "state": "UNPROVEN"
+    },
+    "same-name-type": {
+      "state": "UNPROVEN"
+    },
+    "callee-HEURISTIC": {
+      "state": "UNPROVEN"
+    },
+    "callee-AMBIGUOUS": {
+      "state": "UNPROVEN"
+    },
+    "callee-UNSUPPORTED": {
+      "state": "UNPROVEN"
+    },
+    "JAVA_WILDCARD": {
+      "state": "UNPROVEN"
+    },
+    "JAVA_STATIC_WILDCARD": {
+      "state": "UNPROVEN"
+    },
+    "static-member-not-type": {
+      "state": "BOUND",
+      "qualifiedName": "p.Type.method",
+      "support": ["import", "scope:module", "scope:type"]
+    },
+    "effect-ITERATION_TARGET": {
+      "state": "UNPROVEN"
+    },
+    "effect-CONTEXT_TARGET": {
+      "state": "UNPROVEN"
+    },
+    "effect-EXCEPTION_TARGET": {
+      "state": "UNPROVEN"
+    },
+    "effect-PATTERN_TARGET": {
+      "state": "UNPROVEN"
+    },
+    "effect-WALRUS_TARGET": {
+      "state": "UNPROVEN"
+    },
+    "effect-UNBIND": {
+      "state": "UNPROVEN"
+    },
+    "effect-AUGMENT": {
+      "state": "UNPROVEN"
+    },
+    "effect-GLOBAL": {
+      "state": "UNPROVEN"
+    },
+    "relative": {
+      "state": "UNPROVEN"
+    },
+    "python-wildcard": {
+      "state": "UNPROVEN"
+    },
+    "partial-ancestor": {
+      "state": "UNPROVEN"
+    },
+    "typed-field": {
+      "state": "BOUND",
+      "qualifiedName": "org.springframework.data.mongodb.core.MongoTemplate",
+      "support": ["decl", "import", "scope:function", "scope:module", "scope:type"]
+    },
+    "explicit-this-field": {
+      "state": "BOUND",
+      "qualifiedName": "org.springframework.data.mongodb.core.MongoTemplate",
+      "support": ["decl", "import", "scope:function", "scope:module", "scope:type"]
+    },
+    "shadowed-field": {
+      "state": "UNPROVEN"
+    },
+    "generic-type": {
+      "state": "BOUND",
+      "qualifiedName": "org.springframework.data.mongodb.core.MongoTemplate",
+      "support": ["decl", "import", "scope:function", "scope:module", "scope:type"]
+    },
+    "python-dotted-same-root-alias": {
+      "state": "UNPROVEN"
+    },
+    "unresolved-with-candidates": {
+      "state": "UNPROVEN"
+    },
+    "conditional-import": {
+      "state": "UNPROVEN"
+    },
+    "receiver-callee-disagreement": {
+      "state": "UNPROVEN"
+    },
+    "heuristic-receiver": {
+      "state": "UNPROVEN"
+    },
+    "python-import-alias-coalescence": {
+      "state": "BOUND",
+      "qualifiedName": "fastapi.FastAPI",
+      "support": ["alias", "import", "scope:module"]
+    },
+    "python-import-alias-mismatch": {
+      "state": "UNPROVEN"
+    },
+    "nested-NONLOCAL-target": {
+      "state": "UNPROVEN"
+    },
+    "python-parameter-shadow": {
+      "state": "UNPROVEN"
+    },
+    "receiver-initialized": {
+      "state": "BOUND",
+      "qualifiedName": "org.springframework.data.mongodb.core.MongoTemplate",
+      "support": ["decl", "import", "init", "scope:function", "scope:module", "scope:type"]
+    },
+    "receiver-initialized-reverse": {
+      "state": "BOUND",
+      "qualifiedName": "org.springframework.data.mongodb.core.MongoTemplate",
+      "support": ["decl", "import", "init", "scope:function", "scope:module", "scope:type"]
+    },
+    "receiver-init-other-range": {
+      "state": "UNPROVEN"
+    },
+    "receiver-init-other-owner": {
+      "state": "UNPROVEN"
+    },
+    "receiver-init-other-scope": {
+      "state": "UNPROVEN"
+    },
+    "receiver-init-conditional": {
+      "state": "UNPROVEN"
+    },
+    "receiver-init-extra-write": {
+      "state": "UNPROVEN"
+    },
+    "receiver-init-extra-definition": {
+      "state": "UNPROVEN"
+    },
+    "receiver-init-partial": {
+      "state": "UNPROVEN"
+    },
+    "receiver-init-other-form": {
+      "state": "UNPROVEN"
+    },
+    "receiver-init-python": {
+      "state": "UNPROVEN"
+    },
+    "receiver-generic-qualified": {
+      "state": "BOUND",
+      "qualifiedName": "org.springframework.data.mongodb.core.MongoTemplate",
+      "support": ["decl", "import", "scope:function", "scope:module", "scope:type"]
+    },
+    "receiver-generic-initialized": {
+      "state": "BOUND",
+      "qualifiedName": "org.springframework.kafka.core.KafkaTemplate",
+      "support": ["decl", "import", "init", "scope:function", "scope:module", "scope:type"]
+    },
+    "receiver-generic-empty": {
+      "state": "UNPROVEN"
+    },
+    "receiver-generic-unclosed": {
+      "state": "UNPROVEN"
+    },
+    "receiver-generic-nested": {
+      "state": "UNPROVEN"
+    },
+    "receiver-generic-wildcard": {
+      "state": "UNPROVEN"
+    },
+    "receiver-generic-array": {
+      "state": "UNPROVEN"
+    },
+    "receiver-generic-var": {
+      "state": "UNPROVEN"
+    },
+    "receiver-generic-annotation": {
+      "state": "UNPROVEN"
+    },
+    "receiver-generic-intersection": {
+      "state": "UNPROVEN"
+    },
+    "receiver-generic-trailing": {
+      "state": "UNPROVEN"
+    },
+    "receiver-generic-empty-argument": {
+      "state": "UNPROVEN"
+    },
+    "receiver-generic-comment": {
+      "state": "UNPROVEN"
+    },
+    "receiver-generic-static-import": {
+      "state": "UNPROVEN"
+    }
+  },
+  "extraction": {
+    "spring-route": {
+      "proposals": [
+        {
+          "kind": "HTTP",
+          "direction": "PROVIDER",
+          "implementationRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:one",
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:function",
+              "revisionId": "revision:one"
+            }
+          },
+          "signature": {
+            "kind": "HTTP",
+            "method": "GET",
+            "pathSegments": [
+              {
+                "kind": "LITERAL",
+                "value": "x"
+              }
+            ],
+            "querySchemaRef": null,
+            "requestSchemaRef": null,
+            "responseSchemaRef": null,
+            "serviceHint": null
+          }
+        }
+      ],
+      "support": ["import", "scope:module", "scope:type", "site"],
+      "diagnostic": false
+    },
+    "spring-array": {
+      "proposals": [],
+      "support": [],
+      "diagnostic": true
+    },
+    "spring-conflict": {
+      "proposals": [],
+      "support": [],
+      "diagnostic": true
+    },
+    "spring-constraint": {
+      "proposals": [],
+      "support": [],
+      "diagnostic": true
+    },
+    "spring-dynamic": {
+      "proposals": [],
+      "support": [],
+      "diagnostic": true
+    },
+    "spring-trailing-slash": {
+      "proposals": [],
+      "support": [],
+      "diagnostic": true
+    },
+    "spring-wildcard": {
+      "proposals": [],
+      "support": [],
+      "diagnostic": true
+    },
+    "spring-encoded": {
+      "proposals": [],
+      "support": [],
+      "diagnostic": true
+    },
+    "spring-prefix": {
+      "proposals": [
+        {
+          "kind": "HTTP",
+          "direction": "PROVIDER",
+          "implementationRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:one",
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:function",
+              "revisionId": "revision:one"
+            }
+          },
+          "signature": {
+            "kind": "HTTP",
+            "method": "GET",
+            "pathSegments": [
+              {
+                "kind": "LITERAL",
+                "value": "api"
+              },
+              {
+                "kind": "LITERAL",
+                "value": "x"
+              }
+            ],
+            "querySchemaRef": null,
+            "requestSchemaRef": null,
+            "responseSchemaRef": null,
+            "serviceHint": null
+          }
+        }
+      ],
+      "support": ["import", "prefix", "prefix-import", "scope:module", "scope:type", "site"],
+      "diagnostic": false
+    },
+    "spring-root": {
+      "proposals": [
+        {
+          "kind": "HTTP",
+          "direction": "PROVIDER",
+          "implementationRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:one",
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:function",
+              "revisionId": "revision:one"
+            }
+          },
+          "signature": {
+            "kind": "HTTP",
+            "method": "GET",
+            "pathSegments": [],
+            "querySchemaRef": null,
+            "requestSchemaRef": null,
+            "responseSchemaRef": null,
+            "serviceHint": null
+          }
+        }
+      ],
+      "support": ["import", "scope:module", "scope:type", "site"],
+      "diagnostic": false
+    },
+    "spring-parameter": {
+      "proposals": [
+        {
+          "kind": "HTTP",
+          "direction": "PROVIDER",
+          "implementationRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:one",
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:function",
+              "revisionId": "revision:one"
+            }
+          },
+          "signature": {
+            "kind": "HTTP",
+            "method": "GET",
+            "pathSegments": [
+              {
+                "kind": "LITERAL",
+                "value": "x"
+              },
+              {
+                "kind": "PARAMETER",
+                "name": "id"
+              }
+            ],
+            "querySchemaRef": null,
+            "requestSchemaRef": null,
+            "responseSchemaRef": null,
+            "serviceHint": null
+          }
+        }
+      ],
+      "support": ["import", "scope:module", "scope:type", "site"],
+      "diagnostic": false
+    },
+    "spring-cron": {
+      "proposals": [
+        {
+          "kind": "TASK",
+          "taskKind": "JOB",
+          "implementationRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:one",
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:function",
+              "revisionId": "revision:one"
+            }
+          },
+          "schedule": {
+            "kind": "OBJECT",
+            "entries": [
+              {
+                "name": "cron",
+                "value": {
+                  "kind": "STRING",
+                  "value": "0 * * * * *"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "support": ["import", "scope:module", "scope:type", "site"],
+      "diagnostic": false
+    },
+    "spring-cron-placeholder": {
+      "proposals": [],
+      "support": [],
+      "diagnostic": true
+    },
+    "spring-fake-annotation": {
+      "proposals": [],
+      "support": [],
+      "diagnostic": false
+    },
+    "mongo-read": {
+      "proposals": [
+        {
+          "kind": "DATA_OPERATION",
+          "resourceKind": "MONGODB_COLLECTION",
+          "logicalName": "items",
+          "namespace": null,
+          "implementationRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:one",
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:function",
+              "revisionId": "revision:one"
+            }
+          },
+          "operation": "READ",
+          "handlerRef": null
+        },
+        {
+          "kind": "DATA_RESOURCE",
+          "resourceKind": "MONGODB_COLLECTION",
+          "logicalName": "items",
+          "namespace": null,
+          "schemaRef": null
+        }
+      ],
+      "support": ["decl", "import", "scope:function", "scope:module", "scope:type", "site"],
+      "diagnostic": false
+    },
+    "mongo-write": {
+      "proposals": [
+        {
+          "kind": "DATA_OPERATION",
+          "resourceKind": "MONGODB_COLLECTION",
+          "logicalName": "items",
+          "namespace": null,
+          "implementationRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:one",
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:function",
+              "revisionId": "revision:one"
+            }
+          },
+          "operation": "WRITE",
+          "handlerRef": null
+        },
+        {
+          "kind": "DATA_RESOURCE",
+          "resourceKind": "MONGODB_COLLECTION",
+          "logicalName": "items",
+          "namespace": null,
+          "schemaRef": null
+        }
+      ],
+      "support": ["decl", "import", "scope:function", "scope:module", "scope:type", "site"],
+      "diagnostic": false
+    },
+    "mongo-dynamic": {
+      "proposals": [],
+      "support": [],
+      "diagnostic": true
+    },
+    "mongo-watch": {
+      "proposals": [],
+      "support": [],
+      "diagnostic": true
+    },
+    "mongo-wrong-type": {
+      "proposals": [],
+      "support": [],
+      "diagnostic": true
+    },
+    "kafka-listener": {
+      "proposals": [
+        {
+          "kind": "MESSAGE",
+          "implementationRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:one",
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:function",
+              "revisionId": "revision:one"
+            }
+          },
+          "signature": {
+            "kind": "MESSAGE",
+            "transport": "KAFKA",
+            "namespace": null,
+            "channel": "orders",
+            "role": "CONSUMER",
+            "payloadSchemaRef": null,
+            "keySchemaRef": null
+          }
+        }
+      ],
+      "support": ["import", "scope:module", "scope:type", "site"],
+      "diagnostic": false
+    },
+    "kafka-topics": {
+      "proposals": [
+        {
+          "kind": "MESSAGE",
+          "implementationRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:one",
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:function",
+              "revisionId": "revision:one"
+            }
+          },
+          "signature": {
+            "kind": "MESSAGE",
+            "transport": "KAFKA",
+            "namespace": null,
+            "channel": "orders",
+            "role": "CONSUMER",
+            "payloadSchemaRef": null,
+            "keySchemaRef": null
+          }
+        },
+        {
+          "kind": "MESSAGE",
+          "implementationRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:one",
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:function",
+              "revisionId": "revision:one"
+            }
+          },
+          "signature": {
+            "kind": "MESSAGE",
+            "transport": "KAFKA",
+            "namespace": null,
+            "channel": "audit",
+            "role": "CONSUMER",
+            "payloadSchemaRef": null,
+            "keySchemaRef": null
+          }
+        }
+      ],
+      "support": ["import", "scope:module", "scope:type", "site"],
+      "diagnostic": false
+    },
+    "kafka-placeholder": {
+      "proposals": [],
+      "support": [],
+      "diagnostic": true
+    },
+    "kafka-pattern": {
+      "proposals": [],
+      "support": [],
+      "diagnostic": true
+    },
+    "kafka-send": {
+      "proposals": [
+        {
+          "kind": "MESSAGE",
+          "implementationRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:one",
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:function",
+              "revisionId": "revision:one"
+            }
+          },
+          "signature": {
+            "kind": "MESSAGE",
+            "transport": "KAFKA",
+            "namespace": null,
+            "channel": "orders",
+            "role": "PRODUCER",
+            "payloadSchemaRef": null,
+            "keySchemaRef": null
+          }
+        }
+      ],
+      "support": ["decl", "import", "scope:function", "scope:module", "scope:type", "site"],
+      "diagnostic": false
+    },
+    "kafka-send-default": {
+      "proposals": [],
+      "support": [],
+      "diagnostic": true
+    },
+    "fastapi-direct": {
+      "proposals": [
+        {
+          "kind": "HTTP",
+          "direction": "PROVIDER",
+          "implementationRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:one",
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:function",
+              "revisionId": "revision:one"
+            }
+          },
+          "signature": {
+            "kind": "HTTP",
+            "method": "GET",
+            "pathSegments": [
+              {
+                "kind": "LITERAL",
+                "value": "x"
+              }
+            ],
+            "querySchemaRef": null,
+            "requestSchemaRef": null,
+            "responseSchemaRef": null,
+            "serviceHint": null
+          }
+        }
+      ],
+      "support": ["app-assign", "app-ctor", "import", "scope:module", "site"],
+      "diagnostic": false
+    },
+    "fastapi-router": {
+      "proposals": [
+        {
+          "kind": "HTTP",
+          "direction": "PROVIDER",
+          "implementationRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:one",
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:function",
+              "revisionId": "revision:one"
+            }
+          },
+          "signature": {
+            "kind": "HTTP",
+            "method": "GET",
+            "pathSegments": [
+              {
+                "kind": "LITERAL",
+                "value": "api"
+              },
+              {
+                "kind": "LITERAL",
+                "value": "v1"
+              },
+              {
+                "kind": "LITERAL",
+                "value": "x"
+              }
+            ],
+            "querySchemaRef": null,
+            "requestSchemaRef": null,
+            "responseSchemaRef": null,
+            "serviceHint": null
+          }
+        }
+      ],
+      "support": [
+        "app-assign",
+        "app-ctor",
+        "import",
+        "include",
+        "router-assign",
+        "router-ctor",
+        "router-import",
+        "scope:module",
+        "site"
+      ],
+      "diagnostic": false
+    },
+    "fastapi-unregistered": {
+      "proposals": [],
+      "support": [],
+      "diagnostic": true
+    },
+    "fastapi-early-include": {
+      "proposals": [],
+      "support": [],
+      "diagnostic": true
+    },
+    "fastapi-multiple-include": {
+      "proposals": [],
+      "support": [],
+      "diagnostic": true
+    },
+    "fastapi-reassign": {
+      "proposals": [],
+      "support": [],
+      "diagnostic": true
+    },
+    "fastapi-member-write": {
+      "proposals": [],
+      "support": [],
+      "diagnostic": true
+    },
+    "fastapi-conditional": {
+      "proposals": [],
+      "support": [],
+      "diagnostic": true
+    },
+    "fastapi-depends-unsupported": {
+      "proposals": [],
+      "support": [],
+      "diagnostic": true
+    },
+    "spring-static-member-annotation": {
+      "proposals": [],
+      "support": [],
+      "diagnostic": true
+    },
+    "kafka-static-member-annotation": {
+      "proposals": [],
+      "support": [],
+      "diagnostic": true
+    },
+    "fastapi-ambiguous-extra-include": {
+      "proposals": [],
+      "support": [],
+      "diagnostic": true
+    },
+    "fastapi-unknown-wrapper": {
+      "proposals": [],
+      "support": [],
+      "diagnostic": true
+    },
+    "mongo-read-findOne-variant": {
+      "proposals": [
+        {
+          "kind": "DATA_OPERATION",
+          "resourceKind": "MONGODB_COLLECTION",
+          "logicalName": "items",
+          "namespace": null,
+          "implementationRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:one",
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:function",
+              "revisionId": "revision:one"
+            }
+          },
+          "operation": "READ",
+          "handlerRef": null
+        },
+        {
+          "kind": "DATA_RESOURCE",
+          "resourceKind": "MONGODB_COLLECTION",
+          "logicalName": "items",
+          "namespace": null,
+          "schemaRef": null
+        }
+      ],
+      "support": ["decl", "import", "scope:function", "scope:module", "scope:type", "site"],
+      "diagnostic": false
+    },
+    "mongo-read-findAll-variant": {
+      "proposals": [
+        {
+          "kind": "DATA_OPERATION",
+          "resourceKind": "MONGODB_COLLECTION",
+          "logicalName": "items",
+          "namespace": null,
+          "implementationRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:one",
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:function",
+              "revisionId": "revision:one"
+            }
+          },
+          "operation": "READ",
+          "handlerRef": null
+        },
+        {
+          "kind": "DATA_RESOURCE",
+          "resourceKind": "MONGODB_COLLECTION",
+          "logicalName": "items",
+          "namespace": null,
+          "schemaRef": null
+        }
+      ],
+      "support": ["decl", "import", "scope:function", "scope:module", "scope:type", "site"],
+      "diagnostic": false
+    },
+    "mongo-write-insert-variant": {
+      "proposals": [
+        {
+          "kind": "DATA_OPERATION",
+          "resourceKind": "MONGODB_COLLECTION",
+          "logicalName": "items",
+          "namespace": null,
+          "implementationRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:one",
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:function",
+              "revisionId": "revision:one"
+            }
+          },
+          "operation": "WRITE",
+          "handlerRef": null
+        },
+        {
+          "kind": "DATA_RESOURCE",
+          "resourceKind": "MONGODB_COLLECTION",
+          "logicalName": "items",
+          "namespace": null,
+          "schemaRef": null
+        }
+      ],
+      "support": ["decl", "import", "scope:function", "scope:module", "scope:type", "site"],
+      "diagnostic": false
+    },
+    "kafka-send-send-variant": {
+      "proposals": [
+        {
+          "kind": "MESSAGE",
+          "implementationRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:one",
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:function",
+              "revisionId": "revision:one"
+            }
+          },
+          "signature": {
+            "kind": "MESSAGE",
+            "transport": "KAFKA",
+            "namespace": null,
+            "channel": "orders",
+            "role": "PRODUCER",
+            "payloadSchemaRef": null,
+            "keySchemaRef": null
+          }
+        }
+      ],
+      "support": ["decl", "import", "scope:function", "scope:module", "scope:type", "site"],
+      "diagnostic": false
+    },
+    "fastapi-post": {
+      "proposals": [
+        {
+          "kind": "HTTP",
+          "direction": "PROVIDER",
+          "implementationRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:one",
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:function",
+              "revisionId": "revision:one"
+            }
+          },
+          "signature": {
+            "kind": "HTTP",
+            "method": "POST",
+            "pathSegments": [
+              {
+                "kind": "LITERAL",
+                "value": "x"
+              }
+            ],
+            "querySchemaRef": null,
+            "requestSchemaRef": null,
+            "responseSchemaRef": null,
+            "serviceHint": null
+          }
+        }
+      ],
+      "support": ["app-assign", "app-ctor", "import", "scope:module", "site"],
+      "diagnostic": false
+    },
+    "fastapi-put": {
+      "proposals": [
+        {
+          "kind": "HTTP",
+          "direction": "PROVIDER",
+          "implementationRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:one",
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:function",
+              "revisionId": "revision:one"
+            }
+          },
+          "signature": {
+            "kind": "HTTP",
+            "method": "PUT",
+            "pathSegments": [
+              {
+                "kind": "LITERAL",
+                "value": "x"
+              }
+            ],
+            "querySchemaRef": null,
+            "requestSchemaRef": null,
+            "responseSchemaRef": null,
+            "serviceHint": null
+          }
+        }
+      ],
+      "support": ["app-assign", "app-ctor", "import", "scope:module", "site"],
+      "diagnostic": false
+    },
+    "fastapi-delete": {
+      "proposals": [
+        {
+          "kind": "HTTP",
+          "direction": "PROVIDER",
+          "implementationRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:one",
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:function",
+              "revisionId": "revision:one"
+            }
+          },
+          "signature": {
+            "kind": "HTTP",
+            "method": "DELETE",
+            "pathSegments": [
+              {
+                "kind": "LITERAL",
+                "value": "x"
+              }
+            ],
+            "querySchemaRef": null,
+            "requestSchemaRef": null,
+            "responseSchemaRef": null,
+            "serviceHint": null
+          }
+        }
+      ],
+      "support": ["app-assign", "app-ctor", "import", "scope:module", "site"],
+      "diagnostic": false
+    },
+    "fastapi-patch": {
+      "proposals": [
+        {
+          "kind": "HTTP",
+          "direction": "PROVIDER",
+          "implementationRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:one",
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:function",
+              "revisionId": "revision:one"
+            }
+          },
+          "signature": {
+            "kind": "HTTP",
+            "method": "PATCH",
+            "pathSegments": [
+              {
+                "kind": "LITERAL",
+                "value": "x"
+              }
+            ],
+            "querySchemaRef": null,
+            "requestSchemaRef": null,
+            "responseSchemaRef": null,
+            "serviceHint": null
+          }
+        }
+      ],
+      "support": ["app-assign", "app-ctor", "import", "scope:module", "site"],
+      "diagnostic": false
+    },
+    "fastapi-options": {
+      "proposals": [
+        {
+          "kind": "HTTP",
+          "direction": "PROVIDER",
+          "implementationRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:one",
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:function",
+              "revisionId": "revision:one"
+            }
+          },
+          "signature": {
+            "kind": "HTTP",
+            "method": "OPTIONS",
+            "pathSegments": [
+              {
+                "kind": "LITERAL",
+                "value": "x"
+              }
+            ],
+            "querySchemaRef": null,
+            "requestSchemaRef": null,
+            "responseSchemaRef": null,
+            "serviceHint": null
+          }
+        }
+      ],
+      "support": ["app-assign", "app-ctor", "import", "scope:module", "site"],
+      "diagnostic": false
+    },
+    "fastapi-head": {
+      "proposals": [
+        {
+          "kind": "HTTP",
+          "direction": "PROVIDER",
+          "implementationRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:one",
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:function",
+              "revisionId": "revision:one"
+            }
+          },
+          "signature": {
+            "kind": "HTTP",
+            "method": "HEAD",
+            "pathSegments": [
+              {
+                "kind": "LITERAL",
+                "value": "x"
+              }
+            ],
+            "querySchemaRef": null,
+            "requestSchemaRef": null,
+            "responseSchemaRef": null,
+            "serviceHint": null
+          }
+        }
+      ],
+      "support": ["app-assign", "app-ctor", "import", "scope:module", "site"],
+      "diagnostic": false
+    },
+    "spring-PostMapping": {
+      "proposals": [
+        {
+          "kind": "HTTP",
+          "direction": "PROVIDER",
+          "implementationRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:one",
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:function",
+              "revisionId": "revision:one"
+            }
+          },
+          "signature": {
+            "kind": "HTTP",
+            "method": "POST",
+            "pathSegments": [
+              {
+                "kind": "LITERAL",
+                "value": "x"
+              }
+            ],
+            "querySchemaRef": null,
+            "requestSchemaRef": null,
+            "responseSchemaRef": null,
+            "serviceHint": null
+          }
+        }
+      ],
+      "support": ["import", "scope:module", "scope:type", "site"],
+      "diagnostic": false
+    },
+    "spring-PutMapping": {
+      "proposals": [
+        {
+          "kind": "HTTP",
+          "direction": "PROVIDER",
+          "implementationRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:one",
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:function",
+              "revisionId": "revision:one"
+            }
+          },
+          "signature": {
+            "kind": "HTTP",
+            "method": "PUT",
+            "pathSegments": [
+              {
+                "kind": "LITERAL",
+                "value": "x"
+              }
+            ],
+            "querySchemaRef": null,
+            "requestSchemaRef": null,
+            "responseSchemaRef": null,
+            "serviceHint": null
+          }
+        }
+      ],
+      "support": ["import", "scope:module", "scope:type", "site"],
+      "diagnostic": false
+    },
+    "spring-DeleteMapping": {
+      "proposals": [
+        {
+          "kind": "HTTP",
+          "direction": "PROVIDER",
+          "implementationRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:one",
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:function",
+              "revisionId": "revision:one"
+            }
+          },
+          "signature": {
+            "kind": "HTTP",
+            "method": "DELETE",
+            "pathSegments": [
+              {
+                "kind": "LITERAL",
+                "value": "x"
+              }
+            ],
+            "querySchemaRef": null,
+            "requestSchemaRef": null,
+            "responseSchemaRef": null,
+            "serviceHint": null
+          }
+        }
+      ],
+      "support": ["import", "scope:module", "scope:type", "site"],
+      "diagnostic": false
+    },
+    "spring-PatchMapping": {
+      "proposals": [
+        {
+          "kind": "HTTP",
+          "direction": "PROVIDER",
+          "implementationRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:one",
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:function",
+              "revisionId": "revision:one"
+            }
+          },
+          "signature": {
+            "kind": "HTTP",
+            "method": "PATCH",
+            "pathSegments": [
+              {
+                "kind": "LITERAL",
+                "value": "x"
+              }
+            ],
+            "querySchemaRef": null,
+            "requestSchemaRef": null,
+            "responseSchemaRef": null,
+            "serviceHint": null
+          }
+        }
+      ],
+      "support": ["import", "scope:module", "scope:type", "site"],
+      "diagnostic": false
+    },
+    "spring-positional-cron": {
+      "proposals": [],
+      "support": [],
+      "diagnostic": true
+    },
+    "kafka-positional-topics": {
+      "proposals": [],
+      "support": [],
+      "diagnostic": true
+    }
+  }
+}

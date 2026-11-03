@@ -1,0 +1,70 @@
+{
+  "kind": "MAPPING_PROJECTION_EXPECTATION",
+  "semanticDisposition": "PROJECTABLE_WITHOUT_POLICY",
+  "projection": {
+    "repositoryId": "repo-fixture",
+    "revisionId": "rev-a",
+    "sourceFileId": "source-fixture",
+    "sourceFingerprint": "9e3012e6aaee68ca614e04a2aad0097292c86ef767f320fc61445527f910e69e",
+    "sourceRange": {
+      "sourceFileId": "source-fixture",
+      "startLine": 1,
+      "startColumn": 0,
+      "endLine": 1,
+      "endColumn": 15
+    },
+    "syntaxKind": "INVOCATION",
+    "owner": {
+      "scope": "REPOSITORY",
+      "repositoryId": "repo-fixture",
+      "entity": {
+        "kind": "CODE_NODE",
+        "id": "node-owner",
+        "revisionId": "rev-a"
+      }
+    },
+    "payload": {
+      "callee": {
+        "state": "NON_RESOLVED",
+        "name": "FastAPI",
+        "target": null,
+        "candidates": []
+      },
+      "receiver": null,
+      "arguments": []
+    }
+  },
+  "requiredEntities": [
+    {
+      "kind": "SOURCE_FILE",
+      "id": "source-fixture",
+      "revisionId": "rev-a"
+    },
+    {
+      "kind": "CODE_NODE",
+      "id": "node-owner",
+      "revisionId": "rev-a"
+    }
+  ],
+  "keyMeaning": {
+    "owner": {
+      "kind": "CODE_NODE",
+      "id": "node-owner"
+    },
+    "payload": {
+      "callee": {
+        "state": "NON_RESOLVED",
+        "name": "FastAPI",
+        "target": null,
+        "candidates": []
+      },
+      "receiver": null,
+      "arguments": []
+    }
+  },
+  "admission": "BLOCKED_POLICY",
+  "canonicalEnvelope": null,
+  "keyCanonicalText": "{\"owner\":{\"id\":\"node-owner\",\"kind\":\"CODE_NODE\"},\"payload\":{\"arguments\":[],\"callee\":{\"candidates\":[],\"name\":\"FastAPI\",\"state\":\"NON_RESOLVED\",\"target\":null},\"receiver\":null}}",
+  "payloadDigest": "66cacbfbf1b0ef852813543d91254e33a3e70ca1262aa8f3dedf5823e4fe40a2",
+  "syntaxKey": "syntax-key-v1:bf6c91179692685d6737033466e3b69f204ef273700325a710558e4381d9aedc"
+}

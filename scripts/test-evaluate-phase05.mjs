@@ -22,7 +22,10 @@ import { DatabaseSync } from 'node:sqlite';
 import { RepositorySourceStateStore } from '../packages/storage/dist/index.js';
 import { createQueryControl } from '../packages/application/dist/index.js';
 import { readEvaluationStateRows } from '../packages/storage/dist/analysis/evaluation-state.js';
-import { withCodeQueryDatabase } from '../packages/storage/test/helpers/code-query-fixture.mjs';
+import { withCodeQueryDatabase as withQueryFixture } from '../packages/storage/test/helpers/code-query-fixture.mjs';
+// Keep the original Phase0.5 R010 Evaluation reader contract; do not widen production schema admission.
+const withCodeQueryDatabase = (t, scenario, callback) =>
+  withQueryFixture(t, scenario, callback, 10);
 
 const helperURL = new URL('./helpers/phase05-evaluation-fixture.mjs', import.meta.url);
 let helper;

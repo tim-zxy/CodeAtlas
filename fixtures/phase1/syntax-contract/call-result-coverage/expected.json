@@ -1,0 +1,81 @@
+{
+  "cases": {
+    "direct": {
+      "v6": "SUCCEEDED",
+      "legacy": "NOT_SUCCEEDED",
+      "callResult": "UNKNOWN"
+    },
+    "wrapped": {
+      "v6": "SUCCEEDED",
+      "legacy": "NOT_SUCCEEDED",
+      "callResult": "UNKNOWN"
+    },
+    "argument-list": {
+      "v6": "SUCCEEDED",
+      "legacy": "NOT_SUCCEEDED",
+      "callResult": "UNKNOWN"
+    },
+    "mixed": {
+      "v6": "PARTIAL",
+      "legacy": "NOT_SUCCEEDED",
+      "callResult": "UNKNOWN"
+    },
+    "conditional": {
+      "v6": "PARTIAL",
+      "legacy": "NOT_SUCCEEDED",
+      "callResult": "UNKNOWN"
+    },
+    "parenthesized": {
+      "v6": "PARTIAL",
+      "legacy": "NOT_SUCCEEDED",
+      "callResult": "UNKNOWN"
+    },
+    "class": {
+      "v6": "PARTIAL",
+      "legacy": "NOT_SUCCEEDED",
+      "callResult": "UNKNOWN"
+    },
+    "wildcard": {
+      "v6": "PARTIAL",
+      "legacy": "NOT_SUCCEEDED",
+      "callResult": "UNKNOWN"
+    },
+    "syntax-error": {
+      "v6": "NOT_SUCCEEDED",
+      "legacy": "NOT_SUCCEEDED",
+      "callResult": "UNKNOWN"
+    },
+    "dynamic-callee": {
+      "v6": "PARTIAL",
+      "legacy": "NOT_SUCCEEDED",
+      "callResult": "UNKNOWN"
+    },
+    "splat": {
+      "v6": "PARTIAL",
+      "legacy": "NOT_SUCCEEDED",
+      "callResult": "UNKNOWN"
+    },
+    "escaped": {
+      "v6": "PARTIAL",
+      "legacy": "NOT_SUCCEEDED",
+      "callResult": "UNKNOWN"
+    },
+    "dictionary": {
+      "v6": "PARTIAL",
+      "legacy": "NOT_SUCCEEDED",
+      "callResult": "UNKNOWN"
+    }
+  },
+  "capture": {
+    "python-direct.py": {
+      "outcome": "SUCCEEDED",
+      "syntaxOutcome": "COMPLETE",
+      "codeOutcome": "COMPLETE"
+    },
+    "python-nested.py": {
+      "outcome": "PARTIAL",
+      "syntaxOutcome": "PARTIAL",
+      "codeOutcome": "COMPLETE"
+    }
+  }
+}

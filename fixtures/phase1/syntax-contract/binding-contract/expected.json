@@ -1,0 +1,62 @@
+{
+  "canonical": {
+    "direct": true,
+    "scope-null": true,
+    "missing-scope": false,
+    "old-envelope": false,
+    "extra-key": false,
+    "direct-null": false,
+    "foreign-value-file": false,
+    "value-outside": false,
+    "alias-with-range": false,
+    "alias": true,
+    "other": true,
+    "missing-scope-reference": false,
+    "missing-scope-value": false,
+    "scope-field": false,
+    "foreign-code-node": false,
+    "duplicate-code-node": false,
+    "foreign-scope-file": false,
+    "scope-without-range": false,
+    "workspace-scope": false,
+    "wrong-scope-kind": false,
+    "decoration": true,
+    "invocation": true,
+    "typed-binding": true,
+    "callable-return-type": true,
+    "typed-unknown": true,
+    "missing-declared-name": false,
+    "artifact": true
+  },
+  "raw": {
+    "direct": true,
+    "missing-scope": false,
+    "direct-null": false,
+    "alias": true,
+    "wrong-file": false,
+    "outside-range": false,
+    "extra-key": false,
+    "other": true,
+    "declaration": true,
+    "nameless-declaration": false
+  },
+  "requests": {
+    "v6": true,
+    "old-version": false,
+    "missing-selector": false,
+    "wrong-selector": false,
+    "unknown-field": false
+  },
+  "relations": {
+    "direct": true,
+    "wrapper-inner": false,
+    "conditional": false,
+    "parenthesized": false,
+    "await": false,
+    "alias": false,
+    "scope-null": false,
+    "different-extractor": false,
+    "different-fingerprint": false,
+    "different-scope": false
+  }
+}

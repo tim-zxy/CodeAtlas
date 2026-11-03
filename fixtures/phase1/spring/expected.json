@@ -1,0 +1,43 @@
+{
+  "policy": "runtime-declaration-support-v1",
+  "notClaimed": ["REAL_NATIVE", "DEPLOYMENT", "EVALUATION_BASELINE"],
+  "cases": [
+    {
+      "name": "spring-route",
+      "bindings": [],
+      "domainIds": ["runtime:02d05f1396ea5a4b864f2cc66ceace81dc407a6df18373b3e20b9bad784edb36"],
+      "entries": 1
+    },
+    {
+      "name": "spring-prefix",
+      "bindings": [],
+      "domainIds": ["runtime:f43b8bbb368aabc5599d68876113d61114c52ef92b3edefdc614d1f7ba8af1ac"],
+      "entries": 1
+    },
+    {
+      "name": "spring-cron",
+      "bindings": [],
+      "domainIds": ["runtime:ca12868e55d1123404fea22b9dda00fa3ee1c1445a9e56e8f9b61e61e9b9aded"],
+      "entries": 1
+    },
+    {
+      "name": "spring-dynamic",
+      "bindings": [],
+      "domainIds": [],
+      "entries": 0
+    },
+    {
+      "name": "spring-feign",
+      "domainIds": ["runtime:c00cd8235b7470d05873872e58cb6cdeb459d3b6ca770aecae752fadbf5c8f05"],
+      "entries": 0,
+      "bindings": [
+        {
+          "kind": "HTTP_CALL",
+          "targetId": "runtime:c00cd8235b7470d05873872e58cb6cdeb459d3b6ca770aecae752fadbf5c8f05",
+          "factKey": "framework-binding:bd1deeebac7adb33448d6fdee0fd8061c4cf702f2a236f859be0feb56750b630",
+          "id": "binding:09edae3c9dea534e084df1d2efaea2ff02461cd859b95a4c27847f5646197960"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "envelope": {
+    "schema": "codeatlas.syntax-evidence",
+    "version": 1,
+    "payload": {
+      "id": "syntax:2d7fb104f5e0d4bf07a81ee153a759a4af2027f68ccbc5915001cf2bf7047ec9",
+      "repositoryId": "repo-fixture",
+      "revisionId": "rev-a",
+      "sourceFingerprint": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+      "sourceRange": {
+        "sourceFileId": "source-fixture",
+        "startLine": 1,
+        "startColumn": 0,
+        "endLine": 1,
+        "endColumn": 5
+      },
+      "syntaxKind": "ASSIGNMENT",
+      "owner": {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo-fixture",
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "node-owner",
+          "revisionId": "rev-a"
+        }
+      },
+      "payload": {
+        "targetName": "x",
+        "value": {
+          "kind": "NUMBER",
+          "value": 42
+        }
+      },
+      "syntaxKey": "syntax-key-v1:7bf0f805d966b4cbb3388bef0a1105a0f84f3a8a10f28fe443c3b62b5ff72e71",
+      "supportRefs": [
+        {
+          "basis": {
+            "repositoryId": "repo-fixture",
+            "revisionId": "rev-a",
+            "contentFingerprint": "mapping-target",
+            "codeActivationDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "entity": {
+            "kind": "CODE_NODE",
+            "id": "node-owner",
+            "revisionId": "rev-a"
+          },
+          "valueDigest": "913bd38a8c63cefcd36047009c6a78dd464fd9b888032ac0f0ef6234ab417a63"
+        },
+        {
+          "basis": {
+            "repositoryId": "repo-fixture",
+            "revisionId": "rev-a",
+            "contentFingerprint": "mapping-target",
+            "codeActivationDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "entity": {
+            "kind": "SOURCE_FILE",
+            "id": "source-fixture",
+            "revisionId": "rev-a"
+          },
+          "valueDigest": "4d1753a7fcf1fe547d33d74c5eb95dc4723db71ee742b213ede249b2938d729d"
+        }
+      ],
+      "confidence": {
+        "score": 0.5,
+        "method": "syntax-surface-support-v1",
+        "reasons": [
+          "DECLARED_SOURCE_CONTEXT_MATCHED",
+          "SYNTAX_PAYLOAD_VALIDATED",
+          "REQUIRED_SUPPORTS_CLOSED"
+        ]
+      },
+      "extractionVersion": "syntax-extraction-v1:a294595a10ef89fc89aa2fa923caf5e692ebf5b86e2a7c3ececfe2756b5dcfbc"
+    }
+  },
+  "confidenceMeaning": "NORMATIVE_NOT_PROBABILITY"
+}

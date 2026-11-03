@@ -1,0 +1,46 @@
+[
+  {
+    "id": "canonical-node-v1:ae1b570f7db8867b1b65413e5aea33c724495f9823df77e297800a6b7eb9c229",
+    "factKey": "node-fact-v1:d7f793f3b77951e87d895d29543a3c42a055eda17d0b060c90bd15c4ca07d58a",
+    "repositoryId": "repo:one",
+    "revisionId": "revision:worktree",
+    "name": "Endpoint_holdout",
+    "qualifiedName": "Endpoint_holdout",
+    "sourceRange": {
+      "sourceFileId": "file:one",
+      "startLine": 0,
+      "startColumn": 6,
+      "endLine": 0,
+      "endColumn": 22
+    },
+    "confidence": {
+      "score": 1,
+      "method": "parser",
+      "reasons": []
+    },
+    "kind": "TYPE",
+    "typeKind": "CLASS"
+  },
+  {
+    "id": "canonical-node-v1:ec7485e300e8b48027721d3077378f8fa675d634f504d05c11300508c831749d",
+    "factKey": "node-fact-v1:7edadffb2d2b7da4a3dc4ac82721d49d5bddb28b407e72f1f16080ddf23ad2d2",
+    "repositoryId": "repo:one",
+    "revisionId": "revision:worktree",
+    "name": "handle_holdout",
+    "qualifiedName": "Endpoint_holdout.handle_holdout",
+    "sourceRange": {
+      "sourceFileId": "file:one",
+      "startLine": 0,
+      "startColumn": 49,
+      "endLine": 0,
+      "endColumn": 63
+    },
+    "confidence": {
+      "score": 1,
+      "method": "parser",
+      "reasons": []
+    },
+    "kind": "SYMBOL",
+    "symbolKind": "METHOD"
+  }
+]

@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "p1-syntax-admission-contract-v1",
+  "category": "runtime-graph",
+  "phase": "1",
+  "languages": [],
+  "frameworks": [],
+  "capabilities": [
+    "SYNTAX_ADMISSION_CONTRACT_ONLY"
+  ],
+  "inputs": {
+    "candidate": "inputs/candidate.json"
+  },
+  "expected": {
+    "accounting": "expected/accounting.json"
+  },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

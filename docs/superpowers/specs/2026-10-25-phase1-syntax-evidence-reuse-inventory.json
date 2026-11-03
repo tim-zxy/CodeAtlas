@@ -1,0 +1,584 @@
+{
+  "schemaVersion": 1,
+  "status": "HISTORICAL_LIBRARY_ARTIFACT_INVENTORY_ONLY",
+  "captureRoot": ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs",
+  "executionKind": "RUST_LIBRARY_TEST_ONLY",
+  "measurementEligible": false,
+  "sourceOrHistoryAuthenticated": false,
+  "caseCount": 18,
+  "syntaxObservationCount": 30,
+  "kinds": {
+    "DECLARATION": 7,
+    "DECORATION": 4,
+    "INVOCATION": 2,
+    "ASSIGNMENT": 17
+  },
+  "nestedValueOccurrences": {
+    "UNKNOWN": 4,
+    "REFERENCE": 14,
+    "STRING": 4,
+    "ARRAY": 1,
+    "OBJECT": 1
+  },
+  "nestedTargetOccurrences": {
+    "UNRESOLVED": 20
+  },
+  "nullOwnerObservations": 1,
+  "terminalOutcomes": {
+    "SUCCEEDED": 11,
+    "PARTIAL": 7
+  },
+  "coverageRecordCounts": {
+    "CODE_COVERAGE": {
+      "COMPLETE": 60,
+      "PARTIAL": 8
+    },
+    "SYNTAX_COVERAGE": {
+      "COMPLETE": 12,
+      "PARTIAL": 7
+    }
+  },
+  "historicalExecutionInputHashesMatched": 123,
+  "allEventsBytesEqualRetainedExpected": true,
+  "scope": "Counts of retained records, not measurements, confidence calibration, sample sufficiency or fresh Native execution",
+  "cases": [
+    {
+      "caseId": "no-files",
+      "captureHashes": {
+        "manifest.json": "1e67e3b90afc6c0d9d2715b144c38f22b2e332b4ecc7abbd71244101c7358f8a",
+        "request.jsonl": "6968852f2bd1d43a9502914cd220d5d2712d908a0baf0d3e1fdf92e8717911cf",
+        "events.jsonl": "ca324df5695209e5258ea2d98a703d72cd5fd6f839e1b8b5015c3f7ebc79edf9",
+        "expected.jsonl": "ca324df5695209e5258ea2d98a703d72cd5fd6f839e1b8b5015c3f7ebc79edf9"
+      },
+      "sources": [],
+      "syntaxObservationCount": 0,
+      "syntaxKinds": [],
+      "terminalOutcome": "SUCCEEDED",
+      "measurementEligible": false,
+      "sourceOrHistoryAuthenticated": false
+    },
+    {
+      "caseId": "empty-python",
+      "captureHashes": {
+        "manifest.json": "a1f83a1fcbedf82c1512fe929b039ed4e9cb18b2870775c70e982ec3df47e433",
+        "request.jsonl": "59ba93bfd48e38f8afc42ee7e2da2ff4c0557f59c33d1fd08125a8856fc86238",
+        "events.jsonl": "82d2668f17bd6b117c2e1d002cf4dd793cbb441658da23425a1a67f0f4a34545",
+        "expected.jsonl": "82d2668f17bd6b117c2e1d002cf4dd793cbb441658da23425a1a67f0f4a34545"
+      },
+      "sources": [
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/empty-python/sources/app.py",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sourceFileId": "file:one",
+          "sourceFingerprint": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "syntaxObservationCount": 0,
+      "syntaxKinds": [],
+      "terminalOutcome": "SUCCEEDED",
+      "measurementEligible": false,
+      "sourceOrHistoryAuthenticated": false
+    },
+    {
+      "caseId": "comment-python",
+      "captureHashes": {
+        "manifest.json": "9542b82992a064b5216a4678961e75371ab8bdd6e94cbadccc09a3e2b8e4b392",
+        "request.jsonl": "29f5566ea4ccb4b94ad04215c2b76badad1cabc026187f8b62948102b3a9b9e3",
+        "events.jsonl": "47cc7febd5311fb0895a6f92c2c3ce6105e3580c6bba590519ff0f92c9638624",
+        "expected.jsonl": "47cc7febd5311fb0895a6f92c2c3ce6105e3580c6bba590519ff0f92c9638624"
+      },
+      "sources": [
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/comment-python/sources/app.py",
+          "sha256": "4874464a2b14eef4bf671cccfe7fbbfb60bc99c5fd166c320299c59f5e1061f6",
+          "sourceFileId": "file:one",
+          "sourceFingerprint": "sha256:4874464a2b14eef4bf671cccfe7fbbfb60bc99c5fd166c320299c59f5e1061f6"
+        }
+      ],
+      "syntaxObservationCount": 0,
+      "syntaxKinds": [],
+      "terminalOutcome": "SUCCEEDED",
+      "measurementEligible": false,
+      "sourceOrHistoryAuthenticated": false
+    },
+    {
+      "caseId": "wildcard-python",
+      "captureHashes": {
+        "manifest.json": "bdb25560c57329da4386729f21fee1f742ab667fa1f1a50c12b124669ce0e533",
+        "request.jsonl": "88016026f798ffad7fbdd30d9065b3e10f0a817dc5098bb2c6c16095ea30bcac",
+        "events.jsonl": "e59f0f093738ffe2f2b9912d829be31b68dea8ee1993a46ebaef4b99a0976456",
+        "expected.jsonl": "e59f0f093738ffe2f2b9912d829be31b68dea8ee1993a46ebaef4b99a0976456"
+      },
+      "sources": [
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/wildcard-python/sources/app.py",
+          "sha256": "10f9e467a1340fc7e9e1e8789d9423b3ae843c794203f929c9003b595c46caba",
+          "sourceFileId": "file:one",
+          "sourceFingerprint": "sha256:10f9e467a1340fc7e9e1e8789d9423b3ae843c794203f929c9003b595c46caba"
+        }
+      ],
+      "syntaxObservationCount": 0,
+      "syntaxKinds": [],
+      "terminalOutcome": "PARTIAL",
+      "measurementEligible": false,
+      "sourceOrHistoryAuthenticated": false
+    },
+    {
+      "caseId": "class-python",
+      "captureHashes": {
+        "manifest.json": "39e6a0c62a82e92fad11c5c4a1a7269ed76b7705ac46bec60f8ba643900c02bc",
+        "request.jsonl": "436c0d42475617afcb0a991848b4ed001063e0a06d5e2e3e25948cc6c60cd0cf",
+        "events.jsonl": "7c2be45b3d18aa140909a4ce9e6934a0bdbe17c463eb14a6b0b2309de01ae85b",
+        "expected.jsonl": "7c2be45b3d18aa140909a4ce9e6934a0bdbe17c463eb14a6b0b2309de01ae85b"
+      },
+      "sources": [
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/class-python/sources/app.py",
+          "sha256": "262689e9ab7186ffc83347c330c67f357ce0e5133df6bcea4225337e88f3e714",
+          "sourceFileId": "file:one",
+          "sourceFingerprint": "sha256:262689e9ab7186ffc83347c330c67f357ce0e5133df6bcea4225337e88f3e714"
+        }
+      ],
+      "syntaxObservationCount": 0,
+      "syntaxKinds": [],
+      "terminalOutcome": "PARTIAL",
+      "measurementEligible": false,
+      "sourceOrHistoryAuthenticated": false
+    },
+    {
+      "caseId": "nested-python",
+      "captureHashes": {
+        "manifest.json": "e880f1d49d3c5ec9adea816ab3722bf5fe2e23f0af5383d0f1b252bde375b994",
+        "request.jsonl": "48b6c3d87820da03ca562ff85b76ffa1b2442694b1d49c69d97c270a2ccf3268",
+        "events.jsonl": "5fa9ac5abe01157950d0019587854201df5e5e29440dad7dcb59d96df80b0c24",
+        "expected.jsonl": "5fa9ac5abe01157950d0019587854201df5e5e29440dad7dcb59d96df80b0c24"
+      },
+      "sources": [
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/nested-python/sources/app.py",
+          "sha256": "3659a0d37476d1a1a2e611d2db7df72c6a7415f102cebc3d4bf457504a069aef",
+          "sourceFileId": "file:one",
+          "sourceFingerprint": "sha256:3659a0d37476d1a1a2e611d2db7df72c6a7415f102cebc3d4bf457504a069aef"
+        }
+      ],
+      "syntaxObservationCount": 2,
+      "syntaxKinds": [
+        "DECLARATION"
+      ],
+      "terminalOutcome": "SUCCEEDED",
+      "measurementEligible": false,
+      "sourceOrHistoryAuthenticated": false
+    },
+    {
+      "caseId": "malformed-python",
+      "captureHashes": {
+        "manifest.json": "0f4c6bfb670314a14104b9bc11472524d9544f1151a3b188735ed20a0d307ee7",
+        "request.jsonl": "dccb8156a29ac3ebcd97f9ffab1f3ea068e35606244a95ec4a49b4a7f01adeda",
+        "events.jsonl": "410ba9a287a9fbde0e7305fa53a2b53e7d2fe139fbc0be7e83d59b3202b71a2c",
+        "expected.jsonl": "410ba9a287a9fbde0e7305fa53a2b53e7d2fe139fbc0be7e83d59b3202b71a2c"
+      },
+      "sources": [
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/malformed-python/sources/app.py",
+          "sha256": "14d108c35f7699d58e5052d166147ad8573e628a521a95caa79c5c9f249e8635",
+          "sourceFileId": "file:one",
+          "sourceFingerprint": "sha256:14d108c35f7699d58e5052d166147ad8573e628a521a95caa79c5c9f249e8635"
+        }
+      ],
+      "syntaxObservationCount": 3,
+      "syntaxKinds": [
+        "DECLARATION",
+        "DECORATION",
+        "INVOCATION"
+      ],
+      "terminalOutcome": "PARTIAL",
+      "measurementEligible": false,
+      "sourceOrHistoryAuthenticated": false
+    },
+    {
+      "caseId": "dynamic-python",
+      "captureHashes": {
+        "manifest.json": "f377927c91cf1216985edc50416dea97ae54c917757bb054b921577de98fb034",
+        "request.jsonl": "1c843af41a6959e5eef92dbb1fc1d599649c9611f01611a1af3ad4a537021bdd",
+        "events.jsonl": "55380d48a068d402f7334904aaf6d7de759b1e0fbd47b5771d192693409e45f8",
+        "expected.jsonl": "55380d48a068d402f7334904aaf6d7de759b1e0fbd47b5771d192693409e45f8"
+      },
+      "sources": [
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/dynamic-python/sources/app.py",
+          "sha256": "9e3012e6aaee68ca614e04a2aad0097292c86ef767f320fc61445527f910e69e",
+          "sourceFileId": "file:one",
+          "sourceFingerprint": "sha256:9e3012e6aaee68ca614e04a2aad0097292c86ef767f320fc61445527f910e69e"
+        }
+      ],
+      "syntaxObservationCount": 5,
+      "syntaxKinds": [
+        "ASSIGNMENT",
+        "DECLARATION",
+        "DECORATION",
+        "INVOCATION"
+      ],
+      "terminalOutcome": "PARTIAL",
+      "measurementEligible": false,
+      "sourceOrHistoryAuthenticated": false
+    },
+    {
+      "caseId": "alias-reference-python",
+      "captureHashes": {
+        "manifest.json": "d83859c208e180f3981aed58016fb801267c43095f0efcc084ea9ea241ee3853",
+        "request.jsonl": "33a9f65c7017935ca104422675b0628211275c856e3d071598d743f44b6205b1",
+        "events.jsonl": "ce0cd5a984d36dc5221cf4559eb0260aced18cc4c6fcd0436fcee0852b325fb3",
+        "expected.jsonl": "ce0cd5a984d36dc5221cf4559eb0260aced18cc4c6fcd0436fcee0852b325fb3"
+      },
+      "sources": [
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/alias-reference-python/sources/app.py",
+          "sha256": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+          "sourceFileId": "file:one",
+          "sourceFingerprint": "sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50"
+        }
+      ],
+      "syntaxObservationCount": 2,
+      "syntaxKinds": [
+        "ASSIGNMENT"
+      ],
+      "terminalOutcome": "SUCCEEDED",
+      "measurementEligible": false,
+      "sourceOrHistoryAuthenticated": false
+    },
+    {
+      "caseId": "async-python",
+      "captureHashes": {
+        "manifest.json": "8b8ee5c13283df32bda04c7dfee8882e003527f8b75e9808c9f8134351c1165e",
+        "request.jsonl": "eab344aaa125d1812ee57af9b8f9a488b475787628534507d23ea58e08ef16f9",
+        "events.jsonl": "a9c2bf8f391a5796d1b5fa57844f8a284de548baa253e7e334393ade49fd7be6",
+        "expected.jsonl": "a9c2bf8f391a5796d1b5fa57844f8a284de548baa253e7e334393ade49fd7be6"
+      },
+      "sources": [
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/async-python/sources/app.py",
+          "sha256": "3a174317fd5ec1b1dab15ed55072c503d43e2aa684bc67e297ee32979c8e5466",
+          "sourceFileId": "file:one",
+          "sourceFingerprint": "sha256:3a174317fd5ec1b1dab15ed55072c503d43e2aa684bc67e297ee32979c8e5466"
+        }
+      ],
+      "syntaxObservationCount": 1,
+      "syntaxKinds": [
+        "DECLARATION"
+      ],
+      "terminalOutcome": "SUCCEEDED",
+      "measurementEligible": false,
+      "sourceOrHistoryAuthenticated": false
+    },
+    {
+      "caseId": "java-only",
+      "captureHashes": {
+        "manifest.json": "3dc565374a86253f3760575979cfa8a19f9aaed7f6a29e71e820753dbe25d0ec",
+        "request.jsonl": "75c0af507899132a8302168220830b97d2caa03bb326f33e2bd030919263c5ad",
+        "events.jsonl": "d29c001ebba51fe771d0324875df5e27a9683cf12a0a91bc80d7968f864411d0",
+        "expected.jsonl": "d29c001ebba51fe771d0324875df5e27a9683cf12a0a91bc80d7968f864411d0"
+      },
+      "sources": [
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/java-only/sources/Endpoint.java",
+          "sha256": "fa9a07e5b149109de9313e541101b3363a014b87e18f469e91643781ed2833c1",
+          "sourceFileId": "file:one",
+          "sourceFingerprint": "sha256:fa9a07e5b149109de9313e541101b3363a014b87e18f469e91643781ed2833c1"
+        }
+      ],
+      "syntaxObservationCount": 2,
+      "syntaxKinds": [
+        "DECLARATION",
+        "DECORATION"
+      ],
+      "terminalOutcome": "SUCCEEDED",
+      "measurementEligible": false,
+      "sourceOrHistoryAuthenticated": false
+    },
+    {
+      "caseId": "mixed",
+      "captureHashes": {
+        "manifest.json": "e144317ead997388ec1e623439b7e62c06104eb14db28bac145a5e7b7362938a",
+        "request.jsonl": "20ea047ac106a33ed4b62cb23690b24eefd91acd924e519eccb976095a4cd328",
+        "events.jsonl": "dc63de9f2fcd9c070a1c4bf1b52e76f76ea5fd0389d48da61b544893e9573901",
+        "expected.jsonl": "dc63de9f2fcd9c070a1c4bf1b52e76f76ea5fd0389d48da61b544893e9573901"
+      },
+      "sources": [
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/mixed/sources/Endpoint.java",
+          "sha256": "fa9a07e5b149109de9313e541101b3363a014b87e18f469e91643781ed2833c1",
+          "sourceFileId": "file:one",
+          "sourceFingerprint": "sha256:fa9a07e5b149109de9313e541101b3363a014b87e18f469e91643781ed2833c1"
+        },
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/mixed/sources/app.py",
+          "sha256": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+          "sourceFileId": "python:file",
+          "sourceFingerprint": "sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50"
+        }
+      ],
+      "syntaxObservationCount": 4,
+      "syntaxKinds": [
+        "ASSIGNMENT",
+        "DECLARATION",
+        "DECORATION"
+      ],
+      "terminalOutcome": "SUCCEEDED",
+      "measurementEligible": false,
+      "sourceOrHistoryAuthenticated": false
+    },
+    {
+      "caseId": "multi-import-from",
+      "captureHashes": {
+        "manifest.json": "66f58670ce62dcbab8bfbfcd5a0d22249eaf8136be7d31bcf5f3f5d349df8597",
+        "request.jsonl": "0180295d64f84fb09670603e3661ccc19847a7d7b65a2ffc26013afe45141785",
+        "events.jsonl": "c798ea1391c66ded1b57d437532234f1cb47321598316f7a7a92ef39a81ea220",
+        "expected.jsonl": "c798ea1391c66ded1b57d437532234f1cb47321598316f7a7a92ef39a81ea220"
+      },
+      "sources": [
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/multi-import-from/sources/app.py",
+          "sha256": "927ff7b20b77652ff3798b4a9a0e46d7d8d99fcaa22a9816eafe694043f2d878",
+          "sourceFileId": "file:one",
+          "sourceFingerprint": "sha256:927ff7b20b77652ff3798b4a9a0e46d7d8d99fcaa22a9816eafe694043f2d878"
+        }
+      ],
+      "syntaxObservationCount": 4,
+      "syntaxKinds": [
+        "ASSIGNMENT"
+      ],
+      "terminalOutcome": "SUCCEEDED",
+      "measurementEligible": false,
+      "sourceOrHistoryAuthenticated": false
+    },
+    {
+      "caseId": "nested-repeated-values",
+      "captureHashes": {
+        "manifest.json": "114fa947dc37685224785373cc56bf377672e095814321df240e7abec37437e3",
+        "request.jsonl": "06357563fce73367161f7f67a921c09d47b80bee78961b0d01c8e6fb691b97f4",
+        "events.jsonl": "37d30cd67718f4486a0cbf6428af7f8a4a524da51f2e0b59361acba801a1a7c9",
+        "expected.jsonl": "37d30cd67718f4486a0cbf6428af7f8a4a524da51f2e0b59361acba801a1a7c9"
+      },
+      "sources": [
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/nested-repeated-values/sources/app.py",
+          "sha256": "6b4bef0872162fdd35688d5bef795985b8f9aa31bf9be8592c06dc1b6b21bd07",
+          "sourceFileId": "file:one",
+          "sourceFingerprint": "sha256:6b4bef0872162fdd35688d5bef795985b8f9aa31bf9be8592c06dc1b6b21bd07"
+        }
+      ],
+      "syntaxObservationCount": 1,
+      "syntaxKinds": [
+        "ASSIGNMENT"
+      ],
+      "terminalOutcome": "SUCCEEDED",
+      "measurementEligible": false,
+      "sourceOrHistoryAuthenticated": false
+    },
+    {
+      "caseId": "class-owner-gap",
+      "captureHashes": {
+        "manifest.json": "31cba8c48da5bd49d94c33baf0784bbe047b2164e9b18a9f790fee631636524f",
+        "request.jsonl": "bb6deef30bf22361afd0fe3a74b516152688b09166ba47defd826e744c3a4fcd",
+        "events.jsonl": "f68c99d97d6f6c5c0dbfd6230865930a75eb000baebd410aac8e542fd98b9f01",
+        "expected.jsonl": "f68c99d97d6f6c5c0dbfd6230865930a75eb000baebd410aac8e542fd98b9f01"
+      },
+      "sources": [
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/class-owner-gap/sources/app.py",
+          "sha256": "e245b405eef0421e8462f62ef9c518d38227e79739935f49acfd35fcb22e6eff",
+          "sourceFileId": "file:one",
+          "sourceFingerprint": "sha256:e245b405eef0421e8462f62ef9c518d38227e79739935f49acfd35fcb22e6eff"
+        }
+      ],
+      "syntaxObservationCount": 1,
+      "syntaxKinds": [
+        "ASSIGNMENT"
+      ],
+      "terminalOutcome": "PARTIAL",
+      "measurementEligible": false,
+      "sourceOrHistoryAuthenticated": false
+    },
+    {
+      "caseId": "unicode-control",
+      "captureHashes": {
+        "manifest.json": "5a3c63bbf757f1d03da2eaea0ef1852f4e460a5585cf4f1d1d8251d437ba6449",
+        "request.jsonl": "314302fc8c9666aa749058bf8f4b37d5e0214274acb7318a7b9b157c0de35d0f",
+        "events.jsonl": "47cabfc651141b2a541a9351163a79e1a853e48faf75b30172b03c392870e9ce",
+        "expected.jsonl": "47cabfc651141b2a541a9351163a79e1a853e48faf75b30172b03c392870e9ce"
+      },
+      "sources": [
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/unicode-control/sources/app.py",
+          "sha256": "46aa337271d994729a8ea9cea2dfa33d3b08b5d3056db75e2a02624fa749d646",
+          "sourceFileId": "file:one",
+          "sourceFingerprint": "sha256:46aa337271d994729a8ea9cea2dfa33d3b08b5d3056db75e2a02624fa749d646"
+        }
+      ],
+      "syntaxObservationCount": 2,
+      "syntaxKinds": [
+        "ASSIGNMENT"
+      ],
+      "terminalOutcome": "PARTIAL",
+      "measurementEligible": false,
+      "sourceOrHistoryAuthenticated": false
+    },
+    {
+      "caseId": "two-python-files",
+      "captureHashes": {
+        "manifest.json": "9ef0f4c9cc8e97ac3db6f2e31dbced45bf4cadb02c9029a378e1e9f2fb1de712",
+        "request.jsonl": "9f6d809883112ca0495313dc60b4900ee24105bf7e299b0f9533b9b539f9167c",
+        "events.jsonl": "6e4dfde17940bda25cc880dca15062b03fc48e27772789500dae025c53d57f0c",
+        "expected.jsonl": "6e4dfde17940bda25cc880dca15062b03fc48e27772789500dae025c53d57f0c"
+      },
+      "sources": [
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/two-python-files/sources/a.py",
+          "sha256": "95414ae91b961ddf9e8504e62a0f052e5765e00325895da862b61eda451e7c83",
+          "sourceFileId": "a:file",
+          "sourceFingerprint": "sha256:95414ae91b961ddf9e8504e62a0f052e5765e00325895da862b61eda451e7c83"
+        },
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/two-python-files/sources/b.py",
+          "sha256": "7804227de8159a423dfcace82a4c684fb816948dd2062a7e540f9d9aac7ffecd",
+          "sourceFileId": "b:file",
+          "sourceFingerprint": "sha256:7804227de8159a423dfcace82a4c684fb816948dd2062a7e540f9d9aac7ffecd"
+        }
+      ],
+      "syntaxObservationCount": 2,
+      "syntaxKinds": [
+        "ASSIGNMENT"
+      ],
+      "terminalOutcome": "SUCCEEDED",
+      "measurementEligible": false,
+      "sourceOrHistoryAuthenticated": false
+    },
+    {
+      "caseId": "discarded-dictionary",
+      "captureHashes": {
+        "manifest.json": "88eb4e1df2a526f61c0001e48b1da955d4e0ed330aaa455e538e30ab3627f718",
+        "request.jsonl": "4d0edb7971016518f42ed2945dfc0a642cfe89a31e6911272a66960ec2bbd5c3",
+        "events.jsonl": "734b2cbcff7e8613f16fdce7e9ecde93c387e2e9cf02345d59a54229cc721508",
+        "expected.jsonl": "734b2cbcff7e8613f16fdce7e9ecde93c387e2e9cf02345d59a54229cc721508"
+      },
+      "sources": [
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/discarded-dictionary/sources/app.py",
+          "sha256": "322fac8805d45759fa28714fcbcbac50958979e68b54a0ef41d3952901999c9d",
+          "sourceFileId": "file:one",
+          "sourceFingerprint": "sha256:322fac8805d45759fa28714fcbcbac50958979e68b54a0ef41d3952901999c9d"
+        }
+      ],
+      "syntaxObservationCount": 1,
+      "syntaxKinds": [
+        "ASSIGNMENT"
+      ],
+      "terminalOutcome": "PARTIAL",
+      "measurementEligible": false,
+      "sourceOrHistoryAuthenticated": false
+    }
+  ],
+  "numericalPolicy": null,
+  "thresholds": null,
+  "newMeasurements": null,
+  "hashPins": {
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/cross-consumer-result.json": "5ca265cd3485511fb3bb6978c96a336df2ddaf9a2e715f84529aa9328f3431af",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/depth-execution-inputs.json": "acabd6f788070e5534a38c4e100cd02c77b742d4e100b0c6a7f2cf1140c1bdf5",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/depth-capture-root.json": "276a5988ba303999024f7f8b93833f60fbc0beadf7c7098fd0f986f9576faf0f",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/implementation-verification.json": "0e179ca477a9b2f984cce961f93d32284eb0fe1d2fe93664faa183763981adcd",
+    "fixtures/phase1/code-syntax-producer-oracle/cases.json": "2014750a46787c3c1ffba0f6e41ed326c01914bbaab12c423bde8aa5c6000185",
+    "scripts/check-code-syntax-library-output.mjs": "1912fc636196a7492d760268ef3c3797eaf9001ad07330acf17664db0988e739",
+    "packages/providers/test/fixtures/code-syntax-producer-helpers.mjs": "2dd68cff0d3d132649ac4954d7f06e4dd298f1b7e5b29a0441b9074397a91cb6",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/no-files/manifest.json": "1e67e3b90afc6c0d9d2715b144c38f22b2e332b4ecc7abbd71244101c7358f8a",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/no-files/request.jsonl": "6968852f2bd1d43a9502914cd220d5d2712d908a0baf0d3e1fdf92e8717911cf",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/no-files/events.jsonl": "ca324df5695209e5258ea2d98a703d72cd5fd6f839e1b8b5015c3f7ebc79edf9",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/no-files/expected.jsonl": "ca324df5695209e5258ea2d98a703d72cd5fd6f839e1b8b5015c3f7ebc79edf9",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/empty-python/manifest.json": "a1f83a1fcbedf82c1512fe929b039ed4e9cb18b2870775c70e982ec3df47e433",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/empty-python/request.jsonl": "59ba93bfd48e38f8afc42ee7e2da2ff4c0557f59c33d1fd08125a8856fc86238",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/empty-python/events.jsonl": "82d2668f17bd6b117c2e1d002cf4dd793cbb441658da23425a1a67f0f4a34545",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/empty-python/expected.jsonl": "82d2668f17bd6b117c2e1d002cf4dd793cbb441658da23425a1a67f0f4a34545",
+    "fixtures/phase1/code-syntax-producer-oracle/cases/empty-python/sources/app.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/comment-python/manifest.json": "9542b82992a064b5216a4678961e75371ab8bdd6e94cbadccc09a3e2b8e4b392",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/comment-python/request.jsonl": "29f5566ea4ccb4b94ad04215c2b76badad1cabc026187f8b62948102b3a9b9e3",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/comment-python/events.jsonl": "47cc7febd5311fb0895a6f92c2c3ce6105e3580c6bba590519ff0f92c9638624",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/comment-python/expected.jsonl": "47cc7febd5311fb0895a6f92c2c3ce6105e3580c6bba590519ff0f92c9638624",
+    "fixtures/phase1/code-syntax-producer-oracle/cases/comment-python/sources/app.py": "4874464a2b14eef4bf671cccfe7fbbfb60bc99c5fd166c320299c59f5e1061f6",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/wildcard-python/manifest.json": "bdb25560c57329da4386729f21fee1f742ab667fa1f1a50c12b124669ce0e533",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/wildcard-python/request.jsonl": "88016026f798ffad7fbdd30d9065b3e10f0a817dc5098bb2c6c16095ea30bcac",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/wildcard-python/events.jsonl": "e59f0f093738ffe2f2b9912d829be31b68dea8ee1993a46ebaef4b99a0976456",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/wildcard-python/expected.jsonl": "e59f0f093738ffe2f2b9912d829be31b68dea8ee1993a46ebaef4b99a0976456",
+    "fixtures/phase1/code-syntax-producer-oracle/cases/wildcard-python/sources/app.py": "10f9e467a1340fc7e9e1e8789d9423b3ae843c794203f929c9003b595c46caba",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/class-python/manifest.json": "39e6a0c62a82e92fad11c5c4a1a7269ed76b7705ac46bec60f8ba643900c02bc",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/class-python/request.jsonl": "436c0d42475617afcb0a991848b4ed001063e0a06d5e2e3e25948cc6c60cd0cf",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/class-python/events.jsonl": "7c2be45b3d18aa140909a4ce9e6934a0bdbe17c463eb14a6b0b2309de01ae85b",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/class-python/expected.jsonl": "7c2be45b3d18aa140909a4ce9e6934a0bdbe17c463eb14a6b0b2309de01ae85b",
+    "fixtures/phase1/code-syntax-producer-oracle/cases/class-python/sources/app.py": "262689e9ab7186ffc83347c330c67f357ce0e5133df6bcea4225337e88f3e714",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/nested-python/manifest.json": "e880f1d49d3c5ec9adea816ab3722bf5fe2e23f0af5383d0f1b252bde375b994",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/nested-python/request.jsonl": "48b6c3d87820da03ca562ff85b76ffa1b2442694b1d49c69d97c270a2ccf3268",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/nested-python/events.jsonl": "5fa9ac5abe01157950d0019587854201df5e5e29440dad7dcb59d96df80b0c24",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/nested-python/expected.jsonl": "5fa9ac5abe01157950d0019587854201df5e5e29440dad7dcb59d96df80b0c24",
+    "fixtures/phase1/code-syntax-producer-oracle/cases/nested-python/sources/app.py": "3659a0d37476d1a1a2e611d2db7df72c6a7415f102cebc3d4bf457504a069aef",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/malformed-python/manifest.json": "0f4c6bfb670314a14104b9bc11472524d9544f1151a3b188735ed20a0d307ee7",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/malformed-python/request.jsonl": "dccb8156a29ac3ebcd97f9ffab1f3ea068e35606244a95ec4a49b4a7f01adeda",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/malformed-python/events.jsonl": "410ba9a287a9fbde0e7305fa53a2b53e7d2fe139fbc0be7e83d59b3202b71a2c",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/malformed-python/expected.jsonl": "410ba9a287a9fbde0e7305fa53a2b53e7d2fe139fbc0be7e83d59b3202b71a2c",
+    "fixtures/phase1/code-syntax-producer-oracle/cases/malformed-python/sources/app.py": "14d108c35f7699d58e5052d166147ad8573e628a521a95caa79c5c9f249e8635",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/dynamic-python/manifest.json": "f377927c91cf1216985edc50416dea97ae54c917757bb054b921577de98fb034",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/dynamic-python/request.jsonl": "1c843af41a6959e5eef92dbb1fc1d599649c9611f01611a1af3ad4a537021bdd",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/dynamic-python/events.jsonl": "55380d48a068d402f7334904aaf6d7de759b1e0fbd47b5771d192693409e45f8",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/dynamic-python/expected.jsonl": "55380d48a068d402f7334904aaf6d7de759b1e0fbd47b5771d192693409e45f8",
+    "fixtures/phase1/code-syntax-producer-oracle/cases/dynamic-python/sources/app.py": "9e3012e6aaee68ca614e04a2aad0097292c86ef767f320fc61445527f910e69e",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/alias-reference-python/manifest.json": "d83859c208e180f3981aed58016fb801267c43095f0efcc084ea9ea241ee3853",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/alias-reference-python/request.jsonl": "33a9f65c7017935ca104422675b0628211275c856e3d071598d743f44b6205b1",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/alias-reference-python/events.jsonl": "ce0cd5a984d36dc5221cf4559eb0260aced18cc4c6fcd0436fcee0852b325fb3",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/alias-reference-python/expected.jsonl": "ce0cd5a984d36dc5221cf4559eb0260aced18cc4c6fcd0436fcee0852b325fb3",
+    "fixtures/phase1/code-syntax-producer-oracle/cases/alias-reference-python/sources/app.py": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/async-python/manifest.json": "8b8ee5c13283df32bda04c7dfee8882e003527f8b75e9808c9f8134351c1165e",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/async-python/request.jsonl": "eab344aaa125d1812ee57af9b8f9a488b475787628534507d23ea58e08ef16f9",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/async-python/events.jsonl": "a9c2bf8f391a5796d1b5fa57844f8a284de548baa253e7e334393ade49fd7be6",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/async-python/expected.jsonl": "a9c2bf8f391a5796d1b5fa57844f8a284de548baa253e7e334393ade49fd7be6",
+    "fixtures/phase1/code-syntax-producer-oracle/cases/async-python/sources/app.py": "3a174317fd5ec1b1dab15ed55072c503d43e2aa684bc67e297ee32979c8e5466",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/java-only/manifest.json": "3dc565374a86253f3760575979cfa8a19f9aaed7f6a29e71e820753dbe25d0ec",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/java-only/request.jsonl": "75c0af507899132a8302168220830b97d2caa03bb326f33e2bd030919263c5ad",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/java-only/events.jsonl": "d29c001ebba51fe771d0324875df5e27a9683cf12a0a91bc80d7968f864411d0",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/java-only/expected.jsonl": "d29c001ebba51fe771d0324875df5e27a9683cf12a0a91bc80d7968f864411d0",
+    "fixtures/phase1/code-syntax-producer-oracle/cases/java-only/sources/Endpoint.java": "fa9a07e5b149109de9313e541101b3363a014b87e18f469e91643781ed2833c1",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/mixed/manifest.json": "e144317ead997388ec1e623439b7e62c06104eb14db28bac145a5e7b7362938a",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/mixed/request.jsonl": "20ea047ac106a33ed4b62cb23690b24eefd91acd924e519eccb976095a4cd328",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/mixed/events.jsonl": "dc63de9f2fcd9c070a1c4bf1b52e76f76ea5fd0389d48da61b544893e9573901",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/mixed/expected.jsonl": "dc63de9f2fcd9c070a1c4bf1b52e76f76ea5fd0389d48da61b544893e9573901",
+    "fixtures/phase1/code-syntax-producer-oracle/cases/mixed/sources/Endpoint.java": "fa9a07e5b149109de9313e541101b3363a014b87e18f469e91643781ed2833c1",
+    "fixtures/phase1/code-syntax-producer-oracle/cases/mixed/sources/app.py": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/multi-import-from/manifest.json": "66f58670ce62dcbab8bfbfcd5a0d22249eaf8136be7d31bcf5f3f5d349df8597",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/multi-import-from/request.jsonl": "0180295d64f84fb09670603e3661ccc19847a7d7b65a2ffc26013afe45141785",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/multi-import-from/events.jsonl": "c798ea1391c66ded1b57d437532234f1cb47321598316f7a7a92ef39a81ea220",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/multi-import-from/expected.jsonl": "c798ea1391c66ded1b57d437532234f1cb47321598316f7a7a92ef39a81ea220",
+    "fixtures/phase1/code-syntax-producer-oracle/cases/multi-import-from/sources/app.py": "927ff7b20b77652ff3798b4a9a0e46d7d8d99fcaa22a9816eafe694043f2d878",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/nested-repeated-values/manifest.json": "114fa947dc37685224785373cc56bf377672e095814321df240e7abec37437e3",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/nested-repeated-values/request.jsonl": "06357563fce73367161f7f67a921c09d47b80bee78961b0d01c8e6fb691b97f4",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/nested-repeated-values/events.jsonl": "37d30cd67718f4486a0cbf6428af7f8a4a524da51f2e0b59361acba801a1a7c9",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/nested-repeated-values/expected.jsonl": "37d30cd67718f4486a0cbf6428af7f8a4a524da51f2e0b59361acba801a1a7c9",
+    "fixtures/phase1/code-syntax-producer-oracle/cases/nested-repeated-values/sources/app.py": "6b4bef0872162fdd35688d5bef795985b8f9aa31bf9be8592c06dc1b6b21bd07",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/class-owner-gap/manifest.json": "31cba8c48da5bd49d94c33baf0784bbe047b2164e9b18a9f790fee631636524f",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/class-owner-gap/request.jsonl": "bb6deef30bf22361afd0fe3a74b516152688b09166ba47defd826e744c3a4fcd",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/class-owner-gap/events.jsonl": "f68c99d97d6f6c5c0dbfd6230865930a75eb000baebd410aac8e542fd98b9f01",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/class-owner-gap/expected.jsonl": "f68c99d97d6f6c5c0dbfd6230865930a75eb000baebd410aac8e542fd98b9f01",
+    "fixtures/phase1/code-syntax-producer-oracle/cases/class-owner-gap/sources/app.py": "e245b405eef0421e8462f62ef9c518d38227e79739935f49acfd35fcb22e6eff",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/unicode-control/manifest.json": "5a3c63bbf757f1d03da2eaea0ef1852f4e460a5585cf4f1d1d8251d437ba6449",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/unicode-control/request.jsonl": "314302fc8c9666aa749058bf8f4b37d5e0214274acb7318a7b9b157c0de35d0f",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/unicode-control/events.jsonl": "47cabfc651141b2a541a9351163a79e1a853e48faf75b30172b03c392870e9ce",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/unicode-control/expected.jsonl": "47cabfc651141b2a541a9351163a79e1a853e48faf75b30172b03c392870e9ce",
+    "fixtures/phase1/code-syntax-producer-oracle/cases/unicode-control/sources/app.py": "46aa337271d994729a8ea9cea2dfa33d3b08b5d3056db75e2a02624fa749d646",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/two-python-files/manifest.json": "9ef0f4c9cc8e97ac3db6f2e31dbced45bf4cadb02c9029a378e1e9f2fb1de712",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/two-python-files/request.jsonl": "9f6d809883112ca0495313dc60b4900ee24105bf7e299b0f9533b9b539f9167c",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/two-python-files/events.jsonl": "6e4dfde17940bda25cc880dca15062b03fc48e27772789500dae025c53d57f0c",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/two-python-files/expected.jsonl": "6e4dfde17940bda25cc880dca15062b03fc48e27772789500dae025c53d57f0c",
+    "fixtures/phase1/code-syntax-producer-oracle/cases/two-python-files/sources/a.py": "95414ae91b961ddf9e8504e62a0f052e5765e00325895da862b61eda451e7c83",
+    "fixtures/phase1/code-syntax-producer-oracle/cases/two-python-files/sources/b.py": "7804227de8159a423dfcace82a4c684fb816948dd2062a7e540f9d9aac7ffecd",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/discarded-dictionary/manifest.json": "88eb4e1df2a526f61c0001e48b1da955d4e0ed330aaa455e538e30ab3627f718",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/discarded-dictionary/request.jsonl": "4d0edb7971016518f42ed2945dfc0a642cfe89a31e6911272a66960ec2bbd5c3",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/discarded-dictionary/events.jsonl": "734b2cbcff7e8613f16fdce7e9ecde93c387e2e9cf02345d59a54229cc721508",
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/discarded-dictionary/expected.jsonl": "734b2cbcff7e8613f16fdce7e9ecde93c387e2e9cf02345d59a54229cc721508",
+    "fixtures/phase1/code-syntax-producer-oracle/cases/discarded-dictionary/sources/app.py": "322fac8805d45759fa28714fcbcbac50958979e68b54a0ef41d3952901999c9d"
+  }
+}

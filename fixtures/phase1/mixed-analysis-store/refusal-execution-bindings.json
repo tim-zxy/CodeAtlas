@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "DECLARED_NODE_SQLITE_COMPONENT_ONLY",
+  "cases": [
+    {
+      "id": "foreign-unobserved",
+      "family": "STORE_CONTRACT",
+      "input": "cases/foreign-unobserved/input.json",
+      "expected": "cases/foreign-unobserved/expected.json",
+      "inputSha256": "db87c37d501755d8e5c2a521fd8efdbef5a0cff6c34d5bf5ff2eaa363896f9dd",
+      "expectedSha256": "2a15c883fa6adb4760bd379cd920a3d357a97a138bf18f9abff52e5e19b9dc81",
+      "context": "../mixed-analysis-stage/boundary-execution-bindings.json#foreignControl"
+    },
+    {
+      "id": "same-id-content-conflict",
+      "family": "STORE_CONTRACT",
+      "input": "cases/same-id-content-conflict/input.json",
+      "expected": "cases/same-id-content-conflict/expected.json",
+      "inputSha256": "813fa62266af9e2fa38fde28ca59f44a9d04884c46aa9fdf3ae08cb906df031d",
+      "expectedSha256": "2a15c883fa6adb4760bd379cd920a3d357a97a138bf18f9abff52e5e19b9dc81",
+      "context": "../mixed-analysis-stage/component-references/store-row-independent/mixed.json"
+    }
+  ],
+  "injection": "New isolated database only; collision row is inserted inside real Store transaction after lock and first actual evidence write; actual immutable SELECT must observe it before rollback. No state setter, caller trusted shortcut, SQL repair or user DB."
+}

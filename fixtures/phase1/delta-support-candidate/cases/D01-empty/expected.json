@@ -1,0 +1,50 @@
+{
+  "kind": "DECLARED_DELTA_SUPPORT_CANDIDATE",
+  "mode": "NO_OP",
+  "targetSource": {
+    "repositoryId": "repo:history",
+    "revisionId": "revision:worktree",
+    "contentFingerprint": "content:old"
+  },
+  "inventory": [],
+  "transition": {
+    "kind": "NO_OP_DRAFT",
+    "activationId": "activation:old",
+    "oldBasis": {
+      "repositoryId": "repo:history",
+      "revisionId": "revision:worktree",
+      "contentFingerprint": "content:old",
+      "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "targetSource": {
+      "repositoryId": "repo:history",
+      "revisionId": "revision:worktree",
+      "contentFingerprint": "content:old"
+    },
+    "historyDigest": "874875bd601443eca030766adb4ee338dccc62dc686cbcf2b69a8bb11a3bef74",
+    "diff": [],
+    "supportDecisions": [],
+    "addedEvidenceIds": [],
+    "survivingFactKeys": [],
+    "coverageOrigins": [],
+    "syntaxRequirements": [],
+    "ledgerDigest": "410de324a3ab016c0f32dd9e18bf0910514b94b57b54d17b18d372a817307e2a"
+  },
+  "activeSupports": [],
+  "dependencyUnits": [],
+  "merged": {
+    "nodes": [],
+    "edges": [],
+    "explanations": [],
+    "evidence": [],
+    "factEvidence": [],
+    "bindings": []
+  },
+  "originSnapshotRegistry": [],
+  "provenance": {
+    "kind": "DECLARED_INPUT",
+    "historyDigest": "874875bd601443eca030766adb4ee338dccc62dc686cbcf2b69a8bb11a3bef74",
+    "ledgerDigest": "410de324a3ab016c0f32dd9e18bf0910514b94b57b54d17b18d372a817307e2a",
+    "observation": null
+  }
+}

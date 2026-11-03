@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "p1-kafka-v1",
+  "category": "runtime-graph",
+  "phase": "1",
+  "languages": ["java"],
+  "frameworks": ["kafka"],
+  "capabilities": ["FRAMEWORK_RUNTIME_CANDIDATE", "FRAMEWORK_BINDING_CANDIDATE"],
+  "inputs": {
+    "vectors": "inputs.json",
+    "frameworkSource": "source-adequacy/KafkaSource.java"
+  },
+  "expected": {
+    "contract": "expected.json",
+    "sourceReview": "source-adequacy/obligations.json"
+  },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

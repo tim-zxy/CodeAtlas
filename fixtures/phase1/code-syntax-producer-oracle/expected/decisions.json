@@ -1,0 +1,236 @@
+{
+  "no-files": {
+    "codeOutcome": "NOT_APPLICABLE",
+    "syntaxOutcome": "COMPLETE",
+    "outcome": "SUCCEEDED",
+    "counts": {
+      "nodes": 0,
+      "edges": 0,
+      "syntax": 0,
+      "codeCoverage": 0,
+      "syntaxCoverage": 0,
+      "diagnostics": 0
+    }
+  },
+  "empty-python": {
+    "codeOutcome": "COMPLETE",
+    "syntaxOutcome": "COMPLETE",
+    "outcome": "SUCCEEDED",
+    "counts": {
+      "nodes": 1,
+      "edges": 0,
+      "syntax": 0,
+      "codeCoverage": 4,
+      "syntaxCoverage": 1,
+      "diagnostics": 0
+    }
+  },
+  "comment-python": {
+    "codeOutcome": "COMPLETE",
+    "syntaxOutcome": "COMPLETE",
+    "outcome": "SUCCEEDED",
+    "counts": {
+      "nodes": 1,
+      "edges": 0,
+      "syntax": 0,
+      "codeCoverage": 4,
+      "syntaxCoverage": 1,
+      "diagnostics": 0
+    }
+  },
+  "wildcard-python": {
+    "codeOutcome": "PARTIAL",
+    "syntaxOutcome": "PARTIAL",
+    "outcome": "PARTIAL",
+    "counts": {
+      "nodes": 1,
+      "edges": 0,
+      "syntax": 0,
+      "codeCoverage": 4,
+      "syntaxCoverage": 1,
+      "diagnostics": 0
+    }
+  },
+  "class-python": {
+    "codeOutcome": "PARTIAL",
+    "syntaxOutcome": "PARTIAL",
+    "outcome": "PARTIAL",
+    "counts": {
+      "nodes": 1,
+      "edges": 0,
+      "syntax": 0,
+      "codeCoverage": 4,
+      "syntaxCoverage": 1,
+      "diagnostics": 0
+    }
+  },
+  "nested-python": {
+    "codeOutcome": "COMPLETE",
+    "syntaxOutcome": "COMPLETE",
+    "outcome": "SUCCEEDED",
+    "counts": {
+      "nodes": 3,
+      "edges": 0,
+      "syntax": 2,
+      "codeCoverage": 4,
+      "syntaxCoverage": 1,
+      "diagnostics": 0
+    }
+  },
+  "malformed-python": {
+    "codeOutcome": "PARTIAL",
+    "syntaxOutcome": "PARTIAL",
+    "outcome": "PARTIAL",
+    "counts": {
+      "nodes": 2,
+      "edges": 0,
+      "syntax": 3,
+      "codeCoverage": 4,
+      "syntaxCoverage": 1,
+      "diagnostics": 1
+    }
+  },
+  "dynamic-python": {
+    "codeOutcome": "COMPLETE",
+    "syntaxOutcome": "PARTIAL",
+    "outcome": "PARTIAL",
+    "counts": {
+      "nodes": 2,
+      "edges": 1,
+      "syntax": 5,
+      "codeCoverage": 4,
+      "syntaxCoverage": 1,
+      "diagnostics": 0
+    }
+  },
+  "alias-reference-python": {
+    "codeOutcome": "COMPLETE",
+    "syntaxOutcome": "COMPLETE",
+    "outcome": "SUCCEEDED",
+    "counts": {
+      "nodes": 1,
+      "edges": 2,
+      "syntax": 2,
+      "codeCoverage": 4,
+      "syntaxCoverage": 1,
+      "diagnostics": 0
+    }
+  },
+  "async-python": {
+    "codeOutcome": "COMPLETE",
+    "syntaxOutcome": "COMPLETE",
+    "outcome": "SUCCEEDED",
+    "counts": {
+      "nodes": 2,
+      "edges": 0,
+      "syntax": 1,
+      "codeCoverage": 4,
+      "syntaxCoverage": 1,
+      "diagnostics": 0
+    }
+  },
+  "java-only": {
+    "codeOutcome": "NOT_APPLICABLE",
+    "syntaxOutcome": "COMPLETE",
+    "outcome": "SUCCEEDED",
+    "counts": {
+      "nodes": 0,
+      "edges": 0,
+      "syntax": 2,
+      "codeCoverage": 0,
+      "syntaxCoverage": 1,
+      "diagnostics": 0
+    }
+  },
+  "mixed": {
+    "codeOutcome": "COMPLETE",
+    "syntaxOutcome": "COMPLETE",
+    "outcome": "SUCCEEDED",
+    "counts": {
+      "nodes": 1,
+      "edges": 2,
+      "syntax": 4,
+      "codeCoverage": 4,
+      "syntaxCoverage": 2,
+      "diagnostics": 0
+    }
+  },
+  "multi-import-from": {
+    "codeOutcome": "COMPLETE",
+    "syntaxOutcome": "COMPLETE",
+    "outcome": "SUCCEEDED",
+    "counts": {
+      "nodes": 1,
+      "edges": 4,
+      "syntax": 4,
+      "codeCoverage": 4,
+      "syntaxCoverage": 1,
+      "diagnostics": 0
+    }
+  },
+  "nested-repeated-values": {
+    "codeOutcome": "COMPLETE",
+    "syntaxOutcome": "COMPLETE",
+    "outcome": "SUCCEEDED",
+    "counts": {
+      "nodes": 1,
+      "edges": 2,
+      "syntax": 1,
+      "codeCoverage": 4,
+      "syntaxCoverage": 1,
+      "diagnostics": 0
+    }
+  },
+  "class-owner-gap": {
+    "codeOutcome": "PARTIAL",
+    "syntaxOutcome": "PARTIAL",
+    "outcome": "PARTIAL",
+    "counts": {
+      "nodes": 1,
+      "edges": 0,
+      "syntax": 1,
+      "codeCoverage": 4,
+      "syntaxCoverage": 1,
+      "diagnostics": 0
+    }
+  },
+  "unicode-control": {
+    "codeOutcome": "COMPLETE",
+    "syntaxOutcome": "PARTIAL",
+    "outcome": "PARTIAL",
+    "counts": {
+      "nodes": 1,
+      "edges": 0,
+      "syntax": 2,
+      "codeCoverage": 4,
+      "syntaxCoverage": 1,
+      "diagnostics": 0
+    }
+  },
+  "two-python-files": {
+    "codeOutcome": "COMPLETE",
+    "syntaxOutcome": "COMPLETE",
+    "outcome": "SUCCEEDED",
+    "counts": {
+      "nodes": 2,
+      "edges": 2,
+      "syntax": 2,
+      "codeCoverage": 8,
+      "syntaxCoverage": 2,
+      "diagnostics": 0
+    }
+  },
+  "discarded-dictionary": {
+    "codeOutcome": "PARTIAL",
+    "syntaxOutcome": "PARTIAL",
+    "outcome": "PARTIAL",
+    "counts": {
+      "nodes": 1,
+      "edges": 0,
+      "syntax": 1,
+      "codeCoverage": 4,
+      "syntaxCoverage": 1,
+      "diagnostics": 0
+    }
+  }
+}

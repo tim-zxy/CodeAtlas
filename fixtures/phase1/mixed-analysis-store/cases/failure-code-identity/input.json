@@ -1,0 +1,5 @@
+{
+  "point": "code-identity",
+  "base": "base-input.json",
+  "processExit": true
+}

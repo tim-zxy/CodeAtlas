@@ -1,0 +1,20 @@
+{
+  "domain": "codeatlas-code-activation-v1",
+  "groups": [
+    {
+      "tag": "COVERAGE",
+      "entries": [
+        {
+          "key": ["s", "NODE", "NONE", "", "COMPLETE"],
+          "value": {
+            "providerSnapshotId": "s",
+            "capabilityName": "NODE",
+            "sourceFileId": null,
+            "status": "COMPLETE",
+            "multiplicity": 2
+          }
+        }
+      ]
+    }
+  ]
+}

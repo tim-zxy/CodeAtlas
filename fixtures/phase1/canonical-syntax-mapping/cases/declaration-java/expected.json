@@ -1,0 +1,76 @@
+{
+  "envelope": {
+    "schema": "codeatlas.syntax-evidence",
+    "version": 1,
+    "payload": {
+      "id": "syntax:3ac482670410213cca55610162951b5133b713c354163333e5f15e5683ec99f0",
+      "repositoryId": "repo-fixture",
+      "revisionId": "rev-a",
+      "sourceFingerprint": "fa9a07e5b149109de9313e541101b3363a014b87e18f469e91643781ed2833c1",
+      "sourceRange": {
+        "sourceFileId": "source-fixture",
+        "startLine": 0,
+        "startColumn": 25,
+        "endLine": 0,
+        "endColumn": 68
+      },
+      "syntaxKind": "DECLARATION",
+      "owner": {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo-fixture",
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "node-owner",
+          "revisionId": "rev-a"
+        }
+      },
+      "payload": {
+        "declaredType": "void",
+        "parameterNames": [],
+        "modifiers": []
+      },
+      "syntaxKey": "syntax-key-v1:b6e36318bec9c13bb988cb9ed8aa617a919b4e54471507c7eddf80fbc93936e4",
+      "supportRefs": [
+        {
+          "basis": {
+            "repositoryId": "repo-fixture",
+            "revisionId": "rev-a",
+            "contentFingerprint": "mapping-target",
+            "codeActivationDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "entity": {
+            "kind": "CODE_NODE",
+            "id": "node-owner",
+            "revisionId": "rev-a"
+          },
+          "valueDigest": "4c64a8ed65c52cbfa3820f9bc6af1811d245d7ad944bde3e8237253fff32c1dc"
+        },
+        {
+          "basis": {
+            "repositoryId": "repo-fixture",
+            "revisionId": "rev-a",
+            "contentFingerprint": "mapping-target",
+            "codeActivationDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "entity": {
+            "kind": "SOURCE_FILE",
+            "id": "source-fixture",
+            "revisionId": "rev-a"
+          },
+          "valueDigest": "3c204001f4fbdf7b68013d8dbf333bf6f5a45e95bf844ffa340bc16ed311ea3f"
+        }
+      ],
+      "confidence": {
+        "score": 0.5,
+        "method": "syntax-surface-support-v1",
+        "reasons": [
+          "DECLARED_SOURCE_CONTEXT_MATCHED",
+          "SYNTAX_PAYLOAD_VALIDATED",
+          "REQUIRED_SUPPORTS_CLOSED"
+        ]
+      },
+      "extractionVersion": "syntax-extraction-v1:a294595a10ef89fc89aa2fa923caf5e692ebf5b86e2a7c3ececfe2756b5dcfbc"
+    }
+  },
+  "confidenceMeaning": "NORMATIVE_NOT_PROBABILITY"
+}

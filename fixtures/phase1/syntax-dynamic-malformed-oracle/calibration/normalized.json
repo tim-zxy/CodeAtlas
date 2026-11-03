@@ -1,0 +1,56 @@
+{
+  "nodePairs": [
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "python-symbol-v1:cdddb41f1bba7e1339eb9fa293477518167ea3342ff89e3cb9bc159d10767a98"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:4659fe2007e4a7af30da5baf7853f8907b5230e2e3d3f4980ce12b8c3f45b637",
+        "factKey": "node-fact-v1:01d5c10774aa1493d05db659c5043dde3d8b32f6c11d15c7c19ab4a36eab1bd0",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "broken_fixture",
+        "qualifiedName": "app.py::broken_fixture",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 1,
+          "startColumn": 4,
+          "endLine": 1,
+          "endColumn": 18
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION"
+      }
+    },
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+        "factKey": "node-fact-v1:9f87fdd184180db6f32fe351dc70bd34a7f1d2baebfa5f06eb7714f1cb1f3dc5",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "name": "app.py",
+        "qualifiedName": "app.py",
+        "sourceRange": null,
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "MODULE"
+      }
+    }
+  ],
+  "edgePairs": []
+}

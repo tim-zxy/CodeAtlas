@@ -1,0 +1,188 @@
+[
+  {
+    "id": "migration",
+    "family": "R01",
+    "input": "cases/migration/input.json",
+    "expected": "cases/migration/expected.json"
+  },
+  {
+    "id": "constraints",
+    "family": "R02",
+    "input": "cases/constraints/input.json",
+    "expected": "cases/constraints/expected.json"
+  },
+  {
+    "id": "legacy",
+    "family": "R03",
+    "input": "cases/legacy/input.json",
+    "expected": "cases/legacy/expected.json"
+  },
+  {
+    "id": "old-code",
+    "family": "R04",
+    "input": "cases/old-code/input.json",
+    "expected": "cases/old-code/expected.json"
+  },
+  {
+    "id": "available",
+    "family": "R06",
+    "input": "cases/available/input.json",
+    "expected": "cases/available/expected.json"
+  },
+  {
+    "id": "empty-code",
+    "family": "R06",
+    "input": "cases/empty-code/input.json",
+    "expected": "cases/empty-code/expected.json"
+  },
+  {
+    "id": "multiple-originals",
+    "family": "R06",
+    "input": "cases/multiple-originals/input.json",
+    "expected": "cases/multiple-originals/expected.json"
+  },
+  {
+    "id": "unicode",
+    "family": "R06",
+    "input": "cases/unicode/input.json",
+    "expected": "cases/unicode/expected.json"
+  },
+  {
+    "id": "handles",
+    "family": "R08",
+    "input": "cases/handles/input.json",
+    "expected": "cases/handles/expected.json"
+  },
+  {
+    "id": "budgets",
+    "family": "R09",
+    "input": "cases/budgets/input.json",
+    "expected": "cases/budgets/expected.json"
+  },
+  {
+    "id": "readonly-reopen",
+    "family": "R11",
+    "input": "cases/readonly-reopen/input.json",
+    "expected": "cases/readonly-reopen/expected.json"
+  },
+  {
+    "id": "registration",
+    "family": "R12",
+    "input": "cases/registration/input.json",
+    "expected": "cases/registration/expected.json"
+  },
+  {
+    "id": "no-history",
+    "family": "R06",
+    "input": "cases/no-history/input.json",
+    "expected": "cases/no-history/expected.json"
+  },
+  {
+    "id": "unindexed",
+    "family": "R06",
+    "input": "cases/unindexed/input.json",
+    "expected": "cases/unindexed/expected.json"
+  },
+  {
+    "id": "missing-target",
+    "family": "R06",
+    "input": "cases/missing-target/input.json",
+    "expected": "cases/missing-target/expected.json"
+  },
+  {
+    "id": "syntax",
+    "family": "R07",
+    "input": "cases/syntax/input.json",
+    "expected": "cases/syntax/expected.json"
+  },
+  {
+    "id": "syntax-ancestor",
+    "family": "R07",
+    "input": "cases/syntax-ancestor/input.json",
+    "expected": "cases/syntax-ancestor/expected.json"
+  },
+  {
+    "id": "advanced-source",
+    "family": "R10",
+    "input": "cases/advanced-source/input.json",
+    "expected": "cases/advanced-source/expected.json"
+  },
+  {
+    "id": "bad-manifest-hash",
+    "family": "R06",
+    "input": "cases/bad-manifest-hash/input.json",
+    "expected": "cases/bad-manifest-hash/expected.json"
+  },
+  {
+    "id": "extra-field",
+    "family": "R06",
+    "input": "cases/extra-field/input.json",
+    "expected": "cases/extra-field/expected.json"
+  },
+  {
+    "id": "code-drift",
+    "family": "R06",
+    "input": "cases/code-drift/input.json",
+    "expected": "cases/code-drift/expected.json"
+  },
+  {
+    "id": "candidate-drift",
+    "family": "R06",
+    "input": "cases/candidate-drift/input.json",
+    "expected": "cases/candidate-drift/expected.json"
+  },
+  {
+    "id": "missing-coverage",
+    "family": "R06",
+    "input": "cases/missing-coverage/input.json",
+    "expected": "cases/missing-coverage/expected.json"
+  },
+  {
+    "id": "missing-support",
+    "family": "R06",
+    "input": "cases/missing-support/input.json",
+    "expected": "cases/missing-support/expected.json"
+  },
+  {
+    "id": "wrong-origin-id",
+    "family": "R07",
+    "input": "cases/wrong-origin-id/input.json",
+    "expected": "cases/wrong-origin-id/expected.json"
+  },
+  {
+    "id": "wrong-projection-id",
+    "family": "R07",
+    "input": "cases/wrong-projection-id/input.json",
+    "expected": "cases/wrong-projection-id/expected.json"
+  },
+  {
+    "id": "wrong-member",
+    "family": "R07",
+    "input": "cases/wrong-member/input.json",
+    "expected": "cases/wrong-member/expected.json"
+  },
+  {
+    "id": "noncanonical-json",
+    "family": "R06",
+    "input": "cases/noncanonical-json/input.json",
+    "expected": "cases/noncanonical-json/expected.json"
+  },
+  {
+    "id": "duplicate-key",
+    "family": "R06",
+    "input": "cases/duplicate-key/input.json",
+    "expected": "cases/duplicate-key/expected.json"
+  },
+  {
+    "id": "encoding",
+    "family": "R05",
+    "input": "cases/encoding/input.json",
+    "expected": "cases/encoding/expected.json"
+  },
+  {
+    "id": "empty-code-complete",
+    "family": "R06",
+    "input": "cases/empty-code-complete/input.json",
+    "expected": "cases/empty-code-complete/expected.json"
+  }
+]

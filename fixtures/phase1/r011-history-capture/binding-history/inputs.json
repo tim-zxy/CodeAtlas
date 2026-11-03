@@ -1,0 +1,10 @@
+{
+  "reference": "../../syntax-contract/binding-history/inputs.json",
+  "cases": [
+    "envelope-v2",
+    "pair-v2",
+    "wrong-projection-version",
+    "foreign-scope",
+    "unknown-version"
+  ]
+}

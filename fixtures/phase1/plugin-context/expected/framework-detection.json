@@ -1,0 +1,386 @@
+{
+  "spring-import": {
+    "matched": true,
+    "support": [
+      {
+        "kind": "CANONICAL",
+        "ref": {
+          "factType": "EDGE",
+          "id": "edge:spring"
+        }
+      }
+    ],
+    "diagnostics": []
+  },
+  "mongo-driver": {
+    "matched": true,
+    "support": [
+      {
+        "kind": "CANONICAL",
+        "ref": {
+          "factType": "EDGE",
+          "id": "edge:mongo"
+        }
+      }
+    ],
+    "diagnostics": []
+  },
+  "mongo-spring": {
+    "matched": true,
+    "support": [
+      {
+        "kind": "CANONICAL",
+        "ref": {
+          "factType": "EDGE",
+          "id": "edge:mongo-spring"
+        }
+      }
+    ],
+    "diagnostics": []
+  },
+  "kafka-client": {
+    "matched": true,
+    "support": [
+      {
+        "kind": "CANONICAL",
+        "ref": {
+          "factType": "EDGE",
+          "id": "edge:kafka"
+        }
+      }
+    ],
+    "diagnostics": []
+  },
+  "fastapi-import": {
+    "matched": true,
+    "support": [
+      {
+        "kind": "CANONICAL",
+        "ref": {
+          "factType": "EDGE",
+          "id": "edge:fastapi"
+        }
+      }
+    ],
+    "diagnostics": []
+  },
+  "spring-prefix-collision": {
+    "matched": false,
+    "support": [],
+    "diagnostics": []
+  },
+  "mongo-prefix-collision": {
+    "matched": false,
+    "support": [],
+    "diagnostics": []
+  },
+  "kafka-prefix-collision": {
+    "matched": false,
+    "support": [],
+    "diagnostics": []
+  },
+  "fastapi-prefix-collision": {
+    "matched": false,
+    "support": [],
+    "diagnostics": []
+  },
+  "simple-custom-names": {
+    "matched": false,
+    "support": [],
+    "diagnostics": []
+  },
+  "custom-qualified-route": {
+    "matched": false,
+    "support": [],
+    "diagnostics": []
+  },
+  "non-import-is-not-proof": {
+    "matched": false,
+    "support": [],
+    "diagnostics": []
+  },
+  "missing-import-no-stale-result": {
+    "matched": false,
+    "support": [],
+    "diagnostics": []
+  },
+  "missing-location": {
+    "matched": false,
+    "support": [],
+    "diagnostics": []
+  },
+  "missing-language": {
+    "matched": false,
+    "support": [],
+    "diagnostics": []
+  },
+  "wrong-language": {
+    "matched": false,
+    "support": [],
+    "diagnostics": []
+  },
+  "java-wildcard-erased": {
+    "matched": true,
+    "support": [
+      {
+        "kind": "CANONICAL",
+        "ref": {
+          "factType": "EDGE",
+          "id": "edge:wildcard"
+        }
+      }
+    ],
+    "diagnostics": []
+  },
+  "literal-star-unverified": {
+    "matched": false,
+    "support": [],
+    "diagnostics": [
+      {
+        "code": "FRAMEWORK_IMPORT_UNVERIFIED",
+        "severity": "WARNING",
+        "message": "Framework import is not verified",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 0,
+          "startColumn": 0,
+          "endLine": 1,
+          "endColumn": 2
+        }
+      }
+    ]
+  },
+  "empty-segment-unverified": {
+    "matched": false,
+    "support": [],
+    "diagnostics": [
+      {
+        "code": "FRAMEWORK_IMPORT_UNVERIFIED",
+        "severity": "WARNING",
+        "message": "Framework import is not verified",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 0,
+          "startColumn": 0,
+          "endLine": 1,
+          "endColumn": 2
+        }
+      }
+    ]
+  },
+  "punctuation-unverified": {
+    "matched": false,
+    "support": [],
+    "diagnostics": [
+      {
+        "code": "FRAMEWORK_IMPORT_UNVERIFIED",
+        "severity": "WARNING",
+        "message": "Framework import is not verified",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 0,
+          "startColumn": 0,
+          "endLine": 1,
+          "endColumn": 2
+        }
+      }
+    ]
+  },
+  "python-wildcard-no-edge": {
+    "matched": false,
+    "support": [],
+    "diagnostics": []
+  },
+  "python-alias-import-original": {
+    "matched": true,
+    "support": [
+      {
+        "kind": "CANONICAL",
+        "ref": {
+          "factType": "EDGE",
+          "id": "edge:alias"
+        }
+      }
+    ],
+    "diagnostics": []
+  },
+  "resolved-exact": {
+    "matched": true,
+    "support": [
+      {
+        "kind": "CANONICAL",
+        "ref": {
+          "factType": "EDGE",
+          "id": "edge:resolved"
+        }
+      }
+    ],
+    "diagnostics": []
+  },
+  "resolved-heuristic": {
+    "matched": false,
+    "support": [],
+    "diagnostics": [
+      {
+        "code": "FRAMEWORK_IMPORT_UNVERIFIED",
+        "severity": "WARNING",
+        "message": "Framework import is not verified",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 0,
+          "startColumn": 0,
+          "endLine": 1,
+          "endColumn": 2
+        }
+      }
+    ]
+  },
+  "ambiguous-import": {
+    "matched": false,
+    "support": [],
+    "diagnostics": [
+      {
+        "code": "FRAMEWORK_IMPORT_UNVERIFIED",
+        "severity": "WARNING",
+        "message": "Framework import is not verified",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 0,
+          "startColumn": 0,
+          "endLine": 1,
+          "endColumn": 2
+        }
+      }
+    ]
+  },
+  "unsupported-import": {
+    "matched": false,
+    "support": [],
+    "diagnostics": [
+      {
+        "code": "FRAMEWORK_IMPORT_UNVERIFIED",
+        "severity": "WARNING",
+        "message": "Framework import is not verified",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 0,
+          "startColumn": 0,
+          "endLine": 1,
+          "endColumn": 2
+        }
+      }
+    ]
+  },
+  "unresolved-with-candidate": {
+    "matched": false,
+    "support": [],
+    "diagnostics": [
+      {
+        "code": "FRAMEWORK_IMPORT_UNVERIFIED",
+        "severity": "WARNING",
+        "message": "Framework import is not verified",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 0,
+          "startColumn": 0,
+          "endLine": 1,
+          "endColumn": 2
+        }
+      }
+    ]
+  },
+  "overlap-spring": {
+    "matched": true,
+    "support": [
+      {
+        "kind": "CANONICAL",
+        "ref": {
+          "factType": "EDGE",
+          "id": "edge:overlap"
+        }
+      }
+    ],
+    "diagnostics": []
+  },
+  "overlap-kafka": {
+    "matched": true,
+    "support": [
+      {
+        "kind": "CANONICAL",
+        "ref": {
+          "factType": "EDGE",
+          "id": "edge:overlap"
+        }
+      }
+    ],
+    "diagnostics": []
+  },
+  "supports-sort-by-fact-key": {
+    "matched": true,
+    "support": [
+      {
+        "kind": "CANONICAL",
+        "ref": {
+          "factType": "EDGE",
+          "id": "edge:a"
+        }
+      },
+      {
+        "kind": "CANONICAL",
+        "ref": {
+          "factType": "EDGE",
+          "id": "edge:z"
+        }
+      }
+    ],
+    "diagnostics": []
+  },
+  "diagnostics-sorted-and-deduplicated": {
+    "matched": false,
+    "support": [],
+    "diagnostics": [
+      {
+        "code": "FRAMEWORK_IMPORT_UNVERIFIED",
+        "severity": "WARNING",
+        "message": "Framework import is not verified",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 0,
+          "startColumn": 0,
+          "endLine": 1,
+          "endColumn": 2
+        }
+      }
+    ]
+  },
+  "diagnostics-source-position-order": {
+    "matched": false,
+    "support": [],
+    "diagnostics": [
+      {
+        "code": "FRAMEWORK_IMPORT_UNVERIFIED",
+        "severity": "WARNING",
+        "message": "Framework import is not verified",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 0,
+          "startColumn": 0,
+          "endLine": 1,
+          "endColumn": 2
+        }
+      },
+      {
+        "code": "FRAMEWORK_IMPORT_UNVERIFIED",
+        "severity": "WARNING",
+        "message": "Framework import is not verified",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 4,
+          "startColumn": 0,
+          "endLine": 5,
+          "endColumn": 2
+        }
+      }
+    ]
+  }
+}

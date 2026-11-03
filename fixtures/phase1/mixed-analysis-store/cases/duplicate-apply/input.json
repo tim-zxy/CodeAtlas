@@ -1,0 +1,4 @@
+{
+  "scenario": "duplicate-apply",
+  "base": "base-input.json"
+}

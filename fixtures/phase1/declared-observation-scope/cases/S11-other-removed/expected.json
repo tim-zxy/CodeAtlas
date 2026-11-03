@@ -1,0 +1,161 @@
+{
+  "scope": {
+    "kind": "DECLARED_NATIVE_OBSERVATION_SCOPE",
+    "mode": "NO_OBSERVATION",
+    "targetSource": {
+      "repositoryId": "repo:history",
+      "revisionId": "revision:worktree",
+      "contentFingerprint": "content:scope:S11-other-removed"
+    },
+    "diff": [
+      {
+        "kind": "UNCHANGED",
+        "before": {
+          "id": "a",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "a.py",
+          "contentFingerprint": "content:a",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "python",
+          "sensitivity": "INTERNAL"
+        },
+        "after": {
+          "id": "a",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "a.py",
+          "contentFingerprint": "content:a",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "python",
+          "sensitivity": "INTERNAL"
+        }
+      },
+      {
+        "kind": "UNCHANGED",
+        "before": {
+          "id": "b",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "b.py",
+          "contentFingerprint": "content:b",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "python",
+          "sensitivity": "INTERNAL"
+        },
+        "after": {
+          "id": "b",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "b.py",
+          "contentFingerprint": "content:b",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "python",
+          "sensitivity": "INTERNAL"
+        }
+      },
+      {
+        "kind": "REMOVED",
+        "before": {
+          "id": "doc",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "notes.md",
+          "contentFingerprint": "content:doc",
+          "classification": {
+            "role": "OTHER",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": null,
+          "sensitivity": "INTERNAL"
+        },
+        "after": null
+      },
+      {
+        "kind": "UNCHANGED",
+        "before": {
+          "id": "j",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "J.java",
+          "contentFingerprint": "content:j",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "java",
+          "sensitivity": "INTERNAL"
+        },
+        "after": {
+          "id": "j",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "J.java",
+          "contentFingerprint": "content:j",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "java",
+          "sensitivity": "INTERNAL"
+        }
+      },
+      {
+        "kind": "UNCHANGED",
+        "before": {
+          "id": "k",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "K.java",
+          "contentFingerprint": "content:k",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "java",
+          "sensitivity": "INTERNAL"
+        },
+        "after": {
+          "id": "k",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "K.java",
+          "contentFingerprint": "content:k",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "java",
+          "sensitivity": "INTERNAL"
+        }
+      }
+    ],
+    "requiredUnits": [],
+    "removedSourceFileIds": ["doc"],
+    "provenance": {
+      "kind": "DECLARED_INPUT",
+      "historyActivationId": "activation:old"
+    }
+  }
+}

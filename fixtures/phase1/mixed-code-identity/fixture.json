@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "p1-mixed-code-identity-v1",
+  "category": "code-intelligence",
+  "phase": "1",
+  "languages": [],
+  "frameworks": [],
+  "capabilities": ["MIXED_CODE_IDENTITY_COMPONENT_ONLY"],
+  "inputs": {
+    "cases": "cases.json",
+    "provenance": "provenance.json"
+  },
+  "expected": {
+    "cases": "cases.json"
+  },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

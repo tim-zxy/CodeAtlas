@@ -1,0 +1,485 @@
+{
+  "schemaVersion": 1,
+  "kind": "SEALED_COMPONENT_REFERENCE_TRANSFER",
+  "qualification": "DECLARED_COMPONENT_ONLY",
+  "sourceCheckpoint": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/store-aba-component-verification.json",
+  "groups": [
+    "runtime-delta-independent-v4",
+    "owner-scope-independent",
+    "early-java-independent-v2",
+    "stage-observation-independent",
+    "stage-freeze-independent",
+    "store-row-independent"
+  ],
+  "files": [
+    {
+      "path": "runtime-delta-independent-v4/delete-all.json",
+      "sha256": "16fea874159b236db25531337540818363148bc98ef7bf71a1c0575c2782db8d",
+      "sourceEvidence": {
+        "path": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/runtime-delta-independent-v4/delete-all.json",
+        "sha256": "16fea874159b236db25531337540818363148bc98ef7bf71a1c0575c2782db8d"
+      },
+      "provenance": "Previously sealed declared component input; this transfer changes no input or expected byte.",
+      "byteLength": 58217,
+      "asset": "runtime-delta-independent-v4/delete-all.json.gz",
+      "encoding": "gzip",
+      "assetSha256": "271912c2a46efd15ae4881cbcc2d2bc9491ad320bcd921e5671e25ccbe01288c"
+    },
+    {
+      "path": "runtime-delta-independent-v4/delete-python.json",
+      "sha256": "6a0efc1276a9a5a8e215a9e23786a67b17f66ad96432c9ba3e515959b1b2833f",
+      "sourceEvidence": {
+        "path": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/runtime-delta-independent-v4/delete-python.json",
+        "sha256": "6a0efc1276a9a5a8e215a9e23786a67b17f66ad96432c9ba3e515959b1b2833f"
+      },
+      "provenance": "Previously sealed declared component input; this transfer changes no input or expected byte.",
+      "byteLength": 80948,
+      "asset": "runtime-delta-independent-v4/delete-python.json.gz",
+      "encoding": "gzip",
+      "assetSha256": "912aba5ec1851c2a5bac9a78f6f97d2e0a98d438d543ea1d812e769260c5ca39"
+    },
+    {
+      "path": "runtime-delta-independent-v4/I01-output.jsonl",
+      "sha256": "8f50c89b7a6936731ae311fb9ae8d7015b58501b266d8781ed771e9dc3d36d78",
+      "sourceEvidence": {
+        "path": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/runtime-delta-independent-v4/I01-output.jsonl",
+        "sha256": "8f50c89b7a6936731ae311fb9ae8d7015b58501b266d8781ed771e9dc3d36d78"
+      },
+      "provenance": "Previously sealed declared component input; this transfer changes no input or expected byte.",
+      "byteLength": 4455,
+      "asset": "runtime-delta-independent-v4/I01-output.jsonl",
+      "encoding": "identity",
+      "assetSha256": "8f50c89b7a6936731ae311fb9ae8d7015b58501b266d8781ed771e9dc3d36d78"
+    },
+    {
+      "path": "runtime-delta-independent-v4/I01-request.jsonl",
+      "sha256": "190b85553ff891196e6b9017876855aaf0cd93ede12054aa6895e1849b71d341",
+      "sourceEvidence": {
+        "path": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/runtime-delta-independent-v4/I01-request.jsonl",
+        "sha256": "190b85553ff891196e6b9017876855aaf0cd93ede12054aa6895e1849b71d341"
+      },
+      "provenance": "Previously sealed declared component input; this transfer changes no input or expected byte.",
+      "byteLength": 1562,
+      "asset": "runtime-delta-independent-v4/I01-request.jsonl",
+      "encoding": "identity",
+      "assetSha256": "190b85553ff891196e6b9017876855aaf0cd93ede12054aa6895e1849b71d341"
+    },
+    {
+      "path": "runtime-delta-independent-v4/I02-output.jsonl",
+      "sha256": "5927a56589450003cbab8e629ccf7b768b480d3ecb79d8925f67bc7b4e0e5c23",
+      "sourceEvidence": {
+        "path": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/runtime-delta-independent-v4/I02-output.jsonl",
+        "sha256": "5927a56589450003cbab8e629ccf7b768b480d3ecb79d8925f67bc7b4e0e5c23"
+      },
+      "provenance": "Previously sealed declared component input; this transfer changes no input or expected byte.",
+      "byteLength": 2472,
+      "asset": "runtime-delta-independent-v4/I02-output.jsonl",
+      "encoding": "identity",
+      "assetSha256": "5927a56589450003cbab8e629ccf7b768b480d3ecb79d8925f67bc7b4e0e5c23"
+    },
+    {
+      "path": "runtime-delta-independent-v4/I02-request.jsonl",
+      "sha256": "84966e11da1de33ff9181665f0d455a18cd4fa0df8a9c87cf16d874ff74fe788",
+      "sourceEvidence": {
+        "path": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/runtime-delta-independent-v4/I02-request.jsonl",
+        "sha256": "84966e11da1de33ff9181665f0d455a18cd4fa0df8a9c87cf16d874ff74fe788"
+      },
+      "provenance": "Previously sealed declared component input; this transfer changes no input or expected byte.",
+      "byteLength": 4015,
+      "asset": "runtime-delta-independent-v4/I02-request.jsonl",
+      "encoding": "identity",
+      "assetSha256": "84966e11da1de33ff9181665f0d455a18cd4fa0df8a9c87cf16d874ff74fe788"
+    },
+    {
+      "path": "runtime-delta-independent-v4/I03-output.jsonl",
+      "sha256": "69d38d2b97eccf31aadda341def8251fc9a7dd8ab093ac3e28fa90c2493a1825",
+      "sourceEvidence": {
+        "path": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/runtime-delta-independent-v4/I03-output.jsonl",
+        "sha256": "69d38d2b97eccf31aadda341def8251fc9a7dd8ab093ac3e28fa90c2493a1825"
+      },
+      "provenance": "Previously sealed declared component input; this transfer changes no input or expected byte.",
+      "byteLength": 4315,
+      "asset": "runtime-delta-independent-v4/I03-output.jsonl",
+      "encoding": "identity",
+      "assetSha256": "69d38d2b97eccf31aadda341def8251fc9a7dd8ab093ac3e28fa90c2493a1825"
+    },
+    {
+      "path": "runtime-delta-independent-v4/I03-request.jsonl",
+      "sha256": "8f8a5c1f6e61617f79a3556665a13685b54e3bd2e9f7fa2f4874e67f0a055c5a",
+      "sourceEvidence": {
+        "path": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/runtime-delta-independent-v4/I03-request.jsonl",
+        "sha256": "8f8a5c1f6e61617f79a3556665a13685b54e3bd2e9f7fa2f4874e67f0a055c5a"
+      },
+      "provenance": "Previously sealed declared component input; this transfer changes no input or expected byte.",
+      "byteLength": 1529,
+      "asset": "runtime-delta-independent-v4/I03-request.jsonl",
+      "encoding": "identity",
+      "assetSha256": "8f8a5c1f6e61617f79a3556665a13685b54e3bd2e9f7fa2f4874e67f0a055c5a"
+    },
+    {
+      "path": "runtime-delta-independent-v4/index.json",
+      "sha256": "84ea02c5c7f79139a9a500564c1d96e87f558a3da57111f913d17b0e959d051d",
+      "sourceEvidence": {
+        "path": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/runtime-delta-independent-v4/index.json",
+        "sha256": "84ea02c5c7f79139a9a500564c1d96e87f558a3da57111f913d17b0e959d051d"
+      },
+      "provenance": "Previously sealed declared component input; this transfer changes no input or expected byte.",
+      "byteLength": 151,
+      "asset": "runtime-delta-independent-v4/index.json.gz",
+      "encoding": "gzip",
+      "assetSha256": "b9414a098c0eea2e1f29272603ec497e8f8836bb71ac10d6c6fbf7522eccdc26"
+    },
+    {
+      "path": "runtime-delta-independent-v4/noop-empty.json",
+      "sha256": "14f839728cee440e54c17d538fc8061ec595c3cdbe7c3c2a4e5a37c254f050b3",
+      "sourceEvidence": {
+        "path": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/runtime-delta-independent-v4/noop-empty.json",
+        "sha256": "14f839728cee440e54c17d538fc8061ec595c3cdbe7c3c2a4e5a37c254f050b3"
+      },
+      "provenance": "Previously sealed declared component input; this transfer changes no input or expected byte.",
+      "byteLength": 4790,
+      "asset": "runtime-delta-independent-v4/noop-empty.json.gz",
+      "encoding": "gzip",
+      "assetSha256": "1ab6ceaaa9ae7e95731531581e56b3fa7d302ac4d91ecada59a4e3a106e91af7"
+    },
+    {
+      "path": "runtime-delta-independent-v4/noop-java-only.json",
+      "sha256": "6b602fb4bb3dca722eefbb4331d71d1ea8b366ffff81c66d204241d6bb29f454",
+      "sourceEvidence": {
+        "path": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/runtime-delta-independent-v4/noop-java-only.json",
+        "sha256": "6b602fb4bb3dca722eefbb4331d71d1ea8b366ffff81c66d204241d6bb29f454"
+      },
+      "provenance": "Previously sealed declared component input; this transfer changes no input or expected byte.",
+      "byteLength": 21391,
+      "asset": "runtime-delta-independent-v4/noop-java-only.json.gz",
+      "encoding": "gzip",
+      "assetSha256": "387c28006ad633b5bf9d9e8d74ef5d32c3a1be0ca98d7415da5ed2d99c16b07e"
+    },
+    {
+      "path": "runtime-delta-independent-v4/noop-mixed.json",
+      "sha256": "e070561549374255d56fab7a6f629ebf554b7d47cd1e698013bc2d21f9b88364",
+      "sourceEvidence": {
+        "path": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/runtime-delta-independent-v4/noop-mixed.json",
+        "sha256": "e070561549374255d56fab7a6f629ebf554b7d47cd1e698013bc2d21f9b88364"
+      },
+      "provenance": "Previously sealed declared component input; this transfer changes no input or expected byte.",
+      "byteLength": 50608,
+      "asset": "runtime-delta-independent-v4/noop-mixed.json.gz",
+      "encoding": "gzip",
+      "assetSha256": "42ee601be308890763138852435c50cb7f4e1ab7a98ea958b8c6827907af446a"
+    },
+    {
+      "path": "runtime-delta-independent-v4/noop-python-only.json",
+      "sha256": "4a52a78422a5059f3848da739115dbca0f2681600e72a6572b1b635c6089d9ef",
+      "sourceEvidence": {
+        "path": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/runtime-delta-independent-v4/noop-python-only.json",
+        "sha256": "4a52a78422a5059f3848da739115dbca0f2681600e72a6572b1b635c6089d9ef"
+      },
+      "provenance": "Previously sealed declared component input; this transfer changes no input or expected byte.",
+      "byteLength": 33896,
+      "asset": "runtime-delta-independent-v4/noop-python-only.json.gz",
+      "encoding": "gzip",
+      "assetSha256": "75274f0ce7914d7e8cdffe077651fd1f6c443867bbc5f9fa407138784b87d29c"
+    },
+    {
+      "path": "runtime-delta-independent-v4/raw-I01.json",
+      "sha256": "2342639cbb5b14593b1888a570c17514618d8a49d2fbed4916acbf9ea8a175f6",
+      "sourceEvidence": {
+        "path": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/runtime-delta-independent-v4/raw-I01.json",
+        "sha256": "2342639cbb5b14593b1888a570c17514618d8a49d2fbed4916acbf9ea8a175f6"
+      },
+      "provenance": "Previously sealed declared component input; this transfer changes no input or expected byte.",
+      "byteLength": 68067,
+      "asset": "runtime-delta-independent-v4/raw-I01.json.gz",
+      "encoding": "gzip",
+      "assetSha256": "2f7b5817b5d1269da721d85cfcbfd0e5a552dfff6c53e71dd55c5890fb4a3cfe"
+    },
+    {
+      "path": "runtime-delta-independent-v4/raw-I02.json",
+      "sha256": "1629123a59fbd06a1e84b692b08d66979b3e027b4977d688dad9dda019c676f6",
+      "sourceEvidence": {
+        "path": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/runtime-delta-independent-v4/raw-I02.json",
+        "sha256": "1629123a59fbd06a1e84b692b08d66979b3e027b4977d688dad9dda019c676f6"
+      },
+      "provenance": "Previously sealed declared component input; this transfer changes no input or expected byte.",
+      "byteLength": 101062,
+      "asset": "runtime-delta-independent-v4/raw-I02.json.gz",
+      "encoding": "gzip",
+      "assetSha256": "cbf011962c7e076b503227d4f7dac39b39c48478654d59a784bcc0c802c8a431"
+    },
+    {
+      "path": "runtime-delta-independent-v4/raw-I03.json",
+      "sha256": "4cbac8abddd61cf88e187c0fb7eea52fb21fb89d6b9a7182be4c57ab70146536",
+      "sourceEvidence": {
+        "path": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/runtime-delta-independent-v4/raw-I03.json",
+        "sha256": "4cbac8abddd61cf88e187c0fb7eea52fb21fb89d6b9a7182be4c57ab70146536"
+      },
+      "provenance": "Previously sealed declared component input; this transfer changes no input or expected byte.",
+      "byteLength": 74535,
+      "asset": "runtime-delta-independent-v4/raw-I03.json.gz",
+      "encoding": "gzip",
+      "assetSha256": "c02d8af85385e86e1c91e91b9ff5446584009f009c17a18bd2278617de35d7d1"
+    },
+    {
+      "path": "owner-scope-independent/delta-delete-only.json",
+      "sha256": "50d7eff7f8b03aad673db3a22ee43d515bf428b1e8ec7d644b6dd9288c3fed71",
+      "sourceEvidence": {
+        "path": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/owner-scope-independent/delta-delete-only.json",
+        "sha256": "50d7eff7f8b03aad673db3a22ee43d515bf428b1e8ec7d644b6dd9288c3fed71"
+      },
+      "provenance": "Previously sealed declared component input; this transfer changes no input or expected byte.",
+      "byteLength": 6986,
+      "asset": "owner-scope-independent/delta-delete-only.json.gz",
+      "encoding": "gzip",
+      "assetSha256": "74adb183ed8818c3005413ff694a7e86274613a91efb7fb329e010b3b39f3c91"
+    },
+    {
+      "path": "owner-scope-independent/delta-python-modified.json",
+      "sha256": "48327c959a60bf02878b89c39b3456de55f9911fec24bc317e29a7f45e435b62",
+      "sourceEvidence": {
+        "path": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/owner-scope-independent/delta-python-modified.json",
+        "sha256": "48327c959a60bf02878b89c39b3456de55f9911fec24bc317e29a7f45e435b62"
+      },
+      "provenance": "Previously sealed declared component input; this transfer changes no input or expected byte.",
+      "byteLength": 7395,
+      "asset": "owner-scope-independent/delta-python-modified.json.gz",
+      "encoding": "gzip",
+      "assetSha256": "b4796003eb27825e413d7f8464b78f4896f499c31b14dab162e7736a48d62fd1"
+    },
+    {
+      "path": "owner-scope-independent/full-python.json",
+      "sha256": "5338293c541c6b20d44cb3e00ac2c48c4122a6edf43e04e155f1f13d6ba337de",
+      "sourceEvidence": {
+        "path": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/owner-scope-independent/full-python.json",
+        "sha256": "5338293c541c6b20d44cb3e00ac2c48c4122a6edf43e04e155f1f13d6ba337de"
+      },
+      "provenance": "Previously sealed declared component input; this transfer changes no input or expected byte.",
+      "byteLength": 7450,
+      "asset": "owner-scope-independent/full-python.json.gz",
+      "encoding": "gzip",
+      "assetSha256": "57e56063ee13ea9cd23a394a747cbc40fd610b62f6579ec10c91edaa3277b2f2"
+    },
+    {
+      "path": "early-java-independent-v2/java-only.json",
+      "sha256": "f26da9e56601fdb420f0be6e1425a2a52799adbdf67e3da4b04b2536088852d9",
+      "sourceEvidence": {
+        "path": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/early-java-independent-v2/java-only.json",
+        "sha256": "f26da9e56601fdb420f0be6e1425a2a52799adbdf67e3da4b04b2536088852d9"
+      },
+      "provenance": "Post-callable locator/unit context adaptation; original raw nodes and Java digest unchanged; do not call this whole file pre-product.",
+      "byteLength": 30788,
+      "asset": "early-java-independent-v2/java-only.json.gz",
+      "encoding": "gzip",
+      "assetSha256": "5b7f78827b7bad842ed99100becfd32bf68940613980abc5d89d2cda65d7fc9f"
+    },
+    {
+      "path": "early-java-independent-v2/mixed.json",
+      "sha256": "1e94151e88362ec080ab0f8db1c1f13ec50ac18bc99b8aa071aad75828cda843",
+      "sourceEvidence": {
+        "path": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/early-java-independent-v2/mixed.json",
+        "sha256": "1e94151e88362ec080ab0f8db1c1f13ec50ac18bc99b8aa071aad75828cda843"
+      },
+      "provenance": "Post-callable locator/unit context adaptation; original raw nodes and Java digest unchanged; do not call this whole file pre-product.",
+      "byteLength": 32495,
+      "asset": "early-java-independent-v2/mixed.json.gz",
+      "encoding": "gzip",
+      "assetSha256": "cbcfdecc59b729da363366b6131fff94bdd52fb45590a1b49fa0674686856a94"
+    },
+    {
+      "path": "stage-observation-independent/java-only-output.jsonl",
+      "sha256": "4498f99f364b403ed446389b43feb22b8091f6c8cb3894a6d2a9aa95ba0d564b",
+      "sourceEvidence": {
+        "path": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/stage-observation-independent/java-only-output.jsonl",
+        "sha256": "4498f99f364b403ed446389b43feb22b8091f6c8cb3894a6d2a9aa95ba0d564b"
+      },
+      "provenance": "Source-only context/owner/raw rebinding independently frozen before Stage Java/accept implementation.",
+      "byteLength": 2287,
+      "asset": "stage-observation-independent/java-only-output.jsonl",
+      "encoding": "identity",
+      "assetSha256": "4498f99f364b403ed446389b43feb22b8091f6c8cb3894a6d2a9aa95ba0d564b"
+    },
+    {
+      "path": "stage-observation-independent/java-only-request.jsonl",
+      "sha256": "890dc44697f5655f95add3a0af4f351c0579e5d1bcde971adadca49ba3ed34aa",
+      "sourceEvidence": {
+        "path": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/stage-observation-independent/java-only-request.jsonl",
+        "sha256": "890dc44697f5655f95add3a0af4f351c0579e5d1bcde971adadca49ba3ed34aa"
+      },
+      "provenance": "Source-only context/owner/raw rebinding independently frozen before Stage Java/accept implementation.",
+      "byteLength": 1695,
+      "asset": "stage-observation-independent/java-only-request.jsonl",
+      "encoding": "identity",
+      "assetSha256": "890dc44697f5655f95add3a0af4f351c0579e5d1bcde971adadca49ba3ed34aa"
+    },
+    {
+      "path": "stage-observation-independent/java-only.json",
+      "sha256": "cafff113a8b251711f03c7f2382567ae52fef77a7ccb0f9d2783e492ad5c6567",
+      "sourceEvidence": {
+        "path": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/stage-observation-independent/java-only.json",
+        "sha256": "cafff113a8b251711f03c7f2382567ae52fef77a7ccb0f9d2783e492ad5c6567"
+      },
+      "provenance": "Source-only context/owner/raw rebinding independently frozen before Stage Java/accept implementation.",
+      "byteLength": 27256,
+      "asset": "stage-observation-independent/java-only.json.gz",
+      "encoding": "gzip",
+      "assetSha256": "d2d1eb7e6837674e8b750923fa7a2a35cd8eda3b93916ee3ae6daeecfb8b6d5d"
+    },
+    {
+      "path": "stage-observation-independent/mixed-output.jsonl",
+      "sha256": "52a66409eea2414fdaecba57e7667073276504c2ed1c461074eaeebab0c282a0",
+      "sourceEvidence": {
+        "path": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/stage-observation-independent/mixed-output.jsonl",
+        "sha256": "52a66409eea2414fdaecba57e7667073276504c2ed1c461074eaeebab0c282a0"
+      },
+      "provenance": "Source-only context/owner/raw rebinding independently frozen before Stage Java/accept implementation.",
+      "byteLength": 8037,
+      "asset": "stage-observation-independent/mixed-output.jsonl",
+      "encoding": "identity",
+      "assetSha256": "52a66409eea2414fdaecba57e7667073276504c2ed1c461074eaeebab0c282a0"
+    },
+    {
+      "path": "stage-observation-independent/mixed-request.jsonl",
+      "sha256": "a1bea975a6e30feefdcd2f33e07afa3d9cd168b86b6fc35b754d2d481e6bd0c0",
+      "sourceEvidence": {
+        "path": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/stage-observation-independent/mixed-request.jsonl",
+        "sha256": "a1bea975a6e30feefdcd2f33e07afa3d9cd168b86b6fc35b754d2d481e6bd0c0"
+      },
+      "provenance": "Source-only context/owner/raw rebinding independently frozen before Stage Java/accept implementation.",
+      "byteLength": 2119,
+      "asset": "stage-observation-independent/mixed-request.jsonl",
+      "encoding": "identity",
+      "assetSha256": "a1bea975a6e30feefdcd2f33e07afa3d9cd168b86b6fc35b754d2d481e6bd0c0"
+    },
+    {
+      "path": "stage-observation-independent/mixed.json",
+      "sha256": "165fee9f7588c62662d745c9dda49baab4ab641a18779a1c2e83dcdff13d8b1c",
+      "sourceEvidence": {
+        "path": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/stage-observation-independent/mixed.json",
+        "sha256": "165fee9f7588c62662d745c9dda49baab4ab641a18779a1c2e83dcdff13d8b1c"
+      },
+      "provenance": "Source-only context/owner/raw rebinding independently frozen before Stage Java/accept implementation.",
+      "byteLength": 28706,
+      "asset": "stage-observation-independent/mixed.json.gz",
+      "encoding": "gzip",
+      "assetSha256": "0248f1267989abafb2ef32474204f8de71229d464ab08c73339ad4d243c6cb64"
+    },
+    {
+      "path": "stage-observation-independent/python-only-output.jsonl",
+      "sha256": "923a37ed184817c2144d471664c2de71b9cd8b4703e62c538fc742552f2cf2ca",
+      "sourceEvidence": {
+        "path": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/stage-observation-independent/python-only-output.jsonl",
+        "sha256": "923a37ed184817c2144d471664c2de71b9cd8b4703e62c538fc742552f2cf2ca"
+      },
+      "provenance": "Source-only context/owner/raw rebinding independently frozen before Stage Java/accept implementation.",
+      "byteLength": 7446,
+      "asset": "stage-observation-independent/python-only-output.jsonl",
+      "encoding": "identity",
+      "assetSha256": "923a37ed184817c2144d471664c2de71b9cd8b4703e62c538fc742552f2cf2ca"
+    },
+    {
+      "path": "stage-observation-independent/python-only-request.jsonl",
+      "sha256": "56889ba555597663524f23ed47871e4a68162fe6839badd01b855dbb9718eb46",
+      "sourceEvidence": {
+        "path": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/stage-observation-independent/python-only-request.jsonl",
+        "sha256": "56889ba555597663524f23ed47871e4a68162fe6839badd01b855dbb9718eb46"
+      },
+      "provenance": "Source-only context/owner/raw rebinding independently frozen before Stage Java/accept implementation.",
+      "byteLength": 1376,
+      "asset": "stage-observation-independent/python-only-request.jsonl",
+      "encoding": "identity",
+      "assetSha256": "56889ba555597663524f23ed47871e4a68162fe6839badd01b855dbb9718eb46"
+    },
+    {
+      "path": "stage-observation-independent/python-only.json",
+      "sha256": "f96dcda689dc7ac577f436743b31733edf695e5604aae2474ab3ee3c3a05aec7",
+      "sourceEvidence": {
+        "path": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/stage-observation-independent/python-only.json",
+        "sha256": "f96dcda689dc7ac577f436743b31733edf695e5604aae2474ab3ee3c3a05aec7"
+      },
+      "provenance": "Source-only context/owner/raw rebinding independently frozen before Stage Java/accept implementation.",
+      "byteLength": 3917,
+      "asset": "stage-observation-independent/python-only.json.gz",
+      "encoding": "gzip",
+      "assetSha256": "7dbacd776f8305393c42cfab823b3032bef319ecc4a8a343abb677061ddddd57"
+    },
+    {
+      "path": "stage-freeze-independent/java-only.json",
+      "sha256": "b52c70548a937db8636eee2aa9b93084e687803a73cb2079d10b827bb6bf22f6",
+      "sourceEvidence": {
+        "path": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/stage-freeze-independent/java-only.json",
+        "sha256": "b52c70548a937db8636eee2aa9b93084e687803a73cb2079d10b827bb6bf22f6"
+      },
+      "provenance": "Complete Stage targets independently frozen before freeze implementation; context adaptation from prior original independent targets.",
+      "byteLength": 17852,
+      "asset": "stage-freeze-independent/java-only.json.gz",
+      "encoding": "gzip",
+      "assetSha256": "1f82bfb156f9219593ed4903526f1b22416b48a84336adaadad65143b72ccc37"
+    },
+    {
+      "path": "stage-freeze-independent/mixed.json",
+      "sha256": "da5e095fac2d6b6cbf1654b42ecf9d189d8c26979566942cbd90c559f164d50b",
+      "sourceEvidence": {
+        "path": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/stage-freeze-independent/mixed.json",
+        "sha256": "da5e095fac2d6b6cbf1654b42ecf9d189d8c26979566942cbd90c559f164d50b"
+      },
+      "provenance": "Complete Stage targets independently frozen before freeze implementation; context adaptation from prior original independent targets.",
+      "byteLength": 45206,
+      "asset": "stage-freeze-independent/mixed.json.gz",
+      "encoding": "gzip",
+      "assetSha256": "bc777107ba3b5d08c9db417536a48a8edfc9bfab361c80db5fc77652da1cba03"
+    },
+    {
+      "path": "stage-freeze-independent/python-only.json",
+      "sha256": "16e96c9b74a9ffbdea66bd8945f1932a3801a4d90dc99e96d19719f8b33cf155",
+      "sourceEvidence": {
+        "path": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/stage-freeze-independent/python-only.json",
+        "sha256": "16e96c9b74a9ffbdea66bd8945f1932a3801a4d90dc99e96d19719f8b33cf155"
+      },
+      "provenance": "Complete Stage targets independently frozen before freeze implementation; context adaptation from prior original independent targets.",
+      "byteLength": 30100,
+      "asset": "stage-freeze-independent/python-only.json.gz",
+      "encoding": "gzip",
+      "assetSha256": "e64d08c60f190389e84aa800d117323f9fa2c43173a8e34c2e023e50c3c3ef31"
+    },
+    {
+      "path": "store-row-independent/java-only.json",
+      "sha256": "e4b4a9668af9466f7132d758b36f5324a700eadf9e6807c11a18768e948d2792",
+      "sourceEvidence": {
+        "path": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/store-row-independent/java-only.json",
+        "sha256": "e4b4a9668af9466f7132d758b36f5324a700eadf9e6807c11a18768e948d2792"
+      },
+      "provenance": "Full SQL target frozen before Store product implementation; derived from pre-Store independent Stage targets and original SQL column contracts.",
+      "byteLength": 40566,
+      "asset": "store-row-independent/java-only.json.gz",
+      "encoding": "gzip",
+      "assetSha256": "757c7bf7ea8750ca90635668598e86b7b6226590f13d576b40851c81a20af5d1"
+    },
+    {
+      "path": "store-row-independent/mixed.json",
+      "sha256": "cf9a87f4b1b4d15449fae925f460cd51fea332e8528ecd15d71bc148daa2ee66",
+      "sourceEvidence": {
+        "path": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/store-row-independent/mixed.json",
+        "sha256": "cf9a87f4b1b4d15449fae925f460cd51fea332e8528ecd15d71bc148daa2ee66"
+      },
+      "provenance": "Full SQL target frozen before Store product implementation; derived from pre-Store independent Stage targets and original SQL column contracts.",
+      "byteLength": 102082,
+      "asset": "store-row-independent/mixed.json.gz",
+      "encoding": "gzip",
+      "assetSha256": "05badeb90d55a5729f8f92588349a26ec29a7a7e20d0d2a6d6c0069a51eba4c3"
+    },
+    {
+      "path": "store-row-independent/python-only.json",
+      "sha256": "ea44a0c109bf3b50f2a4a2488c93d60921b476e10dd3afe96f00ee6619f466ca",
+      "sourceEvidence": {
+        "path": ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/store-row-independent/python-only.json",
+        "sha256": "ea44a0c109bf3b50f2a4a2488c93d60921b476e10dd3afe96f00ee6619f466ca"
+      },
+      "provenance": "Full SQL target frozen before Store product implementation; derived from pre-Store independent Stage targets and original SQL column contracts.",
+      "byteLength": 68060,
+      "asset": "store-row-independent/python-only.json.gz",
+      "encoding": "gzip",
+      "assetSha256": "1cbbba27ef3161785e0b7066eebee36bf1c92844308db354a71db81869dec25d"
+    }
+  ],
+  "transport": "gzip for sealed JSON payloads; identity for JSONL. Decompressed byte length and SHA-256 must equal the original sealed source. No formatting gate exception."
+}

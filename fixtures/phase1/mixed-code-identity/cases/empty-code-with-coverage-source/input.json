@@ -1,0 +1,42 @@
+{
+  "domain": "codeatlas-source-inventory-v1",
+  "groups": [
+    {
+      "tag": "TARGET",
+      "entries": [
+        {
+          "key": ["capture-worktree"],
+          "value": {
+            "baseRevisionId": null,
+            "contentFingerprint": "capture-fingerprint",
+            "id": "capture-worktree",
+            "kind": "WORKTREE",
+            "repositoryId": "capture-repo"
+          }
+        }
+      ]
+    },
+    {
+      "tag": "SOURCE_FILE",
+      "entries": [
+        {
+          "key": ["source:one"],
+          "value": {
+            "classification": {
+              "contentKind": "TEXT",
+              "provenance": "AUTHORED",
+              "role": "SOURCE"
+            },
+            "contentFingerprint": "source-fingerprint",
+            "id": "source:one",
+            "languageHint": null,
+            "path": "src/observation.txt",
+            "repositoryId": "capture-repo",
+            "revisionId": "capture-worktree",
+            "sensitivity": "PUBLIC"
+          }
+        }
+      ]
+    }
+  ]
+}

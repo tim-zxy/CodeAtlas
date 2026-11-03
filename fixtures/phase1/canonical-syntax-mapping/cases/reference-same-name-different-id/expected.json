@@ -1,0 +1,128 @@
+{
+  "envelope": {
+    "schema": "codeatlas.syntax-evidence",
+    "version": 1,
+    "payload": {
+      "id": "syntax:0f920b44d243dd1a342f16f870952449a8311c75376bc54cf880a0fd4bfb2327",
+      "repositoryId": "repo-fixture",
+      "revisionId": "rev-a",
+      "sourceFingerprint": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+      "sourceRange": {
+        "sourceFileId": "source-fixture",
+        "startLine": 1,
+        "startColumn": 0,
+        "endLine": 1,
+        "endColumn": 5
+      },
+      "syntaxKind": "ASSIGNMENT",
+      "owner": {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo-fixture",
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "node-owner",
+          "revisionId": "rev-a"
+        }
+      },
+      "payload": {
+        "targetName": "x",
+        "value": {
+          "kind": "REFERENCE",
+          "name": "p",
+          "resolution": "AMBIGUOUS",
+          "candidates": [
+            {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo-fixture",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "node-a",
+                "revisionId": "rev-a"
+              }
+            },
+            {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo-fixture",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "node-b",
+                "revisionId": "rev-a"
+              }
+            }
+          ]
+        }
+      },
+      "syntaxKey": "syntax-key-v1:1184fc824047a61c05971db9c95d6ebbc9846824774406089cbc30017333a6f3",
+      "supportRefs": [
+        {
+          "basis": {
+            "repositoryId": "repo-fixture",
+            "revisionId": "rev-a",
+            "contentFingerprint": "mapping-target",
+            "codeActivationDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "entity": {
+            "kind": "CODE_NODE",
+            "id": "node-a",
+            "revisionId": "rev-a"
+          },
+          "valueDigest": "516747f2629b7aabdd24aa4f2f3734eebfec3c072363002d837b381b7f91eb76"
+        },
+        {
+          "basis": {
+            "repositoryId": "repo-fixture",
+            "revisionId": "rev-a",
+            "contentFingerprint": "mapping-target",
+            "codeActivationDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "entity": {
+            "kind": "CODE_NODE",
+            "id": "node-b",
+            "revisionId": "rev-a"
+          },
+          "valueDigest": "0ab68491cc75004de6bc944ede68ee68d37c522ff77078d8ee60a94d0d118656"
+        },
+        {
+          "basis": {
+            "repositoryId": "repo-fixture",
+            "revisionId": "rev-a",
+            "contentFingerprint": "mapping-target",
+            "codeActivationDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "entity": {
+            "kind": "CODE_NODE",
+            "id": "node-owner",
+            "revisionId": "rev-a"
+          },
+          "valueDigest": "913bd38a8c63cefcd36047009c6a78dd464fd9b888032ac0f0ef6234ab417a63"
+        },
+        {
+          "basis": {
+            "repositoryId": "repo-fixture",
+            "revisionId": "rev-a",
+            "contentFingerprint": "mapping-target",
+            "codeActivationDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "entity": {
+            "kind": "SOURCE_FILE",
+            "id": "source-fixture",
+            "revisionId": "rev-a"
+          },
+          "valueDigest": "4d1753a7fcf1fe547d33d74c5eb95dc4723db71ee742b213ede249b2938d729d"
+        }
+      ],
+      "confidence": {
+        "score": 0.5,
+        "method": "syntax-surface-support-v1",
+        "reasons": [
+          "DECLARED_SOURCE_CONTEXT_MATCHED",
+          "SYNTAX_PAYLOAD_VALIDATED",
+          "REQUIRED_SUPPORTS_CLOSED",
+          "NON_EXACT_VALUE_REFERENCE_PRESERVED"
+        ]
+      },
+      "extractionVersion": "syntax-extraction-v1:a294595a10ef89fc89aa2fa923caf5e692ebf5b86e2a7c3ececfe2756b5dcfbc"
+    }
+  },
+  "confidenceMeaning": "NORMATIVE_NOT_PROBABILITY"
+}

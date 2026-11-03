@@ -1,0 +1,8 @@
+{
+  "protocolVersion": 7,
+  "syntaxOutcome": "COMPLETE",
+  "codeOutcome": "NOT_APPLICABLE",
+  "outcome": "SUCCEEDED",
+  "syntaxCount": 10,
+  "missingScope": "PROTOCOL_CORRUPTION"
+}

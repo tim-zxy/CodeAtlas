@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "schemas": [
+    "codeatlas.runtime-fact-set",
+    "codeatlas.runtime-flow",
+    "codeatlas.syntax-evidence",
+    "codeatlas.document-bundle",
+    "codeatlas.claim",
+    "codeatlas.knowledge-candidate",
+    "codeatlas.knowledge-item",
+    "codeatlas.knowledge-revision"
+  ],
+  "validPayloadsPreserved": true,
+  "negativeControls": "REQUIRED"
+}

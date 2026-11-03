@@ -1,0 +1,130 @@
+{
+  "configuration": {
+    "configVersion": 1,
+    "runtime": {
+      "mode": "ONE_SHOT",
+      "workspaceRoot": "/fixture/workspace"
+    },
+    "indexing": {
+      "nativeAnalyzer": {
+        "parseWorkers": "AUTO"
+      },
+      "resourceBudget": {
+        "maxInputBytes": 9007199254740991,
+        "maxOutputBytes": 9007199254740991,
+        "maxItems": 9007199254740991,
+        "maxDepth": 9007199254740991,
+        "maxDurationMs": 4503599627370495,
+        "maxMemoryBytes": 9007199254740991
+      }
+    },
+    "providers": [
+      {
+        "providerId": "native",
+        "enabled": true,
+        "configurationSchemaVersion": 2,
+        "configuration": {
+          "kind": "MIXED_CODE_SYNTAX_V1",
+          "source": {
+            "include": [],
+            "exclude": []
+          },
+          "history": {
+            "maxRows": 9007199254740991,
+            "maxSerializedBytes": 9007199254740991
+          },
+          "native": {
+            "maxEvents": 10000,
+            "transportLimits": {
+              "maxStdinBytes": 1000000,
+              "maxLineBytes": 1000000,
+              "maxStdoutBytes": 10000000,
+              "maxEvents": 10000,
+              "maxStderrBytes": 1000000
+            }
+          }
+        }
+      }
+    ],
+    "plugins": [],
+    "knowledge": {
+      "defaultScope": "AUTO",
+      "defaultMode": "AFFECTED_ONLY",
+      "degradedCandidates": false
+    },
+    "llm": {
+      "enabled": false,
+      "endpoint": null,
+      "credentialRef": null,
+      "allowRemoteFallback": false,
+      "resourceBudget": null
+    },
+    "embedding": {
+      "enabled": false
+    },
+    "agents": {
+      "defaultDepth": "L0"
+    },
+    "security": {
+      "localOnly": true,
+      "remoteLlmEnabled": false,
+      "remoteEmbeddingEnabled": false,
+      "allowSensitiveRemote": false,
+      "allowRawSourceRemote": false
+    }
+  },
+  "expectedConfiguration": {
+    "source": {
+      "include": [],
+      "exclude": []
+    },
+    "history": {
+      "maxRows": 9007199254740991,
+      "maxSerializedBytes": 9007199254740991,
+      "maxItems": 9007199254740991,
+      "maxDepth": 9007199254740991,
+      "memoryBudgetBytes": 9007199254740991
+    },
+    "operationBudget": {
+      "maxInputBytes": 9007199254740991,
+      "maxOutputBytes": 9007199254740991,
+      "maxItems": 9007199254740991,
+      "maxDepth": 9007199254740991,
+      "maxDurationMs": 4503599627370495,
+      "maxMemoryBytes": 9007199254740991
+    },
+    "native": {
+      "maxEvents": 10000,
+      "transportLimits": {
+        "maxStdinBytes": 1000000,
+        "maxLineBytes": 1000000,
+        "maxStdoutBytes": 10000000,
+        "maxEvents": 10000,
+        "maxStderrBytes": 1000000
+      }
+    }
+  },
+  "reference": "Existing Native hard caps, A4 unbounded test allowances; no product defaults",
+  "scenarios": [
+    "empty",
+    "other-only",
+    "python-only",
+    "java-only",
+    "mixed",
+    "NO_OP",
+    "delete-only",
+    "python-modified",
+    "java-group",
+    "full-required",
+    "other-provider",
+    "contract-change",
+    "source-change",
+    "cancel",
+    "timeout",
+    "malformed",
+    "late-stream",
+    "commit-unknown",
+    "postcommit-cleanup",
+    "failed-rollback"
+  ]
+}

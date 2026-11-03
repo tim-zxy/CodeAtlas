@@ -1,0 +1,4 @@
+{
+  "scenario": "same-fingerprint-support-drift",
+  "base": "base-input.json"
+}

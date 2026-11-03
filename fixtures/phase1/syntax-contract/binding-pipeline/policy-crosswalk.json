@@ -1,0 +1,117 @@
+{
+  "policy": "syntax-surface-support-v1",
+  "score": 0.5,
+  "meaning": "Declared surface support, not semantic confidence/probability",
+  "cases": [
+    {
+      "kind": "BINDING_SCOPE",
+      "expectedIndex": 0,
+      "conditions": [
+        "source/basis matched",
+        "all Code references supported",
+        "each required Code score >= existing fixed score",
+        "strict payload valid"
+      ],
+      "partial": "retained diagnostic only; no complete publication"
+    },
+    {
+      "kind": "BINDING_SCOPE",
+      "expectedIndex": 1,
+      "conditions": [
+        "source/basis matched",
+        "all Code references supported",
+        "each required Code score >= existing fixed score",
+        "strict payload valid"
+      ],
+      "partial": "retained diagnostic only; no complete publication"
+    },
+    {
+      "kind": "BINDING_SCOPE",
+      "expectedIndex": 2,
+      "conditions": [
+        "source/basis matched",
+        "all Code references supported",
+        "each required Code score >= existing fixed score",
+        "strict payload valid"
+      ],
+      "partial": "retained diagnostic only; no complete publication"
+    },
+    {
+      "kind": "IMPORT_BINDING",
+      "expectedIndex": 3,
+      "conditions": [
+        "source/basis matched",
+        "all Code references supported",
+        "each required Code score >= existing fixed score",
+        "strict payload valid"
+      ],
+      "partial": "retained diagnostic only; no complete publication"
+    },
+    {
+      "kind": "DECORATION",
+      "expectedIndex": 4,
+      "conditions": [
+        "source/basis matched",
+        "all Code references supported",
+        "each required Code score >= existing fixed score",
+        "strict payload valid"
+      ],
+      "partial": "retained diagnostic only; no complete publication"
+    },
+    {
+      "kind": "INVOCATION",
+      "expectedIndex": 5,
+      "conditions": [
+        "source/basis matched",
+        "all Code references supported",
+        "each required Code score >= existing fixed score",
+        "strict payload valid"
+      ],
+      "partial": "retained diagnostic only; no complete publication"
+    },
+    {
+      "kind": "DECLARATION",
+      "expectedIndex": 6,
+      "conditions": [
+        "source/basis matched",
+        "all Code references supported",
+        "each required Code score >= existing fixed score",
+        "strict payload valid"
+      ],
+      "partial": "retained diagnostic only; no complete publication"
+    },
+    {
+      "kind": "ASSIGNMENT",
+      "expectedIndex": 7,
+      "conditions": [
+        "source/basis matched",
+        "all Code references supported",
+        "each required Code score >= existing fixed score",
+        "strict payload valid"
+      ],
+      "partial": "retained diagnostic only; no complete publication"
+    },
+    {
+      "kind": "BINDING_EFFECT",
+      "expectedIndex": 8,
+      "conditions": [
+        "source/basis matched",
+        "all Code references supported",
+        "each required Code score >= existing fixed score",
+        "strict payload valid"
+      ],
+      "partial": "retained diagnostic only; no complete publication"
+    },
+    {
+      "kind": "ARTIFACT",
+      "expectedIndex": 9,
+      "conditions": [
+        "source/basis matched",
+        "all Code references supported",
+        "each required Code score >= existing fixed score",
+        "strict payload valid"
+      ],
+      "partial": "retained diagnostic only; no complete publication"
+    }
+  ]
+}

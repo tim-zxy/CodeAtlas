@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "p1-report-contract-v1",
+  "category": "runtime-graph",
+  "phase": "1",
+  "languages": [],
+  "frameworks": [],
+  "capabilities": ["PHASE1_REPORT_CONTRACT"],
+  "inputs": {
+    "vectors": "inputs/vectors.json"
+  },
+  "expected": {
+    "report": "expected/report.json"
+  },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

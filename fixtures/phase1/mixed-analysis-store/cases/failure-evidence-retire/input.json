@@ -1,0 +1,5 @@
+{
+  "point": "evidence-retire",
+  "base": "base-input.json",
+  "processExit": true
+}

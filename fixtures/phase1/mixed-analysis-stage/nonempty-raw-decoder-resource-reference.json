@@ -1,0 +1,2126 @@
+{
+  "kind": "INDEPENDENT_NONEMPTY_RAW_DECODER_RESOURCE_REFERENCE",
+  "qualification": "DECLARED_COMPONENT_ONLY",
+  "manifestPath": "fixtures/phase1/mixed-analysis-stage/component-references/provenance.json",
+  "manifestSha256": "0013dc7fbdc9991fc8378aed49b6ba2fd9899a063de87112349a7609160a1173",
+  "modelPath": "fixtures/phase1/mixed-analysis-stage/independent-nonempty-raw-decoder-resource-model.mjs",
+  "modelSha256": "db7f226d821512ac12500e219feaea96dc942fcb8956744d632c01d7894ef5ed",
+  "cases": [
+    {
+      "id": "java-only",
+      "sources": [
+        {
+          "path": "stage-observation-independent/java-only-request.jsonl",
+          "sha256": "890dc44697f5655f95add3a0af4f351c0579e5d1bcde971adadca49ba3ed34aa",
+          "assetPath": "fixtures/phase1/mixed-analysis-stage/component-references/stage-observation-independent/java-only-request.jsonl",
+          "assetSha256": "890dc44697f5655f95add3a0af4f351c0579e5d1bcde971adadca49ba3ed34aa"
+        },
+        {
+          "path": "stage-observation-independent/java-only-output.jsonl",
+          "sha256": "4498f99f364b403ed446389b43feb22b8091f6c8cb3894a6d2a9aa95ba0d564b",
+          "assetPath": "fixtures/phase1/mixed-analysis-stage/component-references/stage-observation-independent/java-only-output.jsonl",
+          "assetSha256": "4498f99f364b403ed446389b43feb22b8091f6c8cb3894a6d2a9aa95ba0d564b"
+        }
+      ],
+      "raw": {
+        "requestText": "{\"protocolVersion\":5,\"requestId\":\"contract:java-only\",\"sequence\":0,\"type\":\"OBSERVE_CODE_SYNTAX\",\"payload\":{\"irSchemaVersion\":1,\"repository\":{\"id\":\"repo:one\",\"rootPath\":\"/fixture/repo\"},\"providerId\":\"native\",\"providerVersion\":\"0.0.0\",\"providerSnapshotId\":\"snapshot:one\",\"extractorVersion\":\"syntax-v1\",\"languages\":[{\"languageId\":\"java\",\"grammarVersion\":\"0.23.5\",\"analyzerVersion\":\"0.0.0\",\"compatibilityVersion\":\"syntax-v1\"}],\"sourceFiles\":[{\"id\":\"java:file\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"path\":\"Box.java\",\"contentFingerprint\":\"sha256:5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1\",\"classification\":{\"role\":\"SOURCE\",\"provenance\":\"AUTHORED\",\"contentKind\":\"TEXT\"},\"languageHint\":\"java\",\"sensitivity\":\"INTERNAL\"}],\"removedSourceFiles\":[],\"owners\":[{\"sourceFileId\":\"java:file\",\"providerNodeRef\":{\"factType\":\"NODE\",\"providerId\":\"native\",\"providerFactId\":\"java:Box\"},\"canonicalRef\":{\"scope\":\"REPOSITORY\",\"repositoryId\":\"repo:one\",\"entity\":{\"kind\":\"CODE_NODE\",\"id\":\"canonical-node-v1:d4d1141ea168c690fb883ecbbaba0e7057a010eb7ef98d8cef6fc9172cbd42d8\",\"revisionId\":\"revision:worktree\"}}}],\"deadlineEpochMs\":null,\"resourceBudget\":{\"maxDurationMs\":1000,\"maxMemoryBytes\":65536,\"maxEvents\":20,\"maxInputBytes\":65536,\"maxOutputBytes\":65536,\"maxDepth\":64,\"maxItems\":1000},\"expectedActivationBasis\":null,\"targetSource\":{\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"contentFingerprint\":\"content:first\"},\"ownerBinding\":{\"kind\":\"PROVISIONAL_CODE\",\"stageDigest\":\"38b2cc2887a654f069f9d6cde822d46ffd7666f04ff8a67628f07939c296faf5\",\"ownerMapDigest\":\"c976d613550bdf2bc16b5920eec614b22e6cb63a88586120f5cc306a71468d41\"},\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\"}}\n",
+        "outputText": "{\"protocolVersion\":5,\"requestId\":\"contract:java-only\",\"sequence\":0,\"type\":\"OBSERVATION_STARTED\",\"payload\":{\"expectedActivationBasis\":null,\"targetSource\":{\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"contentFingerprint\":\"content:first\"},\"ownerBinding\":{\"kind\":\"PROVISIONAL_CODE\",\"stageDigest\":\"38b2cc2887a654f069f9d6cde822d46ffd7666f04ff8a67628f07939c296faf5\",\"ownerMapDigest\":\"c976d613550bdf2bc16b5920eec614b22e6cb63a88586120f5cc306a71468d41\"},\"extractorVersion\":\"syntax-v1\",\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\",\"requestChecksum\":\"890dc44697f5655f95add3a0af4f351c0579e5d1bcde971adadca49ba3ed34aa\"}}\n{\"protocolVersion\":5,\"requestId\":\"contract:java-only\",\"sequence\":1,\"type\":\"SYNTAX_OBSERVATION\",\"payload\":{\"providerSyntaxId\":\"java:syntax:Box\",\"sourceFileId\":\"java:file\",\"sourceFingerprint\":\"sha256:5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1\",\"sourceRange\":{\"sourceFileId\":\"java:file\",\"startLine\":0,\"startColumn\":0,\"endLine\":0,\"endColumn\":12},\"owner\":{\"factType\":\"NODE\",\"providerId\":\"native\",\"providerFactId\":\"java:Box\"},\"syntaxKind\":\"DECLARATION\",\"payload\":{\"declaredType\":null,\"parameterNames\":[],\"modifiers\":[]}}}\n{\"protocolVersion\":5,\"requestId\":\"contract:java-only\",\"sequence\":2,\"type\":\"SYNTAX_COVERAGE\",\"payload\":{\"sourceFileId\":\"java:file\",\"sourceFingerprint\":\"sha256:5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1\",\"status\":\"COMPLETE\",\"limitations\":[]}}\n{\"protocolVersion\":5,\"requestId\":\"contract:java-only\",\"sequence\":3,\"type\":\"OBSERVATION_COMPLETED\",\"payload\":{\"expectedActivationBasis\":null,\"targetSource\":{\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"contentFingerprint\":\"content:first\"},\"ownerBinding\":{\"kind\":\"PROVISIONAL_CODE\",\"stageDigest\":\"38b2cc2887a654f069f9d6cde822d46ffd7666f04ff8a67628f07939c296faf5\",\"ownerMapDigest\":\"c976d613550bdf2bc16b5920eec614b22e6cb63a88586120f5cc306a71468d41\"},\"extractorVersion\":\"syntax-v1\",\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\",\"requestChecksum\":\"890dc44697f5655f95add3a0af4f351c0579e5d1bcde971adadca49ba3ed34aa\",\"codeOutcome\":\"NOT_APPLICABLE\",\"syntaxOutcome\":\"COMPLETE\",\"outcome\":\"SUCCEEDED\",\"counts\":{\"nodes\":0,\"edges\":0,\"syntax\":1,\"codeCoverage\":0,\"syntaxCoverage\":1,\"diagnostics\":0},\"checksum\":\"eb4cb5e55005be376633979a0a0e51c44164348739ff44e2d33318819d1c4d91\"}}\n"
+      },
+      "expected": {
+        "result": {
+          "observation": {
+            "request": {
+              "protocolVersion": 5,
+              "requestId": "contract:java-only",
+              "sequence": 0,
+              "type": "OBSERVE_CODE_SYNTAX",
+              "payload": {
+                "irSchemaVersion": 1,
+                "repository": { "id": "repo:one", "rootPath": "/fixture/repo" },
+                "providerId": "native",
+                "providerVersion": "0.0.0",
+                "providerSnapshotId": "snapshot:one",
+                "extractorVersion": "syntax-v1",
+                "languages": [
+                  {
+                    "languageId": "java",
+                    "grammarVersion": "0.23.5",
+                    "analyzerVersion": "0.0.0",
+                    "compatibilityVersion": "syntax-v1"
+                  }
+                ],
+                "sourceFiles": [
+                  {
+                    "id": "java:file",
+                    "repositoryId": "repo:one",
+                    "revisionId": "revision:worktree",
+                    "path": "Box.java",
+                    "contentFingerprint": "sha256:5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1",
+                    "classification": {
+                      "role": "SOURCE",
+                      "provenance": "AUTHORED",
+                      "contentKind": "TEXT"
+                    },
+                    "languageHint": "java",
+                    "sensitivity": "INTERNAL"
+                  }
+                ],
+                "removedSourceFiles": [],
+                "owners": [
+                  {
+                    "sourceFileId": "java:file",
+                    "providerNodeRef": {
+                      "factType": "NODE",
+                      "providerId": "native",
+                      "providerFactId": "java:Box"
+                    },
+                    "canonicalRef": {
+                      "scope": "REPOSITORY",
+                      "repositoryId": "repo:one",
+                      "entity": {
+                        "kind": "CODE_NODE",
+                        "id": "canonical-node-v1:d4d1141ea168c690fb883ecbbaba0e7057a010eb7ef98d8cef6fc9172cbd42d8",
+                        "revisionId": "revision:worktree"
+                      }
+                    }
+                  }
+                ],
+                "deadlineEpochMs": null,
+                "resourceBudget": {
+                  "maxDurationMs": 1000,
+                  "maxMemoryBytes": 65536,
+                  "maxEvents": 20,
+                  "maxInputBytes": 65536,
+                  "maxOutputBytes": 65536,
+                  "maxDepth": 64,
+                  "maxItems": 1000
+                },
+                "expectedActivationBasis": null,
+                "targetSource": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:worktree",
+                  "contentFingerprint": "content:first"
+                },
+                "ownerBinding": {
+                  "kind": "PROVISIONAL_CODE",
+                  "stageDigest": "38b2cc2887a654f069f9d6cde822d46ffd7666f04ff8a67628f07939c296faf5",
+                  "ownerMapDigest": "c976d613550bdf2bc16b5920eec614b22e6cb63a88586120f5cc306a71468d41"
+                },
+                "codeContract": "PYTHON_SYNTAX_CODE_V1"
+              }
+            },
+            "events": [
+              {
+                "protocolVersion": 5,
+                "requestId": "contract:java-only",
+                "sequence": 0,
+                "type": "OBSERVATION_STARTED",
+                "payload": {
+                  "expectedActivationBasis": null,
+                  "targetSource": {
+                    "repositoryId": "repo:one",
+                    "revisionId": "revision:worktree",
+                    "contentFingerprint": "content:first"
+                  },
+                  "ownerBinding": {
+                    "kind": "PROVISIONAL_CODE",
+                    "stageDigest": "38b2cc2887a654f069f9d6cde822d46ffd7666f04ff8a67628f07939c296faf5",
+                    "ownerMapDigest": "c976d613550bdf2bc16b5920eec614b22e6cb63a88586120f5cc306a71468d41"
+                  },
+                  "extractorVersion": "syntax-v1",
+                  "codeContract": "PYTHON_SYNTAX_CODE_V1",
+                  "requestChecksum": "890dc44697f5655f95add3a0af4f351c0579e5d1bcde971adadca49ba3ed34aa"
+                }
+              },
+              {
+                "protocolVersion": 5,
+                "requestId": "contract:java-only",
+                "sequence": 1,
+                "type": "SYNTAX_OBSERVATION",
+                "payload": {
+                  "providerSyntaxId": "java:syntax:Box",
+                  "sourceFileId": "java:file",
+                  "sourceFingerprint": "sha256:5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1",
+                  "sourceRange": {
+                    "sourceFileId": "java:file",
+                    "startLine": 0,
+                    "startColumn": 0,
+                    "endLine": 0,
+                    "endColumn": 12
+                  },
+                  "owner": {
+                    "factType": "NODE",
+                    "providerId": "native",
+                    "providerFactId": "java:Box"
+                  },
+                  "syntaxKind": "DECLARATION",
+                  "payload": { "declaredType": null, "parameterNames": [], "modifiers": [] }
+                }
+              },
+              {
+                "protocolVersion": 5,
+                "requestId": "contract:java-only",
+                "sequence": 2,
+                "type": "SYNTAX_COVERAGE",
+                "payload": {
+                  "sourceFileId": "java:file",
+                  "sourceFingerprint": "sha256:5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1",
+                  "status": "COMPLETE",
+                  "limitations": []
+                }
+              },
+              {
+                "protocolVersion": 5,
+                "requestId": "contract:java-only",
+                "sequence": 3,
+                "type": "OBSERVATION_COMPLETED",
+                "payload": {
+                  "expectedActivationBasis": null,
+                  "targetSource": {
+                    "repositoryId": "repo:one",
+                    "revisionId": "revision:worktree",
+                    "contentFingerprint": "content:first"
+                  },
+                  "ownerBinding": {
+                    "kind": "PROVISIONAL_CODE",
+                    "stageDigest": "38b2cc2887a654f069f9d6cde822d46ffd7666f04ff8a67628f07939c296faf5",
+                    "ownerMapDigest": "c976d613550bdf2bc16b5920eec614b22e6cb63a88586120f5cc306a71468d41"
+                  },
+                  "extractorVersion": "syntax-v1",
+                  "codeContract": "PYTHON_SYNTAX_CODE_V1",
+                  "requestChecksum": "890dc44697f5655f95add3a0af4f351c0579e5d1bcde971adadca49ba3ed34aa",
+                  "codeOutcome": "NOT_APPLICABLE",
+                  "syntaxOutcome": "COMPLETE",
+                  "outcome": "SUCCEEDED",
+                  "counts": {
+                    "nodes": 0,
+                    "edges": 0,
+                    "syntax": 1,
+                    "codeCoverage": 0,
+                    "syntaxCoverage": 1,
+                    "diagnostics": 0
+                  },
+                  "checksum": "eb4cb5e55005be376633979a0a0e51c44164348739ff44e2d33318819d1c4d91"
+                }
+              }
+            ],
+            "codeOutcome": "NOT_APPLICABLE",
+            "syntaxOutcome": "COMPLETE",
+            "outcome": "SUCCEEDED",
+            "counts": {
+              "nodes": 0,
+              "edges": 0,
+              "syntax": 1,
+              "codeCoverage": 0,
+              "syntaxCoverage": 1,
+              "diagnostics": 0
+            },
+            "checksum": "eb4cb5e55005be376633979a0a0e51c44164348739ff44e2d33318819d1c4d91",
+            "requestChecksum": "890dc44697f5655f95add3a0af4f351c0579e5d1bcde971adadca49ba3ed34aa"
+          },
+          "outputIdentity": "4498f99f364b403ed446389b43feb22b8091f6c8cb3894a6d2a9aa95ba0d564b"
+        },
+        "normalized": { "nodePairs": [], "edgePairs": [] },
+        "cost": { "serializedBytes": 32991, "items": 1115, "maxDepth": 8 },
+        "ledger": [
+          {
+            "label": "raw request copy and UTF8 decode",
+            "items": 0,
+            "serializedBytes": 3390,
+            "depth": 0
+          },
+          { "label": "request JSON preflight", "items": 67, "serializedBytes": 0, "depth": 6 },
+          { "label": "request decoded", "items": 67, "serializedBytes": 1694, "depth": 6 },
+          { "label": "request schema", "items": 67, "serializedBytes": 1694, "depth": 6 },
+          { "label": "common payload", "items": 61, "serializedBytes": 1548, "depth": 5 },
+          { "label": "common request", "items": 66, "serializedBytes": 1650, "depth": 6 },
+          { "label": "parsed common request", "items": 66, "serializedBytes": 1650, "depth": 6 },
+          {
+            "label": "raw output copy and UTF8 decode",
+            "items": 0,
+            "serializedBytes": 4574,
+            "depth": 0
+          },
+          { "label": "event 0 JSON preflight", "items": 18, "serializedBytes": 0, "depth": 3 },
+          { "label": "event 0 decoded", "items": 18, "serializedBytes": 615, "depth": 3 },
+          { "label": "event 0 schema", "items": 18, "serializedBytes": 615, "depth": 3 },
+          { "label": "event 1 JSON preflight", "items": 24, "serializedBytes": 0, "depth": 3 },
+          { "label": "event 1 decoded", "items": 24, "serializedBytes": 537, "depth": 3 },
+          { "label": "event 1 schema", "items": 24, "serializedBytes": 537, "depth": 3 },
+          { "label": "event 2 JSON preflight", "items": 10, "serializedBytes": 0, "depth": 2 },
+          { "label": "event 2 decoded", "items": 10, "serializedBytes": 262, "depth": 2 },
+          { "label": "event 2 schema", "items": 10, "serializedBytes": 262, "depth": 2 },
+          { "label": "event 3 JSON preflight", "items": 29, "serializedBytes": 0, "depth": 3 },
+          { "label": "event 3 decoded", "items": 29, "serializedBytes": 869, "depth": 3 },
+          { "label": "event 3 schema", "items": 29, "serializedBytes": 869, "depth": 3 },
+          { "label": "all events", "items": 82, "serializedBytes": 2288, "depth": 4 },
+          { "label": "correspondence", "items": 150, "serializedBytes": 4004, "depth": 7 },
+          {
+            "label": "correspondence provider reference key",
+            "items": 1,
+            "serializedBytes": 27,
+            "depth": 0
+          },
+          { "label": "syntax identity", "items": 1, "serializedBytes": 17, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          {
+            "label": "correspondence provider reference key",
+            "items": 1,
+            "serializedBytes": 27,
+            "depth": 0
+          },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          {
+            "label": "syntax covered source identity",
+            "items": 1,
+            "serializedBytes": 11,
+            "depth": 0
+          },
+          { "label": "Python input", "items": 22, "serializedBytes": 528, "depth": 4 },
+          { "label": "Python parsed input", "items": 22, "serializedBytes": 528, "depth": 4 },
+          { "label": "Python sourceFiles", "items": 13, "serializedBytes": 319, "depth": 3 },
+          { "label": "Python nodes", "items": 1, "serializedBytes": 2, "depth": 0 },
+          { "label": "Python edges", "items": 1, "serializedBytes": 2, "depth": 0 },
+          { "label": "Python normalized pairs", "items": 3, "serializedBytes": 31, "depth": 1 },
+          { "label": "validated stream wrapper", "items": 164, "serializedBytes": 4441, "depth": 8 }
+        ],
+        "scope": "Closed declared v5 decoder only; no authenticity, Native, Stage, Store or RSS qualification."
+      }
+    },
+    {
+      "id": "mixed",
+      "sources": [
+        {
+          "path": "stage-observation-independent/mixed-request.jsonl",
+          "sha256": "a1bea975a6e30feefdcd2f33e07afa3d9cd168b86b6fc35b754d2d481e6bd0c0",
+          "assetPath": "fixtures/phase1/mixed-analysis-stage/component-references/stage-observation-independent/mixed-request.jsonl",
+          "assetSha256": "a1bea975a6e30feefdcd2f33e07afa3d9cd168b86b6fc35b754d2d481e6bd0c0"
+        },
+        {
+          "path": "stage-observation-independent/mixed-output.jsonl",
+          "sha256": "52a66409eea2414fdaecba57e7667073276504c2ed1c461074eaeebab0c282a0",
+          "assetPath": "fixtures/phase1/mixed-analysis-stage/component-references/stage-observation-independent/mixed-output.jsonl",
+          "assetSha256": "52a66409eea2414fdaecba57e7667073276504c2ed1c461074eaeebab0c282a0"
+        }
+      ],
+      "raw": {
+        "requestText": "{\"protocolVersion\":5,\"requestId\":\"contract:mixed\",\"sequence\":0,\"type\":\"OBSERVE_CODE_SYNTAX\",\"payload\":{\"irSchemaVersion\":1,\"repository\":{\"id\":\"repo:one\",\"rootPath\":\"/fixture/repo\"},\"providerId\":\"native\",\"providerVersion\":\"0.0.0\",\"providerSnapshotId\":\"snapshot:one\",\"extractorVersion\":\"syntax-v1\",\"languages\":[{\"languageId\":\"java\",\"grammarVersion\":\"0.23.5\",\"analyzerVersion\":\"0.0.0\",\"compatibilityVersion\":\"syntax-v1\"},{\"languageId\":\"python\",\"grammarVersion\":\"0.25.0\",\"analyzerVersion\":\"0.0.0\",\"compatibilityVersion\":\"syntax-v1\"}],\"sourceFiles\":[{\"id\":\"java:file\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"path\":\"Box.java\",\"contentFingerprint\":\"sha256:5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1\",\"classification\":{\"role\":\"SOURCE\",\"provenance\":\"AUTHORED\",\"contentKind\":\"TEXT\"},\"languageHint\":\"java\",\"sensitivity\":\"INTERNAL\"},{\"id\":\"file:one\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"path\":\"app.py\",\"contentFingerprint\":\"sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50\",\"classification\":{\"role\":\"SOURCE\",\"provenance\":\"AUTHORED\",\"contentKind\":\"TEXT\"},\"languageHint\":\"python\",\"sensitivity\":\"INTERNAL\"}],\"removedSourceFiles\":[],\"owners\":[{\"sourceFileId\":\"java:file\",\"providerNodeRef\":{\"factType\":\"NODE\",\"providerId\":\"native\",\"providerFactId\":\"java:Box\"},\"canonicalRef\":{\"scope\":\"REPOSITORY\",\"repositoryId\":\"repo:one\",\"entity\":{\"kind\":\"CODE_NODE\",\"id\":\"canonical-node-v1:d4d1141ea168c690fb883ecbbaba0e7057a010eb7ef98d8cef6fc9172cbd42d8\",\"revisionId\":\"revision:worktree\"}}}],\"deadlineEpochMs\":null,\"resourceBudget\":{\"maxDurationMs\":1000,\"maxMemoryBytes\":65536,\"maxEvents\":20,\"maxInputBytes\":65536,\"maxOutputBytes\":65536,\"maxDepth\":64,\"maxItems\":1000},\"expectedActivationBasis\":null,\"targetSource\":{\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"contentFingerprint\":\"content:first\"},\"ownerBinding\":{\"kind\":\"PROVISIONAL_CODE\",\"stageDigest\":\"74dd95e88a44a35e9bdfa0d761d69ab74c26cd7e6a2c6fefc6594fc5a6948a96\",\"ownerMapDigest\":\"7dca27e601f0bbfde8081bb8caa014f9099f624a39c2381e7b8225eb40cbe47f\"},\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\"}}\n",
+        "outputText": "{\"protocolVersion\":5,\"requestId\":\"contract:mixed\",\"sequence\":0,\"type\":\"OBSERVATION_STARTED\",\"payload\":{\"expectedActivationBasis\":null,\"targetSource\":{\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"contentFingerprint\":\"content:first\"},\"ownerBinding\":{\"kind\":\"PROVISIONAL_CODE\",\"stageDigest\":\"74dd95e88a44a35e9bdfa0d761d69ab74c26cd7e6a2c6fefc6594fc5a6948a96\",\"ownerMapDigest\":\"7dca27e601f0bbfde8081bb8caa014f9099f624a39c2381e7b8225eb40cbe47f\"},\"extractorVersion\":\"syntax-v1\",\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\",\"requestChecksum\":\"a1bea975a6e30feefdcd2f33e07afa3d9cd168b86b6fc35b754d2d481e6bd0c0\"}}\n{\"protocolVersion\":5,\"requestId\":\"contract:mixed\",\"sequence\":1,\"type\":\"SYNTAX_OBSERVATION\",\"payload\":{\"providerSyntaxId\":\"java:syntax:Box\",\"sourceFileId\":\"java:file\",\"sourceFingerprint\":\"sha256:5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1\",\"sourceRange\":{\"sourceFileId\":\"java:file\",\"startLine\":0,\"startColumn\":0,\"endLine\":0,\"endColumn\":12},\"owner\":{\"factType\":\"NODE\",\"providerId\":\"native\",\"providerFactId\":\"java:Box\"},\"syntaxKind\":\"DECLARATION\",\"payload\":{\"declaredType\":null,\"parameterNames\":[],\"modifiers\":[]}}}\n{\"protocolVersion\":5,\"requestId\":\"contract:mixed\",\"sequence\":2,\"type\":\"SYNTAX_COVERAGE\",\"payload\":{\"sourceFileId\":\"java:file\",\"sourceFingerprint\":\"sha256:5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1\",\"status\":\"COMPLETE\",\"limitations\":[]}}\n{\"protocolVersion\":5,\"requestId\":\"contract:mixed\",\"sequence\":3,\"type\":\"NODE\",\"payload\":{\"providerId\":\"native\",\"providerSnapshotId\":\"snapshot:one\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"providerFactId\":\"python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb\",\"providerKind\":\"python.module\",\"name\":\"app.py\",\"qualifiedName\":\"app.py\",\"sourceRange\":{\"sourceFileId\":\"file:one\",\"startLine\":0,\"startColumn\":0,\"endLine\":2,\"endColumn\":0},\"confidence\":{\"score\":1,\"method\":\"parser\",\"reasons\":[]}}}\n{\"protocolVersion\":5,\"requestId\":\"contract:mixed\",\"sequence\":4,\"type\":\"EDGE\",\"payload\":{\"providerId\":\"native\",\"providerSnapshotId\":\"snapshot:one\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"providerFactId\":\"python-edge-v1:37bdc236f427d4e4dc22c574e10b48a36d14083aa7f3f4ae471776631d75fa67\",\"providerKind\":\"python.import\",\"sourceRange\":{\"sourceFileId\":\"file:one\",\"startLine\":0,\"startColumn\":7,\"endLine\":0,\"endColumn\":15},\"confidence\":{\"score\":1,\"method\":\"parser\",\"reasons\":[]},\"source\":{\"factType\":\"NODE\",\"providerId\":\"native\",\"providerFactId\":\"python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb\"},\"target\":{\"state\":\"UNRESOLVED\",\"resolution\":\"UNRESOLVED\",\"originalHint\":\"pkg\",\"candidates\":[]}}}\n{\"protocolVersion\":5,\"requestId\":\"contract:mixed\",\"sequence\":5,\"type\":\"EDGE\",\"payload\":{\"providerId\":\"native\",\"providerSnapshotId\":\"snapshot:one\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"providerFactId\":\"python-edge-v1:778fbe8c61c6ddb3ac42c06c7d6014fd8a250b2b36c53529c4dad1a70fdef970\",\"providerKind\":\"python.reference\",\"sourceRange\":{\"sourceFileId\":\"file:one\",\"startLine\":1,\"startColumn\":4,\"endLine\":1,\"endColumn\":5},\"confidence\":{\"score\":1,\"method\":\"parser\",\"reasons\":[]},\"source\":{\"factType\":\"NODE\",\"providerId\":\"native\",\"providerFactId\":\"python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb\"},\"target\":{\"state\":\"UNRESOLVED\",\"resolution\":\"UNRESOLVED\",\"originalHint\":\"p\",\"candidates\":[]}}}\n{\"protocolVersion\":5,\"requestId\":\"contract:mixed\",\"sequence\":6,\"type\":\"SYNTAX_OBSERVATION\",\"payload\":{\"providerSyntaxId\":\"python-syntax-v1:c328aab87bcc189e5124b10f4df68846ebbb0f010c92ab10efe4976b011d9e9b\",\"sourceFileId\":\"file:one\",\"sourceFingerprint\":\"sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50\",\"sourceRange\":{\"sourceFileId\":\"file:one\",\"startLine\":0,\"startColumn\":7,\"endLine\":0,\"endColumn\":15},\"owner\":{\"factType\":\"NODE\",\"providerId\":\"native\",\"providerFactId\":\"python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb\"},\"syntaxKind\":\"ASSIGNMENT\",\"payload\":{\"targetName\":\"p\",\"value\":{\"kind\":\"REFERENCE\",\"name\":\"pkg\",\"target\":{\"state\":\"UNRESOLVED\",\"resolution\":\"UNRESOLVED\",\"originalHint\":\"pkg\",\"candidates\":[]}}}}}\n{\"protocolVersion\":5,\"requestId\":\"contract:mixed\",\"sequence\":7,\"type\":\"SYNTAX_OBSERVATION\",\"payload\":{\"providerSyntaxId\":\"python-syntax-v1:77e2f151a2fce77c4b023ae5f92d2038c8518c892aeec5dfe07e38871abd89c7\",\"sourceFileId\":\"file:one\",\"sourceFingerprint\":\"sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50\",\"sourceRange\":{\"sourceFileId\":\"file:one\",\"startLine\":1,\"startColumn\":0,\"endLine\":1,\"endColumn\":5},\"owner\":{\"factType\":\"NODE\",\"providerId\":\"native\",\"providerFactId\":\"python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb\"},\"syntaxKind\":\"ASSIGNMENT\",\"payload\":{\"targetName\":\"x\",\"value\":{\"kind\":\"REFERENCE\",\"name\":\"p\",\"target\":{\"state\":\"UNRESOLVED\",\"resolution\":\"UNRESOLVED\",\"originalHint\":\"p\",\"candidates\":[]}}}}}\n{\"protocolVersion\":5,\"requestId\":\"contract:mixed\",\"sequence\":8,\"type\":\"CODE_COVERAGE\",\"payload\":{\"sourceFileId\":\"file:one\",\"sourceFingerprint\":\"sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50\",\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\",\"facet\":\"MODULE\",\"status\":\"COMPLETE\",\"limitations\":[],\"statistics\":{\"eligibleSites\":1,\"coveredSites\":1,\"unsupportedSites\":0,\"partialSites\":0,\"resolutionCounts\":{\"EXACT\":0,\"HEURISTIC\":0,\"AMBIGUOUS\":0,\"UNRESOLVED\":0,\"UNSUPPORTED\":0}}}}\n{\"protocolVersion\":5,\"requestId\":\"contract:mixed\",\"sequence\":9,\"type\":\"CODE_COVERAGE\",\"payload\":{\"sourceFileId\":\"file:one\",\"sourceFingerprint\":\"sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50\",\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\",\"facet\":\"FUNCTION\",\"status\":\"COMPLETE\",\"limitations\":[],\"statistics\":{\"eligibleSites\":0,\"coveredSites\":0,\"unsupportedSites\":0,\"partialSites\":0,\"resolutionCounts\":{\"EXACT\":0,\"HEURISTIC\":0,\"AMBIGUOUS\":0,\"UNRESOLVED\":0,\"UNSUPPORTED\":0}}}}\n{\"protocolVersion\":5,\"requestId\":\"contract:mixed\",\"sequence\":10,\"type\":\"CODE_COVERAGE\",\"payload\":{\"sourceFileId\":\"file:one\",\"sourceFingerprint\":\"sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50\",\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\",\"facet\":\"IMPORT\",\"status\":\"COMPLETE\",\"limitations\":[],\"statistics\":{\"eligibleSites\":1,\"coveredSites\":1,\"unsupportedSites\":0,\"partialSites\":0,\"resolutionCounts\":{\"EXACT\":0,\"HEURISTIC\":0,\"AMBIGUOUS\":0,\"UNRESOLVED\":1,\"UNSUPPORTED\":0}}}}\n{\"protocolVersion\":5,\"requestId\":\"contract:mixed\",\"sequence\":11,\"type\":\"CODE_COVERAGE\",\"payload\":{\"sourceFileId\":\"file:one\",\"sourceFingerprint\":\"sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50\",\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\",\"facet\":\"REFERENCE\",\"status\":\"COMPLETE\",\"limitations\":[],\"statistics\":{\"eligibleSites\":1,\"coveredSites\":1,\"unsupportedSites\":0,\"partialSites\":0,\"resolutionCounts\":{\"EXACT\":0,\"HEURISTIC\":0,\"AMBIGUOUS\":0,\"UNRESOLVED\":1,\"UNSUPPORTED\":0}}}}\n{\"protocolVersion\":5,\"requestId\":\"contract:mixed\",\"sequence\":12,\"type\":\"SYNTAX_COVERAGE\",\"payload\":{\"sourceFileId\":\"file:one\",\"sourceFingerprint\":\"sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50\",\"status\":\"COMPLETE\",\"limitations\":[]}}\n{\"protocolVersion\":5,\"requestId\":\"contract:mixed\",\"sequence\":13,\"type\":\"OBSERVATION_COMPLETED\",\"payload\":{\"expectedActivationBasis\":null,\"targetSource\":{\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"contentFingerprint\":\"content:first\"},\"ownerBinding\":{\"kind\":\"PROVISIONAL_CODE\",\"stageDigest\":\"74dd95e88a44a35e9bdfa0d761d69ab74c26cd7e6a2c6fefc6594fc5a6948a96\",\"ownerMapDigest\":\"7dca27e601f0bbfde8081bb8caa014f9099f624a39c2381e7b8225eb40cbe47f\"},\"extractorVersion\":\"syntax-v1\",\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\",\"requestChecksum\":\"a1bea975a6e30feefdcd2f33e07afa3d9cd168b86b6fc35b754d2d481e6bd0c0\",\"codeOutcome\":\"COMPLETE\",\"syntaxOutcome\":\"COMPLETE\",\"outcome\":\"SUCCEEDED\",\"counts\":{\"nodes\":1,\"edges\":2,\"syntax\":3,\"codeCoverage\":4,\"syntaxCoverage\":2,\"diagnostics\":0},\"checksum\":\"0ae4b1f0ac6ad1e8178be86027fed69f53c1e31edb12830b66046c9467a586cc\"}}\n"
+      },
+      "expected": {
+        "result": {
+          "observation": {
+            "request": {
+              "protocolVersion": 5,
+              "requestId": "contract:mixed",
+              "sequence": 0,
+              "type": "OBSERVE_CODE_SYNTAX",
+              "payload": {
+                "irSchemaVersion": 1,
+                "repository": { "id": "repo:one", "rootPath": "/fixture/repo" },
+                "providerId": "native",
+                "providerVersion": "0.0.0",
+                "providerSnapshotId": "snapshot:one",
+                "extractorVersion": "syntax-v1",
+                "languages": [
+                  {
+                    "languageId": "java",
+                    "grammarVersion": "0.23.5",
+                    "analyzerVersion": "0.0.0",
+                    "compatibilityVersion": "syntax-v1"
+                  },
+                  {
+                    "languageId": "python",
+                    "grammarVersion": "0.25.0",
+                    "analyzerVersion": "0.0.0",
+                    "compatibilityVersion": "syntax-v1"
+                  }
+                ],
+                "sourceFiles": [
+                  {
+                    "id": "java:file",
+                    "repositoryId": "repo:one",
+                    "revisionId": "revision:worktree",
+                    "path": "Box.java",
+                    "contentFingerprint": "sha256:5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1",
+                    "classification": {
+                      "role": "SOURCE",
+                      "provenance": "AUTHORED",
+                      "contentKind": "TEXT"
+                    },
+                    "languageHint": "java",
+                    "sensitivity": "INTERNAL"
+                  },
+                  {
+                    "id": "file:one",
+                    "repositoryId": "repo:one",
+                    "revisionId": "revision:worktree",
+                    "path": "app.py",
+                    "contentFingerprint": "sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+                    "classification": {
+                      "role": "SOURCE",
+                      "provenance": "AUTHORED",
+                      "contentKind": "TEXT"
+                    },
+                    "languageHint": "python",
+                    "sensitivity": "INTERNAL"
+                  }
+                ],
+                "removedSourceFiles": [],
+                "owners": [
+                  {
+                    "sourceFileId": "java:file",
+                    "providerNodeRef": {
+                      "factType": "NODE",
+                      "providerId": "native",
+                      "providerFactId": "java:Box"
+                    },
+                    "canonicalRef": {
+                      "scope": "REPOSITORY",
+                      "repositoryId": "repo:one",
+                      "entity": {
+                        "kind": "CODE_NODE",
+                        "id": "canonical-node-v1:d4d1141ea168c690fb883ecbbaba0e7057a010eb7ef98d8cef6fc9172cbd42d8",
+                        "revisionId": "revision:worktree"
+                      }
+                    }
+                  }
+                ],
+                "deadlineEpochMs": null,
+                "resourceBudget": {
+                  "maxDurationMs": 1000,
+                  "maxMemoryBytes": 65536,
+                  "maxEvents": 20,
+                  "maxInputBytes": 65536,
+                  "maxOutputBytes": 65536,
+                  "maxDepth": 64,
+                  "maxItems": 1000
+                },
+                "expectedActivationBasis": null,
+                "targetSource": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:worktree",
+                  "contentFingerprint": "content:first"
+                },
+                "ownerBinding": {
+                  "kind": "PROVISIONAL_CODE",
+                  "stageDigest": "74dd95e88a44a35e9bdfa0d761d69ab74c26cd7e6a2c6fefc6594fc5a6948a96",
+                  "ownerMapDigest": "7dca27e601f0bbfde8081bb8caa014f9099f624a39c2381e7b8225eb40cbe47f"
+                },
+                "codeContract": "PYTHON_SYNTAX_CODE_V1"
+              }
+            },
+            "events": [
+              {
+                "protocolVersion": 5,
+                "requestId": "contract:mixed",
+                "sequence": 0,
+                "type": "OBSERVATION_STARTED",
+                "payload": {
+                  "expectedActivationBasis": null,
+                  "targetSource": {
+                    "repositoryId": "repo:one",
+                    "revisionId": "revision:worktree",
+                    "contentFingerprint": "content:first"
+                  },
+                  "ownerBinding": {
+                    "kind": "PROVISIONAL_CODE",
+                    "stageDigest": "74dd95e88a44a35e9bdfa0d761d69ab74c26cd7e6a2c6fefc6594fc5a6948a96",
+                    "ownerMapDigest": "7dca27e601f0bbfde8081bb8caa014f9099f624a39c2381e7b8225eb40cbe47f"
+                  },
+                  "extractorVersion": "syntax-v1",
+                  "codeContract": "PYTHON_SYNTAX_CODE_V1",
+                  "requestChecksum": "a1bea975a6e30feefdcd2f33e07afa3d9cd168b86b6fc35b754d2d481e6bd0c0"
+                }
+              },
+              {
+                "protocolVersion": 5,
+                "requestId": "contract:mixed",
+                "sequence": 1,
+                "type": "SYNTAX_OBSERVATION",
+                "payload": {
+                  "providerSyntaxId": "java:syntax:Box",
+                  "sourceFileId": "java:file",
+                  "sourceFingerprint": "sha256:5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1",
+                  "sourceRange": {
+                    "sourceFileId": "java:file",
+                    "startLine": 0,
+                    "startColumn": 0,
+                    "endLine": 0,
+                    "endColumn": 12
+                  },
+                  "owner": {
+                    "factType": "NODE",
+                    "providerId": "native",
+                    "providerFactId": "java:Box"
+                  },
+                  "syntaxKind": "DECLARATION",
+                  "payload": { "declaredType": null, "parameterNames": [], "modifiers": [] }
+                }
+              },
+              {
+                "protocolVersion": 5,
+                "requestId": "contract:mixed",
+                "sequence": 2,
+                "type": "SYNTAX_COVERAGE",
+                "payload": {
+                  "sourceFileId": "java:file",
+                  "sourceFingerprint": "sha256:5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1",
+                  "status": "COMPLETE",
+                  "limitations": []
+                }
+              },
+              {
+                "protocolVersion": 5,
+                "requestId": "contract:mixed",
+                "sequence": 3,
+                "type": "NODE",
+                "payload": {
+                  "providerId": "native",
+                  "providerSnapshotId": "snapshot:one",
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:worktree",
+                  "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb",
+                  "providerKind": "python.module",
+                  "name": "app.py",
+                  "qualifiedName": "app.py",
+                  "sourceRange": {
+                    "sourceFileId": "file:one",
+                    "startLine": 0,
+                    "startColumn": 0,
+                    "endLine": 2,
+                    "endColumn": 0
+                  },
+                  "confidence": { "score": 1, "method": "parser", "reasons": [] }
+                }
+              },
+              {
+                "protocolVersion": 5,
+                "requestId": "contract:mixed",
+                "sequence": 4,
+                "type": "EDGE",
+                "payload": {
+                  "providerId": "native",
+                  "providerSnapshotId": "snapshot:one",
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:worktree",
+                  "providerFactId": "python-edge-v1:37bdc236f427d4e4dc22c574e10b48a36d14083aa7f3f4ae471776631d75fa67",
+                  "providerKind": "python.import",
+                  "sourceRange": {
+                    "sourceFileId": "file:one",
+                    "startLine": 0,
+                    "startColumn": 7,
+                    "endLine": 0,
+                    "endColumn": 15
+                  },
+                  "confidence": { "score": 1, "method": "parser", "reasons": [] },
+                  "source": {
+                    "factType": "NODE",
+                    "providerId": "native",
+                    "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb"
+                  },
+                  "target": {
+                    "state": "UNRESOLVED",
+                    "resolution": "UNRESOLVED",
+                    "originalHint": "pkg",
+                    "candidates": []
+                  }
+                }
+              },
+              {
+                "protocolVersion": 5,
+                "requestId": "contract:mixed",
+                "sequence": 5,
+                "type": "EDGE",
+                "payload": {
+                  "providerId": "native",
+                  "providerSnapshotId": "snapshot:one",
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:worktree",
+                  "providerFactId": "python-edge-v1:778fbe8c61c6ddb3ac42c06c7d6014fd8a250b2b36c53529c4dad1a70fdef970",
+                  "providerKind": "python.reference",
+                  "sourceRange": {
+                    "sourceFileId": "file:one",
+                    "startLine": 1,
+                    "startColumn": 4,
+                    "endLine": 1,
+                    "endColumn": 5
+                  },
+                  "confidence": { "score": 1, "method": "parser", "reasons": [] },
+                  "source": {
+                    "factType": "NODE",
+                    "providerId": "native",
+                    "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb"
+                  },
+                  "target": {
+                    "state": "UNRESOLVED",
+                    "resolution": "UNRESOLVED",
+                    "originalHint": "p",
+                    "candidates": []
+                  }
+                }
+              },
+              {
+                "protocolVersion": 5,
+                "requestId": "contract:mixed",
+                "sequence": 6,
+                "type": "SYNTAX_OBSERVATION",
+                "payload": {
+                  "providerSyntaxId": "python-syntax-v1:c328aab87bcc189e5124b10f4df68846ebbb0f010c92ab10efe4976b011d9e9b",
+                  "sourceFileId": "file:one",
+                  "sourceFingerprint": "sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+                  "sourceRange": {
+                    "sourceFileId": "file:one",
+                    "startLine": 0,
+                    "startColumn": 7,
+                    "endLine": 0,
+                    "endColumn": 15
+                  },
+                  "owner": {
+                    "factType": "NODE",
+                    "providerId": "native",
+                    "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb"
+                  },
+                  "syntaxKind": "ASSIGNMENT",
+                  "payload": {
+                    "targetName": "p",
+                    "value": {
+                      "kind": "REFERENCE",
+                      "name": "pkg",
+                      "target": {
+                        "state": "UNRESOLVED",
+                        "resolution": "UNRESOLVED",
+                        "originalHint": "pkg",
+                        "candidates": []
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "protocolVersion": 5,
+                "requestId": "contract:mixed",
+                "sequence": 7,
+                "type": "SYNTAX_OBSERVATION",
+                "payload": {
+                  "providerSyntaxId": "python-syntax-v1:77e2f151a2fce77c4b023ae5f92d2038c8518c892aeec5dfe07e38871abd89c7",
+                  "sourceFileId": "file:one",
+                  "sourceFingerprint": "sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+                  "sourceRange": {
+                    "sourceFileId": "file:one",
+                    "startLine": 1,
+                    "startColumn": 0,
+                    "endLine": 1,
+                    "endColumn": 5
+                  },
+                  "owner": {
+                    "factType": "NODE",
+                    "providerId": "native",
+                    "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb"
+                  },
+                  "syntaxKind": "ASSIGNMENT",
+                  "payload": {
+                    "targetName": "x",
+                    "value": {
+                      "kind": "REFERENCE",
+                      "name": "p",
+                      "target": {
+                        "state": "UNRESOLVED",
+                        "resolution": "UNRESOLVED",
+                        "originalHint": "p",
+                        "candidates": []
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "protocolVersion": 5,
+                "requestId": "contract:mixed",
+                "sequence": 8,
+                "type": "CODE_COVERAGE",
+                "payload": {
+                  "sourceFileId": "file:one",
+                  "sourceFingerprint": "sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+                  "codeContract": "PYTHON_SYNTAX_CODE_V1",
+                  "facet": "MODULE",
+                  "status": "COMPLETE",
+                  "limitations": [],
+                  "statistics": {
+                    "eligibleSites": 1,
+                    "coveredSites": 1,
+                    "unsupportedSites": 0,
+                    "partialSites": 0,
+                    "resolutionCounts": {
+                      "EXACT": 0,
+                      "HEURISTIC": 0,
+                      "AMBIGUOUS": 0,
+                      "UNRESOLVED": 0,
+                      "UNSUPPORTED": 0
+                    }
+                  }
+                }
+              },
+              {
+                "protocolVersion": 5,
+                "requestId": "contract:mixed",
+                "sequence": 9,
+                "type": "CODE_COVERAGE",
+                "payload": {
+                  "sourceFileId": "file:one",
+                  "sourceFingerprint": "sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+                  "codeContract": "PYTHON_SYNTAX_CODE_V1",
+                  "facet": "FUNCTION",
+                  "status": "COMPLETE",
+                  "limitations": [],
+                  "statistics": {
+                    "eligibleSites": 0,
+                    "coveredSites": 0,
+                    "unsupportedSites": 0,
+                    "partialSites": 0,
+                    "resolutionCounts": {
+                      "EXACT": 0,
+                      "HEURISTIC": 0,
+                      "AMBIGUOUS": 0,
+                      "UNRESOLVED": 0,
+                      "UNSUPPORTED": 0
+                    }
+                  }
+                }
+              },
+              {
+                "protocolVersion": 5,
+                "requestId": "contract:mixed",
+                "sequence": 10,
+                "type": "CODE_COVERAGE",
+                "payload": {
+                  "sourceFileId": "file:one",
+                  "sourceFingerprint": "sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+                  "codeContract": "PYTHON_SYNTAX_CODE_V1",
+                  "facet": "IMPORT",
+                  "status": "COMPLETE",
+                  "limitations": [],
+                  "statistics": {
+                    "eligibleSites": 1,
+                    "coveredSites": 1,
+                    "unsupportedSites": 0,
+                    "partialSites": 0,
+                    "resolutionCounts": {
+                      "EXACT": 0,
+                      "HEURISTIC": 0,
+                      "AMBIGUOUS": 0,
+                      "UNRESOLVED": 1,
+                      "UNSUPPORTED": 0
+                    }
+                  }
+                }
+              },
+              {
+                "protocolVersion": 5,
+                "requestId": "contract:mixed",
+                "sequence": 11,
+                "type": "CODE_COVERAGE",
+                "payload": {
+                  "sourceFileId": "file:one",
+                  "sourceFingerprint": "sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+                  "codeContract": "PYTHON_SYNTAX_CODE_V1",
+                  "facet": "REFERENCE",
+                  "status": "COMPLETE",
+                  "limitations": [],
+                  "statistics": {
+                    "eligibleSites": 1,
+                    "coveredSites": 1,
+                    "unsupportedSites": 0,
+                    "partialSites": 0,
+                    "resolutionCounts": {
+                      "EXACT": 0,
+                      "HEURISTIC": 0,
+                      "AMBIGUOUS": 0,
+                      "UNRESOLVED": 1,
+                      "UNSUPPORTED": 0
+                    }
+                  }
+                }
+              },
+              {
+                "protocolVersion": 5,
+                "requestId": "contract:mixed",
+                "sequence": 12,
+                "type": "SYNTAX_COVERAGE",
+                "payload": {
+                  "sourceFileId": "file:one",
+                  "sourceFingerprint": "sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+                  "status": "COMPLETE",
+                  "limitations": []
+                }
+              },
+              {
+                "protocolVersion": 5,
+                "requestId": "contract:mixed",
+                "sequence": 13,
+                "type": "OBSERVATION_COMPLETED",
+                "payload": {
+                  "expectedActivationBasis": null,
+                  "targetSource": {
+                    "repositoryId": "repo:one",
+                    "revisionId": "revision:worktree",
+                    "contentFingerprint": "content:first"
+                  },
+                  "ownerBinding": {
+                    "kind": "PROVISIONAL_CODE",
+                    "stageDigest": "74dd95e88a44a35e9bdfa0d761d69ab74c26cd7e6a2c6fefc6594fc5a6948a96",
+                    "ownerMapDigest": "7dca27e601f0bbfde8081bb8caa014f9099f624a39c2381e7b8225eb40cbe47f"
+                  },
+                  "extractorVersion": "syntax-v1",
+                  "codeContract": "PYTHON_SYNTAX_CODE_V1",
+                  "requestChecksum": "a1bea975a6e30feefdcd2f33e07afa3d9cd168b86b6fc35b754d2d481e6bd0c0",
+                  "codeOutcome": "COMPLETE",
+                  "syntaxOutcome": "COMPLETE",
+                  "outcome": "SUCCEEDED",
+                  "counts": {
+                    "nodes": 1,
+                    "edges": 2,
+                    "syntax": 3,
+                    "codeCoverage": 4,
+                    "syntaxCoverage": 2,
+                    "diagnostics": 0
+                  },
+                  "checksum": "0ae4b1f0ac6ad1e8178be86027fed69f53c1e31edb12830b66046c9467a586cc"
+                }
+              }
+            ],
+            "codeOutcome": "COMPLETE",
+            "syntaxOutcome": "COMPLETE",
+            "outcome": "SUCCEEDED",
+            "counts": {
+              "nodes": 1,
+              "edges": 2,
+              "syntax": 3,
+              "codeCoverage": 4,
+              "syntaxCoverage": 2,
+              "diagnostics": 0
+            },
+            "checksum": "0ae4b1f0ac6ad1e8178be86027fed69f53c1e31edb12830b66046c9467a586cc",
+            "requestChecksum": "a1bea975a6e30feefdcd2f33e07afa3d9cd168b86b6fc35b754d2d481e6bd0c0"
+          },
+          "outputIdentity": "52a66409eea2414fdaecba57e7667073276504c2ed1c461074eaeebab0c282a0"
+        },
+        "normalized": {
+          "nodePairs": [
+            {
+              "provider": {
+                "factType": "NODE",
+                "providerId": "native",
+                "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb"
+              },
+              "canonical": {
+                "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+                "factKey": "node-fact-v1:9f87fdd184180db6f32fe351dc70bd34a7f1d2baebfa5f06eb7714f1cb1f3dc5",
+                "repositoryId": "repo:one",
+                "revisionId": "revision:worktree",
+                "name": "app.py",
+                "qualifiedName": "app.py",
+                "sourceRange": null,
+                "confidence": { "score": 1, "method": "parser", "reasons": [] },
+                "kind": "MODULE"
+              }
+            }
+          ],
+          "edgePairs": [
+            {
+              "provider": {
+                "factType": "EDGE",
+                "providerId": "native",
+                "providerFactId": "python-edge-v1:778fbe8c61c6ddb3ac42c06c7d6014fd8a250b2b36c53529c4dad1a70fdef970"
+              },
+              "canonical": {
+                "id": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f",
+                "factKey": "edge-fact-v1:1a0f6116e03a3e0ec190dcae40a69e4c6dc7b8306c921c480ee61a134faefbb1",
+                "repositoryId": "repo:one",
+                "revisionId": "revision:worktree",
+                "kind": "REFERENCE",
+                "source": {
+                  "factType": "NODE",
+                  "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+                },
+                "target": {
+                  "state": "UNRESOLVED",
+                  "resolution": "UNRESOLVED",
+                  "originalHint": "p",
+                  "candidates": []
+                },
+                "sourceRange": {
+                  "sourceFileId": "file:one",
+                  "startLine": 1,
+                  "startColumn": 4,
+                  "endLine": 1,
+                  "endColumn": 5
+                },
+                "confidence": { "score": 1, "method": "parser", "reasons": [] }
+              }
+            },
+            {
+              "provider": {
+                "factType": "EDGE",
+                "providerId": "native",
+                "providerFactId": "python-edge-v1:37bdc236f427d4e4dc22c574e10b48a36d14083aa7f3f4ae471776631d75fa67"
+              },
+              "canonical": {
+                "id": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b",
+                "factKey": "edge-fact-v1:4a62f7e32fef238335777788b0a79f7ca94e221cf803955bce28151f1a3b608a",
+                "repositoryId": "repo:one",
+                "revisionId": "revision:worktree",
+                "kind": "IMPORT",
+                "source": {
+                  "factType": "NODE",
+                  "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+                },
+                "target": {
+                  "state": "UNRESOLVED",
+                  "resolution": "UNRESOLVED",
+                  "originalHint": "pkg",
+                  "candidates": []
+                },
+                "sourceRange": {
+                  "sourceFileId": "file:one",
+                  "startLine": 0,
+                  "startColumn": 7,
+                  "endLine": 0,
+                  "endColumn": 15
+                },
+                "confidence": { "score": 1, "method": "parser", "reasons": [] }
+              }
+            }
+          ]
+        },
+        "cost": { "serializedBytes": 96149, "items": 3572, "maxDepth": 8 },
+        "ledger": [
+          {
+            "label": "raw request copy and UTF8 decode",
+            "items": 0,
+            "serializedBytes": 4238,
+            "depth": 0
+          },
+          { "label": "request JSON preflight", "items": 84, "serializedBytes": 0, "depth": 6 },
+          { "label": "request decoded", "items": 84, "serializedBytes": 2118, "depth": 6 },
+          { "label": "request schema", "items": 84, "serializedBytes": 2118, "depth": 6 },
+          { "label": "common payload", "items": 78, "serializedBytes": 1976, "depth": 5 },
+          { "label": "common request", "items": 83, "serializedBytes": 2074, "depth": 6 },
+          { "label": "parsed common request", "items": 83, "serializedBytes": 2074, "depth": 6 },
+          {
+            "label": "raw output copy and UTF8 decode",
+            "items": 0,
+            "serializedBytes": 16074,
+            "depth": 0
+          },
+          { "label": "event 0 JSON preflight", "items": 18, "serializedBytes": 0, "depth": 3 },
+          { "label": "event 0 decoded", "items": 18, "serializedBytes": 611, "depth": 3 },
+          { "label": "event 0 schema", "items": 18, "serializedBytes": 611, "depth": 3 },
+          { "label": "event 1 JSON preflight", "items": 24, "serializedBytes": 0, "depth": 3 },
+          { "label": "event 1 decoded", "items": 24, "serializedBytes": 533, "depth": 3 },
+          { "label": "event 1 schema", "items": 24, "serializedBytes": 533, "depth": 3 },
+          { "label": "event 2 JSON preflight", "items": 10, "serializedBytes": 0, "depth": 2 },
+          { "label": "event 2 decoded", "items": 10, "serializedBytes": 258, "depth": 2 },
+          { "label": "event 2 schema", "items": 10, "serializedBytes": 258, "depth": 2 },
+          { "label": "event 3 JSON preflight", "items": 24, "serializedBytes": 0, "depth": 3 },
+          { "label": "event 3 decoded", "items": 24, "serializedBytes": 533, "depth": 3 },
+          { "label": "event 3 schema", "items": 24, "serializedBytes": 533, "depth": 3 },
+          { "label": "event 4 JSON preflight", "items": 31, "serializedBytes": 0, "depth": 3 },
+          { "label": "event 4 decoded", "items": 31, "serializedBytes": 738, "depth": 3 },
+          { "label": "event 4 schema", "items": 31, "serializedBytes": 738, "depth": 3 },
+          { "label": "event 5 JSON preflight", "items": 31, "serializedBytes": 0, "depth": 3 },
+          { "label": "event 5 decoded", "items": 31, "serializedBytes": 738, "depth": 3 },
+          { "label": "event 5 schema", "items": 31, "serializedBytes": 738, "depth": 3 },
+          { "label": "event 6 JSON preflight", "items": 30, "serializedBytes": 0, "depth": 5 },
+          { "label": "event 6 decoded", "items": 30, "serializedBytes": 768, "depth": 5 },
+          { "label": "event 6 schema", "items": 30, "serializedBytes": 768, "depth": 5 },
+          { "label": "event 7 JSON preflight", "items": 30, "serializedBytes": 0, "depth": 5 },
+          { "label": "event 7 decoded", "items": 30, "serializedBytes": 763, "depth": 5 },
+          { "label": "event 7 schema", "items": 30, "serializedBytes": 763, "depth": 5 },
+          { "label": "event 8 JSON preflight", "items": 23, "serializedBytes": 0, "depth": 4 },
+          { "label": "event 8 decoded", "items": 23, "serializedBytes": 489, "depth": 4 },
+          { "label": "event 8 schema", "items": 23, "serializedBytes": 489, "depth": 4 },
+          { "label": "event 9 JSON preflight", "items": 23, "serializedBytes": 0, "depth": 4 },
+          { "label": "event 9 decoded", "items": 23, "serializedBytes": 491, "depth": 4 },
+          { "label": "event 9 schema", "items": 23, "serializedBytes": 491, "depth": 4 },
+          { "label": "event 10 JSON preflight", "items": 23, "serializedBytes": 0, "depth": 4 },
+          { "label": "event 10 decoded", "items": 23, "serializedBytes": 490, "depth": 4 },
+          { "label": "event 10 schema", "items": 23, "serializedBytes": 490, "depth": 4 },
+          { "label": "event 11 JSON preflight", "items": 23, "serializedBytes": 0, "depth": 4 },
+          { "label": "event 11 decoded", "items": 23, "serializedBytes": 493, "depth": 4 },
+          { "label": "event 11 schema", "items": 23, "serializedBytes": 493, "depth": 4 },
+          { "label": "event 12 JSON preflight", "items": 10, "serializedBytes": 0, "depth": 2 },
+          { "label": "event 12 decoded", "items": 10, "serializedBytes": 258, "depth": 2 },
+          { "label": "event 12 schema", "items": 10, "serializedBytes": 258, "depth": 2 },
+          { "label": "event 13 JSON preflight", "items": 29, "serializedBytes": 0, "depth": 3 },
+          { "label": "event 13 decoded", "items": 29, "serializedBytes": 860, "depth": 3 },
+          { "label": "event 13 schema", "items": 29, "serializedBytes": 860, "depth": 3 },
+          { "label": "all events", "items": 330, "serializedBytes": 8038, "depth": 6 },
+          { "label": "correspondence", "items": 415, "serializedBytes": 10178, "depth": 7 },
+          {
+            "label": "correspondence provider reference key",
+            "items": 1,
+            "serializedBytes": 27,
+            "depth": 0
+          },
+          {
+            "label": "correspondence provider reference key",
+            "items": 1,
+            "serializedBytes": 100,
+            "depth": 0
+          },
+          { "label": "syntax identity", "items": 1, "serializedBytes": 17, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          {
+            "label": "correspondence provider reference key",
+            "items": 1,
+            "serializedBytes": 27,
+            "depth": 0
+          },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          {
+            "label": "syntax covered source identity",
+            "items": 1,
+            "serializedBytes": 11,
+            "depth": 0
+          },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          {
+            "label": "correspondence provider reference key",
+            "items": 1,
+            "serializedBytes": 100,
+            "depth": 0
+          },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          {
+            "label": "correspondence provider reference key",
+            "items": 1,
+            "serializedBytes": 100,
+            "depth": 0
+          },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "syntax identity", "items": 1, "serializedBytes": 83, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          {
+            "label": "correspondence provider reference key",
+            "items": 1,
+            "serializedBytes": 100,
+            "depth": 0
+          },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "syntax identity", "items": 1, "serializedBytes": 83, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          {
+            "label": "correspondence provider reference key",
+            "items": 1,
+            "serializedBytes": 100,
+            "depth": 0
+          },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          {
+            "label": "code coverage keyed record",
+            "items": 20,
+            "serializedBytes": 439,
+            "depth": 4
+          },
+          {
+            "label": "code coverage keyed record",
+            "items": 20,
+            "serializedBytes": 443,
+            "depth": 4
+          },
+          {
+            "label": "code coverage keyed record",
+            "items": 20,
+            "serializedBytes": 439,
+            "depth": 4
+          },
+          {
+            "label": "code coverage keyed record",
+            "items": 20,
+            "serializedBytes": 445,
+            "depth": 4
+          },
+          {
+            "label": "syntax covered source identity",
+            "items": 1,
+            "serializedBytes": 10,
+            "depth": 0
+          },
+          { "label": "Python input", "items": 105, "serializedBytes": 2591, "depth": 4 },
+          { "label": "Python parsed input", "items": 105, "serializedBytes": 2591, "depth": 4 },
+          { "label": "Python sourceFiles", "items": 25, "serializedBytes": 636, "depth": 3 },
+          { "label": "Python nodes", "items": 20, "serializedBytes": 447, "depth": 3 },
+          { "label": "Python edges", "items": 53, "serializedBytes": 1303, "depth": 3 },
+          { "label": "Python node fields", "items": 5, "serializedBytes": 50, "depth": 1 },
+          { "label": "Python node fact key", "items": 1, "serializedBytes": 79, "depth": 0 },
+          { "label": "Python canonical node id", "items": 1, "serializedBytes": 84, "depth": 0 },
+          { "label": "Python node pair", "items": 18, "serializedBytes": 540, "depth": 3 },
+          { "label": "Python edge input", "items": 26, "serializedBytes": 650, "depth": 2 },
+          { "label": "Python edge pair", "items": 29, "serializedBytes": 791, "depth": 3 },
+          { "label": "Python edge input", "items": 26, "serializedBytes": 650, "depth": 2 },
+          { "label": "Python edge pair", "items": 29, "serializedBytes": 791, "depth": 3 },
+          { "label": "Python normalized pairs", "items": 79, "serializedBytes": 2154, "depth": 5 },
+          {
+            "label": "Python per-file complete view",
+            "items": 20,
+            "serializedBytes": 447,
+            "depth": 3
+          },
+          {
+            "label": "Python per-file complete view",
+            "items": 53,
+            "serializedBytes": 1303,
+            "depth": 3
+          },
+          {
+            "label": "Python per-file complete view",
+            "items": 70,
+            "serializedBytes": 1762,
+            "depth": 5
+          },
+          {
+            "label": "Syntax expression recursive visit",
+            "items": 1,
+            "serializedBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "Syntax expression recursive visit",
+            "items": 1,
+            "serializedBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "Syntax expression recursive visit",
+            "items": 1,
+            "serializedBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "Syntax reference occurrence",
+            "items": 21,
+            "serializedBytes": 409,
+            "depth": 2
+          },
+          {
+            "label": "Syntax expression recursive visit",
+            "items": 1,
+            "serializedBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "Syntax expression recursive visit",
+            "items": 1,
+            "serializedBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "Syntax expression recursive visit",
+            "items": 1,
+            "serializedBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "Syntax reference occurrence",
+            "items": 21,
+            "serializedBytes": 404,
+            "depth": 2
+          },
+          {
+            "label": "correspondence provider reference key",
+            "items": 1,
+            "serializedBytes": 100,
+            "depth": 0
+          },
+          {
+            "label": "correspondence provider reference key",
+            "items": 1,
+            "serializedBytes": 100,
+            "depth": 0
+          },
+          {
+            "label": "correspondence provider reference key",
+            "items": 1,
+            "serializedBytes": 100,
+            "depth": 0
+          },
+          {
+            "label": "correspondence provider reference key",
+            "items": 1,
+            "serializedBytes": 100,
+            "depth": 0
+          },
+          {
+            "label": "validated stream wrapper",
+            "items": 429,
+            "serializedBytes": 10609,
+            "depth": 8
+          }
+        ],
+        "scope": "Closed declared v5 decoder only; no authenticity, Native, Stage, Store or RSS qualification."
+      }
+    },
+    {
+      "id": "python-only",
+      "sources": [
+        {
+          "path": "stage-observation-independent/python-only-request.jsonl",
+          "sha256": "56889ba555597663524f23ed47871e4a68162fe6839badd01b855dbb9718eb46",
+          "assetPath": "fixtures/phase1/mixed-analysis-stage/component-references/stage-observation-independent/python-only-request.jsonl",
+          "assetSha256": "56889ba555597663524f23ed47871e4a68162fe6839badd01b855dbb9718eb46"
+        },
+        {
+          "path": "stage-observation-independent/python-only-output.jsonl",
+          "sha256": "923a37ed184817c2144d471664c2de71b9cd8b4703e62c538fc742552f2cf2ca",
+          "assetPath": "fixtures/phase1/mixed-analysis-stage/component-references/stage-observation-independent/python-only-output.jsonl",
+          "assetSha256": "923a37ed184817c2144d471664c2de71b9cd8b4703e62c538fc742552f2cf2ca"
+        }
+      ],
+      "raw": {
+        "requestText": "{\"protocolVersion\":5,\"requestId\":\"contract:alias-reference-python\",\"sequence\":0,\"type\":\"OBSERVE_CODE_SYNTAX\",\"payload\":{\"irSchemaVersion\":1,\"repository\":{\"id\":\"repo:one\",\"rootPath\":\"/fixture/repo\"},\"providerId\":\"native\",\"providerVersion\":\"0.0.0\",\"providerSnapshotId\":\"snapshot:one\",\"extractorVersion\":\"syntax-v1\",\"languages\":[{\"languageId\":\"python\",\"grammarVersion\":\"0.25.0\",\"analyzerVersion\":\"0.0.0\",\"compatibilityVersion\":\"syntax-v1\"}],\"sourceFiles\":[{\"id\":\"file:one\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"path\":\"app.py\",\"contentFingerprint\":\"sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50\",\"classification\":{\"role\":\"SOURCE\",\"provenance\":\"AUTHORED\",\"contentKind\":\"TEXT\"},\"languageHint\":\"python\",\"sensitivity\":\"INTERNAL\"}],\"removedSourceFiles\":[],\"owners\":[],\"deadlineEpochMs\":null,\"resourceBudget\":{\"maxDurationMs\":1000,\"maxMemoryBytes\":65536,\"maxEvents\":20,\"maxInputBytes\":65536,\"maxOutputBytes\":65536,\"maxDepth\":64,\"maxItems\":1000},\"expectedActivationBasis\":null,\"targetSource\":{\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"contentFingerprint\":\"content:first\"},\"ownerBinding\":{\"kind\":\"PROVISIONAL_CODE\",\"stageDigest\":\"5ae2cfb89fa413ae07288d996dca635c972894cac027230c9f369e3fc247f1f9\",\"ownerMapDigest\":\"a3c9bd0cc75bcbd61d17d79c1af2992e2c0294a07b6da134c76cc07bf8bac2b8\"},\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\"}}\n",
+        "outputText": "{\"protocolVersion\":5,\"requestId\":\"contract:alias-reference-python\",\"sequence\":0,\"type\":\"OBSERVATION_STARTED\",\"payload\":{\"expectedActivationBasis\":null,\"targetSource\":{\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"contentFingerprint\":\"content:first\"},\"ownerBinding\":{\"kind\":\"PROVISIONAL_CODE\",\"stageDigest\":\"5ae2cfb89fa413ae07288d996dca635c972894cac027230c9f369e3fc247f1f9\",\"ownerMapDigest\":\"a3c9bd0cc75bcbd61d17d79c1af2992e2c0294a07b6da134c76cc07bf8bac2b8\"},\"extractorVersion\":\"syntax-v1\",\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\",\"requestChecksum\":\"56889ba555597663524f23ed47871e4a68162fe6839badd01b855dbb9718eb46\"}}\n{\"protocolVersion\":5,\"requestId\":\"contract:alias-reference-python\",\"sequence\":1,\"type\":\"NODE\",\"payload\":{\"providerId\":\"native\",\"providerSnapshotId\":\"snapshot:one\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"providerFactId\":\"python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb\",\"providerKind\":\"python.module\",\"name\":\"app.py\",\"qualifiedName\":\"app.py\",\"sourceRange\":{\"sourceFileId\":\"file:one\",\"startLine\":0,\"startColumn\":0,\"endLine\":2,\"endColumn\":0},\"confidence\":{\"score\":1,\"method\":\"parser\",\"reasons\":[]}}}\n{\"protocolVersion\":5,\"requestId\":\"contract:alias-reference-python\",\"sequence\":2,\"type\":\"EDGE\",\"payload\":{\"providerId\":\"native\",\"providerSnapshotId\":\"snapshot:one\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"providerFactId\":\"python-edge-v1:37bdc236f427d4e4dc22c574e10b48a36d14083aa7f3f4ae471776631d75fa67\",\"providerKind\":\"python.import\",\"sourceRange\":{\"sourceFileId\":\"file:one\",\"startLine\":0,\"startColumn\":7,\"endLine\":0,\"endColumn\":15},\"confidence\":{\"score\":1,\"method\":\"parser\",\"reasons\":[]},\"source\":{\"factType\":\"NODE\",\"providerId\":\"native\",\"providerFactId\":\"python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb\"},\"target\":{\"state\":\"UNRESOLVED\",\"resolution\":\"UNRESOLVED\",\"originalHint\":\"pkg\",\"candidates\":[]}}}\n{\"protocolVersion\":5,\"requestId\":\"contract:alias-reference-python\",\"sequence\":3,\"type\":\"EDGE\",\"payload\":{\"providerId\":\"native\",\"providerSnapshotId\":\"snapshot:one\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"providerFactId\":\"python-edge-v1:778fbe8c61c6ddb3ac42c06c7d6014fd8a250b2b36c53529c4dad1a70fdef970\",\"providerKind\":\"python.reference\",\"sourceRange\":{\"sourceFileId\":\"file:one\",\"startLine\":1,\"startColumn\":4,\"endLine\":1,\"endColumn\":5},\"confidence\":{\"score\":1,\"method\":\"parser\",\"reasons\":[]},\"source\":{\"factType\":\"NODE\",\"providerId\":\"native\",\"providerFactId\":\"python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb\"},\"target\":{\"state\":\"UNRESOLVED\",\"resolution\":\"UNRESOLVED\",\"originalHint\":\"p\",\"candidates\":[]}}}\n{\"protocolVersion\":5,\"requestId\":\"contract:alias-reference-python\",\"sequence\":4,\"type\":\"SYNTAX_OBSERVATION\",\"payload\":{\"providerSyntaxId\":\"python-syntax-v1:c328aab87bcc189e5124b10f4df68846ebbb0f010c92ab10efe4976b011d9e9b\",\"sourceFileId\":\"file:one\",\"sourceFingerprint\":\"sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50\",\"sourceRange\":{\"sourceFileId\":\"file:one\",\"startLine\":0,\"startColumn\":7,\"endLine\":0,\"endColumn\":15},\"owner\":{\"factType\":\"NODE\",\"providerId\":\"native\",\"providerFactId\":\"python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb\"},\"syntaxKind\":\"ASSIGNMENT\",\"payload\":{\"targetName\":\"p\",\"value\":{\"kind\":\"REFERENCE\",\"name\":\"pkg\",\"target\":{\"state\":\"UNRESOLVED\",\"resolution\":\"UNRESOLVED\",\"originalHint\":\"pkg\",\"candidates\":[]}}}}}\n{\"protocolVersion\":5,\"requestId\":\"contract:alias-reference-python\",\"sequence\":5,\"type\":\"SYNTAX_OBSERVATION\",\"payload\":{\"providerSyntaxId\":\"python-syntax-v1:77e2f151a2fce77c4b023ae5f92d2038c8518c892aeec5dfe07e38871abd89c7\",\"sourceFileId\":\"file:one\",\"sourceFingerprint\":\"sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50\",\"sourceRange\":{\"sourceFileId\":\"file:one\",\"startLine\":1,\"startColumn\":0,\"endLine\":1,\"endColumn\":5},\"owner\":{\"factType\":\"NODE\",\"providerId\":\"native\",\"providerFactId\":\"python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb\"},\"syntaxKind\":\"ASSIGNMENT\",\"payload\":{\"targetName\":\"x\",\"value\":{\"kind\":\"REFERENCE\",\"name\":\"p\",\"target\":{\"state\":\"UNRESOLVED\",\"resolution\":\"UNRESOLVED\",\"originalHint\":\"p\",\"candidates\":[]}}}}}\n{\"protocolVersion\":5,\"requestId\":\"contract:alias-reference-python\",\"sequence\":6,\"type\":\"CODE_COVERAGE\",\"payload\":{\"sourceFileId\":\"file:one\",\"sourceFingerprint\":\"sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50\",\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\",\"facet\":\"MODULE\",\"status\":\"COMPLETE\",\"limitations\":[],\"statistics\":{\"eligibleSites\":1,\"coveredSites\":1,\"unsupportedSites\":0,\"partialSites\":0,\"resolutionCounts\":{\"EXACT\":0,\"HEURISTIC\":0,\"AMBIGUOUS\":0,\"UNRESOLVED\":0,\"UNSUPPORTED\":0}}}}\n{\"protocolVersion\":5,\"requestId\":\"contract:alias-reference-python\",\"sequence\":7,\"type\":\"CODE_COVERAGE\",\"payload\":{\"sourceFileId\":\"file:one\",\"sourceFingerprint\":\"sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50\",\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\",\"facet\":\"FUNCTION\",\"status\":\"COMPLETE\",\"limitations\":[],\"statistics\":{\"eligibleSites\":0,\"coveredSites\":0,\"unsupportedSites\":0,\"partialSites\":0,\"resolutionCounts\":{\"EXACT\":0,\"HEURISTIC\":0,\"AMBIGUOUS\":0,\"UNRESOLVED\":0,\"UNSUPPORTED\":0}}}}\n{\"protocolVersion\":5,\"requestId\":\"contract:alias-reference-python\",\"sequence\":8,\"type\":\"CODE_COVERAGE\",\"payload\":{\"sourceFileId\":\"file:one\",\"sourceFingerprint\":\"sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50\",\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\",\"facet\":\"IMPORT\",\"status\":\"COMPLETE\",\"limitations\":[],\"statistics\":{\"eligibleSites\":1,\"coveredSites\":1,\"unsupportedSites\":0,\"partialSites\":0,\"resolutionCounts\":{\"EXACT\":0,\"HEURISTIC\":0,\"AMBIGUOUS\":0,\"UNRESOLVED\":1,\"UNSUPPORTED\":0}}}}\n{\"protocolVersion\":5,\"requestId\":\"contract:alias-reference-python\",\"sequence\":9,\"type\":\"CODE_COVERAGE\",\"payload\":{\"sourceFileId\":\"file:one\",\"sourceFingerprint\":\"sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50\",\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\",\"facet\":\"REFERENCE\",\"status\":\"COMPLETE\",\"limitations\":[],\"statistics\":{\"eligibleSites\":1,\"coveredSites\":1,\"unsupportedSites\":0,\"partialSites\":0,\"resolutionCounts\":{\"EXACT\":0,\"HEURISTIC\":0,\"AMBIGUOUS\":0,\"UNRESOLVED\":1,\"UNSUPPORTED\":0}}}}\n{\"protocolVersion\":5,\"requestId\":\"contract:alias-reference-python\",\"sequence\":10,\"type\":\"SYNTAX_COVERAGE\",\"payload\":{\"sourceFileId\":\"file:one\",\"sourceFingerprint\":\"sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50\",\"status\":\"COMPLETE\",\"limitations\":[]}}\n{\"protocolVersion\":5,\"requestId\":\"contract:alias-reference-python\",\"sequence\":11,\"type\":\"OBSERVATION_COMPLETED\",\"payload\":{\"expectedActivationBasis\":null,\"targetSource\":{\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"contentFingerprint\":\"content:first\"},\"ownerBinding\":{\"kind\":\"PROVISIONAL_CODE\",\"stageDigest\":\"5ae2cfb89fa413ae07288d996dca635c972894cac027230c9f369e3fc247f1f9\",\"ownerMapDigest\":\"a3c9bd0cc75bcbd61d17d79c1af2992e2c0294a07b6da134c76cc07bf8bac2b8\"},\"extractorVersion\":\"syntax-v1\",\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\",\"requestChecksum\":\"56889ba555597663524f23ed47871e4a68162fe6839badd01b855dbb9718eb46\",\"codeOutcome\":\"COMPLETE\",\"syntaxOutcome\":\"COMPLETE\",\"outcome\":\"SUCCEEDED\",\"counts\":{\"nodes\":1,\"edges\":2,\"syntax\":2,\"codeCoverage\":4,\"syntaxCoverage\":1,\"diagnostics\":0},\"checksum\":\"f1ffbd3a9c0e107c2a7b74d21c3da1a803820c66f704b6f10b150c52d59e6193\"}}\n"
+      },
+      "expected": {
+        "result": {
+          "observation": {
+            "request": {
+              "protocolVersion": 5,
+              "requestId": "contract:alias-reference-python",
+              "sequence": 0,
+              "type": "OBSERVE_CODE_SYNTAX",
+              "payload": {
+                "irSchemaVersion": 1,
+                "repository": { "id": "repo:one", "rootPath": "/fixture/repo" },
+                "providerId": "native",
+                "providerVersion": "0.0.0",
+                "providerSnapshotId": "snapshot:one",
+                "extractorVersion": "syntax-v1",
+                "languages": [
+                  {
+                    "languageId": "python",
+                    "grammarVersion": "0.25.0",
+                    "analyzerVersion": "0.0.0",
+                    "compatibilityVersion": "syntax-v1"
+                  }
+                ],
+                "sourceFiles": [
+                  {
+                    "id": "file:one",
+                    "repositoryId": "repo:one",
+                    "revisionId": "revision:worktree",
+                    "path": "app.py",
+                    "contentFingerprint": "sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+                    "classification": {
+                      "role": "SOURCE",
+                      "provenance": "AUTHORED",
+                      "contentKind": "TEXT"
+                    },
+                    "languageHint": "python",
+                    "sensitivity": "INTERNAL"
+                  }
+                ],
+                "removedSourceFiles": [],
+                "owners": [],
+                "deadlineEpochMs": null,
+                "resourceBudget": {
+                  "maxDurationMs": 1000,
+                  "maxMemoryBytes": 65536,
+                  "maxEvents": 20,
+                  "maxInputBytes": 65536,
+                  "maxOutputBytes": 65536,
+                  "maxDepth": 64,
+                  "maxItems": 1000
+                },
+                "expectedActivationBasis": null,
+                "targetSource": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:worktree",
+                  "contentFingerprint": "content:first"
+                },
+                "ownerBinding": {
+                  "kind": "PROVISIONAL_CODE",
+                  "stageDigest": "5ae2cfb89fa413ae07288d996dca635c972894cac027230c9f369e3fc247f1f9",
+                  "ownerMapDigest": "a3c9bd0cc75bcbd61d17d79c1af2992e2c0294a07b6da134c76cc07bf8bac2b8"
+                },
+                "codeContract": "PYTHON_SYNTAX_CODE_V1"
+              }
+            },
+            "events": [
+              {
+                "protocolVersion": 5,
+                "requestId": "contract:alias-reference-python",
+                "sequence": 0,
+                "type": "OBSERVATION_STARTED",
+                "payload": {
+                  "expectedActivationBasis": null,
+                  "targetSource": {
+                    "repositoryId": "repo:one",
+                    "revisionId": "revision:worktree",
+                    "contentFingerprint": "content:first"
+                  },
+                  "ownerBinding": {
+                    "kind": "PROVISIONAL_CODE",
+                    "stageDigest": "5ae2cfb89fa413ae07288d996dca635c972894cac027230c9f369e3fc247f1f9",
+                    "ownerMapDigest": "a3c9bd0cc75bcbd61d17d79c1af2992e2c0294a07b6da134c76cc07bf8bac2b8"
+                  },
+                  "extractorVersion": "syntax-v1",
+                  "codeContract": "PYTHON_SYNTAX_CODE_V1",
+                  "requestChecksum": "56889ba555597663524f23ed47871e4a68162fe6839badd01b855dbb9718eb46"
+                }
+              },
+              {
+                "protocolVersion": 5,
+                "requestId": "contract:alias-reference-python",
+                "sequence": 1,
+                "type": "NODE",
+                "payload": {
+                  "providerId": "native",
+                  "providerSnapshotId": "snapshot:one",
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:worktree",
+                  "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb",
+                  "providerKind": "python.module",
+                  "name": "app.py",
+                  "qualifiedName": "app.py",
+                  "sourceRange": {
+                    "sourceFileId": "file:one",
+                    "startLine": 0,
+                    "startColumn": 0,
+                    "endLine": 2,
+                    "endColumn": 0
+                  },
+                  "confidence": { "score": 1, "method": "parser", "reasons": [] }
+                }
+              },
+              {
+                "protocolVersion": 5,
+                "requestId": "contract:alias-reference-python",
+                "sequence": 2,
+                "type": "EDGE",
+                "payload": {
+                  "providerId": "native",
+                  "providerSnapshotId": "snapshot:one",
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:worktree",
+                  "providerFactId": "python-edge-v1:37bdc236f427d4e4dc22c574e10b48a36d14083aa7f3f4ae471776631d75fa67",
+                  "providerKind": "python.import",
+                  "sourceRange": {
+                    "sourceFileId": "file:one",
+                    "startLine": 0,
+                    "startColumn": 7,
+                    "endLine": 0,
+                    "endColumn": 15
+                  },
+                  "confidence": { "score": 1, "method": "parser", "reasons": [] },
+                  "source": {
+                    "factType": "NODE",
+                    "providerId": "native",
+                    "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb"
+                  },
+                  "target": {
+                    "state": "UNRESOLVED",
+                    "resolution": "UNRESOLVED",
+                    "originalHint": "pkg",
+                    "candidates": []
+                  }
+                }
+              },
+              {
+                "protocolVersion": 5,
+                "requestId": "contract:alias-reference-python",
+                "sequence": 3,
+                "type": "EDGE",
+                "payload": {
+                  "providerId": "native",
+                  "providerSnapshotId": "snapshot:one",
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:worktree",
+                  "providerFactId": "python-edge-v1:778fbe8c61c6ddb3ac42c06c7d6014fd8a250b2b36c53529c4dad1a70fdef970",
+                  "providerKind": "python.reference",
+                  "sourceRange": {
+                    "sourceFileId": "file:one",
+                    "startLine": 1,
+                    "startColumn": 4,
+                    "endLine": 1,
+                    "endColumn": 5
+                  },
+                  "confidence": { "score": 1, "method": "parser", "reasons": [] },
+                  "source": {
+                    "factType": "NODE",
+                    "providerId": "native",
+                    "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb"
+                  },
+                  "target": {
+                    "state": "UNRESOLVED",
+                    "resolution": "UNRESOLVED",
+                    "originalHint": "p",
+                    "candidates": []
+                  }
+                }
+              },
+              {
+                "protocolVersion": 5,
+                "requestId": "contract:alias-reference-python",
+                "sequence": 4,
+                "type": "SYNTAX_OBSERVATION",
+                "payload": {
+                  "providerSyntaxId": "python-syntax-v1:c328aab87bcc189e5124b10f4df68846ebbb0f010c92ab10efe4976b011d9e9b",
+                  "sourceFileId": "file:one",
+                  "sourceFingerprint": "sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+                  "sourceRange": {
+                    "sourceFileId": "file:one",
+                    "startLine": 0,
+                    "startColumn": 7,
+                    "endLine": 0,
+                    "endColumn": 15
+                  },
+                  "owner": {
+                    "factType": "NODE",
+                    "providerId": "native",
+                    "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb"
+                  },
+                  "syntaxKind": "ASSIGNMENT",
+                  "payload": {
+                    "targetName": "p",
+                    "value": {
+                      "kind": "REFERENCE",
+                      "name": "pkg",
+                      "target": {
+                        "state": "UNRESOLVED",
+                        "resolution": "UNRESOLVED",
+                        "originalHint": "pkg",
+                        "candidates": []
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "protocolVersion": 5,
+                "requestId": "contract:alias-reference-python",
+                "sequence": 5,
+                "type": "SYNTAX_OBSERVATION",
+                "payload": {
+                  "providerSyntaxId": "python-syntax-v1:77e2f151a2fce77c4b023ae5f92d2038c8518c892aeec5dfe07e38871abd89c7",
+                  "sourceFileId": "file:one",
+                  "sourceFingerprint": "sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+                  "sourceRange": {
+                    "sourceFileId": "file:one",
+                    "startLine": 1,
+                    "startColumn": 0,
+                    "endLine": 1,
+                    "endColumn": 5
+                  },
+                  "owner": {
+                    "factType": "NODE",
+                    "providerId": "native",
+                    "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb"
+                  },
+                  "syntaxKind": "ASSIGNMENT",
+                  "payload": {
+                    "targetName": "x",
+                    "value": {
+                      "kind": "REFERENCE",
+                      "name": "p",
+                      "target": {
+                        "state": "UNRESOLVED",
+                        "resolution": "UNRESOLVED",
+                        "originalHint": "p",
+                        "candidates": []
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "protocolVersion": 5,
+                "requestId": "contract:alias-reference-python",
+                "sequence": 6,
+                "type": "CODE_COVERAGE",
+                "payload": {
+                  "sourceFileId": "file:one",
+                  "sourceFingerprint": "sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+                  "codeContract": "PYTHON_SYNTAX_CODE_V1",
+                  "facet": "MODULE",
+                  "status": "COMPLETE",
+                  "limitations": [],
+                  "statistics": {
+                    "eligibleSites": 1,
+                    "coveredSites": 1,
+                    "unsupportedSites": 0,
+                    "partialSites": 0,
+                    "resolutionCounts": {
+                      "EXACT": 0,
+                      "HEURISTIC": 0,
+                      "AMBIGUOUS": 0,
+                      "UNRESOLVED": 0,
+                      "UNSUPPORTED": 0
+                    }
+                  }
+                }
+              },
+              {
+                "protocolVersion": 5,
+                "requestId": "contract:alias-reference-python",
+                "sequence": 7,
+                "type": "CODE_COVERAGE",
+                "payload": {
+                  "sourceFileId": "file:one",
+                  "sourceFingerprint": "sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+                  "codeContract": "PYTHON_SYNTAX_CODE_V1",
+                  "facet": "FUNCTION",
+                  "status": "COMPLETE",
+                  "limitations": [],
+                  "statistics": {
+                    "eligibleSites": 0,
+                    "coveredSites": 0,
+                    "unsupportedSites": 0,
+                    "partialSites": 0,
+                    "resolutionCounts": {
+                      "EXACT": 0,
+                      "HEURISTIC": 0,
+                      "AMBIGUOUS": 0,
+                      "UNRESOLVED": 0,
+                      "UNSUPPORTED": 0
+                    }
+                  }
+                }
+              },
+              {
+                "protocolVersion": 5,
+                "requestId": "contract:alias-reference-python",
+                "sequence": 8,
+                "type": "CODE_COVERAGE",
+                "payload": {
+                  "sourceFileId": "file:one",
+                  "sourceFingerprint": "sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+                  "codeContract": "PYTHON_SYNTAX_CODE_V1",
+                  "facet": "IMPORT",
+                  "status": "COMPLETE",
+                  "limitations": [],
+                  "statistics": {
+                    "eligibleSites": 1,
+                    "coveredSites": 1,
+                    "unsupportedSites": 0,
+                    "partialSites": 0,
+                    "resolutionCounts": {
+                      "EXACT": 0,
+                      "HEURISTIC": 0,
+                      "AMBIGUOUS": 0,
+                      "UNRESOLVED": 1,
+                      "UNSUPPORTED": 0
+                    }
+                  }
+                }
+              },
+              {
+                "protocolVersion": 5,
+                "requestId": "contract:alias-reference-python",
+                "sequence": 9,
+                "type": "CODE_COVERAGE",
+                "payload": {
+                  "sourceFileId": "file:one",
+                  "sourceFingerprint": "sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+                  "codeContract": "PYTHON_SYNTAX_CODE_V1",
+                  "facet": "REFERENCE",
+                  "status": "COMPLETE",
+                  "limitations": [],
+                  "statistics": {
+                    "eligibleSites": 1,
+                    "coveredSites": 1,
+                    "unsupportedSites": 0,
+                    "partialSites": 0,
+                    "resolutionCounts": {
+                      "EXACT": 0,
+                      "HEURISTIC": 0,
+                      "AMBIGUOUS": 0,
+                      "UNRESOLVED": 1,
+                      "UNSUPPORTED": 0
+                    }
+                  }
+                }
+              },
+              {
+                "protocolVersion": 5,
+                "requestId": "contract:alias-reference-python",
+                "sequence": 10,
+                "type": "SYNTAX_COVERAGE",
+                "payload": {
+                  "sourceFileId": "file:one",
+                  "sourceFingerprint": "sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+                  "status": "COMPLETE",
+                  "limitations": []
+                }
+              },
+              {
+                "protocolVersion": 5,
+                "requestId": "contract:alias-reference-python",
+                "sequence": 11,
+                "type": "OBSERVATION_COMPLETED",
+                "payload": {
+                  "expectedActivationBasis": null,
+                  "targetSource": {
+                    "repositoryId": "repo:one",
+                    "revisionId": "revision:worktree",
+                    "contentFingerprint": "content:first"
+                  },
+                  "ownerBinding": {
+                    "kind": "PROVISIONAL_CODE",
+                    "stageDigest": "5ae2cfb89fa413ae07288d996dca635c972894cac027230c9f369e3fc247f1f9",
+                    "ownerMapDigest": "a3c9bd0cc75bcbd61d17d79c1af2992e2c0294a07b6da134c76cc07bf8bac2b8"
+                  },
+                  "extractorVersion": "syntax-v1",
+                  "codeContract": "PYTHON_SYNTAX_CODE_V1",
+                  "requestChecksum": "56889ba555597663524f23ed47871e4a68162fe6839badd01b855dbb9718eb46",
+                  "codeOutcome": "COMPLETE",
+                  "syntaxOutcome": "COMPLETE",
+                  "outcome": "SUCCEEDED",
+                  "counts": {
+                    "nodes": 1,
+                    "edges": 2,
+                    "syntax": 2,
+                    "codeCoverage": 4,
+                    "syntaxCoverage": 1,
+                    "diagnostics": 0
+                  },
+                  "checksum": "f1ffbd3a9c0e107c2a7b74d21c3da1a803820c66f704b6f10b150c52d59e6193"
+                }
+              }
+            ],
+            "codeOutcome": "COMPLETE",
+            "syntaxOutcome": "COMPLETE",
+            "outcome": "SUCCEEDED",
+            "counts": {
+              "nodes": 1,
+              "edges": 2,
+              "syntax": 2,
+              "codeCoverage": 4,
+              "syntaxCoverage": 1,
+              "diagnostics": 0
+            },
+            "checksum": "f1ffbd3a9c0e107c2a7b74d21c3da1a803820c66f704b6f10b150c52d59e6193",
+            "requestChecksum": "56889ba555597663524f23ed47871e4a68162fe6839badd01b855dbb9718eb46"
+          },
+          "outputIdentity": "923a37ed184817c2144d471664c2de71b9cd8b4703e62c538fc742552f2cf2ca"
+        },
+        "normalized": {
+          "nodePairs": [
+            {
+              "provider": {
+                "factType": "NODE",
+                "providerId": "native",
+                "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb"
+              },
+              "canonical": {
+                "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+                "factKey": "node-fact-v1:9f87fdd184180db6f32fe351dc70bd34a7f1d2baebfa5f06eb7714f1cb1f3dc5",
+                "repositoryId": "repo:one",
+                "revisionId": "revision:worktree",
+                "name": "app.py",
+                "qualifiedName": "app.py",
+                "sourceRange": null,
+                "confidence": { "score": 1, "method": "parser", "reasons": [] },
+                "kind": "MODULE"
+              }
+            }
+          ],
+          "edgePairs": [
+            {
+              "provider": {
+                "factType": "EDGE",
+                "providerId": "native",
+                "providerFactId": "python-edge-v1:778fbe8c61c6ddb3ac42c06c7d6014fd8a250b2b36c53529c4dad1a70fdef970"
+              },
+              "canonical": {
+                "id": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f",
+                "factKey": "edge-fact-v1:1a0f6116e03a3e0ec190dcae40a69e4c6dc7b8306c921c480ee61a134faefbb1",
+                "repositoryId": "repo:one",
+                "revisionId": "revision:worktree",
+                "kind": "REFERENCE",
+                "source": {
+                  "factType": "NODE",
+                  "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+                },
+                "target": {
+                  "state": "UNRESOLVED",
+                  "resolution": "UNRESOLVED",
+                  "originalHint": "p",
+                  "candidates": []
+                },
+                "sourceRange": {
+                  "sourceFileId": "file:one",
+                  "startLine": 1,
+                  "startColumn": 4,
+                  "endLine": 1,
+                  "endColumn": 5
+                },
+                "confidence": { "score": 1, "method": "parser", "reasons": [] }
+              }
+            },
+            {
+              "provider": {
+                "factType": "EDGE",
+                "providerId": "native",
+                "providerFactId": "python-edge-v1:37bdc236f427d4e4dc22c574e10b48a36d14083aa7f3f4ae471776631d75fa67"
+              },
+              "canonical": {
+                "id": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b",
+                "factKey": "edge-fact-v1:4a62f7e32fef238335777788b0a79f7ca94e221cf803955bce28151f1a3b608a",
+                "repositoryId": "repo:one",
+                "revisionId": "revision:worktree",
+                "kind": "IMPORT",
+                "source": {
+                  "factType": "NODE",
+                  "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+                },
+                "target": {
+                  "state": "UNRESOLVED",
+                  "resolution": "UNRESOLVED",
+                  "originalHint": "pkg",
+                  "candidates": []
+                },
+                "sourceRange": {
+                  "sourceFileId": "file:one",
+                  "startLine": 0,
+                  "startColumn": 7,
+                  "endLine": 0,
+                  "endColumn": 15
+                },
+                "confidence": { "score": 1, "method": "parser", "reasons": [] }
+              }
+            }
+          ]
+        },
+        "cost": { "serializedBytes": 83844, "items": 3053, "maxDepth": 8 },
+        "ledger": [
+          {
+            "label": "raw request copy and UTF8 decode",
+            "items": 0,
+            "serializedBytes": 2752,
+            "depth": 0
+          },
+          { "label": "request JSON preflight", "items": 54, "serializedBytes": 0, "depth": 5 },
+          { "label": "request decoded", "items": 54, "serializedBytes": 1375, "depth": 5 },
+          { "label": "request schema", "items": 54, "serializedBytes": 1375, "depth": 5 },
+          { "label": "common payload", "items": 48, "serializedBytes": 1216, "depth": 4 },
+          { "label": "common request", "items": 53, "serializedBytes": 1331, "depth": 5 },
+          { "label": "parsed common request", "items": 53, "serializedBytes": 1331, "depth": 5 },
+          {
+            "label": "raw output copy and UTF8 decode",
+            "items": 0,
+            "serializedBytes": 14892,
+            "depth": 0
+          },
+          { "label": "event 0 JSON preflight", "items": 18, "serializedBytes": 0, "depth": 3 },
+          { "label": "event 0 decoded", "items": 18, "serializedBytes": 628, "depth": 3 },
+          { "label": "event 0 schema", "items": 18, "serializedBytes": 628, "depth": 3 },
+          { "label": "event 1 JSON preflight", "items": 24, "serializedBytes": 0, "depth": 3 },
+          { "label": "event 1 decoded", "items": 24, "serializedBytes": 550, "depth": 3 },
+          { "label": "event 1 schema", "items": 24, "serializedBytes": 550, "depth": 3 },
+          { "label": "event 2 JSON preflight", "items": 31, "serializedBytes": 0, "depth": 3 },
+          { "label": "event 2 decoded", "items": 31, "serializedBytes": 755, "depth": 3 },
+          { "label": "event 2 schema", "items": 31, "serializedBytes": 755, "depth": 3 },
+          { "label": "event 3 JSON preflight", "items": 31, "serializedBytes": 0, "depth": 3 },
+          { "label": "event 3 decoded", "items": 31, "serializedBytes": 755, "depth": 3 },
+          { "label": "event 3 schema", "items": 31, "serializedBytes": 755, "depth": 3 },
+          { "label": "event 4 JSON preflight", "items": 30, "serializedBytes": 0, "depth": 5 },
+          { "label": "event 4 decoded", "items": 30, "serializedBytes": 785, "depth": 5 },
+          { "label": "event 4 schema", "items": 30, "serializedBytes": 785, "depth": 5 },
+          { "label": "event 5 JSON preflight", "items": 30, "serializedBytes": 0, "depth": 5 },
+          { "label": "event 5 decoded", "items": 30, "serializedBytes": 780, "depth": 5 },
+          { "label": "event 5 schema", "items": 30, "serializedBytes": 780, "depth": 5 },
+          { "label": "event 6 JSON preflight", "items": 23, "serializedBytes": 0, "depth": 4 },
+          { "label": "event 6 decoded", "items": 23, "serializedBytes": 506, "depth": 4 },
+          { "label": "event 6 schema", "items": 23, "serializedBytes": 506, "depth": 4 },
+          { "label": "event 7 JSON preflight", "items": 23, "serializedBytes": 0, "depth": 4 },
+          { "label": "event 7 decoded", "items": 23, "serializedBytes": 508, "depth": 4 },
+          { "label": "event 7 schema", "items": 23, "serializedBytes": 508, "depth": 4 },
+          { "label": "event 8 JSON preflight", "items": 23, "serializedBytes": 0, "depth": 4 },
+          { "label": "event 8 decoded", "items": 23, "serializedBytes": 506, "depth": 4 },
+          { "label": "event 8 schema", "items": 23, "serializedBytes": 506, "depth": 4 },
+          { "label": "event 9 JSON preflight", "items": 23, "serializedBytes": 0, "depth": 4 },
+          { "label": "event 9 decoded", "items": 23, "serializedBytes": 509, "depth": 4 },
+          { "label": "event 9 schema", "items": 23, "serializedBytes": 509, "depth": 4 },
+          { "label": "event 10 JSON preflight", "items": 10, "serializedBytes": 0, "depth": 2 },
+          { "label": "event 10 decoded", "items": 10, "serializedBytes": 275, "depth": 2 },
+          { "label": "event 10 schema", "items": 10, "serializedBytes": 275, "depth": 2 },
+          { "label": "event 11 JSON preflight", "items": 29, "serializedBytes": 0, "depth": 3 },
+          { "label": "event 11 decoded", "items": 29, "serializedBytes": 877, "depth": 3 },
+          { "label": "event 11 schema", "items": 29, "serializedBytes": 877, "depth": 3 },
+          { "label": "all events", "items": 296, "serializedBytes": 7447, "depth": 6 },
+          { "label": "correspondence", "items": 351, "serializedBytes": 8844, "depth": 7 },
+          {
+            "label": "correspondence provider reference key",
+            "items": 1,
+            "serializedBytes": 100,
+            "depth": 0
+          },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          {
+            "label": "correspondence provider reference key",
+            "items": 1,
+            "serializedBytes": 100,
+            "depth": 0
+          },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          {
+            "label": "correspondence provider reference key",
+            "items": 1,
+            "serializedBytes": 100,
+            "depth": 0
+          },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "syntax identity", "items": 1, "serializedBytes": 83, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          {
+            "label": "correspondence provider reference key",
+            "items": 1,
+            "serializedBytes": 100,
+            "depth": 0
+          },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "syntax identity", "items": 1, "serializedBytes": 83, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          {
+            "label": "correspondence provider reference key",
+            "items": 1,
+            "serializedBytes": 100,
+            "depth": 0
+          },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          { "label": "reference recursive visit", "items": 1, "serializedBytes": 0, "depth": 0 },
+          {
+            "label": "code coverage keyed record",
+            "items": 20,
+            "serializedBytes": 439,
+            "depth": 4
+          },
+          {
+            "label": "code coverage keyed record",
+            "items": 20,
+            "serializedBytes": 443,
+            "depth": 4
+          },
+          {
+            "label": "code coverage keyed record",
+            "items": 20,
+            "serializedBytes": 439,
+            "depth": 4
+          },
+          {
+            "label": "code coverage keyed record",
+            "items": 20,
+            "serializedBytes": 445,
+            "depth": 4
+          },
+          {
+            "label": "syntax covered source identity",
+            "items": 1,
+            "serializedBytes": 10,
+            "depth": 0
+          },
+          { "label": "Python input", "items": 93, "serializedBytes": 2273, "depth": 4 },
+          { "label": "Python parsed input", "items": 93, "serializedBytes": 2273, "depth": 4 },
+          { "label": "Python sourceFiles", "items": 13, "serializedBytes": 318, "depth": 3 },
+          { "label": "Python nodes", "items": 20, "serializedBytes": 447, "depth": 3 },
+          { "label": "Python edges", "items": 53, "serializedBytes": 1303, "depth": 3 },
+          { "label": "Python node fields", "items": 5, "serializedBytes": 50, "depth": 1 },
+          { "label": "Python node fact key", "items": 1, "serializedBytes": 79, "depth": 0 },
+          { "label": "Python canonical node id", "items": 1, "serializedBytes": 84, "depth": 0 },
+          { "label": "Python node pair", "items": 18, "serializedBytes": 540, "depth": 3 },
+          { "label": "Python edge input", "items": 26, "serializedBytes": 650, "depth": 2 },
+          { "label": "Python edge pair", "items": 29, "serializedBytes": 791, "depth": 3 },
+          { "label": "Python edge input", "items": 26, "serializedBytes": 650, "depth": 2 },
+          { "label": "Python edge pair", "items": 29, "serializedBytes": 791, "depth": 3 },
+          { "label": "Python normalized pairs", "items": 79, "serializedBytes": 2154, "depth": 5 },
+          {
+            "label": "Python per-file complete view",
+            "items": 20,
+            "serializedBytes": 447,
+            "depth": 3
+          },
+          {
+            "label": "Python per-file complete view",
+            "items": 53,
+            "serializedBytes": 1303,
+            "depth": 3
+          },
+          {
+            "label": "Python per-file complete view",
+            "items": 51,
+            "serializedBytes": 1330,
+            "depth": 5
+          },
+          {
+            "label": "Syntax expression recursive visit",
+            "items": 1,
+            "serializedBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "Syntax expression recursive visit",
+            "items": 1,
+            "serializedBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "Syntax expression recursive visit",
+            "items": 1,
+            "serializedBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "Syntax reference occurrence",
+            "items": 21,
+            "serializedBytes": 409,
+            "depth": 2
+          },
+          {
+            "label": "Syntax expression recursive visit",
+            "items": 1,
+            "serializedBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "Syntax expression recursive visit",
+            "items": 1,
+            "serializedBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "Syntax expression recursive visit",
+            "items": 1,
+            "serializedBytes": 0,
+            "depth": 0
+          },
+          {
+            "label": "Syntax reference occurrence",
+            "items": 21,
+            "serializedBytes": 404,
+            "depth": 2
+          },
+          {
+            "label": "correspondence provider reference key",
+            "items": 1,
+            "serializedBytes": 100,
+            "depth": 0
+          },
+          {
+            "label": "correspondence provider reference key",
+            "items": 1,
+            "serializedBytes": 100,
+            "depth": 0
+          },
+          {
+            "label": "correspondence provider reference key",
+            "items": 1,
+            "serializedBytes": 100,
+            "depth": 0
+          },
+          {
+            "label": "correspondence provider reference key",
+            "items": 1,
+            "serializedBytes": 100,
+            "depth": 0
+          },
+          { "label": "validated stream wrapper", "items": 365, "serializedBytes": 9275, "depth": 8 }
+        ],
+        "scope": "Closed declared v5 decoder only; no authenticity, Native, Stage, Store or RSS qualification."
+      }
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "cases": [
+    {
+      "name": "unique-http",
+      "status": "MATCHED"
+    },
+    {
+      "name": "null-schema-is-not-compatible",
+      "status": "UNRESOLVED"
+    },
+    {
+      "name": "method-contradiction",
+      "status": "CONFLICTED"
+    },
+    {
+      "name": "two-providers",
+      "status": "AMBIGUOUS"
+    },
+    {
+      "name": "registered-outside_workspace",
+      "status": "OUTSIDE_WORKSPACE"
+    },
+    {
+      "name": "registered-known_external",
+      "status": "KNOWN_EXTERNAL"
+    },
+    {
+      "name": "missing-service-is-not-external",
+      "status": "UNRESOLVED"
+    }
+  ],
+  "score": 0.5,
+  "method": "contract-support-bound-v1"
+}

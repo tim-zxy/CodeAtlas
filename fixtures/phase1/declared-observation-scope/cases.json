@@ -1,0 +1,170 @@
+[
+  {
+    "id": "S01-no-op",
+    "family": "NO_OP",
+    "input": "cases/S01-no-op/input.json",
+    "expected": "cases/S01-no-op/expected.json"
+  },
+  {
+    "id": "S02-python-modified-a",
+    "family": "PYTHON",
+    "input": "cases/S02-python-modified-a/input.json",
+    "expected": "cases/S02-python-modified-a/expected.json"
+  },
+  {
+    "id": "S03-python-added-c",
+    "family": "PYTHON",
+    "input": "cases/S03-python-added-c/input.json",
+    "expected": "cases/S03-python-added-c/expected.json"
+  },
+  {
+    "id": "S04-python-removed-a",
+    "family": "PYTHON",
+    "input": "cases/S04-python-removed-a/input.json",
+    "expected": "cases/S04-python-removed-a/expected.json"
+  },
+  {
+    "id": "S05-java-modified-j",
+    "family": "JAVA",
+    "input": "cases/S05-java-modified-j/input.json",
+    "expected": "cases/S05-java-modified-j/expected.json"
+  },
+  {
+    "id": "S06-java-added-l",
+    "family": "JAVA",
+    "input": "cases/S06-java-added-l/input.json",
+    "expected": "cases/S06-java-added-l/expected.json"
+  },
+  {
+    "id": "S07-java-removed-j",
+    "family": "JAVA",
+    "input": "cases/S07-java-removed-j/input.json",
+    "expected": "cases/S07-java-removed-j/expected.json"
+  },
+  {
+    "id": "S08-java-all-removed",
+    "family": "JAVA",
+    "input": "cases/S08-java-all-removed/input.json",
+    "expected": "cases/S08-java-all-removed/expected.json"
+  },
+  {
+    "id": "S09-other-modified-fallback",
+    "family": "OTHER",
+    "input": "cases/S09-other-modified-fallback/input.json",
+    "expected": "cases/S09-other-modified-fallback/expected.json"
+  },
+  {
+    "id": "S10-other-added-fallback",
+    "family": "OTHER",
+    "input": "cases/S10-other-added-fallback/input.json",
+    "expected": "cases/S10-other-added-fallback/expected.json"
+  },
+  {
+    "id": "S11-other-removed",
+    "family": "OTHER",
+    "input": "cases/S11-other-removed/input.json",
+    "expected": "cases/S11-other-removed/expected.json"
+  },
+  {
+    "id": "S12-other-modified-with-removal",
+    "family": "OTHER",
+    "input": "cases/S12-other-modified-with-removal/input.json",
+    "expected": "cases/S12-other-modified-with-removal/expected.json"
+  },
+  {
+    "id": "S13-mixed-java-python",
+    "family": "MIXED",
+    "input": "cases/S13-mixed-java-python/input.json",
+    "expected": "cases/S13-mixed-java-python/expected.json"
+  },
+  {
+    "id": "S14-native-contract-changed",
+    "family": "CONTRACT",
+    "input": "cases/S14-native-contract-changed/input.json",
+    "expected": "cases/S14-native-contract-changed/expected.json"
+  },
+  {
+    "id": "S15-external-source-change",
+    "family": "CONTRACT",
+    "input": "cases/S15-external-source-change/input.json",
+    "expected": "cases/S15-external-source-change/expected.json"
+  },
+  {
+    "id": "S16-external-contract-change",
+    "family": "CONTRACT",
+    "input": "cases/S16-external-contract-change/input.json",
+    "expected": "cases/S16-external-contract-change/expected.json"
+  },
+  {
+    "id": "S17-no-history",
+    "family": "REJECTION",
+    "input": "cases/S17-no-history/input.json",
+    "expected": "cases/S17-no-history/expected.json"
+  },
+  {
+    "id": "S18-stale-history",
+    "family": "REJECTION",
+    "input": "cases/S18-stale-history/input.json",
+    "expected": "cases/S18-stale-history/expected.json"
+  },
+  {
+    "id": "S19-foreign-repository",
+    "family": "REJECTION",
+    "input": "cases/S19-foreign-repository/input.json",
+    "expected": "cases/S19-foreign-repository/expected.json"
+  },
+  {
+    "id": "S20-revision-change",
+    "family": "REJECTION",
+    "input": "cases/S20-revision-change/input.json",
+    "expected": "cases/S20-revision-change/expected.json"
+  },
+  {
+    "id": "S21-locator-change",
+    "family": "REJECTION",
+    "input": "cases/S21-locator-change/input.json",
+    "expected": "cases/S21-locator-change/expected.json"
+  },
+  {
+    "id": "S22-classification-change",
+    "family": "REJECTION",
+    "input": "cases/S22-classification-change/input.json",
+    "expected": "cases/S22-classification-change/expected.json"
+  },
+  {
+    "id": "S23-path-owner-reassigned",
+    "family": "REJECTION",
+    "input": "cases/S23-path-owner-reassigned/input.json",
+    "expected": "cases/S23-path-owner-reassigned/expected.json"
+  },
+  {
+    "id": "S24-non-null-observation",
+    "family": "REJECTION",
+    "input": "cases/S24-non-null-observation/input.json",
+    "expected": "cases/S24-non-null-observation/expected.json"
+  },
+  {
+    "id": "S25-spoofed-scope-field",
+    "family": "REJECTION",
+    "input": "cases/S25-spoofed-scope-field/input.json",
+    "expected": "cases/S25-spoofed-scope-field/expected.json"
+  },
+  {
+    "id": "S26-secret-projected-source",
+    "family": "REJECTION",
+    "input": "cases/S26-secret-projected-source/input.json",
+    "expected": "cases/S26-secret-projected-source/expected.json"
+  },
+  {
+    "id": "S27-python-added-no-prior-facts",
+    "family": "PYTHON",
+    "input": "cases/S27-python-added-no-prior-facts/input.json",
+    "expected": "cases/S27-python-added-no-prior-facts/expected.json"
+  },
+  {
+    "id": "S28-fingerprint-only-fallback",
+    "family": "OTHER",
+    "input": "cases/S28-fingerprint-only-fallback/input.json",
+    "expected": "cases/S28-fingerprint-only-fallback/expected.json"
+  }
+]

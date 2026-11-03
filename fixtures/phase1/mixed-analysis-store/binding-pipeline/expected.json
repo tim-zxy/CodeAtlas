@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 11,
+  "syntaxEnvelopeVersion": 3,
+  "scenarios": [
+    "FULL/reopen",
+    "v1-upgrade",
+    "PARTIAL/transaction-rollback",
+    "retained/deletion/NO_OP/emptyFULL",
+    "same-versionDELTA"
+  ],
+  "actualNativeQualification": false
+}

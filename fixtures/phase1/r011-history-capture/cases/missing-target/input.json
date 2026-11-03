@@ -1,0 +1,36 @@
+{
+  "repositoryId": "capture-repo",
+  "tables": {
+    "repository": [
+      {
+        "slot": 1,
+        "id": "capture-repo",
+        "root_path": "C:/capture-fixture"
+      }
+    ],
+    "repository_state": [
+      {
+        "repository_id": "capture-repo",
+        "indexed_revision_id": null,
+        "indexed_content_fingerprint": null
+      }
+    ],
+    "revisions": [],
+    "source_files": [],
+    "provider_snapshots": [],
+    "provider_capabilities": [],
+    "canonical_nodes": [],
+    "canonical_edges": [],
+    "unresolved_targets": [],
+    "evidence": [],
+    "fact_evidence": [],
+    "provider_fact_bindings": [],
+    "active_support_candidates": [],
+    "analysis_coverage": [],
+    "activation_history": [],
+    "syntax_origins": [],
+    "syntax_projections": [],
+    "activation_syntax_members": [],
+    "active_history_pointer": []
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "targetSource": {
+    "repositoryId": "repo:one",
+    "revisionId": "revision:worktree",
+    "contentFingerprint": "content:first"
+  },
+  "inventory": [],
+  "snapshot": {
+    "id": "snapshot:one",
+    "providerId": "native",
+    "providerVersion": "0.0.0",
+    "runtimeVersion": "fixture-runtime",
+    "startedAt": "2026-10-24T00:00:00.000Z",
+    "completedAt": "2026-10-24T00:00:00.003Z"
+  },
+  "tool": {
+    "target": "fixture-target",
+    "profile": "test"
+  },
+  "java": null,
+  "codeSyntax": {
+    "providerVersion": "0.0.0",
+    "runtimeVersion": "fixture-runtime",
+    "tool": {
+      "target": "fixture-target",
+      "profile": "test"
+    },
+    "startedAt": "2026-10-24T00:00:00.001Z",
+    "settledAt": "2026-10-24T00:00:00.002Z"
+  }
+}

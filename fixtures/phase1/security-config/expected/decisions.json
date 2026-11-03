@@ -1,0 +1,18 @@
+{
+  "baseline": {
+    "allowed": true,
+    "code": "ALLOWED",
+    "fallbackAllowed": false
+  },
+  "localOnlyRemote": {
+    "allowed": false,
+    "code": "REMOTE_DISABLED",
+    "fallbackAllowed": false
+  },
+  "scopeDenied": {
+    "allowed": false,
+    "code": "PERMISSION_DENIED",
+    "fallbackAllowed": false
+  },
+  "syntheticBudgetsOnly": true
+}

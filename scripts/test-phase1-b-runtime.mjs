@@ -1,0 +1,13 @@
+import '../packages/ir/test/contract-ir.test.mjs';
+import '../packages/plugins/test/plugin-spi-v4.test.mjs';
+import '../packages/plugins/test/framework-plugin-v4.test.mjs';
+import '../packages/execution/test/derive-execution.test.mjs';
+import '../packages/execution/test/derive-runtime-flow.test.mjs';
+import '../packages/contracts/test/match-contracts.test.mjs';
+import '../packages/execution/test/stitch-workspace.test.mjs';
+import '../packages/storage/test/runtime-migrations.test.mjs';
+import '../packages/storage/test/runtime-fact-store.test.mjs';
+import '../packages/storage/test/contract-store.test.mjs';
+import '../packages/application/test/runtime-refresh.test.mjs';
+import '../packages/runtime/test/runtime-fact-composition.test.mjs';
+import '../packages/storage/test/runtime-sql-budget.test.mjs';

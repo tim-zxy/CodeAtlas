@@ -1,0 +1,68 @@
+{
+  "protocolVersion": 4,
+  "requestId": "syntax:request",
+  "sequence": 0,
+  "type": "OBSERVE_SYNTAX",
+  "payload": {
+    "irSchemaVersion": 1,
+    "repository": {
+      "id": "repo:one",
+      "rootPath": "/fixture/repo"
+    },
+    "providerId": "native",
+    "providerVersion": "0.0.0",
+    "providerSnapshotId": "snapshot:one",
+    "extractorVersion": "syntax-v1",
+    "languages": [
+      {
+        "languageId": "python",
+        "grammarVersion": "fixture-only",
+        "analyzerVersion": "fixture-only",
+        "compatibilityVersion": "syntax-v1"
+      }
+    ],
+    "sourceFiles": [
+      {
+        "id": "file:one",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "path": "src/handler.py",
+        "contentFingerprint": "source:one",
+        "classification": {
+          "role": "SOURCE",
+          "provenance": "AUTHORED",
+          "contentKind": "TEXT"
+        },
+        "languageHint": "python",
+        "sensitivity": "INTERNAL"
+      }
+    ],
+    "removedSourceFiles": [],
+    "owners": [],
+    "deadlineEpochMs": null,
+    "resourceBudget": {
+      "maxDurationMs": 1000,
+      "maxMemoryBytes": 65536,
+      "maxEvents": 20,
+      "maxInputBytes": 65536,
+      "maxOutputBytes": 65536,
+      "maxDepth": 64
+    },
+    "expectedActivationBasis": {
+      "repositoryId": "repo:one",
+      "revisionId": "revision:worktree",
+      "contentFingerprint": "content:first",
+      "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "targetSource": {
+      "repositoryId": "repo:one",
+      "revisionId": "revision:worktree",
+      "contentFingerprint": "content:first"
+    },
+    "ownerBinding": {
+      "kind": "ACTIVE_CODE",
+      "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ownerMapDigest": "cb09ba6e985a7fa3a9e2cae7d5619f128a539798dd0319d16beccf54d46267c2"
+    }
+  }
+}

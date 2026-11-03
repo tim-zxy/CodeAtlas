@@ -1,0 +1,260 @@
+[
+  {
+    "id": "failure-snapshot",
+    "family": "WRITE_RECOVERY",
+    "input": "cases/failure-snapshot/input.json",
+    "expected": "cases/failure-snapshot/expected.json"
+  },
+  {
+    "id": "failure-capabilities",
+    "family": "WRITE_RECOVERY",
+    "input": "cases/failure-capabilities/input.json",
+    "expected": "cases/failure-capabilities/expected.json"
+  },
+  {
+    "id": "failure-evidence-retire",
+    "family": "WRITE_RECOVERY",
+    "input": "cases/failure-evidence-retire/input.json",
+    "expected": "cases/failure-evidence-retire/expected.json"
+  },
+  {
+    "id": "failure-evidence-insert",
+    "family": "WRITE_RECOVERY",
+    "input": "cases/failure-evidence-insert/input.json",
+    "expected": "cases/failure-evidence-insert/expected.json"
+  },
+  {
+    "id": "failure-binding",
+    "family": "WRITE_RECOVERY",
+    "input": "cases/failure-binding/input.json",
+    "expected": "cases/failure-binding/expected.json"
+  },
+  {
+    "id": "failure-candidate",
+    "family": "WRITE_RECOVERY",
+    "input": "cases/failure-candidate/input.json",
+    "expected": "cases/failure-candidate/expected.json"
+  },
+  {
+    "id": "failure-node",
+    "family": "WRITE_RECOVERY",
+    "input": "cases/failure-node/input.json",
+    "expected": "cases/failure-node/expected.json"
+  },
+  {
+    "id": "failure-edge",
+    "family": "WRITE_RECOVERY",
+    "input": "cases/failure-edge/input.json",
+    "expected": "cases/failure-edge/expected.json"
+  },
+  {
+    "id": "failure-coverage",
+    "family": "WRITE_RECOVERY",
+    "input": "cases/failure-coverage/input.json",
+    "expected": "cases/failure-coverage/expected.json"
+  },
+  {
+    "id": "failure-code-identity",
+    "family": "WRITE_RECOVERY",
+    "input": "cases/failure-code-identity/input.json",
+    "expected": "cases/failure-code-identity/expected.json"
+  },
+  {
+    "id": "failure-native-state-clear",
+    "family": "WRITE_RECOVERY",
+    "input": "cases/failure-native-state-clear/input.json",
+    "expected": "cases/failure-native-state-clear/expected.json"
+  },
+  {
+    "id": "failure-origin",
+    "family": "WRITE_RECOVERY",
+    "input": "cases/failure-origin/input.json",
+    "expected": "cases/failure-origin/expected.json"
+  },
+  {
+    "id": "failure-projection",
+    "family": "WRITE_RECOVERY",
+    "input": "cases/failure-projection/input.json",
+    "expected": "cases/failure-projection/expected.json"
+  },
+  {
+    "id": "failure-history",
+    "family": "WRITE_RECOVERY",
+    "input": "cases/failure-history/input.json",
+    "expected": "cases/failure-history/expected.json"
+  },
+  {
+    "id": "failure-members",
+    "family": "WRITE_RECOVERY",
+    "input": "cases/failure-members/input.json",
+    "expected": "cases/failure-members/expected.json"
+  },
+  {
+    "id": "failure-pointer",
+    "family": "WRITE_RECOVERY",
+    "input": "cases/failure-pointer/input.json",
+    "expected": "cases/failure-pointer/expected.json"
+  },
+  {
+    "id": "failure-pre-commit",
+    "family": "WRITE_RECOVERY",
+    "input": "cases/failure-pre-commit/input.json",
+    "expected": "cases/failure-pre-commit/expected.json"
+  },
+  {
+    "id": "failure-commit-unknown",
+    "family": "WRITE_RECOVERY",
+    "input": "cases/failure-commit-unknown/input.json",
+    "expected": "cases/failure-commit-unknown/expected.json"
+  },
+  {
+    "id": "failure-post-commit-close",
+    "family": "WRITE_RECOVERY",
+    "input": "cases/failure-post-commit-close/input.json",
+    "expected": "cases/failure-post-commit-close/expected.json"
+  },
+  {
+    "id": "full-initial",
+    "family": "STORE_CONTRACT",
+    "input": "cases/full-initial/input.json",
+    "expected": "cases/full-initial/expected.json"
+  },
+  {
+    "id": "full-accurate-parent",
+    "family": "STORE_CONTRACT",
+    "input": "cases/full-accurate-parent/input.json",
+    "expected": "cases/full-accurate-parent/expected.json"
+  },
+  {
+    "id": "delta-complete",
+    "family": "STORE_CONTRACT",
+    "input": "cases/delta-complete/input.json",
+    "expected": "cases/delta-complete/expected.json"
+  },
+  {
+    "id": "deletion-only",
+    "family": "STORE_CONTRACT",
+    "input": "cases/deletion-only/input.json",
+    "expected": "cases/deletion-only/expected.json"
+  },
+  {
+    "id": "noop",
+    "family": "STORE_CONTRACT",
+    "input": "cases/noop/input.json",
+    "expected": "cases/noop/expected.json"
+  },
+  {
+    "id": "source-drift",
+    "family": "STORE_CONTRACT",
+    "input": "cases/source-drift/input.json",
+    "expected": "cases/source-drift/expected.json"
+  },
+  {
+    "id": "same-fingerprint-support-drift",
+    "family": "STORE_CONTRACT",
+    "input": "cases/same-fingerprint-support-drift/input.json",
+    "expected": "cases/same-fingerprint-support-drift/expected.json"
+  },
+  {
+    "id": "pointer-aba",
+    "family": "STORE_CONTRACT",
+    "input": "cases/pointer-aba/input.json",
+    "expected": "cases/pointer-aba/expected.json"
+  },
+  {
+    "id": "pointer-null-drift",
+    "family": "STORE_CONTRACT",
+    "input": "cases/pointer-null-drift/input.json",
+    "expected": "cases/pointer-null-drift/expected.json"
+  },
+  {
+    "id": "temp-locked-tamper",
+    "family": "STORE_CONTRACT",
+    "input": "cases/temp-locked-tamper/input.json",
+    "expected": "cases/temp-locked-tamper/expected.json"
+  },
+  {
+    "id": "foreign-unobserved",
+    "family": "STORE_CONTRACT",
+    "input": "cases/foreign-unobserved/input.json",
+    "expected": "cases/foreign-unobserved/expected.json"
+  },
+  {
+    "id": "full-provider-revalidated",
+    "family": "STORE_CONTRACT",
+    "input": "cases/full-provider-revalidated/input.json",
+    "expected": "cases/full-provider-revalidated/expected.json"
+  },
+  {
+    "id": "same-id-content-conflict",
+    "family": "STORE_CONTRACT",
+    "input": "cases/same-id-content-conflict/input.json",
+    "expected": "cases/same-id-content-conflict/expected.json"
+  },
+  {
+    "id": "duplicate-apply",
+    "family": "STORE_CONTRACT",
+    "input": "cases/duplicate-apply/input.json",
+    "expected": "cases/duplicate-apply/expected.json"
+  },
+  {
+    "id": "ambient-transaction",
+    "family": "STORE_CONTRACT",
+    "input": "cases/ambient-transaction/input.json",
+    "expected": "cases/ambient-transaction/expected.json"
+  },
+  {
+    "id": "cross-db-lease",
+    "family": "STORE_CONTRACT",
+    "input": "cases/cross-db-lease/input.json",
+    "expected": "cases/cross-db-lease/expected.json"
+  },
+  {
+    "id": "begin-fails",
+    "family": "STORE_CONTRACT",
+    "input": "cases/begin-fails/input.json",
+    "expected": "cases/begin-fails/expected.json"
+  },
+  {
+    "id": "coverage-multiplicity",
+    "family": "STORE_CONTRACT",
+    "input": "cases/coverage-multiplicity/input.json",
+    "expected": "cases/coverage-multiplicity/expected.json"
+  },
+  {
+    "id": "all-snapshot-census",
+    "family": "STORE_CONTRACT",
+    "input": "cases/all-snapshot-census/input.json",
+    "expected": "cases/all-snapshot-census/expected.json"
+  },
+  {
+    "id": "legacy-writer-success",
+    "family": "STORE_CONTRACT",
+    "input": "cases/legacy-writer-success/input.json",
+    "expected": "cases/legacy-writer-success/expected.json"
+  },
+  {
+    "id": "legacy-writer-rollback",
+    "family": "STORE_CONTRACT",
+    "input": "cases/legacy-writer-rollback/input.json",
+    "expected": "cases/legacy-writer-rollback/expected.json"
+  },
+  {
+    "id": "readonly-unknown-committed",
+    "family": "STORE_CONTRACT",
+    "input": "cases/readonly-unknown-committed/input.json",
+    "expected": "cases/readonly-unknown-committed/expected.json"
+  },
+  {
+    "id": "readonly-unknown-not-committed",
+    "family": "STORE_CONTRACT",
+    "input": "cases/readonly-unknown-not-committed/input.json",
+    "expected": "cases/readonly-unknown-not-committed/expected.json"
+  },
+  {
+    "id": "readonly-unknown-inconsistent",
+    "family": "STORE_CONTRACT",
+    "input": "cases/readonly-unknown-inconsistent/input.json",
+    "expected": "cases/readonly-unknown-inconsistent/expected.json"
+  }
+]

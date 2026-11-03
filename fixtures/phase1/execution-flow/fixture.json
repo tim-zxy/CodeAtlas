@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "p1-execution-flow-v1",
+  "category": "runtime-graph",
+  "phase": "1",
+  "languages": ["java"],
+  "frameworks": ["spring", "mongo", "kafka"],
+  "capabilities": ["EXECUTION_GRAPH", "RUNTIME_FLOW"],
+  "inputs": {
+    "vectors": "inputs.json"
+  },
+  "expected": {
+    "contract": "expected.json"
+  },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

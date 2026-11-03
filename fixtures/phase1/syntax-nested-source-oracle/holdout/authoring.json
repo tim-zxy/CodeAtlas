@@ -1,0 +1,60 @@
+{
+  "kind": "INDEPENDENT_LITERAL_NESTED_SOURCE_REFERENCE",
+  "sourceSha256": "8aa1338a581bd101243cf2fa72b4039865ab5332b68b4880813e25acd624c238",
+  "declarations": [
+    {
+      "name": "outer_holdout",
+      "qualified": "app.py::outer_holdout",
+      "nameBytes": [4, 17],
+      "nameRange": {
+        "sourceFileId": "file:one",
+        "startLine": 0,
+        "startColumn": 4,
+        "endLine": 0,
+        "endColumn": 17
+      },
+      "bytes": [0, 90],
+      "range": {
+        "sourceFileId": "file:one",
+        "startLine": 0,
+        "startColumn": 0,
+        "endLine": 3,
+        "endColumn": 24
+      }
+    },
+    {
+      "name": "inner_holdout",
+      "qualified": "app.py::outer_holdout.inner_holdout",
+      "nameBytes": [29, 42],
+      "nameRange": {
+        "sourceFileId": "file:one",
+        "startLine": 1,
+        "startColumn": 8,
+        "endLine": 1,
+        "endColumn": 21
+      },
+      "bytes": [25, 65],
+      "range": {
+        "sourceFileId": "file:one",
+        "startLine": 1,
+        "startColumn": 4,
+        "endLine": 2,
+        "endColumn": 19
+      }
+    }
+  ],
+  "recordCount": 8,
+  "counts": {
+    "nodes": 3,
+    "edges": 0,
+    "syntax": 2,
+    "coverage": 1,
+    "diagnostics": 0
+  },
+  "outcome": "SUCCEEDED",
+  "limitations": [
+    "SYNTHETIC_UNIT_CONTEXT_AND_OLD_CONTROLS",
+    "DECLARATIONS_ONLY_NO_INFERRED_RETURN_REFERENCE_OR_CALL_EDGE",
+    "NO_ACTUAL_NATIVE_CLI_PROFILE_OR_STORE"
+  ]
+}

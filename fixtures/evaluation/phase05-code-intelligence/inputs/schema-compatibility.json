@@ -1,0 +1,38 @@
+[
+  {
+    "schema": 10,
+    "setup": 10,
+    "queryOnly": true,
+    "accepted": true
+  },
+  {
+    "schema": 13,
+    "setup": 13,
+    "queryOnly": true,
+    "accepted": true
+  },
+  {
+    "schema": 11,
+    "setup": 11,
+    "queryOnly": true,
+    "accepted": false
+  },
+  {
+    "schema": 12,
+    "setup": 12,
+    "queryOnly": true,
+    "accepted": false
+  },
+  {
+    "schema": 14,
+    "setup": 13,
+    "queryOnly": true,
+    "accepted": false
+  },
+  {
+    "schema": 13,
+    "setup": 13,
+    "queryOnly": false,
+    "accepted": false
+  }
+]

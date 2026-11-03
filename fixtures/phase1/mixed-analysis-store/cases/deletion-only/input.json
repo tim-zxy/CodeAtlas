@@ -1,0 +1,4 @@
+{
+  "scenario": "deletion-only",
+  "base": "base-input.json"
+}

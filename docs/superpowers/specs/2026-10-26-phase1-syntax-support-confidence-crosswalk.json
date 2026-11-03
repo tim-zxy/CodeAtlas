@@ -1,0 +1,544 @@
+{
+  "schemaVersion": 1,
+  "status": "RULE_EVIDENCE_CROSSWALK_ONLY",
+  "basis": [
+    {
+      "sourcePath": "docs/superpowers/specs/2026-10-26-phase1-syntax-support-confidence-design.md",
+      "snapshotPath": ".superpowers/sdd/2026-10-26-phase1-syntax-support-confidence-preparation/inputs/design.md",
+      "sha256": "6b94d5fd6bb74ae2b4286ecb8338bf457d0b34c37d3b5f5ef09e0fe315a6ef57"
+    },
+    {
+      "sourcePath": "docs/superpowers/specs/2026-10-25-phase1-syntax-confidence-evidence-plan.json",
+      "snapshotPath": ".superpowers/sdd/2026-10-26-phase1-syntax-support-confidence-preparation/inputs/mapping-matrix.json",
+      "sha256": "0c5b4ddba186b30f32cd4a6c4f0a36756905d0d48f82e09690a5c0b558a54c8b"
+    },
+    {
+      "sourcePath": "fixtures/phase1/syntax-mapping-preparation/provenance.json",
+      "snapshotPath": ".superpowers/sdd/2026-10-26-phase1-syntax-support-confidence-preparation/inputs/mapping-provenance.json",
+      "sha256": "6a4640f0d3431339b72cd66b2cc8b9dd14c90f979d33ec87ba2f42235bff400a"
+    },
+    {
+      "sourcePath": "docs/superpowers/specs/2026-10-25-phase1-syntax-evidence-reuse-inventory.json",
+      "snapshotPath": ".superpowers/sdd/2026-10-26-phase1-syntax-support-confidence-preparation/inputs/historical-inventory.json",
+      "sha256": "4921052ee2f50f61a7a7796f2e57fd8e870261a1b64f067c8a28fad4d4202b52"
+    },
+    {
+      "sourcePath": "docs/superpowers/specs/2026-10-25-phase1-syntax-evidence-source-annotations.json",
+      "snapshotPath": ".superpowers/sdd/2026-10-26-phase1-syntax-support-confidence-preparation/inputs/source-annotations.json",
+      "sha256": "36f9cfbb87d1ee183b09311bcec52f366c6f5672763fb843d475c0198899ed6b"
+    },
+    {
+      "sourcePath": ".superpowers/sdd/2026-10-25-phase1-syntax-evidence-reuse/reuse-report.json",
+      "snapshotPath": ".superpowers/sdd/2026-10-26-phase1-syntax-support-confidence-preparation/inputs/historical-report.json",
+      "sha256": "21817f3a83cae6485492046f38eabe573c7f88d507407559e0a0f7fef6962c6b"
+    }
+  ],
+  "rules": [
+    {
+      "id": "R01",
+      "claim": "Source correspondence",
+      "sections": "5,6",
+      "mappingCaseIds": [
+        "decoration-java",
+        "invocation-python",
+        "source-fingerprint-drift",
+        "source-range-foreign",
+        "owner-cross-revision",
+        "revision-rebound-key-stable"
+      ],
+      "evidenceKinds": [
+        "CONTRACT_TEXT",
+        "DECLARED_COMPONENT_EXPECTATION",
+        "HISTORICAL_LIBRARY_CONFORMANCE"
+      ],
+      "limitations": [
+        "Declared Source/refusal vectors and historical byte ranges do not authenticate current Source/capture; no score follows."
+      ],
+      "gapIds": ["SOURCE_HISTORY_STAGE_RUN_QUALIFICATION"]
+    },
+    {
+      "id": "R02",
+      "claim": "Syntax fields and recursive values",
+      "sections": "5",
+      "mappingCaseIds": [
+        "decoration-java",
+        "invocation-python",
+        "declaration-java",
+        "assignment-python",
+        "artifact-ownerless",
+        "value-string",
+        "value-number",
+        "value-boolean",
+        "value-null",
+        "value-reference-exact",
+        "value-reference-heuristic",
+        "value-array",
+        "value-object-duplicates",
+        "value-unknown",
+        "payload-changed-key"
+      ],
+      "evidenceKinds": [
+        "CONTRACT_TEXT",
+        "DECLARED_COMPONENT_EXPECTATION",
+        "HISTORICAL_LIBRARY_CONFORMANCE"
+      ],
+      "limitations": [
+        "Schema-only ARTIFACT/scalars/duplicate OBJECT controls do not prove producer capability; field agreement is not a score."
+      ],
+      "gapIds": [
+        "ARTIFACT",
+        "NUMBER_BOOLEAN_NULL_VALUES",
+        "DUPLICATE_OBJECT_ENTRY_PRODUCER_SUPPORT"
+      ]
+    },
+    {
+      "id": "R03",
+      "claim": "Owner and ownerless boundaries",
+      "sections": "5",
+      "mappingCaseIds": [
+        "artifact-ownerless",
+        "owner-not-selected",
+        "owner-cross-revision",
+        "reference-loser-binding"
+      ],
+      "evidenceKinds": [
+        "CONTRACT_TEXT",
+        "DECLARED_COMPONENT_EXPECTATION",
+        "HISTORICAL_LIBRARY_CONFORMANCE"
+      ],
+      "limitations": [
+        "Allowed owner-null is not automatically weaker; the class-owner-gap observation is not ARTIFACT evidence; no owner confidence is borrowed."
+      ],
+      "gapIds": ["ARTIFACT", "SOURCE_HISTORY_STAGE_RUN_QUALIFICATION"]
+    },
+    {
+      "id": "R04",
+      "claim": "Resolution and ambiguity",
+      "sections": "5,6",
+      "mappingCaseIds": [
+        "value-reference-exact",
+        "value-reference-heuristic",
+        "reference-ambiguous-two",
+        "callee-collapse-one",
+        "value-collapse-reject",
+        "reference-unresolved-zero",
+        "reference-unsupported-zero",
+        "reference-missing-binding",
+        "reference-not-selected",
+        "reference-loser-binding",
+        "reference-same-name-different-id"
+      ],
+      "evidenceKinds": [
+        "CONTRACT_TEXT",
+        "DECLARED_COMPONENT_EXPECTATION",
+        "HISTORICAL_LIBRARY_CONFORMANCE"
+      ],
+      "limitations": [
+        "Historical targets are UNRESOLVED only; declared EXACT/HEURISTIC/AMBIGUOUS/UNSUPPORTED tests do not establish production resolution or score ordering."
+      ],
+      "gapIds": ["EXACT_HEURISTIC_AMBIGUOUS_UNSUPPORTED_TARGETS"]
+    },
+    {
+      "id": "R05",
+      "claim": "Uncertainty without invented ordering",
+      "sections": "2,5",
+      "mappingCaseIds": [
+        "value-unknown",
+        "invocation-python",
+        "artifact-ownerless",
+        "reference-unresolved-zero",
+        "reference-unsupported-zero"
+      ],
+      "evidenceKinds": [
+        "CONTRACT_TEXT",
+        "DECLARED_COMPONENT_EXPECTATION",
+        "HISTORICAL_LIBRARY_CONFORMANCE"
+      ],
+      "limitations": [
+        "UNKNOWN reason, dynamic.py and unresolved names are not independent dynamic truth; uncertainty is neither automatic refusal nor a score grade."
+      ],
+      "gapIds": ["REPRESENTATIVE_INDEPENDENT_DYNAMIC_TRUTH", "CONFIDENCE_POLICY_AND_CALIBRATION"]
+    },
+    {
+      "id": "R06",
+      "claim": "Contract adaptation and missing policy",
+      "sections": "4,6",
+      "mappingCaseIds": [
+        "policy-missing",
+        "provider-renamed-key-stable",
+        "revision-rebound-key-stable"
+      ],
+      "evidenceKinds": ["CONTRACT_TEXT", "DECLARED_COMPONENT_EXPECTATION"],
+      "limitations": [
+        "policy-missing and identity vectors are declarations, not an implemented version-adaptation table or accepted numeric policy; no historical policy witness is asserted."
+      ],
+      "gapIds": ["RULE_CONTRACT_ADAPTATION", "CONFIDENCE_POLICY_AND_CALIBRATION"]
+    },
+    {
+      "id": "R07",
+      "claim": "Complete original support closure",
+      "sections": "5",
+      "mappingCaseIds": [
+        "reference-missing-binding",
+        "reference-not-selected",
+        "reference-loser-binding",
+        "reference-same-name-different-id",
+        "owner-not-selected",
+        "source-range-foreign"
+      ],
+      "evidenceKinds": ["CONTRACT_TEXT", "DECLARED_COMPONENT_EXPECTATION"],
+      "limitations": [
+        "Declared original/loser reference checks are not actual final Code basis, Source authentication or a Stage capability; no historical full-closure proof is asserted."
+      ],
+      "gapIds": ["SOURCE_HISTORY_STAGE_RUN_QUALIFICATION"]
+    },
+    {
+      "id": "R08",
+      "claim": "Completeness and failed/not-run qualification",
+      "sections": "6,7",
+      "mappingCaseIds": [],
+      "evidenceKinds": ["CONTRACT_TEXT", "HISTORICAL_LIBRARY_CONFORMANCE"],
+      "limitations": [
+        "No M-02 witness is invented for whole-operation completeness; historical SUCCEEDED/PARTIAL are preserved by reference, and failed/cancelled/not-run qualification is absent."
+      ],
+      "gapIds": ["FAILURE_CANCELLATION_QUALIFICATION", "SOURCE_HISTORY_STAGE_RUN_QUALIFICATION"]
+    },
+    {
+      "id": "R09",
+      "claim": "Determinism, safe explanations and immutable origins",
+      "sections": "6,8,9",
+      "mappingCaseIds": [
+        "provider-renamed-key-stable",
+        "revision-rebound-key-stable",
+        "payload-changed-key",
+        "policy-missing"
+      ],
+      "evidenceKinds": ["CONTRACT_TEXT", "DECLARED_COMPONENT_EXPECTATION"],
+      "limitations": [
+        "Identity/key declarations and accepted immutability text are not an implemented scoring function, deterministic reasons, safety audit or runtime version qualification."
+      ],
+      "gapIds": [
+        "RULE_CONTRACT_ADAPTATION",
+        "RULE_DETERMINISM_REASON_SAFETY",
+        "CONFIDENCE_POLICY_AND_CALIBRATION"
+      ]
+    }
+  ],
+  "historicalUse": [
+    {
+      "caseId": "no-files",
+      "ruleIds": ["R08"],
+      "use": "COVERAGE_OR_REFUSAL_ONLY",
+      "limitations": [
+        "Historical library conformance is not measurement-eligible.",
+        "Source/history/Stage/run authentication is not established.",
+        "No numerical policy or actual execution truth is established.",
+        "No Source or Syntax observation; only empty inventory/settlement discussion."
+      ]
+    },
+    {
+      "caseId": "empty-python",
+      "ruleIds": ["R08"],
+      "use": "COVERAGE_OR_REFUSAL_ONLY",
+      "limitations": [
+        "Historical library conformance is not measurement-eligible.",
+        "Source/history/Stage/run authentication is not established.",
+        "No numerical policy or actual execution truth is established.",
+        "Empty Source produces no Syntax; not ownerless ARTIFACT evidence."
+      ]
+    },
+    {
+      "caseId": "comment-python",
+      "ruleIds": ["R08"],
+      "use": "COVERAGE_OR_REFUSAL_ONLY",
+      "limitations": [
+        "Historical library conformance is not measurement-eligible.",
+        "Source/history/Stage/run authentication is not established.",
+        "No numerical policy or actual execution truth is established.",
+        "Comment-only Source has no Syntax; no execution claim."
+      ]
+    },
+    {
+      "caseId": "wildcard-python",
+      "ruleIds": ["R08"],
+      "use": "COVERAGE_OR_REFUSAL_ONLY",
+      "limitations": [
+        "Historical library conformance is not measurement-eligible.",
+        "Source/history/Stage/run authentication is not established.",
+        "No numerical policy or actual execution truth is established.",
+        "Wildcard syntax remains PARTIAL; no member resolution or complete Syntax claim."
+      ]
+    },
+    {
+      "caseId": "class-python",
+      "ruleIds": ["R08"],
+      "use": "COVERAGE_OR_REFUSAL_ONLY",
+      "limitations": [
+        "Historical library conformance is not measurement-eligible.",
+        "Source/history/Stage/run authentication is not established.",
+        "No numerical policy or actual execution truth is established.",
+        "Class/pass text and PARTIAL outcome do not establish TYPE/class-owner extraction."
+      ]
+    },
+    {
+      "caseId": "nested-python",
+      "ruleIds": ["R01", "R02", "R08"],
+      "use": "SURFACE_CONFORMANCE_ONLY",
+      "limitations": [
+        "Historical library conformance is not measurement-eligible.",
+        "Source/history/Stage/run authentication is not established.",
+        "No numerical policy or actual execution truth is established.",
+        "Nested declarations support surface shape only; owner/binding truth is not inferred."
+      ]
+    },
+    {
+      "caseId": "malformed-python",
+      "ruleIds": ["R01", "R02", "R04", "R05", "R08"],
+      "use": "SURFACE_CONFORMANCE_ONLY",
+      "limitations": [
+        "Historical library conformance is not measurement-eligible.",
+        "Source/history/Stage/run authentication is not established.",
+        "No numerical policy or actual execution truth is established.",
+        "Incomplete signature and retained UNKNOWN/unresolved surface stay PARTIAL; not a successful parse or dynamic trace."
+      ]
+    },
+    {
+      "caseId": "dynamic-python",
+      "ruleIds": ["R01", "R02", "R04", "R05", "R08"],
+      "use": "SURFACE_CONFORMANCE_ONLY",
+      "limitations": [
+        "Historical library conformance is not measurement-eligible.",
+        "Source/history/Stage/run authentication is not established.",
+        "No numerical policy or actual execution truth is established.",
+        "Imports/decorator/call text and retained UNKNOWN do not prove FastAPI meaning or independently annotated dynamic truth."
+      ]
+    },
+    {
+      "caseId": "alias-reference-python",
+      "ruleIds": ["R01", "R02", "R04", "R08"],
+      "use": "SURFACE_CONFORMANCE_ONLY",
+      "limitations": [
+        "Historical library conformance is not measurement-eligible.",
+        "Source/history/Stage/run authentication is not established.",
+        "No numerical policy or actual execution truth is established.",
+        "Alias/assignment text and raw UNRESOLVED are not a verified symbol-resolution result."
+      ]
+    },
+    {
+      "caseId": "async-python",
+      "ruleIds": ["R01", "R02", "R08"],
+      "use": "SURFACE_CONFORMANCE_ONLY",
+      "limitations": [
+        "Historical library conformance is not measurement-eligible.",
+        "Source/history/Stage/run authentication is not established.",
+        "No numerical policy or actual execution truth is established.",
+        "Async declaration/parameter/return text is not execution behavior."
+      ]
+    },
+    {
+      "caseId": "java-only",
+      "ruleIds": ["R01", "R02", "R04", "R08"],
+      "use": "SURFACE_CONFORMANCE_ONLY",
+      "limitations": [
+        "Historical library conformance is not measurement-eligible.",
+        "Source/history/Stage/run authentication is not established.",
+        "No numerical policy or actual execution truth is established.",
+        "Decoration/string/method text and unresolved target do not establish Route framework semantics."
+      ]
+    },
+    {
+      "caseId": "mixed",
+      "ruleIds": ["R01", "R02", "R04", "R08"],
+      "use": "SURFACE_CONFORMANCE_ONLY",
+      "limitations": [
+        "Historical library conformance is not measurement-eligible.",
+        "Source/history/Stage/run authentication is not established.",
+        "No numerical policy or actual execution truth is established.",
+        "Separate Java/Python Source literals do not merge origins or prove cross-language binding."
+      ]
+    },
+    {
+      "caseId": "multi-import-from",
+      "ruleIds": ["R01", "R02", "R04", "R08"],
+      "use": "SURFACE_CONFORMANCE_ONLY",
+      "limitations": [
+        "Historical library conformance is not measurement-eligible.",
+        "Source/history/Stage/run authentication is not established.",
+        "No numerical policy or actual execution truth is established.",
+        "Import/alias text does not establish module/member availability or exact binding."
+      ]
+    },
+    {
+      "caseId": "nested-repeated-values",
+      "ruleIds": ["R01", "R02", "R04", "R08"],
+      "use": "SURFACE_CONFORMANCE_ONLY",
+      "limitations": [
+        "Historical library conformance is not measurement-eligible.",
+        "Source/history/Stage/run authentication is not established.",
+        "No numerical policy or actual execution truth is established.",
+        "Array/object/repeated reference surface is retained; no duplicate OBJECT producer support or exact resolution is inferred."
+      ]
+    },
+    {
+      "caseId": "class-owner-gap",
+      "ruleIds": ["R01", "R02", "R03", "R04", "R08"],
+      "use": "SURFACE_CONFORMANCE_ONLY",
+      "limitations": [
+        "Historical library conformance is not measurement-eligible.",
+        "Source/history/Stage/run authentication is not established.",
+        "No numerical policy or actual execution truth is established.",
+        "One null owner in a class-contained assignment is not ownerless ARTIFACT or final owner qualification."
+      ]
+    },
+    {
+      "caseId": "unicode-control",
+      "ruleIds": ["R01", "R02", "R05", "R08"],
+      "use": "SURFACE_CONFORMANCE_ONLY",
+      "limitations": [
+        "Historical library conformance is not measurement-eligible.",
+        "Source/history/Stage/run authentication is not established.",
+        "No numerical policy or actual execution truth is established.",
+        "Unicode/control-spelling and UNKNOWN remain PARTIAL; not dynamic truth or coordinate goldens for every probe."
+      ]
+    },
+    {
+      "caseId": "two-python-files",
+      "ruleIds": ["R01", "R02", "R04", "R08"],
+      "use": "SURFACE_CONFORMANCE_ONLY",
+      "limitations": [
+        "Historical library conformance is not measurement-eligible.",
+        "Source/history/Stage/run authentication is not established.",
+        "No numerical policy or actual execution truth is established.",
+        "Two Sources do not authorize same-name/cross-file identity merging or complete final support closure."
+      ]
+    },
+    {
+      "caseId": "discarded-dictionary",
+      "ruleIds": ["R01", "R02", "R05", "R08"],
+      "use": "SURFACE_CONFORMANCE_ONLY",
+      "limitations": [
+        "Historical library conformance is not measurement-eligible.",
+        "Source/history/Stage/run authentication is not established.",
+        "No numerical policy or actual execution truth is established.",
+        "Unpacking and UNKNOWN remain PARTIAL; unsupported evaluation is not performed."
+      ]
+    }
+  ],
+  "gaps": [
+    {
+      "id": "ARTIFACT",
+      "status": "OPEN",
+      "ruleIds": ["R02", "R03"],
+      "availableRefs": ["M01:artifact-ownerless", "HIST:class-owner-gap"],
+      "missingEvidence": "Only a schema declaration and an unrelated null-owner assignment exist; no ownerless ARTIFACT producer observation or independent policy evidence.",
+      "nextDecision": "Review whether existing Phase1 capability requires a separate bounded artifact evidence proposal; do not add a producer or score here."
+    },
+    {
+      "id": "NUMBER_BOOLEAN_NULL_VALUES",
+      "status": "OPEN",
+      "ruleIds": ["R02"],
+      "availableRefs": ["M01:value-number", "M01:value-boolean", "M01:value-null"],
+      "missingEvidence": "Scalar mapping declarations do not demonstrate actual producer outputs for these kinds.",
+      "nextDecision": "Review exact source-grounded expectations and applicable capability before any separate collection proposal."
+    },
+    {
+      "id": "EXACT_HEURISTIC_AMBIGUOUS_UNSUPPORTED_TARGETS",
+      "status": "OPEN",
+      "ruleIds": ["R04"],
+      "availableRefs": [
+        "M01:value-reference-exact",
+        "M01:value-reference-heuristic",
+        "M01:reference-ambiguous-two",
+        "M01:reference-unsupported-zero",
+        "HIST:alias-reference-python"
+      ],
+      "missingEvidence": "History has UNRESOLVED targets only; other resolution states remain component declarations, not validated production resolution or scores.",
+      "nextDecision": "Review each stratum against existing mapping expressibility and source evidence; preserve hard-refusal controls and do not assume a rank."
+    },
+    {
+      "id": "DUPLICATE_OBJECT_ENTRY_PRODUCER_SUPPORT",
+      "status": "OPEN",
+      "ruleIds": ["R02"],
+      "availableRefs": ["M01:value-object-duplicates", "HIST:nested-repeated-values"],
+      "missingEvidence": "Repeated nested values do not prove duplicate OBJECT entry extraction by the producer.",
+      "nextDecision": "Review producer applicability separately; preserve ordered duplicate mapping contract without claiming an observed capability."
+    },
+    {
+      "id": "REPRESENTATIVE_INDEPENDENT_DYNAMIC_TRUTH",
+      "status": "OPEN",
+      "ruleIds": ["R05"],
+      "availableRefs": [
+        "M01:value-unknown",
+        "M01:invocation-python",
+        "HIST:dynamic-python",
+        "HIST:malformed-python"
+      ],
+      "missingEvidence": "Visible dynamic expression text and raw UNKNOWN are not independently annotated runtime or representative dynamic truth.",
+      "nextDecision": "Define the limited surface claim and independent annotation needed; do not run Source or infer semantics from filenames."
+    },
+    {
+      "id": "FAILURE_CANCELLATION_QUALIFICATION",
+      "status": "OPEN",
+      "ruleIds": ["R08"],
+      "availableRefs": ["HIST:no-files", "HIST:wildcard-python", "HIST:malformed-python"],
+      "missingEvidence": "Retained SUCCEEDED/PARTIAL are not actual process failure/cancellation/not-run qualification; no successful denominator is synthesized.",
+      "nextDecision": "Carry this into a separately reviewed real-run lifecycle proposal only when that capability is entered."
+    },
+    {
+      "id": "SOURCE_HISTORY_STAGE_RUN_QUALIFICATION",
+      "status": "OPEN",
+      "ruleIds": ["R01", "R03", "R07", "R08"],
+      "availableRefs": [
+        "M01:source-fingerprint-drift",
+        "M01:owner-cross-revision",
+        "M01:reference-loser-binding",
+        "HIST:two-python-files"
+      ],
+      "missingEvidence": "Declarations, hash equality and Source byte slices do not authenticate current Source/history/owner/Stage/final basis or run resources.",
+      "nextDecision": "Keep H2/H3 final basis and H4/H5 authenticated operations separate; propose exact authorized tests/operations before implementation."
+    },
+    {
+      "id": "CONFIDENCE_POLICY_AND_CALIBRATION",
+      "status": "OPEN",
+      "ruleIds": ["R05", "R06", "R09"],
+      "availableRefs": ["M01:policy-missing", "M01:value-unknown"],
+      "missingEvidence": "No accepted scores, adaptation combinations or method/reason tokens exist. The retained gap name does not make probability calibration a new dependency for the chosen categorical support meaning.",
+      "nextDecision": "Review a fixed-rule support-degree numerical proposal with independent rationale and explicit approval; do not borrow Code scores or invent defaults."
+    },
+    {
+      "id": "RULE_CONTRACT_ADAPTATION",
+      "status": "OPEN",
+      "ruleIds": ["R06", "R09"],
+      "availableRefs": [
+        "M01:policy-missing",
+        "M01:provider-renamed-key-stable",
+        "M01:revision-rebound-key-stable"
+      ],
+      "missingEvidence": "Missing-policy and key stability declarations are not a fixed executable extractor/mapper/IR/policy adaptation contract or cross-provider capability qualification.",
+      "nextDecision": "Specify exact applicable combinations and mismatch refusals in the separately approved complete-policy package."
+    },
+    {
+      "id": "RULE_DETERMINISM_REASON_SAFETY",
+      "status": "OPEN",
+      "ruleIds": ["R09"],
+      "availableRefs": [
+        "M01:provider-renamed-key-stable",
+        "M01:payload-changed-key",
+        "M01:policy-missing"
+      ],
+      "missingEvidence": "No policy implementation demonstrates deterministic safe reasons, provider/order invariance or immutable origin preservation under policy changes.",
+      "nextDecision": "Require independent policy behavior and safety fixtures in a later approved implementation package, not a score-bearing oracle here."
+    }
+  ],
+  "numericalPolicy": null,
+  "thresholds": null,
+  "measurements": null,
+  "notes": [
+    "This is a documentary rule/evidence/gap relation only; no score, ordinal ranking or numerical policy is selected.",
+    "All mapping cases are declarations; all linked historical cases remain library-only, ineligible for measurement and unauthenticated.",
+    "Typed M01 and HIST references are documentary namespaces, never origin or Source identity joins.",
+    "PROJECTABLE_WITHOUT_POLICY is an old component expectation, not permission to emit Canonical Syntax.",
+    "All retained gap names remain open; none promotes DEFERRED scope or mandates probability calibration.",
+    "No new observations, product capabilities, Source/run authority or publication eligibility are established."
+  ]
+}

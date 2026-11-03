@@ -1,0 +1,12 @@
+{
+  "draftKinds": ["HTTP", "TASK", "DATA_RESOURCE", "DATA_OPERATION", "MESSAGE", "DEPENDENCY"],
+  "draftKeys": [
+    "framework-draft:939e4be379cb82f118bef56a02c4883fde825131ac75668354ecf8cd9ebe38e5",
+    "framework-draft:a520f49d2b5bfd8e84ea2403a32a29463cdaa992992fdee917a12ac3e6d3b896",
+    "framework-draft:ef0f3528348c37346e2be4368e19057a783c1f1892a795997e445c221b4a8a13",
+    "framework-draft:7f6f1993d2ed2640e36a2e8cf23f9263f89d3a79c770e50cda80a3129f641b13",
+    "framework-draft:af27952eeb1049a45f2d828b9fe9f1ac25a61b7db797b17638f0df3a177d2a65",
+    "framework-draft:859c4d67cf9497075417b36bf0c702270de70da3e28dcd3e444f67be1736f39f"
+  ],
+  "runtimeRejectsDraft": true
+}

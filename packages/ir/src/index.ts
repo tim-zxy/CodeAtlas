@@ -173,3 +173,20 @@ export type {
 } from './source-identity.js';
 export * from './time.js';
 export * from './validation.js';
+export * from './phase1-support.js';
+export * from './runtime-ir.js';
+export * from './syntax-evidence.js';
+export * from './document-ir.js';
+export * from './knowledge-ir.js';
+export * from './syntax-evidence-v2.js';
+export * from './syntax-evidence-v3.js';
+export * from './framework-binding-ir.js';
+export * from './contract-ir.js';
+export * from './workspace-execution-ir.js';
+export * from './runtime-request-control.js';
+export * from './runtime-identity.js';
+
+export * from './syntax-evidence-v4.js';
+export * from './runtime-site-plan.js';
+
+export * from './declared-http-schema.js';

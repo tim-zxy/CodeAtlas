@@ -22,6 +22,27 @@
       "file": "003_revision_sets.sql",
       "checksum": "sha256:5278670e504bef6b7ddcb3fa52666de327d4508a2b5575cce4633215c10ab1f8",
       "backupRequired": false
+    },
+    {
+      "version": 4,
+      "name": "services",
+      "file": "004_services.sql",
+      "checksum": "sha256:a9175bc3793a3ad3b9c85d0be095227ddec381b286efbf08f775f31987a32fc7",
+      "backupRequired": false
+    },
+    {
+      "version": 5,
+      "name": "contracts",
+      "file": "005_contracts.sql",
+      "checksum": "sha256:60275e3cf428823d264266dfb9c1213fd4b30d72bc4329b08ed9d0997484f322",
+      "backupRequired": false
+    },
+    {
+      "version": 6,
+      "name": "workspace_execution",
+      "file": "006_workspace_execution.sql",
+      "checksum": "sha256:7fa20074a8709ebd1c60040ab828b8d8a72422214963811a11d1509e653fcc88",
+      "backupRequired": false
     }
   ]
 }

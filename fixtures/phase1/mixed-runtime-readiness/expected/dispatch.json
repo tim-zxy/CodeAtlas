@@ -1,0 +1,11 @@
+{
+  "protocol": 5,
+  "request": "OBSERVE_CODE_SYNTAX",
+  "fallback": false,
+  "describeProtocols": [
+    1,
+    2,
+    3
+  ],
+  "cliExecuted": false
+}

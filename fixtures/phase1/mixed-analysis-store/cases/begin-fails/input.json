@@ -1,0 +1,4 @@
+{
+  "scenario": "begin-fails",
+  "base": "base-input.json"
+}

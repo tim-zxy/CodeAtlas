@@ -1,0 +1,4 @@
+{
+  "scenario": "full-provider-revalidated",
+  "base": "base-input.json"
+}

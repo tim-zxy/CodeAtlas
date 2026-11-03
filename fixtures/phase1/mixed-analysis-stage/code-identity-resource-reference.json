@@ -1,0 +1,2819 @@
+{
+  "schemaVersion": 1,
+  "qualification": "INDEPENDENT_COMPLETE_CODE_IDENTITY_SUBOPERATION_RESOURCE_REFERENCE_NOT_COMPLETE_STAGE_RUNTIME_STORE_OPERATION",
+  "modelSource": "fixtures/phase1/mixed-analysis-stage/independent-code-resource-model.mjs",
+  "provenance": "BigInt closed algebra over immutable literal semantic input, nine framing groups, two input ownerships, group ownership, two emitted-value ownerships, coverage grouping triples, framed UTF8 payloads and digest pin. Generated before invoking predictCodeActivation; no candidate usage enters golden.",
+  "cases": [
+    {
+      "id": "multiplicity",
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-store/orphan-coverage-multiplicity-context.json",
+        "sha256": "07be4e2909f157d4802afc21f4f648e2578d9d095caf90001c157e32bc40d8de"
+      },
+      "input": {
+        "targetSource": {
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "contentFingerprint": "content:first"
+        },
+        "committedSnapshotCount": 2,
+        "nodes": [
+          {
+            "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+            "factKey": "node-fact-v1:9f87fdd184180db6f32fe351dc70bd34a7f1d2baebfa5f06eb7714f1cb1f3dc5",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "name": "app.py",
+            "qualifiedName": "app.py",
+            "sourceRange": null,
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            },
+            "kind": "MODULE"
+          }
+        ],
+        "edges": [
+          {
+            "id": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f",
+            "factKey": "edge-fact-v1:1a0f6116e03a3e0ec190dcae40a69e4c6dc7b8306c921c480ee61a134faefbb1",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "REFERENCE",
+            "source": {
+              "factType": "NODE",
+              "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "p",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 1,
+              "startColumn": 4,
+              "endLine": 1,
+              "endColumn": 5
+            },
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            }
+          },
+          {
+            "id": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b",
+            "factKey": "edge-fact-v1:4a62f7e32fef238335777788b0a79f7ca94e221cf803955bce28151f1a3b608a",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "factType": "NODE",
+              "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "pkg",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 7,
+              "endLine": 0,
+              "endColumn": 15
+            },
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            }
+          }
+        ],
+        "evidence": [
+          {
+            "id": "provider-evidence-v1:4bc5da6c939c17eacc003b046fa57992629f785d32da0b5a22b2e2509950dc2e",
+            "providerFact": {
+              "factType": "EDGE",
+              "providerFactId": "python-edge-v1:37bdc236f427d4e4dc22c574e10b48a36d14083aa7f3f4ae471776631d75fa67",
+              "providerId": "native"
+            },
+            "providerSnapshotId": "snapshot:two",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "status": "ACTIVE"
+          },
+          {
+            "id": "provider-evidence-v1:a7b81e5b6d3727f55016820d3b70e49f45bee37146f3c479fac676a636ead07f",
+            "providerFact": {
+              "factType": "EDGE",
+              "providerFactId": "python-edge-v1:778fbe8c61c6ddb3ac42c06c7d6014fd8a250b2b36c53529c4dad1a70fdef970",
+              "providerId": "native"
+            },
+            "providerSnapshotId": "snapshot:two",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "status": "ACTIVE"
+          },
+          {
+            "id": "provider-evidence-v1:e6b5a493aaec4513d20cad63deb3d52d847f29cf9ecb161e87f1aee85080fc09",
+            "providerFact": {
+              "factType": "NODE",
+              "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb",
+              "providerId": "native"
+            },
+            "providerSnapshotId": "snapshot:two",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "status": "ACTIVE"
+          }
+        ],
+        "bindings": [
+          {
+            "canonicalFact": {
+              "factType": "EDGE",
+              "id": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b"
+            },
+            "evidenceId": "provider-evidence-v1:4bc5da6c939c17eacc003b046fa57992629f785d32da0b5a22b2e2509950dc2e",
+            "providerFact": {
+              "factType": "EDGE",
+              "providerFactId": "python-edge-v1:37bdc236f427d4e4dc22c574e10b48a36d14083aa7f3f4ae471776631d75fa67",
+              "providerId": "native"
+            },
+            "providerSnapshotId": "snapshot:two"
+          },
+          {
+            "canonicalFact": {
+              "factType": "EDGE",
+              "id": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f"
+            },
+            "evidenceId": "provider-evidence-v1:a7b81e5b6d3727f55016820d3b70e49f45bee37146f3c479fac676a636ead07f",
+            "providerFact": {
+              "factType": "EDGE",
+              "providerFactId": "python-edge-v1:778fbe8c61c6ddb3ac42c06c7d6014fd8a250b2b36c53529c4dad1a70fdef970",
+              "providerId": "native"
+            },
+            "providerSnapshotId": "snapshot:two"
+          },
+          {
+            "canonicalFact": {
+              "factType": "NODE",
+              "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+            },
+            "evidenceId": "provider-evidence-v1:e6b5a493aaec4513d20cad63deb3d52d847f29cf9ecb161e87f1aee85080fc09",
+            "providerFact": {
+              "factType": "NODE",
+              "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb",
+              "providerId": "native"
+            },
+            "providerSnapshotId": "snapshot:two"
+          }
+        ],
+        "factEvidence": [
+          {
+            "evidenceId": "provider-evidence-v1:4bc5da6c939c17eacc003b046fa57992629f785d32da0b5a22b2e2509950dc2e",
+            "fact": {
+              "factType": "EDGE",
+              "id": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b"
+            }
+          },
+          {
+            "evidenceId": "provider-evidence-v1:a7b81e5b6d3727f55016820d3b70e49f45bee37146f3c479fac676a636ead07f",
+            "fact": {
+              "factType": "EDGE",
+              "id": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f"
+            }
+          },
+          {
+            "evidenceId": "provider-evidence-v1:e6b5a493aaec4513d20cad63deb3d52d847f29cf9ecb161e87f1aee85080fc09",
+            "fact": {
+              "factType": "NODE",
+              "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+            }
+          }
+        ],
+        "candidates": [
+          {
+            "evidenceId": "provider-evidence-v1:4bc5da6c939c17eacc003b046fa57992629f785d32da0b5a22b2e2509950dc2e",
+            "factType": "EDGE",
+            "canonicalFactId": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b",
+            "candidate": {
+              "confidence": {
+                "method": "parser",
+                "reasons": [],
+                "score": 1
+              },
+              "factKey": "edge-fact-v1:4a62f7e32fef238335777788b0a79f7ca94e221cf803955bce28151f1a3b608a",
+              "id": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b",
+              "kind": "IMPORT",
+              "repositoryId": "repo:one",
+              "revisionId": "revision:worktree",
+              "source": {
+                "factType": "NODE",
+                "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+              },
+              "sourceRange": {
+                "endColumn": 15,
+                "endLine": 0,
+                "sourceFileId": "file:one",
+                "startColumn": 7,
+                "startLine": 0
+              },
+              "target": {
+                "candidates": [],
+                "originalHint": "pkg",
+                "resolution": "UNRESOLVED",
+                "state": "UNRESOLVED"
+              }
+            }
+          },
+          {
+            "evidenceId": "provider-evidence-v1:a7b81e5b6d3727f55016820d3b70e49f45bee37146f3c479fac676a636ead07f",
+            "factType": "EDGE",
+            "canonicalFactId": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f",
+            "candidate": {
+              "confidence": {
+                "method": "parser",
+                "reasons": [],
+                "score": 1
+              },
+              "factKey": "edge-fact-v1:1a0f6116e03a3e0ec190dcae40a69e4c6dc7b8306c921c480ee61a134faefbb1",
+              "id": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f",
+              "kind": "REFERENCE",
+              "repositoryId": "repo:one",
+              "revisionId": "revision:worktree",
+              "source": {
+                "factType": "NODE",
+                "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+              },
+              "sourceRange": {
+                "endColumn": 5,
+                "endLine": 1,
+                "sourceFileId": "file:one",
+                "startColumn": 4,
+                "startLine": 1
+              },
+              "target": {
+                "candidates": [],
+                "originalHint": "p",
+                "resolution": "UNRESOLVED",
+                "state": "UNRESOLVED"
+              }
+            }
+          },
+          {
+            "evidenceId": "provider-evidence-v1:e6b5a493aaec4513d20cad63deb3d52d847f29cf9ecb161e87f1aee85080fc09",
+            "factType": "NODE",
+            "canonicalFactId": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+            "candidate": {
+              "confidence": {
+                "method": "parser",
+                "reasons": [],
+                "score": 1
+              },
+              "factKey": "node-fact-v1:9f87fdd184180db6f32fe351dc70bd34a7f1d2baebfa5f06eb7714f1cb1f3dc5",
+              "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+              "kind": "MODULE",
+              "name": "app.py",
+              "qualifiedName": "app.py",
+              "repositoryId": "repo:one",
+              "revisionId": "revision:worktree",
+              "sourceRange": null
+            }
+          }
+        ],
+        "snapshots": [
+          {
+            "id": "snapshot:one",
+            "providerId": "native",
+            "providerVersion": "0.0.0",
+            "runtimeVersion": "fixture-runtime",
+            "startedAt": "2026-10-24T00:00:00.000Z",
+            "completedAt": "2026-10-24T00:00:00.003Z",
+            "repositoryId": "repo:one",
+            "requestedRevisionId": "revision:worktree",
+            "requestedRevisionFingerprint": "content:first",
+            "capabilities": [
+              {
+                "name": "PYTHON_SYNTAX_CODE_V1",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              },
+              {
+                "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              }
+            ],
+            "diagnostics": [],
+            "outcome": "SUCCEEDED"
+          },
+          {
+            "id": "snapshot:two",
+            "providerId": "native",
+            "providerVersion": "0.0.0",
+            "runtimeVersion": "fixture-runtime",
+            "startedAt": "2026-10-24T00:00:00.000Z",
+            "completedAt": "2026-10-24T00:00:00.003Z",
+            "repositoryId": "repo:one",
+            "requestedRevisionId": "revision:worktree",
+            "requestedRevisionFingerprint": "content:first",
+            "capabilities": [
+              {
+                "name": "PYTHON_SYNTAX_CODE_V1",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              },
+              {
+                "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              }
+            ],
+            "diagnostics": [],
+            "outcome": "SUCCEEDED"
+          }
+        ],
+        "coverage": [
+          {
+            "providerSnapshotId": "snapshot:one",
+            "capabilityName": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+            "sourceFileId": "file:one",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:one",
+            "capabilityName": "PYTHON_SYNTAX_CODE_V1",
+            "sourceFileId": "file:one",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:one",
+            "capabilityName": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+            "sourceFileId": "file:one",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:two",
+            "capabilityName": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+            "sourceFileId": "file:one",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:two",
+            "capabilityName": "PYTHON_SYNTAX_CODE_V1",
+            "sourceFileId": "file:one",
+            "status": "COMPLETE"
+          }
+        ]
+      },
+      "basis": {
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "contentFingerprint": "content:first",
+        "codeActivationDigest": "fb6e0c92b129b30649891630e18ef710754a43c298d886fe5e08d2c3b5a06917"
+      },
+      "cost": {
+        "rows": 0,
+        "serializedBytes": 11831,
+        "items": 1836,
+        "retainedLogicalBytes": 68495,
+        "maxDepth": 5,
+        "memoryBudgetBytes": 136990
+      },
+      "ledger": {
+        "domainBytes": 29,
+        "emittedRows": 31,
+        "groups": [
+          {
+            "tag": "HEADER",
+            "count": 1,
+            "ownedItems": 9,
+            "ownedWeight": 130
+          },
+          {
+            "tag": "NODE",
+            "count": 1,
+            "ownedItems": 17,
+            "ownedWeight": 389
+          },
+          {
+            "tag": "EDGE",
+            "count": 2,
+            "ownedItems": 55,
+            "ownedWeight": 1169
+          },
+          {
+            "tag": "EVIDENCE",
+            "count": 3,
+            "ownedItems": 40,
+            "ownedWeight": 1208
+          },
+          {
+            "tag": "BINDING",
+            "count": 3,
+            "ownedItems": 46,
+            "ownedWeight": 1640
+          },
+          {
+            "tag": "FACT_EVIDENCE",
+            "count": 3,
+            "ownedItems": 31,
+            "ownedWeight": 1122
+          },
+          {
+            "tag": "SUPPORT_CANDIDATE",
+            "count": 3,
+            "ownedItems": 89,
+            "ownedWeight": 2464
+          },
+          {
+            "tag": "SNAPSHOT",
+            "count": 2,
+            "ownedItems": 45,
+            "ownedWeight": 712
+          },
+          {
+            "tag": "COVERAGE",
+            "count": 4,
+            "ownedItems": 53,
+            "ownedWeight": 736
+          }
+        ],
+        "encodedBytes": 11685,
+        "framingBytes": 117,
+        "ownedWeight": 44915,
+        "finalDigestPin": 64
+      }
+    },
+    {
+      "id": "global-census",
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-store/orphan-all-snapshot-census-context.json",
+        "sha256": "15dfd4e3bdc71c5d27c9c011d274ab795af83e63c1d3481769e99d9c4f167b03"
+      },
+      "input": {
+        "targetSource": {
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "contentFingerprint": "content:first"
+        },
+        "committedSnapshotCount": 3,
+        "nodes": [
+          {
+            "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+            "factKey": "node-fact-v1:9f87fdd184180db6f32fe351dc70bd34a7f1d2baebfa5f06eb7714f1cb1f3dc5",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "name": "app.py",
+            "qualifiedName": "app.py",
+            "sourceRange": null,
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            },
+            "kind": "MODULE"
+          }
+        ],
+        "edges": [
+          {
+            "id": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f",
+            "factKey": "edge-fact-v1:1a0f6116e03a3e0ec190dcae40a69e4c6dc7b8306c921c480ee61a134faefbb1",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "REFERENCE",
+            "source": {
+              "factType": "NODE",
+              "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "p",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 1,
+              "startColumn": 4,
+              "endLine": 1,
+              "endColumn": 5
+            },
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            }
+          },
+          {
+            "id": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b",
+            "factKey": "edge-fact-v1:4a62f7e32fef238335777788b0a79f7ca94e221cf803955bce28151f1a3b608a",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "factType": "NODE",
+              "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "pkg",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 7,
+              "endLine": 0,
+              "endColumn": 15
+            },
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            }
+          }
+        ],
+        "evidence": [
+          {
+            "id": "provider-evidence-v1:4bc5da6c939c17eacc003b046fa57992629f785d32da0b5a22b2e2509950dc2e",
+            "providerFact": {
+              "factType": "EDGE",
+              "providerFactId": "python-edge-v1:37bdc236f427d4e4dc22c574e10b48a36d14083aa7f3f4ae471776631d75fa67",
+              "providerId": "native"
+            },
+            "providerSnapshotId": "snapshot:two",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "status": "ACTIVE"
+          },
+          {
+            "id": "provider-evidence-v1:a7b81e5b6d3727f55016820d3b70e49f45bee37146f3c479fac676a636ead07f",
+            "providerFact": {
+              "factType": "EDGE",
+              "providerFactId": "python-edge-v1:778fbe8c61c6ddb3ac42c06c7d6014fd8a250b2b36c53529c4dad1a70fdef970",
+              "providerId": "native"
+            },
+            "providerSnapshotId": "snapshot:two",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "status": "ACTIVE"
+          },
+          {
+            "id": "provider-evidence-v1:e6b5a493aaec4513d20cad63deb3d52d847f29cf9ecb161e87f1aee85080fc09",
+            "providerFact": {
+              "factType": "NODE",
+              "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb",
+              "providerId": "native"
+            },
+            "providerSnapshotId": "snapshot:two",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "status": "ACTIVE"
+          }
+        ],
+        "bindings": [
+          {
+            "canonicalFact": {
+              "factType": "EDGE",
+              "id": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b"
+            },
+            "evidenceId": "provider-evidence-v1:4bc5da6c939c17eacc003b046fa57992629f785d32da0b5a22b2e2509950dc2e",
+            "providerFact": {
+              "factType": "EDGE",
+              "providerFactId": "python-edge-v1:37bdc236f427d4e4dc22c574e10b48a36d14083aa7f3f4ae471776631d75fa67",
+              "providerId": "native"
+            },
+            "providerSnapshotId": "snapshot:two"
+          },
+          {
+            "canonicalFact": {
+              "factType": "EDGE",
+              "id": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f"
+            },
+            "evidenceId": "provider-evidence-v1:a7b81e5b6d3727f55016820d3b70e49f45bee37146f3c479fac676a636ead07f",
+            "providerFact": {
+              "factType": "EDGE",
+              "providerFactId": "python-edge-v1:778fbe8c61c6ddb3ac42c06c7d6014fd8a250b2b36c53529c4dad1a70fdef970",
+              "providerId": "native"
+            },
+            "providerSnapshotId": "snapshot:two"
+          },
+          {
+            "canonicalFact": {
+              "factType": "NODE",
+              "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+            },
+            "evidenceId": "provider-evidence-v1:e6b5a493aaec4513d20cad63deb3d52d847f29cf9ecb161e87f1aee85080fc09",
+            "providerFact": {
+              "factType": "NODE",
+              "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb",
+              "providerId": "native"
+            },
+            "providerSnapshotId": "snapshot:two"
+          }
+        ],
+        "factEvidence": [
+          {
+            "evidenceId": "provider-evidence-v1:4bc5da6c939c17eacc003b046fa57992629f785d32da0b5a22b2e2509950dc2e",
+            "fact": {
+              "factType": "EDGE",
+              "id": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b"
+            }
+          },
+          {
+            "evidenceId": "provider-evidence-v1:a7b81e5b6d3727f55016820d3b70e49f45bee37146f3c479fac676a636ead07f",
+            "fact": {
+              "factType": "EDGE",
+              "id": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f"
+            }
+          },
+          {
+            "evidenceId": "provider-evidence-v1:e6b5a493aaec4513d20cad63deb3d52d847f29cf9ecb161e87f1aee85080fc09",
+            "fact": {
+              "factType": "NODE",
+              "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+            }
+          }
+        ],
+        "candidates": [
+          {
+            "evidenceId": "provider-evidence-v1:4bc5da6c939c17eacc003b046fa57992629f785d32da0b5a22b2e2509950dc2e",
+            "factType": "EDGE",
+            "canonicalFactId": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b",
+            "candidate": {
+              "confidence": {
+                "method": "parser",
+                "reasons": [],
+                "score": 1
+              },
+              "factKey": "edge-fact-v1:4a62f7e32fef238335777788b0a79f7ca94e221cf803955bce28151f1a3b608a",
+              "id": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b",
+              "kind": "IMPORT",
+              "repositoryId": "repo:one",
+              "revisionId": "revision:worktree",
+              "source": {
+                "factType": "NODE",
+                "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+              },
+              "sourceRange": {
+                "endColumn": 15,
+                "endLine": 0,
+                "sourceFileId": "file:one",
+                "startColumn": 7,
+                "startLine": 0
+              },
+              "target": {
+                "candidates": [],
+                "originalHint": "pkg",
+                "resolution": "UNRESOLVED",
+                "state": "UNRESOLVED"
+              }
+            }
+          },
+          {
+            "evidenceId": "provider-evidence-v1:a7b81e5b6d3727f55016820d3b70e49f45bee37146f3c479fac676a636ead07f",
+            "factType": "EDGE",
+            "canonicalFactId": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f",
+            "candidate": {
+              "confidence": {
+                "method": "parser",
+                "reasons": [],
+                "score": 1
+              },
+              "factKey": "edge-fact-v1:1a0f6116e03a3e0ec190dcae40a69e4c6dc7b8306c921c480ee61a134faefbb1",
+              "id": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f",
+              "kind": "REFERENCE",
+              "repositoryId": "repo:one",
+              "revisionId": "revision:worktree",
+              "source": {
+                "factType": "NODE",
+                "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+              },
+              "sourceRange": {
+                "endColumn": 5,
+                "endLine": 1,
+                "sourceFileId": "file:one",
+                "startColumn": 4,
+                "startLine": 1
+              },
+              "target": {
+                "candidates": [],
+                "originalHint": "p",
+                "resolution": "UNRESOLVED",
+                "state": "UNRESOLVED"
+              }
+            }
+          },
+          {
+            "evidenceId": "provider-evidence-v1:e6b5a493aaec4513d20cad63deb3d52d847f29cf9ecb161e87f1aee85080fc09",
+            "factType": "NODE",
+            "canonicalFactId": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+            "candidate": {
+              "confidence": {
+                "method": "parser",
+                "reasons": [],
+                "score": 1
+              },
+              "factKey": "node-fact-v1:9f87fdd184180db6f32fe351dc70bd34a7f1d2baebfa5f06eb7714f1cb1f3dc5",
+              "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+              "kind": "MODULE",
+              "name": "app.py",
+              "qualifiedName": "app.py",
+              "repositoryId": "repo:one",
+              "revisionId": "revision:worktree",
+              "sourceRange": null
+            }
+          }
+        ],
+        "snapshots": [
+          {
+            "id": "snapshot:one",
+            "providerId": "native",
+            "providerVersion": "0.0.0",
+            "runtimeVersion": "fixture-runtime",
+            "startedAt": "2026-10-24T00:00:00.000Z",
+            "completedAt": "2026-10-24T00:00:00.003Z",
+            "repositoryId": "repo:one",
+            "requestedRevisionId": "revision:worktree",
+            "requestedRevisionFingerprint": "content:first",
+            "capabilities": [
+              {
+                "name": "PYTHON_SYNTAX_CODE_V1",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              },
+              {
+                "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              }
+            ],
+            "diagnostics": [],
+            "outcome": "SUCCEEDED"
+          },
+          {
+            "id": "snapshot:two",
+            "providerId": "native",
+            "providerVersion": "0.0.0",
+            "runtimeVersion": "fixture-runtime",
+            "startedAt": "2026-10-24T00:00:00.000Z",
+            "completedAt": "2026-10-24T00:00:00.003Z",
+            "repositoryId": "repo:one",
+            "requestedRevisionId": "revision:worktree",
+            "requestedRevisionFingerprint": "content:first",
+            "capabilities": [
+              {
+                "name": "PYTHON_SYNTAX_CODE_V1",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              },
+              {
+                "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              }
+            ],
+            "diagnostics": [],
+            "outcome": "SUCCEEDED"
+          }
+        ],
+        "coverage": [
+          {
+            "providerSnapshotId": "snapshot:one",
+            "capabilityName": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+            "sourceFileId": "file:one",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:one",
+            "capabilityName": "PYTHON_SYNTAX_CODE_V1",
+            "sourceFileId": "file:one",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:two",
+            "capabilityName": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+            "sourceFileId": "file:one",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:two",
+            "capabilityName": "PYTHON_SYNTAX_CODE_V1",
+            "sourceFileId": "file:one",
+            "status": "COMPLETE"
+          }
+        ]
+      },
+      "basis": {
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "contentFingerprint": "content:first",
+        "codeActivationDigest": "4014342b2295a94531502583181acb49c215627e070a48e8f21aebfb849c2235"
+      },
+      "cost": {
+        "rows": 0,
+        "serializedBytes": 11831,
+        "items": 1813,
+        "retainedLogicalBytes": 68022,
+        "maxDepth": 5,
+        "memoryBudgetBytes": 136044
+      },
+      "ledger": {
+        "domainBytes": 29,
+        "emittedRows": 31,
+        "groups": [
+          {
+            "tag": "HEADER",
+            "count": 1,
+            "ownedItems": 9,
+            "ownedWeight": 130
+          },
+          {
+            "tag": "NODE",
+            "count": 1,
+            "ownedItems": 17,
+            "ownedWeight": 389
+          },
+          {
+            "tag": "EDGE",
+            "count": 2,
+            "ownedItems": 55,
+            "ownedWeight": 1169
+          },
+          {
+            "tag": "EVIDENCE",
+            "count": 3,
+            "ownedItems": 40,
+            "ownedWeight": 1208
+          },
+          {
+            "tag": "BINDING",
+            "count": 3,
+            "ownedItems": 46,
+            "ownedWeight": 1640
+          },
+          {
+            "tag": "FACT_EVIDENCE",
+            "count": 3,
+            "ownedItems": 31,
+            "ownedWeight": 1122
+          },
+          {
+            "tag": "SUPPORT_CANDIDATE",
+            "count": 3,
+            "ownedItems": 89,
+            "ownedWeight": 2464
+          },
+          {
+            "tag": "SNAPSHOT",
+            "count": 2,
+            "ownedItems": 45,
+            "ownedWeight": 712
+          },
+          {
+            "tag": "COVERAGE",
+            "count": 4,
+            "ownedItems": 53,
+            "ownedWeight": 736
+          }
+        ],
+        "encodedBytes": 11685,
+        "framingBytes": 117,
+        "ownedWeight": 44442,
+        "finalDigestPin": 64
+      }
+    },
+    {
+      "id": "accurate-parent-full",
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-store/full-reestablishment-independent-context.json",
+        "sha256": "fe303d6f72d34f9d5d61cdbbf2fe98c80f30510deb5721ae408204a94eb08d03"
+      },
+      "input": {
+        "targetSource": {
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "contentFingerprint": "content:first"
+        },
+        "committedSnapshotCount": 2,
+        "nodes": [
+          {
+            "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+            "factKey": "node-fact-v1:9f87fdd184180db6f32fe351dc70bd34a7f1d2baebfa5f06eb7714f1cb1f3dc5",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "name": "app.py",
+            "qualifiedName": "app.py",
+            "sourceRange": null,
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            },
+            "kind": "MODULE"
+          }
+        ],
+        "edges": [
+          {
+            "id": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f",
+            "factKey": "edge-fact-v1:1a0f6116e03a3e0ec190dcae40a69e4c6dc7b8306c921c480ee61a134faefbb1",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "REFERENCE",
+            "source": {
+              "factType": "NODE",
+              "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "p",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 1,
+              "startColumn": 4,
+              "endLine": 1,
+              "endColumn": 5
+            },
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            }
+          },
+          {
+            "id": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b",
+            "factKey": "edge-fact-v1:4a62f7e32fef238335777788b0a79f7ca94e221cf803955bce28151f1a3b608a",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "factType": "NODE",
+              "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "pkg",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 7,
+              "endLine": 0,
+              "endColumn": 15
+            },
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            }
+          }
+        ],
+        "evidence": [
+          {
+            "id": "provider-evidence-v1:4bc5da6c939c17eacc003b046fa57992629f785d32da0b5a22b2e2509950dc2e",
+            "providerFact": {
+              "factType": "EDGE",
+              "providerFactId": "python-edge-v1:37bdc236f427d4e4dc22c574e10b48a36d14083aa7f3f4ae471776631d75fa67",
+              "providerId": "native"
+            },
+            "providerSnapshotId": "snapshot:two",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "status": "ACTIVE"
+          },
+          {
+            "id": "provider-evidence-v1:a7b81e5b6d3727f55016820d3b70e49f45bee37146f3c479fac676a636ead07f",
+            "providerFact": {
+              "factType": "EDGE",
+              "providerFactId": "python-edge-v1:778fbe8c61c6ddb3ac42c06c7d6014fd8a250b2b36c53529c4dad1a70fdef970",
+              "providerId": "native"
+            },
+            "providerSnapshotId": "snapshot:two",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "status": "ACTIVE"
+          },
+          {
+            "id": "provider-evidence-v1:e6b5a493aaec4513d20cad63deb3d52d847f29cf9ecb161e87f1aee85080fc09",
+            "providerFact": {
+              "factType": "NODE",
+              "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb",
+              "providerId": "native"
+            },
+            "providerSnapshotId": "snapshot:two",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "status": "ACTIVE"
+          }
+        ],
+        "bindings": [
+          {
+            "canonicalFact": {
+              "factType": "EDGE",
+              "id": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b"
+            },
+            "evidenceId": "provider-evidence-v1:4bc5da6c939c17eacc003b046fa57992629f785d32da0b5a22b2e2509950dc2e",
+            "providerFact": {
+              "factType": "EDGE",
+              "providerFactId": "python-edge-v1:37bdc236f427d4e4dc22c574e10b48a36d14083aa7f3f4ae471776631d75fa67",
+              "providerId": "native"
+            },
+            "providerSnapshotId": "snapshot:two"
+          },
+          {
+            "canonicalFact": {
+              "factType": "EDGE",
+              "id": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f"
+            },
+            "evidenceId": "provider-evidence-v1:a7b81e5b6d3727f55016820d3b70e49f45bee37146f3c479fac676a636ead07f",
+            "providerFact": {
+              "factType": "EDGE",
+              "providerFactId": "python-edge-v1:778fbe8c61c6ddb3ac42c06c7d6014fd8a250b2b36c53529c4dad1a70fdef970",
+              "providerId": "native"
+            },
+            "providerSnapshotId": "snapshot:two"
+          },
+          {
+            "canonicalFact": {
+              "factType": "NODE",
+              "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+            },
+            "evidenceId": "provider-evidence-v1:e6b5a493aaec4513d20cad63deb3d52d847f29cf9ecb161e87f1aee85080fc09",
+            "providerFact": {
+              "factType": "NODE",
+              "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb",
+              "providerId": "native"
+            },
+            "providerSnapshotId": "snapshot:two"
+          }
+        ],
+        "factEvidence": [
+          {
+            "evidenceId": "provider-evidence-v1:4bc5da6c939c17eacc003b046fa57992629f785d32da0b5a22b2e2509950dc2e",
+            "fact": {
+              "factType": "EDGE",
+              "id": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b"
+            }
+          },
+          {
+            "evidenceId": "provider-evidence-v1:a7b81e5b6d3727f55016820d3b70e49f45bee37146f3c479fac676a636ead07f",
+            "fact": {
+              "factType": "EDGE",
+              "id": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f"
+            }
+          },
+          {
+            "evidenceId": "provider-evidence-v1:e6b5a493aaec4513d20cad63deb3d52d847f29cf9ecb161e87f1aee85080fc09",
+            "fact": {
+              "factType": "NODE",
+              "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+            }
+          }
+        ],
+        "candidates": [
+          {
+            "evidenceId": "provider-evidence-v1:4bc5da6c939c17eacc003b046fa57992629f785d32da0b5a22b2e2509950dc2e",
+            "factType": "EDGE",
+            "canonicalFactId": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b",
+            "candidate": {
+              "confidence": {
+                "method": "parser",
+                "reasons": [],
+                "score": 1
+              },
+              "factKey": "edge-fact-v1:4a62f7e32fef238335777788b0a79f7ca94e221cf803955bce28151f1a3b608a",
+              "id": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b",
+              "kind": "IMPORT",
+              "repositoryId": "repo:one",
+              "revisionId": "revision:worktree",
+              "source": {
+                "factType": "NODE",
+                "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+              },
+              "sourceRange": {
+                "endColumn": 15,
+                "endLine": 0,
+                "sourceFileId": "file:one",
+                "startColumn": 7,
+                "startLine": 0
+              },
+              "target": {
+                "candidates": [],
+                "originalHint": "pkg",
+                "resolution": "UNRESOLVED",
+                "state": "UNRESOLVED"
+              }
+            }
+          },
+          {
+            "evidenceId": "provider-evidence-v1:a7b81e5b6d3727f55016820d3b70e49f45bee37146f3c479fac676a636ead07f",
+            "factType": "EDGE",
+            "canonicalFactId": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f",
+            "candidate": {
+              "confidence": {
+                "method": "parser",
+                "reasons": [],
+                "score": 1
+              },
+              "factKey": "edge-fact-v1:1a0f6116e03a3e0ec190dcae40a69e4c6dc7b8306c921c480ee61a134faefbb1",
+              "id": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f",
+              "kind": "REFERENCE",
+              "repositoryId": "repo:one",
+              "revisionId": "revision:worktree",
+              "source": {
+                "factType": "NODE",
+                "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+              },
+              "sourceRange": {
+                "endColumn": 5,
+                "endLine": 1,
+                "sourceFileId": "file:one",
+                "startColumn": 4,
+                "startLine": 1
+              },
+              "target": {
+                "candidates": [],
+                "originalHint": "p",
+                "resolution": "UNRESOLVED",
+                "state": "UNRESOLVED"
+              }
+            }
+          },
+          {
+            "evidenceId": "provider-evidence-v1:e6b5a493aaec4513d20cad63deb3d52d847f29cf9ecb161e87f1aee85080fc09",
+            "factType": "NODE",
+            "canonicalFactId": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+            "candidate": {
+              "confidence": {
+                "method": "parser",
+                "reasons": [],
+                "score": 1
+              },
+              "factKey": "node-fact-v1:9f87fdd184180db6f32fe351dc70bd34a7f1d2baebfa5f06eb7714f1cb1f3dc5",
+              "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+              "kind": "MODULE",
+              "name": "app.py",
+              "qualifiedName": "app.py",
+              "repositoryId": "repo:one",
+              "revisionId": "revision:worktree",
+              "sourceRange": null
+            }
+          }
+        ],
+        "snapshots": [
+          {
+            "id": "snapshot:one",
+            "providerId": "native",
+            "providerVersion": "0.0.0",
+            "runtimeVersion": "fixture-runtime",
+            "startedAt": "2026-10-24T00:00:00.000Z",
+            "completedAt": "2026-10-24T00:00:00.003Z",
+            "repositoryId": "repo:one",
+            "requestedRevisionId": "revision:worktree",
+            "requestedRevisionFingerprint": "content:first",
+            "capabilities": [
+              {
+                "name": "PYTHON_SYNTAX_CODE_V1",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              },
+              {
+                "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              }
+            ],
+            "diagnostics": [],
+            "outcome": "SUCCEEDED"
+          },
+          {
+            "id": "snapshot:two",
+            "providerId": "native",
+            "providerVersion": "0.0.0",
+            "runtimeVersion": "fixture-runtime",
+            "startedAt": "2026-10-24T00:00:00.000Z",
+            "completedAt": "2026-10-24T00:00:00.003Z",
+            "repositoryId": "repo:one",
+            "requestedRevisionId": "revision:worktree",
+            "requestedRevisionFingerprint": "content:first",
+            "capabilities": [
+              {
+                "name": "PYTHON_SYNTAX_CODE_V1",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              },
+              {
+                "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              }
+            ],
+            "diagnostics": [],
+            "outcome": "SUCCEEDED"
+          }
+        ],
+        "coverage": [
+          {
+            "providerSnapshotId": "snapshot:one",
+            "capabilityName": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+            "sourceFileId": "file:one",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:one",
+            "capabilityName": "PYTHON_SYNTAX_CODE_V1",
+            "sourceFileId": "file:one",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:two",
+            "capabilityName": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+            "sourceFileId": "file:one",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:two",
+            "capabilityName": "PYTHON_SYNTAX_CODE_V1",
+            "sourceFileId": "file:one",
+            "status": "COMPLETE"
+          }
+        ]
+      },
+      "basis": {
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "contentFingerprint": "content:first",
+        "codeActivationDigest": "592bdb997758de12d44a6d49cee9c9891be50188c47ef8b4fcc3506d1b94fda4"
+      },
+      "cost": {
+        "rows": 0,
+        "serializedBytes": 11831,
+        "items": 1813,
+        "retainedLogicalBytes": 68022,
+        "maxDepth": 5,
+        "memoryBudgetBytes": 136044
+      },
+      "ledger": {
+        "domainBytes": 29,
+        "emittedRows": 31,
+        "groups": [
+          {
+            "tag": "HEADER",
+            "count": 1,
+            "ownedItems": 9,
+            "ownedWeight": 130
+          },
+          {
+            "tag": "NODE",
+            "count": 1,
+            "ownedItems": 17,
+            "ownedWeight": 389
+          },
+          {
+            "tag": "EDGE",
+            "count": 2,
+            "ownedItems": 55,
+            "ownedWeight": 1169
+          },
+          {
+            "tag": "EVIDENCE",
+            "count": 3,
+            "ownedItems": 40,
+            "ownedWeight": 1208
+          },
+          {
+            "tag": "BINDING",
+            "count": 3,
+            "ownedItems": 46,
+            "ownedWeight": 1640
+          },
+          {
+            "tag": "FACT_EVIDENCE",
+            "count": 3,
+            "ownedItems": 31,
+            "ownedWeight": 1122
+          },
+          {
+            "tag": "SUPPORT_CANDIDATE",
+            "count": 3,
+            "ownedItems": 89,
+            "ownedWeight": 2464
+          },
+          {
+            "tag": "SNAPSHOT",
+            "count": 2,
+            "ownedItems": 45,
+            "ownedWeight": 712
+          },
+          {
+            "tag": "COVERAGE",
+            "count": 4,
+            "ownedItems": 53,
+            "ownedWeight": 736
+          }
+        ],
+        "encodedBytes": 11685,
+        "framingBytes": 117,
+        "ownedWeight": 44442,
+        "finalDigestPin": 64
+      }
+    },
+    {
+      "id": "real-raw-delta",
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-store/raw-delta-independent-context.json",
+        "sha256": "7a86598e9c0a664ec860b14968232129d791340feada86f533f57a43d01c8afa"
+      },
+      "input": {
+        "targetSource": {
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "contentFingerprint": "content:scope:S02-python-modified-a"
+        },
+        "committedSnapshotCount": 3,
+        "nodes": [
+          {
+            "id": "canonical-node-v1:a321299c2517e165d8b00ddcd03c5015ab0a092bef9a417cfd31d77e723fe33b",
+            "factKey": "node-fact-v1:b1abc023d77072cb8fd1932b2dda594ab73b837d8755dfdb6334bf10804496d7",
+            "repositoryId": "repo:history",
+            "revisionId": "revision:worktree",
+            "name": "a.py",
+            "qualifiedName": "a.py",
+            "sourceRange": null,
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            },
+            "kind": "MODULE"
+          },
+          {
+            "id": "node:a",
+            "factKey": "fact:a",
+            "repositoryId": "repo:history",
+            "revisionId": "revision:worktree",
+            "name": "a",
+            "qualifiedName": "a",
+            "sourceRange": null,
+            "confidence": {
+              "score": 0.7,
+              "method": "fixture-parser",
+              "reasons": []
+            },
+            "kind": "MODULE"
+          },
+          {
+            "id": "node:b",
+            "factKey": "fact:b",
+            "repositoryId": "repo:history",
+            "revisionId": "revision:worktree",
+            "name": "b",
+            "qualifiedName": "b",
+            "sourceRange": null,
+            "confidence": {
+              "score": 1,
+              "method": "fixture-parser",
+              "reasons": []
+            },
+            "kind": "MODULE"
+          },
+          {
+            "id": "node:java",
+            "factKey": "fact:java",
+            "repositoryId": "repo:history",
+            "revisionId": "revision:worktree",
+            "name": "java",
+            "qualifiedName": "java",
+            "sourceRange": null,
+            "confidence": {
+              "score": 1,
+              "method": "fixture-parser",
+              "reasons": []
+            },
+            "kind": "PACKAGE"
+          }
+        ],
+        "edges": [],
+        "evidence": [
+          {
+            "id": "provider-evidence-v1:a33a7dd05dec6e9bef2bcbb95876a833ef4a2f5297cc430fd4d9ea5113d46bf7",
+            "repositoryId": "repo:history",
+            "revisionId": "revision:worktree",
+            "providerSnapshotId": "snapshot:external",
+            "providerFact": {
+              "factType": "NODE",
+              "providerId": "external",
+              "providerFactId": "opaque:a"
+            },
+            "status": "ACTIVE"
+          },
+          {
+            "id": "provider-evidence-v1:c78336bd33570d302e7b5321df48c0c4dd73fb99a1da888d09118423cf538ff7",
+            "repositoryId": "repo:history",
+            "revisionId": "revision:worktree",
+            "providerSnapshotId": "snapshot:old",
+            "providerFact": {
+              "factType": "NODE",
+              "providerId": "native",
+              "providerFactId": "opaque:b"
+            },
+            "status": "ACTIVE"
+          },
+          {
+            "id": "provider-evidence-v1:2eeafa1054c52f1dfec8c4aaf580a0970cca5f255c7b3dd7713894ddf554469f",
+            "repositoryId": "repo:history",
+            "revisionId": "revision:worktree",
+            "providerSnapshotId": "snapshot:old",
+            "providerFact": {
+              "factType": "NODE",
+              "providerId": "native",
+              "providerFactId": "opaque:java"
+            },
+            "status": "ACTIVE"
+          },
+          {
+            "id": "provider-evidence-v1:daaad91bcd2ba4eba3d1867c1cdc78ab57dfe726c09e98cba050378c1c054a1a",
+            "repositoryId": "repo:history",
+            "revisionId": "revision:worktree",
+            "providerSnapshotId": "snapshot:r0:R01-python-with-untouched-java",
+            "providerFact": {
+              "factType": "NODE",
+              "providerId": "native",
+              "providerFactId": "python:module:a"
+            },
+            "status": "ACTIVE"
+          }
+        ],
+        "bindings": [
+          {
+            "providerFact": {
+              "factType": "NODE",
+              "providerId": "external",
+              "providerFactId": "opaque:a"
+            },
+            "providerSnapshotId": "snapshot:external",
+            "canonicalFact": {
+              "factType": "NODE",
+              "id": "node:a"
+            },
+            "evidenceId": "provider-evidence-v1:a33a7dd05dec6e9bef2bcbb95876a833ef4a2f5297cc430fd4d9ea5113d46bf7"
+          },
+          {
+            "providerFact": {
+              "factType": "NODE",
+              "providerId": "native",
+              "providerFactId": "opaque:b"
+            },
+            "providerSnapshotId": "snapshot:old",
+            "canonicalFact": {
+              "factType": "NODE",
+              "id": "node:b"
+            },
+            "evidenceId": "provider-evidence-v1:c78336bd33570d302e7b5321df48c0c4dd73fb99a1da888d09118423cf538ff7"
+          },
+          {
+            "providerFact": {
+              "factType": "NODE",
+              "providerId": "native",
+              "providerFactId": "opaque:java"
+            },
+            "providerSnapshotId": "snapshot:old",
+            "canonicalFact": {
+              "factType": "NODE",
+              "id": "node:java"
+            },
+            "evidenceId": "provider-evidence-v1:2eeafa1054c52f1dfec8c4aaf580a0970cca5f255c7b3dd7713894ddf554469f"
+          },
+          {
+            "providerFact": {
+              "factType": "NODE",
+              "providerId": "native",
+              "providerFactId": "python:module:a"
+            },
+            "providerSnapshotId": "snapshot:r0:R01-python-with-untouched-java",
+            "canonicalFact": {
+              "factType": "NODE",
+              "id": "canonical-node-v1:a321299c2517e165d8b00ddcd03c5015ab0a092bef9a417cfd31d77e723fe33b"
+            },
+            "evidenceId": "provider-evidence-v1:daaad91bcd2ba4eba3d1867c1cdc78ab57dfe726c09e98cba050378c1c054a1a"
+          }
+        ],
+        "factEvidence": [
+          {
+            "fact": {
+              "factType": "NODE",
+              "id": "node:a"
+            },
+            "evidenceId": "provider-evidence-v1:a33a7dd05dec6e9bef2bcbb95876a833ef4a2f5297cc430fd4d9ea5113d46bf7"
+          },
+          {
+            "fact": {
+              "factType": "NODE",
+              "id": "node:b"
+            },
+            "evidenceId": "provider-evidence-v1:c78336bd33570d302e7b5321df48c0c4dd73fb99a1da888d09118423cf538ff7"
+          },
+          {
+            "fact": {
+              "factType": "NODE",
+              "id": "node:java"
+            },
+            "evidenceId": "provider-evidence-v1:2eeafa1054c52f1dfec8c4aaf580a0970cca5f255c7b3dd7713894ddf554469f"
+          },
+          {
+            "fact": {
+              "factType": "NODE",
+              "id": "canonical-node-v1:a321299c2517e165d8b00ddcd03c5015ab0a092bef9a417cfd31d77e723fe33b"
+            },
+            "evidenceId": "provider-evidence-v1:daaad91bcd2ba4eba3d1867c1cdc78ab57dfe726c09e98cba050378c1c054a1a"
+          }
+        ],
+        "candidates": [
+          {
+            "evidenceId": "provider-evidence-v1:a33a7dd05dec6e9bef2bcbb95876a833ef4a2f5297cc430fd4d9ea5113d46bf7",
+            "factType": "NODE",
+            "canonicalFactId": "node:a",
+            "candidate": {
+              "id": "node:a",
+              "factKey": "fact:a",
+              "repositoryId": "repo:history",
+              "revisionId": "revision:worktree",
+              "name": "a",
+              "qualifiedName": "a",
+              "sourceRange": null,
+              "confidence": {
+                "score": 0.7,
+                "method": "fixture-parser",
+                "reasons": []
+              },
+              "kind": "MODULE"
+            }
+          },
+          {
+            "evidenceId": "provider-evidence-v1:c78336bd33570d302e7b5321df48c0c4dd73fb99a1da888d09118423cf538ff7",
+            "factType": "NODE",
+            "canonicalFactId": "node:b",
+            "candidate": {
+              "id": "node:b",
+              "factKey": "fact:b",
+              "repositoryId": "repo:history",
+              "revisionId": "revision:worktree",
+              "name": "b",
+              "qualifiedName": "b",
+              "sourceRange": null,
+              "confidence": {
+                "score": 1,
+                "method": "fixture-parser",
+                "reasons": []
+              },
+              "kind": "MODULE"
+            }
+          },
+          {
+            "evidenceId": "provider-evidence-v1:2eeafa1054c52f1dfec8c4aaf580a0970cca5f255c7b3dd7713894ddf554469f",
+            "factType": "NODE",
+            "canonicalFactId": "node:java",
+            "candidate": {
+              "id": "node:java",
+              "factKey": "fact:java",
+              "repositoryId": "repo:history",
+              "revisionId": "revision:worktree",
+              "name": "java",
+              "qualifiedName": "java",
+              "sourceRange": null,
+              "confidence": {
+                "score": 1,
+                "method": "fixture-parser",
+                "reasons": []
+              },
+              "kind": "PACKAGE"
+            }
+          },
+          {
+            "evidenceId": "provider-evidence-v1:daaad91bcd2ba4eba3d1867c1cdc78ab57dfe726c09e98cba050378c1c054a1a",
+            "factType": "NODE",
+            "canonicalFactId": "canonical-node-v1:a321299c2517e165d8b00ddcd03c5015ab0a092bef9a417cfd31d77e723fe33b",
+            "candidate": {
+              "id": "canonical-node-v1:a321299c2517e165d8b00ddcd03c5015ab0a092bef9a417cfd31d77e723fe33b",
+              "factKey": "node-fact-v1:b1abc023d77072cb8fd1932b2dda594ab73b837d8755dfdb6334bf10804496d7",
+              "repositoryId": "repo:history",
+              "revisionId": "revision:worktree",
+              "name": "a.py",
+              "qualifiedName": "a.py",
+              "sourceRange": null,
+              "confidence": {
+                "score": 1,
+                "method": "parser",
+                "reasons": []
+              },
+              "kind": "MODULE"
+            }
+          }
+        ],
+        "snapshots": [
+          {
+            "id": "snapshot:external",
+            "repositoryId": "repo:history",
+            "providerId": "external",
+            "providerVersion": "1",
+            "runtimeVersion": "fixture",
+            "requestedRevisionId": "revision:worktree",
+            "requestedRevisionFingerprint": "content:old",
+            "startedAt": "2026-10-24T00:00:00.000Z",
+            "completedAt": "2026-10-24T00:00:00.001Z",
+            "capabilities": [
+              {
+                "name": "EXTERNAL_CODE",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              }
+            ],
+            "diagnostics": [],
+            "outcome": "SUCCEEDED"
+          },
+          {
+            "id": "snapshot:old",
+            "repositoryId": "repo:history",
+            "providerId": "native",
+            "providerVersion": "1",
+            "runtimeVersion": "fixture",
+            "requestedRevisionId": "revision:worktree",
+            "requestedRevisionFingerprint": "content:old",
+            "startedAt": "2026-10-24T00:00:00.000Z",
+            "completedAt": "2026-10-24T00:00:00.001Z",
+            "capabilities": [
+              {
+                "name": "JAVA_CODE_V2",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              },
+              {
+                "name": "PYTHON_SYNTAX_CODE_V1",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              },
+              {
+                "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              }
+            ],
+            "diagnostics": [],
+            "outcome": "SUCCEEDED"
+          },
+          {
+            "id": "snapshot:r0:R01-python-with-untouched-java",
+            "providerId": "native",
+            "providerVersion": "0.0.0",
+            "runtimeVersion": "fixture-runtime",
+            "startedAt": "2026-10-24T00:00:00.000Z",
+            "completedAt": "2026-10-24T00:00:00.003Z",
+            "repositoryId": "repo:history",
+            "requestedRevisionId": "revision:worktree",
+            "requestedRevisionFingerprint": "content:scope:S02-python-modified-a",
+            "capabilities": [
+              {
+                "name": "PYTHON_SYNTAX_CODE_V1",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              },
+              {
+                "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              }
+            ],
+            "diagnostics": [],
+            "outcome": "SUCCEEDED"
+          }
+        ],
+        "coverage": [
+          {
+            "providerSnapshotId": "snapshot:external",
+            "capabilityName": "EXTERNAL_CODE",
+            "sourceFileId": "b",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:old",
+            "capabilityName": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+            "sourceFileId": "j",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:old",
+            "capabilityName": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+            "sourceFileId": "k",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:old",
+            "capabilityName": "JAVA_CODE_V2",
+            "sourceFileId": "j",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:old",
+            "capabilityName": "JAVA_CODE_V2",
+            "sourceFileId": "k",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:old",
+            "capabilityName": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+            "sourceFileId": "a",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:old",
+            "capabilityName": "PYTHON_SYNTAX_CODE_V1",
+            "sourceFileId": "a",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:old",
+            "capabilityName": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+            "sourceFileId": "b",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:old",
+            "capabilityName": "PYTHON_SYNTAX_CODE_V1",
+            "sourceFileId": "b",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:r0:R01-python-with-untouched-java",
+            "capabilityName": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+            "sourceFileId": "a",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:r0:R01-python-with-untouched-java",
+            "capabilityName": "PYTHON_SYNTAX_CODE_V1",
+            "sourceFileId": "a",
+            "status": "COMPLETE"
+          }
+        ]
+      },
+      "basis": {
+        "repositoryId": "repo:history",
+        "revisionId": "revision:worktree",
+        "contentFingerprint": "content:scope:S02-python-modified-a",
+        "codeActivationDigest": "ae33a7e469fb19c7cc61265b779f9d93cacdfe743da5b19ce3639a3b312fb222"
+      },
+      "cost": {
+        "rows": 0,
+        "serializedBytes": 12914,
+        "items": 2473,
+        "retainedLogicalBytes": 72929,
+        "maxDepth": 5,
+        "memoryBudgetBytes": 145858
+      },
+      "ledger": {
+        "domainBytes": 29,
+        "emittedRows": 44,
+        "groups": [
+          {
+            "tag": "HEADER",
+            "count": 1,
+            "ownedItems": 9,
+            "ownedWeight": 160
+          },
+          {
+            "tag": "NODE",
+            "count": 4,
+            "ownedItems": 65,
+            "ownedWeight": 909
+          },
+          {
+            "tag": "EDGE",
+            "count": 0,
+            "ownedItems": 1,
+            "ownedWeight": 0
+          },
+          {
+            "tag": "EVIDENCE",
+            "count": 4,
+            "ownedItems": 53,
+            "ownedWeight": 1387
+          },
+          {
+            "tag": "BINDING",
+            "count": 4,
+            "ownedItems": 61,
+            "ownedWeight": 1497
+          },
+          {
+            "tag": "FACT_EVIDENCE",
+            "count": 4,
+            "ownedItems": 41,
+            "ownedWeight": 1046
+          },
+          {
+            "tag": "SUPPORT_CANDIDATE",
+            "count": 4,
+            "ownedItems": 89,
+            "ownedWeight": 1892
+          },
+          {
+            "tag": "SNAPSHOT",
+            "count": 3,
+            "ownedItems": 67,
+            "ownedWeight": 1119
+          },
+          {
+            "tag": "COVERAGE",
+            "count": 11,
+            "ownedItems": 144,
+            "ownedWeight": 1938
+          }
+        ],
+        "encodedBytes": 12718,
+        "framingBytes": 167,
+        "ownedWeight": 47233,
+        "finalDigestPin": 64
+      }
+    },
+    {
+      "id": "retained-origins",
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-store/../mixed-analysis-stage/retained-deletion-independent-context.json",
+        "sha256": "ec9452c2106330fa89c4b9d4910041032f53fccb3559ebb62fcdb7611c3c261b"
+      },
+      "input": {
+        "targetSource": {
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "contentFingerprint": "content:deleted-python"
+        },
+        "committedSnapshotCount": 1,
+        "nodes": [
+          {
+            "id": "canonical-node-v1:b8cc9d8484f5c608ab4fd16c8fa699f60df84e2f488d03111e93b5101cc5d8d2",
+            "factKey": "node-fact-v1:426cb60ee0500370996dbbdfd7ef72985b743b06382ef7df9e6b79699e1138a7",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "name": "Box.java",
+            "qualifiedName": "Box.java",
+            "sourceRange": null,
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            },
+            "kind": "MODULE"
+          },
+          {
+            "id": "canonical-node-v1:d4d1141ea168c690fb883ecbbaba0e7057a010eb7ef98d8cef6fc9172cbd42d8",
+            "factKey": "node-fact-v1:fa07e81351801d888b39e1742617736c6fe9d1f50c0ee59f63680270f36e3856",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "name": "Box",
+            "qualifiedName": "Box",
+            "sourceRange": {
+              "sourceFileId": "java:file",
+              "startLine": 0,
+              "startColumn": 6,
+              "endLine": 0,
+              "endColumn": 9
+            },
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            },
+            "kind": "TYPE",
+            "typeKind": "CLASS"
+          }
+        ],
+        "edges": [],
+        "evidence": [
+          {
+            "id": "provider-evidence-v1:9a96776fa3dee8d0b3bace20e24b9e91e84704bcc9177a57c65002f64b7cc393",
+            "providerFact": {
+              "factType": "NODE",
+              "providerFactId": "java:Box",
+              "providerId": "native"
+            },
+            "providerSnapshotId": "snapshot:one",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "status": "ACTIVE"
+          },
+          {
+            "id": "provider-evidence-v1:d2a6ae2ed2543f5ed0f5a7e6a73899da9f8dc20d8cd585c0d6f00159ffc5bdb5",
+            "providerFact": {
+              "factType": "NODE",
+              "providerFactId": "java:unit",
+              "providerId": "native"
+            },
+            "providerSnapshotId": "snapshot:one",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "status": "ACTIVE"
+          }
+        ],
+        "bindings": [
+          {
+            "canonicalFact": {
+              "factType": "NODE",
+              "id": "canonical-node-v1:d4d1141ea168c690fb883ecbbaba0e7057a010eb7ef98d8cef6fc9172cbd42d8"
+            },
+            "evidenceId": "provider-evidence-v1:9a96776fa3dee8d0b3bace20e24b9e91e84704bcc9177a57c65002f64b7cc393",
+            "providerFact": {
+              "factType": "NODE",
+              "providerFactId": "java:Box",
+              "providerId": "native"
+            },
+            "providerSnapshotId": "snapshot:one"
+          },
+          {
+            "canonicalFact": {
+              "factType": "NODE",
+              "id": "canonical-node-v1:b8cc9d8484f5c608ab4fd16c8fa699f60df84e2f488d03111e93b5101cc5d8d2"
+            },
+            "evidenceId": "provider-evidence-v1:d2a6ae2ed2543f5ed0f5a7e6a73899da9f8dc20d8cd585c0d6f00159ffc5bdb5",
+            "providerFact": {
+              "factType": "NODE",
+              "providerFactId": "java:unit",
+              "providerId": "native"
+            },
+            "providerSnapshotId": "snapshot:one"
+          }
+        ],
+        "factEvidence": [
+          {
+            "evidenceId": "provider-evidence-v1:9a96776fa3dee8d0b3bace20e24b9e91e84704bcc9177a57c65002f64b7cc393",
+            "fact": {
+              "factType": "NODE",
+              "id": "canonical-node-v1:d4d1141ea168c690fb883ecbbaba0e7057a010eb7ef98d8cef6fc9172cbd42d8"
+            }
+          },
+          {
+            "evidenceId": "provider-evidence-v1:d2a6ae2ed2543f5ed0f5a7e6a73899da9f8dc20d8cd585c0d6f00159ffc5bdb5",
+            "fact": {
+              "factType": "NODE",
+              "id": "canonical-node-v1:b8cc9d8484f5c608ab4fd16c8fa699f60df84e2f488d03111e93b5101cc5d8d2"
+            }
+          }
+        ],
+        "candidates": [
+          {
+            "evidenceId": "provider-evidence-v1:9a96776fa3dee8d0b3bace20e24b9e91e84704bcc9177a57c65002f64b7cc393",
+            "factType": "NODE",
+            "canonicalFactId": "canonical-node-v1:d4d1141ea168c690fb883ecbbaba0e7057a010eb7ef98d8cef6fc9172cbd42d8",
+            "candidate": {
+              "confidence": {
+                "method": "parser",
+                "reasons": [],
+                "score": 1
+              },
+              "factKey": "node-fact-v1:fa07e81351801d888b39e1742617736c6fe9d1f50c0ee59f63680270f36e3856",
+              "id": "canonical-node-v1:d4d1141ea168c690fb883ecbbaba0e7057a010eb7ef98d8cef6fc9172cbd42d8",
+              "kind": "TYPE",
+              "name": "Box",
+              "qualifiedName": "Box",
+              "repositoryId": "repo:one",
+              "revisionId": "revision:worktree",
+              "sourceRange": {
+                "endColumn": 9,
+                "endLine": 0,
+                "sourceFileId": "java:file",
+                "startColumn": 6,
+                "startLine": 0
+              },
+              "typeKind": "CLASS"
+            }
+          },
+          {
+            "evidenceId": "provider-evidence-v1:d2a6ae2ed2543f5ed0f5a7e6a73899da9f8dc20d8cd585c0d6f00159ffc5bdb5",
+            "factType": "NODE",
+            "canonicalFactId": "canonical-node-v1:b8cc9d8484f5c608ab4fd16c8fa699f60df84e2f488d03111e93b5101cc5d8d2",
+            "candidate": {
+              "confidence": {
+                "method": "parser",
+                "reasons": [],
+                "score": 1
+              },
+              "factKey": "node-fact-v1:426cb60ee0500370996dbbdfd7ef72985b743b06382ef7df9e6b79699e1138a7",
+              "id": "canonical-node-v1:b8cc9d8484f5c608ab4fd16c8fa699f60df84e2f488d03111e93b5101cc5d8d2",
+              "kind": "MODULE",
+              "name": "Box.java",
+              "qualifiedName": "Box.java",
+              "repositoryId": "repo:one",
+              "revisionId": "revision:worktree",
+              "sourceRange": null
+            }
+          }
+        ],
+        "snapshots": [
+          {
+            "id": "snapshot:one",
+            "providerId": "native",
+            "providerVersion": "0.0.0",
+            "runtimeVersion": "fixture-runtime",
+            "startedAt": "2026-10-24T00:00:00.000Z",
+            "completedAt": "2026-10-24T00:00:00.003Z",
+            "repositoryId": "repo:one",
+            "requestedRevisionId": "revision:worktree",
+            "requestedRevisionFingerprint": "content:first",
+            "capabilities": [
+              {
+                "name": "JAVA_CODE_V2",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              },
+              {
+                "name": "PYTHON_SYNTAX_CODE_V1",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              },
+              {
+                "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              }
+            ],
+            "diagnostics": [],
+            "outcome": "SUCCEEDED"
+          }
+        ],
+        "coverage": [
+          {
+            "providerSnapshotId": "snapshot:one",
+            "capabilityName": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+            "sourceFileId": "java:file",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:one",
+            "capabilityName": "JAVA_CODE_V2",
+            "sourceFileId": "java:file",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:one",
+            "capabilityName": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+            "sourceFileId": "file:one",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:one",
+            "capabilityName": "PYTHON_SYNTAX_CODE_V1",
+            "sourceFileId": "file:one",
+            "status": "COMPLETE"
+          }
+        ]
+      },
+      "basis": {
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "contentFingerprint": "content:deleted-python",
+        "codeActivationDigest": "a8b7027dffebc59540ed22edb5d86672d7822189ef112d3dcf7b7bc931b09e42"
+      },
+      "cost": {
+        "rows": 0,
+        "serializedBytes": 7507,
+        "items": 1227,
+        "retainedLogicalBytes": 42476,
+        "maxDepth": 5,
+        "memoryBudgetBytes": 84952
+      },
+      "ledger": {
+        "domainBytes": 29,
+        "emittedRows": 25,
+        "groups": [
+          {
+            "tag": "HEADER",
+            "count": 1,
+            "ownedItems": 9,
+            "ownedWeight": 139
+          },
+          {
+            "tag": "NODE",
+            "count": 2,
+            "ownedItems": 39,
+            "ownedWeight": 844
+          },
+          {
+            "tag": "EDGE",
+            "count": 0,
+            "ownedItems": 1,
+            "ownedWeight": 0
+          },
+          {
+            "tag": "EVIDENCE",
+            "count": 2,
+            "ownedItems": 27,
+            "ownedWeight": 663
+          },
+          {
+            "tag": "BINDING",
+            "count": 2,
+            "ownedItems": 31,
+            "ownedWeight": 951
+          },
+          {
+            "tag": "FACT_EVIDENCE",
+            "count": 2,
+            "ownedItems": 21,
+            "ownedWeight": 748
+          },
+          {
+            "tag": "SUPPORT_CANDIDATE",
+            "count": 2,
+            "ownedItems": 51,
+            "ownedWeight": 1448
+          },
+          {
+            "tag": "SNAPSHOT",
+            "count": 1,
+            "ownedItems": 27,
+            "ownedWeight": 404
+          },
+          {
+            "tag": "COVERAGE",
+            "count": 4,
+            "ownedItems": 53,
+            "ownedWeight": 722
+          }
+        ],
+        "encodedBytes": 7387,
+        "framingBytes": 91,
+        "ownedWeight": 27518,
+        "finalDigestPin": 64
+      }
+    },
+    {
+      "id": "empty-deletion",
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-stage/independent-budget-boundary-reference.json",
+        "sha256": "2c2bf0d8bcee41d92ae831280299524916d7536fd7af499e1be5f69f1dd8a68c"
+      },
+      "input": {
+        "targetSource": {
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "contentFingerprint": "capture-fingerprint-deleted"
+        },
+        "committedSnapshotCount": 1,
+        "nodes": [],
+        "edges": [],
+        "evidence": [],
+        "bindings": [],
+        "factEvidence": [],
+        "candidates": [],
+        "snapshots": [
+          {
+            "capabilities": [
+              {
+                "coverage": "COMPLETE",
+                "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                "support": "SUPPORTED"
+              },
+              {
+                "coverage": "COMPLETE",
+                "name": "PYTHON_SYNTAX_CODE_V1",
+                "support": "SUPPORTED"
+              }
+            ],
+            "completedAt": "2026-10-23T00:00:01.000Z",
+            "diagnostics": [],
+            "id": "snapshot:alpha",
+            "outcome": "SUCCEEDED",
+            "providerId": "native",
+            "providerVersion": "fixture-v1",
+            "repositoryId": "capture-repo",
+            "requestedRevisionFingerprint": "capture-fingerprint",
+            "requestedRevisionId": "capture-worktree",
+            "runtimeVersion": "fixture-v1",
+            "startedAt": "2026-10-23T00:00:00.000Z"
+          }
+        ],
+        "coverage": [
+          {
+            "providerSnapshotId": "snapshot:alpha",
+            "capabilityName": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+            "sourceFileId": "source:one",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:alpha",
+            "capabilityName": "PYTHON_SYNTAX_CODE_V1",
+            "sourceFileId": "source:one",
+            "status": "COMPLETE"
+          }
+        ]
+      },
+      "basis": {
+        "repositoryId": "capture-repo",
+        "revisionId": "capture-worktree",
+        "contentFingerprint": "capture-fingerprint-deleted",
+        "codeActivationDigest": "50357fc3b1c26e72f1714d73e62ccccee002adb56d2822df6a8afd066b41974a"
+      },
+      "cost": {
+        "rows": 0,
+        "serializedBytes": 1490,
+        "items": 347,
+        "retainedLogicalBytes": 8138,
+        "maxDepth": 5,
+        "memoryBudgetBytes": 16276
+      },
+      "ledger": {
+        "domainBytes": 29,
+        "emittedRows": 13,
+        "groups": [
+          {
+            "tag": "HEADER",
+            "count": 1,
+            "ownedItems": 9,
+            "ownedWeight": 151
+          },
+          {
+            "tag": "NODE",
+            "count": 0,
+            "ownedItems": 1,
+            "ownedWeight": 0
+          },
+          {
+            "tag": "EDGE",
+            "count": 0,
+            "ownedItems": 1,
+            "ownedWeight": 0
+          },
+          {
+            "tag": "EVIDENCE",
+            "count": 0,
+            "ownedItems": 1,
+            "ownedWeight": 0
+          },
+          {
+            "tag": "BINDING",
+            "count": 0,
+            "ownedItems": 1,
+            "ownedWeight": 0
+          },
+          {
+            "tag": "FACT_EVIDENCE",
+            "count": 0,
+            "ownedItems": 1,
+            "ownedWeight": 0
+          },
+          {
+            "tag": "SUPPORT_CANDIDATE",
+            "count": 0,
+            "ownedItems": 1,
+            "ownedWeight": 0
+          },
+          {
+            "tag": "SNAPSHOT",
+            "count": 1,
+            "ownedItems": 23,
+            "ownedWeight": 369
+          },
+          {
+            "tag": "COVERAGE",
+            "count": 2,
+            "ownedItems": 27,
+            "ownedWeight": 384
+          }
+        ],
+        "encodedBytes": 1418,
+        "framingBytes": 43,
+        "ownedWeight": 5166,
+        "finalDigestPin": 64
+      }
+    },
+    {
+      "id": "unicode-framing",
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-store/raw-delta-independent-context.json",
+        "sha256": "7a86598e9c0a664ec860b14968232129d791340feada86f533f57a43d01c8afa",
+        "mutation": "Append literal 雪😀 to first canonical node name before independently framing all groups."
+      },
+      "input": {
+        "targetSource": {
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "contentFingerprint": "content:scope:S02-python-modified-a"
+        },
+        "committedSnapshotCount": 3,
+        "nodes": [
+          {
+            "id": "canonical-node-v1:a321299c2517e165d8b00ddcd03c5015ab0a092bef9a417cfd31d77e723fe33b",
+            "factKey": "node-fact-v1:b1abc023d77072cb8fd1932b2dda594ab73b837d8755dfdb6334bf10804496d7",
+            "repositoryId": "repo:history",
+            "revisionId": "revision:worktree",
+            "name": "a.py雪😀",
+            "qualifiedName": "a.py",
+            "sourceRange": null,
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            },
+            "kind": "MODULE"
+          },
+          {
+            "id": "node:a",
+            "factKey": "fact:a",
+            "repositoryId": "repo:history",
+            "revisionId": "revision:worktree",
+            "name": "a",
+            "qualifiedName": "a",
+            "sourceRange": null,
+            "confidence": {
+              "score": 0.7,
+              "method": "fixture-parser",
+              "reasons": []
+            },
+            "kind": "MODULE"
+          },
+          {
+            "id": "node:b",
+            "factKey": "fact:b",
+            "repositoryId": "repo:history",
+            "revisionId": "revision:worktree",
+            "name": "b",
+            "qualifiedName": "b",
+            "sourceRange": null,
+            "confidence": {
+              "score": 1,
+              "method": "fixture-parser",
+              "reasons": []
+            },
+            "kind": "MODULE"
+          },
+          {
+            "id": "node:java",
+            "factKey": "fact:java",
+            "repositoryId": "repo:history",
+            "revisionId": "revision:worktree",
+            "name": "java",
+            "qualifiedName": "java",
+            "sourceRange": null,
+            "confidence": {
+              "score": 1,
+              "method": "fixture-parser",
+              "reasons": []
+            },
+            "kind": "PACKAGE"
+          }
+        ],
+        "edges": [],
+        "evidence": [
+          {
+            "id": "provider-evidence-v1:a33a7dd05dec6e9bef2bcbb95876a833ef4a2f5297cc430fd4d9ea5113d46bf7",
+            "repositoryId": "repo:history",
+            "revisionId": "revision:worktree",
+            "providerSnapshotId": "snapshot:external",
+            "providerFact": {
+              "factType": "NODE",
+              "providerId": "external",
+              "providerFactId": "opaque:a"
+            },
+            "status": "ACTIVE"
+          },
+          {
+            "id": "provider-evidence-v1:c78336bd33570d302e7b5321df48c0c4dd73fb99a1da888d09118423cf538ff7",
+            "repositoryId": "repo:history",
+            "revisionId": "revision:worktree",
+            "providerSnapshotId": "snapshot:old",
+            "providerFact": {
+              "factType": "NODE",
+              "providerId": "native",
+              "providerFactId": "opaque:b"
+            },
+            "status": "ACTIVE"
+          },
+          {
+            "id": "provider-evidence-v1:2eeafa1054c52f1dfec8c4aaf580a0970cca5f255c7b3dd7713894ddf554469f",
+            "repositoryId": "repo:history",
+            "revisionId": "revision:worktree",
+            "providerSnapshotId": "snapshot:old",
+            "providerFact": {
+              "factType": "NODE",
+              "providerId": "native",
+              "providerFactId": "opaque:java"
+            },
+            "status": "ACTIVE"
+          },
+          {
+            "id": "provider-evidence-v1:daaad91bcd2ba4eba3d1867c1cdc78ab57dfe726c09e98cba050378c1c054a1a",
+            "repositoryId": "repo:history",
+            "revisionId": "revision:worktree",
+            "providerSnapshotId": "snapshot:r0:R01-python-with-untouched-java",
+            "providerFact": {
+              "factType": "NODE",
+              "providerId": "native",
+              "providerFactId": "python:module:a"
+            },
+            "status": "ACTIVE"
+          }
+        ],
+        "bindings": [
+          {
+            "providerFact": {
+              "factType": "NODE",
+              "providerId": "external",
+              "providerFactId": "opaque:a"
+            },
+            "providerSnapshotId": "snapshot:external",
+            "canonicalFact": {
+              "factType": "NODE",
+              "id": "node:a"
+            },
+            "evidenceId": "provider-evidence-v1:a33a7dd05dec6e9bef2bcbb95876a833ef4a2f5297cc430fd4d9ea5113d46bf7"
+          },
+          {
+            "providerFact": {
+              "factType": "NODE",
+              "providerId": "native",
+              "providerFactId": "opaque:b"
+            },
+            "providerSnapshotId": "snapshot:old",
+            "canonicalFact": {
+              "factType": "NODE",
+              "id": "node:b"
+            },
+            "evidenceId": "provider-evidence-v1:c78336bd33570d302e7b5321df48c0c4dd73fb99a1da888d09118423cf538ff7"
+          },
+          {
+            "providerFact": {
+              "factType": "NODE",
+              "providerId": "native",
+              "providerFactId": "opaque:java"
+            },
+            "providerSnapshotId": "snapshot:old",
+            "canonicalFact": {
+              "factType": "NODE",
+              "id": "node:java"
+            },
+            "evidenceId": "provider-evidence-v1:2eeafa1054c52f1dfec8c4aaf580a0970cca5f255c7b3dd7713894ddf554469f"
+          },
+          {
+            "providerFact": {
+              "factType": "NODE",
+              "providerId": "native",
+              "providerFactId": "python:module:a"
+            },
+            "providerSnapshotId": "snapshot:r0:R01-python-with-untouched-java",
+            "canonicalFact": {
+              "factType": "NODE",
+              "id": "canonical-node-v1:a321299c2517e165d8b00ddcd03c5015ab0a092bef9a417cfd31d77e723fe33b"
+            },
+            "evidenceId": "provider-evidence-v1:daaad91bcd2ba4eba3d1867c1cdc78ab57dfe726c09e98cba050378c1c054a1a"
+          }
+        ],
+        "factEvidence": [
+          {
+            "fact": {
+              "factType": "NODE",
+              "id": "node:a"
+            },
+            "evidenceId": "provider-evidence-v1:a33a7dd05dec6e9bef2bcbb95876a833ef4a2f5297cc430fd4d9ea5113d46bf7"
+          },
+          {
+            "fact": {
+              "factType": "NODE",
+              "id": "node:b"
+            },
+            "evidenceId": "provider-evidence-v1:c78336bd33570d302e7b5321df48c0c4dd73fb99a1da888d09118423cf538ff7"
+          },
+          {
+            "fact": {
+              "factType": "NODE",
+              "id": "node:java"
+            },
+            "evidenceId": "provider-evidence-v1:2eeafa1054c52f1dfec8c4aaf580a0970cca5f255c7b3dd7713894ddf554469f"
+          },
+          {
+            "fact": {
+              "factType": "NODE",
+              "id": "canonical-node-v1:a321299c2517e165d8b00ddcd03c5015ab0a092bef9a417cfd31d77e723fe33b"
+            },
+            "evidenceId": "provider-evidence-v1:daaad91bcd2ba4eba3d1867c1cdc78ab57dfe726c09e98cba050378c1c054a1a"
+          }
+        ],
+        "candidates": [
+          {
+            "evidenceId": "provider-evidence-v1:a33a7dd05dec6e9bef2bcbb95876a833ef4a2f5297cc430fd4d9ea5113d46bf7",
+            "factType": "NODE",
+            "canonicalFactId": "node:a",
+            "candidate": {
+              "id": "node:a",
+              "factKey": "fact:a",
+              "repositoryId": "repo:history",
+              "revisionId": "revision:worktree",
+              "name": "a",
+              "qualifiedName": "a",
+              "sourceRange": null,
+              "confidence": {
+                "score": 0.7,
+                "method": "fixture-parser",
+                "reasons": []
+              },
+              "kind": "MODULE"
+            }
+          },
+          {
+            "evidenceId": "provider-evidence-v1:c78336bd33570d302e7b5321df48c0c4dd73fb99a1da888d09118423cf538ff7",
+            "factType": "NODE",
+            "canonicalFactId": "node:b",
+            "candidate": {
+              "id": "node:b",
+              "factKey": "fact:b",
+              "repositoryId": "repo:history",
+              "revisionId": "revision:worktree",
+              "name": "b",
+              "qualifiedName": "b",
+              "sourceRange": null,
+              "confidence": {
+                "score": 1,
+                "method": "fixture-parser",
+                "reasons": []
+              },
+              "kind": "MODULE"
+            }
+          },
+          {
+            "evidenceId": "provider-evidence-v1:2eeafa1054c52f1dfec8c4aaf580a0970cca5f255c7b3dd7713894ddf554469f",
+            "factType": "NODE",
+            "canonicalFactId": "node:java",
+            "candidate": {
+              "id": "node:java",
+              "factKey": "fact:java",
+              "repositoryId": "repo:history",
+              "revisionId": "revision:worktree",
+              "name": "java",
+              "qualifiedName": "java",
+              "sourceRange": null,
+              "confidence": {
+                "score": 1,
+                "method": "fixture-parser",
+                "reasons": []
+              },
+              "kind": "PACKAGE"
+            }
+          },
+          {
+            "evidenceId": "provider-evidence-v1:daaad91bcd2ba4eba3d1867c1cdc78ab57dfe726c09e98cba050378c1c054a1a",
+            "factType": "NODE",
+            "canonicalFactId": "canonical-node-v1:a321299c2517e165d8b00ddcd03c5015ab0a092bef9a417cfd31d77e723fe33b",
+            "candidate": {
+              "id": "canonical-node-v1:a321299c2517e165d8b00ddcd03c5015ab0a092bef9a417cfd31d77e723fe33b",
+              "factKey": "node-fact-v1:b1abc023d77072cb8fd1932b2dda594ab73b837d8755dfdb6334bf10804496d7",
+              "repositoryId": "repo:history",
+              "revisionId": "revision:worktree",
+              "name": "a.py",
+              "qualifiedName": "a.py",
+              "sourceRange": null,
+              "confidence": {
+                "score": 1,
+                "method": "parser",
+                "reasons": []
+              },
+              "kind": "MODULE"
+            }
+          }
+        ],
+        "snapshots": [
+          {
+            "id": "snapshot:external",
+            "repositoryId": "repo:history",
+            "providerId": "external",
+            "providerVersion": "1",
+            "runtimeVersion": "fixture",
+            "requestedRevisionId": "revision:worktree",
+            "requestedRevisionFingerprint": "content:old",
+            "startedAt": "2026-10-24T00:00:00.000Z",
+            "completedAt": "2026-10-24T00:00:00.001Z",
+            "capabilities": [
+              {
+                "name": "EXTERNAL_CODE",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              }
+            ],
+            "diagnostics": [],
+            "outcome": "SUCCEEDED"
+          },
+          {
+            "id": "snapshot:old",
+            "repositoryId": "repo:history",
+            "providerId": "native",
+            "providerVersion": "1",
+            "runtimeVersion": "fixture",
+            "requestedRevisionId": "revision:worktree",
+            "requestedRevisionFingerprint": "content:old",
+            "startedAt": "2026-10-24T00:00:00.000Z",
+            "completedAt": "2026-10-24T00:00:00.001Z",
+            "capabilities": [
+              {
+                "name": "JAVA_CODE_V2",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              },
+              {
+                "name": "PYTHON_SYNTAX_CODE_V1",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              },
+              {
+                "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              }
+            ],
+            "diagnostics": [],
+            "outcome": "SUCCEEDED"
+          },
+          {
+            "id": "snapshot:r0:R01-python-with-untouched-java",
+            "providerId": "native",
+            "providerVersion": "0.0.0",
+            "runtimeVersion": "fixture-runtime",
+            "startedAt": "2026-10-24T00:00:00.000Z",
+            "completedAt": "2026-10-24T00:00:00.003Z",
+            "repositoryId": "repo:history",
+            "requestedRevisionId": "revision:worktree",
+            "requestedRevisionFingerprint": "content:scope:S02-python-modified-a",
+            "capabilities": [
+              {
+                "name": "PYTHON_SYNTAX_CODE_V1",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              },
+              {
+                "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              }
+            ],
+            "diagnostics": [],
+            "outcome": "SUCCEEDED"
+          }
+        ],
+        "coverage": [
+          {
+            "providerSnapshotId": "snapshot:external",
+            "capabilityName": "EXTERNAL_CODE",
+            "sourceFileId": "b",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:old",
+            "capabilityName": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+            "sourceFileId": "j",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:old",
+            "capabilityName": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+            "sourceFileId": "k",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:old",
+            "capabilityName": "JAVA_CODE_V2",
+            "sourceFileId": "j",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:old",
+            "capabilityName": "JAVA_CODE_V2",
+            "sourceFileId": "k",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:old",
+            "capabilityName": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+            "sourceFileId": "a",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:old",
+            "capabilityName": "PYTHON_SYNTAX_CODE_V1",
+            "sourceFileId": "a",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:old",
+            "capabilityName": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+            "sourceFileId": "b",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:old",
+            "capabilityName": "PYTHON_SYNTAX_CODE_V1",
+            "sourceFileId": "b",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:r0:R01-python-with-untouched-java",
+            "capabilityName": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+            "sourceFileId": "a",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:r0:R01-python-with-untouched-java",
+            "capabilityName": "PYTHON_SYNTAX_CODE_V1",
+            "sourceFileId": "a",
+            "status": "COMPLETE"
+          }
+        ]
+      },
+      "basis": {
+        "repositoryId": "repo:history",
+        "revisionId": "revision:worktree",
+        "contentFingerprint": "content:scope:S02-python-modified-a",
+        "codeActivationDigest": "162d5cdfe279bc06fdea88a5bfb27cfb2347acbf99baafdd4fb54217bfcc57c3"
+      },
+      "cost": {
+        "rows": 0,
+        "serializedBytes": 12921,
+        "items": 2473,
+        "retainedLogicalBytes": 72978,
+        "maxDepth": 5,
+        "memoryBudgetBytes": 145956
+      },
+      "ledger": {
+        "domainBytes": 29,
+        "emittedRows": 44,
+        "groups": [
+          {
+            "tag": "HEADER",
+            "count": 1,
+            "ownedItems": 9,
+            "ownedWeight": 160
+          },
+          {
+            "tag": "NODE",
+            "count": 4,
+            "ownedItems": 65,
+            "ownedWeight": 916
+          },
+          {
+            "tag": "EDGE",
+            "count": 0,
+            "ownedItems": 1,
+            "ownedWeight": 0
+          },
+          {
+            "tag": "EVIDENCE",
+            "count": 4,
+            "ownedItems": 53,
+            "ownedWeight": 1387
+          },
+          {
+            "tag": "BINDING",
+            "count": 4,
+            "ownedItems": 61,
+            "ownedWeight": 1497
+          },
+          {
+            "tag": "FACT_EVIDENCE",
+            "count": 4,
+            "ownedItems": 41,
+            "ownedWeight": 1046
+          },
+          {
+            "tag": "SUPPORT_CANDIDATE",
+            "count": 4,
+            "ownedItems": 89,
+            "ownedWeight": 1892
+          },
+          {
+            "tag": "SNAPSHOT",
+            "count": 3,
+            "ownedItems": 67,
+            "ownedWeight": 1119
+          },
+          {
+            "tag": "COVERAGE",
+            "count": 11,
+            "ownedItems": 144,
+            "ownedWeight": 1938
+          }
+        ],
+        "encodedBytes": 12725,
+        "framingBytes": 167,
+        "ownedWeight": 47268,
+        "finalDigestPin": 64
+      }
+    }
+  ]
+}

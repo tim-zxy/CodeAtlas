@@ -1,0 +1,4 @@
+{
+  "scenario": "unsafe-sparse",
+  "base": "base-input.json"
+}

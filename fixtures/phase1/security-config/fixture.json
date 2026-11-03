@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "p1-security-config-v1",
+  "category": "agent-utility",
+  "phase": "1",
+  "languages": [],
+  "frameworks": [],
+  "capabilities": ["OPERATION_POLICY", "EFFECTIVE_CONFIG"],
+  "inputs": {
+    "policy": "inputs/policy.json",
+    "defaults": "inputs/defaults.json"
+  },
+  "expected": {
+    "decisions": "expected/decisions.json"
+  },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

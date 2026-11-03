@@ -1,0 +1,5 @@
+{
+  "state": "APPLYING",
+  "method": "prepareOwner",
+  "base": "base-input.json"
+}

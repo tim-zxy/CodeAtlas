@@ -1,0 +1,31 @@
+{
+  "expectedActivationBasis": null,
+  "targetSource": {
+    "repositoryId": "repo:one",
+    "revisionId": "revision:worktree",
+    "contentFingerprint": "content:first"
+  },
+  "ownerBinding": {
+    "kind": "PROVISIONAL_CODE",
+    "stageDigest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+  },
+  "providerId": "native",
+  "providerSnapshotId": "snapshot:one",
+  "sourceFiles": [
+    {
+      "id": "file:one",
+      "repositoryId": "repo:one",
+      "revisionId": "revision:worktree",
+      "path": "app.py",
+      "contentFingerprint": "sha256:3659a0d37476d1a1a2e611d2db7df72c6a7415f102cebc3d4bf457504a069aef",
+      "classification": {
+        "role": "SOURCE",
+        "provenance": "AUTHORED",
+        "contentKind": "TEXT"
+      },
+      "languageHint": "python",
+      "sensitivity": "INTERNAL"
+    }
+  ],
+  "owners": []
+}

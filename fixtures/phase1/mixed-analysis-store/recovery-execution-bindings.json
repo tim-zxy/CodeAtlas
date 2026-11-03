@@ -1,0 +1,317 @@
+{
+  "schemaVersion": 1,
+  "kind": "EXPLICIT_FIXTURE_CONTEXT_AND_EXPECTATION_CORRECTION",
+  "qualification": "DECLARED_NODE_SQLITE_COMPONENT_ONLY",
+  "design": "docs/superpowers/specs/2026-10-25-phase1-r011-history-stage-contract.md#6-原子提交与恢复矩阵",
+  "contextAuthority": "../mixed-analysis-stage/state-matrix-execution-bindings.json",
+  "expectedAuthority": "../mixed-analysis-stage/component-references/provenance.json",
+  "originalBasesPreserved": true,
+  "cases": [
+    {
+      "id": "failure-snapshot",
+      "family": "WRITE_RECOVERY",
+      "input": "cases/failure-snapshot/input.json",
+      "expected": "cases/failure-snapshot/expected.json",
+      "inputSha256": "7249af8afb968327534d1c1f18861263bd4c52a57072f937a8dc5988de76b1d2",
+      "expectedSha256": "5fa298668d8985fff2327ef05d793c296d7439cb8d8a50061e4940c549010028",
+      "point": "snapshot",
+      "context": "mixed-source-only-full",
+      "effectiveExpected": {
+        "result": "ROLLBACK",
+        "persistentRows": "EXACT_BOUND_LITERAL_CONTEXT",
+        "leaseReusable": false
+      },
+      "expectedCorrection": null
+    },
+    {
+      "id": "failure-capabilities",
+      "family": "WRITE_RECOVERY",
+      "input": "cases/failure-capabilities/input.json",
+      "expected": "cases/failure-capabilities/expected.json",
+      "inputSha256": "6fe3b1cea1b41bfe9dbe6bd5409a4ea2b47652c4520089129137109879676940",
+      "expectedSha256": "5fa298668d8985fff2327ef05d793c296d7439cb8d8a50061e4940c549010028",
+      "point": "capabilities",
+      "context": "mixed-source-only-full",
+      "effectiveExpected": {
+        "result": "ROLLBACK",
+        "persistentRows": "EXACT_BOUND_LITERAL_CONTEXT",
+        "leaseReusable": false
+      },
+      "expectedCorrection": null
+    },
+    {
+      "id": "failure-evidence-retire",
+      "family": "WRITE_RECOVERY",
+      "input": "cases/failure-evidence-retire/input.json",
+      "expected": "cases/failure-evidence-retire/expected.json",
+      "inputSha256": "f53ab93db2860b60bd561bd88eac4b729740353d93aba7b31c57b117f882833f",
+      "expectedSha256": "5fa298668d8985fff2327ef05d793c296d7439cb8d8a50061e4940c549010028",
+      "point": "evidence-retire",
+      "context": "independent-committed-python",
+      "effectiveExpected": {
+        "result": "ROLLBACK",
+        "persistentRows": "EXACT_BOUND_LITERAL_CONTEXT",
+        "leaseReusable": false
+      },
+      "expectedCorrection": null
+    },
+    {
+      "id": "failure-evidence-insert",
+      "family": "WRITE_RECOVERY",
+      "input": "cases/failure-evidence-insert/input.json",
+      "expected": "cases/failure-evidence-insert/expected.json",
+      "inputSha256": "d63b11f0fd7f6da3b3a0dd9f101551cf32c7552c5533a10026407d7022ce3df9",
+      "expectedSha256": "5fa298668d8985fff2327ef05d793c296d7439cb8d8a50061e4940c549010028",
+      "point": "evidence-insert",
+      "context": "mixed-source-only-full",
+      "effectiveExpected": {
+        "result": "ROLLBACK",
+        "persistentRows": "EXACT_BOUND_LITERAL_CONTEXT",
+        "leaseReusable": false
+      },
+      "expectedCorrection": null
+    },
+    {
+      "id": "failure-binding",
+      "family": "WRITE_RECOVERY",
+      "input": "cases/failure-binding/input.json",
+      "expected": "cases/failure-binding/expected.json",
+      "inputSha256": "64ddc95d5cf7585e4f0d16efb4a8b22065268dfc28b91a99a28eabaeac290df9",
+      "expectedSha256": "5fa298668d8985fff2327ef05d793c296d7439cb8d8a50061e4940c549010028",
+      "point": "binding",
+      "context": "mixed-source-only-full",
+      "effectiveExpected": {
+        "result": "ROLLBACK",
+        "persistentRows": "EXACT_BOUND_LITERAL_CONTEXT",
+        "leaseReusable": false
+      },
+      "expectedCorrection": null
+    },
+    {
+      "id": "failure-candidate",
+      "family": "WRITE_RECOVERY",
+      "input": "cases/failure-candidate/input.json",
+      "expected": "cases/failure-candidate/expected.json",
+      "inputSha256": "a51c95bce2c4e49d544bc9a7abdf2acf91589111c2e3333ab2520f04926512c5",
+      "expectedSha256": "5fa298668d8985fff2327ef05d793c296d7439cb8d8a50061e4940c549010028",
+      "point": "candidate",
+      "context": "mixed-source-only-full",
+      "effectiveExpected": {
+        "result": "ROLLBACK",
+        "persistentRows": "EXACT_BOUND_LITERAL_CONTEXT",
+        "leaseReusable": false
+      },
+      "expectedCorrection": null
+    },
+    {
+      "id": "failure-node",
+      "family": "WRITE_RECOVERY",
+      "input": "cases/failure-node/input.json",
+      "expected": "cases/failure-node/expected.json",
+      "inputSha256": "86ddebd5c7cceb8eb885ce95f1f608e851925c6beac10578625395810819a904",
+      "expectedSha256": "5fa298668d8985fff2327ef05d793c296d7439cb8d8a50061e4940c549010028",
+      "point": "node",
+      "context": "mixed-source-only-full",
+      "effectiveExpected": {
+        "result": "ROLLBACK",
+        "persistentRows": "EXACT_BOUND_LITERAL_CONTEXT",
+        "leaseReusable": false
+      },
+      "expectedCorrection": null
+    },
+    {
+      "id": "failure-edge",
+      "family": "WRITE_RECOVERY",
+      "input": "cases/failure-edge/input.json",
+      "expected": "cases/failure-edge/expected.json",
+      "inputSha256": "cd7d5a3b87861e75b216d588c4cfe843c58dc95dc08c099be985fa0997897fc7",
+      "expectedSha256": "5fa298668d8985fff2327ef05d793c296d7439cb8d8a50061e4940c549010028",
+      "point": "edge",
+      "context": "mixed-source-only-full",
+      "effectiveExpected": {
+        "result": "ROLLBACK",
+        "persistentRows": "EXACT_BOUND_LITERAL_CONTEXT",
+        "leaseReusable": false
+      },
+      "expectedCorrection": null
+    },
+    {
+      "id": "failure-coverage",
+      "family": "WRITE_RECOVERY",
+      "input": "cases/failure-coverage/input.json",
+      "expected": "cases/failure-coverage/expected.json",
+      "inputSha256": "943d34a5040d5e74f5a275759a36361ff5b9be7107bb503f2ecf4ced421cf91b",
+      "expectedSha256": "5fa298668d8985fff2327ef05d793c296d7439cb8d8a50061e4940c549010028",
+      "point": "coverage",
+      "context": "mixed-source-only-full",
+      "effectiveExpected": {
+        "result": "ROLLBACK",
+        "persistentRows": "EXACT_BOUND_LITERAL_CONTEXT",
+        "leaseReusable": false
+      },
+      "expectedCorrection": null
+    },
+    {
+      "id": "failure-code-identity",
+      "family": "WRITE_RECOVERY",
+      "input": "cases/failure-code-identity/input.json",
+      "expected": "cases/failure-code-identity/expected.json",
+      "inputSha256": "98952eda4612a44a3b233e5dc5893517ee40a9e6c3b30b8f30db24c4a178cb19",
+      "expectedSha256": "5fa298668d8985fff2327ef05d793c296d7439cb8d8a50061e4940c549010028",
+      "point": "code-identity",
+      "context": "mixed-source-only-full",
+      "effectiveExpected": {
+        "result": "ROLLBACK",
+        "persistentRows": "EXACT_BOUND_LITERAL_CONTEXT",
+        "leaseReusable": false
+      },
+      "expectedCorrection": null
+    },
+    {
+      "id": "failure-native-state-clear",
+      "family": "WRITE_RECOVERY",
+      "input": "cases/failure-native-state-clear/input.json",
+      "expected": "cases/failure-native-state-clear/expected.json",
+      "inputSha256": "83477f18d5da928f63142c32fc4c068a521b4569b5623f65a5305f205c336d6d",
+      "expectedSha256": "5fa298668d8985fff2327ef05d793c296d7439cb8d8a50061e4940c549010028",
+      "point": "native-state-clear",
+      "context": "mixed-source-only-full",
+      "effectiveExpected": {
+        "result": "ROLLBACK",
+        "persistentRows": "EXACT_BOUND_LITERAL_CONTEXT",
+        "leaseReusable": false
+      },
+      "expectedCorrection": null
+    },
+    {
+      "id": "failure-origin",
+      "family": "WRITE_RECOVERY",
+      "input": "cases/failure-origin/input.json",
+      "expected": "cases/failure-origin/expected.json",
+      "inputSha256": "add3f8c84de42b1258f3b2ab5b89efe74b5028dfa3261c9e9918e9f9a2e82b98",
+      "expectedSha256": "5fa298668d8985fff2327ef05d793c296d7439cb8d8a50061e4940c549010028",
+      "point": "origin",
+      "context": "mixed-source-only-full",
+      "effectiveExpected": {
+        "result": "ROLLBACK",
+        "persistentRows": "EXACT_BOUND_LITERAL_CONTEXT",
+        "leaseReusable": false
+      },
+      "expectedCorrection": null
+    },
+    {
+      "id": "failure-projection",
+      "family": "WRITE_RECOVERY",
+      "input": "cases/failure-projection/input.json",
+      "expected": "cases/failure-projection/expected.json",
+      "inputSha256": "94df38be45fa524bd16a42736dea22a7c8f3e997ca3d2158207006a1c9b5d5ab",
+      "expectedSha256": "5fa298668d8985fff2327ef05d793c296d7439cb8d8a50061e4940c549010028",
+      "point": "projection",
+      "context": "mixed-source-only-full",
+      "effectiveExpected": {
+        "result": "ROLLBACK",
+        "persistentRows": "EXACT_BOUND_LITERAL_CONTEXT",
+        "leaseReusable": false
+      },
+      "expectedCorrection": null
+    },
+    {
+      "id": "failure-history",
+      "family": "WRITE_RECOVERY",
+      "input": "cases/failure-history/input.json",
+      "expected": "cases/failure-history/expected.json",
+      "inputSha256": "c9bcf63f76f5aa504559a123bbe2ffd4996d13f26c3e6ee5d7a75f3a14d123e9",
+      "expectedSha256": "5fa298668d8985fff2327ef05d793c296d7439cb8d8a50061e4940c549010028",
+      "point": "history",
+      "context": "mixed-source-only-full",
+      "effectiveExpected": {
+        "result": "ROLLBACK",
+        "persistentRows": "EXACT_BOUND_LITERAL_CONTEXT",
+        "leaseReusable": false
+      },
+      "expectedCorrection": null
+    },
+    {
+      "id": "failure-members",
+      "family": "WRITE_RECOVERY",
+      "input": "cases/failure-members/input.json",
+      "expected": "cases/failure-members/expected.json",
+      "inputSha256": "9f92741c36673cbc8d3d4b97603737e830adb02d169f4f49eeed08f190e9cdd5",
+      "expectedSha256": "5fa298668d8985fff2327ef05d793c296d7439cb8d8a50061e4940c549010028",
+      "point": "members",
+      "context": "mixed-source-only-full",
+      "effectiveExpected": {
+        "result": "ROLLBACK",
+        "persistentRows": "EXACT_BOUND_LITERAL_CONTEXT",
+        "leaseReusable": false
+      },
+      "expectedCorrection": null
+    },
+    {
+      "id": "failure-pointer",
+      "family": "WRITE_RECOVERY",
+      "input": "cases/failure-pointer/input.json",
+      "expected": "cases/failure-pointer/expected.json",
+      "inputSha256": "ffa113f29ac19b5e083d9c163a6ad2f42e98a34a1eef1c13477a766a0e4db759",
+      "expectedSha256": "5fa298668d8985fff2327ef05d793c296d7439cb8d8a50061e4940c549010028",
+      "point": "pointer",
+      "context": "mixed-source-only-full",
+      "effectiveExpected": {
+        "result": "ROLLBACK",
+        "persistentRows": "EXACT_BOUND_LITERAL_CONTEXT",
+        "leaseReusable": false
+      },
+      "expectedCorrection": null
+    },
+    {
+      "id": "failure-pre-commit",
+      "family": "WRITE_RECOVERY",
+      "input": "cases/failure-pre-commit/input.json",
+      "expected": "cases/failure-pre-commit/expected.json",
+      "inputSha256": "399a65a7168875dc669feddbad84881bb68c60a0a6f8ab43b62854dcdedbc924",
+      "expectedSha256": "5fa298668d8985fff2327ef05d793c296d7439cb8d8a50061e4940c549010028",
+      "point": "pre-commit",
+      "context": "mixed-source-only-full",
+      "effectiveExpected": {
+        "result": "ROLLBACK",
+        "persistentRows": "EXACT_BOUND_LITERAL_CONTEXT",
+        "leaseReusable": false
+      },
+      "expectedCorrection": null
+    },
+    {
+      "id": "failure-commit-unknown",
+      "family": "WRITE_RECOVERY",
+      "input": "cases/failure-commit-unknown/input.json",
+      "expected": "cases/failure-commit-unknown/expected.json",
+      "inputSha256": "adaad1ffb6bfbda5ffb796eb34bfedc43d0d24ec6ddf1228630ca9d53edf0b8c",
+      "expectedSha256": "fa546ecdd6c2db42d0b873cda83eea7f1a645231a7b5e45c611fafc7a5781091",
+      "point": "commit-unknown",
+      "context": "mixed-source-only-full",
+      "effectiveExpected": {
+        "result": "COMMIT_OUTCOME_UNKNOWN",
+        "persistentRows": "EXACT_INDEPENDENT_FROZEN_TARGET",
+        "leaseReusable": false
+      },
+      "expectedCorrection": "Original unconditional EXACT_LITERAL_BASE conflicts with accepted recovery contract: this hook executes after successful actual COMMIT. API still returns COMMIT_OUTCOME_UNKNOWN; fresh validated readonly workflow must establish COMMITTED and exact independent target, never force rollback or retry. Original expectation retained as historical Fixture defect."
+    },
+    {
+      "id": "failure-post-commit-close",
+      "family": "WRITE_RECOVERY",
+      "input": "cases/failure-post-commit-close/input.json",
+      "expected": "cases/failure-post-commit-close/expected.json",
+      "inputSha256": "d7fe3094db8bc8f607cfeb8ab296acfa0373de11606fb29f9960af6897b007db",
+      "expectedSha256": "11d5057ef041bed8ae02a505cdf37a6b67bea3ebd46d51f93a889cb33d6036f0",
+      "point": "post-commit-close",
+      "context": "mixed-source-only-full",
+      "effectiveExpected": {
+        "result": "COMMITTED_WITH_CLOSE_DIAGNOSTIC",
+        "persistentRows": "EXACT_INDEPENDENT_FROZEN_TARGET",
+        "leaseReusable": false
+      },
+      "expectedCorrection": null
+    }
+  ],
+  "nativeStateClearQualification": "Actual DELETE boundary on empty derived state only; valid prior R010-state invalidation remains a separate open compatibility gate.",
+  "doesNotCloseStore43": true
+}

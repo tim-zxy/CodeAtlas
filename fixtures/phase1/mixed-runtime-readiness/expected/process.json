@@ -1,0 +1,17 @@
+{
+  "success": [
+    "spawn",
+    "beforeInput",
+    "stdin",
+    "drain",
+    "close",
+    "afterClose",
+    "dispose"
+  ],
+  "failureBeforeInput": {
+    "stdinWrites": 0,
+    "disposeCalls": 1
+  },
+  "classification": "PROCESS_DOUBLE_ONLY",
+  "measurementEligible": false
+}

@@ -1,0 +1,14 @@
+{
+  "fixtures/phase1/syntax-nested-source-oracle/calibration/request.json": "e6eeecef51022bedc432b1780b0015edfa25b99483ad84fd694fe5a57c136b66",
+  "fixtures/phase1/syntax-nested-source-oracle/calibration/events.jsonl": "fca148f03d243be30e4cc0f9bc68aab40071732cab544c2e532996d94c485d8f",
+  "fixtures/phase1/syntax-nested-source-oracle/calibration/app.py": "3659a0d37476d1a1a2e611d2db7df72c6a7415f102cebc3d4bf457504a069aef",
+  "fixtures/phase1/syntax-nested-source-oracle/calibration/normalized.json": "3cda437cf8cd44762c93bfd0b52ce6f1bb5355cbbbea4ca3362a5349a59071b5",
+  "fixtures/phase1/syntax-dynamic-malformed-oracle/calibration/request.json": "15d1420b0191a2131f1c9da9777ad2ecb797da50367428d16ee6bf0b62e94ed7",
+  "fixtures/phase1/syntax-dynamic-malformed-oracle/calibration/events.jsonl": "0650f0e6b63e7570848970f735043c6d6f1e1ce23cfd52dc13fa6171a332a110",
+  "fixtures/phase1/syntax-dynamic-malformed-oracle/calibration/app.py": "14d108c35f7699d58e5052d166147ad8573e628a521a95caa79c5c9f249e8635",
+  "fixtures/phase1/syntax-dynamic-malformed-oracle/calibration/normalized.json": "77d8481b9d97f84e66220283e2be5abbba9a880227e9824b52da6dccdf3ecf81",
+  "fixtures/phase1/syntax-initial-absence-oracle/calibration/request.json": "3c611dd26db3abe7659088354a38e98a19d702eaf61cfd5bab56c9f813bd6f47",
+  "fixtures/phase1/syntax-initial-absence-oracle/calibration/events.jsonl": "327d37cf1798d6f652fb6745f014be663c74e2065ab09f411e2eae6afc2e0401",
+  "fixtures/phase1/syntax-initial-absence-oracle/calibration/app.py": "9e3012e6aaee68ca614e04a2aad0097292c86ef767f320fc61445527f910e69e",
+  "fixtures/phase1/syntax-initial-absence-oracle/calibration/normalized.json": "63f1f0face77210618eb80aa9fd76bf1fd02d429445ef28f930b7a91fa175aa0"
+}

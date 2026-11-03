@@ -1,0 +1,18 @@
+{
+  "schemas": [
+    "codeatlas.framework-binding-set",
+    "codeatlas.contract-match",
+    "codeatlas.workspace-execution"
+  ],
+  "statuses": [
+    "MATCHED",
+    "AMBIGUOUS",
+    "UNRESOLVED",
+    "CONFLICTED",
+    "OUTSIDE_WORKSPACE",
+    "KNOWN_EXTERNAL"
+  ],
+  "bindingTarget": "contract:a",
+  "nodeRef": "node:a",
+  "policy": "contract-support-bound-v1"
+}

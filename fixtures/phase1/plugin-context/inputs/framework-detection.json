@@ -1,0 +1,1851 @@
+{
+  "baseContext": {
+    "contextVersion": 2,
+    "basis": {
+      "repositoryId": "repo:one",
+      "revisionId": "revision:worktree",
+      "contentFingerprint": "content:first",
+      "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "nodes": [
+      {
+        "id": "code:handler",
+        "factKey": "node-key:handler",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "kind": "SYMBOL",
+        "symbolKind": "METHOD",
+        "name": "handler",
+        "qualifiedName": "Handler.handler",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 0,
+          "startColumn": 0,
+          "endLine": 1,
+          "endColumn": 2
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        }
+      }
+    ],
+    "edges": [],
+    "sourceFiles": [
+      {
+        "id": "file:one",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "path": "src/Handler.java",
+        "contentFingerprint": "source:one",
+        "classification": {
+          "role": "SOURCE",
+          "provenance": "AUTHORED",
+          "contentKind": "TEXT"
+        },
+        "languageHint": "java",
+        "sensitivity": "INTERNAL"
+      }
+    ],
+    "syntaxEvidence": [],
+    "supportInventory": [
+      {
+        "basis": {
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "contentFingerprint": "content:first",
+          "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "code:handler",
+          "revisionId": "revision:worktree"
+        },
+        "valueDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      }
+    ],
+    "configuration": {}
+  },
+  "cases": [
+    {
+      "id": "spring-import",
+      "framework": "spring",
+      "context": {
+        "edges": [
+          {
+            "id": "edge:spring",
+            "factKey": "import-key:spring",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "org.springframework.web.bind.annotation.GetMapping",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mongo-driver",
+      "framework": "mongo",
+      "context": {
+        "edges": [
+          {
+            "id": "edge:mongo",
+            "factKey": "import-key:mongo",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "com.mongodb.client.MongoCollection",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mongo-spring",
+      "framework": "mongo",
+      "context": {
+        "edges": [
+          {
+            "id": "edge:mongo-spring",
+            "factKey": "import-key:mongo-spring",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "org.springframework.data.mongodb.core.MongoTemplate",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "kafka-client",
+      "framework": "kafka",
+      "context": {
+        "edges": [
+          {
+            "id": "edge:kafka",
+            "factKey": "import-key:kafka",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "org.apache.kafka.clients.producer.KafkaProducer",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "fastapi-import",
+      "framework": "fastapi",
+      "context": {
+        "edges": [
+          {
+            "id": "edge:fastapi",
+            "factKey": "import-key:fastapi",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "fastapi.APIRouter",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          }
+        ],
+        "sourceFiles": [
+          {
+            "id": "file:one",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "path": "src/Handler.java",
+            "contentFingerprint": "source:one",
+            "classification": {
+              "role": "SOURCE",
+              "provenance": "AUTHORED",
+              "contentKind": "TEXT"
+            },
+            "languageHint": "python",
+            "sensitivity": "INTERNAL"
+          }
+        ]
+      }
+    },
+    {
+      "id": "spring-prefix-collision",
+      "framework": "spring",
+      "context": {
+        "edges": [
+          {
+            "id": "edge:collision",
+            "factKey": "import-key:collision",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "org.springframeworkish.GetMapping",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mongo-prefix-collision",
+      "framework": "mongo",
+      "context": {
+        "edges": [
+          {
+            "id": "edge:collision",
+            "factKey": "import-key:collision",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "com.mongodbatlas.Collection",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "kafka-prefix-collision",
+      "framework": "kafka",
+      "context": {
+        "edges": [
+          {
+            "id": "edge:collision",
+            "factKey": "import-key:collision",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "org.apache.kafkaish.Producer",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "fastapi-prefix-collision",
+      "framework": "fastapi",
+      "context": {
+        "edges": [
+          {
+            "id": "edge:collision",
+            "factKey": "import-key:collision",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "fastapi_extra.APIRouter",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          }
+        ],
+        "sourceFiles": [
+          {
+            "id": "file:one",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "path": "src/Handler.java",
+            "contentFingerprint": "source:one",
+            "classification": {
+              "role": "SOURCE",
+              "provenance": "AUTHORED",
+              "contentKind": "TEXT"
+            },
+            "languageHint": "python",
+            "sensitivity": "INTERNAL"
+          }
+        ]
+      }
+    },
+    {
+      "id": "simple-custom-names",
+      "framework": "spring",
+      "context": {
+        "edges": [
+          {
+            "id": "edge:get",
+            "factKey": "import-key:get",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "get",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          },
+          {
+            "id": "edge:save",
+            "factKey": "import-key:save",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "save",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          },
+          {
+            "id": "edge:send",
+            "factKey": "import-key:send",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "send",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          },
+          {
+            "id": "edge:route",
+            "factKey": "import-key:route",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "Route",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "custom-qualified-route",
+      "framework": "spring",
+      "context": {
+        "edges": [
+          {
+            "id": "edge:custom",
+            "factKey": "import-key:custom",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "local.Route",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "non-import-is-not-proof",
+      "framework": "spring",
+      "context": {
+        "edges": [
+          {
+            "id": "edge:call",
+            "factKey": "import-key:call",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "CALL",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "org.springframework.GetMapping",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "missing-import-no-stale-result",
+      "framework": "spring",
+      "context": {
+        "edges": []
+      }
+    },
+    {
+      "id": "missing-location",
+      "framework": "spring",
+      "context": {
+        "edges": [
+          {
+            "id": "edge:noloc",
+            "factKey": "import-key:noloc",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "org.springframework.GetMapping",
+              "candidates": []
+            },
+            "sourceRange": null,
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "missing-language",
+      "framework": "spring",
+      "context": {
+        "edges": [
+          {
+            "id": "edge:nolang",
+            "factKey": "import-key:nolang",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "org.springframework.GetMapping",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          }
+        ],
+        "sourceFiles": [
+          {
+            "id": "file:one",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "path": "src/Handler.java",
+            "contentFingerprint": "source:one",
+            "classification": {
+              "role": "SOURCE",
+              "provenance": "AUTHORED",
+              "contentKind": "TEXT"
+            },
+            "languageHint": null,
+            "sensitivity": "INTERNAL"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wrong-language",
+      "framework": "spring",
+      "context": {
+        "edges": [
+          {
+            "id": "edge:wronglang",
+            "factKey": "import-key:wronglang",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "org.springframework.GetMapping",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          }
+        ],
+        "sourceFiles": [
+          {
+            "id": "file:one",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "path": "src/Handler.java",
+            "contentFingerprint": "source:one",
+            "classification": {
+              "role": "SOURCE",
+              "provenance": "AUTHORED",
+              "contentKind": "TEXT"
+            },
+            "languageHint": "python",
+            "sensitivity": "INTERNAL"
+          }
+        ]
+      }
+    },
+    {
+      "id": "java-wildcard-erased",
+      "framework": "spring",
+      "context": {
+        "edges": [
+          {
+            "id": "edge:wildcard",
+            "factKey": "import-key:wildcard",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "org.springframework.web.bind.annotation",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "literal-star-unverified",
+      "framework": "spring",
+      "context": {
+        "edges": [
+          {
+            "id": "edge:star",
+            "factKey": "import-key:star",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "org.springframework.*",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "empty-segment-unverified",
+      "framework": "spring",
+      "context": {
+        "edges": [
+          {
+            "id": "edge:badname",
+            "factKey": "import-key:badname",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "org.springframework..GetMapping",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "punctuation-unverified",
+      "framework": "spring",
+      "context": {
+        "edges": [
+          {
+            "id": "edge:punct",
+            "factKey": "import-key:punct",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "org.springframework.GetMapping()",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "python-wildcard-no-edge",
+      "framework": "fastapi",
+      "context": {
+        "edges": [],
+        "sourceFiles": [
+          {
+            "id": "file:one",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "path": "src/Handler.java",
+            "contentFingerprint": "source:one",
+            "classification": {
+              "role": "SOURCE",
+              "provenance": "AUTHORED",
+              "contentKind": "TEXT"
+            },
+            "languageHint": "python",
+            "sensitivity": "INTERNAL"
+          }
+        ]
+      }
+    },
+    {
+      "id": "python-alias-import-original",
+      "framework": "fastapi",
+      "context": {
+        "edges": [
+          {
+            "id": "edge:alias",
+            "factKey": "import-key:alias",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "fastapi.APIRouter",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          }
+        ],
+        "sourceFiles": [
+          {
+            "id": "file:one",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "path": "src/Handler.java",
+            "contentFingerprint": "source:one",
+            "classification": {
+              "role": "SOURCE",
+              "provenance": "AUTHORED",
+              "contentKind": "TEXT"
+            },
+            "languageHint": "python",
+            "sensitivity": "INTERNAL"
+          }
+        ],
+        "syntaxEvidence": [
+          {
+            "id": "syntax:decoration",
+            "syntaxKey": "syntax-key:one",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "sourceFingerprint": "source:one",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "owner": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:handler",
+                "revisionId": "revision:worktree"
+              }
+            },
+            "syntaxKind": "ASSIGNMENT",
+            "payload": {
+              "targetName": "Router",
+              "value": {
+                "kind": "REFERENCE",
+                "name": "fastapi.APIRouter",
+                "resolution": "UNRESOLVED",
+                "candidates": []
+              }
+            },
+            "supportRefs": [
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:worktree",
+                  "contentFingerprint": "content:first",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:handler",
+                  "revisionId": "revision:worktree"
+                },
+                "valueDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+              }
+            ],
+            "confidence": {
+              "score": 1,
+              "method": "SOURCE_LITERAL",
+              "reasons": ["EXPLICIT_SOURCE"]
+            },
+            "extractionVersion": "syntax-v1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "resolved-exact",
+      "framework": "spring",
+      "context": {
+        "edges": [
+          {
+            "id": "edge:resolved",
+            "factKey": "import-key:resolved",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "RESOLVED",
+              "resolution": "EXACT",
+              "target": {
+                "id": "code:target",
+                "factType": "NODE"
+              }
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          }
+        ],
+        "nodes": [
+          {
+            "id": "code:handler",
+            "factKey": "node-key:handler",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "SYMBOL",
+            "symbolKind": "METHOD",
+            "name": "handler",
+            "qualifiedName": "Handler.handler",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            }
+          },
+          {
+            "id": "code:target",
+            "factKey": "node-key:target",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "SYMBOL",
+            "symbolKind": "METHOD",
+            "name": "target",
+            "qualifiedName": "org.springframework.web.bind.annotation.GetMapping",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "resolved-heuristic",
+      "framework": "spring",
+      "context": {
+        "edges": [
+          {
+            "id": "edge:heuristic",
+            "factKey": "import-key:heuristic",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "RESOLVED",
+              "resolution": "HEURISTIC",
+              "target": {
+                "id": "code:target",
+                "factType": "NODE"
+              }
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          }
+        ],
+        "nodes": [
+          {
+            "id": "code:handler",
+            "factKey": "node-key:handler",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "SYMBOL",
+            "symbolKind": "METHOD",
+            "name": "handler",
+            "qualifiedName": "Handler.handler",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            }
+          },
+          {
+            "id": "code:target",
+            "factKey": "node-key:target",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "SYMBOL",
+            "symbolKind": "METHOD",
+            "name": "target",
+            "qualifiedName": "org.springframework.web.bind.annotation.GetMapping",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "ambiguous-import",
+      "framework": "spring",
+      "context": {
+        "edges": [
+          {
+            "id": "edge:ambiguous",
+            "factKey": "import-key:ambiguous",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "AMBIGUOUS",
+              "originalHint": "org.springframework.GetMapping",
+              "candidates": [
+                {
+                  "id": "code:target",
+                  "factType": "NODE"
+                },
+                {
+                  "id": "code:other",
+                  "factType": "NODE"
+                }
+              ]
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          }
+        ],
+        "nodes": [
+          {
+            "id": "code:handler",
+            "factKey": "node-key:handler",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "SYMBOL",
+            "symbolKind": "METHOD",
+            "name": "handler",
+            "qualifiedName": "Handler.handler",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            }
+          },
+          {
+            "id": "code:target",
+            "factKey": "node-key:target",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "SYMBOL",
+            "symbolKind": "METHOD",
+            "name": "target",
+            "qualifiedName": "org.springframework.web.bind.annotation.GetMapping",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            }
+          },
+          {
+            "id": "code:other",
+            "factKey": "node-key:other",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "SYMBOL",
+            "symbolKind": "METHOD",
+            "name": "other",
+            "qualifiedName": "local.GetMapping",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "unsupported-import",
+      "framework": "spring",
+      "context": {
+        "edges": [
+          {
+            "id": "edge:unsupported",
+            "factKey": "import-key:unsupported",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNSUPPORTED",
+              "originalHint": "org.springframework.GetMapping",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "unresolved-with-candidate",
+      "framework": "spring",
+      "context": {
+        "edges": [
+          {
+            "id": "edge:candidate",
+            "factKey": "import-key:candidate",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "org.springframework.GetMapping",
+              "candidates": [
+                {
+                  "id": "code:target",
+                  "factType": "NODE"
+                }
+              ]
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          }
+        ],
+        "nodes": [
+          {
+            "id": "code:handler",
+            "factKey": "node-key:handler",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "SYMBOL",
+            "symbolKind": "METHOD",
+            "name": "handler",
+            "qualifiedName": "Handler.handler",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            }
+          },
+          {
+            "id": "code:target",
+            "factKey": "node-key:target",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "SYMBOL",
+            "symbolKind": "METHOD",
+            "name": "target",
+            "qualifiedName": "org.springframework.web.bind.annotation.GetMapping",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "overlap-spring",
+      "framework": "spring",
+      "context": {
+        "edges": [
+          {
+            "id": "edge:overlap",
+            "factKey": "import-key:overlap",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "org.springframework.kafka.annotation.KafkaListener",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "overlap-kafka",
+      "framework": "kafka",
+      "context": {
+        "edges": [
+          {
+            "id": "edge:overlap",
+            "factKey": "import-key:overlap",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "org.springframework.kafka.annotation.KafkaListener",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "supports-sort-by-fact-key",
+      "framework": "spring",
+      "context": {
+        "edges": [
+          {
+            "id": "edge:z",
+            "factKey": "import-key:z",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "org.springframework.GetMapping",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          },
+          {
+            "id": "edge:a",
+            "factKey": "import-key:a",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "org.springframework.PostMapping",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "diagnostics-sorted-and-deduplicated",
+      "framework": "spring",
+      "context": {
+        "edges": [
+          {
+            "id": "edge:warn2",
+            "factKey": "import-key:warn2",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "org.springframework.*",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          },
+          {
+            "id": "edge:warn1",
+            "factKey": "import-key:warn1",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "org.springframework..GetMapping",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "diagnostics-source-position-order",
+      "framework": "spring",
+      "context": {
+        "edges": [
+          {
+            "id": "edge:late",
+            "factKey": "import-key:late",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "org.springframework.*",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 4,
+              "startColumn": 0,
+              "endLine": 5,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          },
+          {
+            "id": "edge:early",
+            "factKey": "import-key:early",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "org.springframework.*",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "invalidCases": [
+    {
+      "id": "invalid-selector",
+      "framework": "unknown",
+      "context": {}
+    },
+    {
+      "id": "duplicate-import",
+      "framework": "spring",
+      "context": {
+        "edges": [
+          {
+            "id": "edge:duplicate",
+            "factKey": "import-key:duplicate",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "org.springframework.GetMapping",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          },
+          {
+            "id": "edge:duplicate",
+            "factKey": "import-key:duplicate",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "org.springframework.GetMapping",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "foreign-basis",
+      "framework": "spring",
+      "context": {
+        "edges": [
+          {
+            "id": "edge:foreign",
+            "factKey": "import-key:foreign",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:foreign",
+            "kind": "IMPORT",
+            "source": {
+              "id": "code:handler",
+              "factType": "NODE"
+            },
+            "target": {
+              "state": "UNRESOLVED",
+              "resolution": "UNRESOLVED",
+              "originalHint": "org.springframework.GetMapping",
+              "candidates": []
+            },
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 2
+            },
+            "confidence": {
+              "score": 1,
+              "method": "fixture-literal",
+              "reasons": []
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

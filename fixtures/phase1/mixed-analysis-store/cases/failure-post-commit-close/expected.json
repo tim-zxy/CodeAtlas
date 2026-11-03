@@ -1,0 +1,5 @@
+{
+  "result": "COMMITTED_WITH_CLOSE_DIAGNOSTIC",
+  "persistentRows": "EXACT_FROZEN_TARGET",
+  "leaseReusable": false
+}

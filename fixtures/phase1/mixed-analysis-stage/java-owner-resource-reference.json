@@ -1,0 +1,2823 @@
+{
+  "schemaVersion": 1,
+  "qualification": "CLOSED_REAL_RUNTIME_JAVA_OWNER_CALLBACK_RESOURCE_COST_NOT_COMPLETE_STAGE",
+  "provenance": "Independent tuple hashes + complete Runtime/Provider accounting over previously sealed Java input, before product invocation. Normalized nodes agree with original before-endpoint reference; no observed usage golden.",
+  "cases": [
+    {
+      "id": "java-only",
+      "source": {
+        "manifestPath": "fixtures/phase1/mixed-analysis-stage/component-references/provenance.json",
+        "manifestSha256": "0013dc7fbdc9991fc8378aed49b6ba2fd9899a063de87112349a7609160a1173",
+        "path": "early-java-independent-v2/java-only.json",
+        "sha256": "f26da9e56601fdb420f0be6e1425a2a52799adbdf67e3da4b04b2536088852d9",
+        "assetPath": "fixtures/phase1/mixed-analysis-stage/component-references/early-java-independent-v2/java-only.json.gz",
+        "assetSha256": "5b7f78827b7bad842ed99100becfd32bf68940613980abc5d89d2cda65d7fc9f"
+      },
+      "input": {
+        "target": {
+          "source": {
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "contentFingerprint": "content:first"
+          },
+          "repositoryLocatorDigest": "426090d7661a80c943922fecb0a5e4cedd5d2e3eedadd812145564e57a7a3481",
+          "inventory": [
+            {
+              "id": "java:file",
+              "repositoryId": "repo:one",
+              "revisionId": "revision:worktree",
+              "path": "Box.java",
+              "contentFingerprint": "sha256:5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1",
+              "classification": {
+                "role": "SOURCE",
+                "provenance": "AUTHORED",
+                "contentKind": "TEXT"
+              },
+              "languageHint": "java",
+              "sensitivity": "INTERNAL"
+            }
+          ],
+          "contracts": [
+            {
+              "providerId": "native",
+              "extractor": "syntax-v1",
+              "normalizer": "fixture-v1",
+              "contract": "PYTHON_SYNTAX_CODE_V1",
+              "policy": "syntax-surface-support-v1"
+            }
+          ]
+        },
+        "scope": {
+          "units": [
+            {
+              "id": "history-native-unit-v1:2464cfb1659a3a1553997008d35f870ac16fb89ba887481f6df1388b6c575d28",
+              "providerId": "native",
+              "kind": "JAVA_GROUP",
+              "sourceFileIds": ["java:file"]
+            }
+          ],
+          "removedSourceFileIds": []
+        },
+        "javaRows": {
+          "targetSource": {
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "contentFingerprint": "content:first"
+          },
+          "inventory": [
+            {
+              "id": "java:file",
+              "repositoryId": "repo:one",
+              "revisionId": "revision:worktree",
+              "path": "Box.java",
+              "contentFingerprint": "sha256:5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1",
+              "classification": {
+                "role": "SOURCE",
+                "provenance": "AUTHORED",
+                "contentKind": "TEXT"
+              },
+              "languageHint": "java",
+              "sensitivity": "INTERNAL"
+            }
+          ],
+          "snapshot": {
+            "id": "snapshot:one",
+            "providerId": "native",
+            "providerVersion": "0.0.0",
+            "runtimeVersion": "fixture-runtime",
+            "startedAt": "2026-10-24T00:00:00.000Z",
+            "completedAt": "2026-10-24T00:00:00.003Z"
+          },
+          "tool": {
+            "target": "fixture-target",
+            "profile": "test"
+          },
+          "java": {
+            "request": {
+              "protocolVersion": 2,
+              "requestId": "companion:java",
+              "type": "ANALYZE",
+              "payload": {
+                "irSchemaVersion": 1,
+                "providerSnapshotId": "snapshot:one",
+                "repository": {
+                  "id": "repo:one",
+                  "rootPath": "/fixture/repo"
+                },
+                "revision": {
+                  "id": "revision:worktree",
+                  "repositoryId": "repo:one",
+                  "kind": "WORKTREE",
+                  "contentFingerprint": "content:first",
+                  "baseRevisionId": null
+                },
+                "sourceFiles": [
+                  {
+                    "id": "java:file",
+                    "repositoryId": "repo:one",
+                    "revisionId": "revision:worktree",
+                    "path": "Box.java",
+                    "contentFingerprint": "sha256:5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1",
+                    "classification": {
+                      "role": "SOURCE",
+                      "provenance": "AUTHORED",
+                      "contentKind": "TEXT"
+                    },
+                    "languageHint": "java",
+                    "sensitivity": "INTERNAL"
+                  }
+                ],
+                "requestedCapabilities": ["SYMBOL", "IMPORT", "CALL", "INHERITANCE", "REFERENCE"],
+                "deadlineEpochMs": null,
+                "resourceBudget": {
+                  "maxDurationMs": 1000,
+                  "maxMemoryBytes": 65536,
+                  "maxEvents": 20
+                }
+              }
+            },
+            "events": [
+              {
+                "protocolVersion": 2,
+                "requestId": "companion:java",
+                "sequence": 0,
+                "type": "ANALYSIS_STARTED",
+                "payload": {
+                  "providerSnapshotId": "snapshot:one",
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:worktree",
+                  "revisionFingerprint": "content:first"
+                }
+              },
+              {
+                "protocolVersion": 2,
+                "requestId": "companion:java",
+                "sequence": 1,
+                "type": "SOURCE_FILE",
+                "payload": {
+                  "id": "java:file",
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:worktree",
+                  "path": "Box.java",
+                  "contentFingerprint": "sha256:5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1",
+                  "classification": {
+                    "role": "SOURCE",
+                    "provenance": "AUTHORED",
+                    "contentKind": "TEXT"
+                  },
+                  "languageHint": "java",
+                  "sensitivity": "INTERNAL"
+                }
+              },
+              {
+                "protocolVersion": 2,
+                "requestId": "companion:java",
+                "sequence": 2,
+                "type": "NODE",
+                "payload": {
+                  "providerId": "native",
+                  "providerSnapshotId": "snapshot:one",
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:worktree",
+                  "providerFactId": "java:unit",
+                  "providerKind": "java.compilation_unit",
+                  "name": "Box.java",
+                  "qualifiedName": "Box.java",
+                  "sourceRange": null,
+                  "confidence": {
+                    "score": 1,
+                    "method": "parser",
+                    "reasons": []
+                  }
+                }
+              },
+              {
+                "protocolVersion": 2,
+                "requestId": "companion:java",
+                "sequence": 3,
+                "type": "NODE",
+                "payload": {
+                  "providerId": "native",
+                  "providerSnapshotId": "snapshot:one",
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:worktree",
+                  "providerFactId": "java:Box",
+                  "providerKind": "java.class",
+                  "name": "Box",
+                  "qualifiedName": "Box",
+                  "sourceRange": {
+                    "sourceFileId": "java:file",
+                    "startLine": 0,
+                    "startColumn": 6,
+                    "endLine": 0,
+                    "endColumn": 9
+                  },
+                  "confidence": {
+                    "score": 1,
+                    "method": "parser",
+                    "reasons": []
+                  }
+                }
+              },
+              {
+                "protocolVersion": 2,
+                "requestId": "companion:java",
+                "sequence": 4,
+                "type": "COVERAGE",
+                "payload": {
+                  "capability": "SYMBOL",
+                  "sourceFileId": "java:file",
+                  "support": "SUPPORTED",
+                  "coverage": "COMPLETE",
+                  "statistics": {
+                    "eligibleSites": 1,
+                    "coveredSites": 1,
+                    "unsupportedSites": 0,
+                    "partialSites": 0,
+                    "resolutionCounts": {
+                      "EXACT": 0,
+                      "HEURISTIC": 0,
+                      "AMBIGUOUS": 0,
+                      "UNRESOLVED": 0,
+                      "UNSUPPORTED": 0
+                    }
+                  }
+                }
+              },
+              {
+                "protocolVersion": 2,
+                "requestId": "companion:java",
+                "sequence": 5,
+                "type": "COVERAGE",
+                "payload": {
+                  "capability": "IMPORT",
+                  "sourceFileId": "java:file",
+                  "support": "SUPPORTED",
+                  "coverage": "COMPLETE",
+                  "statistics": {
+                    "eligibleSites": 0,
+                    "coveredSites": 0,
+                    "unsupportedSites": 0,
+                    "partialSites": 0,
+                    "resolutionCounts": {
+                      "EXACT": 0,
+                      "HEURISTIC": 0,
+                      "AMBIGUOUS": 0,
+                      "UNRESOLVED": 0,
+                      "UNSUPPORTED": 0
+                    }
+                  }
+                }
+              },
+              {
+                "protocolVersion": 2,
+                "requestId": "companion:java",
+                "sequence": 6,
+                "type": "COVERAGE",
+                "payload": {
+                  "capability": "CALL",
+                  "sourceFileId": "java:file",
+                  "support": "SUPPORTED",
+                  "coverage": "COMPLETE",
+                  "statistics": {
+                    "eligibleSites": 0,
+                    "coveredSites": 0,
+                    "unsupportedSites": 0,
+                    "partialSites": 0,
+                    "resolutionCounts": {
+                      "EXACT": 0,
+                      "HEURISTIC": 0,
+                      "AMBIGUOUS": 0,
+                      "UNRESOLVED": 0,
+                      "UNSUPPORTED": 0
+                    }
+                  }
+                }
+              },
+              {
+                "protocolVersion": 2,
+                "requestId": "companion:java",
+                "sequence": 7,
+                "type": "COVERAGE",
+                "payload": {
+                  "capability": "INHERITANCE",
+                  "sourceFileId": "java:file",
+                  "support": "SUPPORTED",
+                  "coverage": "COMPLETE",
+                  "statistics": {
+                    "eligibleSites": 0,
+                    "coveredSites": 0,
+                    "unsupportedSites": 0,
+                    "partialSites": 0,
+                    "resolutionCounts": {
+                      "EXACT": 0,
+                      "HEURISTIC": 0,
+                      "AMBIGUOUS": 0,
+                      "UNRESOLVED": 0,
+                      "UNSUPPORTED": 0
+                    }
+                  }
+                }
+              },
+              {
+                "protocolVersion": 2,
+                "requestId": "companion:java",
+                "sequence": 8,
+                "type": "COVERAGE",
+                "payload": {
+                  "capability": "REFERENCE",
+                  "sourceFileId": "java:file",
+                  "support": "SUPPORTED",
+                  "coverage": "COMPLETE",
+                  "statistics": {
+                    "eligibleSites": 0,
+                    "coveredSites": 0,
+                    "unsupportedSites": 0,
+                    "partialSites": 0,
+                    "resolutionCounts": {
+                      "EXACT": 0,
+                      "HEURISTIC": 0,
+                      "AMBIGUOUS": 0,
+                      "UNRESOLVED": 0,
+                      "UNSUPPORTED": 0
+                    }
+                  }
+                }
+              },
+              {
+                "protocolVersion": 2,
+                "requestId": "companion:java",
+                "sequence": 9,
+                "type": "ANALYSIS_COMPLETED",
+                "payload": {
+                  "providerSnapshotId": "snapshot:one",
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:worktree",
+                  "revisionFingerprint": "content:first",
+                  "outcome": "SUCCEEDED",
+                  "counts": {
+                    "sourceFiles": 1,
+                    "nodes": 2,
+                    "edges": 0,
+                    "coverage": 5,
+                    "diagnostics": 0
+                  },
+                  "capabilities": [
+                    {
+                      "name": "SYMBOL",
+                      "support": "SUPPORTED",
+                      "coverage": "COMPLETE"
+                    },
+                    {
+                      "name": "IMPORT",
+                      "support": "SUPPORTED",
+                      "coverage": "COMPLETE"
+                    },
+                    {
+                      "name": "CALL",
+                      "support": "SUPPORTED",
+                      "coverage": "COMPLETE"
+                    },
+                    {
+                      "name": "INHERITANCE",
+                      "support": "SUPPORTED",
+                      "coverage": "COMPLETE"
+                    },
+                    {
+                      "name": "REFERENCE",
+                      "support": "SUPPORTED",
+                      "coverage": "COMPLETE"
+                    }
+                  ],
+                  "contentFingerprint": "content:java-reference",
+                  "integrityChecksum": "sha256:9bca06af76d6fd51f4a95f13aaab78485919fb6361ad41d1dfbc3f47ee954075"
+                }
+              }
+            ],
+            "terminal": {
+              "protocolVersion": 2,
+              "requestId": "companion:java",
+              "sequence": 9,
+              "type": "ANALYSIS_COMPLETED",
+              "payload": {
+                "providerSnapshotId": "snapshot:one",
+                "repositoryId": "repo:one",
+                "revisionId": "revision:worktree",
+                "revisionFingerprint": "content:first",
+                "outcome": "SUCCEEDED",
+                "counts": {
+                  "sourceFiles": 1,
+                  "nodes": 2,
+                  "edges": 0,
+                  "coverage": 5,
+                  "diagnostics": 0
+                },
+                "capabilities": [
+                  {
+                    "name": "SYMBOL",
+                    "support": "SUPPORTED",
+                    "coverage": "COMPLETE"
+                  },
+                  {
+                    "name": "IMPORT",
+                    "support": "SUPPORTED",
+                    "coverage": "COMPLETE"
+                  },
+                  {
+                    "name": "CALL",
+                    "support": "SUPPORTED",
+                    "coverage": "COMPLETE"
+                  },
+                  {
+                    "name": "INHERITANCE",
+                    "support": "SUPPORTED",
+                    "coverage": "COMPLETE"
+                  },
+                  {
+                    "name": "REFERENCE",
+                    "support": "SUPPORTED",
+                    "coverage": "COMPLETE"
+                  }
+                ],
+                "contentFingerprint": "content:java-reference",
+                "integrityChecksum": "sha256:9bca06af76d6fd51f4a95f13aaab78485919fb6361ad41d1dfbc3f47ee954075"
+              }
+            },
+            "providerVersion": "0.0.0",
+            "runtimeVersion": "fixture-runtime",
+            "tool": {
+              "target": "fixture-target",
+              "profile": "test"
+            },
+            "startedAt": "2026-10-24T00:00:00.001Z",
+            "settledAt": "2026-10-24T00:00:00.002Z"
+          },
+          "codeSyntax": {
+            "providerVersion": "0.0.0",
+            "runtimeVersion": "fixture-runtime",
+            "tool": {
+              "target": "fixture-target",
+              "profile": "test"
+            },
+            "startedAt": "2026-10-24T00:00:00.001Z",
+            "settledAt": "2026-10-24T00:00:00.002Z"
+          }
+        }
+      },
+      "expected": {
+        "result": {
+          "metadata": {
+            "codeSyntax": {
+              "providerVersion": "0.0.0",
+              "runtimeVersion": "fixture-runtime",
+              "settledAt": "2026-10-24T00:00:00.002Z",
+              "startedAt": "2026-10-24T00:00:00.001Z",
+              "tool": {
+                "profile": "test",
+                "target": "fixture-target"
+              }
+            },
+            "inventory": [
+              {
+                "classification": {
+                  "contentKind": "TEXT",
+                  "provenance": "AUTHORED",
+                  "role": "SOURCE"
+                },
+                "contentFingerprint": "sha256:5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1",
+                "id": "java:file",
+                "languageHint": "java",
+                "path": "Box.java",
+                "repositoryId": "repo:one",
+                "revisionId": "revision:worktree",
+                "sensitivity": "INTERNAL"
+              }
+            ],
+            "java": {
+              "events": [
+                {
+                  "payload": {
+                    "providerSnapshotId": "snapshot:one",
+                    "repositoryId": "repo:one",
+                    "revisionFingerprint": "content:first",
+                    "revisionId": "revision:worktree"
+                  },
+                  "protocolVersion": 2,
+                  "requestId": "companion:java",
+                  "sequence": 0,
+                  "type": "ANALYSIS_STARTED"
+                },
+                {
+                  "payload": {
+                    "classification": {
+                      "contentKind": "TEXT",
+                      "provenance": "AUTHORED",
+                      "role": "SOURCE"
+                    },
+                    "contentFingerprint": "sha256:5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1",
+                    "id": "java:file",
+                    "languageHint": "java",
+                    "path": "Box.java",
+                    "repositoryId": "repo:one",
+                    "revisionId": "revision:worktree",
+                    "sensitivity": "INTERNAL"
+                  },
+                  "protocolVersion": 2,
+                  "requestId": "companion:java",
+                  "sequence": 1,
+                  "type": "SOURCE_FILE"
+                },
+                {
+                  "payload": {
+                    "confidence": {
+                      "method": "parser",
+                      "reasons": [],
+                      "score": 1
+                    },
+                    "name": "Box.java",
+                    "providerFactId": "java:unit",
+                    "providerId": "native",
+                    "providerKind": "java.compilation_unit",
+                    "providerSnapshotId": "snapshot:one",
+                    "qualifiedName": "Box.java",
+                    "repositoryId": "repo:one",
+                    "revisionId": "revision:worktree",
+                    "sourceRange": null
+                  },
+                  "protocolVersion": 2,
+                  "requestId": "companion:java",
+                  "sequence": 2,
+                  "type": "NODE"
+                },
+                {
+                  "payload": {
+                    "confidence": {
+                      "method": "parser",
+                      "reasons": [],
+                      "score": 1
+                    },
+                    "name": "Box",
+                    "providerFactId": "java:Box",
+                    "providerId": "native",
+                    "providerKind": "java.class",
+                    "providerSnapshotId": "snapshot:one",
+                    "qualifiedName": "Box",
+                    "repositoryId": "repo:one",
+                    "revisionId": "revision:worktree",
+                    "sourceRange": {
+                      "endColumn": 9,
+                      "endLine": 0,
+                      "sourceFileId": "java:file",
+                      "startColumn": 6,
+                      "startLine": 0
+                    }
+                  },
+                  "protocolVersion": 2,
+                  "requestId": "companion:java",
+                  "sequence": 3,
+                  "type": "NODE"
+                },
+                {
+                  "payload": {
+                    "capability": "SYMBOL",
+                    "coverage": "COMPLETE",
+                    "sourceFileId": "java:file",
+                    "statistics": {
+                      "coveredSites": 1,
+                      "eligibleSites": 1,
+                      "partialSites": 0,
+                      "resolutionCounts": {
+                        "AMBIGUOUS": 0,
+                        "EXACT": 0,
+                        "HEURISTIC": 0,
+                        "UNRESOLVED": 0,
+                        "UNSUPPORTED": 0
+                      },
+                      "unsupportedSites": 0
+                    },
+                    "support": "SUPPORTED"
+                  },
+                  "protocolVersion": 2,
+                  "requestId": "companion:java",
+                  "sequence": 4,
+                  "type": "COVERAGE"
+                },
+                {
+                  "payload": {
+                    "capability": "IMPORT",
+                    "coverage": "COMPLETE",
+                    "sourceFileId": "java:file",
+                    "statistics": {
+                      "coveredSites": 0,
+                      "eligibleSites": 0,
+                      "partialSites": 0,
+                      "resolutionCounts": {
+                        "AMBIGUOUS": 0,
+                        "EXACT": 0,
+                        "HEURISTIC": 0,
+                        "UNRESOLVED": 0,
+                        "UNSUPPORTED": 0
+                      },
+                      "unsupportedSites": 0
+                    },
+                    "support": "SUPPORTED"
+                  },
+                  "protocolVersion": 2,
+                  "requestId": "companion:java",
+                  "sequence": 5,
+                  "type": "COVERAGE"
+                },
+                {
+                  "payload": {
+                    "capability": "CALL",
+                    "coverage": "COMPLETE",
+                    "sourceFileId": "java:file",
+                    "statistics": {
+                      "coveredSites": 0,
+                      "eligibleSites": 0,
+                      "partialSites": 0,
+                      "resolutionCounts": {
+                        "AMBIGUOUS": 0,
+                        "EXACT": 0,
+                        "HEURISTIC": 0,
+                        "UNRESOLVED": 0,
+                        "UNSUPPORTED": 0
+                      },
+                      "unsupportedSites": 0
+                    },
+                    "support": "SUPPORTED"
+                  },
+                  "protocolVersion": 2,
+                  "requestId": "companion:java",
+                  "sequence": 6,
+                  "type": "COVERAGE"
+                },
+                {
+                  "payload": {
+                    "capability": "INHERITANCE",
+                    "coverage": "COMPLETE",
+                    "sourceFileId": "java:file",
+                    "statistics": {
+                      "coveredSites": 0,
+                      "eligibleSites": 0,
+                      "partialSites": 0,
+                      "resolutionCounts": {
+                        "AMBIGUOUS": 0,
+                        "EXACT": 0,
+                        "HEURISTIC": 0,
+                        "UNRESOLVED": 0,
+                        "UNSUPPORTED": 0
+                      },
+                      "unsupportedSites": 0
+                    },
+                    "support": "SUPPORTED"
+                  },
+                  "protocolVersion": 2,
+                  "requestId": "companion:java",
+                  "sequence": 7,
+                  "type": "COVERAGE"
+                },
+                {
+                  "payload": {
+                    "capability": "REFERENCE",
+                    "coverage": "COMPLETE",
+                    "sourceFileId": "java:file",
+                    "statistics": {
+                      "coveredSites": 0,
+                      "eligibleSites": 0,
+                      "partialSites": 0,
+                      "resolutionCounts": {
+                        "AMBIGUOUS": 0,
+                        "EXACT": 0,
+                        "HEURISTIC": 0,
+                        "UNRESOLVED": 0,
+                        "UNSUPPORTED": 0
+                      },
+                      "unsupportedSites": 0
+                    },
+                    "support": "SUPPORTED"
+                  },
+                  "protocolVersion": 2,
+                  "requestId": "companion:java",
+                  "sequence": 8,
+                  "type": "COVERAGE"
+                },
+                {
+                  "payload": {
+                    "capabilities": [
+                      {
+                        "coverage": "COMPLETE",
+                        "name": "SYMBOL",
+                        "support": "SUPPORTED"
+                      },
+                      {
+                        "coverage": "COMPLETE",
+                        "name": "IMPORT",
+                        "support": "SUPPORTED"
+                      },
+                      {
+                        "coverage": "COMPLETE",
+                        "name": "CALL",
+                        "support": "SUPPORTED"
+                      },
+                      {
+                        "coverage": "COMPLETE",
+                        "name": "INHERITANCE",
+                        "support": "SUPPORTED"
+                      },
+                      {
+                        "coverage": "COMPLETE",
+                        "name": "REFERENCE",
+                        "support": "SUPPORTED"
+                      }
+                    ],
+                    "contentFingerprint": "content:java-reference",
+                    "counts": {
+                      "coverage": 5,
+                      "diagnostics": 0,
+                      "edges": 0,
+                      "nodes": 2,
+                      "sourceFiles": 1
+                    },
+                    "integrityChecksum": "sha256:9bca06af76d6fd51f4a95f13aaab78485919fb6361ad41d1dfbc3f47ee954075",
+                    "outcome": "SUCCEEDED",
+                    "providerSnapshotId": "snapshot:one",
+                    "repositoryId": "repo:one",
+                    "revisionFingerprint": "content:first",
+                    "revisionId": "revision:worktree"
+                  },
+                  "protocolVersion": 2,
+                  "requestId": "companion:java",
+                  "sequence": 9,
+                  "type": "ANALYSIS_COMPLETED"
+                }
+              ],
+              "providerVersion": "0.0.0",
+              "request": {
+                "payload": {
+                  "deadlineEpochMs": null,
+                  "irSchemaVersion": 1,
+                  "providerSnapshotId": "snapshot:one",
+                  "repository": {
+                    "id": "repo:one",
+                    "rootPath": "/fixture/repo"
+                  },
+                  "requestedCapabilities": ["SYMBOL", "IMPORT", "CALL", "INHERITANCE", "REFERENCE"],
+                  "resourceBudget": {
+                    "maxDurationMs": 1000,
+                    "maxEvents": 20,
+                    "maxMemoryBytes": 65536
+                  },
+                  "revision": {
+                    "baseRevisionId": null,
+                    "contentFingerprint": "content:first",
+                    "id": "revision:worktree",
+                    "kind": "WORKTREE",
+                    "repositoryId": "repo:one"
+                  },
+                  "sourceFiles": [
+                    {
+                      "classification": {
+                        "contentKind": "TEXT",
+                        "provenance": "AUTHORED",
+                        "role": "SOURCE"
+                      },
+                      "contentFingerprint": "sha256:5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1",
+                      "id": "java:file",
+                      "languageHint": "java",
+                      "path": "Box.java",
+                      "repositoryId": "repo:one",
+                      "revisionId": "revision:worktree",
+                      "sensitivity": "INTERNAL"
+                    }
+                  ]
+                },
+                "protocolVersion": 2,
+                "requestId": "companion:java",
+                "type": "ANALYZE"
+              },
+              "runtimeVersion": "fixture-runtime",
+              "settledAt": "2026-10-24T00:00:00.002Z",
+              "startedAt": "2026-10-24T00:00:00.001Z",
+              "terminal": {
+                "payload": {
+                  "capabilities": [
+                    {
+                      "coverage": "COMPLETE",
+                      "name": "SYMBOL",
+                      "support": "SUPPORTED"
+                    },
+                    {
+                      "coverage": "COMPLETE",
+                      "name": "IMPORT",
+                      "support": "SUPPORTED"
+                    },
+                    {
+                      "coverage": "COMPLETE",
+                      "name": "CALL",
+                      "support": "SUPPORTED"
+                    },
+                    {
+                      "coverage": "COMPLETE",
+                      "name": "INHERITANCE",
+                      "support": "SUPPORTED"
+                    },
+                    {
+                      "coverage": "COMPLETE",
+                      "name": "REFERENCE",
+                      "support": "SUPPORTED"
+                    }
+                  ],
+                  "contentFingerprint": "content:java-reference",
+                  "counts": {
+                    "coverage": 5,
+                    "diagnostics": 0,
+                    "edges": 0,
+                    "nodes": 2,
+                    "sourceFiles": 1
+                  },
+                  "integrityChecksum": "sha256:9bca06af76d6fd51f4a95f13aaab78485919fb6361ad41d1dfbc3f47ee954075",
+                  "outcome": "SUCCEEDED",
+                  "providerSnapshotId": "snapshot:one",
+                  "repositoryId": "repo:one",
+                  "revisionFingerprint": "content:first",
+                  "revisionId": "revision:worktree"
+                },
+                "protocolVersion": 2,
+                "requestId": "companion:java",
+                "sequence": 9,
+                "type": "ANALYSIS_COMPLETED"
+              },
+              "tool": {
+                "profile": "test",
+                "target": "fixture-target"
+              }
+            },
+            "snapshot": {
+              "completedAt": "2026-10-24T00:00:00.003Z",
+              "id": "snapshot:one",
+              "providerId": "native",
+              "providerVersion": "0.0.0",
+              "runtimeVersion": "fixture-runtime",
+              "startedAt": "2026-10-24T00:00:00.000Z"
+            },
+            "targetSource": {
+              "contentFingerprint": "content:first",
+              "repositoryId": "repo:one",
+              "revisionId": "revision:worktree"
+            },
+            "tool": {
+              "profile": "test",
+              "target": "fixture-target"
+            }
+          },
+          "nodes": [
+            {
+              "providerNode": {
+                "confidence": {
+                  "method": "parser",
+                  "reasons": [],
+                  "score": 1
+                },
+                "name": "Box",
+                "providerFactId": "java:Box",
+                "providerId": "native",
+                "providerKind": "java.class",
+                "providerSnapshotId": "snapshot:one",
+                "qualifiedName": "Box",
+                "repositoryId": "repo:one",
+                "revisionId": "revision:worktree",
+                "sourceRange": {
+                  "endColumn": 9,
+                  "endLine": 0,
+                  "sourceFileId": "java:file",
+                  "startColumn": 6,
+                  "startLine": 0
+                }
+              },
+              "canonicalNode": {
+                "repositoryId": "repo:one",
+                "revisionId": "revision:worktree",
+                "name": "Box",
+                "qualifiedName": "Box",
+                "sourceRange": {
+                  "endColumn": 9,
+                  "endLine": 0,
+                  "sourceFileId": "java:file",
+                  "startColumn": 6,
+                  "startLine": 0
+                },
+                "confidence": {
+                  "method": "parser",
+                  "reasons": [],
+                  "score": 1
+                },
+                "kind": "TYPE",
+                "typeKind": "CLASS",
+                "factKey": "node-fact-v1:fa07e81351801d888b39e1742617736c6fe9d1f50c0ee59f63680270f36e3856",
+                "id": "canonical-node-v1:d4d1141ea168c690fb883ecbbaba0e7057a010eb7ef98d8cef6fc9172cbd42d8"
+              },
+              "sourceFileId": "java:file"
+            },
+            {
+              "providerNode": {
+                "confidence": {
+                  "method": "parser",
+                  "reasons": [],
+                  "score": 1
+                },
+                "name": "Box.java",
+                "providerFactId": "java:unit",
+                "providerId": "native",
+                "providerKind": "java.compilation_unit",
+                "providerSnapshotId": "snapshot:one",
+                "qualifiedName": "Box.java",
+                "repositoryId": "repo:one",
+                "revisionId": "revision:worktree",
+                "sourceRange": null
+              },
+              "canonicalNode": {
+                "repositoryId": "repo:one",
+                "revisionId": "revision:worktree",
+                "name": "Box.java",
+                "qualifiedName": "Box.java",
+                "sourceRange": null,
+                "confidence": {
+                  "method": "parser",
+                  "reasons": [],
+                  "score": 1
+                },
+                "kind": "MODULE",
+                "factKey": "node-fact-v1:426cb60ee0500370996dbbdfd7ef72985b743b06382ef7df9e6b79699e1138a7",
+                "id": "canonical-node-v1:b8cc9d8484f5c608ab4fd16c8fa699f60df84e2f488d03111e93b5101cc5d8d2"
+              },
+              "sourceFileId": "java:file"
+            }
+          ],
+          "usage": {
+            "rows": 0,
+            "serializedBytes": 26101,
+            "items": 3571,
+            "retainedLogicalBytes": 70986
+          }
+        },
+        "cost": {
+          "rows": 0,
+          "serializedBytes": 26101,
+          "items": 3571,
+          "retainedLogicalBytes": 70986,
+          "maxDepth": 8,
+          "memoryBudgetBytes": 141972
+        },
+        "ledger": [
+          {
+            "label": "complete callback input",
+            "items": 376,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 5851,
+            "depth": 8
+          },
+          {
+            "label": "complete callback input traverse",
+            "items": 376,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 8
+          },
+          {
+            "label": "complete callback input encode",
+            "items": 0,
+            "serializedBytes": 15706,
+            "retainedLogicalBytes": 15706,
+            "depth": 0
+          },
+          {
+            "label": "complete callback input parsed",
+            "items": 376,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 5851,
+            "depth": 8
+          },
+          {
+            "label": "metadata before schema",
+            "items": 340,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 5112,
+            "depth": 7
+          },
+          {
+            "label": "metadata after schema",
+            "items": 340,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 5112,
+            "depth": 7
+          },
+          {
+            "label": "target metadata before schema",
+            "items": 340,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 5112,
+            "depth": 7
+          },
+          {
+            "label": "target metadata after schema",
+            "items": 340,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 5112,
+            "depth": 7
+          },
+          {
+            "label": "inventory byte key",
+            "items": 0,
+            "serializedBytes": 8,
+            "retainedLogicalBytes": 8,
+            "depth": 0
+          },
+          {
+            "label": "inventory byte key",
+            "items": 0,
+            "serializedBytes": 9,
+            "retainedLogicalBytes": 9,
+            "depth": 0
+          },
+          {
+            "label": "metadata inventory",
+            "items": 13,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 251,
+            "depth": 3
+          },
+          {
+            "label": "complete inventory comparison",
+            "items": 27,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 502,
+            "depth": 4
+          },
+          {
+            "label": "contracts and declared scope",
+            "items": 16,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 255,
+            "depth": 4
+          },
+          {
+            "label": "locator domain",
+            "items": 0,
+            "serializedBytes": 32,
+            "retainedLogicalBytes": 32,
+            "depth": 0
+          },
+          {
+            "label": "locator frame traverse",
+            "items": 3,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 1
+          },
+          {
+            "label": "locator frame encode",
+            "items": 0,
+            "serializedBytes": 54,
+            "retainedLogicalBytes": 54,
+            "depth": 0
+          },
+          {
+            "label": "locator prefix/scratch",
+            "items": 0,
+            "serializedBytes": 3,
+            "retainedLogicalBytes": 30,
+            "depth": 0
+          },
+          {
+            "label": "locator frame traverse",
+            "items": 6,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 2
+          },
+          {
+            "label": "locator frame encode",
+            "items": 0,
+            "serializedBytes": 146,
+            "retainedLogicalBytes": 146,
+            "depth": 0
+          },
+          {
+            "label": "locator prefix/scratch",
+            "items": 0,
+            "serializedBytes": 3,
+            "retainedLogicalBytes": 76,
+            "depth": 0
+          },
+          {
+            "label": "locator digest pin",
+            "items": 0,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 64,
+            "depth": 0
+          },
+          {
+            "label": "parsed Java hard JSON",
+            "items": 0,
+            "serializedBytes": 846,
+            "retainedLogicalBytes": 846,
+            "depth": 0
+          },
+          {
+            "label": "parsed Java hard JSON",
+            "items": 0,
+            "serializedBytes": 234,
+            "retainedLogicalBytes": 234,
+            "depth": 0
+          },
+          {
+            "label": "parsed Java hard JSON",
+            "items": 0,
+            "serializedBytes": 412,
+            "retainedLogicalBytes": 412,
+            "depth": 0
+          },
+          {
+            "label": "parsed Java hard JSON",
+            "items": 0,
+            "serializedBytes": 394,
+            "retainedLogicalBytes": 394,
+            "depth": 0
+          },
+          {
+            "label": "parsed Java hard JSON",
+            "items": 0,
+            "serializedBytes": 452,
+            "retainedLogicalBytes": 452,
+            "depth": 0
+          },
+          {
+            "label": "parsed Java hard JSON",
+            "items": 0,
+            "serializedBytes": 364,
+            "retainedLogicalBytes": 364,
+            "depth": 0
+          },
+          {
+            "label": "parsed Java hard JSON",
+            "items": 0,
+            "serializedBytes": 364,
+            "retainedLogicalBytes": 364,
+            "depth": 0
+          },
+          {
+            "label": "parsed Java hard JSON",
+            "items": 0,
+            "serializedBytes": 362,
+            "retainedLogicalBytes": 362,
+            "depth": 0
+          },
+          {
+            "label": "parsed Java hard JSON",
+            "items": 0,
+            "serializedBytes": 369,
+            "retainedLogicalBytes": 369,
+            "depth": 0
+          },
+          {
+            "label": "parsed Java hard JSON",
+            "items": 0,
+            "serializedBytes": 367,
+            "retainedLogicalBytes": 367,
+            "depth": 0
+          },
+          {
+            "label": "parsed Java hard JSON",
+            "items": 0,
+            "serializedBytes": 807,
+            "retainedLogicalBytes": 807,
+            "depth": 0
+          },
+          {
+            "label": "validated Java stream",
+            "items": 257,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 3648,
+            "depth": 6
+          },
+          {
+            "label": "Java source lookup",
+            "items": 13,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 251,
+            "depth": 3
+          },
+          {
+            "label": "normalizer input",
+            "items": 14,
+            "serializedBytes": 306,
+            "retainedLogicalBytes": 306,
+            "depth": 2
+          },
+          {
+            "label": "normalizer parsed",
+            "items": 14,
+            "serializedBytes": 306,
+            "retainedLogicalBytes": 306,
+            "depth": 2
+          },
+          {
+            "label": "normalizer base",
+            "items": 10,
+            "serializedBytes": 180,
+            "retainedLogicalBytes": 180,
+            "depth": 2
+          },
+          {
+            "label": "canonical draft fields",
+            "items": 11,
+            "serializedBytes": 196,
+            "retainedLogicalBytes": 196,
+            "depth": 2
+          },
+          {
+            "label": "normalizer identity fields",
+            "items": 5,
+            "serializedBytes": 52,
+            "retainedLogicalBytes": 52,
+            "depth": 1
+          },
+          {
+            "label": "normalizer field paths",
+            "items": 9,
+            "serializedBytes": 68,
+            "retainedLogicalBytes": 68,
+            "depth": 2
+          },
+          {
+            "label": "provider tuple node-fact-v1",
+            "items": 6,
+            "serializedBytes": 138,
+            "retainedLogicalBytes": 138,
+            "depth": 0
+          },
+          {
+            "label": "factKey array",
+            "items": 2,
+            "serializedBytes": 81,
+            "retainedLogicalBytes": 81,
+            "depth": 1
+          },
+          {
+            "label": "provider tuple canonical-node-v1",
+            "items": 3,
+            "serializedBytes": 180,
+            "retainedLogicalBytes": 180,
+            "depth": 0
+          },
+          {
+            "label": "final canonical draft",
+            "items": 13,
+            "serializedBytes": 376,
+            "retainedLogicalBytes": 376,
+            "depth": 2
+          },
+          {
+            "label": "final schema representation",
+            "items": 13,
+            "serializedBytes": 376,
+            "retainedLogicalBytes": 376,
+            "depth": 2
+          },
+          {
+            "label": "normalizer input",
+            "items": 19,
+            "serializedBytes": 364,
+            "retainedLogicalBytes": 364,
+            "depth": 2
+          },
+          {
+            "label": "normalizer parsed",
+            "items": 19,
+            "serializedBytes": 364,
+            "retainedLogicalBytes": 364,
+            "depth": 2
+          },
+          {
+            "label": "normalizer base",
+            "items": 15,
+            "serializedBytes": 250,
+            "retainedLogicalBytes": 250,
+            "depth": 2
+          },
+          {
+            "label": "canonical draft fields",
+            "items": 17,
+            "serializedBytes": 283,
+            "retainedLogicalBytes": 283,
+            "depth": 2
+          },
+          {
+            "label": "normalizer identity fields",
+            "items": 11,
+            "serializedBytes": 73,
+            "retainedLogicalBytes": 73,
+            "depth": 1
+          },
+          {
+            "label": "normalizer field paths",
+            "items": 26,
+            "serializedBytes": 228,
+            "retainedLogicalBytes": 228,
+            "depth": 2
+          },
+          {
+            "label": "provider tuple node-fact-v1",
+            "items": 12,
+            "serializedBytes": 161,
+            "retainedLogicalBytes": 161,
+            "depth": 0
+          },
+          {
+            "label": "factKey array",
+            "items": 2,
+            "serializedBytes": 81,
+            "retainedLogicalBytes": 81,
+            "depth": 1
+          },
+          {
+            "label": "provider tuple canonical-node-v1",
+            "items": 3,
+            "serializedBytes": 180,
+            "retainedLogicalBytes": 180,
+            "depth": 0
+          },
+          {
+            "label": "final canonical draft",
+            "items": 19,
+            "serializedBytes": 463,
+            "retainedLogicalBytes": 463,
+            "depth": 2
+          },
+          {
+            "label": "final schema representation",
+            "items": 19,
+            "serializedBytes": 463,
+            "retainedLogicalBytes": 463,
+            "depth": 2
+          },
+          {
+            "label": "complete normalized owner nodes",
+            "items": 70,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 1245,
+            "depth": 4
+          },
+          {
+            "label": "complete callback result",
+            "items": 416,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 6419,
+            "depth": 8
+          }
+        ],
+        "scope": "Closed class + compilation-unit pure Java owner Runtime callback only; no Native execution or Stage/Store publication qualification."
+      }
+    },
+    {
+      "id": "mixed",
+      "source": {
+        "manifestPath": "fixtures/phase1/mixed-analysis-stage/component-references/provenance.json",
+        "manifestSha256": "0013dc7fbdc9991fc8378aed49b6ba2fd9899a063de87112349a7609160a1173",
+        "path": "early-java-independent-v2/mixed.json",
+        "sha256": "1e94151e88362ec080ab0f8db1c1f13ec50ac18bc99b8aa071aad75828cda843",
+        "assetPath": "fixtures/phase1/mixed-analysis-stage/component-references/early-java-independent-v2/mixed.json.gz",
+        "assetSha256": "cbcfdecc59b729da363366b6131fff94bdd52fb45590a1b49fa0674686856a94"
+      },
+      "input": {
+        "target": {
+          "source": {
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "contentFingerprint": "content:first"
+          },
+          "repositoryLocatorDigest": "426090d7661a80c943922fecb0a5e4cedd5d2e3eedadd812145564e57a7a3481",
+          "inventory": [
+            {
+              "id": "java:file",
+              "repositoryId": "repo:one",
+              "revisionId": "revision:worktree",
+              "path": "Box.java",
+              "contentFingerprint": "sha256:5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1",
+              "classification": {
+                "role": "SOURCE",
+                "provenance": "AUTHORED",
+                "contentKind": "TEXT"
+              },
+              "languageHint": "java",
+              "sensitivity": "INTERNAL"
+            },
+            {
+              "id": "file:one",
+              "repositoryId": "repo:one",
+              "revisionId": "revision:worktree",
+              "path": "app.py",
+              "contentFingerprint": "sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+              "classification": {
+                "role": "SOURCE",
+                "provenance": "AUTHORED",
+                "contentKind": "TEXT"
+              },
+              "languageHint": "python",
+              "sensitivity": "INTERNAL"
+            }
+          ],
+          "contracts": [
+            {
+              "providerId": "native",
+              "extractor": "syntax-v1",
+              "normalizer": "fixture-v1",
+              "contract": "PYTHON_SYNTAX_CODE_V1",
+              "policy": "syntax-surface-support-v1"
+            }
+          ]
+        },
+        "scope": {
+          "units": [
+            {
+              "id": "history-native-unit-v1:2464cfb1659a3a1553997008d35f870ac16fb89ba887481f6df1388b6c575d28",
+              "providerId": "native",
+              "kind": "JAVA_GROUP",
+              "sourceFileIds": ["java:file"]
+            },
+            {
+              "id": "history-native-unit-v1:77f704f613db0a5a20a5f00bac609f2c85d5e7cef1fa2b0d522599181fb80f3a",
+              "providerId": "native",
+              "kind": "PYTHON_FILE",
+              "sourceFileIds": ["file:one"]
+            }
+          ],
+          "removedSourceFileIds": []
+        },
+        "javaRows": {
+          "targetSource": {
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "contentFingerprint": "content:first"
+          },
+          "inventory": [
+            {
+              "id": "java:file",
+              "repositoryId": "repo:one",
+              "revisionId": "revision:worktree",
+              "path": "Box.java",
+              "contentFingerprint": "sha256:5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1",
+              "classification": {
+                "role": "SOURCE",
+                "provenance": "AUTHORED",
+                "contentKind": "TEXT"
+              },
+              "languageHint": "java",
+              "sensitivity": "INTERNAL"
+            },
+            {
+              "id": "file:one",
+              "repositoryId": "repo:one",
+              "revisionId": "revision:worktree",
+              "path": "app.py",
+              "contentFingerprint": "sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+              "classification": {
+                "role": "SOURCE",
+                "provenance": "AUTHORED",
+                "contentKind": "TEXT"
+              },
+              "languageHint": "python",
+              "sensitivity": "INTERNAL"
+            }
+          ],
+          "snapshot": {
+            "id": "snapshot:one",
+            "providerId": "native",
+            "providerVersion": "0.0.0",
+            "runtimeVersion": "fixture-runtime",
+            "startedAt": "2026-10-24T00:00:00.000Z",
+            "completedAt": "2026-10-24T00:00:00.003Z"
+          },
+          "tool": {
+            "target": "fixture-target",
+            "profile": "test"
+          },
+          "java": {
+            "request": {
+              "protocolVersion": 2,
+              "requestId": "companion:java",
+              "type": "ANALYZE",
+              "payload": {
+                "irSchemaVersion": 1,
+                "providerSnapshotId": "snapshot:one",
+                "repository": {
+                  "id": "repo:one",
+                  "rootPath": "/fixture/repo"
+                },
+                "revision": {
+                  "id": "revision:worktree",
+                  "repositoryId": "repo:one",
+                  "kind": "WORKTREE",
+                  "contentFingerprint": "content:first",
+                  "baseRevisionId": null
+                },
+                "sourceFiles": [
+                  {
+                    "id": "java:file",
+                    "repositoryId": "repo:one",
+                    "revisionId": "revision:worktree",
+                    "path": "Box.java",
+                    "contentFingerprint": "sha256:5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1",
+                    "classification": {
+                      "role": "SOURCE",
+                      "provenance": "AUTHORED",
+                      "contentKind": "TEXT"
+                    },
+                    "languageHint": "java",
+                    "sensitivity": "INTERNAL"
+                  }
+                ],
+                "requestedCapabilities": ["SYMBOL", "IMPORT", "CALL", "INHERITANCE", "REFERENCE"],
+                "deadlineEpochMs": null,
+                "resourceBudget": {
+                  "maxDurationMs": 1000,
+                  "maxMemoryBytes": 65536,
+                  "maxEvents": 20
+                }
+              }
+            },
+            "events": [
+              {
+                "protocolVersion": 2,
+                "requestId": "companion:java",
+                "sequence": 0,
+                "type": "ANALYSIS_STARTED",
+                "payload": {
+                  "providerSnapshotId": "snapshot:one",
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:worktree",
+                  "revisionFingerprint": "content:first"
+                }
+              },
+              {
+                "protocolVersion": 2,
+                "requestId": "companion:java",
+                "sequence": 1,
+                "type": "SOURCE_FILE",
+                "payload": {
+                  "id": "java:file",
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:worktree",
+                  "path": "Box.java",
+                  "contentFingerprint": "sha256:5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1",
+                  "classification": {
+                    "role": "SOURCE",
+                    "provenance": "AUTHORED",
+                    "contentKind": "TEXT"
+                  },
+                  "languageHint": "java",
+                  "sensitivity": "INTERNAL"
+                }
+              },
+              {
+                "protocolVersion": 2,
+                "requestId": "companion:java",
+                "sequence": 2,
+                "type": "NODE",
+                "payload": {
+                  "providerId": "native",
+                  "providerSnapshotId": "snapshot:one",
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:worktree",
+                  "providerFactId": "java:unit",
+                  "providerKind": "java.compilation_unit",
+                  "name": "Box.java",
+                  "qualifiedName": "Box.java",
+                  "sourceRange": null,
+                  "confidence": {
+                    "score": 1,
+                    "method": "parser",
+                    "reasons": []
+                  }
+                }
+              },
+              {
+                "protocolVersion": 2,
+                "requestId": "companion:java",
+                "sequence": 3,
+                "type": "NODE",
+                "payload": {
+                  "providerId": "native",
+                  "providerSnapshotId": "snapshot:one",
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:worktree",
+                  "providerFactId": "java:Box",
+                  "providerKind": "java.class",
+                  "name": "Box",
+                  "qualifiedName": "Box",
+                  "sourceRange": {
+                    "sourceFileId": "java:file",
+                    "startLine": 0,
+                    "startColumn": 6,
+                    "endLine": 0,
+                    "endColumn": 9
+                  },
+                  "confidence": {
+                    "score": 1,
+                    "method": "parser",
+                    "reasons": []
+                  }
+                }
+              },
+              {
+                "protocolVersion": 2,
+                "requestId": "companion:java",
+                "sequence": 4,
+                "type": "COVERAGE",
+                "payload": {
+                  "capability": "SYMBOL",
+                  "sourceFileId": "java:file",
+                  "support": "SUPPORTED",
+                  "coverage": "COMPLETE",
+                  "statistics": {
+                    "eligibleSites": 1,
+                    "coveredSites": 1,
+                    "unsupportedSites": 0,
+                    "partialSites": 0,
+                    "resolutionCounts": {
+                      "EXACT": 0,
+                      "HEURISTIC": 0,
+                      "AMBIGUOUS": 0,
+                      "UNRESOLVED": 0,
+                      "UNSUPPORTED": 0
+                    }
+                  }
+                }
+              },
+              {
+                "protocolVersion": 2,
+                "requestId": "companion:java",
+                "sequence": 5,
+                "type": "COVERAGE",
+                "payload": {
+                  "capability": "IMPORT",
+                  "sourceFileId": "java:file",
+                  "support": "SUPPORTED",
+                  "coverage": "COMPLETE",
+                  "statistics": {
+                    "eligibleSites": 0,
+                    "coveredSites": 0,
+                    "unsupportedSites": 0,
+                    "partialSites": 0,
+                    "resolutionCounts": {
+                      "EXACT": 0,
+                      "HEURISTIC": 0,
+                      "AMBIGUOUS": 0,
+                      "UNRESOLVED": 0,
+                      "UNSUPPORTED": 0
+                    }
+                  }
+                }
+              },
+              {
+                "protocolVersion": 2,
+                "requestId": "companion:java",
+                "sequence": 6,
+                "type": "COVERAGE",
+                "payload": {
+                  "capability": "CALL",
+                  "sourceFileId": "java:file",
+                  "support": "SUPPORTED",
+                  "coverage": "COMPLETE",
+                  "statistics": {
+                    "eligibleSites": 0,
+                    "coveredSites": 0,
+                    "unsupportedSites": 0,
+                    "partialSites": 0,
+                    "resolutionCounts": {
+                      "EXACT": 0,
+                      "HEURISTIC": 0,
+                      "AMBIGUOUS": 0,
+                      "UNRESOLVED": 0,
+                      "UNSUPPORTED": 0
+                    }
+                  }
+                }
+              },
+              {
+                "protocolVersion": 2,
+                "requestId": "companion:java",
+                "sequence": 7,
+                "type": "COVERAGE",
+                "payload": {
+                  "capability": "INHERITANCE",
+                  "sourceFileId": "java:file",
+                  "support": "SUPPORTED",
+                  "coverage": "COMPLETE",
+                  "statistics": {
+                    "eligibleSites": 0,
+                    "coveredSites": 0,
+                    "unsupportedSites": 0,
+                    "partialSites": 0,
+                    "resolutionCounts": {
+                      "EXACT": 0,
+                      "HEURISTIC": 0,
+                      "AMBIGUOUS": 0,
+                      "UNRESOLVED": 0,
+                      "UNSUPPORTED": 0
+                    }
+                  }
+                }
+              },
+              {
+                "protocolVersion": 2,
+                "requestId": "companion:java",
+                "sequence": 8,
+                "type": "COVERAGE",
+                "payload": {
+                  "capability": "REFERENCE",
+                  "sourceFileId": "java:file",
+                  "support": "SUPPORTED",
+                  "coverage": "COMPLETE",
+                  "statistics": {
+                    "eligibleSites": 0,
+                    "coveredSites": 0,
+                    "unsupportedSites": 0,
+                    "partialSites": 0,
+                    "resolutionCounts": {
+                      "EXACT": 0,
+                      "HEURISTIC": 0,
+                      "AMBIGUOUS": 0,
+                      "UNRESOLVED": 0,
+                      "UNSUPPORTED": 0
+                    }
+                  }
+                }
+              },
+              {
+                "protocolVersion": 2,
+                "requestId": "companion:java",
+                "sequence": 9,
+                "type": "ANALYSIS_COMPLETED",
+                "payload": {
+                  "providerSnapshotId": "snapshot:one",
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:worktree",
+                  "revisionFingerprint": "content:first",
+                  "outcome": "SUCCEEDED",
+                  "counts": {
+                    "sourceFiles": 1,
+                    "nodes": 2,
+                    "edges": 0,
+                    "coverage": 5,
+                    "diagnostics": 0
+                  },
+                  "capabilities": [
+                    {
+                      "name": "SYMBOL",
+                      "support": "SUPPORTED",
+                      "coverage": "COMPLETE"
+                    },
+                    {
+                      "name": "IMPORT",
+                      "support": "SUPPORTED",
+                      "coverage": "COMPLETE"
+                    },
+                    {
+                      "name": "CALL",
+                      "support": "SUPPORTED",
+                      "coverage": "COMPLETE"
+                    },
+                    {
+                      "name": "INHERITANCE",
+                      "support": "SUPPORTED",
+                      "coverage": "COMPLETE"
+                    },
+                    {
+                      "name": "REFERENCE",
+                      "support": "SUPPORTED",
+                      "coverage": "COMPLETE"
+                    }
+                  ],
+                  "contentFingerprint": "content:java-reference",
+                  "integrityChecksum": "sha256:9bca06af76d6fd51f4a95f13aaab78485919fb6361ad41d1dfbc3f47ee954075"
+                }
+              }
+            ],
+            "terminal": {
+              "protocolVersion": 2,
+              "requestId": "companion:java",
+              "sequence": 9,
+              "type": "ANALYSIS_COMPLETED",
+              "payload": {
+                "providerSnapshotId": "snapshot:one",
+                "repositoryId": "repo:one",
+                "revisionId": "revision:worktree",
+                "revisionFingerprint": "content:first",
+                "outcome": "SUCCEEDED",
+                "counts": {
+                  "sourceFiles": 1,
+                  "nodes": 2,
+                  "edges": 0,
+                  "coverage": 5,
+                  "diagnostics": 0
+                },
+                "capabilities": [
+                  {
+                    "name": "SYMBOL",
+                    "support": "SUPPORTED",
+                    "coverage": "COMPLETE"
+                  },
+                  {
+                    "name": "IMPORT",
+                    "support": "SUPPORTED",
+                    "coverage": "COMPLETE"
+                  },
+                  {
+                    "name": "CALL",
+                    "support": "SUPPORTED",
+                    "coverage": "COMPLETE"
+                  },
+                  {
+                    "name": "INHERITANCE",
+                    "support": "SUPPORTED",
+                    "coverage": "COMPLETE"
+                  },
+                  {
+                    "name": "REFERENCE",
+                    "support": "SUPPORTED",
+                    "coverage": "COMPLETE"
+                  }
+                ],
+                "contentFingerprint": "content:java-reference",
+                "integrityChecksum": "sha256:9bca06af76d6fd51f4a95f13aaab78485919fb6361ad41d1dfbc3f47ee954075"
+              }
+            },
+            "providerVersion": "0.0.0",
+            "runtimeVersion": "fixture-runtime",
+            "tool": {
+              "target": "fixture-target",
+              "profile": "test"
+            },
+            "startedAt": "2026-10-24T00:00:00.001Z",
+            "settledAt": "2026-10-24T00:00:00.002Z"
+          },
+          "codeSyntax": {
+            "providerVersion": "0.0.0",
+            "runtimeVersion": "fixture-runtime",
+            "tool": {
+              "target": "fixture-target",
+              "profile": "test"
+            },
+            "startedAt": "2026-10-24T00:00:00.001Z",
+            "settledAt": "2026-10-24T00:00:00.002Z"
+          }
+        }
+      },
+      "expected": {
+        "result": {
+          "metadata": {
+            "codeSyntax": {
+              "providerVersion": "0.0.0",
+              "runtimeVersion": "fixture-runtime",
+              "settledAt": "2026-10-24T00:00:00.002Z",
+              "startedAt": "2026-10-24T00:00:00.001Z",
+              "tool": {
+                "profile": "test",
+                "target": "fixture-target"
+              }
+            },
+            "inventory": [
+              {
+                "classification": {
+                  "contentKind": "TEXT",
+                  "provenance": "AUTHORED",
+                  "role": "SOURCE"
+                },
+                "contentFingerprint": "sha256:5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1",
+                "id": "java:file",
+                "languageHint": "java",
+                "path": "Box.java",
+                "repositoryId": "repo:one",
+                "revisionId": "revision:worktree",
+                "sensitivity": "INTERNAL"
+              },
+              {
+                "classification": {
+                  "contentKind": "TEXT",
+                  "provenance": "AUTHORED",
+                  "role": "SOURCE"
+                },
+                "contentFingerprint": "sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+                "id": "file:one",
+                "languageHint": "python",
+                "path": "app.py",
+                "repositoryId": "repo:one",
+                "revisionId": "revision:worktree",
+                "sensitivity": "INTERNAL"
+              }
+            ],
+            "java": {
+              "events": [
+                {
+                  "payload": {
+                    "providerSnapshotId": "snapshot:one",
+                    "repositoryId": "repo:one",
+                    "revisionFingerprint": "content:first",
+                    "revisionId": "revision:worktree"
+                  },
+                  "protocolVersion": 2,
+                  "requestId": "companion:java",
+                  "sequence": 0,
+                  "type": "ANALYSIS_STARTED"
+                },
+                {
+                  "payload": {
+                    "classification": {
+                      "contentKind": "TEXT",
+                      "provenance": "AUTHORED",
+                      "role": "SOURCE"
+                    },
+                    "contentFingerprint": "sha256:5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1",
+                    "id": "java:file",
+                    "languageHint": "java",
+                    "path": "Box.java",
+                    "repositoryId": "repo:one",
+                    "revisionId": "revision:worktree",
+                    "sensitivity": "INTERNAL"
+                  },
+                  "protocolVersion": 2,
+                  "requestId": "companion:java",
+                  "sequence": 1,
+                  "type": "SOURCE_FILE"
+                },
+                {
+                  "payload": {
+                    "confidence": {
+                      "method": "parser",
+                      "reasons": [],
+                      "score": 1
+                    },
+                    "name": "Box.java",
+                    "providerFactId": "java:unit",
+                    "providerId": "native",
+                    "providerKind": "java.compilation_unit",
+                    "providerSnapshotId": "snapshot:one",
+                    "qualifiedName": "Box.java",
+                    "repositoryId": "repo:one",
+                    "revisionId": "revision:worktree",
+                    "sourceRange": null
+                  },
+                  "protocolVersion": 2,
+                  "requestId": "companion:java",
+                  "sequence": 2,
+                  "type": "NODE"
+                },
+                {
+                  "payload": {
+                    "confidence": {
+                      "method": "parser",
+                      "reasons": [],
+                      "score": 1
+                    },
+                    "name": "Box",
+                    "providerFactId": "java:Box",
+                    "providerId": "native",
+                    "providerKind": "java.class",
+                    "providerSnapshotId": "snapshot:one",
+                    "qualifiedName": "Box",
+                    "repositoryId": "repo:one",
+                    "revisionId": "revision:worktree",
+                    "sourceRange": {
+                      "endColumn": 9,
+                      "endLine": 0,
+                      "sourceFileId": "java:file",
+                      "startColumn": 6,
+                      "startLine": 0
+                    }
+                  },
+                  "protocolVersion": 2,
+                  "requestId": "companion:java",
+                  "sequence": 3,
+                  "type": "NODE"
+                },
+                {
+                  "payload": {
+                    "capability": "SYMBOL",
+                    "coverage": "COMPLETE",
+                    "sourceFileId": "java:file",
+                    "statistics": {
+                      "coveredSites": 1,
+                      "eligibleSites": 1,
+                      "partialSites": 0,
+                      "resolutionCounts": {
+                        "AMBIGUOUS": 0,
+                        "EXACT": 0,
+                        "HEURISTIC": 0,
+                        "UNRESOLVED": 0,
+                        "UNSUPPORTED": 0
+                      },
+                      "unsupportedSites": 0
+                    },
+                    "support": "SUPPORTED"
+                  },
+                  "protocolVersion": 2,
+                  "requestId": "companion:java",
+                  "sequence": 4,
+                  "type": "COVERAGE"
+                },
+                {
+                  "payload": {
+                    "capability": "IMPORT",
+                    "coverage": "COMPLETE",
+                    "sourceFileId": "java:file",
+                    "statistics": {
+                      "coveredSites": 0,
+                      "eligibleSites": 0,
+                      "partialSites": 0,
+                      "resolutionCounts": {
+                        "AMBIGUOUS": 0,
+                        "EXACT": 0,
+                        "HEURISTIC": 0,
+                        "UNRESOLVED": 0,
+                        "UNSUPPORTED": 0
+                      },
+                      "unsupportedSites": 0
+                    },
+                    "support": "SUPPORTED"
+                  },
+                  "protocolVersion": 2,
+                  "requestId": "companion:java",
+                  "sequence": 5,
+                  "type": "COVERAGE"
+                },
+                {
+                  "payload": {
+                    "capability": "CALL",
+                    "coverage": "COMPLETE",
+                    "sourceFileId": "java:file",
+                    "statistics": {
+                      "coveredSites": 0,
+                      "eligibleSites": 0,
+                      "partialSites": 0,
+                      "resolutionCounts": {
+                        "AMBIGUOUS": 0,
+                        "EXACT": 0,
+                        "HEURISTIC": 0,
+                        "UNRESOLVED": 0,
+                        "UNSUPPORTED": 0
+                      },
+                      "unsupportedSites": 0
+                    },
+                    "support": "SUPPORTED"
+                  },
+                  "protocolVersion": 2,
+                  "requestId": "companion:java",
+                  "sequence": 6,
+                  "type": "COVERAGE"
+                },
+                {
+                  "payload": {
+                    "capability": "INHERITANCE",
+                    "coverage": "COMPLETE",
+                    "sourceFileId": "java:file",
+                    "statistics": {
+                      "coveredSites": 0,
+                      "eligibleSites": 0,
+                      "partialSites": 0,
+                      "resolutionCounts": {
+                        "AMBIGUOUS": 0,
+                        "EXACT": 0,
+                        "HEURISTIC": 0,
+                        "UNRESOLVED": 0,
+                        "UNSUPPORTED": 0
+                      },
+                      "unsupportedSites": 0
+                    },
+                    "support": "SUPPORTED"
+                  },
+                  "protocolVersion": 2,
+                  "requestId": "companion:java",
+                  "sequence": 7,
+                  "type": "COVERAGE"
+                },
+                {
+                  "payload": {
+                    "capability": "REFERENCE",
+                    "coverage": "COMPLETE",
+                    "sourceFileId": "java:file",
+                    "statistics": {
+                      "coveredSites": 0,
+                      "eligibleSites": 0,
+                      "partialSites": 0,
+                      "resolutionCounts": {
+                        "AMBIGUOUS": 0,
+                        "EXACT": 0,
+                        "HEURISTIC": 0,
+                        "UNRESOLVED": 0,
+                        "UNSUPPORTED": 0
+                      },
+                      "unsupportedSites": 0
+                    },
+                    "support": "SUPPORTED"
+                  },
+                  "protocolVersion": 2,
+                  "requestId": "companion:java",
+                  "sequence": 8,
+                  "type": "COVERAGE"
+                },
+                {
+                  "payload": {
+                    "capabilities": [
+                      {
+                        "coverage": "COMPLETE",
+                        "name": "SYMBOL",
+                        "support": "SUPPORTED"
+                      },
+                      {
+                        "coverage": "COMPLETE",
+                        "name": "IMPORT",
+                        "support": "SUPPORTED"
+                      },
+                      {
+                        "coverage": "COMPLETE",
+                        "name": "CALL",
+                        "support": "SUPPORTED"
+                      },
+                      {
+                        "coverage": "COMPLETE",
+                        "name": "INHERITANCE",
+                        "support": "SUPPORTED"
+                      },
+                      {
+                        "coverage": "COMPLETE",
+                        "name": "REFERENCE",
+                        "support": "SUPPORTED"
+                      }
+                    ],
+                    "contentFingerprint": "content:java-reference",
+                    "counts": {
+                      "coverage": 5,
+                      "diagnostics": 0,
+                      "edges": 0,
+                      "nodes": 2,
+                      "sourceFiles": 1
+                    },
+                    "integrityChecksum": "sha256:9bca06af76d6fd51f4a95f13aaab78485919fb6361ad41d1dfbc3f47ee954075",
+                    "outcome": "SUCCEEDED",
+                    "providerSnapshotId": "snapshot:one",
+                    "repositoryId": "repo:one",
+                    "revisionFingerprint": "content:first",
+                    "revisionId": "revision:worktree"
+                  },
+                  "protocolVersion": 2,
+                  "requestId": "companion:java",
+                  "sequence": 9,
+                  "type": "ANALYSIS_COMPLETED"
+                }
+              ],
+              "providerVersion": "0.0.0",
+              "request": {
+                "payload": {
+                  "deadlineEpochMs": null,
+                  "irSchemaVersion": 1,
+                  "providerSnapshotId": "snapshot:one",
+                  "repository": {
+                    "id": "repo:one",
+                    "rootPath": "/fixture/repo"
+                  },
+                  "requestedCapabilities": ["SYMBOL", "IMPORT", "CALL", "INHERITANCE", "REFERENCE"],
+                  "resourceBudget": {
+                    "maxDurationMs": 1000,
+                    "maxEvents": 20,
+                    "maxMemoryBytes": 65536
+                  },
+                  "revision": {
+                    "baseRevisionId": null,
+                    "contentFingerprint": "content:first",
+                    "id": "revision:worktree",
+                    "kind": "WORKTREE",
+                    "repositoryId": "repo:one"
+                  },
+                  "sourceFiles": [
+                    {
+                      "classification": {
+                        "contentKind": "TEXT",
+                        "provenance": "AUTHORED",
+                        "role": "SOURCE"
+                      },
+                      "contentFingerprint": "sha256:5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1",
+                      "id": "java:file",
+                      "languageHint": "java",
+                      "path": "Box.java",
+                      "repositoryId": "repo:one",
+                      "revisionId": "revision:worktree",
+                      "sensitivity": "INTERNAL"
+                    }
+                  ]
+                },
+                "protocolVersion": 2,
+                "requestId": "companion:java",
+                "type": "ANALYZE"
+              },
+              "runtimeVersion": "fixture-runtime",
+              "settledAt": "2026-10-24T00:00:00.002Z",
+              "startedAt": "2026-10-24T00:00:00.001Z",
+              "terminal": {
+                "payload": {
+                  "capabilities": [
+                    {
+                      "coverage": "COMPLETE",
+                      "name": "SYMBOL",
+                      "support": "SUPPORTED"
+                    },
+                    {
+                      "coverage": "COMPLETE",
+                      "name": "IMPORT",
+                      "support": "SUPPORTED"
+                    },
+                    {
+                      "coverage": "COMPLETE",
+                      "name": "CALL",
+                      "support": "SUPPORTED"
+                    },
+                    {
+                      "coverage": "COMPLETE",
+                      "name": "INHERITANCE",
+                      "support": "SUPPORTED"
+                    },
+                    {
+                      "coverage": "COMPLETE",
+                      "name": "REFERENCE",
+                      "support": "SUPPORTED"
+                    }
+                  ],
+                  "contentFingerprint": "content:java-reference",
+                  "counts": {
+                    "coverage": 5,
+                    "diagnostics": 0,
+                    "edges": 0,
+                    "nodes": 2,
+                    "sourceFiles": 1
+                  },
+                  "integrityChecksum": "sha256:9bca06af76d6fd51f4a95f13aaab78485919fb6361ad41d1dfbc3f47ee954075",
+                  "outcome": "SUCCEEDED",
+                  "providerSnapshotId": "snapshot:one",
+                  "repositoryId": "repo:one",
+                  "revisionFingerprint": "content:first",
+                  "revisionId": "revision:worktree"
+                },
+                "protocolVersion": 2,
+                "requestId": "companion:java",
+                "sequence": 9,
+                "type": "ANALYSIS_COMPLETED"
+              },
+              "tool": {
+                "profile": "test",
+                "target": "fixture-target"
+              }
+            },
+            "snapshot": {
+              "completedAt": "2026-10-24T00:00:00.003Z",
+              "id": "snapshot:one",
+              "providerId": "native",
+              "providerVersion": "0.0.0",
+              "runtimeVersion": "fixture-runtime",
+              "startedAt": "2026-10-24T00:00:00.000Z"
+            },
+            "targetSource": {
+              "contentFingerprint": "content:first",
+              "repositoryId": "repo:one",
+              "revisionId": "revision:worktree"
+            },
+            "tool": {
+              "profile": "test",
+              "target": "fixture-target"
+            }
+          },
+          "nodes": [
+            {
+              "providerNode": {
+                "confidence": {
+                  "method": "parser",
+                  "reasons": [],
+                  "score": 1
+                },
+                "name": "Box",
+                "providerFactId": "java:Box",
+                "providerId": "native",
+                "providerKind": "java.class",
+                "providerSnapshotId": "snapshot:one",
+                "qualifiedName": "Box",
+                "repositoryId": "repo:one",
+                "revisionId": "revision:worktree",
+                "sourceRange": {
+                  "endColumn": 9,
+                  "endLine": 0,
+                  "sourceFileId": "java:file",
+                  "startColumn": 6,
+                  "startLine": 0
+                }
+              },
+              "canonicalNode": {
+                "repositoryId": "repo:one",
+                "revisionId": "revision:worktree",
+                "name": "Box",
+                "qualifiedName": "Box",
+                "sourceRange": {
+                  "endColumn": 9,
+                  "endLine": 0,
+                  "sourceFileId": "java:file",
+                  "startColumn": 6,
+                  "startLine": 0
+                },
+                "confidence": {
+                  "method": "parser",
+                  "reasons": [],
+                  "score": 1
+                },
+                "kind": "TYPE",
+                "typeKind": "CLASS",
+                "factKey": "node-fact-v1:fa07e81351801d888b39e1742617736c6fe9d1f50c0ee59f63680270f36e3856",
+                "id": "canonical-node-v1:d4d1141ea168c690fb883ecbbaba0e7057a010eb7ef98d8cef6fc9172cbd42d8"
+              },
+              "sourceFileId": "java:file"
+            },
+            {
+              "providerNode": {
+                "confidence": {
+                  "method": "parser",
+                  "reasons": [],
+                  "score": 1
+                },
+                "name": "Box.java",
+                "providerFactId": "java:unit",
+                "providerId": "native",
+                "providerKind": "java.compilation_unit",
+                "providerSnapshotId": "snapshot:one",
+                "qualifiedName": "Box.java",
+                "repositoryId": "repo:one",
+                "revisionId": "revision:worktree",
+                "sourceRange": null
+              },
+              "canonicalNode": {
+                "repositoryId": "repo:one",
+                "revisionId": "revision:worktree",
+                "name": "Box.java",
+                "qualifiedName": "Box.java",
+                "sourceRange": null,
+                "confidence": {
+                  "method": "parser",
+                  "reasons": [],
+                  "score": 1
+                },
+                "kind": "MODULE",
+                "factKey": "node-fact-v1:426cb60ee0500370996dbbdfd7ef72985b743b06382ef7df9e6b79699e1138a7",
+                "id": "canonical-node-v1:b8cc9d8484f5c608ab4fd16c8fa699f60df84e2f488d03111e93b5101cc5d8d2"
+              },
+              "sourceFileId": "java:file"
+            }
+          ],
+          "usage": {
+            "rows": 0,
+            "serializedBytes": 27721,
+            "items": 3763,
+            "retainedLogicalBytes": 76029
+          }
+        },
+        "cost": {
+          "rows": 0,
+          "serializedBytes": 27721,
+          "items": 3763,
+          "retainedLogicalBytes": 76029,
+          "maxDepth": 8,
+          "memoryBudgetBytes": 152058
+        },
+        "ledger": [
+          {
+            "label": "complete callback input",
+            "items": 406,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 6492,
+            "depth": 8
+          },
+          {
+            "label": "complete callback input traverse",
+            "items": 406,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 8
+          },
+          {
+            "label": "complete callback input encode",
+            "items": 0,
+            "serializedBytes": 17312,
+            "retainedLogicalBytes": 17312,
+            "depth": 0
+          },
+          {
+            "label": "complete callback input parsed",
+            "items": 406,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 6492,
+            "depth": 8
+          },
+          {
+            "label": "metadata before schema",
+            "items": 352,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 5362,
+            "depth": 7
+          },
+          {
+            "label": "metadata after schema",
+            "items": 352,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 5362,
+            "depth": 7
+          },
+          {
+            "label": "target metadata before schema",
+            "items": 352,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 5362,
+            "depth": 7
+          },
+          {
+            "label": "target metadata after schema",
+            "items": 352,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 5362,
+            "depth": 7
+          },
+          {
+            "label": "inventory byte key",
+            "items": 0,
+            "serializedBytes": 8,
+            "retainedLogicalBytes": 8,
+            "depth": 0
+          },
+          {
+            "label": "inventory byte key",
+            "items": 0,
+            "serializedBytes": 9,
+            "retainedLogicalBytes": 9,
+            "depth": 0
+          },
+          {
+            "label": "inventory byte key",
+            "items": 0,
+            "serializedBytes": 6,
+            "retainedLogicalBytes": 6,
+            "depth": 0
+          },
+          {
+            "label": "inventory byte key",
+            "items": 0,
+            "serializedBytes": 8,
+            "retainedLogicalBytes": 8,
+            "depth": 0
+          },
+          {
+            "label": "metadata inventory",
+            "items": 25,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 501,
+            "depth": 3
+          },
+          {
+            "label": "complete inventory comparison",
+            "items": 51,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 1002,
+            "depth": 4
+          },
+          {
+            "label": "contracts and declared scope",
+            "items": 22,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 396,
+            "depth": 4
+          },
+          {
+            "label": "locator domain",
+            "items": 0,
+            "serializedBytes": 32,
+            "retainedLogicalBytes": 32,
+            "depth": 0
+          },
+          {
+            "label": "locator frame traverse",
+            "items": 3,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 1
+          },
+          {
+            "label": "locator frame encode",
+            "items": 0,
+            "serializedBytes": 54,
+            "retainedLogicalBytes": 54,
+            "depth": 0
+          },
+          {
+            "label": "locator prefix/scratch",
+            "items": 0,
+            "serializedBytes": 3,
+            "retainedLogicalBytes": 30,
+            "depth": 0
+          },
+          {
+            "label": "locator frame traverse",
+            "items": 6,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 0,
+            "depth": 2
+          },
+          {
+            "label": "locator frame encode",
+            "items": 0,
+            "serializedBytes": 146,
+            "retainedLogicalBytes": 146,
+            "depth": 0
+          },
+          {
+            "label": "locator prefix/scratch",
+            "items": 0,
+            "serializedBytes": 3,
+            "retainedLogicalBytes": 76,
+            "depth": 0
+          },
+          {
+            "label": "locator digest pin",
+            "items": 0,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 64,
+            "depth": 0
+          },
+          {
+            "label": "parsed Java hard JSON",
+            "items": 0,
+            "serializedBytes": 846,
+            "retainedLogicalBytes": 846,
+            "depth": 0
+          },
+          {
+            "label": "parsed Java hard JSON",
+            "items": 0,
+            "serializedBytes": 234,
+            "retainedLogicalBytes": 234,
+            "depth": 0
+          },
+          {
+            "label": "parsed Java hard JSON",
+            "items": 0,
+            "serializedBytes": 412,
+            "retainedLogicalBytes": 412,
+            "depth": 0
+          },
+          {
+            "label": "parsed Java hard JSON",
+            "items": 0,
+            "serializedBytes": 394,
+            "retainedLogicalBytes": 394,
+            "depth": 0
+          },
+          {
+            "label": "parsed Java hard JSON",
+            "items": 0,
+            "serializedBytes": 452,
+            "retainedLogicalBytes": 452,
+            "depth": 0
+          },
+          {
+            "label": "parsed Java hard JSON",
+            "items": 0,
+            "serializedBytes": 364,
+            "retainedLogicalBytes": 364,
+            "depth": 0
+          },
+          {
+            "label": "parsed Java hard JSON",
+            "items": 0,
+            "serializedBytes": 364,
+            "retainedLogicalBytes": 364,
+            "depth": 0
+          },
+          {
+            "label": "parsed Java hard JSON",
+            "items": 0,
+            "serializedBytes": 362,
+            "retainedLogicalBytes": 362,
+            "depth": 0
+          },
+          {
+            "label": "parsed Java hard JSON",
+            "items": 0,
+            "serializedBytes": 369,
+            "retainedLogicalBytes": 369,
+            "depth": 0
+          },
+          {
+            "label": "parsed Java hard JSON",
+            "items": 0,
+            "serializedBytes": 367,
+            "retainedLogicalBytes": 367,
+            "depth": 0
+          },
+          {
+            "label": "parsed Java hard JSON",
+            "items": 0,
+            "serializedBytes": 807,
+            "retainedLogicalBytes": 807,
+            "depth": 0
+          },
+          {
+            "label": "validated Java stream",
+            "items": 257,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 3648,
+            "depth": 6
+          },
+          {
+            "label": "Java source lookup",
+            "items": 13,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 251,
+            "depth": 3
+          },
+          {
+            "label": "normalizer input",
+            "items": 14,
+            "serializedBytes": 306,
+            "retainedLogicalBytes": 306,
+            "depth": 2
+          },
+          {
+            "label": "normalizer parsed",
+            "items": 14,
+            "serializedBytes": 306,
+            "retainedLogicalBytes": 306,
+            "depth": 2
+          },
+          {
+            "label": "normalizer base",
+            "items": 10,
+            "serializedBytes": 180,
+            "retainedLogicalBytes": 180,
+            "depth": 2
+          },
+          {
+            "label": "canonical draft fields",
+            "items": 11,
+            "serializedBytes": 196,
+            "retainedLogicalBytes": 196,
+            "depth": 2
+          },
+          {
+            "label": "normalizer identity fields",
+            "items": 5,
+            "serializedBytes": 52,
+            "retainedLogicalBytes": 52,
+            "depth": 1
+          },
+          {
+            "label": "normalizer field paths",
+            "items": 9,
+            "serializedBytes": 68,
+            "retainedLogicalBytes": 68,
+            "depth": 2
+          },
+          {
+            "label": "provider tuple node-fact-v1",
+            "items": 6,
+            "serializedBytes": 138,
+            "retainedLogicalBytes": 138,
+            "depth": 0
+          },
+          {
+            "label": "factKey array",
+            "items": 2,
+            "serializedBytes": 81,
+            "retainedLogicalBytes": 81,
+            "depth": 1
+          },
+          {
+            "label": "provider tuple canonical-node-v1",
+            "items": 3,
+            "serializedBytes": 180,
+            "retainedLogicalBytes": 180,
+            "depth": 0
+          },
+          {
+            "label": "final canonical draft",
+            "items": 13,
+            "serializedBytes": 376,
+            "retainedLogicalBytes": 376,
+            "depth": 2
+          },
+          {
+            "label": "final schema representation",
+            "items": 13,
+            "serializedBytes": 376,
+            "retainedLogicalBytes": 376,
+            "depth": 2
+          },
+          {
+            "label": "normalizer input",
+            "items": 19,
+            "serializedBytes": 364,
+            "retainedLogicalBytes": 364,
+            "depth": 2
+          },
+          {
+            "label": "normalizer parsed",
+            "items": 19,
+            "serializedBytes": 364,
+            "retainedLogicalBytes": 364,
+            "depth": 2
+          },
+          {
+            "label": "normalizer base",
+            "items": 15,
+            "serializedBytes": 250,
+            "retainedLogicalBytes": 250,
+            "depth": 2
+          },
+          {
+            "label": "canonical draft fields",
+            "items": 17,
+            "serializedBytes": 283,
+            "retainedLogicalBytes": 283,
+            "depth": 2
+          },
+          {
+            "label": "normalizer identity fields",
+            "items": 11,
+            "serializedBytes": 73,
+            "retainedLogicalBytes": 73,
+            "depth": 1
+          },
+          {
+            "label": "normalizer field paths",
+            "items": 26,
+            "serializedBytes": 228,
+            "retainedLogicalBytes": 228,
+            "depth": 2
+          },
+          {
+            "label": "provider tuple node-fact-v1",
+            "items": 12,
+            "serializedBytes": 161,
+            "retainedLogicalBytes": 161,
+            "depth": 0
+          },
+          {
+            "label": "factKey array",
+            "items": 2,
+            "serializedBytes": 81,
+            "retainedLogicalBytes": 81,
+            "depth": 1
+          },
+          {
+            "label": "provider tuple canonical-node-v1",
+            "items": 3,
+            "serializedBytes": 180,
+            "retainedLogicalBytes": 180,
+            "depth": 0
+          },
+          {
+            "label": "final canonical draft",
+            "items": 19,
+            "serializedBytes": 463,
+            "retainedLogicalBytes": 463,
+            "depth": 2
+          },
+          {
+            "label": "final schema representation",
+            "items": 19,
+            "serializedBytes": 463,
+            "retainedLogicalBytes": 463,
+            "depth": 2
+          },
+          {
+            "label": "complete normalized owner nodes",
+            "items": 70,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 1245,
+            "depth": 4
+          },
+          {
+            "label": "complete callback result",
+            "items": 428,
+            "serializedBytes": 0,
+            "retainedLogicalBytes": 6669,
+            "depth": 8
+          }
+        ],
+        "scope": "Closed class + compilation-unit pure Java owner Runtime callback only; no Native execution or Stage/Store publication qualification."
+      }
+    }
+  ]
+}

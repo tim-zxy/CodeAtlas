@@ -1,0 +1,31 @@
+{
+  "kind": "INDEPENDENT_JAVA_SOURCE_LITERAL_OWNER_ORACLE",
+  "sourceSha256": "fa9a07e5b149109de9313e541101b3363a014b87e18f469e91643781ed2833c1",
+  "spans": {
+    "className": [6, 22],
+    "methodName": [49, 63],
+    "methodDeclaration": [25, 68],
+    "annotation": [25, 43],
+    "argument": [32, 42]
+  },
+  "symbolFields": {
+    "classOwners": [],
+    "methodOwners": ["Endpoint_fixture"],
+    "methodSignature": "()",
+    "ordinal": 0
+  },
+  "counts": {
+    "nodes": 0,
+    "edges": 0,
+    "syntax": 2,
+    "coverage": 1,
+    "diagnostics": 0
+  },
+  "limitations": [
+    "SYNTHETIC_UNIT_REPO_AND_PROVISIONAL_CONTEXT",
+    "EXISTING_UNIT_CONTROLS_ONLY",
+    "NO_V4_JAVA_CODE_EMISSION",
+    "NO_LIVE_RUNTIME_STAGE_OR_STORE_AUTHENTICATION",
+    "NO_ACTUAL_NATIVE_PROCESS_PROFILE"
+  ]
+}

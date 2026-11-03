@@ -1,0 +1,54 @@
+{
+  "expectedActivationBasis": {
+    "repositoryId": "repo:one",
+    "revisionId": "revision:worktree",
+    "contentFingerprint": "content:previous",
+    "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "targetSource": {
+    "repositoryId": "repo:one",
+    "revisionId": "revision:worktree",
+    "contentFingerprint": "content:first"
+  },
+  "ownerBinding": {
+    "kind": "PROVISIONAL_CODE",
+    "stageDigest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+  },
+  "providerId": "native",
+  "providerSnapshotId": "snapshot:one",
+  "sourceFiles": [
+    {
+      "id": "file:one",
+      "repositoryId": "repo:one",
+      "revisionId": "revision:worktree",
+      "path": "Endpoint.java",
+      "contentFingerprint": "sha256:fa9a07e5b149109de9313e541101b3363a014b87e18f469e91643781ed2833c1",
+      "classification": {
+        "role": "SOURCE",
+        "provenance": "AUTHORED",
+        "contentKind": "TEXT"
+      },
+      "languageHint": "java",
+      "sensitivity": "INTERNAL"
+    }
+  ],
+  "owners": [
+    {
+      "sourceFileId": "file:one",
+      "providerNodeRef": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "java-symbol-v1:c406b4884df2f824f51e3e7c272d7f301a7536f25355a8c60b2639f6577cfd9a"
+      },
+      "canonicalRef": {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo:one",
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "canonical-node-v1:31633c86cdc06cf4b4aab9182e50e22ee05d40cbc80f973b86277fc482aacaa3",
+          "revisionId": "revision:worktree"
+        }
+      }
+    }
+  ]
+}

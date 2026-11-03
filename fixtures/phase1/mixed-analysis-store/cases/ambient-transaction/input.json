@@ -1,0 +1,4 @@
+{
+  "scenario": "ambient-transaction",
+  "base": "base-input.json"
+}

@@ -1,0 +1,4 @@
+{
+  "scenario": "unsafe-cycle",
+  "base": "base-input.json"
+}

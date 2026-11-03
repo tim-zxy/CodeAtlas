@@ -1,0 +1,5 @@
+{
+  "state": "PREPARING",
+  "method": "apply",
+  "base": "base-input.json"
+}

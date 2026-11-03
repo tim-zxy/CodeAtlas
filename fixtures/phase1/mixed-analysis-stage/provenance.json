@@ -1,0 +1,8 @@
+{
+  "kind": "INDEPENDENT_PRE_PRODUCT_DESIGN_EXPECTATIONS",
+  "designs": ["H1 §3–7", "mapping §4–7", "accepted syntax-surface-support-v1"],
+  "measurementEligible": false,
+  "sourceOrHistoryAuthenticated": false,
+  "scoreMeaning": "Normative support tier; not measured probability",
+  "newQualityThresholds": null
+}

@@ -1884,6 +1884,98 @@ impl<'a, W: Write> EventWriter<'a, W> {
 #[cfg(test)]
 mod tests {
     #[test]
+    #[ignore = "explicit approved seven-Java actual Code library capture only"]
+    fn phase1_ab_code_source_capture() {
+        use std::{
+            fs,
+            io::Write,
+            path::PathBuf,
+            time::{SystemTime, UNIX_EPOCH},
+        };
+        let task = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .join("../../.superpowers/sdd/2026-10-31-phase1-b-remaining-execution/ab-local-closure")
+            .canonicalize()
+            .unwrap();
+        let input =
+            PathBuf::from(std::env::var_os("CODEATLAS_AB_BATCH_INPUT").expect("explicit input"))
+                .canonicalize()
+                .unwrap();
+        let output =
+            PathBuf::from(std::env::var_os("CODEATLAS_AB_BATCH_OUTPUT").expect("explicit output"))
+                .canonicalize()
+                .unwrap();
+        assert!(input.starts_with(&task) && output.starts_with(&task));
+        assert_eq!(fs::read_dir(&output).unwrap().count(), 0);
+        let pack: serde_json::Value =
+            serde_json::from_slice(&fs::read(input.join("code-requests.json")).unwrap()).unwrap();
+        let cases = pack["cases"].as_array().unwrap();
+        assert_eq!(cases.len(), 7);
+        fn save(p: &std::path::Path, b: &[u8]) {
+            let mut f = fs::OpenOptions::new()
+                .write(true)
+                .create_new(true)
+                .open(p)
+                .unwrap();
+            f.write_all(b).unwrap();
+            f.flush().unwrap();
+        }
+        let mut failures = vec![];
+        for case in cases {
+            let id = case["id"].as_str().unwrap();
+            assert!(matches!(id, "J1" | "J2" | "J3" | "J4" | "J5" | "J6" | "J7"));
+            let request = case["request"].clone();
+            assert_eq!(request["protocolVersion"], 2);
+            let p = &request["payload"];
+            assert!(
+                PathBuf::from(p["repository"]["rootPath"].as_str().unwrap())
+                    .canonicalize()
+                    .unwrap()
+                    .starts_with(&task)
+            );
+            assert_eq!(p["sourceFiles"].as_array().unwrap().len(), 1);
+            assert_eq!(
+                p["resourceBudget"],
+                serde_json::json!({"maxDurationMs":30000,"maxMemoryBytes":64000000,"maxEvents":10000})
+            );
+            let mut rb = serde_json::to_vec(&request).unwrap();
+            rb.push(b'\n');
+            save(&output.join(format!("{id}.request.jsonl")), &rb);
+            let started = SystemTime::now()
+                .duration_since(UNIX_EPOCH)
+                .unwrap()
+                .as_millis();
+            let mut raw = vec![];
+            let mut diagnostics = vec![];
+            let result = super::run(
+                request,
+                NonZeroUsize::new(1).unwrap(),
+                &mut raw,
+                &mut diagnostics,
+            );
+            let settled = SystemTime::now()
+                .duration_since(UNIX_EPOCH)
+                .unwrap()
+                .as_millis();
+            save(&output.join(format!("{id}.output.jsonl")), &raw);
+            save(&output.join(format!("{id}.stderr")), &diagnostics);
+            let events: Vec<serde_json::Value> = raw
+                .split(|b| *b == b'\n')
+                .filter(|l| !l.is_empty())
+                .map(|l| serde_json::from_slice(l).unwrap())
+                .collect();
+            let terminal = events.last().cloned().unwrap_or(serde_json::Value::Null);
+            save(&output.join(format!("{id}.settlement.json")),&serde_json::to_vec_pretty(&serde_json::json!({"kind":"ACTUAL_CODE_LIBRARY_TEST","startedAtEpochMs":started,"settledAtEpochMs":settled,"terminal":terminal,"ioError":result.as_ref().err().map(ToString::to_string)})).unwrap());
+            if result.is_err() || terminal["type"] != "ANALYSIS_COMPLETED" {
+                failures.push(id.to_owned());
+            }
+        }
+        assert!(
+            failures.is_empty(),
+            "actual Java Code failures (all raw retained): {failures:?}"
+        );
+    }
+
+    #[test]
     fn retained_fact_digest_omits_only_snapshot() {
         let mut payload = serde_json::json!({"providerSnapshotId":"old","name":"𝒜","n":1});
         let expected = format!(

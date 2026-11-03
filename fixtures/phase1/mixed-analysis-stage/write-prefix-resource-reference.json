@@ -1,0 +1,496 @@
+{
+  "schemaVersion": 1,
+  "qualification": "Nineteen original SQL boundary classes with independently frozen complete prefixes; original process-exit evidence reused, no new Native/crash execution",
+  "schemaSource": {
+    "path": "fixtures/phase1/mixed-analysis-stage/zero-store-schema-reference.json",
+    "sha256": "0b0eacfeed822326225a20023db159dbe884904cab489e35489a9c9ee861c152"
+  },
+  "models": [
+    {
+      "path": "fixtures/phase1/mixed-analysis-stage/independent-initial-write-prefix-resource-model.mjs",
+      "sha256": "3bf8e11933bd21cf0c8d1d6cfe2046f4e7e7c96d94391218a53c19b58fd88ddd"
+    },
+    {
+      "path": "fixtures/phase1/mixed-analysis-stage/independent-active-write-prefix-resource-model.mjs",
+      "sha256": "7b969ce87b25475fd84502e0e530c15bdce591ad3ff672b111afddbde05e5f2d"
+    }
+  ],
+  "cases": [
+    {
+      "id": "snapshot",
+      "point": "snapshot",
+      "active": false,
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-stage/nonempty-store-resource-reference.json",
+        "sha256": "bb8c141f1e8fd12d263dcdee7e4debad5d8bed6e845e5818926b3d3cee253db0"
+      },
+      "expected": {
+        "state": {
+          "rows": 957,
+          "serializedBytes": 3567350,
+          "items": 99471,
+          "retainedLogicalBytes": 4155166
+        },
+        "required": {
+          "maxRows": 957,
+          "maxSerializedBytes": 3567350,
+          "maxItems": 99471,
+          "maxDepth": 10,
+          "memoryBudgetBytes": 8310332
+        }
+      },
+      "committed": false
+    },
+    {
+      "id": "capabilities",
+      "point": "capabilities",
+      "active": false,
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-stage/nonempty-store-resource-reference.json",
+        "sha256": "bb8c141f1e8fd12d263dcdee7e4debad5d8bed6e845e5818926b3d3cee253db0"
+      },
+      "expected": {
+        "state": {
+          "rows": 958,
+          "serializedBytes": 3567391,
+          "items": 99481,
+          "retainedLogicalBytes": 4155278
+        },
+        "required": {
+          "maxRows": 958,
+          "maxSerializedBytes": 3567391,
+          "maxItems": 99481,
+          "maxDepth": 10,
+          "memoryBudgetBytes": 8310556
+        }
+      },
+      "committed": false
+    },
+    {
+      "id": "evidence-retire",
+      "point": "evidence-retire",
+      "active": true,
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-stage/active-full-resource-reference.json",
+        "sha256": "73099973f067ac73f49c9af0893193b0512901bf270ee82a74163f0d908688d1"
+      },
+      "expected": {
+        "state": {
+          "rows": 1712,
+          "serializedBytes": 5726437,
+          "items": 109381,
+          "retainedLogicalBytes": 7404234
+        },
+        "required": {
+          "maxRows": 1712,
+          "maxSerializedBytes": 5726437,
+          "maxItems": 109381,
+          "maxDepth": 9,
+          "memoryBudgetBytes": 14808468
+        }
+      },
+      "committed": false
+    },
+    {
+      "id": "evidence-insert",
+      "point": "evidence-insert",
+      "active": false,
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-stage/nonempty-store-resource-reference.json",
+        "sha256": "bb8c141f1e8fd12d263dcdee7e4debad5d8bed6e845e5818926b3d3cee253db0"
+      },
+      "expected": {
+        "state": {
+          "rows": 972,
+          "serializedBytes": 3569992,
+          "items": 99721,
+          "retainedLogicalBytes": 4161300
+        },
+        "required": {
+          "maxRows": 972,
+          "maxSerializedBytes": 3569992,
+          "maxItems": 99721,
+          "maxDepth": 10,
+          "memoryBudgetBytes": 8322600
+        }
+      },
+      "committed": false
+    },
+    {
+      "id": "binding",
+      "point": "binding",
+      "active": false,
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-stage/nonempty-store-resource-reference.json",
+        "sha256": "bb8c141f1e8fd12d263dcdee7e4debad5d8bed6e845e5818926b3d3cee253db0"
+      },
+      "expected": {
+        "state": {
+          "rows": 986,
+          "serializedBytes": 3571844,
+          "items": 99891,
+          "retainedLogicalBytes": 4167044
+        },
+        "required": {
+          "maxRows": 986,
+          "maxSerializedBytes": 3571844,
+          "maxItems": 99891,
+          "maxDepth": 10,
+          "memoryBudgetBytes": 8334088
+        }
+      },
+      "committed": false
+    },
+    {
+      "id": "candidate",
+      "point": "candidate",
+      "active": false,
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-stage/nonempty-store-resource-reference.json",
+        "sha256": "bb8c141f1e8fd12d263dcdee7e4debad5d8bed6e845e5818926b3d3cee253db0"
+      },
+      "expected": {
+        "state": {
+          "rows": 991,
+          "serializedBytes": 3574062,
+          "items": 99970,
+          "retainedLogicalBytes": 4171123
+        },
+        "required": {
+          "maxRows": 991,
+          "maxSerializedBytes": 3574062,
+          "maxItems": 99970,
+          "maxDepth": 10,
+          "memoryBudgetBytes": 8342246
+        }
+      },
+      "committed": false
+    },
+    {
+      "id": "node",
+      "point": "node",
+      "active": false,
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-stage/nonempty-store-resource-reference.json",
+        "sha256": "bb8c141f1e8fd12d263dcdee7e4debad5d8bed6e845e5818926b3d3cee253db0"
+      },
+      "expected": {
+        "state": {
+          "rows": 964,
+          "serializedBytes": 3567766,
+          "items": 99536,
+          "retainedLogicalBytes": 4156182
+        },
+        "required": {
+          "maxRows": 964,
+          "maxSerializedBytes": 3567766,
+          "maxItems": 99536,
+          "maxDepth": 10,
+          "memoryBudgetBytes": 8312364
+        }
+      },
+      "committed": false
+    },
+    {
+      "id": "edge",
+      "point": "edge",
+      "active": false,
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-stage/nonempty-store-resource-reference.json",
+        "sha256": "bb8c141f1e8fd12d263dcdee7e4debad5d8bed6e845e5818926b3d3cee253db0"
+      },
+      "expected": {
+        "state": {
+          "rows": 967,
+          "serializedBytes": 3569003,
+          "items": 99635,
+          "retainedLogicalBytes": 4158769
+        },
+        "required": {
+          "maxRows": 967,
+          "maxSerializedBytes": 3569003,
+          "maxItems": 99635,
+          "maxDepth": 10,
+          "memoryBudgetBytes": 8317538
+        }
+      },
+      "committed": false
+    },
+    {
+      "id": "coverage",
+      "point": "coverage",
+      "active": false,
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-stage/nonempty-store-resource-reference.json",
+        "sha256": "bb8c141f1e8fd12d263dcdee7e4debad5d8bed6e845e5818926b3d3cee253db0"
+      },
+      "expected": {
+        "state": {
+          "rows": 996,
+          "serializedBytes": 3581073,
+          "items": 100100,
+          "retainedLogicalBytes": 4181226
+        },
+        "required": {
+          "maxRows": 996,
+          "maxSerializedBytes": 3581073,
+          "maxItems": 100100,
+          "maxDepth": 10,
+          "memoryBudgetBytes": 8362452
+        }
+      },
+      "committed": false
+    },
+    {
+      "id": "code-identity",
+      "point": "code-identity",
+      "active": false,
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-stage/nonempty-store-resource-reference.json",
+        "sha256": "bb8c141f1e8fd12d263dcdee7e4debad5d8bed6e845e5818926b3d3cee253db0"
+      },
+      "expected": {
+        "state": {
+          "rows": 1000,
+          "serializedBytes": 3581260,
+          "items": 100134,
+          "retainedLogicalBytes": 4181727
+        },
+        "required": {
+          "maxRows": 1001,
+          "maxSerializedBytes": 3581261,
+          "maxItems": 100135,
+          "maxDepth": 10,
+          "memoryBudgetBytes": 8363455
+        }
+      },
+      "committed": false
+    },
+    {
+      "id": "native-state-clear",
+      "point": "native-state-clear",
+      "active": false,
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-stage/nonempty-store-resource-reference.json",
+        "sha256": "bb8c141f1e8fd12d263dcdee7e4debad5d8bed6e845e5818926b3d3cee253db0"
+      },
+      "expected": {
+        "state": {
+          "rows": 1141,
+          "serializedBytes": 3608145,
+          "items": 101200,
+          "retainedLogicalBytes": 4193760
+        },
+        "required": {
+          "maxRows": 1141,
+          "maxSerializedBytes": 3608145,
+          "maxItems": 101200,
+          "maxDepth": 10,
+          "memoryBudgetBytes": 8391560
+        }
+      },
+      "committed": false
+    },
+    {
+      "id": "origin",
+      "point": "origin",
+      "active": false,
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-stage/nonempty-store-resource-reference.json",
+        "sha256": "bb8c141f1e8fd12d263dcdee7e4debad5d8bed6e845e5818926b3d3cee253db0"
+      },
+      "expected": {
+        "state": {
+          "rows": 1143,
+          "serializedBytes": 3611445,
+          "items": 101223,
+          "retainedLogicalBytes": 4203874
+        },
+        "required": {
+          "maxRows": 1143,
+          "maxSerializedBytes": 3611445,
+          "maxItems": 101223,
+          "maxDepth": 10,
+          "memoryBudgetBytes": 8407748
+        }
+      },
+      "committed": false
+    },
+    {
+      "id": "projection",
+      "point": "projection",
+      "active": false,
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-stage/nonempty-store-resource-reference.json",
+        "sha256": "bb8c141f1e8fd12d263dcdee7e4debad5d8bed6e845e5818926b3d3cee253db0"
+      },
+      "expected": {
+        "state": {
+          "rows": 1149,
+          "serializedBytes": 3620070,
+          "items": 101289,
+          "retainedLogicalBytes": 4230356
+        },
+        "required": {
+          "maxRows": 1149,
+          "maxSerializedBytes": 3620070,
+          "maxItems": 101289,
+          "maxDepth": 10,
+          "memoryBudgetBytes": 8460712
+        }
+      },
+      "committed": false
+    },
+    {
+      "id": "history",
+      "point": "history",
+      "active": false,
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-stage/nonempty-store-resource-reference.json",
+        "sha256": "bb8c141f1e8fd12d263dcdee7e4debad5d8bed6e845e5818926b3d3cee253db0"
+      },
+      "expected": {
+        "state": {
+          "rows": 1155,
+          "serializedBytes": 3676056,
+          "items": 101856,
+          "retainedLogicalBytes": 4330129
+        },
+        "required": {
+          "maxRows": 1155,
+          "maxSerializedBytes": 3676056,
+          "maxItems": 101856,
+          "maxDepth": 10,
+          "memoryBudgetBytes": 8660258
+        }
+      },
+      "committed": false
+    },
+    {
+      "id": "members",
+      "point": "members",
+      "active": false,
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-stage/nonempty-store-resource-reference.json",
+        "sha256": "bb8c141f1e8fd12d263dcdee7e4debad5d8bed6e845e5818926b3d3cee253db0"
+      },
+      "expected": {
+        "state": {
+          "rows": 1157,
+          "serializedBytes": 3676288,
+          "items": 101875,
+          "retainedLogicalBytes": 4331145
+        },
+        "required": {
+          "maxRows": 1157,
+          "maxSerializedBytes": 3676288,
+          "maxItems": 101875,
+          "maxDepth": 10,
+          "memoryBudgetBytes": 8662290
+        }
+      },
+      "committed": false
+    },
+    {
+      "id": "pointer",
+      "point": "pointer",
+      "active": false,
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-stage/nonempty-store-resource-reference.json",
+        "sha256": "bb8c141f1e8fd12d263dcdee7e4debad5d8bed6e845e5818926b3d3cee253db0"
+      },
+      "expected": {
+        "state": {
+          "rows": 1163,
+          "serializedBytes": 3676843,
+          "items": 101921,
+          "retainedLogicalBytes": 4333377
+        },
+        "required": {
+          "maxRows": 1163,
+          "maxSerializedBytes": 3676843,
+          "maxItems": 101921,
+          "maxDepth": 10,
+          "memoryBudgetBytes": 8666754
+        }
+      },
+      "committed": false
+    },
+    {
+      "id": "pre-commit",
+      "point": "pre-commit",
+      "active": false,
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-stage/nonempty-store-resource-reference.json",
+        "sha256": "bb8c141f1e8fd12d263dcdee7e4debad5d8bed6e845e5818926b3d3cee253db0"
+      },
+      "expected": {
+        "state": {
+          "rows": 1332,
+          "serializedBytes": 3945908,
+          "items": 102984,
+          "retainedLogicalBytes": 4656094
+        },
+        "required": {
+          "maxRows": 1332,
+          "maxSerializedBytes": 3945908,
+          "maxItems": 102984,
+          "maxDepth": 10,
+          "memoryBudgetBytes": 9312188
+        }
+      },
+      "committed": false
+    },
+    {
+      "id": "commit-unknown",
+      "point": "commit-unknown",
+      "active": false,
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-stage/nonempty-store-resource-reference.json",
+        "sha256": "bb8c141f1e8fd12d263dcdee7e4debad5d8bed6e845e5818926b3d3cee253db0"
+      },
+      "expected": {
+        "state": {
+          "rows": 1332,
+          "serializedBytes": 3945908,
+          "items": 102984,
+          "retainedLogicalBytes": 4656094
+        },
+        "required": {
+          "maxRows": 1332,
+          "maxSerializedBytes": 3945908,
+          "maxItems": 102984,
+          "maxDepth": 10,
+          "memoryBudgetBytes": 9312188
+        }
+      },
+      "committed": true
+    },
+    {
+      "id": "post-commit-close",
+      "point": "post-commit-close",
+      "active": false,
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-stage/nonempty-store-resource-reference.json",
+        "sha256": "bb8c141f1e8fd12d263dcdee7e4debad5d8bed6e845e5818926b3d3cee253db0"
+      },
+      "expected": {
+        "state": {
+          "rows": 1332,
+          "serializedBytes": 3945908,
+          "items": 102984,
+          "retainedLogicalBytes": 4656094
+        },
+        "required": {
+          "maxRows": 1332,
+          "maxSerializedBytes": 3945908,
+          "maxItems": 102984,
+          "maxDepth": 10,
+          "memoryBudgetBytes": 9312188
+        }
+      },
+      "committed": true
+    }
+  ],
+  "positiveRemainderWitness": "Before first Code reader SQL, HistoryReadBudget.remaining requires strictly positive rows/bytes/items/memory; value1 is an admissibility witness only and no consumption is invented."
+}

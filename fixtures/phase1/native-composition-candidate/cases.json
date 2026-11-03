@@ -1,0 +1,127 @@
+[
+  {
+    "id": "empty",
+    "metadata": "empty/metadata.json",
+    "request": "empty/request.jsonl",
+    "output": "empty/output.jsonl",
+    "expected": "empty/expected.json",
+    "sources": []
+  },
+  {
+    "id": "python-only",
+    "metadata": "python-only/metadata.json",
+    "request": "python-only/request.jsonl",
+    "output": "python-only/output.jsonl",
+    "expected": "python-only/expected.json",
+    "sources": [
+      "python-only/sources/app.py"
+    ]
+  },
+  {
+    "id": "java-only",
+    "metadata": "java-only/metadata.json",
+    "request": "java-only/request.jsonl",
+    "output": "java-only/output.jsonl",
+    "expected": "java-only/expected.json",
+    "sources": [
+      "java-only/sources/Box.java"
+    ]
+  },
+  {
+    "id": "mixed",
+    "metadata": "mixed/metadata.json",
+    "request": "mixed/request.jsonl",
+    "output": "mixed/output.jsonl",
+    "expected": "mixed/expected.json",
+    "sources": [
+      "mixed/sources/Box.java",
+      "mixed/sources/app.py"
+    ]
+  },
+  {
+    "id": "python-partial",
+    "metadata": "python-partial/metadata.json",
+    "request": "python-partial/request.jsonl",
+    "output": "python-partial/output.jsonl",
+    "expected": "python-partial/expected.json",
+    "sources": [
+      "python-partial/sources/app.py"
+    ]
+  },
+  {
+    "id": "syntax-partial",
+    "metadata": "syntax-partial/metadata.json",
+    "request": "syntax-partial/request.jsonl",
+    "output": "syntax-partial/output.jsonl",
+    "expected": "syntax-partial/expected.json",
+    "sources": [
+      "syntax-partial/sources/app.py"
+    ]
+  },
+  {
+    "id": "java-partial",
+    "metadata": "java-partial/metadata.json",
+    "request": "java-partial/request.jsonl",
+    "output": "java-partial/output.jsonl",
+    "expected": "java-partial/expected.json",
+    "sources": [
+      "java-partial/sources/Box.java",
+      "java-partial/sources/app.py"
+    ]
+  },
+  {
+    "id": "mismatched-target",
+    "metadata": "mismatched-target/metadata.json",
+    "request": "mismatched-target/request.jsonl",
+    "output": "mismatched-target/output.jsonl",
+    "expected": "mismatched-target/expected.json",
+    "sources": [
+      "mismatched-target/sources/Box.java",
+      "mismatched-target/sources/app.py"
+    ]
+  },
+  {
+    "id": "mismatched-snapshot",
+    "metadata": "mismatched-snapshot/metadata.json",
+    "request": "mismatched-snapshot/request.jsonl",
+    "output": "mismatched-snapshot/output.jsonl",
+    "expected": "mismatched-snapshot/expected.json",
+    "sources": [
+      "mismatched-snapshot/sources/Box.java",
+      "mismatched-snapshot/sources/app.py"
+    ]
+  },
+  {
+    "id": "inventory-omission",
+    "metadata": "inventory-omission/metadata.json",
+    "request": "inventory-omission/request.jsonl",
+    "output": "inventory-omission/output.jsonl",
+    "expected": "inventory-omission/expected.json",
+    "sources": [
+      "inventory-omission/sources/Box.java",
+      "inventory-omission/sources/app.py"
+    ]
+  },
+  {
+    "id": "unsupported-source",
+    "metadata": "unsupported-source/metadata.json",
+    "request": "unsupported-source/request.jsonl",
+    "output": "unsupported-source/output.jsonl",
+    "expected": "unsupported-source/expected.json",
+    "sources": [
+      "unsupported-source/sources/Box.java",
+      "unsupported-source/sources/app.py"
+    ]
+  },
+  {
+    "id": "temporal-mismatch",
+    "metadata": "temporal-mismatch/metadata.json",
+    "request": "temporal-mismatch/request.jsonl",
+    "output": "temporal-mismatch/output.jsonl",
+    "expected": "temporal-mismatch/expected.json",
+    "sources": [
+      "temporal-mismatch/sources/Box.java",
+      "temporal-mismatch/sources/app.py"
+    ]
+  }
+]

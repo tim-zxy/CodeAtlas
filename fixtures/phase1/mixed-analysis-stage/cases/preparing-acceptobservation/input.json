@@ -1,0 +1,5 @@
+{
+  "state": "PREPARING",
+  "method": "acceptObservation",
+  "base": "base-input.json"
+}
