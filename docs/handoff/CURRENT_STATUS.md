@@ -1,3 +1,47 @@
+## R5 草稿资产与本地 CI 接入核验 — 2026-11-04
+
+同仓草稿 433386530 的资产 707690867 已上传。GitHub 确认 271749831 bytes，SHA-256 44cc411d72f5a25539fa8fbdd8e18e7cde9ecfd93f4c1f5353424d6f4541d8e4，目标 433015700c7c701a6493f7f8fa5eace00e773913。新增 R5 批准记录，保留 R4 原记录供历史检查。Native CI 的下载与收集使用同一 R5 记录，临时 checkout 在收集退出后恢复 R4 原字节。两版 schema、52 项 Native 源码、严格 ZIP 校验、8 条历史 Source 检查、PowerShell 解析及模拟退出 37 时的恢复均通过。后续发布与云端集成待准确候选审批。详见[集成计划](../superpowers/plans/2026-11-04-phase1-r5-exact-pack-integration.md)。
+
+## R5 Q3最终本地结算 — 2026-11-04
+
+用户另行批准一次固定R5 context续接后，D exit0、22/22 ACTUAL_ADMITTED、0failure；实际最高350482432＜批准399069184 bytes，耗时51分47秒。与此前27/27必需profile观察、15/15 ACTUAL_PRIVATE_PORT各自构成本地Q3退出，四用途批准值已安装。候选/环境/22类覆盖/持久状态/transaction与TEMP关闭、原工具及Native pin终审通过。[准确结果与原失败](../superpowers/reviews/2026-11-03-phase1-native-profile-installation-review.md)；唯一索引为原B results.nativeCiQualificationPreparation.q3.finalExit。
+
+原D缺context失败、旧状态和全部证据保留；没有重复27/15/320/64、构建、产品测试或新增collector。复用产品未变的原编译/10项定向测试/架构17证据。R5试验后不宣称pristine，未来打包仍须原strict reader/guard，不手动恢复或伪造ownership。Phase1仍4/21接受、17OPEN，Syntax/A6/E02及UNKNOWN风险保持；无新独立整分支评审、Git或云端操作。下方历史待批/未执行文字由本次明确批准及实际证据限定替代，原文逐字节保留。
+
+## R5数值已批准安装，Q3本地部分通过／D入口拒绝 — 2026-11-03
+
+用户已批准准确四用途值及Q3：READ_SEAL/FULL_TRANSPORT各226656256，REFRESH_VERIFY407248896，REFRESH_TRANSPORT399069184 bytes。三个静态条目/13原字节证据/旧数据与空Syntax catalog保留；Runtime编译、正式入口定向10/10、架构17及具名格式通过，编译身份及原3053依赖不变。[任务/证据与作者审查](../superpowers/reviews/2026-11-03-phase1-native-profile-installation-review.md)为本次准确入口。
+
+一次实际观察27/27＋私有验证15/15通过；D通用CLI因缺R5 context、默认target/debug根而被原依赖门禁拒绝，Native启动0/D实际观察0，未评估pristine。整批失败即停，未重试或修改ownership/DB；D实际22与完整Q3未通过，CI/Release/Git未授权。原22qualification/320校准/64holdout不重跑、不与本批相加。原Phase1四项接受/17OPEN、Syntax/A6/E02及UNKNOWN风险保持；下方待数值/运行文字仅保留历史。
+
+## Q1/Q2完整本地资格批次已结束，准确数值待审批 — 2026-11-03
+
+用户批准的一次八入口批次全部exit0：22qualification、320校准、64独立holdout，失败0；耗时3小时59分50秒，无重试、额外构建/重采。只读终审核对全部类/重复号/环境/candidate SHA及M＋J，33工具/辅助与52Native Source pin前后相同。Native SHA0fe1b8337be2263684cf5c1c7e1df32c1391245761bf0ec6943e95962418eb17，Node编译身份726ffb...。准确结果归原B results.nativeCiQualificationPreparation.actualBatchResult及r5-final-numeric-audit.json。
+
+[具体数值审查](../superpowers/specs/2026-11-03-phase1-native-profile-numeric-review.md)及[集中安装/一次准入验证包](../superpowers/plans/2026-11-03-phase1-native-profile-installation.md)待批准：READ_SEAL 226656256；FULL_TRANSPORT 226656256；REFRESH_VERIFY 407248896；REFRESH_TRANSPORT 399069184 bytes。当前只有候选证据，没有安装、admitted actual22、Release/下载、云端或Git写入。新Syntax/A6/E02、Phase1四项接受/17OPEN、历史Native timeout及两项普通Node timeout UNKNOWN均保持。以下RUNNING/待真实批准为原始历史，由本次完整限定结果替代。
+
+## R5有界准备离线完成，真实批次可集中审查 — 2026-11-03
+
+用户已批准[B1–B2整包](../superpowers/plans/2026-11-03-phase1-bounded-native-preparation.md)。私有Source范围/helper及四个R5准备分支已完成；旧根/无context、原当前Native边界/Source/Store/相邻拒绝保持。最终纯scope/版本隔离4/4、六JS语法和具名格式通过，未执行四个真实边界入口。原Q040/40不重复计数，不重跑全root。
+
+八个顶层Node命令的准确清单已闭合：320校准/64独立holdout及qualification/functional/嵌套调用，上界2066 Native、580 Node，另一次cargo build/一次rustc描述（编译内部子进程不假称固定数）。全新输出当前均不存在；源码/工具/52项Native source以原B r5-run-manifest-preparation.json固定，状态REVIEW_READY_EXECUTION_NOT_AUTHORIZED。真实运行与未知数值/安装、admitted actual、Release/CI/Git仍未授权；本轮没有实际Native/Rust/helper/DB/构建/下载或Git写入。上一轮意外构建与授权两文件归档证据继续保留，不算资格。原Phase14/21、17OPEN、A6/E02及两类UNKNOWN风险保持。
+
+## R5有限准备方案已形成，待整包批准 — 2026-11-03
+
+[有界设计](../superpowers/specs/2026-11-03-phase1-bounded-native-preparation-design.md)与[B1/B2集中离线包](../superpowers/plans/2026-11-03-phase1-bounded-native-preparation.md)基于八项原boundary的长度/SHA和已批准archive.entries只读匹配；只提议限定R5 Source枚举范围、保留当前Native逐项证明/原next拒绝，范围不足即失败，不引入新产品数值或旧资格移植。未读SQLite、未改工具或运行测试/构建/Native/CI/Git；1848仅八类边界准备上界，完整实际批次仍待闭合。原Q040/40、事故/授权归档及CI/Phase1 HOLD保持。
+
+## R5离线兼容已实施，真实批次仍待次数封闭 — 2026-11-03
+
+用户已批准[集中设计与Q0](../superpowers/plans/2026-11-03-phase1-native-ci-qualification.md)。新默认R5/旧四版本/五根隔离/严格记录与临时ownership定向40/40通过；CI仅追加R5失败fallback，未启动云端。真实清单只读展开后为NOT_READY_DISCOVERY_RUN_BOUND：320校准/64holdout外，prepare包含动态边界发现、functional/oracle/Native启动；不能给空白运行授权。产品模块/Fixture/注册/数值/依赖不变，Git head仍be41b9b2dfd58661388000689bd9769b8f3b5fb7，未暂存或提交。
+
+首轮负向测试错误意外触发rustc描述1次、cargo build1次（成功）并产生R5两份失败输出，在旧R4 EEXIST处停止；没有Native执行/语料/测量或资格。已按另行明确批准逐SHA归档这两文件并移除本次文件及空目录，R5当前不存在；原失败保留，后续安全RED与40/40 GREEN未再构建。准确命令/事故/归档/清单归原B results.nativeCiQualificationPreparation，不以新构建冒称资格。CI/合入、A6/E02及Phase14/21、17OPEN保持，两个普通Node超时与历史Native超时分别UNKNOWN。
+
+## Native CI资格集中方案已准备，实际运行仍HOLD — 2026-11-03
+
+已按用户同意完成[集中设计](../superpowers/specs/2026-11-03-phase1-native-ci-qualification-design.md)与[Q0离线准备任务包](../superpowers/plans/2026-11-03-phase1-native-ci-qualification.md)，待固定R5附约/离线实施批准。只读Git确认head be41b9b2dfd58661388000689bd9769b8f3b5fb7；旧exact-pack的Native source清单28项，当前52项（24新增/6修改/0删除），不能仅补profile后复用旧包。建议复用既有工具新增固定R5，保留mutable R4及全部旧证据。原320校准/64独立holdout不含语料准备、22类qualification或actual22；真实总启动范围需Q0展开并冻结，不能空白授权。
+
+本轮仅文档/只读核验，没有工具/产品修改、测试/编译/Native/collector/下载、Git或云端写入。CI/合入仍HOLD；Syntax/A6和Phase1原4/21、17OPEN保持。两个普通Node超时与历史Native超时分别UNKNOWN，原main取消状态不查询。准确准备证据归原B results.json.nativeCiQualificationPreparation。
+
 ## Phase1集成准备：本地核验与审查候选，云端HOLD — 2026-11-03
 
 用户已批准[准备整包](../superpowers/specs/2026-11-03-phase1-integration-readiness-proposal.md)及[Evaluation最小兼容修订](../superpowers/specs/2026-11-03-phase1-evaluation-schema-compatibility-proposal.md)。本轮仅固定既有工作树的本地审查候选，parent为经再次核实的main433015700c7c701a6493f7f8fa5eace00e773913；准确head/tree/parent以Git及原B results.json.integrationPreparation.gitCandidate为准，不push/PR/CI/merge。原物理main、旧分支和本地证据保留。

@@ -1,0 +1,168 @@
+{
+  "schemaVersion": 2,
+  "workspace": "REFRESH_TRANSPORT",
+  "status": "PROVISIONAL_REVIEW_REQUIRED",
+  "environment": {
+    "node": "v24.15.0",
+    "v8": "13.6.233.17-node.48",
+    "platform": "win32",
+    "arch": "x64",
+    "zodVersion": "4.6.1",
+    "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+    "corpusRevision": "p05-native-metadata-memory-v1"
+  },
+  "corpus": {
+    "digest": "9e9b7136852eba80d40bfda8b0fb2a4f57f4e21ef34da2fc5bf0e572811c6dde",
+    "revision": "p05-native-refresh-transport-memory-v1"
+  },
+  "policyRevision": "p05-native-memory-high-water-range-v1",
+  "manifest": {
+    "path": "evidence-manifest.json",
+    "sha256": "256f4963c2c8e8e99ed006e36ff6eca8d833ab6037d5dee9bcbd229f6d6ffed9"
+  },
+  "reports": [
+    {
+      "path": "raw.json",
+      "sha256": "2f294b30a3ef0d4fcbf0678a7b26272842b7cd5073677ed82f97d6841928173e"
+    }
+  ],
+  "priorApprovals": [],
+  "groups": [
+    {
+      "key": "[\"REFRESH_TRANSPORT\",\"d-cancel\",\"f0c8ef64fd46c62236033317e2b65cbd908830bae22a4e22b852a081d55b128e\"]",
+      "low": 79093760,
+      "high": 80154624,
+      "count": 5
+    },
+    {
+      "key": "[\"REFRESH_TRANSPORT\",\"d-complete-coverage\",\"c05b2a1217ff4bc81510bbfd5c3312e5fd39ff4140ab8958446bd59ccb604aa3\"]",
+      "low": 248258560,
+      "high": 251547648,
+      "count": 5
+    },
+    {
+      "key": "[\"REFRESH_TRANSPORT\",\"d-corrupt\",\"54150c648e6692ade30dc64182f27833adf746b04676e36b50102dfd99e76beb\"]",
+      "low": 78913536,
+      "high": 79716352,
+      "count": 5
+    },
+    {
+      "key": "[\"REFRESH_TRANSPORT\",\"d-delete\",\"25be44ebf5d862180e6a1002458c0451142e29a66949e87bd9ad66821950316a\"]",
+      "low": 81686528,
+      "high": 82366464,
+      "count": 5
+    },
+    {
+      "key": "[\"REFRESH_TRANSPORT\",\"d-dense-remove\",\"e958786b7d072eee39ef6cd140dee0a2077df36524ff08c3e34f194372de5c83\"]",
+      "low": 311377920,
+      "high": 345886720,
+      "count": 5
+    },
+    {
+      "key": "[\"REFRESH_TRANSPORT\",\"d-dense-upsert\",\"a4c95365952de3d04b309194fc7eaf5f2e64404bde718f9b135412fb044459be\"]",
+      "low": 333045760,
+      "high": 364560384,
+      "count": 5
+    },
+    {
+      "key": "[\"REFRESH_TRANSPORT\",\"d-dependent-edge\",\"64e15af76d7a32c4eb0490c8f3947daab732e520cd34a5a7e075cc4e99139363\"]",
+      "low": 85479424,
+      "high": 85970944,
+      "count": 5
+    },
+    {
+      "key": "[\"REFRESH_TRANSPORT\",\"d-empty\",\"d658015167b3b564a086363533a2a0b06d9bceaea37701217c012821a37ae0ad\"]",
+      "low": 81121280,
+      "high": 81723392,
+      "count": 5
+    },
+    {
+      "key": "[\"REFRESH_TRANSPORT\",\"d-late-exit\",\"08d39b9f9b968813934e4176e2828f3edf49353ad865a975de4af454644bdc2a\"]",
+      "low": 78725120,
+      "high": 79192064,
+      "count": 5
+    },
+    {
+      "key": "[\"REFRESH_TRANSPORT\",\"d-overlay-retention\",\"6373c7baef81587a59ce55bcf99ea1b16eeb1ed3828f6b1c33dc72cae9f635ad\"]",
+      "low": 247201792,
+      "high": 251592704,
+      "count": 5
+    },
+    {
+      "key": "[\"REFRESH_TRANSPORT\",\"d-partial\",\"8411fcc66c7417fa1d0ec236433ce7b3e4e98cc3dcb2e9da68fb0ec3a35fa23a\"]",
+      "low": 78721024,
+      "high": 79556608,
+      "count": 5
+    },
+    {
+      "key": "[\"REFRESH_TRANSPORT\",\"d-preparation-input\",\"c8bfb90599a536dfb140a0f7d147df5b669ffb2dbb080313763fe6daeb6a7f42\"]",
+      "low": 250277888,
+      "high": 251219968,
+      "count": 5
+    },
+    {
+      "key": "[\"REFRESH_TRANSPORT\",\"d-reopen\",\"0dca67aa392e4d4686c96a9629a11451ea597943bb43dd71b57dde257d353fac\"]",
+      "low": 89489408,
+      "high": 90320896,
+      "count": 5
+    },
+    {
+      "key": "[\"REFRESH_TRANSPORT\",\"d-retained-sites\",\"621b24fedf71f0d75f1d3f5481bcd6b58642d0b8eec17b427c67b04356e33863\"]",
+      "low": 277254144,
+      "high": 278233088,
+      "count": 5
+    },
+    {
+      "key": "[\"REFRESH_TRANSPORT\",\"d-rollback\",\"f82820b3bea21e546f19587b3159e7040a05ea2824ff34c8aae9a7c2c0fe13ed\"]",
+      "low": 87076864,
+      "high": 88842240,
+      "count": 5
+    },
+    {
+      "key": "[\"REFRESH_TRANSPORT\",\"d-shared-owners\",\"6bb882f35accfc2802ca577e8b8eba96d31a7a8beda087e8b3ada8d45512a9a2\"]",
+      "low": 250970112,
+      "high": 255053824,
+      "count": 5
+    },
+    {
+      "key": "[\"REFRESH_TRANSPORT\",\"d-slow-sink\",\"6c6fb1c3551b420633b6179d87a8cc82211e5d291a03e15f2222c6ec63fd0f03\"]",
+      "low": 87199744,
+      "high": 87965696,
+      "count": 5
+    },
+    {
+      "key": "[\"REFRESH_TRANSPORT\",\"d-slow-stdin\",\"cd32c54b50398318be74937a000e234c195a54b47cee7a2b24a110d2930c150a\"]",
+      "low": 212242432,
+      "high": 213684224,
+      "count": 5
+    },
+    {
+      "key": "[\"REFRESH_TRANSPORT\",\"d-source-race\",\"a62fe6f7ce98c6d5e8a6caf08b893386df556e977263d0b61c00d62ba6db5e7c\"]",
+      "low": 82956288,
+      "high": 83533824,
+      "count": 5
+    },
+    {
+      "key": "[\"REFRESH_TRANSPORT\",\"d-sql-preflight\",\"f50e83f68285d6312bfbb73994a223a104724b96ecfe042a7e61c007dd4e1275\"]",
+      "low": 77455360,
+      "high": 78036992,
+      "count": 5
+    },
+    {
+      "key": "[\"REFRESH_TRANSPORT\",\"d-token-race\",\"db61aad6f7bc6d887b77692668de7cc5d4fae58c78a33a48b2ac827ff5eca7e3\"]",
+      "low": 81956864,
+      "high": 83087360,
+      "count": 5
+    },
+    {
+      "key": "[\"REFRESH_TRANSPORT\",\"d-zero-fact\",\"daa41906907360c21df0113da745b053be545c17eb8647426ac9bc5343f57063\"]",
+      "low": 80871424,
+      "high": 81448960,
+      "count": 5
+    }
+  ],
+  "observedPeakBytes": 364560384,
+  "fluctuationAllowanceBytes": 34508800,
+  "priorApprovalFloorBytes": null,
+  "reservationBytes": 399069184
+}

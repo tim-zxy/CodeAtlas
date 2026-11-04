@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "policyRevision": "p05-native-memory-high-water-range-v1",
+  "environment": {
+    "node": "v24.15.0",
+    "v8": "13.6.233.17-node.48",
+    "platform": "win32",
+    "arch": "x64",
+    "zodVersion": "4.6.1",
+    "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+    "corpusRevision": "p05-native-metadata-memory-v1"
+  },
+  "corpora": {
+    "READ_SEAL": {
+      "revision": "p05-native-metadata-memory-v1",
+      "digest": "0c599e6626202fe4a0b5d5866e2d89d01a4674e40b0efe0d0b20acf5b4085b29"
+    },
+    "FULL_TRANSPORT": {
+      "revision": "p05-native-full-v3-memory-v1",
+      "digest": "11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef"
+    }
+  },
+  "requiredCases": {
+    "READ_SEAL": [
+      "zero-file",
+      "empty-file",
+      "maximum-short-files",
+      "dense-numeric-sites",
+      "long-ascii",
+      "long-bmp",
+      "long-astral",
+      "repeated-shared-owners",
+      "duplicate-metadata",
+      "foreign-metadata",
+      "deep-unknown-input",
+      "oversized-sql-column",
+      "oversized-staged-fact"
+    ],
+    "FULL_TRANSPORT": [
+      "zero-file",
+      "empty-file",
+      "maximum-short-files",
+      "dense-numeric-sites",
+      "long-ascii",
+      "long-bmp",
+      "long-astral",
+      "repeated-shared-owners",
+      "duplicate-metadata",
+      "foreign-metadata",
+      "deep-unknown-input",
+      "oversized-staged-fact",
+      "large-request",
+      "slow-sink"
+    ]
+  },
+  "reports": [
+    {
+      "path": "read-seal.json",
+      "sha256": "d29793756dbefdf563e69aa7054dac7c3aacb35fa2a993acece25cef289f87c9",
+      "workspace": "READ_SEAL",
+      "purpose": "calibration",
+      "command": "node scripts/bench-native-metadata-memory.mjs",
+      "collectionConditions": "Approved single fixed batch; five fresh processes per existing class; original input/resource policy"
+    },
+    {
+      "path": "full-transport.json",
+      "sha256": "28e456adfede6d8d9094495e269af7a22316d278f92b04a253b5118e9fa2e515",
+      "workspace": "FULL_TRANSPORT",
+      "purpose": "calibration",
+      "command": "node scripts/bench-native-full-v3-memory.mjs",
+      "collectionConditions": "Approved single fixed batch; five fresh processes per existing class; original input/resource policy"
+    }
+  ],
+  "priorApprovals": []
+}

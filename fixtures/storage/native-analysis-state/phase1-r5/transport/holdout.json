@@ -1,0 +1,1662 @@
+{
+  "schemaVersion": 2,
+  "workspace": "REFRESH_TRANSPORT",
+  "candidateSha256": "2c3c890d439c45f8a67d5ba864727ae9a995f02039fb312c021931f6f0c020a7",
+  "environment": {
+    "node": "v24.15.0",
+    "v8": "13.6.233.17-node.48",
+    "platform": "win32",
+    "arch": "x64",
+    "zodVersion": "4.6.1",
+    "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+    "corpusRevision": "p05-native-metadata-memory-v1"
+  },
+  "corpus": {
+    "digest": "9e9b7136852eba80d40bfda8b0fb2a4f57f4e21ef34da2fc5bf0e572811c6dde",
+    "revision": "p05-native-refresh-transport-memory-v1"
+  },
+  "observations": [
+    {
+      "outputProof": null,
+      "name": "d-preparation-input",
+      "repetition": 0,
+      "workspace": "REFRESH_TRANSPORT",
+      "environment": {
+        "arch": "x64",
+        "corpusRevision": "p05-native-metadata-memory-v1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "node": "v24.15.0",
+        "platform": "win32",
+        "v8": "13.6.233.17-node.48",
+        "zodVersion": "4.6.1"
+      },
+      "corpus": {
+        "digest": "9e9b7136852eba80d40bfda8b0fb2a4f57f4e21ef34da2fc5bf0e572811c6dde",
+        "revision": "p05-native-refresh-transport-memory-v1"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "corpusPayloadDigest": "c8bfb90599a536dfb140a0f7d147df5b669ffb2dbb080313763fe6daeb6a7f42",
+      "expectedOutcome": "SUCCEEDED",
+      "observedOutcome": "SUCCEEDED",
+      "eventCount": 2366,
+      "inputBytes": 997957,
+      "largestLineBytes": 130629,
+      "outputBytes": 1662755,
+      "summaryBytes": 815580,
+      "persistentStateVerified": true,
+      "transactionClosed": true,
+      "tempClosed": true,
+      "retainedSqlBytes": 2035342,
+      "retainedSqlStringChargeBytes": 4070684,
+      "samples": [
+        {
+          "memory": {
+            "arrayBuffers": 35616,
+            "external": 2301294,
+            "heapTotal": 7012352,
+            "heapUsed": 5892240,
+            "rss": 48168960
+          },
+          "peakKiB": 47048,
+          "phase": "startup"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 2042969,
+            "external": 4551408,
+            "heapTotal": 190660608,
+            "heapUsed": 81754896,
+            "rss": 248217600
+          },
+          "peakKiB": 244732,
+          "phase": "apply-or-rollback-settled"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 2042969,
+            "external": 4551408,
+            "heapTotal": 190660608,
+            "heapUsed": 81767960,
+            "rss": 242798592
+          },
+          "peakKiB": 244732,
+          "phase": "finished"
+        }
+      ],
+      "peakResidentBytes": 250605568,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    },
+    {
+      "outputProof": null,
+      "name": "d-retained-sites",
+      "repetition": 0,
+      "workspace": "REFRESH_TRANSPORT",
+      "environment": {
+        "arch": "x64",
+        "corpusRevision": "p05-native-metadata-memory-v1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "node": "v24.15.0",
+        "platform": "win32",
+        "v8": "13.6.233.17-node.48",
+        "zodVersion": "4.6.1"
+      },
+      "corpus": {
+        "digest": "9e9b7136852eba80d40bfda8b0fb2a4f57f4e21ef34da2fc5bf0e572811c6dde",
+        "revision": "p05-native-refresh-transport-memory-v1"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "corpusPayloadDigest": "621b24fedf71f0d75f1d3f5481bcd6b58642d0b8eec17b427c67b04356e33863",
+      "expectedOutcome": "SUCCEEDED",
+      "observedOutcome": "SUCCEEDED",
+      "eventCount": 8,
+      "inputBytes": 999729,
+      "largestLineBytes": 997387,
+      "outputBytes": 1001330,
+      "summaryBytes": 997259,
+      "persistentStateVerified": true,
+      "transactionClosed": true,
+      "tempClosed": true,
+      "retainedSqlBytes": 3283592,
+      "retainedSqlStringChargeBytes": 6567184,
+      "samples": [
+        {
+          "memory": {
+            "arrayBuffers": 35616,
+            "external": 2301294,
+            "heapTotal": 7012352,
+            "heapUsed": 5892240,
+            "rss": 48107520
+          },
+          "peakKiB": 46988,
+          "phase": "startup"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 2039607,
+            "external": 4548046,
+            "heapTotal": 210006016,
+            "heapUsed": 135700400,
+            "rss": 268234752
+          },
+          "peakKiB": 265544,
+          "phase": "apply-or-rollback-settled"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 2039607,
+            "external": 4548046,
+            "heapTotal": 210006016,
+            "heapUsed": 135713392,
+            "rss": 264179712
+          },
+          "peakKiB": 265544,
+          "phase": "finished"
+        }
+      ],
+      "peakResidentBytes": 271917056,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    },
+    {
+      "outputProof": null,
+      "name": "d-shared-owners",
+      "repetition": 0,
+      "workspace": "REFRESH_TRANSPORT",
+      "environment": {
+        "arch": "x64",
+        "corpusRevision": "p05-native-metadata-memory-v1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "node": "v24.15.0",
+        "platform": "win32",
+        "v8": "13.6.233.17-node.48",
+        "zodVersion": "4.6.1"
+      },
+      "corpus": {
+        "digest": "9e9b7136852eba80d40bfda8b0fb2a4f57f4e21ef34da2fc5bf0e572811c6dde",
+        "revision": "p05-native-refresh-transport-memory-v1"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "corpusPayloadDigest": "6bb882f35accfc2802ca577e8b8eba96d31a7a8beda087e8b3ada8d45512a9a2",
+      "expectedOutcome": "SUCCEEDED",
+      "observedOutcome": "SUCCEEDED",
+      "eventCount": 1430,
+      "inputBytes": 998193,
+      "largestLineBytes": 79615,
+      "outputBytes": 1401735,
+      "summaryBytes": 886788,
+      "persistentStateVerified": true,
+      "transactionClosed": true,
+      "tempClosed": true,
+      "retainedSqlBytes": 2483179,
+      "retainedSqlStringChargeBytes": 4966358,
+      "samples": [
+        {
+          "memory": {
+            "arrayBuffers": 35616,
+            "external": 2301294,
+            "heapTotal": 7012352,
+            "heapUsed": 5892240,
+            "rss": 48107520
+          },
+          "peakKiB": 46988,
+          "phase": "startup"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 2043422,
+            "external": 4551861,
+            "heapTotal": 193282048,
+            "heapUsed": 98914712,
+            "rss": 250654720
+          },
+          "peakKiB": 244780,
+          "phase": "apply-or-rollback-settled"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 2043422,
+            "external": 4551861,
+            "heapTotal": 193282048,
+            "heapUsed": 98927704,
+            "rss": 246345728
+          },
+          "peakKiB": 244780,
+          "phase": "finished"
+        }
+      ],
+      "peakResidentBytes": 250654720,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    },
+    {
+      "outputProof": null,
+      "name": "d-dense-upsert",
+      "repetition": 0,
+      "workspace": "REFRESH_TRANSPORT",
+      "environment": {
+        "arch": "x64",
+        "corpusRevision": "p05-native-metadata-memory-v1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "node": "v24.15.0",
+        "platform": "win32",
+        "v8": "13.6.233.17-node.48",
+        "zodVersion": "4.6.1"
+      },
+      "corpus": {
+        "digest": "9e9b7136852eba80d40bfda8b0fb2a4f57f4e21ef34da2fc5bf0e572811c6dde",
+        "revision": "p05-native-refresh-transport-memory-v1"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "corpusPayloadDigest": "a4c95365952de3d04b309194fc7eaf5f2e64404bde718f9b135412fb044459be",
+      "expectedOutcome": "SUCCEEDED",
+      "observedOutcome": "SUCCEEDED",
+      "eventCount": 1995,
+      "inputBytes": 5308,
+      "largestLineBytes": 2650,
+      "outputBytes": 2180181,
+      "summaryBytes": 2521,
+      "persistentStateVerified": true,
+      "transactionClosed": true,
+      "tempClosed": true,
+      "retainedSqlBytes": 1005929,
+      "retainedSqlStringChargeBytes": 2011858,
+      "samples": [
+        {
+          "memory": {
+            "arrayBuffers": 35616,
+            "external": 2301294,
+            "heapTotal": 7012352,
+            "heapUsed": 5892240,
+            "rss": 48181248
+          },
+          "peakKiB": 47060,
+          "phase": "startup"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 35174,
+            "external": 2543613,
+            "heapTotal": 193843200,
+            "heapUsed": 51638640,
+            "rss": 339873792
+          },
+          "peakKiB": 353856,
+          "phase": "apply-or-rollback-settled"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 35174,
+            "external": 2543613,
+            "heapTotal": 193843200,
+            "heapUsed": 51658552,
+            "rss": 306147328
+          },
+          "peakKiB": 353856,
+          "phase": "finished"
+        }
+      ],
+      "peakResidentBytes": 362348544,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    },
+    {
+      "outputProof": null,
+      "name": "d-dense-remove",
+      "repetition": 0,
+      "workspace": "REFRESH_TRANSPORT",
+      "environment": {
+        "arch": "x64",
+        "corpusRevision": "p05-native-metadata-memory-v1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "node": "v24.15.0",
+        "platform": "win32",
+        "v8": "13.6.233.17-node.48",
+        "zodVersion": "4.6.1"
+      },
+      "corpus": {
+        "digest": "9e9b7136852eba80d40bfda8b0fb2a4f57f4e21ef34da2fc5bf0e572811c6dde",
+        "revision": "p05-native-refresh-transport-memory-v1"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "corpusPayloadDigest": "e958786b7d072eee39ef6cd140dee0a2077df36524ff08c3e34f194372de5c83",
+      "expectedOutcome": "SUCCEEDED",
+      "observedOutcome": "SUCCEEDED",
+      "eventCount": 1990,
+      "inputBytes": 999543,
+      "largestLineBytes": 996885,
+      "outputBytes": 536863,
+      "summaryBytes": 996756,
+      "persistentStateVerified": true,
+      "transactionClosed": true,
+      "tempClosed": true,
+      "retainedSqlBytes": 2287739,
+      "retainedSqlStringChargeBytes": 4575478,
+      "samples": [
+        {
+          "memory": {
+            "arrayBuffers": 35616,
+            "external": 2301294,
+            "heapTotal": 7012352,
+            "heapUsed": 5892240,
+            "rss": 48136192
+          },
+          "peakKiB": 47016,
+          "phase": "startup"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 2038481,
+            "external": 4546920,
+            "heapTotal": 208044032,
+            "heapUsed": 82892344,
+            "rss": 311099392
+          },
+          "peakKiB": 303808,
+          "phase": "apply-or-rollback-settled"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 2038481,
+            "external": 4546920,
+            "heapTotal": 208044032,
+            "heapUsed": 82905336,
+            "rss": 265273344
+          },
+          "peakKiB": 303812,
+          "phase": "finished"
+        }
+      ],
+      "peakResidentBytes": 311103488,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    },
+    {
+      "outputProof": null,
+      "name": "d-dependent-edge",
+      "repetition": 0,
+      "workspace": "REFRESH_TRANSPORT",
+      "environment": {
+        "arch": "x64",
+        "corpusRevision": "p05-native-metadata-memory-v1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "node": "v24.15.0",
+        "platform": "win32",
+        "v8": "13.6.233.17-node.48",
+        "zodVersion": "4.6.1"
+      },
+      "corpus": {
+        "digest": "9e9b7136852eba80d40bfda8b0fb2a4f57f4e21ef34da2fc5bf0e572811c6dde",
+        "revision": "p05-native-refresh-transport-memory-v1"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "corpusPayloadDigest": "64e15af76d7a32c4eb0490c8f3947daab732e520cd34a5a7e075cc4e99139363",
+      "expectedOutcome": "SUCCEEDED",
+      "observedOutcome": "SUCCEEDED",
+      "eventCount": 18,
+      "inputBytes": 9758,
+      "largestLineBytes": 3614,
+      "outputBytes": 14920,
+      "summaryBytes": 6508,
+      "persistentStateVerified": true,
+      "transactionClosed": true,
+      "tempClosed": true,
+      "retainedSqlBytes": 20971,
+      "retainedSqlStringChargeBytes": 41942,
+      "samples": [
+        {
+          "memory": {
+            "arrayBuffers": 35616,
+            "external": 2301294,
+            "heapTotal": 7012352,
+            "heapUsed": 5892312,
+            "rss": 48144384
+          },
+          "peakKiB": 47024,
+          "phase": "startup"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 68868,
+            "external": 2577307,
+            "heapTotal": 53559296,
+            "heapUsed": 25419672,
+            "rss": 85553152
+          },
+          "peakKiB": 83548,
+          "phase": "apply-or-rollback-settled"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 68868,
+            "external": 2577307,
+            "heapTotal": 53559296,
+            "heapUsed": 25432792,
+            "rss": 83578880
+          },
+          "peakKiB": 83548,
+          "phase": "finished"
+        }
+      ],
+      "peakResidentBytes": 85553152,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    },
+    {
+      "outputProof": null,
+      "name": "d-complete-coverage",
+      "repetition": 0,
+      "workspace": "REFRESH_TRANSPORT",
+      "environment": {
+        "arch": "x64",
+        "corpusRevision": "p05-native-metadata-memory-v1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "node": "v24.15.0",
+        "platform": "win32",
+        "v8": "13.6.233.17-node.48",
+        "zodVersion": "4.6.1"
+      },
+      "corpus": {
+        "digest": "9e9b7136852eba80d40bfda8b0fb2a4f57f4e21ef34da2fc5bf0e572811c6dde",
+        "revision": "p05-native-refresh-transport-memory-v1"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "corpusPayloadDigest": "c05b2a1217ff4bc81510bbfd5c3312e5fd39ff4140ab8958446bd59ccb604aa3",
+      "expectedOutcome": "SUCCEEDED",
+      "observedOutcome": "SUCCEEDED",
+      "eventCount": 2358,
+      "inputBytes": 997935,
+      "largestLineBytes": 130283,
+      "outputBytes": 1672976,
+      "summaryBytes": 813808,
+      "persistentStateVerified": true,
+      "transactionClosed": true,
+      "tempClosed": true,
+      "retainedSqlBytes": 2034543,
+      "retainedSqlStringChargeBytes": 4069086,
+      "samples": [
+        {
+          "memory": {
+            "arrayBuffers": 35616,
+            "external": 2301294,
+            "heapTotal": 7012352,
+            "heapUsed": 5892240,
+            "rss": 48185344
+          },
+          "peakKiB": 47064,
+          "phase": "startup"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 2043488,
+            "external": 4551927,
+            "heapTotal": 190660608,
+            "heapUsed": 87223448,
+            "rss": 249454592
+          },
+          "peakKiB": 245416,
+          "phase": "apply-or-rollback-settled"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 2043488,
+            "external": 4551927,
+            "heapTotal": 190660608,
+            "heapUsed": 87237568,
+            "rss": 243298304
+          },
+          "peakKiB": 245416,
+          "phase": "finished"
+        }
+      ],
+      "peakResidentBytes": 251305984,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    },
+    {
+      "outputProof": null,
+      "name": "d-overlay-retention",
+      "repetition": 0,
+      "workspace": "REFRESH_TRANSPORT",
+      "environment": {
+        "arch": "x64",
+        "corpusRevision": "p05-native-metadata-memory-v1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "node": "v24.15.0",
+        "platform": "win32",
+        "v8": "13.6.233.17-node.48",
+        "zodVersion": "4.6.1"
+      },
+      "corpus": {
+        "digest": "9e9b7136852eba80d40bfda8b0fb2a4f57f4e21ef34da2fc5bf0e572811c6dde",
+        "revision": "p05-native-refresh-transport-memory-v1"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "corpusPayloadDigest": "6373c7baef81587a59ce55bcf99ea1b16eeb1ed3828f6b1c33dc72cae9f635ad",
+      "expectedOutcome": "SUCCEEDED",
+      "observedOutcome": "SUCCEEDED",
+      "eventCount": 2358,
+      "inputBytes": 997935,
+      "largestLineBytes": 130283,
+      "outputBytes": 1672976,
+      "summaryBytes": 813808,
+      "persistentStateVerified": true,
+      "transactionClosed": true,
+      "tempClosed": true,
+      "retainedSqlBytes": 2034543,
+      "retainedSqlStringChargeBytes": 4069086,
+      "samples": [
+        {
+          "memory": {
+            "arrayBuffers": 35616,
+            "external": 2301294,
+            "heapTotal": 7012352,
+            "heapUsed": 5892240,
+            "rss": 48214016
+          },
+          "peakKiB": 47092,
+          "phase": "startup"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 2240096,
+            "external": 4748535,
+            "heapTotal": 180977664,
+            "heapUsed": 93839032,
+            "rss": 245481472
+          },
+          "peakKiB": 239728,
+          "phase": "overlay-views-retained"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 2051680,
+            "external": 4748535,
+            "heapTotal": 181690368,
+            "heapUsed": 89300616,
+            "rss": 241180672
+          },
+          "peakKiB": 240124,
+          "phase": "overlay-seal-returned"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 2051680,
+            "external": 4560119,
+            "heapTotal": 188039168,
+            "heapUsed": 110800632,
+            "rss": 247607296
+          },
+          "peakKiB": 243008,
+          "phase": "apply-or-rollback-settled"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 2051680,
+            "external": 4560119,
+            "heapTotal": 188039168,
+            "heapUsed": 110813456,
+            "rss": 241070080
+          },
+          "peakKiB": 243008,
+          "phase": "finished"
+        }
+      ],
+      "peakResidentBytes": 248840192,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    },
+    {
+      "outputProof": null,
+      "name": "d-delete",
+      "repetition": 0,
+      "workspace": "REFRESH_TRANSPORT",
+      "environment": {
+        "arch": "x64",
+        "corpusRevision": "p05-native-metadata-memory-v1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "node": "v24.15.0",
+        "platform": "win32",
+        "v8": "13.6.233.17-node.48",
+        "zodVersion": "4.6.1"
+      },
+      "corpus": {
+        "digest": "9e9b7136852eba80d40bfda8b0fb2a4f57f4e21ef34da2fc5bf0e572811c6dde",
+        "revision": "p05-native-refresh-transport-memory-v1"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "corpusPayloadDigest": "25be44ebf5d862180e6a1002458c0451142e29a66949e87bd9ad66821950316a",
+      "expectedOutcome": "SUCCEEDED",
+      "observedOutcome": "SUCCEEDED",
+      "eventCount": 7,
+      "inputBytes": 5976,
+      "largestLineBytes": 3802,
+      "outputBytes": 3380,
+      "summaryBytes": 3663,
+      "persistentStateVerified": true,
+      "transactionClosed": true,
+      "tempClosed": true,
+      "retainedSqlBytes": 8478,
+      "retainedSqlStringChargeBytes": 16956,
+      "samples": [
+        {
+          "memory": {
+            "arrayBuffers": 35616,
+            "external": 2301294,
+            "heapTotal": 7012352,
+            "heapUsed": 5892240,
+            "rss": 48177152
+          },
+          "peakKiB": 47056,
+          "phase": "startup"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 74833,
+            "external": 2583272,
+            "heapTotal": 35471360,
+            "heapUsed": 24108136,
+            "rss": 82079744
+          },
+          "peakKiB": 80156,
+          "phase": "apply-or-rollback-settled"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 74833,
+            "external": 2583272,
+            "heapTotal": 35471360,
+            "heapUsed": 24121256,
+            "rss": 79458304
+          },
+          "peakKiB": 80156,
+          "phase": "finished"
+        }
+      ],
+      "peakResidentBytes": 82079744,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    },
+    {
+      "outputProof": null,
+      "name": "d-empty",
+      "repetition": 0,
+      "workspace": "REFRESH_TRANSPORT",
+      "environment": {
+        "arch": "x64",
+        "corpusRevision": "p05-native-metadata-memory-v1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "node": "v24.15.0",
+        "platform": "win32",
+        "v8": "13.6.233.17-node.48",
+        "zodVersion": "4.6.1"
+      },
+      "corpus": {
+        "digest": "9e9b7136852eba80d40bfda8b0fb2a4f57f4e21ef34da2fc5bf0e572811c6dde",
+        "revision": "p05-native-refresh-transport-memory-v1"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "corpusPayloadDigest": "d658015167b3b564a086363533a2a0b06d9bceaea37701217c012821a37ae0ad",
+      "expectedOutcome": "SUCCEEDED",
+      "observedOutcome": "SUCCEEDED",
+      "eventCount": 8,
+      "inputBytes": 4460,
+      "largestLineBytes": 2151,
+      "outputBytes": 6004,
+      "summaryBytes": 2035,
+      "persistentStateVerified": true,
+      "transactionClosed": true,
+      "tempClosed": true,
+      "retainedSqlBytes": 6176,
+      "retainedSqlStringChargeBytes": 12352,
+      "samples": [
+        {
+          "memory": {
+            "arrayBuffers": 35616,
+            "external": 2301294,
+            "heapTotal": 7012352,
+            "heapUsed": 5892240,
+            "rss": 48128000
+          },
+          "peakKiB": 47008,
+          "phase": "startup"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 55343,
+            "external": 2584209,
+            "heapTotal": 35471360,
+            "heapUsed": 20906824,
+            "rss": 81182720
+          },
+          "peakKiB": 79280,
+          "phase": "apply-or-rollback-settled"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 55343,
+            "external": 2584209,
+            "heapTotal": 35471360,
+            "heapUsed": 20919944,
+            "rss": 78950400
+          },
+          "peakKiB": 79280,
+          "phase": "finished"
+        }
+      ],
+      "peakResidentBytes": 81182720,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    },
+    {
+      "outputProof": null,
+      "name": "d-zero-fact",
+      "repetition": 0,
+      "workspace": "REFRESH_TRANSPORT",
+      "environment": {
+        "arch": "x64",
+        "corpusRevision": "p05-native-metadata-memory-v1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "node": "v24.15.0",
+        "platform": "win32",
+        "v8": "13.6.233.17-node.48",
+        "zodVersion": "4.6.1"
+      },
+      "corpus": {
+        "digest": "9e9b7136852eba80d40bfda8b0fb2a4f57f4e21ef34da2fc5bf0e572811c6dde",
+        "revision": "p05-native-refresh-transport-memory-v1"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "corpusPayloadDigest": "daa41906907360c21df0113da745b053be545c17eb8647426ac9bc5343f57063",
+      "expectedOutcome": "SUCCEEDED",
+      "observedOutcome": "SUCCEEDED",
+      "eventCount": 2,
+      "inputBytes": 1996,
+      "largestLineBytes": 1770,
+      "outputBytes": 1936,
+      "summaryBytes": 0,
+      "persistentStateVerified": true,
+      "transactionClosed": true,
+      "tempClosed": true,
+      "retainedSqlBytes": 1956,
+      "retainedSqlStringChargeBytes": 3912,
+      "samples": [
+        {
+          "memory": {
+            "arrayBuffers": 35616,
+            "external": 2301294,
+            "heapTotal": 7012352,
+            "heapUsed": 5892240,
+            "rss": 48173056
+          },
+          "peakKiB": 47052,
+          "phase": "startup"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 66535,
+            "external": 2574974,
+            "heapTotal": 35471360,
+            "heapUsed": 23156776,
+            "rss": 81272832
+          },
+          "peakKiB": 79368,
+          "phase": "apply-or-rollback-settled"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 66535,
+            "external": 2574974,
+            "heapTotal": 35471360,
+            "heapUsed": 23169896,
+            "rss": 79003648
+          },
+          "peakKiB": 79368,
+          "phase": "finished"
+        }
+      ],
+      "peakResidentBytes": 81272832,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    },
+    {
+      "outputProof": null,
+      "name": "d-sql-preflight",
+      "repetition": 0,
+      "workspace": "REFRESH_TRANSPORT",
+      "environment": {
+        "arch": "x64",
+        "corpusRevision": "p05-native-metadata-memory-v1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "node": "v24.15.0",
+        "platform": "win32",
+        "v8": "13.6.233.17-node.48",
+        "zodVersion": "4.6.1"
+      },
+      "corpus": {
+        "digest": "9e9b7136852eba80d40bfda8b0fb2a4f57f4e21ef34da2fc5bf0e572811c6dde",
+        "revision": "p05-native-refresh-transport-memory-v1"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "corpusPayloadDigest": "f50e83f68285d6312bfbb73994a223a104724b96ecfe042a7e61c007dd4e1275",
+      "expectedOutcome": "RESOURCE_LIMIT_EXCEEDED",
+      "observedOutcome": "RESOURCE_LIMIT_EXCEEDED",
+      "eventCount": 0,
+      "inputBytes": 0,
+      "largestLineBytes": 0,
+      "outputBytes": 0,
+      "summaryBytes": 1006033,
+      "persistentStateVerified": true,
+      "transactionClosed": true,
+      "tempClosed": true,
+      "retainedSqlBytes": 0,
+      "retainedSqlStringChargeBytes": 0,
+      "samples": [
+        {
+          "memory": {
+            "arrayBuffers": 35616,
+            "external": 2301294,
+            "heapTotal": 7012352,
+            "heapUsed": 5892240,
+            "rss": 48168960
+          },
+          "peakKiB": 47048,
+          "phase": "startup"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 56069,
+            "external": 2564508,
+            "heapTotal": 33374208,
+            "heapUsed": 15923816,
+            "rss": 76111872
+          },
+          "peakKiB": 75672,
+          "phase": "finished"
+        }
+      ],
+      "peakResidentBytes": 77488128,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    },
+    {
+      "outputProof": null,
+      "name": "d-slow-stdin",
+      "repetition": 0,
+      "workspace": "REFRESH_TRANSPORT",
+      "environment": {
+        "arch": "x64",
+        "corpusRevision": "p05-native-metadata-memory-v1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "node": "v24.15.0",
+        "platform": "win32",
+        "v8": "13.6.233.17-node.48",
+        "zodVersion": "4.6.1"
+      },
+      "corpus": {
+        "digest": "9e9b7136852eba80d40bfda8b0fb2a4f57f4e21ef34da2fc5bf0e572811c6dde",
+        "revision": "p05-native-refresh-transport-memory-v1"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "corpusPayloadDigest": "cd32c54b50398318be74937a000e234c195a54b47cee7a2b24a110d2930c150a",
+      "expectedOutcome": "CANCELLED",
+      "observedOutcome": "CANCELLED",
+      "eventCount": 0,
+      "inputBytes": 130623,
+      "largestLineBytes": 130622,
+      "outputBytes": 0,
+      "summaryBytes": 815580,
+      "persistentStateVerified": true,
+      "transactionClosed": true,
+      "tempClosed": true,
+      "retainedSqlBytes": 917222,
+      "retainedSqlStringChargeBytes": 1834444,
+      "samples": [
+        {
+          "memory": {
+            "arrayBuffers": 35616,
+            "external": 2301294,
+            "heapTotal": 7012352,
+            "heapUsed": 5892240,
+            "rss": 48181248
+          },
+          "peakKiB": 47060,
+          "phase": "startup"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 2025825,
+            "external": 4534264,
+            "heapTotal": 173883392,
+            "heapUsed": 22074336,
+            "rss": 201023488
+          },
+          "peakKiB": 207368,
+          "phase": "blocked-stdin"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 2025825,
+            "external": 4534264,
+            "heapTotal": 173883392,
+            "heapUsed": 22348736,
+            "rss": 201527296
+          },
+          "peakKiB": 207368,
+          "phase": "apply-or-rollback-settled"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 2025825,
+            "external": 4534264,
+            "heapTotal": 173883392,
+            "heapUsed": 22363064,
+            "rss": 199548928
+          },
+          "peakKiB": 207368,
+          "phase": "finished"
+        }
+      ],
+      "peakResidentBytes": 212344832,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    },
+    {
+      "outputProof": null,
+      "name": "d-slow-sink",
+      "repetition": 0,
+      "workspace": "REFRESH_TRANSPORT",
+      "environment": {
+        "arch": "x64",
+        "corpusRevision": "p05-native-metadata-memory-v1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "node": "v24.15.0",
+        "platform": "win32",
+        "v8": "13.6.233.17-node.48",
+        "zodVersion": "4.6.1"
+      },
+      "corpus": {
+        "digest": "9e9b7136852eba80d40bfda8b0fb2a4f57f4e21ef34da2fc5bf0e572811c6dde",
+        "revision": "p05-native-refresh-transport-memory-v1"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "corpusPayloadDigest": "6c6fb1c3551b420633b6179d87a8cc82211e5d291a03e15f2222c6ec63fd0f03",
+      "expectedOutcome": "SUCCEEDED",
+      "observedOutcome": "SUCCEEDED",
+      "eventCount": 23,
+      "inputBytes": 13149,
+      "largestLineBytes": 3602,
+      "outputBytes": 19203,
+      "summaryBytes": 9515,
+      "persistentStateVerified": true,
+      "transactionClosed": true,
+      "tempClosed": true,
+      "retainedSqlBytes": 29279,
+      "retainedSqlStringChargeBytes": 58558,
+      "samples": [
+        {
+          "memory": {
+            "arrayBuffers": 35616,
+            "external": 2301294,
+            "heapTotal": 7012352,
+            "heapUsed": 5892240,
+            "rss": 48041984
+          },
+          "peakKiB": 46924,
+          "phase": "startup"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 100073,
+            "external": 2608512,
+            "heapTotal": 35471360,
+            "heapUsed": 20354728,
+            "rss": 79376384
+          },
+          "peakKiB": 77692,
+          "phase": "blocked-sink"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 72244,
+            "external": 2580683,
+            "heapTotal": 54083584,
+            "heapUsed": 29328272,
+            "rss": 87756800
+          },
+          "peakKiB": 85700,
+          "phase": "apply-or-rollback-settled"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 72244,
+            "external": 2580683,
+            "heapTotal": 54083584,
+            "heapUsed": 29345616,
+            "rss": 85528576
+          },
+          "peakKiB": 85704,
+          "phase": "finished"
+        }
+      ],
+      "peakResidentBytes": 87760896,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    },
+    {
+      "outputProof": null,
+      "name": "d-partial",
+      "repetition": 0,
+      "workspace": "REFRESH_TRANSPORT",
+      "environment": {
+        "arch": "x64",
+        "corpusRevision": "p05-native-metadata-memory-v1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "node": "v24.15.0",
+        "platform": "win32",
+        "v8": "13.6.233.17-node.48",
+        "zodVersion": "4.6.1"
+      },
+      "corpus": {
+        "digest": "9e9b7136852eba80d40bfda8b0fb2a4f57f4e21ef34da2fc5bf0e572811c6dde",
+        "revision": "p05-native-refresh-transport-memory-v1"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "corpusPayloadDigest": "8411fcc66c7417fa1d0ec236433ce7b3e4e98cc3dcb2e9da68fb0ec3a35fa23a",
+      "expectedOutcome": "WORKER_EXCEPTION",
+      "observedOutcome": "WORKER_EXCEPTION",
+      "eventCount": 8,
+      "inputBytes": 4462,
+      "largestLineBytes": 2151,
+      "outputBytes": 6002,
+      "summaryBytes": 2035,
+      "persistentStateVerified": true,
+      "transactionClosed": true,
+      "tempClosed": true,
+      "retainedSqlBytes": 4224,
+      "retainedSqlStringChargeBytes": 8448,
+      "samples": [
+        {
+          "memory": {
+            "arrayBuffers": 35616,
+            "external": 2301294,
+            "heapTotal": 7012352,
+            "heapUsed": 5892240,
+            "rss": 48250880
+          },
+          "peakKiB": 47128,
+          "phase": "startup"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 55393,
+            "external": 2583830,
+            "heapTotal": 35471360,
+            "heapUsed": 17934496,
+            "rss": 79253504
+          },
+          "peakKiB": 77824,
+          "phase": "apply-or-rollback-settled"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 55393,
+            "external": 2583830,
+            "heapTotal": 35471360,
+            "heapUsed": 17969600,
+            "rss": 78954496
+          },
+          "peakKiB": 77824,
+          "phase": "finished"
+        }
+      ],
+      "peakResidentBytes": 79691776,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    },
+    {
+      "outputProof": null,
+      "name": "d-corrupt",
+      "repetition": 0,
+      "workspace": "REFRESH_TRANSPORT",
+      "environment": {
+        "arch": "x64",
+        "corpusRevision": "p05-native-metadata-memory-v1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "node": "v24.15.0",
+        "platform": "win32",
+        "v8": "13.6.233.17-node.48",
+        "zodVersion": "4.6.1"
+      },
+      "corpus": {
+        "digest": "9e9b7136852eba80d40bfda8b0fb2a4f57f4e21ef34da2fc5bf0e572811c6dde",
+        "revision": "p05-native-refresh-transport-memory-v1"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "corpusPayloadDigest": "54150c648e6692ade30dc64182f27833adf746b04676e36b50102dfd99e76beb",
+      "expectedOutcome": "CHECKSUM_MISMATCH",
+      "observedOutcome": "CHECKSUM_MISMATCH",
+      "eventCount": 8,
+      "inputBytes": 4462,
+      "largestLineBytes": 2151,
+      "outputBytes": 6004,
+      "summaryBytes": 2035,
+      "persistentStateVerified": true,
+      "transactionClosed": true,
+      "tempClosed": true,
+      "retainedSqlBytes": 4224,
+      "retainedSqlStringChargeBytes": 8448,
+      "samples": [
+        {
+          "memory": {
+            "arrayBuffers": 35616,
+            "external": 2301294,
+            "heapTotal": 7012352,
+            "heapUsed": 5892240,
+            "rss": 48177152
+          },
+          "peakKiB": 47056,
+          "phase": "startup"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 55398,
+            "external": 2583837,
+            "heapTotal": 34684928,
+            "heapUsed": 17705056,
+            "rss": 79249408
+          },
+          "peakKiB": 77940,
+          "phase": "apply-or-rollback-settled"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 55398,
+            "external": 2583837,
+            "heapTotal": 34684928,
+            "heapUsed": 17741896,
+            "rss": 78921728
+          },
+          "peakKiB": 77940,
+          "phase": "finished"
+        }
+      ],
+      "peakResidentBytes": 79810560,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    },
+    {
+      "outputProof": null,
+      "name": "d-late-exit",
+      "repetition": 0,
+      "workspace": "REFRESH_TRANSPORT",
+      "environment": {
+        "arch": "x64",
+        "corpusRevision": "p05-native-metadata-memory-v1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "node": "v24.15.0",
+        "platform": "win32",
+        "v8": "13.6.233.17-node.48",
+        "zodVersion": "4.6.1"
+      },
+      "corpus": {
+        "digest": "9e9b7136852eba80d40bfda8b0fb2a4f57f4e21ef34da2fc5bf0e572811c6dde",
+        "revision": "p05-native-refresh-transport-memory-v1"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "corpusPayloadDigest": "08d39b9f9b968813934e4176e2828f3edf49353ad865a975de4af454644bdc2a",
+      "expectedOutcome": "PROCESS_FAILED",
+      "observedOutcome": "PROCESS_FAILED",
+      "eventCount": 8,
+      "inputBytes": 4464,
+      "largestLineBytes": 2151,
+      "outputBytes": 6004,
+      "summaryBytes": 2035,
+      "persistentStateVerified": true,
+      "transactionClosed": true,
+      "tempClosed": true,
+      "retainedSqlBytes": 4224,
+      "retainedSqlStringChargeBytes": 8448,
+      "samples": [
+        {
+          "memory": {
+            "arrayBuffers": 35616,
+            "external": 2301294,
+            "heapTotal": 7012352,
+            "heapUsed": 5892312,
+            "rss": 48300032
+          },
+          "peakKiB": 47176,
+          "phase": "startup"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 55409,
+            "external": 2583854,
+            "heapTotal": 35471360,
+            "heapUsed": 17664208,
+            "rss": 79302656
+          },
+          "peakKiB": 77912,
+          "phase": "apply-or-rollback-settled"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 55409,
+            "external": 2583854,
+            "heapTotal": 35471360,
+            "heapUsed": 17699312,
+            "rss": 78938112
+          },
+          "peakKiB": 77912,
+          "phase": "finished"
+        }
+      ],
+      "peakResidentBytes": 79781888,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    },
+    {
+      "outputProof": {
+        "kind": "CANCELLED_PREFIX",
+        "referenceSha256": "498c5f060212c5e9a0b2bac77a6edfbb52a477058d524b7b0d850b55678f1db7",
+        "inputSha256": "42dc558481c97de0fac8a1ce8e07023909234e7131c5fb76ea63d3e2df78125a",
+        "outputSha256": "f9b99502f4912f673599a80c318d6873cd0813cb7f6297e443b83c2709ba86e5",
+        "outputBytes": 753,
+        "eventCount": 2,
+        "gateVerified": true,
+        "provenanceSha256": "d298fb74887105b4e765a396e24798474bcf358d9912ad8aa78dc40bf040f418",
+        "artifact": {
+          "path": "corpus/replay/d-cancel/qualification-0-f38YGL/prefix-proof.json",
+          "sha256": "f81da3f7b961fcff39a7d77cd3c83dfc1257fd8f6a1962a9a117f6a2994bcfbe"
+        }
+      },
+      "name": "d-cancel",
+      "repetition": 0,
+      "workspace": "REFRESH_TRANSPORT",
+      "environment": {
+        "arch": "x64",
+        "corpusRevision": "p05-native-metadata-memory-v1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "node": "v24.15.0",
+        "platform": "win32",
+        "v8": "13.6.233.17-node.48",
+        "zodVersion": "4.6.1"
+      },
+      "corpus": {
+        "digest": "9e9b7136852eba80d40bfda8b0fb2a4f57f4e21ef34da2fc5bf0e572811c6dde",
+        "revision": "p05-native-refresh-transport-memory-v1"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "corpusPayloadDigest": "f0c8ef64fd46c62236033317e2b65cbd908830bae22a4e22b852a081d55b128e",
+      "expectedOutcome": "CANCELLED",
+      "observedOutcome": "CANCELLED",
+      "eventCount": 2,
+      "inputBytes": 13146,
+      "largestLineBytes": 3602,
+      "outputBytes": 753,
+      "summaryBytes": 9515,
+      "persistentStateVerified": true,
+      "transactionClosed": true,
+      "tempClosed": true,
+      "retainedSqlBytes": 12178,
+      "retainedSqlStringChargeBytes": 24356,
+      "samples": [
+        {
+          "memory": {
+            "arrayBuffers": 35616,
+            "external": 2301294,
+            "heapTotal": 7012352,
+            "heapUsed": 5892240,
+            "rss": 48082944
+          },
+          "peakKiB": 46964,
+          "phase": "startup"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 100209,
+            "external": 2608648,
+            "heapTotal": 34947072,
+            "heapUsed": 20349880,
+            "rss": 78610432
+          },
+          "peakKiB": 77048,
+          "phase": "blocked-sink"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 100209,
+            "external": 2608648,
+            "heapTotal": 34947072,
+            "heapUsed": 20559016,
+            "rss": 78548992
+          },
+          "peakKiB": 77220,
+          "phase": "apply-or-rollback-settled"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 100209,
+            "external": 2608648,
+            "heapTotal": 34947072,
+            "heapUsed": 20575200,
+            "rss": 78200832
+          },
+          "peakKiB": 77220,
+          "phase": "finished"
+        }
+      ],
+      "peakResidentBytes": 79073280,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    },
+    {
+      "outputProof": null,
+      "name": "d-source-race",
+      "repetition": 0,
+      "workspace": "REFRESH_TRANSPORT",
+      "environment": {
+        "arch": "x64",
+        "corpusRevision": "p05-native-metadata-memory-v1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "node": "v24.15.0",
+        "platform": "win32",
+        "v8": "13.6.233.17-node.48",
+        "zodVersion": "4.6.1"
+      },
+      "corpus": {
+        "digest": "9e9b7136852eba80d40bfda8b0fb2a4f57f4e21ef34da2fc5bf0e572811c6dde",
+        "revision": "p05-native-refresh-transport-memory-v1"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "corpusPayloadDigest": "a62fe6f7ce98c6d5e8a6caf08b893386df556e977263d0b61c00d62ba6db5e7c",
+      "expectedOutcome": "WORKER_EXCEPTION",
+      "observedOutcome": "WORKER_EXCEPTION",
+      "eventCount": 23,
+      "inputBytes": 13151,
+      "largestLineBytes": 3602,
+      "outputBytes": 19203,
+      "summaryBytes": 9515,
+      "persistentStateVerified": true,
+      "transactionClosed": true,
+      "tempClosed": true,
+      "retainedSqlBytes": 12299,
+      "retainedSqlStringChargeBytes": 24598,
+      "samples": [
+        {
+          "memory": {
+            "arrayBuffers": 35616,
+            "external": 2301294,
+            "heapTotal": 7012352,
+            "heapUsed": 5892240,
+            "rss": 48168960
+          },
+          "peakKiB": 47048,
+          "phase": "startup"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 56089,
+            "external": 2564528,
+            "heapTotal": 34684928,
+            "heapUsed": 22225152,
+            "rss": 78082048
+          },
+          "peakKiB": 76616,
+          "phase": "competitor-committed"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 72353,
+            "external": 2580792,
+            "heapTotal": 53559296,
+            "heapUsed": 19992184,
+            "rss": 82821120
+          },
+          "peakKiB": 81336,
+          "phase": "apply-or-rollback-settled"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 72353,
+            "external": 2580792,
+            "heapTotal": 53559296,
+            "heapUsed": 20004952,
+            "rss": 82472960
+          },
+          "peakKiB": 81336,
+          "phase": "finished"
+        }
+      ],
+      "peakResidentBytes": 83288064,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    },
+    {
+      "outputProof": null,
+      "name": "d-token-race",
+      "repetition": 0,
+      "workspace": "REFRESH_TRANSPORT",
+      "environment": {
+        "arch": "x64",
+        "corpusRevision": "p05-native-metadata-memory-v1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "node": "v24.15.0",
+        "platform": "win32",
+        "v8": "13.6.233.17-node.48",
+        "zodVersion": "4.6.1"
+      },
+      "corpus": {
+        "digest": "9e9b7136852eba80d40bfda8b0fb2a4f57f4e21ef34da2fc5bf0e572811c6dde",
+        "revision": "p05-native-refresh-transport-memory-v1"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "corpusPayloadDigest": "db61aad6f7bc6d887b77692668de7cc5d4fae58c78a33a48b2ac827ff5eca7e3",
+      "expectedOutcome": "WORKER_EXCEPTION",
+      "observedOutcome": "WORKER_EXCEPTION",
+      "eventCount": 8,
+      "inputBytes": 4465,
+      "largestLineBytes": 2151,
+      "outputBytes": 6004,
+      "summaryBytes": 2035,
+      "persistentStateVerified": true,
+      "transactionClosed": true,
+      "tempClosed": true,
+      "retainedSqlBytes": 9279,
+      "retainedSqlStringChargeBytes": 18558,
+      "samples": [
+        {
+          "memory": {
+            "arrayBuffers": 35616,
+            "external": 2301294,
+            "heapTotal": 7012352,
+            "heapUsed": 5892240,
+            "rss": 48201728
+          },
+          "peakKiB": 47080,
+          "phase": "startup"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 55766,
+            "external": 2584405,
+            "heapTotal": 35733504,
+            "heapUsed": 21733472,
+            "rss": 80683008
+          },
+          "peakKiB": 80628,
+          "phase": "competitor-committed"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 66748,
+            "external": 2600421,
+            "heapTotal": 53297152,
+            "heapUsed": 19595528,
+            "rss": 82350080
+          },
+          "peakKiB": 81036,
+          "phase": "apply-or-rollback-settled"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 66748,
+            "external": 2600421,
+            "heapTotal": 53297152,
+            "heapUsed": 19609400,
+            "rss": 82001920
+          },
+          "peakKiB": 81036,
+          "phase": "finished"
+        }
+      ],
+      "peakResidentBytes": 82980864,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    },
+    {
+      "outputProof": null,
+      "name": "d-rollback",
+      "repetition": 0,
+      "workspace": "REFRESH_TRANSPORT",
+      "environment": {
+        "arch": "x64",
+        "corpusRevision": "p05-native-metadata-memory-v1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "node": "v24.15.0",
+        "platform": "win32",
+        "v8": "13.6.233.17-node.48",
+        "zodVersion": "4.6.1"
+      },
+      "corpus": {
+        "digest": "9e9b7136852eba80d40bfda8b0fb2a4f57f4e21ef34da2fc5bf0e572811c6dde",
+        "revision": "p05-native-refresh-transport-memory-v1"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "corpusPayloadDigest": "f82820b3bea21e546f19587b3159e7040a05ea2824ff34c8aae9a7c2c0fe13ed",
+      "expectedOutcome": "ERR_SQLITE_ERROR",
+      "observedOutcome": "ERR_SQLITE_ERROR",
+      "eventCount": 23,
+      "inputBytes": 13148,
+      "largestLineBytes": 3602,
+      "outputBytes": 19203,
+      "summaryBytes": 9515,
+      "persistentStateVerified": true,
+      "transactionClosed": true,
+      "tempClosed": true,
+      "retainedSqlBytes": 29279,
+      "retainedSqlStringChargeBytes": 58558,
+      "samples": [
+        {
+          "memory": {
+            "arrayBuffers": 35616,
+            "external": 2301294,
+            "heapTotal": 7012352,
+            "heapUsed": 5892240,
+            "rss": 48185344
+          },
+          "peakKiB": 47064,
+          "phase": "startup"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 72244,
+            "external": 2580683,
+            "heapTotal": 53821440,
+            "heapUsed": 30021360,
+            "rss": 88047616
+          },
+          "peakKiB": 85984,
+          "phase": "apply-or-rollback-settled"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 72244,
+            "external": 2580683,
+            "heapTotal": 53821440,
+            "heapUsed": 30056600,
+            "rss": 85712896
+          },
+          "peakKiB": 86112,
+          "phase": "finished"
+        }
+      ],
+      "peakResidentBytes": 88178688,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    },
+    {
+      "outputProof": null,
+      "name": "d-reopen",
+      "repetition": 0,
+      "workspace": "REFRESH_TRANSPORT",
+      "environment": {
+        "arch": "x64",
+        "corpusRevision": "p05-native-metadata-memory-v1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "node": "v24.15.0",
+        "platform": "win32",
+        "v8": "13.6.233.17-node.48",
+        "zodVersion": "4.6.1"
+      },
+      "corpus": {
+        "digest": "9e9b7136852eba80d40bfda8b0fb2a4f57f4e21ef34da2fc5bf0e572811c6dde",
+        "revision": "p05-native-refresh-transport-memory-v1"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "corpusPayloadDigest": "0dca67aa392e4d4686c96a9629a11451ea597943bb43dd71b57dde257d353fac",
+      "expectedOutcome": "SUCCEEDED",
+      "observedOutcome": "SUCCEEDED",
+      "eventCount": 23,
+      "inputBytes": 13146,
+      "largestLineBytes": 3602,
+      "outputBytes": 19203,
+      "summaryBytes": 9515,
+      "persistentStateVerified": true,
+      "transactionClosed": true,
+      "tempClosed": true,
+      "retainedSqlBytes": 29279,
+      "retainedSqlStringChargeBytes": 58558,
+      "samples": [
+        {
+          "memory": {
+            "arrayBuffers": 35616,
+            "external": 2301294,
+            "heapTotal": 7012352,
+            "heapUsed": 5892312,
+            "rss": 48209920
+          },
+          "peakKiB": 47088,
+          "phase": "startup"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 72424,
+            "external": 2580863,
+            "heapTotal": 54083584,
+            "heapUsed": 29337016,
+            "rss": 87961600
+          },
+          "peakKiB": 85900,
+          "phase": "apply-or-rollback-settled"
+        },
+        {
+          "memory": {
+            "arrayBuffers": 72424,
+            "external": 2580863,
+            "heapTotal": 54083584,
+            "heapUsed": 32606832,
+            "rss": 89104384
+          },
+          "peakKiB": 87928,
+          "phase": "finished"
+        }
+      ],
+      "peakResidentBytes": 90038272,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    }
+  ],
+  "failures": []
+}

@@ -50,6 +50,28 @@ export interface NativeRefreshTransportProfile extends Omit<
 // Exact D5 candidates, most recently approved environment first; retain history.
 export const nativeRefreshTransportProfiles: readonly NativeRefreshTransportProfile[] =
   Object.freeze([
+    // R5 exact candidate and values approved by the user on 2026-11-03.
+    Object.freeze({
+      node: 'v24.15.0',
+      v8: '13.6.233.17-node.48',
+      platform: 'win32',
+      arch: 'x64',
+      zodVersion: '4.6.1',
+      implementationDigest: '726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013',
+      corpusRevision: 'p05-native-metadata-memory-v1',
+      memoryPolicyRevision: 'p05-native-memory-high-water-range-v1',
+      peakMethod: 'resourceUsage.maxRSS',
+      peakUnits: 'bytes',
+      workspace: 'REFRESH_TRANSPORT',
+      transportCorpusRevision: 'p05-native-refresh-transport-memory-v1',
+      transportCorpusDigest: '9e9b7136852eba80d40bfda8b0fb2a4f57f4e21ef34da2fc5bf0e572811c6dde',
+      reservationBytes: 399069184,
+      evidenceDigest: '2f294b30a3ef0d4fcbf0678a7b26272842b7cd5073677ed82f97d6841928173e',
+      memoryCandidateEvidenceDigest:
+        '2c3c890d439c45f8a67d5ba864727ae9a995f02039fb312c021931f6f0c020a7',
+      observedPeakBytes: 364560384,
+      fluctuationAllowanceBytes: 34508800,
+    }),
     // R4 exact candidate separately approved by the user on 2026-10-21.
     Object.freeze({
       node: 'v24.15.0',
@@ -165,6 +187,28 @@ export const nativeRefreshTransportProfiles: readonly NativeRefreshTransportProf
 // Exact verification candidate approved on 2026-10-03; never borrow full/read evidence.
 export const nativeRefreshVerificationProfiles: readonly NativeRefreshVerificationProfile[] =
   Object.freeze([
+    // R5 exact candidate and values approved by the user on 2026-11-03.
+    Object.freeze({
+      node: 'v24.15.0',
+      v8: '13.6.233.17-node.48',
+      platform: 'win32',
+      arch: 'x64',
+      zodVersion: '4.6.1',
+      implementationDigest: '726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013',
+      corpusRevision: 'p05-native-metadata-memory-v1',
+      memoryPolicyRevision: 'p05-native-memory-high-water-range-v1',
+      peakMethod: 'resourceUsage.maxRSS',
+      peakUnits: 'bytes',
+      workspace: 'REFRESH_VERIFY',
+      verificationCorpusRevision: 'p05-native-refresh-verification-memory-v1',
+      verificationCorpusDigest: '1969707b181cf5bbd2fd753d489c4ff3a39333f4d8166b43c13a62ec40dad232',
+      reservationBytes: 407248896,
+      evidenceDigest: '116d839659bea9be80f32d5999cc56cc574a131485187860fdd0824c805741ed',
+      memoryCandidateEvidenceDigest:
+        '6dd8f8de50d1a683bb087c0eee244788fc5104d4c4082a84578991a03d491aa9',
+      observedPeakBytes: 345808896,
+      fluctuationAllowanceBytes: 61440000,
+    }),
     // R4 exact candidate separately approved by the user on 2026-10-21.
     Object.freeze({
       node: 'v24.15.0',
@@ -280,6 +324,30 @@ export const nativeRefreshVerificationProfiles: readonly NativeRefreshVerificati
 // Exact Windows environment only; mismatches remain fail-closed. Raw report
 // capture status is preserved; approval is recorded in CURRENT_STATUS.
 export const nativeMetadataProfiles: readonly NativeMetadataProfile[] = Object.freeze([
+  // R5 exact candidate and values approved by the user on 2026-11-03.
+  Object.freeze({
+    node: 'v24.15.0',
+    v8: '13.6.233.17-node.48',
+    platform: 'win32',
+    arch: 'x64',
+    zodVersion: '4.6.1',
+    implementationDigest: '726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013',
+    corpusRevision: 'p05-native-metadata-memory-v1',
+    memoryPolicyRevision: 'p05-native-memory-high-water-range-v1',
+    peakMethod: 'resourceUsage.maxRSS',
+    peakUnits: 'bytes',
+    corpusDigest: '0c599e6626202fe4a0b5d5866e2d89d01a4674e40b0efe0d0b20acf5b4085b29',
+    reservationBytes: 226656256,
+    evidenceDigest: 'd29793756dbefdf563e69aa7054dac7c3aacb35fa2a993acece25cef289f87c9',
+    fullTransportCorpusRevision: 'p05-native-full-v3-memory-v1',
+    fullTransportCorpusDigest: '11cc2f5492f3429f3081fa8278852d947635a8d778471d293f3ce103785fd8ef',
+    fullTransportEvidenceDigest: '28e456adfede6d8d9094495e269af7a22316d278f92b04a253b5118e9fa2e515',
+    fullTransportPeakBytes: 167899136,
+    memoryCandidateEvidenceDigest:
+      'bf55069efc3b459a8b2eac5cb30e51eed60a764326264d66f1179e421522552f',
+    observedPeakBytes: 217964544,
+    fluctuationAllowanceBytes: 8691712,
+  }),
   // R4 exact candidate separately approved by the user on 2026-10-21.
   Object.freeze({
     node: 'v24.15.0',

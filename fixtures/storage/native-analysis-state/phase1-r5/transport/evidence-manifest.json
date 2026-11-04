@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 2,
+  "workspace": "REFRESH_TRANSPORT",
+  "environment": {
+    "node": "v24.15.0",
+    "v8": "13.6.233.17-node.48",
+    "platform": "win32",
+    "arch": "x64",
+    "zodVersion": "4.6.1",
+    "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+    "corpusRevision": "p05-native-metadata-memory-v1"
+  },
+  "corpus": {
+    "digest": "9e9b7136852eba80d40bfda8b0fb2a4f57f4e21ef34da2fc5bf0e572811c6dde",
+    "revision": "p05-native-refresh-transport-memory-v1"
+  },
+  "reports": [
+    {
+      "path": "raw.json",
+      "sha256": "2f294b30a3ef0d4fcbf0678a7b26272842b7cd5073677ed82f97d6841928173e"
+    }
+  ],
+  "priorApprovals": []
+}

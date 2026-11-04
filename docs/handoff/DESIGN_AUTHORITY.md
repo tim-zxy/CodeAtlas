@@ -1,3 +1,15 @@
+## R5 Q3最终本地结算 — 2026-11-04
+
+用户另行批准一次固定R5 context续接后，D exit0、22/22 ACTUAL_ADMITTED、0failure；实际最高350482432＜批准399069184 bytes，耗时51分47秒。与此前27/27必需profile观察、15/15 ACTUAL_PRIVATE_PORT各自构成本地Q3退出，四用途批准值已安装。候选/环境/22类覆盖/持久状态/transaction与TEMP关闭、原工具及Native pin终审通过。[准确结果与原失败](../superpowers/reviews/2026-11-03-phase1-native-profile-installation-review.md)；唯一索引为原B results.nativeCiQualificationPreparation.q3.finalExit。
+
+原D缺context失败、旧状态和全部证据保留；没有重复27/15/320/64、构建、产品测试或新增collector。复用产品未变的原编译/10项定向测试/架构17证据。R5试验后不宣称pristine，未来打包仍须原strict reader/guard，不手动恢复或伪造ownership。Phase1仍4/21接受、17OPEN，Syntax/A6/E02及UNKNOWN风险保持；无新独立整分支评审、Git或云端操作。下方历史待批/未执行文字由本次明确批准及实际证据限定替代，原文逐字节保留。
+
+## R5数值已批准安装，Q3本地部分通过／D入口拒绝 — 2026-11-03
+
+用户已批准准确四用途值及Q3：READ_SEAL/FULL_TRANSPORT各226656256，REFRESH_VERIFY407248896，REFRESH_TRANSPORT399069184 bytes。三个静态条目/13原字节证据/旧数据与空Syntax catalog保留；Runtime编译、正式入口定向10/10、架构17及具名格式通过，编译身份及原3053依赖不变。[任务/证据与作者审查](../superpowers/reviews/2026-11-03-phase1-native-profile-installation-review.md)为本次准确入口。
+
+一次实际观察27/27＋私有验证15/15通过；D通用CLI因缺R5 context、默认target/debug根而被原依赖门禁拒绝，Native启动0/D实际观察0，未评估pristine。整批失败即停，未重试或修改ownership/DB；D实际22与完整Q3未通过，CI/Release/Git未授权。原22qualification/320校准/64holdout不重跑、不与本批相加。原Phase1四项接受/17OPEN、Syntax/A6/E02及UNKNOWN风险保持；下方待数值/运行文字仅保留历史。
+
 ## 已批准：声明接收者消费修订 — 2026-10-31
 
 用户批准[消费合同与T1–T3](../superpowers/specs/2026-10-31-phase1-declared-receiver-consumption-design.md)。限现有Syntax3上的Java同site类型声明/初始化证明及简单泛型名义类型消费；原Context、支持、scope/import/callee和PARTIAL发布边界保持。无IR/wire/SQL/置信数值变更；不授权producer/真实运行。generic-type一项旧预期随本显式规则更新并保留原件，不静默保留互相矛盾的旧拒绝语义。实际本地证据见该合同链接的作者审查。

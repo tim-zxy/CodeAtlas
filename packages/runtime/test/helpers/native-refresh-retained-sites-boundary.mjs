@@ -10,6 +10,8 @@ import {
 import { preparedSourceRefresh } from './native-refresh-source-fixture.mjs';
 import { frameSourceRefreshBoundary } from './native-refresh-source-input-boundary.mjs';
 
+import { r5PreparationScope } from './native-refresh-r5-preparation-scope.mjs';
+
 const id = 'source-field-sites-boundary';
 export const sourceAt = (count) =>
   'class Sites {\n' +
@@ -139,7 +141,12 @@ export async function preparedRetainedSitesBoundary(t, onReadDiagnostic, replayR
       dContext,
     );
   let accepted, next;
-  if (dContext === undefined) {
+  const scope = r5PreparationScope(id, dContext);
+  if (scope !== null) {
+    ({ accepted, next } = await size([scope.accepted, scope.next]));
+    assert.equal(accepted.metrics.memberCount, scope.accepted);
+    assert.equal(next.metrics.memberCount, scope.next);
+  } else if (dContext === undefined) {
     ({ accepted, next } = await size([pair.accepted.memberCount, pair.next.memberCount]));
     assert.equal(accepted.metrics.memberCount, pair.accepted.memberCount);
     assert.equal(next.metrics.memberCount, pair.next.memberCount);

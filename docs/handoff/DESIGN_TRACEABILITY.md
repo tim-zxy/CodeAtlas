@@ -1,3 +1,27 @@
+## R5 草稿资产与本地 CI 接入核验 — 2026-11-04
+
+同仓草稿 433386530 的资产 707690867 已上传。GitHub 确认 271749831 bytes，SHA-256 44cc411d72f5a25539fa8fbdd8e18e7cde9ecfd93f4c1f5353424d6f4541d8e4，目标 433015700c7c701a6493f7f8fa5eace00e773913。新增 R5 批准记录，保留 R4 原记录供历史检查。Native CI 的下载与收集使用同一 R5 记录，临时 checkout 在收集退出后恢复 R4 原字节。两版 schema、52 项 Native 源码、严格 ZIP 校验、8 条历史 Source 检查、PowerShell 解析及模拟退出 37 时的恢复均通过。后续发布与云端集成待准确候选审批。详见[集成计划](../superpowers/plans/2026-11-04-phase1-r5-exact-pack-integration.md)。
+
+## R5 Q3最终本地结算 — 2026-11-04
+
+用户另行批准一次固定R5 context续接后，D exit0、22/22 ACTUAL_ADMITTED、0failure；实际最高350482432＜批准399069184 bytes，耗时51分47秒。与此前27/27必需profile观察、15/15 ACTUAL_PRIVATE_PORT各自构成本地Q3退出，四用途批准值已安装。候选/环境/22类覆盖/持久状态/transaction与TEMP关闭、原工具及Native pin终审通过。[准确结果与原失败](../superpowers/reviews/2026-11-03-phase1-native-profile-installation-review.md)；唯一索引为原B results.nativeCiQualificationPreparation.q3.finalExit。
+
+原D缺context失败、旧状态和全部证据保留；没有重复27/15/320/64、构建、产品测试或新增collector。复用产品未变的原编译/10项定向测试/架构17证据。R5试验后不宣称pristine，未来打包仍须原strict reader/guard，不手动恢复或伪造ownership。Phase1仍4/21接受、17OPEN，Syntax/A6/E02及UNKNOWN风险保持；无新独立整分支评审、Git或云端操作。下方历史待批/未执行文字由本次明确批准及实际证据限定替代，原文逐字节保留。
+
+## R5数值已批准安装，Q3本地部分通过／D入口拒绝 — 2026-11-03
+
+用户已批准准确四用途值及Q3：READ_SEAL/FULL_TRANSPORT各226656256，REFRESH_VERIFY407248896，REFRESH_TRANSPORT399069184 bytes。三个静态条目/13原字节证据/旧数据与空Syntax catalog保留；Runtime编译、正式入口定向10/10、架构17及具名格式通过，编译身份及原3053依赖不变。[任务/证据与作者审查](../superpowers/reviews/2026-11-03-phase1-native-profile-installation-review.md)为本次准确入口。
+
+一次实际观察27/27＋私有验证15/15通过；D通用CLI因缺R5 context、默认target/debug根而被原依赖门禁拒绝，Native启动0/D实际观察0，未评估pristine。整批失败即停，未重试或修改ownership/DB；D实际22与完整Q3未通过，CI/Release/Git未授权。原22qualification/320校准/64holdout不重跑、不与本批相加。原Phase1四项接受/17OPEN、Syntax/A6/E02及UNKNOWN风险保持；下方待数值/运行文字仅保留历史。
+
+## R5有限Source准备附约已批准并本地实施 — 2026-11-03
+
+用户批准[B1–B2整包](../superpowers/plans/2026-11-03-phase1-bounded-native-preparation.md)；仅R5使用有原SHA依据的有限Source范围，旧版本/原实际边界/Source/Store/相邻拒绝门禁保持。两项纯scope RED→最终相关4/4与六JS语法/具名格式通过；不授当前Native资格。完整实际清单已可审查（最大2066 Native、580 Node，单次构建），执行未授权；具体profile数值/CI/Git和Phase1/A6/E02仍HOLD。没有新Fixture ID/注册、产品schema/迁移、分数或依赖；原未知风险与失败保留。
+
+## 固定R5离线附约已批准并验证 — 2026-11-03
+
+用户已明确批准[Native CI资格设计](../superpowers/specs/2026-11-03-phase1-native-ci-qualification-design.md)与Q0整包。新生成默认v5固定R5，v1..v4原映射/字节/严格读者/ownership保持；所有五根均受输出confinement，CI仅追加R5失败fallback。定向离线40/40通过，无新Fixture ID、schema、依赖、数值或产品路由。真实执行清单仍NOT_READY：原生成器实际增长循环没有已冻结的启动次数上界，不将320校准/64holdout误称全部进程。资格、数值和云端仍须各自准确证据与明确授权。
+
 ## A/B 版本化联合链实施追踪 — 2026-11-03
 
 批准合同 §2–5 → wire8/Syntax4/当前历史及 Stage → 38 份可携带流与严格映射/历史测试；§6–7 → 固定 V5 四框架/共享 site 覆盖 → framework-surface-closure 的支持、未知、qualifier、参数漏报 RED→GREEN；§7.1–7.3 → Graph/Flow V2 与同 lease Store/Application/Runtime → framework-surface-publication 的联合/刷新/重开/changed/removed/retained/NO_OP。SQL1/JSON2 按已批准最小 DCP，旧摘要/迁移保持。§8 跨仓 → 实际 matcher/V2 stitch/workspace Store 负向拒绝，正向 schema 兼容证据 HOLD。[完整原任务/门禁映射及准确日志](../superpowers/reviews/2026-11-03-phase1-ab-local-implementation-review.md)，原 B results.json 为唯一执行索引；不新造 Fixture ID 或经验数值。

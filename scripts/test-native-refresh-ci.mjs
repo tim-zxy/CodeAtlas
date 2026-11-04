@@ -6,6 +6,7 @@ import { DatabaseSync } from 'node:sqlite';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { test } from 'node:test';
+import { assertRefreshCiOutputOutsideLayouts } from './helpers/native-refresh-ci-layout.mjs';
 import { refreshTransportCases } from './native-refresh-transport-memory.mjs';
 import * as memory from './native-refresh-transport-memory.mjs';
 import * as replay from '../packages/runtime/test/helpers/native-refresh-transport-replay.mjs';
@@ -186,8 +187,11 @@ for (const root of [
   'C:\\CodeAtlas-P05-D5-R2',
   'C:\\CodeAtlas-P05-D5-R3',
   'C:\\CodeAtlas-P05-D5-R4',
+  'C:\\CodeAtlas-P05-D5-R5',
 ]) {
   test(`CI commands refuse output into preserved layout before approval or build: ${root}`, async () => {
+    // Establish the pure precondition before calling any side-effecting command.
+    assert.throws(() => assertRefreshCiOutputOutsideLayouts(root), /overlaps frozen layout/i);
     for (const command of ['prepare', 'verify', 'collect']) {
       const args = command === 'prepare' ? [command, root] : [command, 'missing.zip', root];
       await assert.rejects(

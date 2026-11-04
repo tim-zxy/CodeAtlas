@@ -12,6 +12,8 @@ import { stateDigest } from '../../../providers/test/helpers/native-full-v3-corp
 import { requestBytes } from '../../../providers/test/helpers/native-refresh-v3-corpus.mjs';
 import { preparedSourceRefresh, sourceTransitions } from './native-refresh-source-fixture.mjs';
 
+import { r5PreparationScope } from './native-refresh-r5-preparation-scope.mjs';
+
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const nameAt = (index) => `File${String(index).padStart(6, '0')}.java`;
 function transition(count, artifact, transitionId) {
@@ -106,6 +108,7 @@ async function preparedFileBoundary(
   replayRoot,
   dContext,
 ) {
+  const scope = r5PreparationScope(transitionId, dContext);
   const rowAt = (count) => {
     const row = transition(count, artifact, transitionId);
     return {
@@ -136,7 +139,7 @@ async function preparedFileBoundary(
   let next;
   // ponytail: bounded offline repeated parsing/framing; freeze these corpus artifacts
   // before calibration rather than adding speculative sizing or fake fact identities.
-  for (let index = 1; ; index++) {
+  for (let index = 1; scope === null || summaries.length < scope.next; index++) {
     const path = nameAt(index);
     await cp(
       fileURLToPath(

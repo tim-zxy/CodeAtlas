@@ -9,6 +9,8 @@ import { sourceAt } from './native-refresh-retained-sites-boundary.mjs';
 import { preparedSourceRefresh, activationImage } from './native-refresh-source-fixture.mjs';
 import { observeNativeWire } from './native-refresh-wire-probe.mjs';
 
+import { r5PreparationScope } from './native-refresh-r5-preparation-scope.mjs';
+
 const sha = (raw) => createHash('sha256').update(raw).digest('hex');
 export function denseUpsertTransition(count) {
   return {
@@ -28,6 +30,7 @@ export async function prepareDenseUpsertBoundary(t, onReadDiagnostic, dContext) 
   assert.equal(pair.status, 'GENERATED_SOURCE_PREPARATION_ONLY');
   assert.equal(pair.calibrationEligible, false);
   const lower = pair.accepted;
+  const scope = r5PreparationScope('source-dense-upsert-boundary', dContext);
   const seed = Buffer.from(sourceAt(lower.memberCount));
   assert.equal(seed.length, lower.sourceBytes);
   assert.equal(sha(seed), lower.sourceSha256);
@@ -44,7 +47,7 @@ export async function prepareDenseUpsertBoundary(t, onReadDiagnostic, dContext) 
   let next;
   // The prior source family is a checked lower seed, never this output boundary.
   // One new legal field per actual Rust REFRESH; no cached Provider facts.
-  for (let count = lower.memberCount; ; count++) {
+  for (let count = lower.memberCount; scope === null || count <= scope.next; count++) {
     const raw = Buffer.from(sourceAt(count));
     await writeFile(join(fixture.prepared.request.payload.repository.rootPath, 'Sites.java'), raw);
     const request = structuredClone(fixture.prepared.request);
@@ -137,6 +140,7 @@ export async function prepareDenseUpsertBoundary(t, onReadDiagnostic, dContext) 
   } finally {
     reopened.close();
   }
+  if (scope !== null) assert.ok(next, 'R5 preparation range exhausted before a producer boundary');
   return {
     status: 'REAL_PRODUCER_BOUNDARY_PREPARATION_ONLY',
     calibrationEligible: false,
