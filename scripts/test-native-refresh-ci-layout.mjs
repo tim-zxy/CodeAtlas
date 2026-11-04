@@ -23,7 +23,7 @@ const layout = await import('./helpers/native-refresh-ci-layout.mjs').catch((err
 const native = Buffer.from('owned synthetic executable bytes\n');
 const nativeSha256 = createHash('sha256').update(native).digest('hex');
 
-test('versioned operational layouts preserve v1 to v5 and choose R6 for new generation', () => {
+test('versioned operational layouts preserve v1 to v6 and choose R7 for new generation', () => {
   assert.equal(typeof layout.refreshCiLayoutRootForRevision, 'function');
   assert.equal(
     layout.refreshCiLayoutRootForRevision('p05-d5-exact-layout-v1'),
@@ -45,8 +45,12 @@ test('versioned operational layouts preserve v1 to v5 and choose R6 for new gene
     layout.refreshCiLayoutRootForRevision('p05-d5-exact-layout-v5'),
     'C:\\CodeAtlas-P05-D5-R5',
   );
-  assert.equal(layout.refreshCiLayoutRoot, 'C:\\CodeAtlas-P05-D5-R6');
-  assert.equal(layout.refreshCiLayoutRevision, 'p05-d5-exact-layout-v6');
+  assert.equal(
+    layout.refreshCiLayoutRootForRevision('p05-d5-exact-layout-v6'),
+    'C:\\CodeAtlas-P05-D5-R6',
+  );
+  assert.equal(layout.refreshCiLayoutRoot, 'C:\\CodeAtlas-P05-D5-R7');
+  assert.equal(layout.refreshCiLayoutRevision, 'p05-d5-exact-layout-v7');
   assert.throws(() => layout.refreshCiLayoutRootForRevision('other-layout'), /revision|layout/i);
 });
 
@@ -59,6 +63,7 @@ test('operational output confinement preserves all five frozen layouts', () => {
     'C:\\CodeAtlas-P05-D5-R4',
     'C:\\CodeAtlas-P05-D5-R5',
     'C:\\CodeAtlas-P05-D5-R6',
+    'C:\\CodeAtlas-P05-D5-R7',
   ]) {
     for (const output of [root, path.join(root, 'evidence', 'trial')])
       assert.throws(() => layout.assertRefreshCiOutputOutsideLayouts(output), /overlap|layout/i);
@@ -236,6 +241,12 @@ test('R5 preparation scope pins finite Source ranges without granting qualificat
       value,
     );
     assert.deepEqual(value, { accepted, next });
+    assert.deepEqual(
+      r5PreparationScope(family, {
+        executablePath: context.executablePath.replace('-R5', '-R7'),
+      }),
+      value,
+    );
     assert.ok(Object.isFrozen(value));
   }
   assert.throws(() => r5PreparationScope('foreign-family', context), /family/i);

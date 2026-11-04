@@ -165,6 +165,7 @@ test('pack output refuses all frozen layouts before reading ownership or evidenc
     'C:\\CodeAtlas-P05-D5-R4',
     'C:\\CodeAtlas-P05-D5-R5',
     'C:\\CodeAtlas-P05-D5-R6',
+    'C:\\CodeAtlas-P05-D5-R7',
   ])
     await assert.rejects(
       () =>
@@ -197,6 +198,8 @@ test('pack approval accepts v5 and v6 independently and refuses unknown layout r
   assert.equal(value.layoutRevision, 'p05-d5-exact-layout-v5');
   const v6 = { ...input, layoutRevision: 'p05-d5-exact-layout-v6' };
   assert.deepEqual(pack.validateRefreshCiApproval(v6), v6);
+  const v7 = { ...input, layoutRevision: 'p05-d5-exact-layout-v7' };
+  assert.deepEqual(pack.validateRefreshCiApproval(v7), v7);
   assert.throws(
     () => pack.validateRefreshCiApproval({ ...record(), layoutRevision: 'other-layout' }),
     /revision|layout/i,
