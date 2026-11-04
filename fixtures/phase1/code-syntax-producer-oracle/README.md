@@ -1,0 +1,3 @@
+# Independent Code/Syntax library oracle
+
+18 Source families,strict v5 raw templates and independent Canonical references,authored before product changes with no product imports. Published identity encodings/old independent references are SHA-pinned. Java uses real frozen declaration identities,not B0b-1 unit IDs. Raw templates retain integer/f64 lexemes;replace only declared root/request-SHA/terminal-SHA JSON stringtokens. Legacy-v4 dictionary template pins existing behavior,not correct complete extraction. Candidate/library evidence only: no process,profile,Source/history authentication,publication or Phase1 qualification. Old roots remain immutable. Budgets copy existing reference requests.

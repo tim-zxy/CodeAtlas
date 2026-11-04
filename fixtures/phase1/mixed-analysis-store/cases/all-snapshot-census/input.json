@@ -1,0 +1,4 @@
+{
+  "scenario": "all-snapshot-census",
+  "base": "base-input.json"
+}

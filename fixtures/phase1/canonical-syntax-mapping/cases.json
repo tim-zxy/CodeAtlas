@@ -1,0 +1,218 @@
+[
+  {
+    "id": "decoration-java",
+    "family": "M01_LITERAL_SUCCESSOR",
+    "input": "cases/decoration-java/input.json",
+    "expected": "cases/decoration-java/expected.json"
+  },
+  {
+    "id": "invocation-python",
+    "family": "M01_LITERAL_SUCCESSOR",
+    "input": "cases/invocation-python/input.json",
+    "expected": "cases/invocation-python/expected.json"
+  },
+  {
+    "id": "declaration-java",
+    "family": "M01_LITERAL_SUCCESSOR",
+    "input": "cases/declaration-java/input.json",
+    "expected": "cases/declaration-java/expected.json"
+  },
+  {
+    "id": "assignment-python",
+    "family": "M01_LITERAL_SUCCESSOR",
+    "input": "cases/assignment-python/input.json",
+    "expected": "cases/assignment-python/expected.json"
+  },
+  {
+    "id": "artifact-ownerless",
+    "family": "M01_LITERAL_SUCCESSOR",
+    "input": "cases/artifact-ownerless/input.json",
+    "expected": "cases/artifact-ownerless/expected.json"
+  },
+  {
+    "id": "value-string",
+    "family": "M01_LITERAL_SUCCESSOR",
+    "input": "cases/value-string/input.json",
+    "expected": "cases/value-string/expected.json"
+  },
+  {
+    "id": "value-number",
+    "family": "M01_LITERAL_SUCCESSOR",
+    "input": "cases/value-number/input.json",
+    "expected": "cases/value-number/expected.json"
+  },
+  {
+    "id": "value-boolean",
+    "family": "M01_LITERAL_SUCCESSOR",
+    "input": "cases/value-boolean/input.json",
+    "expected": "cases/value-boolean/expected.json"
+  },
+  {
+    "id": "value-null",
+    "family": "M01_LITERAL_SUCCESSOR",
+    "input": "cases/value-null/input.json",
+    "expected": "cases/value-null/expected.json"
+  },
+  {
+    "id": "value-reference-exact",
+    "family": "M01_LITERAL_SUCCESSOR",
+    "input": "cases/value-reference-exact/input.json",
+    "expected": "cases/value-reference-exact/expected.json"
+  },
+  {
+    "id": "value-reference-heuristic",
+    "family": "M01_LITERAL_SUCCESSOR",
+    "input": "cases/value-reference-heuristic/input.json",
+    "expected": "cases/value-reference-heuristic/expected.json"
+  },
+  {
+    "id": "value-array",
+    "family": "M01_LITERAL_SUCCESSOR",
+    "input": "cases/value-array/input.json",
+    "expected": "cases/value-array/expected.json"
+  },
+  {
+    "id": "value-object-duplicates",
+    "family": "M01_LITERAL_SUCCESSOR",
+    "input": "cases/value-object-duplicates/input.json",
+    "expected": "cases/value-object-duplicates/expected.json"
+  },
+  {
+    "id": "value-unknown",
+    "family": "M01_LITERAL_SUCCESSOR",
+    "input": "cases/value-unknown/input.json",
+    "expected": "cases/value-unknown/expected.json"
+  },
+  {
+    "id": "reference-ambiguous-two",
+    "family": "M01_LITERAL_SUCCESSOR",
+    "input": "cases/reference-ambiguous-two/input.json",
+    "expected": "cases/reference-ambiguous-two/expected.json"
+  },
+  {
+    "id": "callee-collapse-one",
+    "family": "M01_LITERAL_SUCCESSOR",
+    "input": "cases/callee-collapse-one/input.json",
+    "expected": "cases/callee-collapse-one/expected.json"
+  },
+  {
+    "id": "value-collapse-reject",
+    "family": "M01_LITERAL_SUCCESSOR",
+    "input": "cases/value-collapse-reject/input.json",
+    "expected": "cases/value-collapse-reject/expected.json"
+  },
+  {
+    "id": "reference-unresolved-zero",
+    "family": "M01_LITERAL_SUCCESSOR",
+    "input": "cases/reference-unresolved-zero/input.json",
+    "expected": "cases/reference-unresolved-zero/expected.json"
+  },
+  {
+    "id": "reference-unsupported-zero",
+    "family": "M01_LITERAL_SUCCESSOR",
+    "input": "cases/reference-unsupported-zero/input.json",
+    "expected": "cases/reference-unsupported-zero/expected.json"
+  },
+  {
+    "id": "reference-missing-binding",
+    "family": "M01_LITERAL_SUCCESSOR",
+    "input": "cases/reference-missing-binding/input.json",
+    "expected": "cases/reference-missing-binding/expected.json"
+  },
+  {
+    "id": "reference-not-selected",
+    "family": "M01_LITERAL_SUCCESSOR",
+    "input": "cases/reference-not-selected/input.json",
+    "expected": "cases/reference-not-selected/expected.json"
+  },
+  {
+    "id": "reference-loser-binding",
+    "family": "M01_LITERAL_SUCCESSOR",
+    "input": "cases/reference-loser-binding/input.json",
+    "expected": "cases/reference-loser-binding/expected.json"
+  },
+  {
+    "id": "reference-same-name-different-id",
+    "family": "M01_LITERAL_SUCCESSOR",
+    "input": "cases/reference-same-name-different-id/input.json",
+    "expected": "cases/reference-same-name-different-id/expected.json"
+  },
+  {
+    "id": "owner-not-selected",
+    "family": "M01_LITERAL_SUCCESSOR",
+    "input": "cases/owner-not-selected/input.json",
+    "expected": "cases/owner-not-selected/expected.json"
+  },
+  {
+    "id": "source-fingerprint-drift",
+    "family": "M01_LITERAL_SUCCESSOR",
+    "input": "cases/source-fingerprint-drift/input.json",
+    "expected": "cases/source-fingerprint-drift/expected.json"
+  },
+  {
+    "id": "source-range-foreign",
+    "family": "M01_LITERAL_SUCCESSOR",
+    "input": "cases/source-range-foreign/input.json",
+    "expected": "cases/source-range-foreign/expected.json"
+  },
+  {
+    "id": "owner-cross-revision",
+    "family": "M01_LITERAL_SUCCESSOR",
+    "input": "cases/owner-cross-revision/input.json",
+    "expected": "cases/owner-cross-revision/expected.json"
+  },
+  {
+    "id": "provider-renamed-key-stable",
+    "family": "M01_LITERAL_SUCCESSOR",
+    "input": "cases/provider-renamed-key-stable/input.json",
+    "expected": "cases/provider-renamed-key-stable/expected.json"
+  },
+  {
+    "id": "revision-rebound-key-stable",
+    "family": "M01_LITERAL_SUCCESSOR",
+    "input": "cases/revision-rebound-key-stable/input.json",
+    "expected": "cases/revision-rebound-key-stable/expected.json"
+  },
+  {
+    "id": "payload-changed-key",
+    "family": "M01_LITERAL_SUCCESSOR",
+    "input": "cases/payload-changed-key/input.json",
+    "expected": "cases/payload-changed-key/expected.json"
+  },
+  {
+    "id": "policy-missing",
+    "family": "M01_LITERAL_SUCCESSOR",
+    "input": "cases/policy-missing/input.json",
+    "expected": "cases/policy-missing/expected.json"
+  },
+  {
+    "id": "wrong-extractor",
+    "family": "CONTRACT_REFUSAL",
+    "input": "cases/wrong-extractor/input.json",
+    "expected": "cases/wrong-extractor/expected.json"
+  },
+  {
+    "id": "caller-policy",
+    "family": "CONTRACT_REFUSAL",
+    "input": "cases/caller-policy/input.json",
+    "expected": "cases/caller-policy/expected.json"
+  },
+  {
+    "id": "caller-score",
+    "family": "CONTRACT_REFUSAL",
+    "input": "cases/caller-score/input.json",
+    "expected": "cases/caller-score/expected.json"
+  },
+  {
+    "id": "raw-heuristic-callee",
+    "family": "RAW_RESOLUTION",
+    "input": "cases/raw-heuristic-callee/input.json",
+    "expected": "cases/raw-heuristic-callee/expected.json"
+  },
+  {
+    "id": "artifact-path-mismatch",
+    "family": "SOURCE_PATH_REFUSAL",
+    "input": "cases/artifact-path-mismatch/input.json",
+    "expected": "cases/artifact-path-mismatch/expected.json"
+  }
+]

@@ -1,0 +1,47 @@
+{
+  "configVersion": 1,
+  "runtime": {
+    "mode": "ONE_SHOT",
+    "workspaceRoot": "/fixture/workspace"
+  },
+  "indexing": {
+    "nativeAnalyzer": {
+      "parseWorkers": "AUTO"
+    },
+    "resourceBudget": {
+      "maxInputBytes": 8192,
+      "maxOutputBytes": 8192,
+      "maxItems": 16,
+      "maxDepth": 4,
+      "maxDurationMs": 1000,
+      "maxMemoryBytes": 8192
+    }
+  },
+  "providers": [],
+  "plugins": [],
+  "knowledge": {
+    "defaultScope": "AUTO",
+    "defaultMode": "AFFECTED_ONLY",
+    "degradedCandidates": false
+  },
+  "llm": {
+    "enabled": false,
+    "endpoint": null,
+    "credentialRef": null,
+    "allowRemoteFallback": false,
+    "resourceBudget": null
+  },
+  "embedding": {
+    "enabled": false
+  },
+  "agents": {
+    "defaultDepth": "L0"
+  },
+  "security": {
+    "localOnly": true,
+    "remoteLlmEnabled": false,
+    "remoteEmbeddingEnabled": false,
+    "allowSensitiveRemote": false,
+    "allowRawSourceRemote": false
+  }
+}

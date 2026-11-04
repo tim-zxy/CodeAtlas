@@ -1,0 +1,4 @@
+{
+  "scenario": "unsafe-proxy",
+  "base": "base-input.json"
+}

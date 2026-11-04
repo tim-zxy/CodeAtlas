@@ -1,0 +1,859 @@
+{
+  "schemaVersion": 1,
+  "qualification": "INDEPENDENT_COMPLETE_SCHEMA11_ZERO_FACT_CODE_READ_COST_NOT_WHOLE_PIPELINE_OR_NATIVE_AUTHORIZATION",
+  "scope": "Closed zero-fact inputs, optional OTHER files, zero/one/two snapshots, global census and orphan/available histories; unsupported fact/coverage tables explicitly rejected by model.",
+  "provenance": "Reference generated with only immutable SQL literals, standard crypto/UTF8/canonical framing and independently written BigInt read model before product invocation. No candidate consumption/usage or Code read output is a golden.",
+  "cases": [
+    {
+      "id": "other-only-unindexed",
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-stage/other-zero-context.json",
+        "sha256": "17cfcc540a762d4beb1697b61617a2757153a149fda7f55bb8419aed03f68fd2"
+      },
+      "input": {
+        "repositoryId": "repo:one",
+        "tables": {
+          "repository": [{ "slot": 1, "id": "repo:one", "root_path": "C:/b1b-component-fixture" }],
+          "repository_state": [
+            {
+              "repository_id": "repo:one",
+              "indexed_revision_id": null,
+              "indexed_content_fingerprint": null
+            }
+          ],
+          "revisions": [
+            {
+              "id": "revision:worktree",
+              "repository_id": "repo:one",
+              "kind": "WORKTREE",
+              "content_fingerprint": "content:first",
+              "commit_identity": null,
+              "base_revision_id": null,
+              "source_revision_id": null
+            }
+          ],
+          "source_files": [
+            {
+              "revision_id": "revision:worktree",
+              "id": "file:one",
+              "repository_id": "repo:one",
+              "path": "README.txt",
+              "content_fingerprint": "sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+              "role": "OTHER",
+              "provenance": "AUTHORED",
+              "content_kind": "TEXT",
+              "language_hint": null,
+              "sensitivity": "INTERNAL"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "view": {
+          "schemaVersion": 1,
+          "kind": "REPOSITORY_CODE_CAPTURE",
+          "repositoryId": "repo:one",
+          "repositoryLocatorDigest": "be4f443420f269e1872f380f6f29ebe00eb40b3be70bb3df08a27a9691b576ac",
+          "activeBasis": null,
+          "targetSource": {
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "contentFingerprint": "content:first"
+          },
+          "sourceInventoryDigest": "212a5953b536c2d73931c46ae4eb35603ceaadc95942cad3aef97249b0c2b3af",
+          "sourceFileCount": 1,
+          "committedSnapshotCount": 0,
+          "historicalSourceProof": "UNAVAILABLE"
+        },
+        "entries": {
+          "SOURCE_FILE": [
+            {
+              "id": "file:one",
+              "repositoryId": "repo:one",
+              "revisionId": "revision:worktree",
+              "path": "README.txt",
+              "contentFingerprint": "sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+              "classification": {
+                "role": "OTHER",
+                "provenance": "AUTHORED",
+                "contentKind": "TEXT"
+              },
+              "languageHint": null,
+              "sensitivity": "INTERNAL"
+            }
+          ]
+        },
+        "consumed": { "rows": 56, "serializedBytes": 986, "items": 81 },
+        "retainedLogicalBytes": 978,
+        "required": {
+          "maxRows": 56,
+          "maxSerializedBytes": 986,
+          "maxItems": 81,
+          "maxDepth": 3,
+          "memoryBudgetBytes": 3222
+        },
+        "ledger": [
+          { "phase": "fixed numeric SQL", "rows": 43 },
+          { "phase": "all numeric and row deliveries", "rows": 56 },
+          { "phase": "retained context", "bytes": 576 },
+          { "phase": "view weight", "bytes": 402 }
+        ]
+      }
+    },
+    {
+      "id": "empty-unindexed",
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-stage/other-zero-context.json",
+        "sha256": "17cfcc540a762d4beb1697b61617a2757153a149fda7f55bb8419aed03f68fd2",
+        "mutation": "Remove sole OTHER file from current literal Source inventory; retain unindexed state."
+      },
+      "input": {
+        "repositoryId": "repo:one",
+        "tables": {
+          "repository": [{ "slot": 1, "id": "repo:one", "root_path": "C:/b1b-component-fixture" }],
+          "repository_state": [
+            {
+              "repository_id": "repo:one",
+              "indexed_revision_id": null,
+              "indexed_content_fingerprint": null
+            }
+          ],
+          "revisions": [
+            {
+              "id": "revision:worktree",
+              "repository_id": "repo:one",
+              "kind": "WORKTREE",
+              "content_fingerprint": "content:first",
+              "commit_identity": null,
+              "base_revision_id": null,
+              "source_revision_id": null
+            }
+          ],
+          "source_files": []
+        }
+      },
+      "expected": {
+        "view": {
+          "schemaVersion": 1,
+          "kind": "REPOSITORY_CODE_CAPTURE",
+          "repositoryId": "repo:one",
+          "repositoryLocatorDigest": "be4f443420f269e1872f380f6f29ebe00eb40b3be70bb3df08a27a9691b576ac",
+          "activeBasis": null,
+          "targetSource": {
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "contentFingerprint": "content:first"
+          },
+          "sourceInventoryDigest": "47637a5405eed96d2213c92226d189f85a63c24773572208030220b9f181a679",
+          "sourceFileCount": 0,
+          "committedSnapshotCount": 0,
+          "historicalSourceProof": "UNAVAILABLE"
+        },
+        "entries": {},
+        "consumed": { "rows": 54, "serializedBytes": 499, "items": 54 },
+        "retainedLogicalBytes": 720,
+        "required": {
+          "maxRows": 54,
+          "maxSerializedBytes": 499,
+          "maxItems": 54,
+          "maxDepth": 2,
+          "memoryBudgetBytes": 1668
+        },
+        "ledger": [
+          { "phase": "fixed numeric SQL", "rows": 43 },
+          { "phase": "all numeric and row deliveries", "rows": 54 },
+          { "phase": "retained context", "bytes": 318 },
+          { "phase": "view weight", "bytes": 402 }
+        ]
+      }
+    },
+    {
+      "id": "legacy-empty-available",
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-store/valid-r010-clearing-context.json",
+        "sha256": "76b7d0cd528e270cf6b8f4c12a17e9432ccc2a5e01dda93479dddc071dd7fa53"
+      },
+      "input": {
+        "repositoryId": "r",
+        "tables": {
+          "repository": [{ "slot": 1, "id": "r", "root_path": "/r" }],
+          "repository_state": [
+            {
+              "repository_id": "r",
+              "indexed_revision_id": "rev",
+              "indexed_content_fingerprint": "base"
+            }
+          ],
+          "revisions": [
+            {
+              "id": "rev",
+              "repository_id": "r",
+              "kind": "WORKTREE",
+              "content_fingerprint": "base",
+              "commit_identity": null,
+              "base_revision_id": null,
+              "source_revision_id": null
+            }
+          ],
+          "source_files": [],
+          "provider_snapshots": [
+            {
+              "id": "snap",
+              "repository_id": "r",
+              "provider_id": "native",
+              "provider_version": "0.0.0",
+              "runtime_version": "0.0.0",
+              "requested_revision_id": "rev",
+              "requested_revision_fingerprint": "base",
+              "started_at": 1767225600000,
+              "completed_at": 1767225601000,
+              "outcome": "SUCCEEDED"
+            }
+          ],
+          "provider_capabilities": [
+            {
+              "snapshot_id": "snap",
+              "name": "SYMBOL",
+              "support": "SUPPORTED",
+              "coverage": "COMPLETE"
+            }
+          ],
+          "activation_history": [
+            {
+              "id": "activation:1079a965802acb90666b73177b06023ec10236efd6776120808a701ff966aa87",
+              "repository_id": "r",
+              "revision_id": "rev",
+              "parent_id": null,
+              "manifest_digest": "1079a965802acb90666b73177b06023ec10236efd6776120808a701ff966aa87",
+              "manifest_json": "{\"codeIdentity\":\"c208949d1f8e2a0031bd0a84bce005c10c058c02f532e36d6833f1a6056f046b\",\"observation\":null,\"originRegistryDigest\":\"d6db62aa1a54c8f2be953cb84a58e2280417fc4dddd85f021e86f90e3fe29d4d\",\"parent\":null,\"schemaVersion\":1,\"sourceIdentity\":\"9a99716b1331858af1b9ae8165aeec7ca36b6a3fe64b28c804d01bb414e1cfa2\",\"state\":{\"basis\":{\"codeActivationDigest\":\"c208949d1f8e2a0031bd0a84bce005c10c058c02f532e36d6833f1a6056f046b\",\"contentFingerprint\":\"base\",\"repositoryId\":\"r\",\"revisionId\":\"rev\"},\"contracts\":[{\"contract\":\"PYTHON_SYNTAX_CODE_V1\",\"extractor\":\"syntax-v1\",\"normalizer\":\"fixture-v1\",\"policy\":\"syntax-surface-support-v1\",\"providerId\":\"native\"}],\"coverage\":[],\"edges\":[],\"inventory\":[],\"nodes\":[],\"repositoryLocatorDigest\":\"89b334a45872720bb324e270130b21bc4d472bb297298b0d45685db1c0571ff7\",\"snapshots\":[{\"capabilities\":[{\"coverage\":\"COMPLETE\",\"name\":\"SYMBOL\",\"support\":\"SUPPORTED\"}],\"completedAt\":\"2026-01-01T00:00:01.000Z\",\"diagnostics\":[],\"id\":\"snap\",\"outcome\":\"SUCCEEDED\",\"providerId\":\"native\",\"providerVersion\":\"0.0.0\",\"repositoryId\":\"r\",\"requestedRevisionFingerprint\":\"base\",\"requestedRevisionId\":\"rev\",\"runtimeVersion\":\"0.0.0\",\"startedAt\":\"2026-01-01T00:00:00.000Z\"}],\"supports\":[],\"syntaxOrigins\":[],\"units\":[]},\"syntaxMembers\":[],\"transitions\":null}"
+            }
+          ],
+          "active_history_pointer": [
+            {
+              "repository_id": "r",
+              "activation_id": "activation:1079a965802acb90666b73177b06023ec10236efd6776120808a701ff966aa87"
+            }
+          ],
+          "activation_syntax_members": [],
+          "syntax_origins": [],
+          "syntax_projections": []
+        }
+      },
+      "expected": {
+        "view": {
+          "schemaVersion": 1,
+          "kind": "REPOSITORY_CODE_CAPTURE",
+          "repositoryId": "r",
+          "repositoryLocatorDigest": "89b334a45872720bb324e270130b21bc4d472bb297298b0d45685db1c0571ff7",
+          "activeBasis": {
+            "repositoryId": "r",
+            "revisionId": "rev",
+            "contentFingerprint": "base",
+            "codeActivationDigest": "c208949d1f8e2a0031bd0a84bce005c10c058c02f532e36d6833f1a6056f046b"
+          },
+          "targetSource": {
+            "repositoryId": "r",
+            "revisionId": "rev",
+            "contentFingerprint": "base"
+          },
+          "sourceInventoryDigest": "3b8366b8a23841ab31fe739eec3e86bf1eb5d1fc2a55e123c98dd3eca542a6e5",
+          "sourceFileCount": 0,
+          "committedSnapshotCount": 1,
+          "historicalSourceProof": "UNAVAILABLE"
+        },
+        "entries": {
+          "HEADER": [
+            {
+              "repositoryId": "r",
+              "indexedRevisionId": "rev",
+              "indexedContentFingerprint": "base",
+              "committedSnapshotCount": 1
+            }
+          ],
+          "PROVIDER_SNAPSHOT": [
+            {
+              "id": "snap",
+              "repositoryId": "r",
+              "providerId": "native",
+              "providerVersion": "0.0.0",
+              "runtimeVersion": "0.0.0",
+              "requestedRevisionId": "rev",
+              "requestedRevisionFingerprint": "base",
+              "startedAt": "2026-01-01T00:00:00.000Z",
+              "completedAt": "2026-01-01T00:00:01.000Z",
+              "capabilities": [
+                { "name": "SYMBOL", "support": "SUPPORTED", "coverage": "COMPLETE" }
+              ],
+              "diagnostics": [],
+              "outcome": "SUCCEEDED"
+            }
+          ],
+          "SNAPSHOT": [
+            {
+              "snapshot": {
+                "id": "snap",
+                "repositoryId": "r",
+                "providerId": "native",
+                "providerVersion": "0.0.0",
+                "runtimeVersion": "0.0.0",
+                "requestedRevisionId": "rev",
+                "requestedRevisionFingerprint": "base",
+                "outcome": "SUCCEEDED"
+              },
+              "capabilities": [{ "name": "SYMBOL", "support": "SUPPORTED", "coverage": "COMPLETE" }]
+            }
+          ]
+        },
+        "consumed": { "rows": 68, "serializedBytes": 1183, "items": 147 },
+        "retainedLogicalBytes": 1381,
+        "required": {
+          "maxRows": 68,
+          "maxSerializedBytes": 1183,
+          "maxItems": 147,
+          "maxDepth": 4,
+          "memoryBudgetBytes": 3460
+        },
+        "ledger": [
+          { "phase": "fixed numeric SQL", "rows": 43 },
+          { "phase": "all numeric and row deliveries", "rows": 68 },
+          { "phase": "retained context", "bytes": 884 },
+          { "phase": "view weight", "bytes": 497 }
+        ]
+      }
+    },
+    {
+      "id": "orphan-empty-unavailable",
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-store/valid-r010-clearing-context.json",
+        "sha256": "76b7d0cd528e270cf6b8f4c12a17e9432ccc2a5e01dda93479dddc071dd7fa53",
+        "mutation": "Remove only active history pointer; retain immutable history and Code."
+      },
+      "input": {
+        "repositoryId": "r",
+        "tables": {
+          "repository": [{ "slot": 1, "id": "r", "root_path": "/r" }],
+          "repository_state": [
+            {
+              "repository_id": "r",
+              "indexed_revision_id": "rev",
+              "indexed_content_fingerprint": "base"
+            }
+          ],
+          "revisions": [
+            {
+              "id": "rev",
+              "repository_id": "r",
+              "kind": "WORKTREE",
+              "content_fingerprint": "base",
+              "commit_identity": null,
+              "base_revision_id": null,
+              "source_revision_id": null
+            }
+          ],
+          "source_files": [],
+          "provider_snapshots": [
+            {
+              "id": "snap",
+              "repository_id": "r",
+              "provider_id": "native",
+              "provider_version": "0.0.0",
+              "runtime_version": "0.0.0",
+              "requested_revision_id": "rev",
+              "requested_revision_fingerprint": "base",
+              "started_at": 1767225600000,
+              "completed_at": 1767225601000,
+              "outcome": "SUCCEEDED"
+            }
+          ],
+          "provider_capabilities": [
+            {
+              "snapshot_id": "snap",
+              "name": "SYMBOL",
+              "support": "SUPPORTED",
+              "coverage": "COMPLETE"
+            }
+          ],
+          "activation_history": [
+            {
+              "id": "activation:1079a965802acb90666b73177b06023ec10236efd6776120808a701ff966aa87",
+              "repository_id": "r",
+              "revision_id": "rev",
+              "parent_id": null,
+              "manifest_digest": "1079a965802acb90666b73177b06023ec10236efd6776120808a701ff966aa87",
+              "manifest_json": "{\"codeIdentity\":\"c208949d1f8e2a0031bd0a84bce005c10c058c02f532e36d6833f1a6056f046b\",\"observation\":null,\"originRegistryDigest\":\"d6db62aa1a54c8f2be953cb84a58e2280417fc4dddd85f021e86f90e3fe29d4d\",\"parent\":null,\"schemaVersion\":1,\"sourceIdentity\":\"9a99716b1331858af1b9ae8165aeec7ca36b6a3fe64b28c804d01bb414e1cfa2\",\"state\":{\"basis\":{\"codeActivationDigest\":\"c208949d1f8e2a0031bd0a84bce005c10c058c02f532e36d6833f1a6056f046b\",\"contentFingerprint\":\"base\",\"repositoryId\":\"r\",\"revisionId\":\"rev\"},\"contracts\":[{\"contract\":\"PYTHON_SYNTAX_CODE_V1\",\"extractor\":\"syntax-v1\",\"normalizer\":\"fixture-v1\",\"policy\":\"syntax-surface-support-v1\",\"providerId\":\"native\"}],\"coverage\":[],\"edges\":[],\"inventory\":[],\"nodes\":[],\"repositoryLocatorDigest\":\"89b334a45872720bb324e270130b21bc4d472bb297298b0d45685db1c0571ff7\",\"snapshots\":[{\"capabilities\":[{\"coverage\":\"COMPLETE\",\"name\":\"SYMBOL\",\"support\":\"SUPPORTED\"}],\"completedAt\":\"2026-01-01T00:00:01.000Z\",\"diagnostics\":[],\"id\":\"snap\",\"outcome\":\"SUCCEEDED\",\"providerId\":\"native\",\"providerVersion\":\"0.0.0\",\"repositoryId\":\"r\",\"requestedRevisionFingerprint\":\"base\",\"requestedRevisionId\":\"rev\",\"runtimeVersion\":\"0.0.0\",\"startedAt\":\"2026-01-01T00:00:00.000Z\"}],\"supports\":[],\"syntaxOrigins\":[],\"units\":[]},\"syntaxMembers\":[],\"transitions\":null}"
+            }
+          ],
+          "active_history_pointer": [],
+          "activation_syntax_members": [],
+          "syntax_origins": [],
+          "syntax_projections": []
+        }
+      },
+      "expected": {
+        "view": {
+          "schemaVersion": 1,
+          "kind": "REPOSITORY_CODE_CAPTURE",
+          "repositoryId": "r",
+          "repositoryLocatorDigest": "89b334a45872720bb324e270130b21bc4d472bb297298b0d45685db1c0571ff7",
+          "activeBasis": {
+            "repositoryId": "r",
+            "revisionId": "rev",
+            "contentFingerprint": "base",
+            "codeActivationDigest": "c208949d1f8e2a0031bd0a84bce005c10c058c02f532e36d6833f1a6056f046b"
+          },
+          "targetSource": {
+            "repositoryId": "r",
+            "revisionId": "rev",
+            "contentFingerprint": "base"
+          },
+          "sourceInventoryDigest": "3b8366b8a23841ab31fe739eec3e86bf1eb5d1fc2a55e123c98dd3eca542a6e5",
+          "sourceFileCount": 0,
+          "committedSnapshotCount": 1,
+          "historicalSourceProof": "UNAVAILABLE"
+        },
+        "entries": {
+          "HEADER": [
+            {
+              "repositoryId": "r",
+              "indexedRevisionId": "rev",
+              "indexedContentFingerprint": "base",
+              "committedSnapshotCount": 1
+            }
+          ],
+          "PROVIDER_SNAPSHOT": [
+            {
+              "id": "snap",
+              "repositoryId": "r",
+              "providerId": "native",
+              "providerVersion": "0.0.0",
+              "runtimeVersion": "0.0.0",
+              "requestedRevisionId": "rev",
+              "requestedRevisionFingerprint": "base",
+              "startedAt": "2026-01-01T00:00:00.000Z",
+              "completedAt": "2026-01-01T00:00:01.000Z",
+              "capabilities": [
+                { "name": "SYMBOL", "support": "SUPPORTED", "coverage": "COMPLETE" }
+              ],
+              "diagnostics": [],
+              "outcome": "SUCCEEDED"
+            }
+          ],
+          "SNAPSHOT": [
+            {
+              "snapshot": {
+                "id": "snap",
+                "repositoryId": "r",
+                "providerId": "native",
+                "providerVersion": "0.0.0",
+                "runtimeVersion": "0.0.0",
+                "requestedRevisionId": "rev",
+                "requestedRevisionFingerprint": "base",
+                "outcome": "SUCCEEDED"
+              },
+              "capabilities": [{ "name": "SYMBOL", "support": "SUPPORTED", "coverage": "COMPLETE" }]
+            }
+          ]
+        },
+        "consumed": { "rows": 68, "serializedBytes": 1183, "items": 147 },
+        "retainedLogicalBytes": 1381,
+        "required": {
+          "maxRows": 68,
+          "maxSerializedBytes": 1183,
+          "maxItems": 147,
+          "maxDepth": 4,
+          "memoryBudgetBytes": 3460
+        },
+        "ledger": [
+          { "phase": "fixed numeric SQL", "rows": 43 },
+          { "phase": "all numeric and row deliveries", "rows": 68 },
+          { "phase": "retained context", "bytes": 884 },
+          { "phase": "view weight", "bytes": 497 }
+        ]
+      }
+    },
+    {
+      "id": "global-other-revision-snapshot",
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-store/valid-r010-clearing-context.json",
+        "sha256": "76b7d0cd528e270cf6b8f4c12a17e9432ccc2a5e01dda93479dddc071dd7fa53",
+        "mutation": "Add literal snapshot/capability; independently recompute Code basis and immutable manifest/pointer. Canonical resource context only, no Native ownership qualification."
+      },
+      "input": {
+        "repositoryId": "r",
+        "tables": {
+          "repository": [{ "slot": 1, "id": "r", "root_path": "/r" }],
+          "repository_state": [
+            {
+              "repository_id": "r",
+              "indexed_revision_id": "rev",
+              "indexed_content_fingerprint": "base"
+            }
+          ],
+          "revisions": [
+            {
+              "id": "rev",
+              "repository_id": "r",
+              "kind": "WORKTREE",
+              "content_fingerprint": "base",
+              "commit_identity": null,
+              "base_revision_id": null,
+              "source_revision_id": null
+            },
+            {
+              "id": "rev:other",
+              "repository_id": "r",
+              "kind": "COMMIT",
+              "content_fingerprint": "base:other",
+              "commit_identity": "independent-other-commit",
+              "base_revision_id": null,
+              "source_revision_id": null
+            }
+          ],
+          "source_files": [],
+          "provider_snapshots": [
+            {
+              "id": "snap",
+              "repository_id": "r",
+              "provider_id": "native",
+              "provider_version": "0.0.0",
+              "runtime_version": "0.0.0",
+              "requested_revision_id": "rev",
+              "requested_revision_fingerprint": "base",
+              "started_at": 1767225600000,
+              "completed_at": 1767225601000,
+              "outcome": "SUCCEEDED"
+            },
+            {
+              "id": "snap:other",
+              "repository_id": "r",
+              "provider_id": "native",
+              "provider_version": "0.0.0",
+              "runtime_version": "0.0.0",
+              "requested_revision_id": "rev:other",
+              "requested_revision_fingerprint": "base:other",
+              "started_at": 1767225600000,
+              "completed_at": 1767225601000,
+              "outcome": "SUCCEEDED"
+            }
+          ],
+          "provider_capabilities": [
+            {
+              "snapshot_id": "snap",
+              "name": "SYMBOL",
+              "support": "SUPPORTED",
+              "coverage": "COMPLETE"
+            },
+            {
+              "snapshot_id": "snap:other",
+              "name": "SYMBOL",
+              "support": "SUPPORTED",
+              "coverage": "COMPLETE"
+            }
+          ],
+          "activation_history": [
+            {
+              "id": "activation:23b99724efe3a73475284f05bcfef634661e5d5958bf28653e68879bf556b861",
+              "repository_id": "r",
+              "revision_id": "rev",
+              "parent_id": null,
+              "manifest_digest": "23b99724efe3a73475284f05bcfef634661e5d5958bf28653e68879bf556b861",
+              "manifest_json": "{\"codeIdentity\":\"091677c0b8244a793f1de39a3aecf3038172f0efccba53933acd2d2b66bba5be\",\"observation\":null,\"originRegistryDigest\":\"d6db62aa1a54c8f2be953cb84a58e2280417fc4dddd85f021e86f90e3fe29d4d\",\"parent\":null,\"schemaVersion\":1,\"sourceIdentity\":\"9a99716b1331858af1b9ae8165aeec7ca36b6a3fe64b28c804d01bb414e1cfa2\",\"state\":{\"basis\":{\"codeActivationDigest\":\"091677c0b8244a793f1de39a3aecf3038172f0efccba53933acd2d2b66bba5be\",\"contentFingerprint\":\"base\",\"repositoryId\":\"r\",\"revisionId\":\"rev\"},\"contracts\":[{\"contract\":\"PYTHON_SYNTAX_CODE_V1\",\"extractor\":\"syntax-v1\",\"normalizer\":\"fixture-v1\",\"policy\":\"syntax-surface-support-v1\",\"providerId\":\"native\"}],\"coverage\":[],\"edges\":[],\"inventory\":[],\"nodes\":[],\"repositoryLocatorDigest\":\"89b334a45872720bb324e270130b21bc4d472bb297298b0d45685db1c0571ff7\",\"snapshots\":[{\"capabilities\":[{\"coverage\":\"COMPLETE\",\"name\":\"SYMBOL\",\"support\":\"SUPPORTED\"}],\"completedAt\":\"2026-01-01T00:00:01.000Z\",\"diagnostics\":[],\"id\":\"snap\",\"outcome\":\"SUCCEEDED\",\"providerId\":\"native\",\"providerVersion\":\"0.0.0\",\"repositoryId\":\"r\",\"requestedRevisionFingerprint\":\"base\",\"requestedRevisionId\":\"rev\",\"runtimeVersion\":\"0.0.0\",\"startedAt\":\"2026-01-01T00:00:00.000Z\"}],\"supports\":[],\"syntaxOrigins\":[],\"units\":[]},\"syntaxMembers\":[],\"transitions\":null}"
+            }
+          ],
+          "active_history_pointer": [
+            {
+              "repository_id": "r",
+              "activation_id": "activation:23b99724efe3a73475284f05bcfef634661e5d5958bf28653e68879bf556b861"
+            }
+          ],
+          "activation_syntax_members": [],
+          "syntax_origins": [],
+          "syntax_projections": []
+        }
+      },
+      "expected": {
+        "view": {
+          "schemaVersion": 1,
+          "kind": "REPOSITORY_CODE_CAPTURE",
+          "repositoryId": "r",
+          "repositoryLocatorDigest": "89b334a45872720bb324e270130b21bc4d472bb297298b0d45685db1c0571ff7",
+          "activeBasis": {
+            "repositoryId": "r",
+            "revisionId": "rev",
+            "contentFingerprint": "base",
+            "codeActivationDigest": "091677c0b8244a793f1de39a3aecf3038172f0efccba53933acd2d2b66bba5be"
+          },
+          "targetSource": {
+            "repositoryId": "r",
+            "revisionId": "rev",
+            "contentFingerprint": "base"
+          },
+          "sourceInventoryDigest": "3b8366b8a23841ab31fe739eec3e86bf1eb5d1fc2a55e123c98dd3eca542a6e5",
+          "sourceFileCount": 0,
+          "committedSnapshotCount": 2,
+          "historicalSourceProof": "UNAVAILABLE"
+        },
+        "entries": {
+          "HEADER": [
+            {
+              "repositoryId": "r",
+              "indexedRevisionId": "rev",
+              "indexedContentFingerprint": "base",
+              "committedSnapshotCount": 2
+            }
+          ],
+          "PROVIDER_SNAPSHOT": [
+            {
+              "id": "snap",
+              "repositoryId": "r",
+              "providerId": "native",
+              "providerVersion": "0.0.0",
+              "runtimeVersion": "0.0.0",
+              "requestedRevisionId": "rev",
+              "requestedRevisionFingerprint": "base",
+              "startedAt": "2026-01-01T00:00:00.000Z",
+              "completedAt": "2026-01-01T00:00:01.000Z",
+              "capabilities": [
+                { "name": "SYMBOL", "support": "SUPPORTED", "coverage": "COMPLETE" }
+              ],
+              "diagnostics": [],
+              "outcome": "SUCCEEDED"
+            }
+          ],
+          "SNAPSHOT": [
+            {
+              "snapshot": {
+                "id": "snap",
+                "repositoryId": "r",
+                "providerId": "native",
+                "providerVersion": "0.0.0",
+                "runtimeVersion": "0.0.0",
+                "requestedRevisionId": "rev",
+                "requestedRevisionFingerprint": "base",
+                "outcome": "SUCCEEDED"
+              },
+              "capabilities": [{ "name": "SYMBOL", "support": "SUPPORTED", "coverage": "COMPLETE" }]
+            }
+          ]
+        },
+        "consumed": { "rows": 68, "serializedBytes": 1183, "items": 147 },
+        "retainedLogicalBytes": 1381,
+        "required": {
+          "maxRows": 68,
+          "maxSerializedBytes": 1183,
+          "maxItems": 147,
+          "maxDepth": 4,
+          "memoryBudgetBytes": 3460
+        },
+        "ledger": [
+          { "phase": "fixed numeric SQL", "rows": 43 },
+          { "phase": "all numeric and row deliveries", "rows": 68 },
+          { "phase": "retained context", "bytes": 884 },
+          { "phase": "view weight", "bytes": 497 }
+        ]
+      }
+    },
+    {
+      "id": "two-current-snapshots",
+      "source": {
+        "path": "fixtures/phase1/mixed-analysis-store/valid-r010-clearing-context.json",
+        "sha256": "76b7d0cd528e270cf6b8f4c12a17e9432ccc2a5e01dda93479dddc071dd7fa53",
+        "mutation": "Add literal snapshot/capability; independently recompute Code basis and immutable manifest/pointer. Canonical resource context only, no Native ownership qualification."
+      },
+      "input": {
+        "repositoryId": "r",
+        "tables": {
+          "repository": [{ "slot": 1, "id": "r", "root_path": "/r" }],
+          "repository_state": [
+            {
+              "repository_id": "r",
+              "indexed_revision_id": "rev",
+              "indexed_content_fingerprint": "base"
+            }
+          ],
+          "revisions": [
+            {
+              "id": "rev",
+              "repository_id": "r",
+              "kind": "WORKTREE",
+              "content_fingerprint": "base",
+              "commit_identity": null,
+              "base_revision_id": null,
+              "source_revision_id": null
+            }
+          ],
+          "source_files": [],
+          "provider_snapshots": [
+            {
+              "id": "snap",
+              "repository_id": "r",
+              "provider_id": "native",
+              "provider_version": "0.0.0",
+              "runtime_version": "0.0.0",
+              "requested_revision_id": "rev",
+              "requested_revision_fingerprint": "base",
+              "started_at": 1767225600000,
+              "completed_at": 1767225601000,
+              "outcome": "SUCCEEDED"
+            },
+            {
+              "id": "snap:two",
+              "repository_id": "r",
+              "provider_id": "native",
+              "provider_version": "0.0.0",
+              "runtime_version": "0.0.0",
+              "requested_revision_id": "rev",
+              "requested_revision_fingerprint": "base",
+              "started_at": 1767225600000,
+              "completed_at": 1767225601000,
+              "outcome": "SUCCEEDED"
+            }
+          ],
+          "provider_capabilities": [
+            {
+              "snapshot_id": "snap",
+              "name": "SYMBOL",
+              "support": "SUPPORTED",
+              "coverage": "COMPLETE"
+            },
+            {
+              "snapshot_id": "snap:two",
+              "name": "SYMBOL",
+              "support": "SUPPORTED",
+              "coverage": "COMPLETE"
+            }
+          ],
+          "activation_history": [
+            {
+              "id": "activation:9adaa3ffb9e3c2978394da10cade694fcf0299de2eda82d0be3daa104bc3c109",
+              "repository_id": "r",
+              "revision_id": "rev",
+              "parent_id": null,
+              "manifest_digest": "9adaa3ffb9e3c2978394da10cade694fcf0299de2eda82d0be3daa104bc3c109",
+              "manifest_json": "{\"codeIdentity\":\"2fafb7a5eac659854ef02af4af23d7874cf469cedf1fd1bfc48b256430df2587\",\"observation\":null,\"originRegistryDigest\":\"2131a80fbed533be52250b1432ef995dccdab9a16c083a7a14d389b238077b98\",\"parent\":null,\"schemaVersion\":1,\"sourceIdentity\":\"9a99716b1331858af1b9ae8165aeec7ca36b6a3fe64b28c804d01bb414e1cfa2\",\"state\":{\"basis\":{\"codeActivationDigest\":\"2fafb7a5eac659854ef02af4af23d7874cf469cedf1fd1bfc48b256430df2587\",\"contentFingerprint\":\"base\",\"repositoryId\":\"r\",\"revisionId\":\"rev\"},\"contracts\":[{\"contract\":\"PYTHON_SYNTAX_CODE_V1\",\"extractor\":\"syntax-v1\",\"normalizer\":\"fixture-v1\",\"policy\":\"syntax-surface-support-v1\",\"providerId\":\"native\"}],\"coverage\":[],\"edges\":[],\"inventory\":[],\"nodes\":[],\"repositoryLocatorDigest\":\"89b334a45872720bb324e270130b21bc4d472bb297298b0d45685db1c0571ff7\",\"snapshots\":[{\"capabilities\":[{\"coverage\":\"COMPLETE\",\"name\":\"SYMBOL\",\"support\":\"SUPPORTED\"}],\"completedAt\":\"2026-01-01T00:00:01.000Z\",\"diagnostics\":[],\"id\":\"snap\",\"outcome\":\"SUCCEEDED\",\"providerId\":\"native\",\"providerVersion\":\"0.0.0\",\"repositoryId\":\"r\",\"requestedRevisionFingerprint\":\"base\",\"requestedRevisionId\":\"rev\",\"runtimeVersion\":\"0.0.0\",\"startedAt\":\"2026-01-01T00:00:00.000Z\"},{\"capabilities\":[{\"coverage\":\"COMPLETE\",\"name\":\"SYMBOL\",\"support\":\"SUPPORTED\"}],\"completedAt\":\"2026-01-01T00:00:01.000Z\",\"diagnostics\":[],\"id\":\"snap:two\",\"outcome\":\"SUCCEEDED\",\"providerId\":\"native\",\"providerVersion\":\"0.0.0\",\"repositoryId\":\"r\",\"requestedRevisionFingerprint\":\"base\",\"requestedRevisionId\":\"rev\",\"runtimeVersion\":\"0.0.0\",\"startedAt\":\"2026-01-01T00:00:00.000Z\"}],\"supports\":[],\"syntaxOrigins\":[],\"units\":[]},\"syntaxMembers\":[],\"transitions\":null}"
+            }
+          ],
+          "active_history_pointer": [
+            {
+              "repository_id": "r",
+              "activation_id": "activation:9adaa3ffb9e3c2978394da10cade694fcf0299de2eda82d0be3daa104bc3c109"
+            }
+          ],
+          "activation_syntax_members": [],
+          "syntax_origins": [],
+          "syntax_projections": []
+        }
+      },
+      "expected": {
+        "view": {
+          "schemaVersion": 1,
+          "kind": "REPOSITORY_CODE_CAPTURE",
+          "repositoryId": "r",
+          "repositoryLocatorDigest": "89b334a45872720bb324e270130b21bc4d472bb297298b0d45685db1c0571ff7",
+          "activeBasis": {
+            "repositoryId": "r",
+            "revisionId": "rev",
+            "contentFingerprint": "base",
+            "codeActivationDigest": "2fafb7a5eac659854ef02af4af23d7874cf469cedf1fd1bfc48b256430df2587"
+          },
+          "targetSource": {
+            "repositoryId": "r",
+            "revisionId": "rev",
+            "contentFingerprint": "base"
+          },
+          "sourceInventoryDigest": "3b8366b8a23841ab31fe739eec3e86bf1eb5d1fc2a55e123c98dd3eca542a6e5",
+          "sourceFileCount": 0,
+          "committedSnapshotCount": 2,
+          "historicalSourceProof": "UNAVAILABLE"
+        },
+        "entries": {
+          "HEADER": [
+            {
+              "repositoryId": "r",
+              "indexedRevisionId": "rev",
+              "indexedContentFingerprint": "base",
+              "committedSnapshotCount": 2
+            }
+          ],
+          "PROVIDER_SNAPSHOT": [
+            {
+              "id": "snap",
+              "repositoryId": "r",
+              "providerId": "native",
+              "providerVersion": "0.0.0",
+              "runtimeVersion": "0.0.0",
+              "requestedRevisionId": "rev",
+              "requestedRevisionFingerprint": "base",
+              "startedAt": "2026-01-01T00:00:00.000Z",
+              "completedAt": "2026-01-01T00:00:01.000Z",
+              "capabilities": [
+                { "name": "SYMBOL", "support": "SUPPORTED", "coverage": "COMPLETE" }
+              ],
+              "diagnostics": [],
+              "outcome": "SUCCEEDED"
+            },
+            {
+              "id": "snap:two",
+              "repositoryId": "r",
+              "providerId": "native",
+              "providerVersion": "0.0.0",
+              "runtimeVersion": "0.0.0",
+              "requestedRevisionId": "rev",
+              "requestedRevisionFingerprint": "base",
+              "startedAt": "2026-01-01T00:00:00.000Z",
+              "completedAt": "2026-01-01T00:00:01.000Z",
+              "capabilities": [
+                { "name": "SYMBOL", "support": "SUPPORTED", "coverage": "COMPLETE" }
+              ],
+              "diagnostics": [],
+              "outcome": "SUCCEEDED"
+            }
+          ],
+          "SNAPSHOT": [
+            {
+              "snapshot": {
+                "id": "snap",
+                "repositoryId": "r",
+                "providerId": "native",
+                "providerVersion": "0.0.0",
+                "runtimeVersion": "0.0.0",
+                "requestedRevisionId": "rev",
+                "requestedRevisionFingerprint": "base",
+                "outcome": "SUCCEEDED"
+              },
+              "capabilities": [{ "name": "SYMBOL", "support": "SUPPORTED", "coverage": "COMPLETE" }]
+            },
+            {
+              "snapshot": {
+                "id": "snap:two",
+                "repositoryId": "r",
+                "providerId": "native",
+                "providerVersion": "0.0.0",
+                "runtimeVersion": "0.0.0",
+                "requestedRevisionId": "rev",
+                "requestedRevisionFingerprint": "base",
+                "outcome": "SUCCEEDED"
+              },
+              "capabilities": [{ "name": "SYMBOL", "support": "SUPPORTED", "coverage": "COMPLETE" }]
+            }
+          ]
+        },
+        "consumed": { "rows": 73, "serializedBytes": 1577, "items": 198 },
+        "retainedLogicalBytes": 1872,
+        "required": {
+          "maxRows": 73,
+          "maxSerializedBytes": 1577,
+          "maxItems": 198,
+          "maxDepth": 4,
+          "memoryBudgetBytes": 4530
+        },
+        "ledger": [
+          { "phase": "fixed numeric SQL", "rows": 43 },
+          { "phase": "all numeric and row deliveries", "rows": 73 },
+          { "phase": "retained context", "bytes": 1375 },
+          { "phase": "view weight", "bytes": 497 }
+        ]
+      }
+    }
+  ]
+}

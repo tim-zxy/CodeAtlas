@@ -1,0 +1,4153 @@
+{
+  "declaration": "Independent declared Context4 assembled from preserved author-written B-F3 vectors. Expected domain identities reused unchanged; binding identities computed from approved literal tuple before product. Not real Source evidence.",
+  "cases": [
+    {
+      "name": "spring-route",
+      "context": {
+        "contextVersion": 4,
+        "syntaxSchemaVersion": 3,
+        "basis": {
+          "repositoryId": "repo:one",
+          "revisionId": "revision:one",
+          "contentFingerprint": "content:declared",
+          "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "nodes": [
+          {
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            },
+            "id": "code:module",
+            "factKey": "code-key:module",
+            "name": "src/App.java",
+            "qualifiedName": "src/App.java",
+            "sourceRange": null,
+            "kind": "MODULE"
+          },
+          {
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            },
+            "id": "code:function",
+            "factKey": "code-key:function",
+            "name": "handler",
+            "qualifiedName": "App.handler",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 40,
+              "startColumn": 0,
+              "endLine": 100,
+              "endColumn": 0
+            },
+            "kind": "SYMBOL",
+            "symbolKind": "METHOD"
+          },
+          {
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            },
+            "id": "code:type",
+            "factKey": "code-key:type",
+            "name": "App",
+            "qualifiedName": "App",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 20,
+              "startColumn": 0,
+              "endLine": 180,
+              "endColumn": 0
+            },
+            "kind": "TYPE",
+            "typeKind": "CLASS"
+          }
+        ],
+        "edges": [],
+        "sourceFiles": [
+          {
+            "id": "file:one",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "path": "src/App.java",
+            "contentFingerprint": "source:declared",
+            "classification": {
+              "role": "SOURCE",
+              "provenance": "AUTHORED",
+              "contentKind": "TEXT"
+            },
+            "languageHint": "java",
+            "sensitivity": "INTERNAL"
+          }
+        ],
+        "syntaxEvidence": [
+          {
+            "id": "syntax:scope:module",
+            "syntaxKey": "declared-key:scope:module",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "sourceFingerprint": "source:declared",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 200,
+              "endColumn": 20
+            },
+            "owner": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:module",
+                "revisionId": "revision:one"
+              }
+            },
+            "lexicalScope": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:module",
+                "revisionId": "revision:one"
+              }
+            },
+            "confidence": {
+              "score": 0.5,
+              "method": "syntax-surface-support-v1",
+              "reasons": ["CURRENT_INPUT_BASIS", "CANONICAL_FIELDS_SUPPORTED", "NO_MODEL_INFERENCE"]
+            },
+            "extractionVersion": "declared-binding-fixture-v1",
+            "controlContext": "UNCONDITIONAL",
+            "syntaxKind": "BINDING_SCOPE",
+            "payload": {
+              "scopeRef": {
+                "scope": "REPOSITORY",
+                "repositoryId": "repo:one",
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                }
+              },
+              "parentScopeRef": null,
+              "status": "COMPLETE",
+              "limitations": []
+            },
+            "supportRefs": [
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "dcec1436386fe674e97156a2aaebcab2aff9a459f98f4457a14a1f193fc7a5d8"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:function",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "6283fae9d348bca4083a717bb2236b4c5348e15faf2da276860ce13e4594de9f"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9d58a43d676491baf6b51fcc5cdb7c5e62740fe3c835de78d2378ce08abc1bad"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "SOURCE_FILE",
+                  "id": "file:one",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9cbe8692220ba86d7beec5434bc5d6909164f06745d378ef1149fc028bf2e6c1"
+              }
+            ]
+          },
+          {
+            "id": "syntax:scope:type",
+            "syntaxKey": "declared-key:scope:type",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "sourceFingerprint": "source:declared",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 20,
+              "startColumn": 0,
+              "endLine": 180,
+              "endColumn": 20
+            },
+            "owner": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:type",
+                "revisionId": "revision:one"
+              }
+            },
+            "lexicalScope": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:type",
+                "revisionId": "revision:one"
+              }
+            },
+            "confidence": {
+              "score": 0.5,
+              "method": "syntax-surface-support-v1",
+              "reasons": ["CURRENT_INPUT_BASIS", "CANONICAL_FIELDS_SUPPORTED", "NO_MODEL_INFERENCE"]
+            },
+            "extractionVersion": "declared-binding-fixture-v1",
+            "controlContext": "UNCONDITIONAL",
+            "syntaxKind": "BINDING_SCOPE",
+            "payload": {
+              "scopeRef": {
+                "scope": "REPOSITORY",
+                "repositoryId": "repo:one",
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                }
+              },
+              "parentScopeRef": {
+                "scope": "REPOSITORY",
+                "repositoryId": "repo:one",
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                }
+              },
+              "status": "COMPLETE",
+              "limitations": []
+            },
+            "supportRefs": [
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "dcec1436386fe674e97156a2aaebcab2aff9a459f98f4457a14a1f193fc7a5d8"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:function",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "6283fae9d348bca4083a717bb2236b4c5348e15faf2da276860ce13e4594de9f"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9d58a43d676491baf6b51fcc5cdb7c5e62740fe3c835de78d2378ce08abc1bad"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "SOURCE_FILE",
+                  "id": "file:one",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9cbe8692220ba86d7beec5434bc5d6909164f06745d378ef1149fc028bf2e6c1"
+              }
+            ]
+          },
+          {
+            "id": "syntax:scope:function",
+            "syntaxKey": "declared-key:scope:function",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "sourceFingerprint": "source:declared",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 40,
+              "startColumn": 0,
+              "endLine": 100,
+              "endColumn": 20
+            },
+            "owner": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:function",
+                "revisionId": "revision:one"
+              }
+            },
+            "lexicalScope": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:function",
+                "revisionId": "revision:one"
+              }
+            },
+            "confidence": {
+              "score": 0.5,
+              "method": "syntax-surface-support-v1",
+              "reasons": ["CURRENT_INPUT_BASIS", "CANONICAL_FIELDS_SUPPORTED", "NO_MODEL_INFERENCE"]
+            },
+            "extractionVersion": "declared-binding-fixture-v1",
+            "controlContext": "UNCONDITIONAL",
+            "syntaxKind": "BINDING_SCOPE",
+            "payload": {
+              "scopeRef": {
+                "scope": "REPOSITORY",
+                "repositoryId": "repo:one",
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:function",
+                  "revisionId": "revision:one"
+                }
+              },
+              "parentScopeRef": {
+                "scope": "REPOSITORY",
+                "repositoryId": "repo:one",
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                }
+              },
+              "status": "COMPLETE",
+              "limitations": []
+            },
+            "supportRefs": [
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "dcec1436386fe674e97156a2aaebcab2aff9a459f98f4457a14a1f193fc7a5d8"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:function",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "6283fae9d348bca4083a717bb2236b4c5348e15faf2da276860ce13e4594de9f"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9d58a43d676491baf6b51fcc5cdb7c5e62740fe3c835de78d2378ce08abc1bad"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "SOURCE_FILE",
+                  "id": "file:one",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9cbe8692220ba86d7beec5434bc5d6909164f06745d378ef1149fc028bf2e6c1"
+              }
+            ]
+          },
+          {
+            "id": "syntax:import",
+            "syntaxKey": "declared-key:import",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "sourceFingerprint": "source:declared",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 1,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 10
+            },
+            "owner": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:module",
+                "revisionId": "revision:one"
+              }
+            },
+            "lexicalScope": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:module",
+                "revisionId": "revision:one"
+              }
+            },
+            "confidence": {
+              "score": 0.5,
+              "method": "syntax-surface-support-v1",
+              "reasons": ["CURRENT_INPUT_BASIS", "CANONICAL_FIELDS_SUPPORTED", "NO_MODEL_INFERENCE"]
+            },
+            "extractionVersion": "declared-binding-fixture-v1",
+            "controlContext": "UNCONDITIONAL",
+            "syntaxKind": "IMPORT_BINDING",
+            "payload": {
+              "language": "java",
+              "importKind": "JAVA_TYPE",
+              "qualifiedName": "org.springframework.web.bind.annotation.GetMapping",
+              "importedName": "GetMapping",
+              "boundName": "GetMapping"
+            },
+            "supportRefs": [
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "dcec1436386fe674e97156a2aaebcab2aff9a459f98f4457a14a1f193fc7a5d8"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:function",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "6283fae9d348bca4083a717bb2236b4c5348e15faf2da276860ce13e4594de9f"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9d58a43d676491baf6b51fcc5cdb7c5e62740fe3c835de78d2378ce08abc1bad"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "SOURCE_FILE",
+                  "id": "file:one",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9cbe8692220ba86d7beec5434bc5d6909164f06745d378ef1149fc028bf2e6c1"
+              }
+            ]
+          },
+          {
+            "id": "syntax:site",
+            "syntaxKey": "declared-key:site",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "sourceFingerprint": "source:declared",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 45,
+              "startColumn": 0,
+              "endLine": 45,
+              "endColumn": 10
+            },
+            "owner": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:function",
+                "revisionId": "revision:one"
+              }
+            },
+            "lexicalScope": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:type",
+                "revisionId": "revision:one"
+              }
+            },
+            "confidence": {
+              "score": 0.5,
+              "method": "syntax-surface-support-v1",
+              "reasons": ["CURRENT_INPUT_BASIS", "CANONICAL_FIELDS_SUPPORTED", "NO_MODEL_INFERENCE"]
+            },
+            "extractionVersion": "declared-binding-fixture-v1",
+            "controlContext": "UNCONDITIONAL",
+            "syntaxKind": "DECORATION",
+            "payload": {
+              "callee": {
+                "state": "NON_RESOLVED",
+                "name": "GetMapping",
+                "target": null,
+                "candidates": [],
+                "resolution": "UNRESOLVED"
+              },
+              "arguments": [
+                {
+                  "name": null,
+                  "value": {
+                    "kind": "STRING",
+                    "value": "/x"
+                  },
+                  "sourceRange": {
+                    "sourceFileId": "file:one",
+                    "startLine": 45,
+                    "startColumn": 0,
+                    "endLine": 45,
+                    "endColumn": 10
+                  }
+                }
+              ]
+            },
+            "supportRefs": [
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "dcec1436386fe674e97156a2aaebcab2aff9a459f98f4457a14a1f193fc7a5d8"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:function",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "6283fae9d348bca4083a717bb2236b4c5348e15faf2da276860ce13e4594de9f"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9d58a43d676491baf6b51fcc5cdb7c5e62740fe3c835de78d2378ce08abc1bad"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "SOURCE_FILE",
+                  "id": "file:one",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9cbe8692220ba86d7beec5434bc5d6909164f06745d378ef1149fc028bf2e6c1"
+              }
+            ]
+          }
+        ],
+        "supportInventory": [
+          {
+            "basis": {
+              "repositoryId": "repo:one",
+              "revisionId": "revision:one",
+              "contentFingerprint": "content:declared",
+              "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:module",
+              "revisionId": "revision:one"
+            },
+            "valueDigest": "dcec1436386fe674e97156a2aaebcab2aff9a459f98f4457a14a1f193fc7a5d8"
+          },
+          {
+            "basis": {
+              "repositoryId": "repo:one",
+              "revisionId": "revision:one",
+              "contentFingerprint": "content:declared",
+              "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:function",
+              "revisionId": "revision:one"
+            },
+            "valueDigest": "6283fae9d348bca4083a717bb2236b4c5348e15faf2da276860ce13e4594de9f"
+          },
+          {
+            "basis": {
+              "repositoryId": "repo:one",
+              "revisionId": "revision:one",
+              "contentFingerprint": "content:declared",
+              "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:type",
+              "revisionId": "revision:one"
+            },
+            "valueDigest": "9d58a43d676491baf6b51fcc5cdb7c5e62740fe3c835de78d2378ce08abc1bad"
+          },
+          {
+            "basis": {
+              "repositoryId": "repo:one",
+              "revisionId": "revision:one",
+              "contentFingerprint": "content:declared",
+              "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "entity": {
+              "kind": "SOURCE_FILE",
+              "id": "file:one",
+              "revisionId": "revision:one"
+            },
+            "valueDigest": "9cbe8692220ba86d7beec5434bc5d6909164f06745d378ef1149fc028bf2e6c1"
+          }
+        ],
+        "configuration": {}
+      },
+      "expected": {
+        "bindings": [],
+        "domainIds": ["runtime:02d05f1396ea5a4b864f2cc66ceace81dc407a6df18373b3e20b9bad784edb36"],
+        "entries": 1
+      }
+    },
+    {
+      "name": "spring-prefix",
+      "context": {
+        "contextVersion": 4,
+        "syntaxSchemaVersion": 3,
+        "basis": {
+          "repositoryId": "repo:one",
+          "revisionId": "revision:one",
+          "contentFingerprint": "content:declared",
+          "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "nodes": [
+          {
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            },
+            "id": "code:module",
+            "factKey": "code-key:module",
+            "name": "src/App.java",
+            "qualifiedName": "src/App.java",
+            "sourceRange": null,
+            "kind": "MODULE"
+          },
+          {
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            },
+            "id": "code:function",
+            "factKey": "code-key:function",
+            "name": "handler",
+            "qualifiedName": "App.handler",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 40,
+              "startColumn": 0,
+              "endLine": 100,
+              "endColumn": 0
+            },
+            "kind": "SYMBOL",
+            "symbolKind": "METHOD"
+          },
+          {
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            },
+            "id": "code:type",
+            "factKey": "code-key:type",
+            "name": "App",
+            "qualifiedName": "App",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 20,
+              "startColumn": 0,
+              "endLine": 180,
+              "endColumn": 0
+            },
+            "kind": "TYPE",
+            "typeKind": "CLASS"
+          }
+        ],
+        "edges": [],
+        "sourceFiles": [
+          {
+            "id": "file:one",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "path": "src/App.java",
+            "contentFingerprint": "source:declared",
+            "classification": {
+              "role": "SOURCE",
+              "provenance": "AUTHORED",
+              "contentKind": "TEXT"
+            },
+            "languageHint": "java",
+            "sensitivity": "INTERNAL"
+          }
+        ],
+        "syntaxEvidence": [
+          {
+            "id": "syntax:scope:module",
+            "syntaxKey": "declared-key:scope:module",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "sourceFingerprint": "source:declared",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 200,
+              "endColumn": 20
+            },
+            "owner": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:module",
+                "revisionId": "revision:one"
+              }
+            },
+            "lexicalScope": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:module",
+                "revisionId": "revision:one"
+              }
+            },
+            "confidence": {
+              "score": 0.5,
+              "method": "syntax-surface-support-v1",
+              "reasons": ["CURRENT_INPUT_BASIS", "CANONICAL_FIELDS_SUPPORTED", "NO_MODEL_INFERENCE"]
+            },
+            "extractionVersion": "declared-binding-fixture-v1",
+            "controlContext": "UNCONDITIONAL",
+            "syntaxKind": "BINDING_SCOPE",
+            "payload": {
+              "scopeRef": {
+                "scope": "REPOSITORY",
+                "repositoryId": "repo:one",
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                }
+              },
+              "parentScopeRef": null,
+              "status": "COMPLETE",
+              "limitations": []
+            },
+            "supportRefs": [
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "dcec1436386fe674e97156a2aaebcab2aff9a459f98f4457a14a1f193fc7a5d8"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:function",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "6283fae9d348bca4083a717bb2236b4c5348e15faf2da276860ce13e4594de9f"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9d58a43d676491baf6b51fcc5cdb7c5e62740fe3c835de78d2378ce08abc1bad"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "SOURCE_FILE",
+                  "id": "file:one",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9cbe8692220ba86d7beec5434bc5d6909164f06745d378ef1149fc028bf2e6c1"
+              }
+            ]
+          },
+          {
+            "id": "syntax:scope:type",
+            "syntaxKey": "declared-key:scope:type",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "sourceFingerprint": "source:declared",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 20,
+              "startColumn": 0,
+              "endLine": 180,
+              "endColumn": 20
+            },
+            "owner": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:type",
+                "revisionId": "revision:one"
+              }
+            },
+            "lexicalScope": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:type",
+                "revisionId": "revision:one"
+              }
+            },
+            "confidence": {
+              "score": 0.5,
+              "method": "syntax-surface-support-v1",
+              "reasons": ["CURRENT_INPUT_BASIS", "CANONICAL_FIELDS_SUPPORTED", "NO_MODEL_INFERENCE"]
+            },
+            "extractionVersion": "declared-binding-fixture-v1",
+            "controlContext": "UNCONDITIONAL",
+            "syntaxKind": "BINDING_SCOPE",
+            "payload": {
+              "scopeRef": {
+                "scope": "REPOSITORY",
+                "repositoryId": "repo:one",
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                }
+              },
+              "parentScopeRef": {
+                "scope": "REPOSITORY",
+                "repositoryId": "repo:one",
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                }
+              },
+              "status": "COMPLETE",
+              "limitations": []
+            },
+            "supportRefs": [
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "dcec1436386fe674e97156a2aaebcab2aff9a459f98f4457a14a1f193fc7a5d8"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:function",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "6283fae9d348bca4083a717bb2236b4c5348e15faf2da276860ce13e4594de9f"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9d58a43d676491baf6b51fcc5cdb7c5e62740fe3c835de78d2378ce08abc1bad"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "SOURCE_FILE",
+                  "id": "file:one",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9cbe8692220ba86d7beec5434bc5d6909164f06745d378ef1149fc028bf2e6c1"
+              }
+            ]
+          },
+          {
+            "id": "syntax:scope:function",
+            "syntaxKey": "declared-key:scope:function",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "sourceFingerprint": "source:declared",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 40,
+              "startColumn": 0,
+              "endLine": 100,
+              "endColumn": 20
+            },
+            "owner": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:function",
+                "revisionId": "revision:one"
+              }
+            },
+            "lexicalScope": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:function",
+                "revisionId": "revision:one"
+              }
+            },
+            "confidence": {
+              "score": 0.5,
+              "method": "syntax-surface-support-v1",
+              "reasons": ["CURRENT_INPUT_BASIS", "CANONICAL_FIELDS_SUPPORTED", "NO_MODEL_INFERENCE"]
+            },
+            "extractionVersion": "declared-binding-fixture-v1",
+            "controlContext": "UNCONDITIONAL",
+            "syntaxKind": "BINDING_SCOPE",
+            "payload": {
+              "scopeRef": {
+                "scope": "REPOSITORY",
+                "repositoryId": "repo:one",
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:function",
+                  "revisionId": "revision:one"
+                }
+              },
+              "parentScopeRef": {
+                "scope": "REPOSITORY",
+                "repositoryId": "repo:one",
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                }
+              },
+              "status": "COMPLETE",
+              "limitations": []
+            },
+            "supportRefs": [
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "dcec1436386fe674e97156a2aaebcab2aff9a459f98f4457a14a1f193fc7a5d8"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:function",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "6283fae9d348bca4083a717bb2236b4c5348e15faf2da276860ce13e4594de9f"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9d58a43d676491baf6b51fcc5cdb7c5e62740fe3c835de78d2378ce08abc1bad"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "SOURCE_FILE",
+                  "id": "file:one",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9cbe8692220ba86d7beec5434bc5d6909164f06745d378ef1149fc028bf2e6c1"
+              }
+            ]
+          },
+          {
+            "id": "syntax:import",
+            "syntaxKey": "declared-key:import",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "sourceFingerprint": "source:declared",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 1,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 10
+            },
+            "owner": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:module",
+                "revisionId": "revision:one"
+              }
+            },
+            "lexicalScope": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:module",
+                "revisionId": "revision:one"
+              }
+            },
+            "confidence": {
+              "score": 0.5,
+              "method": "syntax-surface-support-v1",
+              "reasons": ["CURRENT_INPUT_BASIS", "CANONICAL_FIELDS_SUPPORTED", "NO_MODEL_INFERENCE"]
+            },
+            "extractionVersion": "declared-binding-fixture-v1",
+            "controlContext": "UNCONDITIONAL",
+            "syntaxKind": "IMPORT_BINDING",
+            "payload": {
+              "language": "java",
+              "importKind": "JAVA_TYPE",
+              "qualifiedName": "org.springframework.web.bind.annotation.GetMapping",
+              "importedName": "GetMapping",
+              "boundName": "GetMapping"
+            },
+            "supportRefs": [
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "dcec1436386fe674e97156a2aaebcab2aff9a459f98f4457a14a1f193fc7a5d8"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:function",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "6283fae9d348bca4083a717bb2236b4c5348e15faf2da276860ce13e4594de9f"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9d58a43d676491baf6b51fcc5cdb7c5e62740fe3c835de78d2378ce08abc1bad"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "SOURCE_FILE",
+                  "id": "file:one",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9cbe8692220ba86d7beec5434bc5d6909164f06745d378ef1149fc028bf2e6c1"
+              }
+            ]
+          },
+          {
+            "id": "syntax:prefix-import",
+            "syntaxKey": "declared-key:prefix-import",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "sourceFingerprint": "source:declared",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 2,
+              "startColumn": 0,
+              "endLine": 2,
+              "endColumn": 10
+            },
+            "owner": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:module",
+                "revisionId": "revision:one"
+              }
+            },
+            "lexicalScope": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:module",
+                "revisionId": "revision:one"
+              }
+            },
+            "confidence": {
+              "score": 0.5,
+              "method": "syntax-surface-support-v1",
+              "reasons": ["CURRENT_INPUT_BASIS", "CANONICAL_FIELDS_SUPPORTED", "NO_MODEL_INFERENCE"]
+            },
+            "extractionVersion": "declared-binding-fixture-v1",
+            "controlContext": "UNCONDITIONAL",
+            "syntaxKind": "IMPORT_BINDING",
+            "payload": {
+              "language": "java",
+              "importKind": "JAVA_TYPE",
+              "qualifiedName": "org.springframework.web.bind.annotation.RequestMapping",
+              "importedName": "RequestMapping",
+              "boundName": "RequestMapping"
+            },
+            "supportRefs": [
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "dcec1436386fe674e97156a2aaebcab2aff9a459f98f4457a14a1f193fc7a5d8"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:function",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "6283fae9d348bca4083a717bb2236b4c5348e15faf2da276860ce13e4594de9f"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9d58a43d676491baf6b51fcc5cdb7c5e62740fe3c835de78d2378ce08abc1bad"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "SOURCE_FILE",
+                  "id": "file:one",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9cbe8692220ba86d7beec5434bc5d6909164f06745d378ef1149fc028bf2e6c1"
+              }
+            ]
+          },
+          {
+            "id": "syntax:prefix",
+            "syntaxKey": "declared-key:prefix",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "sourceFingerprint": "source:declared",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 21,
+              "startColumn": 0,
+              "endLine": 21,
+              "endColumn": 10
+            },
+            "owner": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:type",
+                "revisionId": "revision:one"
+              }
+            },
+            "lexicalScope": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:module",
+                "revisionId": "revision:one"
+              }
+            },
+            "confidence": {
+              "score": 0.5,
+              "method": "syntax-surface-support-v1",
+              "reasons": ["CURRENT_INPUT_BASIS", "CANONICAL_FIELDS_SUPPORTED", "NO_MODEL_INFERENCE"]
+            },
+            "extractionVersion": "declared-binding-fixture-v1",
+            "controlContext": "UNCONDITIONAL",
+            "syntaxKind": "DECORATION",
+            "payload": {
+              "callee": {
+                "state": "NON_RESOLVED",
+                "name": "RequestMapping",
+                "target": null,
+                "candidates": [],
+                "resolution": "UNRESOLVED"
+              },
+              "arguments": [
+                {
+                  "name": null,
+                  "value": {
+                    "kind": "STRING",
+                    "value": "/api"
+                  },
+                  "sourceRange": {
+                    "sourceFileId": "file:one",
+                    "startLine": 21,
+                    "startColumn": 0,
+                    "endLine": 21,
+                    "endColumn": 10
+                  }
+                }
+              ]
+            },
+            "supportRefs": [
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "dcec1436386fe674e97156a2aaebcab2aff9a459f98f4457a14a1f193fc7a5d8"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:function",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "6283fae9d348bca4083a717bb2236b4c5348e15faf2da276860ce13e4594de9f"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9d58a43d676491baf6b51fcc5cdb7c5e62740fe3c835de78d2378ce08abc1bad"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "SOURCE_FILE",
+                  "id": "file:one",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9cbe8692220ba86d7beec5434bc5d6909164f06745d378ef1149fc028bf2e6c1"
+              }
+            ]
+          },
+          {
+            "id": "syntax:site",
+            "syntaxKey": "declared-key:site",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "sourceFingerprint": "source:declared",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 45,
+              "startColumn": 0,
+              "endLine": 45,
+              "endColumn": 10
+            },
+            "owner": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:function",
+                "revisionId": "revision:one"
+              }
+            },
+            "lexicalScope": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:type",
+                "revisionId": "revision:one"
+              }
+            },
+            "confidence": {
+              "score": 0.5,
+              "method": "syntax-surface-support-v1",
+              "reasons": ["CURRENT_INPUT_BASIS", "CANONICAL_FIELDS_SUPPORTED", "NO_MODEL_INFERENCE"]
+            },
+            "extractionVersion": "declared-binding-fixture-v1",
+            "controlContext": "UNCONDITIONAL",
+            "syntaxKind": "DECORATION",
+            "payload": {
+              "callee": {
+                "state": "NON_RESOLVED",
+                "name": "GetMapping",
+                "target": null,
+                "candidates": [],
+                "resolution": "UNRESOLVED"
+              },
+              "arguments": [
+                {
+                  "name": null,
+                  "value": {
+                    "kind": "STRING",
+                    "value": "/x"
+                  },
+                  "sourceRange": {
+                    "sourceFileId": "file:one",
+                    "startLine": 45,
+                    "startColumn": 0,
+                    "endLine": 45,
+                    "endColumn": 10
+                  }
+                }
+              ]
+            },
+            "supportRefs": [
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "dcec1436386fe674e97156a2aaebcab2aff9a459f98f4457a14a1f193fc7a5d8"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:function",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "6283fae9d348bca4083a717bb2236b4c5348e15faf2da276860ce13e4594de9f"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9d58a43d676491baf6b51fcc5cdb7c5e62740fe3c835de78d2378ce08abc1bad"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "SOURCE_FILE",
+                  "id": "file:one",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9cbe8692220ba86d7beec5434bc5d6909164f06745d378ef1149fc028bf2e6c1"
+              }
+            ]
+          }
+        ],
+        "supportInventory": [
+          {
+            "basis": {
+              "repositoryId": "repo:one",
+              "revisionId": "revision:one",
+              "contentFingerprint": "content:declared",
+              "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:module",
+              "revisionId": "revision:one"
+            },
+            "valueDigest": "dcec1436386fe674e97156a2aaebcab2aff9a459f98f4457a14a1f193fc7a5d8"
+          },
+          {
+            "basis": {
+              "repositoryId": "repo:one",
+              "revisionId": "revision:one",
+              "contentFingerprint": "content:declared",
+              "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:function",
+              "revisionId": "revision:one"
+            },
+            "valueDigest": "6283fae9d348bca4083a717bb2236b4c5348e15faf2da276860ce13e4594de9f"
+          },
+          {
+            "basis": {
+              "repositoryId": "repo:one",
+              "revisionId": "revision:one",
+              "contentFingerprint": "content:declared",
+              "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:type",
+              "revisionId": "revision:one"
+            },
+            "valueDigest": "9d58a43d676491baf6b51fcc5cdb7c5e62740fe3c835de78d2378ce08abc1bad"
+          },
+          {
+            "basis": {
+              "repositoryId": "repo:one",
+              "revisionId": "revision:one",
+              "contentFingerprint": "content:declared",
+              "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "entity": {
+              "kind": "SOURCE_FILE",
+              "id": "file:one",
+              "revisionId": "revision:one"
+            },
+            "valueDigest": "9cbe8692220ba86d7beec5434bc5d6909164f06745d378ef1149fc028bf2e6c1"
+          }
+        ],
+        "configuration": {}
+      },
+      "expected": {
+        "bindings": [],
+        "domainIds": ["runtime:f43b8bbb368aabc5599d68876113d61114c52ef92b3edefdc614d1f7ba8af1ac"],
+        "entries": 1
+      }
+    },
+    {
+      "name": "spring-cron",
+      "context": {
+        "contextVersion": 4,
+        "syntaxSchemaVersion": 3,
+        "basis": {
+          "repositoryId": "repo:one",
+          "revisionId": "revision:one",
+          "contentFingerprint": "content:declared",
+          "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "nodes": [
+          {
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            },
+            "id": "code:module",
+            "factKey": "code-key:module",
+            "name": "src/App.java",
+            "qualifiedName": "src/App.java",
+            "sourceRange": null,
+            "kind": "MODULE"
+          },
+          {
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            },
+            "id": "code:function",
+            "factKey": "code-key:function",
+            "name": "handler",
+            "qualifiedName": "App.handler",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 40,
+              "startColumn": 0,
+              "endLine": 100,
+              "endColumn": 0
+            },
+            "kind": "SYMBOL",
+            "symbolKind": "METHOD"
+          },
+          {
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            },
+            "id": "code:type",
+            "factKey": "code-key:type",
+            "name": "App",
+            "qualifiedName": "App",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 20,
+              "startColumn": 0,
+              "endLine": 180,
+              "endColumn": 0
+            },
+            "kind": "TYPE",
+            "typeKind": "CLASS"
+          }
+        ],
+        "edges": [],
+        "sourceFiles": [
+          {
+            "id": "file:one",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "path": "src/App.java",
+            "contentFingerprint": "source:declared",
+            "classification": {
+              "role": "SOURCE",
+              "provenance": "AUTHORED",
+              "contentKind": "TEXT"
+            },
+            "languageHint": "java",
+            "sensitivity": "INTERNAL"
+          }
+        ],
+        "syntaxEvidence": [
+          {
+            "id": "syntax:scope:module",
+            "syntaxKey": "declared-key:scope:module",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "sourceFingerprint": "source:declared",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 200,
+              "endColumn": 20
+            },
+            "owner": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:module",
+                "revisionId": "revision:one"
+              }
+            },
+            "lexicalScope": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:module",
+                "revisionId": "revision:one"
+              }
+            },
+            "confidence": {
+              "score": 0.5,
+              "method": "syntax-surface-support-v1",
+              "reasons": ["CURRENT_INPUT_BASIS", "CANONICAL_FIELDS_SUPPORTED", "NO_MODEL_INFERENCE"]
+            },
+            "extractionVersion": "declared-binding-fixture-v1",
+            "controlContext": "UNCONDITIONAL",
+            "syntaxKind": "BINDING_SCOPE",
+            "payload": {
+              "scopeRef": {
+                "scope": "REPOSITORY",
+                "repositoryId": "repo:one",
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                }
+              },
+              "parentScopeRef": null,
+              "status": "COMPLETE",
+              "limitations": []
+            },
+            "supportRefs": [
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "dcec1436386fe674e97156a2aaebcab2aff9a459f98f4457a14a1f193fc7a5d8"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:function",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "6283fae9d348bca4083a717bb2236b4c5348e15faf2da276860ce13e4594de9f"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9d58a43d676491baf6b51fcc5cdb7c5e62740fe3c835de78d2378ce08abc1bad"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "SOURCE_FILE",
+                  "id": "file:one",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9cbe8692220ba86d7beec5434bc5d6909164f06745d378ef1149fc028bf2e6c1"
+              }
+            ]
+          },
+          {
+            "id": "syntax:scope:type",
+            "syntaxKey": "declared-key:scope:type",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "sourceFingerprint": "source:declared",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 20,
+              "startColumn": 0,
+              "endLine": 180,
+              "endColumn": 20
+            },
+            "owner": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:type",
+                "revisionId": "revision:one"
+              }
+            },
+            "lexicalScope": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:type",
+                "revisionId": "revision:one"
+              }
+            },
+            "confidence": {
+              "score": 0.5,
+              "method": "syntax-surface-support-v1",
+              "reasons": ["CURRENT_INPUT_BASIS", "CANONICAL_FIELDS_SUPPORTED", "NO_MODEL_INFERENCE"]
+            },
+            "extractionVersion": "declared-binding-fixture-v1",
+            "controlContext": "UNCONDITIONAL",
+            "syntaxKind": "BINDING_SCOPE",
+            "payload": {
+              "scopeRef": {
+                "scope": "REPOSITORY",
+                "repositoryId": "repo:one",
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                }
+              },
+              "parentScopeRef": {
+                "scope": "REPOSITORY",
+                "repositoryId": "repo:one",
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                }
+              },
+              "status": "COMPLETE",
+              "limitations": []
+            },
+            "supportRefs": [
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "dcec1436386fe674e97156a2aaebcab2aff9a459f98f4457a14a1f193fc7a5d8"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:function",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "6283fae9d348bca4083a717bb2236b4c5348e15faf2da276860ce13e4594de9f"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9d58a43d676491baf6b51fcc5cdb7c5e62740fe3c835de78d2378ce08abc1bad"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "SOURCE_FILE",
+                  "id": "file:one",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9cbe8692220ba86d7beec5434bc5d6909164f06745d378ef1149fc028bf2e6c1"
+              }
+            ]
+          },
+          {
+            "id": "syntax:scope:function",
+            "syntaxKey": "declared-key:scope:function",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "sourceFingerprint": "source:declared",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 40,
+              "startColumn": 0,
+              "endLine": 100,
+              "endColumn": 20
+            },
+            "owner": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:function",
+                "revisionId": "revision:one"
+              }
+            },
+            "lexicalScope": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:function",
+                "revisionId": "revision:one"
+              }
+            },
+            "confidence": {
+              "score": 0.5,
+              "method": "syntax-surface-support-v1",
+              "reasons": ["CURRENT_INPUT_BASIS", "CANONICAL_FIELDS_SUPPORTED", "NO_MODEL_INFERENCE"]
+            },
+            "extractionVersion": "declared-binding-fixture-v1",
+            "controlContext": "UNCONDITIONAL",
+            "syntaxKind": "BINDING_SCOPE",
+            "payload": {
+              "scopeRef": {
+                "scope": "REPOSITORY",
+                "repositoryId": "repo:one",
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:function",
+                  "revisionId": "revision:one"
+                }
+              },
+              "parentScopeRef": {
+                "scope": "REPOSITORY",
+                "repositoryId": "repo:one",
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                }
+              },
+              "status": "COMPLETE",
+              "limitations": []
+            },
+            "supportRefs": [
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "dcec1436386fe674e97156a2aaebcab2aff9a459f98f4457a14a1f193fc7a5d8"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:function",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "6283fae9d348bca4083a717bb2236b4c5348e15faf2da276860ce13e4594de9f"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9d58a43d676491baf6b51fcc5cdb7c5e62740fe3c835de78d2378ce08abc1bad"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "SOURCE_FILE",
+                  "id": "file:one",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9cbe8692220ba86d7beec5434bc5d6909164f06745d378ef1149fc028bf2e6c1"
+              }
+            ]
+          },
+          {
+            "id": "syntax:import",
+            "syntaxKey": "declared-key:import",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "sourceFingerprint": "source:declared",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 1,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 10
+            },
+            "owner": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:module",
+                "revisionId": "revision:one"
+              }
+            },
+            "lexicalScope": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:module",
+                "revisionId": "revision:one"
+              }
+            },
+            "confidence": {
+              "score": 0.5,
+              "method": "syntax-surface-support-v1",
+              "reasons": ["CURRENT_INPUT_BASIS", "CANONICAL_FIELDS_SUPPORTED", "NO_MODEL_INFERENCE"]
+            },
+            "extractionVersion": "declared-binding-fixture-v1",
+            "controlContext": "UNCONDITIONAL",
+            "syntaxKind": "IMPORT_BINDING",
+            "payload": {
+              "language": "java",
+              "importKind": "JAVA_TYPE",
+              "qualifiedName": "org.springframework.scheduling.annotation.Scheduled",
+              "importedName": "Scheduled",
+              "boundName": "Scheduled"
+            },
+            "supportRefs": [
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "dcec1436386fe674e97156a2aaebcab2aff9a459f98f4457a14a1f193fc7a5d8"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:function",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "6283fae9d348bca4083a717bb2236b4c5348e15faf2da276860ce13e4594de9f"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9d58a43d676491baf6b51fcc5cdb7c5e62740fe3c835de78d2378ce08abc1bad"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "SOURCE_FILE",
+                  "id": "file:one",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9cbe8692220ba86d7beec5434bc5d6909164f06745d378ef1149fc028bf2e6c1"
+              }
+            ]
+          },
+          {
+            "id": "syntax:site",
+            "syntaxKey": "declared-key:site",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "sourceFingerprint": "source:declared",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 45,
+              "startColumn": 0,
+              "endLine": 45,
+              "endColumn": 10
+            },
+            "owner": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:function",
+                "revisionId": "revision:one"
+              }
+            },
+            "lexicalScope": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:type",
+                "revisionId": "revision:one"
+              }
+            },
+            "confidence": {
+              "score": 0.5,
+              "method": "syntax-surface-support-v1",
+              "reasons": ["CURRENT_INPUT_BASIS", "CANONICAL_FIELDS_SUPPORTED", "NO_MODEL_INFERENCE"]
+            },
+            "extractionVersion": "declared-binding-fixture-v1",
+            "controlContext": "UNCONDITIONAL",
+            "syntaxKind": "DECORATION",
+            "payload": {
+              "callee": {
+                "state": "NON_RESOLVED",
+                "name": "Scheduled",
+                "target": null,
+                "candidates": [],
+                "resolution": "UNRESOLVED"
+              },
+              "arguments": [
+                {
+                  "name": "cron",
+                  "value": {
+                    "kind": "STRING",
+                    "value": "0 * * * * *"
+                  },
+                  "sourceRange": {
+                    "sourceFileId": "file:one",
+                    "startLine": 45,
+                    "startColumn": 0,
+                    "endLine": 45,
+                    "endColumn": 10
+                  }
+                }
+              ]
+            },
+            "supportRefs": [
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "dcec1436386fe674e97156a2aaebcab2aff9a459f98f4457a14a1f193fc7a5d8"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:function",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "6283fae9d348bca4083a717bb2236b4c5348e15faf2da276860ce13e4594de9f"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9d58a43d676491baf6b51fcc5cdb7c5e62740fe3c835de78d2378ce08abc1bad"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "SOURCE_FILE",
+                  "id": "file:one",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9cbe8692220ba86d7beec5434bc5d6909164f06745d378ef1149fc028bf2e6c1"
+              }
+            ]
+          }
+        ],
+        "supportInventory": [
+          {
+            "basis": {
+              "repositoryId": "repo:one",
+              "revisionId": "revision:one",
+              "contentFingerprint": "content:declared",
+              "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:module",
+              "revisionId": "revision:one"
+            },
+            "valueDigest": "dcec1436386fe674e97156a2aaebcab2aff9a459f98f4457a14a1f193fc7a5d8"
+          },
+          {
+            "basis": {
+              "repositoryId": "repo:one",
+              "revisionId": "revision:one",
+              "contentFingerprint": "content:declared",
+              "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:function",
+              "revisionId": "revision:one"
+            },
+            "valueDigest": "6283fae9d348bca4083a717bb2236b4c5348e15faf2da276860ce13e4594de9f"
+          },
+          {
+            "basis": {
+              "repositoryId": "repo:one",
+              "revisionId": "revision:one",
+              "contentFingerprint": "content:declared",
+              "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:type",
+              "revisionId": "revision:one"
+            },
+            "valueDigest": "9d58a43d676491baf6b51fcc5cdb7c5e62740fe3c835de78d2378ce08abc1bad"
+          },
+          {
+            "basis": {
+              "repositoryId": "repo:one",
+              "revisionId": "revision:one",
+              "contentFingerprint": "content:declared",
+              "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "entity": {
+              "kind": "SOURCE_FILE",
+              "id": "file:one",
+              "revisionId": "revision:one"
+            },
+            "valueDigest": "9cbe8692220ba86d7beec5434bc5d6909164f06745d378ef1149fc028bf2e6c1"
+          }
+        ],
+        "configuration": {}
+      },
+      "expected": {
+        "bindings": [],
+        "domainIds": ["runtime:ca12868e55d1123404fea22b9dda00fa3ee1c1445a9e56e8f9b61e61e9b9aded"],
+        "entries": 1
+      }
+    },
+    {
+      "name": "spring-dynamic",
+      "context": {
+        "contextVersion": 4,
+        "syntaxSchemaVersion": 3,
+        "basis": {
+          "repositoryId": "repo:one",
+          "revisionId": "revision:one",
+          "contentFingerprint": "content:declared",
+          "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "nodes": [
+          {
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            },
+            "id": "code:module",
+            "factKey": "code-key:module",
+            "name": "src/App.java",
+            "qualifiedName": "src/App.java",
+            "sourceRange": null,
+            "kind": "MODULE"
+          },
+          {
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            },
+            "id": "code:function",
+            "factKey": "code-key:function",
+            "name": "handler",
+            "qualifiedName": "App.handler",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 40,
+              "startColumn": 0,
+              "endLine": 100,
+              "endColumn": 0
+            },
+            "kind": "SYMBOL",
+            "symbolKind": "METHOD"
+          },
+          {
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            },
+            "id": "code:type",
+            "factKey": "code-key:type",
+            "name": "App",
+            "qualifiedName": "App",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 20,
+              "startColumn": 0,
+              "endLine": 180,
+              "endColumn": 0
+            },
+            "kind": "TYPE",
+            "typeKind": "CLASS"
+          }
+        ],
+        "edges": [],
+        "sourceFiles": [
+          {
+            "id": "file:one",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "path": "src/App.java",
+            "contentFingerprint": "source:declared",
+            "classification": {
+              "role": "SOURCE",
+              "provenance": "AUTHORED",
+              "contentKind": "TEXT"
+            },
+            "languageHint": "java",
+            "sensitivity": "INTERNAL"
+          }
+        ],
+        "syntaxEvidence": [
+          {
+            "id": "syntax:scope:module",
+            "syntaxKey": "declared-key:scope:module",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "sourceFingerprint": "source:declared",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 200,
+              "endColumn": 20
+            },
+            "owner": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:module",
+                "revisionId": "revision:one"
+              }
+            },
+            "lexicalScope": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:module",
+                "revisionId": "revision:one"
+              }
+            },
+            "confidence": {
+              "score": 0.5,
+              "method": "syntax-surface-support-v1",
+              "reasons": ["CURRENT_INPUT_BASIS", "CANONICAL_FIELDS_SUPPORTED", "NO_MODEL_INFERENCE"]
+            },
+            "extractionVersion": "declared-binding-fixture-v1",
+            "controlContext": "UNCONDITIONAL",
+            "syntaxKind": "BINDING_SCOPE",
+            "payload": {
+              "scopeRef": {
+                "scope": "REPOSITORY",
+                "repositoryId": "repo:one",
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                }
+              },
+              "parentScopeRef": null,
+              "status": "COMPLETE",
+              "limitations": []
+            },
+            "supportRefs": [
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "dcec1436386fe674e97156a2aaebcab2aff9a459f98f4457a14a1f193fc7a5d8"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:function",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "6283fae9d348bca4083a717bb2236b4c5348e15faf2da276860ce13e4594de9f"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9d58a43d676491baf6b51fcc5cdb7c5e62740fe3c835de78d2378ce08abc1bad"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "SOURCE_FILE",
+                  "id": "file:one",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9cbe8692220ba86d7beec5434bc5d6909164f06745d378ef1149fc028bf2e6c1"
+              }
+            ]
+          },
+          {
+            "id": "syntax:scope:type",
+            "syntaxKey": "declared-key:scope:type",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "sourceFingerprint": "source:declared",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 20,
+              "startColumn": 0,
+              "endLine": 180,
+              "endColumn": 20
+            },
+            "owner": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:type",
+                "revisionId": "revision:one"
+              }
+            },
+            "lexicalScope": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:type",
+                "revisionId": "revision:one"
+              }
+            },
+            "confidence": {
+              "score": 0.5,
+              "method": "syntax-surface-support-v1",
+              "reasons": ["CURRENT_INPUT_BASIS", "CANONICAL_FIELDS_SUPPORTED", "NO_MODEL_INFERENCE"]
+            },
+            "extractionVersion": "declared-binding-fixture-v1",
+            "controlContext": "UNCONDITIONAL",
+            "syntaxKind": "BINDING_SCOPE",
+            "payload": {
+              "scopeRef": {
+                "scope": "REPOSITORY",
+                "repositoryId": "repo:one",
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                }
+              },
+              "parentScopeRef": {
+                "scope": "REPOSITORY",
+                "repositoryId": "repo:one",
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                }
+              },
+              "status": "COMPLETE",
+              "limitations": []
+            },
+            "supportRefs": [
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "dcec1436386fe674e97156a2aaebcab2aff9a459f98f4457a14a1f193fc7a5d8"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:function",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "6283fae9d348bca4083a717bb2236b4c5348e15faf2da276860ce13e4594de9f"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9d58a43d676491baf6b51fcc5cdb7c5e62740fe3c835de78d2378ce08abc1bad"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "SOURCE_FILE",
+                  "id": "file:one",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9cbe8692220ba86d7beec5434bc5d6909164f06745d378ef1149fc028bf2e6c1"
+              }
+            ]
+          },
+          {
+            "id": "syntax:scope:function",
+            "syntaxKey": "declared-key:scope:function",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "sourceFingerprint": "source:declared",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 40,
+              "startColumn": 0,
+              "endLine": 100,
+              "endColumn": 20
+            },
+            "owner": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:function",
+                "revisionId": "revision:one"
+              }
+            },
+            "lexicalScope": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:function",
+                "revisionId": "revision:one"
+              }
+            },
+            "confidence": {
+              "score": 0.5,
+              "method": "syntax-surface-support-v1",
+              "reasons": ["CURRENT_INPUT_BASIS", "CANONICAL_FIELDS_SUPPORTED", "NO_MODEL_INFERENCE"]
+            },
+            "extractionVersion": "declared-binding-fixture-v1",
+            "controlContext": "UNCONDITIONAL",
+            "syntaxKind": "BINDING_SCOPE",
+            "payload": {
+              "scopeRef": {
+                "scope": "REPOSITORY",
+                "repositoryId": "repo:one",
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:function",
+                  "revisionId": "revision:one"
+                }
+              },
+              "parentScopeRef": {
+                "scope": "REPOSITORY",
+                "repositoryId": "repo:one",
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                }
+              },
+              "status": "COMPLETE",
+              "limitations": []
+            },
+            "supportRefs": [
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "dcec1436386fe674e97156a2aaebcab2aff9a459f98f4457a14a1f193fc7a5d8"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:function",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "6283fae9d348bca4083a717bb2236b4c5348e15faf2da276860ce13e4594de9f"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9d58a43d676491baf6b51fcc5cdb7c5e62740fe3c835de78d2378ce08abc1bad"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "SOURCE_FILE",
+                  "id": "file:one",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9cbe8692220ba86d7beec5434bc5d6909164f06745d378ef1149fc028bf2e6c1"
+              }
+            ]
+          },
+          {
+            "id": "syntax:import",
+            "syntaxKey": "declared-key:import",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "sourceFingerprint": "source:declared",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 1,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 10
+            },
+            "owner": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:module",
+                "revisionId": "revision:one"
+              }
+            },
+            "lexicalScope": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:module",
+                "revisionId": "revision:one"
+              }
+            },
+            "confidence": {
+              "score": 0.5,
+              "method": "syntax-surface-support-v1",
+              "reasons": ["CURRENT_INPUT_BASIS", "CANONICAL_FIELDS_SUPPORTED", "NO_MODEL_INFERENCE"]
+            },
+            "extractionVersion": "declared-binding-fixture-v1",
+            "controlContext": "UNCONDITIONAL",
+            "syntaxKind": "IMPORT_BINDING",
+            "payload": {
+              "language": "java",
+              "importKind": "JAVA_TYPE",
+              "qualifiedName": "org.springframework.web.bind.annotation.GetMapping",
+              "importedName": "GetMapping",
+              "boundName": "GetMapping"
+            },
+            "supportRefs": [
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "dcec1436386fe674e97156a2aaebcab2aff9a459f98f4457a14a1f193fc7a5d8"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:function",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "6283fae9d348bca4083a717bb2236b4c5348e15faf2da276860ce13e4594de9f"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9d58a43d676491baf6b51fcc5cdb7c5e62740fe3c835de78d2378ce08abc1bad"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "SOURCE_FILE",
+                  "id": "file:one",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9cbe8692220ba86d7beec5434bc5d6909164f06745d378ef1149fc028bf2e6c1"
+              }
+            ]
+          },
+          {
+            "id": "syntax:site",
+            "syntaxKey": "declared-key:site",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "sourceFingerprint": "source:declared",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 45,
+              "startColumn": 0,
+              "endLine": 45,
+              "endColumn": 10
+            },
+            "owner": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:function",
+                "revisionId": "revision:one"
+              }
+            },
+            "lexicalScope": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:type",
+                "revisionId": "revision:one"
+              }
+            },
+            "confidence": {
+              "score": 0.5,
+              "method": "syntax-surface-support-v1",
+              "reasons": ["CURRENT_INPUT_BASIS", "CANONICAL_FIELDS_SUPPORTED", "NO_MODEL_INFERENCE"]
+            },
+            "extractionVersion": "declared-binding-fixture-v1",
+            "controlContext": "UNCONDITIONAL",
+            "syntaxKind": "DECORATION",
+            "payload": {
+              "callee": {
+                "state": "NON_RESOLVED",
+                "name": "GetMapping",
+                "target": null,
+                "candidates": [],
+                "resolution": "UNRESOLVED"
+              },
+              "arguments": [
+                {
+                  "name": null,
+                  "value": {
+                    "kind": "UNKNOWN",
+                    "reason": "DYNAMIC"
+                  },
+                  "sourceRange": {
+                    "sourceFileId": "file:one",
+                    "startLine": 45,
+                    "startColumn": 0,
+                    "endLine": 45,
+                    "endColumn": 10
+                  }
+                }
+              ]
+            },
+            "supportRefs": [
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "dcec1436386fe674e97156a2aaebcab2aff9a459f98f4457a14a1f193fc7a5d8"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:function",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "6283fae9d348bca4083a717bb2236b4c5348e15faf2da276860ce13e4594de9f"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9d58a43d676491baf6b51fcc5cdb7c5e62740fe3c835de78d2378ce08abc1bad"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "SOURCE_FILE",
+                  "id": "file:one",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9cbe8692220ba86d7beec5434bc5d6909164f06745d378ef1149fc028bf2e6c1"
+              }
+            ]
+          }
+        ],
+        "supportInventory": [
+          {
+            "basis": {
+              "repositoryId": "repo:one",
+              "revisionId": "revision:one",
+              "contentFingerprint": "content:declared",
+              "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:module",
+              "revisionId": "revision:one"
+            },
+            "valueDigest": "dcec1436386fe674e97156a2aaebcab2aff9a459f98f4457a14a1f193fc7a5d8"
+          },
+          {
+            "basis": {
+              "repositoryId": "repo:one",
+              "revisionId": "revision:one",
+              "contentFingerprint": "content:declared",
+              "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:function",
+              "revisionId": "revision:one"
+            },
+            "valueDigest": "6283fae9d348bca4083a717bb2236b4c5348e15faf2da276860ce13e4594de9f"
+          },
+          {
+            "basis": {
+              "repositoryId": "repo:one",
+              "revisionId": "revision:one",
+              "contentFingerprint": "content:declared",
+              "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:type",
+              "revisionId": "revision:one"
+            },
+            "valueDigest": "9d58a43d676491baf6b51fcc5cdb7c5e62740fe3c835de78d2378ce08abc1bad"
+          },
+          {
+            "basis": {
+              "repositoryId": "repo:one",
+              "revisionId": "revision:one",
+              "contentFingerprint": "content:declared",
+              "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "entity": {
+              "kind": "SOURCE_FILE",
+              "id": "file:one",
+              "revisionId": "revision:one"
+            },
+            "valueDigest": "9cbe8692220ba86d7beec5434bc5d6909164f06745d378ef1149fc028bf2e6c1"
+          }
+        ],
+        "configuration": {}
+      },
+      "expected": {
+        "bindings": [],
+        "domainIds": [],
+        "entries": 0
+      }
+    },
+    {
+      "name": "spring-feign",
+      "context": {
+        "contextVersion": 4,
+        "syntaxSchemaVersion": 3,
+        "basis": {
+          "repositoryId": "repo:one",
+          "revisionId": "revision:one",
+          "contentFingerprint": "content:declared",
+          "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "nodes": [
+          {
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            },
+            "id": "code:module",
+            "factKey": "code-key:module",
+            "name": "src/App.java",
+            "qualifiedName": "src/App.java",
+            "sourceRange": null,
+            "kind": "MODULE"
+          },
+          {
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            },
+            "id": "code:function",
+            "factKey": "code-key:function",
+            "name": "handler",
+            "qualifiedName": "App.handler",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 40,
+              "startColumn": 0,
+              "endLine": 100,
+              "endColumn": 0
+            },
+            "kind": "SYMBOL",
+            "symbolKind": "METHOD"
+          },
+          {
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "confidence": {
+              "score": 1,
+              "method": "parser",
+              "reasons": []
+            },
+            "id": "code:type",
+            "factKey": "code-key:type",
+            "name": "App",
+            "qualifiedName": "App",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 20,
+              "startColumn": 0,
+              "endLine": 180,
+              "endColumn": 0
+            },
+            "kind": "TYPE",
+            "typeKind": "INTERFACE"
+          }
+        ],
+        "edges": [],
+        "sourceFiles": [
+          {
+            "id": "file:one",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "path": "src/App.java",
+            "contentFingerprint": "source:declared",
+            "classification": {
+              "role": "SOURCE",
+              "provenance": "AUTHORED",
+              "contentKind": "TEXT"
+            },
+            "languageHint": "java",
+            "sensitivity": "INTERNAL"
+          }
+        ],
+        "syntaxEvidence": [
+          {
+            "id": "syntax:scope:module",
+            "syntaxKey": "declared-key:scope:module",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "sourceFingerprint": "source:declared",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 0,
+              "startColumn": 0,
+              "endLine": 200,
+              "endColumn": 20
+            },
+            "owner": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:module",
+                "revisionId": "revision:one"
+              }
+            },
+            "lexicalScope": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:module",
+                "revisionId": "revision:one"
+              }
+            },
+            "confidence": {
+              "score": 0.5,
+              "method": "syntax-surface-support-v1",
+              "reasons": ["CURRENT_INPUT_BASIS", "CANONICAL_FIELDS_SUPPORTED", "NO_MODEL_INFERENCE"]
+            },
+            "extractionVersion": "declared-binding-fixture-v1",
+            "controlContext": "UNCONDITIONAL",
+            "syntaxKind": "BINDING_SCOPE",
+            "payload": {
+              "scopeRef": {
+                "scope": "REPOSITORY",
+                "repositoryId": "repo:one",
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                }
+              },
+              "parentScopeRef": null,
+              "status": "COMPLETE",
+              "limitations": []
+            },
+            "supportRefs": [
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "dcec1436386fe674e97156a2aaebcab2aff9a459f98f4457a14a1f193fc7a5d8"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:function",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "6283fae9d348bca4083a717bb2236b4c5348e15faf2da276860ce13e4594de9f"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "bc2c0723f632fee5a9d9a0a719cc148fded389058de3c55956cd2ccc81aaf9ab"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "SOURCE_FILE",
+                  "id": "file:one",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9cbe8692220ba86d7beec5434bc5d6909164f06745d378ef1149fc028bf2e6c1"
+              }
+            ]
+          },
+          {
+            "id": "syntax:scope:type",
+            "syntaxKey": "declared-key:scope:type",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "sourceFingerprint": "source:declared",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 20,
+              "startColumn": 0,
+              "endLine": 180,
+              "endColumn": 20
+            },
+            "owner": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:type",
+                "revisionId": "revision:one"
+              }
+            },
+            "lexicalScope": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:type",
+                "revisionId": "revision:one"
+              }
+            },
+            "confidence": {
+              "score": 0.5,
+              "method": "syntax-surface-support-v1",
+              "reasons": ["CURRENT_INPUT_BASIS", "CANONICAL_FIELDS_SUPPORTED", "NO_MODEL_INFERENCE"]
+            },
+            "extractionVersion": "declared-binding-fixture-v1",
+            "controlContext": "UNCONDITIONAL",
+            "syntaxKind": "BINDING_SCOPE",
+            "payload": {
+              "scopeRef": {
+                "scope": "REPOSITORY",
+                "repositoryId": "repo:one",
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                }
+              },
+              "parentScopeRef": {
+                "scope": "REPOSITORY",
+                "repositoryId": "repo:one",
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                }
+              },
+              "status": "COMPLETE",
+              "limitations": []
+            },
+            "supportRefs": [
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "dcec1436386fe674e97156a2aaebcab2aff9a459f98f4457a14a1f193fc7a5d8"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:function",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "6283fae9d348bca4083a717bb2236b4c5348e15faf2da276860ce13e4594de9f"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "bc2c0723f632fee5a9d9a0a719cc148fded389058de3c55956cd2ccc81aaf9ab"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "SOURCE_FILE",
+                  "id": "file:one",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9cbe8692220ba86d7beec5434bc5d6909164f06745d378ef1149fc028bf2e6c1"
+              }
+            ]
+          },
+          {
+            "id": "syntax:scope:function",
+            "syntaxKey": "declared-key:scope:function",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "sourceFingerprint": "source:declared",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 40,
+              "startColumn": 0,
+              "endLine": 100,
+              "endColumn": 20
+            },
+            "owner": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:function",
+                "revisionId": "revision:one"
+              }
+            },
+            "lexicalScope": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:function",
+                "revisionId": "revision:one"
+              }
+            },
+            "confidence": {
+              "score": 0.5,
+              "method": "syntax-surface-support-v1",
+              "reasons": ["CURRENT_INPUT_BASIS", "CANONICAL_FIELDS_SUPPORTED", "NO_MODEL_INFERENCE"]
+            },
+            "extractionVersion": "declared-binding-fixture-v1",
+            "controlContext": "UNCONDITIONAL",
+            "syntaxKind": "BINDING_SCOPE",
+            "payload": {
+              "scopeRef": {
+                "scope": "REPOSITORY",
+                "repositoryId": "repo:one",
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:function",
+                  "revisionId": "revision:one"
+                }
+              },
+              "parentScopeRef": {
+                "scope": "REPOSITORY",
+                "repositoryId": "repo:one",
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                }
+              },
+              "status": "COMPLETE",
+              "limitations": []
+            },
+            "supportRefs": [
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "dcec1436386fe674e97156a2aaebcab2aff9a459f98f4457a14a1f193fc7a5d8"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:function",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "6283fae9d348bca4083a717bb2236b4c5348e15faf2da276860ce13e4594de9f"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "bc2c0723f632fee5a9d9a0a719cc148fded389058de3c55956cd2ccc81aaf9ab"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "SOURCE_FILE",
+                  "id": "file:one",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9cbe8692220ba86d7beec5434bc5d6909164f06745d378ef1149fc028bf2e6c1"
+              }
+            ]
+          },
+          {
+            "id": "syntax:import",
+            "syntaxKey": "declared-key:import",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "sourceFingerprint": "source:declared",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 1,
+              "startColumn": 0,
+              "endLine": 1,
+              "endColumn": 10
+            },
+            "owner": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:module",
+                "revisionId": "revision:one"
+              }
+            },
+            "lexicalScope": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:module",
+                "revisionId": "revision:one"
+              }
+            },
+            "confidence": {
+              "score": 0.5,
+              "method": "syntax-surface-support-v1",
+              "reasons": ["CURRENT_INPUT_BASIS", "CANONICAL_FIELDS_SUPPORTED", "NO_MODEL_INFERENCE"]
+            },
+            "extractionVersion": "declared-binding-fixture-v1",
+            "controlContext": "UNCONDITIONAL",
+            "syntaxKind": "IMPORT_BINDING",
+            "payload": {
+              "language": "java",
+              "importKind": "JAVA_TYPE",
+              "qualifiedName": "org.springframework.web.bind.annotation.GetMapping",
+              "importedName": "GetMapping",
+              "boundName": "GetMapping"
+            },
+            "supportRefs": [
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "dcec1436386fe674e97156a2aaebcab2aff9a459f98f4457a14a1f193fc7a5d8"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:function",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "6283fae9d348bca4083a717bb2236b4c5348e15faf2da276860ce13e4594de9f"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "bc2c0723f632fee5a9d9a0a719cc148fded389058de3c55956cd2ccc81aaf9ab"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "SOURCE_FILE",
+                  "id": "file:one",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9cbe8692220ba86d7beec5434bc5d6909164f06745d378ef1149fc028bf2e6c1"
+              }
+            ]
+          },
+          {
+            "id": "syntax:site",
+            "syntaxKey": "declared-key:site",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "sourceFingerprint": "source:declared",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 45,
+              "startColumn": 0,
+              "endLine": 45,
+              "endColumn": 10
+            },
+            "owner": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:function",
+                "revisionId": "revision:one"
+              }
+            },
+            "lexicalScope": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:type",
+                "revisionId": "revision:one"
+              }
+            },
+            "confidence": {
+              "score": 0.5,
+              "method": "syntax-surface-support-v1",
+              "reasons": ["CURRENT_INPUT_BASIS", "CANONICAL_FIELDS_SUPPORTED", "NO_MODEL_INFERENCE"]
+            },
+            "extractionVersion": "declared-binding-fixture-v1",
+            "controlContext": "UNCONDITIONAL",
+            "syntaxKind": "DECORATION",
+            "payload": {
+              "callee": {
+                "state": "NON_RESOLVED",
+                "name": "GetMapping",
+                "target": null,
+                "candidates": [],
+                "resolution": "UNRESOLVED"
+              },
+              "arguments": [
+                {
+                  "name": null,
+                  "value": {
+                    "kind": "STRING",
+                    "value": "/x"
+                  },
+                  "sourceRange": {
+                    "sourceFileId": "file:one",
+                    "startLine": 45,
+                    "startColumn": 0,
+                    "endLine": 45,
+                    "endColumn": 10
+                  }
+                }
+              ]
+            },
+            "supportRefs": [
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "dcec1436386fe674e97156a2aaebcab2aff9a459f98f4457a14a1f193fc7a5d8"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:function",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "6283fae9d348bca4083a717bb2236b4c5348e15faf2da276860ce13e4594de9f"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "bc2c0723f632fee5a9d9a0a719cc148fded389058de3c55956cd2ccc81aaf9ab"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "SOURCE_FILE",
+                  "id": "file:one",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9cbe8692220ba86d7beec5434bc5d6909164f06745d378ef1149fc028bf2e6c1"
+              }
+            ]
+          },
+          {
+            "id": "syntax:feign-import",
+            "syntaxKey": "declared-key:feign-import",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "sourceFingerprint": "source:declared",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 2,
+              "startColumn": 0,
+              "endLine": 2,
+              "endColumn": 10
+            },
+            "owner": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:module",
+                "revisionId": "revision:one"
+              }
+            },
+            "lexicalScope": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:module",
+                "revisionId": "revision:one"
+              }
+            },
+            "confidence": {
+              "score": 0.5,
+              "method": "syntax-surface-support-v1",
+              "reasons": ["CURRENT_INPUT_BASIS", "CANONICAL_FIELDS_SUPPORTED", "NO_MODEL_INFERENCE"]
+            },
+            "extractionVersion": "declared-binding-fixture-v1",
+            "controlContext": "UNCONDITIONAL",
+            "syntaxKind": "IMPORT_BINDING",
+            "payload": {
+              "language": "java",
+              "importKind": "JAVA_TYPE",
+              "qualifiedName": "org.springframework.cloud.openfeign.FeignClient",
+              "importedName": "FeignClient",
+              "boundName": "FeignClient"
+            },
+            "supportRefs": [
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "dcec1436386fe674e97156a2aaebcab2aff9a459f98f4457a14a1f193fc7a5d8"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:function",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "6283fae9d348bca4083a717bb2236b4c5348e15faf2da276860ce13e4594de9f"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "bc2c0723f632fee5a9d9a0a719cc148fded389058de3c55956cd2ccc81aaf9ab"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "SOURCE_FILE",
+                  "id": "file:one",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9cbe8692220ba86d7beec5434bc5d6909164f06745d378ef1149fc028bf2e6c1"
+              }
+            ]
+          },
+          {
+            "id": "syntax:feign-type",
+            "syntaxKey": "declared-key:feign-type",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:one",
+            "sourceFingerprint": "source:declared",
+            "sourceRange": {
+              "sourceFileId": "file:one",
+              "startLine": 19,
+              "startColumn": 0,
+              "endLine": 19,
+              "endColumn": 10
+            },
+            "owner": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:type",
+                "revisionId": "revision:one"
+              }
+            },
+            "lexicalScope": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:module",
+                "revisionId": "revision:one"
+              }
+            },
+            "confidence": {
+              "score": 0.5,
+              "method": "syntax-surface-support-v1",
+              "reasons": ["CURRENT_INPUT_BASIS", "CANONICAL_FIELDS_SUPPORTED", "NO_MODEL_INFERENCE"]
+            },
+            "extractionVersion": "declared-binding-fixture-v1",
+            "controlContext": "UNCONDITIONAL",
+            "syntaxKind": "DECORATION",
+            "payload": {
+              "callee": {
+                "state": "NON_RESOLVED",
+                "name": "FeignClient",
+                "target": null,
+                "candidates": [],
+                "resolution": "UNRESOLVED"
+              },
+              "arguments": [
+                {
+                  "name": "name",
+                  "value": {
+                    "kind": "STRING",
+                    "value": "catalog"
+                  },
+                  "sourceRange": {
+                    "sourceFileId": "file:one",
+                    "startLine": 19,
+                    "startColumn": 0,
+                    "endLine": 19,
+                    "endColumn": 10
+                  }
+                }
+              ]
+            },
+            "supportRefs": [
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:module",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "dcec1436386fe674e97156a2aaebcab2aff9a459f98f4457a14a1f193fc7a5d8"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:function",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "6283fae9d348bca4083a717bb2236b4c5348e15faf2da276860ce13e4594de9f"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "CODE_NODE",
+                  "id": "code:type",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "bc2c0723f632fee5a9d9a0a719cc148fded389058de3c55956cd2ccc81aaf9ab"
+              },
+              {
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:one",
+                  "contentFingerprint": "content:declared",
+                  "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "entity": {
+                  "kind": "SOURCE_FILE",
+                  "id": "file:one",
+                  "revisionId": "revision:one"
+                },
+                "valueDigest": "9cbe8692220ba86d7beec5434bc5d6909164f06745d378ef1149fc028bf2e6c1"
+              }
+            ]
+          }
+        ],
+        "supportInventory": [
+          {
+            "basis": {
+              "repositoryId": "repo:one",
+              "revisionId": "revision:one",
+              "contentFingerprint": "content:declared",
+              "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:module",
+              "revisionId": "revision:one"
+            },
+            "valueDigest": "dcec1436386fe674e97156a2aaebcab2aff9a459f98f4457a14a1f193fc7a5d8"
+          },
+          {
+            "basis": {
+              "repositoryId": "repo:one",
+              "revisionId": "revision:one",
+              "contentFingerprint": "content:declared",
+              "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:function",
+              "revisionId": "revision:one"
+            },
+            "valueDigest": "6283fae9d348bca4083a717bb2236b4c5348e15faf2da276860ce13e4594de9f"
+          },
+          {
+            "basis": {
+              "repositoryId": "repo:one",
+              "revisionId": "revision:one",
+              "contentFingerprint": "content:declared",
+              "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:type",
+              "revisionId": "revision:one"
+            },
+            "valueDigest": "bc2c0723f632fee5a9d9a0a719cc148fded389058de3c55956cd2ccc81aaf9ab"
+          },
+          {
+            "basis": {
+              "repositoryId": "repo:one",
+              "revisionId": "revision:one",
+              "contentFingerprint": "content:declared",
+              "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "entity": {
+              "kind": "SOURCE_FILE",
+              "id": "file:one",
+              "revisionId": "revision:one"
+            },
+            "valueDigest": "9cbe8692220ba86d7beec5434bc5d6909164f06745d378ef1149fc028bf2e6c1"
+          }
+        ],
+        "configuration": {}
+      },
+      "expected": {
+        "domainIds": ["runtime:c00cd8235b7470d05873872e58cb6cdeb459d3b6ca770aecae752fadbf5c8f05"],
+        "entries": 0,
+        "bindings": [
+          {
+            "kind": "HTTP_CALL",
+            "targetId": "runtime:c00cd8235b7470d05873872e58cb6cdeb459d3b6ca770aecae752fadbf5c8f05",
+            "factKey": "framework-binding:bd1deeebac7adb33448d6fdee0fd8061c4cf702f2a236f859be0feb56750b630",
+            "id": "binding:09edae3c9dea534e084df1d2efaea2ff02461cd859b95a4c27847f5646197960"
+          }
+        ]
+      }
+    }
+  ]
+}

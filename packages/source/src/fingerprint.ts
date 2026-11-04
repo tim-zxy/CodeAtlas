@@ -1,3 +1,4 @@
+import type { MixedSourceAccount } from './mixed-source-verification.js';
 import { createHash } from 'node:crypto';
 import { lstat, open } from 'node:fs/promises';
 import { join } from 'node:path';
@@ -37,28 +38,46 @@ function sameFile(
   );
 }
 
-export async function fingerprintFile(
+async function fingerprintFileCore(
   absolutePath: string,
   path: RepositoryRelativePath,
+  account: MixedSourceAccount | null,
+  classify = classifySample,
 ): Promise<
   Pick<ObservedFile, 'contentFingerprint' | 'sizeBytes' | 'classification' | 'languageHint'>
 > {
   try {
+    account?.checkpoint();
     const ancestors = await safeAncestors(absolutePath, path);
     const before = await lstat(absolutePath);
     if (!before.isFile() || before.isSymbolicLink()) throw sourceChanged();
+    if (account && (!Number.isSafeInteger(before.size) || before.size < 0 || before.nlink !== 1))
+      throw sourceChanged();
+    const sampleSize = account ? Math.min(sampleBytes, before.size) : sampleBytes;
+    account?.reserveBuffer(sampleSize);
+    account?.checkpoint();
     const handle = await open(absolutePath, 'r');
     let digest: string;
     let sizeBytes = 0;
-    const sample = Buffer.alloc(sampleBytes);
+    const sample = Buffer.alloc(sampleSize);
     let sampleLength = 0;
     try {
       await assertSameAncestors(absolutePath, path, ancestors);
+      account?.checkpoint();
       if (!sameFile(before, await handle.stat())) throw sourceChanged();
       const hash = createHash('sha256');
-      const buffer = Buffer.alloc(readBufferBytes);
+      const bufferSize = account ? Math.min(readBufferBytes, before.size) : readBufferBytes;
+      account?.reserveBuffer(bufferSize);
+      const buffer = Buffer.alloc(bufferSize);
       for (;;) {
-        const { bytesRead } = await handle.read(buffer, 0, buffer.length, sizeBytes);
+        account?.checkpoint();
+        const allowance = account
+          ? Math.min(buffer.length, before.size - sizeBytes)
+          : buffer.length;
+        if (account && allowance === 0) break;
+        account?.readBytes(allowance);
+        account?.checkpoint();
+        const { bytesRead } = await handle.read(buffer, 0, allowance, sizeBytes);
         if (bytesRead === 0) break;
         hash.update(buffer.subarray(0, bytesRead));
         const take = Math.min(bytesRead, sampleBytes - sampleLength);
@@ -79,15 +98,28 @@ export async function fingerprintFile(
     if (!sameFile(before, await lstat(absolutePath))) throw sourceChanged();
     await assertSameAncestors(absolutePath, path, ancestors);
     return {
-      ...classifySample(path, sample.subarray(0, sampleLength), sizeBytes),
+      ...classify(path, sample.subarray(0, sampleLength), sizeBytes),
       contentFingerprint: ContentFingerprintSchema.parse(`sha256:${digest}`),
       sizeBytes,
     };
   } catch (error) {
-    if (error instanceof SourceScanError) throw error;
+    if (account || error instanceof SourceScanError) throw error;
     if (isMissing(error)) throw sourceChanged();
     throw new SourceScanError('FILE_READ_FAILED', 'Cannot fingerprint source file');
   }
+}
+
+export async function fingerprintFile(absolutePath: string, path: RepositoryRelativePath) {
+  return fingerprintFileCore(absolutePath, path, null);
+}
+/** Private bounded entry; original public path keeps its exact behavior. */
+export function fingerprintFileControlled(
+  absolutePath: string,
+  path: RepositoryRelativePath,
+  account: MixedSourceAccount,
+  classify = classifySample,
+) {
+  return fingerprintFileCore(absolutePath, path, account, classify);
 }
 
 function addField(hash: ReturnType<typeof createHash>, value: string | number | null): void {

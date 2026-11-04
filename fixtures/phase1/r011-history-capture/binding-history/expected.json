@@ -1,0 +1,5 @@
+{
+  "accepted": ["envelope-v2", "pair-v2"],
+  "rejected": ["wrong-projection-version", "foreign-scope", "unknown-version"],
+  "sqlVersion": 11
+}

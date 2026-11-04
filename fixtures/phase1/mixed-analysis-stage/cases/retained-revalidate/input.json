@@ -1,0 +1,4 @@
+{
+  "scenario": "retained-revalidate",
+  "base": "base-input.json"
+}

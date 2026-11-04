@@ -1,0 +1,25 @@
+{
+  "kind": "INDEPENDENT_LITERAL_CHANGED_ONLY_REFERENCE",
+  "sourceSha256": "8642750a29ca09745ad9e9aae69cabebc992afc90dfee80aef84ba1875c3598d",
+  "spans": {
+    "functionName": [4, 19],
+    "function": [0, 38]
+  },
+  "recordCount": 6,
+  "counts": {
+    "nodes": 2,
+    "edges": 0,
+    "syntax": 1,
+    "coverage": 1,
+    "diagnostics": 0
+  },
+  "outcome": "SUCCEEDED",
+  "nonRequestedPaths": ["removed.py", "retained.py"],
+  "limitations": [
+    "SYNTHETIC_PRESENT_ACTIVE_PROVISIONAL_FINAL_CONTEXT",
+    "REMOVED_METADATA_NOT_IN_OWNER_MAP_CONTEXT_OR_DIGEST",
+    "NO_STORE_REMOVAL_PUBLICATION_OR_FULL_IO_TRACE",
+    "SAME_PROCESS_LIBRARY_RECONSTRUCTION_ONLY_NOT_PROCESS_RESTART",
+    "NO_ACTUAL_NATIVE_CLI_PROFILE"
+  ]
+}

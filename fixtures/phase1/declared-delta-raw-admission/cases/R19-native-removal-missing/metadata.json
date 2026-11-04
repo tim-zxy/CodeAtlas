@@ -1,0 +1,102 @@
+{
+  "targetSource": {
+    "repositoryId": "repo:history",
+    "revisionId": "revision:worktree",
+    "contentFingerprint": "content:scope:S02-python-modified-a"
+  },
+  "inventory": [
+    {
+      "id": "j",
+      "repositoryId": "repo:history",
+      "revisionId": "revision:worktree",
+      "path": "J.java",
+      "contentFingerprint": "content:j",
+      "classification": {
+        "role": "SOURCE",
+        "provenance": "AUTHORED",
+        "contentKind": "TEXT"
+      },
+      "languageHint": "java",
+      "sensitivity": "INTERNAL"
+    },
+    {
+      "id": "k",
+      "repositoryId": "repo:history",
+      "revisionId": "revision:worktree",
+      "path": "K.java",
+      "contentFingerprint": "content:k",
+      "classification": {
+        "role": "SOURCE",
+        "provenance": "AUTHORED",
+        "contentKind": "TEXT"
+      },
+      "languageHint": "java",
+      "sensitivity": "INTERNAL"
+    },
+    {
+      "id": "a",
+      "repositoryId": "repo:history",
+      "revisionId": "revision:worktree",
+      "path": "a.py",
+      "contentFingerprint": "content:changed:a",
+      "classification": {
+        "role": "SOURCE",
+        "provenance": "AUTHORED",
+        "contentKind": "TEXT"
+      },
+      "languageHint": "python",
+      "sensitivity": "INTERNAL"
+    },
+    {
+      "id": "b",
+      "repositoryId": "repo:history",
+      "revisionId": "revision:worktree",
+      "path": "b.py",
+      "contentFingerprint": "content:b",
+      "classification": {
+        "role": "SOURCE",
+        "provenance": "AUTHORED",
+        "contentKind": "TEXT"
+      },
+      "languageHint": "python",
+      "sensitivity": "INTERNAL"
+    },
+    {
+      "id": "doc",
+      "repositoryId": "repo:history",
+      "revisionId": "revision:worktree",
+      "path": "notes.md",
+      "contentFingerprint": "content:doc",
+      "classification": {
+        "role": "OTHER",
+        "provenance": "AUTHORED",
+        "contentKind": "TEXT"
+      },
+      "languageHint": null,
+      "sensitivity": "INTERNAL"
+    }
+  ],
+  "snapshot": {
+    "id": "snapshot:r0:R19-native-removal-missing",
+    "providerId": "native",
+    "providerVersion": "0.0.0",
+    "runtimeVersion": "fixture-runtime",
+    "startedAt": "2026-10-24T00:00:00.000Z",
+    "completedAt": "2026-10-24T00:00:00.003Z"
+  },
+  "tool": {
+    "target": "fixture-target",
+    "profile": "test"
+  },
+  "java": null,
+  "codeSyntax": {
+    "providerVersion": "0.0.0",
+    "runtimeVersion": "fixture-runtime",
+    "tool": {
+      "target": "fixture-target",
+      "profile": "test"
+    },
+    "startedAt": "2026-10-24T00:00:00.001Z",
+    "settledAt": "2026-10-24T00:00:00.002Z"
+  }
+}

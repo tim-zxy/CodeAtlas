@@ -1,0 +1,249 @@
+{
+  "schemaVersion": 11,
+  "provenance": "Static DDL text only, extracted before product execution; no database introspection or product outputs.",
+  "sources": [
+    {
+      "path": "packages/storage/migrations/repository/001_repo_core.sql",
+      "sha256": "90ab382dfd94214f09e8534e1a2d91ff456a078933fc9cf03a568e4836367bf6"
+    },
+    {
+      "path": "packages/storage/migrations/repository/002_source_revision.sql",
+      "sha256": "66daa5a9788f29227317aaa1dd5ca9ddaa3c2ecf4aaa8b2d738ea6735239d090"
+    },
+    {
+      "path": "packages/storage/migrations/repository/003_provider_runtime.sql",
+      "sha256": "abd6a7b8348d94dfd0b70bffc1fa9a9c41d1fd0d6ce3691235e9fd71e6091043"
+    },
+    {
+      "path": "packages/storage/migrations/repository/004_code_graph.sql",
+      "sha256": "1d586d05cab4618f4a879548ad02d383ea6f80b70bb855aadf24c17a43cc0157"
+    },
+    {
+      "path": "packages/storage/migrations/repository/005_evidence.sql",
+      "sha256": "b64b7a0cdb08a07d3581be38ca4bcd0095714ab64421d28cff382d0d48ac4273"
+    },
+    {
+      "path": "packages/storage/migrations/repository/006_analysis_coverage.sql",
+      "sha256": "98b03f4f86bd656407fa4e73f40814f23727b4aab8f7fa8b9801a6750a364eb5"
+    },
+    {
+      "path": "packages/storage/migrations/repository/007_diagnostics.sql",
+      "sha256": "ec48432013d8c860bc828898d39c0a784e7335b3241800941188228adb2ae2ea"
+    },
+    {
+      "path": "packages/storage/migrations/repository/008_indexed_fingerprint.sql",
+      "sha256": "bd57f0d186f3834dd9dc8be9d36b7f0bebdab96f6cbbaa04d5d86fc46b49180a"
+    },
+    {
+      "path": "packages/storage/migrations/repository/009_active_support_candidates.sql",
+      "sha256": "35a708e895e009be17336eb748a53406148d031523ad741da8d272e04758e870"
+    },
+    {
+      "path": "packages/storage/migrations/repository/010_native_analysis_state.sql",
+      "sha256": "ebf26d1df42a47418bb06173e4783d3fdf3503ca0f6e0a0f8b6893ebbc711fa2"
+    },
+    {
+      "path": "packages/storage/migrations/repository/011_framework_syntax.sql",
+      "sha256": "b456ea6cbdf315cdc714b0e4435973e839837db02854acc7fb66f388066e715d"
+    }
+  ],
+  "tables": [
+    {
+      "name": "repository",
+      "columns": ["slot", "id", "root_path"]
+    },
+    {
+      "name": "repository_state",
+      "columns": ["repository_id", "indexed_revision_id", "indexed_content_fingerprint"]
+    },
+    {
+      "name": "revisions",
+      "columns": [
+        "id",
+        "repository_id",
+        "kind",
+        "content_fingerprint",
+        "commit_identity",
+        "base_revision_id",
+        "source_revision_id"
+      ]
+    },
+    {
+      "name": "source_files",
+      "columns": [
+        "revision_id",
+        "id",
+        "repository_id",
+        "path",
+        "content_fingerprint",
+        "role",
+        "provenance",
+        "content_kind",
+        "language_hint",
+        "sensitivity"
+      ]
+    },
+    {
+      "name": "provider_snapshots",
+      "columns": [
+        "id",
+        "repository_id",
+        "provider_id",
+        "provider_version",
+        "runtime_version",
+        "requested_revision_id",
+        "requested_revision_fingerprint",
+        "started_at",
+        "completed_at",
+        "outcome"
+      ]
+    },
+    {
+      "name": "provider_capabilities",
+      "columns": ["snapshot_id", "name", "support", "coverage"]
+    },
+    {
+      "name": "canonical_nodes",
+      "columns": [
+        "revision_id",
+        "id",
+        "repository_id",
+        "fact_key",
+        "kind",
+        "type_kind",
+        "symbol_kind",
+        "name",
+        "qualified_name",
+        "source_range_json",
+        "confidence_score",
+        "confidence_method",
+        "confidence_reasons_json"
+      ]
+    },
+    {
+      "name": "canonical_edges",
+      "columns": [
+        "revision_id",
+        "id",
+        "repository_id",
+        "fact_key",
+        "kind",
+        "source_node_id",
+        "target_state",
+        "resolution",
+        "target_node_id",
+        "source_range_json",
+        "confidence_score",
+        "confidence_method",
+        "confidence_reasons_json"
+      ]
+    },
+    {
+      "name": "unresolved_targets",
+      "columns": ["revision_id", "edge_id", "original_hint", "candidates_json"]
+    },
+    {
+      "name": "evidence",
+      "columns": [
+        "id",
+        "repository_id",
+        "revision_id",
+        "provider_snapshot_id",
+        "fact_type",
+        "provider_id",
+        "provider_fact_id",
+        "status"
+      ]
+    },
+    {
+      "name": "fact_evidence",
+      "columns": ["fact_type", "canonical_fact_id", "evidence_id"]
+    },
+    {
+      "name": "provider_fact_bindings",
+      "columns": [
+        "fact_type",
+        "provider_id",
+        "provider_fact_id",
+        "provider_snapshot_id",
+        "canonical_fact_id",
+        "evidence_id"
+      ]
+    },
+    {
+      "name": "analysis_coverage",
+      "columns": ["id", "provider_snapshot_id", "capability_name", "source_file_id", "status"]
+    },
+    {
+      "name": "analysis_diagnostics",
+      "columns": [
+        "provider_snapshot_id",
+        "ordinal",
+        "code",
+        "severity",
+        "message",
+        "source_range_json"
+      ]
+    },
+    {
+      "name": "active_support_candidates",
+      "columns": ["evidence_id", "fact_type", "canonical_fact_id", "candidate_json"]
+    },
+    {
+      "name": "native_analysis_state",
+      "columns": [
+        "repository_id",
+        "provider_id",
+        "provider_snapshot_id",
+        "revision_id",
+        "content_fingerprint",
+        "header_json"
+      ]
+    },
+    {
+      "name": "native_analysis_file",
+      "columns": [
+        "repository_id",
+        "provider_id",
+        "source_file_id",
+        "source_path",
+        "content_fingerprint",
+        "summary_json"
+      ]
+    },
+    {
+      "name": "activation_history",
+      "columns": [
+        "id",
+        "repository_id",
+        "revision_id",
+        "parent_id",
+        "manifest_digest",
+        "manifest_json"
+      ]
+    },
+    {
+      "name": "syntax_origins",
+      "columns": [
+        "id",
+        "repository_id",
+        "revision_id",
+        "origin_snapshot_id",
+        "origin_digest",
+        "origin_json"
+      ]
+    },
+    {
+      "name": "syntax_projections",
+      "columns": ["id", "repository_id", "origin_id", "projection_digest", "envelope_json"]
+    },
+    {
+      "name": "activation_syntax_members",
+      "columns": ["activation_id", "repository_id", "origin_id", "projection_id"]
+    },
+    {
+      "name": "active_history_pointer",
+      "columns": ["repository_id", "activation_id"]
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "kind": "INDEPENDENT_LITERAL_PROBES_UNEXECUTED",
+  "scope": "SOURCE_SHAPE_AND_RAW_SYNTAX_PROBES_ONLY",
+  "expectedOutcome": "PARTIAL",
+  "probes": [
+    {
+      "syntaxKind": "DECORATION",
+      "calleeName": "app.get",
+      "literalPath": "/holdout"
+    },
+    {
+      "codeKind": "FUNCTION",
+      "name": "endpoint_holdout"
+    },
+    {
+      "syntaxKind": "DECORATION",
+      "calleeName": "Route",
+      "literalPath": "/holdout",
+      "ownerName": "handle_holdout"
+    }
+  ],
+  "limitations": [
+    "NO_EXECUTED_OBSERVER_RESULT",
+    "NO_FULL_NORMALIZED_GRAPH_OR_MEMORY_QUALIFICATION"
+  ]
+}

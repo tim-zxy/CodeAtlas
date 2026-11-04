@@ -1,0 +1,63 @@
+{
+  "kind": "INDEPENDENT_SOURCE_LITERAL_REBOUND_LIBRARY_ORACLE",
+  "sourceSha256": "9e3012e6aaee68ca614e04a2aad0097292c86ef767f320fc61445527f910e69e",
+  "spans": {
+    "module": [
+      0,
+      105
+    ],
+    "import": [
+      20,
+      27
+    ],
+    "assignment": [
+      28,
+      43
+    ],
+    "invocation": [
+      34,
+      43
+    ],
+    "decoration": [
+      44,
+      64
+    ],
+    "argument": [
+      53,
+      63
+    ],
+    "function": [
+      65,
+      104
+    ],
+    "functionName": [
+      69,
+      85
+    ]
+  },
+  "counts": {
+    "nodes": 2,
+    "edges": 1,
+    "syntax": 5,
+    "coverage": 1,
+    "diagnostics": 0
+  },
+  "outcome": "PARTIAL",
+  "limitations": [
+    "SYNTHETIC_UNIT_REPO_AND_STAGE_CONTEXT",
+    "EXISTING_UNIT_BUDGETS_ONLY",
+    "NO_ACTUAL_NATIVE_CLI_OR_PROFILE_QUALIFICATION",
+    "NO_SYNTAX_CANONICAL_SUPPORT_OR_STORE_ACTIVATION"
+  ],
+  "caseClass": "python-static",
+  "expectedActivation": "PRESENT",
+  "dependencyDigests": {
+    "calibration/app.py": "9e3012e6aaee68ca614e04a2aad0097292c86ef767f320fc61445527f910e69e",
+    "calibration/request.json": "3c611dd26db3abe7659088354a38e98a19d702eaf61cfd5bab56c9f813bd6f47",
+    "calibration/context.json": "4a739127044466f4ea6c7ffaa2c0b9492c83083034c03ac67d57f214f55bc8b1",
+    "calibration/basis.json": "a6225613ce512b3569de2518503a147a9b05cc6e812c01fa8ecdd8c2ca379c99",
+    "calibration/events.jsonl": "327d37cf1798d6f652fb6745f014be663c74e2065ab09f411e2eae6afc2e0401",
+    "calibration/normalized.json": "63f1f0face77210618eb80aa9fd76bf1fd02d429445ef28f930b7a91fa175aa0",
+    "calibration/authoring.json": "6ce4539dc12a52326738e8eda9f186015e8df1214d7c1249012caffcf4983b00"
+  }
+}

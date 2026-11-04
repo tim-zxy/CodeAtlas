@@ -1,0 +1,4 @@
+{
+  "scenario": "readonly-unknown-inconsistent",
+  "base": "base-input.json"
+}

@@ -170,11 +170,10 @@ async function readStateRows(
 ): Promise<Record<string, Row[]>> {
   const id = EntityIdSchema.parse(repositoryId);
   await control.checkpoint();
-  if (
-    db.prepare('PRAGMA query_only').get()?.query_only !== 1 ||
-    db.prepare('PRAGMA user_version').get()?.user_version !== 10
-  )
-    invalid();
+  if (db.prepare('PRAGMA query_only').get()?.query_only !== 1) invalid();
+  const schemaVersion = db.prepare('PRAGMA user_version').get()?.user_version;
+  // R011..R013 add structures; this remains the legacy Code projection, not Syntax/Runtime evaluation.
+  if (schemaVersion !== 10 && schemaVersion !== 13) invalid();
   const owned = !db.isTransaction;
   if (owned) db.exec('BEGIN');
   let retainedBytes = 0;

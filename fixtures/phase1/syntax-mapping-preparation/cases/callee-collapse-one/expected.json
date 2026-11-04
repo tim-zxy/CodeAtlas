@@ -1,0 +1,90 @@
+{
+  "kind": "MAPPING_PROJECTION_EXPECTATION",
+  "semanticDisposition": "PROJECTABLE_WITHOUT_POLICY",
+  "projection": {
+    "repositoryId": "repo-fixture",
+    "revisionId": "rev-a",
+    "sourceFileId": "source-fixture",
+    "sourceFingerprint": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+    "sourceRange": {
+      "sourceFileId": "source-fixture",
+      "startLine": 1,
+      "startColumn": 0,
+      "endLine": 1,
+      "endColumn": 5
+    },
+    "syntaxKind": "INVOCATION",
+    "owner": {
+      "scope": "REPOSITORY",
+      "repositoryId": "repo-fixture",
+      "entity": {
+        "kind": "CODE_NODE",
+        "id": "node-owner",
+        "revisionId": "rev-a"
+      }
+    },
+    "payload": {
+      "callee": {
+        "state": "NON_RESOLVED",
+        "name": "p",
+        "target": null,
+        "candidates": [
+          {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo-fixture",
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "node-a",
+              "revisionId": "rev-a"
+            }
+          }
+        ]
+      },
+      "receiver": null,
+      "arguments": []
+    }
+  },
+  "requiredEntities": [
+    {
+      "kind": "SOURCE_FILE",
+      "id": "source-fixture",
+      "revisionId": "rev-a"
+    },
+    {
+      "kind": "CODE_NODE",
+      "id": "node-owner",
+      "revisionId": "rev-a"
+    },
+    {
+      "kind": "CODE_NODE",
+      "id": "node-a",
+      "revisionId": "rev-a"
+    }
+  ],
+  "keyMeaning": {
+    "owner": {
+      "kind": "CODE_NODE",
+      "id": "node-owner"
+    },
+    "payload": {
+      "callee": {
+        "state": "NON_RESOLVED",
+        "name": "p",
+        "target": null,
+        "candidates": [
+          {
+            "kind": "CODE_NODE",
+            "id": "node-a"
+          }
+        ]
+      },
+      "receiver": null,
+      "arguments": []
+    }
+  },
+  "admission": "BLOCKED_POLICY",
+  "canonicalEnvelope": null,
+  "keyCanonicalText": "{\"owner\":{\"id\":\"node-owner\",\"kind\":\"CODE_NODE\"},\"payload\":{\"arguments\":[],\"callee\":{\"candidates\":[{\"id\":\"node-a\",\"kind\":\"CODE_NODE\"}],\"name\":\"p\",\"state\":\"NON_RESOLVED\",\"target\":null},\"receiver\":null}}",
+  "payloadDigest": "0919b82daf69b5c433ef799370cb4893930d8fe6c6ca13c4ab8bc84953e712ea",
+  "syntaxKey": "syntax-key-v1:c86c728db01f61b1efb063248ae48124e1285e0e5e87a6bcf2aeec0e6e3a18f5"
+}

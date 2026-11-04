@@ -1,0 +1,4 @@
+{
+  "scenario": "legacy-writer-success",
+  "base": "base-input.json"
+}

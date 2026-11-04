@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "DECLARED_NODE_SQLITE_COMPONENT_ONLY",
+  "cases": [
+    {
+      "id": "legacy-writer-success",
+      "family": "STORE_CONTRACT",
+      "input": "cases/legacy-writer-success/input.json",
+      "expected": "cases/legacy-writer-success/expected.json",
+      "inputSha256": "9c88eda92452a652675d470a569ba8b64ce4028e2ade2afbff8c37375a0cd5c4",
+      "expectedSha256": "2a15c883fa6adb4760bd379cd920a3d357a97a138bf18f9abff52e5e19b9dc81",
+      "selectors": [
+        "R03 actual generic full commit invalidates captured history",
+        "R03 actual generic patch commit invalidates captured history",
+        "R03 actual Native full commit invalidates captured history",
+        "R03 actual Native patch commit invalidates captured history"
+      ]
+    },
+    {
+      "id": "legacy-writer-rollback",
+      "family": "STORE_CONTRACT",
+      "input": "cases/legacy-writer-rollback/input.json",
+      "expected": "cases/legacy-writer-rollback/expected.json",
+      "inputSha256": "48be544347b815e00a1054eac7525f0b5d19413c16cad1346cbf2bf28027d4b6",
+      "expectedSha256": "2a15c883fa6adb4760bd379cd920a3d357a97a138bf18f9abff52e5e19b9dc81",
+      "selectors": [
+        "R03 actual generic full rollback preserves captured history",
+        "R03 actual generic patch rollback preserves captured history",
+        "R03 actual Native full rollback preserves captured history",
+        "R03 actual Native patch rollback preserves captured history"
+      ]
+    }
+  ],
+  "implementation": "packages/storage/test/activation-history.test.mjs",
+  "context": "Existing independent H1/legacy validated writer fixtures, real AVAILABLE capture and complete all-persistent-table rollback image; no new product output golden.",
+  "notNativeRun": true
+}

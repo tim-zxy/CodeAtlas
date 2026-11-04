@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "p1-ir-contract-v1",
+  "category": "runtime-graph",
+  "phase": "1",
+  "languages": [],
+  "frameworks": [],
+  "capabilities": ["PHASE1_STRICT_IR"],
+  "inputs": {
+    "vectors": "inputs/vectors.json",
+    "declaredExecution": "declared-execution/inputs.json"
+  },
+  "expected": {
+    "contract": "expected/contract.json",
+    "declaredExecution": "declared-execution/expected.json"
+  },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

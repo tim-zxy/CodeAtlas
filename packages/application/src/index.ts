@@ -13,3 +13,45 @@ export * from './code-query-contract.js';
 export * from './code-query.js';
 export * from './index-command-contract.js';
 export * from './index-command.js';
+export * from './operation-policy.js';
+
+export { refreshRuntimeFacts } from './refresh-runtime-facts.js';
+export type {
+  RuntimeWorkflowRequest,
+  RuntimeRefreshPorts,
+  RuntimeInputIdentity,
+  CompleteRuntimeCandidate,
+} from './refresh-runtime-facts.js';
+export { refreshWorkspaceRuntime } from './refresh-workspace-runtime.js';
+export type {
+  WorkspaceRuntimeBatch,
+  WorkspaceRuntimeRefreshPorts,
+} from './refresh-workspace-runtime.js';
+export { traceRuntime } from './trace-runtime.js';
+
+export { deriveFrameworkRuntime } from './derive-framework-runtime.js';
+export type {
+  FrameworkRuntimeInputs,
+  FrameworkRuntimeCandidate,
+} from './derive-framework-runtime.js';
+
+export { deriveWorkspaceRuntime } from './derive-workspace-runtime.js';
+
+export { deriveFrameworkRuntimeV2 } from './derive-framework-runtime.js';
+export type {
+  FrameworkRuntimeInputsV2,
+  FrameworkRuntimeCandidateV2,
+  DerivedFrameworkRuntimeV2,
+} from './derive-framework-runtime.js';
+export { refreshRuntimeFactsV2 } from './refresh-runtime-facts.js';
+export type { CompleteRuntimeCandidateV2, RuntimeRefreshPortsV2 } from './refresh-runtime-facts.js';
+
+export { deriveWorkspaceRuntimeV2 } from './derive-workspace-runtime.js';
+
+export { refreshWorkspaceRuntimeV2 } from './refresh-workspace-runtime.js';
+export type {
+  WorkspaceRuntimeBatchV2,
+  WorkspaceRuntimeRefreshPortsV2,
+} from './refresh-workspace-runtime.js';
+export { deriveWorkspaceRuntimeV3 } from './derive-workspace-runtime.js';
+export type { WorkspacePreparationInputsV2 } from './derive-workspace-runtime.js';

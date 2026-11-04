@@ -8,6 +8,8 @@ import { preparedSourceRefresh } from './native-refresh-source-fixture.mjs';
 import { requestBytes } from '../../../providers/test/helpers/native-refresh-v3-corpus.mjs';
 import { NATIVE_CLIENT_HARD_LIMITS } from '../../../providers/dist/index.js';
 
+import { r5PreparationScope } from './native-refresh-r5-preparation-scope.mjs';
+
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const id = 'source-dense-remove-boundary';
 function transition(count) {
@@ -61,8 +63,10 @@ export async function preparedDenseRemoveBoundary(t, onReadDiagnostic, replayRoo
   // The adjacent predecessor is a derived source-family seed, not a new cap.
   // Prove it fits this modified-file request before advancing one field at a time.
   const lowerSeed = pair.accepted.memberCount - 1;
+  const scope = r5PreparationScope(id, dContext);
   function* counts() {
-    for (let count = lowerSeed; ; count++) yield count;
+    for (let count = scope?.accepted ?? lowerSeed; scope === null || count <= scope.next; count++)
+      yield count;
   }
   const boundFrame = (template, summary, count) =>
     frame(

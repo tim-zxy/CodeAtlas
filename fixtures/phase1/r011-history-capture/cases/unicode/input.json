@@ -1,0 +1,199 @@
+{
+  "repositoryId": "capture-repo",
+  "tables": {
+    "repository": [
+      {
+        "slot": 1,
+        "id": "capture-repo",
+        "root_path": "C:/capture-fixture"
+      }
+    ],
+    "repository_state": [
+      {
+        "repository_id": "capture-repo",
+        "indexed_revision_id": "capture-worktree",
+        "indexed_content_fingerprint": "capture-fingerprint"
+      }
+    ],
+    "revisions": [
+      {
+        "id": "capture-worktree",
+        "repository_id": "capture-repo",
+        "kind": "WORKTREE",
+        "content_fingerprint": "capture-fingerprint",
+        "commit_identity": null,
+        "base_revision_id": null,
+        "source_revision_id": null
+      }
+    ],
+    "source_files": [
+      {
+        "revision_id": "capture-worktree",
+        "id": "source:one",
+        "repository_id": "capture-repo",
+        "path": "src/observation.txt",
+        "content_fingerprint": "source-fingerprint",
+        "role": "SOURCE",
+        "provenance": "AUTHORED",
+        "content_kind": "TEXT",
+        "language_hint": null,
+        "sensitivity": "PUBLIC"
+      }
+    ],
+    "provider_snapshots": [
+      {
+        "id": "snapshot:alpha",
+        "repository_id": "capture-repo",
+        "provider_id": "alpha",
+        "provider_version": "fixture-v1",
+        "runtime_version": "fixture-v1",
+        "requested_revision_id": "capture-worktree",
+        "requested_revision_fingerprint": "capture-fingerprint",
+        "started_at": 1792713600000,
+        "completed_at": 1792713601000,
+        "outcome": "SUCCEEDED"
+      }
+    ],
+    "provider_capabilities": [
+      {
+        "snapshot_id": "snapshot:alpha",
+        "name": "SYMBOL",
+        "support": "SUPPORTED",
+        "coverage": "COMPLETE"
+      },
+      {
+        "snapshot_id": "snapshot:alpha",
+        "name": "CALL",
+        "support": "SUPPORTED",
+        "coverage": "COMPLETE"
+      }
+    ],
+    "canonical_nodes": [
+      {
+        "revision_id": "capture-worktree",
+        "id": "node:𐀀",
+        "repository_id": "capture-repo",
+        "fact_key": "key:node:𐀀",
+        "kind": "SYMBOL",
+        "type_kind": null,
+        "symbol_kind": "FUNCTION",
+        "name": "astral \"quote\"",
+        "qualified_name": "fixture.node:𐀀",
+        "source_range_json": "{\"sourceFileId\":\"source:one\",\"startLine\":1,\"startColumn\":0,\"endLine\":1,\"endColumn\":1}",
+        "confidence_score": 1,
+        "confidence_method": "fixture-observation",
+        "confidence_reasons_json": "[]"
+      },
+      {
+        "revision_id": "capture-worktree",
+        "id": "node:",
+        "repository_id": "capture-repo",
+        "fact_key": "key:node:",
+        "kind": "SYMBOL",
+        "type_kind": null,
+        "symbol_kind": "FUNCTION",
+        "name": "private é\\line\nend",
+        "qualified_name": "fixture.node:",
+        "source_range_json": "{\"sourceFileId\":\"source:one\",\"startLine\":1,\"startColumn\":0,\"endLine\":1,\"endColumn\":1}",
+        "confidence_score": 1,
+        "confidence_method": "fixture-observation",
+        "confidence_reasons_json": "[]"
+      }
+    ],
+    "canonical_edges": [],
+    "unresolved_targets": [],
+    "evidence": [
+      {
+        "id": "provider-evidence-v1:ca2ee8be63d78a5d209491a9d57c34c7adf593bd8edf049f1038978b1e864858",
+        "repository_id": "capture-repo",
+        "revision_id": "capture-worktree",
+        "provider_snapshot_id": "snapshot:alpha",
+        "fact_type": "NODE",
+        "provider_id": "alpha",
+        "provider_fact_id": "provider:node:",
+        "status": "ACTIVE"
+      },
+      {
+        "id": "provider-evidence-v1:c554fe069e6e56109d7e17755af65949418550d9790b35eb17c8942819cea452",
+        "repository_id": "capture-repo",
+        "revision_id": "capture-worktree",
+        "provider_snapshot_id": "snapshot:alpha",
+        "fact_type": "NODE",
+        "provider_id": "alpha",
+        "provider_fact_id": "provider:node:𐀀",
+        "status": "ACTIVE"
+      }
+    ],
+    "fact_evidence": [
+      {
+        "fact_type": "NODE",
+        "canonical_fact_id": "node:",
+        "evidence_id": "provider-evidence-v1:ca2ee8be63d78a5d209491a9d57c34c7adf593bd8edf049f1038978b1e864858"
+      },
+      {
+        "fact_type": "NODE",
+        "canonical_fact_id": "node:𐀀",
+        "evidence_id": "provider-evidence-v1:c554fe069e6e56109d7e17755af65949418550d9790b35eb17c8942819cea452"
+      }
+    ],
+    "provider_fact_bindings": [
+      {
+        "fact_type": "NODE",
+        "provider_id": "alpha",
+        "provider_fact_id": "provider:node:",
+        "provider_snapshot_id": "snapshot:alpha",
+        "canonical_fact_id": "node:",
+        "evidence_id": "provider-evidence-v1:ca2ee8be63d78a5d209491a9d57c34c7adf593bd8edf049f1038978b1e864858"
+      },
+      {
+        "fact_type": "NODE",
+        "provider_id": "alpha",
+        "provider_fact_id": "provider:node:𐀀",
+        "provider_snapshot_id": "snapshot:alpha",
+        "canonical_fact_id": "node:𐀀",
+        "evidence_id": "provider-evidence-v1:c554fe069e6e56109d7e17755af65949418550d9790b35eb17c8942819cea452"
+      }
+    ],
+    "active_support_candidates": [
+      {
+        "evidence_id": "provider-evidence-v1:ca2ee8be63d78a5d209491a9d57c34c7adf593bd8edf049f1038978b1e864858",
+        "fact_type": "NODE",
+        "canonical_fact_id": "node:",
+        "candidate_json": "{\"confidence\":{\"method\":\"fixture-observation\",\"reasons\":[],\"score\":1},\"factKey\":\"key:node:\",\"id\":\"node:\",\"kind\":\"SYMBOL\",\"name\":\"private é\\\\line\\nend\",\"qualifiedName\":\"fixture.node:\",\"repositoryId\":\"capture-repo\",\"revisionId\":\"capture-worktree\",\"sourceRange\":{\"endColumn\":1,\"endLine\":1,\"sourceFileId\":\"source:one\",\"startColumn\":0,\"startLine\":1},\"symbolKind\":\"FUNCTION\"}"
+      },
+      {
+        "evidence_id": "provider-evidence-v1:c554fe069e6e56109d7e17755af65949418550d9790b35eb17c8942819cea452",
+        "fact_type": "NODE",
+        "canonical_fact_id": "node:𐀀",
+        "candidate_json": "{\"confidence\":{\"method\":\"fixture-observation\",\"reasons\":[],\"score\":1},\"factKey\":\"key:node:𐀀\",\"id\":\"node:𐀀\",\"kind\":\"SYMBOL\",\"name\":\"astral \\\"quote\\\"\",\"qualifiedName\":\"fixture.node:𐀀\",\"repositoryId\":\"capture-repo\",\"revisionId\":\"capture-worktree\",\"sourceRange\":{\"endColumn\":1,\"endLine\":1,\"sourceFileId\":\"source:one\",\"startColumn\":0,\"startLine\":1},\"symbolKind\":\"FUNCTION\"}"
+      }
+    ],
+    "analysis_coverage": [
+      {
+        "provider_snapshot_id": "snapshot:alpha",
+        "capability_name": "SYMBOL",
+        "source_file_id": "source:one",
+        "status": "COMPLETE"
+      }
+    ],
+    "activation_history": [
+      {
+        "id": "activation:a82f1409b9c8a2f120490202a231ea2e6ac09cdea83ef57ff4765c9d4e3b74d9",
+        "manifest_digest": "a82f1409b9c8a2f120490202a231ea2e6ac09cdea83ef57ff4765c9d4e3b74d9",
+        "manifest_json": "{\"codeIdentity\":\"5bad73b08fe370c9c8447c1732377d6faaecaa6a4a3515c0305dd5e8ff0d7b88\",\"observation\":null,\"originRegistryDigest\":\"2b882c27d543d092c83322f5f48282e9f52fdf4c471a15531098b7a66d0a1f30\",\"parent\":null,\"schemaVersion\":1,\"sourceIdentity\":\"ce3ce67e19cc5d618d097d195c3b1ab54994212f92bc71eed784a2a23917124e\",\"state\":{\"basis\":{\"codeActivationDigest\":\"5bad73b08fe370c9c8447c1732377d6faaecaa6a4a3515c0305dd5e8ff0d7b88\",\"contentFingerprint\":\"capture-fingerprint\",\"repositoryId\":\"capture-repo\",\"revisionId\":\"capture-worktree\"},\"contracts\":[{\"contract\":\"fixture-v1\",\"extractor\":\"fixture-v1\",\"normalizer\":\"fixture-v1\",\"policy\":\"fixture-v1\",\"providerId\":\"alpha\"}],\"coverage\":[{\"coverage\":\"COMPLETE\",\"facet\":\"SYMBOL\",\"originSnapshotId\":\"snapshot:alpha\",\"unitId\":\"unit:alpha\"}],\"edges\":[],\"inventory\":[{\"classification\":{\"contentKind\":\"TEXT\",\"provenance\":\"AUTHORED\",\"role\":\"SOURCE\"},\"contentFingerprint\":\"source-fingerprint\",\"id\":\"source:one\",\"languageHint\":null,\"path\":\"src/observation.txt\",\"repositoryId\":\"capture-repo\",\"revisionId\":\"capture-worktree\",\"sensitivity\":\"PUBLIC\"}],\"nodes\":[{\"confidence\":{\"method\":\"fixture-observation\",\"reasons\":[],\"score\":1},\"factKey\":\"key:node:𐀀\",\"id\":\"node:𐀀\",\"kind\":\"SYMBOL\",\"name\":\"astral \\\"quote\\\"\",\"qualifiedName\":\"fixture.node:𐀀\",\"repositoryId\":\"capture-repo\",\"revisionId\":\"capture-worktree\",\"sourceRange\":{\"endColumn\":1,\"endLine\":1,\"sourceFileId\":\"source:one\",\"startColumn\":0,\"startLine\":1},\"symbolKind\":\"FUNCTION\"},{\"confidence\":{\"method\":\"fixture-observation\",\"reasons\":[],\"score\":1},\"factKey\":\"key:node:\",\"id\":\"node:\",\"kind\":\"SYMBOL\",\"name\":\"private é\\\\line\\nend\",\"qualifiedName\":\"fixture.node:\",\"repositoryId\":\"capture-repo\",\"revisionId\":\"capture-worktree\",\"sourceRange\":{\"endColumn\":1,\"endLine\":1,\"sourceFileId\":\"source:one\",\"startColumn\":0,\"startLine\":1},\"symbolKind\":\"FUNCTION\"}],\"repositoryLocatorDigest\":\"00f7217f0d1a535342bd3dad39a25b2c1d2ae98d69476a4e575f4406bc214595\",\"snapshots\":[{\"capabilities\":[{\"coverage\":\"COMPLETE\",\"name\":\"SYMBOL\",\"support\":\"SUPPORTED\"},{\"coverage\":\"COMPLETE\",\"name\":\"CALL\",\"support\":\"SUPPORTED\"}],\"completedAt\":\"2026-10-23T00:00:01.000Z\",\"diagnostics\":[],\"id\":\"snapshot:alpha\",\"outcome\":\"SUCCEEDED\",\"providerId\":\"alpha\",\"providerVersion\":\"fixture-v1\",\"repositoryId\":\"capture-repo\",\"requestedRevisionFingerprint\":\"capture-fingerprint\",\"requestedRevisionId\":\"capture-worktree\",\"runtimeVersion\":\"fixture-v1\",\"startedAt\":\"2026-10-23T00:00:00.000Z\"}],\"supports\":[{\"binding\":{\"canonicalFact\":{\"factType\":\"NODE\",\"id\":\"node:𐀀\"},\"evidenceId\":\"provider-evidence-v1:c554fe069e6e56109d7e17755af65949418550d9790b35eb17c8942819cea452\",\"providerFact\":{\"factType\":\"NODE\",\"providerFactId\":\"provider:node:𐀀\",\"providerId\":\"alpha\"},\"providerSnapshotId\":\"snapshot:alpha\"},\"canonical\":{\"confidence\":{\"method\":\"fixture-observation\",\"reasons\":[],\"score\":1},\"factKey\":\"key:node:𐀀\",\"id\":\"node:𐀀\",\"kind\":\"SYMBOL\",\"name\":\"astral \\\"quote\\\"\",\"qualifiedName\":\"fixture.node:𐀀\",\"repositoryId\":\"capture-repo\",\"revisionId\":\"capture-worktree\",\"sourceRange\":{\"endColumn\":1,\"endLine\":1,\"sourceFileId\":\"source:one\",\"startColumn\":0,\"startLine\":1},\"symbolKind\":\"FUNCTION\"},\"dependencyUnitIds\":[\"unit:alpha\"],\"evidence\":{\"id\":\"provider-evidence-v1:c554fe069e6e56109d7e17755af65949418550d9790b35eb17c8942819cea452\",\"providerFact\":{\"factType\":\"NODE\",\"providerFactId\":\"provider:node:𐀀\",\"providerId\":\"alpha\"},\"providerSnapshotId\":\"snapshot:alpha\",\"repositoryId\":\"capture-repo\",\"revisionId\":\"capture-worktree\",\"status\":\"ACTIVE\"},\"factEvidence\":{\"evidenceId\":\"provider-evidence-v1:c554fe069e6e56109d7e17755af65949418550d9790b35eb17c8942819cea452\",\"fact\":{\"factType\":\"NODE\",\"id\":\"node:𐀀\"}},\"factType\":\"NODE\",\"valueDigest\":\"ad314dce146978a31291fc46ed2bb780fb573f5c8f72f0189869a591bf5b7c53\"},{\"binding\":{\"canonicalFact\":{\"factType\":\"NODE\",\"id\":\"node:\"},\"evidenceId\":\"provider-evidence-v1:ca2ee8be63d78a5d209491a9d57c34c7adf593bd8edf049f1038978b1e864858\",\"providerFact\":{\"factType\":\"NODE\",\"providerFactId\":\"provider:node:\",\"providerId\":\"alpha\"},\"providerSnapshotId\":\"snapshot:alpha\"},\"canonical\":{\"confidence\":{\"method\":\"fixture-observation\",\"reasons\":[],\"score\":1},\"factKey\":\"key:node:\",\"id\":\"node:\",\"kind\":\"SYMBOL\",\"name\":\"private é\\\\line\\nend\",\"qualifiedName\":\"fixture.node:\",\"repositoryId\":\"capture-repo\",\"revisionId\":\"capture-worktree\",\"sourceRange\":{\"endColumn\":1,\"endLine\":1,\"sourceFileId\":\"source:one\",\"startColumn\":0,\"startLine\":1},\"symbolKind\":\"FUNCTION\"},\"dependencyUnitIds\":[\"unit:alpha\"],\"evidence\":{\"id\":\"provider-evidence-v1:ca2ee8be63d78a5d209491a9d57c34c7adf593bd8edf049f1038978b1e864858\",\"providerFact\":{\"factType\":\"NODE\",\"providerFactId\":\"provider:node:\",\"providerId\":\"alpha\"},\"providerSnapshotId\":\"snapshot:alpha\",\"repositoryId\":\"capture-repo\",\"revisionId\":\"capture-worktree\",\"status\":\"ACTIVE\"},\"factEvidence\":{\"evidenceId\":\"provider-evidence-v1:ca2ee8be63d78a5d209491a9d57c34c7adf593bd8edf049f1038978b1e864858\",\"fact\":{\"factType\":\"NODE\",\"id\":\"node:\"}},\"factType\":\"NODE\",\"valueDigest\":\"4952695e0ff8e0419645c8412c8c9504759af936ae8b0d661582c13a0bc1e93b\"}],\"syntaxOrigins\":[],\"units\":[{\"id\":\"unit:alpha\",\"kind\":\"PROVIDER_SCOPE\",\"providerId\":\"alpha\",\"sourceFileIds\":[\"source:one\"]}]},\"syntaxMembers\":[],\"transitions\":null}",
+        "repository_id": "capture-repo",
+        "revision_id": "capture-worktree",
+        "parent_id": null
+      }
+    ],
+    "syntax_origins": [],
+    "syntax_projections": [],
+    "activation_syntax_members": [],
+    "active_history_pointer": [
+      {
+        "repository_id": "capture-repo",
+        "activation_id": "activation:a82f1409b9c8a2f120490202a231ea2e6ac09cdea83ef57ff4765c9d4e3b74d9"
+      }
+    ]
+  }
+}

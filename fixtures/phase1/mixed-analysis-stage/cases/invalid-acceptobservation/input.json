@@ -1,0 +1,5 @@
+{
+  "state": "INVALID",
+  "method": "acceptObservation",
+  "base": "base-input.json"
+}

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "p1-runtime-storage-v1",
+  "category": "runtime-graph",
+  "phase": "1",
+  "languages": [],
+  "frameworks": [],
+  "capabilities": ["RUNTIME_FACT_SET", "WORKSPACE_EXECUTION"],
+  "inputs": {
+    "cases": "cases.json"
+  },
+  "expected": {
+    "schema": "expected.json"
+  },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

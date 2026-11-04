@@ -1,0 +1,4 @@
+{
+  "scenario": "foreign-unobserved",
+  "base": "base-input.json"
+}

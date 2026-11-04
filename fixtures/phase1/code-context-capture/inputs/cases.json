@@ -1,0 +1,2929 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "id": "no-source-not-indexed",
+      "repository": {
+        "id": "capture-repo",
+        "rootPath": "C:/capture-fixture"
+      },
+      "revision": null,
+      "files": [],
+      "runs": [],
+      "activeRunIndexes": [],
+      "canonicalNodes": [],
+      "canonicalEdges": []
+    },
+    {
+      "id": "source-only",
+      "repository": {
+        "id": "capture-repo",
+        "rootPath": "C:/capture-fixture"
+      },
+      "revision": {
+        "id": "capture-worktree",
+        "repositoryId": "capture-repo",
+        "kind": "WORKTREE",
+        "contentFingerprint": "capture-fingerprint",
+        "baseRevisionId": null
+      },
+      "files": [
+        {
+          "id": "source:one",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "path": "src/observation.txt",
+          "contentFingerprint": "source-fingerprint",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": null,
+          "sensitivity": "PUBLIC"
+        }
+      ],
+      "runs": [],
+      "activeRunIndexes": [],
+      "canonicalNodes": [],
+      "canonicalEdges": []
+    },
+    {
+      "id": "complete",
+      "repository": {
+        "id": "capture-repo",
+        "rootPath": "C:/capture-fixture"
+      },
+      "revision": {
+        "id": "capture-worktree",
+        "repositoryId": "capture-repo",
+        "kind": "WORKTREE",
+        "contentFingerprint": "capture-fingerprint",
+        "baseRevisionId": null
+      },
+      "files": [
+        {
+          "id": "source:one",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "path": "src/observation.txt",
+          "contentFingerprint": "source-fingerprint",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": null,
+          "sensitivity": "PUBLIC"
+        }
+      ],
+      "runs": [
+        {
+          "snapshot": {
+            "id": "snapshot:alpha",
+            "repositoryId": "capture-repo",
+            "providerId": "alpha",
+            "providerVersion": "fixture-v1",
+            "runtimeVersion": "fixture-v1",
+            "requestedRevisionId": "capture-worktree",
+            "requestedRevisionFingerprint": "capture-fingerprint",
+            "startedAt": "2026-10-23T00:00:00.000Z",
+            "completedAt": "2026-10-23T00:00:01.000Z",
+            "capabilities": [
+              {
+                "name": "SYMBOL",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              },
+              {
+                "name": "CALL",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              }
+            ],
+            "diagnostics": [],
+            "outcome": "SUCCEEDED"
+          },
+          "nodes": [
+            {
+              "provider": {
+                "factType": "NODE",
+                "providerId": "alpha",
+                "providerFactId": "provider:node:a"
+              },
+              "canonical": {
+                "id": "node:a",
+                "factKey": "key:node:a",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "SYMBOL",
+                "symbolKind": "FUNCTION",
+                "name": "alpha",
+                "qualifiedName": "fixture.node:a",
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            },
+            {
+              "provider": {
+                "factType": "NODE",
+                "providerId": "alpha",
+                "providerFactId": "provider:node:b"
+              },
+              "canonical": {
+                "id": "node:b",
+                "factKey": "key:node:b",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "SYMBOL",
+                "symbolKind": "FUNCTION",
+                "name": "beta",
+                "qualifiedName": "fixture.node:b",
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            }
+          ],
+          "edges": [
+            {
+              "provider": {
+                "factType": "EDGE",
+                "providerId": "alpha",
+                "providerFactId": "provider-edge:edge:call"
+              },
+              "canonical": {
+                "id": "edge:call",
+                "factKey": "key:call",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "CALL",
+                "source": {
+                  "factType": "NODE",
+                  "id": "node:a"
+                },
+                "target": {
+                  "state": "RESOLVED",
+                  "resolution": "EXACT",
+                  "target": {
+                    "factType": "NODE",
+                    "id": "node:b"
+                  }
+                },
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            }
+          ],
+          "coverage": [
+            {
+              "capability": "SYMBOL",
+              "sourceFileId": "source:one",
+              "coverage": "COMPLETE"
+            }
+          ]
+        }
+      ],
+      "activeRunIndexes": [0],
+      "canonicalNodes": [
+        {
+          "id": "node:a",
+          "factKey": "key:node:a",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "kind": "SYMBOL",
+          "symbolKind": "FUNCTION",
+          "name": "alpha",
+          "qualifiedName": "fixture.node:a",
+          "sourceRange": {
+            "sourceFileId": "source:one",
+            "startLine": 1,
+            "startColumn": 0,
+            "endLine": 1,
+            "endColumn": 1
+          },
+          "confidence": {
+            "score": 1,
+            "method": "fixture-observation",
+            "reasons": []
+          }
+        },
+        {
+          "id": "node:b",
+          "factKey": "key:node:b",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "kind": "SYMBOL",
+          "symbolKind": "FUNCTION",
+          "name": "beta",
+          "qualifiedName": "fixture.node:b",
+          "sourceRange": {
+            "sourceFileId": "source:one",
+            "startLine": 1,
+            "startColumn": 0,
+            "endLine": 1,
+            "endColumn": 1
+          },
+          "confidence": {
+            "score": 1,
+            "method": "fixture-observation",
+            "reasons": []
+          }
+        }
+      ],
+      "canonicalEdges": [
+        {
+          "id": "edge:call",
+          "factKey": "key:call",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "kind": "CALL",
+          "source": {
+            "factType": "NODE",
+            "id": "node:a"
+          },
+          "target": {
+            "state": "RESOLVED",
+            "resolution": "EXACT",
+            "target": {
+              "factType": "NODE",
+              "id": "node:b"
+            }
+          },
+          "sourceRange": {
+            "sourceFileId": "source:one",
+            "startLine": 1,
+            "startColumn": 0,
+            "endLine": 1,
+            "endColumn": 1
+          },
+          "confidence": {
+            "score": 1,
+            "method": "fixture-observation",
+            "reasons": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "same-header-losing-support-A",
+      "repository": {
+        "id": "capture-repo",
+        "rootPath": "C:/capture-fixture"
+      },
+      "revision": {
+        "id": "capture-worktree",
+        "repositoryId": "capture-repo",
+        "kind": "WORKTREE",
+        "contentFingerprint": "capture-fingerprint",
+        "baseRevisionId": null
+      },
+      "files": [
+        {
+          "id": "source:one",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "path": "src/observation.txt",
+          "contentFingerprint": "source-fingerprint",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": null,
+          "sensitivity": "PUBLIC"
+        }
+      ],
+      "runs": [
+        {
+          "snapshot": {
+            "id": "snapshot:alpha",
+            "repositoryId": "capture-repo",
+            "providerId": "alpha",
+            "providerVersion": "fixture-v1",
+            "runtimeVersion": "fixture-v1",
+            "requestedRevisionId": "capture-worktree",
+            "requestedRevisionFingerprint": "capture-fingerprint",
+            "startedAt": "2026-10-23T00:00:00.000Z",
+            "completedAt": "2026-10-23T00:00:01.000Z",
+            "capabilities": [
+              {
+                "name": "SYMBOL",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              },
+              {
+                "name": "CALL",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              }
+            ],
+            "diagnostics": [],
+            "outcome": "SUCCEEDED"
+          },
+          "nodes": [
+            {
+              "provider": {
+                "factType": "NODE",
+                "providerId": "alpha",
+                "providerFactId": "provider:node:a"
+              },
+              "canonical": {
+                "id": "node:a",
+                "factKey": "key:node:a",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "SYMBOL",
+                "symbolKind": "FUNCTION",
+                "name": "alpha",
+                "qualifiedName": "fixture.node:a",
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            },
+            {
+              "provider": {
+                "factType": "NODE",
+                "providerId": "alpha",
+                "providerFactId": "provider:node:b"
+              },
+              "canonical": {
+                "id": "node:b",
+                "factKey": "key:node:b",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "SYMBOL",
+                "symbolKind": "FUNCTION",
+                "name": "beta",
+                "qualifiedName": "fixture.node:b",
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            }
+          ],
+          "edges": [
+            {
+              "provider": {
+                "factType": "EDGE",
+                "providerId": "alpha",
+                "providerFactId": "provider-edge:edge:call"
+              },
+              "canonical": {
+                "id": "edge:call",
+                "factKey": "key:call",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "CALL",
+                "source": {
+                  "factType": "NODE",
+                  "id": "node:a"
+                },
+                "target": {
+                  "state": "RESOLVED",
+                  "resolution": "EXACT",
+                  "target": {
+                    "factType": "NODE",
+                    "id": "node:b"
+                  }
+                },
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            }
+          ],
+          "coverage": [
+            {
+              "capability": "SYMBOL",
+              "sourceFileId": "source:one",
+              "coverage": "COMPLETE"
+            }
+          ]
+        },
+        {
+          "snapshot": {
+            "id": "snapshot:beta",
+            "repositoryId": "capture-repo",
+            "providerId": "beta",
+            "providerVersion": "fixture-v1",
+            "runtimeVersion": "fixture-v1",
+            "requestedRevisionId": "capture-worktree",
+            "requestedRevisionFingerprint": "capture-fingerprint",
+            "startedAt": "2026-10-23T00:00:00.000Z",
+            "completedAt": "2026-10-23T00:00:01.000Z",
+            "capabilities": [
+              {
+                "name": "SYMBOL",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              },
+              {
+                "name": "CALL",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              }
+            ],
+            "diagnostics": [],
+            "outcome": "SUCCEEDED"
+          },
+          "nodes": [
+            {
+              "provider": {
+                "factType": "NODE",
+                "providerId": "beta",
+                "providerFactId": "provider:node:a"
+              },
+              "canonical": {
+                "id": "node:a",
+                "factKey": "key:node:a",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "SYMBOL",
+                "symbolKind": "FUNCTION",
+                "name": "losing-A",
+                "qualifiedName": "fixture.node:a",
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            },
+            {
+              "provider": {
+                "factType": "NODE",
+                "providerId": "beta",
+                "providerFactId": "provider:node:b"
+              },
+              "canonical": {
+                "id": "node:b",
+                "factKey": "key:node:b",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "SYMBOL",
+                "symbolKind": "FUNCTION",
+                "name": "beta",
+                "qualifiedName": "fixture.node:b",
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            }
+          ],
+          "edges": [
+            {
+              "provider": {
+                "factType": "EDGE",
+                "providerId": "beta",
+                "providerFactId": "provider-edge:edge:call"
+              },
+              "canonical": {
+                "id": "edge:call",
+                "factKey": "key:call",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "CALL",
+                "source": {
+                  "factType": "NODE",
+                  "id": "node:a"
+                },
+                "target": {
+                  "state": "RESOLVED",
+                  "resolution": "EXACT",
+                  "target": {
+                    "factType": "NODE",
+                    "id": "node:b"
+                  }
+                },
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            }
+          ],
+          "coverage": [
+            {
+              "capability": "SYMBOL",
+              "sourceFileId": "source:one",
+              "coverage": "COMPLETE"
+            }
+          ]
+        }
+      ],
+      "activeRunIndexes": [0, 1],
+      "canonicalNodes": [
+        {
+          "id": "node:a",
+          "factKey": "key:node:a",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "kind": "SYMBOL",
+          "symbolKind": "FUNCTION",
+          "name": "alpha",
+          "qualifiedName": "fixture.node:a",
+          "sourceRange": {
+            "sourceFileId": "source:one",
+            "startLine": 1,
+            "startColumn": 0,
+            "endLine": 1,
+            "endColumn": 1
+          },
+          "confidence": {
+            "score": 1,
+            "method": "fact-merger-min-v1",
+            "reasons": ["minimum active support score"]
+          }
+        },
+        {
+          "id": "node:b",
+          "factKey": "key:node:b",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "kind": "SYMBOL",
+          "symbolKind": "FUNCTION",
+          "name": "beta",
+          "qualifiedName": "fixture.node:b",
+          "sourceRange": {
+            "sourceFileId": "source:one",
+            "startLine": 1,
+            "startColumn": 0,
+            "endLine": 1,
+            "endColumn": 1
+          },
+          "confidence": {
+            "score": 1,
+            "method": "fact-merger-min-v1",
+            "reasons": ["minimum active support score"]
+          }
+        }
+      ],
+      "canonicalEdges": [
+        {
+          "id": "edge:call",
+          "factKey": "key:call",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "kind": "CALL",
+          "source": {
+            "factType": "NODE",
+            "id": "node:a"
+          },
+          "target": {
+            "state": "RESOLVED",
+            "resolution": "EXACT",
+            "target": {
+              "factType": "NODE",
+              "id": "node:b"
+            }
+          },
+          "sourceRange": {
+            "sourceFileId": "source:one",
+            "startLine": 1,
+            "startColumn": 0,
+            "endLine": 1,
+            "endColumn": 1
+          },
+          "confidence": {
+            "score": 1,
+            "method": "fact-merger-min-v1",
+            "reasons": ["minimum active support score"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "same-header-losing-support-B",
+      "repository": {
+        "id": "capture-repo",
+        "rootPath": "C:/capture-fixture"
+      },
+      "revision": {
+        "id": "capture-worktree",
+        "repositoryId": "capture-repo",
+        "kind": "WORKTREE",
+        "contentFingerprint": "capture-fingerprint",
+        "baseRevisionId": null
+      },
+      "files": [
+        {
+          "id": "source:one",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "path": "src/observation.txt",
+          "contentFingerprint": "source-fingerprint",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": null,
+          "sensitivity": "PUBLIC"
+        }
+      ],
+      "runs": [
+        {
+          "snapshot": {
+            "id": "snapshot:alpha",
+            "repositoryId": "capture-repo",
+            "providerId": "alpha",
+            "providerVersion": "fixture-v1",
+            "runtimeVersion": "fixture-v1",
+            "requestedRevisionId": "capture-worktree",
+            "requestedRevisionFingerprint": "capture-fingerprint",
+            "startedAt": "2026-10-23T00:00:00.000Z",
+            "completedAt": "2026-10-23T00:00:01.000Z",
+            "capabilities": [
+              {
+                "name": "SYMBOL",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              },
+              {
+                "name": "CALL",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              }
+            ],
+            "diagnostics": [],
+            "outcome": "SUCCEEDED"
+          },
+          "nodes": [
+            {
+              "provider": {
+                "factType": "NODE",
+                "providerId": "alpha",
+                "providerFactId": "provider:node:a"
+              },
+              "canonical": {
+                "id": "node:a",
+                "factKey": "key:node:a",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "SYMBOL",
+                "symbolKind": "FUNCTION",
+                "name": "alpha",
+                "qualifiedName": "fixture.node:a",
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            },
+            {
+              "provider": {
+                "factType": "NODE",
+                "providerId": "alpha",
+                "providerFactId": "provider:node:b"
+              },
+              "canonical": {
+                "id": "node:b",
+                "factKey": "key:node:b",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "SYMBOL",
+                "symbolKind": "FUNCTION",
+                "name": "beta",
+                "qualifiedName": "fixture.node:b",
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            }
+          ],
+          "edges": [
+            {
+              "provider": {
+                "factType": "EDGE",
+                "providerId": "alpha",
+                "providerFactId": "provider-edge:edge:call"
+              },
+              "canonical": {
+                "id": "edge:call",
+                "factKey": "key:call",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "CALL",
+                "source": {
+                  "factType": "NODE",
+                  "id": "node:a"
+                },
+                "target": {
+                  "state": "RESOLVED",
+                  "resolution": "EXACT",
+                  "target": {
+                    "factType": "NODE",
+                    "id": "node:b"
+                  }
+                },
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            }
+          ],
+          "coverage": [
+            {
+              "capability": "SYMBOL",
+              "sourceFileId": "source:one",
+              "coverage": "COMPLETE"
+            }
+          ]
+        },
+        {
+          "snapshot": {
+            "id": "snapshot:beta",
+            "repositoryId": "capture-repo",
+            "providerId": "beta",
+            "providerVersion": "fixture-v1",
+            "runtimeVersion": "fixture-v1",
+            "requestedRevisionId": "capture-worktree",
+            "requestedRevisionFingerprint": "capture-fingerprint",
+            "startedAt": "2026-10-23T00:00:00.000Z",
+            "completedAt": "2026-10-23T00:00:01.000Z",
+            "capabilities": [
+              {
+                "name": "SYMBOL",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              },
+              {
+                "name": "CALL",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              }
+            ],
+            "diagnostics": [],
+            "outcome": "SUCCEEDED"
+          },
+          "nodes": [
+            {
+              "provider": {
+                "factType": "NODE",
+                "providerId": "beta",
+                "providerFactId": "provider:node:a"
+              },
+              "canonical": {
+                "id": "node:a",
+                "factKey": "key:node:a",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "SYMBOL",
+                "symbolKind": "FUNCTION",
+                "name": "losing-B",
+                "qualifiedName": "fixture.node:a",
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            },
+            {
+              "provider": {
+                "factType": "NODE",
+                "providerId": "beta",
+                "providerFactId": "provider:node:b"
+              },
+              "canonical": {
+                "id": "node:b",
+                "factKey": "key:node:b",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "SYMBOL",
+                "symbolKind": "FUNCTION",
+                "name": "beta",
+                "qualifiedName": "fixture.node:b",
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            }
+          ],
+          "edges": [
+            {
+              "provider": {
+                "factType": "EDGE",
+                "providerId": "beta",
+                "providerFactId": "provider-edge:edge:call"
+              },
+              "canonical": {
+                "id": "edge:call",
+                "factKey": "key:call",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "CALL",
+                "source": {
+                  "factType": "NODE",
+                  "id": "node:a"
+                },
+                "target": {
+                  "state": "RESOLVED",
+                  "resolution": "EXACT",
+                  "target": {
+                    "factType": "NODE",
+                    "id": "node:b"
+                  }
+                },
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            }
+          ],
+          "coverage": [
+            {
+              "capability": "SYMBOL",
+              "sourceFileId": "source:one",
+              "coverage": "COMPLETE"
+            }
+          ]
+        }
+      ],
+      "activeRunIndexes": [0, 1],
+      "canonicalNodes": [
+        {
+          "id": "node:a",
+          "factKey": "key:node:a",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "kind": "SYMBOL",
+          "symbolKind": "FUNCTION",
+          "name": "alpha",
+          "qualifiedName": "fixture.node:a",
+          "sourceRange": {
+            "sourceFileId": "source:one",
+            "startLine": 1,
+            "startColumn": 0,
+            "endLine": 1,
+            "endColumn": 1
+          },
+          "confidence": {
+            "score": 1,
+            "method": "fact-merger-min-v1",
+            "reasons": ["minimum active support score"]
+          }
+        },
+        {
+          "id": "node:b",
+          "factKey": "key:node:b",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "kind": "SYMBOL",
+          "symbolKind": "FUNCTION",
+          "name": "beta",
+          "qualifiedName": "fixture.node:b",
+          "sourceRange": {
+            "sourceFileId": "source:one",
+            "startLine": 1,
+            "startColumn": 0,
+            "endLine": 1,
+            "endColumn": 1
+          },
+          "confidence": {
+            "score": 1,
+            "method": "fact-merger-min-v1",
+            "reasons": ["minimum active support score"]
+          }
+        }
+      ],
+      "canonicalEdges": [
+        {
+          "id": "edge:call",
+          "factKey": "key:call",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "kind": "CALL",
+          "source": {
+            "factType": "NODE",
+            "id": "node:a"
+          },
+          "target": {
+            "state": "RESOLVED",
+            "resolution": "EXACT",
+            "target": {
+              "factType": "NODE",
+              "id": "node:b"
+            }
+          },
+          "sourceRange": {
+            "sourceFileId": "source:one",
+            "startLine": 1,
+            "startColumn": 0,
+            "endLine": 1,
+            "endColumn": 1
+          },
+          "confidence": {
+            "score": 1,
+            "method": "fact-merger-min-v1",
+            "reasons": ["minimum active support score"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "same-header-coverage-A",
+      "repository": {
+        "id": "capture-repo",
+        "rootPath": "C:/capture-fixture"
+      },
+      "revision": {
+        "id": "capture-worktree",
+        "repositoryId": "capture-repo",
+        "kind": "WORKTREE",
+        "contentFingerprint": "capture-fingerprint",
+        "baseRevisionId": null
+      },
+      "files": [
+        {
+          "id": "source:one",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "path": "src/observation.txt",
+          "contentFingerprint": "source-fingerprint",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": null,
+          "sensitivity": "PUBLIC"
+        }
+      ],
+      "runs": [
+        {
+          "snapshot": {
+            "id": "snapshot:alpha",
+            "repositoryId": "capture-repo",
+            "providerId": "alpha",
+            "providerVersion": "fixture-v1",
+            "runtimeVersion": "fixture-v1",
+            "requestedRevisionId": "capture-worktree",
+            "requestedRevisionFingerprint": "capture-fingerprint",
+            "startedAt": "2026-10-23T00:00:00.000Z",
+            "completedAt": "2026-10-23T00:00:01.000Z",
+            "capabilities": [
+              {
+                "name": "SYMBOL",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              },
+              {
+                "name": "CALL",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              }
+            ],
+            "diagnostics": [],
+            "outcome": "SUCCEEDED"
+          },
+          "nodes": [
+            {
+              "provider": {
+                "factType": "NODE",
+                "providerId": "alpha",
+                "providerFactId": "provider:node:a"
+              },
+              "canonical": {
+                "id": "node:a",
+                "factKey": "key:node:a",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "SYMBOL",
+                "symbolKind": "FUNCTION",
+                "name": "alpha",
+                "qualifiedName": "fixture.node:a",
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            },
+            {
+              "provider": {
+                "factType": "NODE",
+                "providerId": "alpha",
+                "providerFactId": "provider:node:b"
+              },
+              "canonical": {
+                "id": "node:b",
+                "factKey": "key:node:b",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "SYMBOL",
+                "symbolKind": "FUNCTION",
+                "name": "beta",
+                "qualifiedName": "fixture.node:b",
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            }
+          ],
+          "edges": [
+            {
+              "provider": {
+                "factType": "EDGE",
+                "providerId": "alpha",
+                "providerFactId": "provider-edge:edge:call"
+              },
+              "canonical": {
+                "id": "edge:call",
+                "factKey": "key:call",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "CALL",
+                "source": {
+                  "factType": "NODE",
+                  "id": "node:a"
+                },
+                "target": {
+                  "state": "RESOLVED",
+                  "resolution": "EXACT",
+                  "target": {
+                    "factType": "NODE",
+                    "id": "node:b"
+                  }
+                },
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            }
+          ],
+          "coverage": [
+            {
+              "capability": "SYMBOL",
+              "sourceFileId": "source:one",
+              "coverage": "COMPLETE"
+            }
+          ]
+        }
+      ],
+      "activeRunIndexes": [0],
+      "canonicalNodes": [
+        {
+          "id": "node:a",
+          "factKey": "key:node:a",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "kind": "SYMBOL",
+          "symbolKind": "FUNCTION",
+          "name": "alpha",
+          "qualifiedName": "fixture.node:a",
+          "sourceRange": {
+            "sourceFileId": "source:one",
+            "startLine": 1,
+            "startColumn": 0,
+            "endLine": 1,
+            "endColumn": 1
+          },
+          "confidence": {
+            "score": 1,
+            "method": "fixture-observation",
+            "reasons": []
+          }
+        },
+        {
+          "id": "node:b",
+          "factKey": "key:node:b",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "kind": "SYMBOL",
+          "symbolKind": "FUNCTION",
+          "name": "beta",
+          "qualifiedName": "fixture.node:b",
+          "sourceRange": {
+            "sourceFileId": "source:one",
+            "startLine": 1,
+            "startColumn": 0,
+            "endLine": 1,
+            "endColumn": 1
+          },
+          "confidence": {
+            "score": 1,
+            "method": "fixture-observation",
+            "reasons": []
+          }
+        }
+      ],
+      "canonicalEdges": [
+        {
+          "id": "edge:call",
+          "factKey": "key:call",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "kind": "CALL",
+          "source": {
+            "factType": "NODE",
+            "id": "node:a"
+          },
+          "target": {
+            "state": "RESOLVED",
+            "resolution": "EXACT",
+            "target": {
+              "factType": "NODE",
+              "id": "node:b"
+            }
+          },
+          "sourceRange": {
+            "sourceFileId": "source:one",
+            "startLine": 1,
+            "startColumn": 0,
+            "endLine": 1,
+            "endColumn": 1
+          },
+          "confidence": {
+            "score": 1,
+            "method": "fixture-observation",
+            "reasons": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "same-header-coverage-B",
+      "repository": {
+        "id": "capture-repo",
+        "rootPath": "C:/capture-fixture"
+      },
+      "revision": {
+        "id": "capture-worktree",
+        "repositoryId": "capture-repo",
+        "kind": "WORKTREE",
+        "contentFingerprint": "capture-fingerprint",
+        "baseRevisionId": null
+      },
+      "files": [
+        {
+          "id": "source:one",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "path": "src/observation.txt",
+          "contentFingerprint": "source-fingerprint",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": null,
+          "sensitivity": "PUBLIC"
+        }
+      ],
+      "runs": [
+        {
+          "snapshot": {
+            "id": "snapshot:alpha",
+            "repositoryId": "capture-repo",
+            "providerId": "alpha",
+            "providerVersion": "fixture-v1",
+            "runtimeVersion": "fixture-v1",
+            "requestedRevisionId": "capture-worktree",
+            "requestedRevisionFingerprint": "capture-fingerprint",
+            "startedAt": "2026-10-23T00:00:00.000Z",
+            "completedAt": "2026-10-23T00:00:01.000Z",
+            "capabilities": [
+              {
+                "name": "SYMBOL",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              },
+              {
+                "name": "CALL",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              }
+            ],
+            "diagnostics": [],
+            "outcome": "SUCCEEDED"
+          },
+          "nodes": [
+            {
+              "provider": {
+                "factType": "NODE",
+                "providerId": "alpha",
+                "providerFactId": "provider:node:a"
+              },
+              "canonical": {
+                "id": "node:a",
+                "factKey": "key:node:a",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "SYMBOL",
+                "symbolKind": "FUNCTION",
+                "name": "alpha",
+                "qualifiedName": "fixture.node:a",
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            },
+            {
+              "provider": {
+                "factType": "NODE",
+                "providerId": "alpha",
+                "providerFactId": "provider:node:b"
+              },
+              "canonical": {
+                "id": "node:b",
+                "factKey": "key:node:b",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "SYMBOL",
+                "symbolKind": "FUNCTION",
+                "name": "beta",
+                "qualifiedName": "fixture.node:b",
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            }
+          ],
+          "edges": [
+            {
+              "provider": {
+                "factType": "EDGE",
+                "providerId": "alpha",
+                "providerFactId": "provider-edge:edge:call"
+              },
+              "canonical": {
+                "id": "edge:call",
+                "factKey": "key:call",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "CALL",
+                "source": {
+                  "factType": "NODE",
+                  "id": "node:a"
+                },
+                "target": {
+                  "state": "RESOLVED",
+                  "resolution": "EXACT",
+                  "target": {
+                    "factType": "NODE",
+                    "id": "node:b"
+                  }
+                },
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            }
+          ],
+          "coverage": [
+            {
+              "capability": "SYMBOL",
+              "sourceFileId": "source:one",
+              "coverage": "PARTIAL"
+            }
+          ]
+        }
+      ],
+      "activeRunIndexes": [0],
+      "canonicalNodes": [
+        {
+          "id": "node:a",
+          "factKey": "key:node:a",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "kind": "SYMBOL",
+          "symbolKind": "FUNCTION",
+          "name": "alpha",
+          "qualifiedName": "fixture.node:a",
+          "sourceRange": {
+            "sourceFileId": "source:one",
+            "startLine": 1,
+            "startColumn": 0,
+            "endLine": 1,
+            "endColumn": 1
+          },
+          "confidence": {
+            "score": 1,
+            "method": "fixture-observation",
+            "reasons": []
+          }
+        },
+        {
+          "id": "node:b",
+          "factKey": "key:node:b",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "kind": "SYMBOL",
+          "symbolKind": "FUNCTION",
+          "name": "beta",
+          "qualifiedName": "fixture.node:b",
+          "sourceRange": {
+            "sourceFileId": "source:one",
+            "startLine": 1,
+            "startColumn": 0,
+            "endLine": 1,
+            "endColumn": 1
+          },
+          "confidence": {
+            "score": 1,
+            "method": "fixture-observation",
+            "reasons": []
+          }
+        }
+      ],
+      "canonicalEdges": [
+        {
+          "id": "edge:call",
+          "factKey": "key:call",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "kind": "CALL",
+          "source": {
+            "factType": "NODE",
+            "id": "node:a"
+          },
+          "target": {
+            "state": "RESOLVED",
+            "resolution": "EXACT",
+            "target": {
+              "factType": "NODE",
+              "id": "node:b"
+            }
+          },
+          "sourceRange": {
+            "sourceFileId": "source:one",
+            "startLine": 1,
+            "startColumn": 0,
+            "endLine": 1,
+            "endColumn": 1
+          },
+          "confidence": {
+            "score": 1,
+            "method": "fixture-observation",
+            "reasons": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "empty-code-with-coverage",
+      "repository": {
+        "id": "capture-repo",
+        "rootPath": "C:/capture-fixture"
+      },
+      "revision": {
+        "id": "capture-worktree",
+        "repositoryId": "capture-repo",
+        "kind": "WORKTREE",
+        "contentFingerprint": "capture-fingerprint",
+        "baseRevisionId": null
+      },
+      "files": [
+        {
+          "id": "source:one",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "path": "src/observation.txt",
+          "contentFingerprint": "source-fingerprint",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": null,
+          "sensitivity": "PUBLIC"
+        }
+      ],
+      "runs": [
+        {
+          "snapshot": {
+            "id": "snapshot:alpha",
+            "repositoryId": "capture-repo",
+            "providerId": "alpha",
+            "providerVersion": "fixture-v1",
+            "runtimeVersion": "fixture-v1",
+            "requestedRevisionId": "capture-worktree",
+            "requestedRevisionFingerprint": "capture-fingerprint",
+            "startedAt": "2026-10-23T00:00:00.000Z",
+            "completedAt": "2026-10-23T00:00:01.000Z",
+            "capabilities": [
+              {
+                "name": "SYMBOL",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              },
+              {
+                "name": "CALL",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              }
+            ],
+            "diagnostics": [],
+            "outcome": "SUCCEEDED"
+          },
+          "nodes": [],
+          "edges": [],
+          "coverage": [
+            {
+              "capability": "SYMBOL",
+              "sourceFileId": null,
+              "coverage": "UNKNOWN"
+            }
+          ]
+        }
+      ],
+      "activeRunIndexes": [0],
+      "canonicalNodes": [],
+      "canonicalEdges": []
+    },
+    {
+      "id": "coverage-multiplicity",
+      "repository": {
+        "id": "capture-repo",
+        "rootPath": "C:/capture-fixture"
+      },
+      "revision": {
+        "id": "capture-worktree",
+        "repositoryId": "capture-repo",
+        "kind": "WORKTREE",
+        "contentFingerprint": "capture-fingerprint",
+        "baseRevisionId": null
+      },
+      "files": [
+        {
+          "id": "source:one",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "path": "src/observation.txt",
+          "contentFingerprint": "source-fingerprint",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": null,
+          "sensitivity": "PUBLIC"
+        }
+      ],
+      "runs": [
+        {
+          "snapshot": {
+            "id": "snapshot:alpha",
+            "repositoryId": "capture-repo",
+            "providerId": "alpha",
+            "providerVersion": "fixture-v1",
+            "runtimeVersion": "fixture-v1",
+            "requestedRevisionId": "capture-worktree",
+            "requestedRevisionFingerprint": "capture-fingerprint",
+            "startedAt": "2026-10-23T00:00:00.000Z",
+            "completedAt": "2026-10-23T00:00:01.000Z",
+            "capabilities": [
+              {
+                "name": "SYMBOL",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              },
+              {
+                "name": "CALL",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              }
+            ],
+            "diagnostics": [],
+            "outcome": "SUCCEEDED"
+          },
+          "nodes": [
+            {
+              "provider": {
+                "factType": "NODE",
+                "providerId": "alpha",
+                "providerFactId": "provider:node:a"
+              },
+              "canonical": {
+                "id": "node:a",
+                "factKey": "key:node:a",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "SYMBOL",
+                "symbolKind": "FUNCTION",
+                "name": "alpha",
+                "qualifiedName": "fixture.node:a",
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            },
+            {
+              "provider": {
+                "factType": "NODE",
+                "providerId": "alpha",
+                "providerFactId": "provider:node:b"
+              },
+              "canonical": {
+                "id": "node:b",
+                "factKey": "key:node:b",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "SYMBOL",
+                "symbolKind": "FUNCTION",
+                "name": "beta",
+                "qualifiedName": "fixture.node:b",
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            }
+          ],
+          "edges": [
+            {
+              "provider": {
+                "factType": "EDGE",
+                "providerId": "alpha",
+                "providerFactId": "provider-edge:edge:call"
+              },
+              "canonical": {
+                "id": "edge:call",
+                "factKey": "key:call",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "CALL",
+                "source": {
+                  "factType": "NODE",
+                  "id": "node:a"
+                },
+                "target": {
+                  "state": "RESOLVED",
+                  "resolution": "EXACT",
+                  "target": {
+                    "factType": "NODE",
+                    "id": "node:b"
+                  }
+                },
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            }
+          ],
+          "coverage": [
+            {
+              "capability": "SYMBOL",
+              "sourceFileId": "source:one",
+              "coverage": "COMPLETE"
+            },
+            {
+              "capability": "SYMBOL",
+              "sourceFileId": "source:one",
+              "coverage": "COMPLETE"
+            },
+            {
+              "capability": "SYMBOL",
+              "sourceFileId": "source:one",
+              "coverage": "PARTIAL"
+            },
+            {
+              "capability": "SYMBOL",
+              "sourceFileId": null,
+              "coverage": "UNKNOWN"
+            }
+          ]
+        }
+      ],
+      "activeRunIndexes": [0],
+      "canonicalNodes": [
+        {
+          "id": "node:a",
+          "factKey": "key:node:a",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "kind": "SYMBOL",
+          "symbolKind": "FUNCTION",
+          "name": "alpha",
+          "qualifiedName": "fixture.node:a",
+          "sourceRange": {
+            "sourceFileId": "source:one",
+            "startLine": 1,
+            "startColumn": 0,
+            "endLine": 1,
+            "endColumn": 1
+          },
+          "confidence": {
+            "score": 1,
+            "method": "fixture-observation",
+            "reasons": []
+          }
+        },
+        {
+          "id": "node:b",
+          "factKey": "key:node:b",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "kind": "SYMBOL",
+          "symbolKind": "FUNCTION",
+          "name": "beta",
+          "qualifiedName": "fixture.node:b",
+          "sourceRange": {
+            "sourceFileId": "source:one",
+            "startLine": 1,
+            "startColumn": 0,
+            "endLine": 1,
+            "endColumn": 1
+          },
+          "confidence": {
+            "score": 1,
+            "method": "fixture-observation",
+            "reasons": []
+          }
+        }
+      ],
+      "canonicalEdges": [
+        {
+          "id": "edge:call",
+          "factKey": "key:call",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "kind": "CALL",
+          "source": {
+            "factType": "NODE",
+            "id": "node:a"
+          },
+          "target": {
+            "state": "RESOLVED",
+            "resolution": "EXACT",
+            "target": {
+              "factType": "NODE",
+              "id": "node:b"
+            }
+          },
+          "sourceRange": {
+            "sourceFileId": "source:one",
+            "startLine": 1,
+            "startColumn": 0,
+            "endLine": 1,
+            "endColumn": 1
+          },
+          "confidence": {
+            "score": 1,
+            "method": "fixture-observation",
+            "reasons": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "stale-target-source",
+      "repository": {
+        "id": "capture-repo",
+        "rootPath": "C:/capture-fixture"
+      },
+      "revision": {
+        "id": "capture-worktree",
+        "repositoryId": "capture-repo",
+        "kind": "WORKTREE",
+        "contentFingerprint": "source-newer-fingerprint",
+        "baseRevisionId": null
+      },
+      "files": [
+        {
+          "id": "source:one",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "path": "src/observation.txt",
+          "contentFingerprint": "source-fingerprint",
+          "classification": {
+            "role": "TEST",
+            "provenance": "GENERATED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": null,
+          "sensitivity": "PUBLIC"
+        }
+      ],
+      "runs": [
+        {
+          "snapshot": {
+            "id": "snapshot:alpha",
+            "repositoryId": "capture-repo",
+            "providerId": "alpha",
+            "providerVersion": "fixture-v1",
+            "runtimeVersion": "fixture-v1",
+            "requestedRevisionId": "capture-worktree",
+            "requestedRevisionFingerprint": "capture-fingerprint",
+            "startedAt": "2026-10-23T00:00:00.000Z",
+            "completedAt": "2026-10-23T00:00:01.000Z",
+            "capabilities": [
+              {
+                "name": "SYMBOL",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              },
+              {
+                "name": "CALL",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              }
+            ],
+            "diagnostics": [],
+            "outcome": "SUCCEEDED"
+          },
+          "nodes": [
+            {
+              "provider": {
+                "factType": "NODE",
+                "providerId": "alpha",
+                "providerFactId": "provider:node:a"
+              },
+              "canonical": {
+                "id": "node:a",
+                "factKey": "key:node:a",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "SYMBOL",
+                "symbolKind": "FUNCTION",
+                "name": "alpha",
+                "qualifiedName": "fixture.node:a",
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            },
+            {
+              "provider": {
+                "factType": "NODE",
+                "providerId": "alpha",
+                "providerFactId": "provider:node:b"
+              },
+              "canonical": {
+                "id": "node:b",
+                "factKey": "key:node:b",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "SYMBOL",
+                "symbolKind": "FUNCTION",
+                "name": "beta",
+                "qualifiedName": "fixture.node:b",
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            }
+          ],
+          "edges": [
+            {
+              "provider": {
+                "factType": "EDGE",
+                "providerId": "alpha",
+                "providerFactId": "provider-edge:edge:call"
+              },
+              "canonical": {
+                "id": "edge:call",
+                "factKey": "key:call",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "CALL",
+                "source": {
+                  "factType": "NODE",
+                  "id": "node:a"
+                },
+                "target": {
+                  "state": "RESOLVED",
+                  "resolution": "EXACT",
+                  "target": {
+                    "factType": "NODE",
+                    "id": "node:b"
+                  }
+                },
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            }
+          ],
+          "coverage": [
+            {
+              "capability": "SYMBOL",
+              "sourceFileId": "source:one",
+              "coverage": "COMPLETE"
+            }
+          ]
+        }
+      ],
+      "activeRunIndexes": [0],
+      "canonicalNodes": [
+        {
+          "id": "node:a",
+          "factKey": "key:node:a",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "kind": "SYMBOL",
+          "symbolKind": "FUNCTION",
+          "name": "alpha",
+          "qualifiedName": "fixture.node:a",
+          "sourceRange": {
+            "sourceFileId": "source:one",
+            "startLine": 1,
+            "startColumn": 0,
+            "endLine": 1,
+            "endColumn": 1
+          },
+          "confidence": {
+            "score": 1,
+            "method": "fixture-observation",
+            "reasons": []
+          }
+        },
+        {
+          "id": "node:b",
+          "factKey": "key:node:b",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "kind": "SYMBOL",
+          "symbolKind": "FUNCTION",
+          "name": "beta",
+          "qualifiedName": "fixture.node:b",
+          "sourceRange": {
+            "sourceFileId": "source:one",
+            "startLine": 1,
+            "startColumn": 0,
+            "endLine": 1,
+            "endColumn": 1
+          },
+          "confidence": {
+            "score": 1,
+            "method": "fixture-observation",
+            "reasons": []
+          }
+        }
+      ],
+      "canonicalEdges": [
+        {
+          "id": "edge:call",
+          "factKey": "key:call",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "kind": "CALL",
+          "source": {
+            "factType": "NODE",
+            "id": "node:a"
+          },
+          "target": {
+            "state": "RESOLVED",
+            "resolution": "EXACT",
+            "target": {
+              "factType": "NODE",
+              "id": "node:b"
+            }
+          },
+          "sourceRange": {
+            "sourceFileId": "source:one",
+            "startLine": 1,
+            "startColumn": 0,
+            "endLine": 1,
+            "endColumn": 1
+          },
+          "confidence": {
+            "score": 1,
+            "method": "fixture-observation",
+            "reasons": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "unicode-order",
+      "repository": {
+        "id": "capture-repo",
+        "rootPath": "C:/capture-fixture"
+      },
+      "revision": {
+        "id": "capture-worktree",
+        "repositoryId": "capture-repo",
+        "kind": "WORKTREE",
+        "contentFingerprint": "capture-fingerprint",
+        "baseRevisionId": null
+      },
+      "files": [
+        {
+          "id": "source:one",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "path": "src/observation.txt",
+          "contentFingerprint": "source-fingerprint",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": null,
+          "sensitivity": "PUBLIC"
+        }
+      ],
+      "runs": [
+        {
+          "snapshot": {
+            "id": "snapshot:alpha",
+            "repositoryId": "capture-repo",
+            "providerId": "alpha",
+            "providerVersion": "fixture-v1",
+            "runtimeVersion": "fixture-v1",
+            "requestedRevisionId": "capture-worktree",
+            "requestedRevisionFingerprint": "capture-fingerprint",
+            "startedAt": "2026-10-23T00:00:00.000Z",
+            "completedAt": "2026-10-23T00:00:01.000Z",
+            "capabilities": [
+              {
+                "name": "SYMBOL",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              },
+              {
+                "name": "CALL",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              }
+            ],
+            "diagnostics": [],
+            "outcome": "SUCCEEDED"
+          },
+          "nodes": [
+            {
+              "provider": {
+                "factType": "NODE",
+                "providerId": "alpha",
+                "providerFactId": "provider:node:𐀀"
+              },
+              "canonical": {
+                "id": "node:𐀀",
+                "factKey": "key:node:𐀀",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "SYMBOL",
+                "symbolKind": "FUNCTION",
+                "name": "astral \"quote\"",
+                "qualifiedName": "fixture.node:𐀀",
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            },
+            {
+              "provider": {
+                "factType": "NODE",
+                "providerId": "alpha",
+                "providerFactId": "provider:node:"
+              },
+              "canonical": {
+                "id": "node:",
+                "factKey": "key:node:",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "SYMBOL",
+                "symbolKind": "FUNCTION",
+                "name": "private é\\line\nend",
+                "qualifiedName": "fixture.node:",
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            }
+          ],
+          "edges": [],
+          "coverage": [
+            {
+              "capability": "SYMBOL",
+              "sourceFileId": "source:one",
+              "coverage": "COMPLETE"
+            }
+          ]
+        }
+      ],
+      "activeRunIndexes": [0],
+      "canonicalNodes": [
+        {
+          "id": "node:𐀀",
+          "factKey": "key:node:𐀀",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "kind": "SYMBOL",
+          "symbolKind": "FUNCTION",
+          "name": "astral \"quote\"",
+          "qualifiedName": "fixture.node:𐀀",
+          "sourceRange": {
+            "sourceFileId": "source:one",
+            "startLine": 1,
+            "startColumn": 0,
+            "endLine": 1,
+            "endColumn": 1
+          },
+          "confidence": {
+            "score": 1,
+            "method": "fixture-observation",
+            "reasons": []
+          }
+        },
+        {
+          "id": "node:",
+          "factKey": "key:node:",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "kind": "SYMBOL",
+          "symbolKind": "FUNCTION",
+          "name": "private é\\line\nend",
+          "qualifiedName": "fixture.node:",
+          "sourceRange": {
+            "sourceFileId": "source:one",
+            "startLine": 1,
+            "startColumn": 0,
+            "endLine": 1,
+            "endColumn": 1
+          },
+          "confidence": {
+            "score": 1,
+            "method": "fixture-observation",
+            "reasons": []
+          }
+        }
+      ],
+      "canonicalEdges": []
+    },
+    {
+      "id": "typed-node-edge-id",
+      "repository": {
+        "id": "capture-repo",
+        "rootPath": "C:/capture-fixture"
+      },
+      "revision": {
+        "id": "capture-worktree",
+        "repositoryId": "capture-repo",
+        "kind": "WORKTREE",
+        "contentFingerprint": "capture-fingerprint",
+        "baseRevisionId": null
+      },
+      "files": [
+        {
+          "id": "source:one",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "path": "src/observation.txt",
+          "contentFingerprint": "source-fingerprint",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": null,
+          "sensitivity": "PUBLIC"
+        }
+      ],
+      "runs": [
+        {
+          "snapshot": {
+            "id": "snapshot:alpha",
+            "repositoryId": "capture-repo",
+            "providerId": "alpha",
+            "providerVersion": "fixture-v1",
+            "runtimeVersion": "fixture-v1",
+            "requestedRevisionId": "capture-worktree",
+            "requestedRevisionFingerprint": "capture-fingerprint",
+            "startedAt": "2026-10-23T00:00:00.000Z",
+            "completedAt": "2026-10-23T00:00:01.000Z",
+            "capabilities": [
+              {
+                "name": "SYMBOL",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              },
+              {
+                "name": "CALL",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              }
+            ],
+            "diagnostics": [],
+            "outcome": "SUCCEEDED"
+          },
+          "nodes": [
+            {
+              "provider": {
+                "factType": "NODE",
+                "providerId": "alpha",
+                "providerFactId": "provider:node:a"
+              },
+              "canonical": {
+                "id": "node:a",
+                "factKey": "key:node:a",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "SYMBOL",
+                "symbolKind": "FUNCTION",
+                "name": "alpha",
+                "qualifiedName": "fixture.node:a",
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            },
+            {
+              "provider": {
+                "factType": "NODE",
+                "providerId": "alpha",
+                "providerFactId": "provider:node:b"
+              },
+              "canonical": {
+                "id": "node:b",
+                "factKey": "key:node:b",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "SYMBOL",
+                "symbolKind": "FUNCTION",
+                "name": "beta",
+                "qualifiedName": "fixture.node:b",
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            }
+          ],
+          "edges": [
+            {
+              "provider": {
+                "factType": "EDGE",
+                "providerId": "alpha",
+                "providerFactId": "provider-edge:node:a"
+              },
+              "canonical": {
+                "id": "node:a",
+                "factKey": "key:call",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "CALL",
+                "source": {
+                  "factType": "NODE",
+                  "id": "node:a"
+                },
+                "target": {
+                  "state": "RESOLVED",
+                  "resolution": "EXACT",
+                  "target": {
+                    "factType": "NODE",
+                    "id": "node:b"
+                  }
+                },
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            }
+          ],
+          "coverage": [
+            {
+              "capability": "SYMBOL",
+              "sourceFileId": "source:one",
+              "coverage": "COMPLETE"
+            }
+          ]
+        }
+      ],
+      "activeRunIndexes": [0],
+      "canonicalNodes": [
+        {
+          "id": "node:a",
+          "factKey": "key:node:a",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "kind": "SYMBOL",
+          "symbolKind": "FUNCTION",
+          "name": "alpha",
+          "qualifiedName": "fixture.node:a",
+          "sourceRange": {
+            "sourceFileId": "source:one",
+            "startLine": 1,
+            "startColumn": 0,
+            "endLine": 1,
+            "endColumn": 1
+          },
+          "confidence": {
+            "score": 1,
+            "method": "fixture-observation",
+            "reasons": []
+          }
+        },
+        {
+          "id": "node:b",
+          "factKey": "key:node:b",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "kind": "SYMBOL",
+          "symbolKind": "FUNCTION",
+          "name": "beta",
+          "qualifiedName": "fixture.node:b",
+          "sourceRange": {
+            "sourceFileId": "source:one",
+            "startLine": 1,
+            "startColumn": 0,
+            "endLine": 1,
+            "endColumn": 1
+          },
+          "confidence": {
+            "score": 1,
+            "method": "fixture-observation",
+            "reasons": []
+          }
+        }
+      ],
+      "canonicalEdges": [
+        {
+          "id": "node:a",
+          "factKey": "key:call",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "kind": "CALL",
+          "source": {
+            "factType": "NODE",
+            "id": "node:a"
+          },
+          "target": {
+            "state": "RESOLVED",
+            "resolution": "EXACT",
+            "target": {
+              "factType": "NODE",
+              "id": "node:b"
+            }
+          },
+          "sourceRange": {
+            "sourceFileId": "source:one",
+            "startLine": 1,
+            "startColumn": 0,
+            "endLine": 1,
+            "endColumn": 1
+          },
+          "confidence": {
+            "score": 1,
+            "method": "fixture-observation",
+            "reasons": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "history-snapshot-set",
+      "repository": {
+        "id": "capture-repo",
+        "rootPath": "C:/capture-fixture"
+      },
+      "revision": {
+        "id": "capture-worktree",
+        "repositoryId": "capture-repo",
+        "kind": "WORKTREE",
+        "contentFingerprint": "capture-fingerprint",
+        "baseRevisionId": null
+      },
+      "files": [
+        {
+          "id": "source:one",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "path": "src/observation.txt",
+          "contentFingerprint": "source-fingerprint",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": null,
+          "sensitivity": "PUBLIC"
+        }
+      ],
+      "runs": [
+        {
+          "snapshot": {
+            "id": "snapshot:alpha",
+            "repositoryId": "capture-repo",
+            "providerId": "alpha",
+            "providerVersion": "fixture-v1",
+            "runtimeVersion": "fixture-v1",
+            "requestedRevisionId": "capture-worktree",
+            "requestedRevisionFingerprint": "capture-fingerprint",
+            "startedAt": "2026-10-23T00:00:00.000Z",
+            "completedAt": "2026-10-23T00:00:01.000Z",
+            "capabilities": [
+              {
+                "name": "SYMBOL",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              },
+              {
+                "name": "CALL",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              }
+            ],
+            "diagnostics": [],
+            "outcome": "SUCCEEDED"
+          },
+          "nodes": [
+            {
+              "provider": {
+                "factType": "NODE",
+                "providerId": "alpha",
+                "providerFactId": "provider:node:a"
+              },
+              "canonical": {
+                "id": "node:a",
+                "factKey": "key:node:a",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "SYMBOL",
+                "symbolKind": "FUNCTION",
+                "name": "alpha",
+                "qualifiedName": "fixture.node:a",
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            },
+            {
+              "provider": {
+                "factType": "NODE",
+                "providerId": "alpha",
+                "providerFactId": "provider:node:b"
+              },
+              "canonical": {
+                "id": "node:b",
+                "factKey": "key:node:b",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "SYMBOL",
+                "symbolKind": "FUNCTION",
+                "name": "beta",
+                "qualifiedName": "fixture.node:b",
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            }
+          ],
+          "edges": [
+            {
+              "provider": {
+                "factType": "EDGE",
+                "providerId": "alpha",
+                "providerFactId": "provider-edge:edge:call"
+              },
+              "canonical": {
+                "id": "edge:call",
+                "factKey": "key:call",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "CALL",
+                "source": {
+                  "factType": "NODE",
+                  "id": "node:a"
+                },
+                "target": {
+                  "state": "RESOLVED",
+                  "resolution": "EXACT",
+                  "target": {
+                    "factType": "NODE",
+                    "id": "node:b"
+                  }
+                },
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            }
+          ],
+          "coverage": [
+            {
+              "capability": "SYMBOL",
+              "sourceFileId": "source:one",
+              "coverage": "COMPLETE"
+            }
+          ]
+        },
+        {
+          "snapshot": {
+            "id": "snapshot:alpha-new",
+            "repositoryId": "capture-repo",
+            "providerId": "alpha",
+            "providerVersion": "fixture-v1",
+            "runtimeVersion": "fixture-v1",
+            "requestedRevisionId": "capture-worktree",
+            "requestedRevisionFingerprint": "capture-fingerprint",
+            "startedAt": "2026-10-23T00:00:00.000Z",
+            "completedAt": "2026-10-23T00:00:01.000Z",
+            "capabilities": [
+              {
+                "name": "SYMBOL",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              },
+              {
+                "name": "CALL",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              }
+            ],
+            "diagnostics": [],
+            "outcome": "SUCCEEDED"
+          },
+          "nodes": [
+            {
+              "provider": {
+                "factType": "NODE",
+                "providerId": "alpha",
+                "providerFactId": "provider:node:a"
+              },
+              "canonical": {
+                "id": "node:a",
+                "factKey": "key:node:a",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "SYMBOL",
+                "symbolKind": "FUNCTION",
+                "name": "alpha",
+                "qualifiedName": "fixture.node:a",
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            },
+            {
+              "provider": {
+                "factType": "NODE",
+                "providerId": "alpha",
+                "providerFactId": "provider:node:b"
+              },
+              "canonical": {
+                "id": "node:b",
+                "factKey": "key:node:b",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "SYMBOL",
+                "symbolKind": "FUNCTION",
+                "name": "beta",
+                "qualifiedName": "fixture.node:b",
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            }
+          ],
+          "edges": [
+            {
+              "provider": {
+                "factType": "EDGE",
+                "providerId": "alpha",
+                "providerFactId": "provider-edge:edge:call"
+              },
+              "canonical": {
+                "id": "edge:call",
+                "factKey": "key:call",
+                "repositoryId": "capture-repo",
+                "revisionId": "capture-worktree",
+                "kind": "CALL",
+                "source": {
+                  "factType": "NODE",
+                  "id": "node:a"
+                },
+                "target": {
+                  "state": "RESOLVED",
+                  "resolution": "EXACT",
+                  "target": {
+                    "factType": "NODE",
+                    "id": "node:b"
+                  }
+                },
+                "sourceRange": {
+                  "sourceFileId": "source:one",
+                  "startLine": 1,
+                  "startColumn": 0,
+                  "endLine": 1,
+                  "endColumn": 1
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "fixture-observation",
+                  "reasons": []
+                }
+              }
+            }
+          ],
+          "coverage": [
+            {
+              "capability": "SYMBOL",
+              "sourceFileId": "source:one",
+              "coverage": "COMPLETE"
+            }
+          ]
+        }
+      ],
+      "activeRunIndexes": [1],
+      "canonicalNodes": [
+        {
+          "id": "node:a",
+          "factKey": "key:node:a",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "kind": "SYMBOL",
+          "symbolKind": "FUNCTION",
+          "name": "alpha",
+          "qualifiedName": "fixture.node:a",
+          "sourceRange": {
+            "sourceFileId": "source:one",
+            "startLine": 1,
+            "startColumn": 0,
+            "endLine": 1,
+            "endColumn": 1
+          },
+          "confidence": {
+            "score": 1,
+            "method": "fixture-observation",
+            "reasons": []
+          }
+        },
+        {
+          "id": "node:b",
+          "factKey": "key:node:b",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "kind": "SYMBOL",
+          "symbolKind": "FUNCTION",
+          "name": "beta",
+          "qualifiedName": "fixture.node:b",
+          "sourceRange": {
+            "sourceFileId": "source:one",
+            "startLine": 1,
+            "startColumn": 0,
+            "endLine": 1,
+            "endColumn": 1
+          },
+          "confidence": {
+            "score": 1,
+            "method": "fixture-observation",
+            "reasons": []
+          }
+        }
+      ],
+      "canonicalEdges": [
+        {
+          "id": "edge:call",
+          "factKey": "key:call",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "kind": "CALL",
+          "source": {
+            "factType": "NODE",
+            "id": "node:a"
+          },
+          "target": {
+            "state": "RESOLVED",
+            "resolution": "EXACT",
+            "target": {
+              "factType": "NODE",
+              "id": "node:b"
+            }
+          },
+          "sourceRange": {
+            "sourceFileId": "source:one",
+            "startLine": 1,
+            "startColumn": 0,
+            "endLine": 1,
+            "endColumn": 1
+          },
+          "confidence": {
+            "score": 1,
+            "method": "fixture-observation",
+            "reasons": []
+          }
+        }
+      ]
+    }
+  ]
+}

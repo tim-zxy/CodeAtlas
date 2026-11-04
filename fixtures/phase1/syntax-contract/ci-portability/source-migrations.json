@@ -1,0 +1,138 @@
+{
+  "scripts/test-history-transition.mjs": [
+    {
+      "before": "    assert.equal(p.scripts.test.split(/\\s+/).filter((x) => x === f).length, 1);\n});\ntest('registry62 exact36 Phase1 one history fixture; catalog remains empty', async () => {\n  const r = await discoverFixtures('fixtures');\n  assert.equal(nativeSyntaxObservationProfiles.length, 0);\n  assert.equal(r.length, 62);\n  assert.equal(r.filter((x) => x.manifest.phase === '1').length, 36);\n  assert.equal(r.filter((x) => x.manifest.id === 'p1-history-transition-draft-v1').length, 1);\n});\n",
+      "after": "    assert.equal(p.scripts.test.split(/\\s+/).filter((x) => x === f).length, 1);\n});\ntest('local Fixture registration Phase1 one history fixture; catalog remains empty', async () => {\n  const r = await discoverFixtures('fixtures');\n  assert.equal(nativeSyntaxObservationProfiles.length, 0);\n  assert.equal(r.filter((x) => x.manifest.id === 'p1-history-transition-draft-v1').length, 1);\n});\n"
+    }
+  ],
+  "scripts/test-delta-support-candidate.mjs": [
+    {
+      "before": "    assert.equal(p.scripts.test.split(/\\s+/).filter((x) => x === f).length, 1);\n});\ntest('registry62 exact36 one delta fixture, old fixture retained and catalog0', async () => {\n  const r = await discoverFixtures('fixtures');\n  assert.equal(r.length, 62);\n  assert.equal(r.filter((x) => x.manifest.phase === '1').length, 36);\n  for (const id of ['p1-delta-support-candidate-v1', 'p1-history-transition-draft-v1'])\n    assert.equal(r.filter((x) => x.manifest.id === id).length, 1);\n",
+      "after": "    assert.equal(p.scripts.test.split(/\\s+/).filter((x) => x === f).length, 1);\n});\ntest('local Fixture registration one delta fixture, old fixture retained and catalog0', async () => {\n  const r = await discoverFixtures('fixtures');\n  for (const id of ['p1-delta-support-candidate-v1', 'p1-history-transition-draft-v1'])\n    assert.equal(r.filter((x) => x.manifest.id === id).length, 1);\n"
+    }
+  ],
+  "scripts/test-r011-history-capture.mjs": [
+    {
+      "before": "import assert from 'node:assert/strict';\nimport test from 'node:test';\n",
+      "after": "import { assertHistoricalFixturePin } from '../fixtures/phase1/syntax-contract/ci-portability/historical-inputs.mjs';\nimport assert from 'node:assert/strict';\nimport test from 'node:test';\n"
+    },
+    {
+      "before": "  const paths = walk(root)\n    .map((p) => p.slice(root.length))\n    .filter((p) => p !== 'provenance.json')\n    .sort();\n  assert.equal(paths.length, 64);\n  assert.deepEqual(Object.keys(provenance.sha256).sort(), paths);\n  for (const p of paths) assert.equal(sha(readFileSync(root + p)), provenance.sha256[p], p);\n});\ntest('independent integer-key and Unicode value encoding goldens', () => {\n",
+      "after": "  const paths = walk(root)\n    .map((p) => p.slice(root.length))\n    .filter(\n      (p) =>\n        ![\n          'provenance.json',\n          'binding-history/inputs.json',\n          'binding-history/expected.json',\n        ].includes(p),\n    )\n    .sort();\n  assert.equal(paths.length, 64);\n  assert.deepEqual(Object.keys(provenance.sha256).sort(), paths);\n  for (const p of paths) assertHistoricalFixturePin(root + p, provenance.sha256[p]);\n});\ntest('independent integer-key and Unicode value encoding goldens', () => {\n"
+    },
+    {
+      "before": "  );\n  const m = json('packages/storage/migrations/repository/manifest.json');\n  assert.equal(m.migrations.length, 11);\n  assert.equal(m.migrations.at(-1).name, 'framework_syntax');\n  assert.equal(m.migrations.at(-1).backupRequired, false);\n  for (const migration of m.migrations)\n    assert.equal(\n",
+      "after": "  );\n  const m = json('packages/storage/migrations/repository/manifest.json');\n  // R012/R013 are tested by repository-schema; R011 remains the eleventh migration.\n  assert.equal(m.migrations[10].name, 'framework_syntax');\n  assert.equal(m.migrations[10].backupRequired, false);\n  for (const migration of m.migrations)\n    assert.equal(\n"
+    },
+    {
+      "before": "    assert.equal(command.split(/\\s+/).filter((x) => x === p).length, 1);\n});\ntest('registry62 exact36 Phase1 retains prior history fixtures and catalog0', async () => {\n  const r = await discoverFixtures('fixtures');\n  assert.equal(r.length, 62);\n  assert.equal(r.filter((x) => x.manifest.phase === '1').length, 36);\n  for (const id of [\n    'p1-r011-history-capture-v1',\n",
+      "after": "    assert.equal(command.split(/\\s+/).filter((x) => x === p).length, 1);\n});\ntest('local Fixture registration Phase1 retains prior history fixtures and catalog0', async () => {\n  const r = await discoverFixtures('fixtures');\n  for (const id of [\n    'p1-r011-history-capture-v1',\n"
+    }
+  ],
+  "scripts/test-syntax-mapping-preparation.mjs": [
+    {
+      "before": "  );\n  const fixtures = await discoverFixtures('fixtures');\n  assert.equal(fixtures.length, 62);\n  assert.equal(fixtures.filter((x) => x.manifest.phase === '1').length, 36);\n  assert.equal(\n    fixtures.filter((x) => x.manifest.id === 'p1-syntax-mapping-preparation-v1').length,\n",
+      "after": "  );\n  const fixtures = await discoverFixtures('fixtures');\n  assert.equal(\n    fixtures.filter((x) => x.manifest.id === 'p1-syntax-mapping-preparation-v1').length,\n"
+    }
+  ],
+  "scripts/test-syntax-evidence-reuse.mjs": [
+    {
+      "before": "import assert from 'node:assert/strict';\nimport test from 'node:test';\n",
+      "after": "import {\n  readHistoricalInput,\n  historicalPath,\n  historicalEntries,\n} from '../fixtures/phase1/syntax-contract/ci-portability/historical-inputs.mjs';\nimport assert from 'node:assert/strict';\nimport test from 'node:test';\n"
+    },
+    {
+      "before": "import { consumeCodeSyntaxObservationStream } from '../packages/providers/dist/native-code-syntax-stream.js';\nimport { instantiateProducerCase } from '../packages/providers/test/fixtures/code-syntax-producer-helpers.mjs';\nimport { discoverFixtures } from '../packages/evaluation/dist/index.js';\nconst inventoryPath =\n  'docs/superpowers/specs/2026-10-25-phase1-syntax-evidence-reuse-inventory.json';\n",
+      "after": "import { consumeCodeSyntaxObservationStream } from '../packages/providers/dist/native-code-syntax-stream.js';\nimport { instantiateProducerCase } from '../packages/providers/test/fixtures/code-syntax-producer-helpers.mjs';\nconst inventoryPath =\n  'docs/superpowers/specs/2026-10-25-phase1-syntax-evidence-reuse-inventory.json';\n"
+    },
+    {
+      "before": "      1,\n    );\n    const r = await discoverFixtures(path.resolve(repo, 'fixtures'));\n    assert.equal(r.length, 62);\n    assert.equal(r.filter((x) => x.manifest.phase === '1').length, 36);\n    const { nativeSyntaxObservationProfiles } =\n      await import('../packages/runtime/dist/native-metadata-profiles.js');\n",
+      "after": "      1,\n    );\n    const { nativeSyntaxObservationProfiles } =\n      await import('../packages/runtime/dist/native-metadata-profiles.js');\n"
+    },
+    {
+      "before": "    'UNSAFE_PIN_PATH',\n  );\n  const full = path.resolve(repo, relative);\n  check(full.startsWith(path.resolve(repo) + path.sep), 'OUTSIDE_REPO');\n",
+      "after": "    'UNSAFE_PIN_PATH',\n  );\n  if (relative.startsWith('.superpowers/')) {\n    const physical = path.relative(repo, historicalPath(relative)).split(path.sep).join('/');\n    regular(physical, hard.maxStdoutBytes); // Archive bytes use the existing whole-output cap.\n    const bytes = readHistoricalInput(relative);\n    check(bytes.length <= cap, 'EXISTING_BYTE_CAP');\n    return bytes;\n  }\n  const full = path.resolve(repo, relative);\n  check(full.startsWith(path.resolve(repo) + path.sep), 'OUTSIDE_REPO');\n"
+    },
+    {
+      "before": "    'cross-consumer-result.json',\n  ].sort();\n  same(fs.readdirSync(path.resolve(repo, capture)).sort(), expectedRootEntries, 'ROOT_LAYOUT');\n  for (const c of inventory.cases) {\n    check(/^[a-z0-9-]+$/.test(c.caseId), 'CASE_ID');\n    same(\n      fs.readdirSync(path.resolve(repo, capture, c.caseId)).sort(),\n      ['events.jsonl', 'expected.jsonl', 'manifest.json', 'request.jsonl'],\n      'CASE_LAYOUT',\n",
+      "after": "    'cross-consumer-result.json',\n  ].sort();\n  same(historicalEntries(capture), expectedRootEntries, 'ROOT_LAYOUT');\n  for (const c of inventory.cases) {\n    check(/^[a-z0-9-]+$/.test(c.caseId), 'CASE_ID');\n    same(\n      historicalEntries(capture + '/' + c.caseId),\n      ['events.jsonl', 'expected.jsonl', 'manifest.json', 'request.jsonl'],\n      'CASE_LAYOUT',\n"
+    }
+  ],
+  "scripts/test-declared-observation-scope.mjs": [
+    {
+      "before": "import assert from 'node:assert/strict';\nimport test from 'node:test';\n",
+      "after": "import { readHistoricalInput } from '../fixtures/phase1/syntax-contract/ci-portability/historical-inputs.mjs';\nimport assert from 'node:assert/strict';\nimport test from 'node:test';\n"
+    },
+    {
+      "before": "  await import('../packages/providers/dist/history-transition.js');\nconst root = new URL('../fixtures/phase1/declared-observation-scope/', import.meta.url);\nconst workspace = new URL(\n  '../.superpowers/sdd/2026-10-26-phase1-declared-observation-scope/',\n  import.meta.url,\n);\nconst json = (p) => JSON.parse(readFileSync(new URL(p, root), 'utf8'));\nconst old = JSON.parse(readFileSync(new URL('old-behavior.json', workspace), 'utf8'));\nconst reject = (f, code) =>\n  assert.throws(\n",
+      "after": "  await import('../packages/providers/dist/history-transition.js');\nconst root = new URL('../fixtures/phase1/declared-observation-scope/', import.meta.url);\nconst json = (p) => JSON.parse(readFileSync(new URL(p, root), 'utf8'));\nconst old = JSON.parse(\n  readHistoricalInput(\n    '.superpowers/sdd/2026-10-26-phase1-declared-observation-scope/old-behavior.json',\n    'utf8',\n  ),\n);\nconst reject = (f, code) =>\n  assert.throws(\n"
+    },
+    {
+      "before": "  );\n});\ntest('one root registration and prospective registry62 exact36 catalog0', async () => {\n  const command = JSON.parse(\n    readFileSync(new URL('../package.json', import.meta.url)),\n",
+      "after": "  );\n});\ntest('one root registration and prospective local Fixture registration catalog0', async () => {\n  const command = JSON.parse(\n    readFileSync(new URL('../package.json', import.meta.url)),\n"
+    },
+    {
+      "before": "  );\n  const fixtures = await discoverFixtures('fixtures');\n  assert.equal(fixtures.length, 62);\n  assert.equal(fixtures.filter((x) => x.manifest.phase === '1').length, 36);\n  assert.equal(\n    fixtures.filter((x) => x.manifest.id === 'p1-declared-observation-scope-v1').length,\n",
+      "after": "  );\n  const fixtures = await discoverFixtures('fixtures');\n  assert.equal(\n    fixtures.filter((x) => x.manifest.id === 'p1-declared-observation-scope-v1').length,\n"
+    }
+  ],
+  "scripts/test-declared-delta-raw-admission.mjs": [
+    {
+      "before": "import assert from 'node:assert/strict';\nimport test from 'node:test';\n",
+      "after": "import {\n  assertHistoricalFixturePin,\n  readHistoricalInput,\n  applyPortableSourceMigration,\n} from '../fixtures/phase1/syntax-contract/ci-portability/historical-inputs.mjs';\nimport assert from 'node:assert/strict';\nimport test from 'node:test';\n"
+    },
+    {
+      "before": "const w = '.superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission',\n  root = 'fixtures/phase1/declared-delta-raw-admission';\nconst json = (p) => JSON.parse(fs.readFileSync(p));\nconst old = json(w + '/old-behavior.json');\nconst context = () => ({ limits: { ...limits }, budget: { serializedBytes: 0, items: 0 } });\n",
+      "after": "const w = '.superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission',\n  root = 'fixtures/phase1/declared-delta-raw-admission';\nconst json = (p) =>\n  JSON.parse(p.startsWith('.superpowers/') ? readHistoricalInput(p) : fs.readFileSync(p));\nconst old = json(w + '/old-behavior.json');\nconst context = () => ({ limits: { ...limits }, budget: { serializedBytes: 0, items: 0 } });\n"
+    },
+    {
+      "before": "    assert.equal(sha(fs.readFileSync(p)), h, p);\n  for (const [p, h] of Object.entries(json(w + '/semantic-freeze.json').sha256))\n    assert.equal(sha(fs.readFileSync(w + '/first-freeze-raw/' + p)), h, p);\n  const provenance = json(root + '/provenance.json');\n  assert.equal(provenance.sourceOrHistoryAuthenticated, false);\n",
+      "after": "    assert.equal(sha(fs.readFileSync(p)), h, p);\n  for (const [p, h] of Object.entries(json(w + '/semantic-freeze.json').sha256))\n    assert.equal(sha(readHistoricalInput(w + '/first-freeze-raw/' + p)), h, p);\n  const provenance = json(root + '/provenance.json');\n  assert.equal(provenance.sourceOrHistoryAuthenticated, false);\n"
+    },
+    {
+      "before": "  );\n  const r = await discoverFixtures('fixtures');\n  assert.equal(r.length, 62);\n  assert.equal(r.filter((x) => x.manifest.phase === '1').length, 36);\n  assert.equal(r.filter((x) => x.manifest.id === 'p1-declared-delta-raw-admission-v1').length, 1);\n  let total = 0;\n",
+      "after": "  );\n  const r = await discoverFixtures('fixtures');\n  assert.equal(r.filter((x) => x.manifest.id === 'p1-declared-delta-raw-admission-v1').length, 1);\n  let total = 0;\n"
+    },
+    {
+      "before": "    'scripts/test-declared-observation-scope.mjs',\n  ]) {\n    let before = fs.readFileSync(w + '/before-execution/' + p, 'utf8');\n    const variable =\n      p.includes('syntax-mapping-preparation') || p.includes('declared-observation-scope')\n",
+      "after": "    'scripts/test-declared-observation-scope.mjs',\n  ]) {\n    let before = readHistoricalInput(w + '/before-execution/' + p, 'utf8');\n    const variable =\n      p.includes('syntax-mapping-preparation') || p.includes('declared-observation-scope')\n"
+    },
+    {
+      "before": "      total++;\n    }\n    assert.equal(fs.readFileSync(p, 'utf8'), before, p);\n  }\n  assert.equal(total, 16);\n  const old = json(w + '/plan-review.json');\n  for (const [p, h] of Object.entries(old.sha256))\n    if (p.startsWith('fixtures/')) assert.equal(sha(fs.readFileSync(p)), h, p);\n});\n",
+      "after": "      total++;\n    }\n    assert.equal(fs.readFileSync(p, 'utf8'), applyPortableSourceMigration(p, before), p);\n  }\n  assert.equal(total, 16);\n  const old = json(w + '/plan-review.json');\n  for (const [p, h] of Object.entries(old.sha256))\n    if (p.startsWith('fixtures/')) assertHistoricalFixturePin(p, h);\n});\n"
+    }
+  ],
+  "scripts/test-declared-raw-history-candidate.mjs": [
+    {
+      "before": "import assert from 'node:assert/strict';\nimport test from 'node:test';\n",
+      "after": "import {\n  assertHistoricalFixturePin,\n  readHistoricalInput,\n  applyPortableSourceMigration,\n} from '../fixtures/phase1/syntax-contract/ci-portability/historical-inputs.mjs';\nimport assert from 'node:assert/strict';\nimport test from 'node:test';\n"
+    },
+    {
+      "before": "const w = '.superpowers/sdd/2026-10-26-phase1-declared-raw-history-candidate',\n  root = 'fixtures/phase1/declared-raw-history-candidate',\n  json = (p) => JSON.parse(fs.readFileSync(p)),\n  sha = (b) => createHash('sha256').update(b).digest('hex'),\n  limits = {\n",
+      "after": "const w = '.superpowers/sdd/2026-10-26-phase1-declared-raw-history-candidate',\n  root = 'fixtures/phase1/declared-raw-history-candidate',\n  json = (p) =>\n    JSON.parse(p.startsWith('.superpowers/') ? readHistoricalInput(p) : fs.readFileSync(p)),\n  sha = (b) => createHash('sha256').update(b).digest('hex'),\n  limits = {\n"
+    },
+    {
+      "before": "    assert.equal(sha(fs.readFileSync(p)), h, p);\n  for (const [p, h] of Object.entries(json(w + '/semantic-freeze.json').sha256))\n    assert.equal(sha(fs.readFileSync(w + '/first-freeze-raw/' + p)), h, p);\n  for (const [p, h] of Object.entries(json(w + '/consumer-freeze-final-format.json').sha256)) {\n    if (p === 'scripts/test-declared-raw-history-candidate.mjs') {\n",
+      "after": "    assert.equal(sha(fs.readFileSync(p)), h, p);\n  for (const [p, h] of Object.entries(json(w + '/semantic-freeze.json').sha256))\n    assert.equal(sha(readHistoricalInput(w + '/first-freeze-raw/' + p)), h, p);\n  for (const [p, h] of Object.entries(json(w + '/consumer-freeze-final-format.json').sha256)) {\n    if (p === 'scripts/test-declared-raw-history-candidate.mjs') {\n"
+    },
+    {
+      "before": "        '.superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure';\n      const successor = json(successorRoot + '/registration-successor.json');\n      let expected = fs.readFileSync(successorRoot + '/originals/' + p, 'utf8');\n      assert.equal(sha(Buffer.from(expected)), h, p);\n      for (const patch of successor.selfPatches) {\n",
+      "after": "        '.superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure';\n      const successor = json(successorRoot + '/registration-successor.json');\n      let expected = readHistoricalInput(successorRoot + '/originals/' + p, 'utf8');\n      assert.equal(sha(Buffer.from(expected)), h, p);\n      for (const patch of successor.selfPatches) {\n"
+    },
+    {
+      "before": "        expected = expected.replace(patch.old, patch.new);\n      }\n      assert.equal(fs.readFileSync(p, 'utf8'), expected, p);\n    } else assert.equal(sha(fs.readFileSync(p)), h, p);\n  }\n",
+      "after": "        expected = expected.replace(patch.old, patch.new);\n      }\n      assert.equal(fs.readFileSync(p, 'utf8'), applyPortableSourceMigration(p, expected), p);\n    } else assert.equal(sha(fs.readFileSync(p)), h, p);\n  }\n"
+    },
+    {
+      "before": "  assert.deepEqual(Object.keys(api).sort(), [\n    'DeclaredDeltaRawSupportError',\n    'composeDeclaredDeltaRawSupportCandidate',\n    'composeDeclaredFullRawSupportCandidate',\n    'default',\n",
+      "after": "  assert.deepEqual(Object.keys(api).sort(), [\n    'DeclaredDeltaRawSupportError',\n    'composeDeclaredBindingAwareDeltaRawSupportCandidateWithBudget',\n    'composeDeclaredBindingAwareFullRawSupportCandidate',\n    'composeDeclaredBindingDeltaRawSupportCandidateWithBudget',\n    'composeDeclaredBindingFullRawSupportCandidate',\n    'composeDeclaredDeltaRawSupportCandidate',\n    'composeDeclaredFrameworkSurfaceDeltaRawSupportCandidateWithBudget',\n    'composeDeclaredFrameworkSurfaceFullRawSupportCandidate',\n    'composeDeclaredFullRawSupportCandidate',\n    'default',\n"
+    },
+    {
+      "before": "  let n = 0;\n  for (const row of m.registrationReplacements) {\n    let before = fs.readFileSync(w + '/before-execution/' + row.path, 'utf8');\n    for (const [a, b] of row.pairs) {\n      assert.equal(before.split(a).length, 2);\n",
+      "after": "  let n = 0;\n  for (const row of m.registrationReplacements) {\n    let before = readHistoricalInput(w + '/before-execution/' + row.path, 'utf8');\n    for (const [a, b] of row.pairs) {\n      assert.equal(before.split(a).length, 2);\n"
+    },
+    {
+      "before": "      n++;\n    }\n    assert.equal(fs.readFileSync(row.path, 'utf8'), before, row.path);\n  }\n  assert.equal(n, 21);\n  const r = await discoverFixtures('fixtures');\n  assert.equal(r.length, 62);\n  assert.equal(r.filter((x) => x.manifest.phase === '1').length, 36);\n  assert.equal(r.filter((x) => x.manifest.id === 'p1-declared-raw-history-candidate-v1').length, 1);\n  for (const [p, h] of Object.entries(json(w + '/planning-start.json').fixtureSha256))\n    assert.equal(sha(fs.readFileSync(p)), h, p);\n});\ntest('G15 old Java and Python normalization stays exact', async () => {\n",
+      "after": "      n++;\n    }\n    assert.equal(\n      fs.readFileSync(row.path, 'utf8'),\n      applyPortableSourceMigration(row.path, before),\n      row.path,\n    );\n  }\n  assert.equal(n, 21);\n  const r = await discoverFixtures('fixtures');\n  assert.equal(r.filter((x) => x.manifest.id === 'p1-declared-raw-history-candidate-v1').length, 1);\n  for (const [p, h] of Object.entries(json(w + '/planning-start.json').fixtureSha256))\n    assertHistoricalFixturePin(p, h);\n});\ntest('G15 old Java and Python normalization stays exact', async () => {\n"
+    }
+  ]
+}

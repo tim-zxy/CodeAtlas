@@ -30,7 +30,7 @@ test('R009 creates active candidates tied to bindings without changing prior sch
     await runMigrations({ databasePath: path, databaseKind: 'REPOSITORY', manifestUrl });
     const db = new DatabaseSync(path);
     try {
-      assert.equal(db.prepare('PRAGMA user_version').get().user_version, 10);
+      assert.equal(db.prepare('PRAGMA user_version').get().user_version, 13);
       const table = db
         .prepare("SELECT name FROM sqlite_master WHERE type = 'table' AND name = ?")
         .get('active_support_candidates');
@@ -101,7 +101,7 @@ test('R008 to R009 leaves old active graph and bindings without invented candida
     assert.deepEqual(
       (await runMigrations({ databasePath: path, databaseKind: 'REPOSITORY', manifestUrl }))
         .appliedVersions,
-      [9, 10],
+      [9, 10, 11, 12, 13],
     );
     const db = new DatabaseSync(path);
     try {

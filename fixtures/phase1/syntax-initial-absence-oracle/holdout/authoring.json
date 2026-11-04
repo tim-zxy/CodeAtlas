@@ -1,0 +1,52 @@
+{
+  "kind": "INDEPENDENT_SOURCE_LITERAL_LIBRARY_ORACLE",
+  "sourceSha256": "38d4338d71f7b9a6e3b097fc6cf857951170f256ed51cceda181747ca2ee33f8",
+  "spans": {
+    "module": [
+      0,
+      105
+    ],
+    "import": [
+      20,
+      27
+    ],
+    "assignment": [
+      28,
+      43
+    ],
+    "invocation": [
+      34,
+      43
+    ],
+    "decoration": [
+      44,
+      64
+    ],
+    "argument": [
+      53,
+      63
+    ],
+    "function": [
+      65,
+      104
+    ],
+    "functionName": [
+      69,
+      85
+    ]
+  },
+  "counts": {
+    "nodes": 2,
+    "edges": 1,
+    "syntax": 5,
+    "coverage": 1,
+    "diagnostics": 0
+  },
+  "outcome": "PARTIAL",
+  "limitations": [
+    "SYNTHETIC_UNIT_REPO_AND_STAGE_CONTEXT",
+    "EXISTING_UNIT_BUDGETS_ONLY",
+    "NO_ACTUAL_NATIVE_CLI_OR_PROFILE_QUALIFICATION",
+    "NO_SYNTAX_CANONICAL_SUPPORT_OR_STORE_ACTIVATION"
+  ]
+}

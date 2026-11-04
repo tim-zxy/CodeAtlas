@@ -23,7 +23,7 @@ const layout = await import('./helpers/native-refresh-ci-layout.mjs').catch((err
 const native = Buffer.from('owned synthetic executable bytes\n');
 const nativeSha256 = createHash('sha256').update(native).digest('hex');
 
-test('versioned operational layouts preserve v1 to v3 and choose R4 for new generation', () => {
+test('versioned operational layouts preserve v1 to v4 and choose R5 for new generation', () => {
   assert.equal(typeof layout.refreshCiLayoutRootForRevision, 'function');
   assert.equal(
     layout.refreshCiLayoutRootForRevision('p05-d5-exact-layout-v1'),
@@ -41,18 +41,19 @@ test('versioned operational layouts preserve v1 to v3 and choose R4 for new gene
     layout.refreshCiLayoutRootForRevision('p05-d5-exact-layout-v4'),
     'C:\\CodeAtlas-P05-D5-R4',
   );
-  assert.equal(layout.refreshCiLayoutRoot, 'C:\\CodeAtlas-P05-D5-R4');
-  assert.equal(layout.refreshCiLayoutRevision, 'p05-d5-exact-layout-v4');
+  assert.equal(layout.refreshCiLayoutRoot, 'C:\\CodeAtlas-P05-D5-R5');
+  assert.equal(layout.refreshCiLayoutRevision, 'p05-d5-exact-layout-v5');
   assert.throws(() => layout.refreshCiLayoutRootForRevision('other-layout'), /revision|layout/i);
 });
 
-test('operational output confinement preserves all four frozen layouts', () => {
+test('operational output confinement preserves all five frozen layouts', () => {
   assert.equal(typeof layout.assertRefreshCiOutputOutsideLayouts, 'function');
   for (const root of [
     'C:\\CodeAtlas-P05-D5',
     'C:\\CodeAtlas-P05-D5-R2',
     'C:\\CodeAtlas-P05-D5-R3',
     'C:\\CodeAtlas-P05-D5-R4',
+    'C:\\CodeAtlas-P05-D5-R5',
   ]) {
     for (const output of [root, path.join(root, 'evidence', 'trial')])
       assert.throws(() => layout.assertRefreshCiOutputOutsideLayouts(output), /overlap|layout/i);
@@ -202,4 +203,81 @@ test('a non-Windows physical environment root refuses before layout acquisition'
   assert.equal(result.status, 0, result.stderr);
   assert.match(result.stdout, /Unsupported Windows system directory/);
   assert.deepEqual(await readdir(input.parent), ['original.exe']);
+});
+
+test('R5 preparation scope pins finite Source ranges without granting qualification', async () => {
+  const { r5PreparationScope } =
+    await import('../packages/runtime/test/helpers/native-refresh-r5-preparation-scope.mjs');
+  const context = {
+    executablePath: path.join(
+      layout.refreshCiLayoutRootForRevision('p05-d5-exact-layout-v5'),
+      'native',
+      'codeatlas-native-analyzer.exe',
+    ),
+  };
+  for (const [family, accepted, next] of [
+    ['source-empty-input-boundary', 394, 395],
+    ['source-shared-owners-boundary', 238, 239],
+    ['source-complete-coverage-boundary', 392, 393],
+    ['source-field-sites-boundary', 1982, 1983],
+    ['source-dense-remove-boundary', 1981, 1982],
+    ['source-dense-upsert-boundary', 1986, 1987],
+  ]) {
+    const value = r5PreparationScope(family, context);
+    assert.deepEqual(value, { accepted, next });
+    assert.ok(Object.isFrozen(value));
+  }
+  assert.throws(() => r5PreparationScope('foreign-family', context), /family/i);
+  const data = JSON.parse(
+    await readFile(
+      new URL(
+        '../packages/runtime/test/helpers/native-refresh-r5-preparation-scope.json',
+        import.meta.url,
+      ),
+      'utf8',
+    ),
+  );
+  assert.equal(data.kind, 'HISTORICAL_SOURCE_SCOPE_ONLY');
+  assert.equal(data.qualification, false);
+  assert.equal(data.sources.length, 8);
+  const approval = JSON.parse(
+    await readFile(
+      new URL('../fixtures/ipc/refresh-v3/approved-transport.json', import.meta.url),
+      'utf8',
+    ),
+  );
+  for (const source of data.sources) {
+    const pin = approval.archive.entries.find((entry) => entry.path === source.originalPath);
+    assert.ok(pin);
+    assert.equal(source.sha256, pin.sha256);
+    assert.equal(source.bytes, pin.bytes);
+  }
+});
+
+test('R5 preparation scope leaves old contexts unchanged and counts base files', async () => {
+  const { r5PreparationScope } =
+    await import('../packages/runtime/test/helpers/native-refresh-r5-preparation-scope.mjs');
+  assert.equal(r5PreparationScope('foreign-family', undefined), null);
+  for (const revision of ['v1', 'v2', 'v3', 'v4']) {
+    const executablePath = path.join(
+      layout.refreshCiLayoutRootForRevision('p05-d5-exact-layout-' + revision),
+      'native',
+      'codeatlas-native-analyzer.exe',
+    );
+    assert.equal(r5PreparationScope('source-field-sites-boundary', { executablePath }), null);
+  }
+  const ctx = {
+    executablePath: path.join(
+      layout.refreshCiLayoutRoot,
+      'native',
+      'codeatlas-native-analyzer.exe',
+    ),
+  };
+  const scope = r5PreparationScope('source-complete-coverage-boundary', ctx);
+  const baseCount = 2,
+    seedCount = 1;
+  assert.equal(scope.next - baseCount - seedCount, 390);
+  assert.equal(scope.next - baseCount - seedCount + 4, 394);
+  const upsert = r5PreparationScope('source-dense-upsert-boundary', ctx);
+  assert.equal(upsert.next - 1982 + 1, 6);
 });

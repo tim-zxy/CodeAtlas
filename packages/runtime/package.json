@@ -24,7 +24,9 @@
   },
   "dependencies": {
     "@codeatlas/application": "workspace:*",
+    "@codeatlas/plugins": "workspace:*",
     "@codeatlas/providers": "workspace:*",
-    "@codeatlas/storage": "workspace:*"
+    "@codeatlas/storage": "workspace:*",
+    "yaml": "2.8.2"
   }
 }

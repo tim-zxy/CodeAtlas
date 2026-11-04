@@ -1,0 +1,315 @@
+{
+  "domain": "codeatlas-code-activation-v1",
+  "groups": [
+    {
+      "tag": "HEADER",
+      "entries": [
+        {
+          "key": ["capture-repo"],
+          "value": {
+            "committedSnapshotCount": 1,
+            "indexedContentFingerprint": "capture-fingerprint",
+            "indexedRevisionId": "capture-worktree",
+            "repositoryId": "capture-repo"
+          }
+        }
+      ]
+    },
+    {
+      "tag": "NODE",
+      "entries": [
+        {
+          "key": ["node:"],
+          "value": {
+            "confidence": {
+              "method": "fixture-observation",
+              "reasons": [],
+              "score": 1
+            },
+            "factKey": "key:node:",
+            "id": "node:",
+            "kind": "SYMBOL",
+            "name": "private é\\line\nend",
+            "qualifiedName": "fixture.node:",
+            "repositoryId": "capture-repo",
+            "revisionId": "capture-worktree",
+            "sourceRange": {
+              "endColumn": 1,
+              "endLine": 1,
+              "sourceFileId": "source:one",
+              "startColumn": 0,
+              "startLine": 1
+            },
+            "symbolKind": "FUNCTION"
+          }
+        },
+        {
+          "key": ["node:𐀀"],
+          "value": {
+            "confidence": {
+              "method": "fixture-observation",
+              "reasons": [],
+              "score": 1
+            },
+            "factKey": "key:node:𐀀",
+            "id": "node:𐀀",
+            "kind": "SYMBOL",
+            "name": "astral \"quote\"",
+            "qualifiedName": "fixture.node:𐀀",
+            "repositoryId": "capture-repo",
+            "revisionId": "capture-worktree",
+            "sourceRange": {
+              "endColumn": 1,
+              "endLine": 1,
+              "sourceFileId": "source:one",
+              "startColumn": 0,
+              "startLine": 1
+            },
+            "symbolKind": "FUNCTION"
+          }
+        }
+      ]
+    },
+    {
+      "tag": "EDGE",
+      "entries": []
+    },
+    {
+      "tag": "EVIDENCE",
+      "entries": [
+        {
+          "key": [
+            "provider-evidence-v1:c554fe069e6e56109d7e17755af65949418550d9790b35eb17c8942819cea452"
+          ],
+          "value": {
+            "id": "provider-evidence-v1:c554fe069e6e56109d7e17755af65949418550d9790b35eb17c8942819cea452",
+            "providerFact": {
+              "factType": "NODE",
+              "providerFactId": "provider:node:𐀀",
+              "providerId": "alpha"
+            },
+            "providerSnapshotId": "snapshot:alpha",
+            "repositoryId": "capture-repo",
+            "revisionId": "capture-worktree",
+            "status": "ACTIVE"
+          }
+        },
+        {
+          "key": [
+            "provider-evidence-v1:ca2ee8be63d78a5d209491a9d57c34c7adf593bd8edf049f1038978b1e864858"
+          ],
+          "value": {
+            "id": "provider-evidence-v1:ca2ee8be63d78a5d209491a9d57c34c7adf593bd8edf049f1038978b1e864858",
+            "providerFact": {
+              "factType": "NODE",
+              "providerFactId": "provider:node:",
+              "providerId": "alpha"
+            },
+            "providerSnapshotId": "snapshot:alpha",
+            "repositoryId": "capture-repo",
+            "revisionId": "capture-worktree",
+            "status": "ACTIVE"
+          }
+        }
+      ]
+    },
+    {
+      "tag": "BINDING",
+      "entries": [
+        {
+          "key": [
+            "provider-evidence-v1:c554fe069e6e56109d7e17755af65949418550d9790b35eb17c8942819cea452",
+            "NODE",
+            "node:𐀀"
+          ],
+          "value": {
+            "canonicalFact": {
+              "factType": "NODE",
+              "id": "node:𐀀"
+            },
+            "evidenceId": "provider-evidence-v1:c554fe069e6e56109d7e17755af65949418550d9790b35eb17c8942819cea452",
+            "providerFact": {
+              "factType": "NODE",
+              "providerFactId": "provider:node:𐀀",
+              "providerId": "alpha"
+            },
+            "providerSnapshotId": "snapshot:alpha"
+          }
+        },
+        {
+          "key": [
+            "provider-evidence-v1:ca2ee8be63d78a5d209491a9d57c34c7adf593bd8edf049f1038978b1e864858",
+            "NODE",
+            "node:"
+          ],
+          "value": {
+            "canonicalFact": {
+              "factType": "NODE",
+              "id": "node:"
+            },
+            "evidenceId": "provider-evidence-v1:ca2ee8be63d78a5d209491a9d57c34c7adf593bd8edf049f1038978b1e864858",
+            "providerFact": {
+              "factType": "NODE",
+              "providerFactId": "provider:node:",
+              "providerId": "alpha"
+            },
+            "providerSnapshotId": "snapshot:alpha"
+          }
+        }
+      ]
+    },
+    {
+      "tag": "FACT_EVIDENCE",
+      "entries": [
+        {
+          "key": [
+            "provider-evidence-v1:c554fe069e6e56109d7e17755af65949418550d9790b35eb17c8942819cea452",
+            "NODE",
+            "node:𐀀"
+          ],
+          "value": {
+            "evidenceId": "provider-evidence-v1:c554fe069e6e56109d7e17755af65949418550d9790b35eb17c8942819cea452",
+            "fact": {
+              "factType": "NODE",
+              "id": "node:𐀀"
+            }
+          }
+        },
+        {
+          "key": [
+            "provider-evidence-v1:ca2ee8be63d78a5d209491a9d57c34c7adf593bd8edf049f1038978b1e864858",
+            "NODE",
+            "node:"
+          ],
+          "value": {
+            "evidenceId": "provider-evidence-v1:ca2ee8be63d78a5d209491a9d57c34c7adf593bd8edf049f1038978b1e864858",
+            "fact": {
+              "factType": "NODE",
+              "id": "node:"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "tag": "SUPPORT_CANDIDATE",
+      "entries": [
+        {
+          "key": [
+            "provider-evidence-v1:c554fe069e6e56109d7e17755af65949418550d9790b35eb17c8942819cea452",
+            "NODE",
+            "node:𐀀"
+          ],
+          "value": {
+            "candidate": {
+              "confidence": {
+                "method": "fixture-observation",
+                "reasons": [],
+                "score": 1
+              },
+              "factKey": "key:node:𐀀",
+              "id": "node:𐀀",
+              "kind": "SYMBOL",
+              "name": "astral \"quote\"",
+              "qualifiedName": "fixture.node:𐀀",
+              "repositoryId": "capture-repo",
+              "revisionId": "capture-worktree",
+              "sourceRange": {
+                "endColumn": 1,
+                "endLine": 1,
+                "sourceFileId": "source:one",
+                "startColumn": 0,
+                "startLine": 1
+              },
+              "symbolKind": "FUNCTION"
+            },
+            "canonicalFactId": "node:𐀀",
+            "evidenceId": "provider-evidence-v1:c554fe069e6e56109d7e17755af65949418550d9790b35eb17c8942819cea452",
+            "factType": "NODE"
+          }
+        },
+        {
+          "key": [
+            "provider-evidence-v1:ca2ee8be63d78a5d209491a9d57c34c7adf593bd8edf049f1038978b1e864858",
+            "NODE",
+            "node:"
+          ],
+          "value": {
+            "candidate": {
+              "confidence": {
+                "method": "fixture-observation",
+                "reasons": [],
+                "score": 1
+              },
+              "factKey": "key:node:",
+              "id": "node:",
+              "kind": "SYMBOL",
+              "name": "private é\\line\nend",
+              "qualifiedName": "fixture.node:",
+              "repositoryId": "capture-repo",
+              "revisionId": "capture-worktree",
+              "sourceRange": {
+                "endColumn": 1,
+                "endLine": 1,
+                "sourceFileId": "source:one",
+                "startColumn": 0,
+                "startLine": 1
+              },
+              "symbolKind": "FUNCTION"
+            },
+            "canonicalFactId": "node:",
+            "evidenceId": "provider-evidence-v1:ca2ee8be63d78a5d209491a9d57c34c7adf593bd8edf049f1038978b1e864858",
+            "factType": "NODE"
+          }
+        }
+      ]
+    },
+    {
+      "tag": "SNAPSHOT",
+      "entries": [
+        {
+          "key": ["snapshot:alpha"],
+          "value": {
+            "capabilities": [
+              {
+                "coverage": "COMPLETE",
+                "name": "CALL",
+                "support": "SUPPORTED"
+              },
+              {
+                "coverage": "COMPLETE",
+                "name": "SYMBOL",
+                "support": "SUPPORTED"
+              }
+            ],
+            "snapshot": {
+              "id": "snapshot:alpha",
+              "outcome": "SUCCEEDED",
+              "providerId": "alpha",
+              "providerVersion": "fixture-v1",
+              "repositoryId": "capture-repo",
+              "requestedRevisionFingerprint": "capture-fingerprint",
+              "requestedRevisionId": "capture-worktree",
+              "runtimeVersion": "fixture-v1"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "tag": "COVERAGE",
+      "entries": [
+        {
+          "key": ["snapshot:alpha", "SYMBOL", "SOURCE", "source:one", "COMPLETE"],
+          "value": {
+            "capabilityName": "SYMBOL",
+            "multiplicity": 1,
+            "providerSnapshotId": "snapshot:alpha",
+            "sourceFileId": "source:one",
+            "status": "COMPLETE"
+          }
+        }
+      ]
+    }
+  ]
+}

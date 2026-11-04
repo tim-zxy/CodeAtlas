@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "p1-fastapi-v1",
+  "category": "runtime-graph",
+  "phase": "1",
+  "languages": ["python"],
+  "frameworks": ["fastapi"],
+  "capabilities": ["FRAMEWORK_RUNTIME_CANDIDATE", "FRAMEWORK_BINDING_CANDIDATE"],
+  "inputs": {
+    "vectors": "inputs.json",
+    "sourceAdequacy": "source-adequacy/README.md",
+    "dependsDefault": "source-adequacy/depends-default.py",
+    "dependsAnnotation": "source-adequacy/depends-annotation.py",
+    "frameworkSource": "source-adequacy/routes.py",
+    "surfaceSourceP4": "source-adequacy/depends-shadow.py",
+    "surfaceSourceP5": "source-adequacy/inventory-service.py"
+  },
+  "expected": {
+    "contract": "expected.json",
+    "sourceReview": "source-adequacy/obligations.json"
+  },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

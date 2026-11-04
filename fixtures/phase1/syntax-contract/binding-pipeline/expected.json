@@ -1,0 +1,114 @@
+{
+  "scope": "Independent Source surface oracle, including EOF-coincident AST ranges",
+  "cases": [
+    {
+      "file": "direct.py",
+      "complete": true,
+      "imports": ["PYTHON_MODULE"],
+      "effects": []
+    },
+    {
+      "file": "imports.py",
+      "complete": false,
+      "imports": ["PYTHON_MODULE", "PYTHON_SYMBOL", "PYTHON_RELATIVE", "PYTHON_WILDCARD"],
+      "effects": []
+    },
+    {
+      "file": "effects.py",
+      "complete": false,
+      "imports": [],
+      "effects": [
+        "ITERATION_TARGET",
+        "CONTEXT_TARGET",
+        "EXCEPTION_TARGET",
+        "WALRUS_TARGET",
+        "UNBIND",
+        "AUGMENT"
+      ]
+    },
+    {
+      "file": "scope.py",
+      "complete": true,
+      "imports": [],
+      "effects": ["GLOBAL", "NONLOCAL"]
+    },
+    {
+      "file": "patterns.py",
+      "complete": false,
+      "imports": [],
+      "effects": ["PATTERN_TARGET"]
+    },
+    {
+      "file": "unsupported.py",
+      "complete": false,
+      "imports": [],
+      "effects": []
+    },
+    {
+      "file": "Main.java",
+      "complete": true,
+      "imports": ["JAVA_TYPE"],
+      "effects": []
+    },
+    {
+      "file": "Imports.java",
+      "complete": true,
+      "imports": ["JAVA_TYPE", "JAVA_STATIC_MEMBER", "JAVA_WILDCARD", "JAVA_STATIC_WILDCARD"],
+      "effects": []
+    },
+    {
+      "file": "Effects.java",
+      "complete": false,
+      "imports": [],
+      "effects": ["ITERATION_TARGET", "CONTEXT_TARGET", "EXCEPTION_TARGET", "AUGMENT"]
+    },
+    {
+      "file": "defaults.py",
+      "complete": true,
+      "imports": [],
+      "effects": []
+    },
+    {
+      "file": "no-binding.py",
+      "complete": true,
+      "imports": [],
+      "effects": []
+    },
+    {
+      "file": "Assignment.java",
+      "complete": true,
+      "imports": [],
+      "effects": ["AUGMENT"]
+    },
+    {
+      "file": "class-scope.py",
+      "complete": false,
+      "imports": [],
+      "effects": []
+    },
+    {
+      "file": "Block.java",
+      "complete": false,
+      "imports": [],
+      "effects": []
+    },
+    {
+      "file": "single-function.py",
+      "complete": true,
+      "imports": [],
+      "effects": []
+    },
+    {
+      "file": "single-assignment.py",
+      "complete": true,
+      "imports": [],
+      "effects": []
+    },
+    {
+      "file": "single-call.py",
+      "complete": true,
+      "imports": [],
+      "effects": []
+    }
+  ]
+}

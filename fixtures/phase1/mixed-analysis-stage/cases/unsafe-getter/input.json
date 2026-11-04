@@ -1,0 +1,4 @@
+{
+  "scenario": "unsafe-getter",
+  "base": "base-input.json"
+}

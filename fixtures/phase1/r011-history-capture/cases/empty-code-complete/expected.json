@@ -1,0 +1,121 @@
+{
+  "status": "AVAILABLE",
+  "history": {
+    "codeIdentity": "3770ffaf867a8355f68661bc7711a28fc4f5b16654172caba705718aba38010c",
+    "observation": null,
+    "originRegistryDigest": "2b882c27d543d092c83322f5f48282e9f52fdf4c471a15531098b7a66d0a1f30",
+    "parent": null,
+    "schemaVersion": 1,
+    "sourceIdentity": "ce3ce67e19cc5d618d097d195c3b1ab54994212f92bc71eed784a2a23917124e",
+    "state": {
+      "basis": {
+        "repositoryId": "capture-repo",
+        "revisionId": "capture-worktree",
+        "contentFingerprint": "capture-fingerprint",
+        "codeActivationDigest": "3770ffaf867a8355f68661bc7711a28fc4f5b16654172caba705718aba38010c"
+      },
+      "contracts": [
+        {
+          "contract": "fixture-v1",
+          "extractor": "fixture-v1",
+          "normalizer": "fixture-v1",
+          "policy": "fixture-v1",
+          "providerId": "alpha"
+        }
+      ],
+      "coverage": [
+        {
+          "coverage": "COMPLETE",
+          "facet": "SYMBOL",
+          "originSnapshotId": "snapshot:alpha",
+          "unitId": "unit:alpha"
+        }
+      ],
+      "edges": [],
+      "inventory": [
+        {
+          "classification": {
+            "contentKind": "TEXT",
+            "provenance": "AUTHORED",
+            "role": "SOURCE"
+          },
+          "contentFingerprint": "source-fingerprint",
+          "id": "source:one",
+          "languageHint": null,
+          "path": "src/observation.txt",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "sensitivity": "PUBLIC"
+        }
+      ],
+      "nodes": [],
+      "repositoryLocatorDigest": "00f7217f0d1a535342bd3dad39a25b2c1d2ae98d69476a4e575f4406bc214595",
+      "snapshots": [
+        {
+          "capabilities": [
+            {
+              "coverage": "COMPLETE",
+              "name": "SYMBOL",
+              "support": "SUPPORTED"
+            },
+            {
+              "coverage": "COMPLETE",
+              "name": "CALL",
+              "support": "SUPPORTED"
+            }
+          ],
+          "completedAt": "2026-10-23T00:00:01.000Z",
+          "diagnostics": [],
+          "id": "snapshot:alpha",
+          "outcome": "SUCCEEDED",
+          "providerId": "alpha",
+          "providerVersion": "fixture-v1",
+          "repositoryId": "capture-repo",
+          "requestedRevisionFingerprint": "capture-fingerprint",
+          "requestedRevisionId": "capture-worktree",
+          "runtimeVersion": "fixture-v1",
+          "startedAt": "2026-10-23T00:00:00.000Z"
+        }
+      ],
+      "supports": [],
+      "syntaxOrigins": [],
+      "units": [
+        {
+          "id": "unit:alpha",
+          "kind": "PROVIDER_SCOPE",
+          "providerId": "alpha",
+          "sourceFileIds": ["source:one"]
+        }
+      ]
+    },
+    "syntaxMembers": [],
+    "transitions": null
+  },
+  "targetSource": {
+    "repositoryId": "capture-repo",
+    "revisionId": "capture-worktree",
+    "contentFingerprint": "capture-fingerprint"
+  },
+  "targetInventory": [
+    {
+      "id": "source:one",
+      "repositoryId": "capture-repo",
+      "revisionId": "capture-worktree",
+      "path": "src/observation.txt",
+      "contentFingerprint": "source-fingerprint",
+      "classification": {
+        "role": "SOURCE",
+        "provenance": "AUTHORED",
+        "contentKind": "TEXT"
+      },
+      "languageHint": null,
+      "sensitivity": "PUBLIC"
+    }
+  ],
+  "activeBasis": {
+    "repositoryId": "capture-repo",
+    "revisionId": "capture-worktree",
+    "contentFingerprint": "capture-fingerprint",
+    "codeActivationDigest": "3770ffaf867a8355f68661bc7711a28fc4f5b16654172caba705718aba38010c"
+  }
+}

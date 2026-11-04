@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "identity": {
+    "fixtureId": "literal-phase1-report",
+    "manifestDigest": "1111111111111111111111111111111111111111111111111111111111111111",
+    "inputDigest": "2222222222222222222222222222222222222222222222222222222222222222",
+    "expectedDigest": "3333333333333333333333333333333333333333333333333333333333333333",
+    "implementationDigest": "4444444444444444444444444444444444444444444444444444444444444444",
+    "configDigest": "5555555555555555555555555555555555555555555555555555555555555555",
+    "policyDigest": "6666666666666666666666666666666666666666666666666666666666666666",
+    "versions": {
+      "product": "test-product",
+      "native": null,
+      "grammar": null,
+      "normalizer": null,
+      "plugin": null,
+      "workflow": null,
+      "prompt": null,
+      "modelPolicy": null,
+      "model": null,
+      "platform": "fixture-only"
+    },
+    "unavailableReasons": {
+      "native": "NOT_APPLICABLE",
+      "grammar": "NOT_APPLICABLE",
+      "normalizer": "NOT_APPLICABLE",
+      "plugin": "NOT_APPLICABLE",
+      "workflow": "NOT_APPLICABLE",
+      "prompt": "NOT_APPLICABLE",
+      "modelPolicy": "NOT_APPLICABLE",
+      "model": "NOT_APPLICABLE"
+    }
+  },
+  "requiredObligations": [
+    {
+      "id": "strict-structure",
+      "layer": "L2",
+      "kind": "ASSERTION",
+      "critical": true,
+      "executionKind": "PURE_CONTRACT",
+      "oracleDigest": "3333333333333333333333333333333333333333333333333333333333333333",
+      "metric": null,
+      "applicability": {
+        "applicable": true,
+        "decisionRef": null,
+        "reason": null
+      }
+    }
+  ],
+  "observations": [
+    {
+      "obligationId": "strict-structure",
+      "executionKind": "PURE_CONTRACT",
+      "oracleDigest": "3333333333333333333333333333333333333333333333333333333333333333",
+      "inputDigest": "2222222222222222222222222222222222222222222222222222222222222222",
+      "implementationDigest": "4444444444444444444444444444444444444444444444444444444444444444",
+      "basisRefs": [],
+      "actualArtifact": {
+        "ref": "fixture:literal-result",
+        "digest": "7777777777777777777777777777777777777777777777777777777777777777"
+      },
+      "status": "PASS",
+      "counts": null,
+      "unavailableReason": null,
+      "timings": {
+        "durationMs": null,
+        "peakBytes": null,
+        "reason": "SYNTHETIC_NO_MEASUREMENT"
+      },
+      "warnings": []
+    }
+  ],
+  "baselineRef": null,
+  "limitations": ["SYNTHETIC_CONTRACT_ONLY"]
+}

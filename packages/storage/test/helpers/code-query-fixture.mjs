@@ -1,3 +1,4 @@
+import { applyMigrationPlan } from '../../dist/migrations/runner.js';
 import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -19,6 +20,7 @@ import {
   RepositoryPatchStage,
   RepositorySourceStateStore,
   runMigrations,
+  loadMigrationPlan,
 } from '../../dist/index.js';
 
 const fixtureRoot = new URL('../../../../fixtures/queries/code-query/', import.meta.url);
@@ -160,13 +162,28 @@ function readState(db) {
   );
 }
 
-export async function withCodeQueryDatabase(t, scenario, callback) {
+export async function withCodeQueryDatabase(t, scenario, callback, migrationVersion) {
   if (!['current', 'multi-provider', 'stale', 'not-indexed'].includes(scenario))
     throw new Error('Unknown query fixture scenario');
   const directory = await mkdtemp(join(tmpdir(), 'codeatlas-query-fixture-'));
   t.after(() => rm(directory, { recursive: true, force: true }));
   const databasePath = join(directory, 'repository with spaces.sqlite');
-  await runMigrations({ databasePath, databaseKind: 'REPOSITORY', manifestUrl });
+  if (migrationVersion === undefined) {
+    await runMigrations({ databasePath, databaseKind: 'REPOSITORY', manifestUrl });
+  } else {
+    // Historical Evaluation proves the declared R010 reader; current query tests use the full plan.
+    const plan = await loadMigrationPlan(manifestUrl, 'REPOSITORY');
+    const setup = new DatabaseSync(databasePath);
+    try {
+      applyMigrationPlan(setup, {
+        ...plan,
+        latestVersion: migrationVersion,
+        migrations: plan.migrations.slice(0, migrationVersion),
+      });
+    } finally {
+      setup.close();
+    }
+  }
   const db = new DatabaseSync(databasePath);
   let beforeState;
   try {

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "p1-mixed-runtime-readiness-v1",
+  "category": "runtime-graph",
+  "phase": "1",
+  "languages": ["java", "python"],
+  "frameworks": [],
+  "capabilities": ["SOURCE_REVALIDATION", "PRIVATE_PROCESS_LIFECYCLE"],
+  "inputs": {
+    "cases": "inputs/cases.json",
+    "source": "inputs/source/",
+    "sourceIntegration": "source-integration/cases.json",
+    "requestPreparation": "request-preparation/cases.json",
+    "javaOwnerTiming": "java-owner-timing/cases.json",
+    "boundedSourceState": "bounded-source-state/cases.json",
+    "mixedExecution": "mixed-execution/cases.json",
+    "processAcquisition": "process-acquisition/cases.json"
+  },
+  "expected": {
+    "source": "expected/source.json",
+    "accounting": "expected/accounting.json",
+    "process": "expected/process.json",
+    "dispatch": "expected/dispatch.json",
+    "sourceIntegration": "source-integration/expected.json",
+    "requestPreparation": "request-preparation/expected.json",
+    "javaOwnerTiming": "java-owner-timing/expected.json",
+    "boundedSourceState": "bounded-source-state/expected.json",
+    "mixedExecution": "mixed-execution/expected.json",
+    "processAcquisition": "process-acquisition/expected.json"
+  },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

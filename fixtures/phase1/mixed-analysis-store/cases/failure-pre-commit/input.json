@@ -1,0 +1,5 @@
+{
+  "point": "pre-commit",
+  "base": "base-input.json",
+  "processExit": true
+}

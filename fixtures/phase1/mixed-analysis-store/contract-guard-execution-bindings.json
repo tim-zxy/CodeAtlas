@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "kind": "EXPLICIT_FIXTURE_CONTEXT_CORRECTION",
+  "qualification": "DECLARED_NODE_SQLITE_COMPONENT_ONLY",
+  "contextAuthority": "recovery-execution-bindings.json",
+  "cases": [
+    {
+      "id": "full-initial",
+      "family": "STORE_CONTRACT",
+      "input": "cases/full-initial/input.json",
+      "expected": "cases/full-initial/expected.json",
+      "inputSha256": "cc5e3a92d418b29e8f1aa28f46b2801031c41f25a5767c7d48d443cea427cb31",
+      "expectedSha256": "2a15c883fa6adb4760bd379cd920a3d357a97a138bf18f9abff52e5e19b9dc81",
+      "context": "mixed-source-only-full",
+      "persistentExpectation": "Complete last-good bound context after explicit external drift, or independently frozen full target after actual valid commit; never infer equality from counts.",
+      "originalBasePreserved": true
+    },
+    {
+      "id": "source-drift",
+      "family": "STORE_CONTRACT",
+      "input": "cases/source-drift/input.json",
+      "expected": "cases/source-drift/expected.json",
+      "inputSha256": "a1d5793a1d74231481a6fd37407187f04ca572907ec1f20c235ccb8acd8ecfcd",
+      "expectedSha256": "2a15c883fa6adb4760bd379cd920a3d357a97a138bf18f9abff52e5e19b9dc81",
+      "context": "mixed-source-only-full",
+      "persistentExpectation": "Complete last-good bound context after explicit external drift, or independently frozen full target after actual valid commit; never infer equality from counts.",
+      "originalBasePreserved": true
+    },
+    {
+      "id": "same-fingerprint-support-drift",
+      "family": "STORE_CONTRACT",
+      "input": "cases/same-fingerprint-support-drift/input.json",
+      "expected": "cases/same-fingerprint-support-drift/expected.json",
+      "inputSha256": "ccd747b7a8292797db38fc44dba58e2527b95e4aab50e827abb10b97e65db7a0",
+      "expectedSha256": "2a15c883fa6adb4760bd379cd920a3d357a97a138bf18f9abff52e5e19b9dc81",
+      "context": "independent-committed-python",
+      "persistentExpectation": "Complete last-good bound context after explicit external drift, or independently frozen full target after actual valid commit; never infer equality from counts.",
+      "originalBasePreserved": true
+    },
+    {
+      "id": "pointer-aba",
+      "family": "STORE_CONTRACT",
+      "input": "cases/pointer-aba/input.json",
+      "expected": "cases/pointer-aba/expected.json",
+      "inputSha256": "7cb5905cf3349710006182a8f0a5b1b2fb65209684bc7c30593a73d00d2d4d2c",
+      "expectedSha256": "2a15c883fa6adb4760bd379cd920a3d357a97a138bf18f9abff52e5e19b9dc81",
+      "context": "independent-committed-python",
+      "persistentExpectation": "Complete last-good bound context after explicit external drift, or independently frozen full target after actual valid commit; never infer equality from counts.",
+      "originalBasePreserved": true
+    },
+    {
+      "id": "pointer-null-drift",
+      "family": "STORE_CONTRACT",
+      "input": "cases/pointer-null-drift/input.json",
+      "expected": "cases/pointer-null-drift/expected.json",
+      "inputSha256": "12bd57788f975697325ab6c1b1a2075972e405f989edbcb636ec7ab763ef8463",
+      "expectedSha256": "2a15c883fa6adb4760bd379cd920a3d357a97a138bf18f9abff52e5e19b9dc81",
+      "context": "independent-committed-python",
+      "persistentExpectation": "Complete last-good bound context after explicit external drift, or independently frozen full target after actual valid commit; never infer equality from counts.",
+      "originalBasePreserved": true
+    },
+    {
+      "id": "temp-locked-tamper",
+      "family": "STORE_CONTRACT",
+      "input": "cases/temp-locked-tamper/input.json",
+      "expected": "cases/temp-locked-tamper/expected.json",
+      "inputSha256": "74914e358441ad003079aa36635c0aa35bf6dda4f10fbcdab1c73f2e5ad94b06",
+      "expectedSha256": "2a15c883fa6adb4760bd379cd920a3d357a97a138bf18f9abff52e5e19b9dc81",
+      "context": "mixed-source-only-full",
+      "persistentExpectation": "Complete last-good bound context after explicit external drift, or independently frozen full target after actual valid commit; never infer equality from counts.",
+      "originalBasePreserved": true
+    },
+    {
+      "id": "duplicate-apply",
+      "family": "STORE_CONTRACT",
+      "input": "cases/duplicate-apply/input.json",
+      "expected": "cases/duplicate-apply/expected.json",
+      "inputSha256": "0a8db8c500a3289d8a2e9383ca3676b2475ccde0dd0df6834facb90834bb2563",
+      "expectedSha256": "2a15c883fa6adb4760bd379cd920a3d357a97a138bf18f9abff52e5e19b9dc81",
+      "context": "mixed-source-only-full",
+      "persistentExpectation": "Complete last-good bound context after explicit external drift, or independently frozen full target after actual valid commit; never infer equality from counts.",
+      "originalBasePreserved": true
+    },
+    {
+      "id": "ambient-transaction",
+      "family": "STORE_CONTRACT",
+      "input": "cases/ambient-transaction/input.json",
+      "expected": "cases/ambient-transaction/expected.json",
+      "inputSha256": "c62829e54952d644ceb368cde98038ea0016a178bd8ae040111d8d960c9b61b0",
+      "expectedSha256": "2a15c883fa6adb4760bd379cd920a3d357a97a138bf18f9abff52e5e19b9dc81",
+      "context": "mixed-source-only-full",
+      "persistentExpectation": "Complete last-good bound context after explicit external drift, or independently frozen full target after actual valid commit; never infer equality from counts.",
+      "originalBasePreserved": true
+    },
+    {
+      "id": "cross-db-lease",
+      "family": "STORE_CONTRACT",
+      "input": "cases/cross-db-lease/input.json",
+      "expected": "cases/cross-db-lease/expected.json",
+      "inputSha256": "210814adec19d309e2f43fc7ba5007a33fa5e0f246259d6910f67ca73e95bb7b",
+      "expectedSha256": "2a15c883fa6adb4760bd379cd920a3d357a97a138bf18f9abff52e5e19b9dc81",
+      "context": "mixed-source-only-full",
+      "persistentExpectation": "Complete last-good bound context after explicit external drift, or independently frozen full target after actual valid commit; never infer equality from counts.",
+      "originalBasePreserved": true
+    },
+    {
+      "id": "begin-fails",
+      "family": "STORE_CONTRACT",
+      "input": "cases/begin-fails/input.json",
+      "expected": "cases/begin-fails/expected.json",
+      "inputSha256": "906f0076f49c2de0cb042a00239b156329d62a227385e0ee45c98f00ce3c3e54",
+      "expectedSha256": "2a15c883fa6adb4760bd379cd920a3d357a97a138bf18f9abff52e5e19b9dc81",
+      "context": "mixed-source-only-full",
+      "persistentExpectation": "Complete last-good bound context after explicit external drift, or independently frozen full target after actual valid commit; never infer equality from counts.",
+      "originalBasePreserved": true
+    },
+    {
+      "id": "readonly-unknown-committed",
+      "family": "STORE_CONTRACT",
+      "input": "cases/readonly-unknown-committed/input.json",
+      "expected": "cases/readonly-unknown-committed/expected.json",
+      "inputSha256": "cebac471d8422278c77ac482e88b6c5dae92856654179ae97db18e933abe5205",
+      "expectedSha256": "2a15c883fa6adb4760bd379cd920a3d357a97a138bf18f9abff52e5e19b9dc81",
+      "context": "mixed-source-only-full",
+      "persistentExpectation": "Complete last-good bound context after explicit external drift, or independently frozen full target after actual valid commit; never infer equality from counts.",
+      "originalBasePreserved": true
+    },
+    {
+      "id": "readonly-unknown-not-committed",
+      "family": "STORE_CONTRACT",
+      "input": "cases/readonly-unknown-not-committed/input.json",
+      "expected": "cases/readonly-unknown-not-committed/expected.json",
+      "inputSha256": "dd0f8f8a7ef2b95c04cf28391bc4d9e7b385656ae93d94fb95ce7dc32510833a",
+      "expectedSha256": "2a15c883fa6adb4760bd379cd920a3d357a97a138bf18f9abff52e5e19b9dc81",
+      "context": "mixed-source-only-full",
+      "persistentExpectation": "Complete last-good bound context after explicit external drift, or independently frozen full target after actual valid commit; never infer equality from counts.",
+      "originalBasePreserved": true
+    },
+    {
+      "id": "readonly-unknown-inconsistent",
+      "family": "STORE_CONTRACT",
+      "input": "cases/readonly-unknown-inconsistent/input.json",
+      "expected": "cases/readonly-unknown-inconsistent/expected.json",
+      "inputSha256": "d1b4ff8e05e7d14c1af372a8b84650eb3246914bec1a66ae1a8e3cef9ae61039",
+      "expectedSha256": "2a15c883fa6adb4760bd379cd920a3d357a97a138bf18f9abff52e5e19b9dc81",
+      "context": "mixed-source-only-full",
+      "persistentExpectation": "Complete last-good bound context after explicit external drift, or independently frozen full target after actual valid commit; never infer equality from counts.",
+      "originalBasePreserved": true
+    }
+  ],
+  "testMutationBoundary": "SQL mutations occur only in newly isolated test databases as adversarial interference/fault injection; no product repair, user database, or R4 reuse.",
+  "doesNotQualifyWholeOperationBudget": true
+}

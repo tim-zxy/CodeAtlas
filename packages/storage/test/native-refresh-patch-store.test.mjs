@@ -1,3 +1,5 @@
+import { prefixPlan } from './helpers/r011-history-fixture.mjs';
+import { applyMigrationPlan } from '../dist/migrations/runner.js';
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { DatabaseSync } from 'node:sqlite';
@@ -459,12 +461,7 @@ async function preparedEmpty(t) {
   const dir = await mkdtemp(join(tmpdir(), 'codeatlas-refresh-store-'));
   const path = join(dir, 'repository.sqlite');
   const db = new DatabaseSync(path);
-  const plan = await storage.loadMigrationPlan(
-    new URL('../migrations/repository/manifest.json', import.meta.url),
-    'REPOSITORY',
-  );
-  for (const migration of plan.migrations) db.exec(migration.sql);
-  db.exec('PRAGMA user_version=10');
+  applyMigrationPlan(db, await prefixPlan(10)); // Genuine released R010; no latest-schema relabeling.
   db.prepare('INSERT INTO repository(slot,id,root_path) VALUES(1,?,?)').run('r', '/r');
   db.prepare('INSERT INTO repository_state(repository_id) VALUES(?)').run('r');
   db.prepare(

@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "sourceRead": "prepaid actual request size, no refund",
+  "bytes": "sum of each read allowance across all passes",
+  "buffer": "charged before allocation",
+  "sameStage": "shared rows/serializedBytes/items/retainedLogicalBytes, cleanup credit preserved",
+  "reborrow": "same signal, minimum deadline and maxInputBytes",
+  "failure": "permanently INVALID, preserve spent prefix"
+}

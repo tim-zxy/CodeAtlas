@@ -1,0 +1,86 @@
+{
+  "kind": "HISTORICAL_SOURCE_SCOPE_ONLY",
+  "qualification": false,
+  "sources": [
+    {
+      "id": "d-preparation-input",
+      "originalPath": "evidence/corpus/artifacts/cases/d-preparation-input/boundary.json",
+      "sha256": "ee9d8eb71498d757a0c15cec6f2198646d5043cf3205028e4c09ddd532a87050",
+      "bytes": 397,
+      "unit": "fileCount",
+      "accepted": 394,
+      "next": 395,
+      "family": "source-empty-input-boundary"
+    },
+    {
+      "id": "d-slow-stdin",
+      "originalPath": "evidence/corpus/artifacts/cases/d-slow-stdin/boundary.json",
+      "sha256": "32cf811c73d1924d574d53d90b13fd3a36aacab82b332907a3e06989fa8020e7",
+      "bytes": 397,
+      "unit": "fileCount",
+      "accepted": 394,
+      "next": 395,
+      "family": "source-empty-input-boundary"
+    },
+    {
+      "id": "d-shared-owners",
+      "originalPath": "evidence/corpus/artifacts/cases/d-shared-owners/boundary.json",
+      "sha256": "c0739f99801440dbf17ec5487ac66954886d3323a2989f64e54518b399cd765c",
+      "bytes": 395,
+      "unit": "fileCount",
+      "accepted": 238,
+      "next": 239,
+      "family": "source-shared-owners-boundary"
+    },
+    {
+      "id": "d-complete-coverage",
+      "originalPath": "evidence/corpus/artifacts/cases/d-complete-coverage/boundary.json",
+      "sha256": "25f45d9106fc1f59ed2d140cbbc151fb24a50677f4bb82cb6fd39a12d85cf11a",
+      "bytes": 397,
+      "unit": "fileCount",
+      "accepted": 392,
+      "next": 393,
+      "family": "source-complete-coverage-boundary"
+    },
+    {
+      "id": "d-overlay-retention",
+      "originalPath": "evidence/corpus/artifacts/cases/d-overlay-retention/boundary.json",
+      "sha256": "311706fd428e1f68ad7e4933b47281bf02374f0357b088e7004557feaf42afa7",
+      "bytes": 397,
+      "unit": "fileCount",
+      "accepted": 392,
+      "next": 393,
+      "family": "source-complete-coverage-boundary"
+    },
+    {
+      "id": "d-retained-sites",
+      "originalPath": "evidence/corpus/artifacts/cases/d-retained-sites/boundary.json",
+      "sha256": "7e8658eff769a493306cad5ca2d5b52b35d34b6809344be977a1b1211ea7939c",
+      "bytes": 505,
+      "unit": "memberCount",
+      "accepted": 1982,
+      "next": 1983,
+      "family": "source-field-sites-boundary"
+    },
+    {
+      "id": "d-dense-remove",
+      "originalPath": "evidence/corpus/artifacts/cases/d-dense-remove/boundary.json",
+      "sha256": "1f2e49bbd22c2de953eefffb1271a2056d45d66f7aaf5a73aff0078709fb8abb",
+      "bytes": 669,
+      "unit": "memberCount",
+      "accepted": 1981,
+      "next": 1982,
+      "family": "source-dense-remove-boundary"
+    },
+    {
+      "id": "d-dense-upsert",
+      "originalPath": "evidence/corpus/artifacts/cases/d-dense-upsert/boundary.json",
+      "sha256": "1edebe60624aba9e67c2a11e1c4485261f675275f02f4377b0a466a822d17930",
+      "bytes": 2129,
+      "unit": "memberCount",
+      "accepted": 1986,
+      "next": 1987,
+      "family": "source-dense-upsert-boundary"
+    }
+  ]
+}

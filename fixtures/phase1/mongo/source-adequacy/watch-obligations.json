@@ -1,0 +1,29 @@
+{
+  "status": "SOURCE_REVIEW_NOT_EXECUTED",
+  "source": "MongoWatchSource.java",
+  "purpose": "Independent positive Source input; no raw output, parsing or execution performed.",
+  "obligations": [
+    {
+      "id": "MONGO-WATCH-RESOURCE-ORIGIN",
+      "requires": "database atlas and collection events are declared by linked getDatabase/getCollection calls; imports and declared receiver/parameter types require proof. Do not borrow resource names from other methods."
+    },
+    {
+      "id": "MONGO-WATCH-RESULT-LINKS",
+      "requires": "The collection receiver and watch result feeding forEach must be tied by direct Source expression/assignment relationships, not same names or source-line proximity."
+    },
+    {
+      "id": "MONGO-WATCH-HANDLER",
+      "requires": "The callback body handle(change) must be tied to its lambda argument and the unique supported callable declaration; unresolved/shadowed/ambiguous targets stay unverified."
+    },
+    {
+      "id": "MONGO-WATCH-UNKNOWN-NEGATIVE",
+      "requires": "Preserve original MongoSource.java as an unknown collection/database identity case. Its read/write events literal is not watch resource evidence."
+    }
+  ],
+  "limits": [
+    "Source text only, not compiled/imported/run; no Native/Rust/Java process or database/network operation.",
+    "No new critical inventory, score, numeric baseline or quality threshold.",
+    "Current parser may be PARTIAL and rules may be unsupported; this input does not assert existing capability or Canonical publication.",
+    "No producer output may be used to fabricate expected facts; preserve original raw, fixture roots and failures."
+  ]
+}

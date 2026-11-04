@@ -1,0 +1,588 @@
+{
+  "schemaVersion": 1,
+  "status": "SOURCE_ANNOTATIONS_ONLY",
+  "basis": {
+    "inventorySha256": "4921052ee2f50f61a7a7796f2e57fd8e870261a1b64f067c8a28fad4d4202b52",
+    "mappingProvenanceSha256": "6a4640f0d3431339b72cd66b2cc8b9dd14c90f979d33ec87ba2f42235bff400a"
+  },
+  "cases": [
+    {
+      "caseId": "no-files",
+      "sources": [],
+      "claims": [],
+      "limitations": [
+        "Historical library outputs and preproduct templates remain separate from these Source-only annotations.",
+        "Missing producer strata and actual-run qualification remain open."
+      ]
+    },
+    {
+      "caseId": "empty-python",
+      "sources": [
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/empty-python/sources/app.py",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "anchors": []
+        }
+      ],
+      "claims": [],
+      "limitations": [
+        "Historical library outputs and preproduct templates remain separate from these Source-only annotations.",
+        "Missing producer strata and actual-run qualification remain open."
+      ]
+    },
+    {
+      "caseId": "comment-python",
+      "sources": [
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/comment-python/sources/app.py",
+          "sha256": "4874464a2b14eef4bf671cccfe7fbbfb60bc99c5fd166c320299c59f5e1061f6",
+          "anchors": [
+            {
+              "range": {
+                "startLine": 0,
+                "startColumn": 0,
+                "endLine": 1,
+                "endColumn": 0
+              },
+              "literal": "# note\n",
+              "interpretation": "The only nonempty line is a comment; no executable statement is asserted.",
+              "limitations": [
+                "Full Source slice anchors surface statements only; it is not an observation expectation or a measured semantic label.",
+                "No dynamic execution, reference resolution, confidence score or Source/history authentication is established."
+              ]
+            }
+          ]
+        }
+      ],
+      "claims": [
+        "The only nonempty line is a comment; no executable statement is asserted."
+      ],
+      "limitations": [
+        "Historical library outputs and preproduct templates remain separate from these Source-only annotations.",
+        "Missing producer strata and actual-run qualification remain open."
+      ]
+    },
+    {
+      "caseId": "wildcard-python",
+      "sources": [
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/wildcard-python/sources/app.py",
+          "sha256": "10f9e467a1340fc7e9e1e8789d9423b3ae843c794203f929c9003b595c46caba",
+          "anchors": [
+            {
+              "range": {
+                "startLine": 0,
+                "startColumn": 0,
+                "endLine": 1,
+                "endColumn": 0
+              },
+              "literal": "from pkg import *\n",
+              "interpretation": "Wildcard import syntax is explicit; imported member identities remain UNDETERMINED.",
+              "limitations": [
+                "Full Source slice anchors surface statements only; it is not an observation expectation or a measured semantic label.",
+                "No dynamic execution, reference resolution, confidence score or Source/history authentication is established."
+              ]
+            }
+          ]
+        }
+      ],
+      "claims": [
+        "Wildcard import syntax is explicit; imported member identities remain UNDETERMINED."
+      ],
+      "limitations": [
+        "Historical library outputs and preproduct templates remain separate from these Source-only annotations.",
+        "Missing producer strata and actual-run qualification remain open."
+      ]
+    },
+    {
+      "caseId": "class-python",
+      "sources": [
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/class-python/sources/app.py",
+          "sha256": "262689e9ab7186ffc83347c330c67f357ce0e5133df6bcea4225337e88f3e714",
+          "anchors": [
+            {
+              "range": {
+                "startLine": 0,
+                "startColumn": 0,
+                "endLine": 2,
+                "endColumn": 0
+              },
+              "literal": "class Box:\n    pass\n",
+              "interpretation": "Class Box and pass are literal structure; no TYPE support or class owner capability is inferred.",
+              "limitations": [
+                "Full Source slice anchors surface statements only; it is not an observation expectation or a measured semantic label.",
+                "No dynamic execution, reference resolution, confidence score or Source/history authentication is established."
+              ]
+            }
+          ]
+        }
+      ],
+      "claims": [
+        "Class Box and pass are literal structure; no TYPE support or class owner capability is inferred."
+      ],
+      "limitations": [
+        "Historical library outputs and preproduct templates remain separate from these Source-only annotations.",
+        "Missing producer strata and actual-run qualification remain open."
+      ]
+    },
+    {
+      "caseId": "nested-python",
+      "sources": [
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/nested-python/sources/app.py",
+          "sha256": "3659a0d37476d1a1a2e611d2db7df72c6a7415f102cebc3d4bf457504a069aef",
+          "anchors": [
+            {
+              "range": {
+                "startLine": 0,
+                "startColumn": 0,
+                "endLine": 4,
+                "endColumn": 0
+              },
+              "literal": "def outer_fixture():\n    def inner_fixture():\n        return None\n    return inner_fixture\n",
+              "interpretation": "Two nested function declarations are visible; return syntax does not establish runtime execution.",
+              "limitations": [
+                "Full Source slice anchors surface statements only; it is not an observation expectation or a measured semantic label.",
+                "No dynamic execution, reference resolution, confidence score or Source/history authentication is established."
+              ]
+            }
+          ]
+        }
+      ],
+      "claims": [
+        "Two nested function declarations are visible; return syntax does not establish runtime execution."
+      ],
+      "limitations": [
+        "Historical library outputs and preproduct templates remain separate from these Source-only annotations.",
+        "Missing producer strata and actual-run qualification remain open."
+      ]
+    },
+    {
+      "caseId": "malformed-python",
+      "sources": [
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/malformed-python/sources/app.py",
+          "sha256": "14d108c35f7699d58e5052d166147ad8573e628a521a95caa79c5c9f249e8635",
+          "anchors": [
+            {
+              "range": {
+                "startLine": 0,
+                "startColumn": 0,
+                "endLine": 3,
+                "endColumn": 0
+              },
+              "literal": "@app.get(prefix_fixture + \"/dynamic\")\ndef broken_fixture(:\n    return invoke()\n",
+              "interpretation": "The function signature is deliberately incomplete; decorator concatenation and invoke() are visible text, not proof of a successful parse or execution.",
+              "limitations": [
+                "Full Source slice anchors surface statements only; it is not an observation expectation or a measured semantic label.",
+                "No dynamic execution, reference resolution, confidence score or Source/history authentication is established."
+              ]
+            }
+          ]
+        }
+      ],
+      "claims": [
+        "The function signature is deliberately incomplete; decorator concatenation and invoke() are visible text, not proof of a successful parse or execution."
+      ],
+      "limitations": [
+        "Historical library outputs and preproduct templates remain separate from these Source-only annotations.",
+        "Missing producer strata and actual-run qualification remain open."
+      ]
+    },
+    {
+      "caseId": "dynamic-python",
+      "sources": [
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/dynamic-python/sources/app.py",
+          "sha256": "9e3012e6aaee68ca614e04a2aad0097292c86ef767f320fc61445527f910e69e",
+          "anchors": [
+            {
+              "range": {
+                "startLine": 0,
+                "startColumn": 0,
+                "endLine": 5,
+                "endColumn": 0
+              },
+              "literal": "from fastapi import FastAPI\napp = FastAPI()\n@app.get(\"/fixture\")\ndef endpoint_fixture():\n    return None\n",
+              "interpretation": "Import, constructor call syntax, decorator and function declaration are literal; FastAPI/app.get runtime meaning remains UNDETERMINED.",
+              "limitations": [
+                "Full Source slice anchors surface statements only; it is not an observation expectation or a measured semantic label.",
+                "No dynamic execution, reference resolution, confidence score or Source/history authentication is established."
+              ]
+            }
+          ]
+        }
+      ],
+      "claims": [
+        "Import, constructor call syntax, decorator and function declaration are literal; FastAPI/app.get runtime meaning remains UNDETERMINED."
+      ],
+      "limitations": [
+        "Historical library outputs and preproduct templates remain separate from these Source-only annotations.",
+        "Missing producer strata and actual-run qualification remain open."
+      ]
+    },
+    {
+      "caseId": "alias-reference-python",
+      "sources": [
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/alias-reference-python/sources/app.py",
+          "sha256": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+          "anchors": [
+            {
+              "range": {
+                "startLine": 0,
+                "startColumn": 0,
+                "endLine": 2,
+                "endColumn": 0
+              },
+              "literal": "import pkg as p\nx = p\n",
+              "interpretation": "Import alias p and assignment x = p are visible; symbol resolution remains UNDETERMINED from Source alone.",
+              "limitations": [
+                "Full Source slice anchors surface statements only; it is not an observation expectation or a measured semantic label.",
+                "No dynamic execution, reference resolution, confidence score or Source/history authentication is established."
+              ]
+            }
+          ]
+        }
+      ],
+      "claims": [
+        "Import alias p and assignment x = p are visible; symbol resolution remains UNDETERMINED from Source alone."
+      ],
+      "limitations": [
+        "Historical library outputs and preproduct templates remain separate from these Source-only annotations.",
+        "Missing producer strata and actual-run qualification remain open."
+      ]
+    },
+    {
+      "caseId": "async-python",
+      "sources": [
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/async-python/sources/app.py",
+          "sha256": "3a174317fd5ec1b1dab15ed55072c503d43e2aa684bc67e297ee32979c8e5466",
+          "anchors": [
+            {
+              "range": {
+                "startLine": 0,
+                "startColumn": 0,
+                "endLine": 2,
+                "endColumn": 0
+              },
+              "literal": "async def f(x):\n    return None\n",
+              "interpretation": "Async declaration, parameter x and return literal are visible; no execution behavior is inferred.",
+              "limitations": [
+                "Full Source slice anchors surface statements only; it is not an observation expectation or a measured semantic label.",
+                "No dynamic execution, reference resolution, confidence score or Source/history authentication is established."
+              ]
+            }
+          ]
+        }
+      ],
+      "claims": [
+        "Async declaration, parameter x and return literal are visible; no execution behavior is inferred."
+      ],
+      "limitations": [
+        "Historical library outputs and preproduct templates remain separate from these Source-only annotations.",
+        "Missing producer strata and actual-run qualification remain open."
+      ]
+    },
+    {
+      "caseId": "java-only",
+      "sources": [
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/java-only/sources/Endpoint.java",
+          "sha256": "fa9a07e5b149109de9313e541101b3363a014b87e18f469e91643781ed2833c1",
+          "anchors": [
+            {
+              "range": {
+                "startLine": 0,
+                "startColumn": 0,
+                "endLine": 1,
+                "endColumn": 0
+              },
+              "literal": "class Endpoint_fixture { @Route(\"/fixture\") void handle_fixture() {} }\n",
+              "interpretation": "Route decoration with string /fixture and void handle_fixture declaration are visible Java syntax.",
+              "limitations": [
+                "Full Source slice anchors surface statements only; it is not an observation expectation or a measured semantic label.",
+                "No dynamic execution, reference resolution, confidence score or Source/history authentication is established."
+              ]
+            }
+          ]
+        }
+      ],
+      "claims": [
+        "Route decoration with string /fixture and void handle_fixture declaration are visible Java syntax."
+      ],
+      "limitations": [
+        "Historical library outputs and preproduct templates remain separate from these Source-only annotations.",
+        "Missing producer strata and actual-run qualification remain open."
+      ]
+    },
+    {
+      "caseId": "mixed",
+      "sources": [
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/mixed/sources/Endpoint.java",
+          "sha256": "fa9a07e5b149109de9313e541101b3363a014b87e18f469e91643781ed2833c1",
+          "anchors": [
+            {
+              "range": {
+                "startLine": 0,
+                "startColumn": 0,
+                "endLine": 1,
+                "endColumn": 0
+              },
+              "literal": "class Endpoint_fixture { @Route(\"/fixture\") void handle_fixture() {} }\n",
+              "interpretation": "Java decoration/method syntax and Python alias/assignment syntax belong to separate Source files; no cross-language identity equivalence is claimed.",
+              "limitations": [
+                "Full Source slice anchors surface statements only; it is not an observation expectation or a measured semantic label.",
+                "No dynamic execution, reference resolution, confidence score or Source/history authentication is established."
+              ]
+            }
+          ]
+        },
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/mixed/sources/app.py",
+          "sha256": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+          "anchors": [
+            {
+              "range": {
+                "startLine": 0,
+                "startColumn": 0,
+                "endLine": 2,
+                "endColumn": 0
+              },
+              "literal": "import pkg as p\nx = p\n",
+              "interpretation": "Java decoration/method syntax and Python alias/assignment syntax belong to separate Source files; no cross-language identity equivalence is claimed.",
+              "limitations": [
+                "Full Source slice anchors surface statements only; it is not an observation expectation or a measured semantic label.",
+                "No dynamic execution, reference resolution, confidence score or Source/history authentication is established."
+              ]
+            }
+          ]
+        }
+      ],
+      "claims": [
+        "Java decoration/method syntax and Python alias/assignment syntax belong to separate Source files; no cross-language identity equivalence is claimed."
+      ],
+      "limitations": [
+        "Historical library outputs and preproduct templates remain separate from these Source-only annotations.",
+        "Missing producer strata and actual-run qualification remain open."
+      ]
+    },
+    {
+      "caseId": "multi-import-from",
+      "sources": [
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/multi-import-from/sources/app.py",
+          "sha256": "927ff7b20b77652ff3798b4a9a0e46d7d8d99fcaa22a9816eafe694043f2d878",
+          "anchors": [
+            {
+              "range": {
+                "startLine": 0,
+                "startColumn": 0,
+                "endLine": 2,
+                "endColumn": 0
+              },
+              "literal": "import pkg as p, other\nfrom lib import first as f, second\n",
+              "interpretation": "Import lists, aliases p/f and names other/second are visible text; module/member availability is UNDETERMINED.",
+              "limitations": [
+                "Full Source slice anchors surface statements only; it is not an observation expectation or a measured semantic label.",
+                "No dynamic execution, reference resolution, confidence score or Source/history authentication is established."
+              ]
+            }
+          ]
+        }
+      ],
+      "claims": [
+        "Import lists, aliases p/f and names other/second are visible text; module/member availability is UNDETERMINED."
+      ],
+      "limitations": [
+        "Historical library outputs and preproduct templates remain separate from these Source-only annotations.",
+        "Missing producer strata and actual-run qualification remain open."
+      ]
+    },
+    {
+      "caseId": "nested-repeated-values",
+      "sources": [
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/nested-repeated-values/sources/app.py",
+          "sha256": "6b4bef0872162fdd35688d5bef795985b8f9aa31bf9be8592c06dc1b6b21bd07",
+          "anchors": [
+            {
+              "range": {
+                "startLine": 0,
+                "startColumn": 0,
+                "endLine": 1,
+                "endColumn": 0
+              },
+              "literal": "x = [p, {\"k\": p}]\n",
+              "interpretation": "Array and dictionary literal syntax repeat p in distinct positions; candidate resolution is not supplied by these literals.",
+              "limitations": [
+                "Full Source slice anchors surface statements only; it is not an observation expectation or a measured semantic label.",
+                "No dynamic execution, reference resolution, confidence score or Source/history authentication is established."
+              ]
+            }
+          ]
+        }
+      ],
+      "claims": [
+        "Array and dictionary literal syntax repeat p in distinct positions; candidate resolution is not supplied by these literals."
+      ],
+      "limitations": [
+        "Historical library outputs and preproduct templates remain separate from these Source-only annotations.",
+        "Missing producer strata and actual-run qualification remain open."
+      ]
+    },
+    {
+      "caseId": "class-owner-gap",
+      "sources": [
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/class-owner-gap/sources/app.py",
+          "sha256": "e245b405eef0421e8462f62ef9c518d38227e79739935f49acfd35fcb22e6eff",
+          "anchors": [
+            {
+              "range": {
+                "startLine": 0,
+                "startColumn": 0,
+                "endLine": 2,
+                "endColumn": 0
+              },
+              "literal": "class Box:\n    x = p\n",
+              "interpretation": "Assignment x = p is inside class Box; Source containment does not authorize a canonical class owner or ownerless ARTIFACT.",
+              "limitations": [
+                "Full Source slice anchors surface statements only; it is not an observation expectation or a measured semantic label.",
+                "No dynamic execution, reference resolution, confidence score or Source/history authentication is established."
+              ]
+            }
+          ]
+        }
+      ],
+      "claims": [
+        "Assignment x = p is inside class Box; Source containment does not authorize a canonical class owner or ownerless ARTIFACT."
+      ],
+      "limitations": [
+        "Historical library outputs and preproduct templates remain separate from these Source-only annotations.",
+        "Missing producer strata and actual-run qualification remain open."
+      ]
+    },
+    {
+      "caseId": "unicode-control",
+      "sources": [
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/unicode-control/sources/app.py",
+          "sha256": "46aa337271d994729a8ea9cea2dfa33d3b08b5d3056db75e2a02624fa749d646",
+          "anchors": [
+            {
+              "range": {
+                "startLine": 0,
+                "startColumn": 0,
+                "endLine": 2,
+                "endColumn": 0
+              },
+              "literal": "name = \"雪\"\ncontrol = \"\\t\"\n",
+              "interpretation": "The source contains the literal Unicode string 雪 and a backslash-t escape spelling; this is not an execution trace or automatic dynamic classification.",
+              "limitations": [
+                "Full Source slice anchors surface statements only; it is not an observation expectation or a measured semantic label.",
+                "No dynamic execution, reference resolution, confidence score or Source/history authentication is established."
+              ]
+            }
+          ]
+        }
+      ],
+      "claims": [
+        "The source contains the literal Unicode string 雪 and a backslash-t escape spelling; this is not an execution trace or automatic dynamic classification."
+      ],
+      "limitations": [
+        "Historical library outputs and preproduct templates remain separate from these Source-only annotations.",
+        "Missing producer strata and actual-run qualification remain open."
+      ]
+    },
+    {
+      "caseId": "two-python-files",
+      "sources": [
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/two-python-files/sources/a.py",
+          "sha256": "95414ae91b961ddf9e8504e62a0f052e5765e00325895da862b61eda451e7c83",
+          "anchors": [
+            {
+              "range": {
+                "startLine": 0,
+                "startColumn": 0,
+                "endLine": 1,
+                "endColumn": 0
+              },
+              "literal": "x = p\n",
+              "interpretation": "Separate a.py and b.py assignments mention p and q; no same-name or cross-file binding merge is inferred.",
+              "limitations": [
+                "Full Source slice anchors surface statements only; it is not an observation expectation or a measured semantic label.",
+                "No dynamic execution, reference resolution, confidence score or Source/history authentication is established."
+              ]
+            }
+          ]
+        },
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/two-python-files/sources/b.py",
+          "sha256": "7804227de8159a423dfcace82a4c684fb816948dd2062a7e540f9d9aac7ffecd",
+          "anchors": [
+            {
+              "range": {
+                "startLine": 0,
+                "startColumn": 0,
+                "endLine": 1,
+                "endColumn": 0
+              },
+              "literal": "y = q\n",
+              "interpretation": "Separate a.py and b.py assignments mention p and q; no same-name or cross-file binding merge is inferred.",
+              "limitations": [
+                "Full Source slice anchors surface statements only; it is not an observation expectation or a measured semantic label.",
+                "No dynamic execution, reference resolution, confidence score or Source/history authentication is established."
+              ]
+            }
+          ]
+        }
+      ],
+      "claims": [
+        "Separate a.py and b.py assignments mention p and q; no same-name or cross-file binding merge is inferred."
+      ],
+      "limitations": [
+        "Historical library outputs and preproduct templates remain separate from these Source-only annotations.",
+        "Missing producer strata and actual-run qualification remain open."
+      ]
+    },
+    {
+      "caseId": "discarded-dictionary",
+      "sources": [
+        {
+          "fixturePath": "fixtures/phase1/code-syntax-producer-oracle/cases/discarded-dictionary/sources/app.py",
+          "sha256": "322fac8805d45759fa28714fcbcbac50958979e68b54a0ef41d3952901999c9d",
+          "anchors": [
+            {
+              "range": {
+                "startLine": 0,
+                "startColumn": 0,
+                "endLine": 1,
+                "endColumn": 0
+              },
+              "literal": "x = {\"k\": p, **kw}\n",
+              "interpretation": "Dictionary text includes explicit key k and unpacking **kw; a complete object value requires unsupported evaluation and remains UNDETERMINED.",
+              "limitations": [
+                "Full Source slice anchors surface statements only; it is not an observation expectation or a measured semantic label.",
+                "No dynamic execution, reference resolution, confidence score or Source/history authentication is established."
+              ]
+            }
+          ]
+        }
+      ],
+      "claims": [
+        "Dictionary text includes explicit key k and unpacking **kw; a complete object value requires unsupported evaluation and remains UNDETERMINED."
+      ],
+      "limitations": [
+        "Historical library outputs and preproduct templates remain separate from these Source-only annotations.",
+        "Missing producer strata and actual-run qualification remain open."
+      ]
+    }
+  ],
+  "numericalPolicy": null,
+  "newMeasurements": null
+}

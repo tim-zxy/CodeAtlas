@@ -21,17 +21,27 @@ const packageNames = [
 const appNames = ['cli', 'mcp', 'daemon'];
 const expectedPackageDependencies = Object.fromEntries(packageNames.map((name) => [name, {}]));
 expectedPackageDependencies.runtime = {
+  '@codeatlas/plugins': 'workspace:*',
   '@codeatlas/application': 'workspace:*',
   '@codeatlas/providers': 'workspace:*',
   '@codeatlas/storage': 'workspace:*',
+  yaml: '2.8.2',
 };
 expectedPackageDependencies.ir = { zod: '4.6.1' };
 expectedPackageDependencies.providers = { '@codeatlas/ir': 'workspace:*', zod: '4.6.1' };
 expectedPackageDependencies.plugins = { '@codeatlas/ir': 'workspace:*', zod: '4.6.1' };
+expectedPackageDependencies.execution = {
+  '@codeatlas/contracts': 'workspace:*',
+  '@codeatlas/ir': 'workspace:*',
+  zod: '4.6.1',
+};
+expectedPackageDependencies.contracts = { '@codeatlas/ir': 'workspace:*' };
 expectedPackageDependencies.evaluation = { '@codeatlas/ir': 'workspace:*' };
 expectedPackageDependencies.source = { '@codeatlas/ir': 'workspace:*' };
 expectedPackageDependencies.storage = { '@codeatlas/ir': 'workspace:*' };
 expectedPackageDependencies.application = {
+  '@codeatlas/contracts': 'workspace:*',
+  '@codeatlas/execution': 'workspace:*',
   '@codeatlas/ir': 'workspace:*',
   '@codeatlas/source': 'workspace:*',
 };
@@ -90,7 +100,7 @@ for (const name of packageNames) {
     } else if (name === 'storage') {
       assert.equal(
         source,
-        "export * from './migrations/index.js';\nexport * from './source-state/index.js';\nexport * from './analysis/activation-state.js';\nexport * from './analysis/temp-stage.js';\nexport * from './analysis/native-analysis-state.js';\nexport * from './analysis/patch-stage.js';\nexport * from './analysis/canonical-fact-store.js';\nexport * from './queries/code-query.js';\nexport {\n  openRepositoryIndexSession,\n  StorageIndexSessionError,\n  type RepositoryIndexSession,\n} from './indexing/repository-index-session.js';\n",
+        "export * from './migrations/index.js';\nexport * from './source-state/index.js';\nexport * from './analysis/activation-state.js';\nexport * from './analysis/temp-stage.js';\nexport * from './analysis/native-analysis-state.js';\nexport * from './analysis/patch-stage.js';\nexport * from './analysis/canonical-fact-store.js';\nexport * from './queries/code-query.js';\nexport {\n  openRepositoryIndexSession,\n  StorageIndexSessionError,\n  type RepositoryIndexSession,\n} from './indexing/repository-index-session.js';\nexport * from './analysis/code-context-capture.js';\n\nexport { RuntimeFactStore } from './runtime/runtime-fact-store.js';\nexport type {\n  RuntimeBatchInput,\n  RuntimeBatchCandidate,\n  RuntimeCommitOutcome,\n} from './runtime/runtime-fact-store.js';\nexport { ContractStore } from './runtime/contract-store.js';\nexport type { WorkspaceRuntimeBatch, WorkspaceRuntimeOutcome } from './runtime/contract-store.js';\nexport type { HistoryReadLimits } from './analysis/activation-history-format.js';\n",
       );
     } else if (name === 'application') {
       assert.match(source, /reconcileGitWorktree/);
@@ -98,17 +108,27 @@ for (const name of packageNames) {
     } else if (name === 'providers') {
       assert.equal(
         source,
-        "export * from './native-client.js';\nexport * from './native-ipc.js';\nexport * from './native-ipc-v2.js';\nexport * from './native-analysis-state.js';\nexport * from './native-analysis-validation.js';\nexport * from './native-analysis-output-v3.js';\nexport * from './native-refresh-output-v3.js';\nexport * from './native-refresh-request-v3.js';\nexport { validateNativeRefreshOverlay } from './native-refresh-overlay.js';\nexport type { NativeRefreshOverlayInput } from './native-refresh-overlay.js';\nexport * from './native-ipc-v3.js';\nexport * from './native-ipc-v3-bytes.js';\nexport * from './coverage-summary.js';\nexport * from './provider-routing.js';\nexport * from './provider-spi.js';\nexport { normalizeNativeAnalysis } from './canonical-normalizer.js';\nexport { normalizeStagedAnalysis } from './staged-normalization.js';\nexport { normalizeStagedPatch } from './staged-patch.js';\nexport { mergeStagedAnalysis, finalizeStagedSupports } from './staged-merger.js';\nexport type {\n  NormalizedCanonicalAnalysis,\n  NormalizedNodePair,\n  NormalizedEdgePair,\n} from './canonical-normalizer.js';\nexport { CanonicalNormalizationError, JAVA_NORMALIZER_VERSION } from './java-node-normalizer.js';\nexport type { CanonicalNormalizationErrorCode } from './java-node-normalizer.js';\nexport { mergeCanonicalObservations } from './fact-merger.js';\nexport { selectMergedGroup } from './fact-merger-selection.js';\nexport type { MergedCanonicalAnalysis } from './fact-merger.js';\nexport { FactMergeError } from './fact-merger-input.js';\nexport type { FactMergeErrorCode, MergeInput, MergeObservation } from './fact-merger-input.js';\nexport type { MergeExplanation, MergeSupportSummary } from './fact-merger-selection.js';\n",
+        "export * from './native-client.js';\nexport * from './native-ipc.js';\nexport * from './native-ipc-v2.js';\nexport * from './native-analysis-state.js';\nexport * from './native-analysis-validation.js';\nexport * from './native-analysis-output-v3.js';\nexport * from './native-refresh-output-v3.js';\nexport * from './native-refresh-request-v3.js';\nexport { validateNativeRefreshOverlay } from './native-refresh-overlay.js';\nexport type { NativeRefreshOverlayInput } from './native-refresh-overlay.js';\nexport * from './native-ipc-v3.js';\nexport * from './native-ipc-v3-bytes.js';\nexport * from './coverage-summary.js';\nexport * from './provider-routing.js';\nexport * from './provider-spi.js';\nexport { normalizeNativeAnalysis } from './canonical-normalizer.js';\nexport { normalizeStagedAnalysis } from './staged-normalization.js';\nexport { normalizeStagedPatch } from './staged-patch.js';\nexport { mergeStagedAnalysis, finalizeStagedSupports } from './staged-merger.js';\nexport type {\n  NormalizedCanonicalAnalysis,\n  NormalizedNodePair,\n  NormalizedEdgePair,\n} from './canonical-normalizer.js';\nexport { CanonicalNormalizationError, JAVA_NORMALIZER_VERSION } from './java-node-normalizer.js';\nexport type { CanonicalNormalizationErrorCode } from './java-node-normalizer.js';\nexport { mergeCanonicalObservations } from './fact-merger.js';\nexport { selectMergedGroup } from './fact-merger-selection.js';\nexport type { MergedCanonicalAnalysis } from './fact-merger.js';\nexport { FactMergeError } from './fact-merger-input.js';\nexport type { FactMergeErrorCode, MergeInput, MergeObservation } from './fact-merger-input.js';\nexport type { MergeExplanation, MergeSupportSummary } from './fact-merger-selection.js';\nexport * from './native-syntax-ipc.js';\nexport * from './python-normalizer.js';\nexport * from './native-syntax-owner-binding.js';\nexport { validateCodeSyntaxObservationStream } from './native-code-syntax-ipc.js';\nexport type { ValidatedCodeSyntaxObservation } from './native-code-syntax-ipc.js';\n",
       );
     } else if (name === 'plugins') {
       assert.equal(
         source,
-        "export * from './plugin-routing.js';\nexport * from './plugin-spi.js';\n",
+        "export * from './plugin-routing.js';\nexport * from './plugin-spi.js';\nexport * from './plugin-spi-v2.js';\nexport * from './plugin-spi-v4.js';\nexport * from './plugin-context-v4.js';\nexport * from './spring.js';\nexport * from './mongo.js';\nexport * from './kafka.js';\nexport * from './fastapi.js';\n\nexport { selectFrameworkPluginsV4 } from './framework-routing-v4.js';\n\nexport * from './plugin-context-v5.js';\nexport * from './plugin-spi-v5.js';\nexport { selectFrameworkPluginsV5 } from './framework-routing-v5.js';\n",
       );
     } else if (name === 'evaluation') {
       assert.equal(
         source,
-        "export * from './canonical-comparator.js';\nexport * from './comparator-error.js';\nexport * from './fixture-error.js';\nexport * from './fixture-manifest.js';\nexport * from './fixture-registry.js';\nexport * from './metric-engine.js';\nexport * from './quality-gates.js';\nexport * from './phase05-metrics.js';\nexport * from './phase05-report.js';\nexport * from './phase05-case-policy.js';\nexport * from './phase05-layered-report.js';\n",
+        "export * from './canonical-comparator.js';\nexport * from './comparator-error.js';\nexport * from './fixture-error.js';\nexport * from './fixture-manifest.js';\nexport * from './fixture-registry.js';\nexport * from './metric-engine.js';\nexport * from './quality-gates.js';\nexport * from './phase05-metrics.js';\nexport * from './phase05-report.js';\nexport * from './phase05-case-policy.js';\nexport * from './phase05-layered-report.js';\nexport * from './phase1-report.js';\n",
+      );
+    } else if (name === 'execution') {
+      assert.equal(
+        source,
+        "export { deriveExecutionGraph } from './derive-execution.js';\nexport type { FormalGraphCandidate } from './derive-execution.js';\nexport { deriveRuntimeFlows } from './derive-runtime-flow.js';\nexport { stitchWorkspaceExecution } from './stitch-workspace.js';\n\nexport { deriveExecutionGraphV2 } from './derive-execution.js';\nexport { deriveRuntimeFlowsV2 } from './derive-runtime-flow.js';\n\nexport { stitchWorkspaceExecutionV2 } from './stitch-workspace.js';\n\nexport { stitchWorkspaceExecutionV3 } from './stitch-workspace.js';\n",
+      );
+    } else if (name === 'contracts') {
+      assert.equal(
+        source,
+        "export {\n  matchContracts,\n  prepareFrozenContracts,\n  workspaceRuntimeInputDigest,\n  workspaceEntityIdentity,\n  contractSupportPolicy,\n} from './match-contracts.js';\nexport type { ContractMatchingCandidate } from './match-contracts.js';\n\nexport { matchContractsV2, prepareFrozenContractsV2 } from './match-contracts.js';\nexport type {\n  DeclaredContractControl,\n  DeclaredContractMatchingCandidate,\n} from './match-contracts.js';\n",
       );
     } else if (name === 'source') {
       assert.match(source, /scanGitRepository/);

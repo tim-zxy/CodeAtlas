@@ -135,12 +135,12 @@ test('session lifetime includes failed binding acquisitions and borrowed read sn
   assert.equal(result.evidence.connectionClosed, true);
 });
 
-test('index repository initializes R010 and exposes bounded persisted-only status', async (t) => {
+test('index repository initializes R013 and exposes bounded persisted-only status', async (t) => {
   const f = await fixture(t);
   const session = await storage.openRepositoryIndexSession(f.input, f.control);
   try {
     assert.equal(session.initialized, true);
-    assert.equal(session.database.prepare('PRAGMA user_version').get().user_version, 10);
+    assert.equal(session.database.prepare('PRAGMA user_version').get().user_version, 13);
     assert.deepEqual(session.sourceState.load('fixture-repo'), null);
     const view = await session.readStatus();
     assert.equal(view.freshness.state, 'NOT_INDEXED');
@@ -263,7 +263,7 @@ for (const kind of ['symlink', 'hardlink', 'foreign', 'old-schema', 'new-schema'
     session.close();
     if (kind === 'old-schema' || kind === 'new-schema') {
       const db = new DatabaseSync(f.input.databasePath);
-      db.exec(`PRAGMA user_version = ${kind === 'old-schema' ? 9 : 11}`);
+      db.exec(`PRAGMA user_version = ${kind === 'old-schema' ? 9 : 14}`);
       db.close();
     }
     let databasePath = f.input.databasePath;

@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "p1-spring-v1",
+  "category": "runtime-graph",
+  "phase": "1",
+  "languages": ["java"],
+  "frameworks": ["spring"],
+  "capabilities": ["FRAMEWORK_RUNTIME_CANDIDATE", "FRAMEWORK_BINDING_CANDIDATE"],
+  "inputs": {
+    "vectors": "inputs.json",
+    "frameworkSource": "source-adequacy/SpringSource.java",
+    "surfaceSourceJ7": "source-adequacy/InventoryProxySource.java"
+  },
+  "expected": {
+    "contract": "expected.json",
+    "sourceReview": "source-adequacy/obligations.json"
+  },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

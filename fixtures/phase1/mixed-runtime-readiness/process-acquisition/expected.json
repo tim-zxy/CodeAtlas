@@ -1,0 +1,19 @@
+{
+  "complete-short": "COMPLETE",
+  "missing-create": "INVALID_PROCESS_CONFORMANCE",
+  "missing-exit": "INVALID_PROCESS_CONFORMANCE",
+  "pid-mismatch": "INVALID_PROCESS_CONFORMANCE",
+  "same-instance": "INVALID_PROCESS_CONFORMANCE",
+  "creation-mismatch": "INVALID_PROCESS_CONFORMANCE",
+  "early-query": "INVALID_PROCESS_CONFORMANCE",
+  "zero-peak": "INVALID_PROCESS_CONFORMANCE",
+  "wrong-unit": "INVALID_PROCESS_CONFORMANCE",
+  "unreleased": "INVALID_PROCESS_CONFORMANCE",
+  "fake-approved": "INVALID_PROCESS_CONFORMANCE",
+  "fake-eligibility": "INVALID_PROCESS_CONFORMANCE",
+  "unknown-field": "INVALID_PROCESS_CONFORMANCE",
+  "cancelled": "INELIGIBLE",
+  "injected-final-failure": "INELIGIBLE",
+  "missing-image-path": "INVALID_PROCESS_CONFORMANCE",
+  "empty-image-path": "INVALID_PROCESS_CONFORMANCE"
+}

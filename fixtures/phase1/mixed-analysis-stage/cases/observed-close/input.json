@@ -1,0 +1,5 @@
+{
+  "state": "OBSERVED",
+  "method": "close",
+  "base": "base-input.json"
+}

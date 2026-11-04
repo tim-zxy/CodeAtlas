@@ -1,5 +1,19 @@
 # Phase 0.5 index CLI and persisted Evaluation Implementation Plan
 
+2026-10-22 SAME Tasks7/8 closeout accepted: exact cc5a8cb PR+push six required
+jobs SUCCESS, strict hosted22 audit PASS, normal PR21 merge433015700c7c701a6493f7f8fa5eace00e773913
+verified with exact tested tree equality. [Final record](../../handoff/PHASE05_CLOSEOUT.md).
+User accepts retained UNKNOWN historical timeout; no waiver/retry/fix claim.
+Phase1 detailed design/review only, no coding. No state-only follow-up push/CI.
+Earlier HOLD and rejected-command notes remain historical.
+
+2026-10-22 SAME Tasks7/8 local closeout reconciliation:
+[evidence/remaining decisions](../../handoff/PHASE05_CLOSEOUT.md). Latest cc5a8cb
+PR+push workflows and strict original22-receipt audit pass; earlier run failures
+remain historical evidence with UNKNOWN timeout causality. No new implementation,
+measurement, cloud round or merge is authorized. Local status/trace synchronization
+does not complete formal integration/acceptance or permit Phase1 coding.
+
 2026-10-21 subsequent "批准一轮" grants the one consolidated diagnostic push /
 PR+push pair proposed below. Before push: scoped read-only review, exact8-file
 diff/index checks, unchanged frozen2329closure and normal commit. After push:

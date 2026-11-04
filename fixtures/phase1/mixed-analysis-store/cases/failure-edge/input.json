@@ -1,0 +1,5 @@
+{
+  "point": "edge",
+  "base": "base-input.json",
+  "processExit": true
+}

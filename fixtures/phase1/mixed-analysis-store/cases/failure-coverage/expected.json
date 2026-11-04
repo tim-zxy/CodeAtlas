@@ -1,0 +1,5 @@
+{
+  "result": "ROLLBACK",
+  "persistentRows": "EXACT_LITERAL_BASE",
+  "leaseReusable": false
+}

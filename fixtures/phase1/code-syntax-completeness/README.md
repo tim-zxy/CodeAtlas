@@ -1,0 +1,5 @@
+# Offline Code/Syntax contract
+
+Twelve independently authored byte-contract seeds;not actual Native output,qualification or Source authentication. Unit stage/owner declarations are not trusted capture. Existing Source/raw payload provenance is SHA-pinned in expected/provenance.json. Canonical expectations use published tuple encoding and are checked against old independently frozen goldens;no product module was imported by the authoring script. Java companion v2 covers all five requested capabilities for exactly class Box Source;its unit Provider IDs do not claim a Native producer run. No provider snapshots are combined or published. Existing budgets are copied from the nested Source reference,not new defaults or profiles.
+
+All files are frozen before product implementation. Dynamic and malformed results remain partial;the wildcard/class seeds describe the new declared contract,not an observed old-v4 fix. Raw output equality is independent of structural checksum acceptance;resealed omission can remain structurally valid but cannot match these full Source-authored references. Original Fixture roots and16Source references are preserved.

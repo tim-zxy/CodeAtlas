@@ -1,0 +1,9 @@
+{
+  "normalizedReference": "../../native-composition-candidate/python-only/expected.json",
+  "requestVersion": 6,
+  "syntaxVersion": 2,
+  "partialError": "INCOMPLETE_OBSERVATION",
+  "codeChanges": false,
+  "publication": "ATOMIC_CODE_SYNTAX_HISTORY_POINTER",
+  "lastGoodOnFailure": true
+}

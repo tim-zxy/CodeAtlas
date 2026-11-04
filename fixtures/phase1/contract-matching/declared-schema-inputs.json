@@ -1,0 +1,560 @@
+{
+  "kind": "INDEPENDENT_DECLARED_HTTP_CONTRACT_NOT_NATIVE_CAPTURE",
+  "bindingBasis": "Explicit current contract factKeys; semantic expected values authored before new product execution",
+  "input": {
+    "workspaceBasis": {
+      "workspaceId": "workspace:one",
+      "revisionSetId": "set:one",
+      "workspaceActivationDigest": "475f73c81d35071fbd23be077f3dc07622020f6802cab75254cd13096b048761"
+    },
+    "repositoryBindings": [
+      {
+        "repoBasis": {
+          "repositoryId": "repo:a",
+          "revisionId": "rev:a",
+          "contentFingerprint": "fixture:a",
+          "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "syntaxActivationId": "syntax:0",
+        "syntaxMembershipDigest": "1111111111111111111111111111111111111111111111111111111111111111",
+        "runtimeActivationId": "runtime:0",
+        "runtimeCandidateDigest": "2222222222222222222222222222222222222222222222222222222222222222"
+      },
+      {
+        "repoBasis": {
+          "repositoryId": "repo:b",
+          "revisionId": "rev:b",
+          "contentFingerprint": "fixture:b",
+          "codeActivationDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "syntaxActivationId": "syntax:1",
+        "syntaxMembershipDigest": "1111111111111111111111111111111111111111111111111111111111111111",
+        "runtimeActivationId": "runtime:1",
+        "runtimeCandidateDigest": "2222222222222222222222222222222222222222222222222222222222222222"
+      }
+    ],
+    "catalog": {
+      "workspaceBasis": {
+        "workspaceId": "workspace:one",
+        "revisionSetId": "set:one",
+        "workspaceActivationDigest": "475f73c81d35071fbd23be077f3dc07622020f6802cab75254cd13096b048761"
+      },
+      "services": [
+        {
+          "id": "service:0",
+          "factKey": "service:0-key",
+          "logicalServiceKey": "frontend",
+          "location": "WORKSPACE",
+          "repositoryRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:a",
+            "entity": {
+              "kind": "REPOSITORY",
+              "id": "repo:a",
+              "revisionId": "rev:a"
+            }
+          },
+          "supportRefs": [
+            {
+              "basis": {
+                "repositoryId": "repo:a",
+                "revisionId": "rev:a",
+                "contentFingerprint": "fixture:a",
+                "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              },
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:0",
+                "revisionId": "rev:a"
+              },
+              "valueDigest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+            }
+          ]
+        },
+        {
+          "id": "service:1",
+          "factKey": "service:1-key",
+          "logicalServiceKey": "catalog",
+          "location": "WORKSPACE",
+          "repositoryRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:b",
+            "entity": {
+              "kind": "REPOSITORY",
+              "id": "repo:b",
+              "revisionId": "rev:b"
+            }
+          },
+          "supportRefs": [
+            {
+              "basis": {
+                "repositoryId": "repo:b",
+                "revisionId": "rev:b",
+                "contentFingerprint": "fixture:b",
+                "codeActivationDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+              },
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:1",
+                "revisionId": "rev:b"
+              },
+              "valueDigest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+            }
+          ]
+        }
+      ],
+      "entries": [
+        {
+          "id": "identity:catalog",
+          "factKey": "identity:catalog-key",
+          "serviceRef": {
+            "scope": "WORKSPACE",
+            "workspaceId": "workspace:one",
+            "entity": {
+              "kind": "SERVICE",
+              "id": "service:1",
+              "revisionId": "set:one"
+            }
+          },
+          "sourceBasis": {
+            "repositoryId": "repo:b",
+            "revisionId": "rev:b",
+            "contentFingerprint": "fixture:b",
+            "codeActivationDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "identityKind": "LOGICAL_SERVICE",
+          "namespace": "fixture",
+          "key": "catalog",
+          "supportRefs": [
+            {
+              "basis": {
+                "repositoryId": "repo:b",
+                "revisionId": "rev:b",
+                "contentFingerprint": "fixture:b",
+                "codeActivationDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+              },
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:1",
+                "revisionId": "rev:b"
+              },
+              "valueDigest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+            },
+            {
+              "basis": {
+                "workspaceId": "workspace:one",
+                "revisionSetId": "set:one",
+                "workspaceActivationDigest": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+              },
+              "entity": {
+                "kind": "SCHEMA",
+                "id": "schema:items",
+                "revisionId": "set:one"
+              },
+              "valueDigest": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+            }
+          ]
+        }
+      ],
+      "contractBindings": [
+        {
+          "contractRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:a",
+            "entity": {
+              "kind": "CONTRACT",
+              "id": "contract:consumer",
+              "revisionId": "rev:a"
+            }
+          },
+          "serviceRef": {
+            "scope": "WORKSPACE",
+            "workspaceId": "workspace:one",
+            "entity": {
+              "kind": "SERVICE",
+              "id": "service:0",
+              "revisionId": "set:one"
+            }
+          },
+          "supportRefs": [
+            {
+              "basis": {
+                "repositoryId": "repo:a",
+                "revisionId": "rev:a",
+                "contentFingerprint": "fixture:a",
+                "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              },
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:0",
+                "revisionId": "rev:a"
+              },
+              "valueDigest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+            }
+          ]
+        },
+        {
+          "contractRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:b",
+            "entity": {
+              "kind": "CONTRACT",
+              "id": "contract:provider",
+              "revisionId": "rev:b"
+            }
+          },
+          "serviceRef": {
+            "scope": "WORKSPACE",
+            "workspaceId": "workspace:one",
+            "entity": {
+              "kind": "SERVICE",
+              "id": "service:1",
+              "revisionId": "set:one"
+            }
+          },
+          "supportRefs": [
+            {
+              "basis": {
+                "repositoryId": "repo:b",
+                "revisionId": "rev:b",
+                "contentFingerprint": "fixture:b",
+                "codeActivationDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+              },
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:1",
+                "revisionId": "rev:b"
+              },
+              "valueDigest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+            }
+          ]
+        },
+        {
+          "contractRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:a",
+            "entity": {
+              "kind": "CONTRACT",
+              "id": "contract:consumer:second",
+              "revisionId": "rev:a"
+            }
+          },
+          "serviceRef": {
+            "scope": "WORKSPACE",
+            "workspaceId": "workspace:one",
+            "entity": {
+              "kind": "SERVICE",
+              "id": "service:0",
+              "revisionId": "set:one"
+            }
+          },
+          "supportRefs": [
+            {
+              "basis": {
+                "repositoryId": "repo:a",
+                "revisionId": "rev:a",
+                "contentFingerprint": "fixture:a",
+                "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              },
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:0",
+                "revisionId": "rev:a"
+              },
+              "valueDigest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+            }
+          ]
+        }
+      ]
+    },
+    "contractRefs": [
+      {
+        "ref": {
+          "scope": "REPOSITORY",
+          "repositoryId": "repo:a",
+          "entity": {
+            "kind": "CONTRACT",
+            "id": "contract:consumer",
+            "revisionId": "rev:a"
+          }
+        },
+        "contract": {
+          "id": "contract:consumer",
+          "factKey": "contract:consumer-key",
+          "repositoryId": "repo:a",
+          "revisionId": "rev:a",
+          "basis": {
+            "repositoryId": "repo:a",
+            "revisionId": "rev:a",
+            "contentFingerprint": "fixture:a",
+            "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "sourceRange": null,
+          "supportRefs": [
+            {
+              "basis": {
+                "repositoryId": "repo:a",
+                "revisionId": "rev:a",
+                "contentFingerprint": "fixture:a",
+                "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              },
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:0",
+                "revisionId": "rev:a"
+              },
+              "valueDigest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+            }
+          ],
+          "confidence": {
+            "score": 0.5,
+            "method": "declared-input",
+            "reasons": [
+              "SOURCE_SUPPORTED"
+            ]
+          },
+          "resolution": "HEURISTIC",
+          "direction": "CONSUMER",
+          "protocol": "HTTP",
+          "serviceRef": null,
+          "signature": {
+            "kind": "HTTP",
+            "method": "GET",
+            "pathSegments": [
+              {
+                "kind": "LITERAL",
+                "value": "items"
+              }
+            ],
+            "querySchemaRef": null,
+            "requestSchemaRef": null,
+            "responseSchemaRef": null,
+            "serviceHint": "catalog"
+          },
+          "implementationRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:a",
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:0",
+              "revisionId": "rev:a"
+            }
+          }
+        }
+      },
+      {
+        "ref": {
+          "scope": "REPOSITORY",
+          "repositoryId": "repo:a",
+          "entity": {
+            "kind": "CONTRACT",
+            "id": "contract:consumer:second",
+            "revisionId": "rev:a"
+          }
+        },
+        "contract": {
+          "id": "contract:consumer:second",
+          "factKey": "contract:consumer-key:second",
+          "repositoryId": "repo:a",
+          "revisionId": "rev:a",
+          "basis": {
+            "repositoryId": "repo:a",
+            "revisionId": "rev:a",
+            "contentFingerprint": "fixture:a",
+            "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "sourceRange": null,
+          "supportRefs": [
+            {
+              "basis": {
+                "repositoryId": "repo:a",
+                "revisionId": "rev:a",
+                "contentFingerprint": "fixture:a",
+                "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              },
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:0",
+                "revisionId": "rev:a"
+              },
+              "valueDigest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+            }
+          ],
+          "confidence": {
+            "score": 0.5,
+            "method": "declared-input",
+            "reasons": [
+              "SOURCE_SUPPORTED"
+            ]
+          },
+          "resolution": "HEURISTIC",
+          "direction": "CONSUMER",
+          "protocol": "HTTP",
+          "serviceRef": null,
+          "signature": {
+            "kind": "HTTP",
+            "method": "GET",
+            "pathSegments": [
+              {
+                "kind": "LITERAL",
+                "value": "items"
+              }
+            ],
+            "querySchemaRef": null,
+            "requestSchemaRef": null,
+            "responseSchemaRef": null,
+            "serviceHint": "catalog"
+          },
+          "implementationRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:a",
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:0",
+              "revisionId": "rev:a"
+            }
+          }
+        }
+      },
+      {
+        "ref": {
+          "scope": "REPOSITORY",
+          "repositoryId": "repo:b",
+          "entity": {
+            "kind": "CONTRACT",
+            "id": "contract:provider",
+            "revisionId": "rev:b"
+          }
+        },
+        "contract": {
+          "id": "contract:provider",
+          "factKey": "contract:provider-key",
+          "repositoryId": "repo:b",
+          "revisionId": "rev:b",
+          "basis": {
+            "repositoryId": "repo:b",
+            "revisionId": "rev:b",
+            "contentFingerprint": "fixture:b",
+            "codeActivationDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "sourceRange": null,
+          "supportRefs": [
+            {
+              "basis": {
+                "repositoryId": "repo:b",
+                "revisionId": "rev:b",
+                "contentFingerprint": "fixture:b",
+                "codeActivationDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+              },
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:1",
+                "revisionId": "rev:b"
+              },
+              "valueDigest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+            }
+          ],
+          "confidence": {
+            "score": 0.7,
+            "method": "declared-input",
+            "reasons": [
+              "SOURCE_SUPPORTED"
+            ]
+          },
+          "resolution": "HEURISTIC",
+          "direction": "PROVIDER",
+          "protocol": "HTTP",
+          "serviceRef": null,
+          "signature": {
+            "kind": "HTTP",
+            "method": "GET",
+            "pathSegments": [
+              {
+                "kind": "LITERAL",
+                "value": "items"
+              }
+            ],
+            "querySchemaRef": null,
+            "requestSchemaRef": null,
+            "responseSchemaRef": null,
+            "serviceHint": null
+          },
+          "implementationRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:b",
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:1",
+              "revisionId": "rev:b"
+            }
+          }
+        }
+      }
+    ],
+    "matchingPolicyVersion": "declared-http-schema-v1",
+    "schemaDocuments": [
+      {
+        "sourceFile": {
+          "id": "file:caller-http.contract",
+          "repositoryId": "repo:a",
+          "revisionId": "rev:a",
+          "path": "contracts/caller-http.contract",
+          "contentFingerprint": "sha256:5eb209be8bf0d83f8fd70e5383bb0858246420dd264db717cb2b7d33319c50ec",
+          "classification": {
+            "role": "OTHER",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": null,
+          "sensitivity": "INTERNAL"
+        },
+        "sourceSupport": {
+          "basis": {
+            "repositoryId": "repo:a",
+            "revisionId": "rev:a",
+            "contentFingerprint": "fixture:a",
+            "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "entity": {
+            "kind": "SOURCE_FILE",
+            "id": "file:caller-http.contract",
+            "revisionId": "rev:a"
+          },
+          "valueDigest": "ec76201dc3a6a69dce0b931fa4212045d73a6e3ba29b8760a80d9f18e31a8132"
+        },
+        "contentUtf8": "{\n  \"schema\": \"codeatlas.declared-http-schema\",\n  \"version\": 1,\n  \"bindings\": [\n    {\n      \"contractFactKey\": \"contract:consumer-key\",\n      \"query\": {\n        \"kind\": \"ABSENT\"\n      },\n      \"request\": {\n        \"kind\": \"ABSENT\"\n      },\n      \"response\": {\n        \"kind\": \"JSON_STRING\",\n        \"mediaType\": \"application/json\"\n      }\n    },\n    {\n      \"contractFactKey\": \"contract:consumer-key:second\",\n      \"query\": {\n        \"kind\": \"ABSENT\"\n      },\n      \"request\": {\n        \"kind\": \"ABSENT\"\n      },\n      \"response\": {\n        \"kind\": \"JSON_STRING\",\n        \"mediaType\": \"application/json\"\n      }\n    }\n  ]\n}\n"
+      },
+      {
+        "sourceFile": {
+          "id": "file:provider-http.contract",
+          "repositoryId": "repo:b",
+          "revisionId": "rev:b",
+          "path": "contracts/provider-http.contract",
+          "contentFingerprint": "sha256:93a15c2ac76c53ea3a4eb0981690a7e038ad1f986c7155d72fd5f381e84b2943",
+          "classification": {
+            "role": "OTHER",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": null,
+          "sensitivity": "INTERNAL"
+        },
+        "sourceSupport": {
+          "basis": {
+            "repositoryId": "repo:b",
+            "revisionId": "rev:b",
+            "contentFingerprint": "fixture:b",
+            "codeActivationDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "entity": {
+            "kind": "SOURCE_FILE",
+            "id": "file:provider-http.contract",
+            "revisionId": "rev:b"
+          },
+          "valueDigest": "f02ca1679604350ce831cc8b3492faaaa3a663848c4762a068d94fa4c69abeb2"
+        },
+        "contentUtf8": "{\n  \"schema\": \"codeatlas.declared-http-schema\",\n  \"version\": 1,\n  \"bindings\": [\n    {\n      \"contractFactKey\": \"contract:provider-key\",\n      \"query\": {\n        \"kind\": \"ABSENT\"\n      },\n      \"request\": {\n        \"kind\": \"ABSENT\"\n      },\n      \"response\": {\n        \"kind\": \"JSON_STRING\",\n        \"mediaType\": \"application/json\"\n      }\n    }\n  ]\n}\n"
+      }
+    ]
+  }
+}

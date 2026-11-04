@@ -10,7 +10,8 @@
     "sourceBinding": "inputs/source-binding.json",
     "metricVectors": "inputs/metric-vectors.json",
     "scenarios": "inputs/scenarios.json",
-    "performance": "inputs/performance.json"
+    "performance": "inputs/performance.json",
+    "schemaCompatibility": "inputs/schema-compatibility.json"
   },
   "expected": {
     "sourceBinding": "expected/source-binding.json",

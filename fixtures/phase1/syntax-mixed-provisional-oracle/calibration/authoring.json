@@ -1,0 +1,37 @@
+{
+  "kind": "INDEPENDENT_PINNED_MIXED_SOURCE_REFERENCE",
+  "inputOrder": ["app.py", "Endpoint.java"],
+  "outputOrder": ["Endpoint.java", "app.py"],
+  "sourceIds": {
+    "java": "file:one",
+    "python": "file:two"
+  },
+  "counts": {
+    "nodes": 2,
+    "edges": 1,
+    "syntax": 7,
+    "coverage": 2,
+    "diagnostics": 0
+  },
+  "recordCount": 14,
+  "outcome": "PARTIAL",
+  "dependencies": {
+    "java/calibration/Endpoint.java": "fa9a07e5b149109de9313e541101b3363a014b87e18f469e91643781ed2833c1",
+    "java/calibration/request.json": "5ee32658acece392e24111b3b8b80d3a4eb3b0a38f1487d1c599d997c6ed1233",
+    "java/calibration/events.jsonl": "02502a7b76c72c723c7a4578d8099973a453cf7150fabbeb0e37fab668c4d177",
+    "java/calibration/symbols.json": "1ffdff044834b9e2e8768a26f8d75c64bc191caf943b1bc00af82ad344c5c641",
+    "java/calibration/provider-nodes.json": "ab0cab1ef3bf969f7663346b15f52587924d4603613264783cdaedb710de7c5e",
+    "java/calibration/canonical-nodes.json": "42bcb7c024e729f14151268cc8906fe8d1149135803b689302f1fe05c6ba18ac",
+    "python/calibration/app.py": "9e3012e6aaee68ca614e04a2aad0097292c86ef767f320fc61445527f910e69e",
+    "python/calibration/request.json": "35b352c6725660c392e6ab767724c17eb8c0e0d371ce5188beb30c11a3b70556",
+    "python/calibration/events.jsonl": "155a1402aac6725d121598156fd694f113b8ad07f2a345342896777840252ea1",
+    "python/calibration/basis.json": "a6225613ce512b3569de2518503a147a9b05cc6e812c01fa8ecdd8c2ca379c99",
+    "python/calibration/normalized.json": "63f1f0face77210618eb80aa9fd76bf1fd02d429445ef28f930b7a91fa175aa0"
+  },
+  "limitations": [
+    "SYNTHETIC_UNIT_CONTEXT_AND_CONTROLS",
+    "JAVA_DECLARATION_OWNER_REFERENCE_ONLY",
+    "NO_COMPLETE_CODE_GRAPH_OR_ATOMIC_CODE_SYNTAX_STORE",
+    "NO_ACTUAL_NATIVE_PROCESS_PROFILE"
+  ]
+}

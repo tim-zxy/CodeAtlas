@@ -1,0 +1,58 @@
+{
+  "source": [
+    "all-files",
+    "logical-removals",
+    "hash-change",
+    "duplicate-id",
+    "duplicate-path",
+    "traversal",
+    "overlap",
+    "getter",
+    "proxy",
+    "hardlink",
+    "root-link",
+    "prepayment",
+    "abort",
+    "named-replacement",
+    "legacy-compatible"
+  ],
+  "account": [
+    "nonzero-prior",
+    "repeat",
+    "tighter-reborrow",
+    "failure-prefix",
+    "invalidated",
+    "cancelled",
+    "deadline",
+    "overflow",
+    "store-import",
+    "cleanup-credit"
+  ],
+  "dispatch": [
+    "v5",
+    "invalid-v5-no-fallback",
+    "workers-refused",
+    "legacy-unchanged"
+  ],
+  "process": [
+    "no-input-before-ready",
+    "rejected-ready",
+    "cancel-ready",
+    "exit-ready",
+    "timeout-ready",
+    "raw-bytes",
+    "after-close",
+    "dispose-once",
+    "legacy-no-hook",
+    "unsafe-public-hook"
+  ],
+  "raw": [
+    "chunks",
+    "single-byte",
+    "unchanged-original",
+    "external-mutation",
+    "trailing",
+    "checksum",
+    "abort"
+  ]
+}

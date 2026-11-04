@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "p1-mongo-v1",
+  "category": "runtime-graph",
+  "phase": "1",
+  "languages": ["java"],
+  "frameworks": ["mongo"],
+  "capabilities": ["FRAMEWORK_RUNTIME_CANDIDATE", "FRAMEWORK_BINDING_CANDIDATE"],
+  "inputs": {
+    "vectors": "inputs.json",
+    "frameworkSource": "source-adequacy/MongoSource.java",
+    "watchFrameworkSource": "source-adequacy/MongoWatchSource.java",
+    "surfaceSourceJ5": "source-adequacy/MongoWatchReferenceSource.java"
+  },
+  "expected": {
+    "contract": "expected.json",
+    "sourceReview": "source-adequacy/obligations.json",
+    "watchSourceReview": "source-adequacy/watch-obligations.json"
+  },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

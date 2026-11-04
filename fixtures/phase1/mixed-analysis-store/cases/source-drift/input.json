@@ -1,0 +1,4 @@
+{
+  "scenario": "source-drift",
+  "base": "base-input.json"
+}

@@ -1,0 +1,13 @@
+{
+  "contexts": ["REQUEST"],
+  "codeTargets": ["code:b", "code:c", "code:function"],
+  "dataTargets": ["resource:items"],
+  "transitions": {
+    "CALL": 4,
+    "PUBLISH": 1
+  },
+  "unresolved": ["PUBLISH"],
+  "flowCount": 1,
+  "branches": 0,
+  "derivation": "runtime-flow-v2"
+}

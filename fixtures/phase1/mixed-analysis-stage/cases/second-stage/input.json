@@ -1,0 +1,4 @@
+{
+  "scenario": "second-stage",
+  "base": "base-input.json"
+}

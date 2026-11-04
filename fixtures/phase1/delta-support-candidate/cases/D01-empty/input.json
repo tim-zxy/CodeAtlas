@@ -1,0 +1,60 @@
+{
+  "history": {
+    "activationId": "activation:old",
+    "parent": null,
+    "state": {
+      "basis": {
+        "repositoryId": "repo:history",
+        "revisionId": "revision:worktree",
+        "contentFingerprint": "content:old",
+        "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "repositoryLocatorDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "inventory": [],
+      "contracts": [],
+      "units": [],
+      "snapshots": [],
+      "nodes": [],
+      "edges": [],
+      "supports": [],
+      "coverage": [],
+      "syntaxOrigins": []
+    }
+  },
+  "current": {
+    "basis": {
+      "repositoryId": "repo:history",
+      "revisionId": "revision:worktree",
+      "contentFingerprint": "content:old",
+      "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "repositoryLocatorDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "inventory": [],
+    "contracts": [],
+    "units": [],
+    "snapshots": [],
+    "nodes": [],
+    "edges": [],
+    "supports": [],
+    "coverage": [],
+    "syntaxOrigins": []
+  },
+  "expectedActivationId": "activation:old",
+  "expectedOldBasis": {
+    "repositoryId": "repo:history",
+    "revisionId": "revision:worktree",
+    "contentFingerprint": "content:old",
+    "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "target": {
+    "source": {
+      "repositoryId": "repo:history",
+      "revisionId": "revision:worktree",
+      "contentFingerprint": "content:old"
+    },
+    "repositoryLocatorDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "inventory": [],
+    "contracts": []
+  },
+  "observation": null
+}

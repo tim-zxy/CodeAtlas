@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "qualification": "INDEPENDENT_CLOSED_ROUNDTRIP_COST_AND_REAL_STAGE_REFUSAL_NOT_WHOLE_OPERATION_OR_RUNTIME_QUALIFICATION",
+  "bindings": [
+    {
+      "id": "items-one-below",
+      "family": "BOUNDARY",
+      "input": "cases/items-one-below/input.json",
+      "expected": "cases/items-one-below/expected.json",
+      "inputSha256": "4be98c06c86c3b659a0fabcedf932de1a8584e50f0d152671b6181f888a408ba",
+      "expectedSha256": "57300d857968d95dc765dd23e40fd6696fdcfb43da98f119452bc0c3872d08f0"
+    },
+    {
+      "id": "bytes-one-below",
+      "family": "BOUNDARY",
+      "input": "cases/bytes-one-below/input.json",
+      "expected": "cases/bytes-one-below/expected.json",
+      "inputSha256": "c57cdcae58b4008bbe072f7df588a5e6d88bf2ee14bc7e40b596642ab98453a3",
+      "expectedSha256": "57300d857968d95dc765dd23e40fd6696fdcfb43da98f119452bc0c3872d08f0"
+    }
+  ],
+  "source": {
+    "path": "fixtures/phase1/mixed-analysis-stage/independent-budget-boundary-reference.json",
+    "sha256": "2c2bf0d8bcee41d92ae831280299524916d7536fd7af499e1be5f69f1dd8a68c",
+    "valuePath": "cumulative.fullFrozenResult"
+  },
+  "cost": {
+    "valueNodes": 149,
+    "decodedStringWeight": 3335,
+    "depth": 7,
+    "canonicalBytesWithZeroReceipt": 4162,
+    "itemsForOwnEncodeParse": 447,
+    "bytesForEncode": "2 * UTF8(canonical(value with controlled declared receipt))",
+    "memoryForOwnEncodeParse": "2 * (2 * decodedStringWeight(value) + 2 * canonicalBytes(value))"
+  },
+  "receiptPlacement": {
+    "items": "declared items = supplied remaining maxItems - independently counted roundtrip items + 1",
+    "bytes": "declared bytes = supplied remaining maxSerializedBytes - independently counted encoding bytes + 1; solve encoded receipt digit length to a fixed point before returning",
+    "noObservedUsage": "No candidate usage counters are read. The fixture-only compose port returns the preauthored independent semantic result with deliberately expensive declared receipt; it does not call the real Runtime composer.",
+    "scope": "Exact/one-below controls qualify only the own/encode/parse boundary. Real Stage rejects one-below with complete persistent equality and no FROZEN record. Full independent operation/reference and whole Fixture acceptance remain OPEN."
+  },
+  "provenance": "All costs use independent recursive value traversal, UTF8 and canonical serialization of a sealed independent value before product execution; no new Stage/Store/Runtime output or usage becomes a golden."
+}

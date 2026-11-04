@@ -1,3 +1,7 @@
+import {
+  chargeCompositionJSON,
+  type CodeSyntaxCompositionBudget,
+} from './native-code-syntax-budget.js';
 import { isDeepStrictEqual } from 'node:util';
 
 import {
@@ -106,42 +110,71 @@ export function selectMergedGroup(group: readonly MergeSupport[]): {
   readonly fact: CanonicalNode | CanonicalEdge;
   readonly explanation: MergeExplanation;
 } {
+  return selectMergedGroupCore(group, null);
+}
+function selectMergedGroupCore(
+  group: readonly MergeSupport[],
+  context: CodeSyntaxCompositionBudget | null,
+): { readonly fact: CanonicalNode | CanonicalEdge; readonly explanation: MergeExplanation } {
+  const q = (v: unknown) => {
+    if (context) chargeCompositionJSON(v, context.limits, context.budget);
+  };
   const identity = identityShape(group[0]!);
-  const conflict = group.find((s) => !isDeepStrictEqual(identityShape(s), identity));
+  q(identity);
+  const conflict = group.find((s) => {
+    const shape = identityShape(s);
+    q(shape);
+    return !isDeepStrictEqual(shape, identity);
+  });
   if (conflict) throw new FactMergeError('FACT_CONFLICT', [...conflict.inputPath, 'canonical']);
+  q(group);
   const ordered = [...group].sort((a, b) => rank(b) - rank(a) || compareSupport(a, b));
   const selected = ordered[0]!;
-  const min = Math.min(...group.map((s) => s.canonical.confidence.score));
+  const scores = group.map((s) => s.canonical.confidence.score);
+  q(scores);
+  const min = Math.min(...scores);
   const confidence =
     group.length === 1
       ? selected.canonical.confidence
       : { score: min, method: 'fact-merger-min-v1', reasons: ['minimum active support score'] };
+  const draft = { ...selected.canonical, confidence };
+  q(draft);
+  q(draft);
   const fact =
     selected.factType === 'NODE'
-      ? CanonicalNodeSchema.parse({ ...selected.canonical, confidence })
-      : CanonicalEdgeSchema.parse({ ...selected.canonical, confidence });
+      ? CanonicalNodeSchema.parse(draft)
+      : CanonicalEdgeSchema.parse(draft);
+  q(group);
   const byEvidence = [...group].sort((a, b) => compare(a.evidence.id, b.evidence.id));
-  return {
-    fact,
-    explanation: {
-      fact: { factType: selected.factType, id: selected.canonical.id },
-      selectedEvidenceId: selected.evidence.id,
-      supports: byEvidence.map((s) => ({
-        evidenceId: s.evidence.id,
-        confidence: s.canonical.confidence,
-        resolution: s.factType === 'EDGE' ? (s.canonical as CanonicalEdge).target.resolution : null,
-      })),
-      selectionRule:
-        group.length === 1
-          ? 'SINGLE_SUPPORT'
-          : rank(ordered[0]!) !== rank(ordered[1]!)
-            ? selected.factType === 'NODE'
-              ? 'SOURCE_BACKED'
-              : 'RESOLUTION_PRIORITY'
-            : 'STABLE_TIE_BREAK',
-      conflicts: conflictCategories(group, selected),
-    },
+  const summaries = byEvidence.map((s) => {
+    const summary = {
+      evidenceId: s.evidence.id,
+      confidence: s.canonical.confidence,
+      resolution: s.factType === 'EDGE' ? (s.canonical as CanonicalEdge).target.resolution : null,
+    };
+    q(summary);
+    return summary;
+  });
+  const conflicts = conflictCategories(group, selected);
+  q(conflicts);
+  const explanation: MergeExplanation = {
+    fact: { factType: selected.factType, id: selected.canonical.id },
+    selectedEvidenceId: selected.evidence.id,
+    supports: summaries,
+    selectionRule:
+      group.length === 1
+        ? 'SINGLE_SUPPORT'
+        : rank(ordered[0]!) !== rank(ordered[1]!)
+          ? selected.factType === 'NODE'
+            ? 'SOURCE_BACKED'
+            : 'RESOLUTION_PRIORITY'
+          : 'STABLE_TIE_BREAK',
+    conflicts,
   };
+  q(explanation);
+  const result = { fact, explanation };
+  q(result);
+  return result;
 }
 
 export function selectMergedFacts(supports: readonly MergeSupport[]): {
@@ -149,22 +182,38 @@ export function selectMergedFacts(supports: readonly MergeSupport[]): {
   edges: CanonicalEdge[];
   explanations: MergeExplanation[];
 } {
+  return selectMergedFactsCore(supports, null);
+}
+export default function selectMergedFactsWithBudget(
+  supports: readonly MergeSupport[],
+  context: CodeSyntaxCompositionBudget,
+): ReturnType<typeof selectMergedFacts> {
+  return selectMergedFactsCore(supports, context);
+}
+function selectMergedFactsCore(
+  supports: readonly MergeSupport[],
+  context: CodeSyntaxCompositionBudget | null,
+): ReturnType<typeof selectMergedFacts> {
+  const q = (v: unknown) => {
+    if (context) chargeCompositionJSON(v, context.limits, context.budget);
+  };
+  q(supports);
   const groups = new Map<string, MergeSupport[]>();
   const keysById = new Map<string, string>();
   for (const support of supports) {
     const fact = support.canonical;
-    const key = JSON.stringify([
-      fact.repositoryId,
-      fact.revisionId,
-      support.factType,
-      fact.factKey,
-    ]);
+    const fields = [fact.repositoryId, fact.revisionId, support.factType, fact.factKey];
+    q(fields);
+    const key = JSON.stringify(fields);
+    q(key);
     const idKey = `${support.factType}:${fact.id}`;
     const existing = keysById.get(idKey);
     if (existing !== undefined && existing !== key)
       throw new FactMergeError('FACT_CONFLICT', [...support.inputPath, 'canonical', 'factKey']);
+    q([idKey, key]);
     keysById.set(idKey, key);
     const group = groups.get(key) ?? [];
+    q(support);
     group.push(support);
     groups.set(key, group);
   }
@@ -173,18 +222,32 @@ export function selectMergedFacts(supports: readonly MergeSupport[]): {
   const explanations: MergeExplanation[] = [];
   const selectedPaths = new Map<string, readonly (string | number)[]>();
   for (const group of groups.values()) {
-    const { fact, explanation } = selectMergedGroup(group);
+    const { fact, explanation } = selectMergedGroupCore(group, context);
     const selected = group.find((s) => s.evidence.id === explanation.selectedEvidenceId)!;
+    q([selected.factType + ':' + selected.canonical.id, selected.inputPath]);
     selectedPaths.set(`${selected.factType}:${selected.canonical.id}`, selected.inputPath);
+    q(fact);
+    q(explanation);
     if (selected.factType === 'NODE') nodes.push(fact as CanonicalNode);
     else edges.push(fact as CanonicalEdge);
     explanations.push(explanation);
   }
   nodes.sort((a, b) => compare(a.factKey, b.factKey));
   edges.sort((a, b) => compare(a.factKey, b.factKey));
-  explanations.sort((a, b) =>
-    compare(`${a.fact.factType}:${a.fact.id}`, `${b.fact.factType}:${b.fact.id}`),
-  );
+  if (context) {
+    const keys = new Map<MergeExplanation, string>();
+    for (const exp of explanations) {
+      const key = exp.fact.factType + ':' + exp.fact.id;
+      q(key);
+      keys.set(exp, key);
+    }
+    explanations.sort((a, b) => compare(keys.get(a)!, keys.get(b)!));
+  } else {
+    explanations.sort((a, b) =>
+      compare(`${a.fact.factType}:${a.fact.id}`, `${b.fact.factType}:${b.fact.id}`),
+    );
+  }
+  if (context) q(nodes.map((n) => n.id));
   const nodeIds = new Set(nodes.map((n) => n.id));
   for (const edge of edges) {
     const path = selectedPaths.get(`EDGE:${edge.id}`) ?? [];
@@ -205,5 +268,7 @@ export function selectMergedFacts(supports: readonly MergeSupport[]): {
       }
     }
   }
-  return { nodes, edges, explanations };
+  const result = { nodes, edges, explanations };
+  q(result);
+  return result;
 }

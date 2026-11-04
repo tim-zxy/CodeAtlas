@@ -1,0 +1,17 @@
+{
+  "domain": "codeatlas-repository-locator-v1",
+  "groups": [
+    {
+      "tag": "LOCATOR",
+      "entries": [
+        {
+          "key": ["capture-repo"],
+          "value": {
+            "id": "capture-repo",
+            "rootPath": "C:/capture-fixture"
+          }
+        }
+      ]
+    }
+  ]
+}

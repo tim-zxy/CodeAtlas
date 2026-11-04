@@ -1,0 +1,4 @@
+{
+  "scenario": "cumulative-insufficient",
+  "base": "base-input.json"
+}

@@ -71,6 +71,27 @@
       "file": "010_native_analysis_state.sql",
       "checksum": "sha256:ebf26d1df42a47418bb06173e4783d3fdf3503ca0f6e0a0f8b6893ebbc711fa2",
       "backupRequired": false
+    },
+    {
+      "version": 11,
+      "name": "framework_syntax",
+      "file": "011_framework_syntax.sql",
+      "checksum": "sha256:b456ea6cbdf315cdc714b0e4435973e839837db02854acc7fb66f388066e715d",
+      "backupRequired": false
+    },
+    {
+      "version": 12,
+      "name": "execution_graph",
+      "file": "012_execution_graph.sql",
+      "checksum": "sha256:7a8e3120d8f70a64af31b6ccf4663fe44c054fd83ea7d5af13ca411d4f0487c5",
+      "backupRequired": false
+    },
+    {
+      "version": 13,
+      "name": "runtime_flow",
+      "file": "013_runtime_flow.sql",
+      "checksum": "sha256:e8764a93600b370de60a189a075d8b87b3e5b78e2f834d1eabb50cc61e9744bd",
+      "backupRequired": false
     }
   ]
 }

@@ -1,0 +1,106 @@
+{
+  "repositoryId": "capture-repo",
+  "tables": {
+    "repository": [
+      {
+        "slot": 1,
+        "id": "capture-repo",
+        "root_path": "C:/capture-fixture"
+      }
+    ],
+    "repository_state": [
+      {
+        "repository_id": "capture-repo",
+        "indexed_revision_id": "capture-worktree",
+        "indexed_content_fingerprint": "capture-fingerprint"
+      }
+    ],
+    "revisions": [
+      {
+        "id": "capture-worktree",
+        "repository_id": "capture-repo",
+        "kind": "WORKTREE",
+        "content_fingerprint": "capture-fingerprint",
+        "commit_identity": null,
+        "base_revision_id": null,
+        "source_revision_id": null
+      }
+    ],
+    "source_files": [
+      {
+        "revision_id": "capture-worktree",
+        "id": "source:one",
+        "repository_id": "capture-repo",
+        "path": "src/observation.txt",
+        "content_fingerprint": "source-fingerprint",
+        "role": "SOURCE",
+        "provenance": "AUTHORED",
+        "content_kind": "TEXT",
+        "language_hint": null,
+        "sensitivity": "PUBLIC"
+      }
+    ],
+    "provider_snapshots": [
+      {
+        "id": "snapshot:alpha",
+        "repository_id": "capture-repo",
+        "provider_id": "alpha",
+        "provider_version": "fixture-v1",
+        "runtime_version": "fixture-v1",
+        "requested_revision_id": "capture-worktree",
+        "requested_revision_fingerprint": "capture-fingerprint",
+        "started_at": 1792713600000,
+        "completed_at": 1792713601000,
+        "outcome": "SUCCEEDED"
+      }
+    ],
+    "provider_capabilities": [
+      {
+        "snapshot_id": "snapshot:alpha",
+        "name": "SYMBOL",
+        "support": "SUPPORTED",
+        "coverage": "COMPLETE"
+      },
+      {
+        "snapshot_id": "snapshot:alpha",
+        "name": "CALL",
+        "support": "SUPPORTED",
+        "coverage": "COMPLETE"
+      }
+    ],
+    "canonical_nodes": [],
+    "canonical_edges": [],
+    "unresolved_targets": [],
+    "evidence": [],
+    "fact_evidence": [],
+    "provider_fact_bindings": [],
+    "active_support_candidates": [],
+    "analysis_coverage": [
+      {
+        "provider_snapshot_id": "snapshot:alpha",
+        "capability_name": "SYMBOL",
+        "source_file_id": null,
+        "status": "UNKNOWN"
+      }
+    ],
+    "activation_history": [
+      {
+        "id": "activation:c481c44fac94d78f0073d9e55410ea10900529d5cf1943fac06970d6b6e3d0cd",
+        "manifest_digest": "c481c44fac94d78f0073d9e55410ea10900529d5cf1943fac06970d6b6e3d0cd",
+        "manifest_json": "{\"codeIdentity\":\"6aae7f22b396d742a7807af8bc36e36bca8b950a310569529c793ffa928acd77\",\"observation\":null,\"originRegistryDigest\":\"2b882c27d543d092c83322f5f48282e9f52fdf4c471a15531098b7a66d0a1f30\",\"parent\":null,\"schemaVersion\":1,\"sourceIdentity\":\"ce3ce67e19cc5d618d097d195c3b1ab54994212f92bc71eed784a2a23917124e\",\"state\":{\"basis\":{\"codeActivationDigest\":\"6aae7f22b396d742a7807af8bc36e36bca8b950a310569529c793ffa928acd77\",\"contentFingerprint\":\"capture-fingerprint\",\"repositoryId\":\"capture-repo\",\"revisionId\":\"capture-worktree\"},\"contracts\":[{\"contract\":\"fixture-v1\",\"extractor\":\"fixture-v1\",\"normalizer\":\"fixture-v1\",\"policy\":\"fixture-v1\",\"providerId\":\"alpha\"}],\"coverage\":[{\"coverage\":\"COMPLETE\",\"facet\":\"SYMBOL\",\"originSnapshotId\":\"snapshot:alpha\",\"unitId\":\"unit:alpha\"}],\"edges\":[],\"inventory\":[{\"classification\":{\"contentKind\":\"TEXT\",\"provenance\":\"AUTHORED\",\"role\":\"SOURCE\"},\"contentFingerprint\":\"source-fingerprint\",\"id\":\"source:one\",\"languageHint\":null,\"path\":\"src/observation.txt\",\"repositoryId\":\"capture-repo\",\"revisionId\":\"capture-worktree\",\"sensitivity\":\"PUBLIC\"}],\"nodes\":[],\"repositoryLocatorDigest\":\"00f7217f0d1a535342bd3dad39a25b2c1d2ae98d69476a4e575f4406bc214595\",\"snapshots\":[{\"capabilities\":[{\"coverage\":\"COMPLETE\",\"name\":\"SYMBOL\",\"support\":\"SUPPORTED\"},{\"coverage\":\"COMPLETE\",\"name\":\"CALL\",\"support\":\"SUPPORTED\"}],\"completedAt\":\"2026-10-23T00:00:01.000Z\",\"diagnostics\":[],\"id\":\"snapshot:alpha\",\"outcome\":\"SUCCEEDED\",\"providerId\":\"alpha\",\"providerVersion\":\"fixture-v1\",\"repositoryId\":\"capture-repo\",\"requestedRevisionFingerprint\":\"capture-fingerprint\",\"requestedRevisionId\":\"capture-worktree\",\"runtimeVersion\":\"fixture-v1\",\"startedAt\":\"2026-10-23T00:00:00.000Z\"}],\"supports\":[],\"syntaxOrigins\":[],\"units\":[{\"id\":\"unit:alpha\",\"kind\":\"PROVIDER_SCOPE\",\"providerId\":\"alpha\",\"sourceFileIds\":[\"source:one\"]}]},\"syntaxMembers\":[],\"transitions\":null}",
+        "repository_id": "capture-repo",
+        "revision_id": "capture-worktree",
+        "parent_id": null
+      }
+    ],
+    "syntax_origins": [],
+    "syntax_projections": [],
+    "activation_syntax_members": [],
+    "active_history_pointer": [
+      {
+        "repository_id": "capture-repo",
+        "activation_id": "activation:c481c44fac94d78f0073d9e55410ea10900529d5cf1943fac06970d6b6e3d0cd"
+      }
+    ]
+  }
+}

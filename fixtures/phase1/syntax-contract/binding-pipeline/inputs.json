@@ -1,0 +1,179 @@
+{
+  "requestTemplate": {
+    "protocolVersion": 7,
+    "requestId": "contract:alias-reference-python",
+    "sequence": 0,
+    "type": "OBSERVE_CODE_SYNTAX",
+    "payload": {
+      "irSchemaVersion": 1,
+      "repository": {
+        "id": "repo:one",
+        "rootPath": "/fixture/repo"
+      },
+      "providerId": "native",
+      "providerVersion": "0.0.0",
+      "providerSnapshotId": "snapshot:one",
+      "extractorVersion": "syntax-v1",
+      "languages": [
+        {
+          "languageId": "python",
+          "grammarVersion": "0.25.0",
+          "analyzerVersion": "0.0.0",
+          "compatibilityVersion": "syntax-v1"
+        }
+      ],
+      "sourceFiles": [
+        {
+          "id": "file:one",
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "path": "app.py",
+          "contentFingerprint": "sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "python",
+          "sensitivity": "INTERNAL"
+        }
+      ],
+      "removedSourceFiles": [],
+      "owners": [],
+      "deadlineEpochMs": null,
+      "resourceBudget": {
+        "maxDurationMs": 1000,
+        "maxMemoryBytes": 65536,
+        "maxEvents": 20,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "maxDepth": 64,
+        "maxItems": 1000
+      },
+      "expectedActivationBasis": null,
+      "targetSource": {
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "contentFingerprint": "content:first"
+      },
+      "ownerBinding": {
+        "kind": "PROVISIONAL_CODE",
+        "stageDigest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "ownerMapDigest": "7b17c08d61eb4e955288bf63c13f2f16f1c1ca14801fcb8190edf65ed4112fb8"
+      },
+      "codeContract": "PYTHON_SYNTAX_CODE_V1",
+      "syntaxContract": "SYNTAX_BINDING_V3"
+    }
+  },
+  "cases": [
+    {
+      "file": "direct.py",
+      "complete": true,
+      "imports": ["PYTHON_MODULE"],
+      "effects": []
+    },
+    {
+      "file": "imports.py",
+      "complete": false,
+      "imports": ["PYTHON_MODULE", "PYTHON_SYMBOL", "PYTHON_RELATIVE", "PYTHON_WILDCARD"],
+      "effects": []
+    },
+    {
+      "file": "effects.py",
+      "complete": false,
+      "imports": [],
+      "effects": [
+        "ITERATION_TARGET",
+        "CONTEXT_TARGET",
+        "EXCEPTION_TARGET",
+        "WALRUS_TARGET",
+        "UNBIND",
+        "AUGMENT"
+      ]
+    },
+    {
+      "file": "scope.py",
+      "complete": true,
+      "imports": [],
+      "effects": ["GLOBAL", "NONLOCAL"]
+    },
+    {
+      "file": "patterns.py",
+      "complete": false,
+      "imports": [],
+      "effects": ["PATTERN_TARGET"]
+    },
+    {
+      "file": "unsupported.py",
+      "complete": false,
+      "imports": [],
+      "effects": []
+    },
+    {
+      "file": "Main.java",
+      "complete": true,
+      "imports": ["JAVA_TYPE"],
+      "effects": []
+    },
+    {
+      "file": "Imports.java",
+      "complete": true,
+      "imports": ["JAVA_TYPE", "JAVA_STATIC_MEMBER", "JAVA_WILDCARD", "JAVA_STATIC_WILDCARD"],
+      "effects": []
+    },
+    {
+      "file": "Effects.java",
+      "complete": false,
+      "imports": [],
+      "effects": ["ITERATION_TARGET", "CONTEXT_TARGET", "EXCEPTION_TARGET", "AUGMENT"]
+    },
+    {
+      "file": "defaults.py",
+      "complete": true,
+      "imports": [],
+      "effects": []
+    },
+    {
+      "file": "no-binding.py",
+      "complete": true,
+      "imports": [],
+      "effects": []
+    },
+    {
+      "file": "Assignment.java",
+      "complete": true,
+      "imports": [],
+      "effects": ["AUGMENT"]
+    },
+    {
+      "file": "class-scope.py",
+      "complete": false,
+      "imports": [],
+      "effects": []
+    },
+    {
+      "file": "Block.java",
+      "complete": false,
+      "imports": [],
+      "effects": []
+    },
+    {
+      "file": "single-function.py",
+      "complete": true,
+      "imports": [],
+      "effects": []
+    },
+    {
+      "file": "single-assignment.py",
+      "complete": true,
+      "imports": [],
+      "effects": []
+    },
+    {
+      "file": "single-call.py",
+      "complete": true,
+      "imports": [],
+      "effects": []
+    }
+  ]
+}

@@ -1,0 +1,670 @@
+{
+  "targetSource": {
+    "repositoryId": "repo:history",
+    "revisionId": "revision:worktree",
+    "contentFingerprint": "content:scope:S05-java-modified-j"
+  },
+  "inventory": [
+    {
+      "id": "j",
+      "repositoryId": "repo:history",
+      "revisionId": "revision:worktree",
+      "path": "J.java",
+      "contentFingerprint": "content:changed:j",
+      "classification": {
+        "role": "SOURCE",
+        "provenance": "AUTHORED",
+        "contentKind": "TEXT"
+      },
+      "languageHint": "java",
+      "sensitivity": "INTERNAL"
+    },
+    {
+      "id": "k",
+      "repositoryId": "repo:history",
+      "revisionId": "revision:worktree",
+      "path": "K.java",
+      "contentFingerprint": "content:k",
+      "classification": {
+        "role": "SOURCE",
+        "provenance": "AUTHORED",
+        "contentKind": "TEXT"
+      },
+      "languageHint": "java",
+      "sensitivity": "INTERNAL"
+    },
+    {
+      "id": "a",
+      "repositoryId": "repo:history",
+      "revisionId": "revision:worktree",
+      "path": "a.py",
+      "contentFingerprint": "content:a",
+      "classification": {
+        "role": "SOURCE",
+        "provenance": "AUTHORED",
+        "contentKind": "TEXT"
+      },
+      "languageHint": "python",
+      "sensitivity": "INTERNAL"
+    },
+    {
+      "id": "b",
+      "repositoryId": "repo:history",
+      "revisionId": "revision:worktree",
+      "path": "b.py",
+      "contentFingerprint": "content:b",
+      "classification": {
+        "role": "SOURCE",
+        "provenance": "AUTHORED",
+        "contentKind": "TEXT"
+      },
+      "languageHint": "python",
+      "sensitivity": "INTERNAL"
+    },
+    {
+      "id": "doc",
+      "repositoryId": "repo:history",
+      "revisionId": "revision:worktree",
+      "path": "notes.md",
+      "contentFingerprint": "content:doc",
+      "classification": {
+        "role": "OTHER",
+        "provenance": "AUTHORED",
+        "contentKind": "TEXT"
+      },
+      "languageHint": null,
+      "sensitivity": "INTERNAL"
+    }
+  ],
+  "snapshot": {
+    "id": "snapshot:r0:R17-request-order-mismatch",
+    "providerId": "native",
+    "providerVersion": "0.0.0",
+    "runtimeVersion": "fixture-runtime",
+    "startedAt": "2026-10-24T00:00:00.000Z",
+    "completedAt": "2026-10-24T00:00:00.003Z"
+  },
+  "tool": {
+    "target": "fixture-target",
+    "profile": "test"
+  },
+  "java": {
+    "request": {
+      "protocolVersion": 2,
+      "requestId": "r0-java:R17-request-order-mismatch",
+      "type": "ANALYZE",
+      "payload": {
+        "irSchemaVersion": 1,
+        "providerSnapshotId": "snapshot:r0:R17-request-order-mismatch",
+        "repository": {
+          "id": "repo:history",
+          "rootPath": "/fixture/r0"
+        },
+        "revision": {
+          "id": "revision:worktree",
+          "repositoryId": "repo:history",
+          "kind": "WORKTREE",
+          "contentFingerprint": "content:scope:S05-java-modified-j",
+          "baseRevisionId": null
+        },
+        "sourceFiles": [
+          {
+            "id": "j",
+            "repositoryId": "repo:history",
+            "revisionId": "revision:worktree",
+            "path": "J.java",
+            "contentFingerprint": "content:changed:j",
+            "classification": {
+              "role": "SOURCE",
+              "provenance": "AUTHORED",
+              "contentKind": "TEXT"
+            },
+            "languageHint": "java",
+            "sensitivity": "INTERNAL"
+          },
+          {
+            "id": "k",
+            "repositoryId": "repo:history",
+            "revisionId": "revision:worktree",
+            "path": "K.java",
+            "contentFingerprint": "content:k",
+            "classification": {
+              "role": "SOURCE",
+              "provenance": "AUTHORED",
+              "contentKind": "TEXT"
+            },
+            "languageHint": "java",
+            "sensitivity": "INTERNAL"
+          }
+        ],
+        "requestedCapabilities": ["SYMBOL", "IMPORT", "CALL", "INHERITANCE", "REFERENCE"],
+        "deadlineEpochMs": null,
+        "resourceBudget": {
+          "maxDurationMs": 1000,
+          "maxMemoryBytes": 65536,
+          "maxEvents": 20
+        }
+      }
+    },
+    "events": [
+      {
+        "protocolVersion": 2,
+        "requestId": "r0-java:R17-request-order-mismatch",
+        "sequence": 0,
+        "type": "ANALYSIS_STARTED",
+        "payload": {
+          "providerSnapshotId": "snapshot:r0:R17-request-order-mismatch",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "revisionFingerprint": "content:scope:S05-java-modified-j"
+        }
+      },
+      {
+        "protocolVersion": 2,
+        "requestId": "r0-java:R17-request-order-mismatch",
+        "sequence": 1,
+        "type": "SOURCE_FILE",
+        "payload": {
+          "id": "j",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "J.java",
+          "contentFingerprint": "content:changed:j",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "java",
+          "sensitivity": "INTERNAL"
+        }
+      },
+      {
+        "protocolVersion": 2,
+        "requestId": "r0-java:R17-request-order-mismatch",
+        "sequence": 2,
+        "type": "NODE",
+        "payload": {
+          "providerId": "native",
+          "providerSnapshotId": "snapshot:r0:R17-request-order-mismatch",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "providerFactId": "java:unit:j",
+          "providerKind": "java.compilation_unit",
+          "name": "J.java",
+          "qualifiedName": "J.java",
+          "sourceRange": null,
+          "confidence": {
+            "score": 1,
+            "method": "parser",
+            "reasons": []
+          }
+        }
+      },
+      {
+        "protocolVersion": 2,
+        "requestId": "r0-java:R17-request-order-mismatch",
+        "sequence": 3,
+        "type": "NODE",
+        "payload": {
+          "providerId": "native",
+          "providerSnapshotId": "snapshot:r0:R17-request-order-mismatch",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "providerFactId": "java:class:j",
+          "providerKind": "java.class",
+          "name": "Box",
+          "qualifiedName": "pkg.j.Box",
+          "sourceRange": {
+            "sourceFileId": "j",
+            "startLine": 0,
+            "startColumn": 6,
+            "endLine": 0,
+            "endColumn": 9
+          },
+          "confidence": {
+            "score": 1,
+            "method": "parser",
+            "reasons": []
+          }
+        }
+      },
+      {
+        "protocolVersion": 2,
+        "requestId": "r0-java:R17-request-order-mismatch",
+        "sequence": 4,
+        "type": "COVERAGE",
+        "payload": {
+          "capability": "SYMBOL",
+          "sourceFileId": "j",
+          "support": "SUPPORTED",
+          "coverage": "COMPLETE",
+          "statistics": {
+            "eligibleSites": 1,
+            "coveredSites": 1,
+            "unsupportedSites": 0,
+            "partialSites": 0,
+            "resolutionCounts": {
+              "EXACT": 0,
+              "HEURISTIC": 0,
+              "AMBIGUOUS": 0,
+              "UNRESOLVED": 0,
+              "UNSUPPORTED": 0
+            }
+          }
+        }
+      },
+      {
+        "protocolVersion": 2,
+        "requestId": "r0-java:R17-request-order-mismatch",
+        "sequence": 5,
+        "type": "COVERAGE",
+        "payload": {
+          "capability": "IMPORT",
+          "sourceFileId": "j",
+          "support": "SUPPORTED",
+          "coverage": "COMPLETE",
+          "statistics": {
+            "eligibleSites": 0,
+            "coveredSites": 0,
+            "unsupportedSites": 0,
+            "partialSites": 0,
+            "resolutionCounts": {
+              "EXACT": 0,
+              "HEURISTIC": 0,
+              "AMBIGUOUS": 0,
+              "UNRESOLVED": 0,
+              "UNSUPPORTED": 0
+            }
+          }
+        }
+      },
+      {
+        "protocolVersion": 2,
+        "requestId": "r0-java:R17-request-order-mismatch",
+        "sequence": 6,
+        "type": "COVERAGE",
+        "payload": {
+          "capability": "CALL",
+          "sourceFileId": "j",
+          "support": "SUPPORTED",
+          "coverage": "COMPLETE",
+          "statistics": {
+            "eligibleSites": 0,
+            "coveredSites": 0,
+            "unsupportedSites": 0,
+            "partialSites": 0,
+            "resolutionCounts": {
+              "EXACT": 0,
+              "HEURISTIC": 0,
+              "AMBIGUOUS": 0,
+              "UNRESOLVED": 0,
+              "UNSUPPORTED": 0
+            }
+          }
+        }
+      },
+      {
+        "protocolVersion": 2,
+        "requestId": "r0-java:R17-request-order-mismatch",
+        "sequence": 7,
+        "type": "COVERAGE",
+        "payload": {
+          "capability": "INHERITANCE",
+          "sourceFileId": "j",
+          "support": "SUPPORTED",
+          "coverage": "COMPLETE",
+          "statistics": {
+            "eligibleSites": 0,
+            "coveredSites": 0,
+            "unsupportedSites": 0,
+            "partialSites": 0,
+            "resolutionCounts": {
+              "EXACT": 0,
+              "HEURISTIC": 0,
+              "AMBIGUOUS": 0,
+              "UNRESOLVED": 0,
+              "UNSUPPORTED": 0
+            }
+          }
+        }
+      },
+      {
+        "protocolVersion": 2,
+        "requestId": "r0-java:R17-request-order-mismatch",
+        "sequence": 8,
+        "type": "COVERAGE",
+        "payload": {
+          "capability": "REFERENCE",
+          "sourceFileId": "j",
+          "support": "SUPPORTED",
+          "coverage": "COMPLETE",
+          "statistics": {
+            "eligibleSites": 0,
+            "coveredSites": 0,
+            "unsupportedSites": 0,
+            "partialSites": 0,
+            "resolutionCounts": {
+              "EXACT": 0,
+              "HEURISTIC": 0,
+              "AMBIGUOUS": 0,
+              "UNRESOLVED": 0,
+              "UNSUPPORTED": 0
+            }
+          }
+        }
+      },
+      {
+        "protocolVersion": 2,
+        "requestId": "r0-java:R17-request-order-mismatch",
+        "sequence": 9,
+        "type": "SOURCE_FILE",
+        "payload": {
+          "id": "k",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "K.java",
+          "contentFingerprint": "content:k",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "java",
+          "sensitivity": "INTERNAL"
+        }
+      },
+      {
+        "protocolVersion": 2,
+        "requestId": "r0-java:R17-request-order-mismatch",
+        "sequence": 10,
+        "type": "NODE",
+        "payload": {
+          "providerId": "native",
+          "providerSnapshotId": "snapshot:r0:R17-request-order-mismatch",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "providerFactId": "java:unit:k",
+          "providerKind": "java.compilation_unit",
+          "name": "K.java",
+          "qualifiedName": "K.java",
+          "sourceRange": null,
+          "confidence": {
+            "score": 1,
+            "method": "parser",
+            "reasons": []
+          }
+        }
+      },
+      {
+        "protocolVersion": 2,
+        "requestId": "r0-java:R17-request-order-mismatch",
+        "sequence": 11,
+        "type": "NODE",
+        "payload": {
+          "providerId": "native",
+          "providerSnapshotId": "snapshot:r0:R17-request-order-mismatch",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "providerFactId": "java:class:k",
+          "providerKind": "java.class",
+          "name": "Box",
+          "qualifiedName": "pkg.k.Box",
+          "sourceRange": {
+            "sourceFileId": "k",
+            "startLine": 0,
+            "startColumn": 6,
+            "endLine": 0,
+            "endColumn": 9
+          },
+          "confidence": {
+            "score": 1,
+            "method": "parser",
+            "reasons": []
+          }
+        }
+      },
+      {
+        "protocolVersion": 2,
+        "requestId": "r0-java:R17-request-order-mismatch",
+        "sequence": 12,
+        "type": "COVERAGE",
+        "payload": {
+          "capability": "SYMBOL",
+          "sourceFileId": "k",
+          "support": "SUPPORTED",
+          "coverage": "COMPLETE",
+          "statistics": {
+            "eligibleSites": 1,
+            "coveredSites": 1,
+            "unsupportedSites": 0,
+            "partialSites": 0,
+            "resolutionCounts": {
+              "EXACT": 0,
+              "HEURISTIC": 0,
+              "AMBIGUOUS": 0,
+              "UNRESOLVED": 0,
+              "UNSUPPORTED": 0
+            }
+          }
+        }
+      },
+      {
+        "protocolVersion": 2,
+        "requestId": "r0-java:R17-request-order-mismatch",
+        "sequence": 13,
+        "type": "COVERAGE",
+        "payload": {
+          "capability": "IMPORT",
+          "sourceFileId": "k",
+          "support": "SUPPORTED",
+          "coverage": "COMPLETE",
+          "statistics": {
+            "eligibleSites": 0,
+            "coveredSites": 0,
+            "unsupportedSites": 0,
+            "partialSites": 0,
+            "resolutionCounts": {
+              "EXACT": 0,
+              "HEURISTIC": 0,
+              "AMBIGUOUS": 0,
+              "UNRESOLVED": 0,
+              "UNSUPPORTED": 0
+            }
+          }
+        }
+      },
+      {
+        "protocolVersion": 2,
+        "requestId": "r0-java:R17-request-order-mismatch",
+        "sequence": 14,
+        "type": "COVERAGE",
+        "payload": {
+          "capability": "CALL",
+          "sourceFileId": "k",
+          "support": "SUPPORTED",
+          "coverage": "COMPLETE",
+          "statistics": {
+            "eligibleSites": 0,
+            "coveredSites": 0,
+            "unsupportedSites": 0,
+            "partialSites": 0,
+            "resolutionCounts": {
+              "EXACT": 0,
+              "HEURISTIC": 0,
+              "AMBIGUOUS": 0,
+              "UNRESOLVED": 0,
+              "UNSUPPORTED": 0
+            }
+          }
+        }
+      },
+      {
+        "protocolVersion": 2,
+        "requestId": "r0-java:R17-request-order-mismatch",
+        "sequence": 15,
+        "type": "COVERAGE",
+        "payload": {
+          "capability": "INHERITANCE",
+          "sourceFileId": "k",
+          "support": "SUPPORTED",
+          "coverage": "COMPLETE",
+          "statistics": {
+            "eligibleSites": 0,
+            "coveredSites": 0,
+            "unsupportedSites": 0,
+            "partialSites": 0,
+            "resolutionCounts": {
+              "EXACT": 0,
+              "HEURISTIC": 0,
+              "AMBIGUOUS": 0,
+              "UNRESOLVED": 0,
+              "UNSUPPORTED": 0
+            }
+          }
+        }
+      },
+      {
+        "protocolVersion": 2,
+        "requestId": "r0-java:R17-request-order-mismatch",
+        "sequence": 16,
+        "type": "COVERAGE",
+        "payload": {
+          "capability": "REFERENCE",
+          "sourceFileId": "k",
+          "support": "SUPPORTED",
+          "coverage": "COMPLETE",
+          "statistics": {
+            "eligibleSites": 0,
+            "coveredSites": 0,
+            "unsupportedSites": 0,
+            "partialSites": 0,
+            "resolutionCounts": {
+              "EXACT": 0,
+              "HEURISTIC": 0,
+              "AMBIGUOUS": 0,
+              "UNRESOLVED": 0,
+              "UNSUPPORTED": 0
+            }
+          }
+        }
+      },
+      {
+        "protocolVersion": 2,
+        "requestId": "r0-java:R17-request-order-mismatch",
+        "sequence": 17,
+        "type": "ANALYSIS_COMPLETED",
+        "payload": {
+          "providerSnapshotId": "snapshot:r0:R17-request-order-mismatch",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "revisionFingerprint": "content:scope:S05-java-modified-j",
+          "outcome": "SUCCEEDED",
+          "counts": {
+            "sourceFiles": 2,
+            "nodes": 4,
+            "edges": 0,
+            "coverage": 10,
+            "diagnostics": 0
+          },
+          "capabilities": [
+            {
+              "name": "SYMBOL",
+              "support": "SUPPORTED",
+              "coverage": "COMPLETE"
+            },
+            {
+              "name": "IMPORT",
+              "support": "SUPPORTED",
+              "coverage": "COMPLETE"
+            },
+            {
+              "name": "CALL",
+              "support": "SUPPORTED",
+              "coverage": "COMPLETE"
+            },
+            {
+              "name": "INHERITANCE",
+              "support": "SUPPORTED",
+              "coverage": "COMPLETE"
+            },
+            {
+              "name": "REFERENCE",
+              "support": "SUPPORTED",
+              "coverage": "COMPLETE"
+            }
+          ],
+          "contentFingerprint": "content:java-reference",
+          "integrityChecksum": "sha256:8ce490d38c44ca4b98108c87aa1a85770d8196a9a11ac2cf53e7d28130973de0"
+        }
+      }
+    ],
+    "terminal": {
+      "protocolVersion": 2,
+      "requestId": "r0-java:R17-request-order-mismatch",
+      "sequence": 17,
+      "type": "ANALYSIS_COMPLETED",
+      "payload": {
+        "providerSnapshotId": "snapshot:r0:R17-request-order-mismatch",
+        "repositoryId": "repo:history",
+        "revisionId": "revision:worktree",
+        "revisionFingerprint": "content:scope:S05-java-modified-j",
+        "outcome": "SUCCEEDED",
+        "counts": {
+          "sourceFiles": 2,
+          "nodes": 4,
+          "edges": 0,
+          "coverage": 10,
+          "diagnostics": 0
+        },
+        "capabilities": [
+          {
+            "name": "SYMBOL",
+            "support": "SUPPORTED",
+            "coverage": "COMPLETE"
+          },
+          {
+            "name": "IMPORT",
+            "support": "SUPPORTED",
+            "coverage": "COMPLETE"
+          },
+          {
+            "name": "CALL",
+            "support": "SUPPORTED",
+            "coverage": "COMPLETE"
+          },
+          {
+            "name": "INHERITANCE",
+            "support": "SUPPORTED",
+            "coverage": "COMPLETE"
+          },
+          {
+            "name": "REFERENCE",
+            "support": "SUPPORTED",
+            "coverage": "COMPLETE"
+          }
+        ],
+        "contentFingerprint": "content:java-reference",
+        "integrityChecksum": "sha256:8ce490d38c44ca4b98108c87aa1a85770d8196a9a11ac2cf53e7d28130973de0"
+      }
+    },
+    "providerVersion": "0.0.0",
+    "runtimeVersion": "fixture-runtime",
+    "tool": {
+      "target": "fixture-target",
+      "profile": "test"
+    },
+    "startedAt": "2026-10-24T00:00:00.001Z",
+    "settledAt": "2026-10-24T00:00:00.002Z"
+  },
+  "codeSyntax": {
+    "providerVersion": "0.0.0",
+    "runtimeVersion": "fixture-runtime",
+    "tool": {
+      "target": "fixture-target",
+      "profile": "test"
+    },
+    "startedAt": "2026-10-24T00:00:00.001Z",
+    "settledAt": "2026-10-24T00:00:00.002Z"
+  }
+}

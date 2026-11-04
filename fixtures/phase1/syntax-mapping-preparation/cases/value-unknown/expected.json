@@ -1,0 +1,64 @@
+{
+  "kind": "MAPPING_PROJECTION_EXPECTATION",
+  "semanticDisposition": "PROJECTABLE_WITHOUT_POLICY",
+  "projection": {
+    "repositoryId": "repo-fixture",
+    "revisionId": "rev-a",
+    "sourceFileId": "source-fixture",
+    "sourceFingerprint": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+    "sourceRange": {
+      "sourceFileId": "source-fixture",
+      "startLine": 1,
+      "startColumn": 0,
+      "endLine": 1,
+      "endColumn": 5
+    },
+    "syntaxKind": "ASSIGNMENT",
+    "owner": {
+      "scope": "REPOSITORY",
+      "repositoryId": "repo-fixture",
+      "entity": {
+        "kind": "CODE_NODE",
+        "id": "node-owner",
+        "revisionId": "rev-a"
+      }
+    },
+    "payload": {
+      "targetName": "x",
+      "value": {
+        "kind": "UNKNOWN",
+        "reason": "expression not evaluated"
+      }
+    }
+  },
+  "requiredEntities": [
+    {
+      "kind": "SOURCE_FILE",
+      "id": "source-fixture",
+      "revisionId": "rev-a"
+    },
+    {
+      "kind": "CODE_NODE",
+      "id": "node-owner",
+      "revisionId": "rev-a"
+    }
+  ],
+  "keyMeaning": {
+    "owner": {
+      "kind": "CODE_NODE",
+      "id": "node-owner"
+    },
+    "payload": {
+      "targetName": "x",
+      "value": {
+        "kind": "UNKNOWN",
+        "reason": "expression not evaluated"
+      }
+    }
+  },
+  "admission": "BLOCKED_POLICY",
+  "canonicalEnvelope": null,
+  "keyCanonicalText": "{\"owner\":{\"id\":\"node-owner\",\"kind\":\"CODE_NODE\"},\"payload\":{\"targetName\":\"x\",\"value\":{\"kind\":\"UNKNOWN\",\"reason\":\"expression not evaluated\"}}}",
+  "payloadDigest": "bde839327bc6b5ac7e6534c1741c8249f84b44894b0f239abad736243af23e1d",
+  "syntaxKey": "syntax-key-v1:7dc088213cc85a8797b818e852ea08586317bf445e2ce116854560f01a971c6e"
+}

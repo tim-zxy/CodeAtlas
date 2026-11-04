@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { join, resolve, dirname, basename } from 'node:path';
 import { DatabaseSync } from 'node:sqlite';
 import { test } from 'node:test';
 import { pathToFileURL } from 'node:url';
@@ -39,13 +39,23 @@ const releasedFiles = [
 
 async function withDatabase(t, run) {
   const directory = await mkdtemp(join(tmpdir(), 'codeatlas-r010-'));
-  t.after(() => rm(directory, { recursive: true, force: true }));
+  t.after(() => {
+    assert.equal(resolve(dirname(directory)), resolve(tmpdir()));
+    assert.ok(basename(directory).startsWith('codeatlas-r010-'));
+    return rm(directory, { recursive: true, force: true });
+  });
   const databasePath = join(directory, 'repo.sqlite');
-  const request = { databasePath, databaseKind: 'REPOSITORY', manifestUrl };
+  const request = {
+    databasePath,
+    databaseKind: 'REPOSITORY',
+    manifestUrl: await prefixManifest(directory, 10),
+  };
   await run({ directory, databasePath, request });
 }
 
 async function prefixManifest(directory, version, sqlSuffix = '') {
+  directory = await mkdtemp(join(directory, 'prefix-')); // Separate deliberate failure SQL from the positive prefix.
+
   const manifest = JSON.parse(await readFile(manifestUrl, 'utf8'));
   const migrations = structuredClone(manifest.migrations.slice(0, version));
   for (const entry of migrations) {
@@ -164,7 +174,7 @@ const cases = {
     }),
   'r010-failure-rolls-back': async (t) =>
     withDatabase(t, async ({ directory, request, databasePath }) => {
-      const manifest = JSON.parse(await readFile(manifestUrl, 'utf8'));
+      const manifest = JSON.parse(await readFile(request.manifestUrl, 'utf8'));
       assert.equal(manifest.migrations.at(-1).version, 10);
       await runMigrations({ ...request, manifestUrl: await prefixManifest(directory, 9) });
       const oldDb = new DatabaseSync(databasePath);
@@ -209,12 +219,12 @@ const cases = {
       })),
     );
     const plan = await loadMigrationPlan(manifestUrl, 'REPOSITORY');
-    assert.equal(plan.latestVersion, 10);
-    assert.deepEqual(manifest.migrations.at(-1), {
+    assert.ok(plan.latestVersion >= 10);
+    assert.deepEqual(manifest.migrations[9], {
       version: 10,
       name: 'native_analysis_state',
       file: '010_native_analysis_state.sql',
-      checksum: 'sha256:' + createHash('sha256').update(plan.migrations.at(-1).sql).digest('hex'),
+      checksum: 'sha256:' + createHash('sha256').update(plan.migrations[9].sql).digest('hex'),
       backupRequired: false,
     });
   },
@@ -289,7 +299,7 @@ const cases = {
       });
       const workspace = new DatabaseSync(workspacePath);
       try {
-        assert.equal(workspace.prepare('PRAGMA user_version').get().user_version, 3);
+        assert.equal(workspace.prepare('PRAGMA user_version').get().user_version, 6);
         assert.deepEqual(
           workspace
             .prepare("SELECT name FROM sqlite_master WHERE name LIKE 'native_analysis_%'")

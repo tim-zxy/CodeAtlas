@@ -1,0 +1,5 @@
+{
+  "point": "members",
+  "base": "base-input.json",
+  "processExit": true
+}

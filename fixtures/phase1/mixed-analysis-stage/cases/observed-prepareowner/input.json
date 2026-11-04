@@ -1,0 +1,5 @@
+{
+  "state": "OBSERVED",
+  "method": "prepareOwner",
+  "base": "base-input.json"
+}

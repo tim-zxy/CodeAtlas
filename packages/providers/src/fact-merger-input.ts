@@ -1,4 +1,9 @@
 import {
+  chargeCompositionJSON,
+  chargeCompositionIdentityTuple,
+  type CodeSyntaxCompositionBudget,
+} from './native-code-syntax-budget.js';
+import {
   CanonicalEdgeSchema,
   CanonicalNodeSchema,
   EntityIdSchema,
@@ -91,6 +96,23 @@ function validate<T>(schema: z.ZodType<T>, value: unknown, path: readonly (strin
 }
 
 export function collectMergeSupports(input: MergeInput): readonly MergeSupport[] {
+  return collectMergeSupportsCore(input, null);
+}
+export default function collectMergeSupportsWithBudget(
+  input: MergeInput,
+  context: CodeSyntaxCompositionBudget,
+): readonly MergeSupport[] {
+  return collectMergeSupportsCore(input, context);
+}
+function collectMergeSupportsCore(
+  input: MergeInput,
+  context: CodeSyntaxCompositionBudget | null,
+): readonly MergeSupport[] {
+  const q = (v: unknown) => {
+    if (context) chargeCompositionJSON(v, context.limits, context.budget);
+  };
+  q(input);
+  q(input);
   const validated = validate(InputSchema, input, []);
   const supports: MergeSupport[] = [];
   const providers = new Set<string>();
@@ -98,6 +120,7 @@ export function collectMergeSupports(input: MergeInput): readonly MergeSupport[]
   const seen = new Set<string>();
   for (const [observationIndex, observation] of validated.observations.entries()) {
     const base = ['observations', observationIndex] as const;
+    q(base);
     const { snapshot } = observation;
     if (snapshot.repositoryId !== validated.repositoryId)
       throw new FactMergeError('INVALID_CONTEXT', [...base, 'snapshot', 'repositoryId']);
@@ -107,15 +130,18 @@ export function collectMergeSupports(input: MergeInput): readonly MergeSupport[]
       throw new FactMergeError('INVALID_CONTEXT', [...base, 'snapshot', 'outcome']);
     if (providers.has(snapshot.providerId))
       throw new FactMergeError('DUPLICATE_SUPPORT', [...base, 'snapshot', 'providerId']);
+    q(snapshot.providerId);
     providers.add(snapshot.providerId);
     if (snapshots.has(snapshot.id))
       throw new FactMergeError('DUPLICATE_SUPPORT', [...base, 'snapshot', 'id']);
+    q(snapshot.id);
     snapshots.add(snapshot.id);
 
     for (const factType of ['NODE', 'EDGE'] as const) {
       const field = factType === 'NODE' ? 'nodes' : 'edges';
       for (const [index, pair] of observation[field].entries()) {
         const path = [...base, field, index];
+        q(path);
         if (pair.provider.factType !== factType)
           throw new FactMergeError('INVALID_CONTEXT', [...path, 'provider', 'factType']);
         if (pair.provider.providerId !== snapshot.providerId)
@@ -124,15 +150,30 @@ export function collectMergeSupports(input: MergeInput): readonly MergeSupport[]
           throw new FactMergeError('INVALID_CONTEXT', [...path, 'canonical', 'repositoryId']);
         if (pair.canonical.revisionId !== validated.revisionId)
           throw new FactMergeError('INVALID_CONTEXT', [...path, 'canonical', 'revisionId']);
-        const unique = JSON.stringify([
+        const uniqueFields = [
           snapshot.id,
           factType,
           pair.provider.providerId,
           pair.provider.providerFactId,
-        ]);
+        ];
+        q(uniqueFields);
+        const unique = JSON.stringify(uniqueFields);
+        q(unique);
         if (seen.has(unique))
           throw new FactMergeError('DUPLICATE_SUPPORT', [...path, 'provider', 'providerFactId']);
         seen.add(unique);
+        if (context) {
+          const fields = [
+            validated.repositoryId,
+            validated.revisionId,
+            snapshot.id,
+            factType,
+            pair.provider.providerId,
+            pair.provider.providerFactId,
+          ];
+          q(fields);
+          chargeCompositionIdentityTuple('provider-evidence-v1', fields, context);
+        }
         let evidenceId;
         try {
           evidenceId = providerEvidenceId(
@@ -161,30 +202,32 @@ export function collectMergeSupports(input: MergeInput): readonly MergeSupport[]
           throw new FactMergeError('INVALID_INPUT', path);
         }
         const fact = { factType, id: pair.canonical.id };
-        const evidence = validate(
-          EvidenceSchema,
-          {
-            id: evidenceId,
-            repositoryId: validated.repositoryId,
-            revisionId: validated.revisionId,
-            providerSnapshotId: snapshot.id,
-            providerFact: pair.provider,
-            status: 'ACTIVE',
-          },
-          path,
-        );
-        const factEvidence = validate(FactEvidenceSchema, { fact, evidenceId }, path);
-        const binding = validate(
-          ProviderFactBindingSchema,
-          {
-            providerFact: pair.provider,
-            providerSnapshotId: snapshot.id,
-            canonicalFact: fact,
-            evidenceId,
-          },
-          path,
-        );
-        supports.push({
+        q(fact);
+        const evidenceDraft = {
+          id: evidenceId,
+          repositoryId: validated.repositoryId,
+          revisionId: validated.revisionId,
+          providerSnapshotId: snapshot.id,
+          providerFact: pair.provider,
+          status: 'ACTIVE',
+        };
+        q(evidenceDraft);
+        q(evidenceDraft);
+        const evidence = validate(EvidenceSchema, evidenceDraft, path);
+        const factEvidenceDraft = { fact, evidenceId };
+        q(factEvidenceDraft);
+        q(factEvidenceDraft);
+        const factEvidence = validate(FactEvidenceSchema, factEvidenceDraft, path);
+        const bindingDraft = {
+          providerFact: pair.provider,
+          providerSnapshotId: snapshot.id,
+          canonicalFact: fact,
+          evidenceId,
+        };
+        q(bindingDraft);
+        q(bindingDraft);
+        const binding = validate(ProviderFactBindingSchema, bindingDraft, path);
+        const support: MergeSupport = {
           factType,
           canonical: pair.canonical,
           snapshotId: snapshot.id,
@@ -192,9 +235,12 @@ export function collectMergeSupports(input: MergeInput): readonly MergeSupport[]
           evidence,
           factEvidence,
           binding,
-        });
+        };
+        q(support);
+        supports.push(support);
       }
     }
   }
+  q(supports);
   return supports;
 }

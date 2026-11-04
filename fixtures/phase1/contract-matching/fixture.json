@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "p1-contract-matching-v1",
+  "category": "runtime-graph",
+  "phase": "1",
+  "languages": [],
+  "frameworks": [],
+  "capabilities": ["CONTRACT_MATCH_STRUCTURE"],
+  "inputs": {
+    "vectors": "inputs.json",
+    "matching": "matching-inputs.json",
+    "declaredSchema": "declared-schema-inputs.json",
+    "declaredCallerSource": "sources/caller-http.contract",
+    "declaredProviderSource": "sources/provider-http.contract"
+  },
+  "expected": {
+    "contract": "expected.json",
+    "matching": "matching-expected.json",
+    "declaredSchema": "declared-schema-expected.json"
+  },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

@@ -11,3 +11,14 @@ export {
   StorageIndexSessionError,
   type RepositoryIndexSession,
 } from './indexing/repository-index-session.js';
+export * from './analysis/code-context-capture.js';
+
+export { RuntimeFactStore } from './runtime/runtime-fact-store.js';
+export type {
+  RuntimeBatchInput,
+  RuntimeBatchCandidate,
+  RuntimeCommitOutcome,
+} from './runtime/runtime-fact-store.js';
+export { ContractStore } from './runtime/contract-store.js';
+export type { WorkspaceRuntimeBatch, WorkspaceRuntimeOutcome } from './runtime/contract-store.js';
+export type { HistoryReadLimits } from './analysis/activation-history-format.js';

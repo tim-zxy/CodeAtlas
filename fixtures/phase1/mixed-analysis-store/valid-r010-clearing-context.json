@@ -1,0 +1,335 @@
+{
+  "schemaVersion": 1,
+  "qualification": "DECLARED_NODE_SQLITE_COMPONENT_ONLY",
+  "oldManifest": {
+    "schemaVersion": 1,
+    "parent": null,
+    "state": {
+      "basis": {
+        "repositoryId": "r",
+        "revisionId": "rev",
+        "contentFingerprint": "base",
+        "codeActivationDigest": "c208949d1f8e2a0031bd0a84bce005c10c058c02f532e36d6833f1a6056f046b"
+      },
+      "repositoryLocatorDigest": "89b334a45872720bb324e270130b21bc4d472bb297298b0d45685db1c0571ff7",
+      "inventory": [],
+      "contracts": [
+        {
+          "providerId": "native",
+          "extractor": "syntax-v1",
+          "normalizer": "fixture-v1",
+          "contract": "PYTHON_SYNTAX_CODE_V1",
+          "policy": "syntax-surface-support-v1"
+        }
+      ],
+      "units": [],
+      "snapshots": [
+        {
+          "id": "snap",
+          "repositoryId": "r",
+          "providerId": "native",
+          "providerVersion": "0.0.0",
+          "runtimeVersion": "0.0.0",
+          "requestedRevisionId": "rev",
+          "requestedRevisionFingerprint": "base",
+          "startedAt": "2026-01-01T00:00:00.000Z",
+          "completedAt": "2026-01-01T00:00:01.000Z",
+          "capabilities": [
+            {
+              "name": "SYMBOL",
+              "support": "SUPPORTED",
+              "coverage": "COMPLETE"
+            }
+          ],
+          "diagnostics": [],
+          "outcome": "SUCCEEDED"
+        }
+      ],
+      "nodes": [],
+      "edges": [],
+      "supports": [],
+      "coverage": [],
+      "syntaxOrigins": []
+    },
+    "observation": null,
+    "transitions": null,
+    "syntaxMembers": [],
+    "codeIdentity": "c208949d1f8e2a0031bd0a84bce005c10c058c02f532e36d6833f1a6056f046b",
+    "sourceIdentity": "9a99716b1331858af1b9ae8165aeec7ca36b6a3fe64b28c804d01bb414e1cfa2",
+    "originRegistryDigest": "d6db62aa1a54c8f2be953cb84a58e2280417fc4dddd85f021e86f90e3fe29d4d"
+  },
+  "oldActivationId": "activation:1079a965802acb90666b73177b06023ec10236efd6776120808a701ff966aa87",
+  "preparation": {
+    "contracts": [
+      {
+        "providerId": "native",
+        "extractor": "syntax-v1",
+        "normalizer": "fixture-v1",
+        "contract": "PYTHON_SYNTAX_CODE_V1",
+        "policy": "syntax-surface-support-v1"
+      }
+    ],
+    "qualificationRef": "component-fixture:not-runtime-qualified"
+  },
+  "owner": {
+    "body": {
+      "schemaVersion": 1,
+      "repositoryLocatorDigest": "89b334a45872720bb324e270130b21bc4d472bb297298b0d45685db1c0571ff7",
+      "expectedActivationId": "activation:1079a965802acb90666b73177b06023ec10236efd6776120808a701ff966aa87",
+      "expectedOldBasis": {
+        "repositoryId": "r",
+        "revisionId": "rev",
+        "contentFingerprint": "base",
+        "codeActivationDigest": "c208949d1f8e2a0031bd0a84bce005c10c058c02f532e36d6833f1a6056f046b"
+      },
+      "targetSource": {
+        "repositoryId": "r",
+        "revisionId": "rev",
+        "contentFingerprint": "base"
+      },
+      "inventoryDigest": "3b8366b8a23841ab31fe739eec3e86bf1eb5d1fc2a55e123c98dd3eca542a6e5",
+      "contracts": [
+        {
+          "providerId": "native",
+          "extractor": "syntax-v1",
+          "normalizer": "fixture-v1",
+          "contract": "PYTHON_SYNTAX_CODE_V1",
+          "policy": "syntax-surface-support-v1"
+        }
+      ],
+      "scope": {
+        "unitIds": [],
+        "removedSourceFileIds": [],
+        "ownerSourceFileIds": []
+      },
+      "javaRowsDigest": null
+    },
+    "stageDigest": "70ba3943c530faaac9a61f137d1a03840d696827f096bae33963b591c07844b7"
+  },
+  "raw": {
+    "metadata": {
+      "targetSource": {
+        "repositoryId": "r",
+        "revisionId": "rev",
+        "contentFingerprint": "base"
+      },
+      "inventory": [],
+      "snapshot": {
+        "id": "snapshot:one",
+        "providerId": "native",
+        "providerVersion": "0.0.0",
+        "runtimeVersion": "fixture-runtime",
+        "startedAt": "2026-10-24T00:00:00.000Z",
+        "completedAt": "2026-10-24T00:00:00.003Z"
+      },
+      "tool": {
+        "target": "fixture-target",
+        "profile": "test"
+      },
+      "java": null,
+      "codeSyntax": {
+        "providerVersion": "0.0.0",
+        "runtimeVersion": "fixture-runtime",
+        "tool": {
+          "target": "fixture-target",
+          "profile": "test"
+        },
+        "startedAt": "2026-10-24T00:00:00.001Z",
+        "settledAt": "2026-10-24T00:00:00.002Z"
+      }
+    },
+    "requestText": "{\"protocolVersion\":5,\"requestId\":\"contract:no-files\",\"sequence\":0,\"type\":\"OBSERVE_CODE_SYNTAX\",\"payload\":{\"irSchemaVersion\":1,\"repository\":{\"id\":\"r\",\"rootPath\":\"/r\"},\"providerId\":\"native\",\"providerVersion\":\"0.0.0\",\"providerSnapshotId\":\"snapshot:one\",\"extractorVersion\":\"syntax-v1\",\"languages\":[{\"languageId\":\"python\",\"grammarVersion\":\"0.25.0\",\"analyzerVersion\":\"0.0.0\",\"compatibilityVersion\":\"syntax-v1\"}],\"sourceFiles\":[],\"removedSourceFiles\":[],\"owners\":[],\"deadlineEpochMs\":null,\"resourceBudget\":{\"maxDurationMs\":1000,\"maxMemoryBytes\":65536,\"maxEvents\":20,\"maxInputBytes\":65536,\"maxOutputBytes\":65536,\"maxDepth\":64,\"maxItems\":1000},\"expectedActivationBasis\":null,\"targetSource\":{\"repositoryId\":\"r\",\"revisionId\":\"rev\",\"contentFingerprint\":\"base\"},\"ownerBinding\":{\"kind\":\"PROVISIONAL_CODE\",\"stageDigest\":\"70ba3943c530faaac9a61f137d1a03840d696827f096bae33963b591c07844b7\",\"ownerMapDigest\":\"60c4b1f68a14bf6b1b0414d58e1c5e5a3f467ed3050fefe383f85d3d033bf8e8\"},\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\"}}\n",
+    "outputText": "{\"protocolVersion\":5,\"requestId\":\"contract:no-files\",\"sequence\":0,\"type\":\"OBSERVATION_STARTED\",\"payload\":{\"expectedActivationBasis\":null,\"targetSource\":{\"repositoryId\":\"r\",\"revisionId\":\"rev\",\"contentFingerprint\":\"base\"},\"ownerBinding\":{\"kind\":\"PROVISIONAL_CODE\",\"stageDigest\":\"70ba3943c530faaac9a61f137d1a03840d696827f096bae33963b591c07844b7\",\"ownerMapDigest\":\"60c4b1f68a14bf6b1b0414d58e1c5e5a3f467ed3050fefe383f85d3d033bf8e8\"},\"extractorVersion\":\"syntax-v1\",\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\",\"requestChecksum\":\"02ba71b3b1c7b1b12749865bed355b5c694e1de3ff9fdb89e95dce5fc83a0d52\"}}\n{\"protocolVersion\":5,\"requestId\":\"contract:no-files\",\"sequence\":1,\"type\":\"OBSERVATION_COMPLETED\",\"payload\":{\"expectedActivationBasis\":null,\"targetSource\":{\"repositoryId\":\"r\",\"revisionId\":\"rev\",\"contentFingerprint\":\"base\"},\"ownerBinding\":{\"kind\":\"PROVISIONAL_CODE\",\"stageDigest\":\"70ba3943c530faaac9a61f137d1a03840d696827f096bae33963b591c07844b7\",\"ownerMapDigest\":\"60c4b1f68a14bf6b1b0414d58e1c5e5a3f467ed3050fefe383f85d3d033bf8e8\"},\"extractorVersion\":\"syntax-v1\",\"codeContract\":\"PYTHON_SYNTAX_CODE_V1\",\"requestChecksum\":\"02ba71b3b1c7b1b12749865bed355b5c694e1de3ff9fdb89e95dce5fc83a0d52\",\"codeOutcome\":\"NOT_APPLICABLE\",\"syntaxOutcome\":\"COMPLETE\",\"outcome\":\"SUCCEEDED\",\"counts\":{\"nodes\":0,\"edges\":0,\"syntax\":0,\"codeCoverage\":0,\"syntaxCoverage\":0,\"diagnostics\":0},\"checksum\":\"1e856e1364fdb346cb913da0c18e5305c79d757c5665215d0f88e4c6bd84a5ce\"}}\n"
+  },
+  "expected": {
+    "manifest": {
+      "schemaVersion": 1,
+      "parent": {
+        "activationId": "activation:1079a965802acb90666b73177b06023ec10236efd6776120808a701ff966aa87",
+        "repositoryId": "r",
+        "revisionId": "rev"
+      },
+      "state": {
+        "basis": {
+          "repositoryId": "r",
+          "revisionId": "rev",
+          "contentFingerprint": "base",
+          "codeActivationDigest": "ce567f356e99e943c5f96fdab595a0bf132f81f6431bb23c92be4c6551008581"
+        },
+        "repositoryLocatorDigest": "89b334a45872720bb324e270130b21bc4d472bb297298b0d45685db1c0571ff7",
+        "inventory": [],
+        "contracts": [
+          {
+            "providerId": "native",
+            "extractor": "syntax-v1",
+            "normalizer": "fixture-v1",
+            "contract": "PYTHON_SYNTAX_CODE_V1",
+            "policy": "syntax-surface-support-v1"
+          }
+        ],
+        "units": [],
+        "snapshots": [
+          {
+            "id": "snap",
+            "repositoryId": "r",
+            "providerId": "native",
+            "providerVersion": "0.0.0",
+            "runtimeVersion": "0.0.0",
+            "requestedRevisionId": "rev",
+            "requestedRevisionFingerprint": "base",
+            "startedAt": "2026-01-01T00:00:00.000Z",
+            "completedAt": "2026-01-01T00:00:01.000Z",
+            "capabilities": [
+              {
+                "name": "SYMBOL",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              }
+            ],
+            "diagnostics": [],
+            "outcome": "SUCCEEDED"
+          },
+          {
+            "id": "snapshot:one",
+            "providerId": "native",
+            "providerVersion": "0.0.0",
+            "runtimeVersion": "fixture-runtime",
+            "startedAt": "2026-10-24T00:00:00.000Z",
+            "completedAt": "2026-10-24T00:00:00.003Z",
+            "repositoryId": "r",
+            "requestedRevisionId": "rev",
+            "requestedRevisionFingerprint": "base",
+            "capabilities": [
+              {
+                "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              }
+            ],
+            "diagnostics": [],
+            "outcome": "SUCCEEDED"
+          }
+        ],
+        "nodes": [],
+        "edges": [],
+        "supports": [],
+        "coverage": [],
+        "syntaxOrigins": []
+      },
+      "observation": {
+        "snapshotId": "snapshot:one",
+        "requestIdentity": "02ba71b3b1c7b1b12749865bed355b5c694e1de3ff9fdb89e95dce5fc83a0d52",
+        "outputIdentity": "d7dd071c44372b87c84d77ff8c0a7ad19ad41928c9e245ab087610d7a6907d2d",
+        "javaProvenance": null,
+        "scope": {
+          "unitIds": [],
+          "removedSourceFileIds": []
+        },
+        "qualificationRef": "component-fixture:not-runtime-qualified"
+      },
+      "transitions": null,
+      "syntaxMembers": [],
+      "codeIdentity": "ce567f356e99e943c5f96fdab595a0bf132f81f6431bb23c92be4c6551008581",
+      "sourceIdentity": "9a99716b1331858af1b9ae8165aeec7ca36b6a3fe64b28c804d01bb414e1cfa2",
+      "originRegistryDigest": "be581db2062018763b2774a37bb553baf8a5b1a82a6ba04184e5b973e7dbc8ee"
+    },
+    "activationId": "activation:54da2b810ea45b77d2c64f59f3f362489382b7db127fbd37531d0af4df7e98a2",
+    "origins": [],
+    "projections": [],
+    "members": [],
+    "basis": {
+      "repositoryId": "r",
+      "revisionId": "rev",
+      "contentFingerprint": "base",
+      "codeActivationDigest": "ce567f356e99e943c5f96fdab595a0bf132f81f6431bb23c92be4c6551008581"
+    }
+  },
+  "expectedTables": {
+    "repository_state": [
+      {
+        "repository_id": "r",
+        "indexed_revision_id": "rev",
+        "indexed_content_fingerprint": "base"
+      }
+    ],
+    "provider_snapshots": [
+      {
+        "id": "snap",
+        "repository_id": "r",
+        "provider_id": "native",
+        "provider_version": "0.0.0",
+        "runtime_version": "0.0.0",
+        "requested_revision_id": "rev",
+        "requested_revision_fingerprint": "base",
+        "started_at": 1767225600000,
+        "completed_at": 1767225601000,
+        "outcome": "SUCCEEDED"
+      },
+      {
+        "id": "snapshot:one",
+        "repository_id": "r",
+        "provider_id": "native",
+        "provider_version": "0.0.0",
+        "runtime_version": "fixture-runtime",
+        "requested_revision_id": "rev",
+        "requested_revision_fingerprint": "base",
+        "started_at": 1792800000000,
+        "completed_at": 1792800000003,
+        "outcome": "SUCCEEDED"
+      }
+    ],
+    "provider_capabilities": [
+      {
+        "snapshot_id": "snap",
+        "name": "SYMBOL",
+        "support": "SUPPORTED",
+        "coverage": "COMPLETE"
+      },
+      {
+        "snapshot_id": "snapshot:one",
+        "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+        "support": "SUPPORTED",
+        "coverage": "COMPLETE"
+      }
+    ],
+    "canonical_nodes": [],
+    "canonical_edges": [],
+    "unresolved_targets": [],
+    "evidence": [],
+    "provider_fact_bindings": [],
+    "fact_evidence": [],
+    "active_support_candidates": [],
+    "analysis_diagnostics": [],
+    "analysis_coverage": [],
+    "activation_history": [
+      {
+        "id": "activation:1079a965802acb90666b73177b06023ec10236efd6776120808a701ff966aa87",
+        "repository_id": "r",
+        "revision_id": "rev",
+        "parent_id": null,
+        "manifest_digest": "1079a965802acb90666b73177b06023ec10236efd6776120808a701ff966aa87",
+        "manifest_json": "{\"codeIdentity\":\"c208949d1f8e2a0031bd0a84bce005c10c058c02f532e36d6833f1a6056f046b\",\"observation\":null,\"originRegistryDigest\":\"d6db62aa1a54c8f2be953cb84a58e2280417fc4dddd85f021e86f90e3fe29d4d\",\"parent\":null,\"schemaVersion\":1,\"sourceIdentity\":\"9a99716b1331858af1b9ae8165aeec7ca36b6a3fe64b28c804d01bb414e1cfa2\",\"state\":{\"basis\":{\"codeActivationDigest\":\"c208949d1f8e2a0031bd0a84bce005c10c058c02f532e36d6833f1a6056f046b\",\"contentFingerprint\":\"base\",\"repositoryId\":\"r\",\"revisionId\":\"rev\"},\"contracts\":[{\"contract\":\"PYTHON_SYNTAX_CODE_V1\",\"extractor\":\"syntax-v1\",\"normalizer\":\"fixture-v1\",\"policy\":\"syntax-surface-support-v1\",\"providerId\":\"native\"}],\"coverage\":[],\"edges\":[],\"inventory\":[],\"nodes\":[],\"repositoryLocatorDigest\":\"89b334a45872720bb324e270130b21bc4d472bb297298b0d45685db1c0571ff7\",\"snapshots\":[{\"capabilities\":[{\"coverage\":\"COMPLETE\",\"name\":\"SYMBOL\",\"support\":\"SUPPORTED\"}],\"completedAt\":\"2026-01-01T00:00:01.000Z\",\"diagnostics\":[],\"id\":\"snap\",\"outcome\":\"SUCCEEDED\",\"providerId\":\"native\",\"providerVersion\":\"0.0.0\",\"repositoryId\":\"r\",\"requestedRevisionFingerprint\":\"base\",\"requestedRevisionId\":\"rev\",\"runtimeVersion\":\"0.0.0\",\"startedAt\":\"2026-01-01T00:00:00.000Z\"}],\"supports\":[],\"syntaxOrigins\":[],\"units\":[]},\"syntaxMembers\":[],\"transitions\":null}"
+      },
+      {
+        "id": "activation:54da2b810ea45b77d2c64f59f3f362489382b7db127fbd37531d0af4df7e98a2",
+        "repository_id": "r",
+        "revision_id": "rev",
+        "parent_id": "activation:1079a965802acb90666b73177b06023ec10236efd6776120808a701ff966aa87",
+        "manifest_digest": "54da2b810ea45b77d2c64f59f3f362489382b7db127fbd37531d0af4df7e98a2",
+        "manifest_json": "{\"codeIdentity\":\"ce567f356e99e943c5f96fdab595a0bf132f81f6431bb23c92be4c6551008581\",\"observation\":{\"javaProvenance\":null,\"outputIdentity\":\"d7dd071c44372b87c84d77ff8c0a7ad19ad41928c9e245ab087610d7a6907d2d\",\"qualificationRef\":\"component-fixture:not-runtime-qualified\",\"requestIdentity\":\"02ba71b3b1c7b1b12749865bed355b5c694e1de3ff9fdb89e95dce5fc83a0d52\",\"scope\":{\"removedSourceFileIds\":[],\"unitIds\":[]},\"snapshotId\":\"snapshot:one\"},\"originRegistryDigest\":\"be581db2062018763b2774a37bb553baf8a5b1a82a6ba04184e5b973e7dbc8ee\",\"parent\":{\"activationId\":\"activation:1079a965802acb90666b73177b06023ec10236efd6776120808a701ff966aa87\",\"repositoryId\":\"r\",\"revisionId\":\"rev\"},\"schemaVersion\":1,\"sourceIdentity\":\"9a99716b1331858af1b9ae8165aeec7ca36b6a3fe64b28c804d01bb414e1cfa2\",\"state\":{\"basis\":{\"codeActivationDigest\":\"ce567f356e99e943c5f96fdab595a0bf132f81f6431bb23c92be4c6551008581\",\"contentFingerprint\":\"base\",\"repositoryId\":\"r\",\"revisionId\":\"rev\"},\"contracts\":[{\"contract\":\"PYTHON_SYNTAX_CODE_V1\",\"extractor\":\"syntax-v1\",\"normalizer\":\"fixture-v1\",\"policy\":\"syntax-surface-support-v1\",\"providerId\":\"native\"}],\"coverage\":[],\"edges\":[],\"inventory\":[],\"nodes\":[],\"repositoryLocatorDigest\":\"89b334a45872720bb324e270130b21bc4d472bb297298b0d45685db1c0571ff7\",\"snapshots\":[{\"capabilities\":[{\"coverage\":\"COMPLETE\",\"name\":\"SYMBOL\",\"support\":\"SUPPORTED\"}],\"completedAt\":\"2026-01-01T00:00:01.000Z\",\"diagnostics\":[],\"id\":\"snap\",\"outcome\":\"SUCCEEDED\",\"providerId\":\"native\",\"providerVersion\":\"0.0.0\",\"repositoryId\":\"r\",\"requestedRevisionFingerprint\":\"base\",\"requestedRevisionId\":\"rev\",\"runtimeVersion\":\"0.0.0\",\"startedAt\":\"2026-01-01T00:00:00.000Z\"},{\"capabilities\":[{\"coverage\":\"COMPLETE\",\"name\":\"FRAMEWORK_SYNTAX_OBSERVATION_V1\",\"support\":\"SUPPORTED\"}],\"completedAt\":\"2026-10-24T00:00:00.003Z\",\"diagnostics\":[],\"id\":\"snapshot:one\",\"outcome\":\"SUCCEEDED\",\"providerId\":\"native\",\"providerVersion\":\"0.0.0\",\"repositoryId\":\"r\",\"requestedRevisionFingerprint\":\"base\",\"requestedRevisionId\":\"rev\",\"runtimeVersion\":\"fixture-runtime\",\"startedAt\":\"2026-10-24T00:00:00.000Z\"}],\"supports\":[],\"syntaxOrigins\":[],\"units\":[]},\"syntaxMembers\":[],\"transitions\":null}"
+      }
+    ],
+    "syntax_origins": [],
+    "syntax_projections": [],
+    "activation_syntax_members": [],
+    "active_history_pointer": [
+      {
+        "repository_id": "r",
+        "activation_id": "activation:54da2b810ea45b77d2c64f59f3f362489382b7db127fbd37531d0af4df7e98a2"
+      }
+    ],
+    "native_analysis_state": [],
+    "native_analysis_file": []
+  },
+  "provenance": "Genuine old writer creates R010 state and validates AVAILABLE. Independent literal old snapshot, C3A author arithmetic, empty raw Fixture and domain-separated manifest formulas precede MixedStage/Store invocation; no product output golden, Native or ownership forgery."
+}

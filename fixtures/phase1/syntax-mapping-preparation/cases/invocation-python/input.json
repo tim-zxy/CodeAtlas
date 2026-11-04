@@ -1,0 +1,177 @@
+{
+  "kind": "SYNTAX_MAPPING_PREPARATION_INPUT",
+  "repositoryId": "repo-fixture",
+  "revisionId": "rev-a",
+  "providerId": "fixture.provider",
+  "sourceFile": {
+    "id": "source-fixture",
+    "repositoryId": "repo-fixture",
+    "revisionId": "rev-a",
+    "path": "sources/dynamic.py",
+    "contentFingerprint": "9e3012e6aaee68ca614e04a2aad0097292c86ef767f320fc61445527f910e69e",
+    "classification": {
+      "role": "SOURCE",
+      "provenance": "AUTHORED",
+      "contentKind": "TEXT"
+    },
+    "languageHint": "python",
+    "sensitivity": "PUBLIC"
+  },
+  "raw": {
+    "providerSyntaxId": "syntax-declared",
+    "sourceFileId": "source-fixture",
+    "sourceFingerprint": "9e3012e6aaee68ca614e04a2aad0097292c86ef767f320fc61445527f910e69e",
+    "sourceRange": {
+      "sourceFileId": "source-fixture",
+      "startLine": 1,
+      "startColumn": 0,
+      "endLine": 1,
+      "endColumn": 15
+    },
+    "owner": {
+      "factType": "NODE",
+      "providerId": "fixture.provider",
+      "providerFactId": "owner"
+    },
+    "syntaxKind": "INVOCATION",
+    "payload": {
+      "callee": {
+        "name": "FastAPI",
+        "target": {
+          "state": "UNRESOLVED",
+          "resolution": "UNRESOLVED",
+          "originalHint": "p",
+          "candidates": []
+        }
+      },
+      "receiver": null,
+      "arguments": []
+    }
+  },
+  "selectedNodes": [
+    {
+      "ref": {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo-fixture",
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "node-owner",
+          "revisionId": "rev-a"
+        }
+      },
+      "name": "owner"
+    },
+    {
+      "ref": {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo-fixture",
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "node-a",
+          "revisionId": "rev-a"
+        }
+      },
+      "name": "p"
+    },
+    {
+      "ref": {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo-fixture",
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "node-b",
+          "revisionId": "rev-a"
+        }
+      },
+      "name": "p"
+    }
+  ],
+  "bindings": [
+    {
+      "providerNodeRef": {
+        "factType": "NODE",
+        "providerId": "fixture.provider",
+        "providerFactId": "owner"
+      },
+      "canonicalRef": {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo-fixture",
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "node-owner",
+          "revisionId": "rev-a"
+        }
+      }
+    },
+    {
+      "providerNodeRef": {
+        "factType": "NODE",
+        "providerId": "fixture.provider",
+        "providerFactId": "a"
+      },
+      "canonicalRef": {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo-fixture",
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "node-a",
+          "revisionId": "rev-a"
+        }
+      }
+    },
+    {
+      "providerNodeRef": {
+        "factType": "NODE",
+        "providerId": "fixture.provider",
+        "providerFactId": "b"
+      },
+      "canonicalRef": {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo-fixture",
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "node-b",
+          "revisionId": "rev-a"
+        }
+      }
+    },
+    {
+      "providerNodeRef": {
+        "factType": "NODE",
+        "providerId": "fixture.provider",
+        "providerFactId": "loser"
+      },
+      "canonicalRef": {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo-fixture",
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "node-a",
+          "revisionId": "rev-a"
+        }
+      }
+    }
+  ],
+  "extractorVersion": "fixture-extractor",
+  "mapperVersion": "mapping-design-v1",
+  "annotation": {
+    "sourcePath": "sources/dynamic.py",
+    "literal": "app = FastAPI()",
+    "line": 1,
+    "coordinateConvention": "0-based lines, 0-based UTF8 byte columns, exclusive end; schema-only ranges are declarations, not producer claims",
+    "dynamicGrounding": "STATIC_SYNTAX_ONLY",
+    "ranges": [
+      {
+        "sourceRange": {
+          "sourceFileId": "source-fixture",
+          "startLine": 1,
+          "startColumn": 0,
+          "endLine": 1,
+          "endColumn": 15
+        },
+        "slice": "app = FastAPI()",
+        "status": "DECLARED_LITERAL_SLICE"
+      }
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "schema": "codeatlas.declared-http-schema",
+  "version": 1,
+  "bindings": [
+    {
+      "contractFactKey": "contract:provider-key",
+      "query": {
+        "kind": "ABSENT"
+      },
+      "request": {
+        "kind": "ABSENT"
+      },
+      "response": {
+        "kind": "JSON_STRING",
+        "mediaType": "application/json"
+      }
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "files": [
+    {
+      "id": "file:ar:0",
+      "path": "Main.java",
+      "languageHint": "java",
+      "contentFingerprint": "sha256:120b3a6597dbb526195b51ab28ea69b6486258e8317fe2695fc8263b1d1b932f",
+      "sizeBytes": 14
+    },
+    {
+      "id": "file:ar:1",
+      "path": "app.py",
+      "languageHint": "python",
+      "contentFingerprint": "sha256:5b76d0962c09ab4ee309fac65fad3568c97abdec983b405146ae3e86a235e352",
+      "sizeBytes": 22
+    },
+    {
+      "id": "file:ar:2",
+      "path": "notes.jsonl",
+      "languageHint": null,
+      "contentFingerprint": "sha256:cc73ff195e67756708d8428e42c5bd5e74d770f838c6137650cd38db805cbac2",
+      "sizeBytes": 19
+    },
+    {
+      "id": "file:ar:3",
+      "path": ".jsonl",
+      "languageHint": null,
+      "contentFingerprint": "sha256:13d022557d2089638a8814b96b364459a957c0ddf97de859a483a6cb0a06a596",
+      "sizeBytes": 15
+    },
+    {
+      "id": "file:ar:4",
+      "path": "𐀀.jsonl",
+      "languageHint": null,
+      "contentFingerprint": "sha256:e03dcb411208ae54e82ae3fa1aa295833a4aae19c9f4173e07b90fffe360f7fc",
+      "sizeBytes": 18
+    }
+  ],
+  "totalBytes": 88,
+  "emptyInventory": "sha256:fa14911f2e95bbc10e0896eac2bc5d58ff3f8965105c6415f112d1c53807ccb3"
+}

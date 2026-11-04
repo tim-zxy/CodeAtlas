@@ -1,0 +1,15 @@
+{
+  "acceptedKinds": [
+    "DECORATION",
+    "INVOCATION",
+    "DECLARATION",
+    "ASSIGNMENT",
+    "ARTIFACT",
+    "IMPORT_BINDING",
+    "BINDING_EFFECT",
+    "BINDING_SCOPE"
+  ],
+  "oldVersionsReject": true,
+  "canonicalVersion": 3,
+  "wireVersion": 7
+}

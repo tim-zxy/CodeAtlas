@@ -1,0 +1,22 @@
+{
+  "fixtures/phase1/code-syntax-completeness/requests/no-files.jsonl": "6f457d2ef9cf21ef38a042a91070ad6443165f4abb0a1da8f95d722ba00c66c5",
+  "fixtures/phase1/code-syntax-completeness/observations/no-files.jsonl": "67ec102f432470801f98b460fc5ca5e509a3525b82cb01dcbbd378765fa45c7a",
+  "fixtures/phase1/code-syntax-completeness/requests/alias-reference-python.jsonl": "ff73f9e334fc3d90e0f71c998a249b18b1041b8645c544ef9222f56afb88a04b",
+  "fixtures/phase1/code-syntax-completeness/observations/alias-reference-python.jsonl": "843cb721824e208c23a52172abe57b4c1702642ac6f647e4456ad6ce34cab96c",
+  "fixtures/phase1/code-syntax-completeness/sources/alias-reference-python/app.py": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+  "fixtures/phase1/code-syntax-completeness/requests/java-only.jsonl": "7b0d6db542fea54b84642c6855f695e92cad4262d4ce13c150e1d5d9c5cdcf7d",
+  "fixtures/phase1/code-syntax-completeness/observations/java-only.jsonl": "63bbc54542b1ddfdd07c81ca0fabf01e35ccab637a1299febe87059cb2151a57",
+  "fixtures/phase1/code-syntax-completeness/requests/java-code-v2.jsonl": "899c35ce89c5a4c6dc09792227ba8f15e18107057c2d4342f0255253a77cfe06",
+  "fixtures/phase1/code-syntax-completeness/observations/java-code-v2.jsonl": "a0eff51a4c26518f93c19a752edee2e4f9a78357d40c33bf294bbd7878cfc700",
+  "fixtures/phase1/code-syntax-completeness/sources/java-only/Box.java": "5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1",
+  "fixtures/phase1/code-syntax-completeness/requests/mixed.jsonl": "5d8b9a1c839997c86f9ea5f0e7ae825e0739cb62682339096c3d97f7c4d372f6",
+  "fixtures/phase1/code-syntax-completeness/observations/mixed.jsonl": "5fb6a450e69d8de1c44e7dd09e412f56af1c2bd050e62b1bae196f1726371d5c",
+  "fixtures/phase1/code-syntax-completeness/sources/mixed/Box.java": "5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1",
+  "fixtures/phase1/code-syntax-completeness/sources/mixed/app.py": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+  "fixtures/phase1/code-syntax-completeness/requests/class-python.jsonl": "fa0ae2c862557f934852cac9c37fa9f0ca6b5686889b734c696367a338b8812e",
+  "fixtures/phase1/code-syntax-completeness/observations/class-python.jsonl": "44e9a766d59ba77099f3f0a9c3156cd51de52e8c6bcdd0881e9bf58125a3548a",
+  "fixtures/phase1/code-syntax-completeness/sources/class-python/app.py": "262689e9ab7186ffc83347c330c67f357ce0e5133df6bcea4225337e88f3e714",
+  "fixtures/phase1/code-syntax-completeness/requests/dynamic-python.jsonl": "6ea8cd2d077167725a281a6978e470be7a467286e670be0091f74a4e3cbe893c",
+  "fixtures/phase1/code-syntax-completeness/observations/dynamic-python.jsonl": "67ba147d27d19552aea803eb8501f32d74de532016125ed4606b71e8d2c576a8",
+  "fixtures/phase1/code-syntax-completeness/sources/dynamic-python/app.py": "9e3012e6aaee68ca614e04a2aad0097292c86ef767f320fc61445527f910e69e"
+}

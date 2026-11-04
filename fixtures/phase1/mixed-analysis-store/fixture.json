@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "p1-mixed-analysis-store-v1",
+  "category": "code-intelligence",
+  "phase": "1",
+  "languages": [],
+  "frameworks": [],
+  "capabilities": ["MIXED_STORE_RECOVERY_COMPONENT_ONLY"],
+  "inputs": {
+    "cases": "cases.json",
+    "provenance": "provenance.json",
+    "bindingHistory": "binding-history/inputs.json",
+    "bindingPipeline": "binding-pipeline/"
+  },
+  "expected": {
+    "cases": "cases.json",
+    "bindingHistory": "binding-history/expected.json",
+    "bindingPipeline": "binding-pipeline/expected.json"
+  },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

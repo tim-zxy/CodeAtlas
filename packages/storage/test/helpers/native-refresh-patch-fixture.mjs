@@ -1,3 +1,5 @@
+import { prefixPlan } from './r011-history-fixture.mjs';
+import { applyMigrationPlan } from '../../dist/migrations/runner.js';
 import assert from 'node:assert/strict';
 import { DatabaseSync } from 'node:sqlite';
 import * as storage from '../../dist/index.js';
@@ -22,12 +24,7 @@ export async function emptyNativePatch(
   normalizerVersion = '1',
 ) {
   const db = new DatabaseSync(databasePath);
-  const plan = await storage.loadMigrationPlan(
-    new URL('../../migrations/repository/manifest.json', import.meta.url),
-    'REPOSITORY',
-  );
-  for (const migration of plan.migrations) db.exec(migration.sql);
-  db.exec('PRAGMA user_version=10');
+  applyMigrationPlan(db, await prefixPlan(10)); // Genuine released R010; no latest-schema relabeling.
   db.prepare('INSERT INTO repository (slot,id,root_path) VALUES (1,?,?)').run('r', '/r');
   db.prepare('INSERT INTO repository_state (repository_id) VALUES (?)').run('r');
   db.prepare(
@@ -321,3 +318,6 @@ export async function emptyNativePatch(
     otherSupport,
   };
 }
+
+// Reuse the existing component allowance; not a new profile or threshold.
+export { limits as nativePatchLimits };

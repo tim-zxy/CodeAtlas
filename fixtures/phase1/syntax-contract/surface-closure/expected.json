@@ -1,0 +1,165 @@
+{
+  "schemaVersion": 1,
+  "kind": "INDEPENDENT_SOURCE_SEMANTIC_ORACLE",
+  "execution": "NOT_EXECUTED",
+  "cases": [
+    {
+      "id": "J1",
+      "source": "spring/source-adequacy/SpringSource.java",
+      "expected": {
+        "routes": ["/api/items"],
+        "jobs": ["refresh"],
+        "feignDeclaration": {
+          "service": "inventory",
+          "path": "/items"
+        },
+        "declaredDependency": {
+          "owner": "SpringSource",
+          "targetType": "Repository"
+        },
+        "notProven": ["bean selection"]
+      }
+    },
+    {
+      "id": "J2",
+      "source": "kafka/source-adequacy/KafkaSource.java",
+      "expected": {
+        "send": {
+          "topic": "events",
+          "owner": "send"
+        },
+        "listener": {
+          "topic": "events",
+          "owner": "receive"
+        },
+        "notProven": ["entry for send"]
+      }
+    },
+    {
+      "id": "J3",
+      "source": "mongo/source-adequacy/MongoSource.java",
+      "expected": {
+        "watch": "UNVERIFIED_RESOURCE_ORIGIN",
+        "publication": "REFUSED"
+      }
+    },
+    {
+      "id": "J4",
+      "source": "mongo/source-adequacy/MongoWatchSource.java",
+      "expected": {
+        "watch": {
+          "database": "atlas",
+          "collection": "events",
+          "handler": "handle",
+          "context": "EVENT",
+          "callback": "JAVA_LAMBDA_DIRECT_CALL"
+        },
+        "notProven": ["new thread"]
+      }
+    },
+    {
+      "id": "J5",
+      "source": "mongo/source-adequacy/MongoWatchReferenceSource.java",
+      "expected": {
+        "watch": {
+          "database": "atlas",
+          "collection": "events",
+          "handler": "handle",
+          "context": "EVENT",
+          "callback": "JAVA_METHOD_REFERENCE"
+        },
+        "notProven": ["new thread"]
+      }
+    },
+    {
+      "id": "J6",
+      "source": "syntax-contract/surface-closure/sources/SourceSafety.java",
+      "expected": {
+        "negativeSites": [
+          {
+            "source": "new Object() { void hidden() { } }",
+            "reason": "ANONYMOUS_CLASS_UNSUPPORTED"
+          },
+          {
+            "source": "values[0] = value",
+            "reason": "COMPLEX_WRITE_UNSUPPORTED"
+          },
+          {
+            "source": "change -> { handle(change); }",
+            "reason": "CALLBACK_BODY_UNSUPPORTED"
+          }
+        ],
+        "publication": "REFUSED"
+      }
+    },
+    {
+      "id": "J7",
+      "source": "spring/source-adequacy/InventoryProxySource.java",
+      "expected": {
+        "routes": ["/proxy"],
+        "consumer": {
+          "owner": "proxy",
+          "service": "inventory",
+          "path": "/items"
+        },
+        "notProven": ["Code CALL EXACT resolution"]
+      }
+    },
+    {
+      "id": "P1",
+      "source": "fastapi/source-adequacy/routes.py",
+      "expected": {
+        "routes": ["/api/v1/items"],
+        "dependency": {
+          "owner": "handler",
+          "parameter": "dependency",
+          "provider": "provider"
+        }
+      }
+    },
+    {
+      "id": "P2",
+      "source": "fastapi/source-adequacy/depends-default.py",
+      "expected": {
+        "dependency": {
+          "owner": "handler",
+          "parameter": "x",
+          "provider": "provider"
+        }
+      }
+    },
+    {
+      "id": "P3",
+      "source": "fastapi/source-adequacy/depends-annotation.py",
+      "expected": {
+        "dependency": "NOT_DEFAULT_INJECTION",
+        "publication": "REFUSED"
+      }
+    },
+    {
+      "id": "P4",
+      "source": "fastapi/source-adequacy/depends-shadow.py",
+      "expected": {
+        "dependency": "REFUSED_SHADOWED_IMPORT",
+        "publication": "REFUSED"
+      }
+    },
+    {
+      "id": "P5",
+      "source": "fastapi/source-adequacy/inventory-service.py",
+      "expected": {
+        "routes": ["/items"],
+        "serviceIdentity": "inventory"
+      }
+    }
+  ],
+  "crossRepository": {
+    "consumer": "J7",
+    "provider": "P5",
+    "service": "inventory",
+    "path": "/items",
+    "negativePath": "/api/v1/items"
+  },
+  "coveragePurpose": "LOCAL_DECLARED_RUNTIME",
+  "notCriticalBaseline": true
+}

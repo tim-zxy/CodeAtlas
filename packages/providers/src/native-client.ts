@@ -1,3 +1,11 @@
+import type { CodeSyntaxRequest } from './native-code-syntax-request.js';
+import {
+  validateSyntaxOwnerContext,
+  validateSyntaxObservationStream,
+  NativeSyntaxContractError,
+  type SyntaxObservationRequest,
+  type ValidatedSyntaxObservation,
+} from './native-syntax-ipc.js';
 import { spawn } from 'node:child_process';
 import { createHash, timingSafeEqual } from 'node:crypto';
 import { isAbsolute } from 'node:path';
@@ -693,10 +701,29 @@ function validateOptions(value: NativeClientOptions): ValidatedOptions {
   };
 }
 
+interface OwnedNativeChild {
+  readonly pid: number;
+  readonly executablePath: string;
+  readonly spawnStartedEpochMs: number;
+  readonly spawnedEpochMs: number;
+}
+interface OwnedNativeClose {
+  readonly exitCode: number | null;
+  readonly signal: NodeJS.Signals | null;
+}
+interface OwnedNativeLifecycle {
+  beforeInput(child: Readonly<OwnedNativeChild>, signal: AbortSignal): Promise<void>;
+  afterClose(result: Readonly<OwnedNativeClose>): Promise<void>;
+  dispose(): Promise<void>;
+}
 function runProcess<
   TOutput = DecodedOutput,
-  TRequest extends AnyNativeRequest | NativeFullAnalyzeRequestV3 | NativeRefreshRequestV3 =
-    AnyNativeRequest,
+  TRequest extends
+    | AnyNativeRequest
+    | NativeFullAnalyzeRequestV3
+    | NativeRefreshRequestV3
+    | SyntaxObservationRequest
+    | CodeSyntaxRequest = AnyNativeRequest,
 >(
   requestBytes: Buffer | readonly Buffer[],
   options: ValidatedOptions,
@@ -713,7 +740,10 @@ function runProcess<
     limits: NativeClientLimits,
     signal: AbortSignal,
   ) => Promise<TOutput>,
+  lifecycle: OwnedNativeLifecycle | null = null,
 ): Promise<{ readonly output: TOutput; readonly stderr: string }> {
+  const spawnStartedEpochMs = Date.now();
+  let inputStarted = false;
   let child;
   try {
     child = spawn(options.executablePath, [...options.arguments], {
@@ -723,9 +753,19 @@ function runProcess<
       env: childEnvironment(options.environment),
     });
   } catch {
-    return Promise.reject(
-      clientError('PROVIDER_UNAVAILABLE', 'Native provider is unavailable', request),
-    );
+    const error = clientError('PROVIDER_UNAVAILABLE', 'Native provider is unavailable', request);
+    if (lifecycle)
+      return Promise.resolve()
+        .then(() => lifecycle.dispose())
+        .then(
+          () => {
+            throw error;
+          },
+          () => {
+            throw error;
+          },
+        );
+    return Promise.reject(error);
   }
 
   let failure: NativeClientError | undefined;
@@ -769,9 +809,61 @@ function runProcess<
     request,
     recordFailure,
   );
-  const writing = Buffer.isBuffer(requestBytes)
-    ? writeRequest(child.stdin, requestBytes, request)
-    : writeFullRequestRecords(child.stdin, requestBytes, stop.signal, request.requestId);
+
+  const writeNow = () =>
+    Buffer.isBuffer(requestBytes)
+      ? writeRequest(child.stdin, requestBytes, request)
+      : writeFullRequestRecords(child.stdin, requestBytes, stop.signal, request.requestId);
+  const writing = lifecycle
+    ? (async () => {
+        const spawnedEpochMs = await new Promise<number>((resolve, reject) => {
+          const cleanup = () => {
+            child.removeListener('spawn', ready);
+            child.removeListener('error', failed);
+            child.removeListener('close', failed);
+            stop.signal.removeEventListener('abort', failed);
+          };
+          const ready = () => {
+            cleanup();
+            resolve(Date.now());
+          };
+          const failed = () => {
+            cleanup();
+            reject(
+              failure ?? clientError('PROCESS_FAILED', 'Native process was not ready', request),
+            );
+          };
+          child.once('spawn', ready);
+          child.once('error', failed);
+          child.once('close', failed);
+          stop.signal.addEventListener('abort', failed, { once: true });
+          if (stop.signal.aborted) failed();
+        });
+        if (
+          closed ||
+          stop.signal.aborted ||
+          child.exitCode !== null ||
+          !Number.isSafeInteger(child.pid) ||
+          child.pid! <= 0
+        )
+          throw failure ?? clientError('PROCESS_FAILED', 'Native process was not ready', request);
+        await lifecycle.beforeInput(
+          Object.freeze({
+            pid: child.pid!,
+            executablePath: options.executablePath,
+            spawnStartedEpochMs,
+            spawnedEpochMs,
+          }),
+          stop.signal,
+        );
+        if (closed || stop.signal.aborted || child.exitCode !== null)
+          throw (
+            failure ?? clientError('PROCESS_FAILED', 'Native input preparation failed', request)
+          );
+        inputStarted = true;
+        await writeNow();
+      })()
+    : writeNow();
   const stdinPromise = writing.catch((error: unknown) => {
     recordFailure(asClientError(error, request, 'Native request could not be written'));
   });
@@ -782,8 +874,17 @@ function runProcess<
     child.once('error', () => {
       recordFailure(clientError('PROVIDER_UNAVAILABLE', 'Native provider is unavailable', request));
     });
+    if (lifecycle)
+      child.once('exit', () => {
+        if (!inputStarted)
+          recordFailure(
+            clientError('PROCESS_FAILED', 'Native process exited before input', request),
+          );
+      });
     child.once('close', (exitCode, signal) => {
       closed = true;
+      if (lifecycle && !inputStarted)
+        recordFailure(clientError('PROCESS_FAILED', 'Native process exited before input', request));
       child.stdin.removeListener('error', stdinError);
       resolve({ exitCode, signal });
     });
@@ -799,7 +900,7 @@ function runProcess<
   options.signal?.addEventListener('abort', abort, { once: true });
 
   return Promise.all([stdoutPromise, stderrPromise, stdinPromise, closePromise])
-    .then(([output, stderr, , close]) => {
+    .then(async ([output, stderr, , close]) => {
       if (close.exitCode !== 0 || close.signal !== null) {
         recordFailure(
           clientError('PROCESS_FAILED', 'Native process failed', request, {
@@ -807,6 +908,20 @@ function runProcess<
             ...(close.signal === null ? {} : { signal: close.signal }),
           }),
         );
+      }
+      if (lifecycle) {
+        try {
+          await lifecycle.afterClose(Object.freeze(close));
+        } catch {
+          recordFailure(
+            clientError('PROCESS_FAILED', 'Native lifecycle settlement failed', request),
+          );
+        }
+        try {
+          await lifecycle.dispose();
+        } catch {
+          recordFailure(clientError('PROCESS_FAILED', 'Native lifecycle cleanup failed', request));
+        }
       }
       if (failure !== undefined) throw withStderr(failure, stderr);
       if (output === undefined) {
@@ -832,10 +947,21 @@ function childEnvironment(
 }
 
 function effectiveTimeout(
-  request: AnyNativeRequest | NativeFullAnalyzeRequestV3 | NativeRefreshRequestV3,
+  request:
+    | AnyNativeRequest
+    | NativeFullAnalyzeRequestV3
+    | NativeRefreshRequestV3
+    | SyntaxObservationRequest
+    | CodeSyntaxRequest,
   invocationTimeoutMs: number,
 ): number {
-  if (request.type !== 'ANALYZE' && request.type !== 'REFRESH') return invocationTimeoutMs;
+  if (
+    request.type !== 'ANALYZE' &&
+    request.type !== 'REFRESH' &&
+    request.type !== 'OBSERVE_SYNTAX' &&
+    request.type !== 'OBSERVE_CODE_SYNTAX'
+  )
+    return invocationTimeoutMs;
   const durations = [invocationTimeoutMs, request.payload.resourceBudget.maxDurationMs];
   if (request.payload.deadlineEpochMs !== null) {
     durations.push(request.payload.deadlineEpochMs - Date.now());
@@ -1285,3 +1411,93 @@ function clientError(
 ): NativeClientError {
   return new NativeClientError(code, message, { requestId: request.requestId, ...details });
 }
+
+/** Low-level trusted-host transport, not Runtime profile admission or publication authority. */
+export async function observeNativeSyntax(
+  requestValue: unknown,
+  control: { readonly capturedContext: unknown; readonly options: NativeClientOptions },
+): Promise<ValidatedSyntaxObservation & { readonly stderr: string }> {
+  if (
+    control === null ||
+    typeof control !== 'object' ||
+    Object.keys(control).length !== 2 ||
+    !Object.hasOwn(control, 'capturedContext') ||
+    !Object.hasOwn(control, 'options')
+  )
+    throw new NativeClientError('INVALID_CONFIGURATION', 'Invalid syntax client control');
+  const request = validateSyntaxOwnerContext(requestValue, control.capturedContext),
+    options = validateOptions(control.options);
+  if (options.signal?.aborted)
+    throw clientError('CANCELLED', 'Native request was cancelled', request);
+  const timeoutMs = effectiveTimeout(request, options.timeoutMs);
+  if (timeoutMs <= 0) throw clientError('TIMEOUT', 'Native request timed out', request);
+  const bytes = Buffer.from(JSON.stringify(request) + '\n', 'utf8');
+  if (bytes.length > options.limits.maxStdinBytes || bytes.length > options.limits.maxLineBytes)
+    throw clientError('OUTPUT_LIMIT_EXCEEDED', 'Native request exceeds the byte limit', request);
+  const result = await runProcess<ValidatedSyntaxObservation, SyntaxObservationRequest>(
+    bytes,
+    options,
+    request,
+    timeoutMs,
+    decodeSyntaxOutput,
+  );
+  return Object.freeze({ ...result.output, stderr: result.stderr });
+}
+async function decodeSyntaxOutput(
+  stdout: Readable,
+  request: SyntaxObservationRequest,
+  limits: NativeClientLimits,
+  signal: AbortSignal,
+): Promise<ValidatedSyntaxObservation> {
+  const records: Buffer[] = [];
+  let carry: Buffer = Buffer.alloc(0),
+    total = 0;
+  const bytesLimit = Math.min(limits.maxStdoutBytes, request.payload.resourceBudget.maxOutputBytes);
+  const eventsLimit = Math.min(limits.maxEvents, request.payload.resourceBudget.maxEvents);
+  for await (const chunk of stdout) {
+    if (signal.aborted) throw signal.reason;
+    if (!Buffer.isBuffer(chunk))
+      throw clientError('PROTOCOL_VIOLATION', 'Native output must be bytes', request);
+    total += chunk.length;
+    if (total > bytesLimit)
+      throw clientError('OUTPUT_LIMIT_EXCEEDED', 'Native output exceeds the byte limit', request);
+    carry = Buffer.concat([carry, chunk]);
+    let lf: number;
+    while ((lf = carry.indexOf(10)) >= 0) {
+      if (lf + 1 > limits.maxLineBytes || records.length >= eventsLimit)
+        throw clientError('OUTPUT_LIMIT_EXCEEDED', 'Native output exceeds framing limits', request);
+      records.push(Buffer.from(carry.subarray(0, lf + 1)));
+      carry = carry.subarray(lf + 1);
+    }
+    if (carry.length > limits.maxLineBytes)
+      throw clientError('OUTPUT_LIMIT_EXCEEDED', 'Native output exceeds the line limit', request);
+  }
+  if (signal.aborted) throw signal.reason;
+  if (carry.length !== 0)
+    throw clientError('PROTOCOL_VIOLATION', 'Native output is unterminated', request);
+  try {
+    return validateSyntaxObservationStream(request, records);
+  } catch (error) {
+    if (error instanceof NativeSyntaxContractError) {
+      if (error.code === 'PROTOCOL_CORRUPTION' || error.code === 'INCOMPATIBLE_PROTOCOL_VERSION')
+        throw clientError('PROTOCOL_VIOLATION', 'Native syntax stream is invalid', request);
+      if (error.code === 'RESOURCE_LIMIT_EXCEEDED')
+        throw clientError('OUTPUT_LIMIT_EXCEEDED', 'Native syntax output exceeds limits', request);
+      throw clientError('ANALYZER_FAILED', 'Native syntax observation refused', request, {
+        analyzerError: {
+          code: error.code,
+          message: 'Native syntax observation refused',
+          retryable: false,
+        },
+      });
+    }
+    throw clientError('PROTOCOL_VIOLATION', 'Native syntax stream is invalid', request);
+  }
+}
+
+// Private default is deliberately invisible to the index export-star.
+export default Object.freeze({
+  validateOwnedNativeOptions: validateOptions,
+  ownedNativeTimeout: effectiveTimeout,
+  runOwnedNativeProcess: runProcess,
+});

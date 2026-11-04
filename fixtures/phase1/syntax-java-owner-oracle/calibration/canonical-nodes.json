@@ -1,0 +1,46 @@
+[
+  {
+    "id": "canonical-node-v1:31633c86cdc06cf4b4aab9182e50e22ee05d40cbc80f973b86277fc482aacaa3",
+    "factKey": "node-fact-v1:9a3e2ddcf1f06924e8788032a2e7e422aab3413fddde1e22328693909bf6f22b",
+    "repositoryId": "repo:one",
+    "revisionId": "revision:worktree",
+    "name": "Endpoint_fixture",
+    "qualifiedName": "Endpoint_fixture",
+    "sourceRange": {
+      "sourceFileId": "file:one",
+      "startLine": 0,
+      "startColumn": 6,
+      "endLine": 0,
+      "endColumn": 22
+    },
+    "confidence": {
+      "score": 1,
+      "method": "parser",
+      "reasons": []
+    },
+    "kind": "TYPE",
+    "typeKind": "CLASS"
+  },
+  {
+    "id": "canonical-node-v1:6a18bb31461f8de514d3f4428c2f695d57e787f50ac4a873b0747ecdf707d4d5",
+    "factKey": "node-fact-v1:1296c0d6e6cf7242434fcf3a281b1910f925d1f5b049fffe8d0f386663660c9b",
+    "repositoryId": "repo:one",
+    "revisionId": "revision:worktree",
+    "name": "handle_fixture",
+    "qualifiedName": "Endpoint_fixture.handle_fixture",
+    "sourceRange": {
+      "sourceFileId": "file:one",
+      "startLine": 0,
+      "startColumn": 49,
+      "endLine": 0,
+      "endColumn": 63
+    },
+    "confidence": {
+      "score": 1,
+      "method": "parser",
+      "reasons": []
+    },
+    "kind": "SYMBOL",
+    "symbolKind": "METHOD"
+  }
+]

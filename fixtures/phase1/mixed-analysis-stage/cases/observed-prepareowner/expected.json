@@ -1,0 +1,6 @@
+{
+  "allowed": false,
+  "next": "OBSERVED",
+  "persistentRows": "UNCHANGED_FROM_LITERAL_BASE_EXCEPT_VALID_APPLY",
+  "error": "INVALID_STAGE"
+}

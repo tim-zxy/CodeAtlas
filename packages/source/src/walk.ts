@@ -1,4 +1,6 @@
-import { lstat, readdir } from 'node:fs/promises';
+import type { MixedSourceAccount } from './mixed-source-verification.js';
+import { safeAncestors, assertSameAncestors } from './path-safety.js';
+import { lstat, readdir, opendir } from 'node:fs/promises';
 import { isAbsolute, join, relative, sep } from 'node:path';
 
 import { RepositoryRelativePathSchema } from '@codeatlas/ir';
@@ -18,12 +20,23 @@ function changed(): SourceScanError {
 export async function* walkCandidates(
   rootPath: string,
   mayDescend: (directory: string) => boolean | Promise<boolean>,
+  account?: MixedSourceAccount,
+  mayVisit?: (path: RepositoryRelativePath, symbolic: boolean) => boolean | Promise<boolean>,
 ): AsyncIterable<Candidate> {
   const seen = new Set<string>();
   async function* visit(directory: string): AsyncIterable<Candidate> {
+    account?.checkpoint();
+    const sentinel = RepositoryRelativePathSchema.parse(
+      [...relative(rootPath, directory).split(sep).filter(Boolean), '__source_scan__'].join('/'),
+    );
+    const sentinelAbsolute = join(directory, '__source_scan__');
+    const ancestors = account ? await safeAncestors(sentinelAbsolute, sentinel) : null;
+    const before = account ? await lstat(directory) : null;
     let entries;
     try {
-      entries = await readdir(directory, { withFileTypes: true });
+      entries = account
+        ? await opendir(directory)
+        : await readdir(directory, { withFileTypes: true });
     } catch (error) {
       if (
         typeof error === 'object' &&
@@ -35,8 +48,12 @@ export async function* walkCandidates(
       }
       throw new SourceScanError('FILE_READ_FAILED', 'Cannot read source directory');
     }
-    entries.sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
-    for (const entry of entries) {
+    if (Array.isArray(entries))
+      entries.sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
+    for await (const entry of entries) {
+      account?.checkpoint();
+      account?.visitItem();
+      if (ancestors) await assertSameAncestors(sentinelAbsolute, sentinel, ancestors);
       const absolutePath = join(directory, entry.name);
       const relativePath = relative(rootPath, absolutePath).split(sep).join('/');
       if (relativePath === '..' || relativePath.startsWith('../') || isAbsolute(relativePath)) {
@@ -44,6 +61,8 @@ export async function* walkCandidates(
       }
       const parsed = RepositoryRelativePathSchema.safeParse(relativePath);
       if (!parsed.success) throw new SourceScanError('INVALID_INPUT', 'Invalid source path');
+      if (account && mayVisit && !(await mayVisit(parsed.data, entry.isSymbolicLink()))) continue;
+      account?.own(parsed.data);
       let observed;
       try {
         observed = await lstat(absolutePath);
@@ -58,7 +77,10 @@ export async function* walkCandidates(
         }
         throw new SourceScanError('FILE_READ_FAILED', 'Cannot inspect source entry');
       }
-      if (observed.isSymbolicLink()) continue;
+      if (observed.isSymbolicLink()) {
+        if (account) throw changed();
+        continue;
+      }
       if (entry.isDirectory() !== observed.isDirectory() || entry.isFile() !== observed.isFile()) {
         throw changed();
       }
@@ -71,6 +93,12 @@ export async function* walkCandidates(
         seen.add(parsed.data);
         yield { absolutePath, path: parsed.data };
       }
+    }
+    if (ancestors && before) {
+      account?.checkpoint();
+      await assertSameAncestors(sentinelAbsolute, sentinel, ancestors);
+      const after = await lstat(directory);
+      if (after.mtimeMs !== before.mtimeMs || after.ctimeMs !== before.ctimeMs) throw changed();
     }
   }
   yield* visit(rootPath);

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "p1-plugin-context-v2",
+  "category": "runtime-graph",
+  "phase": "1",
+  "languages": [],
+  "frameworks": [],
+  "capabilities": ["PLUGIN_V2_CONTRACT_ONLY"],
+  "inputs": {
+    "vectors": "inputs/vectors.json",
+    "frameworkDetection": "inputs/framework-detection.json",
+    "bindingSufficiency": "binding-sufficiency/inputs.json",
+    "bindingExtraction": "binding-extraction/inputs.json",
+    "runtimeCandidate": "runtime-candidate/inputs.json"
+  },
+  "expected": {
+    "decisions": "expected/decisions.json",
+    "frameworkDetection": "expected/framework-detection.json",
+    "bindingSufficiency": "binding-sufficiency/expected.json",
+    "bindingExtraction": "binding-extraction/expected.json",
+    "runtimeCandidate": "runtime-candidate/expected.json"
+  },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

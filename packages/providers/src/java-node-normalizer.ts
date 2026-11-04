@@ -1,4 +1,9 @@
 import {
+  chargeCompositionJSON,
+  chargeCompositionIdentityTuple,
+  type CodeSyntaxCompositionBudget,
+} from './native-code-syntax-budget.js';
+import {
   CanonicalNodeSchema,
   ProviderNodeSchema,
   type CanonicalNode,
@@ -62,6 +67,27 @@ export function normalizeJavaNode(
   input: ProviderNode,
   sourceFiles: SourceFileLookup,
 ): CanonicalNode {
+  return normalizeJavaNodeCore(input, sourceFiles, null);
+}
+
+export default function normalizeJavaNodeWithBudget(
+  input: ProviderNode,
+  sourceFiles: SourceFileLookup,
+  context: CodeSyntaxCompositionBudget,
+): CanonicalNode {
+  return normalizeJavaNodeCore(input, sourceFiles, context);
+}
+
+function normalizeJavaNodeCore(
+  input: ProviderNode,
+  sourceFiles: SourceFileLookup,
+  context: CodeSyntaxCompositionBudget | null,
+): CanonicalNode {
+  const q = (v: unknown) => {
+    if (context) chargeCompositionJSON(v, context.limits, context.budget);
+  };
+  q(input);
+  q(input);
   const parsed = ProviderNodeSchema.safeParse(input);
   if (!parsed.success) {
     fail(
@@ -85,6 +111,7 @@ export function normalizeJavaNode(
     sourceRange: node.sourceRange,
     confidence: node.confidence,
   };
+  q(base);
   let canonical: Record<string, unknown>;
   let fields: (string | number)[];
   let fieldPaths: (string | number)[][];
@@ -175,6 +202,10 @@ export function normalizeJavaNode(
       fail('UNSUPPORTED_KIND', ['providerKind'], 'Provider node kind is unsupported');
   }
 
+  q(canonical);
+  q(fields);
+  q(fieldPaths);
+  if (context) chargeCompositionIdentityTuple('node-fact-v1', fields, context);
   let factKey;
   try {
     factKey = nodeFactKey(fields);
@@ -184,5 +215,12 @@ export function normalizeJavaNode(
     }
     throw error;
   }
-  return CanonicalNodeSchema.parse({ ...canonical, factKey, id: canonicalFactId('NODE', factKey) });
+  if (context) {
+    q([factKey]);
+    chargeCompositionIdentityTuple('canonical-node-v1', [factKey], context);
+  }
+  const draft = { ...canonical, factKey, id: canonicalFactId('NODE', factKey) };
+  q(draft);
+  q(draft);
+  return CanonicalNodeSchema.parse(draft);
 }

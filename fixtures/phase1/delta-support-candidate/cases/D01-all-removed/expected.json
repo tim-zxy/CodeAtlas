@@ -1,0 +1,172 @@
+{
+  "kind": "DECLARED_DELTA_SUPPORT_CANDIDATE",
+  "mode": "TRANSITION",
+  "targetSource": {
+    "repositoryId": "repo:history",
+    "revisionId": "revision:worktree",
+    "contentFingerprint": "content:empty"
+  },
+  "inventory": [],
+  "transition": {
+    "kind": "TRANSITION_DRAFT",
+    "activationId": "activation:old",
+    "oldBasis": {
+      "repositoryId": "repo:history",
+      "revisionId": "revision:worktree",
+      "contentFingerprint": "content:old",
+      "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "targetSource": {
+      "repositoryId": "repo:history",
+      "revisionId": "revision:worktree",
+      "contentFingerprint": "content:empty"
+    },
+    "historyDigest": "701f8660aba9ce9219ce35bd18a88f0d5b76ffbdb4ebd95efacc65903999b32d",
+    "diff": [
+      {
+        "kind": "REMOVED",
+        "before": {
+          "id": "a",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "a.py",
+          "contentFingerprint": "content:a",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "python",
+          "sensitivity": "INTERNAL"
+        },
+        "after": null
+      },
+      {
+        "kind": "REMOVED",
+        "before": {
+          "id": "b",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "b.py",
+          "contentFingerprint": "content:b",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "python",
+          "sensitivity": "INTERNAL"
+        },
+        "after": null
+      },
+      {
+        "kind": "REMOVED",
+        "before": {
+          "id": "doc",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "notes.md",
+          "contentFingerprint": "content:doc",
+          "classification": {
+            "role": "OTHER",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": null,
+          "sensitivity": "INTERNAL"
+        },
+        "after": null
+      },
+      {
+        "kind": "REMOVED",
+        "before": {
+          "id": "j",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "J.java",
+          "contentFingerprint": "content:j",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "java",
+          "sensitivity": "INTERNAL"
+        },
+        "after": null
+      },
+      {
+        "kind": "REMOVED",
+        "before": {
+          "id": "k",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "K.java",
+          "contentFingerprint": "content:k",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "java",
+          "sensitivity": "INTERNAL"
+        },
+        "after": null
+      }
+    ],
+    "supportDecisions": [],
+    "addedEvidenceIds": [],
+    "survivingFactKeys": [],
+    "coverageOrigins": [],
+    "syntaxRequirements": [],
+    "ledgerDigest": "d8004bc672f166d0a7d6c6392c287bad092c86ea094c1baef913dca8e75d01b9"
+  },
+  "activeSupports": [],
+  "dependencyUnits": [],
+  "merged": {
+    "nodes": [],
+    "edges": [],
+    "explanations": [],
+    "evidence": [],
+    "factEvidence": [],
+    "bindings": []
+  },
+  "originSnapshotRegistry": [
+    {
+      "id": "snapshot:old",
+      "repositoryId": "repo:history",
+      "providerId": "native",
+      "providerVersion": "1",
+      "runtimeVersion": "fixture",
+      "requestedRevisionId": "revision:worktree",
+      "requestedRevisionFingerprint": "content:old",
+      "startedAt": "2026-10-24T00:00:00.000Z",
+      "completedAt": "2026-10-24T00:00:00.001Z",
+      "capabilities": [
+        {
+          "name": "JAVA_CODE_V2",
+          "support": "SUPPORTED",
+          "coverage": "COMPLETE"
+        },
+        {
+          "name": "PYTHON_SYNTAX_CODE_V1",
+          "support": "SUPPORTED",
+          "coverage": "COMPLETE"
+        },
+        {
+          "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+          "support": "SUPPORTED",
+          "coverage": "COMPLETE"
+        }
+      ],
+      "diagnostics": [],
+      "outcome": "SUCCEEDED"
+    }
+  ],
+  "provenance": {
+    "kind": "DECLARED_INPUT",
+    "historyDigest": "701f8660aba9ce9219ce35bd18a88f0d5b76ffbdb4ebd95efacc65903999b32d",
+    "ledgerDigest": "d8004bc672f166d0a7d6c6392c287bad092c86ea094c1baef913dca8e75d01b9",
+    "observation": null
+  }
+}

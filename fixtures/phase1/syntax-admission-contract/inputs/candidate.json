@@ -1,0 +1,333 @@
+{
+  "schemaVersion": 1,
+  "purpose": "SYNTAX_OBSERVATION",
+  "status": "PROVISIONAL_REVIEW_REQUIRED",
+  "policyRevision": "p1-syntax-observation-high-water-range-v1",
+  "environment": {
+    "node": "fixture-node",
+    "v8": "fixture-v8",
+    "platform": "win32",
+    "arch": "x64",
+    "zodVersion": "fixture-zod",
+    "implementationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "corpusRevision": "p1-native-syntax-observation-v1",
+    "nativeBinaryDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "rustTarget": "x86_64-pc-windows-msvc",
+    "rustToolchain": "1.98.1",
+    "cargoLockDigest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "javaGrammarVersion": "0.23.5",
+    "pythonGrammarVersion": "0.25.0",
+    "treeSitterVersion": "0.27.0",
+    "extractorVersion": "syntax-v1",
+    "compatibilityVersion": "syntax-v1"
+  },
+  "corpus": {
+    "revision": "p1-native-syntax-observation-v1",
+    "inputDigest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "catalogDigest": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "oracleDigest": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "requestShapeDigest": "1111111111111111111111111111111111111111111111111111111111111111",
+    "sourceShapeDigest": "2222222222222222222222222222222222222222222222222222222222222222",
+    "resourceShapeDigest": "3333333333333333333333333333333333333333333333333333333333333333",
+    "caseIds": [
+      "calibration:static"
+    ]
+  },
+  "observations": [
+    {
+      "caseId": "calibration:static",
+      "repetition": 1,
+      "component": "HOST",
+      "processId": 101,
+      "startedEpochMs": 1000,
+      "finishedEpochMs": 2000,
+      "peakBytes": 100,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes",
+      "completeLifetime": true,
+      "exitCode": 0,
+      "terminal": "SYNTAX_COMPLETED",
+      "checksum": "4444444444444444444444444444444444444444444444444444444444444444",
+      "counts": {
+        "nodes": 0,
+        "edges": 0,
+        "syntax": 0,
+        "coverage": 0,
+        "diagnostics": 0
+      },
+      "outcome": "SUCCEEDED",
+      "expectedMatched": true,
+      "command": "CONTRACT UNIT ONLY; NEVER EXECUTE",
+      "collectionConditions": "SYNTHETIC CONTRACT DATA; NOT A PROFILE OR MEASUREMENT"
+    },
+    {
+      "caseId": "calibration:static",
+      "repetition": 2,
+      "component": "HOST",
+      "processId": 101,
+      "startedEpochMs": 1000,
+      "finishedEpochMs": 2000,
+      "peakBytes": 110,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes",
+      "completeLifetime": true,
+      "exitCode": 0,
+      "terminal": "SYNTAX_COMPLETED",
+      "checksum": "4444444444444444444444444444444444444444444444444444444444444444",
+      "counts": {
+        "nodes": 0,
+        "edges": 0,
+        "syntax": 0,
+        "coverage": 0,
+        "diagnostics": 0
+      },
+      "outcome": "SUCCEEDED",
+      "expectedMatched": true,
+      "command": "CONTRACT UNIT ONLY; NEVER EXECUTE",
+      "collectionConditions": "SYNTHETIC CONTRACT DATA; NOT A PROFILE OR MEASUREMENT"
+    },
+    {
+      "caseId": "calibration:static",
+      "repetition": 3,
+      "component": "HOST",
+      "processId": 101,
+      "startedEpochMs": 1000,
+      "finishedEpochMs": 2000,
+      "peakBytes": 120,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes",
+      "completeLifetime": true,
+      "exitCode": 0,
+      "terminal": "SYNTAX_COMPLETED",
+      "checksum": "4444444444444444444444444444444444444444444444444444444444444444",
+      "counts": {
+        "nodes": 0,
+        "edges": 0,
+        "syntax": 0,
+        "coverage": 0,
+        "diagnostics": 0
+      },
+      "outcome": "SUCCEEDED",
+      "expectedMatched": true,
+      "command": "CONTRACT UNIT ONLY; NEVER EXECUTE",
+      "collectionConditions": "SYNTHETIC CONTRACT DATA; NOT A PROFILE OR MEASUREMENT"
+    },
+    {
+      "caseId": "calibration:static",
+      "repetition": 4,
+      "component": "HOST",
+      "processId": 101,
+      "startedEpochMs": 1000,
+      "finishedEpochMs": 2000,
+      "peakBytes": 110,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes",
+      "completeLifetime": true,
+      "exitCode": 0,
+      "terminal": "SYNTAX_COMPLETED",
+      "checksum": "4444444444444444444444444444444444444444444444444444444444444444",
+      "counts": {
+        "nodes": 0,
+        "edges": 0,
+        "syntax": 0,
+        "coverage": 0,
+        "diagnostics": 0
+      },
+      "outcome": "SUCCEEDED",
+      "expectedMatched": true,
+      "command": "CONTRACT UNIT ONLY; NEVER EXECUTE",
+      "collectionConditions": "SYNTHETIC CONTRACT DATA; NOT A PROFILE OR MEASUREMENT"
+    },
+    {
+      "caseId": "calibration:static",
+      "repetition": 5,
+      "component": "HOST",
+      "processId": 101,
+      "startedEpochMs": 1000,
+      "finishedEpochMs": 2000,
+      "peakBytes": 100,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes",
+      "completeLifetime": true,
+      "exitCode": 0,
+      "terminal": "SYNTAX_COMPLETED",
+      "checksum": "4444444444444444444444444444444444444444444444444444444444444444",
+      "counts": {
+        "nodes": 0,
+        "edges": 0,
+        "syntax": 0,
+        "coverage": 0,
+        "diagnostics": 0
+      },
+      "outcome": "SUCCEEDED",
+      "expectedMatched": true,
+      "command": "CONTRACT UNIT ONLY; NEVER EXECUTE",
+      "collectionConditions": "SYNTHETIC CONTRACT DATA; NOT A PROFILE OR MEASUREMENT"
+    },
+    {
+      "caseId": "calibration:static",
+      "repetition": 1,
+      "component": "NATIVE",
+      "processId": 202,
+      "startedEpochMs": 1000,
+      "finishedEpochMs": 2000,
+      "peakBytes": 200,
+      "peakMethod": "PROCESS_MEMORY_COUNTERS.PeakWorkingSetSize",
+      "peakUnits": "bytes",
+      "completeLifetime": true,
+      "exitCode": 0,
+      "terminal": "SYNTAX_COMPLETED",
+      "checksum": "4444444444444444444444444444444444444444444444444444444444444444",
+      "counts": {
+        "nodes": 0,
+        "edges": 0,
+        "syntax": 0,
+        "coverage": 0,
+        "diagnostics": 0
+      },
+      "outcome": "SUCCEEDED",
+      "expectedMatched": true,
+      "command": "CONTRACT UNIT ONLY; NEVER EXECUTE",
+      "collectionConditions": "SYNTHETIC CONTRACT DATA; NOT A PROFILE OR MEASUREMENT"
+    },
+    {
+      "caseId": "calibration:static",
+      "repetition": 2,
+      "component": "NATIVE",
+      "processId": 202,
+      "startedEpochMs": 1000,
+      "finishedEpochMs": 2000,
+      "peakBytes": 220,
+      "peakMethod": "PROCESS_MEMORY_COUNTERS.PeakWorkingSetSize",
+      "peakUnits": "bytes",
+      "completeLifetime": true,
+      "exitCode": 0,
+      "terminal": "SYNTAX_COMPLETED",
+      "checksum": "4444444444444444444444444444444444444444444444444444444444444444",
+      "counts": {
+        "nodes": 0,
+        "edges": 0,
+        "syntax": 0,
+        "coverage": 0,
+        "diagnostics": 0
+      },
+      "outcome": "SUCCEEDED",
+      "expectedMatched": true,
+      "command": "CONTRACT UNIT ONLY; NEVER EXECUTE",
+      "collectionConditions": "SYNTHETIC CONTRACT DATA; NOT A PROFILE OR MEASUREMENT"
+    },
+    {
+      "caseId": "calibration:static",
+      "repetition": 3,
+      "component": "NATIVE",
+      "processId": 202,
+      "startedEpochMs": 1000,
+      "finishedEpochMs": 2000,
+      "peakBytes": 240,
+      "peakMethod": "PROCESS_MEMORY_COUNTERS.PeakWorkingSetSize",
+      "peakUnits": "bytes",
+      "completeLifetime": true,
+      "exitCode": 0,
+      "terminal": "SYNTAX_COMPLETED",
+      "checksum": "4444444444444444444444444444444444444444444444444444444444444444",
+      "counts": {
+        "nodes": 0,
+        "edges": 0,
+        "syntax": 0,
+        "coverage": 0,
+        "diagnostics": 0
+      },
+      "outcome": "SUCCEEDED",
+      "expectedMatched": true,
+      "command": "CONTRACT UNIT ONLY; NEVER EXECUTE",
+      "collectionConditions": "SYNTHETIC CONTRACT DATA; NOT A PROFILE OR MEASUREMENT"
+    },
+    {
+      "caseId": "calibration:static",
+      "repetition": 4,
+      "component": "NATIVE",
+      "processId": 202,
+      "startedEpochMs": 1000,
+      "finishedEpochMs": 2000,
+      "peakBytes": 220,
+      "peakMethod": "PROCESS_MEMORY_COUNTERS.PeakWorkingSetSize",
+      "peakUnits": "bytes",
+      "completeLifetime": true,
+      "exitCode": 0,
+      "terminal": "SYNTAX_COMPLETED",
+      "checksum": "4444444444444444444444444444444444444444444444444444444444444444",
+      "counts": {
+        "nodes": 0,
+        "edges": 0,
+        "syntax": 0,
+        "coverage": 0,
+        "diagnostics": 0
+      },
+      "outcome": "SUCCEEDED",
+      "expectedMatched": true,
+      "command": "CONTRACT UNIT ONLY; NEVER EXECUTE",
+      "collectionConditions": "SYNTHETIC CONTRACT DATA; NOT A PROFILE OR MEASUREMENT"
+    },
+    {
+      "caseId": "calibration:static",
+      "repetition": 5,
+      "component": "NATIVE",
+      "processId": 202,
+      "startedEpochMs": 1000,
+      "finishedEpochMs": 2000,
+      "peakBytes": 200,
+      "peakMethod": "PROCESS_MEMORY_COUNTERS.PeakWorkingSetSize",
+      "peakUnits": "bytes",
+      "completeLifetime": true,
+      "exitCode": 0,
+      "terminal": "SYNTAX_COMPLETED",
+      "checksum": "4444444444444444444444444444444444444444444444444444444444444444",
+      "counts": {
+        "nodes": 0,
+        "edges": 0,
+        "syntax": 0,
+        "coverage": 0,
+        "diagnostics": 0
+      },
+      "outcome": "SUCCEEDED",
+      "expectedMatched": true,
+      "command": "CONTRACT UNIT ONLY; NEVER EXECUTE",
+      "collectionConditions": "SYNTHETIC CONTRACT DATA; NOT A PROFILE OR MEASUREMENT"
+    }
+  ],
+  "components": {
+    "HOST": {
+      "observedPeakBytes": 120,
+      "fluctuationAllowanceBytes": 20,
+      "priorApprovalFloorBytes": null,
+      "reservationBytes": 140,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    },
+    "NATIVE": {
+      "observedPeakBytes": 240,
+      "fluctuationAllowanceBytes": 40,
+      "priorApprovalFloorBytes": null,
+      "reservationBytes": 280,
+      "peakMethod": "PROCESS_MEMORY_COUNTERS.PeakWorkingSetSize",
+      "peakUnits": "bytes"
+    }
+  },
+  "reservationBytes": 420,
+  "evidence": {
+    "reports": [
+      {
+        "path": "raw/calibration.json",
+        "sha256": "5555555555555555555555555555555555555555555555555555555555555555"
+      }
+    ],
+    "derivationDigest": "ddecb8db9ca34055ab8cce2446403cc1557677f4a862ad22cdfffe40c3dcdf21",
+    "calibrationOriginDigest": "807ae60c8af570e0b8d5584d685f24f27933a91419fbf29b42c54374c44611a4",
+    "verificationRefs": [],
+    "review": {
+      "decision": "PENDING",
+      "ref": null,
+      "digest": null
+    }
+  }
+}

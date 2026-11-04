@@ -1,0 +1,473 @@
+{
+  "policy": {
+    "score": 0.5,
+    "method": "runtime-declaration-support-v1",
+    "resolution": "HEURISTIC"
+  },
+  "cases": {
+    "spring-route": {
+      "support": ["import", "scope:module", "scope:type", "site"],
+      "diagnostic": false,
+      "records": [
+        {
+          "kind": "CONTRACT",
+          "scope": ["src/App.java", "code-key:type", null, "code-key:function"],
+          "semantic": [
+            "PROVIDER",
+            "HTTP",
+            ["GET", [["LITERAL", "x"]], null, null, null, null],
+            "code-key:function"
+          ],
+          "factKey": "runtime-fact:c73e56f5d01340cc53dc33a417f8c747aa2e6ea5caee3d4e1a1942f519cd4a8a",
+          "id": "runtime:02d05f1396ea5a4b864f2cc66ceace81dc407a6df18373b3e20b9bad784edb36",
+          "fields": {
+            "direction": "PROVIDER",
+            "protocol": "HTTP",
+            "serviceRef": null,
+            "signature": {
+              "kind": "HTTP",
+              "method": "GET",
+              "pathSegments": [
+                {
+                  "kind": "LITERAL",
+                  "value": "x"
+                }
+              ],
+              "querySchemaRef": null,
+              "requestSchemaRef": null,
+              "responseSchemaRef": null,
+              "serviceHint": null
+            },
+            "implementationRef": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:function",
+                "revisionId": "revision:one"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "spring-prefix": {
+      "support": ["import", "prefix", "prefix-import", "scope:module", "scope:type", "site"],
+      "diagnostic": false,
+      "records": [
+        {
+          "kind": "CONTRACT",
+          "scope": ["src/App.java", "code-key:type", null, "code-key:function"],
+          "semantic": [
+            "PROVIDER",
+            "HTTP",
+            [
+              "GET",
+              [
+                ["LITERAL", "api"],
+                ["LITERAL", "x"]
+              ],
+              null,
+              null,
+              null,
+              null
+            ],
+            "code-key:function"
+          ],
+          "factKey": "runtime-fact:2246ed8ea9fe66cd1521d16c7ec9b712f0c619ba0d1e141aae9603d4b8c227a9",
+          "id": "runtime:f43b8bbb368aabc5599d68876113d61114c52ef92b3edefdc614d1f7ba8af1ac",
+          "fields": {
+            "direction": "PROVIDER",
+            "protocol": "HTTP",
+            "serviceRef": null,
+            "signature": {
+              "kind": "HTTP",
+              "method": "GET",
+              "pathSegments": [
+                {
+                  "kind": "LITERAL",
+                  "value": "api"
+                },
+                {
+                  "kind": "LITERAL",
+                  "value": "x"
+                }
+              ],
+              "querySchemaRef": null,
+              "requestSchemaRef": null,
+              "responseSchemaRef": null,
+              "serviceHint": null
+            },
+            "implementationRef": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:function",
+                "revisionId": "revision:one"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "spring-cron": {
+      "support": ["import", "scope:module", "scope:type", "site"],
+      "diagnostic": false,
+      "records": [
+        {
+          "kind": "TASK_DEFINITION",
+          "scope": ["src/App.java", "code-key:type", null, "code-key:function"],
+          "semantic": ["JOB", "code-key:function"],
+          "factKey": "runtime-fact:1fdd5b88d435fff8344ddde57520bbc47f4307e63914d760cc5fd375bac20240",
+          "id": "runtime:ca12868e55d1123404fea22b9dda00fa3ee1c1445a9e56e8f9b61e61e9b9aded",
+          "fields": {
+            "taskKind": "JOB",
+            "implementationRef": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:function",
+                "revisionId": "revision:one"
+              }
+            },
+            "triggerRef": null
+          }
+        }
+      ]
+    },
+    "mongo-read": {
+      "support": ["decl", "import", "scope:function", "scope:module", "scope:type", "site"],
+      "diagnostic": false,
+      "records": [
+        {
+          "kind": "DATA_RESOURCE",
+          "scope": ["src/App.java", "code-key:type", "template", null],
+          "semantic": ["MONGODB_COLLECTION", "items", null, null],
+          "factKey": "runtime-fact:30ad62c25d29a4fdfe910f7d7101d24137e76d0d586d3bfcf18c842e7d047c4a",
+          "id": "runtime:27bffba4b7c5d28579d75a54cbd647de53e80b5c4eca735caf8ebea4b08b46dd",
+          "fields": {
+            "resourceKind": "MONGODB_COLLECTION",
+            "logicalName": "items",
+            "namespace": null,
+            "schemaRef": null
+          }
+        }
+      ]
+    },
+    "mongo-write": {
+      "support": ["decl", "import", "scope:function", "scope:module", "scope:type", "site"],
+      "diagnostic": false,
+      "records": [
+        {
+          "kind": "DATA_RESOURCE",
+          "scope": ["src/App.java", "code-key:type", "template", null],
+          "semantic": ["MONGODB_COLLECTION", "items", null, null],
+          "factKey": "runtime-fact:30ad62c25d29a4fdfe910f7d7101d24137e76d0d586d3bfcf18c842e7d047c4a",
+          "id": "runtime:27bffba4b7c5d28579d75a54cbd647de53e80b5c4eca735caf8ebea4b08b46dd",
+          "fields": {
+            "resourceKind": "MONGODB_COLLECTION",
+            "logicalName": "items",
+            "namespace": null,
+            "schemaRef": null
+          }
+        }
+      ]
+    },
+    "kafka-listener": {
+      "support": ["import", "scope:module", "scope:type", "site"],
+      "diagnostic": false,
+      "records": [
+        {
+          "kind": "CONTRACT",
+          "scope": ["src/App.java", "code-key:function", null, "code-key:function"],
+          "semantic": [
+            "CONSUMER",
+            "MESSAGE",
+            ["KAFKA", null, "orders", "CONSUMER", null, null],
+            "code-key:function"
+          ],
+          "factKey": "runtime-fact:72aa4bf77ec8e8f5626a64be0633f1ae0bcad19173279ccdf7c2be7e354c8c44",
+          "id": "runtime:a7f97b91a31c4f283be82303d74f4f5e462200a098c9261c1594dacdd0452e1d",
+          "fields": {
+            "direction": "CONSUMER",
+            "protocol": "MESSAGE",
+            "serviceRef": null,
+            "signature": {
+              "kind": "MESSAGE",
+              "transport": "KAFKA",
+              "namespace": null,
+              "channel": "orders",
+              "role": "CONSUMER",
+              "payloadSchemaRef": null,
+              "keySchemaRef": null
+            },
+            "implementationRef": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:function",
+                "revisionId": "revision:one"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "kafka-topics": {
+      "support": ["import", "scope:module", "scope:type", "site"],
+      "diagnostic": false,
+      "records": [
+        {
+          "kind": "CONTRACT",
+          "scope": ["src/App.java", "code-key:function", null, "code-key:function"],
+          "semantic": [
+            "CONSUMER",
+            "MESSAGE",
+            ["KAFKA", null, "orders", "CONSUMER", null, null],
+            "code-key:function"
+          ],
+          "factKey": "runtime-fact:72aa4bf77ec8e8f5626a64be0633f1ae0bcad19173279ccdf7c2be7e354c8c44",
+          "id": "runtime:a7f97b91a31c4f283be82303d74f4f5e462200a098c9261c1594dacdd0452e1d",
+          "fields": {
+            "direction": "CONSUMER",
+            "protocol": "MESSAGE",
+            "serviceRef": null,
+            "signature": {
+              "kind": "MESSAGE",
+              "transport": "KAFKA",
+              "namespace": null,
+              "channel": "orders",
+              "role": "CONSUMER",
+              "payloadSchemaRef": null,
+              "keySchemaRef": null
+            },
+            "implementationRef": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:function",
+                "revisionId": "revision:one"
+              }
+            }
+          }
+        },
+        {
+          "kind": "CONTRACT",
+          "scope": ["src/App.java", "code-key:function", null, "code-key:function"],
+          "semantic": [
+            "CONSUMER",
+            "MESSAGE",
+            ["KAFKA", null, "audit", "CONSUMER", null, null],
+            "code-key:function"
+          ],
+          "factKey": "runtime-fact:b778ceb0f684b95b52bae37b67b9e658ea8161f7ad9709db89e6d5f6fe646099",
+          "id": "runtime:fbede3b2580b5e81fc53d57f9215ea1998610a6903f6792248c0c64233c77efe",
+          "fields": {
+            "direction": "CONSUMER",
+            "protocol": "MESSAGE",
+            "serviceRef": null,
+            "signature": {
+              "kind": "MESSAGE",
+              "transport": "KAFKA",
+              "namespace": null,
+              "channel": "audit",
+              "role": "CONSUMER",
+              "payloadSchemaRef": null,
+              "keySchemaRef": null
+            },
+            "implementationRef": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:function",
+                "revisionId": "revision:one"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "kafka-send": {
+      "support": ["decl", "import", "scope:function", "scope:module", "scope:type", "site"],
+      "diagnostic": false,
+      "records": [
+        {
+          "kind": "CONTRACT",
+          "scope": ["src/App.java", "code-key:type", "sender", "code-key:function"],
+          "semantic": [
+            "PROVIDER",
+            "MESSAGE",
+            ["KAFKA", null, "orders", "PRODUCER", null, null],
+            "code-key:function"
+          ],
+          "factKey": "runtime-fact:d6170510cb6453a224bd2e5e511d5cbd3b4d6678b90b4d05e73e472a0b4e7b54",
+          "id": "runtime:98743594621c881da9520da807324e78dfc270dea2603a9b887498353c5f7519",
+          "fields": {
+            "direction": "PROVIDER",
+            "protocol": "MESSAGE",
+            "serviceRef": null,
+            "signature": {
+              "kind": "MESSAGE",
+              "transport": "KAFKA",
+              "namespace": null,
+              "channel": "orders",
+              "role": "PRODUCER",
+              "payloadSchemaRef": null,
+              "keySchemaRef": null
+            },
+            "implementationRef": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:function",
+                "revisionId": "revision:one"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "fastapi-direct": {
+      "support": ["app-assign", "app-ctor", "import", "scope:module", "site"],
+      "diagnostic": false,
+      "records": [
+        {
+          "kind": "CONTRACT",
+          "scope": ["src/app.py", "code-key:module", "app", "code-key:function"],
+          "semantic": [
+            "PROVIDER",
+            "HTTP",
+            ["GET", [["LITERAL", "x"]], null, null, null, null],
+            "code-key:function"
+          ],
+          "factKey": "runtime-fact:06e3cf7dd2e8f33316caa02334450fcccd2cd8be5679801a0888a4931b4a8776",
+          "id": "runtime:31996e1fd219c2c0881e523f78785fd8772293387ef5fc6fdcec3e1b7795c660",
+          "fields": {
+            "direction": "PROVIDER",
+            "protocol": "HTTP",
+            "serviceRef": null,
+            "signature": {
+              "kind": "HTTP",
+              "method": "GET",
+              "pathSegments": [
+                {
+                  "kind": "LITERAL",
+                  "value": "x"
+                }
+              ],
+              "querySchemaRef": null,
+              "requestSchemaRef": null,
+              "responseSchemaRef": null,
+              "serviceHint": null
+            },
+            "implementationRef": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:function",
+                "revisionId": "revision:one"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "fastapi-router": {
+      "support": [
+        "app-assign",
+        "app-ctor",
+        "import",
+        "include",
+        "router-assign",
+        "router-ctor",
+        "router-import",
+        "scope:module",
+        "site"
+      ],
+      "diagnostic": false,
+      "records": [
+        {
+          "kind": "CONTRACT",
+          "scope": ["src/app.py", "code-key:module", "router", "code-key:function"],
+          "semantic": [
+            "PROVIDER",
+            "HTTP",
+            [
+              "GET",
+              [
+                ["LITERAL", "api"],
+                ["LITERAL", "v1"],
+                ["LITERAL", "x"]
+              ],
+              null,
+              null,
+              null,
+              null
+            ],
+            "code-key:function"
+          ],
+          "factKey": "runtime-fact:5c6f496b6adf3f4a7b2c00274f6696a770c4bed85988cfef655aa12925ec2c20",
+          "id": "runtime:78c42c919b0f9a0ac8acefc7822d38bf4dc1001b92594a7b44afa8ae1c1e0139",
+          "fields": {
+            "direction": "PROVIDER",
+            "protocol": "HTTP",
+            "serviceRef": null,
+            "signature": {
+              "kind": "HTTP",
+              "method": "GET",
+              "pathSegments": [
+                {
+                  "kind": "LITERAL",
+                  "value": "api"
+                },
+                {
+                  "kind": "LITERAL",
+                  "value": "v1"
+                },
+                {
+                  "kind": "LITERAL",
+                  "value": "x"
+                }
+              ],
+              "querySchemaRef": null,
+              "requestSchemaRef": null,
+              "responseSchemaRef": null,
+              "serviceHint": null
+            },
+            "implementationRef": {
+              "scope": "REPOSITORY",
+              "repositoryId": "repo:one",
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:function",
+                "revisionId": "revision:one"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "spring-dynamic": {
+      "support": [],
+      "diagnostic": true,
+      "records": []
+    },
+    "mongo-dynamic": {
+      "support": [],
+      "diagnostic": true,
+      "records": []
+    },
+    "fastapi-reassign": {
+      "support": [],
+      "diagnostic": true,
+      "records": []
+    }
+  }
+}

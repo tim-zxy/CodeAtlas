@@ -1,0 +1,1169 @@
+{
+  "schemaVersion": 1,
+  "workspace": "REFRESH_VERIFY",
+  "candidateSha256": "6dd8f8de50d1a683bb087c0eee244788fc5104d4c4082a84578991a03d491aa9",
+  "environment": {
+    "node": "v24.15.0",
+    "v8": "13.6.233.17-node.48",
+    "platform": "win32",
+    "arch": "x64",
+    "zodVersion": "4.6.1",
+    "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+    "corpusRevision": "p05-native-metadata-memory-v1"
+  },
+  "corpus": {
+    "revision": "p05-native-refresh-verification-memory-v1",
+    "digest": "1969707b181cf5bbd2fd753d489c4ff3a39333f4d8166b43c13a62ec40dad232"
+  },
+  "observations": [
+    {
+      "name": "zero-target",
+      "repetition": 0,
+      "environment": {
+        "node": "v24.15.0",
+        "v8": "13.6.233.17-node.48",
+        "platform": "win32",
+        "arch": "x64",
+        "zodVersion": "4.6.1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "corpusRevision": "p05-native-metadata-memory-v1"
+      },
+      "corpus": {
+        "revision": "p05-native-refresh-verification-memory-v1",
+        "digest": "1969707b181cf5bbd2fd753d489c4ff3a39333f4d8166b43c13a62ec40dad232"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "opened": 1,
+      "corpusPayloadDigest": "57be658de600d7b55d46cf9d43296f8aa8948a5cc91086b500ecbb2ca91fdab0",
+      "expectedOutcome": "REFRESH_COMPLETED",
+      "observedOutcome": "REFRESH_COMPLETED",
+      "inputBytes": 1537,
+      "largestLineBytes": 1327,
+      "outputBytes": 1247,
+      "eventCount": 2,
+      "summaryBytes": 458,
+      "maximumSinkInFlight": 1,
+      "maximumPendingBytes": 1247,
+      "samples": [
+        {
+          "phase": "startup",
+          "memory": {
+            "rss": 64856064,
+            "heapTotal": 30490624,
+            "heapUsed": 18139848,
+            "external": 2465691,
+            "arrayBuffers": 37143
+          },
+          "peakKiB": 63604
+        },
+        {
+          "phase": "prepared",
+          "memory": {
+            "rss": 70148096,
+            "heapTotal": 33112064,
+            "heapUsed": 13238352,
+            "external": 2507797,
+            "arrayBuffers": 79209
+          },
+          "peakKiB": 68504
+        },
+        {
+          "phase": "first-accept-source-and-chunk-retained",
+          "memory": {
+            "rss": 70365184,
+            "heapTotal": 33374208,
+            "heapUsed": 15101784,
+            "external": 2538396,
+            "arrayBuffers": 79209
+          },
+          "peakKiB": 68884
+        },
+        {
+          "phase": "finished",
+          "memory": {
+            "rss": 70402048,
+            "heapTotal": 33636352,
+            "heapUsed": 15573928,
+            "external": 2538396,
+            "arrayBuffers": 79209
+          },
+          "peakKiB": 68884
+        }
+      ],
+      "peakResidentBytes": 70537216,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    },
+    {
+      "name": "maximum-short-files",
+      "repetition": 0,
+      "environment": {
+        "node": "v24.15.0",
+        "v8": "13.6.233.17-node.48",
+        "platform": "win32",
+        "arch": "x64",
+        "zodVersion": "4.6.1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "corpusRevision": "p05-native-metadata-memory-v1"
+      },
+      "corpus": {
+        "revision": "p05-native-refresh-verification-memory-v1",
+        "digest": "1969707b181cf5bbd2fd753d489c4ff3a39333f4d8166b43c13a62ec40dad232"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "opened": 1,
+      "corpusPayloadDigest": "8499f1869f5d54399775145eb2f88bc03be94dcec9b5d917c4e8ef1b4e032922",
+      "expectedOutcome": "REFRESH_COMPLETED",
+      "observedOutcome": "REFRESH_COMPLETED",
+      "inputBytes": 999814,
+      "largestLineBytes": 247501,
+      "outputBytes": 1134669,
+      "eventCount": 2080,
+      "summaryBytes": 752626,
+      "maximumSinkInFlight": 1,
+      "maximumPendingBytes": 4096,
+      "samples": [
+        {
+          "phase": "startup",
+          "memory": {
+            "rss": 64884736,
+            "heapTotal": 30228480,
+            "heapUsed": 18173784,
+            "external": 2465691,
+            "arrayBuffers": 37143
+          },
+          "peakKiB": 63632
+        },
+        {
+          "phase": "prepared",
+          "memory": {
+            "rss": 243671040,
+            "heapTotal": 189124608,
+            "heapUsed": 65696872,
+            "external": 11189956,
+            "arrayBuffers": 8761368
+          },
+          "peakKiB": 239308
+        },
+        {
+          "phase": "first-accept-source-and-chunk-retained",
+          "memory": {
+            "rss": 233721856,
+            "heapTotal": 163659776,
+            "heapUsed": 18806176,
+            "external": 5641825,
+            "arrayBuffers": 3163212
+          },
+          "peakKiB": 243364
+        },
+        {
+          "phase": "finished",
+          "memory": {
+            "rss": 236011520,
+            "heapTotal": 165945344,
+            "heapUsed": 39759064,
+            "external": 5876351,
+            "arrayBuffers": 3171404
+          },
+          "peakKiB": 243364
+        }
+      ],
+      "peakResidentBytes": 249204736,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    },
+    {
+      "name": "dense-retained-sites",
+      "repetition": 0,
+      "environment": {
+        "node": "v24.15.0",
+        "v8": "13.6.233.17-node.48",
+        "platform": "win32",
+        "arch": "x64",
+        "zodVersion": "4.6.1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "corpusRevision": "p05-native-metadata-memory-v1"
+      },
+      "corpus": {
+        "revision": "p05-native-refresh-verification-memory-v1",
+        "digest": "1969707b181cf5bbd2fd753d489c4ff3a39333f4d8166b43c13a62ec40dad232"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "opened": 1,
+      "corpusPayloadDigest": "290a52334c54ef104cf8e5c4ecc224e5b1ebffe36c2845ea10d1f7906307a745",
+      "expectedOutcome": "REFRESH_COMPLETED",
+      "observedOutcome": "REFRESH_COMPLETED",
+      "inputBytes": 999830,
+      "largestLineBytes": 998034,
+      "outputBytes": 1000099,
+      "eventCount": 5,
+      "summaryBytes": 998504,
+      "maximumSinkInFlight": 1,
+      "maximumPendingBytes": 4096,
+      "samples": [
+        {
+          "phase": "startup",
+          "memory": {
+            "rss": 64749568,
+            "heapTotal": 29966336,
+            "heapUsed": 18094568,
+            "external": 2465691,
+            "arrayBuffers": 37143
+          },
+          "peakKiB": 63460
+        },
+        {
+          "phase": "prepared",
+          "memory": {
+            "rss": 246599680,
+            "heapTotal": 188530688,
+            "heapUsed": 69153448,
+            "external": 11055502,
+            "arrayBuffers": 8626914
+          },
+          "peakKiB": 250600
+        },
+        {
+          "phase": "first-accept-source-and-chunk-retained",
+          "memory": {
+            "rss": 230580224,
+            "heapTotal": 178909184,
+            "heapUsed": 46764136,
+            "external": 5512437,
+            "arrayBuffers": 3053250
+          },
+          "peakKiB": 250600
+        },
+        {
+          "phase": "finished",
+          "memory": {
+            "rss": 252542976,
+            "heapTotal": 167575552,
+            "heapUsed": 68698616,
+            "external": 64053568,
+            "arrayBuffers": 24015747
+          },
+          "peakKiB": 306668
+        }
+      ],
+      "peakResidentBytes": 314028032,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    },
+    {
+      "name": "maximum-target-summary",
+      "repetition": 0,
+      "environment": {
+        "node": "v24.15.0",
+        "v8": "13.6.233.17-node.48",
+        "platform": "win32",
+        "arch": "x64",
+        "zodVersion": "4.6.1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "corpusRevision": "p05-native-metadata-memory-v1"
+      },
+      "corpus": {
+        "revision": "p05-native-refresh-verification-memory-v1",
+        "digest": "1969707b181cf5bbd2fd753d489c4ff3a39333f4d8166b43c13a62ec40dad232"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "opened": 1,
+      "corpusPayloadDigest": "7a776ecb450b3d9f1095eb2b6f704145ddbf7f9fe256f2609d5fe65a5f129643",
+      "expectedOutcome": "REFRESH_COMPLETED",
+      "observedOutcome": "REFRESH_COMPLETED",
+      "inputBytes": 2737,
+      "largestLineBytes": 999459,
+      "outputBytes": 2241667,
+      "eventCount": 2731,
+      "summaryBytes": 999919,
+      "maximumSinkInFlight": 1,
+      "maximumPendingBytes": 4096,
+      "samples": [
+        {
+          "phase": "startup",
+          "memory": {
+            "rss": 64565248,
+            "heapTotal": 29966336,
+            "heapUsed": 18171480,
+            "external": 2465691,
+            "arrayBuffers": 37143
+          },
+          "peakKiB": 63320
+        },
+        {
+          "phase": "prepared",
+          "memory": {
+            "rss": 251576320,
+            "heapTotal": 195526656,
+            "heapUsed": 77887136,
+            "external": 12010299,
+            "arrayBuffers": 9581711
+          },
+          "peakKiB": 245680
+        },
+        {
+          "phase": "first-accept-source-and-chunk-retained",
+          "memory": {
+            "rss": 252370944,
+            "heapTotal": 195788800,
+            "heapUsed": 80292512,
+            "external": 12040898,
+            "arrayBuffers": 9581711
+          },
+          "peakKiB": 246456
+        },
+        {
+          "phase": "finished",
+          "memory": {
+            "rss": 247742464,
+            "heapTotal": 157630464,
+            "heapUsed": 32461864,
+            "external": 27043069,
+            "arrayBuffers": 24583882
+          },
+          "peakKiB": 305372
+        }
+      ],
+      "peakResidentBytes": 312700928,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    },
+    {
+      "name": "large-patch-ledger",
+      "repetition": 0,
+      "environment": {
+        "node": "v24.15.0",
+        "v8": "13.6.233.17-node.48",
+        "platform": "win32",
+        "arch": "x64",
+        "zodVersion": "4.6.1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "corpusRevision": "p05-native-metadata-memory-v1"
+      },
+      "corpus": {
+        "revision": "p05-native-refresh-verification-memory-v1",
+        "digest": "1969707b181cf5bbd2fd753d489c4ff3a39333f4d8166b43c13a62ec40dad232"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "opened": 1,
+      "corpusPayloadDigest": "a11f9631e5a86d90402822f9765cdc822782dd7faaf244d74cf0c7e02ec50568",
+      "expectedOutcome": "REFRESH_COMPLETED",
+      "observedOutcome": "REFRESH_COMPLETED",
+      "inputBytes": 999582,
+      "largestLineBytes": 997540,
+      "outputBytes": 2929745,
+      "eventCount": 5494,
+      "summaryBytes": 970580,
+      "maximumSinkInFlight": 1,
+      "maximumPendingBytes": 4096,
+      "samples": [
+        {
+          "phase": "startup",
+          "memory": {
+            "rss": 64557056,
+            "heapTotal": 30490624,
+            "heapUsed": 18186200,
+            "external": 2465691,
+            "arrayBuffers": 37143
+          },
+          "peakKiB": 63308
+        },
+        {
+          "phase": "prepared",
+          "memory": {
+            "rss": 254468096,
+            "heapTotal": 191012864,
+            "heapUsed": 60911256,
+            "external": 17269440,
+            "arrayBuffers": 14840852
+          },
+          "peakKiB": 254440
+        },
+        {
+          "phase": "first-accept-source-and-chunk-retained",
+          "memory": {
+            "rss": 240955392,
+            "heapTotal": 188657664,
+            "heapUsed": 90873016,
+            "external": 18299621,
+            "arrayBuffers": 5047936
+          },
+          "peakKiB": 254440
+        },
+        {
+          "phase": "finished",
+          "memory": {
+            "rss": 273928192,
+            "heapTotal": 177008640,
+            "heapUsed": 81285712,
+            "external": 61248907,
+            "arrayBuffers": 32318444
+          },
+          "peakKiB": 327620
+        }
+      ],
+      "peakResidentBytes": 335482880,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    },
+    {
+      "name": "long-ascii",
+      "repetition": 0,
+      "environment": {
+        "node": "v24.15.0",
+        "v8": "13.6.233.17-node.48",
+        "platform": "win32",
+        "arch": "x64",
+        "zodVersion": "4.6.1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "corpusRevision": "p05-native-metadata-memory-v1"
+      },
+      "corpus": {
+        "revision": "p05-native-refresh-verification-memory-v1",
+        "digest": "1969707b181cf5bbd2fd753d489c4ff3a39333f4d8166b43c13a62ec40dad232"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "opened": 1,
+      "corpusPayloadDigest": "379f05ce7910d9639411274de88fdaf92c18f4a4ef87e955653c6d2fd517eb10",
+      "expectedOutcome": "REFRESH_COMPLETED",
+      "observedOutcome": "REFRESH_COMPLETED",
+      "inputBytes": 2737,
+      "largestLineBytes": 999540,
+      "outputBytes": 2000399,
+      "eventCount": 6,
+      "summaryBytes": 1000000,
+      "maximumSinkInFlight": 1,
+      "maximumPendingBytes": 4096,
+      "samples": [
+        {
+          "phase": "startup",
+          "memory": {
+            "rss": 65122304,
+            "heapTotal": 30490624,
+            "heapUsed": 18189272,
+            "external": 2465691,
+            "arrayBuffers": 37143
+          },
+          "peakKiB": 63868
+        },
+        {
+          "phase": "prepared",
+          "memory": {
+            "rss": 144687104,
+            "heapTotal": 146526208,
+            "heapUsed": 75767008,
+            "external": 12527030,
+            "arrayBuffers": 10098442
+          },
+          "peakKiB": 141296
+        },
+        {
+          "phase": "first-accept-source-and-chunk-retained",
+          "memory": {
+            "rss": 145203200,
+            "heapTotal": 146788352,
+            "heapUsed": 78165696,
+            "external": 12565821,
+            "arrayBuffers": 10106634
+          },
+          "peakKiB": 142076
+        },
+        {
+          "phase": "finished",
+          "memory": {
+            "rss": 118312960,
+            "heapTotal": 94212096,
+            "heapUsed": 25413296,
+            "external": 36310123,
+            "arrayBuffers": 33850936
+          },
+          "peakKiB": 202360
+        }
+      ],
+      "peakResidentBytes": 207216640,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    },
+    {
+      "name": "long-bmp",
+      "repetition": 0,
+      "environment": {
+        "node": "v24.15.0",
+        "v8": "13.6.233.17-node.48",
+        "platform": "win32",
+        "arch": "x64",
+        "zodVersion": "4.6.1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "corpusRevision": "p05-native-metadata-memory-v1"
+      },
+      "corpus": {
+        "revision": "p05-native-refresh-verification-memory-v1",
+        "digest": "1969707b181cf5bbd2fd753d489c4ff3a39333f4d8166b43c13a62ec40dad232"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "opened": 1,
+      "corpusPayloadDigest": "09bd30586ccdacdd2a9af0ba41de2a3e674863160e2556f525fb5945e1fc42bc",
+      "expectedOutcome": "REFRESH_COMPLETED",
+      "observedOutcome": "REFRESH_COMPLETED",
+      "inputBytes": 2737,
+      "largestLineBytes": 999540,
+      "outputBytes": 2000399,
+      "eventCount": 6,
+      "summaryBytes": 1000000,
+      "maximumSinkInFlight": 1,
+      "maximumPendingBytes": 4096,
+      "samples": [
+        {
+          "phase": "startup",
+          "memory": {
+            "rss": 64634880,
+            "heapTotal": 30490624,
+            "heapUsed": 18161176,
+            "external": 2465691,
+            "arrayBuffers": 37143
+          },
+          "peakKiB": 63336
+        },
+        {
+          "phase": "prepared",
+          "memory": {
+            "rss": 102658048,
+            "heapTotal": 73981952,
+            "heapUsed": 37044896,
+            "external": 10504263,
+            "arrayBuffers": 8075675
+          },
+          "peakKiB": 109516
+        },
+        {
+          "phase": "first-accept-source-and-chunk-retained",
+          "memory": {
+            "rss": 103002112,
+            "heapTotal": 74244096,
+            "heapUsed": 39449728,
+            "external": 10534862,
+            "arrayBuffers": 8075675
+          },
+          "peakKiB": 109516
+        },
+        {
+          "phase": "finished",
+          "memory": {
+            "rss": 105967616,
+            "heapTotal": 57454592,
+            "heapUsed": 21893000,
+            "external": 116195707,
+            "arrayBuffers": 25891750
+          },
+          "peakKiB": 180436
+        }
+      ],
+      "peakResidentBytes": 184766464,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    },
+    {
+      "name": "long-astral",
+      "repetition": 0,
+      "environment": {
+        "node": "v24.15.0",
+        "v8": "13.6.233.17-node.48",
+        "platform": "win32",
+        "arch": "x64",
+        "zodVersion": "4.6.1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "corpusRevision": "p05-native-metadata-memory-v1"
+      },
+      "corpus": {
+        "revision": "p05-native-refresh-verification-memory-v1",
+        "digest": "1969707b181cf5bbd2fd753d489c4ff3a39333f4d8166b43c13a62ec40dad232"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "opened": 1,
+      "corpusPayloadDigest": "83f7f7c937c667f89476697e5a22bb1575f06e75724199b734645a86e65f4bfd",
+      "expectedOutcome": "REFRESH_COMPLETED",
+      "observedOutcome": "REFRESH_COMPLETED",
+      "inputBytes": 2737,
+      "largestLineBytes": 999538,
+      "outputBytes": 2000395,
+      "eventCount": 6,
+      "summaryBytes": 999998,
+      "maximumSinkInFlight": 1,
+      "maximumPendingBytes": 4096,
+      "samples": [
+        {
+          "phase": "startup",
+          "memory": {
+            "rss": 64294912,
+            "heapTotal": 30228480,
+            "heapUsed": 18167304,
+            "external": 2465691,
+            "arrayBuffers": 37143
+          },
+          "peakKiB": 63016
+        },
+        {
+          "phase": "prepared",
+          "memory": {
+            "rss": 139755520,
+            "heapTotal": 141778944,
+            "heapUsed": 71283296,
+            "external": 12526635,
+            "arrayBuffers": 10098047
+          },
+          "peakKiB": 136480
+        },
+        {
+          "phase": "first-accept-source-and-chunk-retained",
+          "memory": {
+            "rss": 139993088,
+            "heapTotal": 142041088,
+            "heapUsed": 73680448,
+            "external": 12557234,
+            "arrayBuffers": 10098047
+          },
+          "peakKiB": 137164
+        },
+        {
+          "phase": "finished",
+          "memory": {
+            "rss": 123154432,
+            "heapTotal": 94220288,
+            "heapUsed": 25426896,
+            "external": 40588603,
+            "arrayBuffers": 38129416
+          },
+          "peakKiB": 194600
+        }
+      ],
+      "peakResidentBytes": 199270400,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    },
+    {
+      "name": "repeated-shared-owners",
+      "repetition": 0,
+      "environment": {
+        "node": "v24.15.0",
+        "v8": "13.6.233.17-node.48",
+        "platform": "win32",
+        "arch": "x64",
+        "zodVersion": "4.6.1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "corpusRevision": "p05-native-metadata-memory-v1"
+      },
+      "corpus": {
+        "revision": "p05-native-refresh-verification-memory-v1",
+        "digest": "1969707b181cf5bbd2fd753d489c4ff3a39333f4d8166b43c13a62ec40dad232"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "opened": 1,
+      "corpusPayloadDigest": "ea4ce17fe2056ed5249eee3c0d4f347cf25e56bc50b98457692e66ce9614d34e",
+      "expectedOutcome": "REFRESH_COMPLETED",
+      "observedOutcome": "REFRESH_COMPLETED",
+      "inputBytes": 999524,
+      "largestLineBytes": 153372,
+      "outputBytes": 1082451,
+      "eventCount": 1286,
+      "summaryBytes": 846149,
+      "maximumSinkInFlight": 1,
+      "maximumPendingBytes": 4096,
+      "samples": [
+        {
+          "phase": "startup",
+          "memory": {
+            "rss": 64790528,
+            "heapTotal": 30228480,
+            "heapUsed": 18200464,
+            "external": 2465691,
+            "arrayBuffers": 37143
+          },
+          "peakKiB": 63472
+        },
+        {
+          "phase": "prepared",
+          "memory": {
+            "rss": 244031488,
+            "heapTotal": 188858368,
+            "heapUsed": 58619784,
+            "external": 10840136,
+            "arrayBuffers": 8411548
+          },
+          "peakKiB": 240192
+        },
+        {
+          "phase": "first-accept-source-and-chunk-retained",
+          "memory": {
+            "rss": 238833664,
+            "heapTotal": 169480192,
+            "heapUsed": 31673688,
+            "external": 5618895,
+            "arrayBuffers": 3110414
+          },
+          "peakKiB": 245044
+        },
+        {
+          "phase": "finished",
+          "memory": {
+            "rss": 238862336,
+            "heapTotal": 170790912,
+            "heapUsed": 60819920,
+            "external": 6036545,
+            "arrayBuffers": 3118606
+          },
+          "peakKiB": 245044
+        }
+      ],
+      "peakResidentBytes": 250925056,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    },
+    {
+      "name": "forged-owner",
+      "repetition": 0,
+      "environment": {
+        "node": "v24.15.0",
+        "v8": "13.6.233.17-node.48",
+        "platform": "win32",
+        "arch": "x64",
+        "zodVersion": "4.6.1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "corpusRevision": "p05-native-metadata-memory-v1"
+      },
+      "corpus": {
+        "revision": "p05-native-refresh-verification-memory-v1",
+        "digest": "1969707b181cf5bbd2fd753d489c4ff3a39333f4d8166b43c13a62ec40dad232"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "opened": 1,
+      "corpusPayloadDigest": "561282a07f33f138c598bdf04e4553ac81fee2f11ebb04cf70c9dc0d5df238a7",
+      "expectedOutcome": "PROTOCOL_VIOLATION",
+      "observedOutcome": "PROTOCOL_VIOLATION",
+      "inputBytes": 999524,
+      "largestLineBytes": 153372,
+      "outputBytes": 1082451,
+      "eventCount": 1286,
+      "summaryBytes": 846149,
+      "maximumSinkInFlight": 1,
+      "maximumPendingBytes": 4096,
+      "samples": [
+        {
+          "phase": "startup",
+          "memory": {
+            "rss": 64581632,
+            "heapTotal": 30228480,
+            "heapUsed": 18155736,
+            "external": 2465691,
+            "arrayBuffers": 37143
+          },
+          "peakKiB": 63340
+        },
+        {
+          "phase": "prepared",
+          "memory": {
+            "rss": 252993536,
+            "heapTotal": 194228224,
+            "heapUsed": 101181640,
+            "external": 14612106,
+            "arrayBuffers": 12183518
+          },
+          "peakKiB": 247064
+        },
+        {
+          "phase": "first-accept-source-and-chunk-retained",
+          "memory": {
+            "rss": 238088192,
+            "heapTotal": 165810176,
+            "heapUsed": 31766416,
+            "external": 5569601,
+            "arrayBuffers": 3110414
+          },
+          "peakKiB": 249308
+        },
+        {
+          "phase": "finished",
+          "memory": {
+            "rss": 240648192,
+            "heapTotal": 166072320,
+            "heapUsed": 42656704,
+            "external": 6036545,
+            "arrayBuffers": 3118606
+          },
+          "peakKiB": 249308
+        }
+      ],
+      "peakResidentBytes": 255291392,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    },
+    {
+      "name": "deep-unknown-input",
+      "repetition": 0,
+      "environment": {
+        "node": "v24.15.0",
+        "v8": "13.6.233.17-node.48",
+        "platform": "win32",
+        "arch": "x64",
+        "zodVersion": "4.6.1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "corpusRevision": "p05-native-metadata-memory-v1"
+      },
+      "corpus": {
+        "revision": "p05-native-refresh-verification-memory-v1",
+        "digest": "1969707b181cf5bbd2fd753d489c4ff3a39333f4d8166b43c13a62ec40dad232"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "opened": 1,
+      "corpusPayloadDigest": "f459f66a6fea9d7e3771a253708aa1a1c67fadacfee9a35b2eb7314189643572",
+      "expectedOutcome": "INVALID_REQUEST",
+      "observedOutcome": "INVALID_REQUEST",
+      "inputBytes": 999991,
+      "largestLineBytes": 999781,
+      "outputBytes": 1247,
+      "eventCount": 2,
+      "summaryBytes": 458,
+      "maximumSinkInFlight": 0,
+      "maximumPendingBytes": 0,
+      "samples": [
+        {
+          "phase": "startup",
+          "memory": {
+            "rss": 64843776,
+            "heapTotal": 30490624,
+            "heapUsed": 18137216,
+            "external": 2465691,
+            "arrayBuffers": 37143
+          },
+          "peakKiB": 63568
+        },
+        {
+          "phase": "prepared",
+          "memory": {
+            "rss": 73932800,
+            "heapTotal": 34639872,
+            "heapUsed": 14257056,
+            "external": 5500835,
+            "arrayBuffers": 3072247
+          },
+          "peakKiB": 72924
+        },
+        {
+          "phase": "finished",
+          "memory": {
+            "rss": 112369664,
+            "heapTotal": 99127296,
+            "heapUsed": 43706456,
+            "external": 4499387,
+            "arrayBuffers": 2070799
+          },
+          "peakKiB": 128788
+        }
+      ],
+      "peakResidentBytes": 131878912,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    },
+    {
+      "name": "oversized-input",
+      "repetition": 0,
+      "environment": {
+        "node": "v24.15.0",
+        "v8": "13.6.233.17-node.48",
+        "platform": "win32",
+        "arch": "x64",
+        "zodVersion": "4.6.1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "corpusRevision": "p05-native-metadata-memory-v1"
+      },
+      "corpus": {
+        "revision": "p05-native-refresh-verification-memory-v1",
+        "digest": "1969707b181cf5bbd2fd753d489c4ff3a39333f4d8166b43c13a62ec40dad232"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "opened": 1,
+      "corpusPayloadDigest": "d79c64affb395ccf77f3810b1061b8b9d2d661943a4c6354bfd6f9ecea58e7e7",
+      "expectedOutcome": "OUTPUT_LIMIT_EXCEEDED",
+      "observedOutcome": "OUTPUT_LIMIT_EXCEEDED",
+      "inputBytes": 1000001,
+      "largestLineBytes": 1000001,
+      "outputBytes": 1247,
+      "eventCount": 2,
+      "summaryBytes": 458,
+      "maximumSinkInFlight": 0,
+      "maximumPendingBytes": 0,
+      "samples": [
+        {
+          "phase": "startup",
+          "memory": {
+            "rss": 64602112,
+            "heapTotal": 30228480,
+            "heapUsed": 18232360,
+            "external": 2465691,
+            "arrayBuffers": 37143
+          },
+          "peakKiB": 63344
+        },
+        {
+          "phase": "prepared",
+          "memory": {
+            "rss": 72351744,
+            "heapTotal": 33898496,
+            "heapUsed": 13257240,
+            "external": 4501076,
+            "arrayBuffers": 2072488
+          },
+          "peakKiB": 71052
+        },
+        {
+          "phase": "finished",
+          "memory": {
+            "rss": 72491008,
+            "heapTotal": 33898496,
+            "heapUsed": 13302968,
+            "external": 4501076,
+            "arrayBuffers": 2072488
+          },
+          "peakKiB": 71052
+        }
+      ],
+      "peakResidentBytes": 72757248,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    },
+    {
+      "name": "oversized-output",
+      "repetition": 0,
+      "environment": {
+        "node": "v24.15.0",
+        "v8": "13.6.233.17-node.48",
+        "platform": "win32",
+        "arch": "x64",
+        "zodVersion": "4.6.1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "corpusRevision": "p05-native-metadata-memory-v1"
+      },
+      "corpus": {
+        "revision": "p05-native-refresh-verification-memory-v1",
+        "digest": "1969707b181cf5bbd2fd753d489c4ff3a39333f4d8166b43c13a62ec40dad232"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "opened": 1,
+      "corpusPayloadDigest": "e18f249372747e9d7256ea4740494f1f9f18281d7bd6177a6f9945f55c9dcd62",
+      "expectedOutcome": "OUTPUT_LIMIT_EXCEEDED",
+      "observedOutcome": "OUTPUT_LIMIT_EXCEEDED",
+      "inputBytes": 1537,
+      "largestLineBytes": 10000001,
+      "outputBytes": 10000001,
+      "eventCount": 2,
+      "summaryBytes": 458,
+      "maximumSinkInFlight": 0,
+      "maximumPendingBytes": 10000001,
+      "samples": [
+        {
+          "phase": "startup",
+          "memory": {
+            "rss": 64528384,
+            "heapTotal": 30228480,
+            "heapUsed": 18127008,
+            "external": 2465691,
+            "arrayBuffers": 37143
+          },
+          "peakKiB": 63276
+        },
+        {
+          "phase": "prepared",
+          "memory": {
+            "rss": 89763840,
+            "heapTotal": 34160640,
+            "heapUsed": 13262576,
+            "external": 22501367,
+            "arrayBuffers": 20072779
+          },
+          "peakKiB": 87660
+        },
+        {
+          "phase": "finished",
+          "memory": {
+            "rss": 90112000,
+            "heapTotal": 34160640,
+            "heapUsed": 14908632,
+            "external": 22501367,
+            "arrayBuffers": 20072779
+          },
+          "peakKiB": 88240
+        }
+      ],
+      "peakResidentBytes": 90357760,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    },
+    {
+      "name": "slow-sink",
+      "repetition": 0,
+      "environment": {
+        "node": "v24.15.0",
+        "v8": "13.6.233.17-node.48",
+        "platform": "win32",
+        "arch": "x64",
+        "zodVersion": "4.6.1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "corpusRevision": "p05-native-metadata-memory-v1"
+      },
+      "corpus": {
+        "revision": "p05-native-refresh-verification-memory-v1",
+        "digest": "1969707b181cf5bbd2fd753d489c4ff3a39333f4d8166b43c13a62ec40dad232"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "opened": 1,
+      "corpusPayloadDigest": "0ca299040549cc9c82f7f6ba5e46f6a23ed35e3ac0e220e29aa76644812bc570",
+      "expectedOutcome": "REFRESH_COMPLETED",
+      "observedOutcome": "REFRESH_COMPLETED",
+      "inputBytes": 999582,
+      "largestLineBytes": 997540,
+      "outputBytes": 2929745,
+      "eventCount": 5494,
+      "summaryBytes": 970580,
+      "maximumSinkInFlight": 1,
+      "maximumPendingBytes": 4096,
+      "samples": [
+        {
+          "phase": "startup",
+          "memory": {
+            "rss": 64602112,
+            "heapTotal": 30228480,
+            "heapUsed": 18163256,
+            "external": 2465691,
+            "arrayBuffers": 37143
+          },
+          "peakKiB": 63380
+        },
+        {
+          "phase": "prepared",
+          "memory": {
+            "rss": 258473984,
+            "heapTotal": 186298368,
+            "heapUsed": 55357288,
+            "external": 17334967,
+            "arrayBuffers": 14906379
+          },
+          "peakKiB": 263428
+        },
+        {
+          "phase": "first-accept-source-and-chunk-retained",
+          "memory": {
+            "rss": 244994048,
+            "heapTotal": 183418880,
+            "heapUsed": 86103152,
+            "external": 18365148,
+            "arrayBuffers": 5113472
+          },
+          "peakKiB": 263428
+        },
+        {
+          "phase": "blocked-sink",
+          "memory": {
+            "rss": 244994048,
+            "heapTotal": 183418880,
+            "heapUsed": 86113360,
+            "external": 18365148,
+            "arrayBuffers": 5113472
+          },
+          "peakKiB": 263428
+        },
+        {
+          "phase": "finished",
+          "memory": {
+            "rss": 270995456,
+            "heapTotal": 179105792,
+            "heapUsed": 81556344,
+            "external": 61248907,
+            "arrayBuffers": 33173904
+          },
+          "peakKiB": 324008
+        }
+      ],
+      "peakResidentBytes": 331784192,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    },
+    {
+      "name": "burst-output-buffer",
+      "repetition": 0,
+      "environment": {
+        "node": "v24.15.0",
+        "v8": "13.6.233.17-node.48",
+        "platform": "win32",
+        "arch": "x64",
+        "zodVersion": "4.6.1",
+        "implementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+        "corpusRevision": "p05-native-metadata-memory-v1"
+      },
+      "corpus": {
+        "revision": "p05-native-refresh-verification-memory-v1",
+        "digest": "1969707b181cf5bbd2fd753d489c4ff3a39333f4d8166b43c13a62ec40dad232"
+      },
+      "scope": "OFFLINE_CALIBRATION_ONLY",
+      "opened": 1,
+      "corpusPayloadDigest": "d08e4ba03ef8a3b1bc9a159e74a7499e469bc566e0b64901a66ffe320c749511",
+      "expectedOutcome": "REFRESH_COMPLETED",
+      "observedOutcome": "REFRESH_COMPLETED",
+      "inputBytes": 999582,
+      "largestLineBytes": 997540,
+      "outputBytes": 2929745,
+      "eventCount": 5494,
+      "summaryBytes": 970580,
+      "maximumSinkInFlight": 1,
+      "maximumPendingBytes": 2929745,
+      "samples": [
+        {
+          "phase": "startup",
+          "memory": {
+            "rss": 64626688,
+            "heapTotal": 29966336,
+            "heapUsed": 18111264,
+            "external": 2465691,
+            "arrayBuffers": 37143
+          },
+          "peakKiB": 63380
+        },
+        {
+          "phase": "prepared",
+          "memory": {
+            "rss": 269709312,
+            "heapTotal": 203440128,
+            "heapUsed": 125545728,
+            "external": 20931946,
+            "arrayBuffers": 18503358
+          },
+          "peakKiB": 263388
+        },
+        {
+          "phase": "first-accept-source-and-chunk-retained",
+          "memory": {
+            "rss": 244318208,
+            "heapTotal": 190332928,
+            "heapUsed": 79559344,
+            "external": 7523507,
+            "arrayBuffers": 5064320
+          },
+          "peakKiB": 266364
+        },
+        {
+          "phase": "finished",
+          "memory": {
+            "rss": 262455296,
+            "heapTotal": 208125952,
+            "heapUsed": 101468960,
+            "external": 7523507,
+            "arrayBuffers": 5064320
+          },
+          "peakKiB": 266364
+        }
+      ],
+      "peakResidentBytes": 272756736,
+      "peakMethod": "resourceUsage.maxRSS",
+      "peakUnits": "bytes"
+    }
+  ],
+  "failures": []
+}

@@ -1,0 +1,396 @@
+{
+  "kind": "DECLARED_DELTA_SUPPORT_CANDIDATE",
+  "mode": "NO_OP",
+  "targetSource": {
+    "repositoryId": "repo:history",
+    "revisionId": "revision:worktree",
+    "contentFingerprint": "content:old"
+  },
+  "inventory": [
+    {
+      "id": "j",
+      "repositoryId": "repo:history",
+      "revisionId": "revision:worktree",
+      "path": "J.java",
+      "contentFingerprint": "content:j",
+      "classification": {
+        "role": "SOURCE",
+        "provenance": "AUTHORED",
+        "contentKind": "TEXT"
+      },
+      "languageHint": "java",
+      "sensitivity": "INTERNAL"
+    },
+    {
+      "id": "k",
+      "repositoryId": "repo:history",
+      "revisionId": "revision:worktree",
+      "path": "K.java",
+      "contentFingerprint": "content:k",
+      "classification": {
+        "role": "SOURCE",
+        "provenance": "AUTHORED",
+        "contentKind": "TEXT"
+      },
+      "languageHint": "java",
+      "sensitivity": "INTERNAL"
+    },
+    {
+      "id": "a",
+      "repositoryId": "repo:history",
+      "revisionId": "revision:worktree",
+      "path": "a.py",
+      "contentFingerprint": "content:a",
+      "classification": {
+        "role": "SOURCE",
+        "provenance": "AUTHORED",
+        "contentKind": "TEXT"
+      },
+      "languageHint": "python",
+      "sensitivity": "INTERNAL"
+    },
+    {
+      "id": "b",
+      "repositoryId": "repo:history",
+      "revisionId": "revision:worktree",
+      "path": "b.py",
+      "contentFingerprint": "content:b",
+      "classification": {
+        "role": "SOURCE",
+        "provenance": "AUTHORED",
+        "contentKind": "TEXT"
+      },
+      "languageHint": "python",
+      "sensitivity": "INTERNAL"
+    },
+    {
+      "id": "doc",
+      "repositoryId": "repo:history",
+      "revisionId": "revision:worktree",
+      "path": "notes.md",
+      "contentFingerprint": "content:doc",
+      "classification": {
+        "role": "OTHER",
+        "provenance": "AUTHORED",
+        "contentKind": "TEXT"
+      },
+      "languageHint": null,
+      "sensitivity": "INTERNAL"
+    }
+  ],
+  "transition": {
+    "kind": "NO_OP_DRAFT",
+    "activationId": "activation:old",
+    "oldBasis": {
+      "repositoryId": "repo:history",
+      "revisionId": "revision:worktree",
+      "contentFingerprint": "content:old",
+      "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "targetSource": {
+      "repositoryId": "repo:history",
+      "revisionId": "revision:worktree",
+      "contentFingerprint": "content:old"
+    },
+    "historyDigest": "64155a34d170e22285c1b74b58a0780221994857f93396ce47afbb505efa7824",
+    "diff": [
+      {
+        "kind": "UNCHANGED",
+        "before": {
+          "id": "a",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "a.py",
+          "contentFingerprint": "content:a",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "python",
+          "sensitivity": "INTERNAL"
+        },
+        "after": {
+          "id": "a",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "a.py",
+          "contentFingerprint": "content:a",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "python",
+          "sensitivity": "INTERNAL"
+        }
+      },
+      {
+        "kind": "UNCHANGED",
+        "before": {
+          "id": "b",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "b.py",
+          "contentFingerprint": "content:b",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "python",
+          "sensitivity": "INTERNAL"
+        },
+        "after": {
+          "id": "b",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "b.py",
+          "contentFingerprint": "content:b",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "python",
+          "sensitivity": "INTERNAL"
+        }
+      },
+      {
+        "kind": "UNCHANGED",
+        "before": {
+          "id": "doc",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "notes.md",
+          "contentFingerprint": "content:doc",
+          "classification": {
+            "role": "OTHER",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": null,
+          "sensitivity": "INTERNAL"
+        },
+        "after": {
+          "id": "doc",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "notes.md",
+          "contentFingerprint": "content:doc",
+          "classification": {
+            "role": "OTHER",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": null,
+          "sensitivity": "INTERNAL"
+        }
+      },
+      {
+        "kind": "UNCHANGED",
+        "before": {
+          "id": "j",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "J.java",
+          "contentFingerprint": "content:j",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "java",
+          "sensitivity": "INTERNAL"
+        },
+        "after": {
+          "id": "j",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "J.java",
+          "contentFingerprint": "content:j",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "java",
+          "sensitivity": "INTERNAL"
+        }
+      },
+      {
+        "kind": "UNCHANGED",
+        "before": {
+          "id": "k",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "K.java",
+          "contentFingerprint": "content:k",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "java",
+          "sensitivity": "INTERNAL"
+        },
+        "after": {
+          "id": "k",
+          "repositoryId": "repo:history",
+          "revisionId": "revision:worktree",
+          "path": "K.java",
+          "contentFingerprint": "content:k",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": "java",
+          "sensitivity": "INTERNAL"
+        }
+      }
+    ],
+    "supportDecisions": [],
+    "addedEvidenceIds": [],
+    "survivingFactKeys": [],
+    "coverageOrigins": [
+      {
+        "unitId": "external:b",
+        "facet": "EXTERNAL_CODE",
+        "originSnapshotId": "snapshot:external",
+        "coverage": "COMPLETE"
+      },
+      {
+        "unitId": "java",
+        "facet": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+        "originSnapshotId": "snapshot:old",
+        "coverage": "COMPLETE"
+      },
+      {
+        "unitId": "java",
+        "facet": "JAVA_CODE_V2",
+        "originSnapshotId": "snapshot:old",
+        "coverage": "COMPLETE"
+      },
+      {
+        "unitId": "py:a",
+        "facet": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+        "originSnapshotId": "snapshot:old",
+        "coverage": "COMPLETE"
+      },
+      {
+        "unitId": "py:a",
+        "facet": "PYTHON_SYNTAX_CODE_V1",
+        "originSnapshotId": "snapshot:old",
+        "coverage": "COMPLETE"
+      },
+      {
+        "unitId": "py:b",
+        "facet": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+        "originSnapshotId": "snapshot:old",
+        "coverage": "COMPLETE"
+      },
+      {
+        "unitId": "py:b",
+        "facet": "PYTHON_SYNTAX_CODE_V1",
+        "originSnapshotId": "snapshot:old",
+        "coverage": "COMPLETE"
+      }
+    ],
+    "syntaxRequirements": [],
+    "ledgerDigest": "14cfa4d951bf7b35c81c4a6d4f77cf5666ac7aac162a19a865758b309e69932c"
+  },
+  "activeSupports": [],
+  "dependencyUnits": [
+    {
+      "id": "external:b",
+      "providerId": "external",
+      "kind": "PROVIDER_SCOPE",
+      "sourceFileIds": ["b"]
+    },
+    {
+      "id": "java",
+      "providerId": "native",
+      "kind": "JAVA_GROUP",
+      "sourceFileIds": ["j", "k"]
+    },
+    {
+      "id": "py:a",
+      "providerId": "native",
+      "kind": "PYTHON_FILE",
+      "sourceFileIds": ["a"]
+    },
+    {
+      "id": "py:b",
+      "providerId": "native",
+      "kind": "PYTHON_FILE",
+      "sourceFileIds": ["b"]
+    }
+  ],
+  "merged": {
+    "nodes": [],
+    "edges": [],
+    "explanations": [],
+    "evidence": [],
+    "factEvidence": [],
+    "bindings": []
+  },
+  "originSnapshotRegistry": [
+    {
+      "id": "snapshot:external",
+      "repositoryId": "repo:history",
+      "providerId": "external",
+      "providerVersion": "1",
+      "runtimeVersion": "fixture",
+      "requestedRevisionId": "revision:worktree",
+      "requestedRevisionFingerprint": "content:old",
+      "startedAt": "2026-10-24T00:00:00.000Z",
+      "completedAt": "2026-10-24T00:00:00.001Z",
+      "capabilities": [
+        {
+          "name": "EXTERNAL_CODE",
+          "support": "SUPPORTED",
+          "coverage": "COMPLETE"
+        }
+      ],
+      "diagnostics": [],
+      "outcome": "SUCCEEDED"
+    },
+    {
+      "id": "snapshot:old",
+      "repositoryId": "repo:history",
+      "providerId": "native",
+      "providerVersion": "1",
+      "runtimeVersion": "fixture",
+      "requestedRevisionId": "revision:worktree",
+      "requestedRevisionFingerprint": "content:old",
+      "startedAt": "2026-10-24T00:00:00.000Z",
+      "completedAt": "2026-10-24T00:00:00.001Z",
+      "capabilities": [
+        {
+          "name": "JAVA_CODE_V2",
+          "support": "SUPPORTED",
+          "coverage": "COMPLETE"
+        },
+        {
+          "name": "PYTHON_SYNTAX_CODE_V1",
+          "support": "SUPPORTED",
+          "coverage": "COMPLETE"
+        },
+        {
+          "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+          "support": "SUPPORTED",
+          "coverage": "COMPLETE"
+        }
+      ],
+      "diagnostics": [],
+      "outcome": "SUCCEEDED"
+    }
+  ],
+  "provenance": {
+    "kind": "DECLARED_INPUT",
+    "historyDigest": "64155a34d170e22285c1b74b58a0780221994857f93396ce47afbb505efa7824",
+    "ledgerDigest": "14cfa4d951bf7b35c81c4a6d4f77cf5666ac7aac162a19a865758b309e69932c",
+    "observation": null
+  }
+}

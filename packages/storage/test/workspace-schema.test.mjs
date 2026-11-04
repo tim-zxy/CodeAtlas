@@ -55,12 +55,12 @@ test('p0-workspace-schema-v1 Fixture maps to task and acceptance', async () => {
   });
 });
 
-test('workspace manifest declares immutable W001-W003 only', async () => {
+test('workspace manifest preserves immutable W001-W003 prefix', async () => {
   const manifest = JSON.parse(await readFile(manifestUrl, 'utf8'));
   assert.equal(manifest.schemaVersion, 1);
   assert.equal(manifest.databaseKind, 'WORKSPACE');
   assert.deepEqual(
-    manifest.migrations.map(({ version, name }) => ({ version, name })),
+    manifest.migrations.slice(0, 3).map(({ version, name }) => ({ version, name })),
     migrationNames.map((name, index) => ({ version: index + 1, name })),
   );
   assert.ok(manifest.migrations.every(({ backupRequired }) => backupRequired === false));
@@ -70,7 +70,20 @@ test('fresh workspace database reaches version 3 with exact Phase 0 inventory', 
   const temporary = await temporaryDirectory('codeatlas-workspace-schema-fresh-');
   const databasePath = join(temporary.directory, 'workspace.sqlite');
   try {
-    const request = { databasePath, databaseKind: 'WORKSPACE', manifestUrl };
+    // Keep the original Phase0 exact inventory gate against its immutable W003 prefix.
+    // New W006 empty/upgrade/inventory gates live in runtime-migrations.test.mjs.
+    const manifest = JSON.parse(await readFile(manifestUrl, 'utf8'));
+    const phase0 = pathToFileURL(join(temporary.directory, 'phase0-manifest.json'));
+    await writeFile(
+      phase0,
+      JSON.stringify({ ...manifest, migrations: manifest.migrations.slice(0, 3) }),
+    );
+    for (const m of manifest.migrations.slice(0, 3))
+      await writeFile(
+        join(temporary.directory, m.file),
+        await readFile(new URL(m.file, manifestUrl)),
+      );
+    const request = { databasePath, databaseKind: 'WORKSPACE', manifestUrl: phase0 };
     assert.deepEqual((await runMigrations(request)).appliedVersions, [1, 2, 3]);
     assert.deepEqual((await runMigrations(request)).appliedVersions, []);
     const database = new DatabaseSync(databasePath);

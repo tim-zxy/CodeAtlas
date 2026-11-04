@@ -1,0 +1,4 @@
+{
+  "scenario": "clone-owner",
+  "base": "base-input.json"
+}

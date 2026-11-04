@@ -1,0 +1,398 @@
+[
+  {
+    "id": "preparing-prepareowner",
+    "family": "STATE_MATRIX",
+    "input": "cases/preparing-prepareowner/input.json",
+    "expected": "cases/preparing-prepareowner/expected.json"
+  },
+  {
+    "id": "preparing-acceptobservation",
+    "family": "STATE_MATRIX",
+    "input": "cases/preparing-acceptobservation/input.json",
+    "expected": "cases/preparing-acceptobservation/expected.json"
+  },
+  {
+    "id": "preparing-freeze",
+    "family": "STATE_MATRIX",
+    "input": "cases/preparing-freeze/input.json",
+    "expected": "cases/preparing-freeze/expected.json"
+  },
+  {
+    "id": "preparing-apply",
+    "family": "STATE_MATRIX",
+    "input": "cases/preparing-apply/input.json",
+    "expected": "cases/preparing-apply/expected.json"
+  },
+  {
+    "id": "preparing-close",
+    "family": "STATE_MATRIX",
+    "input": "cases/preparing-close/input.json",
+    "expected": "cases/preparing-close/expected.json"
+  },
+  {
+    "id": "owner_frozen-prepareowner",
+    "family": "STATE_MATRIX",
+    "input": "cases/owner_frozen-prepareowner/input.json",
+    "expected": "cases/owner_frozen-prepareowner/expected.json"
+  },
+  {
+    "id": "owner_frozen-acceptobservation",
+    "family": "STATE_MATRIX",
+    "input": "cases/owner_frozen-acceptobservation/input.json",
+    "expected": "cases/owner_frozen-acceptobservation/expected.json"
+  },
+  {
+    "id": "owner_frozen-freeze",
+    "family": "STATE_MATRIX",
+    "input": "cases/owner_frozen-freeze/input.json",
+    "expected": "cases/owner_frozen-freeze/expected.json"
+  },
+  {
+    "id": "owner_frozen-apply",
+    "family": "STATE_MATRIX",
+    "input": "cases/owner_frozen-apply/input.json",
+    "expected": "cases/owner_frozen-apply/expected.json"
+  },
+  {
+    "id": "owner_frozen-close",
+    "family": "STATE_MATRIX",
+    "input": "cases/owner_frozen-close/input.json",
+    "expected": "cases/owner_frozen-close/expected.json"
+  },
+  {
+    "id": "observed-prepareowner",
+    "family": "STATE_MATRIX",
+    "input": "cases/observed-prepareowner/input.json",
+    "expected": "cases/observed-prepareowner/expected.json"
+  },
+  {
+    "id": "observed-acceptobservation",
+    "family": "STATE_MATRIX",
+    "input": "cases/observed-acceptobservation/input.json",
+    "expected": "cases/observed-acceptobservation/expected.json"
+  },
+  {
+    "id": "observed-freeze",
+    "family": "STATE_MATRIX",
+    "input": "cases/observed-freeze/input.json",
+    "expected": "cases/observed-freeze/expected.json"
+  },
+  {
+    "id": "observed-apply",
+    "family": "STATE_MATRIX",
+    "input": "cases/observed-apply/input.json",
+    "expected": "cases/observed-apply/expected.json"
+  },
+  {
+    "id": "observed-close",
+    "family": "STATE_MATRIX",
+    "input": "cases/observed-close/input.json",
+    "expected": "cases/observed-close/expected.json"
+  },
+  {
+    "id": "frozen-prepareowner",
+    "family": "STATE_MATRIX",
+    "input": "cases/frozen-prepareowner/input.json",
+    "expected": "cases/frozen-prepareowner/expected.json"
+  },
+  {
+    "id": "frozen-acceptobservation",
+    "family": "STATE_MATRIX",
+    "input": "cases/frozen-acceptobservation/input.json",
+    "expected": "cases/frozen-acceptobservation/expected.json"
+  },
+  {
+    "id": "frozen-freeze",
+    "family": "STATE_MATRIX",
+    "input": "cases/frozen-freeze/input.json",
+    "expected": "cases/frozen-freeze/expected.json"
+  },
+  {
+    "id": "frozen-apply",
+    "family": "STATE_MATRIX",
+    "input": "cases/frozen-apply/input.json",
+    "expected": "cases/frozen-apply/expected.json"
+  },
+  {
+    "id": "frozen-close",
+    "family": "STATE_MATRIX",
+    "input": "cases/frozen-close/input.json",
+    "expected": "cases/frozen-close/expected.json"
+  },
+  {
+    "id": "applying-prepareowner",
+    "family": "STATE_MATRIX",
+    "input": "cases/applying-prepareowner/input.json",
+    "expected": "cases/applying-prepareowner/expected.json"
+  },
+  {
+    "id": "applying-acceptobservation",
+    "family": "STATE_MATRIX",
+    "input": "cases/applying-acceptobservation/input.json",
+    "expected": "cases/applying-acceptobservation/expected.json"
+  },
+  {
+    "id": "applying-freeze",
+    "family": "STATE_MATRIX",
+    "input": "cases/applying-freeze/input.json",
+    "expected": "cases/applying-freeze/expected.json"
+  },
+  {
+    "id": "applying-apply",
+    "family": "STATE_MATRIX",
+    "input": "cases/applying-apply/input.json",
+    "expected": "cases/applying-apply/expected.json"
+  },
+  {
+    "id": "applying-close",
+    "family": "STATE_MATRIX",
+    "input": "cases/applying-close/input.json",
+    "expected": "cases/applying-close/expected.json"
+  },
+  {
+    "id": "consumed-prepareowner",
+    "family": "STATE_MATRIX",
+    "input": "cases/consumed-prepareowner/input.json",
+    "expected": "cases/consumed-prepareowner/expected.json"
+  },
+  {
+    "id": "consumed-acceptobservation",
+    "family": "STATE_MATRIX",
+    "input": "cases/consumed-acceptobservation/input.json",
+    "expected": "cases/consumed-acceptobservation/expected.json"
+  },
+  {
+    "id": "consumed-freeze",
+    "family": "STATE_MATRIX",
+    "input": "cases/consumed-freeze/input.json",
+    "expected": "cases/consumed-freeze/expected.json"
+  },
+  {
+    "id": "consumed-apply",
+    "family": "STATE_MATRIX",
+    "input": "cases/consumed-apply/input.json",
+    "expected": "cases/consumed-apply/expected.json"
+  },
+  {
+    "id": "consumed-close",
+    "family": "STATE_MATRIX",
+    "input": "cases/consumed-close/input.json",
+    "expected": "cases/consumed-close/expected.json"
+  },
+  {
+    "id": "invalid-prepareowner",
+    "family": "STATE_MATRIX",
+    "input": "cases/invalid-prepareowner/input.json",
+    "expected": "cases/invalid-prepareowner/expected.json"
+  },
+  {
+    "id": "invalid-acceptobservation",
+    "family": "STATE_MATRIX",
+    "input": "cases/invalid-acceptobservation/input.json",
+    "expected": "cases/invalid-acceptobservation/expected.json"
+  },
+  {
+    "id": "invalid-freeze",
+    "family": "STATE_MATRIX",
+    "input": "cases/invalid-freeze/input.json",
+    "expected": "cases/invalid-freeze/expected.json"
+  },
+  {
+    "id": "invalid-apply",
+    "family": "STATE_MATRIX",
+    "input": "cases/invalid-apply/input.json",
+    "expected": "cases/invalid-apply/expected.json"
+  },
+  {
+    "id": "invalid-close",
+    "family": "STATE_MATRIX",
+    "input": "cases/invalid-close/input.json",
+    "expected": "cases/invalid-close/expected.json"
+  },
+  {
+    "id": "closed-prepareowner",
+    "family": "STATE_MATRIX",
+    "input": "cases/closed-prepareowner/input.json",
+    "expected": "cases/closed-prepareowner/expected.json"
+  },
+  {
+    "id": "closed-acceptobservation",
+    "family": "STATE_MATRIX",
+    "input": "cases/closed-acceptobservation/input.json",
+    "expected": "cases/closed-acceptobservation/expected.json"
+  },
+  {
+    "id": "closed-freeze",
+    "family": "STATE_MATRIX",
+    "input": "cases/closed-freeze/input.json",
+    "expected": "cases/closed-freeze/expected.json"
+  },
+  {
+    "id": "closed-apply",
+    "family": "STATE_MATRIX",
+    "input": "cases/closed-apply/input.json",
+    "expected": "cases/closed-apply/expected.json"
+  },
+  {
+    "id": "closed-close",
+    "family": "STATE_MATRIX",
+    "input": "cases/closed-close/input.json",
+    "expected": "cases/closed-close/expected.json"
+  },
+  {
+    "id": "second-stage",
+    "family": "BOUNDARY",
+    "input": "cases/second-stage/input.json",
+    "expected": "cases/second-stage/expected.json"
+  },
+  {
+    "id": "cross-db-owner",
+    "family": "BOUNDARY",
+    "input": "cases/cross-db-owner/input.json",
+    "expected": "cases/cross-db-owner/expected.json"
+  },
+  {
+    "id": "clone-owner",
+    "family": "BOUNDARY",
+    "input": "cases/clone-owner/input.json",
+    "expected": "cases/clone-owner/expected.json"
+  },
+  {
+    "id": "clone-lease",
+    "family": "BOUNDARY",
+    "input": "cases/clone-lease/input.json",
+    "expected": "cases/clone-lease/expected.json"
+  },
+  {
+    "id": "reopen",
+    "family": "BOUNDARY",
+    "input": "cases/reopen/input.json",
+    "expected": "cases/reopen/expected.json"
+  },
+  {
+    "id": "released-capture",
+    "family": "BOUNDARY",
+    "input": "cases/released-capture/input.json",
+    "expected": "cases/released-capture/expected.json"
+  },
+  {
+    "id": "temp-tamper",
+    "family": "BOUNDARY",
+    "input": "cases/temp-tamper/input.json",
+    "expected": "cases/temp-tamper/expected.json"
+  },
+  {
+    "id": "raw-mutation",
+    "family": "BOUNDARY",
+    "input": "cases/raw-mutation/input.json",
+    "expected": "cases/raw-mutation/expected.json"
+  },
+  {
+    "id": "port-twice",
+    "family": "BOUNDARY",
+    "input": "cases/port-twice/input.json",
+    "expected": "cases/port-twice/expected.json"
+  },
+  {
+    "id": "scope-tamper",
+    "family": "BOUNDARY",
+    "input": "cases/scope-tamper/input.json",
+    "expected": "cases/scope-tamper/expected.json"
+  },
+  {
+    "id": "other-zero-facts",
+    "family": "BOUNDARY",
+    "input": "cases/other-zero-facts/input.json",
+    "expected": "cases/other-zero-facts/expected.json"
+  },
+  {
+    "id": "delete-only-null",
+    "family": "BOUNDARY",
+    "input": "cases/delete-only-null/input.json",
+    "expected": "cases/delete-only-null/expected.json"
+  },
+  {
+    "id": "noop-no-stage",
+    "family": "BOUNDARY",
+    "input": "cases/noop-no-stage/input.json",
+    "expected": "cases/noop-no-stage/expected.json"
+  },
+  {
+    "id": "foreign-full-refused",
+    "family": "BOUNDARY",
+    "input": "cases/foreign-full-refused/input.json",
+    "expected": "cases/foreign-full-refused/expected.json"
+  },
+  {
+    "id": "origin-immutable",
+    "family": "BOUNDARY",
+    "input": "cases/origin-immutable/input.json",
+    "expected": "cases/origin-immutable/expected.json"
+  },
+  {
+    "id": "retained-revalidate",
+    "family": "BOUNDARY",
+    "input": "cases/retained-revalidate/input.json",
+    "expected": "cases/retained-revalidate/expected.json"
+  },
+  {
+    "id": "retire-origin",
+    "family": "BOUNDARY",
+    "input": "cases/retire-origin/input.json",
+    "expected": "cases/retire-origin/expected.json"
+  },
+  {
+    "id": "items-one-below",
+    "family": "BOUNDARY",
+    "input": "cases/items-one-below/input.json",
+    "expected": "cases/items-one-below/expected.json"
+  },
+  {
+    "id": "bytes-one-below",
+    "family": "BOUNDARY",
+    "input": "cases/bytes-one-below/input.json",
+    "expected": "cases/bytes-one-below/expected.json"
+  },
+  {
+    "id": "depth-one-below",
+    "family": "BOUNDARY",
+    "input": "cases/depth-one-below/input.json",
+    "expected": "cases/depth-one-below/expected.json"
+  },
+  {
+    "id": "cumulative-insufficient",
+    "family": "BOUNDARY",
+    "input": "cases/cumulative-insufficient/input.json",
+    "expected": "cases/cumulative-insufficient/expected.json"
+  },
+  {
+    "id": "safe-integer-overflow",
+    "family": "BOUNDARY",
+    "input": "cases/safe-integer-overflow/input.json",
+    "expected": "cases/safe-integer-overflow/expected.json"
+  },
+  {
+    "id": "unsafe-getter",
+    "family": "BOUNDARY",
+    "input": "cases/unsafe-getter/input.json",
+    "expected": "cases/unsafe-getter/expected.json"
+  },
+  {
+    "id": "unsafe-proxy",
+    "family": "BOUNDARY",
+    "input": "cases/unsafe-proxy/input.json",
+    "expected": "cases/unsafe-proxy/expected.json"
+  },
+  {
+    "id": "unsafe-cycle",
+    "family": "BOUNDARY",
+    "input": "cases/unsafe-cycle/input.json",
+    "expected": "cases/unsafe-cycle/expected.json"
+  },
+  {
+    "id": "unsafe-sparse",
+    "family": "BOUNDARY",
+    "input": "cases/unsafe-sparse/input.json",
+    "expected": "cases/unsafe-sparse/expected.json"
+  }
+]

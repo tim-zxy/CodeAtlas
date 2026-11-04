@@ -1,0 +1,764 @@
+{
+  "declaration": "Independent literal contracts and six result structures; no real Source/Native observation.",
+  "runtime": {
+    "schema": "codeatlas.runtime-fact-set",
+    "version": 1,
+    "payload": {
+      "basis": {
+        "repositoryId": "repo:a",
+        "revisionId": "rev:a",
+        "contentFingerprint": "fixture:a",
+        "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "externalRefs": [
+        {
+          "scope": "REPOSITORY",
+          "repositoryId": "repo:a",
+          "entity": {
+            "kind": "CODE_NODE",
+            "id": "code:a",
+            "revisionId": "rev:a"
+          }
+        },
+        {
+          "scope": "REPOSITORY",
+          "repositoryId": "repo:a",
+          "entity": {
+            "kind": "SOURCE_FILE",
+            "id": "file:a",
+            "revisionId": "rev:a"
+          }
+        }
+      ],
+      "supportInventory": [
+        {
+          "basis": {
+            "repositoryId": "repo:a",
+            "revisionId": "rev:a",
+            "contentFingerprint": "fixture:a",
+            "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "entity": {
+            "kind": "CODE_NODE",
+            "id": "code:a",
+            "revisionId": "rev:a"
+          },
+          "valueDigest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+        }
+      ],
+      "entryPoints": [],
+      "tasks": [],
+      "dataResources": [],
+      "triggers": [],
+      "contracts": [
+        {
+          "id": "contract:a",
+          "factKey": "contract:key",
+          "repositoryId": "repo:a",
+          "revisionId": "rev:a",
+          "basis": {
+            "repositoryId": "repo:a",
+            "revisionId": "rev:a",
+            "contentFingerprint": "fixture:a",
+            "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "sourceRange": {
+            "sourceFileId": "file:a",
+            "startLine": 1,
+            "startColumn": 1,
+            "endLine": 1,
+            "endColumn": 4
+          },
+          "supportRefs": [
+            {
+              "basis": {
+                "repositoryId": "repo:a",
+                "revisionId": "rev:a",
+                "contentFingerprint": "fixture:a",
+                "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              },
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:a",
+                "revisionId": "rev:a"
+              },
+              "valueDigest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+            }
+          ],
+          "confidence": {
+            "score": 0.5,
+            "method": "runtime-declaration-support-v1",
+            "reasons": ["CURRENT_INPUT_BASIS"]
+          },
+          "resolution": "HEURISTIC",
+          "direction": "CONSUMER",
+          "protocol": "HTTP",
+          "serviceRef": null,
+          "signature": {
+            "kind": "HTTP",
+            "method": "GET",
+            "pathSegments": [
+              {
+                "kind": "LITERAL",
+                "value": "items"
+              }
+            ],
+            "querySchemaRef": null,
+            "requestSchemaRef": null,
+            "responseSchemaRef": null,
+            "serviceHint": null
+          },
+          "implementationRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:a",
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:a",
+              "revisionId": "rev:a"
+            }
+          }
+        }
+      ],
+      "contexts": [],
+      "nodes": [],
+      "edges": [],
+      "flows": []
+    }
+  },
+  "bindings": {
+    "schema": "codeatlas.framework-binding-set",
+    "version": 1,
+    "payload": {
+      "basis": {
+        "repositoryId": "repo:a",
+        "revisionId": "rev:a",
+        "contentFingerprint": "fixture:a",
+        "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "externalRefs": [
+        {
+          "scope": "REPOSITORY",
+          "repositoryId": "repo:a",
+          "entity": {
+            "kind": "CODE_NODE",
+            "id": "code:a",
+            "revisionId": "rev:a"
+          }
+        },
+        {
+          "scope": "REPOSITORY",
+          "repositoryId": "repo:a",
+          "entity": {
+            "kind": "SOURCE_FILE",
+            "id": "file:a",
+            "revisionId": "rev:a"
+          }
+        }
+      ],
+      "supportInventory": [
+        {
+          "basis": {
+            "repositoryId": "repo:a",
+            "revisionId": "rev:a",
+            "contentFingerprint": "fixture:a",
+            "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "entity": {
+            "kind": "CODE_NODE",
+            "id": "code:a",
+            "revisionId": "rev:a"
+          },
+          "valueDigest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+        }
+      ],
+      "bindings": [
+        {
+          "id": "binding:a",
+          "factKey": "binding:key",
+          "repositoryId": "repo:a",
+          "revisionId": "rev:a",
+          "basis": {
+            "repositoryId": "repo:a",
+            "revisionId": "rev:a",
+            "contentFingerprint": "fixture:a",
+            "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "sourceRange": {
+            "sourceFileId": "file:a",
+            "startLine": 1,
+            "startColumn": 1,
+            "endLine": 1,
+            "endColumn": 4
+          },
+          "supportRefs": [
+            {
+              "basis": {
+                "repositoryId": "repo:a",
+                "revisionId": "rev:a",
+                "contentFingerprint": "fixture:a",
+                "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              },
+              "entity": {
+                "kind": "CODE_NODE",
+                "id": "code:a",
+                "revisionId": "rev:a"
+              },
+              "valueDigest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+            }
+          ],
+          "confidence": {
+            "score": 0.5,
+            "method": "runtime-declaration-support-v1",
+            "reasons": ["CURRENT_INPUT_BASIS"]
+          },
+          "resolution": "HEURISTIC",
+          "kind": "HTTP_CALL",
+          "ownerRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:a",
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:a",
+              "revisionId": "rev:a"
+            }
+          },
+          "contractRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:a",
+            "entity": {
+              "kind": "CONTRACT",
+              "id": "contract:a",
+              "revisionId": "rev:a"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "context": {
+    "availableEntities": [
+      {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo:a",
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "code:a",
+          "revisionId": "rev:a"
+        }
+      },
+      {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo:a",
+        "entity": {
+          "kind": "SOURCE_FILE",
+          "id": "file:a",
+          "revisionId": "rev:a"
+        }
+      },
+      {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo:a",
+        "entity": {
+          "kind": "CONTRACT",
+          "id": "contract:a",
+          "revisionId": "rev:a"
+        }
+      },
+      {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo:a",
+        "entity": {
+          "kind": "CONTRACT",
+          "id": "contract:b",
+          "revisionId": "rev:a"
+        }
+      },
+      {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo:a",
+        "entity": {
+          "kind": "EXECUTION_NODE",
+          "id": "node:a",
+          "revisionId": "rev:a"
+        }
+      },
+      {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo:a",
+        "entity": {
+          "kind": "EXECUTION_NODE",
+          "id": "node:b",
+          "revisionId": "rev:a"
+        }
+      },
+      {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo:a",
+        "entity": {
+          "kind": "CONTRACT",
+          "id": "contract:c",
+          "revisionId": "rev:a"
+        }
+      }
+    ],
+    "availableSupports": [
+      {
+        "basis": {
+          "repositoryId": "repo:a",
+          "revisionId": "rev:a",
+          "contentFingerprint": "fixture:a",
+          "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "code:a",
+          "revisionId": "rev:a"
+        },
+        "valueDigest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+      }
+    ]
+  },
+  "workspace": {
+    "schema": "codeatlas.workspace-execution",
+    "version": 1,
+    "payload": {
+      "workspaceBasis": {
+        "workspaceId": "workspace:one",
+        "revisionSetId": "set:one",
+        "workspaceActivationDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      "repositoryBindings": [
+        {
+          "repoBasis": {
+            "repositoryId": "repo:a",
+            "revisionId": "rev:a",
+            "contentFingerprint": "fixture:a",
+            "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "syntaxActivationId": "syntax:a",
+          "syntaxMembershipDigest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "runtimeActivationId": "runtime:a",
+          "runtimeCandidateDigest": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+        }
+      ],
+      "nodes": [
+        {
+          "factKey": "workspace-execution:6456727c317f1b17e4343a32760f9ce811c82111edfa503a9456eb4548f65442",
+          "id": "workspace-entity:cfab0617975254521533aa6dc9e8afdf3da5601955699e629fac8e43d47c8fea",
+          "repositoryRuntimeRef": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:a",
+            "entity": {
+              "kind": "EXECUTION_NODE",
+              "id": "node:a",
+              "revisionId": "rev:a"
+            }
+          }
+        }
+      ],
+      "edges": [],
+      "coverage": {
+        "status": "COMPLETE",
+        "limitations": [],
+        "unverifiedRefs": []
+      },
+      "supportInventory": [
+        {
+          "basis": {
+            "repositoryId": "repo:a",
+            "revisionId": "rev:a",
+            "contentFingerprint": "fixture:a",
+            "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "entity": {
+            "kind": "CODE_NODE",
+            "id": "code:a",
+            "revisionId": "rev:a"
+          },
+          "valueDigest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+        }
+      ]
+    }
+  },
+  "matches": [
+    {
+      "schema": "codeatlas.contract-match",
+      "version": 1,
+      "payload": {
+        "factKey": "contract-match:e4eedab01828601b893469b43373c949752e5dbda57606e2736a83db2a2ea914",
+        "id": "workspace-entity:429a6d008e40734b190446e5991da96a13ef6dd91b25dba77d04b29521135cb4",
+        "workspaceBasis": {
+          "workspaceId": "workspace:one",
+          "revisionSetId": "set:one",
+          "workspaceActivationDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "consumerRef": {
+          "scope": "REPOSITORY",
+          "repositoryId": "repo:a",
+          "entity": {
+            "kind": "CONTRACT",
+            "id": "contract:a",
+            "revisionId": "rev:a"
+          }
+        },
+        "status": "MATCHED",
+        "candidateProviderRefs": [
+          {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:a",
+            "entity": {
+              "kind": "CONTRACT",
+              "id": "contract:b",
+              "revisionId": "rev:a"
+            }
+          }
+        ],
+        "selectedProviderRef": {
+          "scope": "REPOSITORY",
+          "repositoryId": "repo:a",
+          "entity": {
+            "kind": "CONTRACT",
+            "id": "contract:b",
+            "revisionId": "rev:a"
+          }
+        },
+        "reasons": ["FIXTURE_MATCHED"],
+        "supportRefs": [
+          {
+            "basis": {
+              "repositoryId": "repo:a",
+              "revisionId": "rev:a",
+              "contentFingerprint": "fixture:a",
+              "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:a",
+              "revisionId": "rev:a"
+            },
+            "valueDigest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+          }
+        ],
+        "basisRefs": [
+          {
+            "repositoryId": "repo:a",
+            "revisionId": "rev:a",
+            "contentFingerprint": "fixture:a",
+            "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        ],
+        "confidence": {
+          "score": 0.5,
+          "method": "contract-support-bound-v1",
+          "reasons": ["SUPPORTED_INPUTS"]
+        }
+      }
+    },
+    {
+      "schema": "codeatlas.contract-match",
+      "version": 1,
+      "payload": {
+        "factKey": "contract-match:e4eedab01828601b893469b43373c949752e5dbda57606e2736a83db2a2ea914",
+        "id": "workspace-entity:429a6d008e40734b190446e5991da96a13ef6dd91b25dba77d04b29521135cb4",
+        "workspaceBasis": {
+          "workspaceId": "workspace:one",
+          "revisionSetId": "set:one",
+          "workspaceActivationDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "consumerRef": {
+          "scope": "REPOSITORY",
+          "repositoryId": "repo:a",
+          "entity": {
+            "kind": "CONTRACT",
+            "id": "contract:a",
+            "revisionId": "rev:a"
+          }
+        },
+        "status": "AMBIGUOUS",
+        "candidateProviderRefs": [
+          {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:a",
+            "entity": {
+              "kind": "CONTRACT",
+              "id": "contract:b",
+              "revisionId": "rev:a"
+            }
+          },
+          {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo:a",
+            "entity": {
+              "kind": "CONTRACT",
+              "id": "contract:c",
+              "revisionId": "rev:a"
+            }
+          }
+        ],
+        "selectedProviderRef": null,
+        "reasons": ["FIXTURE_AMBIGUOUS"],
+        "supportRefs": [
+          {
+            "basis": {
+              "repositoryId": "repo:a",
+              "revisionId": "rev:a",
+              "contentFingerprint": "fixture:a",
+              "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:a",
+              "revisionId": "rev:a"
+            },
+            "valueDigest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+          }
+        ],
+        "basisRefs": [
+          {
+            "repositoryId": "repo:a",
+            "revisionId": "rev:a",
+            "contentFingerprint": "fixture:a",
+            "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        ],
+        "confidence": {
+          "score": 0.5,
+          "method": "contract-support-bound-v1",
+          "reasons": ["SUPPORTED_INPUTS"]
+        }
+      }
+    },
+    {
+      "schema": "codeatlas.contract-match",
+      "version": 1,
+      "payload": {
+        "factKey": "contract-match:e4eedab01828601b893469b43373c949752e5dbda57606e2736a83db2a2ea914",
+        "id": "workspace-entity:429a6d008e40734b190446e5991da96a13ef6dd91b25dba77d04b29521135cb4",
+        "workspaceBasis": {
+          "workspaceId": "workspace:one",
+          "revisionSetId": "set:one",
+          "workspaceActivationDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "consumerRef": {
+          "scope": "REPOSITORY",
+          "repositoryId": "repo:a",
+          "entity": {
+            "kind": "CONTRACT",
+            "id": "contract:a",
+            "revisionId": "rev:a"
+          }
+        },
+        "status": "UNRESOLVED",
+        "candidateProviderRefs": [],
+        "selectedProviderRef": null,
+        "reasons": ["FIXTURE_UNRESOLVED"],
+        "supportRefs": [
+          {
+            "basis": {
+              "repositoryId": "repo:a",
+              "revisionId": "rev:a",
+              "contentFingerprint": "fixture:a",
+              "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:a",
+              "revisionId": "rev:a"
+            },
+            "valueDigest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+          }
+        ],
+        "basisRefs": [
+          {
+            "repositoryId": "repo:a",
+            "revisionId": "rev:a",
+            "contentFingerprint": "fixture:a",
+            "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        ],
+        "confidence": {
+          "score": 0.5,
+          "method": "contract-support-bound-v1",
+          "reasons": ["SUPPORTED_INPUTS"]
+        }
+      }
+    },
+    {
+      "schema": "codeatlas.contract-match",
+      "version": 1,
+      "payload": {
+        "factKey": "contract-match:e4eedab01828601b893469b43373c949752e5dbda57606e2736a83db2a2ea914",
+        "id": "workspace-entity:429a6d008e40734b190446e5991da96a13ef6dd91b25dba77d04b29521135cb4",
+        "workspaceBasis": {
+          "workspaceId": "workspace:one",
+          "revisionSetId": "set:one",
+          "workspaceActivationDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "consumerRef": {
+          "scope": "REPOSITORY",
+          "repositoryId": "repo:a",
+          "entity": {
+            "kind": "CONTRACT",
+            "id": "contract:a",
+            "revisionId": "rev:a"
+          }
+        },
+        "status": "CONFLICTED",
+        "candidateProviderRefs": [],
+        "selectedProviderRef": null,
+        "reasons": ["FIXTURE_CONFLICTED"],
+        "supportRefs": [
+          {
+            "basis": {
+              "repositoryId": "repo:a",
+              "revisionId": "rev:a",
+              "contentFingerprint": "fixture:a",
+              "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:a",
+              "revisionId": "rev:a"
+            },
+            "valueDigest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+          }
+        ],
+        "basisRefs": [
+          {
+            "repositoryId": "repo:a",
+            "revisionId": "rev:a",
+            "contentFingerprint": "fixture:a",
+            "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        ],
+        "confidence": {
+          "score": 0.5,
+          "method": "contract-support-bound-v1",
+          "reasons": ["SUPPORTED_INPUTS"]
+        }
+      }
+    },
+    {
+      "schema": "codeatlas.contract-match",
+      "version": 1,
+      "payload": {
+        "factKey": "contract-match:e4eedab01828601b893469b43373c949752e5dbda57606e2736a83db2a2ea914",
+        "id": "workspace-entity:429a6d008e40734b190446e5991da96a13ef6dd91b25dba77d04b29521135cb4",
+        "workspaceBasis": {
+          "workspaceId": "workspace:one",
+          "revisionSetId": "set:one",
+          "workspaceActivationDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "consumerRef": {
+          "scope": "REPOSITORY",
+          "repositoryId": "repo:a",
+          "entity": {
+            "kind": "CONTRACT",
+            "id": "contract:a",
+            "revisionId": "rev:a"
+          }
+        },
+        "status": "OUTSIDE_WORKSPACE",
+        "candidateProviderRefs": [],
+        "selectedProviderRef": null,
+        "reasons": ["FIXTURE_OUTSIDE_WORKSPACE"],
+        "supportRefs": [
+          {
+            "basis": {
+              "repositoryId": "repo:a",
+              "revisionId": "rev:a",
+              "contentFingerprint": "fixture:a",
+              "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:a",
+              "revisionId": "rev:a"
+            },
+            "valueDigest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+          }
+        ],
+        "basisRefs": [
+          {
+            "repositoryId": "repo:a",
+            "revisionId": "rev:a",
+            "contentFingerprint": "fixture:a",
+            "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        ],
+        "confidence": {
+          "score": 0.5,
+          "method": "contract-support-bound-v1",
+          "reasons": ["SUPPORTED_INPUTS"]
+        }
+      }
+    },
+    {
+      "schema": "codeatlas.contract-match",
+      "version": 1,
+      "payload": {
+        "factKey": "contract-match:e4eedab01828601b893469b43373c949752e5dbda57606e2736a83db2a2ea914",
+        "id": "workspace-entity:429a6d008e40734b190446e5991da96a13ef6dd91b25dba77d04b29521135cb4",
+        "workspaceBasis": {
+          "workspaceId": "workspace:one",
+          "revisionSetId": "set:one",
+          "workspaceActivationDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "consumerRef": {
+          "scope": "REPOSITORY",
+          "repositoryId": "repo:a",
+          "entity": {
+            "kind": "CONTRACT",
+            "id": "contract:a",
+            "revisionId": "rev:a"
+          }
+        },
+        "status": "KNOWN_EXTERNAL",
+        "candidateProviderRefs": [],
+        "selectedProviderRef": null,
+        "reasons": ["FIXTURE_KNOWN_EXTERNAL"],
+        "supportRefs": [
+          {
+            "basis": {
+              "repositoryId": "repo:a",
+              "revisionId": "rev:a",
+              "contentFingerprint": "fixture:a",
+              "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:a",
+              "revisionId": "rev:a"
+            },
+            "valueDigest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+          }
+        ],
+        "basisRefs": [
+          {
+            "repositoryId": "repo:a",
+            "revisionId": "rev:a",
+            "contentFingerprint": "fixture:a",
+            "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        ],
+        "confidence": {
+          "score": 0.5,
+          "method": "contract-support-bound-v1",
+          "reasons": ["SUPPORTED_INPUTS"]
+        }
+      }
+    }
+  ],
+  "binding": {
+    "repoBasis": {
+      "repositoryId": "repo:a",
+      "revisionId": "rev:a",
+      "contentFingerprint": "fixture:a",
+      "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "syntaxActivationId": "syntax:a",
+    "syntaxMembershipDigest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "runtimeActivationId": "runtime:a",
+    "runtimeCandidateDigest": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+  }
+}

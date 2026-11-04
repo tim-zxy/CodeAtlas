@@ -1,0 +1,7 @@
+{
+  "kind": "IDENTITY_ENCODING_INPUT",
+  "value": {
+    "": "bmp",
+    "𐀀": "astral"
+  }
+}

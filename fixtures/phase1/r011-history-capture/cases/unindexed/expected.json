@@ -1,0 +1,26 @@
+{
+  "status": "UNAVAILABLE",
+  "history": null,
+  "targetSource": {
+    "repositoryId": "capture-repo",
+    "revisionId": "capture-worktree",
+    "contentFingerprint": "capture-fingerprint"
+  },
+  "targetInventory": [
+    {
+      "id": "source:one",
+      "repositoryId": "capture-repo",
+      "revisionId": "capture-worktree",
+      "path": "src/observation.txt",
+      "contentFingerprint": "source-fingerprint",
+      "classification": {
+        "role": "SOURCE",
+        "provenance": "AUTHORED",
+        "contentKind": "TEXT"
+      },
+      "languageHint": null,
+      "sensitivity": "PUBLIC"
+    }
+  ],
+  "activeBasis": null
+}

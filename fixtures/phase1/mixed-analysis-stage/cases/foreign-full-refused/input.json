@@ -1,0 +1,4 @@
+{
+  "scenario": "foreign-full-refused",
+  "base": "base-input.json"
+}

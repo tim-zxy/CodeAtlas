@@ -1,0 +1,8 @@
+[
+  "empty",
+  "upgrade-preserves-old-rows-and-schema",
+  "strict-and-closed-relations",
+  "immutable-last-good",
+  "failure-retains-prior-versions",
+  "rerun-and-readonly-reopen"
+]

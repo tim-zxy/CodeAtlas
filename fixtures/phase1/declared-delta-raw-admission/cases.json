@@ -1,0 +1,434 @@
+[
+  {
+    "id": "R01-python-with-untouched-java",
+    "family": "P1",
+    "input": "cases/R01-python-with-untouched-java/input.json",
+    "metadata": "cases/R01-python-with-untouched-java/metadata.json",
+    "request": "cases/R01-python-with-untouched-java/request.jsonl",
+    "output": "cases/R01-python-with-untouched-java/output.jsonl",
+    "expected": "cases/R01-python-with-untouched-java/expected.json"
+  },
+  {
+    "id": "R02-python-added",
+    "family": "P1",
+    "input": "cases/R02-python-added/input.json",
+    "metadata": "cases/R02-python-added/metadata.json",
+    "request": "cases/R02-python-added/request.jsonl",
+    "output": "cases/R02-python-added/output.jsonl",
+    "expected": "cases/R02-python-added/expected.json"
+  },
+  {
+    "id": "R03-java-modified",
+    "family": "P1",
+    "input": "cases/R03-java-modified/input.json",
+    "metadata": "cases/R03-java-modified/metadata.json",
+    "request": "cases/R03-java-modified/request.jsonl",
+    "output": "cases/R03-java-modified/output.jsonl",
+    "expected": "cases/R03-java-modified/expected.json"
+  },
+  {
+    "id": "R04-java-added",
+    "family": "P1",
+    "input": "cases/R04-java-added/input.json",
+    "metadata": "cases/R04-java-added/metadata.json",
+    "request": "cases/R04-java-added/request.jsonl",
+    "output": "cases/R04-java-added/output.jsonl",
+    "expected": "cases/R04-java-added/expected.json"
+  },
+  {
+    "id": "R05-java-removed-survivor",
+    "family": "P1",
+    "input": "cases/R05-java-removed-survivor/input.json",
+    "metadata": "cases/R05-java-removed-survivor/metadata.json",
+    "request": "cases/R05-java-removed-survivor/request.jsonl",
+    "output": "cases/R05-java-removed-survivor/output.jsonl",
+    "expected": "cases/R05-java-removed-survivor/expected.json"
+  },
+  {
+    "id": "R06-mixed",
+    "family": "P1",
+    "input": "cases/R06-mixed/input.json",
+    "metadata": "cases/R06-mixed/metadata.json",
+    "request": "cases/R06-mixed/request.jsonl",
+    "output": "cases/R06-mixed/output.jsonl",
+    "expected": "cases/R06-mixed/expected.json"
+  },
+  {
+    "id": "R07-python-remove-and-modify",
+    "family": "P2",
+    "input": "cases/R07-python-remove-and-modify/input.json",
+    "metadata": "cases/R07-python-remove-and-modify/metadata.json",
+    "request": "cases/R07-python-remove-and-modify/request.jsonl",
+    "output": "cases/R07-python-remove-and-modify/output.jsonl",
+    "expected": "cases/R07-python-remove-and-modify/expected.json"
+  },
+  {
+    "id": "R08-native-and-other-removals",
+    "family": "P2",
+    "input": "cases/R08-native-and-other-removals/input.json",
+    "metadata": "cases/R08-native-and-other-removals/metadata.json",
+    "request": "cases/R08-native-and-other-removals/request.jsonl",
+    "output": "cases/R08-native-and-other-removals/output.jsonl",
+    "expected": "cases/R08-native-and-other-removals/expected.json"
+  },
+  {
+    "id": "R09-other-removal-and-python-modify",
+    "family": "P2",
+    "input": "cases/R09-other-removal-and-python-modify/input.json",
+    "metadata": "cases/R09-other-removal-and-python-modify/metadata.json",
+    "request": "cases/R09-other-removal-and-python-modify/request.jsonl",
+    "output": "cases/R09-other-removal-and-python-modify/output.jsonl",
+    "expected": "cases/R09-other-removal-and-python-modify/expected.json"
+  },
+  {
+    "id": "R10-native-contract-change",
+    "family": "P3",
+    "input": "cases/R10-native-contract-change/input.json",
+    "metadata": "cases/R10-native-contract-change/metadata.json",
+    "request": "cases/R10-native-contract-change/request.jsonl",
+    "output": "cases/R10-native-contract-change/output.jsonl",
+    "expected": "cases/R10-native-contract-change/expected.json"
+  },
+  {
+    "id": "R11-same-name-java-owners",
+    "family": "P3",
+    "input": "cases/R11-same-name-java-owners/input.json",
+    "metadata": "cases/R11-same-name-java-owners/metadata.json",
+    "request": "cases/R11-same-name-java-owners/request.jsonl",
+    "output": "cases/R11-same-name-java-owners/output.jsonl",
+    "expected": "cases/R11-same-name-java-owners/expected.json"
+  },
+  {
+    "id": "R12-unicode-request-order",
+    "family": "P3",
+    "input": "cases/R12-unicode-request-order/input.json",
+    "metadata": "cases/R12-unicode-request-order/metadata.json",
+    "request": "cases/R12-unicode-request-order/request.jsonl",
+    "output": "cases/R12-unicode-request-order/output.jsonl",
+    "expected": "cases/R12-unicode-request-order/expected.json"
+  },
+  {
+    "id": "R13-required-source-omitted",
+    "family": "N1",
+    "input": "cases/R13-required-source-omitted/input.json",
+    "metadata": "cases/R13-required-source-omitted/metadata.json",
+    "request": "cases/R13-required-source-omitted/request.jsonl",
+    "output": "cases/R13-required-source-omitted/output.jsonl",
+    "expected": "cases/R13-required-source-omitted/expected.json"
+  },
+  {
+    "id": "R14-unchanged-source-added",
+    "family": "N1",
+    "input": "cases/R14-unchanged-source-added/input.json",
+    "metadata": "cases/R14-unchanged-source-added/metadata.json",
+    "request": "cases/R14-unchanged-source-added/request.jsonl",
+    "output": "cases/R14-unchanged-source-added/output.jsonl",
+    "expected": "cases/R14-unchanged-source-added/expected.json"
+  },
+  {
+    "id": "R15-partial-java-group",
+    "family": "N1",
+    "input": "cases/R15-partial-java-group/input.json",
+    "metadata": "cases/R15-partial-java-group/metadata.json",
+    "request": "cases/R15-partial-java-group/request.jsonl",
+    "output": "cases/R15-partial-java-group/output.jsonl",
+    "expected": "cases/R15-partial-java-group/expected.json"
+  },
+  {
+    "id": "R16-source-fingerprint-mismatch",
+    "family": "N1",
+    "input": "cases/R16-source-fingerprint-mismatch/input.json",
+    "metadata": "cases/R16-source-fingerprint-mismatch/metadata.json",
+    "request": "cases/R16-source-fingerprint-mismatch/request.jsonl",
+    "output": "cases/R16-source-fingerprint-mismatch/output.jsonl",
+    "expected": "cases/R16-source-fingerprint-mismatch/expected.json"
+  },
+  {
+    "id": "R17-request-order-mismatch",
+    "family": "N1",
+    "input": "cases/R17-request-order-mismatch/input.json",
+    "metadata": "cases/R17-request-order-mismatch/metadata.json",
+    "request": "cases/R17-request-order-mismatch/request.jsonl",
+    "output": "cases/R17-request-order-mismatch/output.jsonl",
+    "expected": "cases/R17-request-order-mismatch/expected.json"
+  },
+  {
+    "id": "R18-partial-metadata-inventory",
+    "family": "N1",
+    "input": "cases/R18-partial-metadata-inventory/input.json",
+    "metadata": "cases/R18-partial-metadata-inventory/metadata.json",
+    "request": "cases/R18-partial-metadata-inventory/request.jsonl",
+    "output": "cases/R18-partial-metadata-inventory/output.jsonl",
+    "expected": "cases/R18-partial-metadata-inventory/expected.json"
+  },
+  {
+    "id": "R19-native-removal-missing",
+    "family": "N2",
+    "input": "cases/R19-native-removal-missing/input.json",
+    "metadata": "cases/R19-native-removal-missing/metadata.json",
+    "request": "cases/R19-native-removal-missing/request.jsonl",
+    "output": "cases/R19-native-removal-missing/output.jsonl",
+    "expected": "cases/R19-native-removal-missing/expected.json"
+  },
+  {
+    "id": "R20-other-removal-in-wire",
+    "family": "N2",
+    "input": "cases/R20-other-removal-in-wire/input.json",
+    "metadata": "cases/R20-other-removal-in-wire/metadata.json",
+    "request": "cases/R20-other-removal-in-wire/request.jsonl",
+    "output": "cases/R20-other-removal-in-wire/output.jsonl",
+    "expected": "cases/R20-other-removal-in-wire/expected.json"
+  },
+  {
+    "id": "R21-old-removal-fingerprint-mismatch",
+    "family": "N2",
+    "input": "cases/R21-old-removal-fingerprint-mismatch/input.json",
+    "metadata": "cases/R21-old-removal-fingerprint-mismatch/metadata.json",
+    "request": "cases/R21-old-removal-fingerprint-mismatch/request.jsonl",
+    "output": "cases/R21-old-removal-fingerprint-mismatch/output.jsonl",
+    "expected": "cases/R21-old-removal-fingerprint-mismatch/expected.json"
+  },
+  {
+    "id": "R22-old-removal-path-mismatch",
+    "family": "N2",
+    "input": "cases/R22-old-removal-path-mismatch/input.json",
+    "metadata": "cases/R22-old-removal-path-mismatch/metadata.json",
+    "request": "cases/R22-old-removal-path-mismatch/request.jsonl",
+    "output": "cases/R22-old-removal-path-mismatch/output.jsonl",
+    "expected": "cases/R22-old-removal-path-mismatch/expected.json"
+  },
+  {
+    "id": "R23-old-basis-mismatch",
+    "family": "N2",
+    "input": "cases/R23-old-basis-mismatch/input.json",
+    "metadata": "cases/R23-old-basis-mismatch/metadata.json",
+    "request": "cases/R23-old-basis-mismatch/request.jsonl",
+    "output": "cases/R23-old-basis-mismatch/output.jsonl",
+    "expected": "cases/R23-old-basis-mismatch/expected.json"
+  },
+  {
+    "id": "R24-target-source-mismatch",
+    "family": "N2",
+    "input": "cases/R24-target-source-mismatch/input.json",
+    "metadata": "cases/R24-target-source-mismatch/metadata.json",
+    "request": "cases/R24-target-source-mismatch/request.jsonl",
+    "output": "cases/R24-target-source-mismatch/output.jsonl",
+    "expected": "cases/R24-target-source-mismatch/expected.json"
+  },
+  {
+    "id": "R25-old-snapshot-id-reused",
+    "family": "N3",
+    "input": "cases/R25-old-snapshot-id-reused/input.json",
+    "metadata": "cases/R25-old-snapshot-id-reused/metadata.json",
+    "request": "cases/R25-old-snapshot-id-reused/request.jsonl",
+    "output": "cases/R25-old-snapshot-id-reused/output.jsonl",
+    "expected": "cases/R25-old-snapshot-id-reused/expected.json"
+  },
+  {
+    "id": "R26-component-version-tool-mismatch",
+    "family": "N3",
+    "input": "cases/R26-component-version-tool-mismatch/input.json",
+    "metadata": "cases/R26-component-version-tool-mismatch/metadata.json",
+    "request": "cases/R26-component-version-tool-mismatch/request.jsonl",
+    "output": "cases/R26-component-version-tool-mismatch/output.jsonl",
+    "expected": "cases/R26-component-version-tool-mismatch/expected.json"
+  },
+  {
+    "id": "R27-component-time-range-mismatch",
+    "family": "N3",
+    "input": "cases/R27-component-time-range-mismatch/input.json",
+    "metadata": "cases/R27-component-time-range-mismatch/metadata.json",
+    "request": "cases/R27-component-time-range-mismatch/request.jsonl",
+    "output": "cases/R27-component-time-range-mismatch/output.jsonl",
+    "expected": "cases/R27-component-time-range-mismatch/expected.json"
+  },
+  {
+    "id": "R28-active-binding-on-contract-change",
+    "family": "N3",
+    "input": "cases/R28-active-binding-on-contract-change/input.json",
+    "metadata": "cases/R28-active-binding-on-contract-change/metadata.json",
+    "request": "cases/R28-active-binding-on-contract-change/request.jsonl",
+    "output": "cases/R28-active-binding-on-contract-change/output.jsonl",
+    "expected": "cases/R28-active-binding-on-contract-change/expected.json"
+  },
+  {
+    "id": "R29-original-java-owner-mismatch",
+    "family": "N3",
+    "input": "cases/R29-original-java-owner-mismatch/input.json",
+    "metadata": "cases/R29-original-java-owner-mismatch/metadata.json",
+    "request": "cases/R29-original-java-owner-mismatch/request.jsonl",
+    "output": "cases/R29-original-java-owner-mismatch/output.jsonl",
+    "expected": "cases/R29-original-java-owner-mismatch/expected.json"
+  },
+  {
+    "id": "R30-owner-map-checksum-mismatch",
+    "family": "N3",
+    "input": "cases/R30-owner-map-checksum-mismatch/input.json",
+    "metadata": "cases/R30-owner-map-checksum-mismatch/metadata.json",
+    "request": "cases/R30-owner-map-checksum-mismatch/request.jsonl",
+    "output": "cases/R30-owner-map-checksum-mismatch/output.jsonl",
+    "expected": "cases/R30-owner-map-checksum-mismatch/expected.json"
+  },
+  {
+    "id": "R31-required-java-missing",
+    "family": "N4",
+    "input": "cases/R31-required-java-missing/input.json",
+    "metadata": "cases/R31-required-java-missing/metadata.json",
+    "request": "cases/R31-required-java-missing/request.jsonl",
+    "output": "cases/R31-required-java-missing/output.jsonl",
+    "expected": "cases/R31-required-java-missing/expected.json"
+  },
+  {
+    "id": "R32-unrequired-java-supplied",
+    "family": "N4",
+    "input": "cases/R32-unrequired-java-supplied/input.json",
+    "metadata": "cases/R32-unrequired-java-supplied/metadata.json",
+    "request": "cases/R32-unrequired-java-supplied/request.jsonl",
+    "output": "cases/R32-unrequired-java-supplied/output.jsonl",
+    "expected": "cases/R32-unrequired-java-supplied/expected.json"
+  },
+  {
+    "id": "R33-java-partial-terminal",
+    "family": "N4",
+    "input": "cases/R33-java-partial-terminal/input.json",
+    "metadata": "cases/R33-java-partial-terminal/metadata.json",
+    "request": "cases/R33-java-partial-terminal/request.jsonl",
+    "output": "cases/R33-java-partial-terminal/output.jsonl",
+    "expected": "cases/R33-java-partial-terminal/expected.json"
+  },
+  {
+    "id": "R34-python-partial",
+    "family": "N4",
+    "input": "cases/R34-python-partial/input.json",
+    "metadata": "cases/R34-python-partial/metadata.json",
+    "request": "cases/R34-python-partial/request.jsonl",
+    "output": "cases/R34-python-partial/output.jsonl",
+    "expected": "cases/R34-python-partial/expected.json"
+  },
+  {
+    "id": "R35-syntax-partial",
+    "family": "N4",
+    "input": "cases/R35-syntax-partial/input.json",
+    "metadata": "cases/R35-syntax-partial/metadata.json",
+    "request": "cases/R35-syntax-partial/request.jsonl",
+    "output": "cases/R35-syntax-partial/output.jsonl",
+    "expected": "cases/R35-syntax-partial/expected.json"
+  },
+  {
+    "id": "R36-cancelled-failure-terminal",
+    "family": "N4",
+    "input": "cases/R36-cancelled-failure-terminal/input.json",
+    "metadata": "cases/R36-cancelled-failure-terminal/metadata.json",
+    "request": "cases/R36-cancelled-failure-terminal/request.jsonl",
+    "output": "cases/R36-cancelled-failure-terminal/output.jsonl",
+    "expected": "cases/R36-cancelled-failure-terminal/expected.json"
+  },
+  {
+    "id": "R37-terminal-checksum-mismatch",
+    "family": "N5",
+    "input": "cases/R37-terminal-checksum-mismatch/input.json",
+    "metadata": "cases/R37-terminal-checksum-mismatch/metadata.json",
+    "request": "cases/R37-terminal-checksum-mismatch/request.jsonl",
+    "output": "cases/R37-terminal-checksum-mismatch/output.jsonl",
+    "expected": "cases/R37-terminal-checksum-mismatch/expected.json"
+  },
+  {
+    "id": "R38-event-sequence-mismatch",
+    "family": "N5",
+    "input": "cases/R38-event-sequence-mismatch/input.json",
+    "metadata": "cases/R38-event-sequence-mismatch/metadata.json",
+    "request": "cases/R38-event-sequence-mismatch/request.jsonl",
+    "output": "cases/R38-event-sequence-mismatch/output.jsonl",
+    "expected": "cases/R38-event-sequence-mismatch/expected.json"
+  },
+  {
+    "id": "R39-invalid-output-utf8",
+    "family": "N5",
+    "input": "cases/R39-invalid-output-utf8/input.json",
+    "metadata": "cases/R39-invalid-output-utf8/metadata.json",
+    "request": "cases/R39-invalid-output-utf8/request.jsonl",
+    "output": "cases/R39-invalid-output-utf8/output.jsonl",
+    "expected": "cases/R39-invalid-output-utf8/expected.json"
+  },
+  {
+    "id": "R40-wrong-typed-raw-ref",
+    "family": "N5",
+    "input": "cases/R40-wrong-typed-raw-ref/input.json",
+    "metadata": "cases/R40-wrong-typed-raw-ref/metadata.json",
+    "request": "cases/R40-wrong-typed-raw-ref/request.jsonl",
+    "output": "cases/R40-wrong-typed-raw-ref/output.jsonl",
+    "expected": "cases/R40-wrong-typed-raw-ref/expected.json"
+  },
+  {
+    "id": "R41-no-op-extra-raw",
+    "family": "N5",
+    "input": "cases/R41-no-op-extra-raw/input.json",
+    "metadata": "cases/R41-no-op-extra-raw/metadata.json",
+    "request": "cases/R41-no-op-extra-raw/request.jsonl",
+    "output": "cases/R41-no-op-extra-raw/output.jsonl",
+    "expected": "cases/R41-no-op-extra-raw/expected.json"
+  },
+  {
+    "id": "R42-deletion-only-extra-raw",
+    "family": "N5",
+    "input": "cases/R42-deletion-only-extra-raw/input.json",
+    "metadata": "cases/R42-deletion-only-extra-raw/metadata.json",
+    "request": "cases/R42-deletion-only-extra-raw/request.jsonl",
+    "output": "cases/R42-deletion-only-extra-raw/output.jsonl",
+    "expected": "cases/R42-deletion-only-extra-raw/expected.json"
+  },
+  {
+    "id": "R43-current-history-mismatch",
+    "family": "N6",
+    "input": "cases/R43-current-history-mismatch/input.json",
+    "metadata": "cases/R43-current-history-mismatch/metadata.json",
+    "request": "cases/R43-current-history-mismatch/request.jsonl",
+    "output": "cases/R43-current-history-mismatch/output.jsonl",
+    "expected": "cases/R43-current-history-mismatch/expected.json"
+  },
+  {
+    "id": "R44-external-support-revalidation",
+    "family": "N6",
+    "input": "cases/R44-external-support-revalidation/input.json",
+    "metadata": "cases/R44-external-support-revalidation/metadata.json",
+    "request": "cases/R44-external-support-revalidation/request.jsonl",
+    "output": "cases/R44-external-support-revalidation/output.jsonl",
+    "expected": "cases/R44-external-support-revalidation/expected.json"
+  },
+  {
+    "id": "R45-other-only-modification",
+    "family": "N6",
+    "input": "cases/R45-other-only-modification/input.json",
+    "metadata": "cases/R45-other-only-modification/metadata.json",
+    "request": "cases/R45-other-only-modification/request.jsonl",
+    "output": "cases/R45-other-only-modification/output.jsonl",
+    "expected": "cases/R45-other-only-modification/expected.json"
+  },
+  {
+    "id": "R46-classification-change",
+    "family": "N6",
+    "input": "cases/R46-classification-change/input.json",
+    "metadata": "cases/R46-classification-change/metadata.json",
+    "request": "cases/R46-classification-change/request.jsonl",
+    "output": "cases/R46-classification-change/output.jsonl",
+    "expected": "cases/R46-classification-change/expected.json"
+  },
+  {
+    "id": "R47-history-and-current-unavailable",
+    "family": "N6",
+    "input": "cases/R47-history-and-current-unavailable/input.json",
+    "metadata": "cases/R47-history-and-current-unavailable/metadata.json",
+    "request": "cases/R47-history-and-current-unavailable/request.jsonl",
+    "output": "cases/R47-history-and-current-unavailable/output.jsonl",
+    "expected": "cases/R47-history-and-current-unavailable/expected.json"
+  },
+  {
+    "id": "R48-extra-metadata-authority-field",
+    "family": "N6",
+    "input": "cases/R48-extra-metadata-authority-field/input.json",
+    "metadata": "cases/R48-extra-metadata-authority-field/metadata.json",
+    "request": "cases/R48-extra-metadata-authority-field/request.jsonl",
+    "output": "cases/R48-extra-metadata-authority-field/output.jsonl",
+    "expected": "cases/R48-extra-metadata-authority-field/expected.json"
+  }
+]

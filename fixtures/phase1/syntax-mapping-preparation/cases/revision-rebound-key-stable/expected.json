@@ -1,0 +1,88 @@
+{
+  "kind": "MAPPING_PROJECTION_EXPECTATION",
+  "semanticDisposition": "PROJECTABLE_WITHOUT_POLICY",
+  "projection": {
+    "repositoryId": "repo-fixture",
+    "revisionId": "rev-b",
+    "sourceFileId": "source-fixture",
+    "sourceFingerprint": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+    "sourceRange": {
+      "sourceFileId": "source-fixture",
+      "startLine": 1,
+      "startColumn": 0,
+      "endLine": 1,
+      "endColumn": 5
+    },
+    "syntaxKind": "ASSIGNMENT",
+    "owner": {
+      "scope": "REPOSITORY",
+      "repositoryId": "repo-fixture",
+      "entity": {
+        "kind": "CODE_NODE",
+        "id": "node-owner",
+        "revisionId": "rev-b"
+      }
+    },
+    "payload": {
+      "targetName": "x",
+      "value": {
+        "kind": "REFERENCE",
+        "name": "p",
+        "resolution": "EXACT",
+        "candidates": [
+          {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo-fixture",
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "node-a",
+              "revisionId": "rev-b"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "requiredEntities": [
+    {
+      "kind": "SOURCE_FILE",
+      "id": "source-fixture",
+      "revisionId": "rev-b"
+    },
+    {
+      "kind": "CODE_NODE",
+      "id": "node-owner",
+      "revisionId": "rev-b"
+    },
+    {
+      "kind": "CODE_NODE",
+      "id": "node-a",
+      "revisionId": "rev-b"
+    }
+  ],
+  "keyMeaning": {
+    "owner": {
+      "kind": "CODE_NODE",
+      "id": "node-owner"
+    },
+    "payload": {
+      "targetName": "x",
+      "value": {
+        "kind": "REFERENCE",
+        "name": "p",
+        "resolution": "EXACT",
+        "candidates": [
+          {
+            "kind": "CODE_NODE",
+            "id": "node-a"
+          }
+        ]
+      }
+    }
+  },
+  "admission": "BLOCKED_POLICY",
+  "canonicalEnvelope": null,
+  "keyCanonicalText": "{\"owner\":{\"id\":\"node-owner\",\"kind\":\"CODE_NODE\"},\"payload\":{\"targetName\":\"x\",\"value\":{\"candidates\":[{\"id\":\"node-a\",\"kind\":\"CODE_NODE\"}],\"kind\":\"REFERENCE\",\"name\":\"p\",\"resolution\":\"EXACT\"}}}",
+  "payloadDigest": "7939376df6d086a63dcc85accb19becadba66cfbbc7625278d175b75d4eb9e31",
+  "syntaxKey": "syntax-key-v1:d3240a1443c16292d4f81fe41d2210d8c505d2da444d1b2838869896b9e2dd71"
+}

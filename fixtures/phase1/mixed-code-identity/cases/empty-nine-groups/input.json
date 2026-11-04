@@ -1,0 +1,41 @@
+{
+  "domain": "codeatlas-code-activation-v1",
+  "groups": [
+    {
+      "tag": "HEADER",
+      "entries": []
+    },
+    {
+      "tag": "NODE",
+      "entries": []
+    },
+    {
+      "tag": "EDGE",
+      "entries": []
+    },
+    {
+      "tag": "EVIDENCE",
+      "entries": []
+    },
+    {
+      "tag": "BINDING",
+      "entries": []
+    },
+    {
+      "tag": "FACT_EVIDENCE",
+      "entries": []
+    },
+    {
+      "tag": "SUPPORT_CANDIDATE",
+      "entries": []
+    },
+    {
+      "tag": "SNAPSHOT",
+      "entries": []
+    },
+    {
+      "tag": "COVERAGE",
+      "entries": []
+    }
+  ]
+}

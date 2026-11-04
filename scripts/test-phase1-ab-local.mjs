@@ -1,0 +1,11 @@
+import '../packages/ir/test/syntax-evidence-v4.test.mjs';
+import '../packages/providers/test/framework-surface-pipeline.test.mjs';
+import '../packages/plugins/test/framework-surface-closure.test.mjs';
+import '../packages/runtime/test/framework-surface-publication.test.mjs';
+import '../packages/execution/test/framework-surface-execution.test.mjs';
+import '../packages/ir/test/declared-http-schema.test.mjs';
+import '../packages/contracts/test/declared-http-schema.test.mjs';
+import '../packages/execution/test/declared-schema-stitch.test.mjs';
+import '../packages/storage/test/declared-schema-contract-store.test.mjs';
+import '../packages/application/test/declared-schema-workspace.test.mjs';
+import '../packages/runtime/test/declared-schema-crossrepo.test.mjs';

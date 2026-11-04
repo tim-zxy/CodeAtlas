@@ -1,0 +1,1291 @@
+{
+  "schemaVersion": 1,
+  "kind": "LITERAL_PROJECTION_OF_PRESEALED_NOOP_CONTEXT",
+  "source": {
+    "repositoryId": "repo:one",
+    "tables": {
+      "repository": [
+        {
+          "slot": 1,
+          "id": "repo:one",
+          "root_path": "C:/b1b-component-fixture"
+        }
+      ],
+      "repository_state": [
+        {
+          "repository_id": "repo:one",
+          "indexed_revision_id": "revision:worktree",
+          "indexed_content_fingerprint": "content:first"
+        }
+      ],
+      "revisions": [
+        {
+          "id": "revision:worktree",
+          "repository_id": "repo:one",
+          "kind": "WORKTREE",
+          "content_fingerprint": "content:first",
+          "commit_identity": null,
+          "base_revision_id": null,
+          "source_revision_id": null
+        }
+      ],
+      "source_files": [
+        {
+          "revision_id": "revision:worktree",
+          "id": "java:file",
+          "repository_id": "repo:one",
+          "path": "Box.java",
+          "content_fingerprint": "sha256:5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1",
+          "role": "SOURCE",
+          "provenance": "AUTHORED",
+          "content_kind": "TEXT",
+          "language_hint": "java",
+          "sensitivity": "INTERNAL"
+        },
+        {
+          "revision_id": "revision:worktree",
+          "id": "file:one",
+          "repository_id": "repo:one",
+          "path": "app.py",
+          "content_fingerprint": "sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+          "role": "SOURCE",
+          "provenance": "AUTHORED",
+          "content_kind": "TEXT",
+          "language_hint": "python",
+          "sensitivity": "INTERNAL"
+        }
+      ],
+      "provider_snapshots": [
+        {
+          "id": "snapshot:one",
+          "repository_id": "repo:one",
+          "provider_id": "native",
+          "provider_version": "0.0.0",
+          "runtime_version": "fixture-runtime",
+          "requested_revision_id": "revision:worktree",
+          "requested_revision_fingerprint": "content:first",
+          "started_at": 1792800000000,
+          "completed_at": 1792800000003,
+          "outcome": "SUCCEEDED"
+        }
+      ],
+      "provider_capabilities": [
+        {
+          "snapshot_id": "snapshot:one",
+          "name": "JAVA_CODE_V2",
+          "support": "SUPPORTED",
+          "coverage": "COMPLETE"
+        },
+        {
+          "snapshot_id": "snapshot:one",
+          "name": "PYTHON_SYNTAX_CODE_V1",
+          "support": "SUPPORTED",
+          "coverage": "COMPLETE"
+        },
+        {
+          "snapshot_id": "snapshot:one",
+          "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+          "support": "SUPPORTED",
+          "coverage": "COMPLETE"
+        }
+      ],
+      "canonical_nodes": [
+        {
+          "revision_id": "revision:worktree",
+          "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+          "repository_id": "repo:one",
+          "fact_key": "node-fact-v1:9f87fdd184180db6f32fe351dc70bd34a7f1d2baebfa5f06eb7714f1cb1f3dc5",
+          "kind": "MODULE",
+          "type_kind": null,
+          "symbol_kind": null,
+          "name": "app.py",
+          "qualified_name": "app.py",
+          "source_range_json": null,
+          "confidence_score": 1,
+          "confidence_method": "parser",
+          "confidence_reasons_json": "[]"
+        },
+        {
+          "revision_id": "revision:worktree",
+          "id": "canonical-node-v1:b8cc9d8484f5c608ab4fd16c8fa699f60df84e2f488d03111e93b5101cc5d8d2",
+          "repository_id": "repo:one",
+          "fact_key": "node-fact-v1:426cb60ee0500370996dbbdfd7ef72985b743b06382ef7df9e6b79699e1138a7",
+          "kind": "MODULE",
+          "type_kind": null,
+          "symbol_kind": null,
+          "name": "Box.java",
+          "qualified_name": "Box.java",
+          "source_range_json": null,
+          "confidence_score": 1,
+          "confidence_method": "parser",
+          "confidence_reasons_json": "[]"
+        },
+        {
+          "revision_id": "revision:worktree",
+          "id": "canonical-node-v1:d4d1141ea168c690fb883ecbbaba0e7057a010eb7ef98d8cef6fc9172cbd42d8",
+          "repository_id": "repo:one",
+          "fact_key": "node-fact-v1:fa07e81351801d888b39e1742617736c6fe9d1f50c0ee59f63680270f36e3856",
+          "kind": "TYPE",
+          "type_kind": "CLASS",
+          "symbol_kind": null,
+          "name": "Box",
+          "qualified_name": "Box",
+          "source_range_json": "{\"endColumn\":9,\"endLine\":0,\"sourceFileId\":\"java:file\",\"startColumn\":6,\"startLine\":0}",
+          "confidence_score": 1,
+          "confidence_method": "parser",
+          "confidence_reasons_json": "[]"
+        }
+      ],
+      "canonical_edges": [
+        {
+          "revision_id": "revision:worktree",
+          "id": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f",
+          "repository_id": "repo:one",
+          "fact_key": "edge-fact-v1:1a0f6116e03a3e0ec190dcae40a69e4c6dc7b8306c921c480ee61a134faefbb1",
+          "kind": "REFERENCE",
+          "source_node_id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+          "target_state": "UNRESOLVED",
+          "resolution": "UNRESOLVED",
+          "target_node_id": null,
+          "source_range_json": "{\"endColumn\":5,\"endLine\":1,\"sourceFileId\":\"file:one\",\"startColumn\":4,\"startLine\":1}",
+          "confidence_score": 1,
+          "confidence_method": "parser",
+          "confidence_reasons_json": "[]"
+        },
+        {
+          "revision_id": "revision:worktree",
+          "id": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b",
+          "repository_id": "repo:one",
+          "fact_key": "edge-fact-v1:4a62f7e32fef238335777788b0a79f7ca94e221cf803955bce28151f1a3b608a",
+          "kind": "IMPORT",
+          "source_node_id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+          "target_state": "UNRESOLVED",
+          "resolution": "UNRESOLVED",
+          "target_node_id": null,
+          "source_range_json": "{\"endColumn\":15,\"endLine\":0,\"sourceFileId\":\"file:one\",\"startColumn\":7,\"startLine\":0}",
+          "confidence_score": 1,
+          "confidence_method": "parser",
+          "confidence_reasons_json": "[]"
+        }
+      ],
+      "unresolved_targets": [
+        {
+          "revision_id": "revision:worktree",
+          "edge_id": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f",
+          "original_hint": "p",
+          "candidates_json": "[]"
+        },
+        {
+          "revision_id": "revision:worktree",
+          "edge_id": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b",
+          "original_hint": "pkg",
+          "candidates_json": "[]"
+        }
+      ],
+      "evidence": [
+        {
+          "id": "provider-evidence-v1:67c5d5eb19460c19712256f8c2468fe6024dc841a52daead2855da4908625010",
+          "repository_id": "repo:one",
+          "revision_id": "revision:worktree",
+          "provider_snapshot_id": "snapshot:one",
+          "fact_type": "EDGE",
+          "provider_id": "native",
+          "provider_fact_id": "python-edge-v1:37bdc236f427d4e4dc22c574e10b48a36d14083aa7f3f4ae471776631d75fa67",
+          "status": "ACTIVE"
+        },
+        {
+          "id": "provider-evidence-v1:f62ec04b071dc54dbfc1bdd6c44f5a418d570203cf31812a9db348059ac2db99",
+          "repository_id": "repo:one",
+          "revision_id": "revision:worktree",
+          "provider_snapshot_id": "snapshot:one",
+          "fact_type": "EDGE",
+          "provider_id": "native",
+          "provider_fact_id": "python-edge-v1:778fbe8c61c6ddb3ac42c06c7d6014fd8a250b2b36c53529c4dad1a70fdef970",
+          "status": "ACTIVE"
+        },
+        {
+          "id": "provider-evidence-v1:9a96776fa3dee8d0b3bace20e24b9e91e84704bcc9177a57c65002f64b7cc393",
+          "repository_id": "repo:one",
+          "revision_id": "revision:worktree",
+          "provider_snapshot_id": "snapshot:one",
+          "fact_type": "NODE",
+          "provider_id": "native",
+          "provider_fact_id": "java:Box",
+          "status": "ACTIVE"
+        },
+        {
+          "id": "provider-evidence-v1:d2a6ae2ed2543f5ed0f5a7e6a73899da9f8dc20d8cd585c0d6f00159ffc5bdb5",
+          "repository_id": "repo:one",
+          "revision_id": "revision:worktree",
+          "provider_snapshot_id": "snapshot:one",
+          "fact_type": "NODE",
+          "provider_id": "native",
+          "provider_fact_id": "java:unit",
+          "status": "ACTIVE"
+        },
+        {
+          "id": "provider-evidence-v1:3e560c7e388bc9af57d1f0df7bc120dc63f963b7ae66ad8f3435919178b9a774",
+          "repository_id": "repo:one",
+          "revision_id": "revision:worktree",
+          "provider_snapshot_id": "snapshot:one",
+          "fact_type": "NODE",
+          "provider_id": "native",
+          "provider_fact_id": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb",
+          "status": "ACTIVE"
+        }
+      ],
+      "provider_fact_bindings": [
+        {
+          "fact_type": "EDGE",
+          "provider_id": "native",
+          "provider_fact_id": "python-edge-v1:37bdc236f427d4e4dc22c574e10b48a36d14083aa7f3f4ae471776631d75fa67",
+          "provider_snapshot_id": "snapshot:one",
+          "canonical_fact_id": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b",
+          "evidence_id": "provider-evidence-v1:67c5d5eb19460c19712256f8c2468fe6024dc841a52daead2855da4908625010"
+        },
+        {
+          "fact_type": "EDGE",
+          "provider_id": "native",
+          "provider_fact_id": "python-edge-v1:778fbe8c61c6ddb3ac42c06c7d6014fd8a250b2b36c53529c4dad1a70fdef970",
+          "provider_snapshot_id": "snapshot:one",
+          "canonical_fact_id": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f",
+          "evidence_id": "provider-evidence-v1:f62ec04b071dc54dbfc1bdd6c44f5a418d570203cf31812a9db348059ac2db99"
+        },
+        {
+          "fact_type": "NODE",
+          "provider_id": "native",
+          "provider_fact_id": "java:Box",
+          "provider_snapshot_id": "snapshot:one",
+          "canonical_fact_id": "canonical-node-v1:d4d1141ea168c690fb883ecbbaba0e7057a010eb7ef98d8cef6fc9172cbd42d8",
+          "evidence_id": "provider-evidence-v1:9a96776fa3dee8d0b3bace20e24b9e91e84704bcc9177a57c65002f64b7cc393"
+        },
+        {
+          "fact_type": "NODE",
+          "provider_id": "native",
+          "provider_fact_id": "java:unit",
+          "provider_snapshot_id": "snapshot:one",
+          "canonical_fact_id": "canonical-node-v1:b8cc9d8484f5c608ab4fd16c8fa699f60df84e2f488d03111e93b5101cc5d8d2",
+          "evidence_id": "provider-evidence-v1:d2a6ae2ed2543f5ed0f5a7e6a73899da9f8dc20d8cd585c0d6f00159ffc5bdb5"
+        },
+        {
+          "fact_type": "NODE",
+          "provider_id": "native",
+          "provider_fact_id": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb",
+          "provider_snapshot_id": "snapshot:one",
+          "canonical_fact_id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+          "evidence_id": "provider-evidence-v1:3e560c7e388bc9af57d1f0df7bc120dc63f963b7ae66ad8f3435919178b9a774"
+        }
+      ],
+      "fact_evidence": [
+        {
+          "fact_type": "EDGE",
+          "canonical_fact_id": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b",
+          "evidence_id": "provider-evidence-v1:67c5d5eb19460c19712256f8c2468fe6024dc841a52daead2855da4908625010"
+        },
+        {
+          "fact_type": "EDGE",
+          "canonical_fact_id": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f",
+          "evidence_id": "provider-evidence-v1:f62ec04b071dc54dbfc1bdd6c44f5a418d570203cf31812a9db348059ac2db99"
+        },
+        {
+          "fact_type": "NODE",
+          "canonical_fact_id": "canonical-node-v1:d4d1141ea168c690fb883ecbbaba0e7057a010eb7ef98d8cef6fc9172cbd42d8",
+          "evidence_id": "provider-evidence-v1:9a96776fa3dee8d0b3bace20e24b9e91e84704bcc9177a57c65002f64b7cc393"
+        },
+        {
+          "fact_type": "NODE",
+          "canonical_fact_id": "canonical-node-v1:b8cc9d8484f5c608ab4fd16c8fa699f60df84e2f488d03111e93b5101cc5d8d2",
+          "evidence_id": "provider-evidence-v1:d2a6ae2ed2543f5ed0f5a7e6a73899da9f8dc20d8cd585c0d6f00159ffc5bdb5"
+        },
+        {
+          "fact_type": "NODE",
+          "canonical_fact_id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+          "evidence_id": "provider-evidence-v1:3e560c7e388bc9af57d1f0df7bc120dc63f963b7ae66ad8f3435919178b9a774"
+        }
+      ],
+      "active_support_candidates": [
+        {
+          "evidence_id": "provider-evidence-v1:67c5d5eb19460c19712256f8c2468fe6024dc841a52daead2855da4908625010",
+          "fact_type": "EDGE",
+          "canonical_fact_id": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b",
+          "candidate_json": "{\"confidence\":{\"method\":\"parser\",\"reasons\":[],\"score\":1},\"factKey\":\"edge-fact-v1:4a62f7e32fef238335777788b0a79f7ca94e221cf803955bce28151f1a3b608a\",\"id\":\"canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b\",\"kind\":\"IMPORT\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"source\":{\"factType\":\"NODE\",\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\"},\"sourceRange\":{\"endColumn\":15,\"endLine\":0,\"sourceFileId\":\"file:one\",\"startColumn\":7,\"startLine\":0},\"target\":{\"candidates\":[],\"originalHint\":\"pkg\",\"resolution\":\"UNRESOLVED\",\"state\":\"UNRESOLVED\"}}"
+        },
+        {
+          "evidence_id": "provider-evidence-v1:f62ec04b071dc54dbfc1bdd6c44f5a418d570203cf31812a9db348059ac2db99",
+          "fact_type": "EDGE",
+          "canonical_fact_id": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f",
+          "candidate_json": "{\"confidence\":{\"method\":\"parser\",\"reasons\":[],\"score\":1},\"factKey\":\"edge-fact-v1:1a0f6116e03a3e0ec190dcae40a69e4c6dc7b8306c921c480ee61a134faefbb1\",\"id\":\"canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f\",\"kind\":\"REFERENCE\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"source\":{\"factType\":\"NODE\",\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\"},\"sourceRange\":{\"endColumn\":5,\"endLine\":1,\"sourceFileId\":\"file:one\",\"startColumn\":4,\"startLine\":1},\"target\":{\"candidates\":[],\"originalHint\":\"p\",\"resolution\":\"UNRESOLVED\",\"state\":\"UNRESOLVED\"}}"
+        },
+        {
+          "evidence_id": "provider-evidence-v1:9a96776fa3dee8d0b3bace20e24b9e91e84704bcc9177a57c65002f64b7cc393",
+          "fact_type": "NODE",
+          "canonical_fact_id": "canonical-node-v1:d4d1141ea168c690fb883ecbbaba0e7057a010eb7ef98d8cef6fc9172cbd42d8",
+          "candidate_json": "{\"confidence\":{\"method\":\"parser\",\"reasons\":[],\"score\":1},\"factKey\":\"node-fact-v1:fa07e81351801d888b39e1742617736c6fe9d1f50c0ee59f63680270f36e3856\",\"id\":\"canonical-node-v1:d4d1141ea168c690fb883ecbbaba0e7057a010eb7ef98d8cef6fc9172cbd42d8\",\"kind\":\"TYPE\",\"name\":\"Box\",\"qualifiedName\":\"Box\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sourceRange\":{\"endColumn\":9,\"endLine\":0,\"sourceFileId\":\"java:file\",\"startColumn\":6,\"startLine\":0},\"typeKind\":\"CLASS\"}"
+        },
+        {
+          "evidence_id": "provider-evidence-v1:d2a6ae2ed2543f5ed0f5a7e6a73899da9f8dc20d8cd585c0d6f00159ffc5bdb5",
+          "fact_type": "NODE",
+          "canonical_fact_id": "canonical-node-v1:b8cc9d8484f5c608ab4fd16c8fa699f60df84e2f488d03111e93b5101cc5d8d2",
+          "candidate_json": "{\"confidence\":{\"method\":\"parser\",\"reasons\":[],\"score\":1},\"factKey\":\"node-fact-v1:426cb60ee0500370996dbbdfd7ef72985b743b06382ef7df9e6b79699e1138a7\",\"id\":\"canonical-node-v1:b8cc9d8484f5c608ab4fd16c8fa699f60df84e2f488d03111e93b5101cc5d8d2\",\"kind\":\"MODULE\",\"name\":\"Box.java\",\"qualifiedName\":\"Box.java\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sourceRange\":null}"
+        },
+        {
+          "evidence_id": "provider-evidence-v1:3e560c7e388bc9af57d1f0df7bc120dc63f963b7ae66ad8f3435919178b9a774",
+          "fact_type": "NODE",
+          "canonical_fact_id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+          "candidate_json": "{\"confidence\":{\"method\":\"parser\",\"reasons\":[],\"score\":1},\"factKey\":\"node-fact-v1:9f87fdd184180db6f32fe351dc70bd34a7f1d2baebfa5f06eb7714f1cb1f3dc5\",\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\",\"kind\":\"MODULE\",\"name\":\"app.py\",\"qualifiedName\":\"app.py\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sourceRange\":null}"
+        }
+      ],
+      "analysis_diagnostics": [],
+      "analysis_coverage": [
+        {
+          "id": 1,
+          "provider_snapshot_id": "snapshot:one",
+          "capability_name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+          "source_file_id": "java:file",
+          "status": "COMPLETE"
+        },
+        {
+          "id": 2,
+          "provider_snapshot_id": "snapshot:one",
+          "capability_name": "JAVA_CODE_V2",
+          "source_file_id": "java:file",
+          "status": "COMPLETE"
+        },
+        {
+          "id": 3,
+          "provider_snapshot_id": "snapshot:one",
+          "capability_name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+          "source_file_id": "file:one",
+          "status": "COMPLETE"
+        },
+        {
+          "id": 4,
+          "provider_snapshot_id": "snapshot:one",
+          "capability_name": "PYTHON_SYNTAX_CODE_V1",
+          "source_file_id": "file:one",
+          "status": "COMPLETE"
+        }
+      ],
+      "activation_history": [
+        {
+          "id": "activation:8eabce2fc68a47ff6be9220bf96ddf0f612e9f809cc01f296731097c13d1fd71",
+          "repository_id": "repo:one",
+          "revision_id": "revision:worktree",
+          "parent_id": null,
+          "manifest_digest": "8eabce2fc68a47ff6be9220bf96ddf0f612e9f809cc01f296731097c13d1fd71",
+          "manifest_json": "{\"codeIdentity\":\"1b82e18797aa65545a0a714478990fea64df3c3c45d72f2901954929e1d90e62\",\"observation\":{\"javaProvenance\":{\"kind\":\"PARSED_V2\",\"requestId\":\"companion:java\",\"settledAt\":\"2026-10-24T00:00:00.002Z\",\"startedAt\":\"2026-10-24T00:00:00.001Z\"},\"outputIdentity\":\"5fb6a450e69d8de1c44e7dd09e412f56af1c2bd050e62b1bae196f1726371d5c\",\"qualificationRef\":\"component-fixture:not-runtime-qualified\",\"requestIdentity\":\"5d8b9a1c839997c86f9ea5f0e7ae825e0739cb62682339096c3d97f7c4d372f6\",\"scope\":{\"removedSourceFileIds\":[],\"unitIds\":[\"history-native-unit-v1:0743bc513cfe3a0ed9200c55058bfa25f626ea90853d29bc829c56b6c6396b36\",\"history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802\"]},\"snapshotId\":\"snapshot:one\"},\"originRegistryDigest\":\"bd5ea6d4aaa83caecf689af4b86dd6e23f42fe9e1475f845d0c3a9f689f097ae\",\"parent\":null,\"schemaVersion\":1,\"sourceIdentity\":\"d1209595d43d995deaa5609a0dd167e3778111771b032969b465b545011215ef\",\"state\":{\"basis\":{\"codeActivationDigest\":\"1b82e18797aa65545a0a714478990fea64df3c3c45d72f2901954929e1d90e62\",\"contentFingerprint\":\"content:first\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\"},\"contracts\":[{\"contract\":\"PYTHON_SYNTAX_CODE_V1\",\"extractor\":\"syntax-v1\",\"normalizer\":\"fixture-v1\",\"policy\":\"syntax-surface-support-v1\",\"providerId\":\"native\"}],\"coverage\":[{\"coverage\":\"COMPLETE\",\"facet\":\"FRAMEWORK_SYNTAX_OBSERVATION_V1\",\"originSnapshotId\":\"snapshot:one\",\"unitId\":\"history-native-unit-v1:0743bc513cfe3a0ed9200c55058bfa25f626ea90853d29bc829c56b6c6396b36\"},{\"coverage\":\"COMPLETE\",\"facet\":\"JAVA_CODE_V2\",\"originSnapshotId\":\"snapshot:one\",\"unitId\":\"history-native-unit-v1:0743bc513cfe3a0ed9200c55058bfa25f626ea90853d29bc829c56b6c6396b36\"},{\"coverage\":\"COMPLETE\",\"facet\":\"FRAMEWORK_SYNTAX_OBSERVATION_V1\",\"originSnapshotId\":\"snapshot:one\",\"unitId\":\"history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802\"},{\"coverage\":\"COMPLETE\",\"facet\":\"PYTHON_SYNTAX_CODE_V1\",\"originSnapshotId\":\"snapshot:one\",\"unitId\":\"history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802\"}],\"edges\":[{\"confidence\":{\"method\":\"parser\",\"reasons\":[],\"score\":1},\"factKey\":\"edge-fact-v1:1a0f6116e03a3e0ec190dcae40a69e4c6dc7b8306c921c480ee61a134faefbb1\",\"id\":\"canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f\",\"kind\":\"REFERENCE\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"source\":{\"factType\":\"NODE\",\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\"},\"sourceRange\":{\"endColumn\":5,\"endLine\":1,\"sourceFileId\":\"file:one\",\"startColumn\":4,\"startLine\":1},\"target\":{\"candidates\":[],\"originalHint\":\"p\",\"resolution\":\"UNRESOLVED\",\"state\":\"UNRESOLVED\"}},{\"confidence\":{\"method\":\"parser\",\"reasons\":[],\"score\":1},\"factKey\":\"edge-fact-v1:4a62f7e32fef238335777788b0a79f7ca94e221cf803955bce28151f1a3b608a\",\"id\":\"canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b\",\"kind\":\"IMPORT\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"source\":{\"factType\":\"NODE\",\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\"},\"sourceRange\":{\"endColumn\":15,\"endLine\":0,\"sourceFileId\":\"file:one\",\"startColumn\":7,\"startLine\":0},\"target\":{\"candidates\":[],\"originalHint\":\"pkg\",\"resolution\":\"UNRESOLVED\",\"state\":\"UNRESOLVED\"}}],\"inventory\":[{\"classification\":{\"contentKind\":\"TEXT\",\"provenance\":\"AUTHORED\",\"role\":\"SOURCE\"},\"contentFingerprint\":\"sha256:5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1\",\"id\":\"java:file\",\"languageHint\":\"java\",\"path\":\"Box.java\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sensitivity\":\"INTERNAL\"},{\"classification\":{\"contentKind\":\"TEXT\",\"provenance\":\"AUTHORED\",\"role\":\"SOURCE\"},\"contentFingerprint\":\"sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50\",\"id\":\"file:one\",\"languageHint\":\"python\",\"path\":\"app.py\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sensitivity\":\"INTERNAL\"}],\"nodes\":[{\"confidence\":{\"method\":\"parser\",\"reasons\":[],\"score\":1},\"factKey\":\"node-fact-v1:9f87fdd184180db6f32fe351dc70bd34a7f1d2baebfa5f06eb7714f1cb1f3dc5\",\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\",\"kind\":\"MODULE\",\"name\":\"app.py\",\"qualifiedName\":\"app.py\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sourceRange\":null},{\"confidence\":{\"method\":\"parser\",\"reasons\":[],\"score\":1},\"factKey\":\"node-fact-v1:426cb60ee0500370996dbbdfd7ef72985b743b06382ef7df9e6b79699e1138a7\",\"id\":\"canonical-node-v1:b8cc9d8484f5c608ab4fd16c8fa699f60df84e2f488d03111e93b5101cc5d8d2\",\"kind\":\"MODULE\",\"name\":\"Box.java\",\"qualifiedName\":\"Box.java\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sourceRange\":null},{\"confidence\":{\"method\":\"parser\",\"reasons\":[],\"score\":1},\"factKey\":\"node-fact-v1:fa07e81351801d888b39e1742617736c6fe9d1f50c0ee59f63680270f36e3856\",\"id\":\"canonical-node-v1:d4d1141ea168c690fb883ecbbaba0e7057a010eb7ef98d8cef6fc9172cbd42d8\",\"kind\":\"TYPE\",\"name\":\"Box\",\"qualifiedName\":\"Box\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sourceRange\":{\"endColumn\":9,\"endLine\":0,\"sourceFileId\":\"java:file\",\"startColumn\":6,\"startLine\":0},\"typeKind\":\"CLASS\"}],\"repositoryLocatorDigest\":\"be4f443420f269e1872f380f6f29ebe00eb40b3be70bb3df08a27a9691b576ac\",\"snapshots\":[{\"capabilities\":[{\"coverage\":\"COMPLETE\",\"name\":\"JAVA_CODE_V2\",\"support\":\"SUPPORTED\"},{\"coverage\":\"COMPLETE\",\"name\":\"PYTHON_SYNTAX_CODE_V1\",\"support\":\"SUPPORTED\"},{\"coverage\":\"COMPLETE\",\"name\":\"FRAMEWORK_SYNTAX_OBSERVATION_V1\",\"support\":\"SUPPORTED\"}],\"completedAt\":\"2026-10-24T00:00:00.003Z\",\"diagnostics\":[],\"id\":\"snapshot:one\",\"outcome\":\"SUCCEEDED\",\"providerId\":\"native\",\"providerVersion\":\"0.0.0\",\"repositoryId\":\"repo:one\",\"requestedRevisionFingerprint\":\"content:first\",\"requestedRevisionId\":\"revision:worktree\",\"runtimeVersion\":\"fixture-runtime\",\"startedAt\":\"2026-10-24T00:00:00.000Z\"}],\"supports\":[{\"binding\":{\"canonicalFact\":{\"factType\":\"EDGE\",\"id\":\"canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b\"},\"evidenceId\":\"provider-evidence-v1:67c5d5eb19460c19712256f8c2468fe6024dc841a52daead2855da4908625010\",\"providerFact\":{\"factType\":\"EDGE\",\"providerFactId\":\"python-edge-v1:37bdc236f427d4e4dc22c574e10b48a36d14083aa7f3f4ae471776631d75fa67\",\"providerId\":\"native\"},\"providerSnapshotId\":\"snapshot:one\"},\"canonical\":{\"confidence\":{\"method\":\"parser\",\"reasons\":[],\"score\":1},\"factKey\":\"edge-fact-v1:4a62f7e32fef238335777788b0a79f7ca94e221cf803955bce28151f1a3b608a\",\"id\":\"canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b\",\"kind\":\"IMPORT\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"source\":{\"factType\":\"NODE\",\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\"},\"sourceRange\":{\"endColumn\":15,\"endLine\":0,\"sourceFileId\":\"file:one\",\"startColumn\":7,\"startLine\":0},\"target\":{\"candidates\":[],\"originalHint\":\"pkg\",\"resolution\":\"UNRESOLVED\",\"state\":\"UNRESOLVED\"}},\"dependencyUnitIds\":[\"history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802\"],\"evidence\":{\"id\":\"provider-evidence-v1:67c5d5eb19460c19712256f8c2468fe6024dc841a52daead2855da4908625010\",\"providerFact\":{\"factType\":\"EDGE\",\"providerFactId\":\"python-edge-v1:37bdc236f427d4e4dc22c574e10b48a36d14083aa7f3f4ae471776631d75fa67\",\"providerId\":\"native\"},\"providerSnapshotId\":\"snapshot:one\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"status\":\"ACTIVE\"},\"factEvidence\":{\"evidenceId\":\"provider-evidence-v1:67c5d5eb19460c19712256f8c2468fe6024dc841a52daead2855da4908625010\",\"fact\":{\"factType\":\"EDGE\",\"id\":\"canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b\"}},\"factType\":\"EDGE\",\"valueDigest\":\"9385c46790615700a8c37d6bedac723beac8b7b729a9e284ae4a5cd8ed264346\"},{\"binding\":{\"canonicalFact\":{\"factType\":\"EDGE\",\"id\":\"canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f\"},\"evidenceId\":\"provider-evidence-v1:f62ec04b071dc54dbfc1bdd6c44f5a418d570203cf31812a9db348059ac2db99\",\"providerFact\":{\"factType\":\"EDGE\",\"providerFactId\":\"python-edge-v1:778fbe8c61c6ddb3ac42c06c7d6014fd8a250b2b36c53529c4dad1a70fdef970\",\"providerId\":\"native\"},\"providerSnapshotId\":\"snapshot:one\"},\"canonical\":{\"confidence\":{\"method\":\"parser\",\"reasons\":[],\"score\":1},\"factKey\":\"edge-fact-v1:1a0f6116e03a3e0ec190dcae40a69e4c6dc7b8306c921c480ee61a134faefbb1\",\"id\":\"canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f\",\"kind\":\"REFERENCE\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"source\":{\"factType\":\"NODE\",\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\"},\"sourceRange\":{\"endColumn\":5,\"endLine\":1,\"sourceFileId\":\"file:one\",\"startColumn\":4,\"startLine\":1},\"target\":{\"candidates\":[],\"originalHint\":\"p\",\"resolution\":\"UNRESOLVED\",\"state\":\"UNRESOLVED\"}},\"dependencyUnitIds\":[\"history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802\"],\"evidence\":{\"id\":\"provider-evidence-v1:f62ec04b071dc54dbfc1bdd6c44f5a418d570203cf31812a9db348059ac2db99\",\"providerFact\":{\"factType\":\"EDGE\",\"providerFactId\":\"python-edge-v1:778fbe8c61c6ddb3ac42c06c7d6014fd8a250b2b36c53529c4dad1a70fdef970\",\"providerId\":\"native\"},\"providerSnapshotId\":\"snapshot:one\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"status\":\"ACTIVE\"},\"factEvidence\":{\"evidenceId\":\"provider-evidence-v1:f62ec04b071dc54dbfc1bdd6c44f5a418d570203cf31812a9db348059ac2db99\",\"fact\":{\"factType\":\"EDGE\",\"id\":\"canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f\"}},\"factType\":\"EDGE\",\"valueDigest\":\"38b06f943da7bed91ea6d61814614c52b05435b6f1fe2d8e0ca908afc2c95b48\"},{\"binding\":{\"canonicalFact\":{\"factType\":\"NODE\",\"id\":\"canonical-node-v1:d4d1141ea168c690fb883ecbbaba0e7057a010eb7ef98d8cef6fc9172cbd42d8\"},\"evidenceId\":\"provider-evidence-v1:9a96776fa3dee8d0b3bace20e24b9e91e84704bcc9177a57c65002f64b7cc393\",\"providerFact\":{\"factType\":\"NODE\",\"providerFactId\":\"java:Box\",\"providerId\":\"native\"},\"providerSnapshotId\":\"snapshot:one\"},\"canonical\":{\"confidence\":{\"method\":\"parser\",\"reasons\":[],\"score\":1},\"factKey\":\"node-fact-v1:fa07e81351801d888b39e1742617736c6fe9d1f50c0ee59f63680270f36e3856\",\"id\":\"canonical-node-v1:d4d1141ea168c690fb883ecbbaba0e7057a010eb7ef98d8cef6fc9172cbd42d8\",\"kind\":\"TYPE\",\"name\":\"Box\",\"qualifiedName\":\"Box\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sourceRange\":{\"endColumn\":9,\"endLine\":0,\"sourceFileId\":\"java:file\",\"startColumn\":6,\"startLine\":0},\"typeKind\":\"CLASS\"},\"dependencyUnitIds\":[\"history-native-unit-v1:0743bc513cfe3a0ed9200c55058bfa25f626ea90853d29bc829c56b6c6396b36\"],\"evidence\":{\"id\":\"provider-evidence-v1:9a96776fa3dee8d0b3bace20e24b9e91e84704bcc9177a57c65002f64b7cc393\",\"providerFact\":{\"factType\":\"NODE\",\"providerFactId\":\"java:Box\",\"providerId\":\"native\"},\"providerSnapshotId\":\"snapshot:one\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"status\":\"ACTIVE\"},\"factEvidence\":{\"evidenceId\":\"provider-evidence-v1:9a96776fa3dee8d0b3bace20e24b9e91e84704bcc9177a57c65002f64b7cc393\",\"fact\":{\"factType\":\"NODE\",\"id\":\"canonical-node-v1:d4d1141ea168c690fb883ecbbaba0e7057a010eb7ef98d8cef6fc9172cbd42d8\"}},\"factType\":\"NODE\",\"valueDigest\":\"49d25d9df260cc99189eb4b990e89a13bf3586b42cdafccebf79b04ef416fde8\"},{\"binding\":{\"canonicalFact\":{\"factType\":\"NODE\",\"id\":\"canonical-node-v1:b8cc9d8484f5c608ab4fd16c8fa699f60df84e2f488d03111e93b5101cc5d8d2\"},\"evidenceId\":\"provider-evidence-v1:d2a6ae2ed2543f5ed0f5a7e6a73899da9f8dc20d8cd585c0d6f00159ffc5bdb5\",\"providerFact\":{\"factType\":\"NODE\",\"providerFactId\":\"java:unit\",\"providerId\":\"native\"},\"providerSnapshotId\":\"snapshot:one\"},\"canonical\":{\"confidence\":{\"method\":\"parser\",\"reasons\":[],\"score\":1},\"factKey\":\"node-fact-v1:426cb60ee0500370996dbbdfd7ef72985b743b06382ef7df9e6b79699e1138a7\",\"id\":\"canonical-node-v1:b8cc9d8484f5c608ab4fd16c8fa699f60df84e2f488d03111e93b5101cc5d8d2\",\"kind\":\"MODULE\",\"name\":\"Box.java\",\"qualifiedName\":\"Box.java\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sourceRange\":null},\"dependencyUnitIds\":[\"history-native-unit-v1:0743bc513cfe3a0ed9200c55058bfa25f626ea90853d29bc829c56b6c6396b36\"],\"evidence\":{\"id\":\"provider-evidence-v1:d2a6ae2ed2543f5ed0f5a7e6a73899da9f8dc20d8cd585c0d6f00159ffc5bdb5\",\"providerFact\":{\"factType\":\"NODE\",\"providerFactId\":\"java:unit\",\"providerId\":\"native\"},\"providerSnapshotId\":\"snapshot:one\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"status\":\"ACTIVE\"},\"factEvidence\":{\"evidenceId\":\"provider-evidence-v1:d2a6ae2ed2543f5ed0f5a7e6a73899da9f8dc20d8cd585c0d6f00159ffc5bdb5\",\"fact\":{\"factType\":\"NODE\",\"id\":\"canonical-node-v1:b8cc9d8484f5c608ab4fd16c8fa699f60df84e2f488d03111e93b5101cc5d8d2\"}},\"factType\":\"NODE\",\"valueDigest\":\"42a64c5065ca9d90ec47727d2ae6af795bd37207127cb7f15a62e31a17a85983\"},{\"binding\":{\"canonicalFact\":{\"factType\":\"NODE\",\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\"},\"evidenceId\":\"provider-evidence-v1:3e560c7e388bc9af57d1f0df7bc120dc63f963b7ae66ad8f3435919178b9a774\",\"providerFact\":{\"factType\":\"NODE\",\"providerFactId\":\"python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb\",\"providerId\":\"native\"},\"providerSnapshotId\":\"snapshot:one\"},\"canonical\":{\"confidence\":{\"method\":\"parser\",\"reasons\":[],\"score\":1},\"factKey\":\"node-fact-v1:9f87fdd184180db6f32fe351dc70bd34a7f1d2baebfa5f06eb7714f1cb1f3dc5\",\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\",\"kind\":\"MODULE\",\"name\":\"app.py\",\"qualifiedName\":\"app.py\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sourceRange\":null},\"dependencyUnitIds\":[\"history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802\"],\"evidence\":{\"id\":\"provider-evidence-v1:3e560c7e388bc9af57d1f0df7bc120dc63f963b7ae66ad8f3435919178b9a774\",\"providerFact\":{\"factType\":\"NODE\",\"providerFactId\":\"python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb\",\"providerId\":\"native\"},\"providerSnapshotId\":\"snapshot:one\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"status\":\"ACTIVE\"},\"factEvidence\":{\"evidenceId\":\"provider-evidence-v1:3e560c7e388bc9af57d1f0df7bc120dc63f963b7ae66ad8f3435919178b9a774\",\"fact\":{\"factType\":\"NODE\",\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\"}},\"factType\":\"NODE\",\"valueDigest\":\"ba5a61549de8650dee23ee17800fdd2edc7f14a35382b2d047555f6b4c437c2b\"}],\"syntaxOrigins\":[{\"basis\":{\"codeActivationDigest\":\"1b82e18797aa65545a0a714478990fea64df3c3c45d72f2901954929e1d90e62\",\"contentFingerprint\":\"content:first\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\"},\"id\":\"syntax-origin:676a070ca8c2c12b29f58994d6f3a3495443772eef836878eb0e716d0007375e\",\"originSnapshotId\":\"snapshot:one\",\"unitId\":\"history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802\",\"valueDigest\":\"676a070ca8c2c12b29f58994d6f3a3495443772eef836878eb0e716d0007375e\"},{\"basis\":{\"codeActivationDigest\":\"1b82e18797aa65545a0a714478990fea64df3c3c45d72f2901954929e1d90e62\",\"contentFingerprint\":\"content:first\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\"},\"id\":\"syntax-origin:9e19c5ae39219cda01e687daf72b908f08088712c9878dd884a8976ceb675018\",\"originSnapshotId\":\"snapshot:one\",\"unitId\":\"history-native-unit-v1:0743bc513cfe3a0ed9200c55058bfa25f626ea90853d29bc829c56b6c6396b36\",\"valueDigest\":\"9e19c5ae39219cda01e687daf72b908f08088712c9878dd884a8976ceb675018\"},{\"basis\":{\"codeActivationDigest\":\"1b82e18797aa65545a0a714478990fea64df3c3c45d72f2901954929e1d90e62\",\"contentFingerprint\":\"content:first\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\"},\"id\":\"syntax-origin:fb450ee7424cc374cd8d586ba052c9e708b44e1dd456fb9c6defeb5c5e5b3810\",\"originSnapshotId\":\"snapshot:one\",\"unitId\":\"history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802\",\"valueDigest\":\"fb450ee7424cc374cd8d586ba052c9e708b44e1dd456fb9c6defeb5c5e5b3810\"}],\"units\":[{\"id\":\"history-native-unit-v1:0743bc513cfe3a0ed9200c55058bfa25f626ea90853d29bc829c56b6c6396b36\",\"kind\":\"JAVA_GROUP\",\"providerId\":\"native\",\"sourceFileIds\":[\"java:file\"]},{\"id\":\"history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802\",\"kind\":\"PYTHON_FILE\",\"providerId\":\"native\",\"sourceFileIds\":[\"file:one\"]}]},\"syntaxMembers\":[{\"originId\":\"syntax-origin:676a070ca8c2c12b29f58994d6f3a3495443772eef836878eb0e716d0007375e\",\"projectionId\":\"syntax:8ea952ecba5d20b818ad824cccec6f51aa97b5b43c5c08d869b19f08e55427bd\",\"unitId\":\"history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802\"},{\"originId\":\"syntax-origin:9e19c5ae39219cda01e687daf72b908f08088712c9878dd884a8976ceb675018\",\"projectionId\":\"syntax:765ba6720f10afa7bd03bd1b53ccbe64a6089666d2cde622a08c0ea1acb456f3\",\"unitId\":\"history-native-unit-v1:0743bc513cfe3a0ed9200c55058bfa25f626ea90853d29bc829c56b6c6396b36\"},{\"originId\":\"syntax-origin:fb450ee7424cc374cd8d586ba052c9e708b44e1dd456fb9c6defeb5c5e5b3810\",\"projectionId\":\"syntax:1d6a5d7011e14ea2ea73f261458609ff7726987a135903976832a3ae8727c1b0\",\"unitId\":\"history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802\"}],\"transitions\":null}"
+        }
+      ],
+      "syntax_origins": [
+        {
+          "id": "syntax-origin:9e19c5ae39219cda01e687daf72b908f08088712c9878dd884a8976ceb675018",
+          "repository_id": "repo:one",
+          "revision_id": "revision:worktree",
+          "origin_snapshot_id": "snapshot:one",
+          "origin_digest": "9e19c5ae39219cda01e687daf72b908f08088712c9878dd884a8976ceb675018",
+          "origin_json": "{\"envelope\":{\"payload\":{\"confidence\":{\"method\":\"syntax-surface-support-v1\",\"reasons\":[\"DECLARED_SOURCE_CONTEXT_MATCHED\",\"SYNTAX_PAYLOAD_VALIDATED\",\"REQUIRED_SUPPORTS_CLOSED\"],\"score\":0.5},\"extractionVersion\":\"syntax-extraction-v1:a294595a10ef89fc89aa2fa923caf5e692ebf5b86e2a7c3ececfe2756b5dcfbc\",\"id\":\"syntax:1101dce95fd0b2d37c13ffd5566bdbce2822b9f99ddc6100e240beb6c4c28404\",\"owner\":{\"entity\":{\"id\":\"canonical-node-v1:d4d1141ea168c690fb883ecbbaba0e7057a010eb7ef98d8cef6fc9172cbd42d8\",\"kind\":\"CODE_NODE\",\"revisionId\":\"revision:worktree\"},\"repositoryId\":\"repo:one\",\"scope\":\"REPOSITORY\"},\"payload\":{\"declaredType\":null,\"modifiers\":[],\"parameterNames\":[]},\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sourceFingerprint\":\"sha256:5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1\",\"sourceRange\":{\"endColumn\":12,\"endLine\":0,\"sourceFileId\":\"java:file\",\"startColumn\":0,\"startLine\":0},\"supportRefs\":[{\"basis\":{\"codeActivationDigest\":\"1b82e18797aa65545a0a714478990fea64df3c3c45d72f2901954929e1d90e62\",\"contentFingerprint\":\"content:first\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\"},\"entity\":{\"id\":\"canonical-node-v1:d4d1141ea168c690fb883ecbbaba0e7057a010eb7ef98d8cef6fc9172cbd42d8\",\"kind\":\"CODE_NODE\",\"revisionId\":\"revision:worktree\"},\"valueDigest\":\"b286513af20e6f8566757e731b4007c467b2f520703941d41866c14a0005cbb5\"},{\"basis\":{\"codeActivationDigest\":\"1b82e18797aa65545a0a714478990fea64df3c3c45d72f2901954929e1d90e62\",\"contentFingerprint\":\"content:first\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\"},\"entity\":{\"id\":\"java:file\",\"kind\":\"SOURCE_FILE\",\"revisionId\":\"revision:worktree\"},\"valueDigest\":\"943bc3ce8566cff936313d84f81e498c9c76cb543fc97033423370cab7593d3e\"}],\"syntaxKey\":\"syntax-key-v1:a6febf2fdd779e42809b88adfeb1aa445c7cb4892b12d15661b78f3251a38efc\",\"syntaxKind\":\"DECLARATION\"},\"schema\":\"codeatlas.syntax-evidence\",\"version\":1},\"originSnapshot\":{\"capabilities\":[{\"coverage\":\"COMPLETE\",\"name\":\"JAVA_CODE_V2\",\"support\":\"SUPPORTED\"},{\"coverage\":\"COMPLETE\",\"name\":\"PYTHON_SYNTAX_CODE_V1\",\"support\":\"SUPPORTED\"},{\"coverage\":\"COMPLETE\",\"name\":\"FRAMEWORK_SYNTAX_OBSERVATION_V1\",\"support\":\"SUPPORTED\"}],\"completedAt\":\"2026-10-24T00:00:00.003Z\",\"diagnostics\":[],\"id\":\"snapshot:one\",\"outcome\":\"SUCCEEDED\",\"providerId\":\"native\",\"providerVersion\":\"0.0.0\",\"repositoryId\":\"repo:one\",\"requestedRevisionFingerprint\":\"content:first\",\"requestedRevisionId\":\"revision:worktree\",\"runtimeVersion\":\"fixture-runtime\",\"startedAt\":\"2026-10-24T00:00:00.000Z\"},\"providerSyntaxId\":\"java:syntax:Box\",\"schemaVersion\":1,\"sourceFile\":{\"classification\":{\"contentKind\":\"TEXT\",\"provenance\":\"AUTHORED\",\"role\":\"SOURCE\"},\"contentFingerprint\":\"sha256:5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1\",\"id\":\"java:file\",\"languageHint\":\"java\",\"path\":\"Box.java\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sensitivity\":\"INTERNAL\"},\"unitId\":\"history-native-unit-v1:0743bc513cfe3a0ed9200c55058bfa25f626ea90853d29bc829c56b6c6396b36\"}"
+        },
+        {
+          "id": "syntax-origin:fb450ee7424cc374cd8d586ba052c9e708b44e1dd456fb9c6defeb5c5e5b3810",
+          "repository_id": "repo:one",
+          "revision_id": "revision:worktree",
+          "origin_snapshot_id": "snapshot:one",
+          "origin_digest": "fb450ee7424cc374cd8d586ba052c9e708b44e1dd456fb9c6defeb5c5e5b3810",
+          "origin_json": "{\"envelope\":{\"payload\":{\"confidence\":{\"method\":\"syntax-surface-support-v1\",\"reasons\":[\"DECLARED_SOURCE_CONTEXT_MATCHED\",\"SYNTAX_PAYLOAD_VALIDATED\",\"REQUIRED_SUPPORTS_CLOSED\",\"NON_EXACT_VALUE_REFERENCE_PRESERVED\"],\"score\":0.5},\"extractionVersion\":\"syntax-extraction-v1:a294595a10ef89fc89aa2fa923caf5e692ebf5b86e2a7c3ececfe2756b5dcfbc\",\"id\":\"syntax:ac1aa4a4fafed53f59af10c245a05477be76f25910260e70c993a6eb3b92cbcb\",\"owner\":{\"entity\":{\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\",\"kind\":\"CODE_NODE\",\"revisionId\":\"revision:worktree\"},\"repositoryId\":\"repo:one\",\"scope\":\"REPOSITORY\"},\"payload\":{\"targetName\":\"p\",\"value\":{\"candidates\":[],\"kind\":\"REFERENCE\",\"name\":\"pkg\",\"resolution\":\"UNRESOLVED\"}},\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sourceFingerprint\":\"sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50\",\"sourceRange\":{\"endColumn\":15,\"endLine\":0,\"sourceFileId\":\"file:one\",\"startColumn\":7,\"startLine\":0},\"supportRefs\":[{\"basis\":{\"codeActivationDigest\":\"1b82e18797aa65545a0a714478990fea64df3c3c45d72f2901954929e1d90e62\",\"contentFingerprint\":\"content:first\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\"},\"entity\":{\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\",\"kind\":\"CODE_NODE\",\"revisionId\":\"revision:worktree\"},\"valueDigest\":\"5f5a1d70c2e495c1a02acac4eacf28b73af6081f5acf0736ecab9db6eb49e330\"},{\"basis\":{\"codeActivationDigest\":\"1b82e18797aa65545a0a714478990fea64df3c3c45d72f2901954929e1d90e62\",\"contentFingerprint\":\"content:first\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\"},\"entity\":{\"id\":\"file:one\",\"kind\":\"SOURCE_FILE\",\"revisionId\":\"revision:worktree\"},\"valueDigest\":\"f437fd4ed7110ca5b2493abdbfec53f42dbe689d54e09a78bab1c11e119da186\"}],\"syntaxKey\":\"syntax-key-v1:2ae55d76e5366c073fa095980413399d4cc53b8e9e548699cf911d9d65df5396\",\"syntaxKind\":\"ASSIGNMENT\"},\"schema\":\"codeatlas.syntax-evidence\",\"version\":1},\"originSnapshot\":{\"capabilities\":[{\"coverage\":\"COMPLETE\",\"name\":\"JAVA_CODE_V2\",\"support\":\"SUPPORTED\"},{\"coverage\":\"COMPLETE\",\"name\":\"PYTHON_SYNTAX_CODE_V1\",\"support\":\"SUPPORTED\"},{\"coverage\":\"COMPLETE\",\"name\":\"FRAMEWORK_SYNTAX_OBSERVATION_V1\",\"support\":\"SUPPORTED\"}],\"completedAt\":\"2026-10-24T00:00:00.003Z\",\"diagnostics\":[],\"id\":\"snapshot:one\",\"outcome\":\"SUCCEEDED\",\"providerId\":\"native\",\"providerVersion\":\"0.0.0\",\"repositoryId\":\"repo:one\",\"requestedRevisionFingerprint\":\"content:first\",\"requestedRevisionId\":\"revision:worktree\",\"runtimeVersion\":\"fixture-runtime\",\"startedAt\":\"2026-10-24T00:00:00.000Z\"},\"providerSyntaxId\":\"python-syntax-v1:c328aab87bcc189e5124b10f4df68846ebbb0f010c92ab10efe4976b011d9e9b\",\"schemaVersion\":1,\"sourceFile\":{\"classification\":{\"contentKind\":\"TEXT\",\"provenance\":\"AUTHORED\",\"role\":\"SOURCE\"},\"contentFingerprint\":\"sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50\",\"id\":\"file:one\",\"languageHint\":\"python\",\"path\":\"app.py\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sensitivity\":\"INTERNAL\"},\"unitId\":\"history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802\"}"
+        },
+        {
+          "id": "syntax-origin:676a070ca8c2c12b29f58994d6f3a3495443772eef836878eb0e716d0007375e",
+          "repository_id": "repo:one",
+          "revision_id": "revision:worktree",
+          "origin_snapshot_id": "snapshot:one",
+          "origin_digest": "676a070ca8c2c12b29f58994d6f3a3495443772eef836878eb0e716d0007375e",
+          "origin_json": "{\"envelope\":{\"payload\":{\"confidence\":{\"method\":\"syntax-surface-support-v1\",\"reasons\":[\"DECLARED_SOURCE_CONTEXT_MATCHED\",\"SYNTAX_PAYLOAD_VALIDATED\",\"REQUIRED_SUPPORTS_CLOSED\",\"NON_EXACT_VALUE_REFERENCE_PRESERVED\"],\"score\":0.5},\"extractionVersion\":\"syntax-extraction-v1:a294595a10ef89fc89aa2fa923caf5e692ebf5b86e2a7c3ececfe2756b5dcfbc\",\"id\":\"syntax:c109d65ca9681058d65f51853d9c70a00b485d0ccf2d8d1b478ba39f68293117\",\"owner\":{\"entity\":{\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\",\"kind\":\"CODE_NODE\",\"revisionId\":\"revision:worktree\"},\"repositoryId\":\"repo:one\",\"scope\":\"REPOSITORY\"},\"payload\":{\"targetName\":\"x\",\"value\":{\"candidates\":[],\"kind\":\"REFERENCE\",\"name\":\"p\",\"resolution\":\"UNRESOLVED\"}},\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sourceFingerprint\":\"sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50\",\"sourceRange\":{\"endColumn\":5,\"endLine\":1,\"sourceFileId\":\"file:one\",\"startColumn\":0,\"startLine\":1},\"supportRefs\":[{\"basis\":{\"codeActivationDigest\":\"1b82e18797aa65545a0a714478990fea64df3c3c45d72f2901954929e1d90e62\",\"contentFingerprint\":\"content:first\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\"},\"entity\":{\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\",\"kind\":\"CODE_NODE\",\"revisionId\":\"revision:worktree\"},\"valueDigest\":\"5f5a1d70c2e495c1a02acac4eacf28b73af6081f5acf0736ecab9db6eb49e330\"},{\"basis\":{\"codeActivationDigest\":\"1b82e18797aa65545a0a714478990fea64df3c3c45d72f2901954929e1d90e62\",\"contentFingerprint\":\"content:first\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\"},\"entity\":{\"id\":\"file:one\",\"kind\":\"SOURCE_FILE\",\"revisionId\":\"revision:worktree\"},\"valueDigest\":\"f437fd4ed7110ca5b2493abdbfec53f42dbe689d54e09a78bab1c11e119da186\"}],\"syntaxKey\":\"syntax-key-v1:8a144109b18053ce891b8c3555cb805bb4d18993842770768b7728df64c49f65\",\"syntaxKind\":\"ASSIGNMENT\"},\"schema\":\"codeatlas.syntax-evidence\",\"version\":1},\"originSnapshot\":{\"capabilities\":[{\"coverage\":\"COMPLETE\",\"name\":\"JAVA_CODE_V2\",\"support\":\"SUPPORTED\"},{\"coverage\":\"COMPLETE\",\"name\":\"PYTHON_SYNTAX_CODE_V1\",\"support\":\"SUPPORTED\"},{\"coverage\":\"COMPLETE\",\"name\":\"FRAMEWORK_SYNTAX_OBSERVATION_V1\",\"support\":\"SUPPORTED\"}],\"completedAt\":\"2026-10-24T00:00:00.003Z\",\"diagnostics\":[],\"id\":\"snapshot:one\",\"outcome\":\"SUCCEEDED\",\"providerId\":\"native\",\"providerVersion\":\"0.0.0\",\"repositoryId\":\"repo:one\",\"requestedRevisionFingerprint\":\"content:first\",\"requestedRevisionId\":\"revision:worktree\",\"runtimeVersion\":\"fixture-runtime\",\"startedAt\":\"2026-10-24T00:00:00.000Z\"},\"providerSyntaxId\":\"python-syntax-v1:77e2f151a2fce77c4b023ae5f92d2038c8518c892aeec5dfe07e38871abd89c7\",\"schemaVersion\":1,\"sourceFile\":{\"classification\":{\"contentKind\":\"TEXT\",\"provenance\":\"AUTHORED\",\"role\":\"SOURCE\"},\"contentFingerprint\":\"sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50\",\"id\":\"file:one\",\"languageHint\":\"python\",\"path\":\"app.py\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sensitivity\":\"INTERNAL\"},\"unitId\":\"history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802\"}"
+        }
+      ],
+      "syntax_projections": [
+        {
+          "id": "syntax:765ba6720f10afa7bd03bd1b53ccbe64a6089666d2cde622a08c0ea1acb456f3",
+          "repository_id": "repo:one",
+          "origin_id": "syntax-origin:9e19c5ae39219cda01e687daf72b908f08088712c9878dd884a8976ceb675018",
+          "projection_digest": "765ba6720f10afa7bd03bd1b53ccbe64a6089666d2cde622a08c0ea1acb456f3",
+          "envelope_json": "{\"payload\":{\"confidence\":{\"method\":\"syntax-surface-support-v1\",\"reasons\":[\"DECLARED_SOURCE_CONTEXT_MATCHED\",\"SYNTAX_PAYLOAD_VALIDATED\",\"REQUIRED_SUPPORTS_CLOSED\"],\"score\":0.5},\"extractionVersion\":\"syntax-extraction-v1:a294595a10ef89fc89aa2fa923caf5e692ebf5b86e2a7c3ececfe2756b5dcfbc\",\"id\":\"syntax:765ba6720f10afa7bd03bd1b53ccbe64a6089666d2cde622a08c0ea1acb456f3\",\"owner\":{\"entity\":{\"id\":\"canonical-node-v1:d4d1141ea168c690fb883ecbbaba0e7057a010eb7ef98d8cef6fc9172cbd42d8\",\"kind\":\"CODE_NODE\",\"revisionId\":\"revision:worktree\"},\"repositoryId\":\"repo:one\",\"scope\":\"REPOSITORY\"},\"payload\":{\"declaredType\":null,\"modifiers\":[],\"parameterNames\":[]},\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sourceFingerprint\":\"sha256:5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1\",\"sourceRange\":{\"endColumn\":12,\"endLine\":0,\"sourceFileId\":\"java:file\",\"startColumn\":0,\"startLine\":0},\"supportRefs\":[{\"basis\":{\"codeActivationDigest\":\"1b82e18797aa65545a0a714478990fea64df3c3c45d72f2901954929e1d90e62\",\"contentFingerprint\":\"content:first\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\"},\"entity\":{\"id\":\"canonical-node-v1:d4d1141ea168c690fb883ecbbaba0e7057a010eb7ef98d8cef6fc9172cbd42d8\",\"kind\":\"CODE_NODE\",\"revisionId\":\"revision:worktree\"},\"valueDigest\":\"b286513af20e6f8566757e731b4007c467b2f520703941d41866c14a0005cbb5\"},{\"basis\":{\"codeActivationDigest\":\"1b82e18797aa65545a0a714478990fea64df3c3c45d72f2901954929e1d90e62\",\"contentFingerprint\":\"content:first\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\"},\"entity\":{\"id\":\"java:file\",\"kind\":\"SOURCE_FILE\",\"revisionId\":\"revision:worktree\"},\"valueDigest\":\"943bc3ce8566cff936313d84f81e498c9c76cb543fc97033423370cab7593d3e\"}],\"syntaxKey\":\"syntax-key-v1:a6febf2fdd779e42809b88adfeb1aa445c7cb4892b12d15661b78f3251a38efc\",\"syntaxKind\":\"DECLARATION\"},\"schema\":\"codeatlas.syntax-evidence\",\"version\":1}"
+        },
+        {
+          "id": "syntax:1d6a5d7011e14ea2ea73f261458609ff7726987a135903976832a3ae8727c1b0",
+          "repository_id": "repo:one",
+          "origin_id": "syntax-origin:fb450ee7424cc374cd8d586ba052c9e708b44e1dd456fb9c6defeb5c5e5b3810",
+          "projection_digest": "1d6a5d7011e14ea2ea73f261458609ff7726987a135903976832a3ae8727c1b0",
+          "envelope_json": "{\"payload\":{\"confidence\":{\"method\":\"syntax-surface-support-v1\",\"reasons\":[\"DECLARED_SOURCE_CONTEXT_MATCHED\",\"SYNTAX_PAYLOAD_VALIDATED\",\"REQUIRED_SUPPORTS_CLOSED\",\"NON_EXACT_VALUE_REFERENCE_PRESERVED\"],\"score\":0.5},\"extractionVersion\":\"syntax-extraction-v1:a294595a10ef89fc89aa2fa923caf5e692ebf5b86e2a7c3ececfe2756b5dcfbc\",\"id\":\"syntax:1d6a5d7011e14ea2ea73f261458609ff7726987a135903976832a3ae8727c1b0\",\"owner\":{\"entity\":{\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\",\"kind\":\"CODE_NODE\",\"revisionId\":\"revision:worktree\"},\"repositoryId\":\"repo:one\",\"scope\":\"REPOSITORY\"},\"payload\":{\"targetName\":\"p\",\"value\":{\"candidates\":[],\"kind\":\"REFERENCE\",\"name\":\"pkg\",\"resolution\":\"UNRESOLVED\"}},\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sourceFingerprint\":\"sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50\",\"sourceRange\":{\"endColumn\":15,\"endLine\":0,\"sourceFileId\":\"file:one\",\"startColumn\":7,\"startLine\":0},\"supportRefs\":[{\"basis\":{\"codeActivationDigest\":\"1b82e18797aa65545a0a714478990fea64df3c3c45d72f2901954929e1d90e62\",\"contentFingerprint\":\"content:first\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\"},\"entity\":{\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\",\"kind\":\"CODE_NODE\",\"revisionId\":\"revision:worktree\"},\"valueDigest\":\"5f5a1d70c2e495c1a02acac4eacf28b73af6081f5acf0736ecab9db6eb49e330\"},{\"basis\":{\"codeActivationDigest\":\"1b82e18797aa65545a0a714478990fea64df3c3c45d72f2901954929e1d90e62\",\"contentFingerprint\":\"content:first\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\"},\"entity\":{\"id\":\"file:one\",\"kind\":\"SOURCE_FILE\",\"revisionId\":\"revision:worktree\"},\"valueDigest\":\"f437fd4ed7110ca5b2493abdbfec53f42dbe689d54e09a78bab1c11e119da186\"}],\"syntaxKey\":\"syntax-key-v1:2ae55d76e5366c073fa095980413399d4cc53b8e9e548699cf911d9d65df5396\",\"syntaxKind\":\"ASSIGNMENT\"},\"schema\":\"codeatlas.syntax-evidence\",\"version\":1}"
+        },
+        {
+          "id": "syntax:8ea952ecba5d20b818ad824cccec6f51aa97b5b43c5c08d869b19f08e55427bd",
+          "repository_id": "repo:one",
+          "origin_id": "syntax-origin:676a070ca8c2c12b29f58994d6f3a3495443772eef836878eb0e716d0007375e",
+          "projection_digest": "8ea952ecba5d20b818ad824cccec6f51aa97b5b43c5c08d869b19f08e55427bd",
+          "envelope_json": "{\"payload\":{\"confidence\":{\"method\":\"syntax-surface-support-v1\",\"reasons\":[\"DECLARED_SOURCE_CONTEXT_MATCHED\",\"SYNTAX_PAYLOAD_VALIDATED\",\"REQUIRED_SUPPORTS_CLOSED\",\"NON_EXACT_VALUE_REFERENCE_PRESERVED\"],\"score\":0.5},\"extractionVersion\":\"syntax-extraction-v1:a294595a10ef89fc89aa2fa923caf5e692ebf5b86e2a7c3ececfe2756b5dcfbc\",\"id\":\"syntax:8ea952ecba5d20b818ad824cccec6f51aa97b5b43c5c08d869b19f08e55427bd\",\"owner\":{\"entity\":{\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\",\"kind\":\"CODE_NODE\",\"revisionId\":\"revision:worktree\"},\"repositoryId\":\"repo:one\",\"scope\":\"REPOSITORY\"},\"payload\":{\"targetName\":\"x\",\"value\":{\"candidates\":[],\"kind\":\"REFERENCE\",\"name\":\"p\",\"resolution\":\"UNRESOLVED\"}},\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sourceFingerprint\":\"sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50\",\"sourceRange\":{\"endColumn\":5,\"endLine\":1,\"sourceFileId\":\"file:one\",\"startColumn\":0,\"startLine\":1},\"supportRefs\":[{\"basis\":{\"codeActivationDigest\":\"1b82e18797aa65545a0a714478990fea64df3c3c45d72f2901954929e1d90e62\",\"contentFingerprint\":\"content:first\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\"},\"entity\":{\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\",\"kind\":\"CODE_NODE\",\"revisionId\":\"revision:worktree\"},\"valueDigest\":\"5f5a1d70c2e495c1a02acac4eacf28b73af6081f5acf0736ecab9db6eb49e330\"},{\"basis\":{\"codeActivationDigest\":\"1b82e18797aa65545a0a714478990fea64df3c3c45d72f2901954929e1d90e62\",\"contentFingerprint\":\"content:first\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\"},\"entity\":{\"id\":\"file:one\",\"kind\":\"SOURCE_FILE\",\"revisionId\":\"revision:worktree\"},\"valueDigest\":\"f437fd4ed7110ca5b2493abdbfec53f42dbe689d54e09a78bab1c11e119da186\"}],\"syntaxKey\":\"syntax-key-v1:8a144109b18053ce891b8c3555cb805bb4d18993842770768b7728df64c49f65\",\"syntaxKind\":\"ASSIGNMENT\"},\"schema\":\"codeatlas.syntax-evidence\",\"version\":1}"
+        }
+      ],
+      "activation_syntax_members": [
+        {
+          "activation_id": "activation:8eabce2fc68a47ff6be9220bf96ddf0f612e9f809cc01f296731097c13d1fd71",
+          "repository_id": "repo:one",
+          "origin_id": "syntax-origin:676a070ca8c2c12b29f58994d6f3a3495443772eef836878eb0e716d0007375e",
+          "projection_id": "syntax:8ea952ecba5d20b818ad824cccec6f51aa97b5b43c5c08d869b19f08e55427bd"
+        },
+        {
+          "activation_id": "activation:8eabce2fc68a47ff6be9220bf96ddf0f612e9f809cc01f296731097c13d1fd71",
+          "repository_id": "repo:one",
+          "origin_id": "syntax-origin:9e19c5ae39219cda01e687daf72b908f08088712c9878dd884a8976ceb675018",
+          "projection_id": "syntax:765ba6720f10afa7bd03bd1b53ccbe64a6089666d2cde622a08c0ea1acb456f3"
+        },
+        {
+          "activation_id": "activation:8eabce2fc68a47ff6be9220bf96ddf0f612e9f809cc01f296731097c13d1fd71",
+          "repository_id": "repo:one",
+          "origin_id": "syntax-origin:fb450ee7424cc374cd8d586ba052c9e708b44e1dd456fb9c6defeb5c5e5b3810",
+          "projection_id": "syntax:1d6a5d7011e14ea2ea73f261458609ff7726987a135903976832a3ae8727c1b0"
+        }
+      ],
+      "active_history_pointer": [
+        {
+          "repository_id": "repo:one",
+          "activation_id": "activation:8eabce2fc68a47ff6be9220bf96ddf0f612e9f809cc01f296731097c13d1fd71"
+        }
+      ]
+    }
+  },
+  "declared": {
+    "id": "noop-mixed",
+    "input": {
+      "mode": "DELTA",
+      "target": {
+        "source": {
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "contentFingerprint": "content:first"
+        },
+        "repositoryLocatorDigest": "be4f443420f269e1872f380f6f29ebe00eb40b3be70bb3df08a27a9691b576ac",
+        "inventory": [
+          {
+            "id": "java:file",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "path": "Box.java",
+            "contentFingerprint": "sha256:5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1",
+            "classification": {
+              "role": "SOURCE",
+              "provenance": "AUTHORED",
+              "contentKind": "TEXT"
+            },
+            "languageHint": "java",
+            "sensitivity": "INTERNAL"
+          },
+          {
+            "id": "file:one",
+            "repositoryId": "repo:one",
+            "revisionId": "revision:worktree",
+            "path": "app.py",
+            "contentFingerprint": "sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+            "classification": {
+              "role": "SOURCE",
+              "provenance": "AUTHORED",
+              "contentKind": "TEXT"
+            },
+            "languageHint": "python",
+            "sensitivity": "INTERNAL"
+          }
+        ],
+        "contracts": [
+          {
+            "providerId": "native",
+            "extractor": "syntax-v1",
+            "normalizer": "fixture-v1",
+            "contract": "PYTHON_SYNTAX_CODE_V1",
+            "policy": "syntax-surface-support-v1"
+          }
+        ]
+      },
+      "capture": {
+        "parent": {
+          "activationId": "activation:8eabce2fc68a47ff6be9220bf96ddf0f612e9f809cc01f296731097c13d1fd71",
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree"
+        },
+        "snapshotIds": ["snapshot:one"],
+        "snapshots": [
+          {
+            "id": "snapshot:one",
+            "providerId": "native",
+            "providerVersion": "0.0.0",
+            "runtimeVersion": "fixture-runtime",
+            "startedAt": "2026-10-24T00:00:00.000Z",
+            "completedAt": "2026-10-24T00:00:00.003Z",
+            "repositoryId": "repo:one",
+            "requestedRevisionId": "revision:worktree",
+            "requestedRevisionFingerprint": "content:first",
+            "capabilities": [
+              {
+                "name": "JAVA_CODE_V2",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              },
+              {
+                "name": "PYTHON_SYNTAX_CODE_V1",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              },
+              {
+                "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                "support": "SUPPORTED",
+                "coverage": "COMPLETE"
+              }
+            ],
+            "diagnostics": [],
+            "outcome": "SUCCEEDED"
+          }
+        ],
+        "coverage": [
+          {
+            "providerSnapshotId": "snapshot:one",
+            "capabilityName": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+            "sourceFileId": "java:file",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:one",
+            "capabilityName": "JAVA_CODE_V2",
+            "sourceFileId": "java:file",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:one",
+            "capabilityName": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+            "sourceFileId": "file:one",
+            "status": "COMPLETE"
+          },
+          {
+            "providerSnapshotId": "snapshot:one",
+            "capabilityName": "PYTHON_SYNTAX_CODE_V1",
+            "sourceFileId": "file:one",
+            "status": "COMPLETE"
+          }
+        ],
+        "activeProviderIds": ["native"],
+        "history": {
+          "schemaVersion": 1,
+          "parent": null,
+          "state": {
+            "basis": {
+              "repositoryId": "repo:one",
+              "revisionId": "revision:worktree",
+              "contentFingerprint": "content:first",
+              "codeActivationDigest": "1b82e18797aa65545a0a714478990fea64df3c3c45d72f2901954929e1d90e62"
+            },
+            "repositoryLocatorDigest": "be4f443420f269e1872f380f6f29ebe00eb40b3be70bb3df08a27a9691b576ac",
+            "inventory": [
+              {
+                "id": "java:file",
+                "repositoryId": "repo:one",
+                "revisionId": "revision:worktree",
+                "path": "Box.java",
+                "contentFingerprint": "sha256:5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1",
+                "classification": {
+                  "role": "SOURCE",
+                  "provenance": "AUTHORED",
+                  "contentKind": "TEXT"
+                },
+                "languageHint": "java",
+                "sensitivity": "INTERNAL"
+              },
+              {
+                "id": "file:one",
+                "repositoryId": "repo:one",
+                "revisionId": "revision:worktree",
+                "path": "app.py",
+                "contentFingerprint": "sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+                "classification": {
+                  "role": "SOURCE",
+                  "provenance": "AUTHORED",
+                  "contentKind": "TEXT"
+                },
+                "languageHint": "python",
+                "sensitivity": "INTERNAL"
+              }
+            ],
+            "contracts": [
+              {
+                "providerId": "native",
+                "extractor": "syntax-v1",
+                "normalizer": "fixture-v1",
+                "contract": "PYTHON_SYNTAX_CODE_V1",
+                "policy": "syntax-surface-support-v1"
+              }
+            ],
+            "units": [
+              {
+                "id": "history-native-unit-v1:0743bc513cfe3a0ed9200c55058bfa25f626ea90853d29bc829c56b6c6396b36",
+                "providerId": "native",
+                "kind": "JAVA_GROUP",
+                "sourceFileIds": ["java:file"]
+              },
+              {
+                "id": "history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802",
+                "providerId": "native",
+                "kind": "PYTHON_FILE",
+                "sourceFileIds": ["file:one"]
+              }
+            ],
+            "snapshots": [
+              {
+                "id": "snapshot:one",
+                "providerId": "native",
+                "providerVersion": "0.0.0",
+                "runtimeVersion": "fixture-runtime",
+                "startedAt": "2026-10-24T00:00:00.000Z",
+                "completedAt": "2026-10-24T00:00:00.003Z",
+                "repositoryId": "repo:one",
+                "requestedRevisionId": "revision:worktree",
+                "requestedRevisionFingerprint": "content:first",
+                "capabilities": [
+                  {
+                    "name": "JAVA_CODE_V2",
+                    "support": "SUPPORTED",
+                    "coverage": "COMPLETE"
+                  },
+                  {
+                    "name": "PYTHON_SYNTAX_CODE_V1",
+                    "support": "SUPPORTED",
+                    "coverage": "COMPLETE"
+                  },
+                  {
+                    "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                    "support": "SUPPORTED",
+                    "coverage": "COMPLETE"
+                  }
+                ],
+                "diagnostics": [],
+                "outcome": "SUCCEEDED"
+              }
+            ],
+            "nodes": [
+              {
+                "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+                "factKey": "node-fact-v1:9f87fdd184180db6f32fe351dc70bd34a7f1d2baebfa5f06eb7714f1cb1f3dc5",
+                "repositoryId": "repo:one",
+                "revisionId": "revision:worktree",
+                "name": "app.py",
+                "qualifiedName": "app.py",
+                "sourceRange": null,
+                "confidence": {
+                  "score": 1,
+                  "method": "parser",
+                  "reasons": []
+                },
+                "kind": "MODULE"
+              },
+              {
+                "id": "canonical-node-v1:b8cc9d8484f5c608ab4fd16c8fa699f60df84e2f488d03111e93b5101cc5d8d2",
+                "factKey": "node-fact-v1:426cb60ee0500370996dbbdfd7ef72985b743b06382ef7df9e6b79699e1138a7",
+                "repositoryId": "repo:one",
+                "revisionId": "revision:worktree",
+                "name": "Box.java",
+                "qualifiedName": "Box.java",
+                "sourceRange": null,
+                "confidence": {
+                  "score": 1,
+                  "method": "parser",
+                  "reasons": []
+                },
+                "kind": "MODULE"
+              },
+              {
+                "id": "canonical-node-v1:d4d1141ea168c690fb883ecbbaba0e7057a010eb7ef98d8cef6fc9172cbd42d8",
+                "factKey": "node-fact-v1:fa07e81351801d888b39e1742617736c6fe9d1f50c0ee59f63680270f36e3856",
+                "repositoryId": "repo:one",
+                "revisionId": "revision:worktree",
+                "name": "Box",
+                "qualifiedName": "Box",
+                "sourceRange": {
+                  "sourceFileId": "java:file",
+                  "startLine": 0,
+                  "startColumn": 6,
+                  "endLine": 0,
+                  "endColumn": 9
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "parser",
+                  "reasons": []
+                },
+                "kind": "TYPE",
+                "typeKind": "CLASS"
+              }
+            ],
+            "edges": [
+              {
+                "id": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f",
+                "factKey": "edge-fact-v1:1a0f6116e03a3e0ec190dcae40a69e4c6dc7b8306c921c480ee61a134faefbb1",
+                "repositoryId": "repo:one",
+                "revisionId": "revision:worktree",
+                "kind": "REFERENCE",
+                "source": {
+                  "factType": "NODE",
+                  "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+                },
+                "target": {
+                  "state": "UNRESOLVED",
+                  "resolution": "UNRESOLVED",
+                  "originalHint": "p",
+                  "candidates": []
+                },
+                "sourceRange": {
+                  "sourceFileId": "file:one",
+                  "startLine": 1,
+                  "startColumn": 4,
+                  "endLine": 1,
+                  "endColumn": 5
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "parser",
+                  "reasons": []
+                }
+              },
+              {
+                "id": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b",
+                "factKey": "edge-fact-v1:4a62f7e32fef238335777788b0a79f7ca94e221cf803955bce28151f1a3b608a",
+                "repositoryId": "repo:one",
+                "revisionId": "revision:worktree",
+                "kind": "IMPORT",
+                "source": {
+                  "factType": "NODE",
+                  "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+                },
+                "target": {
+                  "state": "UNRESOLVED",
+                  "resolution": "UNRESOLVED",
+                  "originalHint": "pkg",
+                  "candidates": []
+                },
+                "sourceRange": {
+                  "sourceFileId": "file:one",
+                  "startLine": 0,
+                  "startColumn": 7,
+                  "endLine": 0,
+                  "endColumn": 15
+                },
+                "confidence": {
+                  "score": 1,
+                  "method": "parser",
+                  "reasons": []
+                }
+              }
+            ],
+            "supports": [
+              {
+                "factType": "EDGE",
+                "canonical": {
+                  "confidence": {
+                    "method": "parser",
+                    "reasons": [],
+                    "score": 1
+                  },
+                  "factKey": "edge-fact-v1:4a62f7e32fef238335777788b0a79f7ca94e221cf803955bce28151f1a3b608a",
+                  "id": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b",
+                  "kind": "IMPORT",
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:worktree",
+                  "source": {
+                    "factType": "NODE",
+                    "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+                  },
+                  "sourceRange": {
+                    "endColumn": 15,
+                    "endLine": 0,
+                    "sourceFileId": "file:one",
+                    "startColumn": 7,
+                    "startLine": 0
+                  },
+                  "target": {
+                    "candidates": [],
+                    "originalHint": "pkg",
+                    "resolution": "UNRESOLVED",
+                    "state": "UNRESOLVED"
+                  }
+                },
+                "evidence": {
+                  "id": "provider-evidence-v1:67c5d5eb19460c19712256f8c2468fe6024dc841a52daead2855da4908625010",
+                  "providerFact": {
+                    "factType": "EDGE",
+                    "providerFactId": "python-edge-v1:37bdc236f427d4e4dc22c574e10b48a36d14083aa7f3f4ae471776631d75fa67",
+                    "providerId": "native"
+                  },
+                  "providerSnapshotId": "snapshot:one",
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:worktree",
+                  "status": "ACTIVE"
+                },
+                "binding": {
+                  "canonicalFact": {
+                    "factType": "EDGE",
+                    "id": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b"
+                  },
+                  "evidenceId": "provider-evidence-v1:67c5d5eb19460c19712256f8c2468fe6024dc841a52daead2855da4908625010",
+                  "providerFact": {
+                    "factType": "EDGE",
+                    "providerFactId": "python-edge-v1:37bdc236f427d4e4dc22c574e10b48a36d14083aa7f3f4ae471776631d75fa67",
+                    "providerId": "native"
+                  },
+                  "providerSnapshotId": "snapshot:one"
+                },
+                "factEvidence": {
+                  "evidenceId": "provider-evidence-v1:67c5d5eb19460c19712256f8c2468fe6024dc841a52daead2855da4908625010",
+                  "fact": {
+                    "factType": "EDGE",
+                    "id": "canonical-edge-v1:f0bd5c04023f11080d9cb2d6b46676428359376c345bc7dd375c0565832ccb5b"
+                  }
+                },
+                "dependencyUnitIds": [
+                  "history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802"
+                ],
+                "valueDigest": "9385c46790615700a8c37d6bedac723beac8b7b729a9e284ae4a5cd8ed264346"
+              },
+              {
+                "factType": "EDGE",
+                "canonical": {
+                  "confidence": {
+                    "method": "parser",
+                    "reasons": [],
+                    "score": 1
+                  },
+                  "factKey": "edge-fact-v1:1a0f6116e03a3e0ec190dcae40a69e4c6dc7b8306c921c480ee61a134faefbb1",
+                  "id": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f",
+                  "kind": "REFERENCE",
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:worktree",
+                  "source": {
+                    "factType": "NODE",
+                    "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+                  },
+                  "sourceRange": {
+                    "endColumn": 5,
+                    "endLine": 1,
+                    "sourceFileId": "file:one",
+                    "startColumn": 4,
+                    "startLine": 1
+                  },
+                  "target": {
+                    "candidates": [],
+                    "originalHint": "p",
+                    "resolution": "UNRESOLVED",
+                    "state": "UNRESOLVED"
+                  }
+                },
+                "evidence": {
+                  "id": "provider-evidence-v1:f62ec04b071dc54dbfc1bdd6c44f5a418d570203cf31812a9db348059ac2db99",
+                  "providerFact": {
+                    "factType": "EDGE",
+                    "providerFactId": "python-edge-v1:778fbe8c61c6ddb3ac42c06c7d6014fd8a250b2b36c53529c4dad1a70fdef970",
+                    "providerId": "native"
+                  },
+                  "providerSnapshotId": "snapshot:one",
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:worktree",
+                  "status": "ACTIVE"
+                },
+                "binding": {
+                  "canonicalFact": {
+                    "factType": "EDGE",
+                    "id": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f"
+                  },
+                  "evidenceId": "provider-evidence-v1:f62ec04b071dc54dbfc1bdd6c44f5a418d570203cf31812a9db348059ac2db99",
+                  "providerFact": {
+                    "factType": "EDGE",
+                    "providerFactId": "python-edge-v1:778fbe8c61c6ddb3ac42c06c7d6014fd8a250b2b36c53529c4dad1a70fdef970",
+                    "providerId": "native"
+                  },
+                  "providerSnapshotId": "snapshot:one"
+                },
+                "factEvidence": {
+                  "evidenceId": "provider-evidence-v1:f62ec04b071dc54dbfc1bdd6c44f5a418d570203cf31812a9db348059ac2db99",
+                  "fact": {
+                    "factType": "EDGE",
+                    "id": "canonical-edge-v1:3101bc34bbc0a91ae6ff2e278c231de0a9ce193ae293808f757dd529de29209f"
+                  }
+                },
+                "dependencyUnitIds": [
+                  "history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802"
+                ],
+                "valueDigest": "38b06f943da7bed91ea6d61814614c52b05435b6f1fe2d8e0ca908afc2c95b48"
+              },
+              {
+                "factType": "NODE",
+                "canonical": {
+                  "confidence": {
+                    "method": "parser",
+                    "reasons": [],
+                    "score": 1
+                  },
+                  "factKey": "node-fact-v1:fa07e81351801d888b39e1742617736c6fe9d1f50c0ee59f63680270f36e3856",
+                  "id": "canonical-node-v1:d4d1141ea168c690fb883ecbbaba0e7057a010eb7ef98d8cef6fc9172cbd42d8",
+                  "kind": "TYPE",
+                  "name": "Box",
+                  "qualifiedName": "Box",
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:worktree",
+                  "sourceRange": {
+                    "endColumn": 9,
+                    "endLine": 0,
+                    "sourceFileId": "java:file",
+                    "startColumn": 6,
+                    "startLine": 0
+                  },
+                  "typeKind": "CLASS"
+                },
+                "evidence": {
+                  "id": "provider-evidence-v1:9a96776fa3dee8d0b3bace20e24b9e91e84704bcc9177a57c65002f64b7cc393",
+                  "providerFact": {
+                    "factType": "NODE",
+                    "providerFactId": "java:Box",
+                    "providerId": "native"
+                  },
+                  "providerSnapshotId": "snapshot:one",
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:worktree",
+                  "status": "ACTIVE"
+                },
+                "binding": {
+                  "canonicalFact": {
+                    "factType": "NODE",
+                    "id": "canonical-node-v1:d4d1141ea168c690fb883ecbbaba0e7057a010eb7ef98d8cef6fc9172cbd42d8"
+                  },
+                  "evidenceId": "provider-evidence-v1:9a96776fa3dee8d0b3bace20e24b9e91e84704bcc9177a57c65002f64b7cc393",
+                  "providerFact": {
+                    "factType": "NODE",
+                    "providerFactId": "java:Box",
+                    "providerId": "native"
+                  },
+                  "providerSnapshotId": "snapshot:one"
+                },
+                "factEvidence": {
+                  "evidenceId": "provider-evidence-v1:9a96776fa3dee8d0b3bace20e24b9e91e84704bcc9177a57c65002f64b7cc393",
+                  "fact": {
+                    "factType": "NODE",
+                    "id": "canonical-node-v1:d4d1141ea168c690fb883ecbbaba0e7057a010eb7ef98d8cef6fc9172cbd42d8"
+                  }
+                },
+                "dependencyUnitIds": [
+                  "history-native-unit-v1:0743bc513cfe3a0ed9200c55058bfa25f626ea90853d29bc829c56b6c6396b36"
+                ],
+                "valueDigest": "49d25d9df260cc99189eb4b990e89a13bf3586b42cdafccebf79b04ef416fde8"
+              },
+              {
+                "factType": "NODE",
+                "canonical": {
+                  "confidence": {
+                    "method": "parser",
+                    "reasons": [],
+                    "score": 1
+                  },
+                  "factKey": "node-fact-v1:426cb60ee0500370996dbbdfd7ef72985b743b06382ef7df9e6b79699e1138a7",
+                  "id": "canonical-node-v1:b8cc9d8484f5c608ab4fd16c8fa699f60df84e2f488d03111e93b5101cc5d8d2",
+                  "kind": "MODULE",
+                  "name": "Box.java",
+                  "qualifiedName": "Box.java",
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:worktree",
+                  "sourceRange": null
+                },
+                "evidence": {
+                  "id": "provider-evidence-v1:d2a6ae2ed2543f5ed0f5a7e6a73899da9f8dc20d8cd585c0d6f00159ffc5bdb5",
+                  "providerFact": {
+                    "factType": "NODE",
+                    "providerFactId": "java:unit",
+                    "providerId": "native"
+                  },
+                  "providerSnapshotId": "snapshot:one",
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:worktree",
+                  "status": "ACTIVE"
+                },
+                "binding": {
+                  "canonicalFact": {
+                    "factType": "NODE",
+                    "id": "canonical-node-v1:b8cc9d8484f5c608ab4fd16c8fa699f60df84e2f488d03111e93b5101cc5d8d2"
+                  },
+                  "evidenceId": "provider-evidence-v1:d2a6ae2ed2543f5ed0f5a7e6a73899da9f8dc20d8cd585c0d6f00159ffc5bdb5",
+                  "providerFact": {
+                    "factType": "NODE",
+                    "providerFactId": "java:unit",
+                    "providerId": "native"
+                  },
+                  "providerSnapshotId": "snapshot:one"
+                },
+                "factEvidence": {
+                  "evidenceId": "provider-evidence-v1:d2a6ae2ed2543f5ed0f5a7e6a73899da9f8dc20d8cd585c0d6f00159ffc5bdb5",
+                  "fact": {
+                    "factType": "NODE",
+                    "id": "canonical-node-v1:b8cc9d8484f5c608ab4fd16c8fa699f60df84e2f488d03111e93b5101cc5d8d2"
+                  }
+                },
+                "dependencyUnitIds": [
+                  "history-native-unit-v1:0743bc513cfe3a0ed9200c55058bfa25f626ea90853d29bc829c56b6c6396b36"
+                ],
+                "valueDigest": "42a64c5065ca9d90ec47727d2ae6af795bd37207127cb7f15a62e31a17a85983"
+              },
+              {
+                "factType": "NODE",
+                "canonical": {
+                  "confidence": {
+                    "method": "parser",
+                    "reasons": [],
+                    "score": 1
+                  },
+                  "factKey": "node-fact-v1:9f87fdd184180db6f32fe351dc70bd34a7f1d2baebfa5f06eb7714f1cb1f3dc5",
+                  "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897",
+                  "kind": "MODULE",
+                  "name": "app.py",
+                  "qualifiedName": "app.py",
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:worktree",
+                  "sourceRange": null
+                },
+                "evidence": {
+                  "id": "provider-evidence-v1:3e560c7e388bc9af57d1f0df7bc120dc63f963b7ae66ad8f3435919178b9a774",
+                  "providerFact": {
+                    "factType": "NODE",
+                    "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb",
+                    "providerId": "native"
+                  },
+                  "providerSnapshotId": "snapshot:one",
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:worktree",
+                  "status": "ACTIVE"
+                },
+                "binding": {
+                  "canonicalFact": {
+                    "factType": "NODE",
+                    "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+                  },
+                  "evidenceId": "provider-evidence-v1:3e560c7e388bc9af57d1f0df7bc120dc63f963b7ae66ad8f3435919178b9a774",
+                  "providerFact": {
+                    "factType": "NODE",
+                    "providerFactId": "python-module-v1:b75c6189490de7085f5f19dce81001b476a6bbb37e432fb3c51942abfbfc86fb",
+                    "providerId": "native"
+                  },
+                  "providerSnapshotId": "snapshot:one"
+                },
+                "factEvidence": {
+                  "evidenceId": "provider-evidence-v1:3e560c7e388bc9af57d1f0df7bc120dc63f963b7ae66ad8f3435919178b9a774",
+                  "fact": {
+                    "factType": "NODE",
+                    "id": "canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897"
+                  }
+                },
+                "dependencyUnitIds": [
+                  "history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802"
+                ],
+                "valueDigest": "ba5a61549de8650dee23ee17800fdd2edc7f14a35382b2d047555f6b4c437c2b"
+              }
+            ],
+            "coverage": [
+              {
+                "unitId": "history-native-unit-v1:0743bc513cfe3a0ed9200c55058bfa25f626ea90853d29bc829c56b6c6396b36",
+                "facet": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                "originSnapshotId": "snapshot:one",
+                "coverage": "COMPLETE"
+              },
+              {
+                "unitId": "history-native-unit-v1:0743bc513cfe3a0ed9200c55058bfa25f626ea90853d29bc829c56b6c6396b36",
+                "facet": "JAVA_CODE_V2",
+                "originSnapshotId": "snapshot:one",
+                "coverage": "COMPLETE"
+              },
+              {
+                "unitId": "history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802",
+                "facet": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                "originSnapshotId": "snapshot:one",
+                "coverage": "COMPLETE"
+              },
+              {
+                "unitId": "history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802",
+                "facet": "PYTHON_SYNTAX_CODE_V1",
+                "originSnapshotId": "snapshot:one",
+                "coverage": "COMPLETE"
+              }
+            ],
+            "syntaxOrigins": [
+              {
+                "id": "syntax-origin:676a070ca8c2c12b29f58994d6f3a3495443772eef836878eb0e716d0007375e",
+                "unitId": "history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802",
+                "originSnapshotId": "snapshot:one",
+                "valueDigest": "676a070ca8c2c12b29f58994d6f3a3495443772eef836878eb0e716d0007375e",
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:worktree",
+                  "contentFingerprint": "content:first",
+                  "codeActivationDigest": "1b82e18797aa65545a0a714478990fea64df3c3c45d72f2901954929e1d90e62"
+                }
+              },
+              {
+                "id": "syntax-origin:9e19c5ae39219cda01e687daf72b908f08088712c9878dd884a8976ceb675018",
+                "unitId": "history-native-unit-v1:0743bc513cfe3a0ed9200c55058bfa25f626ea90853d29bc829c56b6c6396b36",
+                "originSnapshotId": "snapshot:one",
+                "valueDigest": "9e19c5ae39219cda01e687daf72b908f08088712c9878dd884a8976ceb675018",
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:worktree",
+                  "contentFingerprint": "content:first",
+                  "codeActivationDigest": "1b82e18797aa65545a0a714478990fea64df3c3c45d72f2901954929e1d90e62"
+                }
+              },
+              {
+                "id": "syntax-origin:fb450ee7424cc374cd8d586ba052c9e708b44e1dd456fb9c6defeb5c5e5b3810",
+                "unitId": "history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802",
+                "originSnapshotId": "snapshot:one",
+                "valueDigest": "fb450ee7424cc374cd8d586ba052c9e708b44e1dd456fb9c6defeb5c5e5b3810",
+                "basis": {
+                  "repositoryId": "repo:one",
+                  "revisionId": "revision:worktree",
+                  "contentFingerprint": "content:first",
+                  "codeActivationDigest": "1b82e18797aa65545a0a714478990fea64df3c3c45d72f2901954929e1d90e62"
+                }
+              }
+            ]
+          },
+          "observation": {
+            "snapshotId": "snapshot:one",
+            "requestIdentity": "5d8b9a1c839997c86f9ea5f0e7ae825e0739cb62682339096c3d97f7c4d372f6",
+            "outputIdentity": "5fb6a450e69d8de1c44e7dd09e412f56af1c2bd050e62b1bae196f1726371d5c",
+            "javaProvenance": {
+              "kind": "PARSED_V2",
+              "requestId": "companion:java",
+              "startedAt": "2026-10-24T00:00:00.001Z",
+              "settledAt": "2026-10-24T00:00:00.002Z"
+            },
+            "scope": {
+              "unitIds": [
+                "history-native-unit-v1:0743bc513cfe3a0ed9200c55058bfa25f626ea90853d29bc829c56b6c6396b36",
+                "history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802"
+              ],
+              "removedSourceFileIds": []
+            },
+            "qualificationRef": "component-fixture:not-runtime-qualified"
+          },
+          "transitions": null,
+          "syntaxMembers": [
+            {
+              "originId": "syntax-origin:676a070ca8c2c12b29f58994d6f3a3495443772eef836878eb0e716d0007375e",
+              "projectionId": "syntax:8ea952ecba5d20b818ad824cccec6f51aa97b5b43c5c08d869b19f08e55427bd",
+              "unitId": "history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802"
+            },
+            {
+              "originId": "syntax-origin:9e19c5ae39219cda01e687daf72b908f08088712c9878dd884a8976ceb675018",
+              "projectionId": "syntax:765ba6720f10afa7bd03bd1b53ccbe64a6089666d2cde622a08c0ea1acb456f3",
+              "unitId": "history-native-unit-v1:0743bc513cfe3a0ed9200c55058bfa25f626ea90853d29bc829c56b6c6396b36"
+            },
+            {
+              "originId": "syntax-origin:fb450ee7424cc374cd8d586ba052c9e708b44e1dd456fb9c6defeb5c5e5b3810",
+              "projectionId": "syntax:1d6a5d7011e14ea2ea73f261458609ff7726987a135903976832a3ae8727c1b0",
+              "unitId": "history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802"
+            }
+          ],
+          "codeIdentity": "1b82e18797aa65545a0a714478990fea64df3c3c45d72f2901954929e1d90e62",
+          "sourceIdentity": "d1209595d43d995deaa5609a0dd167e3778111771b032969b465b545011215ef",
+          "originRegistryDigest": "bd5ea6d4aaa83caecf689af4b86dd6e23f42fe9e1475f845d0c3a9f689f097ae"
+        },
+        "ancestors": [],
+        "origins": [
+          {
+            "id": "syntax-origin:9e19c5ae39219cda01e687daf72b908f08088712c9878dd884a8976ceb675018",
+            "repository_id": "repo:one",
+            "revision_id": "revision:worktree",
+            "origin_snapshot_id": "snapshot:one",
+            "origin_digest": "9e19c5ae39219cda01e687daf72b908f08088712c9878dd884a8976ceb675018",
+            "origin_json": "{\"envelope\":{\"payload\":{\"confidence\":{\"method\":\"syntax-surface-support-v1\",\"reasons\":[\"DECLARED_SOURCE_CONTEXT_MATCHED\",\"SYNTAX_PAYLOAD_VALIDATED\",\"REQUIRED_SUPPORTS_CLOSED\"],\"score\":0.5},\"extractionVersion\":\"syntax-extraction-v1:a294595a10ef89fc89aa2fa923caf5e692ebf5b86e2a7c3ececfe2756b5dcfbc\",\"id\":\"syntax:1101dce95fd0b2d37c13ffd5566bdbce2822b9f99ddc6100e240beb6c4c28404\",\"owner\":{\"entity\":{\"id\":\"canonical-node-v1:d4d1141ea168c690fb883ecbbaba0e7057a010eb7ef98d8cef6fc9172cbd42d8\",\"kind\":\"CODE_NODE\",\"revisionId\":\"revision:worktree\"},\"repositoryId\":\"repo:one\",\"scope\":\"REPOSITORY\"},\"payload\":{\"declaredType\":null,\"modifiers\":[],\"parameterNames\":[]},\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sourceFingerprint\":\"sha256:5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1\",\"sourceRange\":{\"endColumn\":12,\"endLine\":0,\"sourceFileId\":\"java:file\",\"startColumn\":0,\"startLine\":0},\"supportRefs\":[{\"basis\":{\"codeActivationDigest\":\"1b82e18797aa65545a0a714478990fea64df3c3c45d72f2901954929e1d90e62\",\"contentFingerprint\":\"content:first\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\"},\"entity\":{\"id\":\"canonical-node-v1:d4d1141ea168c690fb883ecbbaba0e7057a010eb7ef98d8cef6fc9172cbd42d8\",\"kind\":\"CODE_NODE\",\"revisionId\":\"revision:worktree\"},\"valueDigest\":\"b286513af20e6f8566757e731b4007c467b2f520703941d41866c14a0005cbb5\"},{\"basis\":{\"codeActivationDigest\":\"1b82e18797aa65545a0a714478990fea64df3c3c45d72f2901954929e1d90e62\",\"contentFingerprint\":\"content:first\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\"},\"entity\":{\"id\":\"java:file\",\"kind\":\"SOURCE_FILE\",\"revisionId\":\"revision:worktree\"},\"valueDigest\":\"943bc3ce8566cff936313d84f81e498c9c76cb543fc97033423370cab7593d3e\"}],\"syntaxKey\":\"syntax-key-v1:a6febf2fdd779e42809b88adfeb1aa445c7cb4892b12d15661b78f3251a38efc\",\"syntaxKind\":\"DECLARATION\"},\"schema\":\"codeatlas.syntax-evidence\",\"version\":1},\"originSnapshot\":{\"capabilities\":[{\"coverage\":\"COMPLETE\",\"name\":\"JAVA_CODE_V2\",\"support\":\"SUPPORTED\"},{\"coverage\":\"COMPLETE\",\"name\":\"PYTHON_SYNTAX_CODE_V1\",\"support\":\"SUPPORTED\"},{\"coverage\":\"COMPLETE\",\"name\":\"FRAMEWORK_SYNTAX_OBSERVATION_V1\",\"support\":\"SUPPORTED\"}],\"completedAt\":\"2026-10-24T00:00:00.003Z\",\"diagnostics\":[],\"id\":\"snapshot:one\",\"outcome\":\"SUCCEEDED\",\"providerId\":\"native\",\"providerVersion\":\"0.0.0\",\"repositoryId\":\"repo:one\",\"requestedRevisionFingerprint\":\"content:first\",\"requestedRevisionId\":\"revision:worktree\",\"runtimeVersion\":\"fixture-runtime\",\"startedAt\":\"2026-10-24T00:00:00.000Z\"},\"providerSyntaxId\":\"java:syntax:Box\",\"schemaVersion\":1,\"sourceFile\":{\"classification\":{\"contentKind\":\"TEXT\",\"provenance\":\"AUTHORED\",\"role\":\"SOURCE\"},\"contentFingerprint\":\"sha256:5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1\",\"id\":\"java:file\",\"languageHint\":\"java\",\"path\":\"Box.java\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sensitivity\":\"INTERNAL\"},\"unitId\":\"history-native-unit-v1:0743bc513cfe3a0ed9200c55058bfa25f626ea90853d29bc829c56b6c6396b36\"}"
+          },
+          {
+            "id": "syntax-origin:fb450ee7424cc374cd8d586ba052c9e708b44e1dd456fb9c6defeb5c5e5b3810",
+            "repository_id": "repo:one",
+            "revision_id": "revision:worktree",
+            "origin_snapshot_id": "snapshot:one",
+            "origin_digest": "fb450ee7424cc374cd8d586ba052c9e708b44e1dd456fb9c6defeb5c5e5b3810",
+            "origin_json": "{\"envelope\":{\"payload\":{\"confidence\":{\"method\":\"syntax-surface-support-v1\",\"reasons\":[\"DECLARED_SOURCE_CONTEXT_MATCHED\",\"SYNTAX_PAYLOAD_VALIDATED\",\"REQUIRED_SUPPORTS_CLOSED\",\"NON_EXACT_VALUE_REFERENCE_PRESERVED\"],\"score\":0.5},\"extractionVersion\":\"syntax-extraction-v1:a294595a10ef89fc89aa2fa923caf5e692ebf5b86e2a7c3ececfe2756b5dcfbc\",\"id\":\"syntax:ac1aa4a4fafed53f59af10c245a05477be76f25910260e70c993a6eb3b92cbcb\",\"owner\":{\"entity\":{\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\",\"kind\":\"CODE_NODE\",\"revisionId\":\"revision:worktree\"},\"repositoryId\":\"repo:one\",\"scope\":\"REPOSITORY\"},\"payload\":{\"targetName\":\"p\",\"value\":{\"candidates\":[],\"kind\":\"REFERENCE\",\"name\":\"pkg\",\"resolution\":\"UNRESOLVED\"}},\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sourceFingerprint\":\"sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50\",\"sourceRange\":{\"endColumn\":15,\"endLine\":0,\"sourceFileId\":\"file:one\",\"startColumn\":7,\"startLine\":0},\"supportRefs\":[{\"basis\":{\"codeActivationDigest\":\"1b82e18797aa65545a0a714478990fea64df3c3c45d72f2901954929e1d90e62\",\"contentFingerprint\":\"content:first\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\"},\"entity\":{\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\",\"kind\":\"CODE_NODE\",\"revisionId\":\"revision:worktree\"},\"valueDigest\":\"5f5a1d70c2e495c1a02acac4eacf28b73af6081f5acf0736ecab9db6eb49e330\"},{\"basis\":{\"codeActivationDigest\":\"1b82e18797aa65545a0a714478990fea64df3c3c45d72f2901954929e1d90e62\",\"contentFingerprint\":\"content:first\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\"},\"entity\":{\"id\":\"file:one\",\"kind\":\"SOURCE_FILE\",\"revisionId\":\"revision:worktree\"},\"valueDigest\":\"f437fd4ed7110ca5b2493abdbfec53f42dbe689d54e09a78bab1c11e119da186\"}],\"syntaxKey\":\"syntax-key-v1:2ae55d76e5366c073fa095980413399d4cc53b8e9e548699cf911d9d65df5396\",\"syntaxKind\":\"ASSIGNMENT\"},\"schema\":\"codeatlas.syntax-evidence\",\"version\":1},\"originSnapshot\":{\"capabilities\":[{\"coverage\":\"COMPLETE\",\"name\":\"JAVA_CODE_V2\",\"support\":\"SUPPORTED\"},{\"coverage\":\"COMPLETE\",\"name\":\"PYTHON_SYNTAX_CODE_V1\",\"support\":\"SUPPORTED\"},{\"coverage\":\"COMPLETE\",\"name\":\"FRAMEWORK_SYNTAX_OBSERVATION_V1\",\"support\":\"SUPPORTED\"}],\"completedAt\":\"2026-10-24T00:00:00.003Z\",\"diagnostics\":[],\"id\":\"snapshot:one\",\"outcome\":\"SUCCEEDED\",\"providerId\":\"native\",\"providerVersion\":\"0.0.0\",\"repositoryId\":\"repo:one\",\"requestedRevisionFingerprint\":\"content:first\",\"requestedRevisionId\":\"revision:worktree\",\"runtimeVersion\":\"fixture-runtime\",\"startedAt\":\"2026-10-24T00:00:00.000Z\"},\"providerSyntaxId\":\"python-syntax-v1:c328aab87bcc189e5124b10f4df68846ebbb0f010c92ab10efe4976b011d9e9b\",\"schemaVersion\":1,\"sourceFile\":{\"classification\":{\"contentKind\":\"TEXT\",\"provenance\":\"AUTHORED\",\"role\":\"SOURCE\"},\"contentFingerprint\":\"sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50\",\"id\":\"file:one\",\"languageHint\":\"python\",\"path\":\"app.py\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sensitivity\":\"INTERNAL\"},\"unitId\":\"history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802\"}"
+          },
+          {
+            "id": "syntax-origin:676a070ca8c2c12b29f58994d6f3a3495443772eef836878eb0e716d0007375e",
+            "repository_id": "repo:one",
+            "revision_id": "revision:worktree",
+            "origin_snapshot_id": "snapshot:one",
+            "origin_digest": "676a070ca8c2c12b29f58994d6f3a3495443772eef836878eb0e716d0007375e",
+            "origin_json": "{\"envelope\":{\"payload\":{\"confidence\":{\"method\":\"syntax-surface-support-v1\",\"reasons\":[\"DECLARED_SOURCE_CONTEXT_MATCHED\",\"SYNTAX_PAYLOAD_VALIDATED\",\"REQUIRED_SUPPORTS_CLOSED\",\"NON_EXACT_VALUE_REFERENCE_PRESERVED\"],\"score\":0.5},\"extractionVersion\":\"syntax-extraction-v1:a294595a10ef89fc89aa2fa923caf5e692ebf5b86e2a7c3ececfe2756b5dcfbc\",\"id\":\"syntax:c109d65ca9681058d65f51853d9c70a00b485d0ccf2d8d1b478ba39f68293117\",\"owner\":{\"entity\":{\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\",\"kind\":\"CODE_NODE\",\"revisionId\":\"revision:worktree\"},\"repositoryId\":\"repo:one\",\"scope\":\"REPOSITORY\"},\"payload\":{\"targetName\":\"x\",\"value\":{\"candidates\":[],\"kind\":\"REFERENCE\",\"name\":\"p\",\"resolution\":\"UNRESOLVED\"}},\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sourceFingerprint\":\"sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50\",\"sourceRange\":{\"endColumn\":5,\"endLine\":1,\"sourceFileId\":\"file:one\",\"startColumn\":0,\"startLine\":1},\"supportRefs\":[{\"basis\":{\"codeActivationDigest\":\"1b82e18797aa65545a0a714478990fea64df3c3c45d72f2901954929e1d90e62\",\"contentFingerprint\":\"content:first\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\"},\"entity\":{\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\",\"kind\":\"CODE_NODE\",\"revisionId\":\"revision:worktree\"},\"valueDigest\":\"5f5a1d70c2e495c1a02acac4eacf28b73af6081f5acf0736ecab9db6eb49e330\"},{\"basis\":{\"codeActivationDigest\":\"1b82e18797aa65545a0a714478990fea64df3c3c45d72f2901954929e1d90e62\",\"contentFingerprint\":\"content:first\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\"},\"entity\":{\"id\":\"file:one\",\"kind\":\"SOURCE_FILE\",\"revisionId\":\"revision:worktree\"},\"valueDigest\":\"f437fd4ed7110ca5b2493abdbfec53f42dbe689d54e09a78bab1c11e119da186\"}],\"syntaxKey\":\"syntax-key-v1:8a144109b18053ce891b8c3555cb805bb4d18993842770768b7728df64c49f65\",\"syntaxKind\":\"ASSIGNMENT\"},\"schema\":\"codeatlas.syntax-evidence\",\"version\":1},\"originSnapshot\":{\"capabilities\":[{\"coverage\":\"COMPLETE\",\"name\":\"JAVA_CODE_V2\",\"support\":\"SUPPORTED\"},{\"coverage\":\"COMPLETE\",\"name\":\"PYTHON_SYNTAX_CODE_V1\",\"support\":\"SUPPORTED\"},{\"coverage\":\"COMPLETE\",\"name\":\"FRAMEWORK_SYNTAX_OBSERVATION_V1\",\"support\":\"SUPPORTED\"}],\"completedAt\":\"2026-10-24T00:00:00.003Z\",\"diagnostics\":[],\"id\":\"snapshot:one\",\"outcome\":\"SUCCEEDED\",\"providerId\":\"native\",\"providerVersion\":\"0.0.0\",\"repositoryId\":\"repo:one\",\"requestedRevisionFingerprint\":\"content:first\",\"requestedRevisionId\":\"revision:worktree\",\"runtimeVersion\":\"fixture-runtime\",\"startedAt\":\"2026-10-24T00:00:00.000Z\"},\"providerSyntaxId\":\"python-syntax-v1:77e2f151a2fce77c4b023ae5f92d2038c8518c892aeec5dfe07e38871abd89c7\",\"schemaVersion\":1,\"sourceFile\":{\"classification\":{\"contentKind\":\"TEXT\",\"provenance\":\"AUTHORED\",\"role\":\"SOURCE\"},\"contentFingerprint\":\"sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50\",\"id\":\"file:one\",\"languageHint\":\"python\",\"path\":\"app.py\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sensitivity\":\"INTERNAL\"},\"unitId\":\"history-native-unit-v1:79521481d413ace2d99c6c3a04ab22d703e48e31e94a1b8ef2b10fa25b84d802\"}"
+          }
+        ],
+        "projections": [
+          {
+            "id": "syntax:765ba6720f10afa7bd03bd1b53ccbe64a6089666d2cde622a08c0ea1acb456f3",
+            "repository_id": "repo:one",
+            "origin_id": "syntax-origin:9e19c5ae39219cda01e687daf72b908f08088712c9878dd884a8976ceb675018",
+            "projection_digest": "765ba6720f10afa7bd03bd1b53ccbe64a6089666d2cde622a08c0ea1acb456f3",
+            "envelope_json": "{\"payload\":{\"confidence\":{\"method\":\"syntax-surface-support-v1\",\"reasons\":[\"DECLARED_SOURCE_CONTEXT_MATCHED\",\"SYNTAX_PAYLOAD_VALIDATED\",\"REQUIRED_SUPPORTS_CLOSED\"],\"score\":0.5},\"extractionVersion\":\"syntax-extraction-v1:a294595a10ef89fc89aa2fa923caf5e692ebf5b86e2a7c3ececfe2756b5dcfbc\",\"id\":\"syntax:765ba6720f10afa7bd03bd1b53ccbe64a6089666d2cde622a08c0ea1acb456f3\",\"owner\":{\"entity\":{\"id\":\"canonical-node-v1:d4d1141ea168c690fb883ecbbaba0e7057a010eb7ef98d8cef6fc9172cbd42d8\",\"kind\":\"CODE_NODE\",\"revisionId\":\"revision:worktree\"},\"repositoryId\":\"repo:one\",\"scope\":\"REPOSITORY\"},\"payload\":{\"declaredType\":null,\"modifiers\":[],\"parameterNames\":[]},\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sourceFingerprint\":\"sha256:5f602a3964174787802642fdaefc55e275ba443293dcb40175368f026b5f96c1\",\"sourceRange\":{\"endColumn\":12,\"endLine\":0,\"sourceFileId\":\"java:file\",\"startColumn\":0,\"startLine\":0},\"supportRefs\":[{\"basis\":{\"codeActivationDigest\":\"1b82e18797aa65545a0a714478990fea64df3c3c45d72f2901954929e1d90e62\",\"contentFingerprint\":\"content:first\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\"},\"entity\":{\"id\":\"canonical-node-v1:d4d1141ea168c690fb883ecbbaba0e7057a010eb7ef98d8cef6fc9172cbd42d8\",\"kind\":\"CODE_NODE\",\"revisionId\":\"revision:worktree\"},\"valueDigest\":\"b286513af20e6f8566757e731b4007c467b2f520703941d41866c14a0005cbb5\"},{\"basis\":{\"codeActivationDigest\":\"1b82e18797aa65545a0a714478990fea64df3c3c45d72f2901954929e1d90e62\",\"contentFingerprint\":\"content:first\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\"},\"entity\":{\"id\":\"java:file\",\"kind\":\"SOURCE_FILE\",\"revisionId\":\"revision:worktree\"},\"valueDigest\":\"943bc3ce8566cff936313d84f81e498c9c76cb543fc97033423370cab7593d3e\"}],\"syntaxKey\":\"syntax-key-v1:a6febf2fdd779e42809b88adfeb1aa445c7cb4892b12d15661b78f3251a38efc\",\"syntaxKind\":\"DECLARATION\"},\"schema\":\"codeatlas.syntax-evidence\",\"version\":1}"
+          },
+          {
+            "id": "syntax:1d6a5d7011e14ea2ea73f261458609ff7726987a135903976832a3ae8727c1b0",
+            "repository_id": "repo:one",
+            "origin_id": "syntax-origin:fb450ee7424cc374cd8d586ba052c9e708b44e1dd456fb9c6defeb5c5e5b3810",
+            "projection_digest": "1d6a5d7011e14ea2ea73f261458609ff7726987a135903976832a3ae8727c1b0",
+            "envelope_json": "{\"payload\":{\"confidence\":{\"method\":\"syntax-surface-support-v1\",\"reasons\":[\"DECLARED_SOURCE_CONTEXT_MATCHED\",\"SYNTAX_PAYLOAD_VALIDATED\",\"REQUIRED_SUPPORTS_CLOSED\",\"NON_EXACT_VALUE_REFERENCE_PRESERVED\"],\"score\":0.5},\"extractionVersion\":\"syntax-extraction-v1:a294595a10ef89fc89aa2fa923caf5e692ebf5b86e2a7c3ececfe2756b5dcfbc\",\"id\":\"syntax:1d6a5d7011e14ea2ea73f261458609ff7726987a135903976832a3ae8727c1b0\",\"owner\":{\"entity\":{\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\",\"kind\":\"CODE_NODE\",\"revisionId\":\"revision:worktree\"},\"repositoryId\":\"repo:one\",\"scope\":\"REPOSITORY\"},\"payload\":{\"targetName\":\"p\",\"value\":{\"candidates\":[],\"kind\":\"REFERENCE\",\"name\":\"pkg\",\"resolution\":\"UNRESOLVED\"}},\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sourceFingerprint\":\"sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50\",\"sourceRange\":{\"endColumn\":15,\"endLine\":0,\"sourceFileId\":\"file:one\",\"startColumn\":7,\"startLine\":0},\"supportRefs\":[{\"basis\":{\"codeActivationDigest\":\"1b82e18797aa65545a0a714478990fea64df3c3c45d72f2901954929e1d90e62\",\"contentFingerprint\":\"content:first\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\"},\"entity\":{\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\",\"kind\":\"CODE_NODE\",\"revisionId\":\"revision:worktree\"},\"valueDigest\":\"5f5a1d70c2e495c1a02acac4eacf28b73af6081f5acf0736ecab9db6eb49e330\"},{\"basis\":{\"codeActivationDigest\":\"1b82e18797aa65545a0a714478990fea64df3c3c45d72f2901954929e1d90e62\",\"contentFingerprint\":\"content:first\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\"},\"entity\":{\"id\":\"file:one\",\"kind\":\"SOURCE_FILE\",\"revisionId\":\"revision:worktree\"},\"valueDigest\":\"f437fd4ed7110ca5b2493abdbfec53f42dbe689d54e09a78bab1c11e119da186\"}],\"syntaxKey\":\"syntax-key-v1:2ae55d76e5366c073fa095980413399d4cc53b8e9e548699cf911d9d65df5396\",\"syntaxKind\":\"ASSIGNMENT\"},\"schema\":\"codeatlas.syntax-evidence\",\"version\":1}"
+          },
+          {
+            "id": "syntax:8ea952ecba5d20b818ad824cccec6f51aa97b5b43c5c08d869b19f08e55427bd",
+            "repository_id": "repo:one",
+            "origin_id": "syntax-origin:676a070ca8c2c12b29f58994d6f3a3495443772eef836878eb0e716d0007375e",
+            "projection_digest": "8ea952ecba5d20b818ad824cccec6f51aa97b5b43c5c08d869b19f08e55427bd",
+            "envelope_json": "{\"payload\":{\"confidence\":{\"method\":\"syntax-surface-support-v1\",\"reasons\":[\"DECLARED_SOURCE_CONTEXT_MATCHED\",\"SYNTAX_PAYLOAD_VALIDATED\",\"REQUIRED_SUPPORTS_CLOSED\",\"NON_EXACT_VALUE_REFERENCE_PRESERVED\"],\"score\":0.5},\"extractionVersion\":\"syntax-extraction-v1:a294595a10ef89fc89aa2fa923caf5e692ebf5b86e2a7c3ececfe2756b5dcfbc\",\"id\":\"syntax:8ea952ecba5d20b818ad824cccec6f51aa97b5b43c5c08d869b19f08e55427bd\",\"owner\":{\"entity\":{\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\",\"kind\":\"CODE_NODE\",\"revisionId\":\"revision:worktree\"},\"repositoryId\":\"repo:one\",\"scope\":\"REPOSITORY\"},\"payload\":{\"targetName\":\"x\",\"value\":{\"candidates\":[],\"kind\":\"REFERENCE\",\"name\":\"p\",\"resolution\":\"UNRESOLVED\"}},\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\",\"sourceFingerprint\":\"sha256:27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50\",\"sourceRange\":{\"endColumn\":5,\"endLine\":1,\"sourceFileId\":\"file:one\",\"startColumn\":0,\"startLine\":1},\"supportRefs\":[{\"basis\":{\"codeActivationDigest\":\"1b82e18797aa65545a0a714478990fea64df3c3c45d72f2901954929e1d90e62\",\"contentFingerprint\":\"content:first\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\"},\"entity\":{\"id\":\"canonical-node-v1:28749a714dec5cde96e747014ef37dfc931e41dc3b240d4e46b48ad38d4d3897\",\"kind\":\"CODE_NODE\",\"revisionId\":\"revision:worktree\"},\"valueDigest\":\"5f5a1d70c2e495c1a02acac4eacf28b73af6081f5acf0736ecab9db6eb49e330\"},{\"basis\":{\"codeActivationDigest\":\"1b82e18797aa65545a0a714478990fea64df3c3c45d72f2901954929e1d90e62\",\"contentFingerprint\":\"content:first\",\"repositoryId\":\"repo:one\",\"revisionId\":\"revision:worktree\"},\"entity\":{\"id\":\"file:one\",\"kind\":\"SOURCE_FILE\",\"revisionId\":\"revision:worktree\"},\"valueDigest\":\"f437fd4ed7110ca5b2493abdbfec53f42dbe689d54e09a78bab1c11e119da186\"}],\"syntaxKey\":\"syntax-key-v1:8a144109b18053ce891b8c3555cb805bb4d18993842770768b7728df64c49f65\",\"syntaxKind\":\"ASSIGNMENT\"},\"schema\":\"codeatlas.syntax-evidence\",\"version\":1}"
+          }
+        ]
+      },
+      "rawCase": null,
+      "qualificationRef": "component-fixture:not-runtime-qualified"
+    },
+    "expected": {
+      "kind": "NO_OP",
+      "activationId": "activation:8eabce2fc68a47ff6be9220bf96ddf0f612e9f809cc01f296731097c13d1fd71",
+      "basis": {
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "contentFingerprint": "content:first",
+        "codeActivationDigest": "1b82e18797aa65545a0a714478990fea64df3c3c45d72f2901954929e1d90e62"
+      }
+    }
+  },
+  "bindings": [
+    {
+      "domain": "stage",
+      "id": "noop-no-stage",
+      "family": "BOUNDARY",
+      "input": "cases/noop-no-stage/input.json",
+      "expected": "cases/noop-no-stage/expected.json",
+      "inputSha256": "c74925875b2cec412c490b4b12081c939373809f8640767efb3111435f6ec61c",
+      "expectedSha256": "57300d857968d95dc765dd23e40fd6696fdcfb43da98f119452bc0c3872d08f0"
+    },
+    {
+      "domain": "store",
+      "id": "noop",
+      "family": "STORE_CONTRACT",
+      "input": "cases/noop/input.json",
+      "expected": "cases/noop/expected.json",
+      "inputSha256": "cda053aee90d061e7f97eb91243389630ff82f4557957a38f50a9fd8eb70e14a",
+      "expectedSha256": "2a15c883fa6adb4760bd379cd920a3d357a97a138bf18f9abff52e5e19b9dc81"
+    }
+  ],
+  "provenance": {
+    "runtimeLogicalPath": "runtime-delta-independent-v4/noop-mixed.json",
+    "runtimeSha256": "e070561549374255d56fab7a6f629ebf554b7d47cd1e698013bc2d21f9b88364",
+    "sqlLogicalPath": "store-row-independent/mixed.json",
+    "sqlSha256": "cf9a87f4b1b4d15449fae925f460cd51fea332e8528ecd15d71bc148daa2ee66",
+    "sourceLogicalPath": "stage-observation-independent/mixed.json",
+    "sourceSha256": "165fee9f7588c62662d745c9dda49baab4ab641a18779a1c2e83dcdff13d8b1c",
+    "changes": "Exact presealed full history/origins/projections/member/pointer/root literal substitution; Code basis and SQL facts unchanged. Actual H1 capture must independently validate this derived context before NO_OP.",
+    "noNewExpectedFromProduct": true
+  }
+}

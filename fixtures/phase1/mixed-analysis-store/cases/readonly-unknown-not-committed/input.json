@@ -1,0 +1,4 @@
+{
+  "scenario": "readonly-unknown-not-committed",
+  "base": "base-input.json"
+}

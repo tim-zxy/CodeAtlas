@@ -1,0 +1,652 @@
+{
+  "policy": {
+    "method": "runtime-execution-declaration-v1",
+    "score": 0.5,
+    "resolution": "HEURISTIC"
+  },
+  "cases": {
+    "http-direct": {
+      "entries": [
+        {
+          "factKey": "execution-fact:f61b7c82a79d2e395aad2693df43ca0e280e6da39a294707de7f6ae031380dc5",
+          "id": "execution:0b780b558d38609b8f33cc9fe0083868d1e95abcb8ec3b8f3457be388ac3f85d",
+          "triggerKind": "HTTP",
+          "contextKind": "REQUEST",
+          "domainId": "runtime:02d05f1396ea5a4b864f2cc66ceace81dc407a6df18373b3e20b9bad784edb36",
+          "context": {
+            "factKey": "execution-fact:809e190447f24cac31439cca777b2c0e9e002477cf4f8be6bb4be7732caf10e9",
+            "id": "execution:cfd28a22229b9c1ae68e9a8bd2b67d058e3629edfabc997fc54e0baf392eeda6"
+          },
+          "nodes": {
+            "function": {
+              "factKey": "execution-fact:4cbc38b79d380cd5f586f008f10a5a045e5db70a7faea1bda42920847dfe0af0",
+              "id": "execution:68b9dc901de60dd018c286d2fea5b58295559426deac176c0d3c2f52b2dd270d"
+            }
+          },
+          "edges": [],
+          "flow": {
+            "factKey": "execution-fact:a51a86bfb4999913c4b40d2f377661afd44bcf2f1c53970719bb6474dc0f07c7",
+            "id": "execution:7dd0913b5b8e049285bba0e7b731e164cdc2d0986c3ca8af56b4e8d85645c7da"
+          },
+          "steps": [
+            {
+              "code": "function",
+              "factKey": "execution-fact:4cbc38b79d380cd5f586f008f10a5a045e5db70a7faea1bda42920847dfe0af0",
+              "id": "execution:68b9dc901de60dd018c286d2fea5b58295559426deac176c0d3c2f52b2dd270d",
+              "stepKey": "step:7b8d042d59c39067351e8718f44a312fb8b015da22d513e27bf73ce2757cc843"
+            }
+          ]
+        }
+      ],
+      "sourceDomain": "spring-route"
+    },
+    "python-direct": {
+      "entries": [
+        {
+          "factKey": "execution-fact:8b0f9ebe2f246f6a392ae0cf7cb7e5ab0949d409d7b816c396065f5d0f8a949c",
+          "id": "execution:708bdfb42b23c5ac8d57c36217f993d3f992e356fc84e4772c70de1316e071df",
+          "triggerKind": "HTTP",
+          "contextKind": "REQUEST",
+          "domainId": "runtime:31996e1fd219c2c0881e523f78785fd8772293387ef5fc6fdcec3e1b7795c660",
+          "context": {
+            "factKey": "execution-fact:1f4acbca90765c2a3e0cc34a7cd46ca313ea50e0e1f35ba55b93fe84eb02d3a5",
+            "id": "execution:78dd4672a2af5f224ba80cde6c1236f3549a80dce922c52d4130609b2069d009"
+          },
+          "nodes": {
+            "function": {
+              "factKey": "execution-fact:e8350b89e19293e23643199dfae1bc77379ae27ff32f9f926d8f9edc4c368c90",
+              "id": "execution:4c32ab2daad8e2aa569c17f653fb17bd307e52a1fb8a36b74ed8e2c6957f7435"
+            }
+          },
+          "edges": [],
+          "flow": {
+            "factKey": "execution-fact:e54b154dc93cf47b8e40d2f738d4883d26e8eda12d420fa764b32b7ad362b451",
+            "id": "execution:3b2997e905b80a93d3601994d1c16a27c160459d776c476b370becee448c2229"
+          },
+          "steps": [
+            {
+              "code": "function",
+              "factKey": "execution-fact:e8350b89e19293e23643199dfae1bc77379ae27ff32f9f926d8f9edc4c368c90",
+              "id": "execution:4c32ab2daad8e2aa569c17f653fb17bd307e52a1fb8a36b74ed8e2c6957f7435",
+              "stepKey": "step:29d89408310f35aa46dea049fc0a32920eb016c211fc42096b25293feef55f96"
+            }
+          ]
+        }
+      ],
+      "sourceDomain": "fastapi-direct"
+    },
+    "job-direct": {
+      "entries": [
+        {
+          "factKey": "execution-fact:b6590dec3c8cdee84064bd0f1535b9e16115897fe377275592e0477d529bb408",
+          "id": "execution:b51cbbbdac19504f84e2a73829abfb91d363bc45fd8bbf5f3e4d776edb16794d",
+          "triggerKind": "SCHEDULE",
+          "contextKind": "JOB",
+          "domainId": "runtime:ca12868e55d1123404fea22b9dda00fa3ee1c1445a9e56e8f9b61e61e9b9aded",
+          "context": {
+            "factKey": "execution-fact:9d0ce7799177593e6e497833b413c51b892b08283ef62cf76792cf3bd3bc5207",
+            "id": "execution:895de205e34775aa9753102597a0979c9da083e28ad44a30cd433db5fb7f5758"
+          },
+          "nodes": {
+            "function": {
+              "factKey": "execution-fact:5ad18a0bb4ad45851c2b9b12bea1611be41e5f8c6ab1ca7d96da1c9ac349af52",
+              "id": "execution:a93bcb3c8d6cfc78e2e989e4e8c8cc002e8111867e643deae1266aeb14e7b1cb"
+            }
+          },
+          "edges": [],
+          "flow": {
+            "factKey": "execution-fact:9a38b4f97cb416eb8a4bf3c99d0b4665a90b98d5133f51a85e8bc0e64844eaf5",
+            "id": "execution:47607e23daf9fe0a60609ffae4950a64e911ece36d083a2d494def14890e4f9f"
+          },
+          "steps": [
+            {
+              "code": "function",
+              "factKey": "execution-fact:5ad18a0bb4ad45851c2b9b12bea1611be41e5f8c6ab1ca7d96da1c9ac349af52",
+              "id": "execution:a93bcb3c8d6cfc78e2e989e4e8c8cc002e8111867e643deae1266aeb14e7b1cb",
+              "stepKey": "step:60a9e3811cfb85408af57904c5baff883ee3367bff68acc9ac260cc464bad8cc"
+            }
+          ]
+        }
+      ],
+      "sourceDomain": "spring-cron"
+    },
+    "event-direct": {
+      "entries": [
+        {
+          "factKey": "execution-fact:faff14433a1db452cff0161a00b353087122cba91c1257968c1a63a72b86f3b7",
+          "id": "execution:cab856f003b2ba9a2ad598baf07f542a3ffb97e01d325c4827b31d29fd98dcc5",
+          "triggerKind": "MESSAGE",
+          "contextKind": "EVENT",
+          "domainId": "runtime:a7f97b91a31c4f283be82303d74f4f5e462200a098c9261c1594dacdd0452e1d",
+          "context": {
+            "factKey": "execution-fact:a77a0e103ed24ae5b6e9bbdd1e73b5badb51358c816ab9514aedb472cd1df498",
+            "id": "execution:b5853ba80f91384fb465ceed9099305bf7561f77b4e3ed889849bea9c033c108"
+          },
+          "nodes": {
+            "function": {
+              "factKey": "execution-fact:2fa5b7f77f99ea877fbcc1d0c7e4be582068d004dd4371721826626dc654b361",
+              "id": "execution:7b60366f5cf8dd7479909b5b69141db0c4bd9be45eddbc1e60b5a106de05319a"
+            }
+          },
+          "edges": [],
+          "flow": {
+            "factKey": "execution-fact:19210651e6aa47766ca1b1a06e595b35e4a98d1abdc06127c08a471576eba52d",
+            "id": "execution:ef2d8626ac7b8823cfc2ac68a42f8e967a7c576a038064c8d20404b95f54ab02"
+          },
+          "steps": [
+            {
+              "code": "function",
+              "factKey": "execution-fact:2fa5b7f77f99ea877fbcc1d0c7e4be582068d004dd4371721826626dc654b361",
+              "id": "execution:7b60366f5cf8dd7479909b5b69141db0c4bd9be45eddbc1e60b5a106de05319a",
+              "stepKey": "step:dc8bcf486ae56f71d146ed9d41bba576d71f76da51975984040250238e6f6cff"
+            }
+          ]
+        }
+      ],
+      "sourceDomain": "kafka-listener"
+    },
+    "two-events": {
+      "entries": [
+        {
+          "factKey": "execution-fact:faff14433a1db452cff0161a00b353087122cba91c1257968c1a63a72b86f3b7",
+          "id": "execution:cab856f003b2ba9a2ad598baf07f542a3ffb97e01d325c4827b31d29fd98dcc5",
+          "triggerKind": "MESSAGE",
+          "contextKind": "EVENT",
+          "domainId": "runtime:a7f97b91a31c4f283be82303d74f4f5e462200a098c9261c1594dacdd0452e1d",
+          "context": {
+            "factKey": "execution-fact:a77a0e103ed24ae5b6e9bbdd1e73b5badb51358c816ab9514aedb472cd1df498",
+            "id": "execution:b5853ba80f91384fb465ceed9099305bf7561f77b4e3ed889849bea9c033c108"
+          },
+          "nodes": {
+            "function": {
+              "factKey": "execution-fact:2fa5b7f77f99ea877fbcc1d0c7e4be582068d004dd4371721826626dc654b361",
+              "id": "execution:7b60366f5cf8dd7479909b5b69141db0c4bd9be45eddbc1e60b5a106de05319a"
+            }
+          },
+          "edges": [],
+          "flow": {
+            "factKey": "execution-fact:19210651e6aa47766ca1b1a06e595b35e4a98d1abdc06127c08a471576eba52d",
+            "id": "execution:ef2d8626ac7b8823cfc2ac68a42f8e967a7c576a038064c8d20404b95f54ab02"
+          },
+          "steps": [
+            {
+              "code": "function",
+              "factKey": "execution-fact:2fa5b7f77f99ea877fbcc1d0c7e4be582068d004dd4371721826626dc654b361",
+              "id": "execution:7b60366f5cf8dd7479909b5b69141db0c4bd9be45eddbc1e60b5a106de05319a",
+              "stepKey": "step:dc8bcf486ae56f71d146ed9d41bba576d71f76da51975984040250238e6f6cff"
+            }
+          ]
+        },
+        {
+          "factKey": "execution-fact:765fd3fae916bcb0a21a76a2eca8d0941c6fc05a1f4cf18991df54a55719a39b",
+          "id": "execution:dff257f3cf5650685673031dd0b50a94c5565d26ffa8bd758165e156e202e2bc",
+          "triggerKind": "MESSAGE",
+          "contextKind": "EVENT",
+          "domainId": "runtime:fbede3b2580b5e81fc53d57f9215ea1998610a6903f6792248c0c64233c77efe",
+          "context": {
+            "factKey": "execution-fact:a64b40323d140e5e6c442a30698884c712b22970e6d1926bd3015304c1d731b5",
+            "id": "execution:4b9d0206fd82e03d6f93dbc3548e737764f85581938d75632915e0db48ae213d"
+          },
+          "nodes": {
+            "function": {
+              "factKey": "execution-fact:696459572205b67560a13d17700eedc3eaf287616cd76407ad2e2894dd369175",
+              "id": "execution:0336e0c82a39da3cfb039622722441958c568f72f3ade76fdf3f64b64848ccb5"
+            }
+          },
+          "edges": [],
+          "flow": {
+            "factKey": "execution-fact:43658942df0e729db43ed3e871db9fedffb75f270187c394fb11b01e5173f010",
+            "id": "execution:0287c0f85f01c7ace192f06ce50585c88a5cccba972c20071e25b2c789a679cb"
+          },
+          "steps": [
+            {
+              "code": "function",
+              "factKey": "execution-fact:696459572205b67560a13d17700eedc3eaf287616cd76407ad2e2894dd369175",
+              "id": "execution:0336e0c82a39da3cfb039622722441958c568f72f3ade76fdf3f64b64848ccb5",
+              "stepKey": "step:962d18554121a6820be4ec34318eea323fc11d2d2095f70b6c4a9468ef3ab327"
+            }
+          ]
+        }
+      ],
+      "sourceDomain": "kafka-topics"
+    },
+    "producer-no-root": {
+      "entries": [],
+      "sourceDomain": "kafka-send"
+    },
+    "mongo-no-root": {
+      "entries": [],
+      "sourceDomain": "mongo-read"
+    },
+    "chain": {
+      "entries": [
+        {
+          "factKey": "execution-fact:f61b7c82a79d2e395aad2693df43ca0e280e6da39a294707de7f6ae031380dc5",
+          "id": "execution:0b780b558d38609b8f33cc9fe0083868d1e95abcb8ec3b8f3457be388ac3f85d",
+          "triggerKind": "HTTP",
+          "contextKind": "REQUEST",
+          "domainId": "runtime:02d05f1396ea5a4b864f2cc66ceace81dc407a6df18373b3e20b9bad784edb36",
+          "context": {
+            "factKey": "execution-fact:809e190447f24cac31439cca777b2c0e9e002477cf4f8be6bb4be7732caf10e9",
+            "id": "execution:cfd28a22229b9c1ae68e9a8bd2b67d058e3629edfabc997fc54e0baf392eeda6"
+          },
+          "nodes": {
+            "function": {
+              "factKey": "execution-fact:4cbc38b79d380cd5f586f008f10a5a045e5db70a7faea1bda42920847dfe0af0",
+              "id": "execution:68b9dc901de60dd018c286d2fea5b58295559426deac176c0d3c2f52b2dd270d"
+            },
+            "b": {
+              "factKey": "execution-fact:c282bee48969df9fd7f447aca2acd78bd014028089db57f8f34916d4aefeb208",
+              "id": "execution:392d0c51e7c239ccea079f14052de997d36a7ebfecc04cd6b9b3ce2b867f8a13"
+            },
+            "c": {
+              "factKey": "execution-fact:aa7fa8bd10e01a84681ed6af7386c8615368bddd946f80f7cb5422094a2647ce",
+              "id": "execution:0689f46e2692f2462f32c5235bc96f27f8f7ddbe9737e855b4917c3aa9a8a7f0"
+            }
+          },
+          "edges": [
+            {
+              "factKey": "execution-fact:8284b733487e383d5fa1d9edb5d136a2cfafe455bbda400d5004eec6305743ee",
+              "id": "execution:2f61dd1d38fb0658beeb98994b27f11d197f63b8748c430c20b6fc57862a8569",
+              "from": "function",
+              "to": "b",
+              "res": "EXACT"
+            },
+            {
+              "factKey": "execution-fact:693ae7e26dc97e1f85c11314c254ddbd9c271a63f70c03270cc8e582093447ed",
+              "id": "execution:0fc3f10ce8b15523ccdac6faa818ee08f625cd5c215cfb954886719fe7dbe9a6",
+              "from": "b",
+              "to": "c",
+              "res": "EXACT"
+            }
+          ],
+          "flow": {
+            "factKey": "execution-fact:a51a86bfb4999913c4b40d2f377661afd44bcf2f1c53970719bb6474dc0f07c7",
+            "id": "execution:7dd0913b5b8e049285bba0e7b731e164cdc2d0986c3ca8af56b4e8d85645c7da"
+          },
+          "steps": [
+            {
+              "code": "function",
+              "factKey": "execution-fact:4cbc38b79d380cd5f586f008f10a5a045e5db70a7faea1bda42920847dfe0af0",
+              "id": "execution:68b9dc901de60dd018c286d2fea5b58295559426deac176c0d3c2f52b2dd270d",
+              "stepKey": "step:7b8d042d59c39067351e8718f44a312fb8b015da22d513e27bf73ce2757cc843"
+            },
+            {
+              "code": "b",
+              "factKey": "execution-fact:c282bee48969df9fd7f447aca2acd78bd014028089db57f8f34916d4aefeb208",
+              "id": "execution:392d0c51e7c239ccea079f14052de997d36a7ebfecc04cd6b9b3ce2b867f8a13",
+              "stepKey": "step:9ec9e43474ceae5ba366705b560d44beb3cca3eb8cfd6ac0c58d9017c1598d8c"
+            },
+            {
+              "code": "c",
+              "factKey": "execution-fact:aa7fa8bd10e01a84681ed6af7386c8615368bddd946f80f7cb5422094a2647ce",
+              "id": "execution:0689f46e2692f2462f32c5235bc96f27f8f7ddbe9737e855b4917c3aa9a8a7f0",
+              "stepKey": "step:8445338661e0a04c4610e368357fb33e1b8afa7253cecba42c7c13877e62c3a1"
+            }
+          ]
+        }
+      ],
+      "sourceDomain": "spring-route"
+    },
+    "diamond": {
+      "entries": [
+        {
+          "factKey": "execution-fact:f61b7c82a79d2e395aad2693df43ca0e280e6da39a294707de7f6ae031380dc5",
+          "id": "execution:0b780b558d38609b8f33cc9fe0083868d1e95abcb8ec3b8f3457be388ac3f85d",
+          "triggerKind": "HTTP",
+          "contextKind": "REQUEST",
+          "domainId": "runtime:02d05f1396ea5a4b864f2cc66ceace81dc407a6df18373b3e20b9bad784edb36",
+          "context": {
+            "factKey": "execution-fact:809e190447f24cac31439cca777b2c0e9e002477cf4f8be6bb4be7732caf10e9",
+            "id": "execution:cfd28a22229b9c1ae68e9a8bd2b67d058e3629edfabc997fc54e0baf392eeda6"
+          },
+          "nodes": {
+            "function": {
+              "factKey": "execution-fact:4cbc38b79d380cd5f586f008f10a5a045e5db70a7faea1bda42920847dfe0af0",
+              "id": "execution:68b9dc901de60dd018c286d2fea5b58295559426deac176c0d3c2f52b2dd270d"
+            },
+            "b": {
+              "factKey": "execution-fact:c282bee48969df9fd7f447aca2acd78bd014028089db57f8f34916d4aefeb208",
+              "id": "execution:392d0c51e7c239ccea079f14052de997d36a7ebfecc04cd6b9b3ce2b867f8a13"
+            },
+            "c": {
+              "factKey": "execution-fact:aa7fa8bd10e01a84681ed6af7386c8615368bddd946f80f7cb5422094a2647ce",
+              "id": "execution:0689f46e2692f2462f32c5235bc96f27f8f7ddbe9737e855b4917c3aa9a8a7f0"
+            },
+            "d": {
+              "factKey": "execution-fact:5fb0f24665f1b5a2bae33806e0243085ed610a5f71723cee3db334e76bee25f5",
+              "id": "execution:1b3afee7d98a2e151bdd0d847840fe8a0ada3408c72882bb1eb027a8b4dee27f"
+            }
+          },
+          "edges": [
+            {
+              "factKey": "execution-fact:8284b733487e383d5fa1d9edb5d136a2cfafe455bbda400d5004eec6305743ee",
+              "id": "execution:2f61dd1d38fb0658beeb98994b27f11d197f63b8748c430c20b6fc57862a8569",
+              "from": "function",
+              "to": "b",
+              "res": "EXACT"
+            },
+            {
+              "factKey": "execution-fact:81f5dbd86a514c109a9f55145a24a68e4b957711d66bc183f9b1da4795fc6762",
+              "id": "execution:74ac1e37037e90291ade76e14076accba0842b77749e56ccaab39f25b7720dcd",
+              "from": "function",
+              "to": "c",
+              "res": "EXACT"
+            },
+            {
+              "factKey": "execution-fact:87716dcb8cf63015f16ab18284bbfddc206e0a66952f9b63a047969ffba92487",
+              "id": "execution:c38e3547578a185d5994ab37755ed5616cc2dc5dee979be0dc69ea932fcf8a58",
+              "from": "b",
+              "to": "d",
+              "res": "EXACT"
+            },
+            {
+              "factKey": "execution-fact:21ee136a8133b511c168eae9cf197c8a1729d3aa9f2229857c9c25d176b1d801",
+              "id": "execution:374aff393bf31d026ebf41af31f44f92aa770144dcd96eed185f671f48aa5917",
+              "from": "c",
+              "to": "d",
+              "res": "EXACT"
+            }
+          ],
+          "flow": {
+            "factKey": "execution-fact:a51a86bfb4999913c4b40d2f377661afd44bcf2f1c53970719bb6474dc0f07c7",
+            "id": "execution:7dd0913b5b8e049285bba0e7b731e164cdc2d0986c3ca8af56b4e8d85645c7da"
+          },
+          "steps": [
+            {
+              "code": "function",
+              "factKey": "execution-fact:4cbc38b79d380cd5f586f008f10a5a045e5db70a7faea1bda42920847dfe0af0",
+              "id": "execution:68b9dc901de60dd018c286d2fea5b58295559426deac176c0d3c2f52b2dd270d",
+              "stepKey": "step:7b8d042d59c39067351e8718f44a312fb8b015da22d513e27bf73ce2757cc843"
+            },
+            {
+              "code": "c",
+              "factKey": "execution-fact:aa7fa8bd10e01a84681ed6af7386c8615368bddd946f80f7cb5422094a2647ce",
+              "id": "execution:0689f46e2692f2462f32c5235bc96f27f8f7ddbe9737e855b4917c3aa9a8a7f0",
+              "stepKey": "step:8445338661e0a04c4610e368357fb33e1b8afa7253cecba42c7c13877e62c3a1"
+            },
+            {
+              "code": "b",
+              "factKey": "execution-fact:c282bee48969df9fd7f447aca2acd78bd014028089db57f8f34916d4aefeb208",
+              "id": "execution:392d0c51e7c239ccea079f14052de997d36a7ebfecc04cd6b9b3ce2b867f8a13",
+              "stepKey": "step:9ec9e43474ceae5ba366705b560d44beb3cca3eb8cfd6ac0c58d9017c1598d8c"
+            },
+            {
+              "code": "d",
+              "factKey": "execution-fact:5fb0f24665f1b5a2bae33806e0243085ed610a5f71723cee3db334e76bee25f5",
+              "id": "execution:1b3afee7d98a2e151bdd0d847840fe8a0ada3408c72882bb1eb027a8b4dee27f",
+              "stepKey": "step:cf858c4e565c51a8d085c13403ec9824dbc66155e81767f4438ec47cb0c562ab"
+            }
+          ]
+        }
+      ],
+      "sourceDomain": "spring-route"
+    },
+    "cycle": {
+      "entries": [
+        {
+          "factKey": "execution-fact:f61b7c82a79d2e395aad2693df43ca0e280e6da39a294707de7f6ae031380dc5",
+          "id": "execution:0b780b558d38609b8f33cc9fe0083868d1e95abcb8ec3b8f3457be388ac3f85d",
+          "triggerKind": "HTTP",
+          "contextKind": "REQUEST",
+          "domainId": "runtime:02d05f1396ea5a4b864f2cc66ceace81dc407a6df18373b3e20b9bad784edb36",
+          "context": {
+            "factKey": "execution-fact:809e190447f24cac31439cca777b2c0e9e002477cf4f8be6bb4be7732caf10e9",
+            "id": "execution:cfd28a22229b9c1ae68e9a8bd2b67d058e3629edfabc997fc54e0baf392eeda6"
+          },
+          "nodes": {
+            "function": {
+              "factKey": "execution-fact:4cbc38b79d380cd5f586f008f10a5a045e5db70a7faea1bda42920847dfe0af0",
+              "id": "execution:68b9dc901de60dd018c286d2fea5b58295559426deac176c0d3c2f52b2dd270d"
+            },
+            "b": {
+              "factKey": "execution-fact:c282bee48969df9fd7f447aca2acd78bd014028089db57f8f34916d4aefeb208",
+              "id": "execution:392d0c51e7c239ccea079f14052de997d36a7ebfecc04cd6b9b3ce2b867f8a13"
+            }
+          },
+          "edges": [
+            {
+              "factKey": "execution-fact:8284b733487e383d5fa1d9edb5d136a2cfafe455bbda400d5004eec6305743ee",
+              "id": "execution:2f61dd1d38fb0658beeb98994b27f11d197f63b8748c430c20b6fc57862a8569",
+              "from": "function",
+              "to": "b",
+              "res": "EXACT"
+            },
+            {
+              "factKey": "execution-fact:693ae7e26dc97e1f85c11314c254ddbd9c271a63f70c03270cc8e582093447ed",
+              "id": "execution:0fc3f10ce8b15523ccdac6faa818ee08f625cd5c215cfb954886719fe7dbe9a6",
+              "from": "b",
+              "to": "function",
+              "res": "EXACT"
+            }
+          ],
+          "flow": {
+            "factKey": "execution-fact:a51a86bfb4999913c4b40d2f377661afd44bcf2f1c53970719bb6474dc0f07c7",
+            "id": "execution:7dd0913b5b8e049285bba0e7b731e164cdc2d0986c3ca8af56b4e8d85645c7da"
+          },
+          "steps": [
+            {
+              "code": "function",
+              "factKey": "execution-fact:4cbc38b79d380cd5f586f008f10a5a045e5db70a7faea1bda42920847dfe0af0",
+              "id": "execution:68b9dc901de60dd018c286d2fea5b58295559426deac176c0d3c2f52b2dd270d",
+              "stepKey": "step:7b8d042d59c39067351e8718f44a312fb8b015da22d513e27bf73ce2757cc843"
+            },
+            {
+              "code": "b",
+              "factKey": "execution-fact:c282bee48969df9fd7f447aca2acd78bd014028089db57f8f34916d4aefeb208",
+              "id": "execution:392d0c51e7c239ccea079f14052de997d36a7ebfecc04cd6b9b3ce2b867f8a13",
+              "stepKey": "step:9ec9e43474ceae5ba366705b560d44beb3cca3eb8cfd6ac0c58d9017c1598d8c"
+            }
+          ]
+        }
+      ],
+      "sourceDomain": "spring-route"
+    },
+    "heuristic": {
+      "entries": [
+        {
+          "factKey": "execution-fact:f61b7c82a79d2e395aad2693df43ca0e280e6da39a294707de7f6ae031380dc5",
+          "id": "execution:0b780b558d38609b8f33cc9fe0083868d1e95abcb8ec3b8f3457be388ac3f85d",
+          "triggerKind": "HTTP",
+          "contextKind": "REQUEST",
+          "domainId": "runtime:02d05f1396ea5a4b864f2cc66ceace81dc407a6df18373b3e20b9bad784edb36",
+          "context": {
+            "factKey": "execution-fact:809e190447f24cac31439cca777b2c0e9e002477cf4f8be6bb4be7732caf10e9",
+            "id": "execution:cfd28a22229b9c1ae68e9a8bd2b67d058e3629edfabc997fc54e0baf392eeda6"
+          },
+          "nodes": {
+            "function": {
+              "factKey": "execution-fact:4cbc38b79d380cd5f586f008f10a5a045e5db70a7faea1bda42920847dfe0af0",
+              "id": "execution:68b9dc901de60dd018c286d2fea5b58295559426deac176c0d3c2f52b2dd270d"
+            },
+            "b": {
+              "factKey": "execution-fact:c282bee48969df9fd7f447aca2acd78bd014028089db57f8f34916d4aefeb208",
+              "id": "execution:392d0c51e7c239ccea079f14052de997d36a7ebfecc04cd6b9b3ce2b867f8a13"
+            },
+            "c": {
+              "factKey": "execution-fact:aa7fa8bd10e01a84681ed6af7386c8615368bddd946f80f7cb5422094a2647ce",
+              "id": "execution:0689f46e2692f2462f32c5235bc96f27f8f7ddbe9737e855b4917c3aa9a8a7f0"
+            }
+          },
+          "edges": [
+            {
+              "factKey": "execution-fact:8284b733487e383d5fa1d9edb5d136a2cfafe455bbda400d5004eec6305743ee",
+              "id": "execution:2f61dd1d38fb0658beeb98994b27f11d197f63b8748c430c20b6fc57862a8569",
+              "from": "function",
+              "to": "b",
+              "res": "HEURISTIC"
+            },
+            {
+              "factKey": "execution-fact:693ae7e26dc97e1f85c11314c254ddbd9c271a63f70c03270cc8e582093447ed",
+              "id": "execution:0fc3f10ce8b15523ccdac6faa818ee08f625cd5c215cfb954886719fe7dbe9a6",
+              "from": "b",
+              "to": "c",
+              "res": "EXACT"
+            }
+          ],
+          "flow": {
+            "factKey": "execution-fact:a51a86bfb4999913c4b40d2f377661afd44bcf2f1c53970719bb6474dc0f07c7",
+            "id": "execution:7dd0913b5b8e049285bba0e7b731e164cdc2d0986c3ca8af56b4e8d85645c7da"
+          },
+          "steps": [
+            {
+              "code": "function",
+              "factKey": "execution-fact:4cbc38b79d380cd5f586f008f10a5a045e5db70a7faea1bda42920847dfe0af0",
+              "id": "execution:68b9dc901de60dd018c286d2fea5b58295559426deac176c0d3c2f52b2dd270d",
+              "stepKey": "step:7b8d042d59c39067351e8718f44a312fb8b015da22d513e27bf73ce2757cc843"
+            }
+          ]
+        }
+      ],
+      "sourceDomain": "spring-route"
+    },
+    "ambiguous": {
+      "entries": [
+        {
+          "factKey": "execution-fact:f61b7c82a79d2e395aad2693df43ca0e280e6da39a294707de7f6ae031380dc5",
+          "id": "execution:0b780b558d38609b8f33cc9fe0083868d1e95abcb8ec3b8f3457be388ac3f85d",
+          "triggerKind": "HTTP",
+          "contextKind": "REQUEST",
+          "domainId": "runtime:02d05f1396ea5a4b864f2cc66ceace81dc407a6df18373b3e20b9bad784edb36",
+          "context": {
+            "factKey": "execution-fact:809e190447f24cac31439cca777b2c0e9e002477cf4f8be6bb4be7732caf10e9",
+            "id": "execution:cfd28a22229b9c1ae68e9a8bd2b67d058e3629edfabc997fc54e0baf392eeda6"
+          },
+          "nodes": {
+            "function": {
+              "factKey": "execution-fact:4cbc38b79d380cd5f586f008f10a5a045e5db70a7faea1bda42920847dfe0af0",
+              "id": "execution:68b9dc901de60dd018c286d2fea5b58295559426deac176c0d3c2f52b2dd270d"
+            },
+            "b": {
+              "factKey": "execution-fact:c282bee48969df9fd7f447aca2acd78bd014028089db57f8f34916d4aefeb208",
+              "id": "execution:392d0c51e7c239ccea079f14052de997d36a7ebfecc04cd6b9b3ce2b867f8a13"
+            },
+            "c": {
+              "factKey": "execution-fact:aa7fa8bd10e01a84681ed6af7386c8615368bddd946f80f7cb5422094a2647ce",
+              "id": "execution:0689f46e2692f2462f32c5235bc96f27f8f7ddbe9737e855b4917c3aa9a8a7f0"
+            },
+            "d": {
+              "factKey": "execution-fact:5fb0f24665f1b5a2bae33806e0243085ed610a5f71723cee3db334e76bee25f5",
+              "id": "execution:1b3afee7d98a2e151bdd0d847840fe8a0ada3408c72882bb1eb027a8b4dee27f"
+            }
+          },
+          "edges": [
+            {
+              "factKey": "execution-fact:8284b733487e383d5fa1d9edb5d136a2cfafe455bbda400d5004eec6305743ee",
+              "id": "execution:2f61dd1d38fb0658beeb98994b27f11d197f63b8748c430c20b6fc57862a8569",
+              "from": "function",
+              "to": ["b", "c"],
+              "res": "AMBIGUOUS"
+            },
+            {
+              "factKey": "execution-fact:693ae7e26dc97e1f85c11314c254ddbd9c271a63f70c03270cc8e582093447ed",
+              "id": "execution:0fc3f10ce8b15523ccdac6faa818ee08f625cd5c215cfb954886719fe7dbe9a6",
+              "from": "b",
+              "to": "d",
+              "res": "EXACT"
+            }
+          ],
+          "flow": {
+            "factKey": "execution-fact:a51a86bfb4999913c4b40d2f377661afd44bcf2f1c53970719bb6474dc0f07c7",
+            "id": "execution:7dd0913b5b8e049285bba0e7b731e164cdc2d0986c3ca8af56b4e8d85645c7da"
+          },
+          "steps": [
+            {
+              "code": "function",
+              "factKey": "execution-fact:4cbc38b79d380cd5f586f008f10a5a045e5db70a7faea1bda42920847dfe0af0",
+              "id": "execution:68b9dc901de60dd018c286d2fea5b58295559426deac176c0d3c2f52b2dd270d",
+              "stepKey": "step:7b8d042d59c39067351e8718f44a312fb8b015da22d513e27bf73ce2757cc843"
+            }
+          ]
+        }
+      ],
+      "sourceDomain": "spring-route"
+    },
+    "unsupported": {
+      "entries": [
+        {
+          "factKey": "execution-fact:f61b7c82a79d2e395aad2693df43ca0e280e6da39a294707de7f6ae031380dc5",
+          "id": "execution:0b780b558d38609b8f33cc9fe0083868d1e95abcb8ec3b8f3457be388ac3f85d",
+          "triggerKind": "HTTP",
+          "contextKind": "REQUEST",
+          "domainId": "runtime:02d05f1396ea5a4b864f2cc66ceace81dc407a6df18373b3e20b9bad784edb36",
+          "context": {
+            "factKey": "execution-fact:809e190447f24cac31439cca777b2c0e9e002477cf4f8be6bb4be7732caf10e9",
+            "id": "execution:cfd28a22229b9c1ae68e9a8bd2b67d058e3629edfabc997fc54e0baf392eeda6"
+          },
+          "nodes": {
+            "function": {
+              "factKey": "execution-fact:4cbc38b79d380cd5f586f008f10a5a045e5db70a7faea1bda42920847dfe0af0",
+              "id": "execution:68b9dc901de60dd018c286d2fea5b58295559426deac176c0d3c2f52b2dd270d"
+            }
+          },
+          "edges": [
+            {
+              "factKey": "execution-fact:8284b733487e383d5fa1d9edb5d136a2cfafe455bbda400d5004eec6305743ee",
+              "id": "execution:2f61dd1d38fb0658beeb98994b27f11d197f63b8748c430c20b6fc57862a8569",
+              "from": "function",
+              "to": [],
+              "res": "UNSUPPORTED"
+            }
+          ],
+          "flow": {
+            "factKey": "execution-fact:a51a86bfb4999913c4b40d2f377661afd44bcf2f1c53970719bb6474dc0f07c7",
+            "id": "execution:7dd0913b5b8e049285bba0e7b731e164cdc2d0986c3ca8af56b4e8d85645c7da"
+          },
+          "steps": [
+            {
+              "code": "function",
+              "factKey": "execution-fact:4cbc38b79d380cd5f586f008f10a5a045e5db70a7faea1bda42920847dfe0af0",
+              "id": "execution:68b9dc901de60dd018c286d2fea5b58295559426deac176c0d3c2f52b2dd270d",
+              "stepKey": "step:7b8d042d59c39067351e8718f44a312fb8b015da22d513e27bf73ce2757cc843"
+            }
+          ]
+        }
+      ],
+      "sourceDomain": "spring-route"
+    },
+    "unresolved": {
+      "entries": [
+        {
+          "factKey": "execution-fact:f61b7c82a79d2e395aad2693df43ca0e280e6da39a294707de7f6ae031380dc5",
+          "id": "execution:0b780b558d38609b8f33cc9fe0083868d1e95abcb8ec3b8f3457be388ac3f85d",
+          "triggerKind": "HTTP",
+          "contextKind": "REQUEST",
+          "domainId": "runtime:02d05f1396ea5a4b864f2cc66ceace81dc407a6df18373b3e20b9bad784edb36",
+          "context": {
+            "factKey": "execution-fact:809e190447f24cac31439cca777b2c0e9e002477cf4f8be6bb4be7732caf10e9",
+            "id": "execution:cfd28a22229b9c1ae68e9a8bd2b67d058e3629edfabc997fc54e0baf392eeda6"
+          },
+          "nodes": {
+            "function": {
+              "factKey": "execution-fact:4cbc38b79d380cd5f586f008f10a5a045e5db70a7faea1bda42920847dfe0af0",
+              "id": "execution:68b9dc901de60dd018c286d2fea5b58295559426deac176c0d3c2f52b2dd270d"
+            }
+          },
+          "edges": [
+            {
+              "factKey": "execution-fact:8284b733487e383d5fa1d9edb5d136a2cfafe455bbda400d5004eec6305743ee",
+              "id": "execution:2f61dd1d38fb0658beeb98994b27f11d197f63b8748c430c20b6fc57862a8569",
+              "from": "function",
+              "to": [],
+              "res": "UNRESOLVED"
+            }
+          ],
+          "flow": {
+            "factKey": "execution-fact:a51a86bfb4999913c4b40d2f377661afd44bcf2f1c53970719bb6474dc0f07c7",
+            "id": "execution:7dd0913b5b8e049285bba0e7b731e164cdc2d0986c3ca8af56b4e8d85645c7da"
+          },
+          "steps": [
+            {
+              "code": "function",
+              "factKey": "execution-fact:4cbc38b79d380cd5f586f008f10a5a045e5db70a7faea1bda42920847dfe0af0",
+              "id": "execution:68b9dc901de60dd018c286d2fea5b58295559426deac176c0d3c2f52b2dd270d",
+              "stepKey": "step:7b8d042d59c39067351e8718f44a312fb8b015da22d513e27bf73ce2757cc843"
+            }
+          ]
+        }
+      ],
+      "sourceDomain": "spring-route"
+    }
+  }
+}

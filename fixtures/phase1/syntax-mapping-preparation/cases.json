@@ -1,0 +1,274 @@
+[
+  {
+    "id": "decoration-java",
+    "family": "KIND",
+    "input": "cases/decoration-java/input.json",
+    "expected": "cases/decoration-java/expected.json",
+    "provenanceClass": "SOURCE_LITERAL_EXPECTATION",
+    "sourceRefs": ["sources/Endpoint.java"]
+  },
+  {
+    "id": "invocation-python",
+    "family": "KIND",
+    "input": "cases/invocation-python/input.json",
+    "expected": "cases/invocation-python/expected.json",
+    "provenanceClass": "SOURCE_LITERAL_EXPECTATION",
+    "sourceRefs": ["sources/dynamic.py"]
+  },
+  {
+    "id": "declaration-java",
+    "family": "KIND",
+    "input": "cases/declaration-java/input.json",
+    "expected": "cases/declaration-java/expected.json",
+    "provenanceClass": "SOURCE_LITERAL_EXPECTATION",
+    "sourceRefs": ["sources/Endpoint.java"]
+  },
+  {
+    "id": "assignment-python",
+    "family": "KIND",
+    "input": "cases/assignment-python/input.json",
+    "expected": "cases/assignment-python/expected.json",
+    "provenanceClass": "SOURCE_LITERAL_EXPECTATION",
+    "sourceRefs": ["sources/app.py"]
+  },
+  {
+    "id": "artifact-ownerless",
+    "family": "KIND",
+    "input": "cases/artifact-ownerless/input.json",
+    "expected": "cases/artifact-ownerless/expected.json",
+    "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+    "sourceRefs": ["sources/artifact.yml"]
+  },
+  {
+    "id": "value-string",
+    "family": "VALUE",
+    "input": "cases/value-string/input.json",
+    "expected": "cases/value-string/expected.json",
+    "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+    "sourceRefs": ["sources/app.py"]
+  },
+  {
+    "id": "value-number",
+    "family": "VALUE",
+    "input": "cases/value-number/input.json",
+    "expected": "cases/value-number/expected.json",
+    "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+    "sourceRefs": ["sources/app.py"]
+  },
+  {
+    "id": "value-boolean",
+    "family": "VALUE",
+    "input": "cases/value-boolean/input.json",
+    "expected": "cases/value-boolean/expected.json",
+    "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+    "sourceRefs": ["sources/app.py"]
+  },
+  {
+    "id": "value-null",
+    "family": "VALUE",
+    "input": "cases/value-null/input.json",
+    "expected": "cases/value-null/expected.json",
+    "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+    "sourceRefs": ["sources/app.py"]
+  },
+  {
+    "id": "value-reference-exact",
+    "family": "VALUE",
+    "input": "cases/value-reference-exact/input.json",
+    "expected": "cases/value-reference-exact/expected.json",
+    "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+    "sourceRefs": ["sources/app.py"]
+  },
+  {
+    "id": "value-reference-heuristic",
+    "family": "VALUE",
+    "input": "cases/value-reference-heuristic/input.json",
+    "expected": "cases/value-reference-heuristic/expected.json",
+    "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+    "sourceRefs": ["sources/app.py"]
+  },
+  {
+    "id": "value-array",
+    "family": "VALUE",
+    "input": "cases/value-array/input.json",
+    "expected": "cases/value-array/expected.json",
+    "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+    "sourceRefs": ["sources/app.py"]
+  },
+  {
+    "id": "value-object-duplicates",
+    "family": "VALUE",
+    "input": "cases/value-object-duplicates/input.json",
+    "expected": "cases/value-object-duplicates/expected.json",
+    "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+    "sourceRefs": ["sources/app.py"]
+  },
+  {
+    "id": "value-unknown",
+    "family": "VALUE",
+    "input": "cases/value-unknown/input.json",
+    "expected": "cases/value-unknown/expected.json",
+    "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+    "sourceRefs": ["sources/app.py"]
+  },
+  {
+    "id": "reference-ambiguous-two",
+    "family": "REFERENCE",
+    "input": "cases/reference-ambiguous-two/input.json",
+    "expected": "cases/reference-ambiguous-two/expected.json",
+    "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+    "sourceRefs": ["sources/app.py"]
+  },
+  {
+    "id": "callee-collapse-one",
+    "family": "REFERENCE",
+    "input": "cases/callee-collapse-one/input.json",
+    "expected": "cases/callee-collapse-one/expected.json",
+    "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+    "sourceRefs": ["sources/app.py"]
+  },
+  {
+    "id": "value-collapse-reject",
+    "family": "REFERENCE",
+    "input": "cases/value-collapse-reject/input.json",
+    "expected": "cases/value-collapse-reject/expected.json",
+    "provenanceClass": "NEGATIVE_ONLY",
+    "sourceRefs": ["sources/app.py"]
+  },
+  {
+    "id": "reference-unresolved-zero",
+    "family": "REFERENCE",
+    "input": "cases/reference-unresolved-zero/input.json",
+    "expected": "cases/reference-unresolved-zero/expected.json",
+    "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+    "sourceRefs": ["sources/app.py"]
+  },
+  {
+    "id": "reference-unsupported-zero",
+    "family": "REFERENCE",
+    "input": "cases/reference-unsupported-zero/input.json",
+    "expected": "cases/reference-unsupported-zero/expected.json",
+    "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+    "sourceRefs": ["sources/app.py"]
+  },
+  {
+    "id": "reference-missing-binding",
+    "family": "REFERENCE",
+    "input": "cases/reference-missing-binding/input.json",
+    "expected": "cases/reference-missing-binding/expected.json",
+    "provenanceClass": "NEGATIVE_ONLY",
+    "sourceRefs": ["sources/app.py"]
+  },
+  {
+    "id": "reference-not-selected",
+    "family": "REFERENCE",
+    "input": "cases/reference-not-selected/input.json",
+    "expected": "cases/reference-not-selected/expected.json",
+    "provenanceClass": "NEGATIVE_ONLY",
+    "sourceRefs": ["sources/app.py"]
+  },
+  {
+    "id": "reference-loser-binding",
+    "family": "REFERENCE",
+    "input": "cases/reference-loser-binding/input.json",
+    "expected": "cases/reference-loser-binding/expected.json",
+    "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+    "sourceRefs": ["sources/app.py"]
+  },
+  {
+    "id": "reference-same-name-different-id",
+    "family": "REFERENCE",
+    "input": "cases/reference-same-name-different-id/input.json",
+    "expected": "cases/reference-same-name-different-id/expected.json",
+    "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+    "sourceRefs": ["sources/app.py"]
+  },
+  {
+    "id": "owner-not-selected",
+    "family": "SOURCE_OWNER",
+    "input": "cases/owner-not-selected/input.json",
+    "expected": "cases/owner-not-selected/expected.json",
+    "provenanceClass": "NEGATIVE_ONLY",
+    "sourceRefs": ["sources/app.py"]
+  },
+  {
+    "id": "source-fingerprint-drift",
+    "family": "SOURCE_OWNER",
+    "input": "cases/source-fingerprint-drift/input.json",
+    "expected": "cases/source-fingerprint-drift/expected.json",
+    "provenanceClass": "NEGATIVE_ONLY",
+    "sourceRefs": ["sources/app.py"]
+  },
+  {
+    "id": "source-range-foreign",
+    "family": "SOURCE_OWNER",
+    "input": "cases/source-range-foreign/input.json",
+    "expected": "cases/source-range-foreign/expected.json",
+    "provenanceClass": "NEGATIVE_ONLY",
+    "sourceRefs": ["sources/app.py"]
+  },
+  {
+    "id": "owner-cross-revision",
+    "family": "SOURCE_OWNER",
+    "input": "cases/owner-cross-revision/input.json",
+    "expected": "cases/owner-cross-revision/expected.json",
+    "provenanceClass": "NEGATIVE_ONLY",
+    "sourceRefs": ["sources/app.py"]
+  },
+  {
+    "id": "provider-renamed-key-stable",
+    "family": "IDENTITY",
+    "input": "cases/provider-renamed-key-stable/input.json",
+    "expected": "cases/provider-renamed-key-stable/expected.json",
+    "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+    "sourceRefs": ["sources/app.py"]
+  },
+  {
+    "id": "revision-rebound-key-stable",
+    "family": "IDENTITY",
+    "input": "cases/revision-rebound-key-stable/input.json",
+    "expected": "cases/revision-rebound-key-stable/expected.json",
+    "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+    "sourceRefs": ["sources/app.py"]
+  },
+  {
+    "id": "payload-changed-key",
+    "family": "IDENTITY",
+    "input": "cases/payload-changed-key/input.json",
+    "expected": "cases/payload-changed-key/expected.json",
+    "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+    "sourceRefs": ["sources/app.py"]
+  },
+  {
+    "id": "unicode-key-order",
+    "family": "IDENTITY",
+    "input": "cases/unicode-key-order/input.json",
+    "expected": "cases/unicode-key-order/expected.json",
+    "provenanceClass": "IDENTITY_ENCODING_ONLY",
+    "sourceRefs": []
+  },
+  {
+    "id": "integer-key-order",
+    "family": "IDENTITY",
+    "input": "cases/integer-key-order/input.json",
+    "expected": "cases/integer-key-order/expected.json",
+    "provenanceClass": "IDENTITY_ENCODING_ONLY",
+    "sourceRefs": []
+  },
+  {
+    "id": "extraction-version-encoding",
+    "family": "IDENTITY",
+    "input": "cases/extraction-version-encoding/input.json",
+    "expected": "cases/extraction-version-encoding/expected.json",
+    "provenanceClass": "IDENTITY_ENCODING_ONLY",
+    "sourceRefs": []
+  },
+  {
+    "id": "policy-missing",
+    "family": "POLICY",
+    "input": "cases/policy-missing/input.json",
+    "expected": "cases/policy-missing/expected.json",
+    "provenanceClass": "SCHEMA_CONTRACT_ONLY",
+    "sourceRefs": ["sources/app.py"]
+  }
+]

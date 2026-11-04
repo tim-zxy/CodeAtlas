@@ -1,0 +1,103 @@
+{
+  "envelope": {
+    "schema": "codeatlas.syntax-evidence",
+    "version": 1,
+    "payload": {
+      "repositoryId": "repo-fixture",
+      "revisionId": "rev-a",
+      "sourceFingerprint": "fa9a07e5b149109de9313e541101b3363a014b87e18f469e91643781ed2833c1",
+      "sourceRange": {
+        "sourceFileId": "source-fixture",
+        "startLine": 0,
+        "startColumn": 25,
+        "endLine": 0,
+        "endColumn": 43
+      },
+      "syntaxKind": "DECORATION",
+      "owner": {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo-fixture",
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "node-owner",
+          "revisionId": "rev-a"
+        }
+      },
+      "payload": {
+        "callee": {
+          "state": "RESOLVED",
+          "name": "Route",
+          "target": {
+            "scope": "REPOSITORY",
+            "repositoryId": "repo-fixture",
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "node-owner",
+              "revisionId": "rev-a"
+            }
+          },
+          "candidates": []
+        },
+        "arguments": [
+          {
+            "name": null,
+            "value": {
+              "kind": "STRING",
+              "value": "/fixture"
+            },
+            "sourceRange": {
+              "sourceFileId": "source-fixture",
+              "startLine": 0,
+              "startColumn": 32,
+              "endLine": 0,
+              "endColumn": 42
+            }
+          }
+        ]
+      },
+      "syntaxKey": "syntax-key-v1:da2119e7f9df70c13f241ceb061ebdf649b24e89508567e000e32269115b6bb7",
+      "supportRefs": [
+        {
+          "basis": {
+            "repositoryId": "repo-fixture",
+            "revisionId": "rev-a",
+            "contentFingerprint": "mapping-target",
+            "codeActivationDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "entity": {
+            "kind": "CODE_NODE",
+            "id": "node-owner",
+            "revisionId": "rev-a"
+          },
+          "valueDigest": "77c1ab82b26628a22970b89dd5446f14d78bde360b374eb93ebff5b9adc1e9e8"
+        },
+        {
+          "basis": {
+            "repositoryId": "repo-fixture",
+            "revisionId": "rev-a",
+            "contentFingerprint": "mapping-target",
+            "codeActivationDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "entity": {
+            "kind": "SOURCE_FILE",
+            "id": "source-fixture",
+            "revisionId": "rev-a"
+          },
+          "valueDigest": "3c204001f4fbdf7b68013d8dbf333bf6f5a45e95bf844ffa340bc16ed311ea3f"
+        }
+      ],
+      "confidence": {
+        "score": 0.5,
+        "method": "syntax-surface-support-v1",
+        "reasons": [
+          "DECLARED_SOURCE_CONTEXT_MATCHED",
+          "SYNTAX_PAYLOAD_VALIDATED",
+          "REQUIRED_SUPPORTS_CLOSED",
+          "NON_EXACT_CALLEE_RESOLUTION_PRESERVED"
+        ]
+      },
+      "extractionVersion": "syntax-extraction-v1:a294595a10ef89fc89aa2fa923caf5e692ebf5b86e2a7c3ececfe2756b5dcfbc",
+      "id": "syntax:0474ef6129239a8ae05008bfcc4661406aafb2846d6864067a39e9420bf228a8"
+    }
+  }
+}

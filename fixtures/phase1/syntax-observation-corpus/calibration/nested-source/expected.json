@@ -1,0 +1,15 @@
+{
+  "kind": "INDEPENDENT_LITERAL_PROBES_UNEXECUTED",
+  "scope": "SOURCE_SHAPE_AND_RAW_SYNTAX_PROBES_ONLY",
+  "expectedOutcome": "SUCCEEDED",
+  "probes": [
+    {
+      "codeKind": "FUNCTION",
+      "qualifiedName": "outer_fixture.inner_fixture"
+    }
+  ],
+  "limitations": [
+    "NO_EXECUTED_OBSERVER_RESULT",
+    "NO_FULL_NORMALIZED_GRAPH_OR_MEMORY_QUALIFICATION"
+  ]
+}

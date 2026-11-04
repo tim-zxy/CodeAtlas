@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "p1-python-normalization-v1",
+  "category": "code-intelligence",
+  "phase": "1",
+  "languages": [],
+  "frameworks": [],
+  "capabilities": ["PYTHON_NORMALIZATION_CONTRACT_ONLY"],
+  "inputs": {
+    "observation": "inputs/observation.json"
+  },
+  "expected": {
+    "normalized": "expected/normalized.json"
+  },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

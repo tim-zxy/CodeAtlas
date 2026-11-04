@@ -1,0 +1,6 @@
+{
+  "kind": "MAPPING_REJECTION_EXPECTATION",
+  "semanticDisposition": "REJECTED",
+  "causeCode": "OWNER_SCOPE_MISMATCH",
+  "canonicalEnvelope": null
+}

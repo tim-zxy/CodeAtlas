@@ -1,0 +1,212 @@
+[
+  {
+    "family": "D01",
+    "id": "D01-no-op",
+    "input": "cases/D01-no-op/input.json",
+    "expected": "cases/D01-no-op/expected.json"
+  },
+  {
+    "family": "D01",
+    "id": "D01-zero-facts",
+    "input": "cases/D01-zero-facts/input.json",
+    "expected": "cases/D01-zero-facts/expected.json"
+  },
+  {
+    "family": "D01",
+    "id": "D01-removal",
+    "input": "cases/D01-removal/input.json",
+    "expected": "cases/D01-removal/expected.json"
+  },
+  {
+    "family": "D01",
+    "id": "D01-empty",
+    "input": "cases/D01-empty/input.json",
+    "expected": "cases/D01-empty/expected.json"
+  },
+  {
+    "family": "D01",
+    "id": "D01-absent",
+    "input": "cases/D01-absent/input.json",
+    "expected": "cases/D01-absent/expected.json"
+  },
+  {
+    "family": "D02",
+    "id": "D02-python",
+    "input": "cases/D02-python/input.json",
+    "expected": "cases/D02-python/expected.json"
+  },
+  {
+    "family": "D02",
+    "id": "D02-java",
+    "input": "cases/D02-java/input.json",
+    "expected": "cases/D02-java/expected.json"
+  },
+  {
+    "family": "D02",
+    "id": "D02-both",
+    "input": "cases/D02-both/input.json",
+    "expected": "cases/D02-both/expected.json"
+  },
+  {
+    "family": "D03",
+    "id": "D03-originals",
+    "input": "cases/D03-originals/input.json",
+    "expected": "cases/D03-originals/expected.json"
+  },
+  {
+    "family": "D03",
+    "id": "D03-survivor",
+    "input": "cases/D03-survivor/input.json",
+    "expected": "cases/D03-survivor/expected.json"
+  },
+  {
+    "family": "D04",
+    "id": "D04-foreign-changed",
+    "input": "cases/D04-foreign-changed/input.json",
+    "expected": "cases/D04-foreign-changed/expected.json"
+  },
+  {
+    "family": "D04",
+    "id": "D04-foreign-removed",
+    "input": "cases/D04-foreign-removed/input.json",
+    "expected": "cases/D04-foreign-removed/expected.json"
+  },
+  {
+    "family": "D04",
+    "id": "D04-foreign-unknown",
+    "input": "cases/D04-foreign-unknown/input.json",
+    "expected": "cases/D04-foreign-unknown/expected.json"
+  },
+  {
+    "family": "D04",
+    "id": "D04-foreign-contract",
+    "input": "cases/D04-foreign-contract/input.json",
+    "expected": "cases/D04-foreign-contract/expected.json"
+  },
+  {
+    "family": "D04",
+    "id": "D04-duplicate",
+    "input": "cases/D04-duplicate/input.json",
+    "expected": "cases/D04-duplicate/expected.json"
+  },
+  {
+    "family": "D04",
+    "id": "D04-drift",
+    "input": "cases/D04-drift/input.json",
+    "expected": "cases/D04-drift/expected.json"
+  },
+  {
+    "family": "D05",
+    "id": "D05-missing",
+    "input": "cases/D05-missing/input.json",
+    "expected": "cases/D05-missing/expected.json"
+  },
+  {
+    "family": "D05",
+    "id": "D05-duplicate",
+    "input": "cases/D05-duplicate/input.json",
+    "expected": "cases/D05-duplicate/expected.json"
+  },
+  {
+    "family": "D06",
+    "id": "D06-retired-source",
+    "input": "cases/D06-retired-source/input.json",
+    "expected": "cases/D06-retired-source/expected.json"
+  },
+  {
+    "family": "D06",
+    "id": "D06-invalid-active-source",
+    "input": "cases/D06-invalid-active-source/input.json",
+    "expected": "cases/D06-invalid-active-source/expected.json"
+  },
+  {
+    "family": "D07",
+    "id": "D07-caller-draft",
+    "input": "cases/D07-caller-draft/input.json",
+    "expected": "cases/D07-caller-draft/expected.json"
+  },
+  {
+    "family": "D07",
+    "id": "D07-caller-supports",
+    "input": "cases/D07-caller-supports/input.json",
+    "expected": "cases/D07-caller-supports/expected.json"
+  },
+  {
+    "family": "D08",
+    "id": "D08-hidden-unresolved",
+    "input": "cases/D08-hidden-unresolved/input.json",
+    "expected": "cases/D08-hidden-unresolved/expected.json"
+  },
+  {
+    "family": "D08",
+    "id": "D08-new-missing-source",
+    "input": "cases/D08-new-missing-source/input.json",
+    "expected": "cases/D08-new-missing-source/expected.json"
+  },
+  {
+    "family": "D08",
+    "id": "D08-new-missing-target",
+    "input": "cases/D08-new-missing-target/input.json",
+    "expected": "cases/D08-new-missing-target/expected.json"
+  },
+  {
+    "family": "D09",
+    "id": "D09-unresolved",
+    "input": "cases/D09-unresolved/input.json",
+    "expected": "cases/D09-unresolved/expected.json"
+  },
+  {
+    "family": "D09",
+    "id": "D09-ambiguous",
+    "input": "cases/D09-ambiguous/input.json",
+    "expected": "cases/D09-ambiguous/expected.json"
+  },
+  {
+    "family": "D09",
+    "id": "D09-conflict",
+    "input": "cases/D09-conflict/input.json",
+    "expected": "cases/D09-conflict/expected.json"
+  },
+  {
+    "family": "D10",
+    "id": "D10-unicode",
+    "input": "cases/D10-unicode/input.json",
+    "expected": "cases/D10-unicode/expected.json"
+  },
+  {
+    "family": "D10",
+    "id": "D10-H12-partial",
+    "input": "cases/D10-H12-partial/input.json",
+    "expected": "cases/D10-H12-partial/expected.json"
+  },
+  {
+    "family": "D10",
+    "id": "D10-H12-failed",
+    "input": "cases/D10-H12-failed/input.json",
+    "expected": "cases/D10-H12-failed/expected.json"
+  },
+  {
+    "family": "D10",
+    "id": "D10-H12-cancelled",
+    "input": "cases/D10-H12-cancelled/input.json",
+    "expected": "cases/D10-H12-cancelled/expected.json"
+  },
+  {
+    "family": "D11",
+    "id": "D11-budget-base",
+    "input": "cases/D11-budget-base/input.json",
+    "expected": "cases/D11-budget-base/expected.json"
+  },
+  {
+    "family": "D12",
+    "id": "D12-compat-base",
+    "input": "cases/D12-compat-base/input.json",
+    "expected": "cases/D12-compat-base/expected.json"
+  },
+  {
+    "family": "D01",
+    "id": "D01-all-removed",
+    "input": "cases/D01-all-removed/input.json",
+    "expected": "cases/D01-all-removed/expected.json"
+  }
+]

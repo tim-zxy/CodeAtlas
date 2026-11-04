@@ -1,0 +1,16 @@
+{
+  "functions": [
+    "dependency",
+    "endpoint",
+    "dynamic_endpoint"
+  ],
+  "decorators": [
+    "router.get",
+    "router.get"
+  ],
+  "literalPath": "/items",
+  "dynamicReason": "DYNAMIC_EXPRESSION",
+  "importHint": "fastapi.APIRouter",
+  "alias": "Router",
+  "coverage": "PARTIAL"
+}

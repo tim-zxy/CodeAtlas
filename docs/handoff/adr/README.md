@@ -22,3 +22,5 @@ All records are Accepted unless their Status explicitly states otherwise or they
 - ADR-018 Native Evaluation Diagnostic Observation (Accepted including FULL count correction and revised Native plan; implementation/qualification in progress)
 - ADR-019 D5 Feasible Inputs and Exact-layout CI Replay (Accepted2026-10-18; Native/batch revised existing plan, numeric/publication gates retained)
 
+
+- ADR-020 Phase1 Contracts, Compilation Evidence and Evaluation (Accepted architecture; P1-00..02 implementation only)

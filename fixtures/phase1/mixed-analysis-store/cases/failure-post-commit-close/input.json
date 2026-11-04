@@ -1,0 +1,5 @@
+{
+  "point": "post-commit-close",
+  "base": "base-input.json",
+  "processExit": true
+}

@@ -1,3 +1,9 @@
+import {
+  chargeCompositionJSON,
+  chargeCompositionIdentityTuple,
+  type CodeSyntaxCompositionBudget,
+} from './native-code-syntax-budget.js';
+import normalizeJavaNodeWithBudget from './java-node-normalizer.js';
 import { isDeepStrictEqual } from 'node:util';
 
 import {
@@ -73,7 +79,30 @@ export function normalizeJavaEdge(
   nodes: Pick<ReadonlyMap<ProviderFactId, CanonicalNode>, 'get'>,
   sourceFiles: SourceFileLookup,
 ): CanonicalEdge {
-  const kind = edgeKind(edge.providerKind);
+  return normalizeCanonicalCodeEdge(edgeKind(edge.providerKind), edge, nodes, sourceFiles);
+}
+
+/** Shared Canonical edge identity/closure; callers map their own Provider kinds. */
+export function normalizeCanonicalCodeEdge(
+  kind: CanonicalEdge['kind'],
+  edge: ProviderEdge,
+  nodes: Pick<ReadonlyMap<ProviderFactId, CanonicalNode>, 'get'>,
+  sourceFiles: SourceFileLookup,
+): CanonicalEdge {
+  return normalizeCanonicalCodeEdgeCore(kind, edge, nodes, sourceFiles, null);
+}
+function normalizeCanonicalCodeEdgeCore(
+  kind: CanonicalEdge['kind'],
+  edge: ProviderEdge,
+  nodes: Pick<ReadonlyMap<ProviderFactId, CanonicalNode>, 'get'>,
+  sourceFiles: SourceFileLookup,
+  context: CodeSyntaxCompositionBudget | null,
+): CanonicalEdge {
+  const q = (v: unknown) => {
+    if (context) chargeCompositionJSON(v, context.limits, context.budget);
+  };
+  q(edge);
+  q(edge);
   const range = edge.sourceRange;
   if (range === null) fail('INVALID_FACT', ['sourceRange'], 'Relation requires a source range');
   const file = sourceFiles.get(range.sourceFileId);
@@ -110,6 +139,7 @@ export function normalizeJavaEdge(
       const node = lookup(candidate, ['target', 'candidates', index]);
       if (!seen.has(node.id)) {
         seen.add(node.id);
+        q({ factType: 'NODE', id: node.id });
         candidates.push({ factType: 'NODE', id: node.id });
       }
     });
@@ -137,6 +167,8 @@ export function normalizeJavaEdge(
     edge.target.state,
     targetIdentity,
   ];
+  q(fields);
+  if (context) chargeCompositionIdentityTuple('edge-fact-v1', fields, context);
   let factKey;
   try {
     factKey = edgeFactKey(fields);
@@ -159,7 +191,11 @@ export function normalizeJavaEdge(
     }
     throw error;
   }
-  return CanonicalEdgeSchema.parse({
+  if (context) {
+    q([factKey]);
+    chargeCompositionIdentityTuple('canonical-edge-v1', [factKey], context);
+  }
+  const draft = {
     id: canonicalFactId('EDGE', factKey),
     factKey,
     repositoryId: edge.repositoryId,
@@ -169,7 +205,10 @@ export function normalizeJavaEdge(
     target,
     sourceRange: range,
     confidence: edge.confidence,
-  });
+  };
+  q(draft);
+  q(draft);
+  return CanonicalEdgeSchema.parse(draft);
 }
 
 function pairOrder<T extends NormalizedNodePair | NormalizedEdgePair>(left: T, right: T): number {
@@ -181,6 +220,24 @@ function pairOrder<T extends NormalizedNodePair | NormalizedEdgePair>(left: T, r
 export function normalizeNativeAnalysis(
   result: ValidatedNativeResult,
 ): NormalizedCanonicalAnalysis {
+  return normalizeNativeAnalysisCore(result, null);
+}
+export default function normalizeNativeAnalysisWithBudget(
+  result: ValidatedNativeResult,
+  context: CodeSyntaxCompositionBudget,
+): NormalizedCanonicalAnalysis {
+  return normalizeNativeAnalysisCore(result, context);
+}
+function normalizeNativeAnalysisCore(
+  result: ValidatedNativeResult,
+  context: CodeSyntaxCompositionBudget | null,
+): NormalizedCanonicalAnalysis {
+  const q = (v: unknown) => {
+    if (context) chargeCompositionJSON(v, context.limits, context.budget);
+  };
+  const streamInput = { request: result.request, events: result.events };
+  q(streamInput);
+  q(streamInput);
   if (result.request.type !== 'ANALYZE') {
     fail('INVALID_CONTEXT', ['request', 'type'], 'Only ANALYZE results can be normalized');
   }
@@ -207,6 +264,7 @@ export function normalizeNativeAnalysis(
     fail('INVALID_CONTEXT', ['terminal'], 'Native result is not one completed analysis');
   }
 
+  if (context) for (const file of request.payload.sourceFiles) q([file.id, file]);
   const sourceFiles = new Map<string, SourceFile>(
     request.payload.sourceFiles.map((file) => [file.id, file]),
   );
@@ -244,19 +302,34 @@ export function normalizeNativeAnalysis(
         'Duplicate Provider Fact ID',
       );
     }
+    q(event.payload.providerFactId);
     seenFacts.add(event.payload.providerFactId);
     if (event.type === 'EDGE') {
+      q({ index, payload: event.payload });
       edgeEvents.push({ index, payload: event.payload });
       continue;
     }
     let canonical: CanonicalNode;
     try {
-      canonical = normalizeJavaNode(event.payload, sourceFiles);
+      canonical = context
+        ? normalizeJavaNodeWithBudget(event.payload, sourceFiles, context)
+        : normalizeJavaNode(event.payload, sourceFiles);
     } catch (error) {
       if (error instanceof CanonicalNormalizationError) {
         fail(error.code, ['events', index, 'payload', ...error.path], error.message);
       }
       throw error;
+    }
+    if (context) {
+      q({
+        provider: {
+          factType: 'NODE',
+          providerId: event.payload.providerId,
+          providerFactId: event.payload.providerFactId,
+        },
+        canonical,
+      });
+      q([event.payload.providerFactId, canonical]);
     }
     canonicalByProviderFactId.set(event.payload.providerFactId, canonical);
     nodePairs.push({
@@ -273,13 +346,29 @@ export function normalizeNativeAnalysis(
   for (const { index, payload } of edgeEvents) {
     let canonical: CanonicalEdge;
     try {
-      canonical = normalizeJavaEdge(payload, canonicalByProviderFactId, sourceFiles);
+      canonical = context
+        ? normalizeCanonicalCodeEdgeCore(
+            edgeKind(payload.providerKind),
+            payload,
+            canonicalByProviderFactId,
+            sourceFiles,
+            context,
+          )
+        : normalizeJavaEdge(payload, canonicalByProviderFactId, sourceFiles);
     } catch (error) {
       if (error instanceof CanonicalNormalizationError) {
         fail(error.code, ['events', index, 'payload', ...error.path], error.message);
       }
       throw error;
     }
+    q({
+      provider: {
+        factType: 'EDGE',
+        providerId: payload.providerId,
+        providerFactId: payload.providerFactId,
+      },
+      canonical,
+    });
     edgePairs.push({
       provider: {
         factType: 'EDGE',
@@ -290,13 +379,38 @@ export function normalizeNativeAnalysis(
     });
   }
 
-  nodePairs.sort(pairOrder);
-  edgePairs.sort(pairOrder);
+  if (context) {
+    for (const pairs of [nodePairs, edgePairs]) {
+      const keys = new Map<NormalizedNodePair | NormalizedEdgePair, string>();
+      for (const pair of pairs) {
+        const key =
+          pair.canonical.factKey +
+          '\0' +
+          pair.provider.providerId +
+          '\0' +
+          pair.provider.providerFactId;
+        q(key);
+        keys.set(pair, key);
+      }
+      pairs.sort((a, b) => {
+        const x = keys.get(a)!,
+          y = keys.get(b)!;
+        return x < y ? -1 : x > y ? 1 : 0;
+      });
+    }
+  } else {
+    nodePairs.sort(pairOrder);
+    edgePairs.sort(pairOrder);
+  }
+  if (context)
+    for (const pair of nodePairs)
+      q([pair.provider.providerFactId, { factType: 'NODE', id: pair.canonical.id }]);
   const nodeRefsByProviderFactId = new Map<ProviderFactId, CanonicalNodeRef>(
     nodePairs.map(({ provider, canonical }) => [
       provider.providerFactId,
       { factType: 'NODE', id: canonical.id },
     ]),
   );
+  q({ nodes: nodePairs, edges: edgePairs });
   return { nodes: nodePairs, edges: edgePairs, nodeRefsByProviderFactId };
 }

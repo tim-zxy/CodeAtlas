@@ -1,0 +1,652 @@
+{
+  "basis": {
+    "repositoryId": "repo:one",
+    "revisionId": "revision:one",
+    "contentFingerprint": "content:declared",
+    "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "sourceFile": {
+    "id": "file:one",
+    "repositoryId": "repo:one",
+    "revisionId": "revision:one",
+    "path": "src/App.java",
+    "contentFingerprint": "source:declared",
+    "classification": {
+      "role": "SOURCE",
+      "provenance": "AUTHORED",
+      "contentKind": "TEXT"
+    },
+    "languageHint": "java",
+    "sensitivity": "INTERNAL"
+  },
+  "selectedNodes": [
+    {
+      "repositoryId": "repo:one",
+      "revisionId": "revision:one",
+      "confidence": {
+        "score": 1,
+        "method": "parser",
+        "reasons": []
+      },
+      "id": "code:module",
+      "factKey": "code-key:module",
+      "name": "src/App.java",
+      "qualifiedName": "src/App.java",
+      "sourceRange": null,
+      "kind": "MODULE"
+    },
+    {
+      "repositoryId": "repo:one",
+      "revisionId": "revision:one",
+      "confidence": {
+        "score": 1,
+        "method": "parser",
+        "reasons": []
+      },
+      "id": "code:function",
+      "factKey": "code-key:function",
+      "name": "handler",
+      "qualifiedName": "App.handler",
+      "sourceRange": {
+        "sourceFileId": "file:one",
+        "startLine": 4,
+        "startColumn": 4,
+        "endLine": 4,
+        "endColumn": 11
+      },
+      "kind": "SYMBOL",
+      "symbolKind": "METHOD"
+    },
+    {
+      "repositoryId": "repo:one",
+      "revisionId": "revision:one",
+      "confidence": {
+        "score": 1,
+        "method": "parser",
+        "reasons": []
+      },
+      "id": "code:type",
+      "factKey": "code-key:type",
+      "name": "App",
+      "qualifiedName": "App",
+      "sourceRange": {
+        "sourceFileId": "file:one",
+        "startLine": 2,
+        "startColumn": 6,
+        "endLine": 2,
+        "endColumn": 9
+      },
+      "kind": "TYPE",
+      "typeKind": "CLASS"
+    }
+  ],
+  "bindings": [
+    {
+      "providerFact": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "provider:code:module"
+      },
+      "providerSnapshotId": "snapshot:declared",
+      "canonicalFact": {
+        "factType": "NODE",
+        "id": "code:module"
+      },
+      "evidenceId": "binding-pipeline-evidence:0"
+    },
+    {
+      "providerFact": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "provider:code:function"
+      },
+      "providerSnapshotId": "snapshot:declared",
+      "canonicalFact": {
+        "factType": "NODE",
+        "id": "code:function"
+      },
+      "evidenceId": "binding-pipeline-evidence:1"
+    },
+    {
+      "providerFact": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "provider:code:type"
+      },
+      "providerSnapshotId": "snapshot:declared",
+      "canonicalFact": {
+        "factType": "NODE",
+        "id": "code:type"
+      },
+      "evidenceId": "binding-pipeline-evidence:2"
+    }
+  ],
+  "supports": [
+    {
+      "factType": "NODE",
+      "canonical": {
+        "repositoryId": "repo:one",
+        "revisionId": "revision:one",
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "id": "code:module",
+        "factKey": "code-key:module",
+        "name": "src/App.java",
+        "qualifiedName": "src/App.java",
+        "sourceRange": null,
+        "kind": "MODULE"
+      },
+      "evidence": {
+        "id": "binding-pipeline-evidence:0",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:one",
+        "providerSnapshotId": "snapshot:declared",
+        "providerFact": {
+          "factType": "NODE",
+          "providerId": "native",
+          "providerFactId": "provider:code:module"
+        },
+        "status": "ACTIVE"
+      },
+      "binding": {
+        "providerFact": {
+          "factType": "NODE",
+          "providerId": "native",
+          "providerFactId": "provider:code:module"
+        },
+        "providerSnapshotId": "snapshot:declared",
+        "canonicalFact": {
+          "factType": "NODE",
+          "id": "code:module"
+        },
+        "evidenceId": "binding-pipeline-evidence:0"
+      },
+      "factEvidence": {
+        "fact": {
+          "factType": "NODE",
+          "id": "code:module"
+        },
+        "evidenceId": "binding-pipeline-evidence:0"
+      },
+      "dependencyUnitIds": ["unit:declared"],
+      "valueDigest": "8440cc1b26bc537454a0489375a2a7cfcbcbb1c4bd46a05bf0d2f8879bf8ce58"
+    },
+    {
+      "factType": "NODE",
+      "canonical": {
+        "repositoryId": "repo:one",
+        "revisionId": "revision:one",
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "id": "code:function",
+        "factKey": "code-key:function",
+        "name": "handler",
+        "qualifiedName": "App.handler",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 4,
+          "startColumn": 4,
+          "endLine": 4,
+          "endColumn": 11
+        },
+        "kind": "SYMBOL",
+        "symbolKind": "METHOD"
+      },
+      "evidence": {
+        "id": "binding-pipeline-evidence:1",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:one",
+        "providerSnapshotId": "snapshot:declared",
+        "providerFact": {
+          "factType": "NODE",
+          "providerId": "native",
+          "providerFactId": "provider:code:function"
+        },
+        "status": "ACTIVE"
+      },
+      "binding": {
+        "providerFact": {
+          "factType": "NODE",
+          "providerId": "native",
+          "providerFactId": "provider:code:function"
+        },
+        "providerSnapshotId": "snapshot:declared",
+        "canonicalFact": {
+          "factType": "NODE",
+          "id": "code:function"
+        },
+        "evidenceId": "binding-pipeline-evidence:1"
+      },
+      "factEvidence": {
+        "fact": {
+          "factType": "NODE",
+          "id": "code:function"
+        },
+        "evidenceId": "binding-pipeline-evidence:1"
+      },
+      "dependencyUnitIds": ["unit:declared"],
+      "valueDigest": "9f403cf0ef5ff5dab5db60d4e681295e0826651a6f9637ae8346427e4a9d400d"
+    },
+    {
+      "factType": "NODE",
+      "canonical": {
+        "repositoryId": "repo:one",
+        "revisionId": "revision:one",
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "id": "code:type",
+        "factKey": "code-key:type",
+        "name": "App",
+        "qualifiedName": "App",
+        "sourceRange": {
+          "sourceFileId": "file:one",
+          "startLine": 2,
+          "startColumn": 6,
+          "endLine": 2,
+          "endColumn": 9
+        },
+        "kind": "TYPE",
+        "typeKind": "CLASS"
+      },
+      "evidence": {
+        "id": "binding-pipeline-evidence:2",
+        "repositoryId": "repo:one",
+        "revisionId": "revision:one",
+        "providerSnapshotId": "snapshot:declared",
+        "providerFact": {
+          "factType": "NODE",
+          "providerId": "native",
+          "providerFactId": "provider:code:type"
+        },
+        "status": "ACTIVE"
+      },
+      "binding": {
+        "providerFact": {
+          "factType": "NODE",
+          "providerId": "native",
+          "providerFactId": "provider:code:type"
+        },
+        "providerSnapshotId": "snapshot:declared",
+        "canonicalFact": {
+          "factType": "NODE",
+          "id": "code:type"
+        },
+        "evidenceId": "binding-pipeline-evidence:2"
+      },
+      "factEvidence": {
+        "fact": {
+          "factType": "NODE",
+          "id": "code:type"
+        },
+        "evidenceId": "binding-pipeline-evidence:2"
+      },
+      "dependencyUnitIds": ["unit:declared"],
+      "valueDigest": "8072912794b0396f98dda5ba156803a48bc96dc86795602c3034b596363961ec"
+    }
+  ],
+  "extractorVersion": "syntax-v1",
+  "raw": [
+    {
+      "providerSyntaxId": "provider:syntax:declared:1",
+      "sourceFileId": "file:one",
+      "sourceFingerprint": "source:declared",
+      "sourceRange": {
+        "sourceFileId": "file:one",
+        "startLine": 0,
+        "startColumn": 0,
+        "endLine": 20,
+        "endColumn": 12
+      },
+      "owner": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "provider:code:module"
+      },
+      "lexicalScope": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "provider:code:module"
+      },
+      "controlContext": "UNCONDITIONAL",
+      "syntaxKind": "BINDING_SCOPE",
+      "payload": {
+        "scopeRef": {
+          "factType": "NODE",
+          "providerId": "native",
+          "providerFactId": "provider:code:module"
+        },
+        "parentScopeRef": null,
+        "status": "COMPLETE",
+        "limitations": []
+      }
+    },
+    {
+      "providerSyntaxId": "provider:syntax:declared:2",
+      "sourceFileId": "file:one",
+      "sourceFingerprint": "source:declared",
+      "sourceRange": {
+        "sourceFileId": "file:one",
+        "startLine": 2,
+        "startColumn": 0,
+        "endLine": 18,
+        "endColumn": 12
+      },
+      "owner": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "provider:code:type"
+      },
+      "lexicalScope": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "provider:code:type"
+      },
+      "controlContext": "UNCONDITIONAL",
+      "syntaxKind": "BINDING_SCOPE",
+      "payload": {
+        "scopeRef": {
+          "factType": "NODE",
+          "providerId": "native",
+          "providerFactId": "provider:code:type"
+        },
+        "parentScopeRef": {
+          "factType": "NODE",
+          "providerId": "native",
+          "providerFactId": "provider:code:module"
+        },
+        "status": "COMPLETE",
+        "limitations": []
+      }
+    },
+    {
+      "providerSyntaxId": "provider:syntax:declared:3",
+      "sourceFileId": "file:one",
+      "sourceFingerprint": "source:declared",
+      "sourceRange": {
+        "sourceFileId": "file:one",
+        "startLine": 4,
+        "startColumn": 0,
+        "endLine": 10,
+        "endColumn": 12
+      },
+      "owner": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "provider:code:function"
+      },
+      "lexicalScope": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "provider:code:function"
+      },
+      "controlContext": "UNCONDITIONAL",
+      "syntaxKind": "BINDING_SCOPE",
+      "payload": {
+        "scopeRef": {
+          "factType": "NODE",
+          "providerId": "native",
+          "providerFactId": "provider:code:function"
+        },
+        "parentScopeRef": {
+          "factType": "NODE",
+          "providerId": "native",
+          "providerFactId": "provider:code:type"
+        },
+        "status": "COMPLETE",
+        "limitations": []
+      }
+    },
+    {
+      "providerSyntaxId": "provider:syntax:declared:4",
+      "sourceFileId": "file:one",
+      "sourceFingerprint": "source:declared",
+      "sourceRange": {
+        "sourceFileId": "file:one",
+        "startLine": 0,
+        "startColumn": 0,
+        "endLine": 0,
+        "endColumn": 12
+      },
+      "owner": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "provider:code:module"
+      },
+      "lexicalScope": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "provider:code:module"
+      },
+      "controlContext": "UNCONDITIONAL",
+      "syntaxKind": "IMPORT_BINDING",
+      "payload": {
+        "language": "java",
+        "importKind": "JAVA_TYPE",
+        "qualifiedName": "org.springframework.web.bind.annotation.GetMapping",
+        "importedName": "GetMapping",
+        "boundName": "GetMapping"
+      }
+    },
+    {
+      "providerSyntaxId": "provider:syntax:declared:5",
+      "sourceFileId": "file:one",
+      "sourceFingerprint": "source:declared",
+      "sourceRange": {
+        "sourceFileId": "file:one",
+        "startLine": 3,
+        "startColumn": 0,
+        "endLine": 3,
+        "endColumn": 12
+      },
+      "owner": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "provider:code:function"
+      },
+      "lexicalScope": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "provider:code:type"
+      },
+      "controlContext": "UNCONDITIONAL",
+      "syntaxKind": "DECORATION",
+      "payload": {
+        "callee": {
+          "name": "GetMapping",
+          "target": {
+            "state": "RESOLVED",
+            "resolution": "EXACT",
+            "target": {
+              "factType": "NODE",
+              "providerId": "native",
+              "providerFactId": "provider:code:type"
+            }
+          }
+        },
+        "arguments": []
+      }
+    },
+    {
+      "providerSyntaxId": "provider:syntax:declared:6",
+      "sourceFileId": "file:one",
+      "sourceFingerprint": "source:declared",
+      "sourceRange": {
+        "sourceFileId": "file:one",
+        "startLine": 5,
+        "startColumn": 0,
+        "endLine": 5,
+        "endColumn": 12
+      },
+      "owner": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "provider:code:function"
+      },
+      "lexicalScope": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "provider:code:function"
+      },
+      "controlContext": "UNCONDITIONAL",
+      "syntaxKind": "INVOCATION",
+      "payload": {
+        "callee": {
+          "name": "handler",
+          "target": {
+            "state": "RESOLVED",
+            "resolution": "HEURISTIC",
+            "target": {
+              "factType": "NODE",
+              "providerId": "native",
+              "providerFactId": "provider:code:function"
+            }
+          }
+        },
+        "receiver": null,
+        "arguments": []
+      }
+    },
+    {
+      "providerSyntaxId": "provider:syntax:declared:7",
+      "sourceFileId": "file:one",
+      "sourceFingerprint": "source:declared",
+      "sourceRange": {
+        "sourceFileId": "file:one",
+        "startLine": 2,
+        "startColumn": 0,
+        "endLine": 18,
+        "endColumn": 12
+      },
+      "owner": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "provider:code:type"
+      },
+      "lexicalScope": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "provider:code:module"
+      },
+      "controlContext": "UNCONDITIONAL",
+      "syntaxKind": "DECLARATION",
+      "payload": {
+        "declarationForm": "TYPE",
+        "declaredName": "App",
+        "declaredType": null,
+        "parameterNames": [],
+        "modifiers": []
+      }
+    },
+    {
+      "providerSyntaxId": "provider:syntax:declared:8",
+      "sourceFileId": "file:one",
+      "sourceFingerprint": "source:declared",
+      "sourceRange": {
+        "sourceFileId": "file:one",
+        "startLine": 6,
+        "startColumn": 0,
+        "endLine": 6,
+        "endColumn": 12
+      },
+      "owner": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "provider:code:function"
+      },
+      "lexicalScope": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "provider:code:function"
+      },
+      "controlContext": "UNCONDITIONAL",
+      "syntaxKind": "ASSIGNMENT",
+      "payload": {
+        "assignmentForm": "DIRECT_VALUE",
+        "valueRange": {
+          "sourceFileId": "file:one",
+          "startLine": 6,
+          "startColumn": 4,
+          "endLine": 6,
+          "endColumn": 10
+        },
+        "targetName": "x",
+        "value": {
+          "kind": "UNKNOWN",
+          "reason": "CALL_RESULT"
+        }
+      }
+    },
+    {
+      "providerSyntaxId": "provider:syntax:declared:9",
+      "sourceFileId": "file:one",
+      "sourceFingerprint": "source:declared",
+      "sourceRange": {
+        "sourceFileId": "file:one",
+        "startLine": 7,
+        "startColumn": 0,
+        "endLine": 7,
+        "endColumn": 12
+      },
+      "owner": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "provider:code:function"
+      },
+      "lexicalScope": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "provider:code:function"
+      },
+      "controlContext": "UNCONDITIONAL",
+      "syntaxKind": "BINDING_EFFECT",
+      "payload": {
+        "name": "item",
+        "effect": "ITERATION_TARGET",
+        "targetScopeRef": {
+          "factType": "NODE",
+          "providerId": "native",
+          "providerFactId": "provider:code:function"
+        }
+      }
+    },
+    {
+      "providerSyntaxId": "provider:syntax:declared:10",
+      "sourceFileId": "file:one",
+      "sourceFingerprint": "source:declared",
+      "sourceRange": {
+        "sourceFileId": "file:one",
+        "startLine": 8,
+        "startColumn": 0,
+        "endLine": 8,
+        "endColumn": 12
+      },
+      "owner": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "provider:code:function"
+      },
+      "lexicalScope": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "provider:code:function"
+      },
+      "controlContext": "UNCONDITIONAL",
+      "syntaxKind": "ARTIFACT",
+      "payload": {
+        "mediaType": "application/json",
+        "logicalPath": "src/App.java",
+        "contentDigest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "declaredValues": []
+      }
+    }
+  ]
+}

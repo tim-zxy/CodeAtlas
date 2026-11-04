@@ -1,0 +1,74 @@
+[
+  {
+    "id": "no-files",
+    "request": "requests/no-files.jsonl",
+    "events": "observations/no-files.jsonl",
+    "sources": []
+  },
+  {
+    "id": "empty-python",
+    "request": "requests/empty-python.jsonl",
+    "events": "observations/empty-python.jsonl",
+    "sources": ["sources/empty-python/app.py"]
+  },
+  {
+    "id": "comment-python",
+    "request": "requests/comment-python.jsonl",
+    "events": "observations/comment-python.jsonl",
+    "sources": ["sources/comment-python/app.py"]
+  },
+  {
+    "id": "wildcard-python",
+    "request": "requests/wildcard-python.jsonl",
+    "events": "observations/wildcard-python.jsonl",
+    "sources": ["sources/wildcard-python/app.py"]
+  },
+  {
+    "id": "class-python",
+    "request": "requests/class-python.jsonl",
+    "events": "observations/class-python.jsonl",
+    "sources": ["sources/class-python/app.py"]
+  },
+  {
+    "id": "nested-python",
+    "request": "requests/nested-python.jsonl",
+    "events": "observations/nested-python.jsonl",
+    "sources": ["sources/nested-python/app.py"]
+  },
+  {
+    "id": "malformed-python",
+    "request": "requests/malformed-python.jsonl",
+    "events": "observations/malformed-python.jsonl",
+    "sources": ["sources/malformed-python/app.py"]
+  },
+  {
+    "id": "dynamic-python",
+    "request": "requests/dynamic-python.jsonl",
+    "events": "observations/dynamic-python.jsonl",
+    "sources": ["sources/dynamic-python/app.py"]
+  },
+  {
+    "id": "alias-reference-python",
+    "request": "requests/alias-reference-python.jsonl",
+    "events": "observations/alias-reference-python.jsonl",
+    "sources": ["sources/alias-reference-python/app.py"]
+  },
+  {
+    "id": "async-python",
+    "request": "requests/async-python.jsonl",
+    "events": "observations/async-python.jsonl",
+    "sources": ["sources/async-python/app.py"]
+  },
+  {
+    "id": "java-only",
+    "request": "requests/java-only.jsonl",
+    "events": "observations/java-only.jsonl",
+    "sources": ["sources/java-only/Box.java"]
+  },
+  {
+    "id": "mixed",
+    "request": "requests/mixed.jsonl",
+    "events": "observations/mixed.jsonl",
+    "sources": ["sources/mixed/Box.java", "sources/mixed/app.py"]
+  }
+]

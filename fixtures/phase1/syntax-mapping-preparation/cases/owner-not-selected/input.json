@@ -1,0 +1,158 @@
+{
+  "kind": "SYNTAX_MAPPING_PREPARATION_INPUT",
+  "repositoryId": "repo-fixture",
+  "revisionId": "rev-a",
+  "providerId": "fixture.provider",
+  "sourceFile": {
+    "id": "source-fixture",
+    "repositoryId": "repo-fixture",
+    "revisionId": "rev-a",
+    "path": "sources/app.py",
+    "contentFingerprint": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+    "classification": {
+      "role": "SOURCE",
+      "provenance": "AUTHORED",
+      "contentKind": "TEXT"
+    },
+    "languageHint": "python",
+    "sensitivity": "PUBLIC"
+  },
+  "raw": {
+    "providerSyntaxId": "syntax-declared",
+    "sourceFileId": "source-fixture",
+    "sourceFingerprint": "27c26c2ea9d1941235e0c2cb252fa25709a36bef6ed581096540c18ab54eec50",
+    "sourceRange": {
+      "sourceFileId": "source-fixture",
+      "startLine": 1,
+      "startColumn": 0,
+      "endLine": 1,
+      "endColumn": 5
+    },
+    "owner": {
+      "factType": "NODE",
+      "providerId": "fixture.provider",
+      "providerFactId": "owner"
+    },
+    "syntaxKind": "ASSIGNMENT",
+    "payload": {
+      "targetName": "x",
+      "value": {
+        "kind": "NULL"
+      }
+    }
+  },
+  "selectedNodes": [
+    {
+      "ref": {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo-fixture",
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "node-a",
+          "revisionId": "rev-a"
+        }
+      },
+      "name": "p"
+    },
+    {
+      "ref": {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo-fixture",
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "node-b",
+          "revisionId": "rev-a"
+        }
+      },
+      "name": "p"
+    }
+  ],
+  "bindings": [
+    {
+      "providerNodeRef": {
+        "factType": "NODE",
+        "providerId": "fixture.provider",
+        "providerFactId": "owner"
+      },
+      "canonicalRef": {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo-fixture",
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "node-owner",
+          "revisionId": "rev-a"
+        }
+      }
+    },
+    {
+      "providerNodeRef": {
+        "factType": "NODE",
+        "providerId": "fixture.provider",
+        "providerFactId": "a"
+      },
+      "canonicalRef": {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo-fixture",
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "node-a",
+          "revisionId": "rev-a"
+        }
+      }
+    },
+    {
+      "providerNodeRef": {
+        "factType": "NODE",
+        "providerId": "fixture.provider",
+        "providerFactId": "b"
+      },
+      "canonicalRef": {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo-fixture",
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "node-b",
+          "revisionId": "rev-a"
+        }
+      }
+    },
+    {
+      "providerNodeRef": {
+        "factType": "NODE",
+        "providerId": "fixture.provider",
+        "providerFactId": "loser"
+      },
+      "canonicalRef": {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo-fixture",
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "node-a",
+          "revisionId": "rev-a"
+        }
+      }
+    }
+  ],
+  "extractorVersion": "fixture-extractor",
+  "mapperVersion": "mapping-design-v1",
+  "annotation": {
+    "sourcePath": "sources/app.py",
+    "literal": "x = p",
+    "line": 1,
+    "coordinateConvention": "0-based lines, 0-based UTF8 byte columns, exclusive end; schema-only ranges are declarations, not producer claims",
+    "dynamicGrounding": "STATIC_SYNTAX_ONLY",
+    "ranges": [
+      {
+        "sourceRange": {
+          "sourceFileId": "source-fixture",
+          "startLine": 1,
+          "startColumn": 0,
+          "endLine": 1,
+          "endColumn": 5
+        },
+        "slice": "x = p",
+        "status": "DECLARED_LITERAL_SLICE"
+      }
+    ]
+  }
+}

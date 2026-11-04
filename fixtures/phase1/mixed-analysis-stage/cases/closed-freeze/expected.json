@@ -1,0 +1,6 @@
+{
+  "allowed": false,
+  "next": "CLOSED",
+  "persistentRows": "UNCHANGED_FROM_LITERAL_BASE_EXCEPT_VALID_APPLY",
+  "error": "STAGE_RELEASED"
+}

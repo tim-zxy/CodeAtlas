@@ -1,0 +1,181 @@
+{
+  "schemaVersion": 1,
+  "qualification": "DECLARED_COMPONENT_ONLY",
+  "contextAuthority": "state-matrix-execution-bindings.json",
+  "cases": [
+    {
+      "id": "second-stage",
+      "family": "BOUNDARY",
+      "input": "cases/second-stage/input.json",
+      "expected": "cases/second-stage/expected.json",
+      "inputSha256": "8fa122ac5cc409059dd7f3e597dfbde019611c85708f18c3eeab492321eea277",
+      "expectedSha256": "57300d857968d95dc765dd23e40fd6696fdcfb43da98f119452bc0c3872d08f0",
+      "context": "stage-observation-independent/mixed.json",
+      "correction": "Original base/input/expected preserved; complete persistent equality evaluated against explicitly bound literal context, never generic alpha base silently relabeled."
+    },
+    {
+      "id": "cross-db-owner",
+      "family": "BOUNDARY",
+      "input": "cases/cross-db-owner/input.json",
+      "expected": "cases/cross-db-owner/expected.json",
+      "inputSha256": "733958efbe82e47d42840bbdfcb45cdc4763ab130502ddb8163d80c7c825911a",
+      "expectedSha256": "57300d857968d95dc765dd23e40fd6696fdcfb43da98f119452bc0c3872d08f0",
+      "context": "stage-observation-independent/mixed.json",
+      "correction": "Original base/input/expected preserved; complete persistent equality evaluated against explicitly bound literal context, never generic alpha base silently relabeled."
+    },
+    {
+      "id": "clone-owner",
+      "family": "BOUNDARY",
+      "input": "cases/clone-owner/input.json",
+      "expected": "cases/clone-owner/expected.json",
+      "inputSha256": "4c0d9ae09cfe083728ffa9bc2c27b2ef8656efee2cbbd1a762372ed7ac40c5c7",
+      "expectedSha256": "57300d857968d95dc765dd23e40fd6696fdcfb43da98f119452bc0c3872d08f0",
+      "context": "stage-observation-independent/mixed.json",
+      "correction": "Original base/input/expected preserved; complete persistent equality evaluated against explicitly bound literal context, never generic alpha base silently relabeled."
+    },
+    {
+      "id": "clone-lease",
+      "family": "BOUNDARY",
+      "input": "cases/clone-lease/input.json",
+      "expected": "cases/clone-lease/expected.json",
+      "inputSha256": "d76637599ee07ca9f70e3b55ca89cce8c3894dbf27b8d385fea2825dc1e7bb7b",
+      "expectedSha256": "57300d857968d95dc765dd23e40fd6696fdcfb43da98f119452bc0c3872d08f0",
+      "context": "stage-observation-independent/mixed.json",
+      "correction": "Original base/input/expected preserved; complete persistent equality evaluated against explicitly bound literal context, never generic alpha base silently relabeled."
+    },
+    {
+      "id": "reopen",
+      "family": "BOUNDARY",
+      "input": "cases/reopen/input.json",
+      "expected": "cases/reopen/expected.json",
+      "inputSha256": "10882e0ae36825d577471f3db65a80e57a069eb897e1458928be7d4b1d67a8ba",
+      "expectedSha256": "57300d857968d95dc765dd23e40fd6696fdcfb43da98f119452bc0c3872d08f0",
+      "context": "stage-observation-independent/mixed.json",
+      "correction": "Original base/input/expected preserved; complete persistent equality evaluated against explicitly bound literal context, never generic alpha base silently relabeled."
+    },
+    {
+      "id": "released-capture",
+      "family": "BOUNDARY",
+      "input": "cases/released-capture/input.json",
+      "expected": "cases/released-capture/expected.json",
+      "inputSha256": "b6048b424d9bd23f9019763746ee7a9a71779f19baa551b800f6e436d5f74f35",
+      "expectedSha256": "57300d857968d95dc765dd23e40fd6696fdcfb43da98f119452bc0c3872d08f0",
+      "context": "stage-observation-independent/mixed.json",
+      "correction": "Original base/input/expected preserved; complete persistent equality evaluated against explicitly bound literal context, never generic alpha base silently relabeled."
+    },
+    {
+      "id": "temp-tamper",
+      "family": "BOUNDARY",
+      "input": "cases/temp-tamper/input.json",
+      "expected": "cases/temp-tamper/expected.json",
+      "inputSha256": "fc01ab073f48a8a51dcf97d5e36c25570d856cc2fcee1a4bfdb6f97bd78b18a4",
+      "expectedSha256": "57300d857968d95dc765dd23e40fd6696fdcfb43da98f119452bc0c3872d08f0",
+      "context": "stage-observation-independent/mixed.json",
+      "correction": "Original base/input/expected preserved; complete persistent equality evaluated against explicitly bound literal context, never generic alpha base silently relabeled."
+    },
+    {
+      "id": "raw-mutation",
+      "family": "BOUNDARY",
+      "input": "cases/raw-mutation/input.json",
+      "expected": "cases/raw-mutation/expected.json",
+      "inputSha256": "2da159fc33ff818430c30a983f6581dfacaf800ded1458b25f579b77d59f08c1",
+      "expectedSha256": "57300d857968d95dc765dd23e40fd6696fdcfb43da98f119452bc0c3872d08f0",
+      "context": "stage-observation-independent/mixed.json",
+      "correction": "Original base/input/expected preserved; complete persistent equality evaluated against explicitly bound literal context, never generic alpha base silently relabeled."
+    },
+    {
+      "id": "port-twice",
+      "family": "BOUNDARY",
+      "input": "cases/port-twice/input.json",
+      "expected": "cases/port-twice/expected.json",
+      "inputSha256": "9ab20500fa33ca682adeedbfb55dd7272434501ddc0d13a0fdb1dd0f51bd74f5",
+      "expectedSha256": "57300d857968d95dc765dd23e40fd6696fdcfb43da98f119452bc0c3872d08f0",
+      "context": "stage-observation-independent/mixed.json",
+      "correction": "Original base/input/expected preserved; complete persistent equality evaluated against explicitly bound literal context, never generic alpha base silently relabeled."
+    },
+    {
+      "id": "scope-tamper",
+      "family": "BOUNDARY",
+      "input": "cases/scope-tamper/input.json",
+      "expected": "cases/scope-tamper/expected.json",
+      "inputSha256": "8f96da6f2f72195e0e952d404a7dabbb73283313b523431636eb22de6d8e11c9",
+      "expectedSha256": "57300d857968d95dc765dd23e40fd6696fdcfb43da98f119452bc0c3872d08f0",
+      "context": "stage-observation-independent/mixed.json",
+      "correction": "Original base/input/expected preserved; complete persistent equality evaluated against explicitly bound literal context, never generic alpha base silently relabeled."
+    },
+    {
+      "id": "unsafe-getter",
+      "family": "BOUNDARY",
+      "input": "cases/unsafe-getter/input.json",
+      "expected": "cases/unsafe-getter/expected.json",
+      "inputSha256": "426ca2851725a98f63feeb3eff50a6f6f1bf9c681057f103364e649c728410df",
+      "expectedSha256": "57300d857968d95dc765dd23e40fd6696fdcfb43da98f119452bc0c3872d08f0",
+      "context": "stage-observation-independent/mixed.json",
+      "correction": "Original base/input/expected preserved; complete persistent equality evaluated against explicitly bound literal context, never generic alpha base silently relabeled."
+    },
+    {
+      "id": "unsafe-proxy",
+      "family": "BOUNDARY",
+      "input": "cases/unsafe-proxy/input.json",
+      "expected": "cases/unsafe-proxy/expected.json",
+      "inputSha256": "d2f49a07839ad828dd9f990d1956e37292ed173ed38906d7ab779700aea63ff8",
+      "expectedSha256": "57300d857968d95dc765dd23e40fd6696fdcfb43da98f119452bc0c3872d08f0",
+      "context": "stage-observation-independent/mixed.json",
+      "correction": "Original base/input/expected preserved; complete persistent equality evaluated against explicitly bound literal context, never generic alpha base silently relabeled."
+    },
+    {
+      "id": "unsafe-cycle",
+      "family": "BOUNDARY",
+      "input": "cases/unsafe-cycle/input.json",
+      "expected": "cases/unsafe-cycle/expected.json",
+      "inputSha256": "b35db2cb56bfdbbb62e38e067621228f602b4f00edb20d5af332353228d447af",
+      "expectedSha256": "57300d857968d95dc765dd23e40fd6696fdcfb43da98f119452bc0c3872d08f0",
+      "context": "stage-observation-independent/mixed.json",
+      "correction": "Original base/input/expected preserved; complete persistent equality evaluated against explicitly bound literal context, never generic alpha base silently relabeled."
+    },
+    {
+      "id": "unsafe-sparse",
+      "family": "BOUNDARY",
+      "input": "cases/unsafe-sparse/input.json",
+      "expected": "cases/unsafe-sparse/expected.json",
+      "inputSha256": "5d1a51c1e46f9ce6082d9c3c8deedcbc2cc5fd8b488e409c77b5f1464ffbbbfc",
+      "expectedSha256": "57300d857968d95dc765dd23e40fd6696fdcfb43da98f119452bc0c3872d08f0",
+      "context": "stage-observation-independent/mixed.json",
+      "correction": "Original base/input/expected preserved; complete persistent equality evaluated against explicitly bound literal context, never generic alpha base silently relabeled."
+    },
+    {
+      "id": "delete-only-null",
+      "family": "BOUNDARY",
+      "input": "cases/delete-only-null/input.json",
+      "expected": "cases/delete-only-null/expected.json",
+      "inputSha256": "a4e2f49bb2fd8a1f46e13d6061197a4e40829668ff60d0caaaa14787cc234c7c",
+      "expectedSha256": "57300d857968d95dc765dd23e40fd6696fdcfb43da98f119452bc0c3872d08f0",
+      "context": "owner-scope-independent/delta-delete-only.json",
+      "correction": "Original base/input/expected preserved; complete persistent equality evaluated against explicitly bound literal context, never generic alpha base silently relabeled."
+    },
+    {
+      "id": "foreign-full-refused",
+      "family": "BOUNDARY",
+      "input": "cases/foreign-full-refused/input.json",
+      "expected": "cases/foreign-full-refused/expected.json",
+      "inputSha256": "e52ed5124273ca391409d0e6d7ea2d8eb7ae47b6b2a32d06888d4e33fbfd5243",
+      "expectedSha256": "57300d857968d95dc765dd23e40fd6696fdcfb43da98f119452bc0c3872d08f0",
+      "context": "original-base-eligible-source-history-unavailable",
+      "correction": "Original base/input/expected preserved; complete persistent equality evaluated against explicitly bound literal context, never generic alpha base silently relabeled."
+    }
+  ],
+  "foreignControl": {
+    "base": "base-input.json",
+    "sha256": "896675121a307df886febdc73faa943f2612003ec794bb57c24891e3040993e9",
+    "literalPreparation": {
+      "source_files": "language_hint=python only; all IDs, fingerprints and foreign support bytes retained",
+      "active_history_pointer": [],
+      "reason": "Reach existing foreign-provider guard with eligible Source and unavailable history; no claimed valid rewritten history."
+    }
+  },
+  "deleteOnlyReference": {
+    "path": "owner-scope-independent/delta-delete-only.json",
+    "sha256": "50d7eff7f8b03aad673db3a22ee43d515bf428b1e8ec7d644b6dd9288c3fed71"
+  },
+  "notWholeOperationBudget": true
+}

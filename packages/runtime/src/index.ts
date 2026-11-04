@@ -43,3 +43,8 @@ export {
   type WorkspaceContext,
   type WorkspaceContextFactory,
 } from './workspace-context.js';
+
+export * from './effective-config.js';
+
+export * from './syntax-observation-profile.js';
+export * from './native-syntax-admission.js';

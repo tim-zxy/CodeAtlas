@@ -1,0 +1,174 @@
+{
+  "kind": "SYNTAX_MAPPING_PREPARATION_INPUT",
+  "repositoryId": "repo-fixture",
+  "revisionId": "rev-a",
+  "providerId": "fixture.provider",
+  "sourceFile": {
+    "id": "source-fixture",
+    "repositoryId": "repo-fixture",
+    "revisionId": "rev-a",
+    "path": "sources/artifact.yml",
+    "contentFingerprint": "0af6a6b64794de7e02c5e17c7d532d8fa22b7e5fce51b803a46439e6637cb269",
+    "classification": {
+      "role": "OTHER",
+      "provenance": "AUTHORED",
+      "contentKind": "TEXT"
+    },
+    "languageHint": null,
+    "sensitivity": "PUBLIC"
+  },
+  "raw": {
+    "providerSyntaxId": "syntax-declared",
+    "sourceFileId": "source-fixture",
+    "sourceFingerprint": "0af6a6b64794de7e02c5e17c7d532d8fa22b7e5fce51b803a46439e6637cb269",
+    "sourceRange": {
+      "sourceFileId": "source-fixture",
+      "startLine": 0,
+      "startColumn": 0,
+      "endLine": 0,
+      "endColumn": 13
+    },
+    "owner": null,
+    "syntaxKind": "ARTIFACT",
+    "payload": {
+      "mediaType": "application/yaml",
+      "logicalPath": "artifact.yml",
+      "contentDigest": "0af6a6b64794de7e02c5e17c7d532d8fa22b7e5fce51b803a46439e6637cb269",
+      "declaredValues": [
+        {
+          "name": "name",
+          "value": {
+            "kind": "STRING",
+            "value": "fixture"
+          }
+        }
+      ]
+    }
+  },
+  "selectedNodes": [
+    {
+      "ref": {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo-fixture",
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "node-owner",
+          "revisionId": "rev-a"
+        }
+      },
+      "name": "owner"
+    },
+    {
+      "ref": {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo-fixture",
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "node-a",
+          "revisionId": "rev-a"
+        }
+      },
+      "name": "p"
+    },
+    {
+      "ref": {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo-fixture",
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "node-b",
+          "revisionId": "rev-a"
+        }
+      },
+      "name": "p"
+    }
+  ],
+  "bindings": [
+    {
+      "providerNodeRef": {
+        "factType": "NODE",
+        "providerId": "fixture.provider",
+        "providerFactId": "owner"
+      },
+      "canonicalRef": {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo-fixture",
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "node-owner",
+          "revisionId": "rev-a"
+        }
+      }
+    },
+    {
+      "providerNodeRef": {
+        "factType": "NODE",
+        "providerId": "fixture.provider",
+        "providerFactId": "a"
+      },
+      "canonicalRef": {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo-fixture",
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "node-a",
+          "revisionId": "rev-a"
+        }
+      }
+    },
+    {
+      "providerNodeRef": {
+        "factType": "NODE",
+        "providerId": "fixture.provider",
+        "providerFactId": "b"
+      },
+      "canonicalRef": {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo-fixture",
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "node-b",
+          "revisionId": "rev-a"
+        }
+      }
+    },
+    {
+      "providerNodeRef": {
+        "factType": "NODE",
+        "providerId": "fixture.provider",
+        "providerFactId": "loser"
+      },
+      "canonicalRef": {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo-fixture",
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "node-a",
+          "revisionId": "rev-a"
+        }
+      }
+    }
+  ],
+  "extractorVersion": "fixture-extractor",
+  "mapperVersion": "mapping-design-v1",
+  "annotation": {
+    "sourcePath": "sources/artifact.yml",
+    "literal": "name: fixture",
+    "line": 0,
+    "coordinateConvention": "0-based lines, 0-based UTF8 byte columns, exclusive end; schema-only ranges are declarations, not producer claims",
+    "dynamicGrounding": "STATIC_SYNTAX_ONLY",
+    "ranges": [
+      {
+        "sourceRange": {
+          "sourceFileId": "source-fixture",
+          "startLine": 0,
+          "startColumn": 0,
+          "endLine": 0,
+          "endColumn": 13
+        },
+        "slice": "name: fixture",
+        "status": "DECLARED_LITERAL_SLICE"
+      }
+    ]
+  }
+}

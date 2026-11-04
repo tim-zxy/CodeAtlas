@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "p1-syntax-offline-corpus-v1",
+  "category": "runtime-graph",
+  "phase": "1",
+  "languages": [],
+  "frameworks": [],
+  "capabilities": [
+    "OFFLINE_SYNTAX_CORPUS_IDENTITY_ONLY"
+  ],
+  "inputs": {
+    "catalog": "catalog.json"
+  },
+  "expected": {
+    "classes": "expected/classes.json"
+  },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

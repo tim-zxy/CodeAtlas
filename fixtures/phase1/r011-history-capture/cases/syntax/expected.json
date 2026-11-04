@@ -1,0 +1,404 @@
+{
+  "status": "AVAILABLE",
+  "history": {
+    "schemaVersion": 1,
+    "parent": null,
+    "state": {
+      "basis": {
+        "repositoryId": "capture-repo",
+        "revisionId": "capture-worktree",
+        "contentFingerprint": "capture-fingerprint",
+        "codeActivationDigest": "ac1b5f475836b85ec1fa5769f8839e27917a730fd04918dde3a63258c9119e7d"
+      },
+      "repositoryLocatorDigest": "00f7217f0d1a535342bd3dad39a25b2c1d2ae98d69476a4e575f4406bc214595",
+      "inventory": [
+        {
+          "id": "source:one",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "path": "src/observation.txt",
+          "contentFingerprint": "source-fingerprint",
+          "classification": {
+            "role": "SOURCE",
+            "provenance": "AUTHORED",
+            "contentKind": "TEXT"
+          },
+          "languageHint": null,
+          "sensitivity": "PUBLIC"
+        }
+      ],
+      "contracts": [
+        {
+          "providerId": "alpha",
+          "extractor": "fixture-v1",
+          "normalizer": "fixture-v1",
+          "contract": "fixture-v1",
+          "policy": "fixture-v1"
+        }
+      ],
+      "units": [
+        {
+          "id": "unit:alpha",
+          "providerId": "alpha",
+          "kind": "PROVIDER_SCOPE",
+          "sourceFileIds": ["source:one"]
+        }
+      ],
+      "snapshots": [
+        {
+          "id": "snapshot:alpha",
+          "repositoryId": "capture-repo",
+          "providerId": "alpha",
+          "providerVersion": "fixture-v1",
+          "runtimeVersion": "fixture-v1",
+          "requestedRevisionId": "capture-worktree",
+          "requestedRevisionFingerprint": "capture-fingerprint",
+          "startedAt": "2026-10-23T00:00:00.000Z",
+          "completedAt": "2026-10-23T00:00:01.000Z",
+          "capabilities": [
+            {
+              "name": "SYMBOL",
+              "support": "SUPPORTED",
+              "coverage": "COMPLETE"
+            },
+            {
+              "name": "CALL",
+              "support": "SUPPORTED",
+              "coverage": "COMPLETE"
+            }
+          ],
+          "diagnostics": [],
+          "outcome": "SUCCEEDED"
+        }
+      ],
+      "nodes": [
+        {
+          "id": "node:a",
+          "factKey": "key:node:a",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "kind": "SYMBOL",
+          "symbolKind": "FUNCTION",
+          "name": "alpha",
+          "qualifiedName": "fixture.node:a",
+          "sourceRange": {
+            "sourceFileId": "source:one",
+            "startLine": 1,
+            "startColumn": 0,
+            "endLine": 1,
+            "endColumn": 1
+          },
+          "confidence": {
+            "score": 1,
+            "method": "fixture-observation",
+            "reasons": []
+          }
+        },
+        {
+          "id": "node:b",
+          "factKey": "key:node:b",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "kind": "SYMBOL",
+          "symbolKind": "FUNCTION",
+          "name": "beta",
+          "qualifiedName": "fixture.node:b",
+          "sourceRange": {
+            "sourceFileId": "source:one",
+            "startLine": 1,
+            "startColumn": 0,
+            "endLine": 1,
+            "endColumn": 1
+          },
+          "confidence": {
+            "score": 1,
+            "method": "fixture-observation",
+            "reasons": []
+          }
+        }
+      ],
+      "edges": [
+        {
+          "id": "edge:call",
+          "factKey": "key:call",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "kind": "CALL",
+          "source": {
+            "factType": "NODE",
+            "id": "node:a"
+          },
+          "target": {
+            "state": "RESOLVED",
+            "resolution": "EXACT",
+            "target": {
+              "factType": "NODE",
+              "id": "node:b"
+            }
+          },
+          "sourceRange": {
+            "sourceFileId": "source:one",
+            "startLine": 1,
+            "startColumn": 0,
+            "endLine": 1,
+            "endColumn": 1
+          },
+          "confidence": {
+            "score": 1,
+            "method": "fixture-observation",
+            "reasons": []
+          }
+        }
+      ],
+      "supports": [
+        {
+          "factType": "EDGE",
+          "canonical": {
+            "confidence": {
+              "method": "fixture-observation",
+              "reasons": [],
+              "score": 1
+            },
+            "factKey": "key:call",
+            "id": "edge:call",
+            "kind": "CALL",
+            "repositoryId": "capture-repo",
+            "revisionId": "capture-worktree",
+            "source": {
+              "factType": "NODE",
+              "id": "node:a"
+            },
+            "sourceRange": {
+              "endColumn": 1,
+              "endLine": 1,
+              "sourceFileId": "source:one",
+              "startColumn": 0,
+              "startLine": 1
+            },
+            "target": {
+              "resolution": "EXACT",
+              "state": "RESOLVED",
+              "target": {
+                "factType": "NODE",
+                "id": "node:b"
+              }
+            }
+          },
+          "evidence": {
+            "id": "provider-evidence-v1:59fef4b91f19622379616d5dbb506b807615f38d1c6520a5480f222f5de98716",
+            "providerFact": {
+              "factType": "EDGE",
+              "providerFactId": "provider-edge:edge:call",
+              "providerId": "alpha"
+            },
+            "providerSnapshotId": "snapshot:alpha",
+            "repositoryId": "capture-repo",
+            "revisionId": "capture-worktree",
+            "status": "ACTIVE"
+          },
+          "binding": {
+            "canonicalFact": {
+              "factType": "EDGE",
+              "id": "edge:call"
+            },
+            "evidenceId": "provider-evidence-v1:59fef4b91f19622379616d5dbb506b807615f38d1c6520a5480f222f5de98716",
+            "providerFact": {
+              "factType": "EDGE",
+              "providerFactId": "provider-edge:edge:call",
+              "providerId": "alpha"
+            },
+            "providerSnapshotId": "snapshot:alpha"
+          },
+          "factEvidence": {
+            "evidenceId": "provider-evidence-v1:59fef4b91f19622379616d5dbb506b807615f38d1c6520a5480f222f5de98716",
+            "fact": {
+              "factType": "EDGE",
+              "id": "edge:call"
+            }
+          },
+          "dependencyUnitIds": ["unit:alpha"],
+          "valueDigest": "3567ec0779e2b3138dd22a690f78fee06522527f41b6554204815402e34add4e"
+        },
+        {
+          "factType": "NODE",
+          "canonical": {
+            "confidence": {
+              "method": "fixture-observation",
+              "reasons": [],
+              "score": 1
+            },
+            "factKey": "key:node:a",
+            "id": "node:a",
+            "kind": "SYMBOL",
+            "name": "alpha",
+            "qualifiedName": "fixture.node:a",
+            "repositoryId": "capture-repo",
+            "revisionId": "capture-worktree",
+            "sourceRange": {
+              "endColumn": 1,
+              "endLine": 1,
+              "sourceFileId": "source:one",
+              "startColumn": 0,
+              "startLine": 1
+            },
+            "symbolKind": "FUNCTION"
+          },
+          "evidence": {
+            "id": "provider-evidence-v1:78582cdf3d126ea6f78f7a44b19977c96522d10173ff19bbb540c7ef428bba90",
+            "providerFact": {
+              "factType": "NODE",
+              "providerFactId": "provider:node:a",
+              "providerId": "alpha"
+            },
+            "providerSnapshotId": "snapshot:alpha",
+            "repositoryId": "capture-repo",
+            "revisionId": "capture-worktree",
+            "status": "ACTIVE"
+          },
+          "binding": {
+            "canonicalFact": {
+              "factType": "NODE",
+              "id": "node:a"
+            },
+            "evidenceId": "provider-evidence-v1:78582cdf3d126ea6f78f7a44b19977c96522d10173ff19bbb540c7ef428bba90",
+            "providerFact": {
+              "factType": "NODE",
+              "providerFactId": "provider:node:a",
+              "providerId": "alpha"
+            },
+            "providerSnapshotId": "snapshot:alpha"
+          },
+          "factEvidence": {
+            "evidenceId": "provider-evidence-v1:78582cdf3d126ea6f78f7a44b19977c96522d10173ff19bbb540c7ef428bba90",
+            "fact": {
+              "factType": "NODE",
+              "id": "node:a"
+            }
+          },
+          "dependencyUnitIds": ["unit:alpha"],
+          "valueDigest": "3ffbeccde4ab62593de1dee06fc2126db2951198917a3cee6cf400065a69f445"
+        },
+        {
+          "factType": "NODE",
+          "canonical": {
+            "confidence": {
+              "method": "fixture-observation",
+              "reasons": [],
+              "score": 1
+            },
+            "factKey": "key:node:b",
+            "id": "node:b",
+            "kind": "SYMBOL",
+            "name": "beta",
+            "qualifiedName": "fixture.node:b",
+            "repositoryId": "capture-repo",
+            "revisionId": "capture-worktree",
+            "sourceRange": {
+              "endColumn": 1,
+              "endLine": 1,
+              "sourceFileId": "source:one",
+              "startColumn": 0,
+              "startLine": 1
+            },
+            "symbolKind": "FUNCTION"
+          },
+          "evidence": {
+            "id": "provider-evidence-v1:8d81f5f47bd8c6704765ff7901264e00ec6941694e2e1a0f6e2d516535d0d2d5",
+            "providerFact": {
+              "factType": "NODE",
+              "providerFactId": "provider:node:b",
+              "providerId": "alpha"
+            },
+            "providerSnapshotId": "snapshot:alpha",
+            "repositoryId": "capture-repo",
+            "revisionId": "capture-worktree",
+            "status": "ACTIVE"
+          },
+          "binding": {
+            "canonicalFact": {
+              "factType": "NODE",
+              "id": "node:b"
+            },
+            "evidenceId": "provider-evidence-v1:8d81f5f47bd8c6704765ff7901264e00ec6941694e2e1a0f6e2d516535d0d2d5",
+            "providerFact": {
+              "factType": "NODE",
+              "providerFactId": "provider:node:b",
+              "providerId": "alpha"
+            },
+            "providerSnapshotId": "snapshot:alpha"
+          },
+          "factEvidence": {
+            "evidenceId": "provider-evidence-v1:8d81f5f47bd8c6704765ff7901264e00ec6941694e2e1a0f6e2d516535d0d2d5",
+            "fact": {
+              "factType": "NODE",
+              "id": "node:b"
+            }
+          },
+          "dependencyUnitIds": ["unit:alpha"],
+          "valueDigest": "45751a74ff7abf8d91c6bd6203103ec1a2d3bfa2857df53070ebdf5869cc566c"
+        }
+      ],
+      "coverage": [
+        {
+          "unitId": "unit:alpha",
+          "facet": "SYMBOL",
+          "originSnapshotId": "snapshot:alpha",
+          "coverage": "COMPLETE"
+        }
+      ],
+      "syntaxOrigins": [
+        {
+          "id": "syntax-origin:eb24c62c116983aa82c5d7a94e4199446b0597b1da9f6b72f7a74ea96fa8a786",
+          "unitId": "unit:alpha",
+          "originSnapshotId": "snapshot:alpha",
+          "valueDigest": "eb24c62c116983aa82c5d7a94e4199446b0597b1da9f6b72f7a74ea96fa8a786",
+          "basis": {
+            "repositoryId": "capture-repo",
+            "revisionId": "capture-worktree",
+            "contentFingerprint": "capture-fingerprint",
+            "codeActivationDigest": "ac1b5f475836b85ec1fa5769f8839e27917a730fd04918dde3a63258c9119e7d"
+          }
+        }
+      ]
+    },
+    "observation": null,
+    "transitions": null,
+    "syntaxMembers": [
+      {
+        "originId": "syntax-origin:eb24c62c116983aa82c5d7a94e4199446b0597b1da9f6b72f7a74ea96fa8a786",
+        "projectionId": "syntax:3eb6c6980f815c1056ac2f3ec63029414394541e7fc2fca2ea35cb68604c8211",
+        "unitId": "unit:alpha"
+      }
+    ],
+    "codeIdentity": "ac1b5f475836b85ec1fa5769f8839e27917a730fd04918dde3a63258c9119e7d",
+    "sourceIdentity": "ce3ce67e19cc5d618d097d195c3b1ab54994212f92bc71eed784a2a23917124e",
+    "originRegistryDigest": "2b882c27d543d092c83322f5f48282e9f52fdf4c471a15531098b7a66d0a1f30"
+  },
+  "targetSource": {
+    "repositoryId": "capture-repo",
+    "revisionId": "capture-worktree",
+    "contentFingerprint": "capture-fingerprint"
+  },
+  "targetInventory": [
+    {
+      "id": "source:one",
+      "repositoryId": "capture-repo",
+      "revisionId": "capture-worktree",
+      "path": "src/observation.txt",
+      "contentFingerprint": "source-fingerprint",
+      "classification": {
+        "role": "SOURCE",
+        "provenance": "AUTHORED",
+        "contentKind": "TEXT"
+      },
+      "languageHint": null,
+      "sensitivity": "PUBLIC"
+    }
+  ],
+  "activeBasis": {
+    "repositoryId": "capture-repo",
+    "revisionId": "capture-worktree",
+    "contentFingerprint": "capture-fingerprint",
+    "codeActivationDigest": "ac1b5f475836b85ec1fa5769f8839e27917a730fd04918dde3a63258c9119e7d"
+  }
+}

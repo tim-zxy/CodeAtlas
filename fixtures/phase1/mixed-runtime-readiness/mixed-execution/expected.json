@@ -1,0 +1,25 @@
+{
+  "full": {
+    "empty": [5],
+    "other-only": [5],
+    "python-only": [5],
+    "java-only": [2, 5],
+    "mixed": [2, 5]
+  },
+  "incremental": {
+    "unchanged": {
+      "native": [],
+      "newHistory": false
+    },
+    "deletion": {
+      "native": [],
+      "newHistory": true
+    }
+  },
+  "failure": {
+    "sourceChanged": "SOURCE_CHANGED",
+    "historyUnavailable": "FULL_ANALYSIS_REQUIRED",
+    "commitUnknown": "UNKNOWN",
+    "postcommitCleanup": "COMMITTED"
+  }
+}

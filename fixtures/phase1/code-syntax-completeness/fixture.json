@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "p1-code-syntax-completeness-v1",
+  "category": "code-intelligence",
+  "phase": "1",
+  "languages": [],
+  "frameworks": [],
+  "capabilities": ["CODE_SYNTAX_COMPLETENESS_CONTRACT_ONLY"],
+  "inputs": {
+    "cases": "cases.json",
+    "sources": "sources/",
+    "requests": "requests/",
+    "observations": "observations/"
+  },
+  "expected": {
+    "decisions": "expected/decisions.json",
+    "canonical": "expected/canonical.json"
+  },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

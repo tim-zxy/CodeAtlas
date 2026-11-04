@@ -1,0 +1,5 @@
+{
+  "point": "coverage",
+  "base": "base-input.json",
+  "processExit": true
+}

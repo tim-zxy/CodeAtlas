@@ -1,0 +1,54 @@
+{
+  "policy": "runtime-declaration-support-v1",
+  "notClaimed": ["REAL_NATIVE", "DEPLOYMENT", "EVALUATION_BASELINE"],
+  "cases": [
+    {
+      "name": "kafka-listener",
+      "bindings": [
+        {
+          "kind": "MESSAGE_CONSUME",
+          "targetId": "runtime:a7f97b91a31c4f283be82303d74f4f5e462200a098c9261c1594dacdd0452e1d",
+          "factKey": "framework-binding:5c5b8c863e5bcd0f0cc4bf6f8dacdc6e0f9c7cc0b0174ee59a4229ee47afbcf5",
+          "id": "binding:2393f2659cce37cc593add5b377ebd055bbbe22a304ce18136095b45e37d6549"
+        }
+      ],
+      "domainIds": ["runtime:a7f97b91a31c4f283be82303d74f4f5e462200a098c9261c1594dacdd0452e1d"],
+      "entries": 1
+    },
+    {
+      "name": "kafka-topics",
+      "bindings": [
+        {
+          "kind": "MESSAGE_CONSUME",
+          "targetId": "runtime:a7f97b91a31c4f283be82303d74f4f5e462200a098c9261c1594dacdd0452e1d",
+          "factKey": "framework-binding:5c5b8c863e5bcd0f0cc4bf6f8dacdc6e0f9c7cc0b0174ee59a4229ee47afbcf5",
+          "id": "binding:2393f2659cce37cc593add5b377ebd055bbbe22a304ce18136095b45e37d6549"
+        },
+        {
+          "kind": "MESSAGE_CONSUME",
+          "targetId": "runtime:fbede3b2580b5e81fc53d57f9215ea1998610a6903f6792248c0c64233c77efe",
+          "factKey": "framework-binding:789ee9270b3c1f07b6ab9902ace03d692c1c7d11ff49c36b6f9a68b01cb5bbbe",
+          "id": "binding:b2b6e57b16f8f0b0cea3743f5fb7e3bc2c508a7dbc2e48c4857ab6539dd964d7"
+        }
+      ],
+      "domainIds": [
+        "runtime:a7f97b91a31c4f283be82303d74f4f5e462200a098c9261c1594dacdd0452e1d",
+        "runtime:fbede3b2580b5e81fc53d57f9215ea1998610a6903f6792248c0c64233c77efe"
+      ],
+      "entries": 2
+    },
+    {
+      "name": "kafka-send",
+      "bindings": [
+        {
+          "kind": "MESSAGE_PUBLISH",
+          "targetId": "runtime:98743594621c881da9520da807324e78dfc270dea2603a9b887498353c5f7519",
+          "factKey": "framework-binding:58ad00d14ace22c58a9eebf18197c1b016e7dd95475b160ec69dbb44dfd42846",
+          "id": "binding:be2ffc26e1e2ece593b98f0cdf93676705c80e36ff5340a03dcdb7e84901309e"
+        }
+      ],
+      "domainIds": ["runtime:98743594621c881da9520da807324e78dfc270dea2603a9b887498353c5f7519"],
+      "entries": 0
+    }
+  ]
+}

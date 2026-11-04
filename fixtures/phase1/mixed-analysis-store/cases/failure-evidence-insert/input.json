@@ -1,0 +1,5 @@
+{
+  "point": "evidence-insert",
+  "base": "base-input.json",
+  "processExit": true
+}

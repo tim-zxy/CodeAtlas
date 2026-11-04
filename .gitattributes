@@ -70,3 +70,7 @@ fixtures/storage/native-analysis-state/memory-refresh-c-review-verify-report.jso
 fixtures/storage/native-analysis-state/memory-refresh-c-review-verify-evidence.json -text
 fixtures/storage/native-analysis-state/memory-refresh-c-review-verify-candidate.json -text
 fixtures/storage/native-analysis-state/memory-refresh-c-review-verify-holdout.json -text
+
+fixtures/phase1/**/*.py -text
+fixtures/phase1/**/*.java -text
+fixtures/phase1/**/*.jsonl -text

@@ -1,0 +1,169 @@
+{
+  "kind": "SYNTAX_MAPPING_PREPARATION_INPUT",
+  "repositoryId": "repo-fixture",
+  "revisionId": "rev-a",
+  "providerId": "fixture.provider",
+  "sourceFile": {
+    "id": "source-fixture",
+    "repositoryId": "repo-fixture",
+    "revisionId": "rev-a",
+    "path": "sources/Endpoint.java",
+    "contentFingerprint": "fa9a07e5b149109de9313e541101b3363a014b87e18f469e91643781ed2833c1",
+    "classification": {
+      "role": "SOURCE",
+      "provenance": "AUTHORED",
+      "contentKind": "TEXT"
+    },
+    "languageHint": "java",
+    "sensitivity": "PUBLIC"
+  },
+  "raw": {
+    "providerSyntaxId": "syntax-declared",
+    "sourceFileId": "source-fixture",
+    "sourceFingerprint": "fa9a07e5b149109de9313e541101b3363a014b87e18f469e91643781ed2833c1",
+    "sourceRange": {
+      "sourceFileId": "source-fixture",
+      "startLine": 0,
+      "startColumn": 25,
+      "endLine": 0,
+      "endColumn": 68
+    },
+    "owner": {
+      "factType": "NODE",
+      "providerId": "fixture.provider",
+      "providerFactId": "owner"
+    },
+    "syntaxKind": "DECLARATION",
+    "payload": {
+      "declaredType": "void",
+      "parameterNames": [],
+      "modifiers": []
+    }
+  },
+  "selectedNodes": [
+    {
+      "ref": {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo-fixture",
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "node-owner",
+          "revisionId": "rev-a"
+        }
+      },
+      "name": "owner"
+    },
+    {
+      "ref": {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo-fixture",
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "node-a",
+          "revisionId": "rev-a"
+        }
+      },
+      "name": "p"
+    },
+    {
+      "ref": {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo-fixture",
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "node-b",
+          "revisionId": "rev-a"
+        }
+      },
+      "name": "p"
+    }
+  ],
+  "bindings": [
+    {
+      "providerNodeRef": {
+        "factType": "NODE",
+        "providerId": "fixture.provider",
+        "providerFactId": "owner"
+      },
+      "canonicalRef": {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo-fixture",
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "node-owner",
+          "revisionId": "rev-a"
+        }
+      }
+    },
+    {
+      "providerNodeRef": {
+        "factType": "NODE",
+        "providerId": "fixture.provider",
+        "providerFactId": "a"
+      },
+      "canonicalRef": {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo-fixture",
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "node-a",
+          "revisionId": "rev-a"
+        }
+      }
+    },
+    {
+      "providerNodeRef": {
+        "factType": "NODE",
+        "providerId": "fixture.provider",
+        "providerFactId": "b"
+      },
+      "canonicalRef": {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo-fixture",
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "node-b",
+          "revisionId": "rev-a"
+        }
+      }
+    },
+    {
+      "providerNodeRef": {
+        "factType": "NODE",
+        "providerId": "fixture.provider",
+        "providerFactId": "loser"
+      },
+      "canonicalRef": {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo-fixture",
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "node-a",
+          "revisionId": "rev-a"
+        }
+      }
+    }
+  ],
+  "extractorVersion": "fixture-extractor",
+  "mapperVersion": "mapping-design-v1",
+  "annotation": {
+    "sourcePath": "sources/Endpoint.java",
+    "literal": "class Endpoint_fixture { @Route(\"/fixture\") void handle_fixture() {} }",
+    "line": 0,
+    "coordinateConvention": "0-based lines, 0-based UTF8 byte columns, exclusive end; schema-only ranges are declarations, not producer claims",
+    "dynamicGrounding": "STATIC_SYNTAX_ONLY",
+    "ranges": [
+      {
+        "sourceRange": {
+          "sourceFileId": "source-fixture",
+          "startLine": 0,
+          "startColumn": 25,
+          "endLine": 0,
+          "endColumn": 68
+        },
+        "slice": "@Route(\"/fixture\") void handle_fixture() {}",
+        "status": "DECLARED_LITERAL_SLICE"
+      }
+    ]
+  }
+}

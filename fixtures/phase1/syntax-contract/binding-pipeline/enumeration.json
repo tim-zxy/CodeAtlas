@@ -1,0 +1,36 @@
+[
+  [
+    "python-assignment",
+    "assignment/augmented_assignment",
+    "ASSIGNMENT/AUGMENT; complex targets PARTIAL"
+  ],
+  [
+    "python-import",
+    "import_statement/import_from_statement",
+    "IMPORT_BINDING plus existing compatibility observations"
+  ],
+  [
+    "python-declaration",
+    "function_definition/class_definition/parameters",
+    "CALLABLE/parameterNames; unsupported class PARTIAL"
+  ],
+  [
+    "python-targets",
+    "for_statement/for_in_clause/with_item/except_clause/as_pattern",
+    "EFFECT or PARTIAL"
+  ],
+  ["python-effects", "case_clause/named_expression/delete/global/nonlocal", "EFFECT or PARTIAL"],
+  ["python-unsupported", "lambda/comprehension/type_alias_statement", "PARTIAL"],
+  ["java-import", "import_declaration", "four forms"],
+  [
+    "java-bindings",
+    "variable_declarator/formal_parameter/spread_parameter/catch_formal_parameter/enhanced_for_statement/resource",
+    "DECLARATION/EFFECT or PARTIAL"
+  ],
+  [
+    "java-update",
+    "assignment_expression/update_expression/type_parameter/local TYPE",
+    "ASSIGNMENT/AUGMENT/TYPE or PARTIAL"
+  ],
+  ["java-unsupported", "lambda_expression/anonymous class/block ownership unknown", "PARTIAL"]
+]

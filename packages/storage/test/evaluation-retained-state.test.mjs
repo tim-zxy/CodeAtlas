@@ -1,3 +1,4 @@
+import { withCodeQueryDatabase } from './helpers/code-query-fixture.mjs';
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import * as inspection from '../dist/analysis/evaluation-state.js';
@@ -5,7 +6,7 @@ import { RepositorySourceStateStore, readNativeAnalysisState } from '../dist/ind
 import { validateNativeStateCandidate } from '../../providers/dist/index.js';
 import { emptyNativePatch } from './helpers/native-refresh-patch-fixture.mjs';
 import { baseCase } from '../../providers/test/helpers/native-full-v3-corpus.mjs';
-import { mkdtemp, rm } from 'node:fs/promises';
+import { mkdtemp, rm, readFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { DatabaseSync } from 'node:sqlite';
@@ -283,3 +284,56 @@ test('retained inspection refuses writable sessions', async (t) => {
   );
   assert.equal(db.isTransaction, false);
 });
+
+const schemaCompatibility = JSON.parse(
+  await readFile(
+    new URL(
+      '../../../fixtures/evaluation/phase05-code-intelligence/inputs/schema-compatibility.json',
+      import.meta.url,
+    ),
+    'utf8',
+  ),
+);
+for (const row of schemaCompatibility) {
+  test(
+    'evaluation schema compatibility ' + row.schema + '/queryOnly=' + row.queryOnly,
+    async (t) => {
+      await withCodeQueryDatabase(
+        t,
+        'current',
+        async ({ databasePath, repositoryId }) => {
+          if (row.schema !== row.setup) {
+            // Deliberately future-version negative input; never used as successful publication evidence.
+            const future = new DatabaseSync(databasePath);
+            try {
+              future.exec('PRAGMA user_version=' + row.schema);
+            } finally {
+              future.close();
+            }
+          }
+          const before = await readFile(databasePath);
+          const db = new DatabaseSync(databasePath, { readOnly: true });
+          try {
+            db.exec('PRAGMA query_only=' + (row.queryOnly ? 'ON' : 'OFF'));
+            if (row.accepted) {
+              const rows = await inspection.readEvaluationStateRows(db, repositoryId, control());
+              assert.equal(rows.repository_state[0].repository_id, repositoryId);
+              assert.ok(rows.canonical_nodes.length > 0);
+              assert.equal(db.isTransaction, false);
+            } else {
+              await assert.rejects(
+                inspection.readEvaluationStateRows(db, repositoryId, control()),
+                /Evaluation stored state unavailable or invalid/,
+              );
+              assert.equal(db.isTransaction, false);
+            }
+          } finally {
+            db.close();
+          }
+          assert.deepEqual(await readFile(databasePath), before);
+        },
+        row.setup,
+      );
+    },
+  );
+}

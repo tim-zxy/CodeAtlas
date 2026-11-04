@@ -1,0 +1,37 @@
+{
+  "kind": "INDEPENDENT_PINNED_MIXED_SOURCE_REFERENCE",
+  "inputOrder": ["app.py", "Endpoint.java"],
+  "outputOrder": ["Endpoint.java", "app.py"],
+  "sourceIds": {
+    "java": "file:one",
+    "python": "file:two"
+  },
+  "counts": {
+    "nodes": 2,
+    "edges": 1,
+    "syntax": 7,
+    "coverage": 2,
+    "diagnostics": 0
+  },
+  "recordCount": 14,
+  "outcome": "PARTIAL",
+  "dependencies": {
+    "java/holdout/Endpoint.java": "7a5f8528afb97200aa88f34389b95d1577910a9f7addb7c5548c781e0e5124cb",
+    "java/holdout/request.json": "17940b30bdf6c5161b7ef954b68f1f8a379557dfb9fa4e19d04c6480b8da8484",
+    "java/holdout/events.jsonl": "4a23c38a1cc2fece499980695e01d558b2ac8730df4135aaa9d9a02d0545539e",
+    "java/holdout/symbols.json": "6423488174fb17eebb7c83ceded2c3192eb1e176c7b8a70ee90297d4847fda92",
+    "java/holdout/provider-nodes.json": "312b7e4dbfa24537c1385e8139c037c381ce81af2b240f22ddecfc0efa4d829b",
+    "java/holdout/canonical-nodes.json": "9e904302712fec8771d3abb8a86d8c684118fe6b6384a783a038d7087a6f9407",
+    "python/holdout/app.py": "38d4338d71f7b9a6e3b097fc6cf857951170f256ed51cceda181747ca2ee33f8",
+    "python/holdout/request.json": "3a7cbe965181bd029cdcf6f370fa3f2cbf20ebe81d877c123692c3a457406c65",
+    "python/holdout/events.jsonl": "c06ff2a0082440f1a3761d050b93d357931257d84645f0cfe55e158bd0f59859",
+    "python/holdout/basis.json": "a6225613ce512b3569de2518503a147a9b05cc6e812c01fa8ecdd8c2ca379c99",
+    "python/holdout/normalized.json": "5a1a4aa89d4bba918091cc05bd1e12d25d4be1573db3f307bafe0f9c8174f2cd"
+  },
+  "limitations": [
+    "SYNTHETIC_UNIT_CONTEXT_AND_CONTROLS",
+    "JAVA_DECLARATION_OWNER_REFERENCE_ONLY",
+    "NO_COMPLETE_CODE_GRAPH_OR_ATOMIC_CODE_SYNTAX_STORE",
+    "NO_ACTUAL_NATIVE_PROCESS_PROFILE"
+  ]
+}

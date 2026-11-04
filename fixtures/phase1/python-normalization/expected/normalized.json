@@ -1,0 +1,131 @@
+{
+  "nodePairs": [
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "py:endpoint"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:c83ef4a02f2e9a4221868e30c7f94fa27739ea7fd56c5ad4045c10a328c05ba2",
+        "factKey": "node-fact-v1:427a822875798f874aabfee3c53fd9f1554f85e40abd09fc6d62b96b04c81ce5",
+        "repositoryId": "repo:python",
+        "revisionId": "revision:worktree",
+        "name": "endpoint",
+        "qualifiedName": "src/app.py::endpoint",
+        "sourceRange": {
+          "sourceFileId": "py:file",
+          "startLine": 3,
+          "startColumn": 4,
+          "endLine": 3,
+          "endColumn": 12
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "SYMBOL",
+        "symbolKind": "FUNCTION"
+      }
+    },
+    {
+      "provider": {
+        "factType": "NODE",
+        "providerId": "native",
+        "providerFactId": "py:module"
+      },
+      "canonical": {
+        "id": "canonical-node-v1:211c73349f56100dd3d2c2b690ee03426e049fd3886338455a68fd22dffa1b42",
+        "factKey": "node-fact-v1:6617c79271f7893f3fdcd1d1d1dd025818f02a93add8ae312a997e547164f14c",
+        "repositoryId": "repo:python",
+        "revisionId": "revision:worktree",
+        "name": "src/app.py",
+        "qualifiedName": "src/app.py",
+        "sourceRange": null,
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        },
+        "kind": "MODULE"
+      }
+    }
+  ],
+  "edgePairs": [
+    {
+      "provider": {
+        "factType": "EDGE",
+        "providerId": "native",
+        "providerFactId": "py:import"
+      },
+      "canonical": {
+        "id": "canonical-edge-v1:b15af23ba7d9d41925e84f0824a08e98fbd3aba2fce4d163e0e3fbb8e1a58b47",
+        "factKey": "edge-fact-v1:2e016ebaf626cac12ef0792e949629ba03cec0227239a609906269b995ddb0bc",
+        "repositoryId": "repo:python",
+        "revisionId": "revision:worktree",
+        "kind": "IMPORT",
+        "source": {
+          "factType": "NODE",
+          "id": "canonical-node-v1:211c73349f56100dd3d2c2b690ee03426e049fd3886338455a68fd22dffa1b42"
+        },
+        "target": {
+          "state": "UNRESOLVED",
+          "resolution": "UNRESOLVED",
+          "originalHint": "fastapi.APIRouter",
+          "candidates": []
+        },
+        "sourceRange": {
+          "sourceFileId": "py:file",
+          "startLine": 0,
+          "startColumn": 0,
+          "endLine": 0,
+          "endColumn": 28
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        }
+      }
+    },
+    {
+      "provider": {
+        "factType": "EDGE",
+        "providerId": "native",
+        "providerFactId": "py:reference"
+      },
+      "canonical": {
+        "id": "canonical-edge-v1:76374478f164e62c7a3d355ee612a5008922fe46eb692fb9ddd460f1660067f6",
+        "factKey": "edge-fact-v1:4d278862582a873666a3c11c9657e7fb339549e49683df1a38664ab1a3382152",
+        "repositoryId": "repo:python",
+        "revisionId": "revision:worktree",
+        "kind": "REFERENCE",
+        "source": {
+          "factType": "NODE",
+          "id": "canonical-node-v1:c83ef4a02f2e9a4221868e30c7f94fa27739ea7fd56c5ad4045c10a328c05ba2"
+        },
+        "target": {
+          "state": "RESOLVED",
+          "resolution": "EXACT",
+          "target": {
+            "factType": "NODE",
+            "id": "canonical-node-v1:211c73349f56100dd3d2c2b690ee03426e049fd3886338455a68fd22dffa1b42"
+          }
+        },
+        "sourceRange": {
+          "sourceFileId": "py:file",
+          "startLine": 4,
+          "startColumn": 4,
+          "endLine": 4,
+          "endColumn": 7
+        },
+        "confidence": {
+          "score": 1,
+          "method": "parser",
+          "reasons": []
+        }
+      }
+    }
+  ]
+}

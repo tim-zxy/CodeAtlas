@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "p1-history-transition-draft-v1",
+  "category": "code-intelligence",
+  "phase": "1",
+  "languages": [],
+  "frameworks": [],
+  "capabilities": ["HISTORY_TRANSITION_DRAFT_ONLY"],
+  "inputs": {
+    "cases": "cases.json",
+    "provenance": "provenance.json"
+  },
+  "expected": {
+    "cases": "cases.json"
+  },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

@@ -1,0 +1,391 @@
+{
+  "schemaVersion": 1,
+  "qualification": "DECLARED_NODE_SQLITE_COMPONENT_ONLY",
+  "binding": {
+    "id": "deletion-only",
+    "family": "STORE_CONTRACT",
+    "input": "cases/deletion-only/input.json",
+    "expected": "cases/deletion-only/expected.json",
+    "inputSha256": "91caf8ae99843e5afcd7924281d26cf11cc3d6486a545a86ae6191a4bed1db4e",
+    "expectedSha256": "2a15c883fa6adb4760bd379cd920a3d357a97a138bf18f9abff52e5e19b9dc81"
+  },
+  "input": {
+    "repositoryId": "capture-repo",
+    "tables": {
+      "repository": [
+        {
+          "slot": 1,
+          "id": "capture-repo",
+          "root_path": "C:/capture-fixture"
+        }
+      ],
+      "repository_state": [
+        {
+          "repository_id": "capture-repo",
+          "indexed_revision_id": "capture-worktree",
+          "indexed_content_fingerprint": "capture-fingerprint"
+        }
+      ],
+      "revisions": [
+        {
+          "id": "capture-worktree",
+          "repository_id": "capture-repo",
+          "kind": "WORKTREE",
+          "content_fingerprint": "capture-fingerprint-deleted",
+          "commit_identity": null,
+          "base_revision_id": null,
+          "source_revision_id": null
+        }
+      ],
+      "source_files": [],
+      "provider_snapshots": [
+        {
+          "id": "snapshot:alpha",
+          "repository_id": "capture-repo",
+          "provider_id": "native",
+          "provider_version": "fixture-v1",
+          "runtime_version": "fixture-v1",
+          "requested_revision_id": "capture-worktree",
+          "requested_revision_fingerprint": "capture-fingerprint",
+          "started_at": 1792713600000,
+          "completed_at": 1792713601000,
+          "outcome": "SUCCEEDED"
+        }
+      ],
+      "provider_capabilities": [
+        {
+          "snapshot_id": "snapshot:alpha",
+          "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+          "support": "SUPPORTED",
+          "coverage": "COMPLETE"
+        },
+        {
+          "snapshot_id": "snapshot:alpha",
+          "name": "PYTHON_SYNTAX_CODE_V1",
+          "support": "SUPPORTED",
+          "coverage": "COMPLETE"
+        }
+      ],
+      "canonical_nodes": [],
+      "canonical_edges": [],
+      "unresolved_targets": [],
+      "evidence": [],
+      "fact_evidence": [],
+      "provider_fact_bindings": [],
+      "active_support_candidates": [],
+      "analysis_coverage": [
+        {
+          "provider_snapshot_id": "snapshot:alpha",
+          "capability_name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+          "source_file_id": "source:one",
+          "status": "COMPLETE"
+        },
+        {
+          "provider_snapshot_id": "snapshot:alpha",
+          "capability_name": "PYTHON_SYNTAX_CODE_V1",
+          "source_file_id": "source:one",
+          "status": "COMPLETE"
+        }
+      ],
+      "activation_history": [
+        {
+          "id": "activation:7d25e7ff824bd7dba6b0d80963bda292de5d532129d60fe3a4cf986704ca8c46",
+          "manifest_digest": "7d25e7ff824bd7dba6b0d80963bda292de5d532129d60fe3a4cf986704ca8c46",
+          "manifest_json": "{\"codeIdentity\":\"0cae471886f237ff5e174f2ac56fc5b33b60000e4ccb91193a14efb9686691e9\",\"observation\":null,\"originRegistryDigest\":\"3920e79ec36acd41d633e00f6da67a9874f49b5dd1a64cb8799beb6ad5a3db71\",\"parent\":null,\"schemaVersion\":1,\"sourceIdentity\":\"9c79526dfa480941f0b3f6fb924f48b3b8997667e51d34e67f5529a4738d96a0\",\"state\":{\"basis\":{\"codeActivationDigest\":\"0cae471886f237ff5e174f2ac56fc5b33b60000e4ccb91193a14efb9686691e9\",\"contentFingerprint\":\"capture-fingerprint\",\"repositoryId\":\"capture-repo\",\"revisionId\":\"capture-worktree\"},\"contracts\":[{\"contract\":\"fixture-v1\",\"extractor\":\"fixture-v1\",\"normalizer\":\"fixture-v1\",\"policy\":\"fixture-v1\",\"providerId\":\"native\"}],\"coverage\":[{\"coverage\":\"COMPLETE\",\"facet\":\"FRAMEWORK_SYNTAX_OBSERVATION_V1\",\"originSnapshotId\":\"snapshot:alpha\",\"unitId\":\"py:one\"},{\"coverage\":\"COMPLETE\",\"facet\":\"PYTHON_SYNTAX_CODE_V1\",\"originSnapshotId\":\"snapshot:alpha\",\"unitId\":\"py:one\"}],\"edges\":[],\"inventory\":[{\"classification\":{\"contentKind\":\"TEXT\",\"provenance\":\"AUTHORED\",\"role\":\"SOURCE\"},\"contentFingerprint\":\"source-fingerprint\",\"id\":\"source:one\",\"languageHint\":\"python\",\"path\":\"src/observation.txt\",\"repositoryId\":\"capture-repo\",\"revisionId\":\"capture-worktree\",\"sensitivity\":\"PUBLIC\"}],\"nodes\":[],\"repositoryLocatorDigest\":\"00f7217f0d1a535342bd3dad39a25b2c1d2ae98d69476a4e575f4406bc214595\",\"snapshots\":[{\"capabilities\":[{\"coverage\":\"COMPLETE\",\"name\":\"FRAMEWORK_SYNTAX_OBSERVATION_V1\",\"support\":\"SUPPORTED\"},{\"coverage\":\"COMPLETE\",\"name\":\"PYTHON_SYNTAX_CODE_V1\",\"support\":\"SUPPORTED\"}],\"completedAt\":\"2026-10-23T00:00:01.000Z\",\"diagnostics\":[],\"id\":\"snapshot:alpha\",\"outcome\":\"SUCCEEDED\",\"providerId\":\"native\",\"providerVersion\":\"fixture-v1\",\"repositoryId\":\"capture-repo\",\"requestedRevisionFingerprint\":\"capture-fingerprint\",\"requestedRevisionId\":\"capture-worktree\",\"runtimeVersion\":\"fixture-v1\",\"startedAt\":\"2026-10-23T00:00:00.000Z\"}],\"supports\":[],\"syntaxOrigins\":[],\"units\":[{\"id\":\"py:one\",\"kind\":\"PYTHON_FILE\",\"providerId\":\"native\",\"sourceFileIds\":[\"source:one\"]}]},\"syntaxMembers\":[],\"transitions\":null}",
+          "repository_id": "capture-repo",
+          "revision_id": "capture-worktree",
+          "parent_id": null
+        }
+      ],
+      "syntax_origins": [],
+      "syntax_projections": [],
+      "activation_syntax_members": [],
+      "active_history_pointer": [
+        {
+          "repository_id": "capture-repo",
+          "activation_id": "activation:7d25e7ff824bd7dba6b0d80963bda292de5d532129d60fe3a4cf986704ca8c46"
+        }
+      ]
+    }
+  },
+  "preparation": {
+    "contracts": [
+      {
+        "contract": "fixture-v1",
+        "extractor": "fixture-v1",
+        "normalizer": "fixture-v1",
+        "policy": "fixture-v1",
+        "providerId": "native"
+      }
+    ],
+    "qualificationRef": "component-fixture:not-runtime-qualified"
+  },
+  "expectedOwner": {
+    "body": {
+      "schemaVersion": 1,
+      "repositoryLocatorDigest": "00f7217f0d1a535342bd3dad39a25b2c1d2ae98d69476a4e575f4406bc214595",
+      "expectedActivationId": "activation:7d25e7ff824bd7dba6b0d80963bda292de5d532129d60fe3a4cf986704ca8c46",
+      "expectedOldBasis": {
+        "codeActivationDigest": "0cae471886f237ff5e174f2ac56fc5b33b60000e4ccb91193a14efb9686691e9",
+        "contentFingerprint": "capture-fingerprint",
+        "repositoryId": "capture-repo",
+        "revisionId": "capture-worktree"
+      },
+      "targetSource": {
+        "repositoryId": "capture-repo",
+        "revisionId": "capture-worktree",
+        "contentFingerprint": "capture-fingerprint-deleted"
+      },
+      "inventoryDigest": "4ad288c443403f85426a053e5b7e3c8a80890f89945bb9cb5f972c78753c2ad1",
+      "contracts": [
+        {
+          "contract": "fixture-v1",
+          "extractor": "fixture-v1",
+          "normalizer": "fixture-v1",
+          "policy": "fixture-v1",
+          "providerId": "native"
+        }
+      ],
+      "scope": {
+        "unitIds": [],
+        "removedSourceFileIds": ["source:one"],
+        "ownerSourceFileIds": []
+      },
+      "javaRowsDigest": null
+    },
+    "stageDigest": "1a85ca3df97367c1018377b09b64096f8f0c340d027eee5da4065f70fbda2e0e"
+  },
+  "expected": {
+    "manifest": {
+      "schemaVersion": 1,
+      "parent": {
+        "activationId": "activation:7d25e7ff824bd7dba6b0d80963bda292de5d532129d60fe3a4cf986704ca8c46",
+        "repositoryId": "capture-repo",
+        "revisionId": "capture-worktree"
+      },
+      "state": {
+        "basis": {
+          "codeActivationDigest": "50357fc3b1c26e72f1714d73e62ccccee002adb56d2822df6a8afd066b41974a",
+          "contentFingerprint": "capture-fingerprint-deleted",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree"
+        },
+        "contracts": [
+          {
+            "contract": "fixture-v1",
+            "extractor": "fixture-v1",
+            "normalizer": "fixture-v1",
+            "policy": "fixture-v1",
+            "providerId": "native"
+          }
+        ],
+        "coverage": [],
+        "edges": [],
+        "inventory": [],
+        "nodes": [],
+        "repositoryLocatorDigest": "00f7217f0d1a535342bd3dad39a25b2c1d2ae98d69476a4e575f4406bc214595",
+        "snapshots": [
+          {
+            "capabilities": [
+              {
+                "coverage": "COMPLETE",
+                "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+                "support": "SUPPORTED"
+              },
+              {
+                "coverage": "COMPLETE",
+                "name": "PYTHON_SYNTAX_CODE_V1",
+                "support": "SUPPORTED"
+              }
+            ],
+            "completedAt": "2026-10-23T00:00:01.000Z",
+            "diagnostics": [],
+            "id": "snapshot:alpha",
+            "outcome": "SUCCEEDED",
+            "providerId": "native",
+            "providerVersion": "fixture-v1",
+            "repositoryId": "capture-repo",
+            "requestedRevisionFingerprint": "capture-fingerprint",
+            "requestedRevisionId": "capture-worktree",
+            "runtimeVersion": "fixture-v1",
+            "startedAt": "2026-10-23T00:00:00.000Z"
+          }
+        ],
+        "supports": [],
+        "syntaxOrigins": [],
+        "units": []
+      },
+      "observation": null,
+      "transitions": {
+        "kind": "TRANSITION_DRAFT",
+        "activationId": "activation:7d25e7ff824bd7dba6b0d80963bda292de5d532129d60fe3a4cf986704ca8c46",
+        "oldBasis": {
+          "codeActivationDigest": "0cae471886f237ff5e174f2ac56fc5b33b60000e4ccb91193a14efb9686691e9",
+          "contentFingerprint": "capture-fingerprint",
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree"
+        },
+        "targetSource": {
+          "repositoryId": "capture-repo",
+          "revisionId": "capture-worktree",
+          "contentFingerprint": "capture-fingerprint-deleted"
+        },
+        "historyDigest": "b29fad3691d4cc737fc444ce04d025d37860c43311d7c67893368e8759ae7dc0",
+        "ledgerDigest": "9c49ecb916b91f827d21a0badb7ee3eb1ce02f5dc7529093be11eeb9f7d3489a",
+        "diff": [
+          {
+            "kind": "REMOVED",
+            "before": {
+              "classification": {
+                "contentKind": "TEXT",
+                "provenance": "AUTHORED",
+                "role": "SOURCE"
+              },
+              "contentFingerprint": "source-fingerprint",
+              "id": "source:one",
+              "languageHint": "python",
+              "path": "src/observation.txt",
+              "repositoryId": "capture-repo",
+              "revisionId": "capture-worktree",
+              "sensitivity": "PUBLIC"
+            },
+            "after": null
+          }
+        ],
+        "supportDecisions": [],
+        "addedEvidenceIds": [],
+        "survivingFactKeys": [],
+        "coverageOrigins": [],
+        "syntaxRequirements": []
+      },
+      "syntaxMembers": [],
+      "codeIdentity": "50357fc3b1c26e72f1714d73e62ccccee002adb56d2822df6a8afd066b41974a",
+      "sourceIdentity": "9a99716b1331858af1b9ae8165aeec7ca36b6a3fe64b28c804d01bb414e1cfa2",
+      "originRegistryDigest": "3920e79ec36acd41d633e00f6da67a9874f49b5dd1a64cb8799beb6ad5a3db71"
+    },
+    "activationId": "activation:69b04748aac19416555eea7d5650abffe253c80d5263a0056bd2a566f1824987",
+    "origins": [],
+    "projections": [],
+    "members": [],
+    "basis": {
+      "codeActivationDigest": "50357fc3b1c26e72f1714d73e62ccccee002adb56d2822df6a8afd066b41974a",
+      "contentFingerprint": "capture-fingerprint-deleted",
+      "repositoryId": "capture-repo",
+      "revisionId": "capture-worktree"
+    }
+  },
+  "expectedTables": {
+    "repository": [
+      {
+        "slot": 1,
+        "id": "capture-repo",
+        "root_path": "C:/capture-fixture"
+      }
+    ],
+    "repository_state": [
+      {
+        "repository_id": "capture-repo",
+        "indexed_revision_id": "capture-worktree",
+        "indexed_content_fingerprint": "capture-fingerprint-deleted"
+      }
+    ],
+    "revisions": [
+      {
+        "id": "capture-worktree",
+        "repository_id": "capture-repo",
+        "kind": "WORKTREE",
+        "content_fingerprint": "capture-fingerprint-deleted",
+        "commit_identity": null,
+        "base_revision_id": null,
+        "source_revision_id": null
+      }
+    ],
+    "source_files": [],
+    "provider_snapshots": [
+      {
+        "id": "snapshot:alpha",
+        "repository_id": "capture-repo",
+        "provider_id": "native",
+        "provider_version": "fixture-v1",
+        "runtime_version": "fixture-v1",
+        "requested_revision_id": "capture-worktree",
+        "requested_revision_fingerprint": "capture-fingerprint",
+        "started_at": 1792713600000,
+        "completed_at": 1792713601000,
+        "outcome": "SUCCEEDED"
+      }
+    ],
+    "provider_capabilities": [
+      {
+        "snapshot_id": "snapshot:alpha",
+        "name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+        "support": "SUPPORTED",
+        "coverage": "COMPLETE"
+      },
+      {
+        "snapshot_id": "snapshot:alpha",
+        "name": "PYTHON_SYNTAX_CODE_V1",
+        "support": "SUPPORTED",
+        "coverage": "COMPLETE"
+      }
+    ],
+    "canonical_nodes": [],
+    "canonical_edges": [],
+    "unresolved_targets": [],
+    "evidence": [],
+    "fact_evidence": [],
+    "provider_fact_bindings": [],
+    "active_support_candidates": [],
+    "analysis_coverage": [
+      {
+        "id": 1,
+        "provider_snapshot_id": "snapshot:alpha",
+        "capability_name": "FRAMEWORK_SYNTAX_OBSERVATION_V1",
+        "source_file_id": "source:one",
+        "status": "COMPLETE"
+      },
+      {
+        "id": 2,
+        "provider_snapshot_id": "snapshot:alpha",
+        "capability_name": "PYTHON_SYNTAX_CODE_V1",
+        "source_file_id": "source:one",
+        "status": "COMPLETE"
+      }
+    ],
+    "activation_history": [
+      {
+        "id": "activation:7d25e7ff824bd7dba6b0d80963bda292de5d532129d60fe3a4cf986704ca8c46",
+        "manifest_digest": "7d25e7ff824bd7dba6b0d80963bda292de5d532129d60fe3a4cf986704ca8c46",
+        "manifest_json": "{\"codeIdentity\":\"0cae471886f237ff5e174f2ac56fc5b33b60000e4ccb91193a14efb9686691e9\",\"observation\":null,\"originRegistryDigest\":\"3920e79ec36acd41d633e00f6da67a9874f49b5dd1a64cb8799beb6ad5a3db71\",\"parent\":null,\"schemaVersion\":1,\"sourceIdentity\":\"9c79526dfa480941f0b3f6fb924f48b3b8997667e51d34e67f5529a4738d96a0\",\"state\":{\"basis\":{\"codeActivationDigest\":\"0cae471886f237ff5e174f2ac56fc5b33b60000e4ccb91193a14efb9686691e9\",\"contentFingerprint\":\"capture-fingerprint\",\"repositoryId\":\"capture-repo\",\"revisionId\":\"capture-worktree\"},\"contracts\":[{\"contract\":\"fixture-v1\",\"extractor\":\"fixture-v1\",\"normalizer\":\"fixture-v1\",\"policy\":\"fixture-v1\",\"providerId\":\"native\"}],\"coverage\":[{\"coverage\":\"COMPLETE\",\"facet\":\"FRAMEWORK_SYNTAX_OBSERVATION_V1\",\"originSnapshotId\":\"snapshot:alpha\",\"unitId\":\"py:one\"},{\"coverage\":\"COMPLETE\",\"facet\":\"PYTHON_SYNTAX_CODE_V1\",\"originSnapshotId\":\"snapshot:alpha\",\"unitId\":\"py:one\"}],\"edges\":[],\"inventory\":[{\"classification\":{\"contentKind\":\"TEXT\",\"provenance\":\"AUTHORED\",\"role\":\"SOURCE\"},\"contentFingerprint\":\"source-fingerprint\",\"id\":\"source:one\",\"languageHint\":\"python\",\"path\":\"src/observation.txt\",\"repositoryId\":\"capture-repo\",\"revisionId\":\"capture-worktree\",\"sensitivity\":\"PUBLIC\"}],\"nodes\":[],\"repositoryLocatorDigest\":\"00f7217f0d1a535342bd3dad39a25b2c1d2ae98d69476a4e575f4406bc214595\",\"snapshots\":[{\"capabilities\":[{\"coverage\":\"COMPLETE\",\"name\":\"FRAMEWORK_SYNTAX_OBSERVATION_V1\",\"support\":\"SUPPORTED\"},{\"coverage\":\"COMPLETE\",\"name\":\"PYTHON_SYNTAX_CODE_V1\",\"support\":\"SUPPORTED\"}],\"completedAt\":\"2026-10-23T00:00:01.000Z\",\"diagnostics\":[],\"id\":\"snapshot:alpha\",\"outcome\":\"SUCCEEDED\",\"providerId\":\"native\",\"providerVersion\":\"fixture-v1\",\"repositoryId\":\"capture-repo\",\"requestedRevisionFingerprint\":\"capture-fingerprint\",\"requestedRevisionId\":\"capture-worktree\",\"runtimeVersion\":\"fixture-v1\",\"startedAt\":\"2026-10-23T00:00:00.000Z\"}],\"supports\":[],\"syntaxOrigins\":[],\"units\":[{\"id\":\"py:one\",\"kind\":\"PYTHON_FILE\",\"providerId\":\"native\",\"sourceFileIds\":[\"source:one\"]}]},\"syntaxMembers\":[],\"transitions\":null}",
+        "repository_id": "capture-repo",
+        "revision_id": "capture-worktree",
+        "parent_id": null
+      },
+      {
+        "id": "activation:69b04748aac19416555eea7d5650abffe253c80d5263a0056bd2a566f1824987",
+        "repository_id": "capture-repo",
+        "revision_id": "capture-worktree",
+        "parent_id": "activation:7d25e7ff824bd7dba6b0d80963bda292de5d532129d60fe3a4cf986704ca8c46",
+        "manifest_digest": "69b04748aac19416555eea7d5650abffe253c80d5263a0056bd2a566f1824987",
+        "manifest_json": "{\"codeIdentity\":\"50357fc3b1c26e72f1714d73e62ccccee002adb56d2822df6a8afd066b41974a\",\"observation\":null,\"originRegistryDigest\":\"3920e79ec36acd41d633e00f6da67a9874f49b5dd1a64cb8799beb6ad5a3db71\",\"parent\":{\"activationId\":\"activation:7d25e7ff824bd7dba6b0d80963bda292de5d532129d60fe3a4cf986704ca8c46\",\"repositoryId\":\"capture-repo\",\"revisionId\":\"capture-worktree\"},\"schemaVersion\":1,\"sourceIdentity\":\"9a99716b1331858af1b9ae8165aeec7ca36b6a3fe64b28c804d01bb414e1cfa2\",\"state\":{\"basis\":{\"codeActivationDigest\":\"50357fc3b1c26e72f1714d73e62ccccee002adb56d2822df6a8afd066b41974a\",\"contentFingerprint\":\"capture-fingerprint-deleted\",\"repositoryId\":\"capture-repo\",\"revisionId\":\"capture-worktree\"},\"contracts\":[{\"contract\":\"fixture-v1\",\"extractor\":\"fixture-v1\",\"normalizer\":\"fixture-v1\",\"policy\":\"fixture-v1\",\"providerId\":\"native\"}],\"coverage\":[],\"edges\":[],\"inventory\":[],\"nodes\":[],\"repositoryLocatorDigest\":\"00f7217f0d1a535342bd3dad39a25b2c1d2ae98d69476a4e575f4406bc214595\",\"snapshots\":[{\"capabilities\":[{\"coverage\":\"COMPLETE\",\"name\":\"FRAMEWORK_SYNTAX_OBSERVATION_V1\",\"support\":\"SUPPORTED\"},{\"coverage\":\"COMPLETE\",\"name\":\"PYTHON_SYNTAX_CODE_V1\",\"support\":\"SUPPORTED\"}],\"completedAt\":\"2026-10-23T00:00:01.000Z\",\"diagnostics\":[],\"id\":\"snapshot:alpha\",\"outcome\":\"SUCCEEDED\",\"providerId\":\"native\",\"providerVersion\":\"fixture-v1\",\"repositoryId\":\"capture-repo\",\"requestedRevisionFingerprint\":\"capture-fingerprint\",\"requestedRevisionId\":\"capture-worktree\",\"runtimeVersion\":\"fixture-v1\",\"startedAt\":\"2026-10-23T00:00:00.000Z\"}],\"supports\":[],\"syntaxOrigins\":[],\"units\":[]},\"syntaxMembers\":[],\"transitions\":{\"activationId\":\"activation:7d25e7ff824bd7dba6b0d80963bda292de5d532129d60fe3a4cf986704ca8c46\",\"addedEvidenceIds\":[],\"coverageOrigins\":[],\"diff\":[{\"after\":null,\"before\":{\"classification\":{\"contentKind\":\"TEXT\",\"provenance\":\"AUTHORED\",\"role\":\"SOURCE\"},\"contentFingerprint\":\"source-fingerprint\",\"id\":\"source:one\",\"languageHint\":\"python\",\"path\":\"src/observation.txt\",\"repositoryId\":\"capture-repo\",\"revisionId\":\"capture-worktree\",\"sensitivity\":\"PUBLIC\"},\"kind\":\"REMOVED\"}],\"historyDigest\":\"b29fad3691d4cc737fc444ce04d025d37860c43311d7c67893368e8759ae7dc0\",\"kind\":\"TRANSITION_DRAFT\",\"ledgerDigest\":\"9c49ecb916b91f827d21a0badb7ee3eb1ce02f5dc7529093be11eeb9f7d3489a\",\"oldBasis\":{\"codeActivationDigest\":\"0cae471886f237ff5e174f2ac56fc5b33b60000e4ccb91193a14efb9686691e9\",\"contentFingerprint\":\"capture-fingerprint\",\"repositoryId\":\"capture-repo\",\"revisionId\":\"capture-worktree\"},\"supportDecisions\":[],\"survivingFactKeys\":[],\"syntaxRequirements\":[],\"targetSource\":{\"contentFingerprint\":\"capture-fingerprint-deleted\",\"repositoryId\":\"capture-repo\",\"revisionId\":\"capture-worktree\"}}}"
+      }
+    ],
+    "syntax_origins": [],
+    "syntax_projections": [],
+    "activation_syntax_members": [],
+    "active_history_pointer": [
+      {
+        "repository_id": "capture-repo",
+        "activation_id": "activation:69b04748aac19416555eea7d5650abffe253c80d5263a0056bd2a566f1824987"
+      }
+    ]
+  },
+  "provenance": {
+    "logicalPath": "owner-scope-independent/delta-delete-only.json",
+    "sha256": "50d7eff7f8b03aad673db3a22ee43d515bf428b1e8ec7d644b6dd9288c3fed71",
+    "oldCodeTranscript": "codeatlas-code-activation-v1\u000026:{\"count\":1,\"tag\":\"HEADER\"}180:{\"key\":[\"capture-repo\"],\"value\":{\"committedSnapshotCount\":1,\"indexedContentFingerprint\":\"capture-fingerprint\",\"indexedRevisionId\":\"capture-worktree\",\"repositoryId\":\"capture-repo\"}}24:{\"count\":0,\"tag\":\"NODE\"}24:{\"count\":0,\"tag\":\"EDGE\"}28:{\"count\":0,\"tag\":\"EVIDENCE\"}27:{\"count\":0,\"tag\":\"BINDING\"}33:{\"count\":0,\"tag\":\"FACT_EVIDENCE\"}37:{\"count\":0,\"tag\":\"SUPPORT_CANDIDATE\"}28:{\"count\":1,\"tag\":\"SNAPSHOT\"}481:{\"key\":[\"snapshot:alpha\"],\"value\":{\"capabilities\":[{\"coverage\":\"COMPLETE\",\"name\":\"FRAMEWORK_SYNTAX_OBSERVATION_V1\",\"support\":\"SUPPORTED\"},{\"coverage\":\"COMPLETE\",\"name\":\"PYTHON_SYNTAX_CODE_V1\",\"support\":\"SUPPORTED\"}],\"snapshot\":{\"id\":\"snapshot:alpha\",\"outcome\":\"SUCCEEDED\",\"providerId\":\"native\",\"providerVersion\":\"fixture-v1\",\"repositoryId\":\"capture-repo\",\"requestedRevisionFingerprint\":\"capture-fingerprint\",\"requestedRevisionId\":\"capture-worktree\",\"runtimeVersion\":\"fixture-v1\"}}}28:{\"count\":2,\"tag\":\"COVERAGE\"}257:{\"key\":[\"snapshot:alpha\",\"FRAMEWORK_SYNTAX_OBSERVATION_V1\",\"SOURCE\",\"source:one\",\"COMPLETE\"],\"value\":{\"capabilityName\":\"FRAMEWORK_SYNTAX_OBSERVATION_V1\",\"multiplicity\":1,\"providerSnapshotId\":\"snapshot:alpha\",\"sourceFileId\":\"source:one\",\"status\":\"COMPLETE\"}}237:{\"key\":[\"snapshot:alpha\",\"PYTHON_SYNTAX_CODE_V1\",\"SOURCE\",\"source:one\",\"COMPLETE\"],\"value\":{\"capabilityName\":\"PYTHON_SYNTAX_CODE_V1\",\"multiplicity\":1,\"providerSnapshotId\":\"snapshot:alpha\",\"sourceFileId\":\"source:one\",\"status\":\"COMPLETE\"}}",
+    "newCodeTranscript": "codeatlas-code-activation-v1\u000026:{\"count\":1,\"tag\":\"HEADER\"}188:{\"key\":[\"capture-repo\"],\"value\":{\"committedSnapshotCount\":1,\"indexedContentFingerprint\":\"capture-fingerprint-deleted\",\"indexedRevisionId\":\"capture-worktree\",\"repositoryId\":\"capture-repo\"}}24:{\"count\":0,\"tag\":\"NODE\"}24:{\"count\":0,\"tag\":\"EDGE\"}28:{\"count\":0,\"tag\":\"EVIDENCE\"}27:{\"count\":0,\"tag\":\"BINDING\"}33:{\"count\":0,\"tag\":\"FACT_EVIDENCE\"}37:{\"count\":0,\"tag\":\"SUPPORT_CANDIDATE\"}28:{\"count\":1,\"tag\":\"SNAPSHOT\"}481:{\"key\":[\"snapshot:alpha\"],\"value\":{\"capabilities\":[{\"coverage\":\"COMPLETE\",\"name\":\"FRAMEWORK_SYNTAX_OBSERVATION_V1\",\"support\":\"SUPPORTED\"},{\"coverage\":\"COMPLETE\",\"name\":\"PYTHON_SYNTAX_CODE_V1\",\"support\":\"SUPPORTED\"}],\"snapshot\":{\"id\":\"snapshot:alpha\",\"outcome\":\"SUCCEEDED\",\"providerId\":\"native\",\"providerVersion\":\"fixture-v1\",\"repositoryId\":\"capture-repo\",\"requestedRevisionFingerprint\":\"capture-fingerprint\",\"requestedRevisionId\":\"capture-worktree\",\"runtimeVersion\":\"fixture-v1\"}}}28:{\"count\":2,\"tag\":\"COVERAGE\"}257:{\"key\":[\"snapshot:alpha\",\"FRAMEWORK_SYNTAX_OBSERVATION_V1\",\"SOURCE\",\"source:one\",\"COMPLETE\"],\"value\":{\"capabilityName\":\"FRAMEWORK_SYNTAX_OBSERVATION_V1\",\"multiplicity\":1,\"providerSnapshotId\":\"snapshot:alpha\",\"sourceFileId\":\"source:one\",\"status\":\"COMPLETE\"}}237:{\"key\":[\"snapshot:alpha\",\"PYTHON_SYNTAX_CODE_V1\",\"SOURCE\",\"source:one\",\"COMPLETE\"],\"value\":{\"capabilityName\":\"PYTHON_SYNTAX_CODE_V1\",\"multiplicity\":1,\"providerSnapshotId\":\"snapshot:alpha\",\"sourceFileId\":\"source:one\",\"status\":\"COMPLETE\"}}",
+    "reference": "Literal R004/R005/C3A frame arithmetic + H0/H1 published history/ledger hashes; old preimage checked before any new Stage/Store invocation. No candidate output or usage used.",
+    "coverageIdRule": "Fresh migrated empty analysis_coverage receives two input rows in literal order, SQLite INTEGER PRIMARY KEY allocates 1,2; deletion preserves both IDs and rows. Derived from schema/seed order, not copied from Store output."
+  }
+}

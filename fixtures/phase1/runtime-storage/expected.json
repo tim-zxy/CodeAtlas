@@ -1,0 +1,38 @@
+{
+  "repository": {
+    "previousVersion": 11,
+    "latestVersion": 13,
+    "newTables": [
+      "runtime_activations",
+      "runtime_state",
+      "runtime_domain_facts",
+      "runtime_bindings",
+      "runtime_support_membership",
+      "execution_contexts",
+      "execution_nodes",
+      "execution_edges",
+      "runtime_flows",
+      "runtime_flow_steps"
+    ]
+  },
+  "workspace": {
+    "previousVersion": 3,
+    "latestVersion": 6,
+    "newTables": [
+      "services",
+      "service_identities",
+      "workspace_runtime_activations",
+      "workspace_runtime_state",
+      "contracts",
+      "contract_matches",
+      "match_candidates",
+      "workspace_execution_nodes",
+      "workspace_execution_edges"
+    ]
+  },
+  "policy": {
+    "backupRequired": false,
+    "additive": true,
+    "backfill": false
+  }
+}

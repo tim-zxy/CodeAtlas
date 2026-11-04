@@ -1,0 +1,19 @@
+{
+  "domain": "codeatlas-code-activation-v1",
+  "groups": [
+    {
+      "tag": "HEADER",
+      "entries": [
+        {
+          "key": ["😀"],
+          "value": {
+            "2": "two",
+            "10": "ten",
+            "𐀀": "supplementary",
+            "": "bmp"
+          }
+        }
+      ]
+    }
+  ]
+}

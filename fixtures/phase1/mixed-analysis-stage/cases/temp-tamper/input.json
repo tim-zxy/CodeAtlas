@@ -1,0 +1,4 @@
+{
+  "scenario": "temp-tamper",
+  "base": "base-input.json"
+}

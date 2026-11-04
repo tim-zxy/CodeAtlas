@@ -1,0 +1,642 @@
+[
+  {
+    "id": "I01",
+    "family": "identity",
+    "input": "cases/I01/input.json",
+    "metadata": "cases/I01/metadata.json",
+    "request": "cases/I01/request.jsonl",
+    "output": "cases/I01/output.jsonl",
+    "expected": "cases/I01/expected.json",
+    "origin": "R01-python-with-untouched-java"
+  },
+  {
+    "id": "I02",
+    "family": "identity",
+    "input": "cases/I02/input.json",
+    "metadata": "cases/I02/metadata.json",
+    "request": "cases/I02/request.jsonl",
+    "output": "cases/I02/output.jsonl",
+    "expected": "cases/I02/expected.json",
+    "origin": "R04-java-added"
+  },
+  {
+    "id": "I03",
+    "family": "identity",
+    "input": "cases/I03/input.json",
+    "metadata": "cases/I03/metadata.json",
+    "request": "cases/I03/request.jsonl",
+    "output": "cases/I03/output.jsonl",
+    "expected": "cases/I03/expected.json",
+    "origin": "R02-python-added"
+  },
+  {
+    "id": "I04",
+    "family": "identity",
+    "input": "cases/I04/input.json",
+    "metadata": "cases/I04/metadata.json",
+    "request": "cases/I04/request.jsonl",
+    "output": "cases/I04/output.jsonl",
+    "expected": "cases/I04/expected.json",
+    "origin": "R03-java-modified"
+  },
+  {
+    "id": "I05",
+    "family": "identity",
+    "input": "cases/I05/input.json",
+    "metadata": "cases/I05/metadata.json",
+    "request": "cases/I05/request.jsonl",
+    "output": "cases/I05/output.jsonl",
+    "expected": "cases/I05/expected.json",
+    "origin": "R02-python-added"
+  },
+  {
+    "id": "I06",
+    "family": "identity",
+    "input": "cases/I06/input.json",
+    "metadata": "cases/I06/metadata.json",
+    "request": "cases/I06/request.jsonl",
+    "output": "cases/I06/output.jsonl",
+    "expected": "cases/I06/expected.json",
+    "origin": "R03-java-modified"
+  },
+  {
+    "id": "I07",
+    "family": "identity",
+    "input": "cases/I07/input.json",
+    "metadata": "cases/I07/metadata.json",
+    "request": "cases/I07/request.jsonl",
+    "output": "cases/I07/output.jsonl",
+    "expected": "cases/I07/expected.json",
+    "origin": "R01-python-with-untouched-java"
+  },
+  {
+    "id": "I08",
+    "family": "identity",
+    "input": "cases/I08/input.json",
+    "metadata": "cases/I08/metadata.json",
+    "request": "cases/I08/request.jsonl",
+    "output": "cases/I08/output.jsonl",
+    "expected": "cases/I08/expected.json",
+    "origin": "R01-python-with-untouched-java"
+  },
+  {
+    "id": "N01",
+    "family": "normalization",
+    "input": "cases/N01/input.json",
+    "metadata": "cases/N01/metadata.json",
+    "request": "cases/N01/request.jsonl",
+    "output": "cases/N01/output.jsonl",
+    "expected": "cases/N01/expected.json",
+    "origin": "R03-java-modified"
+  },
+  {
+    "id": "N02",
+    "family": "normalization",
+    "input": "cases/N02/input.json",
+    "metadata": "cases/N02/metadata.json",
+    "request": "cases/N02/request.jsonl",
+    "output": "cases/N02/output.jsonl",
+    "expected": "cases/N02/expected.json",
+    "origin": "R01-python-with-untouched-java"
+  },
+  {
+    "id": "N03",
+    "family": "normalization",
+    "input": "cases/N03/input.json",
+    "metadata": "cases/N03/metadata.json",
+    "request": "cases/N03/request.jsonl",
+    "output": "cases/N03/output.jsonl",
+    "expected": "cases/N03/expected.json",
+    "origin": "R06-mixed"
+  },
+  {
+    "id": "N04",
+    "family": "normalization",
+    "input": "cases/N04/input.json",
+    "metadata": "cases/N04/metadata.json",
+    "request": "cases/N04/request.jsonl",
+    "output": "cases/N04/output.jsonl",
+    "expected": "cases/N04/expected.json",
+    "origin": "R03-java-modified"
+  },
+  {
+    "id": "N05",
+    "family": "normalization",
+    "input": "cases/N05/input.json",
+    "metadata": "cases/N05/metadata.json",
+    "request": "cases/N05/request.jsonl",
+    "output": "cases/N05/output.jsonl",
+    "expected": "cases/N05/expected.json",
+    "origin": "R01-python-with-untouched-java"
+  },
+  {
+    "id": "N06",
+    "family": "normalization",
+    "input": "cases/N06/input.json",
+    "metadata": "cases/N06/metadata.json",
+    "request": "cases/N06/request.jsonl",
+    "output": "cases/N06/output.jsonl",
+    "expected": "cases/N06/expected.json",
+    "origin": "R01-python-with-untouched-java"
+  },
+  {
+    "id": "N07",
+    "family": "normalization",
+    "input": "cases/N07/input.json",
+    "metadata": "cases/N07/metadata.json",
+    "request": "cases/N07/request.jsonl",
+    "output": "cases/N07/output.jsonl",
+    "expected": "cases/N07/expected.json",
+    "origin": "R03-java-modified"
+  },
+  {
+    "id": "N08",
+    "family": "normalization",
+    "input": "cases/N08/input.json",
+    "metadata": "cases/N08/metadata.json",
+    "request": "cases/N08/request.jsonl",
+    "output": "cases/N08/output.jsonl",
+    "expected": "cases/N08/expected.json",
+    "origin": "R40-wrong-typed-raw-ref"
+  },
+  {
+    "id": "C01",
+    "family": "coverage",
+    "input": "cases/C01/input.json",
+    "metadata": "cases/C01/metadata.json",
+    "request": "cases/C01/request.jsonl",
+    "output": "cases/C01/output.jsonl",
+    "expected": "cases/C01/expected.json",
+    "origin": "R01-python-with-untouched-java"
+  },
+  {
+    "id": "C02",
+    "family": "coverage",
+    "input": "cases/C02/input.json",
+    "metadata": "cases/C02/metadata.json",
+    "request": "cases/C02/request.jsonl",
+    "output": "cases/C02/output.jsonl",
+    "expected": "cases/C02/expected.json",
+    "origin": "R03-java-modified"
+  },
+  {
+    "id": "C03",
+    "family": "coverage",
+    "input": "cases/C03/input.json",
+    "metadata": "cases/C03/metadata.json",
+    "request": "cases/C03/request.jsonl",
+    "output": "cases/C03/output.jsonl",
+    "expected": "cases/C03/expected.json",
+    "origin": "R06-mixed"
+  },
+  {
+    "id": "C04",
+    "family": "coverage",
+    "input": "cases/C04/input.json",
+    "metadata": "cases/C04/metadata.json",
+    "request": "cases/C04/request.jsonl",
+    "output": "cases/C04/output.jsonl",
+    "expected": "cases/C04/expected.json",
+    "origin": "R01-python-with-untouched-java"
+  },
+  {
+    "id": "C05",
+    "family": "coverage",
+    "input": "cases/C05/input.json",
+    "metadata": "cases/C05/metadata.json",
+    "request": "cases/C05/request.jsonl",
+    "output": "cases/C05/output.jsonl",
+    "expected": "cases/C05/expected.json",
+    "origin": "R01-python-with-untouched-java"
+  },
+  {
+    "id": "C06",
+    "family": "coverage",
+    "input": "cases/C06/input.json",
+    "metadata": "cases/C06/metadata.json",
+    "request": "cases/C06/request.jsonl",
+    "output": "cases/C06/output.jsonl",
+    "expected": "cases/C06/expected.json",
+    "origin": "R33-java-partial-terminal"
+  },
+  {
+    "id": "H01",
+    "family": "history",
+    "input": "cases/H01/input.json",
+    "metadata": "cases/H01/metadata.json",
+    "request": "cases/H01/request.jsonl",
+    "output": "cases/H01/output.jsonl",
+    "expected": "cases/H01/expected.json",
+    "origin": "R03-java-modified"
+  },
+  {
+    "id": "H02",
+    "family": "history",
+    "input": "cases/H02/input.json",
+    "metadata": "cases/H02/metadata.json",
+    "request": "cases/H02/request.jsonl",
+    "output": "cases/H02/output.jsonl",
+    "expected": "cases/H02/expected.json",
+    "origin": "R10-native-contract-change"
+  },
+  {
+    "id": "H03",
+    "family": "history",
+    "input": "cases/H03/input.json",
+    "metadata": "cases/H03/metadata.json",
+    "request": "cases/H03/request.jsonl",
+    "output": "cases/H03/output.jsonl",
+    "expected": "cases/H03/expected.json",
+    "origin": "R01-python-with-untouched-java"
+  },
+  {
+    "id": "H04",
+    "family": "history",
+    "input": "cases/H04/input.json",
+    "metadata": "cases/H04/metadata.json",
+    "request": "cases/H04/request.jsonl",
+    "output": "cases/H04/output.jsonl",
+    "expected": "cases/H04/expected.json",
+    "origin": "R01-python-with-untouched-java"
+  },
+  {
+    "id": "H05",
+    "family": "history",
+    "input": "cases/H05/input.json",
+    "metadata": "cases/H05/metadata.json",
+    "request": "cases/H05/request.jsonl",
+    "output": "cases/H05/output.jsonl",
+    "expected": "cases/H05/expected.json",
+    "origin": "R43-current-history-mismatch"
+  },
+  {
+    "id": "H06",
+    "family": "history",
+    "input": "cases/H06/input.json",
+    "metadata": "cases/H06/metadata.json",
+    "request": "cases/H06/request.jsonl",
+    "output": "cases/H06/output.jsonl",
+    "expected": "cases/H06/expected.json",
+    "origin": "R47-history-and-current-unavailable"
+  },
+  {
+    "id": "D01",
+    "family": "removal",
+    "input": "cases/D01/input.json",
+    "metadata": "cases/D01/metadata.json",
+    "request": "cases/D01/request.jsonl",
+    "output": "cases/D01/output.jsonl",
+    "expected": "cases/D01/expected.json",
+    "origin": "R09-other-removal-and-python-modify"
+  },
+  {
+    "id": "D02",
+    "family": "removal",
+    "input": "cases/D02/input.json",
+    "metadata": "cases/D02/metadata.json",
+    "request": "cases/D02/request.jsonl",
+    "output": "cases/D02/output.jsonl",
+    "expected": "cases/D02/expected.json",
+    "origin": "R05-java-removed-survivor"
+  },
+  {
+    "id": "D03",
+    "family": "removal",
+    "input": "cases/D03/input.json",
+    "metadata": "cases/D03/metadata.json",
+    "request": "cases/D03/request.jsonl",
+    "output": "cases/D03/output.jsonl",
+    "expected": "cases/D03/expected.json",
+    "origin": "R01-python-with-untouched-java"
+  },
+  {
+    "id": "D04",
+    "family": "removal",
+    "input": "cases/D04/input.json",
+    "metadata": "cases/D04/metadata.json",
+    "request": "cases/D04/request.jsonl",
+    "output": "cases/D04/output.jsonl",
+    "expected": "cases/D04/expected.json",
+    "origin": "R46-classification-change"
+  },
+  {
+    "id": "D05",
+    "family": "removal",
+    "input": "cases/D05/input.json",
+    "metadata": "cases/D05/metadata.json",
+    "request": "cases/D05/request.jsonl",
+    "output": "cases/D05/output.jsonl",
+    "expected": "cases/D05/expected.json",
+    "origin": "R44-external-support-revalidation"
+  },
+  {
+    "id": "D06",
+    "family": "removal",
+    "input": "cases/D06/input.json",
+    "metadata": "cases/D06/metadata.json",
+    "request": "cases/D06/request.jsonl",
+    "output": "cases/D06/output.jsonl",
+    "expected": "cases/D06/expected.json",
+    "origin": "R01-python-with-untouched-java"
+  },
+  {
+    "id": "R01",
+    "family": "refs",
+    "input": "cases/R01/input.json",
+    "metadata": "cases/R01/metadata.json",
+    "request": "cases/R01/request.jsonl",
+    "output": "cases/R01/output.jsonl",
+    "expected": "cases/R01/expected.json",
+    "origin": "R11-same-name-java-owners"
+  },
+  {
+    "id": "R02",
+    "family": "refs",
+    "input": "cases/R02/input.json",
+    "metadata": "cases/R02/metadata.json",
+    "request": "cases/R02/request.jsonl",
+    "output": "cases/R02/output.jsonl",
+    "expected": "cases/R02/expected.json",
+    "origin": "R03-java-modified"
+  },
+  {
+    "id": "R03",
+    "family": "refs",
+    "input": "cases/R03/input.json",
+    "metadata": "cases/R03/metadata.json",
+    "request": "cases/R03/request.jsonl",
+    "output": "cases/R03/output.jsonl",
+    "expected": "cases/R03/expected.json",
+    "origin": "R03-java-modified"
+  },
+  {
+    "id": "R04",
+    "family": "refs",
+    "input": "cases/R04/input.json",
+    "metadata": "cases/R04/metadata.json",
+    "request": "cases/R04/request.jsonl",
+    "output": "cases/R04/output.jsonl",
+    "expected": "cases/R04/expected.json",
+    "origin": "R03-java-modified"
+  },
+  {
+    "id": "R05",
+    "family": "refs",
+    "input": "cases/R05/input.json",
+    "metadata": "cases/R05/metadata.json",
+    "request": "cases/R05/request.jsonl",
+    "output": "cases/R05/output.jsonl",
+    "expected": "cases/R05/expected.json",
+    "origin": "R01-python-with-untouched-java"
+  },
+  {
+    "id": "R06",
+    "family": "refs",
+    "input": "cases/R06/input.json",
+    "metadata": "cases/R06/metadata.json",
+    "request": "cases/R06/request.jsonl",
+    "output": "cases/R06/output.jsonl",
+    "expected": "cases/R06/expected.json",
+    "origin": "R03-java-modified"
+  },
+  {
+    "id": "R07",
+    "family": "refs",
+    "input": "cases/R07/input.json",
+    "metadata": "cases/R07/metadata.json",
+    "request": "cases/R07/request.jsonl",
+    "output": "cases/R07/output.jsonl",
+    "expected": "cases/R07/expected.json",
+    "origin": "R29-original-java-owner-mismatch"
+  },
+  {
+    "id": "R08",
+    "family": "refs",
+    "input": "cases/R08/input.json",
+    "metadata": "cases/R08/metadata.json",
+    "request": "cases/R08/request.jsonl",
+    "output": "cases/R08/output.jsonl",
+    "expected": "cases/R08/expected.json",
+    "origin": "R01-python-with-untouched-java"
+  },
+  {
+    "id": "S01",
+    "family": "snapshot",
+    "input": "cases/S01/input.json",
+    "metadata": "cases/S01/metadata.json",
+    "request": "cases/S01/request.jsonl",
+    "output": "cases/S01/output.jsonl",
+    "expected": "cases/S01/expected.json",
+    "origin": "R06-mixed"
+  },
+  {
+    "id": "S02",
+    "family": "snapshot",
+    "input": "cases/S02/input.json",
+    "metadata": "cases/S02/metadata.json",
+    "request": "cases/S02/request.jsonl",
+    "output": "cases/S02/output.jsonl",
+    "expected": "cases/S02/expected.json",
+    "origin": "R25-old-snapshot-id-reused"
+  },
+  {
+    "id": "S03",
+    "family": "snapshot",
+    "input": "cases/S03/input.json",
+    "metadata": "cases/S03/metadata.json",
+    "request": "cases/S03/request.jsonl",
+    "output": "cases/S03/output.jsonl",
+    "expected": "cases/S03/expected.json",
+    "origin": "R26-component-version-tool-mismatch"
+  },
+  {
+    "id": "S04",
+    "family": "snapshot",
+    "input": "cases/S04/input.json",
+    "metadata": "cases/S04/metadata.json",
+    "request": "cases/S04/request.jsonl",
+    "output": "cases/S04/output.jsonl",
+    "expected": "cases/S04/expected.json",
+    "origin": "R24-target-source-mismatch"
+  },
+  {
+    "id": "S05",
+    "family": "snapshot",
+    "input": "cases/S05/input.json",
+    "metadata": "cases/S05/metadata.json",
+    "request": "cases/S05/request.jsonl",
+    "output": "cases/S05/output.jsonl",
+    "expected": "cases/S05/expected.json",
+    "origin": "R27-component-time-range-mismatch"
+  },
+  {
+    "id": "S06",
+    "family": "snapshot",
+    "input": "cases/S06/input.json",
+    "metadata": "cases/S06/metadata.json",
+    "request": "cases/S06/request.jsonl",
+    "output": "cases/S06/output.jsonl",
+    "expected": "cases/S06/expected.json",
+    "origin": "R01-python-with-untouched-java"
+  },
+  {
+    "id": "B01",
+    "family": "budget",
+    "input": "cases/B01/input.json",
+    "metadata": "cases/B01/metadata.json",
+    "request": "cases/B01/request.jsonl",
+    "output": "cases/B01/output.jsonl",
+    "expected": "cases/B01/expected.json",
+    "origin": "R01-python-with-untouched-java"
+  },
+  {
+    "id": "B02",
+    "family": "budget",
+    "input": "cases/B02/input.json",
+    "metadata": "cases/B02/metadata.json",
+    "request": "cases/B02/request.jsonl",
+    "output": "cases/B02/output.jsonl",
+    "expected": "cases/B02/expected.json",
+    "origin": "R01-python-with-untouched-java"
+  },
+  {
+    "id": "B03",
+    "family": "budget",
+    "input": "cases/B03/input.json",
+    "metadata": "cases/B03/metadata.json",
+    "request": "cases/B03/request.jsonl",
+    "output": "cases/B03/output.jsonl",
+    "expected": "cases/B03/expected.json",
+    "origin": "R01-python-with-untouched-java"
+  },
+  {
+    "id": "B04",
+    "family": "budget",
+    "input": "cases/B04/input.json",
+    "metadata": "cases/B04/metadata.json",
+    "request": "cases/B04/request.jsonl",
+    "output": "cases/B04/output.jsonl",
+    "expected": "cases/B04/expected.json",
+    "origin": "R01-python-with-untouched-java"
+  },
+  {
+    "id": "B05",
+    "family": "budget",
+    "input": "cases/B05/input.json",
+    "metadata": "cases/B05/metadata.json",
+    "request": "cases/B05/request.jsonl",
+    "output": "cases/B05/output.jsonl",
+    "expected": "cases/B05/expected.json",
+    "origin": "R01-python-with-untouched-java"
+  },
+  {
+    "id": "B06",
+    "family": "budget",
+    "input": "cases/B06/input.json",
+    "metadata": "cases/B06/metadata.json",
+    "request": "cases/B06/request.jsonl",
+    "output": "cases/B06/output.jsonl",
+    "expected": "cases/B06/expected.json",
+    "origin": "R01-python-with-untouched-java"
+  },
+  {
+    "id": "O01",
+    "family": "ownership",
+    "input": "cases/O01/input.json",
+    "metadata": "cases/O01/metadata.json",
+    "request": "cases/O01/request.jsonl",
+    "output": "cases/O01/output.jsonl",
+    "expected": "cases/O01/expected.json",
+    "origin": "R01-python-with-untouched-java"
+  },
+  {
+    "id": "O02",
+    "family": "ownership",
+    "input": "cases/O02/input.json",
+    "metadata": "cases/O02/metadata.json",
+    "request": "cases/O02/request.jsonl",
+    "output": "cases/O02/output.jsonl",
+    "expected": "cases/O02/expected.json",
+    "origin": "R01-python-with-untouched-java"
+  },
+  {
+    "id": "O03",
+    "family": "ownership",
+    "input": "cases/O03/input.json",
+    "metadata": "cases/O03/metadata.json",
+    "request": "cases/O03/request.jsonl",
+    "output": "cases/O03/output.jsonl",
+    "expected": "cases/O03/expected.json",
+    "origin": "R01-python-with-untouched-java"
+  },
+  {
+    "id": "O04",
+    "family": "ownership",
+    "input": "cases/O04/input.json",
+    "metadata": "cases/O04/metadata.json",
+    "request": "cases/O04/request.jsonl",
+    "output": "cases/O04/output.jsonl",
+    "expected": "cases/O04/expected.json",
+    "origin": "R01-python-with-untouched-java"
+  },
+  {
+    "id": "O05",
+    "family": "ownership",
+    "input": "cases/O05/input.json",
+    "metadata": "cases/O05/metadata.json",
+    "request": "cases/O05/request.jsonl",
+    "output": "cases/O05/output.jsonl",
+    "expected": "cases/O05/expected.json",
+    "origin": "R01-python-with-untouched-java"
+  },
+  {
+    "id": "O06",
+    "family": "ownership",
+    "input": "cases/O06/input.json",
+    "metadata": "cases/O06/metadata.json",
+    "request": "cases/O06/request.jsonl",
+    "output": "cases/O06/output.jsonl",
+    "expected": "cases/O06/expected.json",
+    "origin": "R01-python-with-untouched-java"
+  },
+  {
+    "id": "E01",
+    "family": "entry",
+    "input": "cases/E01/input.json",
+    "metadata": "cases/E01/metadata.json",
+    "request": "cases/E01/request.jsonl",
+    "output": "cases/E01/output.jsonl",
+    "expected": "cases/E01/expected.json",
+    "origin": "R41-no-op-extra-raw"
+  },
+  {
+    "id": "E02",
+    "family": "entry",
+    "input": "cases/E02/input.json",
+    "metadata": "cases/E02/metadata.json",
+    "request": "cases/E02/request.jsonl",
+    "output": "cases/E02/output.jsonl",
+    "expected": "cases/E02/expected.json",
+    "origin": "R42-deletion-only-extra-raw"
+  },
+  {
+    "id": "E03",
+    "family": "entry",
+    "input": "cases/E03/input.json",
+    "metadata": "cases/E03/metadata.json",
+    "request": "cases/E03/request.jsonl",
+    "output": "cases/E03/output.jsonl",
+    "expected": "cases/E03/expected.json",
+    "origin": "R36-cancelled-failure-terminal"
+  },
+  {
+    "id": "E04",
+    "family": "entry",
+    "input": "cases/E04/input.json",
+    "metadata": "cases/E04/metadata.json",
+    "request": "cases/E04/request.jsonl",
+    "output": "cases/E04/output.jsonl",
+    "expected": "cases/E04/expected.json",
+    "origin": "R01-python-with-untouched-java"
+  }
+]

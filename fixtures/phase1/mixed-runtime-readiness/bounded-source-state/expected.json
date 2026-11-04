@@ -1,0 +1,14 @@
+{
+  "load": {
+    "rows": 15,
+    "serializedBytes": 248,
+    "items": 136,
+    "retainedLogicalBytes": 1648
+  },
+  "empty": {
+    "rows": 8,
+    "serializedBytes": 37,
+    "items": 32,
+    "retainedLogicalBytes": 176
+  }
+}

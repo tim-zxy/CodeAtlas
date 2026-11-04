@@ -1,0 +1,13 @@
+# Initial-absent Python full literal oracle pair
+
+This is bounded library/reference evidence, not Native process/profile/activation qualification. Source copies are byte-identical to the old calibration/initial-absent and holdout/initial-absent corpus files. Both are105-byte ASCII/LF files with five lines and a trailing LF. The variants differ in decorator path and function name.
+
+The independent authoring.mjs recipe imports only filesystem, crypto and assertions; it has no product/parser/observed-output input. Exact Source text and manually specified byte spans/ranges are asserted before framing documented identity tuples. Expected streams contain every NODE/EDGE/Syntax/coverage/terminal field (11 records); normalized.json contains all Code node/edge pairs. Canonical SyntaxEvidence/support/Store activation is not included. Both output model and UNKNOWN/PARTIAL are deliberate: FastAPI() assigned value is CALL_RESULT, imports and callees stay UNRESOLVED; no framework relation is invented.
+
+Request and capture contexts use existing synthetic repo:one/revision:worktree/content:first/snapshot:one and a provisional c-stage. Expected activation is genuinely null, owners empty. A distinct synthetic d-basis is used only to validate pure Code normalization; it is not an authenticated final candidate/activation. Existing unit-only budgets are copied unchanged from the prior strict request template, not proposed production limits or a run manifest. Grammar identity uses the already pinned versions. Source content fingerprints are actual SHA256 values.
+
+The library test replaces only rootPath with an owned temporary directory, verifies Source through the existing reader, compares the entire emitted model and validates the actual raw checksum. It checks changed Source refusal with no applicable completion. Optional --nocapture prints only these fixture request/raw-output records for a separate strict Node cross-consumer check; it is a Rust test harness, not the Native CLI observer.
+
+Before first library comparison, task-04-initial-oracle-before-library.json froze all fixture bytes in the local ledger. The authoring recipe may subsequently be code-formatted; the original receipt remains and expected/source/data bytes must remain identical. Never replace expected values from product output to make this comparison pass.
+
+Measurement preparation still requires actual authenticated request/context/resource identities, the other14 case oracles, complete Canonical Syntax/support/mixed Store evidence and actual HOST/Native process-memory/lifecycle acquisition. languages/frameworks remain empty and capability is library-only.

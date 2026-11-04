@@ -1,0 +1,4 @@
+{
+  "scenario": "safe-integer-overflow",
+  "base": "base-input.json"
+}
