@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import path from 'node:path';
 import test from 'node:test';
 import * as runtime from '../dist/index.js';
 import * as profiles from '../dist/native-metadata-profiles.js';
@@ -15,7 +16,7 @@ test('missing profile refuses before lazy prepare getter and nonexistent executa
   const input = {
     memoryBudgetBytes: 1000000000,
     maxItems: 1000,
-    executablePath: 'Z:/never-exists/native.exe',
+    executablePath: path.resolve('never-exists', 'native.exe'),
     get prepare() {
       reads++;
       throw Error('must not execute');

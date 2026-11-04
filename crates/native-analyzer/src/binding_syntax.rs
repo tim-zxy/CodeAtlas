@@ -527,7 +527,7 @@ mod tests {
         save_capture_under(root, &owned, name, bytes);
     }
     fn save_capture_under(root: &Path, owned: &Path, name: &str, bytes: &[u8]) {
-        std::fs::create_dir_all(&owned).unwrap();
+        std::fs::create_dir_all(owned).unwrap();
         assert!(!root.components().any(|c| matches!(
             c,
             std::path::Component::ParentDir | std::path::Component::CurDir

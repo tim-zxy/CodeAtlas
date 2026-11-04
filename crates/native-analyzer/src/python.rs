@@ -32,9 +32,7 @@ impl PythonSyntaxAnalyzer {
             file_index,
             source,
             control,
-            false,
-            false,
-            false,
+            (false, false, false),
         )
         .map(|r| r.syntax)
     }
@@ -45,7 +43,7 @@ impl PythonSyntaxAnalyzer {
         source: &[u8],
         control: &SyntaxWalkControl<'_>,
     ) -> Result<crate::code_syntax::CodeSyntaxFileObservation, AnalyzerError> {
-        self.observe_payload(p, file_index, source, control, true, false, false)
+        self.observe_payload(p, file_index, source, control, (true, false, false))
     }
     pub(crate) fn observe_binding_syntax(
         &mut self,
@@ -54,7 +52,7 @@ impl PythonSyntaxAnalyzer {
         source: &[u8],
         control: &SyntaxWalkControl<'_>,
     ) -> Result<crate::code_syntax::CodeSyntaxFileObservation, AnalyzerError> {
-        self.observe_payload(p, file_index, source, control, true, true, false)
+        self.observe_payload(p, file_index, source, control, (true, true, false))
     }
     pub(crate) fn observe_binding_sufficiency(
         &mut self,
@@ -63,7 +61,7 @@ impl PythonSyntaxAnalyzer {
         source: &[u8],
         control: &SyntaxWalkControl<'_>,
     ) -> Result<crate::code_syntax::CodeSyntaxFileObservation, AnalyzerError> {
-        self.observe_payload(p, index, source, control, true, true, true)
+        self.observe_payload(p, index, source, control, (true, true, true))
     }
     fn observe_payload(
         &mut self,
@@ -71,9 +69,7 @@ impl PythonSyntaxAnalyzer {
         file_index: usize,
         source: &[u8],
         control: &SyntaxWalkControl<'_>,
-        code: bool,
-        binding: bool,
-        sufficiency: bool,
+        (code, binding, sufficiency): (bool, bool, bool),
     ) -> Result<crate::code_syntax::CodeSyntaxFileObservation, AnalyzerError> {
         control.check()?;
         if source.len() > control.max_source_bytes

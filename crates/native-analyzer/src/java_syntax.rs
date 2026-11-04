@@ -673,18 +673,15 @@ impl Collector<'_, '_> {
                 if self.binding {
                     self.tick(depth)?;
                     if let (Some(name), Some(parent)) = (n.child_by_field_name("name"), n.parent())
-                    {
-                        if ["field_declaration", "local_variable_declaration"]
+                        && ["field_declaration", "local_variable_declaration"]
                             .contains(&parent.kind())
-                        {
-                            if let Some(ty) = parent.child_by_field_name("type") {
-                                let declared = self.text(ty).to_owned();
-                                if declared != "var" {
-                                    self.emit(n, "DECLARATION", json!({"declarationForm":"TYPED_BINDING","declaredName":self.text(name),"declaredType":declared,"parameterNames":[],"modifiers":[]}))?;
-                                } else {
-                                    self.partial = true;
-                                }
-                            }
+                        && let Some(ty) = parent.child_by_field_name("type")
+                    {
+                        let declared = self.text(ty).to_owned();
+                        if declared != "var" {
+                            self.emit(n, "DECLARATION", json!({"declarationForm":"TYPED_BINDING","declaredName":self.text(name),"declaredType":declared,"parameterNames":[],"modifiers":[]}))?;
+                        } else {
+                            self.partial = true;
                         }
                     }
                 }

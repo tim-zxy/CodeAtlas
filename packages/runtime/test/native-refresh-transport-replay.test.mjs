@@ -1183,7 +1183,16 @@ test('D5 replay materializer retains a failed generator seed after closing its o
   assert.ok(report.retainedFixturePaths.includes(failedRoot));
   const db = new DatabaseSync(path.join(failedRoot, 'repository.sqlite'), { readOnly: true });
   try {
-    assert.equal(db.prepare('PRAGMA user_version').get().user_version, 10);
+    const manifest = JSON.parse(
+      await readFile(
+        new URL('../../storage/migrations/repository/manifest.json', import.meta.url),
+        'utf8',
+      ),
+    );
+    assert.equal(
+      db.prepare('PRAGMA user_version').get().user_version,
+      manifest.migrations.at(-1).version,
+    );
   } finally {
     db.close();
   }

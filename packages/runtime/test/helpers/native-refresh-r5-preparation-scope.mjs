@@ -13,13 +13,11 @@ for (const { family, accepted, next } of data.sources) {
   if (scopes.has(family)) assert.deepEqual(scopes.get(family), scope);
   else scopes.set(family, scope);
 }
-const executablePath = path.join(
-  refreshCiLayoutRootForRevision('p05-d5-exact-layout-v5'),
-  'native',
-  'codeatlas-native-analyzer.exe',
+const executablePaths = ['p05-d5-exact-layout-v5', 'p05-d5-exact-layout-v6'].map((revision) =>
+  path.join(refreshCiLayoutRootForRevision(revision), 'native', 'codeatlas-native-analyzer.exe'),
 );
 export function r5PreparationScope(family, dContext) {
-  if (dContext?.executablePath !== executablePath) return null;
+  if (!executablePaths.includes(dContext?.executablePath)) return null;
   assert.ok(scopes.has(family), 'Unknown R5 preparation family');
   return scopes.get(family);
 }

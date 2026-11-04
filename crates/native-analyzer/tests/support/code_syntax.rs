@@ -38,7 +38,7 @@ pub fn instantiate(request: &str, events: &str, root: &str) -> (Vec<u8>, Vec<u8>
     let expected = events.replace("\"__REQUEST_SHA256__\"", &format!("\"{}\"", sha(&raw)));
     assert!(expected.ends_with('\n'));
     let last = expected[..expected.len() - 1].rfind('\n').unwrap() + 1;
-    let digest = sha(expected[..last].as_bytes());
+    let digest = sha(&expected.as_bytes()[..last]);
     assert_eq!(expected.matches("\"__TERMINAL_SHA256__\"").count(), 1);
     (
         raw,

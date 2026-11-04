@@ -224,8 +224,7 @@ pub(crate) fn collect_node<'t>(
     source: &[u8],
     scopes: &HashMap<usize, Value>,
     records: &[Value],
-    c: &SyntaxWalkControl<'_>,
-    items: &Cell<usize>,
+    (c, items): (&SyntaxWalkControl<'_>, &Cell<usize>),
     emit: &mut impl FnMut(
         Node<'t>,
         &str,

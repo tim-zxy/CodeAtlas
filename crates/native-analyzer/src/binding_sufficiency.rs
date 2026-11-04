@@ -123,10 +123,8 @@ pub(crate) fn scope(
         let outside_python = p.kind() == "function_definition"
             && p.child_by_field_name("body")
                 .is_none_or(|body| body.id() != child.id());
-        if !outside_python {
-            if let Some(r) = scopes.get(&p.id()) {
-                return Ok(Some(r.clone()));
-            }
+        if !outside_python && let Some(r) = scopes.get(&p.id()) {
+            return Ok(Some(r.clone()));
         }
         child = p;
         cursor = p.parent();
@@ -363,335 +361,346 @@ pub(crate) fn augment(
         );
         return Err(E::ResourceLimit);
     }
-    let mut emit = |n: Node<'_>,
-                    kind: &str,
-                    payload: Value,
-                    lex: Option<Value>,
-                    owner: Option<Value>|
-     -> Result<(), E> {
-        let control_node = if surface && kind == "CALLBACK_BINDING" {
-            n.parent().and_then(|p| p.parent()).unwrap_or(n)
-        } else {
-            n
-        };
-        let mut v = json!({"providerSyntaxId":"pending","sourceFileId":file["id"],"sourceFingerprint":file["contentFingerprint"],"sourceRange":range(n,file),"owner":owner,"lexicalScope":lex,"controlContext":control(control_node,c,&accounted_items)?,"syntaxKind":kind,"payload":payload});
-        if surface {
-            crate::framework_surface::common(&mut v, n, file, source, c, &accounted_items, scopes)?;
-        } else {
-            rekey(&mut v, n, file);
-        }
-        let previous = old_count + additions.len() > 0;
-        push_observation(
-            &mut additions,
-            v,
-            c,
-            &accounted_items,
-            &mut result_bytes,
-            previous,
-        )
-    };
-    for n in &nodes {
-        c.check()?;
-        let kind = n.kind();
-        if surface
-            && crate::framework_surface::collect_node(
-                *n,
-                file,
-                source,
-                scopes,
-                &out.observations,
+    {
+        let mut emit = |n: Node<'_>,
+                        kind: &str,
+                        payload: Value,
+                        lex: Option<Value>,
+                        owner: Option<Value>|
+         -> Result<(), E> {
+            let control_node = if surface && kind == "CALLBACK_BINDING" {
+                n.parent().and_then(|p| p.parent()).unwrap_or(n)
+            } else {
+                n
+            };
+            let mut v = json!({"providerSyntaxId":"pending","sourceFileId":file["id"],"sourceFingerprint":file["contentFingerprint"],"sourceRange":range(n,file),"owner":owner,"lexicalScope":lex,"controlContext":control(control_node,c,&accounted_items)?,"syntaxKind":kind,"payload":payload});
+            if surface {
+                crate::framework_surface::common(
+                    &mut v,
+                    n,
+                    file,
+                    source,
+                    c,
+                    &accounted_items,
+                    scopes,
+                )?;
+            } else {
+                rekey(&mut v, n, file);
+            }
+            let previous = old_count + additions.len() > 0;
+            push_observation(
+                &mut additions,
+                v,
                 c,
                 &accounted_items,
-                &mut emit,
-            )?
-        {
-            limits
-                .get_mut(&root.id())
-                .unwrap()
-                .insert("INCOMPLETE_SURFACE_ENUMERATION".into());
-        }
-        if file["languageHint"] == "java"
-            && kind == "block"
-            && n.parent().is_some_and(|p| {
-                !["method_declaration", "constructor_declaration"].contains(&p.kind())
-            })
-        {
-            limits
-                .get_mut(&root.id())
-                .unwrap()
-                .insert("BLOCK_SCOPE_PROMOTED_CONSERVATIVELY".into());
-        }
-
-        if [
-            "class_definition",
-            "lambda",
-            "lambda_expression",
-            "list_comprehension",
-            "set_comprehension",
-            "dictionary_comprehension",
-            "generator_expression",
-            "type_alias_statement",
-            "type_parameter",
-            "object_creation_expression",
-        ]
-        .contains(&kind)
-            && !(surface
-                && (crate::framework_surface::ordinary_constructor(*n)
-                    || crate::framework_surface::bounded_callback(*n, source)))
-        {
-            if let Some(l) = limits.get_mut(&root.id()) {
-                l.insert(format!("UNSUPPORTED_BINDING_SCOPE:{kind}"));
-            }
-            continue;
-        }
-        let effect = match kind {
-            "for_statement" | "for_in_clause" | "enhanced_for_statement" => Some((
-                "ITERATION_TARGET",
-                n.child_by_field_name("left")
-                    .or_else(|| n.child_by_field_name("name")),
-            )),
-            "with_item" => {
-                let v = n.child_by_field_name("value");
-                v.filter(|v| v.kind() == "as_pattern")
-                    .and_then(|v| v.child_by_field_name("alias"))
-                    .map(|a| ("CONTEXT_TARGET", Some(a)))
-            }
-            "resource" => n
-                .child_by_field_name("name")
-                .map(|name| ("CONTEXT_TARGET", Some(name))),
-            "except_clause" => n
-                .child_by_field_name("alias")
-                .or_else(|| {
-                    n.child_by_field_name("value")
-                        .filter(|v| v.kind() == "as_pattern")
-                        .and_then(|v| v.child_by_field_name("alias"))
-                })
-                .map(|a| ("EXCEPTION_TARGET", Some(a))),
-            "catch_formal_parameter" => Some(("EXCEPTION_TARGET", n.child_by_field_name("name"))),
-            "named_expression" => Some(("WALRUS_TARGET", n.child_by_field_name("name"))),
-            "augmented_assignment" => Some(("AUGMENT", n.child_by_field_name("left"))),
-            "assignment_expression" => {
-                if n.child_by_field_name("operator")
-                    .is_some_and(|op| text(op, source) == "=")
-                {
-                    None
-                } else {
-                    Some(("AUGMENT", n.child_by_field_name("left")))
-                }
-            }
-            "update_expression" => Some(("AUGMENT", children(*n).first().copied())),
-            "delete_statement" => Some(("UNBIND", children(*n).first().copied())),
-            "global_statement" => Some(("GLOBAL", None)),
-            "nonlocal_statement" => Some(("NONLOCAL", None)),
-            "case_clause" => Some(("PATTERN_TARGET", None)),
-            _ => None,
+                &mut result_bytes,
+                previous,
+            )
         };
-        let type_scope = scopes.get(&n.id()).filter(|_| {
-            [
-                "class_declaration",
-                "interface_declaration",
-                "record_declaration",
-                "enum_declaration",
-                "annotation_type_declaration",
+        for n in &nodes {
+            c.check()?;
+            let kind = n.kind();
+            if surface
+                && crate::framework_surface::collect_node(
+                    *n,
+                    file,
+                    source,
+                    scopes,
+                    &out.observations,
+                    (c, &accounted_items),
+                    &mut emit,
+                )?
+            {
+                limits
+                    .get_mut(&root.id())
+                    .unwrap()
+                    .insert("INCOMPLETE_SURFACE_ENUMERATION".into());
+            }
+            if file["languageHint"] == "java"
+                && kind == "block"
+                && n.parent().is_some_and(|p| {
+                    !["method_declaration", "constructor_declaration"].contains(&p.kind())
+                })
+            {
+                limits
+                    .get_mut(&root.id())
+                    .unwrap()
+                    .insert("BLOCK_SCOPE_PROMOTED_CONSERVATIVELY".into());
+            }
+
+            if [
+                "class_definition",
+                "lambda",
+                "lambda_expression",
+                "list_comprehension",
+                "set_comprehension",
+                "dictionary_comprehension",
+                "generator_expression",
+                "type_alias_statement",
+                "type_parameter",
+                "object_creation_expression",
             ]
             .contains(&kind)
-        });
-        let java_import = kind == "import_declaration";
-        let python_import = ["import_statement", "import_from_statement"].contains(&kind);
-        if type_scope.is_none() && !java_import && !python_import && effect.is_none() {
-            continue;
-        }
-        let lex = scope(*n, scopes, false, c, &accounted_items)?;
-        let owner = lex.clone();
-        if let Some(r) = type_scope {
-            emit(
-                *n,
-                "DECLARATION",
-                json!({"declarationForm":"TYPE","declaredName":n.child_by_field_name("name").map(|v|text(v,source)),"declaredType":null,"parameterNames":[],"modifiers":[]}),
-                lex.clone(),
-                Some(r.clone()),
-            )?;
-        }
-        if java_import {
-            let named = children(*n);
-            let name = named
-                .iter()
-                .find(|n| ["scoped_identifier", "identifier"].contains(&n.kind()))
-                .map(|n| text(*n, source));
-            let stat = {
-                let mut w = n.walk();
-                n.children(&mut w).any(|x| x.kind() == "static")
-            };
-            let star = named.iter().any(|n| n.kind() == "asterisk");
-            let q = name.unwrap_or("");
-            let imported = (!star).then(|| q.rsplit('.').next().unwrap_or(""));
-            if q.is_empty() {
-                limits
-                    .get_mut(&root.id())
-                    .unwrap()
-                    .insert("UNKNOWN_IMPORT".into());
+                && !(surface
+                    && (crate::framework_surface::ordinary_constructor(*n)
+                        || crate::framework_surface::bounded_callback(*n, source)))
+            {
+                if let Some(l) = limits.get_mut(&root.id()) {
+                    l.insert(format!("UNSUPPORTED_BINDING_SCOPE:{kind}"));
+                }
+                continue;
             }
-            emit(
-                *n,
-                "IMPORT_BINDING",
-                json!({"language":"java","importKind":if q.is_empty(){"UNKNOWN"}else{match(stat,star){(false,false)=>"JAVA_TYPE",(true,false)=>"JAVA_STATIC_MEMBER",(false,true)=>"JAVA_WILDCARD",(true,true)=>"JAVA_STATIC_WILDCARD"}},"qualifiedName":if q.is_empty(){None}else{Some(q)},"importedName":imported,"boundName":imported}),
-                lex.clone(),
-                owner.clone(),
-            )?;
-        }
-        if python_import {
-            let module = n.child_by_field_name("module_name");
-            let from = module.map(|m| text(m, source));
-            for item in children(*n) {
-                tick_binding(c, &accounted_items)?;
-                if module.is_some_and(|m| m.id() == item.id()) {
-                    continue;
+            let effect = match kind {
+                "for_statement" | "for_in_clause" | "enhanced_for_statement" => Some((
+                    "ITERATION_TARGET",
+                    n.child_by_field_name("left")
+                        .or_else(|| n.child_by_field_name("name")),
+                )),
+                "with_item" => {
+                    let v = n.child_by_field_name("value");
+                    v.filter(|v| v.kind() == "as_pattern")
+                        .and_then(|v| v.child_by_field_name("alias"))
+                        .map(|a| ("CONTEXT_TARGET", Some(a)))
                 }
-                if item.kind() == "wildcard_import" {
-                    emit(
-                        item,
-                        "IMPORT_BINDING",
-                        json!({"language":"python","importKind":"PYTHON_WILDCARD","qualifiedName":from,"importedName":null,"boundName":null}),
-                        lex.clone(),
-                        owner.clone(),
-                    )?;
-                    continue;
-                }
-                if !["dotted_name", "aliased_import"].contains(&item.kind()) {
-                    continue;
-                }
-                let original = item.child_by_field_name("name").unwrap_or(item);
-                let name = text(original, source);
-                let alias = item.child_by_field_name("alias").map(|v| text(v, source));
-                let qualified = from
-                    .map(|m| {
-                        if m.ends_with('.') {
-                            format!("{m}{name}")
-                        } else {
-                            format!("{m}.{name}")
-                        }
+                "resource" => n
+                    .child_by_field_name("name")
+                    .map(|name| ("CONTEXT_TARGET", Some(name))),
+                "except_clause" => n
+                    .child_by_field_name("alias")
+                    .or_else(|| {
+                        n.child_by_field_name("value")
+                            .filter(|v| v.kind() == "as_pattern")
+                            .and_then(|v| v.child_by_field_name("alias"))
                     })
-                    .unwrap_or_else(|| name.into());
-                let bound = alias.unwrap_or_else(|| {
-                    if from.is_some() {
-                        name
-                    } else {
-                        name.split('.').next().unwrap_or(name)
-                    }
-                });
-                emit(
-                    item,
-                    "IMPORT_BINDING",
-                    json!({"language":"python","importKind":if from.is_some_and(|m|m.starts_with('.')){"PYTHON_RELATIVE"}else if from.is_some(){"PYTHON_SYMBOL"}else{"PYTHON_MODULE"},"qualifiedName":qualified,"importedName":from.map(|_|name),"boundName":bound}),
-                    lex.clone(),
-                    owner.clone(),
-                )?;
-                for old in &mut out.observations {
-                    if old["syntaxKind"] == "ASSIGNMENT" && old["sourceRange"] == range(item, file)
+                    .map(|a| ("EXCEPTION_TARGET", Some(a))),
+                "catch_formal_parameter" => {
+                    Some(("EXCEPTION_TARGET", n.child_by_field_name("name")))
+                }
+                "named_expression" => Some(("WALRUS_TARGET", n.child_by_field_name("name"))),
+                "augmented_assignment" => Some(("AUGMENT", n.child_by_field_name("left"))),
+                "assignment_expression" => {
+                    if n.child_by_field_name("operator")
+                        .is_some_and(|op| text(op, source) == "=")
                     {
-                        old["payload"]["targetName"] = json!(bound);
-                        rekey(old, item, file);
-                    }
-                }
-            }
-        }
-        if let Some((eff, target)) = effect {
-            let targets: Vec<_> = if ["GLOBAL", "NONLOCAL"].contains(&eff) {
-                children(*n)
-                    .into_iter()
-                    .filter(|v| v.kind() == "identifier")
-                    .collect()
-            } else if eff == "PATTERN_TARGET" {
-                nodes
-                    .iter()
-                    .copied()
-                    .filter(|v| {
-                        v.kind() == "identifier"
-                            && v.start_byte() >= n.start_byte()
-                            && v.end_byte()
-                                <= n.child_by_field_name("consequence")
-                                    .map(|b| b.start_byte())
-                                    .unwrap_or(n.end_byte())
-                    })
-                    .collect()
-            } else {
-                target.into_iter().collect()
-            };
-            let mut names = vec![];
-            for t in targets {
-                if t.kind() == "identifier" {
-                    names.push((t, text(t, source).to_owned()));
-                } else {
-                    let leaves = children(t);
-                    if leaves.len() == 1 && leaves[0].kind() == "identifier" {
-                        names.push((leaves[0], text(leaves[0], source).to_owned()));
+                        None
                     } else {
-                        limits
-                            .get_mut(&root.id())
-                            .unwrap()
-                            .insert("UNSUPPORTED_BINDING_TARGET".into());
+                        Some(("AUGMENT", n.child_by_field_name("left")))
                     }
                 }
+                "update_expression" => Some(("AUGMENT", children(*n).first().copied())),
+                "delete_statement" => Some(("UNBIND", children(*n).first().copied())),
+                "global_statement" => Some(("GLOBAL", None)),
+                "nonlocal_statement" => Some(("NONLOCAL", None)),
+                "case_clause" => Some(("PATTERN_TARGET", None)),
+                _ => None,
+            };
+            let type_scope = scopes.get(&n.id()).filter(|_| {
+                [
+                    "class_declaration",
+                    "interface_declaration",
+                    "record_declaration",
+                    "enum_declaration",
+                    "annotation_type_declaration",
+                ]
+                .contains(&kind)
+            });
+            let java_import = kind == "import_declaration";
+            let python_import = ["import_statement", "import_from_statement"].contains(&kind);
+            if type_scope.is_none() && !java_import && !python_import && effect.is_none() {
+                continue;
             }
-            if names.is_empty() {
-                limits
-                    .get_mut(&root.id())
-                    .unwrap()
-                    .insert(format!("UNKNOWN_BINDING:{eff}"));
+            let lex = scope(*n, scopes, false, c, &accounted_items)?;
+            let owner = lex.clone();
+            if let Some(r) = type_scope {
                 emit(
                     *n,
-                    "BINDING_EFFECT",
-                    json!({"name":null,"effect":"UNSUPPORTED_BINDING","targetScopeRef":null}),
+                    "DECLARATION",
+                    json!({"declarationForm":"TYPE","declaredName":n.child_by_field_name("name").map(|v|text(v,source)),"declaredType":null,"parameterNames":[],"modifiers":[]}),
                     lex.clone(),
-                    owner.clone(),
+                    Some(r.clone()),
                 )?;
             }
-            for (_site, name) in names {
-                let target = if eff == "GLOBAL" {
-                    scopes.get(&root.id()).cloned()
-                } else if eff == "NONLOCAL" {
-                    let mut cursor = n.parent();
-                    let mut current = false;
-                    let mut found = None;
-                    while let Some(a) = cursor {
-                        tick_binding(c, &accounted_items)?;
-                        if let Some(r) = scopes.get(&a.id()) {
-                            if !current {
-                                current = true;
-                            } else if a.id() != root.id()
-                                && out.observations.iter().any(|v| {
-                                    v["syntaxKind"] == "ASSIGNMENT"
-                                        && v["payload"]["targetName"] == name
-                                        && v["lexicalScope"] == *r
-                                })
-                            {
-                                found = Some(r.clone());
-                                break;
-                            }
-                        }
-                        cursor = a.parent();
-                    }
-                    found
-                } else {
-                    lex.clone()
+            if java_import {
+                let named = children(*n);
+                let name = named
+                    .iter()
+                    .find(|n| ["scoped_identifier", "identifier"].contains(&n.kind()))
+                    .map(|n| text(*n, source));
+                let stat = {
+                    let mut w = n.walk();
+                    n.children(&mut w).any(|x| x.kind() == "static")
                 };
-                if target.is_none() || eff == "PATTERN_TARGET" {
+                let star = named.iter().any(|n| n.kind() == "asterisk");
+                let q = name.unwrap_or("");
+                let imported = (!star).then(|| q.rsplit('.').next().unwrap_or(""));
+                if q.is_empty() {
                     limits
                         .get_mut(&root.id())
                         .unwrap()
-                        .insert(format!("UNPROVEN_BINDING:{eff}"));
+                        .insert("UNKNOWN_IMPORT".into());
                 }
                 emit(
                     *n,
-                    "BINDING_EFFECT",
-                    json!({"name":name,"effect":eff,"targetScopeRef":target}),
+                    "IMPORT_BINDING",
+                    json!({"language":"java","importKind":if q.is_empty(){"UNKNOWN"}else{match(stat,star){(false,false)=>"JAVA_TYPE",(true,false)=>"JAVA_STATIC_MEMBER",(false,true)=>"JAVA_WILDCARD",(true,true)=>"JAVA_STATIC_WILDCARD"}},"qualifiedName":if q.is_empty(){None}else{Some(q)},"importedName":imported,"boundName":imported}),
                     lex.clone(),
                     owner.clone(),
                 )?;
             }
+            if python_import {
+                let module = n.child_by_field_name("module_name");
+                let from = module.map(|m| text(m, source));
+                for item in children(*n) {
+                    tick_binding(c, &accounted_items)?;
+                    if module.is_some_and(|m| m.id() == item.id()) {
+                        continue;
+                    }
+                    if item.kind() == "wildcard_import" {
+                        emit(
+                            item,
+                            "IMPORT_BINDING",
+                            json!({"language":"python","importKind":"PYTHON_WILDCARD","qualifiedName":from,"importedName":null,"boundName":null}),
+                            lex.clone(),
+                            owner.clone(),
+                        )?;
+                        continue;
+                    }
+                    if !["dotted_name", "aliased_import"].contains(&item.kind()) {
+                        continue;
+                    }
+                    let original = item.child_by_field_name("name").unwrap_or(item);
+                    let name = text(original, source);
+                    let alias = item.child_by_field_name("alias").map(|v| text(v, source));
+                    let qualified = from
+                        .map(|m| {
+                            if m.ends_with('.') {
+                                format!("{m}{name}")
+                            } else {
+                                format!("{m}.{name}")
+                            }
+                        })
+                        .unwrap_or_else(|| name.into());
+                    let bound = alias.unwrap_or_else(|| {
+                        if from.is_some() {
+                            name
+                        } else {
+                            name.split('.').next().unwrap_or(name)
+                        }
+                    });
+                    emit(
+                        item,
+                        "IMPORT_BINDING",
+                        json!({"language":"python","importKind":if from.is_some_and(|m|m.starts_with('.')){"PYTHON_RELATIVE"}else if from.is_some(){"PYTHON_SYMBOL"}else{"PYTHON_MODULE"},"qualifiedName":qualified,"importedName":from.map(|_|name),"boundName":bound}),
+                        lex.clone(),
+                        owner.clone(),
+                    )?;
+                    for old in &mut out.observations {
+                        if old["syntaxKind"] == "ASSIGNMENT"
+                            && old["sourceRange"] == range(item, file)
+                        {
+                            old["payload"]["targetName"] = json!(bound);
+                            rekey(old, item, file);
+                        }
+                    }
+                }
+            }
+            if let Some((eff, target)) = effect {
+                let targets: Vec<_> = if ["GLOBAL", "NONLOCAL"].contains(&eff) {
+                    children(*n)
+                        .into_iter()
+                        .filter(|v| v.kind() == "identifier")
+                        .collect()
+                } else if eff == "PATTERN_TARGET" {
+                    nodes
+                        .iter()
+                        .copied()
+                        .filter(|v| {
+                            v.kind() == "identifier"
+                                && v.start_byte() >= n.start_byte()
+                                && v.end_byte()
+                                    <= n.child_by_field_name("consequence")
+                                        .map(|b| b.start_byte())
+                                        .unwrap_or(n.end_byte())
+                        })
+                        .collect()
+                } else {
+                    target.into_iter().collect()
+                };
+                let mut names = vec![];
+                for t in targets {
+                    if t.kind() == "identifier" {
+                        names.push((t, text(t, source).to_owned()));
+                    } else {
+                        let leaves = children(t);
+                        if leaves.len() == 1 && leaves[0].kind() == "identifier" {
+                            names.push((leaves[0], text(leaves[0], source).to_owned()));
+                        } else {
+                            limits
+                                .get_mut(&root.id())
+                                .unwrap()
+                                .insert("UNSUPPORTED_BINDING_TARGET".into());
+                        }
+                    }
+                }
+                if names.is_empty() {
+                    limits
+                        .get_mut(&root.id())
+                        .unwrap()
+                        .insert(format!("UNKNOWN_BINDING:{eff}"));
+                    emit(
+                        *n,
+                        "BINDING_EFFECT",
+                        json!({"name":null,"effect":"UNSUPPORTED_BINDING","targetScopeRef":null}),
+                        lex.clone(),
+                        owner.clone(),
+                    )?;
+                }
+                for (_site, name) in names {
+                    let target = if eff == "GLOBAL" {
+                        scopes.get(&root.id()).cloned()
+                    } else if eff == "NONLOCAL" {
+                        let mut cursor = n.parent();
+                        let mut current = false;
+                        let mut found = None;
+                        while let Some(a) = cursor {
+                            tick_binding(c, &accounted_items)?;
+                            if let Some(r) = scopes.get(&a.id()) {
+                                if !current {
+                                    current = true;
+                                } else if a.id() != root.id()
+                                    && out.observations.iter().any(|v| {
+                                        v["syntaxKind"] == "ASSIGNMENT"
+                                            && v["payload"]["targetName"] == name
+                                            && v["lexicalScope"] == *r
+                                    })
+                                {
+                                    found = Some(r.clone());
+                                    break;
+                                }
+                            }
+                            cursor = a.parent();
+                        }
+                        found
+                    } else {
+                        lex.clone()
+                    };
+                    if target.is_none() || eff == "PATTERN_TARGET" {
+                        limits
+                            .get_mut(&root.id())
+                            .unwrap()
+                            .insert(format!("UNPROVEN_BINDING:{eff}"));
+                    }
+                    emit(
+                        *n,
+                        "BINDING_EFFECT",
+                        json!({"name":name,"effect":eff,"targetScopeRef":target}),
+                        lex.clone(),
+                        owner.clone(),
+                    )?;
+                }
+            }
         }
     }
-    drop(emit);
     out.observations.extend(additions);
     for n in &nodes {
         c.check()?;
