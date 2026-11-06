@@ -53,9 +53,10 @@ export async function readDocumentSourceBytes(
     Object.freeze(file);
     if (file.classification.contentKind !== 'TEXT')
       throw new SourceScanError('INVALID_INPUT', 'Document source must be text');
+    // Own the admitted locator before asynchronous authorization can mutate input.
+    const root = path.resolve(input.rootPath);
     await authorize(file);
     account.checkpoint();
-    const root = path.resolve(input.rootPath);
     const rootIdentity = await lstat(root);
     const checkRoot = async () => {
       account.checkpoint();

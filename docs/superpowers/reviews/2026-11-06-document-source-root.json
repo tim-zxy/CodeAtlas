@@ -1,0 +1,54 @@
+{
+  "kind": "DOCUMENT_SOURCE_ADMITTED_ROOT_ALIAS_FIX",
+  "date": "2026-11-06",
+  "base": "43caaa386685433be76262c4d2118d55f11db88a",
+  "status": "SCOPED_SOURCE_RECOVERY_VERIFIED",
+  "assumption": "The admitted root locator and parsed SourceFile describe the selected input; an asynchronous authorization callback does not grant permission to redirect the caller-owned root selector.",
+  "defect": "rootPath was read from mutable caller input after awaited authorization; two real-file regressions reproduced redirect/failure inversion.",
+  "fix": "Bind path.resolve(input.rootPath) before await authorize(file); no filesystem access before authorization, no new authority or caller options.",
+  "evidence": {
+    "red": {
+      "tests": 2,
+      "fail": 2,
+      "details": [
+        "valid original root redirected to nonexistent root and failed",
+        "missing original root redirected to valid root and exposed bytes instead of rejecting"
+      ]
+    },
+    "finalTests": {
+      "pass": 38,
+      "fail": 0,
+      "skip": 0,
+      "command": "node --test packages/source/test/document-bytes.test.mjs packages/application/test/mixed-source-workflow.test.mjs packages/application/test/document-components.test.mjs packages/application/test/document-write-preflight.test.mjs",
+      "log": "local temporary codeatlas-document-source-root-tests.log"
+    },
+    "build": "node node_modules/typescript/bin/tsc -b packages/source: exit 0",
+    "architectureProjects": 17,
+    "format": "scoped Prettier and git diff --check pass"
+  },
+  "independentReview": {
+    "reviewer": "r9_stop_review_medium",
+    "result": "No important findings; path.resolve is non-FS so authorization still precedes first filesystem access",
+    "mode": "read-only; no tests/build/writes"
+  },
+  "captureFindings": {
+    "existingAuthority": [
+      "docs/superpowers/specs/2026-10-22-phase1-knowledge-and-consumption-design.md:76 capture per-repo single snapshot and revalidate basis",
+      "docs/superpowers/specs/2026-10-22-phase1-compatibility-proposal.md:53-65 immutable filtered input, support digests, no cross-database simultaneous-state claim and policy revalidation",
+      "docs/superpowers/plans/2026-10-22-phase1-knowledge-and-delivery.md P1-12/P1-14 split capture from W010 persistence"
+    ],
+    "remainingConcreteContract": [
+      "strict CompilationCaptureRequest/CompilationInputSnapshot fields and same-scope binding, including selected DocumentRevision and existing Code/Runtime/Contract read DTOs",
+      "exact permitted materialized fact/support closure and redaction/policy-version evidence; raw authorized bytes alone are not a snapshot or persistence clearance",
+      "versioned canonical digest domain/encoding, ordering and binding to immutable snapshot identity/reference; P1-14 publication/idempotency consumers must agree",
+      "concrete per-repository combined read adapter and final mutable Source basis verification, without claiming cross-database atomicity"
+    ],
+    "notImplemented": "No new snapshot schema, identity/digest rule, Source authenticity token, W010 migration or publication contract invented."
+  },
+  "r9": "Historical prefreeze unchanged/read-only; no real R9 build/sampling or adopted values. Source/dist changed again, so future execution requires fresh approved build/freeze.",
+  "formalAcceptance": "4/21; A6 NOT_QUALIFIED; E02 PROPOSED/uninstalled",
+  "sha256": {
+    "packages/source/src/document-bytes.ts": "0a9abe3cba974f5e83f88ff1244a25dd07a2b1dd0fc3843300402db1fa22f097",
+    "packages/source/test/document-bytes.test.mjs": "0e54dd26d613262ba533058f9040127fa020cca2e914a35f9a876a58a010db5f"
+  }
+}

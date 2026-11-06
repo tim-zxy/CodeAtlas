@@ -275,3 +275,33 @@ test('asynchronous initial and final authorization failures cannot expose bytes'
     }
   }
 });
+
+test('document root selector remains bound when asynchronous authorization mutates caller input', async (t) => {
+  const { input, bytes } = await setup(t);
+  const admittedRoot = input.rootPath;
+  const a = account();
+  const out = await (
+    await api()
+  ).readDocumentSourceBytes(input, a, async () => {
+    await Promise.resolve();
+    input.rootPath = join(admittedRoot, 'missing-root');
+  });
+  assert.deepEqual(out.bytes, bytes);
+  assert.equal(a.invalid, false);
+});
+
+test('authorization cannot redirect a missing admitted root to an existing document root', async (t) => {
+  const { input } = await setup(t);
+  const existingRoot = input.rootPath;
+  input.rootPath = join(existingRoot, 'missing-root');
+  const a = account();
+  await assert.rejects(
+    (await api()).readDocumentSourceBytes(input, a, async () => {
+      await Promise.resolve();
+      input.rootPath = existingRoot;
+    }),
+    { code: 'SOURCE_CHANGED' },
+  );
+  assert.equal(a.read, 0);
+  assert.equal(a.invalid, true);
+});

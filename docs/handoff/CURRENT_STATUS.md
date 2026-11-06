@@ -1,3 +1,21 @@
+## Document Source admitted-root alias fixed - 2026-11-06
+
+Two real-file regressions reproduced caller rootPath mutation across awaited
+RAW authorization: a valid selected root could be redirected, and a missing root
+could be replaced with an existing root to obtain bytes. Bind the validated locator
+before the await; path.resolve performs no FS operation, so authorization remains
+before reading. Existing identity/hash/final permission/budget gates are unchanged.
+Source build, affected38/38, architecture17 and format pass; read-only independent
+review found no important issues. [Exact evidence and capture-contract gaps](../superpowers/reviews/2026-11-06-document-source-root.json).
+
+P1-12 full capture still needs strict snapshot/request shape, selected support and
+policy closure, canonical digest/ref binding and combined per-repository read
+composition. Existing authority requires immutable filtered content, final basis
+checks and no cross-database simultaneous-state claim; no new schema/identity or
+permission rule was invented. P1-14 owns W010 persistence/publication. This fixes
+Source reading only; Phase1 remains4/21 and A6 NOT_QUALIFIED. R9 prefreeze stays
+untouched historical evidence; no real build/sampling, parser install or new value.
+
 ## Private document batch read verified - 2026-11-06
 
 Implemented the existing P1-12 per-database snapshot obligation as private

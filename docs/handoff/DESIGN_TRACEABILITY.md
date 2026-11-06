@@ -1,3 +1,12 @@
+## Document Source immutable admitted locator - 2026-11-06
+
+Existing controlled RAW selection/authorization -> document-bytes root string owned
+before asynchronous authorization -> real temporary-file redirect regressions, two
+RED then affected38/38 GREEN. No FS before authorization, no new permission or
+snapshot authority. Source build/architecture17 pass; independent review clear.
+[Exact evidence](../superpowers/reviews/2026-11-06-document-source-root.json).
+P1-12 strict snapshot/support/digest contract and P1-14 persistence remain incomplete.
+
 ## P1-12 private document snapshot read port - 2026-11-06
 
 Existing knowledge/delivery plan readDocuments one-snapshot obligation -> private
