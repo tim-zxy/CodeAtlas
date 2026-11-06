@@ -854,3 +854,9 @@ test('pack preflight verifies current environment, independently discovered sour
   await assert.rejects(() => pack.verifyRefreshCiPack(args), /Archive hash/);
   // These are structural synthetic vectors, NOT a candidate/admission approval.
 });
+
+test('R9 approval schema remains a separate unapproved vector', () => {
+  const input = { ...record(), layoutRevision: 'p05-d5-exact-layout-v9' };
+  assert.deepEqual(pack.validateRefreshCiApproval(input), input);
+  assert.equal(record().layoutRevision, 'p05-d5-exact-layout-v1');
+});

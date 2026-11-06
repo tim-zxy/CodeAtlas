@@ -13,6 +13,8 @@ import {
   readRefreshCiPackLayout,
   refreshCiFixtureContext,
   refreshCiLayoutRoot,
+  refreshCiLayoutRevision,
+  refreshCiLayoutRootForRevision,
   assertRefreshCiOutputOutsideLayouts,
 } from './helpers/native-refresh-ci-layout.mjs';
 import {
@@ -54,7 +56,8 @@ export function checkRefreshCiCandidateBudget(callerBudgetBytes, candidateReserv
   };
 }
 
-async function prepareRefreshCiEvidence(outputInput, repositoryPath) {
+async function prepareRefreshCiEvidence(outputInput, repositoryPath, revision) {
+  const preparationRoot = refreshCiLayoutRootForRevision(revision);
   const output = path.resolve(outputInput);
   assert.equal(await realpath(path.dirname(output)), path.dirname(output));
   assertRefreshCiOutputOutsideLayouts(output);
@@ -77,8 +80,8 @@ async function prepareRefreshCiEvidence(outputInput, repositoryPath) {
       'Missing reviewed D environment',
     );
     refreshCiFixtureContext({
-      nativePath: path.join(refreshCiLayoutRoot, 'native', 'codeatlas-native-analyzer.exe'),
-      tempRoot: path.join(refreshCiLayoutRoot, 'temp'),
+      nativePath: path.join(preparationRoot, 'native', 'codeatlas-native-analyzer.exe'),
+      tempRoot: path.join(preparationRoot, 'temp'),
     });
     const sourceFiles = await discoverRefreshCiNativeSourceAt(repositoryPath);
     const toolchain = spawnSync('rustc', ['--version'], {
@@ -110,7 +113,7 @@ async function prepareRefreshCiEvidence(outputInput, repositoryPath) {
       'Native sources changed across build',
     );
     stage = 'LAYOUT';
-    const layout = await acquireRefreshCiLayout();
+    const layout = await acquireRefreshCiLayout(revision);
     const receipt = {
       schemaVersion: 1,
       environment: (
@@ -240,23 +243,29 @@ export function validateRefreshCiActualReport(input, binding) {
 // Internal test-owned checkout seam. Operational CLI never accepts an approval override.
 export async function runRefreshCiAt(args, repositoryPath) {
   if (args[0] === 'prepare') {
-    assert.equal(args.length, 2, 'Invalid prepare arguments');
-    return prepareRefreshCiEvidence(args[1], repositoryPath);
+    assert.ok(args.length === 2 || args.length === 3, 'Invalid prepare arguments');
+    if (args.length === 3)
+      assert.equal(args[2], 'p05-d5-exact-layout-v9', 'Unsupported prepare layout revision');
+    return prepareRefreshCiEvidence(args[1], repositoryPath, args[2] ?? refreshCiLayoutRevision);
   }
   if (args[0] === 'pack') {
-    assert.equal(args.length, 4, 'Invalid pack arguments');
+    assert.ok(args.length === 4 || args.length === 5, 'Invalid pack arguments');
+    if (args.length === 5)
+      assert.equal(args[4], 'p05-d5-exact-layout-v9', 'Unsupported pack layout revision');
+    const revision = args[4] ?? refreshCiLayoutRevision;
+    const packRoot = refreshCiLayoutRootForRevision(revision);
     assert.equal(
       args[1],
-      path.join(refreshCiLayoutRoot, 'evidence', 'candidate.json'),
+      path.join(packRoot, 'evidence', 'candidate.json'),
       'Candidate pack geometry differs',
     );
     assert.equal(
       args[2],
-      path.join(refreshCiLayoutRoot, 'evidence', 'review', 'holdout.json'),
+      path.join(packRoot, 'evidence', 'review', 'holdout.json'),
       'Holdout pack geometry differs',
     );
     const result = await createRefreshCiPack({
-      layout: await readRefreshCiPackLayout(),
+      layout: await readRefreshCiPackLayout(revision),
       candidatePath: args[1],
       holdoutPath: args[2],
       outputArchive: args[3],

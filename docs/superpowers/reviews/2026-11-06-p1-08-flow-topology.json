@@ -1,0 +1,146 @@
+{
+  "kind": "P1_08_FLOW_TOPOLOGY_BOUNDED_VERIFICATION",
+  "utc": "2026-11-06T13:54:43.821696+00:00",
+  "sourceCheckpoint": "9b473df64abc172332b9b76dacb7823315c1d08e",
+  "worktree": "D:\\workspace\\CodeAtlas-phase1-20261106",
+  "changedTest": "packages/execution/test/derive-runtime-flow.test.mjs",
+  "sha256": "79020b3024ebfaa715fd856005dc5f0a75fe5a1cc7f40320b0e364b0ac3ffa8e",
+  "authority": [
+    "docs/superpowers/plans/2026-10-22-phase1-foundation-and-runtime.md#P1-08",
+    "docs/superpowers/specs/2026-10-22-phase1-contracts-and-runtime-design.md#5.1"
+  ],
+  "expectedCodeTopology": [
+    [
+      "code:b",
+      "code:c"
+    ],
+    [
+      "code:c",
+      "code:function"
+    ],
+    [
+      "code:function",
+      "code:b"
+    ],
+    [
+      "code:function",
+      "code:c"
+    ]
+  ],
+  "verification": [
+    {
+      "command": "node node_modules/typescript/bin/tsc -p packages/execution/tsconfig.json",
+      "exitCode": 0
+    },
+    {
+      "command": "node --test packages/execution/test/derive-execution.test.mjs packages/execution/test/derive-runtime-flow.test.mjs",
+      "exitCode": 0,
+      "total": 10,
+      "pass": 10,
+      "fail": 0,
+      "skip": 0,
+      "newTests": 3
+    },
+    {
+      "command": "node scripts/check-architecture.mjs",
+      "exitCode": 0,
+      "projects": 17
+    },
+    {
+      "command": "node node_modules/prettier/bin/prettier.cjs --check packages/execution/test/derive-runtime-flow.test.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0
+    }
+  ],
+  "registration": "Existing package.json test -> scripts/test-phase1-b-runtime.mjs -> original Flow test; no registration change",
+  "independentReview": {
+    "executor": "n1_tests_medium",
+    "mode": "read-only final diff",
+    "blocking": [],
+    "boundary": "Missing-support negative proves output IR validation, not arbitrary missing-support graph input admission"
+  },
+  "scope": [
+    "literal fork/cycle retained as finite back-references",
+    "stable identities and semantics under source+graph permutation",
+    "incoming-edge support retained per step",
+    "flattened-result negative control",
+    "missing-support output IR rejection",
+    "depth frontier/PARTIAL/no completed Flow"
+  ],
+  "notClaimed": [
+    "new product behavior",
+    "original registered Fixture full acceptance",
+    "P1-08 parent closure",
+    "A6 or E02 qualification",
+    "P1-13 identity contract approval",
+    "real Native or resource execution"
+  ],
+  "phaseAcceptance": {
+    "accepted": 4,
+    "total": 21,
+    "a6": "NOT_QUALIFIED",
+    "e02": "PROPOSED_UNINSTALLED"
+  },
+  "crossContextCorrection": {
+    "defect": "Flow.contexts inherited source array order for supported cross-TASK context flows",
+    "actualRed": {
+      "kind": "P1_08_CROSS_CONTEXT_PERMUTATION_RED",
+      "command": "node --test --test-name-pattern=\"task-boundary Flow\" packages/execution/test/derive-runtime-flow.test.mjs",
+      "exitCode": 1,
+      "tests": 1,
+      "pass": 0,
+      "fail": 1,
+      "failure": "deepStrictEqual: Flow.contexts reversed when only input graph contexts reverse",
+      "sourceShaBeforeFix": "b978ae662709660711d6a887a40ba79e0422860bfe1da7e82673f67f20fa2fd7",
+      "scope": "synthetic declared REQUEST/TASK graph; no Native/real Source/resource run"
+    },
+    "fix": "One exactOrder sort on filtered context array; no mutation of input or identity/topology/budget changes",
+    "currentSourceSha256": "b8db5e4b76e84fd66a138d66881287d2a774f9a348e9aeb4519e1011e37a45b4",
+    "currentTestSha256": "83ea90b042fe541e3d2aea11f6b3a69439490d08f398787cbc158c6d36727ac1",
+    "verification": [
+      {
+        "command": "node node_modules/typescript/bin/tsc -p packages/execution/tsconfig.json",
+        "exitCode": 0
+      },
+      {
+        "command": "node --test packages/execution/test/derive-execution.test.mjs packages/execution/test/derive-runtime-flow.test.mjs",
+        "total": 11,
+        "pass": 11,
+        "fail": 0,
+        "skip": 0,
+        "exitCode": 0
+      },
+      {
+        "command": "node --test --test-concurrency=1 scripts/test-phase1-b-runtime.mjs",
+        "total": 82,
+        "pass": 82,
+        "fail": 0,
+        "skip": 0,
+        "exitCode": 0
+      },
+      {
+        "command": "node scripts/check-architecture.mjs",
+        "projects": 17,
+        "exitCode": 0
+      },
+      {
+        "command": "node node_modules/prettier/bin/prettier.cjs --check packages/execution/src/derive-runtime-flow.ts packages/execution/test/derive-runtime-flow.test.mjs",
+        "exitCode": 0
+      },
+      {
+        "command": "git diff --check",
+        "exitCode": 0
+      }
+    ],
+    "independentReview": {
+      "executor": "n1_tests_medium",
+      "scope": "only source sort and cross-context regression after prior bounded test review",
+      "blocking": []
+    },
+    "earlierEvidence": "Top-level10/10 and original test SHA describe preceding test-only batch; retained as historical, not current source validation",
+    "qualification": "No real Native/resource run; existing R8 is not adopted for changed built Execution bytes"
+  }
+}

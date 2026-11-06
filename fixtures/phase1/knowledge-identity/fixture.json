@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "p1-knowledge-identity-v1",
+  "category": "knowledge",
+  "phase": "1",
+  "languages": [],
+  "frameworks": [],
+  "capabilities": ["EXACT_KNOWLEDGE_IDENTITY", "REVIEW_ONLY_RECONCILIATION"],
+  "inputs": {
+    "vectors": "inputs.json"
+  },
+  "expected": {
+    "contract": "expected.json"
+  },
+  "criticalFacts": [],
+  "qualityGates": {}
+}

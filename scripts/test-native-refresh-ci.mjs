@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
@@ -392,4 +393,103 @@ test('settled attempt export retains complete original bytes and mapping without
     /original|owned/i,
   );
   assert.ok(!(await readdir(parent)).includes('forged'));
+});
+
+test('explicit R9 prepare refuses frozen output and unknown revision before build or acquisition', async () => {
+  await assert.rejects(
+    () =>
+      runner.runRefreshCiAt(
+        ['prepare', 'C:\\CodeAtlas-P05-D5-R9', 'p05-d5-exact-layout-v9'],
+        path.resolve(fileURLToPath(new URL('../', import.meta.url))),
+      ),
+    /overlap|layout/i,
+  );
+  await assert.rejects(
+    () =>
+      runner.runRefreshCiAt(
+        ['prepare', 'C:\\not-created', 'other-layout'],
+        path.resolve(fileURLToPath(new URL('../', import.meta.url))),
+      ),
+    /revision|layout/i,
+  );
+});
+
+test('explicit R9 preparation reaches the intercepted build without acquiring a fixed root', async (t) => {
+  const parent = await mkdtemp(path.join(tmpdir(), 'codeatlas-r9-preflight-'));
+  t.after(() => rm(parent, { recursive: true, force: true }));
+  const result = spawnSync(
+    process.execPath,
+    [
+      '--input-type=module',
+      '-e',
+      `import cp from 'node:child_process'; import {syncBuiltinESMExports} from 'node:module';
+     cp.spawnSync=()=>{throw new Error('R9_BUILD_CHECKPOINT')}; syncBuiltinESMExports();
+     const {runRefreshCiAt}=await import(${JSON.stringify(new URL('./native-refresh-ci.mjs', import.meta.url).href)});
+     try {await runRefreshCiAt(['prepare',process.argv[1],'p05-d5-exact-layout-v9'],process.argv[2]);process.exitCode=2;}
+     catch(error){process.stdout.write(error.message);}`,
+      path.join(parent, 'output'),
+      path.resolve(fileURLToPath(new URL('../', import.meta.url))),
+    ],
+    { encoding: 'utf8', windowsHide: true },
+  );
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(result.stdout, 'R9_BUILD_CHECKPOINT');
+  assert.deepEqual(await readdir(parent), ['output']);
+  const receipt = JSON.parse(await readFile(path.join(parent, 'output', 'ci-result.json'), 'utf8'));
+  assert.equal(receipt.stage, 'BUILD');
+  assert.equal(receipt.success, false);
+});
+
+test('explicit R9 pack refuses cross-layout geometry and unknown revision before IO', async () => {
+  const root = 'C:\\CodeAtlas-P05-D5-R9';
+  const candidate = path.join(root, 'evidence', 'candidate.json');
+  const holdout = path.join(root, 'evidence', 'review', 'holdout.json');
+  for (const [c, h] of [
+    [candidate.replace('-R9', '-R8'), holdout],
+    [candidate, holdout.replace('-R9', '-R8')],
+  ])
+    await assert.rejects(
+      () =>
+        runner.runRefreshCiAt(
+          ['pack', c, h, 'C:\\not-created.zip', 'p05-d5-exact-layout-v9'],
+          path.resolve('.'),
+        ),
+      /geometry/i,
+    );
+  await assert.rejects(
+    () =>
+      runner.runRefreshCiAt(
+        ['pack', candidate, holdout, 'C:\\not-created.zip', 'other-layout'],
+        path.resolve('.'),
+      ),
+    /revision|layout/i,
+  );
+});
+
+test('explicit R9 pack selects the original read-only ownership seam without acquiring a root', () => {
+  const root = 'C:\\CodeAtlas-P05-D5-R9';
+  // All filesystem lstat calls stop in this test child, before any layout is opened.
+  const result = spawnSync(
+    process.execPath,
+    [
+      '--input-type=module',
+      '-e',
+      `import fs from 'node:fs/promises'; import {syncBuiltinESMExports} from 'node:module';
+     fs.lstat=async target=>{throw new Error('LAYOUT_READ:'+target)};syncBuiltinESMExports();
+     const {runRefreshCiAt}=await import(${JSON.stringify(new URL('./native-refresh-ci.mjs', import.meta.url).href)});
+     try {await runRefreshCiAt(JSON.parse(process.argv[1]),process.argv[2]);process.exitCode=2;}
+     catch(error){process.stdout.write(error.message);}`,
+      JSON.stringify([
+        'pack',
+        path.join(root, 'evidence', 'candidate.json'),
+        path.join(root, 'evidence', 'review', 'holdout.json'),
+        'C:\\not-created.zip',
+        'p05-d5-exact-layout-v9',
+      ]),
+      path.resolve(fileURLToPath(new URL('../', import.meta.url))),
+    ],
+    { encoding: 'utf8', windowsHide: true },
+  );
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(result.stdout, 'LAYOUT_READ:' + root);
 });

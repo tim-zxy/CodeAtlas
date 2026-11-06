@@ -1,0 +1,165 @@
+{
+  "kind": "EXPLICIT_R9_OFFLINE_PREPARATION_SLICE",
+  "utc": "2026-11-06T14:15:20.415336+00:00",
+  "status": "OFFLINE_SUPPORT_VERIFIED_NOT_SAMPLING_APPROVAL",
+  "defaultLayoutUnchanged": "p05-d5-exact-layout-v8",
+  "explicitPrepareLayout": "p05-d5-exact-layout-v9",
+  "sourceFiles": [
+    {
+      "path": "scripts/helpers/native-refresh-ci-layout.mjs",
+      "sha256": "1fe31f3c0b4229892d40f0b1823b0f998a2e2ca41f1c95eae45676212193313a"
+    },
+    {
+      "path": "scripts/native-refresh-ci.mjs",
+      "sha256": "903d85299c9311454413119efc671bfc809805643e960780f2695608161633a0"
+    },
+    {
+      "path": "packages/runtime/test/helpers/native-refresh-r5-preparation-scope.mjs",
+      "sha256": "c0efe0b1d35f8219141c5abe23f9a599a5e6b8b5a412141d19a7962e4b9e306a"
+    },
+    {
+      "path": "scripts/test-native-refresh-ci-layout.mjs",
+      "sha256": "947a553798e3742ce01fe08cd68b16802cb57907bf284b539d62b6c53d6f8ed6"
+    },
+    {
+      "path": "scripts/test-native-refresh-ci.mjs",
+      "sha256": "8f9147b6c092e29b777fe7395d3beea523f5f7745a0138535b2c5af23f278148"
+    },
+    {
+      "path": "scripts/test-native-refresh-ci-pack.mjs",
+      "sha256": "ef820182700a62dfff51361a3d3c3ae88b523012e47e3528c78608a709fcdf61"
+    }
+  ],
+  "preparationSliceFrozenOnly": true,
+  "wholeCorpusFrozen": false,
+  "r9RootExists": false,
+  "futureCommand": [
+    "D:/Program Files/nodejs/node.exe",
+    "scripts/native-refresh-ci.mjs",
+    "prepare",
+    "D:\\workspace\\CodeAtlas-phase1-20261106\\.superpowers\\sdd\\2026-11-06-r9-transport-execution",
+    "p05-d5-exact-layout-v9"
+  ],
+  "futureLayoutRoot": "C:/CodeAtlas-P05-D5-R9",
+  "holdoutRoot": "D:\\workspace\\CodeAtlas-phase1-20261106\\.superpowers\\sdd\\2026-11-06-r9-transport-execution\\independent",
+  "verification": {
+    "genuineRed": [
+      "v9 mapping absent",
+      "v9 schema vector absent",
+      "three-argument prepare unsupported"
+    ],
+    "setupErrorsRetained": [
+      "missing fileURLToPath test import",
+      "trailing-slash test checkout URL rejected by canonical path guard"
+    ],
+    "initialCombinedSuite": {
+      "total": 86,
+      "pass": 85,
+      "fail": 1,
+      "cause": "new test trailing-slash setup only"
+    },
+    "unchangedLayoutAndPackSuites": {
+      "pass": 63,
+      "fail": 0
+    },
+    "correctedAffectedCliSuite": {
+      "total": 23,
+      "pass": 23,
+      "fail": 0,
+      "skip": 0
+    },
+    "architectureProjects": 17,
+    "formatPassed": true,
+    "diffCheckPassed": true
+  },
+  "executionScope": {
+    "caseConcurrency": 1,
+    "scheduledCases": 154,
+    "qualification": 22,
+    "calibration": 110,
+    "independentHoldout": 22,
+    "nativeParseWorkers": 1,
+    "nativeClientTimeoutMs": 10000,
+    "replayWorkerTimeoutMs": 60000,
+    "callerBudgetBytes": 1000000000,
+    "hardOsMemoryLimit": false,
+    "hardOsProcessLimit": false,
+    "expectedMeasuredSpawnShape": "coordinator Node -> one replay Node -> one Native OR Node fault child; not a proved OS process ceiling",
+    "wholePreparationMaxProcesses": null,
+    "wholePreparationMaxProcessesReason": "cargo/compiler/linker/build-script descendants and OS console behavior are not globally bounded/audited",
+    "batchHardWalltimeMs": null,
+    "scheduledCasesMeaning": "22 measured qualification +110 measured calibration +22 independent measured holdout; excludes corpus/seed/oracle preparation and their functional replays",
+    "wholeRunNativeInvocationMaximum": null,
+    "wholeRunNativeInvocationMaximumReason": "prepareRefreshTransportCorpus also executes Source/seed/oracle functional work before measured bench;154 is not the total real Native invocation ceiling"
+  },
+  "stopConditions": [
+    "source/tool/manifest drift or occupied/aliased roots before execution",
+    "do not start a later phase after preceding failure",
+    "original per-phase loops may retain remaining failure slots; no new first-failure abort promised",
+    "no manual retry/cherry-picking",
+    "timeout/unknown cleanup retained and blocks subsequent progression",
+    "always preserve raw results/exit/cleanup evidence"
+  ],
+  "remaining": [
+    "full source/dist/dependency and executable freeze",
+    "maximum process scope or explicit approval acknowledging no hard process cap",
+    "separate real prepare/build/154case authorization",
+    "actual PACK/profile/numeric/publication approval remains separate"
+  ],
+  "notExecuted": [
+    "real R9 root acquisition",
+    "Rust/Native build",
+    "synthetic qualification/calibration/holdout",
+    "numeric profile adoption",
+    "PACK",
+    "publication",
+    "CI push/retrigger"
+  ],
+  "independentReview": {
+    "executor": "n1_tests_medium",
+    "blocking": [],
+    "scope": "explicit prepare-v9 support only",
+    "boundary": "Positive test stops at first intercepted rustc --version within BUILD stage; no cargo or actual acquisition proved; PACK remains R8"
+  },
+  "subsequentWork": {
+    "status": "P113_CHANGES_INVALIDATE_PREFREEZE_FOR_NEW_EXECUTION",
+    "note": "Original local dependency-prefreeze.json remains historical read-only checkpoint; new Knowledge build/root manifest/lock/Fixture requires a fresh final dependency freeze before any actual R9 prepare."
+  },
+  "initialPrepareSliceHistorical": true,
+  "packContinuation": {
+    "status": "EXPLICIT_R9_PACK_WIRING_VERIFIED_NO_REAL_PACK",
+    "sourceFiles": [
+      {
+        "path": "scripts/helpers/native-refresh-ci-layout.mjs",
+        "sha256": "d60b0538f6ba23f754d0103d1283055bc76f6b31ebaee5a5391bf5137210fd17"
+      },
+      {
+        "path": "scripts/native-refresh-ci.mjs",
+        "sha256": "11e0381b29c0420f2331e105417ba7dc938e27330b930052f0487f533ade466f"
+      },
+      {
+        "path": "scripts/test-native-refresh-ci.mjs",
+        "sha256": "aea02f58473baf264931a63e942301384a909673440d01241fb5ed6c783fd926"
+      }
+    ],
+    "actualRed": {
+      "tests": 2,
+      "fail": 2,
+      "reason": "original PACK only accepted4 args"
+    },
+    "green": {
+      "layoutAndCli": 40,
+      "fail": 0
+    },
+    "unchangedZipSuiteReused": 48,
+    "review": {
+      "executor": "n1_tests_medium",
+      "blocking": [],
+      "boundary": "test-only first lstat intercept proves root selection, not actual root existence or ZIP"
+    },
+    "defaultV8Unchanged": true,
+    "sameCandidateHoldoutRootRequired": true,
+    "profileHoldoutOwnershipZipGatesUnchanged": true,
+    "realPackExecuted": false
+  }
+}

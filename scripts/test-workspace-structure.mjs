@@ -36,6 +36,7 @@ expectedPackageDependencies.execution = {
   zod: '4.6.1',
 };
 expectedPackageDependencies.contracts = { '@codeatlas/ir': 'workspace:*' };
+expectedPackageDependencies.knowledge = { '@codeatlas/ir': 'workspace:*' };
 expectedPackageDependencies.evaluation = { '@codeatlas/ir': 'workspace:*' };
 expectedPackageDependencies.source = { '@codeatlas/ir': 'workspace:*' };
 expectedPackageDependencies.storage = { '@codeatlas/ir': 'workspace:*' };
@@ -129,6 +130,11 @@ for (const name of packageNames) {
       assert.equal(
         source,
         "export {\n  matchContracts,\n  prepareFrozenContracts,\n  workspaceRuntimeInputDigest,\n  workspaceEntityIdentity,\n  contractSupportPolicy,\n} from './match-contracts.js';\nexport type { ContractMatchingCandidate } from './match-contracts.js';\n\nexport { matchContractsV2, prepareFrozenContractsV2 } from './match-contracts.js';\nexport type {\n  DeclaredContractControl,\n  DeclaredContractMatchingCandidate,\n} from './match-contracts.js';\n",
+      );
+    } else if (name === 'knowledge') {
+      assert.equal(
+        source,
+        "export { resolveKnowledgeIdentity } from './identity.js';\nexport type { IdentityDecision } from './identity.js';\nexport { reconcileKnowledge } from './reconciliation.js';\nexport type {\n  ReconciliationInput,\n  ReconciliationPlan,\n  ReconciliationAction,\n} from './reconciliation.js';\n",
       );
     } else if (name === 'source') {
       assert.match(source, /scanGitRepository/);

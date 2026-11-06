@@ -1,0 +1,36 @@
+{
+  "policyRef": "knowledge-exact-reference-v1",
+  "same": "UNCHANGED",
+  "changedSemantic": "UPDATE",
+  "noExisting": "NEW",
+  "unapprovedPolicy": "REVIEW_REQUIRED",
+  "changedRevision": "REVIEW_REQUIRED",
+  "missingOrMixedState": "REVIEW_REQUIRED",
+  "ambiguous": "REVIEW_REQUIRED",
+  "splitRequiresReview": true,
+  "mergeWithoutFactsRequiresReview": true,
+  "disappearanceHealth": "AFFECTED",
+  "advancedDrift": "DEFERRED",
+  "fingerprints": {
+    "COMPONENT": {
+      "semanticFingerprint": "ef24534801d5afd69ed7782f4ff5e3e0736ee59af10e82d715981a989350e963",
+      "presentationFingerprint": "37c4fdce23e9e413698236906205b8f166f7a5d01850d18bc0c22fe71b8abc3e"
+    },
+    "CAPABILITY": {
+      "semanticFingerprint": "ab1bfe58a526a1974ce6468ed1492e3128ea1b50259de701e165a95d913bd1c0",
+      "presentationFingerprint": "496a49c81c3be744b44efa39c84ec989bb9319cab1468fb1d34684890508efb3"
+    },
+    "INTEGRATION": {
+      "semanticFingerprint": "2955d56ae1859cc319229e0622794852f64b65c0a2aa03ae249f36a2b7887d42",
+      "presentationFingerprint": "1743c014152c0adc954b6b810da8bf29595460a13c9c1e0289eeaa76265f0fde"
+    },
+    "BUSINESS_FLOW": {
+      "semanticFingerprint": "058a80f84862ddbba00f4a59cea4ecbfe87589388cbac61f944739ee056e37bc",
+      "presentationFingerprint": "16876232f5e50e1dd73306a5e03b03debd20e1d6ea2954e1bd7c1c9e49c7f27e"
+    },
+    "RUNTIME_FLOW_REFERENCE": {
+      "semanticFingerprint": "fa45802fe4fe9ceb10d2c720101060ac31fdef1f2b8df196db3d5003a7bf8f16",
+      "presentationFingerprint": "2d731e3494835cb89fdaa910cf0b0cce21e4bab236f4bb196d918c5cdb6e9d42"
+    }
+  }
+}

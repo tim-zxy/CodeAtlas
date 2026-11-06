@@ -1,3 +1,119 @@
+## Local integrated batch ready for source checkpoint - 2026-11-06
+
+P1-08 context ordering correction, explicit R9 prepare/PACK wiring and the approved
+P1-13 conservative comparison/plan core are one reviewed local batch. R9 PACK now
+accepts only the explicitv9 fifth argument and exact same-root candidate/holdout;
+legacy defaults and all original profile/ownership/ZIP gates remain. Two real REDs,
+40/40 affected layout+CLI and reused48 ZIP checks plus independent review establish
+wiring only. No real PACK, Native build, sample, profile value or publication occurred.
+
+The exact31 owned source/Fixture/doc files were checked against an empty index and
+continuation HEAD9b473df; bounded new-content secret-pattern scan found no listed
+pattern. Unrelated EOL-status entries and ignored raw evidence remain untouched.
+Original full P1-13/E09, actual capture/merge/time gates and Phase1 4/21 remain open.
+Any new source checkpoint needs its own CI; old9b or d64 results are not transferred.
+
+## Approved P1-13 conservative comparison and plans implemented - 2026-11-06
+
+User-approved bounded rules now have real pure resolveKnowledgeIdentity and
+reconcileKnowledge exports. Five knowledge types compare full scoped/revision
+anchors, validated supplied Claim state and deterministic independently pinned
+semantic/presentation fingerprints. Unique exact identity retains opaque ID;
+revision/structure change, ambiguity, unknown evidence and historical lifecycle
+review. Same-anchor semantic change only proposes UPDATE. No issued IDs or writes.
+
+Plans preserve candidate IDs, existing IDs/revision heads and an input integrity
+digest, never capture or publication authority. Split/insufficient merge review;
+missing time/value proof cannot assert conflict; disappearance only proposes
+AFFECTED. Three independent review P2s were reproduced by7 failing controls and
+fixed in one pass (safe control snapshot/final checkpoint, review refs, lifecycle).
+Knowledge34/34,IR/Fixture62,architecture-rule19 pass. Expanded135 run134pass/1old
+empty-shell inventory failure is retained; exact approved dependency/export pins
+were corrected and affected workspace20/20 passes. Build/IR types/architecture17,
+format/diff are checked. Fixture registry is71/exact45Phase1, not accepted parents.
+[Accepted private contract](../superpowers/specs/2026-11-06-p1-13-conservative-identity.md)
+and [bounded evidence](../superpowers/reviews/2026-11-06-p1-13-conservative-implementation.json).
+
+Actual capture/quality/publication and complete positive merge/time original gates
+remain open; P1-13/E09 is not fully accepted. Phase1 remains4/21,A6 NOT_QUALIFIED,
+E02 PROPOSED/uninstalled. No R9 run. New Knowledge builds invalidate prior R9
+prefreeze as current qualification; re-freeze the final closure before actual work.
+Prior code/CI9b473df cannot represent this new local batch. Source sync is pending.
+
+## Explicit R9 preparation support, without sampling - 2026-11-06
+
+The existing versioned development helper now supports explicit prepare-v9/R9 while
+all historical paths and default two-argument prepare/PACK remainv8. R9 joins output
+confinement and the exact finite historical preparation-range path list, with no new
+profile, values, flags, permissions or qualifying result. Genuine mapping/schema/CLI
+REDs precede implementation.63 layout/pack tests pass; corrected affected CLI23/23,
+architecture17/format/diff pass. Two test setup errors and initial85/86 are retained.
+The positive test intercepts BUILD only; real R9 root is absent, no Native build or
+sample ran. [Slice freeze, commands and bounds](../superpowers/reviews/2026-11-06-r9-offline-support.json).
+
+Only this preparation source slice is frozen; whole corpus/dist/executable freeze
+remain. Independent final-delta review found no blocker. Serial cases/parse-workers1 are not a hard OS
+process limit: Cargo descendants have no verified global maximum.10s client/60s
+worker timeouts are not a batch cap. These risks and unknowns must be included in
+later specific real-run authorization; no154-case operation is authorized here.
+Existing P1-08 real determinism repair and P1-13 concrete unapproved policy remain
+in the same local batch. No CI rerun/push, acceptance or qualification promotion.
+
+## P1-08 cross-context determinism correction - 2026-11-06
+
+Continuing the original Flow permutation gate found a real REQUEST->TASK defect:
+reversing only graph.contexts reversed a multi-context Flow.contexts list. Genuine
+focused RED1/1 is retained. One sort using existing exactOrder on the filtered
+array fixes the output; input arrays, context membership, stable IDs, topology,
+ordinal meaning and output-unit cost remain unchanged. No new policy/threshold.
+
+Fresh Execution build,11/11 targeted tests,original B batch82/82,architecture17,
+format and diff checks pass; independent delta review found no blocker. [Current
+correction plus preserved earlier evidence](../superpowers/reviews/2026-11-06-p1-08-flow-topology.json).
+Original task/phase/actual gates remain open;4/21/A6 NOT_QUALIFIED/E02 PROPOSED.
+P1-13 now has explicit unapproved state/anchor/fingerprint/action rules and examples
+in the same decision packet; none was implemented. R9 is NOT_EXECUTION_READY:
+the current preparer still selects occupied R8, full process concurrency is not
+yet bounded, and final dependency closure is mutable. No154-case run, publication
+or CI retrigger occurred. Changes remain local pending consolidated source sync.
+
+## P1-08 independent Flow topology evidence - 2026-11-06
+
+Three additional tests in the already registered derive-runtime-flow root cover a
+literal function->b/c fork, c->function cycle, finite unique steps, source/graph
+permutation and retained incoming-edge support. A flattened-output control differs
+from the independent four-edge oracle. Missing-support output is rejected by IR;
+maxDepth0 reports DEPTH/PARTIAL/frontier and no completed Flow. No exclusive branch
+or actual temporal order is inferred from call edges or ordinal.
+
+Current Execution build,10/10 focused old/new tests,architecture17,format and diff
+checks pass; independent final-diff review found no blocker. [Fresh scoped evidence](../superpowers/reviews/2026-11-06-p1-08-flow-topology.json).
+Only the test changed: no production implementation, fixture/schema/threshold,
+identity contract, real Native run or resource collection. P1-08's remaining original
+Store/application/actual-context gates stay open; Phase1 remains4/21. The earlier
+P1-13/R8 proposal remains PROPOSED and no154-case run was started. New documentation
+and this test are local pending the next consolidated source-sync batch; prior
+CI128 remains evidence only for9b473df.
+
+## P1-13 contract boundary and matching qualification proposal - 2026-11-06
+
+Source HEAD9b473df is synchronized. CI128/run42221401179 is terminal: TS/Rust PASS;
+Native correctly FAILS the script prerequisite (189 frozen/192 current,3 additions,
+1 helper change); heavy Native/actual22 steps were skipped, not passed. The current
+R8 archive/profile/evidence remains unchanged. Local work/index content diffs were
+empty at inspection; status-only EOL entries were preserved, with no matching
+collector/build/test process found.
+
+P1-13 is independent of A6/E02 but not yet contract-complete: private comparison
+inputs, state binding, type-specific anchors/cross-revision behavior, trusted
+fingerprints and strict plans need governed clarification. No identity algorithm
+or Canonical schema change was implemented. The [consolidated PROPOSED packet](../superpowers/specs/2026-11-06-p1-13-and-matching-qualification-proposal.md)
+separates accepted requirements from these decisions. For the current delta only,
+read-only analysis suggests154 Transport invocations rather than406; freeze the
+final development closure first and verify exact binaries before requesting a new
+run. No R9 preparation/collection, numeric adoption, PACK or CI retrigger occurred.
+Phase1 remains4/21; A6 NOT_QUALIFIED, E02 PROPOSED/uninstalled.
+
 ## Fail-closed script-catalog preflight for source synchronization - 2026-11-06
 
 A strict approved-manifest mirror now allows the existing Native CI job to discover an ineligible script closure before Native build or the long REFRESH/memory/actual22 steps. The gzip decodes to the original approved R8 manifest1089811bytes/SHA9d355dcac5897bf3df7485437736b487f5039bcf9f40dbd7b27e2e421eab5a01; old approval/profile/ZIP/release/catalog bytes remain unchanged. No new exclusion or retagging is used.

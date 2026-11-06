@@ -178,8 +178,8 @@ test('committed registry Fixture is discoverable', async () => {
 // Full-repository registration has one responsibility point.
 test('repository Fixture registry has the approved unique inventory', async () => {
   const found = await discoverFixtures(resolve('fixtures'));
-  assert.equal(found.length, 70);
-  assert.equal(found.filter(({ manifest }) => manifest.phase === '1').length, 44);
+  assert.equal(found.length, 71);
+  assert.equal(found.filter(({ manifest }) => manifest.phase === '1').length, 45);
   assert.equal(new Set(found.map(({ manifest }) => manifest.id)).size, found.length);
 });
 

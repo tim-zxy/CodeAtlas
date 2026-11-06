@@ -16,8 +16,9 @@ export function refreshCiLayoutRootForRevision(revision) {
   if (revision === 'p05-d5-exact-layout-v5') return 'C:\\CodeAtlas-P05-D5-R5';
   if (revision === 'p05-d5-exact-layout-v6') return 'C:\\CodeAtlas-P05-D5-R6';
   if (revision === 'p05-d5-exact-layout-v7') return 'C:\\CodeAtlas-P05-D5-R7';
-  assert.equal(revision, 'p05-d5-exact-layout-v8', 'Unsupported CI layout revision');
-  return 'C:\\CodeAtlas-P05-D5-R8';
+  if (revision === 'p05-d5-exact-layout-v8') return 'C:\\CodeAtlas-P05-D5-R8';
+  assert.equal(revision, 'p05-d5-exact-layout-v9', 'Unsupported CI layout revision');
+  return 'C:\\CodeAtlas-P05-D5-R9';
 }
 export const refreshCiLayoutRoot = refreshCiLayoutRootForRevision(refreshCiLayoutRevision);
 
@@ -32,6 +33,7 @@ export function assertRefreshCiOutputOutsideLayouts(output) {
     'p05-d5-exact-layout-v6',
     'p05-d5-exact-layout-v7',
     'p05-d5-exact-layout-v8',
+    'p05-d5-exact-layout-v9',
   ]) {
     const relative = path.relative(refreshCiLayoutRootForRevision(revision), output);
     assert.ok(
@@ -158,8 +160,8 @@ export async function readRefreshCiPackLayoutAt(root) {
   return layout;
 }
 
-export async function readRefreshCiPackLayout() {
-  return readRefreshCiPackLayoutAt(refreshCiLayoutRoot);
+export async function readRefreshCiPackLayout(revision = refreshCiLayoutRevision) {
+  return readRefreshCiPackLayoutAt(refreshCiLayoutRootForRevision(revision));
 }
 
 export function refreshCiFixtureContext(layout) {
@@ -217,14 +219,15 @@ export async function acquireRefreshCiLayoutAt({ root, nativeSourcePath, nativeS
   return result;
 }
 
-export async function acquireRefreshCiLayout() {
+export async function acquireRefreshCiLayout(revision = refreshCiLayoutRevision) {
+  const root = refreshCiLayoutRootForRevision(revision);
   assert.equal(process.platform, 'win32', 'Exact D CI layout requires Windows');
   assert.equal(process.arch, 'x64', 'Exact D CI layout requires x64');
   const nativeSourcePath = fileURLToPath(
     new URL('../../target/debug/codeatlas-native-analyzer.exe', import.meta.url),
   );
   return acquireRefreshCiLayoutAt({
-    root: refreshCiLayoutRoot,
+    root,
     nativeSourcePath,
     nativeSha256: await hashRegularFile(nativeSourcePath, false),
   });

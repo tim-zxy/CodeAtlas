@@ -1,0 +1,140 @@
+{
+  "kind": "P1_13_CONSERVATIVE_COMPARISON_IMPLEMENTATION",
+  "utc": "2026-11-06T15:01:39.674315+00:00",
+  "status": "BOUNDED_OFFLINE_IMPLEMENTATION_VERIFIED_PARENT_OPEN",
+  "authority": "docs/superpowers/specs/2026-11-06-p1-13-conservative-identity.md",
+  "sourceCheckpoint": "9b473df64abc172332b9b76dacb7823315c1d08e",
+  "files": [
+    {
+      "path": "packages/knowledge/src/comparison-contract.ts",
+      "authorWorktreeSha256": "cd7a971b689ffb14a3e0f7f14e2f978e66c607f2d8abed2d1311321049faf9d4"
+    },
+    {
+      "path": "packages/knowledge/src/identity.ts",
+      "authorWorktreeSha256": "f59b8a9b6eab76fa3190cb68dab835c491757857c6091437be82fd1ce57376e7"
+    },
+    {
+      "path": "packages/knowledge/src/reconciliation.ts",
+      "authorWorktreeSha256": "081b951b281313466ee068e533d8976069290627162336b768475cef9210ad95"
+    },
+    {
+      "path": "packages/knowledge/src/index.ts",
+      "authorWorktreeSha256": "2ccf9b09277c06bce327c8b05c9ee94ff60b7dc1e2cca9ecc325a303de3c2894"
+    },
+    {
+      "path": "packages/knowledge/test/identity.test.mjs",
+      "authorWorktreeSha256": "091269fc76073673984b2aae0b8653ddb13928969c4833a4470d61fb51207248"
+    },
+    {
+      "path": "packages/knowledge/test/reconciliation.test.mjs",
+      "authorWorktreeSha256": "fbe35900291507c704aa8c4e55c101e530cdef8efc461ec8515a3b360957ee47"
+    },
+    {
+      "path": "fixtures/phase1/knowledge-identity/inputs.json",
+      "authorWorktreeSha256": "37bfe07693a127ea77c8dc99c965d9ec99c7f730ada56cef7f5dd4ecf26dd06b"
+    },
+    {
+      "path": "fixtures/phase1/knowledge-identity/expected.json",
+      "authorWorktreeSha256": "a6afe4960111852dbcd663412a43b271e79897007e458c279d31dde072613c94"
+    },
+    {
+      "path": "fixtures/phase1/knowledge-identity/fixture.json",
+      "authorWorktreeSha256": "7a4ffe67082c742b39762be8539382a462f6cacb1fb10b07beb68c5a15f0bef9"
+    }
+  ],
+  "verification": {
+    "knowledgeBuild": {
+      "command": "node node_modules/typescript/bin/tsc -p packages/knowledge/tsconfig.json",
+      "exitCode": 0
+    },
+    "knowledgeTests": {
+      "total": 34,
+      "pass": 34,
+      "fail": 0,
+      "skip": 0
+    },
+    "expandedCombined": {
+      "total": 135,
+      "pass": 134,
+      "fail": 1,
+      "failure": "stale Knowledge empty-shell inventory"
+    },
+    "unchangedConstituentsRetained": {
+      "pass": 115,
+      "note": "34 Knowledge +62 IR/Fixture +19 architecture rules from preserved expanded run"
+    },
+    "correctedAffectedWorkspaceStructure": {
+      "total": 20,
+      "pass": 20,
+      "fail": 0
+    },
+    "irTypes": {
+      "command": "node node_modules/typescript/bin/tsc -p packages/ir/tsconfig.type-tests.json",
+      "exitCode": 0
+    },
+    "architectureProjects": 17,
+    "fixtureRegistry": {
+      "total": 71,
+      "phase1": 45,
+      "unique": true
+    },
+    "rootRegisteredTests": [
+      "packages/knowledge/test/identity.test.mjs",
+      "packages/knowledge/test/reconciliation.test.mjs"
+    ]
+  },
+  "review": {
+    "executor": "offline_contract_review_medium",
+    "findings": [
+      {
+        "severity": "P2",
+        "finding": "caller control getter/Proxy + missing final checkpoint",
+        "resolution": "own-data snapshot and native AbortSignal getter; final checkpoints; real failing controls green"
+      },
+      {
+        "severity": "P2",
+        "finding": "review plan dropped existing alternatives/heads",
+        "resolution": "retain IDs/revision refs and normalized inputDigest with no authority meaning; real failure green"
+      },
+      {
+        "severity": "P2",
+        "finding": "historical lifecycle item reused without review",
+        "resolution": "nonACTIVE stays review; no restoration/new equivalence; real failure green"
+      }
+    ],
+    "fixPass": "one author pass,7 focused RED controls then all34 Knowledge green",
+    "secondIndependentReview": false,
+    "unresolvedBlocking": []
+  },
+  "retainedFailures": [
+    "API absence red.log",
+    "TS2790 descriptor delete compiler error",
+    "initial BusinessFlow test incorrectly added nonexistent summary; fixture corrected only",
+    "cycle/prototype-key RED2",
+    "unknown-policy/multi-candidate-binding RED2",
+    "review-red.log4 + review-additional-red.log3",
+    "final.stdout.log stale bootstrap inventory failure"
+  ],
+  "safety": {
+    "canonicalSchemaChanged": false,
+    "databaseOrPublication": false,
+    "modelCalls": false,
+    "nativeOrR9Sampling": false,
+    "opaqueIdAllocated": false,
+    "numericThresholdAdded": false,
+    "stageAcceptanceChanged": false
+  },
+  "remainingOriginalGates": [
+    "actual P1-12 capture/provenance binding and P1-14 quality/manual publication integration",
+    "complete positive merge survivor evidence/priority and time/exclusivity scenarios",
+    "original full P1-13/E09 acceptance,not replaced by this conservative subset",
+    "A6 qualification and E02 approved baseline remain independent"
+  ],
+  "phase": {
+    "accepted": 4,
+    "total": 21,
+    "A6": "NOT_QUALIFIED",
+    "E02": "PROPOSED_UNINSTALLED"
+  },
+  "logs": ".superpowers/sdd/2026-11-06-p1-13-conservative-execution/"
+}

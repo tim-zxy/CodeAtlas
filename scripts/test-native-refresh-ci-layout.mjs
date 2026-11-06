@@ -319,3 +319,29 @@ test('R5 preparation scope leaves old contexts unchanged and counts base files',
   const upsert = r5PreparationScope('source-dense-upsert-boundary', ctx);
   assert.equal(upsert.next - 1982 + 1, 6);
 });
+
+test('R9 is explicit and preserves historical defaults, confinement and preparation scopes', async () => {
+  const revision = 'p05-d5-exact-layout-v9';
+  const root = 'C:\\CodeAtlas-P05-D5-R9';
+  assert.equal(layout.refreshCiLayoutRootForRevision(revision), root);
+  assert.equal(layout.refreshCiLayoutRevision, 'p05-d5-exact-layout-v8');
+  assert.equal(layout.refreshCiLayoutRoot, 'C:\\CodeAtlas-P05-D5-R8');
+  assert.throws(() => layout.assertRefreshCiOutputOutsideLayouts(root), /overlap|layout/i);
+  assert.throws(
+    () => layout.assertRefreshCiOutputOutsideLayouts(path.join(root, 'evidence')),
+    /overlap|layout/i,
+  );
+  const { r5PreparationScope } =
+    await import('../packages/runtime/test/helpers/native-refresh-r5-preparation-scope.mjs');
+  const executablePath = path.join(root, 'native', 'codeatlas-native-analyzer.exe');
+  assert.deepEqual(r5PreparationScope('source-empty-input-boundary', { executablePath }), {
+    accepted: 394,
+    next: 395,
+  });
+  assert.equal(
+    r5PreparationScope('source-empty-input-boundary', {
+      executablePath: executablePath.replace('-R9', '-R90'),
+    }),
+    null,
+  );
+});

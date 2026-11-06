@@ -1,3 +1,59 @@
+## Explicit R9 PACK continuation - 2026-11-06
+
+Original same-root geometry -> explicitv9 candidate/holdout/read-only root -> original
+installed profile, full candidate/holdout, ownership and ZIP gates unchanged. Two
+missing-wire REDs then40layout/CLI green,48 unchanged ZIP checks reused; independent
+read-only review found no blocker. This is wiring, not a successful real PACK or
+profile/numeric/execution approval. [Current bounded continuation](../superpowers/reviews/2026-11-06-r9-offline-support.json).
+
+## User-approved conservative P1-13 implementation - 2026-11-06
+
+ADR007/exact-only + explicit four-rule approval -> existing strict IR/context/Claim
+parsers -> private full-scope/revision anchors -> deterministic recomputed dual
+fingerprints -> pure candidate decisions and bound review plans. No Canonical or
+publisher mutation; complete capture/merge/time original gates stay open. Original
+Fixture p1-knowledge-identity-v1 and two mandatory roots are now registered.
+[Contract](../superpowers/specs/2026-11-06-p1-13-conservative-identity.md),
+[evidence and3 P2 RED/GREEN fixes](../superpowers/reviews/2026-11-06-p1-13-conservative-implementation.json).
+Registry71/Phase1 45 counts fixtures, not accepted parents; Phase1 remains4/21.
+
+## Explicit R9 preparation compatibility slice - 2026-11-06
+
+Existing exact-layout revision mapping -> additive explicitv9 fixed root and output
+confinement -> same original caller/context/range and one-owner rules -> intercepted
+BUILD test only. Defaultv8 and old approvals remain unchanged.63layout/pack+23CLI,
+architecture17/format/diff pass; no actual R9 run, resource number or schema gate
+waiver. [Exact prepared-source hashes and remaining run limits](../superpowers/reviews/2026-11-06-r9-offline-support.json).
+
+## P1-08 cross-context determinism implementation correction - 2026-11-06
+
+Original Runtime5.1 determinism -> REQUEST/TASK input context reversal -> real RED
+Flow.contexts reversal -> existing exactOrder sort on a filtered copy -> fresh
+build/11focused/82registered B/architecture17 green and independent delta review.
+[Correction receipt](../superpowers/reviews/2026-11-06-p1-08-flow-topology.json).
+Only presentation ordering changes; identity, graph topology and budget accounting
+are preserved. No ADR/Canonical migration or actual qualification is inferred.
+
+## Original P1-08 fork/cycle/ordering obligation - 2026-11-06
+
+Original P1-08 Step1/Step4 and Runtime design5.1 -> existing registered Flow test ->
+independent four-edge synthetic topology oracle, finite cycle back-reference,
+permutation stability, support retention and explicit depth frontier. Fresh build,
+Execution10/10 and architecture17 pass; output-support rejection is IR validation,
+not a new observer admission rule. [Bounded receipt](../superpowers/reviews/2026-11-06-p1-08-flow-topology.json).
+No new identity equivalence, topology compression, time ordering, Fixture signoff
+or parent acceptance is introduced.
+
+## P1-13 authority gap and exact-closure qualification planning - 2026-11-06
+
+ADR007/RECONCILIATION/original P1-13 task -> current Candidate/Item/Revision/Claim
+schemas -> explicit PROPOSED comparison, anchor, fingerprint and plan decisions;
+no silently added state field, semantic hash or identity outcome. Original five
+implementation/fixture steps remain open. CI128 preserved actual prerequisite
+failure -> current script closure differs -> conditional154-case Transport refresh
+proposal, not catalog-only repack or transplanted old holdout. [Decision packet](../superpowers/specs/2026-11-06-p1-13-and-matching-qualification-proposal.md).
+No contract approval, fresh qualification or acceptance promotion is inferred.
+
 ## Approved manifest -> script prerequisite -> honest blocked Native CI - 2026-11-06
 
 Exact manifest bytes authenticated by the original strict R8 archive entry -> independently enumerate every current scripts path/hash -> necessary subset comparison only. Mismatch fails the Native job before expensive invalid-context checks; match retains all original full Native qualification commands and identity/resource gates. No ignored extra files, old hash rewrite, numeric adoption, reduced phase threshold or qualification token. HOST26 and existing basic/light checks remain independently runnable, with always-preserved preflight evidence.

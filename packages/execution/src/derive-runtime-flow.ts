@@ -199,6 +199,7 @@ function deriveFlows(
     ].sort((a, b) => exactOrder(a.entity.id, b.entity.id));
     const contexts = p.contexts
       .filter((c) => contextIds.has(c.id))
+      .sort((a, b) => exactOrder(a.id, b.id))
       .map((c) => scoped(p.basis, 'EXECUTION_CONTEXT', c.id));
     const cost =
       1 +
