@@ -1,3 +1,14 @@
+## P1-12 private document snapshot read port - 2026-11-06
+
+Existing knowledge/delivery plan readDocuments one-snapshot obligation -> private
+DocumentStore.readCurrentBatch -> actual owned SQLite WAL second-writer, cumulative
+budget, immutable selection/result and whole-batch refusal tests. Shared old single
+read checks retained; affected69/69 and architecture17 pass. No snapshot schema/ID,
+Source authenticity, permission/publication contract, migration or root export added.
+[Exact evidence](../superpowers/reviews/2026-11-06-document-batch-read.json).
+Component only; formal acceptance unchanged. Existing R9 prefreeze remains untouched
+historical evidence after the Storage input change, not a current run approval.
+
 ## Preparation cleanup uncertainty is never successful evidence - 2026-11-06
 
 Existing owned-resource/error-preservation invariants -> all-close cleanup with

@@ -1,3 +1,23 @@
+## Private document batch read verified - 2026-11-06
+
+Implemented the existing P1-12 per-database snapshot obligation as private
+DocumentStore.readCurrentBatch: one owned SQLite read transaction, one cumulative
+existing logical budget, required COMPLETE heads in caller order, immutable output.
+Selectors are validated/copied before callbacks; duplicate/missing/corrupt/control/
+budget failure refuses the whole batch. Existing single reads retain their semantics.
+Real SQLite WAL/second-writer regression proves a coherent cross-document view.
+Storage build, affected69/69, architecture17 and scoped format pass; independent
+read-only review found no important defects. [Exact evidence](../superpowers/reviews/2026-11-06-document-batch-read.json).
+
+This is an internal read-port component, not full P1-12 capture, Source authenticity,
+parser adoption, scan clearance or publication. No migration/new root export.
+R9 saved prefreeze files remain untouched and are now historical after Storage
+source/dist changes; they must not authorize a future execution. Real R9 remains
+pending specific approval and a fresh post-build freeze. CI139 on prior347c32f:
+Rust and TypeScript passed; Native stopped at R8 script catalog mismatch.
+No retry and no old CI qualification of this batch.
+Phase1 remains4/21; A6 NOT_QUALIFIED; E02 PROPOSED/uninstalled.
+
 ## Preparation recovery fixed; current R9 prefreeze recorded - 2026-11-06
 
 Found/fixed existing cleanup defects in actual corpus preparation: attempt all

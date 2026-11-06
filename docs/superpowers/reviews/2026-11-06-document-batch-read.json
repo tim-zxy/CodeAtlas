@@ -1,0 +1,54 @@
+{
+  "kind": "PRIVATE_DOCUMENT_COHERENT_BATCH_READ",
+  "date": "2026-11-06",
+  "base": "347c32fbd5e79729a2dc3b380196607d0f09b711",
+  "status": "PRIVATE_COMPONENT_VERIFIED_NOT_FULL_P1_12",
+  "authority": "docs/superpowers/plans/2026-10-22-phase1-knowledge-and-delivery.md: P1-12 one SQLite snapshot per database for readDocuments",
+  "implementation": [
+    "private DocumentStore.readCurrentBatch returns required COMPLETE current revisions in caller order in one owned read transaction",
+    "one cumulative existing HistoryReadBudget; strict selector copied before trusted callbacks; immutable output",
+    "reuse existing scoped header/revision/normalized-row validation; missing/corrupt/duplicate/control/budget failure returns no partial result; old single-read semantics preserved"
+  ],
+  "evidence": {
+    "red": [
+      "five missing batch API tests failed before implementation",
+      "selector mutation test reproduced DOCUMENT_REQUIRED_DOCUMENT_MISSING before copying selection ahead of callback"
+    ],
+    "build": "node node_modules/typescript/bin/tsc -b packages/storage: exit 0",
+    "finalTests": {
+      "pass": 69,
+      "fail": 0,
+      "skip": 0,
+      "command": "node --test packages/storage/test/document-store.test.mjs packages/storage/test/document-migrations.test.mjs packages/storage/test/runtime-migrations.test.mjs packages/storage/test/contract-store.test.mjs packages/application/test/document-components.test.mjs",
+      "log": "local temporary codeatlas-document-batch-tests.log"
+    },
+    "snapshotProof": "actual owned SQLite WAL file and second writer connection update later document after first read; entire batch sees old head, subsequent single read sees new head; no reader writes",
+    "architectureProjects": 17,
+    "format": "scoped Prettier check passed"
+  },
+  "independentReview": {
+    "reviewer": "r9_stop_review_medium",
+    "mode": "read-only diff, budget implementation and plan; no tests/build/writes",
+    "result": "No important findings"
+  },
+  "notDone": [
+    "no full CompilationInputSnapshot schema/ID or Source/capture authorization",
+    "no parser installation or production scanning clearance",
+    "no real R9 build/sampling, numeric/profile/PACK/publication",
+    "no new formal Phase 1 acceptance closure"
+  ],
+  "r9": "Existing prefreeze raw files and summary remain untouched. New Storage source/dist invalidates their use for a future execution; historical evidence only. Fresh post-approved-build freeze needed before actual R9.",
+  "ci139": {
+    "run": 42286212529,
+    "head": "347c32fbd5e79729a2dc3b380196607d0f09b711",
+    "rust": "success",
+    "native": "R8 script catalog mismatch at approved script catalog prerequisite; real Native build skipped",
+    "typescript": "success",
+    "status": "completed; no manual rerun; results apply only to prior347c32f"
+  },
+  "formalAcceptance": "4/21; A6 NOT_QUALIFIED; E02 PROPOSED/uninstalled",
+  "sourceSha256": {
+    "packages/storage/src/documents/document-store.ts": "411baedb034ac5c02a1cc2f00f0f732fef2dddb3baba0d851abf9659cc72e32c",
+    "packages/storage/test/document-store.test.mjs": "ce5ce58633508499c001b6b8725ce470a1fca87783834f5bda11ab8f5a81870f"
+  }
+}

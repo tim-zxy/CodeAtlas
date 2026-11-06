@@ -356,13 +356,58 @@ export class DocumentStore {
     check(syncCheck !== undefined, 'DOCUMENT_SYNC_CHECK_REQUIRED');
     return this.#readDocument(documentId, text(revisionId), limits, syncCheck);
   }
+  /** Internal P1-12 read port only: one database view, not Source/capture authority. */
+  readCurrentBatch(
+    documentIds: readonly string[],
+    limits: HistoryReadLimits,
+    syncCheck: () => undefined,
+  ): readonly Readonly<{ revisionId: string; bundle: Bundle }>[] {
+    check(syncCheck !== undefined, 'DOCUMENT_SYNC_CHECK_REQUIRED');
+    let ids: string[] = [];
+    return this.#withReadSnapshot(
+      limits,
+      syncCheck,
+      (sql, b, recheck) => {
+        const result: Readonly<{ revisionId: string; bundle: Bundle }>[] = [];
+        for (const id of ids) {
+          recheck();
+          const row = this.#readDocumentRow(sql, b, id, null, recheck);
+          check(row !== null, 'DOCUMENT_REQUIRED_DOCUMENT_MISSING');
+          result.push(Object.freeze(row));
+        }
+        return Object.freeze(result);
+      },
+      (b) => {
+        b.own(documentIds);
+        ensurePhase1Data(documentIds);
+        check(Array.isArray(documentIds), 'INVALID_DOCUMENT_SELECTION');
+        // Prepay the owned selector copy and its reference indexes with the existing
+        // request-local logical budget; no default cap or physical RSS formula.
+        b.own(documentIds);
+        ids = documentIds.map((id) => text(id));
+        b.own(ids);
+        const unique = new Set(ids);
+        check(unique.size === ids.length, 'DOCUMENT_DUPLICATE_SELECTION');
+      },
+    );
+  }
   #readDocument(
     documentId: string,
     requestedRevision: string | null,
     limits: HistoryReadLimits,
     syncCheck: (() => undefined) | undefined,
   ): { revisionId: string; bundle: Bundle } | null {
-    const { db, workspaceId } = owners.get(this)!;
+    return this.#withReadSnapshot(limits, syncCheck, (sql, b, recheck) =>
+      this.#readDocumentRow(sql, b, documentId, requestedRevision, recheck),
+    );
+  }
+  #withReadSnapshot<T>(
+    limits: HistoryReadLimits,
+    syncCheck: (() => undefined) | undefined,
+    read: (sql: ReturnType<typeof runtimeSql>, b: HistoryReadBudget, recheck: () => void) => T,
+    prepare?: (b: HistoryReadBudget) => void,
+  ): T {
+    const { db } = owners.get(this)!;
     check(!db.isTransaction, 'DOCUMENT_TRANSACTION_ACTIVE');
     if (syncCheck !== undefined)
       check(
@@ -378,9 +423,15 @@ export class DocumentStore {
         check(result === undefined, 'DOCUMENT_SYNC_CHECK_REQUIRED');
       }
     };
+    // Batch inputs must be owned before a trusted callback can change caller data.
+    // Preserve the existing single-read control/budget admission order.
+    const preparedBudget = prepare
+      ? new HistoryReadBudget(checkedHistoryLimits(limits))
+      : undefined;
+    if (prepare) prepare(preparedBudget!);
     recheck();
-    const b = new HistoryReadBudget(checkedHistoryLimits(limits)),
-      baseSql = runtimeSql(db, b);
+    const b = preparedBudget ?? new HistoryReadBudget(checkedHistoryLimits(limits));
+    const baseSql = runtimeSql(db, b);
     const sql = {
       ...baseSql,
       read(...args: Parameters<typeof baseSql.read>) {
@@ -400,104 +451,7 @@ export class DocumentStore {
     db.exec('BEGIN');
     try {
       assertDocumentSchema(sql);
-      const docs = sql.read(
-        'documents',
-        [
-          'id',
-          'workspace_id',
-          'repository_id',
-          'logical_path',
-          'media_type',
-          'source_kind',
-          'current_revision_id',
-        ],
-        'id=? AND workspace_id=?',
-        [text(documentId), workspaceId],
-      );
-      if (!docs.length || (requestedRevision === null && docs[0]!.current_revision_id === null)) {
-        recheck();
-        db.exec('COMMIT');
-        return null;
-      }
-      const header = docs[0]!,
-        revisionId = requestedRevision ?? text(header.current_revision_id);
-      const rows = sql.read(
-        'document_revisions',
-        [
-          'id',
-          'document_id',
-          'source_fingerprint',
-          'parser_version',
-          'policy_version',
-          'completeness',
-          'payload_json',
-        ],
-        'id=? AND document_id=?',
-        [revisionId, documentId],
-      );
-      if (!rows.length && requestedRevision !== null) {
-        recheck();
-        db.exec('COMMIT');
-        return null;
-      }
-      check(rows.length === 1 && rows[0]!.completeness === 'COMPLETE', 'DOCUMENT_STORAGE_CORRUPT');
-      recheck();
-      const parsed = b.parse(text(rows[0]!.payload_json));
-      b.own(parsed);
-      const bundle = parseDocumentBundle(parsed),
-        d = bundle.payload.document,
-        revision = bundle.payload.revision;
-      check(
-        d.id === documentId &&
-          d.workspaceId === workspaceId &&
-          d.currentRevisionId === null &&
-          revision.id === revisionId &&
-          revision.completeness === 'COMPLETE' &&
-          header.id === d.id &&
-          header.workspace_id === d.workspaceId &&
-          header.repository_id === d.repositoryId &&
-          header.logical_path === d.logicalPath &&
-          header.media_type === d.mediaType &&
-          header.source_kind === d.sourceKind &&
-          rows[0]!.document_id === d.id &&
-          rows[0]!.source_fingerprint === revision.sourceFingerprint &&
-          rows[0]!.parser_version === revision.parserVersion &&
-          rows[0]!.policy_version === revision.policyVersion,
-        'DOCUMENT_STORAGE_CORRUPT',
-      );
-      for (const [table, columns, expected] of [
-        [
-          'document_sections',
-          ['entity_id', 'parent_id', 'ordinal', 'payload_json'],
-          bundle.payload.sections,
-        ],
-        [
-          'document_blocks',
-          ['entity_id', 'section_id', 'ordinal', 'payload_json'],
-          bundle.payload.blocks,
-        ],
-        ['document_links', ['entity_id', 'block_id', 'payload_json'], bundle.payload.links],
-      ] as const) {
-        const actual = sql.read(table, columns, 'revision_id=?', [revisionId]);
-        check(actual.length === expected.length, 'DOCUMENT_STORAGE_CORRUPT');
-        for (const item of expected) {
-          recheck();
-          const row = actual.find((r) => r.entity_id === item.id);
-          check(row && row.payload_json === canonicalRuntimeJson(item), 'DOCUMENT_STORAGE_CORRUPT');
-          if ('parentSectionId' in item)
-            check(
-              row.parent_id === item.parentSectionId && row.ordinal === item.ordinal,
-              'DOCUMENT_STORAGE_CORRUPT',
-            );
-          else if ('sectionId' in item)
-            check(
-              row.section_id === item.sectionId && row.ordinal === item.ordinal,
-              'DOCUMENT_STORAGE_CORRUPT',
-            );
-          else check(row.block_id === item.blockRef.id, 'DOCUMENT_STORAGE_CORRUPT');
-        }
-      }
-      const result = { revisionId, bundle: freeze(bundle) };
+      const result = read(sql, b, recheck);
       recheck();
       db.exec('COMMIT');
       return result;
@@ -505,5 +459,108 @@ export class DocumentStore {
       if (db.isTransaction) db.exec('ROLLBACK');
       throw error;
     }
+  }
+  #readDocumentRow(
+    sql: ReturnType<typeof runtimeSql>,
+    b: HistoryReadBudget,
+    documentId: string,
+    requestedRevision: string | null,
+    recheck: () => void,
+  ): { revisionId: string; bundle: Bundle } | null {
+    const { workspaceId } = owners.get(this)!;
+    const docs = sql.read(
+      'documents',
+      [
+        'id',
+        'workspace_id',
+        'repository_id',
+        'logical_path',
+        'media_type',
+        'source_kind',
+        'current_revision_id',
+      ],
+      'id=? AND workspace_id=?',
+      [text(documentId), workspaceId],
+    );
+    if (!docs.length || (requestedRevision === null && docs[0]!.current_revision_id === null)) {
+      return null;
+    }
+    const header = docs[0]!,
+      revisionId = requestedRevision ?? text(header.current_revision_id);
+    const rows = sql.read(
+      'document_revisions',
+      [
+        'id',
+        'document_id',
+        'source_fingerprint',
+        'parser_version',
+        'policy_version',
+        'completeness',
+        'payload_json',
+      ],
+      'id=? AND document_id=?',
+      [revisionId, documentId],
+    );
+    if (!rows.length && requestedRevision !== null) {
+      return null;
+    }
+    check(rows.length === 1 && rows[0]!.completeness === 'COMPLETE', 'DOCUMENT_STORAGE_CORRUPT');
+    recheck();
+    const parsed = b.parse(text(rows[0]!.payload_json));
+    b.own(parsed);
+    const bundle = parseDocumentBundle(parsed),
+      d = bundle.payload.document,
+      revision = bundle.payload.revision;
+    check(
+      d.id === documentId &&
+        d.workspaceId === workspaceId &&
+        d.currentRevisionId === null &&
+        revision.id === revisionId &&
+        revision.completeness === 'COMPLETE' &&
+        header.id === d.id &&
+        header.workspace_id === d.workspaceId &&
+        header.repository_id === d.repositoryId &&
+        header.logical_path === d.logicalPath &&
+        header.media_type === d.mediaType &&
+        header.source_kind === d.sourceKind &&
+        rows[0]!.document_id === d.id &&
+        rows[0]!.source_fingerprint === revision.sourceFingerprint &&
+        rows[0]!.parser_version === revision.parserVersion &&
+        rows[0]!.policy_version === revision.policyVersion,
+      'DOCUMENT_STORAGE_CORRUPT',
+    );
+    for (const [table, columns, expected] of [
+      [
+        'document_sections',
+        ['entity_id', 'parent_id', 'ordinal', 'payload_json'],
+        bundle.payload.sections,
+      ],
+      [
+        'document_blocks',
+        ['entity_id', 'section_id', 'ordinal', 'payload_json'],
+        bundle.payload.blocks,
+      ],
+      ['document_links', ['entity_id', 'block_id', 'payload_json'], bundle.payload.links],
+    ] as const) {
+      const actual = sql.read(table, columns, 'revision_id=?', [revisionId]);
+      check(actual.length === expected.length, 'DOCUMENT_STORAGE_CORRUPT');
+      for (const item of expected) {
+        recheck();
+        const row = actual.find((r) => r.entity_id === item.id);
+        check(row && row.payload_json === canonicalRuntimeJson(item), 'DOCUMENT_STORAGE_CORRUPT');
+        if ('parentSectionId' in item)
+          check(
+            row.parent_id === item.parentSectionId && row.ordinal === item.ordinal,
+            'DOCUMENT_STORAGE_CORRUPT',
+          );
+        else if ('sectionId' in item)
+          check(
+            row.section_id === item.sectionId && row.ordinal === item.ordinal,
+            'DOCUMENT_STORAGE_CORRUPT',
+          );
+        else check(row.block_id === item.blockRef.id, 'DOCUMENT_STORAGE_CORRUPT');
+      }
+    }
+    return { revisionId, bundle: freeze(bundle) };
   }
 }

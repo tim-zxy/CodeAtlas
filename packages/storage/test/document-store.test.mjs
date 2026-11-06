@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { DatabaseSync } from 'node:sqlite';
 import { mkdtempSync, rmSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, resolve, dirname, basename } from 'node:path';
 import { tmpdir } from 'node:os';
 import { loadMigrationPlan } from '../dist/migrations/manifest.js';
 import { applyMigrationPlan } from '../dist/migrations/runner.js';
@@ -649,4 +649,151 @@ test('read control cannot make Store adopt or finish a newly opened caller trans
   );
   assert.equal(db.isTransaction, true);
   db.exec('ROLLBACK');
+});
+
+function secondDocument(id = 'rev:b1', text = 'world', fingerprint = 'b') {
+  const b = bundle(id, text, fingerprint);
+  b.payload.document.id = 'doc:two';
+  b.payload.document.logicalPath = 'docs/second.md';
+  b.payload.revision.documentId = 'doc:two';
+  return b;
+}
+test('batch current reads share a real SQLite WAL snapshot despite concurrent head update', (t) => {
+  const directory = mkdtempSync(join(tmpdir(), 'codeatlas-doc-batch-'));
+  t.after(() => {
+    assert.equal(resolve(dirname(directory)), resolve(tmpdir()));
+    assert.ok(basename(directory).startsWith('codeatlas-doc-batch-'));
+    rmSync(directory, { recursive: true, force: true });
+  });
+  const file = join(directory, 'owned.sqlite');
+  const { db, store } = setup(t, file);
+  let writer;
+  try {
+    db.exec('PRAGMA journal_mode=WAL');
+    apply(store);
+    apply(store, secondDocument());
+    writer = new DatabaseSync(file);
+    writer.exec('PRAGMA foreign_keys=ON');
+    const other = new api.DocumentStore(writer, 'ws:one');
+    const original = db.prepare.bind(db);
+    let changed = false;
+    db.prepare = (sql) => {
+      const statement = original(sql);
+      if (sql.startsWith('SELECT "id","workspace_id"') && sql.includes('FROM "documents"')) {
+        const all = statement.all.bind(statement);
+        statement.all = (...args) => {
+          const rows = all(...args);
+          if (args[0] === 'doc:one' && !changed) {
+            changed = true;
+            apply(other, secondDocument('rev:b2', 'later', 'c'), 'rev:b1');
+          }
+          return rows;
+        };
+      }
+      return statement;
+    };
+    const before = db.prepare('SELECT total_changes() n').get().n;
+    const values = store.readCurrentBatch(['doc:one', 'doc:two'], limits, () => {});
+    assert.equal(changed, true);
+    assert.deepEqual(
+      values.map((v) => v.revisionId),
+      ['rev:one', 'rev:b1'],
+    );
+    assert.equal(values[1].bundle.payload.blocks[0].payload.text, 'world');
+    assert.ok(
+      Object.isFrozen(values) && Object.isFrozen(values[1]) && Object.isFrozen(values[1].bundle),
+    );
+    assert.equal(db.prepare('SELECT total_changes() n').get().n, before);
+    assert.equal(db.isTransaction, false);
+    assert.equal(store.readCurrent('doc:two', limits).revisionId, 'rev:b2');
+  } finally {
+    if (writer?.isOpen) writer.close();
+    if (db.isOpen) db.close();
+  }
+});
+test('batch missing required document refuses whole result, preserves existing single read and caller order', (t) => {
+  const { db, store } = setup(t);
+  apply(store);
+  apply(store, secondDocument());
+  assert.throws(() => store.readCurrentBatch(['doc:one', 'doc:missing'], limits, () => {}), {
+    code: 'DOCUMENT_REQUIRED_DOCUMENT_MISSING',
+  });
+  assert.equal(db.isTransaction, false);
+  assert.deepEqual(
+    store.readCurrentBatch(['doc:two', 'doc:one'], limits, () => {}).map((v) => v.revisionId),
+    ['rev:b1', 'rev:one'],
+  );
+  assert.equal(store.readCurrent('doc:one', limits).revisionId, 'rev:one');
+  const empty = store.readCurrentBatch([], limits, () => {});
+  assert.deepEqual(empty, []);
+  assert.ok(Object.isFrozen(empty));
+});
+test('batch selection is owned/strict and rejects duplicates/accessors before SQL', (t) => {
+  const { db, store } = setup(t);
+  apply(store);
+  const original = db.prepare.bind(db);
+  let queries = 0,
+    getters = 0;
+  db.prepare = (...args) => {
+    queries++;
+    return original(...args);
+  };
+  assert.throws(() => store.readCurrentBatch(['doc:one', 'doc:one'], limits, () => {}), {
+    code: 'DOCUMENT_DUPLICATE_SELECTION',
+  });
+  const unsafe = [];
+  Object.defineProperty(unsafe, '0', {
+    enumerable: true,
+    get() {
+      getters++;
+      return 'doc:one';
+    },
+  });
+  unsafe.length = 1;
+  assert.throws(() => store.readCurrentBatch(unsafe, limits, () => {}));
+  assert.equal(getters, 0);
+  assert.equal(queries, 0);
+  assert.equal(db.isTransaction, false);
+});
+test('batch uses one cumulative row budget and mandatory synchronous control', (t) => {
+  const { db, store } = setup(t);
+  apply(store);
+  apply(store, secondDocument());
+  assert.equal(store.readCurrent('doc:one', { ...limits, maxRows: 16 }).revisionId, 'rev:one');
+  assert.equal(store.readCurrentBatch(['doc:one'], { ...limits, maxRows: 16 }, () => {}).length, 1);
+  assert.throws(() =>
+    store.readCurrentBatch(['doc:one', 'doc:two'], { ...limits, maxRows: 16 }, () => {}),
+  );
+  for (const control of [undefined, async () => {}, () => Promise.resolve()])
+    assert.throws(() => store.readCurrentBatch(['doc:one'], limits, control), {
+      code: 'DOCUMENT_SYNC_CHECK_REQUIRED',
+    });
+  assert.equal(db.isTransaction, false);
+});
+test('batch refuses corrupted later document instead of returning a successful prefix', (t) => {
+  const { db, store } = setup(t);
+  apply(store);
+  apply(store, secondDocument());
+  db.exec('DROP TRIGGER document_blocks_immutable_update');
+  db.exec("UPDATE document_blocks SET ordinal=99 WHERE revision_id='rev:b1'");
+  assert.throws(() => store.readCurrentBatch(['doc:one', 'doc:two'], limits, () => {}), {
+    code: 'DOCUMENT_STORAGE_CORRUPT',
+  });
+  assert.equal(db.isTransaction, false);
+  assert.equal(store.readCurrent('doc:one', limits).revisionId, 'rev:one');
+});
+
+test('batch owns selection before the first permission/control callback can mutate caller array', (t) => {
+  const { store } = setup(t);
+  apply(store);
+  const ids = ['doc:one'];
+  let first = true;
+  const values = store.readCurrentBatch(ids, limits, () => {
+    if (first) {
+      first = false;
+      ids[0] = 'doc:missing';
+    }
+  });
+  assert.equal(values.length, 1);
+  assert.equal(values[0].revisionId, 'rev:one');
 });
