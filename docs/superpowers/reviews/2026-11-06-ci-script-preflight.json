@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "kind": "FAIL_CLOSED_SCRIPT_CATALOG_CI_PREREQUISITE",
+  "utc": "2026-11-06T12:52:28.392360+00:00",
+  "scope": "Necessary approved-script membership prerequisite only, not full replay eligibility or Native qualification",
+  "approvedManifestMirror": {
+    "path": "fixtures/ipc/refresh-v3/approved-transport-r8-manifest.json.gz",
+    "gzipBytes": 179213,
+    "gzipSha256": "2eb28df048e3fbeed52e891b02acd475d8b7cba176ba37f098eb021e309bb7e2",
+    "decodedBytes": 1089811,
+    "decodedSha256": "9d355dcac5897bf3df7485437736b487f5039bcf9f40dbd7b27e2e421eab5a01",
+    "approvalEntry": "evidence/corpus/artifacts/manifest.json",
+    "originalApprovalAndReleaseUnchanged": true
+  },
+  "tests": {
+    "genuineRed": {
+      "passed": 3,
+      "failed": 5,
+      "reason": "Absent API/preflight and missing third strict-approval consumer"
+    },
+    "finalPassed": 8,
+    "finalFailed": 0,
+    "architectureProjects": 17,
+    "formatPassed": true,
+    "actualWorkflowCommand": {
+      "exit": 1,
+      "expectedMismatchRefusal": true,
+      "result": {
+        "scope": "SCRIPT_CATALOG_PREREQUISITE_ONLY",
+        "matches": false,
+        "expectedCount": 189,
+        "currentCount": 192,
+        "added": [
+          "repository/scripts/mixed-native-host-launch-inventory.cs",
+          "repository/scripts/test-mixed-native-host-launch-inventory-double.cs",
+          "repository/scripts/test-mixed-native-host-launch-inventory.ps1"
+        ],
+        "removed": [],
+        "changed": [
+          "repository/scripts/helpers/native-refresh-ci-pack.mjs"
+        ],
+        "nativeQualified": false
+      },
+      "nativeRuns": 0,
+      "calibrationRuns": 0,
+      "profileChanges": 0
+    },
+    "localHarnessInitialError": "Extractor tried resolving yaml from root instead of its declaring Runtime package and failed before the preflight ran. Fixed only harness module resolution; workflow itself does not parse YAML."
+  },
+  "independentReview": {
+    "reviewer": "/root/n1_tests_medium",
+    "conclusion": "NO_BLOCKING_FINDINGS",
+    "checks": "Original approved manifest bytes/SHA; strict approval/hash before directory read; full script enumeration; mismatch job failure; matched original commands; history restore/always artifacts; platform-neutral cases"
+  },
+  "workflowSemantics": {
+    "mismatch": "script_catalog step fails; Native job fails; expensive ineligible tests remain unpassed/blocked",
+    "match": "Original Native build/Java/REFRESH/reservation/collector/actual22 gates remain required; this precondition alone grants no qualification",
+    "independentChecks": "Original TS/Rust jobs and inexpensive Storage/offline/OS-helper checks retained; HOST26 runs before the prerequisite",
+    "evidence": "Preflight result/failure JSON saved under existing required memory-artifact upload"
+  },
+  "acceptance": {
+    "phase1": "4/21",
+    "a6": "NOT_QUALIFIED",
+    "e02": "PROPOSED/uninstalled"
+  },
+  "realQualificationStillRequired": true,
+  "oldEvidenceModified": false
+}

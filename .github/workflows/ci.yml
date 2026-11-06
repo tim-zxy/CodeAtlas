@@ -75,7 +75,42 @@ jobs:
         run: rustup toolchain install 1.98.1 --profile default
       - name: Build TypeScript workspace
         run: pnpm build
+      - name: Run HOST launch inventory memory checks
+        shell: pwsh
+        run: |
+          & "$env:SystemRoot/System32/WindowsPowerShell/v1.0/powershell.exe" -NoProfile -NonInteractive -File scripts/test-mixed-native-host-launch-inventory.ps1
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Verify approved script catalog prerequisite
+        id: script_catalog
+        shell: pwsh
+        run: |
+          @'
+          import assert from 'node:assert/strict';
+          import { mkdir, readFile, writeFile } from 'node:fs/promises';
+          import { gunzipSync } from 'node:zlib';
+          import path from 'node:path';
+          import { inspectRefreshCiScriptCatalog, validateRefreshCiApproval } from './scripts/helpers/native-refresh-ci-pack.mjs';
+          const output = path.resolve('.superpowers/native-memory/script-catalog');
+          await mkdir(output, { recursive: true });
+          try {
+            const approval = validateRefreshCiApproval(JSON.parse(await readFile('fixtures/ipc/refresh-v3/approved-transport-r8.json', 'utf8')));
+            const entry = approval.archive.entries.find(item => item.path === 'evidence/corpus/artifacts/manifest.json');
+            assert.ok(entry, 'Approved replay manifest missing');
+            const manifestBytes = gunzipSync(await readFile('fixtures/ipc/refresh-v3/approved-transport-r8-manifest.json.gz'), { maxOutputLength: entry.bytes });
+            const result = await inspectRefreshCiScriptCatalog({ approval, manifestBytes, repositoryPath: process.cwd() });
+            await writeFile(path.join(output, 'result.json'), JSON.stringify(result, null, 2) + '\n');
+            if (!result.matches) {
+              console.error('R8 script catalog mismatch: Native qualification remains blocked; see script-catalog/result.json.');
+              process.exitCode = 1;
+            }
+          } catch (error) {
+            await writeFile(path.join(output, 'failure.json'), JSON.stringify({ success: false, code: 'D5_SCRIPT_PREREQUISITE_FAILED' }) + '\n');
+            throw error;
+          }
+          '@ | node --input-type=module
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Build Native Analyzer
+        if: steps.script_catalog.outcome == 'success'
         run: cargo build --workspace
       - name: Run real-binary Java Fixtures
         shell: pwsh
@@ -87,7 +122,7 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           pnpm test:native-analysis
       - name: Run Native REFRESH composition and replay contracts
-        if: always()
+        if: always() && steps.script_catalog.outcome == 'success'
         shell: pwsh
         run: |
           $env:TEMP = Join-Path $env:GITHUB_WORKSPACE '.superpowers/native-memory/refresh-regression'
@@ -98,14 +133,14 @@ jobs:
         if: always()
         run: node --test --test-concurrency=1 packages/storage/test/native-refresh-patch-store.test.mjs packages/storage/test/native-apply-sql-observation.test.mjs packages/storage/test/native-sql-lifetime-observation.test.mjs
       - name: Enforce fresh read-seal, transport and refresh-verification reservations
-        if: always()
+        if: always() && steps.script_catalog.outcome == 'success'
         env:
           CODEATLAS_REQUIRE_NATIVE_MEMORY_PROFILE: '1'
           CODEATLAS_REQUIRE_NATIVE_REFRESH_VERIFICATION_PROFILE: '1'
           CODEATLAS_NATIVE_MEMORY_ARTIFACT_DIR: .superpowers/native-memory/corpus
         run: node --test --test-concurrency=1 packages/runtime/test/native-metadata-corpus.test.mjs packages/providers/test/native-full-v3-memory.test.mjs packages/runtime/test/native-refresh-verification-memory.test.mjs
       - name: Collect every required memory class
-        if: always()
+        if: always() && steps.script_catalog.outcome == 'success'
         run: pnpm test:native-memory
       - name: Run Windows offline C# control, ownership and Entry substitutes
         if: always()
@@ -115,13 +150,11 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           & "$env:SystemRoot/System32/WindowsPowerShell/v1.0/powershell.exe" -NoProfile -NonInteractive -File scripts/test-mixed-native-host-consumption-lifetime.ps1
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          & "$env:SystemRoot/System32/WindowsPowerShell/v1.0/powershell.exe" -NoProfile -NonInteractive -File scripts/test-mixed-native-host-launch-inventory.ps1
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Run existing Windows Node-helper OS peak collector conformance
         if: always()
         run: node --test --test-concurrency=1 scripts/test-syntax-peak-collector.mjs
       - name: Require approved exact-pack Native REFRESH actual22
-        if: always()
+        if: always() && steps.script_catalog.outcome == 'success'
         shell: pwsh
         env:
           GITHUB_TOKEN: ${{ github.token }}

@@ -1,3 +1,9 @@
+## Approved manifest -> script prerequisite -> honest blocked Native CI - 2026-11-06
+
+Exact manifest bytes authenticated by the original strict R8 archive entry -> independently enumerate every current scripts path/hash -> necessary subset comparison only. Mismatch fails the Native job before expensive invalid-context checks; match retains all original full Native qualification commands and identity/resource gates. No ignored extra files, old hash rewrite, numeric adoption, reduced phase threshold or qualification token. HOST26 and existing basic/light checks remain independently runnable, with always-preserved preflight evidence.
+
+[RED5/GREEN8, actual expected refusal, exact mirror and independent review](../superpowers/reviews/2026-11-06-ci-script-preflight.json). The generic private CI helper change itself is reported as current script drift, not hidden. Frozen R8 still applies only to its exact old closure; original acceptance remains4/21/A6 NOT_QUALIFIED.
+
 ## Launch/Entry correlation and E02 proposal byte portability - 2026-11-06
 
 Original fixed LaunchPlan -> pure void Validate against existing Tool/Bootstrap/Manifest/Ancestor Entry fields -> original Lifetime structural checks -> test-only Acquire/BeginConsumption/startup ledger/five settlements/reverse release. No actual Start binding, OS authenticity, inventory completeness or new authority. New26 memory assertions and Windows offline registration cover this primitive; original49/41/receiver evidence retains its original scope.

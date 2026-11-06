@@ -1,6 +1,12 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { readFileSync } from 'node:fs';
+import { mkdir, mkdtemp, realpath, rm, writeFile, unlink } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import path from 'node:path';
+import { createHash } from 'node:crypto';
+import { parse } from 'yaml';
+import * as pack from '../../../scripts/helpers/native-refresh-ci-pack.mjs';
 import { validateRefreshCiApproval } from '../../../scripts/helpers/native-refresh-ci-pack.mjs';
 
 const workflow = () =>
@@ -10,7 +16,7 @@ test('R8 CI selection uses one exact approval for download and original CLI admi
   const text = workflow();
   assert.equal(
     text.match(/fixtures\/ipc\/refresh-v3\/approved-transport-r8\.json/g)?.length ?? 0,
-    2,
+    3,
   );
   assert.equal(text.includes('approved-transport-r5.json'), false);
   assert.match(
@@ -97,4 +103,117 @@ test('R8 CI selection pins the verified asset and retains strict approval refusa
     corrupt(value);
     assert.throws(() => validateRefreshCiApproval(value));
   }
+});
+
+async function scriptCatalogFixture(t) {
+  const temp = await realpath(tmpdir());
+  const root = await mkdtemp(path.join(temp, 'codeatlas-script-preflight-'));
+  t.after(async () => {
+    assert.equal(path.dirname(root), temp);
+    await rm(root, { recursive: true, force: true });
+  });
+  await mkdir(path.join(root, 'scripts/nested'), { recursive: true });
+  await writeFile(path.join(root, 'scripts/alpha.mjs'), 'alpha\n');
+  await writeFile(path.join(root, 'scripts/nested/beta.cs'), 'beta\n');
+  const hash = (text) => createHash('sha256').update(text).digest('hex');
+  const manifestBytes = Buffer.from(
+    JSON.stringify({
+      generator: {
+        dependencies: [
+          { path: 'repository/package.json', sha256: hash('not a script') },
+          { path: 'repository/scripts/alpha.mjs', sha256: hash('alpha\n') },
+          { path: 'repository/scripts/nested/beta.cs', sha256: hash('beta\n') },
+        ],
+      },
+    }),
+  );
+  const approval = JSON.parse(
+    readFileSync(
+      new URL('../../../fixtures/ipc/refresh-v3/approved-transport-r8.json', import.meta.url),
+      'utf8',
+    ),
+  );
+  const manifestEntry = approval.archive.entries.find(
+    (entry) => entry.path === 'evidence/corpus/artifacts/manifest.json',
+  );
+  manifestEntry.bytes = manifestBytes.length;
+  manifestEntry.sha256 = hash(manifestBytes);
+  return { repositoryPath: root, manifestBytes, approval };
+}
+
+test('script catalog preflight accepts matching scripts without claiming Native qualification', async (t) => {
+  assert.equal(typeof pack.inspectRefreshCiScriptCatalog, 'function');
+  const result = await pack.inspectRefreshCiScriptCatalog(await scriptCatalogFixture(t));
+  assert.equal(result.scope, 'SCRIPT_CATALOG_PREREQUISITE_ONLY');
+  assert.equal(result.matches, true);
+  assert.equal(result.expectedCount, 2);
+  assert.equal(result.currentCount, 2);
+  assert.deepEqual([result.added, result.removed, result.changed], [[], [], []]);
+  assert.equal(result.nativeQualified, false);
+});
+
+test('script catalog preflight refuses added removed and altered script membership', async (t) => {
+  assert.equal(typeof pack.inspectRefreshCiScriptCatalog, 'function');
+  const input = await scriptCatalogFixture(t);
+  await unlink(path.join(input.repositoryPath, 'scripts/alpha.mjs'));
+  await writeFile(path.join(input.repositoryPath, 'scripts/nested/beta.cs'), 'changed\n');
+  await writeFile(path.join(input.repositoryPath, 'scripts/gamma.ps1'), 'gamma\n');
+  const result = await pack.inspectRefreshCiScriptCatalog(input);
+  assert.equal(result.matches, false);
+  assert.deepEqual(result.added, ['repository/scripts/gamma.ps1']);
+  assert.deepEqual(result.removed, ['repository/scripts/alpha.mjs']);
+  assert.deepEqual(result.changed, ['repository/scripts/nested/beta.cs']);
+  assert.equal(result.nativeQualified, false);
+});
+
+test('script catalog preflight authenticates the approved manifest before reading a checkout', async (t) => {
+  assert.equal(typeof pack.inspectRefreshCiScriptCatalog, 'function');
+  const input = await scriptCatalogFixture(t);
+  const bad = Buffer.from(input.manifestBytes);
+  bad[0] ^= 1;
+  await assert.rejects(
+    () =>
+      pack.inspectRefreshCiScriptCatalog({
+        ...input,
+        manifestBytes: bad,
+        repositoryPath: path.join(input.repositoryPath, 'absent'),
+      }),
+    /manifest hash/i,
+  );
+  input.approval.archive.entries = input.approval.archive.entries.filter(
+    (entry) => entry.path !== 'evidence/corpus/artifacts/manifest.json',
+  );
+  await assert.rejects(
+    () => pack.inspectRefreshCiScriptCatalog(input),
+    /approved replay manifest/i,
+  );
+});
+
+test('R8 CI script prerequisite failure cannot pass or run the expensive qualification gates', () => {
+  const doc = parse(workflow());
+  const job = doc.jobs['native-analysis'];
+  const catalog = job.steps.find((step) => step.id === 'script_catalog');
+  assert.ok(catalog, 'An explicit script prerequisite is required');
+  assert.notEqual(job['continue-on-error'], true);
+  assert.notEqual(catalog['continue-on-error'], true);
+  assert.match(catalog.run, /process\.exitCode = 1/);
+  assert.ok(
+    job.steps.findIndex((step) => step.name === 'Run HOST launch inventory memory checks') <
+      job.steps.indexOf(catalog),
+  );
+  for (const name of [
+    'Build Native Analyzer',
+    'Run Native REFRESH composition and replay contracts',
+    'Enforce fresh read-seal, transport and refresh-verification reservations',
+    'Collect every required memory class',
+    'Require approved exact-pack Native REFRESH actual22',
+  ]) {
+    const step = job.steps.find((step) => step.name === name);
+    assert.ok(step, name + ' remains required');
+    assert.match(step.if, /steps\.script_catalog\.outcome == 'success'/);
+  }
+  assert.match(
+    job.steps.find((step) => step.name === 'Preserve memory observations including failures').if,
+    /always\(\)/,
+  );
 });

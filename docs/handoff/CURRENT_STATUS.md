@@ -1,3 +1,13 @@
+## Fail-closed script-catalog preflight for source synchronization - 2026-11-06
+
+A strict approved-manifest mirror now allows the existing Native CI job to discover an ineligible script closure before Native build or the long REFRESH/memory/actual22 steps. The gzip decodes to the original approved R8 manifest1089811bytes/SHA9d355dcac5897bf3df7485437736b487f5039bcf9f40dbd7b27e2e421eab5a01; old approval/profile/ZIP/release/catalog bytes remain unchanged. No new exclusion or retagging is used.
+
+Mismatch is an explicit failing step and failing Native job, never PASS or qualification. The original complete heavy commands remain when this necessary prerequisite matches; full downstream identity/resource/actual22 gates still decide qualification. HOST26 runs independently before preflight. Original TS/Rust, light Storage/offline/OS-helper and always evidence preservation remain. This is an operational fail-fast check, not a changed phase quality threshold or an acceptance waiver.
+
+Genuine5 RED controls became8/8 PASS; matching and added/removed/changed scripts, bad approved manifest, mandatory failure semantics and original selectors/history are covered. The actual workflow command on this D tree exited1 with189 frozen scripts versus192 current,3 HOST additions and1 changed helper. No Native/Source/collector/calibration/profile operation ran. Independent concentrated review, formatting and17-project architecture passed. [Exact scope and evidence](../superpowers/reviews/2026-11-06-ci-script-preflight.json).
+
+E02 v6 receipts are complete in local d7f4bab after the c0d853f HOST/proposal checkpoint; exact Git-blob documentation provenance fixes cross-checkout EOL drift without touching Source/runtime hashes. This source-sync continuation needs its own hosted result: old CI127 belongs only to d64fb85. Phase1 remains4/21, A6 NOT_QUALIFIED and E02 PROPOSED/uninstalled. Source can be synchronized with honest Native prerequisite failure; fresh matching qualification remains a later frozen-packet requirement.
+
 ## HOST launch/inventory correlation and portable E02 proposals - 2026-11-06
 
 CI #127/run42196660343 on d64fb85 is terminal SUCCESS for TypeScript, Rust and Windows Native. Its exact R8 actual22 has22 unique ACTUAL_ADMITTED observations, zero failures, expected outcomes matched, transactions/temp closed and22 worker exit0 records. This belongs to that prior head, not the new offline files below. R8 archive/approval identity and original evidence remain unchanged.

@@ -222,6 +222,71 @@ export async function verifyRefreshCiPack({ approval: input, archivePath, reposi
   return approval;
 }
 
+// Necessary script-membership prerequisite only. A match is never Native qualification.
+export async function inspectRefreshCiScriptCatalog({
+  approval: input,
+  manifestBytes,
+  repositoryPath,
+}) {
+  const approval = validateRefreshCiApproval(input);
+  const expected = approval.archive.entries.find(
+    (entry) => entry.path === 'evidence/corpus/artifacts/manifest.json',
+  );
+  assert.ok(expected, 'Approved replay manifest missing');
+  assert.ok(Buffer.isBuffer(manifestBytes), 'Script preflight requires manifest bytes');
+  assert.equal(manifestBytes.length, expected.bytes, 'Script preflight manifest size mismatch');
+  assert.equal(
+    createHash('sha256').update(manifestBytes).digest('hex'),
+    expected.sha256,
+    'Script preflight manifest hash mismatch',
+  );
+  const manifest = JSON.parse(manifestBytes.toString('utf8'));
+  assert.ok(Array.isArray(manifest.generator.dependencies));
+  const entries = manifest.generator.dependencies.filter((entry) =>
+    entry.path.startsWith('repository/scripts/'),
+  );
+  assert.ok(entries.length > 0, 'Approved manifest has no script catalog');
+  const declared = new Map(
+    entries.map((entry) => {
+      relativePath(entry.path);
+      digest(entry.sha256);
+      return [entry.path, entry.sha256];
+    }),
+  );
+  assert.equal(declared.size, entries.length, 'Duplicate approved script path');
+  assert.equal(await realpath(repositoryPath), repositoryPath, 'Script preflight repository alias');
+  const current = new Map();
+  async function visit(relative) {
+    relativePath(relative);
+    const file = path.join(repositoryPath, relative);
+    const info = await lstat(file);
+    assert.ok(!info.isSymbolicLink(), 'Linked script catalog input');
+    assert.equal(await realpath(file), file, 'Script catalog input alias');
+    if (info.isDirectory()) {
+      for (const name of (await readdir(file)).sort()) await visit(relative + '/' + name);
+    } else {
+      assert.ok(info.isFile(), 'Nonregular script catalog input');
+      current.set('repository/' + relative, await hashRefreshCiFile(file));
+    }
+  }
+  await visit('scripts');
+  const added = [...current.keys()].filter((name) => !declared.has(name)).sort();
+  const removed = [...declared.keys()].filter((name) => !current.has(name)).sort();
+  const changed = [...declared.keys()]
+    .filter((name) => current.has(name) && current.get(name) !== declared.get(name))
+    .sort();
+  return freeze({
+    scope: 'SCRIPT_CATALOG_PREREQUISITE_ONLY',
+    matches: added.length + removed.length + changed.length === 0,
+    expectedCount: declared.size,
+    currentCount: current.size,
+    added,
+    removed,
+    changed,
+    nativeQualified: false,
+  });
+}
+
 // The injectable HTTP transport is a development-test seam, not an archive URL override.
 export async function downloadRefreshCiArchive(input, output, repository, fetchImpl = fetch) {
   const approval = validateRefreshCiApproval(input);
