@@ -1,0 +1,109 @@
+{
+  "kind": "GITHUB_D_WORKTREE_AND_CI_REPAIR_INTEGRATION",
+  "utc": "2026-11-06T03:10:10.739724+00:00",
+  "status": "SCOPED_REPAIRS_LOCALLY_VERIFIED_FIRST_NATIVE_RUN_STILL_IN_PROGRESS",
+  "delivered": {
+    "commit": "f8b1a3eed52aa617ed85524c02fade8c26ef57ae",
+    "remoteBranch": "codex/phase1-20261106-continuation",
+    "newWorktree": "D:\\workspace\\CodeAtlas-phase1-20261106",
+    "upstream": "origin/codex/phase1-20261106-continuation",
+    "initialStatus": "CLEAN",
+    "oldCAndDWorktrees": "PRESERVED",
+    "soleFutureDevelopmentWriter": "THIS_D_WORKTREE",
+    "prCreatedOrUpdated": false
+  },
+  "firstCI": {
+    "id": 42151555522,
+    "url": "https://github.com/tim-zxy/CodeAtlas/actions/runs/42151555522",
+    "event": "push",
+    "rust": "SUCCESS",
+    "typescript": {
+      "status": "FAILURE",
+      "tests": 5028,
+      "pass": 5001,
+      "fail": 15,
+      "remaining": "12 skipped tests, not accepted results"
+    },
+    "native": "IN_PROGRESS_WITH_REAL_JAVA_FIXTURE_STEP_FAILED",
+    "reruns": 0,
+    "note": "Do not infer Native failure cause before its complete logs. Original always-steps/evidence preservation continue."
+  },
+  "repairs": {
+    "historicalBytePolicy": {
+      "historicalFixtureFilesAudited": 1506,
+      "sqlExactCRLFPaths": 4,
+      "historicalExactLFPaths": 18,
+      "sourceLiteralFixtureTree": "LF",
+      "additionalDocumentationExactLFPaths": 3,
+      "historicalExpectedHashesChanged": false,
+      "sqlOrDocContentChanged": false,
+      "g14Focused": {
+        "pass": 2,
+        "fail": 0,
+        "durationMs": 1079.0632
+      }
+    },
+    "sourceTimer": {
+      "realTargetHookEntryRequired": true,
+      "deadlineMsUnchanged": 30,
+      "realWatchdogMsUnchanged": 200,
+      "productionChanged": false,
+      "fullFile": {
+        "pass": 39,
+        "fail": 0,
+        "todo": 0,
+        "durationMs": 1430.0723
+      }
+    },
+    "windowsRouting": {
+      "offlineNodeFiles": 10,
+      "extraExistingLifetimeAssertions": 49,
+      "existingOSPeakConformance": "Explicit Windows CI-only step, never run locally",
+      "jobsRetained": 3,
+      "originalActualGatesRetained": true,
+      "actualLocalWindows": {
+        "pass": 17,
+        "fail": 0
+      },
+      "controlledNonWindows": {
+        "purePass": 4,
+        "windowsSkip": 13,
+        "fail": 0,
+        "actualUbuntu": false
+      }
+    },
+    "historicalChecker": {
+      "snapshotBytes": 5439,
+      "snapshotSha256": "1912fc636196a7492d760268ef3c3797eaf9001ad07330acf17664db0988e739",
+      "readOnlyNeverExecuted": true,
+      "immutable98InventoryPinsChanged": false,
+      "historicalAuditPass": 6,
+      "currentBoundedReadOraclePass": 25,
+      "sourceEqualityPass": 2,
+      "oldArchiveIndexChanged": false
+    }
+  },
+  "gates": {
+    "lockedDependencyInstall": "pnpm11.19.0 frozen;8 reused0downloads;no version/lock changes",
+    "typescriptWorkspaceBuild": "PASS",
+    "architecture17": "PASS",
+    "formatAllAfterExactCheckoutPolicies": "PASS"
+  },
+  "reviews": {
+    "2026-11-06-ci-fix-independent-review.json": "6ed149e02752206a1b8a9b1e826fb5e97a88b07505356b6d21d180ff8bc3f931",
+    "2026-11-06-ci-source-timer.json": "273fe8d801f4f3995da9d0e637fbcc06b4c0c0227830d64677910751112b2e77",
+    "2026-11-06-ci-historical-checker.json": "2481d5ca83f39e5a88ca9ca7ed78853028491fce006db68401025c69c145cbbd"
+  },
+  "acceptance": {
+    "accepted": 4,
+    "total": 21,
+    "a6": "NOT_QUALIFIED",
+    "e02": "PROPOSED_UNINSTALLED"
+  },
+  "remaining": [
+    "Finish original Native job and obtain actual failure logs.",
+    "Do not duplicate hosted Native work before original evidence is available.",
+    "Perform final explicit commit review and normal follow-up push only after this repair batch is ready.",
+    "Actual Ubuntu/full hosted gates remain unverified by local substitute tests."
+  ]
+}

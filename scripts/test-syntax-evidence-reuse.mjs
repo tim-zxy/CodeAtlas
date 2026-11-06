@@ -31,12 +31,14 @@ function registerTests() {
     const d = loadInputs();
     assert.equal(verifyArtifacts(d), true);
     assert.equal(d.inventory.cases.length, 18);
-    for (const kind of ['byte', 'hash', 'foreign', 'missing']) {
+    for (const kind of ['byte', 'snapshot', 'hash', 'foreign', 'missing']) {
       const x = copy(d);
       if (kind === 'byte') {
         const p = capture + '/mixed/events.jsonl';
         x.files.set(p, Buffer.from('changed'));
       }
+      if (kind === 'snapshot')
+        x.files.set('scripts/check-code-syntax-library-output.mjs', Buffer.from('changed'));
       if (kind === 'hash') x.inventory.cases[0].captureHashes['events.jsonl'] = 'a'.repeat(64);
       if (kind === 'foreign') x.inventory.cases[0].caseId = 'foreign';
       if (kind === 'missing') x.inventory.cases.pop();
@@ -177,7 +179,12 @@ function loadInputs() {
     );
   }
   const files = new Map();
-  for (const p of Object.keys(inventory.hashPins)) files.set(p, regular(p, hard.maxStdoutBytes));
+  const historicalSources = {
+    'scripts/check-code-syntax-library-output.mjs':
+      'fixtures/phase1/syntax-contract/ci-portability/historical-library-output-before.mjs.txt',
+  };
+  for (const p of Object.keys(inventory.hashPins))
+    files.set(p, regular(historicalSources[p] ?? p, hard.maxStdoutBytes));
   const originalCases = JSON.parse(
     files.get('fixtures/phase1/code-syntax-producer-oracle/cases.json'),
   );

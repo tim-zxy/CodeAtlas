@@ -1,3 +1,51 @@
+## GitHub checkpoint delivered and D worktree active; CI repairs reviewed - 2026-11-06
+
+Checkpoint f8b1a3eed52aa617ed85524c02fade8c26ef57ae and its two existing local
+predecessors were normally pushed to origin/codex/phase1-20261106-continuation.
+New active worktree D:/workspace/CodeAtlas-phase1-20261106 tracks that branch and
+was clean at creation; the existing C and original D worktrees remain preserved.
+All subsequent development writes use only this new D worktree. No PR was created,
+updated or merged. The104 earlier status entries were byte-identical to HEAD and
+index; no unique changes were discarded. D readback matches all104 and offline
+checkout smoke45/45 passed. Dependencies were installed from the unchanged lock
+with pnpm11.19.0 and all TypeScript workspace builds passed; old generated artifacts
+and ignored evidence were not copied. Historical C physical/DLL pins stay historical.
+
+User explicitly approved the normal push and its actual Native/memory CI effects.
+[First hosted run42151555522](https://github.com/tim-zxy/CodeAtlas/actions/runs/42151555522):
+Rust succeeded; TypeScript failed15/5028 tests (5001pass,12skipped). Native's real
+Java Fixture step failed and its subsequent always-steps are still in progress;
+complete Native failure logs are not yet available. No rerun, cancellation or gate
+bypass. This is not a successful hosted verification or A6 qualification.
+
+Three bounded repair streams completed under one integrator: Windows C# launcher
+routing/pure JS portability; deterministic Source deadline Fixture; historical byte
+and source-snapshot consistency. Windows offline17/17 plus original lifetime49 pass;
+controlled non-Windows routing4purePASS/13WindowsSKIP is not actual Ubuntu proof.
+All9 changed launchers are explicitly exercised in the existing Windows job; existing
+Node-helper OS peak conformance has a separate accurately named CI-only step. Three
+jobs and all original real gates remain. No actual collector/HOST/Native ran locally.
+
+Source's test retains its30ms deadline and independent real200ms watchdog, proves
+actual target-hook entry before mock-clock expiry, and requires unknown cleanup;
+full file39/39 passes. No production timer or rejection rule changed. Auditing1506
+frozen Fixture files identified exact checkout byte rules: four historical SQLs retain
+CRLF,18 historical README/Java paths retain LF, and the Source literal Fixture tree
+retains LF. Three existing documents also retain original LF to pass fresh Windows
+format checks; SQL, document content and expected hashes are unchanged. G14 passes2/2.
+
+The historical checker audit now reads one exact5439-byte pre-repair text snapshot
+without executing it; all98 original pins and corruption refusal remain. Current
+bounded-read implementation stays repaired. Historical audit6/6, current checker25/25
+and affected source-equality2/2 pass. Original archive/index and old expected pins are
+unchanged. Full format check and17-project architecture check pass after integration.
+
+[Concentrated repair evidence/reviews](../superpowers/reviews/2026-11-06-ci-repair-integration.json).
+Raw local failures/final logs remain in the new D ignored sdd receipt paths; original
+GitHub failures remain retained. Repairs are not yet pushed; wait for original Native
+exit/logs, combine any authorized necessary correction, then use one reviewed normal
+follow-up commit/push. Phase1 remains4/21, A6 NOT_QUALIFIED, E02 PROPOSED/uninstalled.
+
 ## Phase 1 parallel audit and offline stage checkpoint - 2026-11-06
 
 Three bounded streams overlapped: HOST/A6 receiver implementation and root execution

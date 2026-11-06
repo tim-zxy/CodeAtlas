@@ -1,3 +1,25 @@
+## CI environment routing, exact historical bytes and D handoff trace - 2026-11-06
+
+Explicit GitHub/automatic CI approval -> reviewed f8b1a3e checkpoint normal push ->
+new tracked D:/workspace/CodeAtlas-phase1-20261106 -> same commit/clean creation and
+104 exact byte checks/45 offline smoke. Existing worktrees preserved, one active writer.
+First hosted run42151555522 is retained with Rust success, TS15 failures and Native
+in-progress after a real Fixture failure; no qualification/evaluation acceptance implied.
+
+Existing Windows-only offline contracts -> explicit Windows test markers and matching
+existing Windows CI step, with pure JS checks retained cross-platform; existing OS
+peak conformance accurately runs only in CI. Original three jobs/real gates preserved.
+Existing Source cleanup deadline contract -> deterministic test clock after genuine
+hook entry plus independent real200ms guard -> UNKNOWN/deadline assertions, full39pass.
+Exact frozen Fixture hashes -> scoped EOL checkout attributes, no SQL/data/hash change
+-> G14 exact2pass and fresh D format pass. Historical source identity -> exact original
+5439-byte text snapshot, never invoked -> same98pins and corruption refusal; current
+bounded-read checker remains fixed (historical6/current25/source-equality2pass).
+
+[Unified evidence and independent review](../superpowers/reviews/2026-11-06-ci-repair-integration.json).
+These are environment/Fixture corrections under existing contracts, not new production
+trust authority, relaxed acceptance, changed resource values or formal A6 completion.
+
 ## Phase 1 stage receiver, portability and acceptance trace - 2026-11-06
 
 Approved HOST B offline contract -> pure protected-entry projection -> original C#

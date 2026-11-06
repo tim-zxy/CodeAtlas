@@ -1,0 +1,96 @@
+{
+  "kind": "HISTORICAL_CHECKER_SOURCE_SNAPSHOT_CI_REPAIR",
+  "utc": "2026-11-06T03:05:53.914446+00:00",
+  "worktree": "D:\\workspace\\CodeAtlas-phase1-20261106",
+  "status": "FOCUSED_IMPLEMENTATION_AND_VERIFICATION_COMPLETE_PENDING_ROOT_INTEGRATION",
+  "scope": "Only historical test source resolution, exact read-only fixture snapshot and two additive precise source migrations. Root owns shared docs, .gitattributes, Git and CI.",
+  "rootCause": {
+    "ciRun": "42151555522",
+    "failure": "Four tests failed at verifyArtifacts PIN_HASH because historical source provenance was resolved to the evolved live checker.",
+    "historicalCheckerSha256": "1912fc636196a7492d760268ef3c3797eaf9001ad07330acf17664db0988e739",
+    "liveCheckerSha256": "185017370416f6b2b69b4e65a3e9777f6f9cc8bd7f32d9b2a4b9f655a83be352",
+    "notLineEndings": true,
+    "diagnosis": "All other97inventory pins matched. Live checker is the Nov4 documented bounded-read repair. Existing immutable inventory hash must not change."
+  },
+  "implementation": {
+    "snapshot": {
+      "path": "fixtures/phase1/syntax-contract/ci-portability/historical-library-output-before.mjs.txt",
+      "bytes": 5439,
+      "origin": "C:/Users/Freya/.codex/worktrees/e4fb/CodeAtlas/.superpowers/sdd/2026-11-04-library-capture-read-bound/check-code-syntax-library-output.mjs.before",
+      "mode": "Read via original regular() only; never imported/evaluated/executed."
+    },
+    "mapping": "One fixed original scripts/check-code-syntax-library-output.mjs key resolves to snapshot physical fixture path; d.files keeps original logical key.",
+    "pinChecks": "All98original inventory checks unchanged; no current-successor hash alternative accepted.",
+    "negative": "In-memory loaded historical snapshot corruption rejects under original PIN_HASH check.",
+    "sourceMigrations": "Two exact additive transformations preserve existing historical source-equality checks; every prior migration entry unchanged.",
+    "fixture": "Existing p1-syntax-contract-v1 fixture.json inputs.ciHistoricalInputs covers ci-portability/; no new FixtureID/manifest or baseline.",
+    "attributes": "Root reports exact snapshot -text attribute added/frozen; this worker did not modify .gitattributes."
+  },
+  "verification": {
+    "red": {
+      "command": "node --test --test-reporter=tap scripts/test-syntax-evidence-reuse.mjs",
+      "exitCode": 1,
+      "passCount": 2,
+      "failCount": 4,
+      "durationMs": 4128.5985
+    },
+    "historicalAudit": {
+      "command": "node --test --test-reporter=tap scripts/test-syntax-evidence-reuse.mjs",
+      "exitCode": 0,
+      "passCount": 6,
+      "failCount": 0,
+      "durationMs": 4868.6066
+    },
+    "currentChecker": {
+      "command": "node --test --test-reporter=tap scripts/test-code-syntax-producer-oracle.mjs",
+      "exitCode": 0,
+      "passCount": 25,
+      "failCount": 0,
+      "durationMs": 864.6727,
+      "mode": "Pure offline consumers and synthetic owned capture files; existing cleanup; no Rust/Native/Git/HOST producer."
+    },
+    "sourceEquality": {
+      "command": "node --test --test-reporter=tap --test-name-pattern='^G14' scripts/test-declared-delta-raw-admission.mjs scripts/test-declared-raw-history-candidate.mjs",
+      "exitCode": 0,
+      "passCount": 2,
+      "failCount": 0,
+      "durationMs": 1549.9436
+    },
+    "format": "Existing local Prettier applied only test and source-migrations; both unchanged by formatter."
+  },
+  "protectedPins": {
+    "docs/superpowers/specs/2026-10-25-phase1-syntax-evidence-reuse-inventory.json": {
+      "sha256": "4921052ee2f50f61a7a7796f2e57fd8e870261a1b64f067c8a28fad4d4202b52",
+      "unchanged": true
+    },
+    "fixtures/phase1/syntax-contract/ci-portability/index.json": {
+      "sha256": "830066e540d8da260775d6a5541806c9c234c2154a86a508ffdbcb6ad2427057",
+      "unchanged": true
+    },
+    "fixtures/phase1/syntax-contract/ci-portability/historical-bytes.json.gz": {
+      "sha256": "f8291839a79d41507f78234720796bbaf4eb92793c1b307b7ff6bf98a5112568",
+      "unchanged": true
+    }
+  },
+  "sourcePins": {
+    "scripts/test-syntax-evidence-reuse.mjs": "6dbd153c7bf60af9b8ee9ebba3d17a5fddd5d56443a3397b648462d675af33fe",
+    "fixtures/phase1/syntax-contract/ci-portability/source-migrations.json": "f0354aa37bf734fc3942ff7eb4cb9626933058c5ebabd1d52535612ae572c203",
+    "fixtures/phase1/syntax-contract/ci-portability/historical-library-output-before.mjs.txt": "1912fc636196a7492d760268ef3c3797eaf9001ad07330acf17664db0988e739"
+  },
+  "rawLogPins": {
+    "C:\\Users\\Freya\\AppData\\Local\\Temp\\codeatlas-historical-checker-snapshot-red-20261106.log": "a681f3f0f3077c4fc922ea0b855e615f1c8ee91e8ecf39006e63a71e46bdac02",
+    "C:\\Users\\Freya\\AppData\\Local\\Temp\\codeatlas-historical-checker-snapshot-green-20261106.log": "6c0f42e8fe8cebb90f6bc50e0fa5e77b087b6ea21670529eafe0fc6fbcd6e93f",
+    "C:\\Users\\Freya\\AppData\\Local\\Temp\\codeatlas-historical-checker-current-oracle-20261106.log": "3ee8d229db3bc9e32c8a100b6d1d285e6ea750579d130c3ea01a015325b7f58d",
+    "C:\\Users\\Freya\\AppData\\Local\\Temp\\codeatlas-historical-checker-source-migrations-20261106.log": "2c287866afad30556b71b92000f19fa96db94367ceda62191ef3d94a4fa153db"
+  },
+  "actions": {
+    "productSourceChanges": 0,
+    "inventoryBaselineChanges": 0,
+    "indexArchiveChanges": 0,
+    "gitWrites": 0,
+    "ciCalls": 0,
+    "nativeGitHostProducerRuns": 0,
+    "oldEvidenceMutations": 0
+  },
+  "remaining": "Root shared CURRENT_STATUS/trace/durable receipt integration, concentrated independent review, Git sync and CI verification. No whole CI pass claimed."
+}

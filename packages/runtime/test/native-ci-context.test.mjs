@@ -34,6 +34,38 @@ test('Windows checkout preserves TypeScript template bytes and published SQL lin
     ['packages/storage/src/statement.ts', Buffer.from('export const sql = `SELECT\n1;`;\n')],
     ['apps/cli/src/main.ts', Buffer.from('export const message = `one\ntwo`;\n')],
     ['packages/storage/migrations/repository/001_repo_core.sql', Buffer.from('SELECT 1;\r\n')],
+    [
+      'fixtures/storage/migrations/migration-failure/001-stable.sql',
+      Buffer.from('CREATE TABLE stable_probe (id INTEGER PRIMARY KEY);\r\n'),
+    ],
+    [
+      'fixtures/storage/migrations/migration-failure/002-fail.sql',
+      Buffer.from(
+        'CREATE TABLE rolled_back_probe (id INTEGER PRIMARY KEY);\r\nINSERT INTO missing_table (id) VALUES (1);\r\n',
+      ),
+    ],
+    [
+      'fixtures/storage/migrations/migration-upgrade/001-create-probe.sql',
+      Buffer.from(
+        'CREATE TABLE migration_probe (id INTEGER PRIMARY KEY, value TEXT NOT NULL);\r\n',
+      ),
+    ],
+    [
+      'fixtures/storage/migrations/migration-upgrade/002-add-revision.sql',
+      Buffer.from(
+        "ALTER TABLE migration_probe ADD COLUMN revision INTEGER NOT NULL DEFAULT 1;\r\nINSERT INTO migration_probe (id, value) VALUES (1, 'ready');\r\n",
+      ),
+    ],
+    ['fixtures/phase1/code-context-capture/README.md', Buffer.from('Historical source bytes\n')],
+    ['fixtures/queries/code-query/source/QueryGraph.java', Buffer.from('class QueryGraph {}\n')],
+    [
+      'fixtures/phase1/mixed-runtime-readiness/source-integration/source/notes.txt',
+      Buffer.from('notes\n'),
+    ],
+    [
+      'fixtures/phase1/mixed-runtime-readiness/source-integration/source/stub.pyi',
+      Buffer.from('value: int\n'),
+    ],
   ];
   for (const [relative, bytes] of files) {
     const file = path.join(source, relative);
@@ -59,4 +91,8 @@ test('Windows checkout preserves TypeScript template bytes and published SQL lin
   git('clone', '--config', 'core.autocrlf=true', source, checkout);
   for (const [relative, bytes] of files)
     assert.deepEqual(await readFile(path.join(checkout, relative)), bytes, relative);
+  const noAutoCrlfCheckout = path.join(root, 'checkout-no-autocrlf');
+  git('clone', '--config', 'core.autocrlf=false', source, noAutoCrlfCheckout);
+  for (const [relative, bytes] of files)
+    assert.deepEqual(await readFile(path.join(noAutoCrlfCheckout, relative)), bytes, relative);
 });

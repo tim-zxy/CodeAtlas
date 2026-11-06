@@ -194,85 +194,96 @@ const parent = structuredClone(complete);
 parent.find((e) => e.id === 'module-0').parentId = 'absent-parent';
 const unknown = structuredClone(complete);
 unknown.find((e) => e.id === 'module-0').kind = 'UNKNOWN_KIND';
-const child = spawnSync(
-  'C:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe',
-  [
-    '-NoProfile',
-    '-NonInteractive',
-    '-File',
-    fileURLToPath(
-      new URL('./test-mixed-native-host-protected-inventory-receiver.ps1', import.meta.url),
-    ),
-  ],
-  {
-    input: JSON.stringify([complete, missing, parent, unknown]),
-    windowsHide: true,
-    encoding: 'utf8',
-    timeout: 30000,
-    maxBuffer: 1000000,
-  },
-);
+const child =
+  process.platform === 'win32'
+    ? spawnSync(
+        'C:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe',
+        [
+          '-NoProfile',
+          '-NonInteractive',
+          '-File',
+          fileURLToPath(
+            new URL('./test-mixed-native-host-protected-inventory-receiver.ps1', import.meta.url),
+          ),
+        ],
+        {
+          input: JSON.stringify([complete, missing, parent, unknown]),
+          windowsHide: true,
+          encoding: 'utf8',
+          timeout: 30000,
+          maxBuffer: 1000000,
+        },
+      )
+    : null;
 function received(index) {
   assert.equal(child.status, 0, child.stderr || child.stdout);
   const results = JSON.parse(child.stdout.trim());
   assert.equal(results.length, 4);
   return results[index];
 }
-test('projected complete Entry fields with a shared module/prehook construct and acquire in original C#', (t) => {
-  const r = received(0);
-  assert.equal(r.accepted, true, JSON.stringify(r));
-  assert.equal(r.entries.length, 17);
-  assert.equal(r.entries.find((e) => e.path === 'C:/').parentId, null);
-  assert.equal(r.entries.find((e) => e.path === 'C:/').sha256, null);
-  assert.equal(r.opened, 17);
-  assert.deepEqual(r.closed, [17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]);
-  assert.equal(r.beforeRelease, 'OFFLINE_OWNERSHIP_READY');
-  assert.equal(r.afterRelease, 'RELEASED');
-  assert.equal(r.entries.find((e) => e.id === 'module-1').kind, 'PrehookOwner');
-  assert.equal(r.entries.filter((e) => e.id === 'module-1').length, 1);
-  assert.equal(
-    r.entries.find((e) => e.id === 'module-0').parentId,
-    r.entries.find((e) => e.path === 'C:/receiver-bundle').id,
-  );
-  assert.equal(r.executionAuthorized, false);
-  assert.equal(r.productionAdmission, false);
-  assert.equal(r.measurementEligible, false);
-  assert.equal(r.liveAdmission, 'NOT_READY');
-  assert.equal(r.actualWindowsCalls, 0);
-  assert.equal(r.actualHostStarts, 0);
-  t.diagnostic(
-    JSON.stringify({
-      compilerTesthostProcesses: 1,
-      addTypeCompilations: 1,
-      cases: JSON.parse(child.stdout).map((v) => ({
-        accepted: v.accepted,
-        opened: v.opened,
-        closed: v.closed,
-        stage: v.stage,
-        errorType: v.errorType,
-        liveAdmission: v.liveAdmission,
-      })),
-    }),
-  );
-});
+test(
+  'projected complete Entry fields with a shared module/prehook construct and acquire in original C#',
+  { skip: process.platform !== 'win32' },
+  (t) => {
+    const r = received(0);
+    assert.equal(r.accepted, true, JSON.stringify(r));
+    assert.equal(r.entries.length, 17);
+    assert.equal(r.entries.find((e) => e.path === 'C:/').parentId, null);
+    assert.equal(r.entries.find((e) => e.path === 'C:/').sha256, null);
+    assert.equal(r.opened, 17);
+    assert.deepEqual(r.closed, [17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]);
+    assert.equal(r.beforeRelease, 'OFFLINE_OWNERSHIP_READY');
+    assert.equal(r.afterRelease, 'RELEASED');
+    assert.equal(r.entries.find((e) => e.id === 'module-1').kind, 'PrehookOwner');
+    assert.equal(r.entries.filter((e) => e.id === 'module-1').length, 1);
+    assert.equal(
+      r.entries.find((e) => e.id === 'module-0').parentId,
+      r.entries.find((e) => e.path === 'C:/receiver-bundle').id,
+    );
+    assert.equal(r.executionAuthorized, false);
+    assert.equal(r.productionAdmission, false);
+    assert.equal(r.measurementEligible, false);
+    assert.equal(r.liveAdmission, 'NOT_READY');
+    assert.equal(r.actualWindowsCalls, 0);
+    assert.equal(r.actualHostStarts, 0);
+    t.diagnostic(
+      JSON.stringify({
+        compilerTesthostProcesses: 1,
+        addTypeCompilations: 1,
+        cases: JSON.parse(child.stdout).map((v) => ({
+          accepted: v.accepted,
+          opened: v.opened,
+          closed: v.closed,
+          stage: v.stage,
+          errorType: v.errorType,
+          liveAdmission: v.liveAdmission,
+        })),
+      }),
+    );
+  },
+);
 for (const [index, label] of [
   [1, 'missing Manifest'],
   [2, 'wrong parent'],
   [3, 'unknown enum kind'],
 ]) {
-  test('original C# receiver refuses ' + label + ' before acquiring any handle', () => {
-    const r = received(index);
-    assert.equal(r.accepted, false);
-    assert.equal(
-      r.stage,
-      index === 3 ? 'ENTRY_CONSTRUCTION' : 'LIFETIME_CONSTRUCTION',
-      JSON.stringify(r),
-    );
-    if (index === 3) assert.match(r.error, /UNKNOWN_KIND/);
-    assert.equal(r.opened, 0);
-    assert.deepEqual(r.closed, []);
-    assert.equal(r.liveAdmission, 'NOT_READY');
-    assert.equal(r.actualWindowsCalls, 0);
-    assert.equal(r.actualHostStarts, 0);
-  });
+  test(
+    'original C# receiver refuses ' + label + ' before acquiring any handle',
+    { skip: process.platform !== 'win32' },
+    () => {
+      const r = received(index);
+      assert.equal(r.accepted, false);
+      assert.equal(
+        r.stage,
+        index === 3 ? 'ENTRY_CONSTRUCTION' : 'LIFETIME_CONSTRUCTION',
+        JSON.stringify(r),
+      );
+      if (index === 3) assert.match(r.error, /UNKNOWN_KIND/);
+      assert.equal(r.opened, 0);
+      assert.deepEqual(r.closed, []);
+      assert.equal(r.liveAdmission, 'NOT_READY');
+      assert.equal(r.actualWindowsCalls, 0);
+      assert.equal(r.actualHostStarts, 0);
+    },
+  );
 }

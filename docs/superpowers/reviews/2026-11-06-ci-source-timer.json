@@ -1,0 +1,92 @@
+{
+  "kind": "SCOPED_SOURCE_HANGING_LIFECYCLE_TIMER_FIX",
+  "date": "2026-11-06",
+  "worktree": "D:/workspace/CodeAtlas-phase1-20261106",
+  "baseHead": "f8b1a3eed52aa617ed85524c02fade8c26ef57ae",
+  "modifiedFiles": [
+    "packages/source/test/mixed-source-workflow.test.mjs"
+  ],
+  "productionEdits": 0,
+  "scope": "Only hanging afterClose/dispose loop and its exclusive boundedGitOutcome watchdog/import. No real Git/Native/HOST, source fixture/golden/attribute edit, Git stage/commit/push or CI.",
+  "investigation": [
+    "Original deadline is wall-clock Date.now()+30 before async filesystem discovery and all qualification callbacks; test had no proof intended hook was reached.",
+    "gitGate sets timers using remaining milliseconds and its fail callback chooses GIT_FAILED when Date.now remains before deadline. Early timer scheduling/rounding can select this code. CI original32ms cannot by itself establish exact reached hook; avoid claiming proved original stage.",
+    "No production defect established. Deterministic fixture freezes standard Node mock Date/setTimeout until actual target hook enters, then ticks unchanged30ms. Actual hook counter,1spawn,1dispose,closed count and UNKNOWN cleanup make exercised path explicit.",
+    "Mocking timers would freeze original200ms watchdog. Exclusive helper now uses module-load captured node:timers aliases to retain actual200ms outer bound; no guard removal or deadline increase."
+  ],
+  "verification": [
+    {
+      "durationMs": 574.3948,
+      "raw": "Initial targeted stdout available in task tool record; no standalone raw file retained.",
+      "exitCode": 0,
+      "command": "node --test --test-name-pattern='^A2 qualified hanging ' packages/source/test/mixed-source-workflow.test.mjs",
+      "pass": 2,
+      "fail": 0,
+      "tests": 2
+    },
+    {
+      "tests": 39,
+      "command": "node --test packages/source/test/mixed-source-workflow.test.mjs",
+      "todo": 2,
+      "note": "Initial full command output retained by tool; subsequent unchanged rerun preserved complete TAP without truncation.",
+      "exitCode": 1,
+      "pass": 34,
+      "raw": "full-default-sandbox.tap",
+      "fail": 3
+    },
+    {
+      "raw": "environment-two-escalated.tap",
+      "exitCode": 0,
+      "command": "node --test --test-reporter=tap --test-name-pattern='^A2 selected hardlink is refused$|^A2 private pinned Git gate precedes every spawn and preserves close ownership$' packages/source/test/mixed-source-workflow.test.mjs",
+      "execution": "normal require_escalated",
+      "pass": 2,
+      "fail": 0,
+      "tests": 2
+    },
+    {
+      "clockRestored": true,
+      "exitCode": 0,
+      "command": "One-off Node built-in mock timers frozen-clock/never-settling Promise vs captured real200ms watchdog",
+      "note": "Counterexample demonstrates watchdog refusal when no mocked clock tick occurs.",
+      "elapsedMs": 207.1336,
+      "observed": "UNBOUNDED_GUARD",
+      "clockStayedFrozen": true
+    },
+    {
+      "exitCode": 0,
+      "command": "node --check packages/source/test/mixed-source-workflow.test.mjs"
+    },
+    {
+      "command": "node node_modules/prettier/bin/prettier.cjs --check packages/source/test/mixed-source-workflow.test.mjs",
+      "result": "All matched files use Prettier code style",
+      "note": "Following unrelated git diff failed due environment worktree detection, not formatting."
+    }
+  ],
+  "clockRestoration": "Both target tests passed within full run and subsequent existing real timeout cases passed, including owned proof timeout86ms. Node test context resets mocks automatically; standalone counterexample explicit reset confirmed.",
+  "remaining": {
+    "fullFileStatus": "NOT_PASSING due independent LF checkout fixture mismatch; no scope widening.",
+    "literalLF": {
+      "directory": "fixtures/phase1/mixed-runtime-readiness/source-integration/source",
+      "gitEol": "All3 tracked i/lf w/crlf attr/; .env also i/lf w/crlf but excluded from this golden; Python/Java source remains LF.",
+      "files": [
+        {
+          "diskBytes": 7,
+          "path": "notes.txt",
+          "literalBytes": 6
+        },
+        {
+          "diskBytes": 16,
+          "path": "stub.pyi",
+          "literalBytes": 15
+        },
+        {
+          "diskBytes": 8,
+          "path": "文档.txt",
+          "literalBytes": 7
+        }
+      ]
+    },
+    "sandboxOnly": "Hardlink EPERM and OpenAI.Codex/openai.codex casing strict equality disappeared in normal escalated2case rerun; do not infer production error."
+  },
+  "evidenceHandling": "A temporary sandbox log was unavailable to a separate escalated process; no test executed in that failed Copy-Item command. The full unchanged suite was rerun to capture complete output through tool transport into permanent raw TAP. All attempts retained honestly; no old failure overwritten."
+}

@@ -1,6 +1,7 @@
 import { syncBuiltinESMExports } from 'node:module';
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { setTimeout as guardTimeout, clearTimeout as clearGuardTimeout } from 'node:timers';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { setup, expected, cases, makeAccount } from './fixtures/mixed-source-git-double.mjs';
@@ -327,10 +328,10 @@ async function boundedGitOutcome(p) {
   try {
     return await Promise.race([
       p,
-      new Promise((_r, j) => (timer = setTimeout(() => j(Error('UNBOUNDED_GUARD')), 200))),
+      new Promise((_r, j) => (timer = guardTimeout(() => j(Error('UNBOUNDED_GUARD')), 200))),
     ]);
   } finally {
-    clearTimeout(timer);
+    clearGuardTimeout(timer);
   }
 }
 for (const stage of ['afterClose', 'dispose'])
@@ -339,7 +340,10 @@ for (const stage of ['afterClose', 'dispose'])
     async (t) => {
       const f = await setup(t),
         a = makeAccount(f.control.signal);
-      let disposed = 0;
+      let disposed = 0,
+        entered = 0;
+      // Advance only once the actual hanging hook is entered, independent of host scheduling.
+      t.mock.timers.enable({ apis: ['Date', 'setTimeout'], now: Date.now() });
       f.control.deadlineEpochMs = Date.now() + 30;
       f.control.qualification = {
         executablePath: process.execPath,
@@ -349,11 +353,19 @@ for (const stage of ['afterClose', 'dispose'])
             async beforeSpawn() {},
             async beforeInput() {},
             async afterClose() {
-              if (stage === 'afterClose') await new Promise(() => {});
+              if (stage === 'afterClose') {
+                entered++;
+                t.mock.timers.tick(30);
+                await new Promise(() => {});
+              }
             },
             async dispose() {
               disposed++;
-              if (stage === 'dispose') await new Promise(() => {});
+              if (stage === 'dispose') {
+                entered++;
+                t.mock.timers.tick(30);
+                await new Promise(() => {});
+              }
             },
           };
         },
@@ -361,9 +373,15 @@ for (const stage of ['afterClose', 'dispose'])
       f.state.expectedExecutable = process.execPath;
       await assert.rejects(
         boundedGitOutcome(api.observeMixedGitWorktree(f.request, a.account, f.control)),
-        code('DEADLINE_EXCEEDED'),
+        (error) => {
+          assert.equal(error.code, 'DEADLINE_EXCEEDED');
+          assert.equal(error.cleanupState, 'UNKNOWN');
+          return true;
+        },
       );
+      assert.equal(entered, 1);
       assert.equal(disposed, 1);
+      assert.equal(f.state.calls, 1);
       assert.equal(f.state.calls, f.state.closes);
     },
   );

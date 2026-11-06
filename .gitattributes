@@ -12,6 +12,13 @@ Cargo.lock text eol=lf
 packages/storage/migrations/**/*.sql text eol=lf
 packages/storage/migrations/repository/00[1-7]_*.sql text eol=crlf
 packages/storage/migrations/workspace/00[1-3]_*.sql text eol=crlf
+# Keep the four historical migration Fixture hashes exact on every runner.
+fixtures/storage/migrations/migration-failure/001-stable.sql text eol=crlf
+fixtures/storage/migrations/migration-failure/002-fail.sql text eol=crlf
+fixtures/storage/migrations/migration-upgrade/001-create-probe.sql text eol=crlf
+fixtures/storage/migrations/migration-upgrade/002-add-revision.sql text eol=crlf
+# Source integration literal fingerprints use LF independent of host checkout.
+fixtures/phase1/mixed-runtime-readiness/source-integration/source/** text eol=lf
 fixtures/ipc/protocol-v1/**/*.jsonl -text
 fixtures/ipc/handshake-v1/**/*.jsonl -text
 fixtures/ipc/protocol-v2/**/*.jsonl -text
@@ -74,3 +81,27 @@ fixtures/storage/native-analysis-state/memory-refresh-c-review-verify-holdout.js
 fixtures/phase1/**/*.py -text
 fixtures/phase1/**/*.java -text
 fixtures/phase1/**/*.jsonl -text
+fixtures/phase1/syntax-contract/ci-portability/historical-library-output-before.mjs.txt -text
+# Retain exact LF bytes for independently pinned historical Fixture sources.
+fixtures/phase1/code-context-capture/README.md text eol=lf
+fixtures/phase1/code-syntax-completeness/README.md text eol=lf
+fixtures/phase1/code-syntax-producer-oracle/README.md text eol=lf
+fixtures/phase1/declared-delta-raw-admission/README.md text eol=lf
+fixtures/phase1/declared-observation-scope/README.md text eol=lf
+fixtures/phase1/python-source-normalization/README.md text eol=lf
+fixtures/phase1/syntax-bounded-output-oracle/README.md text eol=lf
+fixtures/phase1/syntax-changed-only-oracle/README.md text eol=lf
+fixtures/phase1/syntax-dynamic-malformed-oracle/README.md text eol=lf
+fixtures/phase1/syntax-initial-absence-oracle/README.md text eol=lf
+fixtures/phase1/syntax-java-owner-oracle/README.md text eol=lf
+fixtures/phase1/syntax-mapping-preparation/README.md text eol=lf
+fixtures/phase1/syntax-mixed-provisional-oracle/README.md text eol=lf
+fixtures/phase1/syntax-nested-source-oracle/README.md text eol=lf
+fixtures/phase1/syntax-observation-corpus/README.md text eol=lf
+fixtures/phase1/syntax-present-activation-oracle/README.md text eol=lf
+fixtures/phase1/syntax-qualification-draft/README.md text eol=lf
+fixtures/queries/code-query/source/QueryGraph.java text eol=lf
+# Existing LF-only documentation must retain its formatting on Windows checkout.
+docs/specs/diagram-projection.md text eol=lf
+docs/specs/native-analyzer-scalability.md text eol=lf
+docs/specs/wiki-projection.md text eol=lf

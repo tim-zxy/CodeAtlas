@@ -1,0 +1,96 @@
+{
+  "kind": "INDEPENDENT_READ_ONLY_CI_FIX_REVIEW",
+  "utc": "2026-11-06T03:07:31.0103648Z",
+  "worktree": "D:\\workspace\\CodeAtlas-phase1-20261106",
+  "base": "f8b1a3eed52aa617ed85524c02fade8c26ef57ae",
+  "verdict": "NO_BLOCKING_SOURCE_FINDING_IN_REVIEWED_DIFF; HOSTED_CI_PENDING",
+  "actions": {
+    "sourceEdits": 0,
+    "ci": 0,
+    "realNativeHostCollector": 0,
+    "gitWrites": 0,
+    "tests": 0
+  },
+  "findings": [
+    {
+      "id": "WINDOWS_ROUTING",
+      "severity": "none",
+      "result": "All9 changed Windows launchers explicitly routed to existing Windows native-analysis job; original assertions preserved. Receiver top-level spawn guarded. PureJS hash/codec assertions remain cross-platform with relative-path refusal."
+    },
+    {
+      "id": "GATE_PRESERVATION",
+      "severity": "none",
+      "result": "Three jobs, contents:read and six original actual Native/memory/refresh gates unchanged. Additive Windows Node-helper OS peak step executes existing conformance under user CI authorization; no resource/profile/formula or privilege changes."
+    },
+    {
+      "id": "SOURCE_TIMER",
+      "severity": "limitation",
+      "result": "Only test changes. Product gitGate timer registered before action; hook tick30 crosses original deadline, entered1/disposed1/calls1/closes and UNKNOWN checked. Imported node:timers watchdog200ms remains separate from mocked global timer; no syncBuiltinESMExports during mocked segment. Proves deterministic deadline logic, not physical30ms scheduling."
+    },
+    {
+      "id": "BYTE_POLICY",
+      "severity": "none",
+      "result": "Precise4 historical SQL CRLF; Source literal tree LF;18 exact historical LF paths; snapshot-text -text. Existing expected hashes untouched. Checkout regression checks autocrlf true and false. Fixture content-only dirty entries are checkout-byte effects; no semantic Fixture rewrite in Git diff."
+    },
+    {
+      "id": "HISTORICAL_SNAPSHOT",
+      "severity": "none",
+      "result": "Snapshot SHA1912fc636196a7492d760268ef3c3797eaf9001ad07330acf17664db0988e739 equals original inventory pin. Loaded as Buffer under original logical name, checked by unchanged PIN_HASH loop. No snapshot execution/import path. Added snapshot corruption negative; exact-count source migrations. Inventory/index/archive unchanged."
+    }
+  ],
+  "evidenceScope": "Read-only diff/callpath/hash review. Worker test counts below reused as reported, not rerun.",
+  "reportedVerification": [
+    "root G14 checkout2/2",
+    "Source39/39",
+    "Windows17/17 plus lifetimePS49",
+    "controlled nonWindows4pass13skip",
+    "historical audit6/6,current oracle25/25,source migration equality2/2"
+  ],
+  "remaining": [
+    "Actual Ubuntu Node24 behavior and checkout can only be confirmed by hosted CI. Simulated platform override is not Ubuntu.",
+    "Root reported unrelated unchanged docs/specs formatting warnings; diagnosis and repository-wide format gate remain root responsibility.",
+    "Root must preserve these pins through final integration and obtain fresh CI run result before claiming CI green."
+  ],
+  "pins": {
+    ".gitattributes": "684bbd094d851a759c594e0b979066d32aae74cf3c98aff3fd89a674ca898c3d",
+    ".github/workflows/ci.yml": "7d5b262e48b5b0fede6b990e0be00e37ff0162db19cb6c08b0daa0d6af70c2da",
+    ".superpowers/sdd/2026-11-06-historical-checker-snapshot/verification.json": "2481d5ca83f39e5a88ca9ca7ed78853028491fce006db68401025c69c145cbbd",
+    "docs/superpowers/reviews/2026-11-06-ci-offline-platform-portability.json": "ada5878b65ab29be7c12b495ba59607ddd5b53bf0feeb2d93fc8e627dd02e479",
+    "docs/superpowers/specs/2026-10-25-phase1-syntax-evidence-reuse-inventory.json": "4921052ee2f50f61a7a7796f2e57fd8e870261a1b64f067c8a28fad4d4202b52",
+    "fixtures/phase1/syntax-contract/ci-portability/historical-bytes.json.gz": "f8291839a79d41507f78234720796bbaf4eb92793c1b307b7ff6bf98a5112568",
+    "fixtures/phase1/syntax-contract/ci-portability/historical-inputs.mjs": "c41e124b8930f1c7f808ae679528652a74804298c2982c978951abf31f5d982c",
+    "fixtures/phase1/syntax-contract/ci-portability/historical-library-output-before.mjs.txt": "1912fc636196a7492d760268ef3c3797eaf9001ad07330acf17664db0988e739",
+    "fixtures/phase1/syntax-contract/ci-portability/index.json": "830066e540d8da260775d6a5541806c9c234c2154a86a508ffdbcb6ad2427057",
+    "fixtures/phase1/syntax-contract/ci-portability/source-migrations.json": "f0354aa37bf734fc3942ff7eb4cb9626933058c5ebabd1d52535612ae572c203",
+    "packages/runtime/test/native-ci-context.test.mjs": "bee46b5d992c837f09c33100b3739ff14570dce9bae0b5e45eda29f12b570919",
+    "packages/source/src/git.ts": "7e6396ca07eaccbdb5d36703a85acd10cc7a42b19b4dc2e8b23fb6dc059a461c",
+    "packages/source/test/mixed-source-workflow.test.mjs": "9eff5f9890a0af1e69589bbbb246b0c6b015409b280132f5f5c43a2ee68ca874",
+    "scripts/test-mixed-native-control-mailbox.mjs": "896c4036d6e6db1b782f15db934ba7ef24ababd496b7ce9161ea793ba548809e",
+    "scripts/test-mixed-native-control-mailbox.ps1": "285200c206145e89f5ae7ca5613d3ad45a63f53194f3381b33523ef99d9082b4",
+    "scripts/test-mixed-native-debug-event-bridge.mjs": "46710405efb2e3f875d28ab38df8fc5b5d717eeda5665c6644e56bf0f13fdb96",
+    "scripts/test-mixed-native-debug-event-bridge.ps1": "1296522591403e02e7acc2441efa69950d7e638a95291c6cd85fb453bfacdb0e",
+    "scripts/test-mixed-native-dynamic-host-windows.mjs": "bcabae1ff237f885ccb7c5a9d71f2ba897953777d53efd85b22c0aae2db133de",
+    "scripts/test-mixed-native-dynamic-host-windows.ps1": "345238c6b5e69ab9cb3c5cc23cb4a47d18df4a0acdc050d2df4f25f3b8753c60",
+    "scripts/test-mixed-native-dynamic-observer-loop.mjs": "827c06797ea18ca1b5759677469aa0731bb460da74511f0c49e0995e01a96362",
+    "scripts/test-mixed-native-dynamic-observer-loop.ps1": "28fae21f7c1e9cef1b6a1197715e6a51cd8fa9e495bb3c87e52d4a66a19b37ea",
+    "scripts/test-mixed-native-dynamic-observer-policy.mjs": "ff5fab24028c09f08b8b1750a9eec193a4592513e0de5421d861ca86c5bb9ded",
+    "scripts/test-mixed-native-dynamic-observer-policy.ps1": "873236a8232e32d6b0b040d6ae8684409e40eaa4e739bc708f263593372cdaa1",
+    "scripts/test-mixed-native-host-consumption-lifetime.ps1": "388daa618dcf6cf29c7c775cf4d79cb48cda65741f2a225f5ea9b6efac36ee0d",
+    "scripts/test-mixed-native-host-protected-inventory-receiver.mjs": "969b20150ba9649982f78a852ae60d42849ee79fc3c12c3916b3f7a3d85bf2f2",
+    "scripts/test-mixed-native-host-protected-inventory-receiver.ps1": "28ce196883f115be6dc62dd4cf2130d8aeb4136aa3e82cf05d704fbcab9b8d3e",
+    "scripts/test-mixed-native-host-startup.mjs": "b43d14b24a11e5ce61643ecdf897b4714c49efa94ddfc91557a05c09d23967d8",
+    "scripts/test-mixed-native-host-startup.ps1": "ff87179f46793218d441b4178e53db1a912dede21307f85ae2e882a1f23088c5",
+    "scripts/test-mixed-native-observer-loop.mjs": "2ead90d3886f8ae5d3ad7ae79cf38c802bd9cd0fca29144b3d14856ab9e97164",
+    "scripts/test-mixed-native-observer-loop.ps1": "a3fb1a9b1848c8e33c571bf10ab5e07b8817b23cd804fe61217a4f6af57d81a1",
+    "scripts/test-mixed-native-observer-policy.mjs": "df6253e45320e61978d3ec380168314819f5af1cfee8ae44107bf3484e8e69d7",
+    "scripts/test-mixed-native-observer-policy.ps1": "76789438e59d638bf6ed2582b2833e5d62a8e2fa08bb41d4a80cb70e4fba0966",
+    "scripts/test-mixed-process-image-identity.mjs": "7e3baf7dd98837fed041c3bc3efb2c0071c8c59a4d17f3f18306d0f22949b853",
+    "scripts/test-syntax-evidence-reuse.mjs": "6dbd153c7bf60af9b8ee9ebba3d17a5fddd5d56443a3397b648462d675af33fe",
+    "scripts/test-syntax-peak-collector.mjs": "eb136889741a4fbda8babdcb3c846b89ad7e99ade1a1686eae28e0a61e7a7680",
+    "C:\\Users\\Freya\\AppData\\Local\\Temp\\codeatlas-typescript-ci-first-42151555522.log": "a73acaf64d0f287ec352282b9ddc57734d550ed7bb8bbf71b0f9375c493207f5",
+    "docs/specs/diagram-projection.md": "ba7d26ead466b2182dd214ca831e997c12052945c968582c41d6611d42b49987",
+    "docs/specs/native-analyzer-scalability.md": "27da4e22c1f73b40497c1247c4784aa358ceaa9d4a73a73cfb59035614d9f0be",
+    "docs/specs/wiki-projection.md": "19495332e3ef0dad79ce586268a73294ad80e6429a4962214b016121ddfaf1c4"
+  },
+  "finalSupplement": "Three exact docs/specs LF checkout rules reviewed; Git diff confirms no document content change. .gitattributes hash refreshed after root final supplement."
+}

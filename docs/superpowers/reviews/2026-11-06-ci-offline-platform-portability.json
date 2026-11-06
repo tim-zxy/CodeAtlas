@@ -1,0 +1,166 @@
+{
+  "kind": "CI_OFFLINE_PLATFORM_PORTABILITY_SCOPE_AND_RECEIPT",
+  "status": "SCOPED_FIX_VERIFIED_PENDING_ROOT_INTEGRATION_AND_HOSTED_CI",
+  "worktree": "D:/workspace/CodeAtlas-phase1-20261106",
+  "base": "f8b1a3eed52aa617ed85524c02fade8c26ef57ae",
+  "hostedFailureRun": "42151555522",
+  "assumptions": [
+    "Windows PowerShell compiler/fixture launchers require Windows and must execute in the existing Windows native-analysis job.",
+    "Pure JS hash/codec assertions remain in Ubuntu tests using host-absolute fixture paths.",
+    "No product path validation, right, profile, formula, real-HOST entry or three-job structure changes."
+  ],
+  "success": [
+    "Every newly platform-marked launcher is explicitly executed by Windows CI.",
+    "Pure dynamic launch hash vectors execute and preserve relative-path refusal across host platforms.",
+    "Local Windows offline substitutes pass; simulated non-Windows dispatch refuses any attempted PowerShell launch and completes JS-only tests.",
+    "Existing real Native/memory/refresh gates remain unchanged; existing Node-helper peak conformance gets an accurately named Windows CI step only."
+  ],
+  "scopeFiles": [
+    ".github/workflows/ci.yml",
+    "scripts/test-mixed-native-control-mailbox.mjs",
+    "scripts/test-mixed-native-debug-event-bridge.mjs",
+    "scripts/test-mixed-native-dynamic-host-windows.mjs",
+    "scripts/test-mixed-native-dynamic-observer-loop.mjs",
+    "scripts/test-mixed-native-host-startup.mjs",
+    "scripts/test-mixed-native-observer-loop.mjs",
+    "scripts/test-mixed-native-observer-policy.mjs",
+    "scripts/test-mixed-native-dynamic-observer-policy.mjs",
+    "scripts/test-mixed-native-host-protected-inventory-receiver.mjs"
+  ],
+  "scanOtherLaunchers": [
+    {
+      "file": "scripts/test-mixed-process-image-identity.mjs",
+      "alreadyGuarded": true,
+      "route": "include existing offline Windows CI command"
+    },
+    {
+      "file": "scripts/test-syntax-peak-collector.mjs",
+      "alreadyGuarded": true,
+      "route": "existing scenarios in separate Windows CI Node-helper OS peak conformance step; not local/offline"
+    },
+    {
+      "file": "scripts/test-mixed-native-host-consumption-lifetime.ps1",
+      "nodeLauncher": false,
+      "route": "explicit offline PowerShell lifetime fixture command in Windows CI"
+    }
+  ],
+  "notAuthorizedHere": [
+    "Git writes or CI triggers",
+    "actual HOST/Native/Git producer or local OS-peak conformance",
+    "production/module/package/Source timing/gitattributes edits",
+    "ExecutionPolicy changes or dependency install"
+  ],
+  "utc": "2026-11-06T03:02:53.570Z",
+  "cause": {
+    "compilerFailures": "Ubuntu cannot execute the hardcoded Windows PowerShell compiler path; unguarded spawn returns null status. Receiver also dispatched before test platform selection.",
+    "pureJavaScriptFailure": "hashMixedNativeLaunch uses host node:path.isAbsolute; D:/fixture is not POSIX absolute. Pure test now uses /fixture on non-Windows and retains production relative-path refusal."
+  },
+  "validation": {
+    "red": {
+      "kind": "controlled non-Windows routing with all spawnSync calls blocked; not actual Ubuntu",
+      "log": ".superpowers/sdd/2026-11-06-ci-offline-platform-portability/non-windows-red.log",
+      "exitCode": 1,
+      "pass": 0,
+      "fail": 9
+    },
+    "windowsOffline": {
+      "log": ".superpowers/sdd/2026-11-06-ci-offline-platform-portability/windows-offline.log",
+      "exitCode": 0,
+      "pass": 17,
+      "fail": 0,
+      "skipped": 0,
+      "durationMs": 11236.4879
+    },
+    "windowsLifetime": {
+      "log": ".superpowers/sdd/2026-11-06-ci-offline-platform-portability/windows-lifetime.log",
+      "exitCode": 0,
+      "assertions": 49,
+      "actualWindowsQualificationCalls": 0,
+      "actualHostRuns": 0
+    },
+    "nonWindowsFinal": {
+      "kind": "controlled process.platform=linux with throwing spawnSync; does not emulate Ubuntu OS",
+      "log": ".superpowers/sdd/2026-11-06-ci-offline-platform-portability/non-windows-green-final.log",
+      "exitCode": 0,
+      "pass": 4,
+      "fail": 0,
+      "skippedWindowsCases": 13
+    },
+    "format": {
+      "log": ".superpowers/sdd/2026-11-06-ci-offline-platform-portability/format.log",
+      "exitCode": 0
+    }
+  },
+  "routingInventory": {
+    "jobs": [
+      "typescript",
+      "rust",
+      "native-analysis"
+    ],
+    "windowsNodeFiles": [
+      "scripts/test-mixed-native-control-mailbox.mjs",
+      "scripts/test-mixed-native-debug-event-bridge.mjs",
+      "scripts/test-mixed-native-dynamic-host-windows.mjs",
+      "scripts/test-mixed-native-dynamic-observer-loop.mjs",
+      "scripts/test-mixed-native-host-startup.mjs",
+      "scripts/test-mixed-native-observer-loop.mjs",
+      "scripts/test-mixed-native-observer-policy.mjs",
+      "scripts/test-mixed-native-dynamic-observer-policy.mjs",
+      "scripts/test-mixed-native-host-protected-inventory-receiver.mjs",
+      "scripts/test-mixed-process-image-identity.mjs"
+    ],
+    "additionalWindowsPowerShell": "scripts/test-mixed-native-host-consumption-lifetime.ps1",
+    "collectorCiOnly": "scripts/test-syntax-peak-collector.mjs",
+    "existingRealGateNames": [
+      "Run real-binary Java Fixtures",
+      "Run Native REFRESH composition and replay contracts",
+      "Run Native REFRESH Storage rollback and ownership contracts",
+      "Enforce fresh read-seal, transport and refresh-verification reservations",
+      "Collect every required memory class",
+      "Require approved exact-pack Native REFRESH actual22"
+    ],
+    "sourceClaims": "No continue-on-error, fourth job, package edit, production path relaxation or OS rights added"
+  },
+  "executionAccounting": {
+    "explicitLocalWindowsCompilerTesthosts": 11,
+    "localActualQualificationHostRuns": 0,
+    "localNativeGitProducers": 0,
+    "localOsPeakCollectorRuns": 0,
+    "gitWrites": 0,
+    "ciTriggers": 0,
+    "oldCWorktreeWrites": 0,
+    "internalCompilerSubprocesses": "NOT_OBSERVED"
+  },
+  "limitations": [
+    "Actual Ubuntu execution unavailable locally; parent supplied failure run42151555522 is the external RED. Hosted rerun remains root-owned.",
+    "Existing OS peak collector scenarios short/ready are routed only to CI and were not executed locally.",
+    "Source timing tests, production modules, package.json, .gitattributes and shared status untouched."
+  ],
+  "verificationNote": "Initial ad-hoc workflow inventory check mistakenly included on.push and did not account for CRLF; checker corrected to jobs block. No source change was required.",
+  "sourcePins": {
+    ".github/workflows/ci.yml": "7d5b262e48b5b0fede6b990e0be00e37ff0162db19cb6c08b0daa0d6af70c2da",
+    "scripts/test-mixed-native-control-mailbox.mjs": "896c4036d6e6db1b782f15db934ba7ef24ababd496b7ce9161ea793ba548809e",
+    "scripts/test-mixed-native-debug-event-bridge.mjs": "46710405efb2e3f875d28ab38df8fc5b5d717eeda5665c6644e56bf0f13fdb96",
+    "scripts/test-mixed-native-dynamic-host-windows.mjs": "bcabae1ff237f885ccb7c5a9d71f2ba897953777d53efd85b22c0aae2db133de",
+    "scripts/test-mixed-native-dynamic-observer-loop.mjs": "827c06797ea18ca1b5759677469aa0731bb460da74511f0c49e0995e01a96362",
+    "scripts/test-mixed-native-host-startup.mjs": "b43d14b24a11e5ce61643ecdf897b4714c49efa94ddfc91557a05c09d23967d8",
+    "scripts/test-mixed-native-observer-loop.mjs": "2ead90d3886f8ae5d3ad7ae79cf38c802bd9cd0fca29144b3d14856ab9e97164",
+    "scripts/test-mixed-native-observer-policy.mjs": "df6253e45320e61978d3ec380168314819f5af1cfee8ae44107bf3484e8e69d7",
+    "scripts/test-mixed-native-dynamic-observer-policy.mjs": "ff5fab24028c09f08b8b1750a9eec193a4592513e0de5421d861ca86c5bb9ded",
+    "scripts/test-mixed-native-host-protected-inventory-receiver.mjs": "969b20150ba9649982f78a852ae60d42849ee79fc3c12c3916b3f7a3d85bf2f2",
+    "scripts/test-mixed-process-image-identity.mjs": "7e3baf7dd98837fed041c3bc3efb2c0071c8c59a4d17f3f18306d0f22949b853",
+    "scripts/test-mixed-native-host-consumption-lifetime.ps1": "388daa618dcf6cf29c7c775cf4d79cb48cda65741f2a225f5ea9b6efac36ee0d",
+    "scripts/test-syntax-peak-collector.mjs": "eb136889741a4fbda8babdcb3c846b89ad7e99ade1a1686eae28e0a61e7a7680",
+    "scripts/mixed-native-launch-handshake.mjs": "b1e911902fd20cf81b2b3920fab14135047da7440e594ff86ea2126b2d4ce5df"
+  },
+  "evidencePins": {
+    "non-windows-red.log": "4640ad6e623f7df910843d0a1e6099db50e3b2e1f1a04c3730a69b6de9b21147",
+    "non-windows-green-attempt-1.log": "66d2d23d5f26adcfe44fd6af35029994ad77eb178575770f08f5889e4b5be5a9",
+    "non-windows-green-final.log": "118b8316bdcabfcf0fdc144596298aef991e5bb1066d84889675dcc439f181b2",
+    "windows-offline.log": "ccf3f663533f48aff6964c75650a8fe196d09eed3a0e63c69b40c58ea64fd523",
+    "windows-lifetime.log": "0954efff587c90d9e58e44eb7fbed05764cb360bc861af9ab31c51cdee5135cf",
+    "format.log": "ec05e71a0fa554faab1b214589aa154f43732cdab23d25f5d6d1459072d71da4",
+    "non-windows-preload.mjs": "2c5acfe1c6fa6a4eb80e833d2f7074d5b72904716139e78750e2b3e7c97af1b6",
+    "apply-fix.mjs": "92427958224921b26c251face7f2def0c34a4ec7e3accc0193bb74d8e2803ee2"
+  }
+}

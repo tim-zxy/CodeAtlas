@@ -55,6 +55,14 @@
     {
       "before": "    'cross-consumer-result.json',\n  ].sort();\n  same(fs.readdirSync(path.resolve(repo, capture)).sort(), expectedRootEntries, 'ROOT_LAYOUT');\n  for (const c of inventory.cases) {\n    check(/^[a-z0-9-]+$/.test(c.caseId), 'CASE_ID');\n    same(\n      fs.readdirSync(path.resolve(repo, capture, c.caseId)).sort(),\n      ['events.jsonl', 'expected.jsonl', 'manifest.json', 'request.jsonl'],\n      'CASE_LAYOUT',\n",
       "after": "    'cross-consumer-result.json',\n  ].sort();\n  same(historicalEntries(capture), expectedRootEntries, 'ROOT_LAYOUT');\n  for (const c of inventory.cases) {\n    check(/^[a-z0-9-]+$/.test(c.caseId), 'CASE_ID');\n    same(\n      historicalEntries(capture + '/' + c.caseId),\n      ['events.jsonl', 'expected.jsonl', 'manifest.json', 'request.jsonl'],\n      'CASE_LAYOUT',\n"
+    },
+    {
+      "before": "    for (const kind of ['byte', 'hash', 'foreign', 'missing']) {\n      const x = copy(d);\n      if (kind === 'byte') {\n        const p = capture + '/mixed/events.jsonl';\n        x.files.set(p, Buffer.from('changed'));\n      }\n",
+      "after": "    for (const kind of ['byte', 'snapshot', 'hash', 'foreign', 'missing']) {\n      const x = copy(d);\n      if (kind === 'byte') {\n        const p = capture + '/mixed/events.jsonl';\n        x.files.set(p, Buffer.from('changed'));\n      }\n      if (kind === 'snapshot')\n        x.files.set('scripts/check-code-syntax-library-output.mjs', Buffer.from('changed'));\n"
+    },
+    {
+      "before": "  for (const p of Object.keys(inventory.hashPins)) files.set(p, regular(p, hard.maxStdoutBytes));\n",
+      "after": "  const historicalSources = {\n    'scripts/check-code-syntax-library-output.mjs':\n      'fixtures/phase1/syntax-contract/ci-portability/historical-library-output-before.mjs.txt',\n  };\n  for (const p of Object.keys(inventory.hashPins))\n    files.set(p, regular(historicalSources[p] ?? p, hard.maxStdoutBytes));\n"
     }
   ],
   "scripts/test-declared-observation-scope.mjs": [

@@ -107,6 +107,17 @@ jobs:
       - name: Collect every required memory class
         if: always()
         run: pnpm test:native-memory
+      - name: Run Windows offline C# control, ownership and Entry substitutes
+        if: always()
+        shell: pwsh
+        run: |
+          node --test --test-concurrency=1 scripts/test-mixed-native-control-mailbox.mjs scripts/test-mixed-native-debug-event-bridge.mjs scripts/test-mixed-native-dynamic-host-windows.mjs scripts/test-mixed-native-dynamic-observer-loop.mjs scripts/test-mixed-native-host-startup.mjs scripts/test-mixed-native-observer-loop.mjs scripts/test-mixed-native-observer-policy.mjs scripts/test-mixed-native-dynamic-observer-policy.mjs scripts/test-mixed-native-host-protected-inventory-receiver.mjs scripts/test-mixed-process-image-identity.mjs
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          & "$env:SystemRoot/System32/WindowsPowerShell/v1.0/powershell.exe" -NoProfile -NonInteractive -File scripts/test-mixed-native-host-consumption-lifetime.ps1
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Run existing Windows Node-helper OS peak collector conformance
+        if: always()
+        run: node --test --test-concurrency=1 scripts/test-syntax-peak-collector.mjs
       - name: Require approved exact-pack Native REFRESH actual22
         if: always()
         shell: pwsh
