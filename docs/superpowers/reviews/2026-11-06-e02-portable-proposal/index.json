@@ -530,6 +530,23 @@
     ]
   },
   "currentCandidate": {
+    "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/candidate-v6.json",
+    "sha256": "59e013ec41d93eca8b87da575ba2358c9bbdbd7f5de2a6d230db9c8128d516ff",
+    "version": "proposed-6",
+    "status": "PROPOSED",
+    "installable": false,
+    "formalDenominator": null,
+    "thresholdState": "UNSET",
+    "currentVersionIndependentReview": {
+      "path": "independent-review-v6.json",
+      "subjectSha256": "59e013ec41d93eca8b87da575ba2358c9bbdbd7f5de2a6d230db9c8128d516ff",
+      "conclusion": "PASS_FOR_PROPOSED_TECHNICAL_QUALITY",
+      "baselineApproval": false
+    }
+  },
+  "combinedFileCount": 96,
+  "provenanceDisposition": "Original92 files retained byte-identically; exact missing gapProposal and v3 review added. PROPOSED v5 refreshes current authority/recall anchor only and clarifies historical mutation prose; old reviews never authorize v5.",
+  "historicalCandidateV5": {
     "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/candidate-v5.json",
     "sha256": "12e299c25194379406555babb037efa6d8a94b077146bd241eefd90150796240",
     "version": "proposed-5",
@@ -544,6 +561,19 @@
       "baselineApproval": false
     }
   },
-  "combinedFileCount": 95,
-  "provenanceDisposition": "Original92 files retained byte-identically; exact missing gapProposal and v3 review added. PROPOSED v5 refreshes current authority/recall anchor only and clarifies historical mutation prose; old reviews never authorize v5."
+  "checkout": {
+    "path": "checkout-bytes.json.gz",
+    "bytes": 9928,
+    "sha256": "6277e45131f2aaa2b05241ff3619bb453a60190fdc8d35df8a2bd61927ffffed",
+    "decodedBytes": 26477,
+    "decodedSha256": "164d12089634265c5313f2e7fd27cff3be2eb2637b81cfb6bc2da09645b70afe",
+    "files": [
+      {
+        "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/candidate-v6.json",
+        "bytes": 19535,
+        "sha256": "59e013ec41d93eca8b87da575ba2358c9bbdbd7f5de2a6d230db9c8128d516ff",
+        "role": "PROPOSED_COMMITTED_DOCUMENT_PROVENANCE_CORRECTION"
+      }
+    ]
+  }
 }

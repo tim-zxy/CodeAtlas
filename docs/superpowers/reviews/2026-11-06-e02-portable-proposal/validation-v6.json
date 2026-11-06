@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "kind": "PORTABLE_E02_COMMITTED_DOCUMENT_VALIDATION",
+  "utc": "2026-11-06T12:37:55.228808+00:00",
+  "status": "PASSED_BYTE_AND_TRACKED_CONTENT_CHECK_ONLY",
+  "candidateSha256": "59e013ec41d93eca8b87da575ba2358c9bbdbd7f5de2a6d230db9c8128d516ff",
+  "files": 96,
+  "authorityGitBlobs": 7,
+  "authoritySourceCommit": "c0d853f48c05f74981cea4857d3217e022b84596",
+  "normalization": "NONE in candidate digest; Git diff uses existing repository text policy",
+  "rootReadmeExitCode": 0,
+  "rootReadmeOutput": {
+    "files": 96,
+    "status": "PROPOSED",
+    "version": "proposed-6",
+    "installable": false
+  },
+  "sourceExecution": 0,
+  "modelExecution": 0,
+  "nativeExecution": 0,
+  "missingSourceCommitBehavior": "Fail; no network fetch/current-file fallback",
+  "localVsCommittedV5MismatchDetected": 7,
+  "v5Retained": true,
+  "lfCopyRuntimeTest": false,
+  "formalDenominator": null,
+  "thresholdState": "UNSET"
+}

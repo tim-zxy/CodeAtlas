@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "kind": "INDEPENDENT_E02_PROPOSED_TECHNICAL_REVIEW",
+  "utc": "2026-11-06T12:37:55.228808+00:00",
+  "recordedBy": "/root",
+  "reviewer": "/root/offline_contract_review_medium",
+  "candidateAuthor": false,
+  "conclusion": "PASS_FOR_PROPOSED_TECHNICAL_QUALITY",
+  "subjectSha256": "59e013ec41d93eca8b87da575ba2358c9bbdbd7f5de2a6d230db9c8128d516ff",
+  "scope": "V6 proposal-document provenance correction only; reuse prior independent Source/oracle review, no formal baseline approval",
+  "checks": {
+    "exactCommittedDocumentationByteBasis": true,
+    "fixedLocalSourceCommit": "c0d853f48c05f74981cea4857d3217e022b84596",
+    "authorityPaths": 7,
+    "noDigestTransformationFallbackFetchOrWrite": true,
+    "nonzeroGitResultRefuses": true,
+    "original43InputsAndScenariosUnchanged": true,
+    "countsControlsNullUnsetAndExecutionCountersUnchanged": true,
+    "historicalV4V5AndReviewsPreserved": true
+  },
+  "executionEvidence": {
+    "rootReadmeResult": "96 files / PROPOSED / proposed-6 / installable false; fixed7 git show hashes and Git-policy tracked-content diff guard exit0",
+    "reviewerMethod": "Independent static/delta/hash review; root runtime evidence reused",
+    "reviewerAdditionalGitCall": "Not executed: automatic review deadline expired; not retried",
+    "lfCopyRuntimeTest": false
+  },
+  "remaining": [
+    "formal baseline/denominator/threshold decision",
+    "actual complete product/E2E/model evidence",
+    "A6 actual full qualification"
+  ],
+  "installable": false,
+  "baselineApproved": false
+}

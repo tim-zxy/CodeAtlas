@@ -6,18 +6,18 @@
   "sourcePins": [
     {
       "path": "scripts/mixed-native-host-launch-inventory.cs",
-      "bytes": 1541,
-      "sha256": "0bf882b32fc45f80696f951876140e3c897774d4f0d2f8184a48ee1a0abd7cbb"
+      "bytes": 1561,
+      "sha256": "023889a0b6e83ee334d2e8a13c760d87830bbe30dd64b7fc82ef10197c2595a2"
     },
     {
       "path": "scripts/test-mixed-native-host-launch-inventory-double.cs",
-      "bytes": 6981,
-      "sha256": "cdff8d16c2b07cb6cde66ec6e5349648fface57fb50088fa8ce6bb54423f3876"
+      "bytes": 7031,
+      "sha256": "266b21f6794707bf4120b0072f6c86407e378c1c7c727e53d9007c7c71f63cf1"
     },
     {
       "path": "scripts/test-mixed-native-host-launch-inventory.ps1",
-      "bytes": 366,
-      "sha256": "47e0ef87c5e8657a405a1cc755e41a1442c1bb11ce5029a902c304d5a1780f2f"
+      "bytes": 363,
+      "sha256": "5cbfe3e2b4fdc3306bd1c158554a913d5ab9290b6e77afd7aabe7dc8f8d12e53"
     },
     {
       "path": "scripts/mixed-native-host-startup.cs",
@@ -39,7 +39,10 @@
     "actualWindowsPInvokeCalls": 0,
     "actualHostStarts": 0,
     "actualNativeSourceGitRuns": 0,
-    "initialSandboxStartRefusal": "candidate-red.json, not counted as RED; normal permission escalation compiled successfully; no ExecutionPolicy/Unblock/inline workaround"
+    "initialSandboxStartRefusal": "candidate-red.json, not counted as RED; normal permission escalation compiled successfully; no ExecutionPolicy/Unblock/inline workaround",
+    "checkoutByteIntegratedAssertions": 26,
+    "checkoutByteIntegratedExitCode": 0,
+    "checkoutTrackedContentChanged": false
   },
   "review": {
     "reviewer": "/root/n1_tests_medium",
@@ -81,5 +84,6 @@
     "OS/path protection semantics and authenticated channel",
     "trusted complete consumer settlement",
     "current exact qualification packet and approved real runs"
-  ]
+  ],
+  "sourcePinByteBasis": "Local compiled checkout bytes, with only the three newly owned files brought to existing Git checkout EOL policy. Original candidate bytes/RED evidence remain in the isolated receipts; no unowned normalization."
 }
