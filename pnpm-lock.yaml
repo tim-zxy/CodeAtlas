@@ -41,6 +41,9 @@ importers:
       '@codeatlas/contracts':
         specifier: workspace:*
         version: link:../contracts
+      '@codeatlas/documents':
+        specifier: workspace:*
+        version: link:../documents
       '@codeatlas/execution':
         specifier: workspace:*
         version: link:../execution

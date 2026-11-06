@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@codeatlas/contracts": "workspace:*",
+    "@codeatlas/documents": "workspace:*",
     "@codeatlas/execution": "workspace:*",
     "@codeatlas/ir": "workspace:*",
     "@codeatlas/source": "workspace:*"

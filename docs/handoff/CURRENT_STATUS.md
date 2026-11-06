@@ -1,3 +1,27 @@
+## Document security preflight component - 2026-11-06
+
+Private stdlib detector now inspects actual UTF8 Source and all final structural
+Draft strings/keys. It detects explicit private-key/credential indicators and
+returns rule IDs without matches. Coverage is LIMITED and clearance always false;
+absence of known patterns never grants write/remote authority. Application reuses
+prepared Source, immutable Draft and final Source/control recheck. Both findings
+and insufficient coverage return document NOT_COMMITTED; previous Source effects
+remain distinct. No Store callback/public route or actual parser was added.
+
+Two changed-package builds pass; final affected cohort119/119 and architecture17
+pass. Exact internal Application->Documents link passes offline frozen install;
+no new external dependency. [Evidence](../superpowers/reviews/2026-11-06-document-secret-preflight.json)
+and [implemented boundary / precise parser and scan decisions](../superpowers/specs/2026-11-06-document-secret-preflight.md).
+CI134 terminated on base4f250a0: Rust passed, Native hit unchanged R8 catalog
+prerequisite; TS main cohort5029PASS/1FAIL/20existingSKIP. Sole failure was the
+current workspace migration isolation test expecting old6 instead of actual8.
+Same local RED reproduced; exact8/FK/document-table checks now pass in19/19
+migration tests, preserving too-new/Native table isolation and old Fixture bytes.
+This fix joins the current batch; no CI rerun of the old commit.
+Actual secret-coverage policy, parser adoption and full write orchestration remain
+open. Old SQL/Fixtures/R8 catalog and numeric gates unchanged; R9 not run.
+Phase1 remains4/21; A6 NOT_QUALIFIED; E02 PROPOSED/uninstalled.
+
 ## P1-10 Draft, original positions and compatible structural Store - 2026-11-06
 
 Private Documents maps original UTF16 offsets to zero-based UTF8 byte columns,

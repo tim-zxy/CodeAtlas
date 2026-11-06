@@ -11,6 +11,7 @@ import { DocumentStore } from '../../storage/dist/documents/document-store.js';
 import { assembleDocumentDraft } from '../../documents/dist/document-draft.js';
 import prepareSource from '../dist/mixed-source-workflow.js';
 import { authorizeOperation } from '../dist/operation-policy.js';
+import { checkDocumentWrite } from '../dist/document-write-preflight.js';
 const vector = JSON.parse(
   await fs.readFile(
     new URL('../../documents/test/fixtures/source-draft.json', import.meta.url),
@@ -120,6 +121,24 @@ test('offline selected Source to literal Draft and SQLite Store preserves raw bi
   assert.equal(current.bundle.payload.revision.sourceFingerprint, raw.contentFingerprint);
   assert.deepEqual(current.bundle.payload.blocks, draft.payload.blocks);
   assert.equal(db.prepare('SELECT count(*) n FROM claims').get().n, 0);
+  // Actual controlled Source read and strict Draft inspection, still no scan clearance.
+  const before = db.prepare('SELECT count(*) n FROM document_revisions').get().n;
+  for (const secret of [false, true]) {
+    const candidate = structuredClone(envelope);
+    if (secret) candidate.payload.blocks[0].payload.text = 'password=synthetic-only';
+    const result = await checkDocumentWrite({
+      source: prepared,
+      path: 'note.md',
+      envelope: candidate,
+      account: shared.account,
+    });
+    assert.equal(result.status, 'NOT_COMMITTED');
+    assert.equal(result.reason, secret ? 'SECRET_DETECTED' : 'SECRET_COVERAGE_INCOMPLETE');
+    assert.equal(result.scan.clearance, false);
+    assert.equal(JSON.stringify(result).includes('synthetic-only'), false);
+    assert.equal(db.prepare('SELECT count(*) n FROM document_revisions').get().n, before);
+  }
+
   raw.bytes.fill(0);
   assert.throws(() => assembleDocumentDraft(raw.bytes, envelope, makeAccount().account), {
     code: 'DOCUMENT_SOURCE_MISMATCH',

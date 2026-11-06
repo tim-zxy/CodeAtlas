@@ -1,3 +1,13 @@
+## P1-10 candidate inspection without fabricated clearance - 2026-11-06
+
+SECURITY source/secret controls + ADR-004/020 -> private deny-only raw/candidate
+indicator inspection -> Application controlled Source + strict Draft + final
+Source/control recheck -> explicit NOT_COMMITTED/insufficient-coverage result.
+No raw match or authorization token is returned; public/Store/remote boundaries
+unchanged. New synthetic security tests and real Source/owned-SQLite component
+checks are mandatory test roots. [Exact evidence and limits](../superpowers/reviews/2026-11-06-document-secret-preflight.json).
+P1-10/E07/P1-12/phase gates remain open, parser and detection-coverage approval separate.
+
 ## P1-10 strict IR to private structural storage - 2026-11-06
 
 Original Source bytes + strict Document IR -> private UTF8 geometry/immutable Draft

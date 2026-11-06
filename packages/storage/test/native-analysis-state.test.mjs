@@ -299,7 +299,15 @@ const cases = {
       });
       const workspace = new DatabaseSync(workspacePath);
       try {
-        assert.equal(workspace.prepare('PRAGMA user_version').get().user_version, 6);
+        // This branch installs the actual CURRENT workspace manifest, not the historical R010 prefix.
+        assert.equal(workspace.prepare('PRAGMA user_version').get().user_version, 8);
+        assert.deepEqual(workspace.prepare('PRAGMA foreign_key_check').all(), []);
+        assert.equal(
+          workspace
+            .prepare("SELECT count(*) n FROM sqlite_master WHERE name='document_revisions'")
+            .get().n,
+          1,
+        );
         assert.deepEqual(
           workspace
             .prepare("SELECT name FROM sqlite_master WHERE name LIKE 'native_analysis_%'")

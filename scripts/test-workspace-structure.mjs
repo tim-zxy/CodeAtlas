@@ -43,6 +43,7 @@ expectedPackageDependencies.source = { '@codeatlas/ir': 'workspace:*' };
 expectedPackageDependencies.storage = { '@codeatlas/ir': 'workspace:*' };
 expectedPackageDependencies.application = {
   '@codeatlas/contracts': 'workspace:*',
+  '@codeatlas/documents': 'workspace:*',
   '@codeatlas/execution': 'workspace:*',
   '@codeatlas/ir': 'workspace:*',
   '@codeatlas/source': 'workspace:*',
@@ -217,6 +218,14 @@ test('workspace scripts expose and compose the architecture dependency gate', as
   assert.ok(
     manifest.scripts.verify.indexOf('pnpm test:native-handshake') <
       manifest.scripts.verify.indexOf('cargo clippy --workspace'),
+  );
+});
+
+test('private document security preflight remains in mandatory tests', async () => {
+  const manifest = JSON.parse(await readFile('package.json', 'utf8'));
+  assert.ok(manifest.scripts.test.includes('packages/documents/test/secret-preflight.test.mjs'));
+  assert.ok(
+    manifest.scripts.test.includes('packages/application/test/document-write-preflight.test.mjs'),
   );
 });
 
