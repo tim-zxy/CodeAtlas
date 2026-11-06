@@ -48,3 +48,5 @@ export * from './effective-config.js';
 
 export * from './syntax-observation-profile.js';
 export * from './native-syntax-admission.js';
+
+export { inspectInstallCapabilities } from './install-capabilities.js';

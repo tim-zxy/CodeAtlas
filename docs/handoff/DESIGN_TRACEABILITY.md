@@ -1,3 +1,14 @@
+## P1-19 CLI read-only diagnostics wiring - 2026-11-06
+
+Existing inspectInstallCapabilities + persisted index status -> doctor explicit
+budget/report-only JSON and status alias preserving old request/result -> real child
+empty-cwd/no-tools/no-write, strict flags, actual SQLite equality/unchanged bytes,
+closed pipe and safe IO-failure regressions. Separate Runtime/CLI builds, affected
+70/70 and architecture17 pass; read-only review clear. No Native/protocol probe,
+configuration/permission change, new default or old public result change.
+[Exact evidence](../superpowers/reviews/2026-11-06-cli-readonly-diagnostics.json).
+P1-19 complete packaging/install and formal Phase1 gates remain open.
+
 ## P1-19 private installation admission observation - 2026-11-06
 
 Existing reporting-only inspectInstallCapabilities -> private installed-environment

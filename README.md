@@ -24,3 +24,23 @@ The canonical flow naming is `ExecutionGraph -> RuntimeFlow -> BusinessFlow`.
 ## Long term repository use
 
 Keep `docs/handoff/` versioned with the implementation repository. The root `AGENTS.md` points Engineering Agents there and establishes the mandatory read-before-change protocol. After every completed work item, update `docs/handoff/CURRENT_STATUS.md`; after every design change, update the affected specs, acceptance criteria, traceability, and ADR record together.
+
+
+## Read-only CLI diagnostics
+
+After the normal workspace build, `doctor --memory-budget-bytes <N>` reports the
+installed JavaScript environment and the existing resource admission checks using
+an explicit positive safe integer budget. It does not probe Native, install tools,
+index, migrate, repair or change configuration. Exit 0 means the JSON report was
+written; `nativeBinary: NOT_PROBED` and `executionAuthorized: false` still apply.
+A refused admission is reported as data, not hidden as an empty success. Inspection
+or output failure exits 1; invalid arguments exit 2. `doctor --help` lists usage.
+
+`status` is a direct alias for `index status`: supply `--database`, `--repository`,
+`--max-metadata-rows`, `--max-result-bytes` and `--timeout-ms`. It reads persisted
+repository metadata only, returns the existing INDEX_STATUS JSON and never indexes
+or initializes a missing database. WORKTREE is NOT_OBSERVED and a persisted baseline
+is not fresh execution admission. Existing `index status` remains unchanged.
+
+These diagnostic commands do not establish complete installation, protocol/platform
+compatibility or Phase 1 acceptance. No budget defaults are provided.

@@ -1,0 +1,63 @@
+{
+  "kind": "P1_19_READONLY_CLI_DIAGNOSTICS",
+  "date": "2026-11-06",
+  "base": "5ff16daab3480f2932206d0d95139d6a6fb720b5",
+  "status": "CLI_COMPONENT_VERIFIED_NOT_FULL_INSTALL_ACCEPTANCE",
+  "contract": [
+    "doctor --memory-budget-bytes positive-safe-decimal: exact existing inspector report JSON, exit0 means report output, not binary readiness/execution permission; NOT_PROBED and false authority retained",
+    "doctor --help describes constraints; invalid shape/budget exit2, no diagnostic IO; inspection/output failures fixed safe JSON stderr and exit1",
+    "status forwards index status with identical request validation, budgets, response JSON and read-only session, no new defaults",
+    "existing index/understand/trace/smoke data contracts unchanged; normal Runtime export only, no direct app provider/Storage bypass or added dependency"
+  ],
+  "evidence": {
+    "red": "Initial missing routes failed actual-child doctor/help/errors/pipe checks; status test initially missed fixture control, corrected and separately observed missing alias route RED before implementation.",
+    "focusedChildGreen": 5,
+    "finalAffected": {
+      "pass": 70,
+      "fail": 0,
+      "skip": 0,
+      "command": "node --test apps/cli/test/doctor.test.mjs apps/cli/test/index-command.test.mjs apps/cli/test/code-query.test.mjs apps/cli/test/smoke.test.mjs packages/runtime/test/install-capabilities.test.mjs packages/runtime/test/runtime-bootstrap.test.mjs scripts/test-runtime-construction.mjs scripts/test-workspace-structure.mjs",
+      "log": "local temporary codeatlas-cli-diagnostics-tests.log"
+    },
+    "actualChecks": [
+      "doctor child runs from empty owned cwd with PATH without tools, produces no files and NOT_PROBED report",
+      "owned real SQLite status alias produces byte-identical original INDEX_STATUS JSON and unchanged DB bytes",
+      "strict unknown/write/missing/duplicate/unsafe budget refusal; missing DB not created",
+      "actual closed stdout pipe and unit inspection/stdout/stderr failure return safe code and release listeners"
+    ],
+    "build": [
+      "initial joint tsc -b invocation failed CLI lookup of new Runtime export",
+      "normal separate package builds node node_modules/typescript/bin/tsc -p packages/runtime/tsconfig.json then -p apps/cli/tsconfig.json passed; package links unchanged, no bypass import"
+    ],
+    "architectureProjects": 17,
+    "format": "scoped Prettier and git diff --check passed"
+  },
+  "independentReview": {
+    "reviewer": "r9_stop_review_medium",
+    "result": "No important findings or contract expansion; existing report exposure and index status alias",
+    "mode": "read-only specified implementation/tests/README/plan; no tests/build/write/R9"
+  },
+  "ci143": {
+    "run": 42311132263,
+    "head": "1562fcd",
+    "typescript": "success; segments 5031PASS/20existingSKIP,84PASS,243PASS",
+    "rust": "success",
+    "native": "failure: R8 script catalog mismatch confirmed complete log",
+    "noRerun": true
+  },
+  "ci144": "Original run42312256105 pending TypeScript at last observation, Rust passed and Native failed. Results concern prior5ff16da, not this new CLI.",
+  "notDone": [
+    "no Native binary protocol/platform probe or actual R9 build/sampling",
+    "no install/init/setup/packaging/production config writes or P1-19 full acceptance",
+    "no parser/capture/scan-clearance/core identity/resource/profile change"
+  ],
+  "r9": "Historical prefreeze unchanged; changed Runtime/CLI source/dist needs a fresh approved future execution freeze.",
+  "formalAcceptance": "4/21; A6 NOT_QUALIFIED; E02 PROPOSED/uninstalled",
+  "sha256": {
+    "apps/cli/src/doctor.ts": "32a0069b3f13ae605b02fa93ca40c266cd75b62393b044e0d2caf9ada05de83e",
+    "apps/cli/src/main.ts": "f4b5ee201d56822ad2ca2fa5a11380988bc13248d49928e935f57051d335fb7f",
+    "apps/cli/test/doctor.test.mjs": "ac7f7a9799a7a4e8a126a73cd1ac4ed5d88ae3e7b489049dcd64fe92960f64fa",
+    "packages/runtime/src/index.ts": "c8da56e628c6a07f5950658f1ba71123cdce5a4d57fa822b326c1ec0cacb7ab2",
+    "package.json": "27bf718607cc173bc094a425214598c02ac471e46d973a997571f9ba5315accd"
+  }
+}

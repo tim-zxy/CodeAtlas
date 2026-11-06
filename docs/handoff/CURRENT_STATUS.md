@@ -1,3 +1,29 @@
+## P1-19 readonly doctor/status CLI connected - 2026-11-06
+
+Actual CLI doctor requires an explicit positive safe decimal --memory-budget-bytes
+and writes the existing inspector JSON. Exit0 means report output only: Native is
+NOT_PROBED and executionAuthorized=false. Invalid args exit2; inspection or output
+errors exit1 with safe fixed JSON stderr. No defaults, Native probe, repair/config/
+DB initialization or writes. status is a direct index status alias: same request,
+explicit budgets, original INDEX_STATUS JSON/errors and read-only storage behavior.
+Old index/understand/trace/smoke semantics remain. Runtime exposes the existing
+observer through its normal package boundary; no new dependency or direct app bypass.
+
+Separate Runtime/CLI package builds pass; affected70/70, architecture17 and format
+pass. Actual child doctor works from empty cwd with PATH without tools and no new
+files; actual SQLite status matches original JSON and keeps DB bytes. Strict flags,
+closed stdout pipe and inspection/stdout/stderr failures covered. Independent
+read-only review found no important defects/contract expansion. Initial fixture
+setup and joint-build lookup errors are recorded accurately, not qualification.
+[Exact evidence](../superpowers/reviews/2026-11-06-cli-readonly-diagnostics.json).
+
+CI143 prior1562fcd ended TS/Rust success and Native R8 script catalog mismatch;
+TS segments5031PASS/20existingSKIP,84PASS,243PASS. CI144 prior5ff16da still TS pending
+at last observation, Rust success/Native failure. No rerun and no old-head claim
+for this new CLI. Full installation/packaging/platform/protocol and Phase1 exits
+remain open; parser/capture approvals and real R9 remain separate. R9 prefreeze is
+untouched historical evidence. Phase1 stays4/21; A6 NOT_QUALIFIED.
+
 ## Private P1-19 admission inspection component verified - 2026-11-06
 
 Continued an independently useful P1-19 reporting slice: inspectInstallCapabilities
