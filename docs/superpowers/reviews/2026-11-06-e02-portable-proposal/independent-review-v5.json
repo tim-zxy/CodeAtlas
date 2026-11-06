@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "kind": "INDEPENDENT_E02_PROPOSED_TECHNICAL_REVIEW",
+  "recordedUtc": "2026-11-06T12:15:43.575362+00:00",
+  "recordedBy": "/root",
+  "reviewer": "/root/offline_contract_review_medium",
+  "candidateAuthor": false,
+  "conclusion": "PASS_FOR_PROPOSED_TECHNICAL_QUALITY",
+  "conclusionScope": "Noninstallable proposed Source/oracle quality and metadata binding only; not formal E02 acceptance, denominator/threshold approval, installation or actual recall.",
+  "candidate": {
+    "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/candidate-v5.json",
+    "sha256": "12e299c25194379406555babb037efa6d8a94b077146bd241eefd90150796240",
+    "version": "proposed-5",
+    "status": "PROPOSED",
+    "installable": false,
+    "formalDenominator": null,
+    "thresholdState": "UNSET",
+    "currentVersionIndependentReview": null
+  },
+  "reusedIndependentBodyReview": {
+    "subjectSha256": "5ea637009c1f26497904640ac9f355a82111aa52cc0b8c7ee5041ff7acc82584",
+    "originalFiles": 92,
+    "payloads": 91,
+    "e2eInputPins": 43,
+    "frameworkInputPins": 29,
+    "digestReferences": 151,
+    "literalSourceLines": 390,
+    "repositories": 6,
+    "sourceFiles": 25,
+    "mutationFingerprints": 8,
+    "knowledgeCandidates": 7,
+    "knowledgeSourceDocumentSupports": 15,
+    "requiredProbeFamilies": 22,
+    "proposedSets": [
+      {
+        "name": "fourFrameworks",
+        "slots": 21,
+        "mandatoryControls": 8
+      },
+      {
+        "name": "vulnerabilityProcessing",
+        "slots": 14,
+        "mandatoryControls": 3
+      },
+      {
+        "name": "springFastapiKafka",
+        "slots": 16,
+        "mandatoryControls": 6
+      }
+    ]
+  },
+  "targetedV5Checks": {
+    "supplementEntries": 3,
+    "exactMissingProvenanceRestored": 2,
+    "currentAuthorityPinsMatched": 7,
+    "stableRecallAnchorMatched": true,
+    "original92ArchiveUnchanged": true,
+    "sourceOracleScenarioCountsUnchanged": true,
+    "historicalReviewsNotInherited": true,
+    "currentVersionSelfApprovalAbsent": true
+  },
+  "remaining": [
+    "formal baseline/denominator/threshold decision",
+    "actual complete product/E2E/Application/Agent evidence",
+    "required actual model evidence or explicit governed applicability",
+    "A6 and original parent gates"
+  ],
+  "execution": {
+    "source": 0,
+    "model": 0,
+    "native": 0,
+    "ci": 0,
+    "baselineInstallations": 0
+  }
+}

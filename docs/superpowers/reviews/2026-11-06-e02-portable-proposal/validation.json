@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "kind": "PORTABLE_E02_BYTE_VALIDATION",
+  "utc": "2026-11-06T12:15:43.575362+00:00",
+  "status": "PASSED_BYTE_INTEGRITY_ONLY",
+  "command": "README.md PowerShell here-string -> existing Node --input-type=module, no Source execution",
+  "node": "v24.15.0",
+  "exitCode": 0,
+  "files": 95,
+  "originalFiles": 92,
+  "originalUniquePayloads": 91,
+  "continuationEntries": 3,
+  "activeCandidateSha256": "12e299c25194379406555babb037efa6d8a94b077146bd241eefd90150796240",
+  "allCompressedDecodedFileLengthsAndShaMatched": true,
+  "allCurrentAuthorityShaMatched": true,
+  "formalDenominator": null,
+  "thresholdState": "UNSET",
+  "installable": false,
+  "sourceOracleInputBytesReused": 43,
+  "frameworkPinsReused": 29,
+  "wrapperErrorsPreserved": "Initial README writer had a PowerShell here-string delimiter parse error before writing; first launch wrapper fed Python directly to Node and failed before validation. Corrected README code ran successfully; neither error is counted as a gate result."
+}

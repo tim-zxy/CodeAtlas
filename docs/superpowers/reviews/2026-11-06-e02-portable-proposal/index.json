@@ -1,0 +1,549 @@
+{
+  "schemaVersion": 1,
+  "kind": "E02_PROPOSED_PORTABLE_REVIEW_INDEX",
+  "status": "PROPOSED",
+  "installable": false,
+  "formalDenominator": null,
+  "thresholdState": "UNSET",
+  "archive": {
+    "path": "original-bytes.json.gz",
+    "bytes": 291105,
+    "sha256": "63bc13bb3e9ecc44c9919efd2ad0d8aa74e9a13bf6302a4a143e5f76926d9a33",
+    "decodedBytes": 1554675,
+    "decodedSha256": "208350d24265c38f6c3f846ec4d1bccc3b635ba14fe86b1e1f771a4695d97a4a"
+  },
+  "fileCount": 92,
+  "uniquePayloadCount": 91,
+  "originalBytes": 1149084,
+  "activeCandidates": [
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/candidate-v4.json",
+      "sha256": "5ea637009c1f26497904640ac9f355a82111aa52cc0b8c7ee5041ff7acc82584",
+      "currentVersionIndependentReview": null
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-next-gates-approval/e02-proposed/candidate-v2.json",
+      "sha256": "b8178e1ed76444ea265e4dd39ad9bc2a72568202601b1e49a7c3cfd7c639a574",
+      "originalIndependentReview": ".superpowers/sdd/2026-11-04-next-gates-approval/e02-proposed/independent-review-v2.json"
+    }
+  ],
+  "proposedSets": {
+    "fourFrameworks": 21,
+    "vulnerabilityProcessing": 14,
+    "springFastapiKafka": 16,
+    "combinedDenominator": null
+  },
+  "coverage": "All 43 candidate-v4 input pins and all29 four-framework source/continuity pins, all61 original proposal/history/review files, and2 exact provenance records. Authority documents remain repository dependencies; old whole-document pin drift is not repaired or certified here.",
+  "reviewApplicability": "E2E reviews cover original candidate and candidate-v2 only. Candidate-v4 independent review remains pending; do not inherit historical PASS.",
+  "syntheticSecurityControl": {
+    "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/sources/va-api/.env.example",
+    "sha256": "cebf6d8d61acc03e7e198f4422cc6cf82ae176497f1a15b928183fb2633455d7",
+    "role": "Explicit candidate-pinned SYNTHETIC_SOURCE security control; no user/environment credential file collected."
+  },
+  "files": [
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/author-receipt-v2.json",
+      "bytes": 30705,
+      "sha256": "8feefce041e40c56cf168dd01eb2ae70b4e54fb02572af3be9a3ab3e74643d64"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/author-receipt.json",
+      "bytes": 16888,
+      "sha256": "3987183df3c831c5adf75271de5c394aca3c3e733e6ce2f49eedacabbaeafb88"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/candidate-v2.json",
+      "bytes": 20095,
+      "sha256": "15f6f3941b4e9bdfdb9f8a3b046c1317f2ad99a644f5954d3ac31d0b131b1b53"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/candidate-v3.json",
+      "bytes": 18453,
+      "sha256": "b423f30fa05f7209f8ec4aacfe9c14ff680a78535b8a4fe944ec9be6ee7946f1"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/candidate-v4.json",
+      "bytes": 18262,
+      "sha256": "5ea637009c1f26497904640ac9f355a82111aa52cc0b8c7ee5041ff7acc82584"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/candidate.json",
+      "bytes": 17733,
+      "sha256": "817cbf46677a4e27bda64c7009fa03cecf8a828dcc18a61f22c2da280f145ddd"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/independent-review-v2.json",
+      "bytes": 23578,
+      "sha256": "b8f3ce636a732fce7d139757df7d284dc9b58b504818bf09963ca2e93e4a92c7"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/independent-review.json",
+      "bytes": 33054,
+      "sha256": "7585c188a283d0233bd7aa3a4a06bf8d07f126bb4b6e13edd63c2ced5780ad69"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/spring-fastapi-kafka/changes/SF-ADD-ENTRY/sf-catalog/catalog.py",
+      "bytes": 312,
+      "sha256": "1625b9a4f9a0927fc7904ed559bccdf6e8c7c0190901104a9518a25657361587"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/spring-fastapi-kafka/changes/SF-DELETE-ENTRY/sf-catalog/catalog.py",
+      "bytes": 176,
+      "sha256": "efe0c0eab7f50c760d79540a68e27701652f00a89c3a9acaef1217286d4aaa0a"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/spring-fastapi-kafka/changes/SF-PATH-CHANGE/sf-catalog/catalog.py",
+      "bytes": 264,
+      "sha256": "924788b5352bd3d3e6fd0f92627c6b3a260991e6162fd4dcf824c13d31208fd2"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/spring-fastapi-kafka/expected/probes-v2.json",
+      "bytes": 25307,
+      "sha256": "2772314ff05a4db3a911e0356034bda2bedab561aaeb168199fac5c55fbaadbd"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/spring-fastapi-kafka/expected/probes.json",
+      "bytes": 24769,
+      "sha256": "42f44463c3873a59fb476649e8d61a71bca60795e19eefa00fecec1a173114f7"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/spring-fastapi-kafka/expected/runtime-v2.json",
+      "bytes": 38290,
+      "sha256": "dcd9fb5734c9366c1bf5c49704c49df263c6230d8f74681559b4e211552b2033"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/spring-fastapi-kafka/expected/runtime.json",
+      "bytes": 35257,
+      "sha256": "65d794d71b51c413c7fffe074149ce4cfd646731645a27d307438bf62209391c"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/spring-fastapi-kafka/mutations.json",
+      "bytes": 5079,
+      "sha256": "8a68c234df20ac2c4250344a1696aa6f621ba0b997162f333a36fe3a763dd951"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/spring-fastapi-kafka/repository-inventory.json",
+      "bytes": 5391,
+      "sha256": "438d356d378ae7a9aee1766c85d05cf9b47b117d6e1d5a5978cb4e613520dee0"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/spring-fastapi-kafka/sources/sf-catalog/catalog.py",
+      "bytes": 261,
+      "sha256": "8319363c2995d9bd43dc1d4f04f162438fd087a43dc28185007551b2698a7171"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/spring-fastapi-kafka/sources/sf-catalog/negative_controls.py",
+      "bytes": 470,
+      "sha256": "25d393ff593ef7f9f5b36ec7498ddb842a85cb3cc39f8dbd8a62717d5dd8e857"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/spring-fastapi-kafka/sources/sf-events/BatchConfiguration.java",
+      "bytes": 569,
+      "sha256": "4da59e3d49011ba61bf869f6629ee1289c228fdf9a4a70e64cc168f5b3987639"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/spring-fastapi-kafka/sources/sf-events/BoundaryControls.java",
+      "bytes": 414,
+      "sha256": "bebe5188e9cc681b59a6d78435277fcbacee87e85888bc2ae09c3e8adfec5e21"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/spring-fastapi-kafka/sources/sf-events/EventWorker.java",
+      "bytes": 1294,
+      "sha256": "c95dec25d6e22311c526e3a6f6c96e44a73ef4b906e7b3d95e777aace3c6601d"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/spring-fastapi-kafka/sources/sf-events/ScenarioConfiguration.java",
+      "bytes": 1761,
+      "sha256": "e0bf28deb13b4813e6a339c97ce220bc79ad8c30a7dedde71519d0fc0e0f6b54"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/spring-fastapi-kafka/sources/sf-events/runtime-environment.json",
+      "bytes": 1137,
+      "sha256": "de74d12cf517e4c309903e704ad23015fb2c3d9e151e448f71891646042fdbf5"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/spring-fastapi-kafka/sources/sf-gateway/ADR-001.md",
+      "bytes": 709,
+      "sha256": "e4cd5387e4f9cc1578bb48f4f0ad691293e84b42872d818f61ec458e8c1e5322"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/spring-fastapi-kafka/sources/sf-gateway/DEPENDENCIES.md",
+      "bytes": 548,
+      "sha256": "13a4e161e6274655c6223cb5dea31ac85b3da284aee2107c5b89cf482a8e455f"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/spring-fastapi-kafka/sources/sf-gateway/Gateway.java",
+      "bytes": 918,
+      "sha256": "452818e04afaa09ebde54fc342aa872539d2653c4c30152fd3cea50a6f0cd847"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/spring-fastapi-kafka/sources/sf-gateway/Lookalike.java",
+      "bytes": 184,
+      "sha256": "3d58a948f0baae8273eaf472c32f09cfa0235d16546898eaecdc35489cf598c4"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/spring-fastapi-kafka/sources/sf-gateway/README.md",
+      "bytes": 925,
+      "sha256": "5e71ad6f616f911958db4d63de99fc7ec8fc0be3447a25331562a2db93a0b4b0"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/spring-fastapi-kafka/sources/sf-gateway/contracts.json",
+      "bytes": 4739,
+      "sha256": "effea92dac9e1bb0ce69a1d37458597db632315dc111fc3029ee126fd2ab54df"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/changes/VA-DOC-RENAME/va-api/Decision-Processing.md",
+      "bytes": 969,
+      "sha256": "254fdab5aafa683c3b4927ba113f0e9f50cf7e0b46feb8e4cc6f33e7d3f32a94"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/changes/VA-DOC-REWORD/va-api/ADR-001.md",
+      "bytes": 968,
+      "sha256": "d3f54625fa5b098df038bcee6b28d5376326d0272fb1941b6dd6616f12207272"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/changes/VA-DOC-SPLIT/va-api/ADR-Processing.md",
+      "bytes": 343,
+      "sha256": "94cc95b043cd01ea480d4c5754ee4ec4c25d8ec7732955a7d55876035da7cb02"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/changes/VA-DOC-SPLIT/va-api/ADR-Scoring.md",
+      "bytes": 306,
+      "sha256": "8006c0ce7e6477e6dc80612bae6d84da94e15938bef17d5bf0c8a5289e33cca0"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/changes/VA-ROUTE-CHANGE/va-scoring/scoring.py",
+      "bytes": 293,
+      "sha256": "5b21579bc690381deff0b8bbd2fd0378058635ddb4a4214f13aa8792f79f1fe0"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/changes/VA-TOPIC-RENAME/va-api/VulnerabilityApi.java",
+      "bytes": 1490,
+      "sha256": "a05a9093d854ec93baf28eeafe6d08d2286a3975a3ef3fa4c6f8c611a1bb81b7"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/expected/knowledge-v2.json",
+      "bytes": 6531,
+      "sha256": "929bc6a235888844071c36d7a19d75d4e51097274c382a0264d938216516f7c8"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/expected/knowledge.json",
+      "bytes": 3608,
+      "sha256": "1bf9630f4c8f8fbfe387bd423fb8dae6311c8669f944a1d6be1108acd19d1f25"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/expected/probes-v2.json",
+      "bytes": 29527,
+      "sha256": "e7705914dfd1d430c24aa7fc1cd6c0e94dc7b96fa185197be0f36e11a815ecc1"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/expected/probes.json",
+      "bytes": 27934,
+      "sha256": "93cd67033772308ef6ecd61482d586d886ed9d7f83b6fc3623ee888eb68f65c8"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/expected/runtime.json",
+      "bytes": 29047,
+      "sha256": "dddf86c9af36829ebbdc2212c508867f3d1c25352aa21c7dca9d60266b867929"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/mutations.json",
+      "bytes": 8914,
+      "sha256": "37a5be8fd7ee2e5760d8efae17016fcfd1162c3709a02806107d3a95dbb80866"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/repository-inventory.json",
+      "bytes": 5130,
+      "sha256": "053164787df33f8862977347c289654b481513a98bd882c5654a5f10cf46b8f7"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/sources/va-api/.env.example",
+      "bytes": 101,
+      "sha256": "cebf6d8d61acc03e7e198f4422cc6cf82ae176497f1a15b928183fb2633455d7"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/sources/va-api/ADR-001.md",
+      "bytes": 969,
+      "sha256": "254fdab5aafa683c3b4927ba113f0e9f50cf7e0b46feb8e4cc6f33e7d3f32a94"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/sources/va-api/DEPENDENCIES.md",
+      "bytes": 406,
+      "sha256": "826d2dcf98fe97d2a114e16d7daab16a94969e4e48964cca44c597e647e69ec1"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/sources/va-api/README.md",
+      "bytes": 822,
+      "sha256": "e54c2da46977ba51f9e06a85d55902b1d5e3bb7385aa97519f97084ac61452b2"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/sources/va-api/VulnerabilityApi.java",
+      "bytes": 1493,
+      "sha256": "b818e282a48307398437403c2e7f9ad1f975f12997caa6731461130a20e77aa0"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/sources/va-api/contracts.json",
+      "bytes": 1923,
+      "sha256": "68c21b623494b6025ad993d055c29aaee24ad76d2786152817ed5d6e6645cb9e"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/sources/va-api/untrusted-note.md",
+      "bytes": 267,
+      "sha256": "d951e6cf441c57554ff05ef2752c05ec4e5eef8f731ce5b72dd33b200a0ba650"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/sources/va-scoring/scoring.py",
+      "bytes": 290,
+      "sha256": "9a0cabc1205cba7b3e3d52635b6776a94691d588c107627eac601bcc55fe3777"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/sources/va-worker/UnknownBoundaries.java",
+      "bytes": 501,
+      "sha256": "f01c83e7052f7a1bccd8ca36006b9bc40f087f7ca288028d57dce66740b8667f"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/sources/va-worker/VulnerabilityWorker.java",
+      "bytes": 1511,
+      "sha256": "d29aea5e994edbf98832e3ca7c399544abe06a04e279cf232fb8a5ac52fcf162"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/sources/va-worker/WatchStartup.java",
+      "bytes": 849,
+      "sha256": "75a03514a4f80db5ca73f75ebe7a354ab43294fa256640ac6d8e7439bb30a437"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/sources/va-worker/runtime-environment.json",
+      "bytes": 781,
+      "sha256": "34c093d53d54915671b327fad765a012bc13849ae6c6e8b820a4099a4fc46099"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-next-gates-approval/approval-package.json",
+      "bytes": 30867,
+      "sha256": "f0caaba3fb6686e726e21b376aa9ec2a65dab0211341e450b4a288e962b08e80"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-next-gates-approval/e02-proposed/author-receipt-v2.json",
+      "bytes": 10681,
+      "sha256": "de660394a9e3644b234e0f5f079a6f0b80725a08d162f17417a5b74c35a67736"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-next-gates-approval/e02-proposed/author-receipt.json",
+      "bytes": 9273,
+      "sha256": "9dc6149340fb9984c4a52862abb63583ea9bfbd888452e2a94f067657c6a8396"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-next-gates-approval/e02-proposed/candidate-v2.json",
+      "bytes": 77995,
+      "sha256": "b8178e1ed76444ea265e4dd39ad9bc2a72568202601b1e49a7c3cfd7c639a574"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-next-gates-approval/e02-proposed/candidate.json",
+      "bytes": 70036,
+      "sha256": "c470c6c1f3099ba066d0d38b11fcb5901c5ad9dc842e357dc15b6ae13fd888b9"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-next-gates-approval/e02-proposed/independent-review-v2.json",
+      "bytes": 12472,
+      "sha256": "0a3edd631ac73a3dbbbe921cbe4b101c4bfdec7a5f2cf634ee3738895f77ec9a"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-next-gates-approval/e02-proposed/independent-review.json",
+      "bytes": 12188,
+      "sha256": "327512fc04a9a6e43e916eff36b5ccb216e1bf882da8852c5d742c32a9348d84"
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-04-phase1-next-work-coordination/coordination.json",
+      "bytes": 9590,
+      "sha256": "f3a7662187b75aeabbadd7239244f356bbf4ae334c828d411b2bf5d9b2f27a57"
+    },
+    {
+      "path": "fixtures/phase1/fastapi/expected.json",
+      "bytes": 613,
+      "sha256": "fec1f99f8181bf4f7d13175708be2bc6a6db72683dde4591cb0cfc2cd0a014de"
+    },
+    {
+      "path": "fixtures/phase1/fastapi/fixture.json",
+      "bytes": 789,
+      "sha256": "4db0a0a67e013fec9e96e5e07c833b30a77cc2713998d6ff4220c68f45af6712"
+    },
+    {
+      "path": "fixtures/phase1/fastapi/inputs.json",
+      "bytes": 99672,
+      "sha256": "62297b11ace73927cfda79608f348b51fdc81656bbf7a40a7f50a4d862794984"
+    },
+    {
+      "path": "fixtures/phase1/fastapi/source-adequacy/README.md",
+      "bytes": 1269,
+      "sha256": "63e6b275edd69367e3e09dfba7192358feca0998e942a8d5bb9f4265c4d622c9"
+    },
+    {
+      "path": "fixtures/phase1/fastapi/source-adequacy/depends-annotation.py",
+      "bytes": 145,
+      "sha256": "e4a95bd6be7111aec30c89306d6a0399877f49b402786909639b8bf66b942fde"
+    },
+    {
+      "path": "fixtures/phase1/fastapi/source-adequacy/depends-default.py",
+      "bytes": 144,
+      "sha256": "320f9dc178a2a2e1438c99ca5e5e9427fcb76fe3233988557e996e3312524c97"
+    },
+    {
+      "path": "fixtures/phase1/fastapi/source-adequacy/depends-shadow.py",
+      "bytes": 181,
+      "sha256": "628f880423e489429101221a3fdee7e4f8b572a13f7d97a964d52b778bf2477d"
+    },
+    {
+      "path": "fixtures/phase1/fastapi/source-adequacy/inventory-service.py",
+      "bytes": 98,
+      "sha256": "7f722fffdcae86317fe7811a7d7d8bc5e6b98a8aa29d04d6259be134dc91350d"
+    },
+    {
+      "path": "fixtures/phase1/fastapi/source-adequacy/obligations.json",
+      "bytes": 1128,
+      "sha256": "2bc07b9b1455113f7824bf5d680f01bebf6d57711835535cfaa479ffbeb36dec"
+    },
+    {
+      "path": "fixtures/phase1/fastapi/source-adequacy/routes.py",
+      "bytes": 259,
+      "sha256": "813cdd3010ecf0fcb0436ade038954c4df5220ea9afcbfcbc93903a35fd00113"
+    },
+    {
+      "path": "fixtures/phase1/kafka/expected.json",
+      "bytes": 2213,
+      "sha256": "a368ed5fd49cbc1c3fd6f70c547289c5b93095d33db7531559eb51ea080f22d5"
+    },
+    {
+      "path": "fixtures/phase1/kafka/fixture.json",
+      "bytes": 490,
+      "sha256": "833804f88ae6b717ccc03c3d8450e476978d62b9c6ab7c2cbca48586629fc7ec"
+    },
+    {
+      "path": "fixtures/phase1/kafka/inputs.json",
+      "bytes": 89550,
+      "sha256": "d1aa45188254cde6ef0d2073655bfee399d4f6d93d313ab2fefd9266fd1a3f1d"
+    },
+    {
+      "path": "fixtures/phase1/kafka/source-adequacy/KafkaSource.java",
+      "bytes": 480,
+      "sha256": "75efaeb25730a4b46838fbfded89cc1b5ed53961663a6072a8f1ac22edbf1bfe"
+    },
+    {
+      "path": "fixtures/phase1/kafka/source-adequacy/obligations.json",
+      "bytes": 1070,
+      "sha256": "9a595fc6fc0e3e533ca47dd81ae071448041c2a616e53ca6e239f7bb2385c02f"
+    },
+    {
+      "path": "fixtures/phase1/mongo/expected.json",
+      "bytes": 1312,
+      "sha256": "59e7fbeb948ededd0262fe73c73327bf6be8f2c47609ef0831f46c7edc1f2e47"
+    },
+    {
+      "path": "fixtures/phase1/mongo/fixture.json",
+      "bytes": 699,
+      "sha256": "7a30b868718cf5383e34a48327cf893df2969b25a2d90f673afbe417e4462b78"
+    },
+    {
+      "path": "fixtures/phase1/mongo/inputs.json",
+      "bytes": 98765,
+      "sha256": "1d74559c88c21ddb7e83cb79925eb7c344ce37483b7f49eab19337ff8a27f830"
+    },
+    {
+      "path": "fixtures/phase1/mongo/source-adequacy/MongoSource.java",
+      "bytes": 574,
+      "sha256": "4e391a19440f353510dfcc34cc7b7e0e823ac5e804a3d30a860b1b0c7ed3dda3"
+    },
+    {
+      "path": "fixtures/phase1/mongo/source-adequacy/MongoWatchReferenceSource.java",
+      "bytes": 486,
+      "sha256": "d2fab9c854ea9e980aaef81d794948812f3d99eeba4b512891f272ce95aaee03"
+    },
+    {
+      "path": "fixtures/phase1/mongo/source-adequacy/MongoWatchSource.java",
+      "bytes": 489,
+      "sha256": "33070ee15c0e98d608ba23c09f0ae0c6e6d4232d5ff4f14b1ab01afbbeb1ca51"
+    },
+    {
+      "path": "fixtures/phase1/mongo/source-adequacy/obligations.json",
+      "bytes": 901,
+      "sha256": "0925216c20c2f7bf147e517d952ded46ed7afb158f7eec46afc76c53da79bd8c"
+    },
+    {
+      "path": "fixtures/phase1/mongo/source-adequacy/watch-obligations.json",
+      "bytes": 1649,
+      "sha256": "f05ac234728001dfa77a31df6e437fd5a3c5297fc5ab5a735fc3d4104a1038b1"
+    },
+    {
+      "path": "fixtures/phase1/spring/expected.json",
+      "bytes": 1323,
+      "sha256": "7e564a32ff807b8bc30c30babb1d9f290328ca377408a8db1144ed7ac3c6d018"
+    },
+    {
+      "path": "fixtures/phase1/spring/fixture.json",
+      "bytes": 561,
+      "sha256": "5baccfd56ccd001cd101c552bf46b2ce3083d405068129b2f15160823d0ba8e0"
+    },
+    {
+      "path": "fixtures/phase1/spring/inputs.json",
+      "bytes": 155922,
+      "sha256": "713ec9ae3a574987c3e0fa7d80d5748e6a5b9820dd0e18aa85ca8c23e80c98ba"
+    },
+    {
+      "path": "fixtures/phase1/spring/source-adequacy/InventoryProxySource.java",
+      "bytes": 567,
+      "sha256": "a0a167fa6bd460c2873055dfdc2017398fba7d2914bfeb801dee22e2fcc6565e"
+    },
+    {
+      "path": "fixtures/phase1/spring/source-adequacy/SpringSource.java",
+      "bytes": 848,
+      "sha256": "68b289e91e213417e4e473e718d5fa9d1b630baef7c344efd3214c02e126fc82"
+    },
+    {
+      "path": "fixtures/phase1/spring/source-adequacy/obligations.json",
+      "bytes": 1270,
+      "sha256": "cf5b732a0ce6909247cde344af997a9e63a43944fcbf9875b5c15a9b87d044d3"
+    }
+  ],
+  "continuation": {
+    "path": "continuation-bytes.json.gz",
+    "bytes": 18049,
+    "sha256": "53dc3729657c99b3096031361d3b947e11cfa679340d314491b9a746806f9e55",
+    "decodedBytes": 52184,
+    "decodedSha256": "b5b5bf8c55178ad836e3e685474d3f9514ef0adf43b0a30cc753dabf3de1862a",
+    "files": [
+      {
+        "path": ".superpowers/sdd/2026-11-04-collector-identity-offline/e02-e2e-gap-proposal.json",
+        "bytes": 17745,
+        "sha256": "b4733ea591886a0ac0728586bb4344b1f0c2acb34ff6cd7cbf8f57533d6a992f",
+        "role": "ORIGINAL_PROVENANCE"
+      },
+      {
+        "path": ".superpowers/sdd/2026-11-05-e02-authority-refresh/independent-review.json",
+        "bytes": 1785,
+        "sha256": "c0687cf3c38f8730d9679b9050df7b76339b80b3ec6ddbf69cf69eaf8ed0fd0a",
+        "role": "ORIGINAL_PROVENANCE"
+      },
+      {
+        "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/candidate-v5.json",
+        "bytes": 18855,
+        "sha256": "12e299c25194379406555babb037efa6d8a94b077146bd241eefd90150796240",
+        "role": "PROPOSED_METADATA_ONLY_REVISION"
+      }
+    ]
+  },
+  "currentCandidate": {
+    "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/candidate-v5.json",
+    "sha256": "12e299c25194379406555babb037efa6d8a94b077146bd241eefd90150796240",
+    "version": "proposed-5",
+    "status": "PROPOSED",
+    "installable": false,
+    "formalDenominator": null,
+    "thresholdState": "UNSET",
+    "currentVersionIndependentReview": {
+      "path": "independent-review-v5.json",
+      "subjectSha256": "12e299c25194379406555babb037efa6d8a94b077146bd241eefd90150796240",
+      "conclusion": "PASS_FOR_PROPOSED_TECHNICAL_QUALITY",
+      "baselineApproval": false
+    }
+  },
+  "combinedFileCount": 95,
+  "provenanceDisposition": "Original92 files retained byte-identically; exact missing gapProposal and v3 review added. PROPOSED v5 refreshes current authority/recall anchor only and clarifies historical mutation prose; old reviews never authorize v5."
+}

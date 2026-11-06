@@ -50,3 +50,12 @@ Spec: ../specs/2026-11-06-host-protected-inventory-offline.md. New scripts/mixed
 - [x] Concentrated new-slice review and shared status/trace/gates/index; reuse firstbatch source evidence without repeating its long tests.
 
 No real Start, actual complete tool inventory, OS guarantee or trusted full consumer settlement is complete. These are prerequisites for a separately reviewable real/platform packet, not permission to add a fallback or inferred success.
+
+## Executed launch-plan correlation continuation
+
+- [x] Freeze independent plan/Entry literal mismatch controls; preserve actual missing-class RED separately from the first sandbox compiler-start refusal.
+- [x] Add the pure void correlation module and literal original-lifetime/ledger memory test; no original lifetime/receiver implementation edit or Start binding.
+- [x] Integrate a PSScriptRoot-relative PowerShell runner, register it in the existing Windows offline job, and run integrated26/26. Independent final-delta review finds no blocking issue.
+- [ ] A fresh integrated source/CI qualification belongs to a later frozen stage; prior R8 CI is not adopted for new files. Real inventory, OS protections and complete actual consumer settlement remain open.
+
+Owned additions: scripts/mixed-native-host-launch-inventory.cs, scripts/test-mixed-native-host-launch-inventory-double.cs and scripts/test-mixed-native-host-launch-inventory.ps1. The ordinary offline CI registration does not authorize actual HOST/Native execution or new resource values.

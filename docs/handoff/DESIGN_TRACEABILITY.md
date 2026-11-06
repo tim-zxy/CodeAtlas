@@ -1,3 +1,9 @@
+## Launch/Entry correlation and E02 proposal byte portability - 2026-11-06
+
+Original fixed LaunchPlan -> pure void Validate against existing Tool/Bootstrap/Manifest/Ancestor Entry fields -> original Lifetime structural checks -> test-only Acquire/BeginConsumption/startup ledger/five settlements/reverse release. No actual Start binding, OS authenticity, inventory completeness or new authority. New26 memory assertions and Windows offline registration cover this primitive; original49/41/receiver evidence retains its original scope.
+
+Original approved E02 candidate-writing/review scope -> portable exact original Source/oracle/proposal bytes -> explicit historical-review subjects and current-authority PROPOSED revision only. Frozen21/14/16 proposed sets are not combined into an approved denominator. Source/model execution, formal recall and installation remain absent. CURRENT_STATUS and the two new review packet links record exact local evidence; prior CI127 remains evidence for d64fb85, not this changed source closure.
+
 ## Published R8 fixture and strict CI binding - 2026-11-06
 
 Exact ZIP full5423-entry/952621184decoded-byte audit -> non-draft/non-latest public

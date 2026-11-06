@@ -1,3 +1,13 @@
+## HOST launch/inventory correlation and portable E02 proposals - 2026-11-06
+
+CI #127/run42196660343 on d64fb85 is terminal SUCCESS for TypeScript, Rust and Windows Native. Its exact R8 actual22 has22 unique ACTUAL_ADMITTED observations, zero failures, expected outcomes matched, transactions/temp closed and22 worker exit0 records. This belongs to that prior head, not the new offline files below. R8 archive/approval identity and original evidence remain unchanged.
+
+The new pure MixedNativeHostLaunchInventory.Validate checks Node Tool, fixed Bootstrap, Manifest path/hash and explicit cwd Ancestor before the original lifetime/composition memory seam. Existing structural validation remains in Lifetime; actual QualificationHostRoot.Start is not bound. Genuine missing-class RED, candidate26 and integrated26 memory assertions pass. Independent final-delta review found no blocking issue. The portable PowerShell runner is registered in the existing Windows offline CI step; no real launch, Win32 probe, Native/Git operation, profile, physical value or production authority was added. Original lifetime49/projector41/receiver sources are unchanged and their bounded evidence is reused.
+
+The E02 review packet restores original proposal/source/oracle/history bytes for cross-machine review. Current v4 independent inspection identified stale authority/line anchors and two missing provenance records, not a Source/oracle semantic mismatch. Original v4 is preserved; noninstallable PROPOSED v5 refreshes authority/anchor metadata only. Independent current-version technical review passes, all95 archived files verify,21/14/16 sets stay separate and formal denominators/thresholds remain null/UNSET. No real product/model recall or baseline installation is inferred.
+
+[Bounded HOST evidence](../superpowers/reviews/2026-11-06-host-launch-inventory.json) and [portable E02 packet](../superpowers/reviews/2026-11-06-e02-portable-proposal/README.md) contain reproducible commands, exact pins and remaining gaps. Phase1 remains4/21; A6 NOT_QUALIFIED, E02 PROPOSED/uninstalled. This continuation is local: read-only catalog comparison is3161 frozen versus3164 current, exactly the3 new HOST files and no changed/removed entries. Existing R8 correctly refuses this membership; no exclusion, old evidence, numeric profile or CI gate was rewritten. Decide a matching qualification packet or governed CI division before a new push/full runner. Do not apply prior R8 CI to changed sources or claim the old C evidence tree fully backed up.
+
 ## R8 fixture published; exact continuation-head CI remains the gate - 2026-11-06
 
 The separately approved public prerelease is436279924, non-draft and not latest.

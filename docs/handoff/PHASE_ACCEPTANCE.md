@@ -1,3 +1,7 @@
+## Bounded launch/inventory and E02 proposal continuation - 2026-11-06
+
+The original protected-consumption contract now has a pure launch-plan/Entry correlation primitive with26 integrated memory assertions and independent delta review. Actual Start/OS path protection/authentication/full-consumer settlement remain unproved; no admission token or original parent acceptance follows. E02 source/oracle proposals are made portable and may receive only a metadata/authority PROPOSED revision;21/14/16 stay separate, denominators null, thresholds UNSET and baseline uninstalled. Current-version independent review is required, not inherited. CI127 passed on prior d64fb85 only. Phase1 stays4/21 and A6 NOT_QUALIFIED; all original gates below remain unchanged.
+
 ## R8 publication and CI integration are not parent acceptance - 2026-11-06
 
 The user-approved public R8 asset716516452 is uploaded with the exact reviewed ZIP

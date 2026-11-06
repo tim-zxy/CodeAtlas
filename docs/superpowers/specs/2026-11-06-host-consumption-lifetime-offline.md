@@ -52,3 +52,9 @@ Exact compiler invocation, API-absence RED, reentrant-release RED, initial47 and
 ## Fixed-input projection continuation
 
 The [pure inventory projector](2026-11-06-host-protected-inventory-offline.md) checks independently fixed existing metadata/raw bytes and emits these same Entry fields. Final41 Node checks prove literal input consistency and lexical ancestor projection, not actual inventory completeness or cross-C# execution. The lifetime49 source and original-ledger tests are unchanged and reused separately. A projector pass never supplies trusted actual consumer settlement or enables Start.
+
+## Launch-plan correlation continuation
+
+scripts/mixed-native-host-launch-inventory.cs adds only void Validate(plan, entries). It correlates the existing Node Tool, fixed Bootstrap, Manifest path/hash and cwd Ancestor fields before the original memory composition seam. Hashes remain ordinal exact; paths use the existing Windows lexical slash/case semantics. It performs no IO, does not retain input, construct a token or replace Lifetime structural validation. The current production Start path does not invoke this primitive and remains NOT_READY.
+
+The independent literal test double invokes Validate before constructing the original OfflineComposition. Wrong paths/hashes/kind/cwd refuse with Open0/callback0; original acquire/reconcile refusals, startup-ledger settlement, five memory observations and reverse closure retain their original owner. The new PowerShell runner compiles these sources with the unchanged startup/lifetime files and is registered in the existing Windows offline step.26 assertions establish only this bounded correlation, not real inventory completeness, protection or qualification. No original49/41 test needs to be repeated for this additive primitive.
