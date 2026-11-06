@@ -1,0 +1,131 @@
+{
+  "scope": "P1-10 package-private Source byte transport only",
+  "status": "LOCAL_VERIFIED",
+  "base": "c037e18fc1931acae12891d061dbdd362a8a40d3",
+  "red": {
+    "missingModule": {
+      "tests": 5,
+      "fail": 5
+    },
+    "reviewAsyncAuthorization": {
+      "tests": 1,
+      "fail": 1,
+      "assertion": "Missing expected rejection (initial async branch)"
+    }
+  },
+  "green": {
+    "sourceBuild": 0,
+    "newTests": {
+      "tests": 9,
+      "pass": 9,
+      "fail": 0,
+      "skip": 0
+    },
+    "priorAffectedSourceFixtureRun": {
+      "total": 38,
+      "pass": 36,
+      "fail": 0,
+      "skip": 1,
+      "todo": 1,
+      "newReaderTestsIncludedBeforeAsyncFix": 8
+    },
+    "architectureProjects": 17,
+    "workspaceStructure": {
+      "tests": 20,
+      "pass": 20
+    }
+  },
+  "review": {
+    "agent": "n1_tests_medium",
+    "initialIssues": [
+      "ignored async authorization rejection"
+    ],
+    "resolution": "await both authorizations then checkpoint",
+    "scopedRecheck": "no remaining blocker; static review only"
+  },
+  "files": [
+    {
+      "path": "packages/source/src/document-bytes.ts",
+      "sha256": "fdd25982a65c871af6699d7c28a3af0945f20b7cf18ee92e37ff379c0f5ff420"
+    },
+    {
+      "path": "packages/source/test/document-bytes.test.mjs",
+      "sha256": "05cbf3fc22cdf33b160ae98748f1f6c4fca1e1d23d9f621597755515de17b54a"
+    }
+  ],
+  "unchanged": [
+    "Source fingerprint and mixed-selection implementations",
+    "package root exports",
+    "Canonical schemas and migration set",
+    "permissions, secret rules, budgets and resource numbers",
+    "R9 execution not authorized/not performed"
+  ],
+  "limits": [
+    "Private raw transport; no Application selection authority or Document token",
+    "Mutable Buffer requires consumer integrity/lifetime validation",
+    "No parser, secret scan, DocumentRevision or CompilationInputSnapshot",
+    "rename success is not portable proof of handle closure; close verified from finally control path",
+    "No P1-10/P1-12 parent acceptance inferred"
+  ],
+  "predecessorCi130": {
+    "runId": 42249156630,
+    "head": "c037e18fc1931acae12891d061dbdd362a8a40d3",
+    "status": "completed",
+    "conclusion": "failure",
+    "url": "https://github.com/tim-zxy/CodeAtlas/actions/runs/42249156630",
+    "jobs": [
+      {
+        "id": 127999259151,
+        "name": "TypeScript workspace",
+        "status": "completed",
+        "conclusion": "success",
+        "failed": [],
+        "skipped": []
+      },
+      {
+        "id": 127999259506,
+        "name": "Native Java analysis integration",
+        "status": "completed",
+        "conclusion": "failure",
+        "failed": [
+          "Verify approved script catalog prerequisite"
+        ],
+        "skipped": [
+          "Build Native Analyzer",
+          "Run real-binary Java Fixtures",
+          "Run Native REFRESH composition and replay contracts",
+          "Enforce fresh read-seal, transport and refresh-verification reservations",
+          "Collect every required memory class",
+          "Require approved exact-pack Native REFRESH actual22",
+          "Post Install Node.js"
+        ]
+      },
+      {
+        "id": 127999259686,
+        "name": "Rust workspace",
+        "status": "completed",
+        "conclusion": "success",
+        "failed": [],
+        "skipped": []
+      }
+    ],
+    "typescript": {
+      "main": {
+        "total": 5044,
+        "pass": 5024,
+        "fail": 0,
+        "skip": 20
+      },
+      "b": {
+        "total": 82,
+        "pass": 82
+      },
+      "final": {
+        "total": 99,
+        "pass": 99,
+        "knowledgeIncluded": 38
+      }
+    },
+    "scope": "c037e18 only; new document byte reader not in this CI; Native qualification skipped, not passed"
+  }
+}

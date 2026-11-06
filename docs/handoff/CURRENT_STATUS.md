@@ -1,3 +1,25 @@
+## P1-10 private Source byte transport implemented - 2026-11-06
+
+Added a package-private controlled raw-byte reader using existing SourceFile,
+shared account, ancestor/file identity and RAW authorization boundaries. It binds
+the original SHA256 to bytes read through the same handle, prepays output and read
+attempts, awaits initial/final authorization and refuses partial success. Root
+exports, old fingerprint APIs, permissions, parser dependencies and migrations stay.
+
+Predecessor c037e18 CI #130 is terminal: TypeScript and Rust SUCCESS; Native
+FAIL only at the unchanged R8 script-catalog prerequisite. Main 5024 pass/20
+existing skips, B 82/82, final 99/99 including Knowledge 38. These results do
+not cover this newer byte-reader delta; heavy Native qualification was skipped.
+
+Five initial missing-module REDs and one async-authorization review RED preceded
+9/9 new tests. Related prior Source Fixture/control run: 36 pass, zero fail,
+1 original skip and 1 original TODO; architecture 17 pass. Scoped review resolved.
+[Implementation boundary](../superpowers/specs/2026-11-06-document-source-bytes.md),
+[exact evidence](../superpowers/reviews/2026-11-06-document-source-bytes.json).
+This is raw mutable transport, not a selection/authentication/capture token. Full
+Document parsing/secret validation/storage and P1-12 immutable capture remain open.
+Phase 1 remains 4/21; A6 NOT_QUALIFIED; E02 PROPOSED/uninstalled; R9 not run.
+
 ## CI129 complete; input-integrity continuation verified - 2026-11-06
 
 Public continuation checkpointd68c2c0 has terminal CI129/run42240191379: Rust and

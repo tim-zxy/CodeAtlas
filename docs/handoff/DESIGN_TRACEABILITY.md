@@ -1,3 +1,13 @@
+## P1-10 Source byte input slice - 2026-11-06
+
+Knowledge/consumption section 2 + Security RAW READ_SOURCE + existing Source path,
+identity and shared-account checks -> private same-handle byte transport -> literal
+raw-byte, policy, race and control tests. Async denial review had a genuine failing
+reproduction and now awaits both authorization points. No new permission token,
+public DTO, Canonical classification, parser dependency or schema/migration.
+[Reproducible evidence and remaining boundaries](../superpowers/reviews/2026-11-06-document-source-bytes.json).
+P1-10/P1-12 and whole-phase gates are not closed by this input slice.
+
 ## Private input integrity and actual CI head scope - 2026-11-06
 
 Strict data -> exact own keys(noNUL delimiter alias), faithful ordered Claim literal
