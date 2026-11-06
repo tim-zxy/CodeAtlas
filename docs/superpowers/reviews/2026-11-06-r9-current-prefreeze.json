@@ -1,0 +1,161 @@
+{
+  "kind": "R9_CURRENT_INPUT_PREFREEZE_AND_CALL_SCOPE",
+  "date": "2026-11-06T20:04:37.027676+00:00",
+  "status": "READ_ONLY_BASELINE_NOT_RUN_READY",
+  "baseHead": "9a60da2b51d628c957cf68997933e1ce99125eb0",
+  "ownedChangesPendingCommit": [
+    "package.json",
+    "packages/runtime/test/helpers/native-refresh-transport-replay.mjs",
+    "scripts/native-refresh-transport-memory.mjs",
+    "scripts/test-native-refresh-transport-memory.mjs"
+  ],
+  "stableTwoPasses": true,
+  "inventory": {
+    "sourceFiles": 506,
+    "catalogFiles": 3206,
+    "physicalRoots": 10,
+    "sourceInventoryDigest": "2c0688491ca2c3fafa5883f6b45f4247acd3b07645b63974364f73ec5e780e90",
+    "catalogInventoryDigest": "4cd3cbea9eab5beb2ac1b0fbb3d1d8dd875f58c8b227c0b60eff8b6d327cbd24",
+    "rawPrefreezeSha256": "f45422a32021527ee5bceeef53115a7daacfdfcf58a48285cc74395178be13d9",
+    "fullLocalEvidence": ".superpowers/sdd/2026-11-06-r9-refreeze/prefreeze.json"
+  },
+  "node": {
+    "path": "D:\\Program Files\\nodejs\\node.exe",
+    "version": "v24.15.0",
+    "v8": "13.6.233.17-node.48",
+    "platform": "win32",
+    "arch": "x64"
+  },
+  "toolFileHashes": {
+    "node": {
+      "sha256": "3331e1ffe19874215472217c5e94f5a0c6d8e18c4ac7111d3937aa0ad5e9b4a5",
+      "status": "HASHED"
+    },
+    "rustcShim": {
+      "sha256": "6f4bef66261261fcb43131be8720bab817d403a09edec7455c371974b90bdb7e",
+      "status": "HASHED"
+    },
+    "pinnedRustc": {
+      "sha256": "ca9988af88b1463f6857fdfe909299fee50a63260b3e5f7dbcb5b4d3318b27bc",
+      "status": "HASHED"
+    },
+    "pinnedCargo": {
+      "sha256": "c37545ec61d48d31bdefce53280ecab61c4ea54eaace372fac6a0316c6e165d9",
+      "status": "HASHED"
+    },
+    "cargoShim": {
+      "sha256": "6f4bef66261261fcb43131be8720bab817d403a09edec7455c371974b90bdb7e",
+      "status": "HASHED"
+    }
+  },
+  "buildSelectorsPresent": [],
+  "whatWasNotDone": [
+    "not a compiler/build execution or fresh Native qualification",
+    "dist bytes inventoried, source-to-dist equivalence not newly proven by a rebuild",
+    "existing Native is PREBUILD baseline, must replace with actual approved build receipt",
+    "PATH tools/shim and pinned toolchain bytes recorded, versions not executed; Windows SDK/linker/transitive build scripts/global Cargo config and environment not fully closed",
+    "credentials/user source/remote model not accessed; selectors report presence only",
+    "current dirty source hashes must match eventual committed batch, revalidate at real-run start and after approved build"
+  ],
+  "futureCommand": [
+    "D:/Program Files/nodejs/node.exe",
+    "scripts/native-refresh-ci.mjs",
+    "prepare",
+    "D:/workspace/CodeAtlas-phase1-20261106/.superpowers/sdd/2026-11-06-r9-transport-execution",
+    "p05-d5-exact-layout-v9"
+  ],
+  "futurePaths": {
+    "layout": "C:/CodeAtlas-P05-D5-R9",
+    "executor": "D:/workspace/CodeAtlas-phase1-20261106/.superpowers/sdd/2026-11-06-r9-transport-execution",
+    "holdout": "D:/workspace/CodeAtlas-phase1-20261106/.superpowers/sdd/2026-11-06-r9-transport-execution/independent"
+  },
+  "normalPathConditionalLaunchScope": {
+    "conditions": [
+      "fixed22 classes,4 controlled fault-process classes",
+      "case concurrency1; native parse workers1",
+      "2 functional replays/class,5 calibration repetitions/class",
+      "qualification22,calibration110,holdout22; no manual retries",
+      "prior1876 seed-boundary and26 full-oracle bounds remain unchanged; cleanup delta adds no launch sites"
+    ],
+    "native": {
+      "seedBoundaryBootstrapUpper": 1876,
+      "targetFullDescribeAndFull": 26,
+      "functionalNativeTrials": 36,
+      "cancelReferenceNativeTrials": 2,
+      "measuredNativeTrials": 126,
+      "sum": 2066
+    },
+    "nodeChildren": {
+      "functionalReplayWorkers": 44,
+      "cancelReferenceWorkers": 2,
+      "measuredWorkers": 154,
+      "nestedControlledFaultProcesses": 36,
+      "sum": 236
+    },
+    "topLevelBuildTools": {
+      "rustcDescriptor": 1,
+      "cargoBuild": 1,
+      "sum": 2
+    },
+    "repositoryLaunchUpper": 2304,
+    "initialCoordinatorExcluded": true,
+    "notHardOsCap": [
+      "Rustup/Cargo/compiler/linker/build-script descendants and downloads",
+      "OS console hosts",
+      "threads",
+      "leftovers after unknown exit/cleanup",
+      "unmeasured aggregate preparation/build/IO time"
+    ],
+    "breakdownQualification": "Arithmetic decomposition of unchanged fixed recipes and prior source audit, not a newly observed process trace; at most one Native/fault invocation per functional/measured trial is assumed as in the original recipe."
+  },
+  "existingLimits": {
+    "nativeRequestMs": 10000,
+    "nodeWorkerMs": 60000,
+    "providerKillGraceMs": 250,
+    "callerLogicalBudgetBytes": 1000000000,
+    "hardBatchTime": null,
+    "hardMemory": null,
+    "hardProcessCount": null,
+    "hardDisk": null,
+    "rustcDescriptorTimeoutMs": null,
+    "cargoBuildTimeoutMs": null
+  },
+  "stopAndFailureConditions": [
+    "Changed/occupied/aliased root, any input/tool hash drift or unknown build/environment stops before later phase",
+    "STOP_REQUESTED checked at implemented build/case/complete-worker lifecycle boundaries",
+    "Complete preservation/validation/restore before during-worker stop; no new worker after sticky failure/UNKNOWN",
+    "New cleanup fix attempts every close and rejects successful-oracle cleanup failure; preserves original/falsy/unprintable errors and artifacts",
+    "No immediate interrupt inside synchronous Cargo or an ongoing internal per-file seed/bootstrap chunk",
+    "No automatic trigger on exec transport disconnection; external stop marker needs a functioning local writer/operator",
+    "Never approve a successful subset, retry-to-green, install profile/numbers, PACK or publish automatically"
+  ],
+  "remainingBeforeAnyRealRun": [
+    "commit and recheck these same physical input hashes at actual start",
+    "explicit specific real build/preparation/154measurement authorization including full conditional launch scope and unknown hard/global limits",
+    "verify approved actual build output/binary receipt, toolchain/SDK/linker/cache/network/config scope; no credential access inferred",
+    "fresh post-build catalog/Native identity before first measured worker",
+    "normal platform approval for fresh fixed C root; preserve all originals/failures",
+    "actual profile/numeric/PACK/publication approval separate"
+  ],
+  "profileOutputsExcludedByOriginalCatalogButObserved": [
+    {
+      "path": "packages/runtime/dist/native-metadata-profiles.js",
+      "sha256": "bc7b27d86c3205c6f608d94a9f9aadd111a2c95b840bfc3c73ee834b884bd41d",
+      "sizeBytes": 30231
+    },
+    {
+      "path": "packages/runtime/dist/native-metadata-profiles.js.map",
+      "sha256": "eeb2e2a6ee3f44cde0b82a037dec0f3c13f93d83605a15e0a82ecdc5cea55c19",
+      "sizeBytes": 12860
+    },
+    {
+      "path": "packages/runtime/dist/native-metadata-profiles.d.ts.map",
+      "sha256": "e0f4eeaaa3f03ee9eee72bd02c5c0e21eb5964a4fa0cfff2a4de13c8cadf0a40",
+      "sizeBytes": 1902
+    }
+  ],
+  "ownedNewSourcePaths": [
+    "scripts/helpers/native-refresh-failure.mjs",
+    "scripts/test-native-refresh-preparation-cleanup.mjs"
+  ]
+}

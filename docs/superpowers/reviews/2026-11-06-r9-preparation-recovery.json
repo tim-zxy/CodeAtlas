@@ -1,0 +1,77 @@
+{
+  "kind": "R9_PREPARATION_CLEANUP_AND_FAILURE_RECOVERY",
+  "date": "2026-11-06",
+  "base": "9a60da2b51d628c957cf68997933e1ce99125eb0",
+  "status": "SCOPED_RECOVERY_VERIFIED_NOT_REAL_R9",
+  "foundDefects": [
+    "ordinary preparation cleanup threw on first close error, skipping later owned resources",
+    "successful full-oracle cleanup recorded close failures but could continue successfully",
+    "caseFailure===undefined confused a primary throw undefined with no failure",
+    "unprintable/nullish errors could replace the primary failure during artifact formatting and lose cleanup diagnostics"
+  ],
+  "implementation": [
+    "close every synchronous owned fixture and preserve explicit first-error/failed flag",
+    "retain failed full fixtures, do not run successful cleanup deletion after uncertain close, refuse later progression",
+    "preserve primary failures even when falsy; failure records use guarded own descriptor/text fallback without invoking stack/message accessors",
+    "persist original sorted/deduplicated retained paths and cleanup diagnostics exclusively; rethrow original value",
+    "reuse one private diagnostic helper at command/qualification/calibration/holdout catches; normal Error message fields unchanged"
+  ],
+  "evidence": {
+    "initialMissingApiRed": 2,
+    "failurePersistenceMissingApiRed": 1,
+    "actualOuterCommandAndHoldoutRed": 2,
+    "focusedRecoveryGreen": 6,
+    "finalIntegrated": {
+      "pass": 122,
+      "fail": 0,
+      "skip": 0,
+      "log": ".superpowers/sdd/2026-11-06-r9-preparation-recovery/final.log",
+      "command": "node --test --test-concurrency=1 scripts/test-native-refresh-preparation-cleanup.mjs scripts/test-native-refresh-r9-stop.mjs scripts/test-native-refresh-ci.mjs scripts/test-native-refresh-transport-memory.mjs scripts/test-workspace-structure.mjs"
+    },
+    "architectureProjects": 17,
+    "architectureExit": 0
+  },
+  "independentReview": {
+    "reviewer": "r9_stop_review_medium",
+    "mode": "read-only associated recovery review; no tests/build/Native/writes",
+    "finding": "outer preparation error formatter could mask unprintable primary and prevent artifact persistence",
+    "fix": "actual failRefreshPreparation persistence helper + shared refreshFailureText and actual command/holdout regression",
+    "recheck": "No remaining Critical/Important related findings"
+  },
+  "sourceSha256": {
+    "packages/runtime/test/helpers/native-refresh-transport-replay.mjs": "000b74c5f69cdee8f5ab566ab01cf05f6e5b40c08be542e7c3921ff2440da3c1",
+    "scripts/helpers/native-refresh-failure.mjs": "871d358ca7c337dcc1e392ec662b5638c1d980a181fdf1771aca90b80c1bdd6f",
+    "scripts/native-refresh-transport-memory.mjs": "d408a97cac53a005cd1941e24e4ac23edbf669febd757fca6ac2663fe9f225f7",
+    "scripts/test-native-refresh-preparation-cleanup.mjs": "36f70abfee15c46337d397d3d12cd45384c950ddac143edb41bd07009f6fe5a9",
+    "scripts/test-native-refresh-transport-memory.mjs": "09c804f429756b338428f2c208b12631f1304640fff56e31799d847a1537eed6",
+    "package.json": "0042a0747f02fd0efc7fdfc44dd47c648fa76a02a1b01c212e42f8c2320467fb"
+  },
+  "freshPrefreeze": "2026-11-06-r9-current-prefreeze.json",
+  "notDone": [
+    "no real R9/compiler/Native/collector/root acquisition",
+    "no actual source-to-dist rebuild or new compiled Native qualification",
+    "no parser installation, profile/numeric adoption, PACK/publication or production changes"
+  ],
+  "ci138": {
+    "head": "9a60da2b51d628c957cf68997933e1ce99125eb0",
+    "run": 42282203251,
+    "typescript": "success",
+    "rust": "success",
+    "native": "R8 script catalog mismatch",
+    "segments": [
+      {
+        "pass": 5031,
+        "skip": 20
+      },
+      {
+        "pass": 84,
+        "skip": 0
+      },
+      {
+        "pass": 224,
+        "skip": 0
+      }
+    ],
+    "doesNotCertifyCurrentFix": true
+  }
+}

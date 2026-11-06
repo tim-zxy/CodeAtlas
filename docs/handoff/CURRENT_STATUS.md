@@ -1,3 +1,31 @@
+## Preparation recovery fixed; current R9 prefreeze recorded - 2026-11-06
+
+Found/fixed existing cleanup defects in actual corpus preparation: attempt all
+synchronous owned closes; reject a successful full-oracle when cleanup failed;
+retain failed fixtures and preserve primary/falsy failures. Guarded diagnostic
+formatting now preserves original thrown values and failure artifacts instead of
+replacing them with formatting errors. Existing complete qualification and
+candidate gates remain unchanged. Final affected122/122 and architecture17 pass;
+concentrated independent review finding resolved/rechecked.
+[Exact implementation evidence](../superpowers/reviews/2026-11-06-r9-preparation-recovery.json).
+
+[Fresh read-only prefreeze/scope](../superpowers/reviews/2026-11-06-r9-current-prefreeze.json):
+506 source files,3206 catalog dependency/dist/Native-baseline files,10 physical
+roots stable across two passes; Node/Rustup shims/pinned Rust tool files hashed.
+Original catalog-excluded profile outputs are separately observed, not adopted.
+Full raw inventory remains local ignored evidence; this committed summary is not
+its cloud backup. No compiler/Native execution or fresh source-to-dist proof.
+Current Native is PREBUILD baseline; real-run start and post-approved-build
+identity/catalog must be revalidated. SDK/linker/global configuration and hard
+OS/resource/time bounds remain incomplete; execution authorization still needed.
+154 measured slots exclude substantial seed/oracle work. Prior conditional source
+launch bound2304 is not an OS process cap. STOP_REQUESTED is cooperative and not
+automatically created on exec-channel disconnection. No real R9, new values,
+profile/PACK/publication or parser install; Phase1 stays4/21, A6 NOT_QUALIFIED.
+
+CI138 on prior9a60da2 ended TS/Rust success; Native R8 catalog mismatch. TS segments
+5031PASS/20existingSKIP,84PASS,224PASS. Those results do not certify this new fix.
+
 ## R9 cooperative stop-only control verified offline - 2026-11-06
 
 Explicit v9 prepare now owns a sticky deny-only STOP_REQUESTED marker control in

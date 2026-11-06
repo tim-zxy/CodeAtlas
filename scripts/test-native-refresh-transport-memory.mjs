@@ -1012,3 +1012,33 @@ test('R9 uncertain holdout worker saves failure and blocks remaining launches', 
     'UNKNOWN',
   );
 });
+
+test('holdout persists falsy worker throws before cooperative refusal', async (t) => {
+  const c = await holdoutSetup(t);
+  const { createR9StopControl } = await import('./helpers/native-refresh-r9-stop.mjs');
+  const control = await createR9StopControl(c.root);
+  let calls = 0;
+  await assert.rejects(
+    () =>
+      c.collect(
+        c.candidatePath,
+        c.artifactDir,
+        c.holdoutPath,
+        async () => {
+          calls++;
+          throw undefined;
+        },
+        identity,
+        'OFFLINE_CALIBRATION_ONLY',
+        undefined,
+        control,
+      ),
+    (e) => e === undefined,
+  );
+  assert.equal(calls, 1);
+  assert.equal(JSON.parse(await readFile(c.holdoutPath, 'utf8')).failures.length, 1);
+  assert.equal(
+    JSON.parse(await readFile(path.join(c.root, 'r9-stop-receipt.json'), 'utf8')).cleanupState,
+    'UNKNOWN',
+  );
+});

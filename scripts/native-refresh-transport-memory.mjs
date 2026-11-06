@@ -1,3 +1,4 @@
+import { refreshFailureText } from './helpers/native-refresh-failure.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile, realpath, readdir, mkdir, writeFile } from 'node:fs/promises';
@@ -772,7 +773,7 @@ export async function collectRefreshTransportObservations(
     assert.equal(typeof runWorker, 'function', 'Explicit offline worker required');
     holdout.candidateSha256 = digest;
   } catch (error) {
-    holdout.failures.push({ code: 'CANDIDATE_INVALID', message: String(error.message) });
+    holdout.failures.push({ code: 'CANDIDATE_INVALID', message: refreshFailureText(error) });
     await persist();
     return holdout;
   }
@@ -814,7 +815,7 @@ export async function collectRefreshTransportObservations(
       const failure = {
         name,
         code: 'WORKER_OR_PEAK_FAILED',
-        message: String(error.message),
+        message: refreshFailureText(error),
         child: child ?? null,
       };
       holdout.failures.push(failure);
@@ -831,7 +832,7 @@ export async function collectRefreshTransportObservations(
   try {
     assert.equal(sha(await readFile(candidatePath)), digest, 'Frozen candidate changed');
   } catch (error) {
-    holdout.failures.push({ code: 'CANDIDATE_CHANGED', message: String(error.message) });
+    holdout.failures.push({ code: 'CANDIDATE_CHANGED', message: refreshFailureText(error) });
     await persist();
   }
   return holdout;

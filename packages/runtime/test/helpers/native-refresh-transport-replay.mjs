@@ -1,3 +1,4 @@
+import { refreshFailureText } from '../../../../scripts/helpers/native-refresh-failure.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import {
@@ -837,7 +838,7 @@ export async function runRefreshTransportCommand(args, dContext, control) {
           qualificationRows.push(await measure(value, 'offline', 0));
           qualification.cases.push({ name: value.name, passed: true });
         } catch (error) {
-          qualification.failures.push({ name: value.name, message: String(error.message) });
+          qualification.failures.push({ name: value.name, message: refreshFailureText(error) });
         }
         if (control)
           await writeFile(
@@ -889,7 +890,11 @@ export async function runRefreshTransportCommand(args, dContext, control) {
           try {
             report.observations.push(await measure(value, 'offline', repetition));
           } catch (error) {
-            report.failures.push({ name: value.name, repetition, message: String(error.message) });
+            report.failures.push({
+              name: value.name,
+              repetition,
+              message: refreshFailureText(error),
+            });
           }
           await writeFile(reportPath, JSON.stringify(report, null, 2) + '\n');
         }
@@ -966,7 +971,7 @@ export async function runRefreshTransportCommand(args, dContext, control) {
     if (control) await control.fail('TRANSPORT_FAILED');
     await writeReplayArtifact(
       path.join(output, 'command-failure.json'),
-      encodeRefreshReplayJson({ failure: String(error.message) }),
+      encodeRefreshReplayJson({ failure: refreshFailureText(error) }),
     );
     throw error;
   }
@@ -1488,6 +1493,50 @@ const lexical = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
 
 // Own only the exclusively created output tree. Failed generation/reference
 // artifacts remain here; never publish a partial Manifest or adopt an old tree.
+/** Synchronous owned-fixture close path: attempt every resource and retain even
+ * falsy/unprintable failures. The caller decides how to preserve its primary error. */
+export function closeRefreshPreparationResources(resources, cleanupFailures) {
+  let failed = false,
+    firstError;
+  for (const resource of resources) {
+    try {
+      resource.close();
+    } catch (error) {
+      if (!failed) firstError = error;
+      failed = true;
+      let diagnostic;
+      try {
+        diagnostic = String(error);
+      } catch {
+        diagnostic = 'UNPRINTABLE_CLEANUP_FAILURE';
+      }
+      cleanupFailures.push(diagnostic);
+    }
+  }
+  return { failed, error: firstError };
+}
+
+/** Persist the existing failure artifact without evaluating arbitrary stack
+ * accessors or allowing diagnostic formatting to replace the primary failure. */
+export async function failRefreshPreparation(
+  outputDirectory,
+  error,
+  retainedFixturePaths,
+  cleanupFailures,
+) {
+  const failure = refreshFailureText(error, true);
+  await writeFile(
+    path.join(outputDirectory, 'preparation-failure.json'),
+    encodeRefreshReplayJson({
+      failure,
+      retainedFixturePaths: [...new Set(retainedFixturePaths)].sort(),
+      cleanupFailures,
+    }),
+    { flag: 'wx' },
+  );
+  throw error;
+}
+
 export async function prepareRefreshTransportCorpus(outputDirectory, dContext, control) {
   if (control) await control.checkpoint('CORPUS_BEGIN');
   const fixtureContext =
@@ -1535,7 +1584,7 @@ export async function prepareRefreshTransportCorpus(outputDirectory, dContext, c
         ownRefreshFixture: (resource) => resources.push(resource),
       };
       let f;
-      let caseFailure;
+      let caseFailed = false;
       try {
         const boundary = ['d-preparation-input', 'd-slow-stdin'].includes(name)
           ? preparedSourceInputBoundary
@@ -1964,15 +2013,19 @@ export async function prepareRefreshTransportCorpus(outputDirectory, dContext, c
             );
             fullSucceeded = true;
           } finally {
-            for (const resource of fullResources) {
+            const closed = closeRefreshPreparationResources(fullResources, cleanupFailures);
+            if (fullSucceeded && !closed.failed) {
               try {
-                resource.close();
+                for (const settle of fullCleanup.reverse()) await settle();
               } catch (error) {
-                cleanupFailures.push(String(error));
+                retainedFixturePaths.push(...fullResources.map((resource) => resource.directory));
+                throw error;
               }
-            }
-            if (fullSucceeded) for (const settle of fullCleanup.reverse()) await settle();
-            else retainedFixturePaths.push(...fullResources.map((resource) => resource.directory));
+            } else
+              retainedFixturePaths.push(...fullResources.map((resource) => resource.directory));
+            // A valid oracle never authorizes progression with uncertain cleanup.
+            // If its body already failed, preserve that original failure instead.
+            if (fullSucceeded && closed.failed) throw closed.error;
           }
         }
         if (['d-partial', 'd-corrupt', 'd-late-exit', 'd-slow-stdin'].includes(name))
@@ -2046,19 +2099,13 @@ export async function prepareRefreshTransportCorpus(outputDirectory, dContext, c
         item.inputContract = { ...inputContract, corpusPayloadDigest: item.caseDigest };
         cases.push(item);
       } catch (error) {
-        caseFailure = error;
+        caseFailed = true;
         throw error;
       } finally {
-        for (const resource of resources) {
-          try {
-            resource.close();
-          } catch (error) {
-            cleanupFailures.push(String(error));
-            if (caseFailure === undefined) throw error;
-          }
-        }
+        const closed = closeRefreshPreparationResources(resources, cleanupFailures);
         if (cleanup.length)
           retainedFixturePaths.push(...resources.map((resource) => resource.directory));
+        if (!caseFailed && closed.failed) throw closed.error;
       }
     }
     await verifyRefreshReplayDependencyCatalog(
@@ -2090,16 +2137,7 @@ export async function prepareRefreshTransportCorpus(outputDirectory, dContext, c
     await writeReplayArtifact(manifestPath, encodeRefreshReplayJson(manifest));
     return { manifestPath, bindingPath };
   } catch (error) {
-    await writeFile(
-      path.join(outputDirectory, 'preparation-failure.json'),
-      encodeRefreshReplayJson({
-        failure: String(error?.stack ?? error),
-        retainedFixturePaths: [...new Set(retainedFixturePaths)].sort(),
-        cleanupFailures,
-      }),
-      { flag: 'wx' },
-    );
-    throw error;
+    return failRefreshPreparation(outputDirectory, error, retainedFixturePaths, cleanupFailures);
   }
 }
 

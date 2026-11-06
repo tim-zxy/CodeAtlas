@@ -1,3 +1,14 @@
+## Preparation cleanup uncertainty is never successful evidence - 2026-11-06
+
+Existing owned-resource/error-preservation invariants -> all-close cleanup with
+explicit failure flag and primary preservation -> successful full-oracle cleanup
+failure refuses rather than passing -> safe exclusive artifact persistence across
+falsy/unprintable command/holdout failures. New synthetic regression is in root
+tests. [Evidence](../superpowers/reviews/2026-11-06-r9-preparation-recovery.json);
+[current physical prefreeze and conditional execution scope](../superpowers/reviews/2026-11-06-r9-current-prefreeze.json).
+No identity/DDL/Canonical IR/numeric/qualification threshold change. Read-only
+hash stability, synthetic122/122 and prior CI do not provide actual R9/A6 approval.
+
 ## R9 stop-only offline control, not execution authority - 2026-11-06
 
 Explicit user-authorized cooperative stop -> new v9-only executor control ->
