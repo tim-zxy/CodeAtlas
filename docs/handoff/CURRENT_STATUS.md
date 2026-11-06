@@ -1,3 +1,1363 @@
+## Phase 1 parallel audit and offline stage checkpoint - 2026-11-06
+
+Three bounded streams overlapped: HOST/A6 receiver implementation and root execution
+preparation; read-only E02 evidence mapping; read-only P1-10/11 decisions. Shared code
+and authority documents have one integrator. This was not three concurrent coding jobs.
+The actual worktree remains C:/Users/Freya/.codex/worktrees/e4fb/CodeAtlas.
+
+Original C# Entry/lifetime receiver passes 4/4 (784ms): full 17-entry inventory opens
+and reversely releases; missing manifest, wrong ancestor and unknown kind refuse at
+the declared construction stage. The adapter now preserves CLR null with reflection;
+prior false-positive negative assertions and corrected failure logs remain. This is
+not BeginConsumption, trusted settlement or actual Start evidence. A single compile-only
+14-source build produced an 81408-byte DLL, SHA256
+9fa2007a2c425d6339dd7099b2fe5a98299510063a6174fce0768f62a9c70813.
+Reflection found Start; it was never invoked. Actual execution remains NOT_READY:
+no installed complete owner/caller, fresh tool/protected inventory, actual namespace
+protection or root-bound complete consumer settlement. No executable real-run request
+is claimed and historical helper commands are not presented as current HOST commands.
+
+All 17 open parent gates are mapped against original acceptance obligations. Phase1
+remains 4/21; A6 NOT_QUALIFIED; E02 PROPOSED/uninstalled. E02 probe, framework slot and
+end-to-end sets retain distinct denominators; thresholds remain unset and controls
+remain mandatory. Some old proposal authority pins have drifted and are not promoted.
+P1-10 owns both W007 and W008; P1-11 owns semantic-port/budget/security decisions, not
+W008. P1-13 exact structural identity/reconciliation is the shortest independent
+implementation proposal, but C/D/E implementation approval remains pending.
+
+Before cloud/D handoff, 13 immutable local-only inputs were added to the existing
+tracked fixture archive; all 679 old logical records and bytes are preserved. Two Java
+raws reuse the tracked J1 capture. Explicit local-root reads retain local priority,
+fall back only on ENOENT, and never materialize archived sdd inputs. New targeted
+portability tests pass 8/8 (641ms); seven fixture consumers use the helper. Product
+source, baseline, Fixture ID, dependencies and required gates are unchanged. Historical
+fixture paths are retained as original metadata; sensitive review found no credentials.
+
+Durable compact evidence, concentrated reviews and the three-stream maps:
+[stage index](../superpowers/reviews/2026-11-06-phase1-stage/index.json).
+Original raw logs remain at their receipt paths in the existing local worktree. Prior
+49/41/N1/P1-08/09 results retain their own frozen scope and are not rerun for this slice.
+
+The user requested stage completion followed by cloud submission and a new D worktree.
+Final local checks/explicit path review precede commit. No push or D worktree creation
+has occurred. Proposed checkpoint branch codex/phase1-20261106-continuation avoids
+updating existing PR22; D:/workspace/CodeAtlas-phase1-20261106 is the proposed new path.
+Existing C and D:/workspace/CodeAtlas worktrees will be preserved. Normal push triggers
+three hosted CI jobs, including actual Native/memory work; that reserved execution
+boundary must be resolved explicitly before push, without disabling existing gates.
+
+## HOST protected inventory pure projection passed - 2026-11-06
+
+The next authorized B offline seam now projects independently fixed raw manifest/
+descriptor, pinned graph metadata and explicit supplement into existing C# Entry
+fields. All manifest artifacts, module/SQL/data coverage and helper/tool annotations
+are checked; exact file exclusions and lexical ancestors are preserved. graph.sourceFiles
+stays pinned provenance, not a recursively protected Source tree. No new wire/schema,
+authority token, dependency or production resource value is introduced.
+
+Final pure Node41/41 exit0 (176ms), source formatted before execution and frozen.
+Original API-absence RED and Program Files embedded-space RED remain. Concentrated
+review found reserved roles could be overwritten by supplement; actual35PASS/6FAIL
+RED precedes the minimal legal-role guard. Manifest/Descriptor/graph-data roles stay;
+Module may only annotate the same fixed helper file. Original34 results are retained,
+not counted as a separate passed gate. Raw consistency does not replace the original
+owner loader's stricter canonical/bootstrap admission. All flags false/live NOT_READY.
+
+Scope: docs/superpowers/specs/2026-11-06-host-protected-inventory-offline.md.
+Exact raw tests/failures/final source pins: .superpowers/sdd/2026-11-06-host-protected-inventory-offline/verification-final.json.
+Current integration/review/readback: .superpowers/sdd/2026-11-06-host-protected-inventory-offline/verification-index.json.
+Prior N1 closedgraph2/2, compatibility28/28 and HOST lifetime49 are reused with their
+own scopes/pins; no producer, long entry or HOST49 suite is repeated for this slice.
+Prior reviewed batch: .superpowers/sdd/2026-11-06-n1-host-b-integration/verification-index.json.
+
+Remaining real binding is NOT_READY: the literal projection oracle is not a fresh
+current protected inventory or real tool identity. Historical graph operation SHA
+is stale after N1; bootstrap/prehook physical inputs and actual tool supplements
+must be independently fixed, and actual namespace guarantees and complete trusted
+consumer settlement are unproved. No graph generation, actual binary read, cross-C#
+projection runner or real HOST/Git/Native/Windows call was performed in this slice.
+No guarded real Start is connected. Further real/platform work needs its concrete
+reviewed prerequisites and separate authorization; E02/P1-10/11 remain excluded.
+Phase1 accepted4/21, A6 NOT_QUALIFIED, E02 PROPOSED/uninstalled remain unchanged.
+
+## N1 complete entries and HOST B memory ownership passed - 2026-11-06
+
+One normal platform retry for the previously unexecuted N1 edit was approved and
+executed; no bypass. Private allSOURCE orchestration now keeps Source correlation
+separate from actual Application/Storage/Runtime authority. Real CURRENT candidate
+rederivation/validation/equality, final Source and synchronous readset/control/owner
+checks precede no-write NO_OP; deletion uses original null observation/atomic Store.
+Old Native bind timing and priorNative/final suffix guards stay unchanged.
+
+Complete copied product graph2/2 exit0, one run/no retry (385614ms): NO_OP keeps all22
+canonical/evidence/provider/history/Runtime table images and old identities; deletion
+removes19 P1 current origins, retains8 P5 and CURRENT Runtime, immutable origins remain.
+Each entry releases16 GIT/SOURCE roles,16 Git memory calls close,0 Native calls.
+Graph281 modules/1156 edges/295 artifacts/310 source inputs. Four source pins match
+before/after run. Direct first14 selected13PASS/1failure; isolated corrected ignore
+case1/1. Explicit include over Git ignore and changed ancestor query count were fixture
+errors; both logs retained, Source semantics/assertions unchanged. No whole14 rerun
+claim. Affected existing operation/owner/order/R013 memory regressions28/28 pass.
+
+HOST B pure consumption ownership plus original startup-ledger substitute composition
+passes final49 assertions/compile0. It retains acquisition/consumer/close uncertainty,
+requires all five consumer joins and original startup resources released before reverse
+close-once. Missing-module and actual reentrant-release REDs remain; acquiring guard
+fixes the latter. Synthetic inventory is not actual protected-set completeness, OS
+immutability or trusted consumer settlement. No actual Start is connected; live NOT_READY.
+
+Controlling contracts/plan: docs/superpowers/specs/2026-11-06-current13-no-native-offline.md,
+2026-11-06-host-consumption-lifetime-offline.md and docs/superpowers/plans/2026-11-06-n1-host-b-offline.md.
+Exact original attempts/commands/results/source hashes: .superpowers/sdd/2026-11-06-current13-no-native-entry/verification.json
+and .superpowers/sdd/2026-11-06-host-consumption-lifetime-offline/verification.json.
+Concentrated integration/gates/review index: .superpowers/sdd/2026-11-06-n1-host-b-integration/verification-index.json.
+Real HOST/OS/Native, rights, physical formulas/values, E02 install and P1-10/11 remain
+outside this batch. Phase1 accepted4/21, A6 NOT_QUALIFIED, E02 PROPOSED/uninstalled.
+Historical denied/paused snapshots below are superseded only for this bounded work.
+
+## Mixed Java-settled / Surface refusal entry verified offline - 2026-11-05
+
+The second scoped complete mixed entry passed1/1, exit0 (118255ms): actual Java V2
+settles and genuine Stage produces10-owner Surface V8; an artificially empty memory
+response from a normally closed process refuses at OWNED_SURFACE_V8. Source remains
+COMMITTED, graph NOT_ATTEMPTED, cleanupFailed=false. All10 registered roles release,
+8 Source Git memory calls close, no final Git runs. Readonly DB confirms original
+Source SHA and22 canonical/provider/Syntax/Runtime tables empty. Complete graph is
+281 modules/1154 edges/295 artifacts/310 source inputs; no producer was rerun.
+
+The first complete run failed its cleanup assertion: the original EOF-before-close
+fixture yielded cleanupFailed=true. Static tracing explains decode rejection ->
+termination -> nonzero close -> existing fail-closed UNKNOWN. Only the new failure
+fixture was corrected to model normal close before decoding EOF; no production
+rule or assertion was weakened. Original failure/log and exact tested bytes remain.
+Kill/nonzero full cleanup is not independently proved by that failed test. Existing
+positive fixture default keeps original timing/reseal, checked by exact diff rather
+than repeating its long test. No new core/permission/dependency/profile/real run.
+
+Focused remaining-decision matrix covers N1/E02/C1/C2/HOST B with necessity, impact,
+risks, rollback, alternatives and distinct architecture/platform approval status:
+.superpowers/sdd/2026-11-05-remaining-acceptance-disposition/decision-approval-matrix.json.
+N1 remains denied/unexecuted with no retry; HOST B explicitly paused. No further
+specific high-priority independent implementation defect is established by the
+current gap inventory; broad formal scenario coverage is not permission to invent
+Source semantics or baseline. Phase1 accepted4/21, A6 NOT_QUALIFIED, E02 uninstalled.
+
+Reproducible commands, both complete runs, source/receipt/review hashes:
+.superpowers/sdd/2026-11-05-current13-mixed-refusal/verification-index.json.
+
+## Source-grounded current13 entries to workspace verified offline - 2026-11-05
+
+Existing P1-08/09/T4 seam now connects two complete original FULL current13 entries
+(J7 Java caller and P5 FastAPI provider) to original Application workspace matching
+and atomic Store. The single complete test passed1/1, exit0 (420712ms): two MATCHED
+results, one supported HTTP invocation edge, CURRENT and equal fresh readonly reopen.
+J7 executes V2 then V8 and releases18 roles; P5 executes V8 and releases17 roles.
+Each closes16 Git memory calls, preserves fixed Source/schema keys and runs the
+complete281-module/1154-edge/295-artifact graph with310 source inputs.
+
+This is prepared-Source FULL, not pristine first-Source: genuine Source-only CAS
+first establishes random revision/file identities, original Stage preview provides
+actual contract keys, independent literal T4 schemas are frozen, then genuine
+Source CAS reobserves them before FULL initialize=false. Four preparatory Source
+operations are explicitly counted; no canonical SQL seed or invented candidate.
+Original stream integrity precedes identity/envelope rebinding; semantics stay.
+Preparation2/2 and compact wiring1/1 also pass; earlier test-only Java V8 COMPLETE
+expectation failure is retained and corrected to existing NOT_APPLICABLE behavior.
+No producer, prior long test, real Native/Git/HOST, dependency or core change.
+
+This closes an offline integration seam, not formal E02/E05/E06 or Phase1 acceptance.
+Phase1 accepted4/21, A6 NOT_QUALIFIED, E02 PROPOSED/uninstalled; HOST B remains paused.
+Automatic approval review denied the proposed no-Native production branch before
+execution; both production files remain unchanged, no retry. NO_OP/deletion full
+entry, E02 formal baseline and P1-10/11 decisions are itemized separately, not passed.
+
+Exact original receipts/source/evidence/review pins:
+.superpowers/sdd/2026-11-05-current13-workspace-entry/verification-index.json.
+Scope: ../superpowers/specs/2026-11-05-current13-workspace-entry-offline.md.
+Decision packet: .superpowers/sdd/2026-11-05-remaining-acceptance-disposition/decision-bundle.json.
+
+## FULL Java/Python mixed current13 entry verified offline - 2026-11-05
+
+Roadmap gap review selected the existing mixed Java+Python full path as the highest
+independent work while HOST B is paused. The first complete mixed entry passed1/1,
+exit0 (218894ms). Actual App Source/CAS -> owned Java V2 response -> genuine10-owner
+Stage map -> combined Surface V8 -> full Runtime derive -> final Source/Git ->
+original atomic Store yields fresh readonly CURRENT. Exact HTTP providers are
+GET /api/items and GET /api/v1/items; JOB implementation resolves to Java METHOD
+refresh. All18 roles release, Native protocols2 then8,16 Git calls close and no
+Native follows final Git. Graph281 modules/1154 edges/295 artifacts/310 source inputs.
+
+Original J1 V2 bytes were strictly validated before rebinding. One new exact local
+Rust library test1/1 produced one genuine combined66-event COMPLETE stream from
+original J1/P1 bytes, unchanged10-owner map/binding; original combined bytes were
+strictly validated before entry replay. Source/semantic fields never rewritten.
+Prepare observed same History budget serialized bytes30001 ->148094 after Java ->
+533028 after Stage ->606404 after V8 request, with items/retained accounting also
+continuing. These are local logical counters, not physical qualification or hidden
+full-entry telemetry. New local fixture bounds are not production policy values.
+
+Initial prepare failure was test metadata providerVersion incorrectly read from V2;
+fixed to existing identity, original log retained. Final semantic assertions were
+strengthened before the long run. Cross-language invocation negative remains
+NOT_MEASURED. No old Python FULL/add/modify long test or prior producer rerun.
+No production/core/dependency/permission/profile/baseline change. Exact local tests
+remain outside default CI; no formal Fixture/phase probe added. HOST B is paused
+and unimplemented; real HOST/OS/whole-process qualification remains open. Phase1
+accepted4/21, A6 NOT_QUALIFIED, E02 PROPOSED/uninstalled.
+
+Commands/original failures/source/raw/evidence/review pins:
+.superpowers/sdd/2026-11-05-current13-mixed-entry/verification-index.json.
+Scope: ../superpowers/specs/2026-11-05-current13-mixed-entry-offline.md.
+
+## Complete modified-file current13 entry verified offline - 2026-11-05
+
+The first complete modified-file entry run passed1/1, exit0 (204584ms). Actual
+Application Source acquisition/CAS establishes P1 GET on a stable root/HEAD/revision,
+then the same file changes to the independently fixed POST bytes. The fixed bootstrap
+and complete281-module/1154-edge/295-artifact graph (310 source inputs) dispatch the
+actual INCREMENTAL business export. The real request keeps original Source identity,
+new genuine SHA and exact old activation basis; original Stage/full Runtime derivation,
+final Source/Git verification and original atomic Store connect to CURRENT POST
+/api/v1/items. Old19 changed origins are inactive/new19 active; immutable historical
+origins/projections remain. All17 control lifecycles release, one Native memory role
+precedes final Git,16 Git memory calls close, all six authority/authentication flags false.
+
+Already generated Rust library POST bytes are reused without producer rerun. Fixed
+producer request/output SHA and strict original-byte validation precede identity/
+envelope-only rebinding and checksum reseal; Source fingerprints and semantic fields
+remain untouched. Baseline FULL is a Source/Stage/Runtime/Store component setup, not
+another FULL product-bootstrap. Prior additive/FULL long tests are not repeated;
+independent exact helper diff confirms the default additive path remains compatible.
+Only shared test fixture/new local test, dedicated command and docs changed; no
+production code, dependency, schema, permission, formula/profile/baseline changes.
+
+This closes the offline modified-file business-entry proof, with Git/Native/observer
+channels still memory doubles. Real HOST/OS/whole-process qualification remains open;
+Phase1 accepted4/21, A6 NOT_QUALIFIED, E02 PROPOSED/uninstalled. NO_OP/deletion-only
+complete entries remain separate. HOST B changes consumption trust/lifetime and
+requires architecture approval: design and offline ownership work only, real runtime
+NOT_READY. No such mechanism was implemented.
+
+Exact first-run summary result.json is preserved; commands/receipts/review and all
+source/evidence pins: .superpowers/sdd/2026-11-05-current13-modified-entry/verification-index.json.
+Scope: ../superpowers/specs/2026-11-05-current13-modified-entry-offline.md.
+
+## Modified-unit positive from genuine Rust library observations - 2026-11-05
+
+Ordinary exact local Rust integration test1/1 (zero ignored in explicit run) obtained
+real GET and POST wire8 library observations, each34 events/COMPLETE, from independently
+fixed Source bytes. Actual test process ran the existing decoder/writer only: no
+analyzer CLI/collector/Git/HOST or old fixed12-Source batch. Both owned Temp roots
+were removed and readonly cleanup checked. Default-ignore isolates only this new
+private-input local test; no existing gate or formal Fixture is skipped.
+
+Final Node replay1/1 strictly validates BOTH original request/raw streams before
+any rebind/reseal, then retains real Source fingerprints and semantics. An independent
+review P2 noted reseal could mask original sequence/checksum defects; that gap is
+fixed, original weaker replay retained and Rust not rerun. Native raw bytes and
+rebound bytes have distinct pinned identities. Explicit validation-ledger spend is
+local integrity accounting, not production maxMemoryBytes or physical qualification.
+
+Real modified Source-port CAS -> DELTA Stage -> real library POST observation ->
+actual fixed-plugin full Runtime candidate -> original atomic Store yields CURRENT
+POST /api/v1/items. All19 old changed-unit origins are inactive,19 new active;
+immutable prior origins/projections stay. This closes a modified-unit component
+positive, not complete modified-file current13/actual process qualification. Earlier
+Application Source acquisition and additive complete-entry evidence remain separate.
+
+New Rust target and Node local harness only; no production/dependency/schema/permission/
+formula/profile/baseline changes. HOST architecture decision remains pending and no
+mechanism is implemented. Phase1 accepted4/21, A6 NOT_QUALIFIED, E02 PROPOSED.
+Exact commands, first replay/P2 repair, raw hashes, static gates and independent review:
+.superpowers/sdd/2026-11-05-modified-unit-library-positive/result.json.
+Scope: ../superpowers/specs/2026-11-05-modified-unit-library-positive-offline.md.
+
+## Modified-unit refusal and deletion-only component closure - 2026-11-05
+
+Modified P1 GET-to-POST Source CAS now has2/2 focused rejection tests: actual old
+Runtime=AFFECTED, same original unit/path/identity selected with real new SHA and
+old basis, missing observation refuses freeze, and old GET records with legal new
+envelope but unchanged old Source fingerprint refuse. Failure preserves full
+canonical/evidence/Syntax/history/Runtime table images. No valid POST Native output
+or successful modified-unit publication is claimed.
+
+Existing incremental component group4/4 includes a new deletion-only closure:
+P5 baseline -> add P1 -> remove P1 via Source CAS -> zero observation units and
+existing null observation -> full real Runtime derive -> original atomic CURRENT
+Store. Removed Source/nodes/Syntax membership are absent, P5 membership remains,
+immutable origins and all historical projections are retained. New-basis projections
+may be appended; the initial test incorrectly required whole-table equality, now
+corrected to existing immutable-row semantics. Production behavior and gates unchanged.
+This is not a complete no-Native/deletion-only business entry or HOST plan.
+
+HOST decision packet recommends only governed consumption-lease design and offline
+ownership implementation, still NOT_READY for real runtime. It explicitly affects
+trust/lifetime architecture; no scheme was implemented. A keeps NOT_READY; C changes
+snapshot/data delivery under separate review. Exact risk/impact/rollback/platform
+requirements: .superpowers/sdd/2026-11-05-modified-unit-readiness/host-decision-packet.json.
+
+No actual HOST/Native/Git/observer, new probe, CI/push, rights, physical formula/value,
+profile or baseline install. Phase1 accepted4/21, A6 NOT_QUALIFIED and E02 PROPOSED
+remain. Evidence/commands/original failures/review/source pins:
+.superpowers/sdd/2026-11-05-modified-unit-readiness/result.json.
+Scope: ../superpowers/specs/2026-11-05-modified-unit-deletion-readiness-offline.md.
+
+## Complete additive DELTA entry and modified Source evidence - 2026-11-05
+
+The actual fixed bootstrap/current13 INCREMENTAL entry now has complete additive
+Python DELTA evidence: genuine Source reconciliation/CAS, old activation binding,
+P1-only recorded wire8 input, retained P5, full fixed-plugin Runtime derivation,
+final Source/Git verification and original same-lease atomic Code/Syntax/Runtime
+commit. Fresh readonly CURRENT readers confirm new activation/membership plus
+unchanged old origins/projections. Control audit:17 registrations/releases, one
+Native memory double,16 Git memory calls/closes; no Native follows final Git.
+The graph used281 modules/1154 edges/295 artifacts. Final DELTA TAP1/1 and fast6/6
+are separate runs; counts are not added to older overlapping cohorts. The initial
+DELTA aggregate failure remains: the test passed historical trace metadata to a
+current-input reader, which correctly refused RUNTIME_INPUT_CHANGED. The test now
+uses readRuntimeBasis identity; the production guard was not changed. No FULL
+product-bootstrap test was repeated; baseline FULL is a Source/Stage/Runtime/Store
+component setup only.
+
+Independent Source evidence fixes before/after bytes for one same-path GET-to-POST
+edit. Actual Source CAS preserves file/revision identity, changes byte/aggregate
+fingerprints, refuses old selection and verifies new selection; unchanged rescan
+is equal. Matching modified-file Native observations and old Runtime support
+invalidation remain unproved.
+
+NO_OP component checks prove real CURRENT identity and equal actual rederived
+candidate for current routes. Empty routes fail Runtime validation while Source
+NO_OP still matches; an ignored valid config change yields equal output. Original
+route/config bytes are not persisted, so output equality does not prove original
+config identity. No digest contract or NO_OP shortcut was introduced. Final Source,
+readset/control/cleanup and explicit no-Native entry plans remain outstanding.
+
+HOST bootstrap/pre-hook/SQL consumption risks and lease/snapshot alternatives were
+analyzed read-only; new trust/lifetime architecture remains unimplemented and live
+NOT_READY. No new probe, actual HOST/Native/Git/observer/OS authentication, CI, push,
+rights, numerical profile or baseline change. Phase1 accepted4/21; A6 NOT_QUALIFIED;
+E02 PROPOSED/uninstalled. Source, commands, original failures, exact review/receipts
+and evidence pins: .superpowers/sdd/2026-11-05-delta-entry-continuation/result.json.
+Scope: ../superpowers/specs/2026-11-05-current13-delta-source-no-op-offline.md.
+
+## Java shared ledger and additive DELTA components - 2026-11-05
+
+Private Java decoding now uses the existing composition budget before response copies,
+JSON parse/schema clone and retained aggregate views; failed spend reaches the Source
+History owner through the existing bridge. Public/default response behavior and V2
+protocol checks remain. This is logical stdout accounting, not stderr/whole-process
+physical resource qualification. The fixed current13 entry now wires Java through
+that bridge and maps a separate INCREMENTAL operation kind to existing Stage DELTA,
+while retaining FULL and refusing unknown kinds without fallback.
+
+Final directed integration92/92, Providers and Runtime builds exit0, architecture17
+and scoped format checks are recorded with independent review and exact pins in
+.superpowers/sdd/2026-11-05-java-ledger-incremental-readiness/result.json.
+The three additive-DELTA cases use original P1/P5 recorded bytes, real Source CAS,
+Stage/capture/Runtime candidate and atomic CURRENT Store. Missing history and Source
+CAS drift refuse. These are component proofs: full-entry DELTA, same-path modification,
+NO_OP/deletion-only and actual mixed Java qualification remain open. Prior FULL Python
+product evidence is preserved for its own historical source snapshot and was not rerun.
+
+One authorized ordinary owned-Temp FS diagnostic completed once with9/9 explicit
+handle closes and cleanup COMPLETE. Attributes-only directory handles allowed own
+rename plus old-name recreation; both tested directory handle modes allowed child
+writes. The proposed namespace lease therefore cannot be accepted on that premise.
+Observed denials are not proof for untested POSIX/atomic replace/reparse/concurrency.
+No actual HOST, Native, Git, observer, OS pipe-instance admission, new right, resource
+number/formula, CI or baseline installation. HOST consumption architecture remains
+PROPOSED, live flags false; Phase1 accepted4/21, A6 NOT_QUALIFIED, E02 PROPOSED.
+Scope: ../superpowers/specs/2026-11-05-java-ledger-incremental-offline.md.
+
+## Actual current13 product entry and complete graph connected offline - 2026-11-05
+
+The fixed bootstrap now dispatches an actual private FULL current13 business export
+through a complete coordinator-fixed product graph. Final candidate has281 ESM
+modules/1153 edges/295 artifacts (code + migration manifest +13 SQL),310 source
+inputs and2 explicitly covered static assets. Existing junction sources are resolved
+and copied into ordinary nlink1 files; snapshots/edges/metadata are rechecked for
+drift. Full product graph and source-byte pins are retained, not just a direct-import
+list or the old synthetic default-false entry.
+
+Actual Application INDEX/READ_SOURCE authorization precedes owned current13 session
+initialization. Real Source CAS -> Runtime capture -> original Stage/request/owned
+Surface wire8 with same logical ledger -> real fixed-plugin candidate -> final
+Source/Git verification -> original authorized synchronous atomic Store all connect.
+Fresh readonly Runtime reader returns CURRENT with actual sitePlan. All subprocesses
+and observer are memory doubles; replay rebinding exists only in tests. Product
+code does not import a fixture or accept caller-supplied verification/candidates.
+
+Loader-issued URLs now use verified owned file URLs + private cache query so actual
+Storage import.meta.url migration assets work; external query aliases/unknown edges
+still refuse, no default filesystem/package resolution. Independent initialization
+P2 fixed: existing session timeout clamped to coordinator epoch with cooperative
+checkpoint/metadata checks (no hard synchronous DDL preemption). Original Store
+COMMITTED/UNKNOWN/failed cleanup ownership is retained.
+
+Final affected fast group64/64, final complete product success selector1/1,
+architecture17, scoped format and concentrated review PASS. Preserved corrupt-Native
+and permission cases pass in earlier attempt2 log; its summaryfail1 is NOT called
+whole-green (the test reader incorrectly nested a transaction, subsequently fixed).
+Overlap and reused cases are not summed. Two fast tests registered once; expensive
+product checks have dedicated test:mixed-current13-product command. Final candidate,
+exact commands/failures/review/source/evidence pins:
+.superpowers/sdd/2026-11-05-current13-product-entry-graph/result.json.
+Scope: ../superpowers/specs/2026-11-05-current13-product-entry-graph-offline.md.
+
+Proof is FULL Python Surface-only. Existing optional Java bounded V2/Stage path is
+preserved, but Java response shared-History accounting and mixed qualification are
+unproved; incremental remains unproved. Bootstrap/static-helper immutable live
+origin, real OS pipe-instance admission and actual whole-process/resource qualification
+remain open. No actual HOST CLI/Native/Git/Win32/observer/collector, user/prod DB,
+credentials, CI/Git writes, new dependency/rights/resource default/physical formula,
+profile or baseline installation. Phase1 accepted4/21, A6 NOT_QUALIFIED, E02
+PROPOSED/uninstalled; v4 authority pins stay current. Ordinary remaining offline
+work continues under approval; new architecture and mandatory platform boundaries
+remain. Night autonomy through2026-11-06T00:00Z is recorded, not a real-run PASS.
+
+## HOST verified module/bootstrap and V2 startup adapters - 2026-11-05
+
+Approved offline work now includes the real-file verified-source snapshot path,
+closed exact-edge Node hooks, fixed two-argument bootstrap entry and V2 HOST
+construction adapter. No new startup argv, preload/permission flags, dependency,
+OS right, numeric default/physical formula, manifest core schema or hash domain.
+
+The original context API stays metadata-only; additional opaque closure uses the
+same bounded ancestry/identity/hash/final-reread sequence and executes immutable
+verified UTF-8 snapshots instead of re-importing paths. Exact reachable module edges
+and canonical builtins only, private per-instance cache namespace, one initial
+bootstrap parent claim, sticky failure/dispose; no Node package/filesystem fallback.
+Hooks are consistency, not an eval/fs/process sandbox or bootstrap-origin proof.
+
+Fixed bootstrap.json is an ordinary manifest artifact, not a new top-level/binding.
+Five explicit existing-environment data fields carry original caps/deadline without
+defaults, match the canonical descriptor, and reject unknown/case aliases or Node
+preload variables. Descriptor/module snapshots come from the same verified read.
+Manifest identity and channel references are captured before awaits (independent
+review P2 RED->GREEN). Bootstrap installs hooks through the full awaited pinned
+entry export and deregisters on success/error; root parent is its own module URL.
+CLI/main was not executed. Tests call functions with synthetic modules/streams.
+
+Separate V2 HOST factory reuses original event operations, root remaining budget/
+cancel source and old HOST pipe including stderr/handle ledger. Old root changes
+only by an owner-thread-checked Cancelled accessor; Start/pipe inheritance/abort/
+cleanup remain. Factory successful real-root path is compiled, not runtime verified;
+no fake created/OS handles are used to claim that proof.
+
+Final affected bootstrap/loader/context/owner cohort51/51; earlier unchanged HOST
+adapter/cohort40/40 remains applicable (overlap is not added). Architecture17,
+scoped format and concentrated initial + added-range independent review PASS.
+Three new ordinary tests registered once, no formal Fixture/acceptance count added.
+Exact commands/failures/source/review/evidence pins:
+.superpowers/sdd/2026-11-05-host-loader-and-v2-startup/result.json.
+Scope: ../superpowers/specs/2026-11-05-host-loader-and-v2-startup-offline.md.
+
+Next authorized offline implementation is the actual current13 operation export and
+its complete coordinator-fixed product artifact/edge graph. Existing workspace
+junctions and transitive Application/IR/zod imports cannot be silently trusted or
+loaded via fallback; coordinator must prepare exact ordinary-file snapshots/edges.
+Synthetic return data is not actual Source/capture/Application/Store publication.
+Versioned explicit input plumbing itself needs no new core approval. New startup/
+trust/rights/numeric policy changes and actual execution retain separate approval.
+Bootstrap/helper immutable live provenance and real OS pipe instance admission stay
+open. No actual HOST/Git/Native/observer/collector/Win32 or user/prod DB, CI/Git writes,
+rights, physical values or installed baseline. Phase1 accepted4/21, A6 NOT_QUALIFIED,
+E02 PROPOSED/uninstalled; v4 authority pins remain current.
+
+## Approved final Source suffix connected offline - 2026-11-05
+
+User approved decision B; the previous pending phase blocker is resolved within
+private V2 offline scope. JS owner and pure C# policy enforce independently fixed
+SOURCE/GIT prefix -> Native ANALYSIS -> final verification-only ANALYSIS/GIT suffix.
+Final Git requires prior Native and the same analysis context; no Native/SOURCE can
+follow. Original active Source issuer, static/full actual-stdin SHA, Application
+permission/control, Storage readset and lifecycle cleanup checks remain mandatory.
+
+The private script now owns actual Source preparation and final verification;
+it accepts no caller success/verifier callback. Real fixed-plugin Runtime derivation
+finishes before final Source/Git re-observation, then original Application candidate
+validation/control and synchronous capture/settled-owner/atomic Store application.
+Ordinary Application derive Promise continuation remains; this is not a zero
+microtask/OS-race or live-authentication guarantee. Old composition/V1 paths stay.
+
+Reproducible result, exact command, source/evidence pins and independent review:
+.superpowers/sdd/2026-11-05-final-source-verification-offline/result.json.
+Final six-file directed cohort29/29, architecture17, scoped JS format and independent
+review PASS. Real current13 initialization/Source CAS/Stage/request/Runtime candidate/
+authorized atomic Store interfaces connect through fixed memory-only17-slot fixture
+(eight initial Git, one Native, eight final Git; fixture-specific, not a quota).
+Source/HEAD/static-command/query/cancel failures refuse Store publication and retain
+committed Source effects. No typed package source changes or redundant old239/build.
+
+Approved authority append makes previous E02 v3 an as-of snapshot; separate v4
+refreshes only version/date/provenance and two authority hashes. Independent review
+PASS, seven current pins and43 active SHA/size checks match. All Source/oracles,
+counting/null denominators/UNSET threshold and PROPOSED/noninstallable state remain.
+The v3->v4 authority additions were independently proved exact suffix additions;
+this does not assert earlier authority edits were prefix-only. Old versions retained.
+
+No actual Git/Native/HOST/debugger/observer/collector, user/prod DB, rights, resource
+formula/value, profile/baseline install, CI or Git write. Phase1 accepted4/21,
+A6 NOT_QUALIFIED, E02 PROPOSED/uninstalled. Next key path: trusted HOST entry and
+closed stable module loading/OS channel instance admission plus Windows V2 startup;
+o live authentication or actual qualification is inferred from the offline chain.
+
+## E02 current-authority proposal refresh - 2026-11-05
+
+The two-scenario E02 candidate now has a separate proposed-3 version: two stale
+controlling-document hashes and the moved Phase 1 exit locator were refreshed.
+Independent current-authority compatibility and exact metadata-diff review PASS.
+Seven authority pins match;43 active SHA/size,43 preserved-v1 SHA and two preserved
+four-framework proposal SHA checks match. All other fields are deep-equal to v2;
+Source/oracle bytes, scenarios, counting/overlap rules and old reviews are retained.
+No prefix-only claim is made for the changed authority documents.
+
+Reproducible evidence and pinned candidate/review paths:
+.superpowers/sdd/2026-11-05-e02-authority-refresh/result.json. Reproduction is
+read-only SHA256/byte-size comparison against candidate.files and the prior author
+receipt, JSON deep comparison excluding only version/createdUtc/authority/
+thresholdAuthority/revision, and seven authority SHA checks; no Source execution.
+Null formal/whole-system denominators and threshold, UNSET, PROPOSED/noninstallable
+and zero execution counters remain. This is proposal readiness, not formal baseline
+approval or actual E2E acceptance. No product code, tests, Native/HOST/Git/collector,
+CI, rights, resource values or baseline installation changed.
+
+Final Source phase proposal remains pending and unimplemented. Full current13
+operation/real HOST authentication and actual qualification remain open; P1-10/11
+core/dependency decisions are still proposed. Phase1 accepted4/21, A6 NOT_QUALIFIED,
+E02 PROPOSED/uninstalled. No independent higher-priority implementation was found
+that avoids those remaining decisions or reserved real evidence.
+
+## V2 bounded event/stream integration; final Source phase decision - 2026-11-05
+
+Within the approved offline V2 contract, the new dynamic debug bridge and bounded
+loop now connect dynamic policy to the existing mailbox and actual stream reader/
+writer workers through a concrete enum-safe adapter. An output-driven synthetic
+HOST drives REGISTER/BOUND/INTENT/READY/ACQUIRED/RELEASED, child/root exits, EOF,
+queue drain and Stop/join through actual bounded memory streams. 93 internal
+assertions are included in one Node wrapper, not counted as 93 formal probes.
+
+Final seven-file directed cohort9/9, architecture17, scoped format and concentrated
+independent review PASS. Old sources/Windows factory/phase predicates remain
+unchanged; typed package build inputs match the prior successful builds, so no
+redundant build or old239 repetition. Source/Git/Native/OS authenticity is not
+inferred: all execution/production/measurement flags stay false. No actual
+HOST/Native/Git/debugger/collector, rights, numbers, baseline/profile or CI/Git write.
+[Offline scope](../superpowers/specs/2026-11-05-v2-event-loop-offline-contract.md).
+Result: .superpowers/sdd/2026-11-05-v2-event-loop-and-operation-order/result.json.
+
+Full current13 orchestration exposed a concrete approved-contract conflict:
+source.verifySelection re-runs actual Source observation and read-only Git AFTER
+analysis. Existing V2 permits GIT only in initial SOURCE and forbids SOURCE return;
+both SOURCE and ANALYSIS suffix placements reject before stream ownership.
+The probe's V2 Native lane therefore is not yet a whole-process operation chain.
+[PROPOSED decision](../superpowers/specs/2026-11-05-final-source-verification-phase-proposal.md)
+recommends a fixed verification-only ANALYSIS/GIT suffix, no Native afterwards,
+same current analysis context and full actual command/stdin binding. This changes
+the frozen role/phase predicate and is NOT approved or implemented. Explicit VERIFY
+phase or retaining the block are alternatives; final verification is not removed
+or moved early. Phase1 accepted4/21, A6 NOT_QUALIFIED, E02 PROPOSED/uninstalled.
+
+## Approved dynamic V2 offline lane integrated - 2026-11-05
+
+User approved independent coordinator/fixed HOST attester offline implementation.
+The private V2 codec/exchange, original active issuer single claim (distinct
+SURFACE_V8), independently pinned artifact/entry/module byte checks and genuine
+Application-authorized same-capture analysis binding now compose. REGISTER/BOUND
+precedes exact INTENT/READY; beforeInput waits for matching ACQUIRED and repeats
+artifact/readset/control checks. Pure C# policy independently recomputes the full
+five-field launch hash from its fixed canonical prefix and real stdin hash, checks
+SOURCE -> ANALYSIS/order/deadline and preserves known cleanup without revival.
+
+R013 probe uses that memory-control/Native lane, actual Runtime wire8 constructor,
+Source/Stage ledger, real plugins' candidate and authorized atomic publication.
+Actual controlled Git issuer SOURCE registration is separately memory-tested;
+C# three-slot source/java/surface lifecycle and JS wire vectors match. Old V1/V5,
+old public rejection and Windows factory remain unchanged. All live authority,
+production, measurement, module-closure authentication flags remain false.
+Independent expected-byte checks are not proof of immutable live loading or an
+authenticated OS channel. No actual HOST/observer/Native/Git/collector execution.
+
+Final affected239/239, Providers/Runtime builds, architecture17 and scoped format
+PASS. One concentrated review plus only associated deadline/control cancellation
+rereads; RED/GREEN and original236 evidence retained. Exact result:
+.superpowers/sdd/2026-11-05-dynamic-binding-offline/result.json.
+[Approved contract](../superpowers/specs/2026-11-05-dynamic-binding-offline-contract.md).
+The earlier current13 failure audit also verified four existing real Store paths
+in owned temporary SQLite: UNKNOWN before/after commit stays local UNKNOWN;
+readonly recovery distinguishes state, postcommit cleanup stays COMMITTED, and
+cancel does not publish. Its evidence is preserved under preceding-current13-audit.
+
+Complete current13 FULL/DELTA operation orchestration still needs a separate
+integration of these components; old runMixedExecution remains11/wire5. Actual
+HOST entry/complete stable loading/OS pipe provenance, V2 event-loop bootstrap,
+whole physical resource formula/values and exact run packet remain open. Offline
+implementation can continue within this approved contract; actual runs, new OS
+rights and resource numbers still require separate approval. No baseline/profile
+install, Git write/push/PR/merge or formal CI. Phase1 accepted4/21; A6
+NOT_QUALIFIED; E02 PROPOSED/uninstalled unchanged.
+
+## Actual Runtime wire8 request construction - 2026-11-05
+
+A/B minimum current13 chain now uses the real private Runtime request constructor
+from genuine Stage preparation and the SAME Source/Stage History budget, replacing
+manual test request/owner binding assembly. Existing construction/locator/language/
+input limits and accounting core is reused; fixed wire8 strict schema and existing
+v5 exact behavior remain. No public routing/role/approval/resource change.
+
+[Scope and evidence](../superpowers/specs/2026-11-05-wire8-request-preparation-contract.md):
+.superpowers/sdd/2026-11-05-wire8-request-preparation/result.json (affected34/34, Runtime build, architecture17, scoped format and concentrated review PASS). This is a distinct
+authorized integration task while cross-process trust is awaiting decision; none
+of that pending HOST/REGISTER/role contract was implemented. Native/Git are memory
+substitutes. Full operation orchestration, real qualification, E02 and original
+E2E/physical gates remain OPEN; Phase1 accepted4/21, A6 NOT_QUALIFIED unchanged.
+
+## Owned wire8 transport and shared decoder ledger - 2026-11-05
+
+Minimum current13 loop now uses private owned wire8 transport, existing process
+lifecycle and strict mode8/raw capture through an in-memory child. Runtime bridges
+its decoder/request/raw-buffer charges into the SAME Source/Stage History budget,
+including already consumed bytes/items on failure; the existing bridge formula is
+unchanged. Real Stage/plugins produce the candidate; denied authorization leaves
+no publication, authorized same-lease Store commits and Runtime reader is CURRENT.
+
+[Exact offline contract](../superpowers/specs/2026-11-05-mixed-native-wire8-transport-contract.md)
+and .superpowers/sdd/2026-11-05-mixed-native-wire8-transport/result.json record
+reproducible verification: affected93/93, Providers/Runtime compile, architecture17
+and scoped format; one concentrated review. Public routes, legacy v5, fixed observer roles and
+production rejection remain unchanged. No real Git/Native/observer/collector/CI.
+This is logical decoder accounting, not stderr/env/process/observer physical
+resource qualification. Live dynamic READY remains blocked by independent HOST/
+Application/context provenance and trusted cross-process delivery; a self-reported
+hash or serialized WeakMap receipt is insufficient. Fixed matching is retained.
+A6 NOT_QUALIFIED; E02 PROPOSED/uninstalled; Phase1 acceptance remains 4/21.
+
+## Prepared owner registration and minimum R013 interface loop - 2026-11-05
+
+User approved dynamic input owner refinement/offline substitutes. Native/Git now
+prove the original frozen launch-plan identity only during their actual owner
+gate, recheck signal/deadline even in synchronous abort listeners and revoke in
+finally. Private one-shot claims prevent cross-registry replay. New offline
+registrar freezes static constraints, accepts only genuine owner plans, binds the
+full actual stdin hash and emits opaque single-use review receipts. Context/
+execution/production/measurement/auth flags remain false; current fixed observer/
+wire does not accept REGISTER. No JSON/hash receipt enables READY or real launch.
+
+Minimum current13 probe now ACTUALLY connects formal initialization, real Source
+observe/reconcile/CAS, capture13, wire8 decoder plus explicit fixture ledger,
+genuine Stage freeze, fixed plugins' real Runtime candidate and same-lease atomic
+Code/Syntax/Runtime Store. Permission-denied path publishes nothing; authorized
+settlement is COMMITTED and authoritative Runtime reader CURRENT with matching
+basis/activations. Git is in-memory double; Native is P5 recorded replay rebound
+to real opaque Source/Stage IDs with unchanged checked file bytes/fingerprints.
+No fabricated candidate, manual SQL, schema downgrade or fixture-prefix init.
+This is a minimum interface proof, not live wire8 transport/whole-operation
+accounting, four-framework/E02 or actual Native qualification.
+
+Final affected160/160, architecture17, scoped format and ONE concentrated review
+PASS. Source39 and R0131 are included, not added. Source/Providers builds pass;
+unmodified C#/Storage contexts reuse pinned evidence instead of mechanically
+rerunning239. Result: .superpowers/sdd/2026-11-05-mixed-native-prepared-registration/result.json.
+[Exact contract](../superpowers/specs/2026-11-05-mixed-native-prepared-registration-contract.md).
+The integration probe is ordinary-test registered once; old fixed binding/public
+refusal paths remain. No real Git/Native/HOST/collector/CI/profile/baseline or new
+physical formula/numerical value. Public Native compatibility uses existing Node
+protocol helpers; those are substitutes, not Rust/Native producer observations.
+
+R013 versions are wire8/Syntax4/PluginContext5/RuntimeCandidateV2 with history1,
+SQL container1/JSON format2. A5 remains11/wire5; no role V5 reinterpretation.
+Next bottleneck: owned wire8 raw transport, whole-ledger/private orchestration
+handoff, and trusted cross-process owner/context delivery. Version/scope/atomicity
+changes still require governed approval; a separate private adapter can reuse
+already-approved B5 components. remaining-batch-approvals.json lists the actual
+qualification prerequisites; no premature real-run request. critical-path-and-
+adjustments.json records concrete scheduling changes and full Phase1 delivery
+path. Phase1 remains4/21 accepted; A6 NOT_QUALIFIED, E02 PROPOSED/uninstalled.
+
+## Fixed HOST startup/owned Storage context offline slice - 2026-11-05
+
+Approved offline implementation now includes a fixed HOST plan (Node/script/
+manifest/hash, explicit cwd/env), startup handle ledger, bounded stderr count/hash
+and a private Windows startup/loop seam using existing APIs/flags only. It retains
+partial resources, separates OS-owned debugger aliases from local closes, keeps
+a controlled abort borrow when duplicate capture fails and retires aliases only
+after successful EXIT Continue. Workers are stopped before raw pipe close.
+Normal loop completion now additionally requires observed empty stderr EOF.
+Only declarations were compiled; no HOST Start or Windows adapter was invoked.
+Plan hashes remain metadata; live file/script/environment provenance is not proved.
+
+A disjoint Node adapter binds an existing Storage opaque capture to its genuine
+connection/incarnation/lease/readset through existing read/recheck/release APIs.
+It adds no SQL/open/capture, does not guess schema and requires recheck before use.
+Application ownership, file identity, live Source/history/tool/env and qualification
+remain false.17 tests use existing owned temporary SQLite helpers, not user DBs.
+Fresh final239/239 PASS; HOST30, loop70 and mailbox564 are internal assertions,
+not added to239. Architecture17, scoped format and independent review PASS.
+23 unchanged product/build pins reuse prior evidence. Result:
+.superpowers/sdd/2026-11-05-mixed-native-host-context/result.json.
+[Contract](../superpowers/specs/2026-11-05-mixed-native-host-context-contract.md).
+No actual HOST/debugger/Git/Native/collector/Prepare/Collect, formal CI, installed
+profile/baseline, new OS right or resource formula/value. Phase1 4/21, A6
+NOT_QUALIFIED and E02 PROPOSED/uninstalled unchanged.
+
+Continuing the next fixed-bootstrap audit found two material contract gaps, not
+one-line implementation fixes. Current session initialization selects R013; legacy
+A5 Runtime capture and ordinary MixedAnalysisStore.apply select R011. R013 combined
+apply requires a genuine Runtime candidate. A capture-only swap, fake candidate,
+downgrade or fixture-prefix initializer is invalid. Source may already commit
+before a later refusal (static call-path inference; no real run was performed).
+Runtime UUIDs/deadlines/remaining duration also make exact stdin/command digests
+unpredictable before HOST startup, while existing session/observer construction
+freezes them. No fields/matching were weakened to hide the mismatch.
+bootstrap-contract-findings.json pins evidence, alternatives and the recommended
+current13 combined-scope/dynamic-plan trust design review before implementation.
+Actual bootstrap is pending these decisions; remaining-batch-approvals.json and
+lifetime-evidence-map.json also keep observer final-close, oracle/applicability,
+physical formula/numeric and exact real-run packet prerequisites explicit.
+Parallel implementation ownership is in parallel-execution.json; follow-on static
+audit is not counted as development concurrency. All historical failures preserved.
+
+## Bounded control/observer loop and private Runtime adapter - 2026-11-05
+
+Approved offline continuation now includes a locked bounded ASCII/LF mailbox,
+owned memory-tested read/write/close workers, and a single-owner serialized
+control/debug loop. Per-turn input batches are fixed, cancellation/deadline is
+rechecked per frame and before waits (also after Stop), writes and consumed event
+Continue are never retried. Unknown closure/blocked workers refuse clean shutdown.
+After known final OS exit, late CLOSED/EOF drains without another debugger Wait.
+Windows wait/query adapters reject INFINITE and guard their construction thread;
+one private factory passes the same remaining callback to wait and final queries.
+It only constructs objects, never starts workers or Run. Old helper Run unchanged.
+
+A disjoint follow-on Node adapter now maps bound-owner callbacks to the existing
+private Runtime {source,createNativeLifecycle} argument, reuses Application Source
+validation, captures methods, preserves UNKNOWN errors and delegates slot/order
+checks to the existing owner. It never calls Runtime, spawns or opens SQLite.
+No public admission/profile/IR/SQL/golden, physical formula/value or OS right change.
+
+Evidence: .superpowers/sdd/2026-11-05-mixed-native-bounded-loop/result.json.
+Directed221/221 PASS; mailbox564 and loop67 are internal synthetic assertions,
+not added to that count. After a small constructor-only factory addition, only
+2 affected C# wrappers were rerun (2/2), preserving221 as reused evidence for all
+unchanged tests. Architecture17 and scoped format PASS; CS and two incremental
+independent reviews have no unresolved findings. 23 unchanged product/build pins
+reuse prior TS evidence. Actual Windows calls/collector/Git/Native/Prepare/Collect,
+formal CI, profile/baseline installs: zero. [Contract](../superpowers/specs/2026-11-05-mixed-native-bounded-loop-contract.md).
+
+remaining-batch-approvals.json separates remaining trusted HOST/root-handle and
+stderr ownership, live DB/Source/history/oracle applicability, full observer/HOST
+lifetime, exact physical formula/numerics and a complete frozen real-run packet.
+No premature request or new cleanup allowance; managed Stream shutdown and
+constructor thread guards are not live provenance. A6 NOT_QUALIFIED, E02 PROPOSED/
+uninstalled, Phase1 4/21 unchanged. Actual sampling remains serial. Parallel code
+ownership and the autonomously continued Runtime adapter are recorded once in
+parallel-execution.json; old failures/receipts remain preserved.
+
+## Event/owner bridge offline integration - 2026-11-05
+
+Two isolated implementation streams delivered a serialized C# debugger-event
+coordinator/private Windows adapter and a bound Node owner composition. CREATE
+captures owned instance/image evidence before Continue; EXIT continues before
+wait/query/release. Failed CREATE remains unknown, refused exceptions default to
+not-handled, and consumed event ordinals prevent Continue retries after failure.
+Windows declarations compile, but only injected fake operations were invoked.
+The existing collector Run content is unchanged (partial declaration plus line
+ending normalization); its actual source/binary freeze must be refreshed before
+any separately approved run. No mixed collector launch or live loop is enabled.
+
+Bound owner loads actual temporary artifact bytes, matches draft role/context
+hashes and an explicit environment artifact, then owns the existing exchange/
+handshake. It keeps execution/production/measurement and environment/DB/history/
+tool-authenticity flags false; descriptor consistency cannot grant live admission.
+No SQLite, real Source or production environment was opened or initialized.
+
+Fresh final177/177 PASS, architecture17 and scoped format PASS; independent review
+and RED/GREEN event controls are bound in
+.superpowers/sdd/2026-11-05-mixed-native-event-owner-bridge/result.json.
+23 unchanged product-source/build pins reuse prior evidence. Real Git/Native,
+collector/Prepare/Collect, formal CI, profiles/baselines and new rights: zero.
+[Exact contract](../superpowers/specs/2026-11-05-mixed-native-event-owner-bridge-contract.md).
+
+remaining-batch-approvals.json consolidates the missing successful-Wait/deadline
+source, bounded C# control scheduler, trusted HOST/DB/Source/oracle lifecycle,
+full-lifetime evidence and exact formula/numeric/run packet. No new premature
+approval request. A6 NOT_QUALIFIED, E02 PROPOSED/uninstalled, Phase1 4/21 unchanged.
+parallel-execution.json records actual disjoint code ownership and root-only
+integration; actual sampling remains serial. Old receipts stay historical.
+
+## Fixed-role observer/control/owner offline batch - 2026-11-05
+
+The approved D1-D4 next slice implements strict context/sequence-bound Node and
+pure C# control frames, an exclusively owned Node stream exchange, a pure fixed-
+role observer metadata policy, and bounded read-only owner manifest/artifact pins.
+READY/acquisition/close/release and early queued SPAWNED/ACQUIRED are checked;
+unknown OS-instance metadata remains sticky unknown, including after HOST exit.
+Independent review defects were first reproduced and fixed without allowing
+conhost or weakening production refusal. The owner loader checks same-read bytes,
+canonical JSON, safe paths, named/open/final identity, hashes and final rechecks;
+all execution/production/measurement and DB/history/tool-authenticity flags stay
+false. Descriptor references do not authenticate a real database or process.
+
+Fresh evidence: .superpowers/sdd/2026-11-05-mixed-native-observer-control/result.json,
+directed-v1.tap (97/97), architecture.txt (17 projects), review-final.json and
+final-directed.tap. Final counts/hashes and independent composition evidence are
+recorded in result.json (final directed124/124 PASS). C# unit compilation loads only the new pure metadata
+policy, never the collector; Node stream tests are in memory, owner tests use
+isolated temporary files. Existing product TS sources/build evidence are reused.
+No actual Git/Rust/collector/Prepare/Collect, formal CI or profile/baseline install.
+
+[Exact contract](../superpowers/specs/2026-11-05-mixed-native-observer-control-contract.md).
+remaining-batch-approvals.json separates implemented offline pieces from actual
+OS/event-loop bridge, bounded C# pipe scheduling, authenticated owner/context,
+full-lifetime evidence, formula/values and exact execution packet still pending.
+Old Node-only collector is unchanged. A6 NOT_QUALIFIED, E02 PROPOSED/uninstalled,
+Phase1 4/21 accepted. Pure traces are not Native qualification.
+
+Parallel development now uses disjoint file ownership: root implements owner
+binding/shared integration; a delegated implementer owns only the new in-memory
+composition test. No worktree switch, shared-source concurrent editing or real
+sampling. parallel-plan.json records the machine snapshot and merge/dependency
+rules. Actual collection remains serial and separately approved.
+
+## Private Source/v2/v5 before-spawn batch verified offline - 2026-11-05
+
+User-approved D1-D4 now has actual deep-private launch plumbing. Mandatory Source
+qualification is validated/snapshotted through Application before any effects;
+missing Source cannot downgrade to PATH. A separate private callback argument
+threads Source then v2/v5; original exact JSON/public admission is unchanged.
+Native v2 reuses the original request/core/event/checksum path and v5 uses the
+same private lifecycle validation. Node keeps all existing protocol pipes/readers.
+
+All new qualified waits use the existing deadline/cancellation, including input,
+settlement and dispose. UNKNOWN cleanup survives stderr and Application/Runtime
+wrapping through owned copies, even for frozen callback errors; it is separate
+from SQLite cleanup effects. Ordered fixed-role handshake refuses unknown role,
+instance/image/parent/cleanup and cannot revive poisoned/disposed slots. Its
+exchange is still injected offline data, not OS provenance or authorization.
+
+Qualified Source/Native dictionaries block fixed Node24/libuv missing-required
+and coverage supplementation without copying host values. The identical frozen
+dictionary is bound/passed; ordinary Native environment stays mutable as before
+for Node normalization. Four TS packages build; final directed279/279 PASS,
+architecture17projects and scoped formatting PASS. Independent review plus final
+incremental review have no unresolved Important/Minor. Public refusal controls
+are included. Old RED/architecture failures remain preserved, not overwritten.
+
+Evidence: .superpowers/sdd/2026-11-05-mixed-native-before-spawn/result.json,
+final-validated-v4.tap, independent-review.json and independent-review-v2.json.
+[Exact contract](../superpowers/specs/2026-11-05-mixed-native-offline-qualification-contract.md).
+New test registered once; fixtures/goldens/SQL/dependencies/profile numbers unchanged.
+Tests used in-process doubles, owned temporary SQLite and existing Node fake-
+protocol client children. No real Source Git/Rust/collector/Prepare/Collect,
+C# collector build, formal CI, production DB or baseline/profile install.
+
+remaining-batch-approvals.json consolidates exact actual-run/physical formula/
+numerical/context prerequisites. It is not a new approval request or complete
+executable Native packet. Actual owner/isolated contexts, C# fixed-role/IPC/OS
+bridge and whole observer/HOST lifetime evidence remain next work. Further
+compatible offline implementation remains authorized; no new rights or actual
+run is implied. A6 NOT_QUALIFIED, E02 PROPOSED/uninstalled, Phase1 stays4/21.
+
+One initial test command was rejected before execution by automatic review due
+to perceived real-Git forwarding. Self-contained non-forwarding fixture dispatch
+was approved and completed; no denied/uncertain action remains pending.
+
+## Approved mixed qualification directions: first offline reader slice - 2026-11-05
+
+User approved D1-D4 design and offline implementation only. The [exact contract](../superpowers/specs/2026-11-05-mixed-native-offline-qualification-contract.md)
+now defines a private draft/trace consistency entry, separate versioned resource
+inventory, fixed HOST/GIT/V2/V5 target roles plus OBSERVER inventory, and strict
+instrumented-only ineligibility. ADR-020/Authority/WBS/Acceptance are synchronized.
+No public Runtime/product profile route, OS collector or process permission changed.
+
+scripts/mixed-native-qualification-plan.mjs has two pure readers: exact JSON-data
+schema, fixed tool/input/oracle/DB/environment digest bindings, normalized frozen
+outputs, and same-instance/role/parent/pipe/exit/final-query/release ordering checks.
+Unknown roles/descendants, caller approval fields, arbitrary commands, numeric
+reservation/formula or production promotion refuse. Descriptor/digest/ordinal
+consistency is not authentication or real same-instance OS evidence. The resource
+inventory does not install a mixed purpose/profile, formula, threshold or value.
+
+33 synthetic controls RED0pass/33fail -> GREEN33/33. Final combined new reader,
+existing process-conformance and architecture-rule regression78/78; architecture
+check passes17projects; scoped format PASS. Test added once to ordinary local
+Node test root. No full root suite/formal CI/build/actual Git/Native/collector,
+Prepare/Collect or model invocation. Fixture goldens/registry/SQL unchanged.
+Proof: .superpowers/sdd/2026-11-05-mixed-native-offline-contract/result.json.
+
+The same contract separately records a not-implemented bridge sequence using
+existing root anonymous control pipes, serialized launch intent, CREATE acquisition
+before Continue, then Node actual-PID/pre-input matching. This avoids claiming
+that stdin holds argv-only Git or image SHA distinguishes v2/v5. Parent PID
+acknowledgement before debugger continuation can deadlock; the proposed sequence
+explicitly avoids that dependency. Real before-spawn plumbing, fixed Git executable,
+owned Source/history/DB context and observer final lifetime still need implementation
+and proof. No bridge prototype or actual scenario was run. New rights, exact physical
+formula/numbers and every real-run object remain reserved. A6 NOT_QUALIFIED;
+Phase1 stays4/21, E02 remains PROPOSED/uninstalled. This is only an offline slice.
+
+## Offline receipt drift window repaired; concentrated decisions proposed - 2026-11-05
+
+The offline preparation script now parses JSON and hashes the same captured
+bytes. Manifest and SQL identity/hash pins guard plan loading, each migration
+before/after and final receipt; selected literal bytes are checked again before
+publication. Four missing-behavior RED cases ->12/12 combined directed checks
+PASS; materializer syntax PASS. No materializer, migration, real Native/Git,
+collector or compiler was run. Original candidate/databases are unchanged.
+
+Evidence: .superpowers/sdd/2026-11-05-mixed-native-preparation/receipt-hardening/
+result.json. Original script bytes are preserved as *.before and match the old
+result hashes; the old result is historical, not the hash manifest of new code.
+Before/after guards do not claim an atomic snapshot/adversarial filesystem
+security guarantee or retroactively improve the old preparation receipt.
+
+The concentrated approval-decision-options-v1.json distinguishes four options:
+private first-run qualification entry; separate whole-flow resource contract;
+fixed Git/v2/v5 acquisition with Node owning protocol streams; instrumented-only
+applicability until separately justified. D1-D3 require governed core decisions;
+ordinary private implementation/tests may proceed only within accepted exact
+contracts. D4's continued ineligibility preserves the present boundary. No new
+formula, numbers, actual-run object, OS right, profile or baseline is preapproved.
+A6 NOT_QUALIFIED and Phase1 4/21 remain unchanged.
+
+## Mixed Native offline inputs and schema templates prepared - 2026-11-05
+
+Actual worktree remains C:/Users/Freya/.codex/worktrees/e4fb/CodeAtlas,
+HEAD292760e069879dc5c49ebe3f2b86c8e46090a82c (fresh read-only Git check).
+Six selected Source literal files passed bounded byte/hash/file-identity checks.
+The existing migration runner produced exclusively new schema-only templates:
+REPOSITORY13 (32 domain tables), WORKSPACE6 (13), all domain rows0; integrity,
+foreign-key checks and recorded database SHA match. These are not registered
+repositories/workspaces, authenticated history, or admitted evaluation databases.
+Eight focused offline tests pass; no product/schema/fixture contract changed.
+
+Evidence: .superpowers/sdd/2026-11-05-mixed-native-preparation/result.json,
+offline-fixtures/candidate.json, input-check-green-final.tap and review report.
+Oracle applicability, calibration checklist and four proposed contract options
+are now consolidated. Purpose/formula/reservation/counts/thresholds stay unset;
+no MAX_SAFE fixture allowances, profile=test or R7 scope was imported into live
+configuration. Source/Git/Native/Stage/Store applicability still requires binding.
+
+Preparation receipt hashing has a separate-read drift window; current files
+were reverified consistent. This single-use offline tool must not be reused for
+mutable/live inputs without same-read hashes and before/after pins. No rerun.
+No actual Native/Git/collector/new compiler execution or baseline/profile install.
+A6 remains NOT_QUALIFIED; Phase1 stays4/21. Full Native is blocked by governed
+first-run authority, whole-flow resources, actual acquisition/pipe ownership,
+and debug/nondebug applicability decisions plus concrete live manifest inputs.
+
+Acceleration is evidenced, not a speedup claim: parallel isolated audits,
+focused tests and evidence reuse are in use; prior two Collects shared one
+approval/old DLL/zero Prepare.322-pin pre-freeze checks are implemented for the
+prepared tool scope. New1Prepare/3Collect plan is reviewed but not executed;
+complete Native batch is not ready. See acceleration-status.json for evidence.
+
+## Consolidated A6 execution plan ready; complete mixed Native still blocked - 2026-11-05
+
+Offline planning now binds one fixed new-tool owner to322 current source/host
+/existing-dependency files. One approved Prepare would create the new absent
+DLL; actual disk SHA and six ABI layouts must be checked, then its ten-file
+freeze precedes G01/G02/G03 sequentially. First unexpected outcome stops all
+later stages; no retry or old DLL/slot reuse. Nineteen pure receipt/ABI tests
+pass. Node/PowerShell syntax and independent owner review pass; complete-plan
+consistency review also finds no Important issue. No owner/stage was invoked,
+no new compilation/Collect/Native run occurred; run/ and new DLL are absent.
+
+Evidence: .superpowers/sdd/2026-11-05-a6-complete-execution-plan/result.json
+and complete-execution-plan.json; owner lives in2026-11-05-a6-no-console-conformance.
+The optional exact batch is1Prepare/at most3Collect,5 target Node lifetimes,
+10s internal/30s stage watchdog/1MB streams, no hard RAM or overall-time claim.
+Compiler/backend candidates are only metadata-pinned, not claimed as a completed
+compiler measurement. Actual new DLL hash is derived after the approved bounded
+Prepare, never fabricated. Native/Git/CI/profile-install actions in owner are0.
+
+Complete Native matrix maps20 existing logical scenarios plus Source selection
+/classification/Git controls; these are not physical invocation counts. Four
+core dependencies remain proposed: first no-profile qualification authority,
+full-lifecycle purpose/components/accounting, actual Git/v2/v5 acquisition and
+pipe ownership, and debugger/nondebug applicability. Exact inputs/pristine DB
+/oracles/calibration/holdout manifest still needs materialization. No fictitious
+Native command/hash/count or unknown numeric preapproval. R7 scope not expanded.
+To avoid disposable runs, the ready tool actual batch may be held until final
+compatible Native prerequisites are ready and then combined/re-frozen; no
+per-scene approval needed within an explicitly accepted batch. A6 NOT_QUALIFIED,
+Phase1 stays4/21; no Quality Gate/FROZEN contract or production route changed.
+
+Model configuration check: local default gpt-6.1-sol/medium; original native
+last turn_context09:19:34Z recorded the same. Actual model/effort of the current
+delegated executor is not exposed, so defaults/approval-review models are not
+presented as current actual execution values. No settings changed.
+
+## Approved remaining two Collects completed; qualification-tool fix verified offline - 2026-11-05
+
+The approved actual batch used the original D03 DLL unchanged:
+62a0be977b2d6c3a543ef6260eefaaeb523c7a63d7a16c03e8df9d7e359b51ad.
+Prepare0/Collect2/no retry. Cancellation recorded SIGTERM, awaited childClosed,
+empty child output and complete exit/handle/PSS cleanup. Final-query injection
+recorded INJECTED_FINAL_QUERY_FAILURE, null peak/no fallback, no child and
+complete cleanup. Both tool exits0; all317 frozen inputs matched afterward.
+Evidence: .superpowers/sdd/2026-11-05-a6-remaining-conformance-proposal/
+post-run-analysis.json and run/. No different/new DLL was used in those cases.
+
+User authorized continuing ordinary architecture-consistent technical decisions.
+The existing qualification tool now has the minimal reviewed root/child detached
+creation settings, retains DEBUG_PROCESS and all image/count/unknown-cleanup
+refusals, and does not copy PSS into active code. A fixed NoConsoleConformance
+batch root is added; old roots and attempt/freeze/destination controls remain.
+No generic command/attach/rights or Runtime/product route was introduced.
+
+Existing required tests now include21 file/pure flag/cleanup assertions and3
+TEST_DOUBLE helper ownership checks. RED1pass3fail -> final targeted50pass;
+architecture17, scoped formatting and independent five-file review pass. The3
+Add-Type unit compilations did not invoke Run/PSS/Prepare/Collect or replace
+the approved DLL. Evidence: .superpowers/sdd/2026-11-05-a6-tool-creation-offline/
+result.json and independent-review.json.
+
+The new uninstrumented source/DLL is not the D03 diagnostic binary. Its real
+Prepare/ABI/binary freeze and required scene validation need new exact approval;
+new run/ is absent. No extra actual run followed the two approved Collects.
+Do not transfer old DLL results or mark A6 qualified. Native mixed qualification,
+non-debug applicability, profile/E02 baseline and formal CI remain separate.
+Current coordinator remains sole writer; original session/locks untouched.
+Phase1 stays4/21 accepted and A6 NOT_QUALIFIED.
+
+## A6 remaining-scene offline hardening and reviewed continuation ready - 2026-11-05
+
+The fixed-scene reader now rejects child status/output in FINAL_QUERY_FAILURE
+(there is no child) and DONE output in the fixed child-wait cancellation scene.
+Five new single-field controls first produced 21pass/5fail, then targeted
+trace/file-cleanup/registration checks passed47/47. After formatting, impacted
+pure traces passed26/26; architecture17 and final scoped formatting pass.
+Independent final reader review finds no Important issue. No Fixture baseline,
+schema, process admission, numeric gate or active creation mode changed.
+
+Evidence: `.superpowers/sdd/2026-11-05-a6-remaining-offline/result.json`.
+D03 original 14 run files and collector/helper/DLL are unchanged. Its old
+19-input current-reader pins are historical after this separately authorized
+offline repair, not a reusable complete freeze. A new v2 continuation freeze
+binds317 existing source/runtime JS files and module resolution, not new deps.
+
+Reviewed proposal: `.superpowers/sdd/2026-11-05-a6-remaining-conformance-proposal/`
+with18 artificial case-check tests passing, Node/PowerShell syntax pass and
+independent v2 review. It requests zero Prepare/compilation and at most two
+fixed Collect calls: cancellation first, only then final-query failure; stop
+at first unexpected outcome, no retry or SHORT rerun. D03 DLL and original ABI
+provenance are reused. run/ is absent; new explicit actual-run approval pending.
+All outcomes remain NOT_QUALIFIED/measurementEligible=false, including expected
+injection. No active no-console adoption or actual Native/CI run occurred.
+
+Formal-adoption/Native prerequisites are recorded in adoption-and-native-gaps.json.
+A minimal active collector without diagnostic PSS would have a different DLL
+identity and needs fresh identity/ABI/applicable evidence; do not transfer D03.
+Exact mixed Native tools/inputs/pristine DB/oracles, first-qualification authority,
+purpose/resource/calibration/holdout and debugger/nondebug applicability remain
+separate. Existing R7 Java/REFRESH evidence is retained within its own scope.
+A6/E02/Phase1 stay open,4/21 accepted. Current coordinator remains sole writer;
+no original-session resume, messages, lock bypass, reset/stash/stage or Git write.
+
+## Approved D03 single diagnostic completed; A6 remains NOT_QUALIFIED - 2026-11-05
+
+User approved the exact D03 v2 once. All 19 pins/environment matched and no
+other CodeAtlas task execution was observed before launch. One Prepare and one
+SHORT_DESCENDANT Collect exited 0; no retries or additional cases. The result is
+EVIDENCE_RECORDED_NOT_QUALIFIED, helperScenarioComplete=true, complete identity
+metadata/images/root anchor/cleanup. Exactly two pinned Node instances were
+recorded; no conhost or untracked CREATE. Both initial breakpoints, actual exits,
+handle releases, final queries and PSS releases were recorded. Helper child
+closed with exit0/no signal/DONE. Observed final peaks are diagnostic-only and
+not eligible resource/profile values. All 19 frozen input pins still match.
+
+Evidence: `.superpowers/sdd/2026-11-05-no-console-proposal/run/` and
+`post-run-analysis.json`. Existing conformance reader accepts a verbatim source
+projection as COMPLETE SHORT, measurementEligible=false; derived mapping and
+hashes are in `offline-short-reader-check.json`. This is not A6 acceptance.
+Cancellation and final-query-failure cases remain unexecuted, and active source
+creation flags/helper were not changed by this diagnostic. No further actual
+run, production adoption, Native/profile, E02 installation or CI is implied.
+
+Current coordinator remains the sole task writer; original native session is
+preserved without resume/messages/lock bypass. Original session had no new
+execution observed since 09:19Z. Native lease release and desktop red dot remain
+unverified; avoid starting a second writer. Use the latest D03 handoff receipt.
+
+## D02 follow-up: conservative cleanup fix verified offline; D03 remains proposed - 2026-11-05
+
+Active collector cleanup now requires the expected first root image/hash/PID
+anchor and no untracked CREATE, in addition to every recorded exit/handle release.
+Main-loop overflow and cleanup-drain CREATE both set the sticky refusal flag.
+Creation flags, fixed helper, process admission/count and serialized Result are
+unchanged. Required file unit now includes eight synthetic cleanup controls
+(17 assertions total); missing-predicate RED and old-behavior unanchored-root RED
+precede 42/42 targeted passes. Architecture17, scoped JS formatting and independent
+static review pass. No Run/Prepare/Collect/PSS was performed for this repair.
+
+Evidence: `.superpowers/sdd/2026-11-05-collector-cleanup-offline/result.json`
+and `independent-review.json`. Event delivery remains unverified by pure tests;
+A6 stays NOT_QUALIFIED. D02 original 14 run files remain unchanged; its frozen
+active-source pins are historical after this separately authorized repair.
+
+A separate D03 v2 unapplied proposal changes root/child no-console creation and
+explicitly transfers cleanup responsibility away from the detached child libuv
+job fallback to debugger ownership and proved exits/handles. Conhost and extra
+processes remain rejected. Thirty pure scenario/identity tests and one unit-only
+compile/reflection check pass; independent v2 static review finds no Important
+issue. Metadata completeness/exit0 are separate from helperScenarioComplete.
+V1 findings and source snapshots are preserved. Proposal has 19 pinned inputs;
+run/ is absent. `2026-11-05-no-console-proposal/approval-request-v2.json` requests
+one Prepare and at most one fixed Collect, with stop/no-retry and no A6 acceptance.
+No new actual run has been approved or executed.
+
+E02 candidates remain unchanged/PROPOSED, denominator null and thresholds UNSET.
+Independent assessment requires full applicability/obligation mapping and a real
+application runner design before final baseline approval; expected data must not
+be injected into product state. See `e02-next-steps.json` in the cleanup evidence.
+
+## Approved D02 diagnostic executed once; A6 remains NOT_QUALIFIED - 2026-11-04
+
+One frozen Prepare and one SHORT_DESCENDANT Collect completed with exit 0; no retry.
+The diagnostic result is EVIDENCE_RECORDED_NOT_QUALIFIED, measurementEligible=false.
+OS-reported identity-bound ancestry is collector 12768 -> pinned Node 18764 ->
+conhost 3852. Both PSS metadata records and cleanup evidence are complete; the
+unexpected conhost is still rejected. Neither target has a final memory peak;
+no intended Node descendant or helper output was recorded. This is not a passed
+helper scenario, resource measurement, historical D01 reconstruction or A6 exit.
+
+All 14 frozen inputs and historical D01 pins remain unchanged. Root creation
+already uses CREATE_NO_WINDOW. Offline source review found that changing the
+helper to detached:true would also skip libuv kill-on-parent-exit job assignment;
+no such code or process-model change was applied. Any further actual diagnostic
+needs a separately reviewed concrete proposal and user approval.
+
+Evidence: `.superpowers/sdd/2026-11-04-a6-origin-diagnostic-proposal/run/` and
+`post-run-analysis.json` in its parent directory. Original result/exit/raw/DLL
+evidence is preserved; no baseline/profile/dependency install, CI or Git write.
+
+## File-only image regression registered in required tests - 2026-11-04
+
+The previously added nine-assertion PowerShell file-identity unit had only an
+explicit manual command. A Windows-only Node wrapper now runs that same file
+unit, and root package.json test registers the wrapper exactly once. It loads
+only the active collector type and invokes ImageHash on owned temporary files;
+it never invokes collector Run, PSS, Prepare/Collect or the proposed D02 files.
+Non-Windows explicitly skips this Windows API unit, not an A6 qualification gate.
+
+The registration check first failed with zero occurrences, then passed with one.
+Targeted wrapper plus workspace-structure tests pass 21/21, zero failures/skips;
+the wrapper checks the nine file assertions completed. Architecture17 and scoped
+formatting pass. The single unit-test Add-Type invocation is not a diagnostic
+Prepare or resource capture. Reproduce:
+`node --test --test-reporter=tap scripts/test-mixed-process-image-identity.mjs scripts/test-workspace-structure.mjs`.
+Evidence: `.superpowers/sdd/2026-11-04-image-unit-registration/result.json`.
+
+All 14 D02 v3 inputs and its lock are unchanged; proposed run/ does not exist.
+Runtime identity read remains 726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013;
+no production build, baseline/profile installation, actual collector/Native,
+CI or Git write occurred. D02 awaits user approval; E02 and Phase1 gates remain
+open, 4/21 accepted. Later planned document/knowledge work still needs concrete
+parser/dependency, port and migration decisions, not silent routine-code choices.
+
+## Two E2E proposals reviewed; A6 D02 v3 awaits approval - 2026-11-04
+
+The separately approved offline Source/literal-oracle proposals for
+vulnerability-processing and spring-fastapi-kafka are authored and independently
+reviewed. V1 and its three CHANGES_NEEDED findings are preserved. V2 fixes K1
+last-good sequencing, the sf-west listener's own empty EVENT context, and the
+separation of real Source grounding from an existing oracle structure reference.
+Candidate v2 SHA256 is
+15f6f3941b4e9bdfdb9f8a3b046c1317f2ad99a644f5954d3ac31d0b131b1b53;
+independent review v2 SHA256 is
+b8f3ce636a732fce7d139757df7d284dc9b58b504818bf09963ca2e93e4a92c7.
+Evidence: `.superpowers/sdd/2026-11-04-e02-e2e-proposed/`.
+All 43 active and 43 original artifact hashes match. Proposed VA14/SF16 slots,
+9 controls and VA12/SF10 families are not an approved whole-system denominator.
+Source-only review PASS is not real Product/Model/transaction/stdio/install
+validation; all remain UNEXECUTED/BLOCKED. Formal denominator and threshold stay
+null/UNSET, installable=false; the prior four-framework proposal is unchanged.
+
+A6's next one-shot metadata diagnostic is an UNAPPLIED design attachment under
+`.superpowers/sdd/2026-11-04-a6-origin-diagnostic-proposal/`. Only proposal files,
+syntax/static checks, SDK declaration inspection and independent design review
+were performed; active collector source was not modified. PSS flags/class are
+fixed at zero on already-owned event handles, taking only PID/reported-parent/
+creation metadata. Actual API support and creating caller remain unproven.
+V3 conservatively marks any cleanup-drain CREATE untracked; no added process is
+accepted/queried, and incomplete cleanup stays INCONCLUSIVE. The earlier static
+CHANGES_NEEDED review remains intact. Fourteen final input pins match, Node/PS
+syntax checks pass, and run/ does not exist. No C# compile, Prepare, Collect,
+PSS, Native, baseline installation, CI or Git write was performed in this batch.
+The exact one-Prepare/one-Collect request is approval-request-v3.json; lock v3
+SHA256 3568cb8adcc0b566f15c64912f23bc172dabf4c32a51d456fb04c0e058a866ef.
+Actual execution still requires explicit approval. A6 NOT_QUALIFIED, E02
+NOT_EVALUABLE and Phase1 4/21 accepted remain unchanged.
+
+## Offline Code/Syntax capture byte-bound repair - 2026-11-04
+
+The existing library-output checker no longer stats a capture and then performs
+an unbounded whole-file read. It opens the file, verifies the opened identity and
+existing hard cap before allocation, reads at most its declared size plus one
+growth sentinel, verifies unchanged metadata, and closes on every path. Existing
+caps, manifest/hash/oracle checks and candidate-only result flags are unchanged.
+
+A deterministic real-file growth control first proved a 1,000,001-byte whole-file
+read after a stale stat, exceeding the existing 1,000,000-byte request hard cap;
+24 tests passed and that control failed. The final scoped suite passes 25/25,
+including all 18 existing producer families and one synthetic capture-root check;
+there are zero failures/skips/TODO. Synthetic file copies are unit inputs, not
+new Rust-produced captures or authenticated Source evidence. Architecture17,
+scoped formatting and git diff --check pass. Reproduce:
+`node --test --test-reporter=tap scripts/test-code-syntax-producer-oracle.mjs`.
+Evidence: `.superpowers/sdd/2026-11-04-library-capture-read-bound/result.json`.
+
+Only the two existing script/test files changed, plus this status prefix. No
+product package/build or official Fixture/baseline changed. All 10 prior R7 file
+pins and the E02 v2 candidate/review pins match. No Rust/Native/helper/collector,
+CI, Git write, baseline installation or two-E2E authorship was performed. E02 E2E
+proposal approval is still pending; no dependent work was started. A6, Syntax,
+E02 and Phase1 exit gates remain open; parent count remains 4/21 accepted.
+
+## Collector image diagnostic repair and E02 E2E gap review - 2026-11-04
+
+The fixed collector now saves the digest from its existing image file handle
+before rejecting a mismatched path. Rejection remains UNEXPECTED_PROCESS even
+when diagnostic hashing fails; expected image SHA, process count/modes, launch
+flags and cleanup are unchanged. The observed digest is not a trust decision.
+A file-only PowerShell unit test compiles/loads the collector type and invokes
+only ImageHash on an owned temporary file; it never calls Run/Prepare/Collect.
+Two real controls first exposed missing rejected-image digest and changed refusal
+on read failure; the final test passes 9 assertions. Offline trace regression
+passes 21/21 and architecture passes 17 projects. Independent scoped code review
+found no important issues. Reproduce with Windows PowerShell -NoProfile -File
+`scripts/test-mixed-process-image-identity.ps1`; this is not A6 qualification.
+
+The six isolated unit-test Add-Type invocations and all earlier harness/edit
+failures are recorded in `.superpowers/sdd/2026-11-04-collector-identity-offline/`.
+Historical G01/D01 raw records, freezes and collector DLLs are unchanged; the
+modified source does not match their old DLL identity and cannot reuse their
+execution freezes. No acquisition helper, collector Run, Native, formal CI,
+Git write, profile or baseline installation occurred. A6 remains NOT_QUALIFIED.
+
+D01 proves a recorded conhost.exe path during the owned debug chain, not its
+parent/cause or historical image digest. Current on-disk SHA is separate evidence
+and must not backfill D01. Missing peaks follow early rejection into cleanup,
+which confirms exit/releases but does not perform successful final Peak queries.
+CREATE_NO_WINDOW was already set; no unsupported launch fix or conhost whitelist
+was applied.
+
+E02 planned vulnerability-processing and spring-fastapi-kafka directories and
+planned runner remain absent. VA12/SF10 probe families are not 22 recall facts;
+the reviewed 21-fact four-framework proposal is not the whole-system denominator.
+The concrete E2E authorship/review plan is in e02-e2e-gap-proposal.json and
+reviewable-next-actions.json under the evidence directory. Whole denominator and
+numeric threshold remain UNSET; Phase1 remains 4/21 accepted, E02 NOT_EVALUABLE.
+
+## E02 four-framework source proposal reviewed - 2026-11-04
+
+The separately approved Source-only candidate authorship and independent review
+are complete for the pinned four-framework subset. Candidate v1 and its
+CHANGES_NEEDED review are retained. Candidate v2 accounts consistently for both
+typed constructor field assignments: 21 PROPOSED critical declarations/boundaries
+and 8 mandatory controls; independent review PASS is proposal quality only.
+All 29 input hashes and 188 literal Source-line references were freshly checked.
+Candidate: `.superpowers/sdd/2026-11-04-next-gates-approval/e02-proposed/candidate-v2.json`
+(SHA256 b8178e1ed76444ea265e4dd39ad9bc2a72568202601b1e49a7c3cfd7c639a574).
+Review: `independent-review-v2.json` in the same directory
+(SHA256 0a3edd631ac73a3dbbbe921cbe4b101c4bfdec7a5f2cf634ee3738895f77ec9a).
+
+The formal denominator remains null and thresholds UNSET. Two E2E scopes,
+dynamic/lookalike coverage, actual typed observations and final baseline approval
+remain open. No official Fixture/baseline installation, Native/helper/collector,
+framework execution, CI or Git write was performed. E02 NOT_EVALUABLE and Phase1
+4/21 accepted remain unchanged. Current Native route and A6 blockers are recorded
+in `.superpowers/sdd/2026-11-04-next-gates-approval/native-current-scope.json`,
+which supersedes the original approval package's incomplete Native section.
+
+## A6 offline trace chronology repair - 2026-11-04
+
+The fixed process-acquisition conformance reader now rejects descendant creation
+or exit after HOST exit when the HOST report claims it awaited descendant close.
+The existing fixed helper awaits that close before writing its final report;
+this enforces the existing lifecycle evidence contract, without schema changes.
+Four short/cancel trace controls first failed with Missing expected exception,
+then passed. The scoped offline suite passes 21/21 with zero failures/skips/TODO;
+the 17-project architecture check and scoped formatting pass. Reproduce with
+`node --test --test-reporter=tap scripts/test-mixed-process-conformance.mjs`.
+Evidence: `.superpowers/sdd/2026-11-04-a6-trace-order-repair/`.
+
+No helper/collector/Native or compilation was run. Collector source/DLL, product
+packages and frozen trace Fixtures are unchanged. A6_PLATFORM_NOT_QUALIFIED,
+empty Syntax catalog, Phase1 4/21 accepted and the original G01/D01 failure
+receipts remain unchanged. The newer private mixed Code/Syntax transport already
+has before-input/after-close/dispose lifecycle support; the old Syntax-only
+collector is not the complete current call-path inventory. See the correction
+in `.superpowers/sdd/2026-11-04-next-gates-approval/native-path-correction.json`.
+E02 candidate authorship/review is separately approved; final installation and
+real-environment validation remain separately reserved.
+
+## P1-04 offline corpus file identity fix - 2026-11-04
+
+The offline `loadSyntaxObservationCorpus` reader now enforces the existing
+nonlinked artifact identity contract: named/opened files must agree on
+inode/device/size/mtime, remain regular with nlink=1, and retain their canonical
+path after reading. Authority: accepted syntax-admission Task C and
+`docs/superpowers/plans/2026-10-23-phase1-trusted-context-preparation.md:77`.
+This repairs missing checks; no input permission, error code or schema changes.
+
+Three real temporary-file controls (hardlinked catalog/Source and same-byte
+named-file replacement after open) first failed with Missing expected rejection,
+then passed 3/3. Fresh ordinary Node evidence/output tests pass 43/43; C1 tests
+excluding the Git-filter simulation pass 51, with 0 failures and 1 existing TODO
+(Windows file-symlink creation EPERM). This filtered run is not the full original
+gate. Formatting and the 17-project architecture check pass.
+
+Reproduce with `node --test scripts/test-syntax-observation-evidence.mjs
+scripts/test-syntax-observation-output.mjs` and `node --test
+--test-name-pattern='^(?!Phase1 raw artifacts)'
+scripts/test-syntax-qualification-draft.mjs`; ordinary FS link controls require
+an environment permitted to create owned temporary links. Evidence and original
+failure receipt: `.superpowers/sdd/2026-11-04-p1-syntax-corpus-identity/`.
+`live-file-verification.json` freshly confirms all 2,557 Fixture files and the
+10 R7 files other than this prefixed status are unchanged. The earlier
+`unchanged-proof.json` false result is retained as a JSON member-order comparison
+error, superseded by that fresh per-path receipt. R7 implementation identity
+remains `726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013`.
+
+No Native/collector/calibration/baseline/CI/Git operation ran. The frozen draft,
+NOT_READY, empty Syntax catalog, A6/E02 and 4/21 accepted / 17 OPEN stay unchanged.
+Next: actual qualification and critical-baseline gaps retain their original
+approval and evidence requirements; this offline repair closes no parent gate.
+
+## R7 transport profile approved and local PACK completed - 2026-11-04
+
+The user explicitly approved only REFRESH_TRANSPORT **410,738,688 bytes** for R7
+candidate `ee73f0af8073c9000db131d55c8b20fc25c438146f87bdd3bdd12ac646f2c921`.
+The newest-approved-first static entry is installed; every previous profile is
+retained. Other purposes and the empty Syntax catalog are unchanged. The measured
+implementation remains `726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013`.
+R7 paired and REFRESH_VERIFY proposals remain provisional and were not installed.
+
+Fresh verification: Runtime build; admission **33/33**, zero skips; Fixture registry
+**13/13**; architecture **17 projects**; named-file formatting; exact installed
+profile and unchanged implementation identity checks pass. RED first proved the
+missing R7 record and old active budget. Original22 qualification,320 calibration
+and64 independent holdouts are reused unchanged, not re-executed. No new actual22
+or clean-host acceptance is claimed.
+
+Supplemental PACK exits **0**, producing245,264,173 bytes and5,423 members.
+ZIP SHA-256: `9957ef02cec2b7c2d53dc98e517c523367301c49b3f2f85c657370202422b72d`.
+The original full R7 run still records exit1/PACK failure; its receipts remain
+unchanged. A supplemental wrapper path-spelling refusal is also retained.
+
+Evidence and exact commands: [installation receipt](../../.superpowers/sdd/2026-11-04-r7-transport-profile-installation/postflight.json),
+[archive manifest](../../.superpowers/sdd/2026-10-31-phase1-b-remaining-execution/integration-preparation/r7-local-exact-pack.zip.manifest.json).
+Portable frozen transport evidence is stored as deterministic gzip with original
+uncompressed SHA pins under `fixtures/storage/native-analysis-state/phase1-r7/transport/`.
+Reproduce admission with `node --test packages/runtime/test/native-metadata-admission.test.mjs`;
+PACK used the unchanged original R7 argv, separately logged. No code algorithm,
+formula, SQL charge, schema, dependency, formal CI, publication or Git write changed.
+Phase1 stays4/21 accepted,17 OPEN; Syntax/A6/E02 and original system gates remain.
+Next is review of the exact local package and separately authorized clean-host/
+integration work; the P1-04..09 gap view is in the installation evidence directory.
+
 ## R5 草稿资产与本地 CI 接入核验 — 2026-11-04
 
 同仓草稿 433386530 的资产 707690867 已上传。GitHub 确认 271749831 bytes，SHA-256 44cc411d72f5a25539fa8fbdd8e18e7cde9ecfd93f4c1f5353424d6f4541d8e4，目标 433015700c7c701a6493f7f8fa5eace00e773913。新增 R5 批准记录，保留 R4 原记录供历史检查。Native CI 的下载与收集使用同一 R5 记录，临时 checkout 在收集退出后恢复 R4 原字节。两版 schema、52 项 Native 源码、严格 ZIP 校验、8 条历史 Source 检查、PowerShell 解析及模拟退出 37 时的恢复均通过。后续发布与云端集成待准确候选审批。详见[集成计划](../superpowers/plans/2026-11-04-phase1-r5-exact-pack-integration.md)。

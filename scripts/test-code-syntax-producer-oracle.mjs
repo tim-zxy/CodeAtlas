@@ -1,7 +1,9 @@
 import { fileURLToPath } from 'node:url';
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { readFile } from 'node:fs/promises';
+import fs, { readFile } from 'node:fs/promises';
+import { syncBuiltinESMExports } from 'node:module';
+import { join, resolve, dirname, basename } from 'node:path';
 import * as api from '../packages/providers/dist/index.js';
 import {
   producerJSON,
@@ -97,5 +99,90 @@ test('capture checker refuses outside or absent root without generation fallback
         ),
       ),
     ),
+  );
+});
+
+// Synthetic file copies exercise only the offline checker, never a Rust capture.
+async function ownedSyntheticCapture(t) {
+  const allowed = fileURLToPath(
+    new URL(
+      '../.superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/',
+      import.meta.url,
+    ),
+  );
+  await fs.mkdir(allowed, { recursive: true });
+  const root = await fs.mkdtemp(join(allowed, 'unit-bounded-'));
+  t.after(async () => {
+    t.mock.restoreAll();
+    syncBuiltinESMExports();
+    assert.equal(resolve(root), root);
+    assert.equal(dirname(root), resolve(allowed));
+    assert.match(basename(root), /^unit-bounded-[A-Za-z0-9]+$/);
+    await fs.rm(root, { recursive: true, force: true });
+  });
+  const { sha } =
+    await import('../packages/providers/test/fixtures/code-syntax-producer-helpers.mjs');
+  for (const { id } of cases) {
+    const x = await instantiateProducerCase(id, '/fixture/code-syntax-producer');
+    const dir = join(root, id);
+    await fs.mkdir(dir);
+    const bytes = {
+      request: x.requestBytes,
+      events: x.expectedOutputBytes,
+      expected: x.expectedOutputBytes,
+    };
+    const manifest = {
+      schemaVersion: 1,
+      executionKind: 'RUST_LIBRARY_TEST_ONLY',
+      measurementEligible: false,
+      caseId: id,
+      requestFile: 'request.jsonl',
+      eventsFile: 'events.jsonl',
+      expectedFile: 'expected.jsonl',
+      requestSha256: sha(bytes.request),
+      eventsSha256: sha(bytes.events),
+      expectedSha256: sha(bytes.expected),
+    };
+    for (const [name, data] of Object.entries(bytes))
+      await fs.writeFile(join(dir, name + '.jsonl'), data, { flag: 'wx' });
+    await fs.writeFile(join(dir, 'manifest.json'), JSON.stringify(manifest), { flag: 'wx' });
+  }
+  return root;
+}
+test('offline checker accepts all18 synthetic capture vectors without promoting authenticity', async (t) => {
+  const { checkCapturedLibraryOutput } = await import('./check-code-syntax-library-output.mjs');
+  const root = await ownedSyntheticCapture(t);
+  const report = await checkCapturedLibraryOutput(root);
+  assert.equal(report.cases.length, 18);
+  assert.equal(report.measurementEligible, false);
+  assert.equal(report.sourceOrHistoryAuthenticated, false);
+});
+test('offline capture growth is rejected before an oversized whole-file read', async (t) => {
+  const { checkCapturedLibraryOutput } = await import('./check-code-syntax-library-output.mjs');
+  const root = await ownedSyntheticCapture(t);
+  const target = join(root, cases[0].id, 'request.jsonl');
+  const originalStat = fs.lstat,
+    originalRead = fs.readFile;
+  let grew = false,
+    wholeReadBytes = 0;
+  t.mock.method(fs, 'lstat', async (name, ...args) => {
+    const stat = await originalStat(name, ...args);
+    if (name === target && !grew) {
+      await fs.truncate(target, api.NATIVE_CLIENT_HARD_LIMITS.maxStdinBytes + 1);
+      grew = true;
+    }
+    return stat;
+  });
+  t.mock.method(fs, 'readFile', async (name, ...args) => {
+    const data = await originalRead(name, ...args);
+    if (name === target) wholeReadBytes += data.length;
+    return data;
+  });
+  syncBuiltinESMExports();
+  await assert.rejects(checkCapturedLibraryOutput(root));
+  assert.equal(grew, true, 'real capture file was grown after its first stat');
+  assert.ok(
+    wholeReadBytes <= api.NATIVE_CLIENT_HARD_LIMITS.maxStdinBytes,
+    'capture checker whole-read more than its existing hard cap before refusal',
   );
 });

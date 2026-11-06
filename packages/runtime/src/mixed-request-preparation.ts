@@ -1,3 +1,5 @@
+import { readFrameworkSurfaceRequestSnapshotWithBudget } from '../../providers/dist/native-framework-surface-stream.js';
+import type { FrameworkSurfaceRequest } from '../../providers/dist/native-framework-surface-contract.js';
 import { NATIVE_CLIENT_HARD_LIMITS } from '../../providers/dist/native-client.js';
 import { NativeSyntaxContractError } from '../../providers/dist/native-syntax-ipc.js';
 import {
@@ -82,7 +84,11 @@ function prepareMixedJavaRequest(
   b.own(value); // Reserve the parsed schema-owned representation before parsing.
   return freezeComposition(NativeAnalyzeRequestV2Schema.parse(value));
 }
-function prepareMixedCodeSyntaxRequest(input: SyntaxInput, b: HistoryReadBudget): Buffer | null {
+function prepareMixedSyntaxRequest(
+  input: SyntaxInput,
+  b: HistoryReadBudget,
+  mode: 5 | 8,
+): Buffer | null {
   b.own(input);
   const p = input.preparation;
   locator(p, input.repository, b);
@@ -101,7 +107,7 @@ function prepareMixedCodeSyntaxRequest(input: SyntaxInput, b: HistoryReadBudget)
   b.pin(64);
   const ownerMapDigest = computeSyntaxOwnerMapDigest(binding);
   const request = {
-    protocolVersion: 5,
+    protocolVersion: mode,
     sequence: 0,
     requestId: input.requestId,
     type: 'OBSERVE_CODE_SYNTAX',
@@ -113,6 +119,7 @@ function prepareMixedCodeSyntaxRequest(input: SyntaxInput, b: HistoryReadBudget)
       providerVersion: input.providerVersion,
       extractorVersion: input.extractorVersion,
       codeContract: 'PYTHON_SYNTAX_CODE_V1',
+      ...(mode === 8 ? { syntaxContract: 'SYNTAX_BINDING_V4' } : {}),
       languages: (p.sourceFiles.length
         ? [...new Set(p.sourceFiles.map((f) => f.languageHint))].sort()
         : ['python']
@@ -154,7 +161,9 @@ function prepareMixedCodeSyntaxRequest(input: SyntaxInput, b: HistoryReadBudget)
     budget: { serializedBytes: startBytes, items: startItems },
   };
   try {
-    return readCodeSyntaxRequestSnapshotWithBudget(bytes, context).bytes;
+    return mode === 8
+      ? readFrameworkSurfaceRequestSnapshotWithBudget(bytes, context).bytes
+      : readCodeSyntaxRequestSnapshotWithBudget(bytes, context).bytes;
   } finally {
     const delta = context.budget.serializedBytes - startBytes;
     b.add('serializedBytes', delta);
@@ -162,5 +171,20 @@ function prepareMixedCodeSyntaxRequest(input: SyntaxInput, b: HistoryReadBudget)
     b.pin(delta);
   }
 }
+function prepareMixedCodeSyntaxRequest(input: SyntaxInput, b: HistoryReadBudget): Buffer | null {
+  return prepareMixedSyntaxRequest(input, b, 5);
+}
+type FrameworkSurfaceInput = Omit<SyntaxInput, 'extractorVersion'> &
+  Pick<FrameworkSurfaceRequest['payload'], 'extractorVersion'>;
+function prepareMixedFrameworkSurfaceRequest(
+  input: FrameworkSurfaceInput,
+  b: HistoryReadBudget,
+): Buffer | null {
+  return prepareMixedSyntaxRequest(input, b, 8);
+}
 /** Fixed private construction only; does not confer profile, run or publication authority. */
-export default Object.freeze({ prepareMixedJavaRequest, prepareMixedCodeSyntaxRequest });
+export default Object.freeze({
+  prepareMixedJavaRequest,
+  prepareMixedCodeSyntaxRequest,
+  prepareMixedFrameworkSurfaceRequest,
+});

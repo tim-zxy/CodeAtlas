@@ -21,7 +21,13 @@ else if (['SHORT_DESCENDANT', 'CANCEL_DESCENDANT'].includes(mode)) {
   const child = spawn(
     process.execPath,
     [fileURLToPath(import.meta.url), mode === 'SHORT_DESCENDANT' ? 'child-short' : 'child-wait'],
-    { shell: false, windowsHide: true, stdio: ['pipe', 'pipe', 'pipe'], env: process.env },
+    {
+      shell: false,
+      windowsHide: true,
+      detached: true,
+      stdio: ['pipe', 'pipe', 'pipe'],
+      env: process.env,
+    },
   );
   let output = '',
     stderr = '';

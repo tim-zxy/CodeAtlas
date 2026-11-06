@@ -2,7 +2,8 @@ import type { MixedSourceAccount } from './mixed-source-verification.js';
 import { execFile, spawn } from 'node:child_process';
 import { realpath, stat } from 'node:fs/promises';
 import { isAbsolute, relative, sep } from 'node:path';
-import { promisify } from 'node:util';
+import { promisify, types } from 'node:util';
+import { createHash } from 'node:crypto';
 
 import { CommitIdentitySchema, RepositoryRelativePathSchema } from '@codeatlas/ir';
 import type { RepositoryRelativePath } from '@codeatlas/ir';
@@ -190,14 +191,194 @@ export function gitIgnoredPaths(
   return gitIgnoredPathsCore(root, paths);
 }
 
+interface GitLaunchPlan {
+  readonly executablePath: string;
+  readonly arguments: readonly string[];
+  readonly environment: Readonly<Record<string, string>>;
+  readonly cwd: string;
+  readonly stdinSha256: string;
+}
+// Identity witness for the current private launch-preparation window only.
+const ownedGitLaunchPlans = new WeakMap<
+  object,
+  { readonly proof: Readonly<{ role: 'GIT'; plan: GitLaunchPlan }>; readonly active: () => boolean }
+>();
+function readOwnedGitLaunchPlan(plan: unknown): Readonly<{ role: 'GIT'; plan: GitLaunchPlan }> {
+  const owned =
+    typeof plan === 'object' && plan !== null ? ownedGitLaunchPlans.get(plan) : undefined;
+  if (!owned || !owned.active()) throw gitFailure();
+  return owned.proof;
+}
+const claimedGitLaunchPlans = new WeakSet<object>();
+function claimOwnedGitLaunchPlan(plan: unknown): Readonly<{ role: 'GIT'; plan: GitLaunchPlan }> {
+  const owned = readOwnedGitLaunchPlan(plan);
+  if (claimedGitLaunchPlans.has(owned.plan)) throw gitFailure();
+  claimedGitLaunchPlans.add(owned.plan);
+  return owned;
+}
+export default Object.freeze({ readOwnedGitLaunchPlan, claimOwnedGitLaunchPlan });
+
+interface GitLifecycle {
+  beforeSpawn(plan: Readonly<GitLaunchPlan>, signal: AbortSignal): Promise<void>;
+  beforeInput(
+    child: Readonly<{
+      pid: number;
+      executablePath: string;
+      spawnStartedEpochMs: number;
+      spawnedEpochMs: number;
+    }>,
+    signal: AbortSignal,
+  ): Promise<void>;
+  afterClose(
+    result: Readonly<{ exitCode: number | null; signal: NodeJS.Signals | null }>,
+    signal?: AbortSignal,
+  ): Promise<void>;
+  dispose(signal?: AbortSignal): Promise<void>;
+}
+interface GitQualification {
+  readonly executablePath: string;
+  readonly environment: Readonly<Record<string, string>>;
+  createLifecycle(plan: Readonly<GitLaunchPlan>): GitLifecycle;
+}
 export interface SourceProcessControl {
+  readonly qualification?: GitQualification;
   readonly signal: AbortSignal;
   readonly deadlineEpochMs: number;
 }
 function sourceStop(code: 'CANCELLED' | 'DEADLINE_EXCEEDED'): Error & { code: string } {
   return Object.assign(new Error(code), { code });
 }
-/** Private bounded owner; no collector hook or arbitrary command entry. */
+function gitFailure(): SourceScanError {
+  return new SourceScanError('GIT_FAILED', 'Git qualification failed');
+}
+function unknownGitCleanup(error: unknown): Error {
+  let copy: Error;
+  if (error instanceof SourceScanError) copy = new SourceScanError(error.code, error.message);
+  else if (
+    error &&
+    typeof error === 'object' &&
+    'code' in error &&
+    [
+      'CANCELLED',
+      'DEADLINE_EXCEEDED',
+      'STAGE_LIMIT_EXCEEDED',
+      'HISTORY_LIMIT_EXCEEDED',
+      'STAGE_RELEASED',
+      'INVALID_STAGE',
+    ].includes(String(error.code))
+  )
+    copy = Object.assign(new Error(String(error.code)), { code: error.code });
+  else copy = gitFailure();
+  return Object.assign(copy, { cleanupState: 'UNKNOWN' });
+}
+function privateData(value: unknown, keys?: readonly string[]): Record<string, unknown> {
+  if (
+    !value ||
+    typeof value !== 'object' ||
+    types.isProxy(value) ||
+    ![Object.prototype, null].includes(Object.getPrototypeOf(value))
+  )
+    throw gitFailure();
+  const descriptors = Object.getOwnPropertyDescriptors(value);
+  if (
+    Reflect.ownKeys(descriptors).some((k) => typeof k !== 'string' || (keys && !keys.includes(k)))
+  )
+    throw gitFailure();
+  for (const d of Object.values(descriptors))
+    if (!d.enumerable || !Object.hasOwn(d, 'value')) throw gitFailure();
+  if (keys && keys.some((k) => !Object.hasOwn(descriptors, k))) throw gitFailure();
+  return value as Record<string, unknown>;
+}
+/** Deep-private validation only; does not inspect or authorize an executable. */
+export function validateGitQualification(value: unknown): GitQualification {
+  const q = privateData(value, ['executablePath', 'environment', 'createLifecycle']);
+  if (
+    typeof q.executablePath !== 'string' ||
+    !isAbsolute(q.executablePath) ||
+    q.executablePath.includes('\0') ||
+    typeof q.createLifecycle !== 'function' ||
+    types.isProxy(q.createLifecycle)
+  )
+    throw gitFailure();
+  const env = privateData(q.environment),
+    names = new Set<string>();
+  for (const [key, value] of Object.entries(env)) {
+    if (
+      !key ||
+      key.includes('=') ||
+      key.includes('\0') ||
+      typeof value !== 'string' ||
+      value.includes('\0') ||
+      names.has(key.toUpperCase())
+    )
+      throw gitFailure();
+    names.add(key.toUpperCase());
+  }
+  const fixed: Record<string, string> = Object.create(null);
+  // Block fixed Node/libuv host supplementation without reading host values.
+  for (const name of [
+    'HOMEDRIVE',
+    'HOMEPATH',
+    'LOGONSERVER',
+    'PATH',
+    'SYSTEMDRIVE',
+    'SYSTEMROOT',
+    'TEMP',
+    'USERDOMAIN',
+    'USERNAME',
+    'USERPROFILE',
+    'WINDIR',
+    'NODE_V8_COVERAGE',
+  ])
+    fixed[name] = '';
+  for (const [name, value] of Object.entries(env)) fixed[name.toUpperCase()] = value as string;
+  return Object.freeze({
+    executablePath: q.executablePath,
+    environment: Object.freeze({ ...fixed }),
+    createLifecycle: (q.createLifecycle as GitQualification['createLifecycle']).bind(value),
+  });
+}
+async function gitGate(
+  action: (signal: AbortSignal) => Promise<void>,
+  control: SourceProcessControl,
+  other?: AbortSignal,
+  cleanup = false,
+): Promise<void> {
+  const stop = new AbortController();
+  let rejectStop!: (error: Error) => void;
+  const stopped = new Promise<never>((_resolve, reject) => {
+    rejectStop = reject;
+  });
+  const fail = () => {
+    const error = control.signal.aborted
+      ? sourceStop('CANCELLED')
+      : Date.now() >= control.deadlineEpochMs
+        ? sourceStop('DEADLINE_EXCEEDED')
+        : gitFailure();
+    stop.abort(error);
+    rejectStop(error);
+  };
+  const timer = setTimeout(fail, Math.max(0, control.deadlineEpochMs - Date.now()));
+  control.signal.addEventListener('abort', fail, { once: true });
+  other?.addEventListener('abort', fail, { once: true });
+  try {
+    if (control.signal.aborted || other?.aborted || Date.now() >= control.deadlineEpochMs) fail();
+    await Promise.race([
+      Promise.resolve().then(() => {
+        if (stop.signal.aborted && !cleanup) throw stop.signal.reason;
+        return action(stop.signal);
+      }),
+      stopped,
+    ]);
+    if (control.signal.aborted) throw sourceStop('CANCELLED');
+    if (Date.now() >= control.deadlineEpochMs) throw sourceStop('DEADLINE_EXCEEDED');
+  } finally {
+    clearTimeout(timer);
+    control.signal.removeEventListener('abort', fail);
+    other?.removeEventListener('abort', fail);
+  }
+}
+/** Private bounded owner; optional qualification hooks never enter public Source exports. */
 async function controlledGit(
   cwd: string,
   args: readonly string[],
@@ -207,107 +388,271 @@ async function controlledGit(
 ): Promise<GitCommandResult> {
   account.checkpoint();
   if (control.signal.aborted) throw sourceStop('CANCELLED');
-  const remaining = control.deadlineEpochMs - Date.now();
-  if (remaining <= 0) throw sourceStop('DEADLINE_EXCEEDED');
-  account.reserveBuffer(1_000_000);
-  const output = Buffer.alloc(1_000_000);
-  account.readBytes(input.length);
-  return await new Promise((resolve, reject) => {
-    let failure: unknown,
-      closed = false,
-      offset = 0,
-      stderrBytes = 0,
-      grace: NodeJS.Timeout | undefined;
-    const child = spawn('git', ['-C', cwd, ...args], {
-      shell: false,
-      windowsHide: true,
-      stdio: ['pipe', 'pipe', 'pipe'],
-      env: gitEnvironment(),
-    });
-    const fail = (error: unknown) => {
-      if (!failure) failure = error;
-      if (!closed) {
-        child.kill();
-        if (!grace) {
-          grace = setTimeout(() => {
-            if (!closed) child.kill('SIGKILL');
-          }, 250);
-          grace.unref();
+  if (control.deadlineEpochMs - Date.now() <= 0) throw sourceStop('DEADLINE_EXCEEDED');
+  let lifecycle: GitLifecycle | undefined, primary: unknown;
+  try {
+    let executablePath = 'git',
+      environment: Readonly<NodeJS.ProcessEnv> =
+        control.qualification === undefined ? gitEnvironment() : Object.freeze({}),
+      launchCwd: string | undefined;
+    const launchArguments = Object.freeze(['-C', cwd, ...args]);
+    if (control.qualification !== undefined) {
+      const q = validateGitQualification(control.qualification);
+      executablePath = q.executablePath;
+      environment = q.environment;
+      launchCwd = process.cwd();
+      const plan = Object.freeze({
+        executablePath,
+        arguments: launchArguments,
+        environment: environment as Readonly<Record<string, string>>,
+        cwd: launchCwd,
+        stdinSha256: createHash('sha256').update(input).digest('hex'),
+      });
+      account.own(plan);
+      const parentSignal = control.signal,
+        deadlineEpochMs = control.deadlineEpochMs;
+      let gateSignal: AbortSignal | undefined;
+      ownedGitLaunchPlans.set(plan, {
+        proof: Object.freeze({ role: 'GIT', plan }),
+        active: () => !parentSignal.aborted && !gateSignal?.aborted && Date.now() < deadlineEpochMs,
+      });
+      try {
+        const candidate = privateData(q.createLifecycle(plan), [
+          'beforeSpawn',
+          'beforeInput',
+          'afterClose',
+          'dispose',
+        ]);
+        if (Object.values(candidate).some((v) => typeof v !== 'function' || types.isProxy(v)))
+          throw gitFailure();
+        lifecycle = Object.freeze({
+          beforeSpawn: (candidate.beforeSpawn as GitLifecycle['beforeSpawn']).bind(candidate),
+          beforeInput: (candidate.beforeInput as GitLifecycle['beforeInput']).bind(candidate),
+          afterClose: (candidate.afterClose as GitLifecycle['afterClose']).bind(candidate),
+          dispose: (candidate.dispose as GitLifecycle['dispose']).bind(candidate),
+        });
+        await gitGate((signal) => {
+          gateSignal = signal;
+          return lifecycle!.beforeSpawn(plan, signal);
+        }, control);
+      } finally {
+        ownedGitLaunchPlans.delete(plan);
+      }
+    }
+    account.checkpoint();
+    if (control.signal.aborted) throw sourceStop('CANCELLED');
+    const remaining = control.deadlineEpochMs - Date.now();
+    if (remaining <= 0) throw sourceStop('DEADLINE_EXCEEDED');
+    account.reserveBuffer(1_000_000);
+    const output = Buffer.alloc(1_000_000);
+    account.readBytes(input.length);
+    return await new Promise<GitCommandResult>((resolve, reject) => {
+      let failure: unknown,
+        closed = false,
+        offset = 0,
+        stderrBytes = 0,
+        grace: NodeJS.Timeout | undefined;
+      const spawnStartedEpochMs = Date.now(),
+        stop = new AbortController();
+      const child = spawn(executablePath, [...launchArguments], {
+        shell: false,
+        windowsHide: true,
+        stdio: ['pipe', 'pipe', 'pipe'],
+        env: environment,
+        ...(launchCwd === undefined ? {} : { cwd: launchCwd }),
+      });
+      const fail = (error: unknown) => {
+        if (!failure) failure = error;
+        stop.abort(error);
+        if (!closed) {
+          child.kill();
+          if (!grace) {
+            grace = setTimeout(() => {
+              if (!closed) child.kill('SIGKILL');
+            }, 250);
+            grace.unref();
+          }
+        }
+      };
+      const abort = () => {
+        failure = sourceStop('CANCELLED');
+        fail(failure);
+      };
+      const timer = setTimeout(() => {
+        failure = sourceStop('DEADLINE_EXCEEDED');
+        fail(failure);
+      }, remaining);
+      timer.unref();
+      control.signal.addEventListener('abort', abort, { once: true });
+      child.on('error', () => fail(new SourceScanError('GIT_FAILED', 'Git command failed')));
+      child.stdin.on('error', () => fail(new SourceScanError('GIT_FAILED', 'Git input failed')));
+      child.stdout.on('error', () =>
+        fail(new SourceScanError('GIT_FAILED', 'Git output pipe failed')),
+      );
+      child.stderr.on('error', () =>
+        fail(new SourceScanError('GIT_FAILED', 'Git error pipe failed')),
+      );
+      child.stdout.on('data', (chunk: Buffer) => {
+        if (failure) return;
+        try {
+          account.checkpoint();
+          if (chunk.length > output.length - offset)
+            throw new SourceScanError('GIT_FAILED', 'Git output exceeds limit');
+          account.readBytes(chunk.length);
+          chunk.copy(output, offset);
+          offset += chunk.length;
+        } catch (e) {
+          fail(e);
+        }
+      });
+      child.stderr.on('data', (chunk: Buffer) => {
+        if (failure) return;
+        try {
+          account.checkpoint();
+          stderrBytes += chunk.length;
+          if (stderrBytes > 1_000_000)
+            throw new SourceScanError('GIT_FAILED', 'Git error output exceeds limit');
+          account.readBytes(chunk.length);
+        } catch (e) {
+          fail(e);
+        }
+      });
+      let writing: Promise<void> = Promise.resolve();
+      child.once('close', (code, signal) => {
+        closed = true;
+        void (async () => {
+          try {
+            await writing;
+            if (lifecycle) {
+              try {
+                await gitGate(
+                  (stopSignal) =>
+                    lifecycle!.afterClose(Object.freeze({ exitCode: code, signal }), stopSignal),
+                  control,
+                  undefined,
+                  true,
+                );
+              } catch (error) {
+                if (!failure) failure = error;
+                failure = unknownGitCleanup(failure);
+              }
+            }
+            if (failure) throw failure;
+            account.checkpoint();
+            account.reserveBuffer(offset);
+            const stdout = new TextDecoder('utf-8', { fatal: true }).decode(
+              output.subarray(0, offset),
+            );
+            resolve({ stdout, exitCode: code ?? -1 });
+          } catch (e) {
+            reject(e);
+          } finally {
+            clearTimeout(timer);
+            if (grace) clearTimeout(grace);
+            control.signal.removeEventListener('abort', abort);
+          }
+        })();
+      });
+      if (lifecycle) {
+        writing = (async () => {
+          const spawnedEpochMs = await new Promise<number>((resolve, reject) => {
+            const cleanup = () => {
+              child.removeListener('spawn', ready);
+              child.removeListener('error', failed);
+              child.removeListener('close', failed);
+            };
+            const ready = () => {
+              cleanup();
+              resolve(Date.now());
+            };
+            const failed = () => {
+              cleanup();
+              reject(gitFailure());
+            };
+            child.once('spawn', ready);
+            child.once('error', failed);
+            child.once('close', failed);
+          });
+          if (!Number.isSafeInteger(child.pid) || child.pid! <= 0) throw gitFailure();
+          await gitGate(
+            (signal) =>
+              lifecycle!.beforeInput(
+                Object.freeze({
+                  pid: child.pid!,
+                  executablePath,
+                  spawnStartedEpochMs,
+                  spawnedEpochMs,
+                }),
+                signal,
+              ),
+            control,
+            stop.signal,
+          );
+          if (closed) {
+            if (input.length !== 0) throw gitFailure();
+            return;
+          }
+          account.checkpoint();
+          if (control.signal.aborted) throw sourceStop('CANCELLED');
+          child.stdin.end(input);
+        })().catch((e) => {
+          fail(e);
+        });
+      } else {
+        if (control.signal.aborted) {
+          abort();
+          return;
+        }
+        try {
+          account.checkpoint();
+          child.stdin.end(input);
+        } catch (e) {
+          fail(e);
         }
       }
-    };
-    const abort = () => {
-      failure = sourceStop('CANCELLED');
-      fail(failure);
-    };
-    const timer = setTimeout(() => {
-      failure = sourceStop('DEADLINE_EXCEEDED');
-      fail(failure);
-    }, remaining);
-    timer.unref();
-    control.signal.addEventListener('abort', abort, { once: true });
-    child.on('error', () => fail(new SourceScanError('GIT_FAILED', 'Git command failed')));
-    child.stdin.on('error', () => fail(new SourceScanError('GIT_FAILED', 'Git input failed')));
-    child.stdout.on('error', () =>
-      fail(new SourceScanError('GIT_FAILED', 'Git output pipe failed')),
-    );
-    child.stderr.on('error', () =>
-      fail(new SourceScanError('GIT_FAILED', 'Git error pipe failed')),
-    );
-    child.stdout.on('data', (chunk: Buffer) => {
-      if (failure) return;
-      try {
-        account.checkpoint();
-        if (chunk.length > output.length - offset)
-          throw new SourceScanError('GIT_FAILED', 'Git output exceeds limit');
-        account.readBytes(chunk.length);
-        chunk.copy(output, offset);
-        offset += chunk.length;
-      } catch (e) {
-        fail(e);
-      }
     });
-    child.stderr.on('data', (chunk: Buffer) => {
-      if (failure) return;
-      try {
-        account.checkpoint();
-        stderrBytes += chunk.length;
-        if (stderrBytes > 1_000_000)
-          throw new SourceScanError('GIT_FAILED', 'Git error output exceeds limit');
-        account.readBytes(chunk.length);
-      } catch (e) {
-        fail(e);
-      }
-    });
-    child.once('close', (code) => {
-      closed = true;
-      clearTimeout(timer);
-      if (grace) clearTimeout(grace);
-      control.signal.removeEventListener('abort', abort);
-      if (failure) {
-        reject(failure);
-        return;
-      }
-      try {
-        account.checkpoint();
-        account.reserveBuffer(offset);
-        const stdout = new TextDecoder('utf-8', { fatal: true }).decode(output.subarray(0, offset));
-        resolve({ stdout, exitCode: code ?? -1 });
-      } catch (e) {
-        reject(e);
-      }
-    });
-    if (control.signal.aborted) {
-      abort();
-      return;
+  } catch (error) {
+    if (control.qualification === undefined) {
+      primary = error;
+      throw error;
     }
-    try {
-      account.checkpoint();
-      child.stdin.end(input);
-    } catch (e) {
-      fail(e);
+    let mapped: unknown = error;
+    if (control.signal.aborted) mapped = sourceStop('CANCELLED');
+    else if (Date.now() >= control.deadlineEpochMs) mapped = sourceStop('DEADLINE_EXCEEDED');
+    else if (
+      !(error instanceof SourceScanError) &&
+      !(
+        error &&
+        typeof error === 'object' &&
+        'code' in error &&
+        [
+          'CANCELLED',
+          'DEADLINE_EXCEEDED',
+          'STAGE_LIMIT_EXCEEDED',
+          'HISTORY_LIMIT_EXCEEDED',
+          'STAGE_RELEASED',
+          'INVALID_STAGE',
+        ].includes(String(error.code))
+      )
+    )
+      mapped = gitFailure();
+    if (
+      error &&
+      typeof error === 'object' &&
+      Object.getOwnPropertyDescriptor(error, 'cleanupState')?.value === 'UNKNOWN'
+    )
+      mapped = unknownGitCleanup(mapped);
+    primary = mapped;
+    throw mapped;
+  } finally {
+    if (lifecycle) {
+      try {
+        await gitGate((signal) => lifecycle!.dispose(signal), control, undefined, true);
+      } catch (error) {
+        throw unknownGitCleanup(primary ?? error);
+      }
     }
-  });
+  }
 }
 export function discoverGitContextControlled(
   start: string,

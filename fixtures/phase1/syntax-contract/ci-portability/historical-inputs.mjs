@@ -1,3 +1,4 @@
+import path from 'node:path';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { gunzipSync } from 'node:zlib';
@@ -67,4 +68,28 @@ export function assertHistoricalFixturePin(logical, sha256) {
     Object.assign(original[field], extension.added[field]);
   }
   assert.deepEqual(JSON.parse(bytes), original, logical);
+}
+
+// Current13 test inputs retain local reads; only an absent file uses immutable history.
+// localRoot is explicit so callers preserve their original repository-relative behavior.
+export function readHistoricalInputOrLocal(logical, encoding, localRoot) {
+  assert.ok(
+    typeof logical === 'string' &&
+      !path.isAbsolute(logical) &&
+      !/^[A-Za-z]:/.test(logical) &&
+      !/[\\:\x00-\x1f]/.test(logical) &&
+      logical.split('/').every((part) => part && part !== '.' && part !== '..'),
+    'UNSAFE_HISTORICAL_INPUT_PATH',
+  );
+  historicalPath(logical); // Require the fixed archive allowlist before touching local files.
+  assert.ok(
+    typeof localRoot === 'string' && path.isAbsolute(localRoot),
+    'ABSOLUTE_LOCAL_ROOT_REQUIRED',
+  );
+  try {
+    return fs.readFileSync(path.resolve(localRoot, ...logical.split('/')), encoding);
+  } catch (error) {
+    if (error.code !== 'ENOENT') throw error;
+    return readHistoricalInput(logical, encoding);
+  }
 }

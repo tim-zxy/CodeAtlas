@@ -1,3 +1,20 @@
+## N1 and HOST B bounded offline contract continuation - 2026-11-06
+
+The selected private allSOURCE NO_OP/deletion and coordinator-owned protected
+consumption lifetime directions are refined for detailed offline implementation
+and memory substitutes. Controlling specs: docs/superpowers/specs/2026-11-06-current13-no-native-offline.md
+and docs/superpowers/specs/2026-11-06-host-consumption-lifetime-offline.md (paths from
+repository root); consolidated plan: docs/superpowers/plans/2026-11-06-n1-host-b-offline.md.
+N1 preserves genuine Application/Storage/Source/Runtime authority, final freshness,
+no-write NO_OP and original atomic deletion; Native branch/priorNative guard stay.
+HOST B changes only the explicitly stated offline trust/lifetime premise: independent
+fixed inventory, known ownership, full consumer join and close-once UNKNOWN handling.
+Pure callbacks/flags never authenticate an actual OS process/path or authorize launch.
+No package dependency edge, IR/schema/migration, AUTO/MANUAL rule, threshold, profile,
+resource formula/value, permission or live-admission change. Original phase/security/
+provider/evaluation gates remain unchanged and unpassed by this approval. Platform
+review remains mandatory; historical denied/unimplemented records are retained.
+
 ## A2混合Source/前置账本整包已批准 — 2026-10-29
 
 用户已批准[A2契约及其合并实施包](../../superpowers/specs/2026-10-29-phase1-mixed-source-runtime-integration.md)：私有Python/Java Source观察与全集重查、同对象前置预算接管、Application授权/CAS与Runtime准备。已完成声明式本地组件交付，验证/作者审查/范围限制集中见[实施包结果](../../superpowers/plans/2026-10-29-phase1-mixed-source-runtime-integration.md#实施结果与作者审查2026-10-29)。旧公开Java/IR/SQL/生产catalog不变，实际Git/Native/collector/profile/云端及Git写入不在授权内。

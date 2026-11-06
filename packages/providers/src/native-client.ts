@@ -1,3 +1,4 @@
+import type { FrameworkSurfaceRequest } from './native-framework-surface-contract.js';
 import type { CodeSyntaxRequest } from './native-code-syntax-request.js';
 import {
   validateSyntaxOwnerContext,
@@ -6,9 +7,17 @@ import {
   type SyntaxObservationRequest,
   type ValidatedSyntaxObservation,
 } from './native-syntax-ipc.js';
+import {
+  remainingCompositionLimits,
+  spendComposition,
+  chargeCompositionJSON,
+  preflightCodeSyntaxJSON,
+  type CodeSyntaxCompositionBudget,
+} from './native-code-syntax-budget.js';
 import { spawn } from 'node:child_process';
 import { createHash, timingSafeEqual } from 'node:crypto';
 import { isAbsolute } from 'node:path';
+import { types } from 'node:util';
 import type { Readable } from 'node:stream';
 import { boundedJson, writeFullRequestRecords } from './native-request-json.js';
 import { NativeRequestHeaderV3Schema } from './native-ipc-v3.js';
@@ -249,7 +258,31 @@ export async function executeNativeRequest(
   requestValue: AnyNativeRequest,
   optionsValue: NativeClientOptions,
 ): Promise<ValidatedNativeResult> {
+  return executeRequestCore(requestValue, optionsValue, null);
+}
+async function executeRequestCore(
+  requestValue: AnyNativeRequest,
+  optionsValue: NativeClientOptions,
+  lifecycle: OwnedNativeLifecycle | null,
+  javaOnly = false,
+  responseBudget?: CodeSyntaxCompositionBudget,
+): Promise<ValidatedNativeResult> {
   const request = parseRequest(requestValue);
+  if (javaOnly && request.protocolVersion !== 2)
+    throw clientError('INVALID_REQUEST', 'Private Java request requires v2', request);
+  if (responseBudget !== undefined) {
+    try {
+      remainingCompositionLimits(responseBudget);
+    } catch (error) {
+      throw clientError(
+        error instanceof Error && 'code' in error && error.code === 'RESOURCE_LIMIT_EXCEEDED'
+          ? 'OUTPUT_LIMIT_EXCEEDED'
+          : 'INVALID_CONFIGURATION',
+        'Private Java response ledger is unavailable',
+        request,
+      );
+    }
+  }
   const options = validateOptions(optionsValue);
   if (options.signal?.aborted === true) {
     throw clientError('CANCELLED', 'Native request was cancelled', request);
@@ -263,7 +296,19 @@ export async function executeNativeRequest(
     throw clientError('OUTPUT_LIMIT_EXCEEDED', 'Native request exceeds the byte limit', request);
   }
 
-  const result = await runProcess(requestBytes, options, request, timeoutMs);
+  const result = await runProcess(
+    requestBytes,
+    options,
+    request,
+    timeoutMs,
+    responseBudget === undefined
+      ? undefined
+      : (stdout, value, limits, signal) =>
+          decodeStdout(stdout, value, limits, signal, responseBudget),
+    lifecycle,
+  );
+  if (responseBudget)
+    chargeJavaResponseJSON({ request, events: result.output.events }, request, responseBudget);
   const stream =
     request.protocolVersion === 2
       ? NativeAnalyzeEventStreamV2Schema.safeParse({ request, events: result.output.events })
@@ -290,6 +335,13 @@ export async function executeNativeRequest(
     });
   }
   if (terminal.type === 'ANALYSIS_COMPLETED' || terminal.type === 'REFRESH_COMPLETED') {
+    if (responseBudget)
+      spendJavaResponse(
+        responseBudget,
+        'items',
+        Math.max(0, result.output.rawRecords.length - 1),
+        request,
+      );
     verifyChecksum(
       result.output.rawRecords.slice(0, -1),
       terminal.payload.integrityChecksum,
@@ -711,19 +763,59 @@ interface OwnedNativeClose {
   readonly exitCode: number | null;
   readonly signal: NodeJS.Signals | null;
 }
-interface OwnedNativeLifecycle {
-  beforeInput(child: Readonly<OwnedNativeChild>, signal: AbortSignal): Promise<void>;
-  afterClose(result: Readonly<OwnedNativeClose>): Promise<void>;
-  dispose(): Promise<void>;
+interface OwnedNativeLaunch {
+  readonly executablePath: string;
+  readonly arguments: readonly string[];
+  readonly environment: Readonly<Record<string, string>>;
+  readonly cwd: string;
+  readonly stdinSha256: string;
 }
-function runProcess<
+interface OwnedNativeLifecycle {
+  beforeSpawn?(plan: Readonly<OwnedNativeLaunch>, signal: AbortSignal): Promise<void>;
+  beforeInput(child: Readonly<OwnedNativeChild>, signal: AbortSignal): Promise<void>;
+  afterClose(result: Readonly<OwnedNativeClose>, signal?: AbortSignal): Promise<void>;
+  dispose(signal?: AbortSignal): Promise<void>;
+}
+type OwnedNativeLaunchPlan = Parameters<NonNullable<OwnedNativeLifecycle['beforeSpawn']>>[0];
+const ownedNativeLaunchPlans = new WeakMap<
+  object,
+  Readonly<{
+    role: 'V2' | 'V5' | 'SURFACE_V8' | null;
+    plan: OwnedNativeLaunchPlan;
+    signal: AbortSignal;
+    deadline: number;
+  }>
+>();
+const claimedNativeLaunchPlans = new WeakSet<object>();
+function readOwnedNativeLaunchPlan(value: unknown) {
+  const proof =
+    value !== null && typeof value === 'object' && !types.isProxy(value)
+      ? ownedNativeLaunchPlans.get(value)
+      : undefined;
+  if (!proof || proof.role === null || proof.signal.aborted || Date.now() >= proof.deadline)
+    throw Object.assign(new Error('INVALID_OWNED_NATIVE_LAUNCH_PLAN'), {
+      code: 'INVALID_OWNED_NATIVE_LAUNCH_PLAN',
+    });
+  return Object.freeze({ role: proof.role, plan: proof.plan });
+}
+function claimOwnedNativeLaunchPlan(value: unknown) {
+  const proof = readOwnedNativeLaunchPlan(value);
+  if (claimedNativeLaunchPlans.has(proof.plan))
+    throw Object.assign(new Error('INVALID_OWNED_NATIVE_LAUNCH_PLAN'), {
+      code: 'INVALID_OWNED_NATIVE_LAUNCH_PLAN',
+    });
+  claimedNativeLaunchPlans.add(proof.plan);
+  return proof;
+}
+async function runProcess<
   TOutput = DecodedOutput,
   TRequest extends
     | AnyNativeRequest
     | NativeFullAnalyzeRequestV3
     | NativeRefreshRequestV3
     | SyntaxObservationRequest
-    | CodeSyntaxRequest = AnyNativeRequest,
+    | CodeSyntaxRequest
+    | FrameworkSurfaceRequest = AnyNativeRequest,
 >(
   requestBytes: Buffer | readonly Buffer[],
   options: ValidatedOptions,
@@ -742,27 +834,103 @@ function runProcess<
   ) => Promise<TOutput>,
   lifecycle: OwnedNativeLifecycle | null = null,
 ): Promise<{ readonly output: TOutput; readonly stderr: string }> {
+  const invocationDeadline = Date.now() + timeoutMs;
+  const launchArguments = Object.freeze([...options.arguments]);
+  const environment = lifecycle?.beforeSpawn
+    ? buildOwnedNativeEnvironment(
+        options.environment,
+        process.platform === 'win32' ? Object.keys(process.env) : [],
+      )
+    : childEnvironment(options.environment);
+  const launchCwd = lifecycle?.beforeSpawn ? process.cwd() : undefined;
+  const disposeLifecycle = () =>
+    lifecycle?.beforeSpawn
+      ? waitOwnedLifecycle(
+          (signal) => lifecycle.dispose(signal),
+          options.signal,
+          invocationDeadline,
+          request,
+          true,
+        )
+      : lifecycle!.dispose();
+  if (lifecycle?.beforeSpawn) {
+    try {
+      const hash = createHash('sha256');
+      for (const bytes of Buffer.isBuffer(requestBytes) ? [requestBytes] : requestBytes)
+        hash.update(bytes);
+      const plan = Object.freeze({
+        executablePath: options.executablePath,
+        arguments: launchArguments,
+        environment,
+        cwd: launchCwd!,
+        stdinSha256: hash.digest('hex'),
+      });
+      try {
+        await waitOwnedLifecycle(
+          (signal) => {
+            ownedNativeLaunchPlans.set(
+              plan,
+              Object.freeze({
+                role:
+                  request.protocolVersion === 2 && request.type === 'ANALYZE'
+                    ? 'V2'
+                    : request.protocolVersion === 5 && request.type === 'OBSERVE_CODE_SYNTAX'
+                      ? 'V5'
+                      : request.protocolVersion === 8 && request.type === 'OBSERVE_CODE_SYNTAX'
+                        ? 'SURFACE_V8'
+                        : null,
+                plan,
+                signal,
+                deadline: invocationDeadline,
+              }),
+            );
+            return lifecycle.beforeSpawn!(plan, signal);
+          },
+          options.signal,
+          invocationDeadline,
+          request,
+        );
+      } finally {
+        ownedNativeLaunchPlans.delete(plan);
+      }
+      timeoutMs = invocationDeadline - Date.now();
+      if (timeoutMs <= 0) throw clientError('TIMEOUT', 'Native request timed out', request);
+    } catch (error) {
+      let failure = options.signal?.aborted
+        ? clientError('CANCELLED', 'Native request was cancelled', request)
+        : error instanceof NativeClientError
+          ? error
+          : clientError('PROCESS_FAILED', 'Native launch preparation failed', request);
+      try {
+        await disposeLifecycle();
+      } catch {
+        failure = withUnknownCleanup(failure);
+      }
+      throw failure;
+    }
+  }
   const spawnStartedEpochMs = Date.now();
   let inputStarted = false;
   let child;
   try {
-    child = spawn(options.executablePath, [...options.arguments], {
+    child = spawn(options.executablePath, [...launchArguments], {
       shell: false,
       windowsHide: true,
       stdio: ['pipe', 'pipe', 'pipe'],
-      env: childEnvironment(options.environment),
+      env: environment,
+      ...(launchCwd === undefined ? {} : { cwd: launchCwd }),
     });
   } catch {
     const error = clientError('PROVIDER_UNAVAILABLE', 'Native provider is unavailable', request);
     if (lifecycle)
       return Promise.resolve()
-        .then(() => lifecycle.dispose())
+        .then(() => disposeLifecycle())
         .then(
           () => {
             throw error;
           },
           () => {
-            throw error;
+            throw lifecycle.beforeSpawn ? withUnknownCleanup(error) : error;
           },
         );
     return Promise.reject(error);
@@ -847,15 +1015,22 @@ function runProcess<
           child.pid! <= 0
         )
           throw failure ?? clientError('PROCESS_FAILED', 'Native process was not ready', request);
-        await lifecycle.beforeInput(
-          Object.freeze({
-            pid: child.pid!,
-            executablePath: options.executablePath,
-            spawnStartedEpochMs,
-            spawnedEpochMs,
-          }),
-          stop.signal,
-        );
+        const identity = Object.freeze({
+          pid: child.pid!,
+          executablePath: options.executablePath,
+          spawnStartedEpochMs,
+          spawnedEpochMs,
+        });
+        if (lifecycle.beforeSpawn)
+          await waitOwnedLifecycle(
+            (signal) => lifecycle.beforeInput(identity, signal),
+            options.signal,
+            invocationDeadline,
+            request,
+            false,
+            stop.signal,
+          );
+        else await lifecycle.beforeInput(identity, stop.signal);
         if (closed || stop.signal.aborted || child.exitCode !== null)
           throw (
             failure ?? clientError('PROCESS_FAILED', 'Native input preparation failed', request)
@@ -911,16 +1086,32 @@ function runProcess<
       }
       if (lifecycle) {
         try {
-          await lifecycle.afterClose(Object.freeze(close));
-        } catch {
+          if (lifecycle.beforeSpawn)
+            await waitOwnedLifecycle(
+              (signal) => lifecycle.afterClose(Object.freeze(close), signal),
+              options.signal,
+              invocationDeadline,
+              request,
+              true,
+            );
+          else await lifecycle.afterClose(Object.freeze(close));
+        } catch (error) {
           recordFailure(
-            clientError('PROCESS_FAILED', 'Native lifecycle settlement failed', request),
+            lifecycle.beforeSpawn
+              ? asClientError(error, request, 'Native lifecycle settlement failed')
+              : clientError('PROCESS_FAILED', 'Native lifecycle settlement failed', request),
           );
+          if (lifecycle.beforeSpawn && failure) failure = withUnknownCleanup(failure);
         }
         try {
-          await lifecycle.dispose();
-        } catch {
-          recordFailure(clientError('PROCESS_FAILED', 'Native lifecycle cleanup failed', request));
+          await disposeLifecycle();
+        } catch (error) {
+          recordFailure(
+            lifecycle.beforeSpawn
+              ? asClientError(error, request, 'Native lifecycle cleanup failed')
+              : clientError('PROCESS_FAILED', 'Native lifecycle cleanup failed', request),
+          );
+          if (lifecycle.beforeSpawn && failure) failure = withUnknownCleanup(failure);
         }
       }
       if (failure !== undefined) throw withStderr(failure, stderr);
@@ -934,6 +1125,136 @@ function runProcess<
       if (graceTimer !== undefined) clearTimeout(graceTimer);
       options.signal?.removeEventListener('abort', abort);
     });
+}
+
+function validateOwnedNativeLifecycle(
+  value: OwnedNativeLifecycle | null,
+): OwnedNativeLifecycle | null {
+  if (value === null) return null;
+  const invalid = () => {
+    throw new NativeClientError(
+      'INVALID_CONFIGURATION',
+      'Invalid private Native lifecycle configuration',
+    );
+  };
+  if (
+    !value ||
+    typeof value !== 'object' ||
+    types.isProxy(value) ||
+    ![Object.prototype, null].includes(Object.getPrototypeOf(value))
+  )
+    invalid();
+  const fields = Object.getOwnPropertyDescriptors(value);
+  if (
+    Reflect.ownKeys(fields).some(
+      (k) =>
+        typeof k !== 'string' ||
+        !['beforeSpawn', 'beforeInput', 'afterClose', 'dispose'].includes(k),
+    )
+  )
+    invalid();
+  for (const d of Object.values(fields))
+    if (
+      !d.enumerable ||
+      !Object.hasOwn(d, 'value') ||
+      typeof d.value !== 'function' ||
+      types.isProxy(d.value)
+    )
+      invalid();
+  if (['beforeInput', 'afterClose', 'dispose'].some((k) => !Object.hasOwn(fields, k))) invalid();
+  return Object.freeze({
+    ...(value.beforeSpawn === undefined ? {} : { beforeSpawn: value.beforeSpawn.bind(value) }),
+    beforeInput: value.beforeInput.bind(value),
+    afterClose: value.afterClose.bind(value),
+    dispose: value.dispose.bind(value),
+  });
+}
+async function executeOwnedJavaRequest(
+  request: NativeAnalyzeRequestV2,
+  options: NativeClientOptions,
+  lifecycleValue: OwnedNativeLifecycle,
+  responseBudget?: CodeSyntaxCompositionBudget,
+) {
+  const lifecycle = validateOwnedNativeLifecycle(lifecycleValue);
+  if (!lifecycle?.beforeSpawn)
+    throw new NativeClientError(
+      'INVALID_CONFIGURATION',
+      'Private Java qualification requires a pre-spawn gate',
+    );
+  return executeRequestCore(request, options, lifecycle, true, responseBudget);
+}
+
+async function waitOwnedLifecycle(
+  action: (signal: AbortSignal) => Promise<void>,
+  signal: AbortSignal | undefined,
+  deadline: number,
+  request: { readonly requestId: string },
+  cleanup = false,
+  other?: AbortSignal,
+): Promise<void> {
+  const stop = new AbortController();
+  let reason: NativeClientError | undefined;
+  let rejectStop!: (error: NativeClientError) => void;
+  const stopped = new Promise<never>((_resolve, reject) => {
+    rejectStop = reject;
+  });
+  const fail = () => {
+    reason = signal?.aborted
+      ? clientError('CANCELLED', 'Native request was cancelled', request)
+      : other?.aborted
+        ? other.reason instanceof NativeClientError
+          ? other.reason
+          : clientError('PROCESS_FAILED', 'Native process failed', request)
+        : clientError('TIMEOUT', 'Native request timed out', request);
+    stop.abort(reason);
+    rejectStop(reason);
+  };
+  const timer = setTimeout(fail, Math.max(0, deadline - Date.now()));
+  signal?.addEventListener('abort', fail, { once: true });
+  other?.addEventListener('abort', fail, { once: true });
+  try {
+    if (signal?.aborted || other?.aborted || Date.now() >= deadline) fail();
+    await Promise.race([
+      Promise.resolve().then(() => {
+        if (stop.signal.aborted && !cleanup) throw reason;
+        return action(stop.signal);
+      }),
+      stopped,
+    ]);
+    if (signal?.aborted || other?.aborted || Date.now() >= deadline) {
+      fail();
+      throw reason;
+    }
+  } finally {
+    clearTimeout(timer);
+    signal?.removeEventListener('abort', fail);
+    other?.removeEventListener('abort', fail);
+  }
+}
+function buildOwnedNativeEnvironment(
+  allowed: Readonly<Record<string, string>>,
+  clearedNames: readonly string[],
+): Readonly<Record<string, string>> {
+  const environment: Record<string, string> = Object.create(null);
+  // Fixed Node24/libuv supplementation keys must stay present even if absent now.
+  for (const name of [
+    'HOMEDRIVE',
+    'HOMEPATH',
+    'LOGONSERVER',
+    'PATH',
+    'SYSTEMDRIVE',
+    'SYSTEMROOT',
+    'TEMP',
+    'USERDOMAIN',
+    'USERNAME',
+    'USERPROFILE',
+    'WINDIR',
+    'NODE_V8_COVERAGE',
+  ])
+    environment[name] = '';
+  for (const name of clearedNames) environment[name.toUpperCase()] = '';
+  for (const [name, value] of Object.entries(allowed)) environment[name.toUpperCase()] = value;
+  return Object.freeze({ ...environment });
 }
 
 function childEnvironment(
@@ -952,7 +1273,8 @@ function effectiveTimeout(
     | NativeFullAnalyzeRequestV3
     | NativeRefreshRequestV3
     | SyntaxObservationRequest
-    | CodeSyntaxRequest,
+    | CodeSyntaxRequest
+    | FrameworkSurfaceRequest,
   invocationTimeoutMs: number,
 ): number {
   if (
@@ -1040,25 +1362,69 @@ function asClientError(
     : clientError('PROCESS_FAILED', message, request);
 }
 
-function withStderr(error: NativeClientError, stderr: string): NativeClientError {
-  if (stderr.length === 0 || error.stderr !== undefined) return error;
-  return new NativeClientError(error.code, error.message, {
+function copyNativeClientError(
+  error: NativeClientError,
+  stderr: string | undefined = error.stderr,
+): NativeClientError {
+  const copy = new NativeClientError(error.code, error.message, {
     ...(error.requestId === undefined ? {} : { requestId: error.requestId }),
     ...(error.exitCode === undefined ? {} : { exitCode: error.exitCode }),
     ...(error.signal === undefined ? {} : { signal: error.signal }),
     ...(error.analyzerError === undefined ? {} : { analyzerError: error.analyzerError }),
-    stderr,
+    ...(stderr === undefined ? {} : { stderr }),
   });
+  if (Object.getOwnPropertyDescriptor(error, 'cleanupState')?.value === 'UNKNOWN')
+    Object.assign(copy, { cleanupState: 'UNKNOWN' });
+  return copy;
+}
+function withUnknownCleanup(error: NativeClientError): NativeClientError {
+  return Object.assign(copyNativeClientError(error), { cleanupState: 'UNKNOWN' });
+}
+function withStderr(error: NativeClientError, stderr: string): NativeClientError {
+  if (stderr.length === 0 || error.stderr !== undefined) return error;
+  return copyNativeClientError(error, stderr);
 }
 
+// Existing logical composition counters, not an OS/physical reservation formula.
+function spendJavaResponse(
+  context: CodeSyntaxCompositionBudget,
+  key: 'serializedBytes' | 'items',
+  amount: number,
+  request: AnyNativeRequest,
+): void {
+  try {
+    spendComposition(context.budget, context.limits, key, amount);
+  } catch {
+    throw clientError('OUTPUT_LIMIT_EXCEEDED', 'Java response exceeds shared ledger', request);
+  }
+}
+function chargeJavaResponseJSON(
+  value: unknown,
+  request: AnyNativeRequest,
+  context: CodeSyntaxCompositionBudget,
+): void {
+  try {
+    chargeCompositionJSON(value, context.limits, context.budget);
+  } catch (error) {
+    throw clientError(
+      error instanceof Error && 'code' in error && error.code === 'RESOURCE_LIMIT_EXCEEDED'
+        ? 'OUTPUT_LIMIT_EXCEEDED'
+        : 'PROTOCOL_VIOLATION',
+      'Java response exceeds shared JSON limits',
+      request,
+    );
+  }
+}
 async function decodeStdout(
   stdout: Readable,
   request: AnyNativeRequest,
   limits: NativeClientLimits,
+  _signal?: AbortSignal,
+  responseBudget?: CodeSyntaxCompositionBudget,
 ): Promise<DecodedOutput> {
   const events: AnyNativeEvent[] = [];
   const rawRecords: Buffer[] = [];
-  for await (const { event, record } of readFramedEvents(stdout, request, limits)) {
+  for await (const { event, record } of readFramedEvents(stdout, request, limits, responseBudget)) {
     events.push(event);
     rawRecords.push(record);
   }
@@ -1069,6 +1435,7 @@ async function* readFramedEvents(
   stdout: Readable,
   request: AnyNativeRequest,
   limits: NativeClientLimits,
+  responseBudget?: CodeSyntaxCompositionBudget,
 ): AsyncGenerator<{ event: AnyNativeEvent; record: Buffer }> {
   const decoder = new TextDecoder('utf-8', { fatal: true });
   const requestEventLimit =
@@ -1081,6 +1448,11 @@ async function* readFramedEvents(
   let sequence = 0;
   let terminalSeen = false;
   for await (const chunk of stdout) {
+    if (responseBudget) {
+      const size = Buffer.byteLength(chunk);
+      spendJavaResponse(responseBudget, 'serializedBytes', size, request);
+      spendJavaResponse(responseBudget, 'serializedBytes', pending.byteLength + size, request);
+    }
     const bytes = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
     totalBytes += bytes.byteLength;
     if (totalBytes > limits.maxStdoutBytes) {
@@ -1121,7 +1493,7 @@ async function* readFramedEvents(
           request,
         );
       }
-      const event = parseEventLine(rawLine, decoder, request, sequence);
+      const event = parseEventLine(rawLine, decoder, request, sequence, responseBudget);
       if (
         !LEGAL_EVENT_TYPES[request.type].has(event.type) ||
         (event.type === 'REQUEST_FAILED' && sequence !== 0)
@@ -1134,7 +1506,13 @@ async function* readFramedEvents(
       }
       terminalSeen = TERMINAL_EVENT_TYPES.has(event.type);
       sequence++;
-      yield { event, record: Buffer.concat([rawLine, Buffer.from('\n')]) };
+      if (responseBudget) {
+        spendJavaResponse(responseBudget, 'serializedBytes', rawLine.byteLength + 1, request);
+        const record = Buffer.alloc(rawLine.byteLength + 1);
+        rawLine.copy(record);
+        record[rawLine.byteLength] = 10;
+        yield { event, record };
+      } else yield { event, record: Buffer.concat([rawLine, Buffer.from('\n')]) };
     }
   }
   if (pending.byteLength !== 0) {
@@ -1379,6 +1757,7 @@ function parseEventLine(
   decoder: TextDecoder,
   request: AnyNativeRequest,
   expectedSequence: number,
+  responseBudget?: CodeSyntaxCompositionBudget,
 ): AnyNativeEvent {
   if (
     rawLine.byteLength === 0 ||
@@ -1388,7 +1767,20 @@ function parseEventLine(
     throw clientError('PROTOCOL_VIOLATION', 'Native stdout is not valid JSONL', request);
   }
   try {
+    if (responseBudget) {
+      spendJavaResponse(responseBudget, 'serializedBytes', rawLine.byteLength, request);
+      try {
+        preflightCodeSyntaxJSON(rawLine, responseBudget);
+      } catch {
+        throw clientError(
+          'OUTPUT_LIMIT_EXCEEDED',
+          'Java response exceeds shared JSON limits',
+          request,
+        );
+      }
+    }
     const parsed: unknown = JSON.parse(decoder.decode(rawLine));
+    if (responseBudget) chargeJavaResponseJSON(parsed, request, responseBudget);
     const result =
       request.protocolVersion === 2
         ? NativeAnalyzeEventEnvelopeV2Schema.safeParse(parsed)
@@ -1398,7 +1790,8 @@ function parseEventLine(
       throw new Error('invalid event context');
     }
     return result.data;
-  } catch {
+  } catch (error) {
+    if (responseBudget && error instanceof NativeClientError) throw error;
     throw clientError('PROTOCOL_VIOLATION', 'Native stdout contains an invalid event', request);
   }
 }
@@ -1497,6 +1890,11 @@ async function decodeSyntaxOutput(
 
 // Private default is deliberately invisible to the index export-star.
 export default Object.freeze({
+  readOwnedNativeLaunchPlan,
+  claimOwnedNativeLaunchPlan,
+  executeOwnedJavaRequest,
+  validateOwnedNativeLifecycle,
+  buildOwnedNativeEnvironment,
   validateOwnedNativeOptions: validateOptions,
   ownedNativeTimeout: effectiveTimeout,
   runOwnedNativeProcess: runProcess,

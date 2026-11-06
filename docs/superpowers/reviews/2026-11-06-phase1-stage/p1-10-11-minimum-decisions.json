@@ -1,0 +1,179 @@
+{
+  "kind": "P1_10_11_SEPARATE_MINIMUM_DESIGN_DECISIONS",
+  "date": "2026-11-06",
+  "status": "READ_ONLY_RECOMMENDATIONS_NOT_APPROVED_OR_IMPLEMENTED",
+  "basis": [
+    "docs/superpowers/plans/2026-10-22-phase1-knowledge-and-delivery.md:34-56",
+    "docs/superpowers/specs/2026-10-22-phase1-knowledge-and-consumption-design.md sections2,4",
+    "packages/ir/src/document-ir.ts",
+    "packages/runtime/src/effective-config.ts:6-20",
+    "packages/application/src/operation-policy.ts",
+    ".superpowers/sdd/2026-11-04-p1-10-11-decision/decision-brief.json",
+    ".superpowers/sdd/2026-11-04-p1-10-11-decision/registry-dependency-candidates.json",
+    ".superpowers/sdd/2026-11-04-p1-10-11-decision/published-license-inspection.json",
+    ".superpowers/sdd/2026-11-04-p1-10-11-decision/types-archive-layout-verification.json"
+  ],
+  "verifiedDelta": [
+    "documents/knowledge package source entrypoints remain export{}; no parser/model-port/semantic adapter exists. Package manifests have no parser/model dependency. Workspace migration manifest ends006; W007/W008 files absent. Existing strict Document/Claim IR and operation-policy/effective budgets already exist, so do not redesign them.",
+    "Old decision brief currentIndependentCodeAssessment D02RunExists=false is superseded by actual D02/D03 receipts and removed as blocker. Neither D02/A6 nor E02 blocks these offline design/implementation preparations.",
+    "Important ownership correction: original P1-10 plan owns BOTH W007_documents and W008_claims plus document-store; P1-11 planned files contain no DDL. Old C1=W007/C2=W008 wording is not authority to move migration ownership. Define Claim storage in10; model-generated Claim remains candidate/manual under11/14.",
+    "License/registry checks are historical2026-11-04 evidence, not a fresh registry recommendation or current lock. No browsing/install/hash/model invocation performed for this packet."
+  ],
+  "decisions": [
+    {
+      "recommendation": "Choose existing remark proposal; authorize one concrete design/plan completion for parser adapter, authorized-byte DTOs and W007+W008 transactional draft. Do not conflate this design choice with an installation/migration implementation approval.",
+      "options": [
+        {
+          "id": "C1A",
+          "choice": "Semantic mdast adapter using unified11.0.5/remark-parse11.0.0/remark-gfm4.0.1 historical exact proposal; reproducible closure mandatory before installation.",
+          "recommended": true
+        },
+        {
+          "id": "C1B",
+          "choice": "Lezer1.6.3 alternative plus explicit reviewed reference-link semantic mapping; extra mapping design remains.",
+          "recommended": false
+        }
+      ],
+      "taskId": "P1-10",
+      "exactGaps": [
+        "AuthorizedDocumentBytes authority/lifetime/policy/basis and immutable byte ownership; DocumentDraft completeness/diagnostics/range mapping; ValidatedDocumentBatch validation authority and receipt effects not implemented.",
+        "W007/W008 table/FK/unique/immutability/current-pointer/Claim-evidence DDL, migration checksum/predecessor and full rollback/unknown-commit/last-good contract only reserved, not executable SQL.",
+        "Shared run request-ledger charging for input/AST/mapping/rows and cancellation/deadline checks; no automatic MAX_SAFE_INTEGER or invented numeric defaults/physical RSS formula."
+      ],
+      "minimumVerification": [
+        "Independent literal duplicate-heading, fence-as-data, table/reference-link, CRLF/Chinese/emoji UTF8 ranges",
+        "Strict Document/Claim IR; failed/partial parse preserves current document revision",
+        "Fresh/sequential W006→W007→W008, FK/checksum/rollback/reopen/unknown outcome in owned temp SQLite",
+        "Authorization before bytes/read/write; shared-budget exact boundary/cancel/deadline controls"
+      ],
+      "decisionId": "C1_DOCUMENT_STRUCTURE_AND_STORAGE_DESIGN",
+      "existingDependencyEvidence": {
+        "remarkNodes": 69,
+        "lezerNodes": 3,
+        "alternative": {
+          "@lezer/markdown": "1.6.3",
+          "@lezer/common": "1.5.5",
+          "@lezer/highlight": "1.2.5"
+        },
+        "roots": {
+          "unified": "11.0.5",
+          "remark-parse": "11.0.0",
+          "remark-gfm": "4.0.1"
+        },
+        "qualification": "72 archives/integrity/MIT checks and zero lifecycle-script findings across both alternatives; historical registry max-satisfying snapshot, NOT pnpm lock, security audit or measured performance. Alternate @types archive roots separately verified.",
+        "archiveEvidence": {
+          "publishedArchives": 72,
+          "integrityMatched": 72,
+          "MITLicenseFileFound": 72,
+          "preinstallInstallPostinstallScriptsFound": 0,
+          "scope": "manifest identity, published integrity and license text checks; not a vulnerability audit or formal legal review"
+        }
+      },
+      "impact": "Source-based Markdown/ADR structure AUTO; semantic Claim extraction does not publish knowledge. Preserve UTF8 byte-column IR, canonical/provider boundaries and existing Source authorization.",
+      "risks": [
+        "69-node dependency/lock drift",
+        "UTF16 AST positions to UTF8 bytes, CRLF/Chinese/emoji and duplicate headings",
+        "Partial parse or SQL failure moving last-good pointers",
+        "W008 semantics accidentally expanding automatic publication"
+      ],
+      "rollback": "Design only has no runtime rollback. Later implementation may disable parser/workflow while retaining last-good immutable revisions; no down/reset/backfill promised.",
+      "afterApprovalCanClose": "With actual authored/reviewed contract: C1 concrete-design/implementation-plan-ready node only. P1-10/E07 still requires implementation, registered p1-document-ir-v1 fixtures and declared gates. No parent count changes merely from approval.",
+      "dependencies": [
+        "Exact roots/closure selection and reproducible lock review before install",
+        "Concrete DTO/DDL/failure contract review and authority synchronization before implementation",
+        "Original bounded owned SQLite only; no user DB/native/model rights"
+      ]
+    },
+    {
+      "recommendation": "Independently authorize concrete SemanticModelPort/capability/usage/error and single-run budget contract completion, with no remote fallback, no automatic retries absent approved caps, and no actual model invocation. Keep W008 DDL ownership in P1-10.",
+      "options": [
+        {
+          "id": "C2A",
+          "choice": "Existing local/explicit opt-in OpenAI-compatible design via Application port and Runtime HTTP adapter; use standard platform HTTP where adequate, no new SDK assumed. Capability modes explicitly configured.",
+          "recommended": true
+        },
+        {
+          "id": "C2B",
+          "choice": "Keep model unavailable and deterministic query usable; defer adapter while C1 proceeds.",
+          "recommended": false
+        }
+      ],
+      "taskId": "P1-11",
+      "existingContracts": {
+        "result": [
+          "structuredOutput",
+          "provider/model identity",
+          "usage",
+          "finishReason",
+          "outputDigest",
+          "warnings"
+        ],
+        "modelBudget": [
+          "maxInputTokens",
+          "maxOutputTokens",
+          "maxInvocations",
+          "maxDurationMs"
+        ],
+        "policy": "Existing OperationPolicyInput LOCAL_LLM/REMOTE_LLM, PRIMARY/REPAIR/FALLBACK, raw/derived/classification/secret and destination controls. Existing type fields are not an implemented semantic ledger.",
+        "taskKinds": [
+          "CAPABILITY_SYNTHESIS",
+          "BUSINESS_FLOW_SYNTHESIS",
+          "COMPONENT_SUMMARY",
+          "CLAIM_EXTRACTION"
+        ],
+        "request": [
+          "taskKind",
+          "promptRef",
+          "modelPolicyRef",
+          "outputSchemaRef",
+          "authorizedContext",
+          "inputDigest",
+          "invocationBudget"
+        ],
+        "requestBudget": [
+          "maxInputBytes",
+          "maxOutputBytes",
+          "maxItems",
+          "maxDepth",
+          "maxDurationMs",
+          "maxMemoryBytes"
+        ]
+      },
+      "minimumVerification": [
+        "Unknown support ref refusal, instruction/data separation, secret recheck on repair",
+        "Transport retry counter distinct from repair, both sharing explicit run budget; missing usage not zero",
+        "Cancel/deadline/partial response discards candidate and proves settlement",
+        "Missing model preserves deterministic query, blocked local never remote, redirect refused",
+        "Bounded mock HTTP TEST_DOUBLE labeled honestly; cannot satisfy ACTUAL_MODEL quality"
+      ],
+      "decisionId": "C2_SEMANTIC_PORT_USAGE_AND_SECURITY_DESIGN",
+      "exactGaps": [
+        "Strict capability/usage/error DTOs; distinguish provider-reported/estimated/unknown usage, partial/cancel/finish/error behavior and what constitutes chargeable attempts. Do not record absent usage as zero.",
+        "Same-run invocation/request ledger and token accounting, repair vs transport retry vs context expansion vs model fallback counters; absent cap disables its automatic path. No numeric defaults selected.",
+        "Capability selection/schema-vs-JSON-vs-prompt configuration, redirect/destination/secret-policy recheck before every attempt, abort/settlement and no partial candidate.",
+        "Versioned prompt/schema registry, allowlisted support grounding/context closure and non-secret provenance; W008 Claim compatibility documented but SQL remains10, final knowledge publication14."
+      ],
+      "impact": "Knowledge creates candidate only, Runtime handles transport, Application authorizes operations. Local-only/security block cannot trigger remote; no-model deterministic paths remain usable.",
+      "risks": [
+        "Unknown usage treated as free/unbounded spend",
+        "Remote redirect/fallback or repair leaking Source/credentials",
+        "Partial output accepted as grounded candidate",
+        "LLM candidate mistaken for canonical publication"
+      ],
+      "rollback": "Keep disabled/fail-closed model path, typed PROVIDER_UNAVAILABLE and existing deterministic queries. Later disable adapter without rewriting existing history or migration rollback.",
+      "afterApprovalCanClose": "With actual authored/reviewed contract: C2 semantic-port/budget-design-ready node only. Subsequent offline implementation may close semantic-runtime workflow contract slice, while P1-11/E08 quality requirements remain NOT_EVALUABLE until actual model/approved evidence. No parent acceptance merely from mock tests.",
+      "dependencies": [
+        "Exact DTO/ledger/error contract review and prompt/schema version ownership",
+        "C1 documents needed for actual doc contexts but synthetic bounded port tests can precede parser;12 snapshot and14 publication still separate",
+        "Real model target/request/data/credentials scope and actual quality baseline need separate explicit approval; no model download/call included"
+      ]
+    }
+  ],
+  "nonActions": [
+    "No install/network/model/API credential use",
+    "No source/frozen IR/schema/migration/threshold edits",
+    "No behavior tests or real Native/Git/HOST",
+    "No transfer of old D02 blocker or parser approval into model approval"
+  ],
+  "nextDecisionShape": "Two independent concrete approvals C1 and C2; select one or both. Final exact implementation/installation/migration artifacts must be reviewable and authorized under their own boundaries, not blanket C-batch approval."
+}

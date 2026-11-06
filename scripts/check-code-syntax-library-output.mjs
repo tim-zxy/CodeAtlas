@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFile, lstat, realpath, readdir, writeFile } from 'node:fs/promises';
+import { open, lstat, realpath, readdir, writeFile } from 'node:fs/promises';
 import { resolve, relative, isAbsolute, join, sep } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import {
@@ -46,9 +46,28 @@ async function regular(path, cap) {
   const s = await lstat(path);
   assert.ok(s.isFile() && !s.isSymbolicLink(), 'Capture file must be regular');
   assert.ok(s.size <= cap, 'Capture exceeds existing byte cap');
-  const b = await readFile(path);
-  assert.equal(b.length, s.size);
-  return b;
+  const file = await open(path, 'r');
+  try {
+    const before = await file.stat();
+    assert.ok(before.isFile() && before.size <= cap, 'Capture exceeds existing byte cap');
+    for (const key of ['dev', 'ino', 'size', 'mtimeMs'])
+      assert.equal(before[key], s[key], 'Capture changed before reading');
+    // One sentinel detects growth without an unbounded whole-file allocation.
+    const data = Buffer.alloc(before.size + 1);
+    let length = 0;
+    while (length < data.length) {
+      const read = await file.read(data, length, data.length - length, null);
+      if (read.bytesRead === 0) break;
+      length += read.bytesRead;
+    }
+    assert.equal(length, before.size, 'Capture changed while reading');
+    const after = await file.stat();
+    for (const key of ['dev', 'ino', 'size', 'mtimeMs'])
+      assert.equal(after[key], before[key], 'Capture changed while reading');
+    return data.subarray(0, length);
+  } finally {
+    await file.close();
+  }
 }
 export async function checkCapturedLibraryOutput(input) {
   const candidate = resolve(input),

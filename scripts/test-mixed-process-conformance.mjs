@@ -35,3 +35,44 @@ for (const c of cases)
       assert.ok(Object.isFrozen(r));
     }
   });
+
+for (const id of ['complete-short', 'cancelled'])
+  for (const ordering of [
+    'descendant-created-after-host-exit',
+    'descendant-exited-after-host-exit',
+  ])
+    test('A6 rejects contradictory lifecycle order ' + id + ' ' + ordering, () => {
+      const value = structuredClone(cases.find((c) => c.id === id).value);
+      // HOST cannot finish its await-close report before the descendant exits.
+      value.processes[0].exitSequence = 3;
+      value.processes[1].exitSequence = 5;
+      if (ordering === 'descendant-created-after-host-exit') value.processes[1].createSequence = 4;
+      assert.throws(
+        () => read(value, limits),
+        (e) => e.code === 'INVALID_PROCESS_CONFORMANCE',
+      );
+    });
+
+for (const [name, patch] of [
+  ['closed missing child', { childClosed: true }],
+  ['exit status for missing child', { childExitCode: 0 }],
+  ['signal for missing child', { childSignal: 'SIGKILL' }],
+  ['output for missing child', { childStdout: 'DONE' }],
+])
+  test('A6 final-query failure rejects ' + name, () => {
+    const value = structuredClone(cases.find((c) => c.id === 'injected-final-failure').value);
+    Object.assign(value.host, patch);
+    assert.throws(
+      () => read(value, limits),
+      (e) => e.code === 'INVALID_PROCESS_CONFORMANCE',
+    );
+  });
+
+test('A6 cancellation rejects output from the wrong fixed child mode', () => {
+  const value = structuredClone(cases.find((c) => c.id === 'cancelled').value);
+  value.host.childStdout = 'DONE';
+  assert.throws(
+    () => read(value, limits),
+    (e) => e.code === 'INVALID_PROCESS_CONFORMANCE',
+  );
+});

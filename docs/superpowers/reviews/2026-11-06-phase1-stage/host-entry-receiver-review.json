@@ -1,0 +1,55 @@
+{
+  "kind": "INDEPENDENT_TEST_ONLY_HOST_PROJECTED_ENTRY_RECEIVER_REVIEW",
+  "reviewer": "/root/offline_contract_review_medium",
+  "utc": "2026-11-06T01:40:07.4072655Z",
+  "status": "NO_BLOCKING_FINDINGS_BOUNDED_RECEIVER_INTEROP",
+  "scope": "Only receiver3files, scope and existing raw receipts. No N1/HOST49/projector41 re-review or rerun.",
+  "method": "Read-only source/contract/receipt review; no tests, producers, platform probes, Git actions or source changes. Only this explicit Local Temp review artifact written.",
+  "findings": [],
+  "checked": [
+    "Node invokes actual frozen projector on independently authored synthetic literal inputs, then one fixed final PowerShell compiler/testhost carries four Entry arrays through stdin JSON.",
+    "ConstructorInfo.Invoke(object[]) preserves null parentId/sha256 while invoking original unchanged Entry constructor. Enum.Parse is exact case-sensitive and rejects non-enum-name strings.",
+    "Valid projection includes one shared Module/prehook once, preserves null root fields, constructs original Lifetime, Acquire calls only fresh memory IOperations, and pre-consumption Release reverses handles17..1.",
+    "Missing Manifest and wrong parent assert LIFETIME_CONSTRUCTION with Open0/Close0; unknown kind asserts ENTRY_CONSTRUCTION and UNKNOWN_KIND error with Open0/Close0. Shared Entry-setup failure cannot satisfy these distinct negative expectations.",
+    "No BeginConsumption, Settle, QualificationHostRoot.Start, direct Windows method, fabricated root.created, policy bypass or production adapter/schema/token added.",
+    "One final explicit PowerShell testhost/AddType is separately accounted from all earlier attempts and unobserved internal compiler process count."
+  ],
+  "receipt": {
+    "fail": 0,
+    "exitCode": 0,
+    "negatives": "Manifest/parent Lifetime construction refusal;unknownkind Enum.Parse refusal;all Open0/Close0",
+    "internalCompilerChildren": "NOT_OBSERVED",
+    "finalExplicitPowerShellTesthosts": 1,
+    "valid": "17known memory opens,17..1 reverse closes,OFFLINE_OWNERSHIP_READY to RELEASED before consumption",
+    "skip": 0,
+    "cancelled": 0,
+    "durationMs": 784.141,
+    "todo": 0,
+    "finalAddTypeInvocations": 1,
+    "history": "Original absent receiver RED, apparent3negative successes due shared null setup defect, strengthened stageRED0/4 and firstfixed4/4 retained honestly.",
+    "pass": 4
+  },
+  "sourcePins": {
+    "scripts/test-mixed-native-host-protected-inventory-receiver.mjs": "b482fe603a5f9a9775169f5d391a4bbc4bb59b234296e8bfe7fd3db2b6f6855b",
+    "scripts/test-mixed-native-host-protected-inventory-receiver.ps1": "28ce196883f115be6dc62dd4cf2130d8aeb4136aa3e82cf05d704fbcab9b8d3e",
+    "scripts/test-mixed-native-host-protected-inventory-receiver-double.cs": "d8e40a31f47c87a776c69c6c95bf3d850cbb81ea15d83e01911306c553e32fe2",
+    "docs/superpowers/specs/2026-11-06-host-protected-entry-receiver-offline.md": "81350e4584efe5f8783a05531ba50e452f7cb8853f1ee3c97c34f161298ac2a3"
+  },
+  "evidencePins": {
+    ".superpowers/sdd/2026-11-06-host-protected-entry-receiver-offline/verification.json": "9f2877b8f203ff4fbf9b45cf7afdc72f9943321ece179c86588567c79872962d",
+    ".superpowers/sdd/2026-11-06-host-protected-entry-receiver-offline/green-final.log": "b85bd0d69ff7d77b062085203048cbb3ef97b2393a8e1f6b662dc255bad1689e",
+    ".superpowers/sdd/2026-11-06-host-protected-entry-receiver-offline/red.log": "27922a0648786d279e0e54b1f471c9e88534d8e48fd74277364f95c2d363ca25",
+    ".superpowers/sdd/2026-11-06-host-protected-entry-receiver-offline/green-attempt-1.log": "6f336de7e30c6f25962b8534c99913938b8204ed39abf1c301e5ceab288d7156",
+    ".superpowers/sdd/2026-11-06-host-protected-entry-receiver-offline/null-marshalling-diagnostic-red.log": "a344fbf287c34b6e8071d8c484920686b3010805a3f3ca2a8b6dc95182b19742",
+    ".superpowers/sdd/2026-11-06-host-protected-entry-receiver-offline/refusal-stage-red.log": "9942ab7317c6ecbca2a73e65c75e19704ec1da2c93373a89a2cbbcb5aa47049d",
+    ".superpowers/sdd/2026-11-06-host-protected-entry-receiver-offline/null-preservation-green.log": "354f50429c6ed9564512d071e1358d30d645fea4b1fc9661255ed3353e3ac66b",
+    ".superpowers/sdd/2026-11-06-host-protected-entry-receiver-offline/format-final.log": "675c94d4bdd7930bb00c854170ed16b574bba52c5327a6cc931ba0f33457c6f9"
+  },
+  "limits": [
+    "Synthetic field interoperability and memory acquisition/pre-consumption cleanup only; not actual current complete inventory or binary identity.",
+    "No OS path/ancestor protection, trusted actual consumer settlement, live startup or qualification proof.",
+    "All reported authority flags false/liveAdmission NOT_READY; formal phase acceptance unchanged.",
+    "Root owns final shared documentation integration, hashes and readback; these were intentionally not awaited or re-reviewed for this focused seal."
+  ],
+  "delivery": "Root publishes exact Local Temp bytes through its authorized writer; no worktree write attempted by reviewer."
+}

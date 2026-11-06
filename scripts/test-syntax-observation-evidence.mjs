@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { readFile, mkdtemp, cp, rm, writeFile } from 'node:fs/promises';
+import { readFile, mkdtemp, cp, rm, writeFile, link, lstat, open, rename } from 'node:fs/promises';
 import path from 'node:path';
 import { tmpdir } from 'node:os';
 let api;
@@ -112,6 +112,66 @@ test('Runtime frozen corpus identity matches current offline bytes', async () =>
     await import('../packages/runtime/dist/syntax-observation-corpus.js');
   const out = await api.loadSyntaxObservationCorpus(root, limits);
   assert.deepEqual(out.identity, nativeSyntaxObservationCorpus);
+});
+
+for (const artifact of ['catalog', 'source'])
+  test('offline corpus refuses a hardlinked ' + artifact, async (t) => {
+    const dir = await mkdtemp(path.join(tmpdir(), 'codeatlas-syntax-corpus-link-'));
+    t.after(async () => {
+      assert.ok(path.resolve(dir).startsWith(path.resolve(tmpdir()) + path.sep));
+      assert.ok(path.basename(dir).startsWith('codeatlas-syntax-corpus-link-'));
+      await rm(dir, { recursive: true, force: true });
+    });
+    await cp(root, dir, { recursive: true });
+    const before = await api.loadSyntaxObservationCorpus(dir, limits);
+    const target =
+      artifact === 'catalog'
+        ? path.join(dir, 'catalog.json')
+        : path.join(dir, before.catalog.calibration[0].sources[0].path);
+    const originalBytes = await readFile(target);
+    await link(target, target + '-alias');
+    assert.equal((await lstat(target)).nlink, 2);
+    assert.deepEqual(await readFile(target), originalBytes);
+    await assert.rejects(
+      () => api.loadSyntaxObservationCorpus(dir, limits),
+      (error) => error.code === 'INVALID_SYNTAX_CORPUS',
+    );
+  });
+
+test('offline corpus refuses named-file replacement after a real open', async (t) => {
+  const dir = await mkdtemp(path.join(tmpdir(), 'codeatlas-syntax-corpus-replacement-'));
+  t.after(async () => {
+    assert.ok(path.resolve(dir).startsWith(path.resolve(tmpdir()) + path.sep));
+    assert.ok(path.basename(dir).startsWith('codeatlas-syntax-corpus-replacement-'));
+    await rm(dir, { recursive: true, force: true });
+  });
+  await cp(root, dir, { recursive: true });
+  const before = await api.loadSyntaxObservationCorpus(dir, limits);
+  const target = path.join(dir, before.catalog.calibration[0].sources[0].path);
+  const originalBytes = await readFile(target);
+  const handle = await open(target, 'r');
+  const targetStat = await handle.stat();
+  const prototype = Object.getPrototypeOf(handle);
+  const originalStat = prototype.stat;
+  await handle.close();
+  let replaced = false;
+  t.mock.method(prototype, 'stat', async function (...args) {
+    const result = await originalStat.apply(this, args);
+    if (!replaced && result.ino === targetStat.ino && result.dev === targetStat.dev) {
+      await rename(target, target + '-original');
+      await writeFile(target, originalBytes);
+      const named = await lstat(target);
+      assert.notEqual(named.ino, result.ino);
+      assert.deepEqual(await readFile(target), originalBytes);
+      replaced = true;
+    }
+    return result;
+  });
+  await assert.rejects(
+    () => api.loadSyntaxObservationCorpus(dir, limits),
+    (error) => error.code === 'INVALID_SYNTAX_CORPUS',
+  );
+  assert.equal(replaced, true, 'replacement must actually complete');
 });
 
 for (const kind of ['missing-case', 'foreign-case', 'traversal', 'duplicate-holdout-source'])

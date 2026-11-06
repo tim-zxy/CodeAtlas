@@ -1,0 +1,3 @@
+$ErrorActionPreference='Stop'
+Add-Type -Path @((Join-Path $PSScriptRoot 'mixed-native-observer-policy.cs'),(Join-Path $PSScriptRoot 'mixed-native-debug-event-bridge.cs'),(Join-Path $PSScriptRoot 'mixed-native-control-mailbox.cs'),(Join-Path $PSScriptRoot 'mixed-native-observer-loop.cs'),(Join-Path $PSScriptRoot 'mixed-native-control-pipe.cs'),(Join-Path $PSScriptRoot 'mixed-native-dynamic-control-pipe.cs'),(Join-Path $PSScriptRoot 'mixed-native-dynamic-observer-policy.cs'),(Join-Path $PSScriptRoot 'mixed-native-dynamic-debug-event-bridge.cs'),(Join-Path $PSScriptRoot 'mixed-native-dynamic-observer-loop.cs'),(Join-Path $PSScriptRoot 'test-mixed-native-dynamic-observer-loop-double.cs'))
+[MixedNativeDynamicBoundedLoopUnit]::Run()

@@ -1,3 +1,597 @@
+## Phase 1 stage receiver, portability and acceptance trace - 2026-11-06
+
+Approved HOST B offline contract -> pure protected-entry projection -> original C#
+Entry constructor/enum -> original memory lifetime -> 17 acquisitions/reverse closes;
+4/4 receiver cases, independent stage-specific refusal assertions and focused review.
+Compile-only candidate is separately pinned and does not prove actual Start admission.
+Actual HOST owner, namespace and complete consumer settlement remain NOT_READY.
+
+Existing immutable historical-input fixture -> 13 additional pinned inputs and tracked
+J1 raws -> explicit-root ENOENT-only fallback -> seven fixture consumers; targeted
+8/8 checks cover old679 byte preservation, raw consumers, isolated cwd, local priority,
+unchanged non-ENOENT errors and pre-IO path rejection. No new product contract, baseline,
+Fixture ID or resource/security threshold. Existing raw metadata is not rewritten.
+
+Original PHASE_ACCEPTANCE parents -> 17-gap board and separate E02 set mapping ->
+unchanged 4/21 count. W007/W008 remain P1-10 obligations; semantic budget/port remains
+P1-11. Exact structural P1-13 remains a pending implementation proposal, not acceptance.
+[Durable stage receipts, source pins, reviews and maps](../superpowers/reviews/2026-11-06-phase1-stage/index.json).
+Real qualification, E02 installation, new contracts and formal hosted CI are not proved
+by offline receivers or by the Git synchronization plan.
+
+## HOST fixed-input inventory to lifetime-record projection - 2026-11-06
+
+Approved B protected-set/lifetime contract -> independently fixed original raw
+manifest/descriptor identity + pinned graph artifact/edge/provenance arrays -> full
+manifest/graph equality and exact supplemental helper/tool coverage -> existing
+Entry id/path/kind/parentId/sha256 records with every lexical ancestor. Mutable file
+exclusions are exact declared inputs; sourceFiles provenance is never runtime-expanded.
+No new public model, wire token, OS proof or real consumer authority is generated.
+
+Pure Node41/41 exit0; original missing-module/embedded-space REDs and reserved-role
+35PASS/6FAIL RED retained. Final guard preserves Manifest/Descriptor/graph-data;
+compatible same-module exact helper annotation remains possible. Source formatted
+before41 run; no firstbatch/producer/C# suite repeated. Original loader canonical
+admission remains separately controlling, not replaced by raw projector consistency.
+
+[Exact projection scope](../superpowers/specs/2026-11-06-host-protected-inventory-offline.md);
+results/source/raw/review pins: .superpowers/sdd/2026-11-06-host-protected-inventory-offline/verification-index.json.
+Existing lifetime49 and N1 complete2/2 receipts retain their distinct offline scopes.
+No cross-C# projection execution, fresh actual inventory/tool identity, actual
+namespace/consumer settlement or live Start proof. Phase1 4/21/A6 unqualified/E02
+uninstalled; remaining true platform/runtime gates are neither replaced nor waived.
+
+## Bounded N1 and HOST B offline implementation trace - 2026-11-06
+
+N1 approved private contract -> fixed allGIT/SOURCE coordinator plan -> actual App
+Source/CAS -> genuine capture/DELTA Stage -> CURRENT full Runtime semantic derivation
+and Application validation -> original final Source -> synchronous readset/control/
+owner/pointer/candidate checks -> unchanged NO_OP identities/no publication writes.
+Deletion instead follows genuine zero-required-observation/null path, full retained
+Runtime and original same-lease atomic Store. Original Native timing/suffix guards stay.
+Direct13 plus corrected ignore1 and affected existing28 pass; complete closedgraph2/2
+(one385614ms run),16 roles/Git closes each,0 Native,281/1156/295/310 graph. Original
+fixture errors and exact source freeze retained; no claim all14 reran or historic raw
+configuration bytes were proved. Evidence: .superpowers/sdd/2026-11-06-current13-no-native-entry/verification.json.
+
+HOST B exact independent-inventory/retained-consumption/close-once contract -> pure
+C# lifetime -> ORIGINAL MixedNativeHostHandleLedger offline composition -> five fixed
+memory consumer joins -> ledger allReleased -> reverse release. Final49 assertions,
+missing-module and reentrant REDs retained. No actual Start/OS proof, selected Windows
+flags, inheritance/permission expansion or physical number. Synthetic inventory and
+substitute observations do not authenticate actual coverage/consumers. Evidence:
+.superpowers/sdd/2026-11-06-host-consumption-lifetime-offline/verification.json.
+
+Governing ADR020/security/provider/module/evaluation applicability and controlling
+N1/HOST specs are synchronized without checking off original phase gates. Integrated
+review/hash/gates: .superpowers/sdd/2026-11-06-n1-host-b-integration/verification-index.json.
+Phase1 4/21, A6 unqualified, E02 uninstalled. Previous N1 denial was resolved by one
+normal approved retry; no retry workaround or real-run authority follows.
+
+## N1 and HOST B bounded offline contract continuation - 2026-11-06
+
+The selected private allSOURCE NO_OP/deletion and coordinator-owned protected
+consumption lifetime directions are refined for detailed offline implementation
+and memory substitutes. Controlling specs: docs/superpowers/specs/2026-11-06-current13-no-native-offline.md
+and docs/superpowers/specs/2026-11-06-host-consumption-lifetime-offline.md (paths from
+repository root); consolidated plan: docs/superpowers/plans/2026-11-06-n1-host-b-offline.md.
+N1 preserves genuine Application/Storage/Source/Runtime authority, final freshness,
+no-write NO_OP and original atomic deletion; Native branch/priorNative guard stay.
+HOST B changes only the explicitly stated offline trust/lifetime premise: independent
+fixed inventory, known ownership, full consumer join and close-once UNKNOWN handling.
+Pure callbacks/flags never authenticate an actual OS process/path or authorize launch.
+No package dependency edge, IR/schema/migration, AUTO/MANUAL rule, threshold, profile,
+resource formula/value, permission or live-admission change. Original phase/security/
+provider/evaluation gates remain unchanged and unpassed by this approval. Platform
+review remains mandatory; historical denied/unimplemented records are retained.
+
+## Settled Java to normal-close Surface refusal trace - 2026-11-05
+
+Existing mixed failure/recovery obligation and gap inventory -> original strict
+Java/combined raw validation -> complete actual current13 FULL graph -> actual
+Source CAS -> settled owned V2 -> genuine10-owner Stage request -> memory Surface
+normal exit0 with empty output -> actual decoder refusal -> original lifecycle
+settlement -> no final Git, no graph publication. Ten roles release/8 Git closes;
+Source SHA remains,22 publication tables empty. Second complete test1/1 exit0.
+
+First EOF-before-close test assertion failed with cleanupFailed=true; retained
+UNKNOWN is correct fail-closed behavior. New fixture models a distinct normal-close
+case, not a production fix or lowered assertion. Static kill9 attribution is not
+independent real exit evidence. Preserve original failed test bytes/logs and exact
+positive-default compatibility diff; no repeat of old producer/positive full test.
+
+Evidence/review/gates: .superpowers/sdd/2026-11-05-current13-mixed-refusal/verification-index.json.
+No formal probe/phase promoted, baseline installed or actual Native/Git/HOST run.
+Architecture/platform decision matrix: remaining-acceptance-disposition/decision-approval-matrix.json.
+N1 is denied/unexecuted/no retry; HOST B remains paused, all existing boundaries stay.
+
+## Actual current13 repository publication to workspace trace - 2026-11-05
+
+Existing P1-08/09/T4 contracts -> authorized Source-only identity reconciliation ->
+strict original J7/P5 streams and actual Stage preview keys -> independently fixed
+literal schema Source documents -> genuine second Source CAS -> original complete
+FULL initialize=false entries -> fresh CURRENT repository stores -> Source-byte
+schema authentication -> original Application matcher/atomic workspace Store ->
+two MATCHED/one supported HTTP invocation edge/CURRENT/equal readonly reopen.
+
+Four Source preparatory operations are counted explicitly; initial canonical tables
+are empty. No pristine-first-Source or schema inference claim, no canonical SQL seed,
+no replacement Runtime candidate. Normal Native roles/bindAnalysis remain intact;
+all35 lifecycles release across serial repositories. Full entry1/1 exit0 (420712ms),
+preparation2/2 and compact wiring1/1; old failed fixture expectations remain in evidence.
+No production module/core/dependency change or actual HOST/Git/Native execution.
+
+[Offline scope](../superpowers/specs/2026-11-05-current13-workspace-entry-offline.md);
+commands/failures/pins/review:
+.superpowers/sdd/2026-11-05-current13-workspace-entry/verification-index.json.
+No formal phase probe or threshold closed. A6/real qualification and E02 installation
+remain open; HOST B paused. The denied no-Native production change was not executed;
+remaining scoped decisions: remaining-acceptance-disposition/decision-bundle.json.
+
+## Mixed Java V2 -> combined V8 -> actual current13 publication trace - 2026-11-05
+
+Existing P1-04/05 integration and P1-06/07 framework obligations -> pinned original
+J1/P1 Source -> strict original J1 V2 client validation -> actual App Source + owned
+Java/History bridge -> genuine Stage10-owner map -> original combined constructor
+-> one true Rust library stream -> strict original bytes -> closed full graph/fixed
+bootstrap actual FULL export -> same snapshot V2 thenV8 -> actual Runtime factories
+-> final Source/Git -> original atomic CURRENT Store. Exact two provider signatures
+and refresh implementation are checked,18 roles settle, no Native after final Git.
+
+Prepare counters prove logical History continuation directly; entry code reuses
+that exact bridge without new telemetry. Local Rust1/1 and full entry1/1 have
+separate scopes; graph281/1154/295 with310 source inputs. The test-only metadata
+failure and exact producer/rebound hashes remain; no P1-08/09 rewrite or E02 metadata
+refresh loop. Cross-language negative is unmeasured, not PASS.
+
+[Offline scope](../superpowers/specs/2026-11-05-current13-mixed-entry-offline.md);
+exact commands/review/source/evidence pins:
+.superpowers/sdd/2026-11-05-current13-mixed-entry/verification-index.json.
+All channels remain memory doubles; actual process/OS/physical qualification and
+formal Phase1 exits remain open. HOST B is explicitly paused; no architecture or
+security-lifetime mechanism is implemented by this batch.
+
+## Actual current13 same-file GET-to-POST entry trace - 2026-11-05
+
+Existing INCREMENTAL/Source/V2/wire8/Stage/atomic contracts -> genuine App Source GET
+baseline on same root/HEAD/revision -> fixed POST byte replacement -> complete owned
+product graph/fixed bootstrap -> actual Source CAS and changed-unit request with
+original id/new SHA/old basis -> prevalidated real Rust-library output replay ->
+actual full Runtime derive -> final Source/Git -> original same-lease atomic CURRENT
+POST Store. First full modified entry1/1 exit0; old19 origins inactive/new19 active,
+immutable historical rows retained,17 roles settled with no Native after final Git.
+Graph281/1154/295 and310 source inputs are captured in original result.json.
+
+Strict original rawSHA/protocol checks before reseal prevent repairing a producer
+error. No Source/semantic mutation or injected candidate. Recorded baseline/additive
+proof reused; default shared-helper path reviewed by exact before/after diff instead
+of repeating old FULL/additive long tests. Independent review, scope gates and exact
+pins: .superpowers/sdd/2026-11-05-current13-modified-entry/verification-index.json.
+[Offline scope](../superpowers/specs/2026-11-05-current13-modified-entry-offline.md).
+No formal probe/threshold closed; all six authority flags false. Actual process/OS/
+resource qualification and HOST consumption architecture remain unproved; proposed
+B design/offline ownership is a user architecture decision, not implemented here.
+
+## Fixed GET-to-POST library producer and DELTA publication trace - 2026-11-05
+
+Existing wire8 library exports -> manual fixed before/after Source/HTTP expectations
+-> original constructor requests -> exact single local Rust test -> actual immutable
+raw GET/POST output -> strict original-byte V8 validation -> identity/envelope-only
+recorded replay -> original changed Source/DELTA Stage/full Runtime derive/atomic
+CURRENT Store. Runtime POST /api/v1/items, old19 origin membership excluded/new19
+included, immutable historical rows retained. Producer1/1 and strict Node1/1 are
+separate scopes, not formal acceptance totals. Default private-case isolation adds
+no default CI evidence claim or new Fixture ID.
+
+Reviewer P2 -> strict original bytes validated before reseal (which rewrites checksums)
+-> final fresh Node success, previous weaker replay preserved; no producer rerun.
+No Source hash/semantic mutation or fabricated candidate. Rustfmt/targeted Clippy and
+scope gates/pins: .superpowers/sdd/2026-11-05-modified-unit-library-positive/result.json.
+[Offline scope](../superpowers/specs/2026-11-05-modified-unit-library-positive-offline.md).
+Complete modified-file business entry, actual CLI/OS/profile qualification and HOST
+consumption trust remain distinct unclosed gates. No frozen contract changed.
+
+## Changed-unit refusal and deletion-only recovery trace - 2026-11-05
+
+Existing P1-04/05 mixed lifetime/recovery obligations -> original P1 GET component
+baseline -> independently fixed POST Source CAS -> Runtime AFFECTED and original
+unit selected -> missing/new-inapplicable observations refused with full last-good
+table preservation. Legitimate new envelope plus old sourceFingerprint never becomes
+POST evidence. Focused2/2 covers refusals, not successful modified-unit publication.
+
+Existing deletion DELTA/null observation branch -> exact removed Source list ->
+retained complete frozen inputs -> actual fixed-plugin Runtime candidate -> original
+atomic CURRENT Store. Incremental component4/4 includes precise membership exclusion
+and immutable old-row preservation; new projections are allowed by existing basis
+semantics. Complete no-Native entry remains open. No frozen contract changed.
+
+[Offline scope](../superpowers/specs/2026-11-05-modified-unit-deletion-readiness-offline.md)
+and .superpowers/sdd/2026-11-05-modified-unit-readiness/result.json record fresh
+commands, initial test failure/correction, review and exact pins. HOST proposal is
+architecture/trust design-only, unimplemented, not a runtime guarantee. No formal
+acceptance count, threshold or installed profile/baseline changes.
+
+## Current13 additive DELTA, Source modification and NO_OP limits - 2026-11-05
+
+Existing private incremental/Source CAS/Stage contracts -> actual P5 Source and
+component baseline -> original P1 addition -> fixed bootstrap complete product
+graph -> current13 DELTA request with real old basis -> retained full Runtime
+inputs/fixed plugin candidate -> final Source/Git -> original atomic CURRENT Store.
+Final entry TAP1/1 checks17 settled roles and no Native after final Git; fast6/6
+covers Source modification, Runtime/NO_OP prerequisites and entry preflight.
+Initial reader-contract test failure is preserved, not relabelled a green run.
+
+Exact GET-to-POST input pair -> genuine Source observation/CAS -> old-selection
+refusal/new-selection success and unchanged rescan. This is Source evidence, not
+modified-unit Native replay or Runtime support-invalidation qualification. Actual
+Runtime rederivation and empty-route refusal show Source-only NO_OP is insufficient;
+equal output from a changed ignored config does not prove unpersisted config identity.
+No shortcut or frozen contract change. HOST consumption trust options remain read-only
+and NOT_READY. No formal Fixture ID/threshold/phase probe or production admission added.
+[Offline scope](../superpowers/specs/2026-11-05-current13-delta-source-no-op-offline.md);
+exact outcomes/review/source and evidence pins:
+.superpowers/sdd/2026-11-05-delta-entry-continuation/result.json.
+
+## Java response accounting and additive DELTA trace - 2026-11-05
+
+Existing private V2 + Source History ledger -> optional private Java composition budget
+-> preallocation/preparse response debit -> existing History bridge finally -> fixed
+current13 Java wiring. Existing DELTA contract -> separate fixed incremental kind ->
+original Source CAS/Stage/capture/fixed framework candidate/atomic Runtime Store.
+Final92 directed tests include exact protocol failures, budget failure retention,
+legacy compatibility, original-byte additive DELTA and stale-history/CAS refusal.
+Evidence, source pins and independent review:
+.superpowers/sdd/2026-11-05-java-ledger-incremental-readiness/result.json.
+Scope: [compatible offline implementation](../superpowers/specs/2026-11-05-java-ledger-incremental-offline.md).
+No formal Fixture ID, threshold or accepted phase probe added. Whole-entry DELTA,
+modified-source, NO_OP/deletion-only and mixed real qualification remain separate.
+
+The one-shot owned-Temp file-share probe supplies a counterexample to attributes-only
+directory namespace stability; it installs no lease/authentication policy. Prehook
+bootstrap trust, path-read migration asset lifetime and OS channel identity remain
+architecture/actual-validation gates. Prior FULL product snapshot is historical after
+this source change and not claimed to qualify the new build.
+
+## Actual current13 entry -> complete owned graph -> canonical publication - 2026-11-05
+
+Existing V2/bootstrap/final Source approval -> [exact offline scope](../superpowers/specs/2026-11-05-current13-product-entry-graph-offline.md)
+-> canonical fixed operation artifact + genuine pre-DB Application permission checks
+-> owned schema13 session/Source/capture/Stage/private wire8 issuer and shared ledger
+-> actual fixed-plugin Runtime candidate -> final fixed Git suffix -> synchronous
+same-lease Store -> fresh readonly CURRENT reader. Entire business module and its
+transitive281-module/1153-edge/295-artifact graph pass through original bootstrap
+closed hooks; code strings and explicit manifest/13 SQL remain byte-bound.
+
+File URL/private nonce fix preserves real import.meta assets without external alias
+or fallback. Deadline P2 RED->GREEN binds original cooperative session checkpoints
+to coordinator epoch, no new resource formula. Native-corrupt/permission refusals
+and COMMITTED/UNKNOWN/cleanup semantics retained. Final64 fast tests +1 product
+success selector, architecture17/format/review are pinned in
+.superpowers/sdd/2026-11-05-current13-product-entry-graph/result.json;
+reused earlier rejection evidence is identified rather than relabelling its failed
+aggregate log green. No formal Fixture/acceptance probes or threshold added.
+
+FULL Python Surface proof only. Java response shared-History, incremental, bootstrap/
+OS live provenance and actual qualification stay separate gates. No unsupported
+capability is silently deferred, no live execution/admission/authentication flag true.
+
+## HOST module bytes, bootstrap and V2 startup offline trace - 2026-11-05
+
+Approved HOST-context/dynamic V2 -> [exact offline implementation scope](../superpowers/specs/2026-11-05-host-loader-and-v2-startup-offline.md)
+-> same-read opaque verified JS source closure -> closed parent/specifier Node hooks
+-> canonical fixed bootstrap artifact + explicit original caps/deadline -> hooks
+through full awaited pinned synthetic entry -> finally deregister. Before-await
+argv/channel identity P2 fixed with reproducible RED and independent recheck.
+Existing inventory schema/bindings, original context output and startup argv remain.
+
+Separate V2 construction factory -> original Windows event operations/wait lane/root
+budget/cancel -> original HOST stderr/ledger pipe. Compile/pure adapters only, no
+successful real-root startup, OS identity or real cleanup claim. Final JS scope51/51,
+prior stable C# HOST scope40/40 (overlap not accumulated), architecture17, format,
+initial + scoped supplement review pinned in
+.superpowers/sdd/2026-11-05-host-loader-and-v2-startup/result.json.
+New test entries3 once; no formal Fixture, E02 threshold/denominator or stage acceptance.
+Actual product entry/complete ordinary-file module graph and bootstrap/OS-channel
+provenance remain distinct work. Existing junction/unknown graph refusal is preserved.
+No extra approval is inferred for ordinary offline wiring; real execution/new core
+trust/permissions/numeric policy remain reserved.
+
+## Final Source suffix approved and composed - 2026-11-05
+
+Explicit user approval -> [decision B](../superpowers/specs/2026-11-05-final-source-verification-phase-proposal.md)
+-> synchronized private V2 role/phase predicate + ADR020/authority/acceptance pointers
+-> JS owner + C# fixed suffix guards -> real owned Source preparation/final verify
+-> actual fixed-plugin candidate before verification -> original authorized Application
+validation and synchronous same-lease Store tail. Six-file29/29, architecture17,
+format and one concentrated independent source/evidence review are pinned in
+.superpowers/sdd/2026-11-05-final-source-verification-offline/result.json.
+Old V1, full input binding, unknown cleanup refusal and UNKNOWN commit recovery remain.
+The fixed17-slot recorded-replay/memory fixture is a complete offline composition
+proof, not real HOST/process authentication, a generic live runner or A6 qualification.
+
+Same batch preserves E02 v3 snapshot and adds metadata-only proposed-v4 after the
+approved authority append. Seven current pins,43 active SHA/size and independent
+exact-diff/append review pass; original Source/oracle semantics and unset numeric
+baseline unchanged. No new evaluation denominator, threshold or installed baseline.
+
+## E02 proposal authority/identity refresh - 2026-11-05
+
+Existing P1-20/E02 two-scene proposed Source/oracles -> immutable v2/review pins ->
+current seven authority SHA checks -> metadata-only proposed-3 -> independent
+exact diff/identity review. Evidence:
+.superpowers/sdd/2026-11-05-e02-authority-refresh/result.json.
+PHASE_ACCEPTANCE:1157 replaces stale1083 as the same approved-baseline exit locator;
+the two-scene all-critical gate remains1171. No threshold/denominator, Source/oracle,
+counting, schema or acceptance change. All old artifacts retained; E02 remains
+PROPOSED/uninstalled. Pending final Source phase decision is untouched.
+
+## V2 bounded loop/worker and final verification ordering - 2026-11-05
+
+Approved V2 control policy -> [offline adapter scope](../superpowers/specs/2026-11-05-v2-event-loop-offline-contract.md)
+-> separate dynamic event bridge/loop -> concrete old-worker adapter -> actual
+bounded memory HOST peer and EOF/cleanup. Final9 Node tests include93 pure
+assertions, old adjacent regressions and R013 interface probe; architecture17,
+format and one review pinned in .superpowers/sdd/2026-11-05-v2-event-loop-and-operation-order/result.json.
+No real authentication/run/physical values or original acceptance claim.
+
+Read-only call-path + 3 diagnostic controls identify final Source re-observation
+requiring fresh Git after ANALYSIS; unchanged V2 rejects both phase assignments.
+[Suffix proposal](../superpowers/specs/2026-11-05-final-source-verification-phase-proposal.md)
+is PROPOSED only. No role/phase relaxation, freshness bypass, public model/schema,
+rights/profile/threshold change. Full operation remains blocked on this decision.
+
+## Dynamic V2 original-owner/observer integration evidence - 2026-11-05
+
+Approved coordinator/HOST-attester trust proposal -> [private V2 contract](../superpowers/specs/2026-11-05-dynamic-binding-offline-contract.md)
+-> independently expected artifact bytes + genuine active Native/Git issuer claim
+-> phase/context/static+actual stdin SHA REGISTER/BOUND -> strict READY/acquire/
+release -> current13 actual request/Stage/plugin candidate/atomic Store substitute
+probe. JS/C# canonical hash and three-slot control vectors agree. All live auth
+flags false; unchanged Windows V1 remains closed. No actual OS/channel provenance
+is inferred. Final239 and original236/review plus scoped deadline/cancel fixes are
+pinned in .superpowers/sdd/2026-11-05-dynamic-binding-offline/result.json.
+Four current13 failure receipts were separately checked in isolated Temp SQLite;
+no product patch was needed for existing Store UNKNOWN/cleanup/cancel behavior.
+IR/SQL/manual semantics, public routes, physical formulas/numbers and original
+acceptance remain unchanged; full current13 executor and actual qualification OPEN.
+
+## Approved dynamic-binding V2 offline implementation - 2026-11-05
+
+User explicitly approved the independent-coordinator/fixed-HOST-attester proposal
+for offline implementation/substitutes. [Exact private contract](../superpowers/specs/2026-11-05-dynamic-binding-offline-contract.md)
+adds a separate bounded V2 REGISTER/BOUND then strict INTENT/READY lane and distinct
+SURFACE_V8 role, preserving V1/V5. Application retains operation authorization.
+Independent expected artifacts, genuine issuer origin and lifecycle are required;
+JSON/hash receipt is not authority. Live module/OS/channel admission, real runs,
+rights, physical formulas/values and Phase1 acceptance remain unapproved/open.
+
+## Runtime wire8 constructor integration trace - 2026-11-05
+
+Approved current13 wire8 contract -> private shared mode5/8 request construction
+-> genuine Stage preparation + matching locator/languages/actual owner digest
+-> SAME History budget -> owned substitute transport -> actual plugins candidate
+-> authorized atomic Store COMMITTED/CURRENT. New constructor refusal and exact
+request fixture controls, original v5 and affected publication/cross-repo controls
+are pinned in .superpowers/sdd/2026-11-05-wire8-request-preparation/result.json (affected34/34, Runtime build, architecture17, scoped format and concentrated review PASS).
+[Exact scope](../superpowers/specs/2026-11-05-wire8-request-preparation-contract.md).
+No pending cross-process trust implementation, production/role/gate/formula/value
+change, actual Native/Git/CI or baseline installation. Original acceptance OPEN.
+
+## Owned wire8 and shared logical accounting trace - 2026-11-05
+
+Approved offline owner direction -> [wire8 transport contract](../superpowers/specs/2026-11-05-mixed-native-wire8-transport-contract.md)
+-> private strict wire8 request/process/raw decoder -> existing-formula async
+History bridge -> formal13 Source/capture/Stage/real plugin candidate/atomic Store.
+New lifecycle/invalid-wire/ledger/cleanup controls plus original v5/registrar tests,
+shared-budget failure controls and minimum R013 positive/denied paths are recorded
+in .superpowers/sdd/2026-11-05-mixed-native-wire8-transport/result.json.
+Original fixed roles/public admission/IR/SQL/acceptance are unchanged. This proof
+excludes full physical resource accounting and live dynamic registration; observer
+still has no authenticated dynamic owner/context. No JSON/digest grants authority.
+
+## Dynamic original-owner proof and current13 substitute integration - 2026-11-05
+
+Approved dynamic trust direction -> [prepared registration contract](../superpowers/specs/2026-11-05-mixed-native-prepared-registration-contract.md)
+-> private live-gate WeakMap proof/one-shot claim -> static constraints + full
+actual input SHA -> opaque offline receipt, no live REGISTER/authority.
+Formal init/Source/capture13 -> strict recorded wire8 -> real Stage/Plugin/App
+candidate -> same-lease COMMITTED/CURRENT; all original auth/candidate gates.
+Final160, source39 included, builds, architecture17, format and one review are
+pinned in .superpowers/sdd/2026-11-05-mixed-native-prepared-registration/result.json.
+No real Native or whole-accounting proof; exact transport/trust gaps and current13
+version map are explicit. Existing fixed mode, IR/SQL/goldens/rights/values and
+Phase1 acceptance unchanged. No Source/Native measurement/profile reused.
+
+## Fixed HOST ownership and genuine Storage capture binding - 2026-11-05
+
+D1-D4 -> [HOST/context offline contract](../superpowers/specs/2026-11-05-mixed-native-host-context-contract.md)
+-> fixed plan/private startup declaration, root alias/local handle ledger, bounded
+stderr and EOF completion gate, existing opaque Storage read/recheck/release.
+RED/GREEN duplicate-failure alias/Stop/EOF/ADS controls + genuine tempSQLite11/13
+handle cases -> final239, architecture17, format and independent review.
+Proof: .superpowers/sdd/2026-11-05-mixed-native-host-context/result.json.
+No actual launch or provenance/qualification inferred. Follow-on static audit
+pins current13-versus-legacy11 Store/capture and dynamic full-input digest freezing
+blockers in bootstrap-contract-findings.json; no core contract changed as a fix.
+Production admission, IR/SQL, rights, resource values and original gates unchanged.
+
+## Bounded control/loop/private callback adapter trace - 2026-11-05
+
+D1-D4 -> [bounded loop contract](../superpowers/specs/2026-11-05-mixed-native-bounded-loop-contract.md)
+-> mailbox caps, owned stream workers, fair single-owner control/event scheduling,
+shared-deadline factory and existing-shape Runtime callbacks. RED/GREEN controls
+cover stale deadline/Stop failure/INFINITE, blocked/dispose workers, duplicate
+owner/write, late CLOSED and missing EOF close. Directed221 + affected compile2,
+internal mailbox564/loop67, architecture17, format and three review receipts:
+.superpowers/sdd/2026-11-05-mixed-native-bounded-loop/result.json.
+No actual Native/collector/OS or DB context was authenticated; logical buffering
+bounds do not select physical resource formula/number. Production/IR/SQL/rights,
+acceptance gates and 4/21 remain unchanged; actual qualification stays OPEN.
+
+## Offline Windows event and bound-owner continuation - 2026-11-05
+
+D1-D4 -> [event/owner bridge contract](../superpowers/specs/2026-11-05-mixed-native-event-owner-bridge-contract.md)
+-> existing Windows APIs behind private event seam + injected coordinator tests;
+actual byte-pinned owner/draft/role/environment-reference match + existing session.
+Missing CREATE/unknown exception/ordinal retry controls were reproduced then fixed.
+Parallel independent code files -> final177/177, architecture17, format and review.
+Evidence: .superpowers/sdd/2026-11-05-mixed-native-event-owner-bridge/result.json.
+Existing Run logic, public production admission, IR/SQL/goldens, rights and numeric
+contracts unchanged. Real successful-Wait/deadline/control scheduling, DB/history/
+environment authenticity and actual qualification remain OPEN; no A6 acceptance.
+
+## Approved observer/control/owner offline trace - 2026-11-05
+
+D1-D4 approval -> [fixed-role control/owner contract](../superpowers/specs/2026-11-05-mixed-native-observer-control-contract.md)
+-> bounded Node/C# codec, owned stream exchange, pure observer role/instance policy,
+read-only same-byte canonical owner/artifact pins. Synthetic missing-CREATE,
+late-SPAWNED, unknown event, HOST ordering, backpressure, abort/EOF, replay and
+artifact tamper controls -> directed and cross-language unit evidence plus an
+independently authored composition test and review. Reproducible logs/hashes:
+.superpowers/sdd/2026-11-05-mixed-native-observer-control/result.json.
+Production admission, OS rights, Canonical IR, SQLite, fixtures/goldens and resource
+numbers unchanged. No atomic snapshot or real OS/context authenticity claim;
+actual bridge/lifetime/applicability/qualification gates remain OPEN.
+
+## Approved private launch plumbing and fail-closed trace - 2026-11-05
+
+D1-D4 approval -> [exact second-slice contract](../superpowers/specs/2026-11-05-mixed-native-offline-qualification-contract.md)
+-> mandatory Source snapshot through Application, deep-private Runtime callback
+composition, shared v2/v5 Native spawn gate and fixed-role offline handshake.
+Refusal/abort/deadline/frozen-error/UNKNOWN/role/instance/pipe/state regressions,
+Windows fixed supplementation and legacy Node normalization -> final279/279,
+four TS builds, architecture17, scoped format and independent/incremental reviews.
+Proof: .superpowers/sdd/2026-11-05-mixed-native-before-spawn/result.json.
+
+Production JSON/admission, public exports, Canonical IR, SQL, frozen goldens,
+profiles/baselines/thresholds remain unchanged. Real owner/context/OS provenance
+and C# bridge are incomplete; no real Git/Rust/collector or numerical authority
+was produced by doubles. Remaining consolidated prerequisites are in the same
+folder's remaining-batch-approvals.json. Original failures/evidence preserved;
+no formal A6/Phase1 acceptance or additional permission/actual-run approval.
+
+## Mixed qualification offline reader trace - 2026-11-05
+
+User D1-D4 direction approval -> [bounded exact offline contract](../superpowers/specs/2026-11-05-mixed-native-offline-qualification-contract.md)
+-> private draft/trace readers in scripts/mixed-native-qualification-plan.mjs
+->33 explicit synthetic controls; existing conformance/architecture rules give
+78/78 final directed tests;17project architecture and scoped format pass.
+Proof: .superpowers/sdd/2026-11-05-mixed-native-offline-contract/result.json.
+
+Five-role resource inventory and same-instance ordinal/refusal checks do not
+create OS evidence, execution authority, installed resource profile or production
+applicability. Resource formula/values remain null. The proposed existing-pipe
+bridge section is unimplemented and unmeasured; private pre-spawn/Source/Native
+integration remains next work. Existing acceptance gates, SQL, goldens and public
+admission remain unchanged. No actual process acquisition/Native/CI occurred.
+
+## Offline receipt consistency repair trace - 2026-11-05
+
+Independent review Minor (parse/receipt reread and manifest reload drift) ->
+same-read JSON hash plus manifest/SQL identity/hash guards ->4 RED counterexamples
+and12 combined GREEN tests; materializer syntax checked without execution.
+Original scripts/receipts/candidate/database evidence preserved. Before/after
+pins remain offline guards, not atomic/live-source authority. Proof:
+.superpowers/sdd/2026-11-05-mixed-native-preparation/receipt-hardening/result.json.
+Four PROPOSED concentrated decisions are in approval-decision-options-v1.json;
+no core authority/resource/acquisition/applicability contract implemented or
+approved by this repair, no numerical/production/real-run scope expansion.
+
+## Mixed Native offline preparation trace - 2026-11-05
+
+Existing Source integration independent literals -> six bounded identity/hash
+checks ->8 focused tests. Existing published REPOSITORY13/WORKSPACE6 migrations
+-> exclusive new schema-only files -> integrity/FK/zero-row/hash verification.
+No domain seed, canonical publication, source/history authentication or Native
+qualification is inferred. Receipt separate-read limitation stays explicit.
+Evidence: .superpowers/sdd/2026-11-05-mixed-native-preparation/result.json.
+
+Existing A5/A6 unresolved obligations -> independent oracle and contract audits
+-> consolidated PROPOSED four-decision packet and calibration readiness list.
+No new authority/schema/role/metric/formula/number accepted; all live numerical
+and invocation fields unset. No Quality Gate weakened, new real runs or phase
+exit. Actual Source/oracle/context and governed contracts remain prerequisites.
+
+## Consolidated A6 plan trace - 2026-11-05
+
+Existing A6 three-scene contract -> one-source new-tool owner ->1Prepare/actual
+SHA+sixABI/ten-file freeze -> at most3fixed Collects ->19pure controls and
+independent static review. No new actual execution or formal eligibility.
+Proof: .superpowers/sdd/2026-11-05-a6-complete-execution-plan/result.json.
+Existing mixed-execution20scenarios/Source controls -> native-scenario-obligations
+and independent inventory -> blocked Native contract/input/manifest dependencies.
+No guessed Native argv/hash/count, resource schema/value or R7 scope transfer.
+Native contracts remain PROPOSED, not accepted or implemented by this plan.
+
+## Remaining diagnostic outcomes and minimal tool creation repair - 2026-11-05
+
+Approved same D03 DLL62a0be... -> zero Prepare/two actual Collects -> cancellation
+and injected final query expected outcomes with complete cleanup, raw/exit/hash
+proof in .superpowers/sdd/2026-11-05-a6-remaining-conformance-proposal/post-run-analysis.json.
+NOT_QUALIFIED/measurementEligible=false unchanged.
+
+Three candidate-scene observations + unchanged fixed debugger ownership design
+-> minimal qualification-only active root/child creation settings + one new
+fixed batch root -> flag properties, TEST_DOUBLE helper lifecycle and existing
+Fixture/registration controls (final50pass), architecture17 and independent review.
+Proof: .superpowers/sdd/2026-11-05-a6-tool-creation-offline/result.json.
+No PSS copy/public contract/profile/threshold/Runtime route. New source identity
+requires separately approved actual build/ABI/freeze/scene proof; old diagnostic
+DLL results are not transferred. New run root absent; no A6/Native/phase exit.
+
+## A6 fixed-helper report consistency and remaining-scene proposal - 2026-11-05
+
+Existing fixed child-wait/no-child helper literals -> strict cancellation and
+FINAL_QUERY_FAILURE host checks in scripts/mixed-process-conformance.mjs ->
+five negative controls and original positive Fixture traces ->47pass targeted,
+26pass final formatted traces, architecture17 and independent final review.
+Implementation evidence: .superpowers/sdd/2026-11-05-a6-remaining-offline/result.json.
+No published schema/Fixture baseline or numeric acceptance change.
+
+D03 same binary/helper provenance -> proposed0Prepare/2remaining Collect owner
+with317-file v2 freeze ->18pure case checks and independent static review.
+Approval remains pending: a6-remaining-conformance-proposal/approval-request-v2.json.
+NOT_QUALIFIED remains; no mixed Native/production applicability/profile transfer.
+Formal adoption prerequisites are explicit, minimal active patch is NOT-APPLIED.
+
+## D03 one-case actual diagnostic evidence - 2026-11-05
+
+Approved D03 v2 19-input freeze -> one Prepare/SHORT Collect -> raw image,
+same-instance origin and exit/handle/PSS release evidence -> pure helper scene
+check and existing offline conformance reader. The reviewed no-console pair
+completed this one Node scene; all measurementEligible=false/NOT_QUALIFIED.
+Proof: `.superpowers/sdd/2026-11-05-no-console-proposal/post-run-analysis.json`.
+No active creation-flag/helper installation, new process class, Native/profile
+or phase acceptance. Cancellation/final-query-failure and Native applicability
+remain open. D02 and prior evidence preserved; 4/21 accepted unchanged.
+
+## D02 follow-up cleanup implementation evidence - 2026-11-05
+
+Existing A6 conformance design section 5.8 (unproven cleanup is UNKNOWN) ->
+`scripts/mixed-process-collector.cs` root anchor + sticky untracked CREATE +
+private CleanupComplete -> existing required image/cleanup unit (17 assertions)
+and trace/registration targets (42 pass), architecture17 and independent review.
+Evidence: `.superpowers/sdd/2026-11-05-collector-cleanup-offline/result.json`.
+No new accepted contract, profile, threshold or process class. Event wiring is
+statically reviewed, not newly measured. D03 remains a separately reviewed
+unapplied proposal under `.superpowers/sdd/2026-11-05-no-console-proposal/`;
+its 30 pure tests are not actual Native/OS qualification. Original D02 evidence
+is preserved; A6, E02 and Phase1 exits stay open (4/21 accepted).
+
+## R7 approved transport installation trace - 2026-11-04
+
+ADR-019 separate exact-value approval -> R7 candidate `ee73f0af...c921` /
+410,738,688 bytes -> `packages/runtime/src/native-metadata-profiles.ts` ->
+`native-r7-approved-transport-profile.test.mjs` through the existing registered
+`native-metadata-admission.test.mjs` entry. Portable gzip evidence preserves all
+four original byte hashes. R5 tests retain exact historical evidence and assert
+old-budget refusal under its approved R7 successor. Fresh33/33 admission,13/13
+registry,17-project architecture and unchanged implementation identity precede
+supplemental PACK exit0; original failed R7 receipts remain immutable.
+[Exact evidence](../../.superpowers/sdd/2026-11-04-r7-transport-profile-installation/postflight.json).
+This is local installation/packaging evidence; actual22/clean-host, formal CI and
+all P1-04..09/Phase1 acceptance gates retain their existing status.
+
 ## R5 草稿资产与本地 CI 接入核验 — 2026-11-04
 
 同仓草稿 433386530 的资产 707690867 已上传。GitHub 确认 271749831 bytes，SHA-256 44cc411d72f5a25539fa8fbdd8e18e7cde9ecfd93f4c1f5353424d6f4541d8e4，目标 433015700c7c701a6493f7f8fa5eace00e773913。新增 R5 批准记录，保留 R4 原记录供历史检查。Native CI 的下载与收集使用同一 R5 记录，临时 checkout 在收集退出后恢复 R4 原字节。两版 schema、52 项 Native 源码、严格 ZIP 校验、8 条历史 Source 检查、PowerShell 解析及模拟退出 37 时的恢复均通过。后续发布与云端集成待准确候选审批。详见[集成计划](../superpowers/plans/2026-11-04-phase1-r5-exact-pack-integration.md)。

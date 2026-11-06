@@ -112,10 +112,13 @@ async function fixture(t, id, mode = 'ok') {
   const spawned = [],
     closed = [],
     requests = [];
-  const git = cp.spawn;
+  // setup returns its own pure EventEmitter double; never a real spawn function.
+  const gitDouble = f.spawnDouble;
   cp.spawn = (file, args, options) => {
-    if (file === 'git') return git(file, args, options);
+    if (file === f.state.expectedExecutable && args[0] === '-C')
+      return gitDouble(file, args, options);
     assert.equal(file, process.execPath);
+    f.state.nativeSpawnCalls = (f.state.nativeSpawnCalls ?? 0) + 1;
     assert.equal(options.shell, false);
     assert.equal(options.windowsHide, true);
     const child = new EventEmitter(),
@@ -576,3 +579,129 @@ test('A5 unknown rejection values keep safe code and effects', async (t) => {
   assert.equal(f.state.calls, 0);
   assert.deepEqual(f.spawned, []);
 });
+
+// Explicit deep-private callback parameter; ordinary JSON input remains exact.
+function qualificationDouble(f, failRole) {
+  const roles = [],
+    events = [],
+    disposals = [];
+  f.state.expectedExecutable = path.join(f.root, 'git-fixture-only.exe');
+  const lifecycle = (role) => ({
+    async beforeSpawn() {
+      events.push(role + ':ready');
+      if (role === failRole) throw Error('private launch refusal');
+    },
+    async beforeInput() {
+      events.push(role + ':input');
+    },
+    async afterClose() {
+      events.push(role + ':close');
+    },
+    async dispose() {
+      disposals.push(role);
+    },
+  });
+  return {
+    roles,
+    events,
+    disposals,
+    value: {
+      source: {
+        executablePath: f.state.expectedExecutable,
+        environment: {},
+        createLifecycle() {
+          return lifecycle('GIT');
+        },
+      },
+      createNativeLifecycle(role) {
+        roles.push(role);
+        return lifecycle(role);
+      },
+    },
+  };
+}
+test('A5 private qualification callbacks reach Source then v2 and v5 without public routing', async (t) => {
+  const f = await fixture(t, 'mixed'),
+    q = qualificationDouble(f);
+  const r = await run(f.input, q.value);
+  assert.equal(r.kind, 'COMMITTED');
+  assert.deepEqual(q.roles, ['V2', 'V5']);
+  assert.ok(q.events.includes('GIT:ready'));
+  for (const role of ['V2', 'V5'])
+    assert.deepEqual(
+      q.events.filter((x) => x.startsWith(role + ':')),
+      [role + ':ready', role + ':input', role + ':close'],
+    );
+  assert.equal(q.disposals.filter((x) => x === 'V2').length, 1);
+  assert.equal(q.disposals.filter((x) => x === 'V5').length, 1);
+  assert.equal(f.state.nativeSpawnCalls, 2);
+});
+test('A5 private v2 pre-spawn refusal does not launch Native or fall through v5', async (t) => {
+  const f = await fixture(t, 'mixed'),
+    q = qualificationDouble(f, 'V2');
+  await assert.rejects(
+    run(f.input, q.value),
+    (e) =>
+      e.code === 'PROCESS_FAILED' &&
+      e.effects.sourceCommit === 'COMMITTED' &&
+      e.effects.graphCommit === 'NOT_ATTEMPTED',
+  );
+  assert.equal(f.state.nativeSpawnCalls ?? 0, 0);
+  assert.deepEqual(q.roles, ['V2']);
+  assert.equal(q.disposals.filter((x) => x === 'V2').length, 1);
+});
+
+test('A5 private unknown process cleanup remains visible without claiming database cleanup failed', async (t) => {
+  const f = await fixture(t, 'mixed'),
+    q = qualificationDouble(f);
+  f.input.native.options.timeoutMs = 100;
+  const originalFactory = q.value.createNativeLifecycle;
+  q.value.createNativeLifecycle = (role) => {
+    const l = originalFactory(role);
+    l.afterClose = async () => {
+      await new Promise(() => {});
+    };
+    return l;
+  };
+  let timer;
+  try {
+    await assert.rejects(
+      Promise.race([
+        run(f.input, q.value),
+        new Promise((_r, j) => (timer = setTimeout(() => j(Error('UNBOUNDED_GUARD')), 1000))),
+      ]),
+      (e) =>
+        e.code === 'TIMEOUT' &&
+        e.cleanupState === 'UNKNOWN' &&
+        e.effects.graphCommit === 'NOT_ATTEMPTED',
+    );
+  } finally {
+    clearTimeout(timer);
+  }
+});
+
+for (const source of [undefined, null, {}])
+  test(
+    'A5 chosen qualification cannot omit or downgrade its Source binding ' + String(source),
+    async (t) => {
+      const f = await fixture(t, 'mixed');
+      const q = {
+        source,
+        createNativeLifecycle() {
+          return {
+            async beforeSpawn() {},
+            async beforeInput() {},
+            async afterClose() {},
+            async dispose() {},
+          };
+        },
+      };
+      await assert.rejects(
+        run(f.input, q),
+        (e) =>
+          e.effects.sourceCommit === 'NOT_ATTEMPTED' && e.effects.graphCommit === 'NOT_ATTEMPTED',
+      );
+      assert.equal(f.state.calls, 0);
+      assert.equal(f.state.nativeSpawnCalls ?? 0, 0);
+    },
+  );

@@ -185,7 +185,15 @@ export async function withFrozenStage(
     const frozen = stage.freeze();
     assert.match(frozen.basis.codeActivationDigest, /^[a-f0-9]{64}$/);
     assert(frozen.lease);
-    await run({ f, stage, frozen, repositoryId: p.targetSource.repositoryId });
+    await run({
+      f,
+      stage,
+      capture,
+      frozen,
+      preparation,
+      request,
+      repositoryId: p.targetSource.repositoryId,
+    });
   } finally {
     stage.close();
   }

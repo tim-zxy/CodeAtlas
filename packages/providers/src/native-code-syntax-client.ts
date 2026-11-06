@@ -67,16 +67,7 @@ export default async function observeOwnedCodeSyntax(
     }
     if (Reflect.ownKeys(a).length !== a.length + 1) invalid();
   }
-  let lifecycle: OwnedNativeLifecycle | null = null;
-  if (lifecycleValue !== null) {
-    const v = plain(lifecycleValue, ['beforeInput', 'afterClose', 'dispose'], true);
-    if (Object.values(v).some((x) => typeof x !== 'function' || types.isProxy(x))) invalid();
-    lifecycle = Object.freeze({
-      beforeInput: lifecycleValue.beforeInput.bind(lifecycleValue),
-      afterClose: lifecycleValue.afterClose.bind(lifecycleValue),
-      dispose: lifecycleValue.dispose.bind(lifecycleValue),
-    });
-  }
+  const lifecycle = nativeOwner.validateOwnedNativeLifecycle(lifecycleValue);
   const options = nativeOwner.validateOwnedNativeOptions(source as unknown as NativeClientOptions);
   if (options.signal?.aborted)
     throw new NativeClientError('CANCELLED', 'Native request was cancelled');

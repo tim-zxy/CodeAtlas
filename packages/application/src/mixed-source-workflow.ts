@@ -2,7 +2,7 @@ import { RepositorySchema, type Repository, type RepositoryRelativePath } from '
 import { isDeepStrictEqual } from 'node:util';
 import source from '../../source/dist/mixed-source-workflow.js';
 import type { MixedSourceAccount } from '../../source/dist/mixed-source-verification.js';
-import type { SourceProcessControl } from '../../source/dist/git.js';
+import { validateGitQualification, type SourceProcessControl } from '../../source/dist/git.js';
 import type { ObservedWorktree, SourceScanRequest } from '@codeatlas/source';
 import { authorizeOperation, type OperationPolicyInput } from './operation-policy.js';
 import {
@@ -10,6 +10,12 @@ import {
   type SourceStatePort,
   type StoredWorktreeState,
 } from './reconcile-worktree.js';
+/** Deep-private bridge to Source validation; no public request/admission option. */
+export function validateMixedSourceQualification(
+  value: SourceProcessControl['qualification'],
+): NonNullable<SourceProcessControl['qualification']> {
+  return validateGitQualification(value);
+}
 export interface MixedSourcePreparationInput {
   readonly request: SourceScanRequest;
   readonly expectedRepository?: Repository;
@@ -63,7 +69,14 @@ export default async function prepareMixedSource(input: MixedSourcePreparationIn
       safeCodes.has(e.code)
         ? e.code
         : 'SOURCE_FAILED';
-    throw new MixedSourceWorkflowError(code, effects());
+    const failure = new MixedSourceWorkflowError(code, effects());
+    if (
+      e &&
+      typeof e === 'object' &&
+      Object.getOwnPropertyDescriptor(e, 'cleanupState')?.value === 'UNKNOWN'
+    )
+      Object.assign(failure, { cleanupState: 'UNKNOWN' });
+    throw failure;
   };
   try {
     const { policy, request } = input;

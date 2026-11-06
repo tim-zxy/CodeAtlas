@@ -1,3 +1,90 @@
+## N1 and HOST B bounded offline contract continuation - 2026-11-06
+
+The selected private allSOURCE NO_OP/deletion and coordinator-owned protected
+consumption lifetime directions are refined for detailed offline implementation
+and memory substitutes. Controlling specs: docs/superpowers/specs/2026-11-06-current13-no-native-offline.md
+and docs/superpowers/specs/2026-11-06-host-consumption-lifetime-offline.md (paths from
+repository root); consolidated plan: docs/superpowers/plans/2026-11-06-n1-host-b-offline.md.
+N1 preserves genuine Application/Storage/Source/Runtime authority, final freshness,
+no-write NO_OP and original atomic deletion; Native branch/priorNative guard stay.
+HOST B changes only the explicitly stated offline trust/lifetime premise: independent
+fixed inventory, known ownership, full consumer join and close-once UNKNOWN handling.
+Pure callbacks/flags never authenticate an actual OS process/path or authorize launch.
+No package dependency edge, IR/schema/migration, AUTO/MANUAL rule, threshold, profile,
+resource formula/value, permission or live-admission change. Original phase/security/
+provider/evaluation gates remain unchanged and unpassed by this approval. Platform
+review remains mandatory; historical denied/unimplemented records are retained.
+
+## Approved dynamic-binding V2 offline implementation - 2026-11-05
+
+User explicitly approved the independent-coordinator/fixed-HOST-attester proposal
+for offline implementation/substitutes. [Exact private contract](../../superpowers/specs/2026-11-05-dynamic-binding-offline-contract.md)
+adds a separate bounded V2 REGISTER/BOUND then strict INTENT/READY lane and distinct
+SURFACE_V8 role, preserving V1/V5. Application retains operation authorization.
+Independent expected artifacts, genuine issuer origin and lifecycle are required;
+JSON/hash receipt is not authority. Live module/OS/channel admission, real runs,
+rights, physical formulas/values and Phase1 acceptance remain unapproved/open.
+
+## Approved prepared-owner offline refinement - 2026-11-05
+
+[Exact slice](../../superpowers/specs/2026-11-05-mixed-native-prepared-registration-contract.md)
+keeps full-byte binding, rejects expired/replayed origin and leaves live observer
+registration closed. Existing approved current13/Syntax4 components compose in
+an explicitly substituted integration probe; no new candidate algorithm, atomic
+publication rule, public Native wire, resource number or phase acceptance.
+CURRENT_STATUS links one integrated result and remaining transport/trust gates.
+
+## Approved HOST/context offline continuation - 2026-11-05
+
+[HOST/context contract](../../superpowers/specs/2026-11-05-mixed-native-host-context-contract.md)
+implements fixed startup-resource ownership and Storage-issued capture readsets
+within existing rights. No real execution, physical value or acceptance change.
+Current13 bootstrap compatibility and dynamic exact-command preparation remain
+separate unresolved contracts; no change to frozen Stage/Store/identity/time
+semantics has been made. CURRENT_STATUS links evidence and next decision material.
+
+## Approved bounded-loop offline continuation - 2026-11-05
+
+Existing D1-D4 [bounded loop slice](../../superpowers/specs/2026-11-05-mixed-native-bounded-loop-contract.md)
+adds pure mailbox, owned-stream/control/event scheduling and a constructor-only
+private Windows factory; Node callback adapter retains existing Runtime shape.
+Logical bounds and synthetic checks do not choose any physical resource value,
+new right or real admission. CURRENT_STATUS records evidence and remaining gates.
+
+## Approved offline event/owner continuation - 2026-11-05
+
+The [event/owner bridge contract](../../superpowers/specs/2026-11-05-mixed-native-event-owner-bridge-contract.md)
+implements existing D1-D4 directions without new Windows rights or live admission.
+Pure event coordination and byte-binding do not authenticate real contexts or
+resources; full event/pipe/deadline/lifetime and actual qualification stay open.
+CURRENT_STATUS links independent review and final177/177 controls; no gate changes.
+
+## Approved observer/control/owner offline continuation - 2026-11-05
+
+D1-D4 [offline control contract](../../superpowers/specs/2026-11-05-mixed-native-observer-control-contract.md)
+now has pure fixed-role policy, bounded Node/C# wire, owned Node stream exchange
+and read-only owner pins. No frozen resource formula, accepted numerical value,
+OS permission, production admission or real-run authority is added. Integration
+and lifetime/context authenticity remain required; CURRENT_STATUS links evidence.
+
+## Approved second offline slice: private launch plumbing - 2026-11-05
+
+The user-approved D1-D4 [contract](../../superpowers/specs/2026-11-05-mixed-native-offline-qualification-contract.md) now includes explicit deep-private Source/v2/v5
+before-spawn and fixed-role handshake plumbing. No public JSON/admission route,
+OS right, collector execution, resource formula/value or installed baseline/profile
+is authorized by callback/digest shape. Exact run owner/context and real observer
+remain incomplete; original acceptance gates and Phase1 4/21 stay OPEN. Fresh
+checks and remaining batch prerequisites are linked from CURRENT_STATUS.
+
+## Mixed Native approved direction; bounded offline contract - 2026-11-05
+
+User approved D1-D4 design/offline implementation. The [exact offline reader
+contract](../../superpowers/specs/2026-11-05-mixed-native-offline-qualification-contract.md)
+is adopted for plan/trace consistency only. No production authority, image
+admission, OS rights, physical formula/number or actual run is approved by this
+slice. Real acquisition/integration and resource/applicability gates stay OPEN;
+A6 NOT_QUALIFIED and Phase1 4/21 unchanged. No existing gate is replaced.
+
 ## A/B 合同与 Runtime 容器最小修订已接受 — 2026-11-03
 
 用户已批准[U0–U7 合同](../../superpowers/specs/2026-11-02-phase1-ab-local-closure-contract.md)和[SQL1/JSON2 最小修订](../../superpowers/specs/2026-11-02-phase1-runtime-container-version-proposal.md)。仅移动新容器格式标记位置，旧 SQL CHECK/迁移/摘要和历史保持；严格新旧读取分派、same-lease 联合提交/重开已有 owned SQLite 证据。Context5 私有续接沿既有 membership digest，V5 使用真实已有 capability，不新增广告或置信数值。[本地实施与作者评审](../../superpowers/reviews/2026-11-03-phase1-ab-local-implementation-review.md)列原门禁缺口，Source 正向 schema 匹配仍 HOLD，不接受 A/B 或 Phase1 整体验收。
@@ -527,3 +614,16 @@ B0b-3/B1/C,productionrouting/trustedhistory/retainedsupport/oneNativeSnapshot/at
 ## 显式schema及适用性本地交付完成 — 2026-11-03
 
 T1–T4及已批准适用性均达到B_DECLARED_HTTP_SCHEMA_LOCAL_EXIT；[当前实施/作者评审](../../superpowers/plans/2026-11-03-phase1-declared-http-schema-crossrepo.md)给出最终120/120、构建/IR类型/架构17、注册与冻结身份，以及两MATCHED/一真实边/owned提交/非空证据重开/正式Source CAS/last-good。旧无文档未知、有site缺boundary拒绝及旧V1/V2保持。旧“尚未实施/T4 HOLD”由此有限结论及准确证据替代，不自动授原整体Evaluation、生产或Phase1验收。
+
+
+## Approved final Source verification suffix - 2026-11-05
+
+User approved [decision B](../../superpowers/specs/2026-11-05-final-source-verification-phase-proposal.md)
+for private V2 offline implementation/substitutes only. Independent fixed
+SOURCE/GIT prefix -> Native ANALYSIS -> final verification-only ANALYSIS/GIT suffix;
+no Native/SOURCE after suffix starts. Same admitted analysis context, original
+controlled Source issuer and static/full actual-input hashes remain mandatory.
+Real Runtime derivation precedes final Source verification and original synchronous
+atomic Store application; failure refuses publication and preserves UNKNOWN recovery.
+Old V1/V5, public/production admission, physical values and acceptance gates remain.
+No real Git/Native/HOST, rights, baseline installation or Phase1 acceptance approval.

@@ -140,11 +140,21 @@ export async function loadSyntaxObservationCorpus(rootValue, limits) {
         current = path.join(current, c);
         check(!(await lstat(current)).isSymbolicLink(), code);
       }
+      const namedBefore = await lstat(current);
+      check(namedBefore.isFile() && namedBefore.nlink === 1, code);
       check((await realpath(current)) === current, code);
       const f = await open(current, 'r');
       try {
         const before = await f.stat();
-        check(before.isFile() && before.size <= max, code);
+        const sameFile = (a, b) =>
+          a.ino === b.ino && a.dev === b.dev && a.size === b.size && a.mtimeMs === b.mtimeMs;
+        check(
+          before.isFile() &&
+            before.nlink === 1 &&
+            before.size <= max &&
+            sameFile(before, namedBefore),
+          code,
+        );
         const b = Buffer.alloc(before.size + 1);
         let n = 0;
         while (n < b.length) {
@@ -152,9 +162,17 @@ export async function loadSyntaxObservationCorpus(rootValue, limits) {
           if (!r.bytesRead) break;
           n += r.bytesRead;
         }
-        const after = await f.stat();
+        const after = await f.stat(),
+          namedAfter = await lstat(current);
         check(
-          n === before.size && after.size === before.size && after.mtimeMs === before.mtimeMs,
+          n === before.size &&
+            after.nlink === 1 &&
+            sameFile(before, after) &&
+            namedAfter.isFile() &&
+            !namedAfter.isSymbolicLink() &&
+            namedAfter.nlink === 1 &&
+            sameFile(before, namedAfter) &&
+            (await realpath(current)) === current,
           code,
         );
         return b.subarray(0, n);

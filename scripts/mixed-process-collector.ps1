@@ -4,7 +4,7 @@ param(
  [string]$NodeExecutable,
  [ValidateSet('SHORT_DESCENDANT','CANCEL_DESCENDANT','FINAL_QUERY_FAILURE')][string]$Mode,
  [string]$Freeze,
- [ValidateSet('Original','IdentityDiagnostic')][string]$Batch='Original'
+ [ValidateSet('Original','IdentityDiagnostic','NoConsoleConformance')][string]$Batch='Original'
 )
 $ErrorActionPreference='Stop'
 $workspace=[IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
@@ -12,6 +12,9 @@ $runRoot=[IO.Path]::GetFullPath((Join-Path $workspace '.superpowers/sdd/2026-10-
 if($Batch -eq 'IdentityDiagnostic'){
  $runRoot=[IO.Path]::GetFullPath((Join-Path $workspace '.superpowers/sdd/2026-10-29-phase1-process-acquisition-identity-diagnostic/run'))
  if($Action -eq 'Collect' -and $Mode -ne 'SHORT_DESCENDANT'){throw 'INVALID_DIAGNOSTIC_MODE'}
+}
+if($Batch -eq 'NoConsoleConformance'){
+ $runRoot=[IO.Path]::GetFullPath((Join-Path $workspace '.superpowers/sdd/2026-11-05-a6-no-console-conformance/run'))
 }
 $destination=[IO.Path]::GetFullPath($OutputRoot)
 $assembly=Join-Path $runRoot 'collector.dll'

@@ -1,0 +1,85 @@
+{
+  "kind": "PHASE1_OFFLINE_STAGE_INTEGRATION",
+  "utc": "2026-11-06T02:28:57.078901+00:00",
+  "status": "OFFLINE_SLICES_REVIEWED_LOCAL_GATES_PASSED_READY_FOR_EXPLICIT_COMMIT",
+  "actualWorktree": "C:\\Users\\Freya\\.codex\\worktrees\\e4fb\\CodeAtlas",
+  "accepted": {
+    "count": 4,
+    "total": 21,
+    "a6": "NOT_QUALIFIED",
+    "e02": "PROPOSED_NOT_INSTALLED"
+  },
+  "receiver": {
+    "pass": 4,
+    "fail": 0,
+    "durationMs": 784.141,
+    "scope": "Original Entry constructor and memory lifetime only, no consumption or Start"
+  },
+  "compileCandidate": {
+    "sha256": "9fa2007a2c425d6339dd7099b2fe5a98299510063a6174fce0768f62a9c70813",
+    "bytes": 81408,
+    "scope": "14 C# production sources compiled once, reflection only, Start never called",
+    "actualCommand": null
+  },
+  "portability": {
+    "pass": 8,
+    "newImmutableInputs": 13,
+    "oldLogicalRecordsPreserved": 679,
+    "scope": "ENOENT-only local fallback into tracked existing archive; historical Java pair reused; no production/contract/dependency change"
+  },
+  "reviews": {
+    "host-entry-receiver.json": "9f2877b8f203ff4fbf9b45cf7afdc72f9943321ece179c86588567c79872962d",
+    "host-entry-receiver-review.json": "8770142f076f516af2674329bc111a9c8a304710e923b962e8d694e0d6c1a3fc",
+    "host-execution-readiness.json": "de67845df0e6aef4103871edd0c565ec88e4181de2d0a45a235117591bafddd5",
+    "acceptance-priority-board.json": "eff88fe4c667578a3a81d42a7a334919c1745338cf9673223e4ea7589f1e5687",
+    "e02-gate-evidence-map.json": "d562ae797469021974d843eab9848c7da920d890600de209f047938c64e5c5d5",
+    "p1-10-11-minimum-decisions.json": "04f732b6dd6a3a5780334d288e854df446af0d12f67be95a8abe8fce9bbdfd4c",
+    "input-portability-verification.json": "4d80c70877d910394d986baf0f265e7202c12cc10830d09c0d84db87017c4280",
+    "git-safety-review.json": "0cab5d8c5de1613c6b370a49c821c332f7585bf9352cef8320d1c1dd298d8227",
+    "portability-and-history-review.json": "42160524b2c1aaffc9ca89481def45dc5881f1964c6bfa79afa36e60c72bddb0"
+  },
+  "sync": {
+    "commit": false,
+    "push": false,
+    "newDWorktree": false,
+    "proposedRemoteBranch": "codex/phase1-20261106-continuation",
+    "proposedDPath": "D:/workspace/CodeAtlas-phase1-20261106",
+    "preserveExisting": [
+      "C:/Users/Freya/.codex/worktrees/e4fb/CodeAtlas",
+      "D:/workspace/CodeAtlas"
+    ],
+    "ciBoundary": "Normal push triggers three formal CI jobs including actual Native; do not bypass or silently extend reserved actual-run approval. Existing PR22 is not a target of this checkpoint."
+  },
+  "limitations": [
+    "Local raw execution evidence stays in original ignored sdd; durable compact receipts and maps are copied exactly here.",
+    "No actual HOST/Windows qualification/Native/Git producer, dependency install, PR update, merge, baseline installation or resource change.",
+    "Historical raw fixture metadata includes local absolute paths, reviewed without credential matches; original bytes preserved.",
+    "P1-13 independent implementation proposal remains unapproved under explicit C/D/E reservation."
+  ],
+  "finalLocalChecks": {
+    "formatAll": {
+      "command": "node node_modules/prettier/bin/prettier.cjs --check .",
+      "exitCode": 0
+    },
+    "architecture": {
+      "command": "node scripts/check-architecture.mjs",
+      "exitCode": 0,
+      "projects": 17
+    },
+    "gitDiffCheck": {
+      "command": "git diff --check",
+      "exitCode": 0
+    },
+    "syntax": {
+      "command": "node --check <88 reviewed mjs>",
+      "checked": 88,
+      "failures": 0,
+      "note": "All88 individual checks exited0. The wrapper then exited1 writing its optional C-worktree ignored receipt under the default read-only sandbox. This summary records the observed output; no source/test failure or rerun."
+    },
+    "currentSourcePins": {
+      "portability": 12,
+      "receiver": 14,
+      "mismatches": 0
+    }
+  }
+}

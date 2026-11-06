@@ -1,0 +1,197 @@
+{
+  "kind": "CURRENT13_IMMUTABLE_INPUT_PORTABILITY_VERIFICATION",
+  "at": "2026-11-06T02:15:44.1173542Z",
+  "status": "FOCUSED_VERIFIED_FROZEN_PENDING_ROOT_REVIEW_AND_GIT_SYNC",
+  "command": "node --test --test-reporter=tap scripts/test-current13-input-portability.mjs",
+  "final": {
+    "cancelled": 0,
+    "skipped": 0,
+    "exitCode": 0,
+    "todo": 0,
+    "durationMs": 640.6242,
+    "pass": 8,
+    "rawLog": ".superpowers/sdd/2026-11-06-current13-input-portability/green-final.log",
+    "fail": 0
+  },
+  "preservedFailures": [
+    {
+      "fail": 5,
+      "reason": "Missing13 archive entries and absent fallback helper before implementation; initial unsafe negative was strengthened before implementation, final suite alone qualifies behavior",
+      "pass": 3,
+      "rawLog": ".superpowers/sdd/2026-11-06-current13-input-portability/red.log"
+    },
+    {
+      "fail": 1,
+      "reason": "New test incorrectly read validator result.outcome instead of documented result.observation.outcome; corrected test property only",
+      "pass": 7,
+      "rawLog": ".superpowers/sdd/2026-11-06-current13-input-portability/green-attempt-1.log"
+    }
+  ],
+  "migration": {
+    "legacyIndexRecordsSha256": "310bf3b762fd394a9287c45fd0bd1ab96e596db83ba018527d41a5e636aa317f",
+    "newLogicalRecords": 692,
+    "newContentBlobs": 372,
+    "deterministicGzip": true,
+    "oldLogicalRecordsPreserved": 679,
+    "oldContentBlobsPreserved": 359,
+    "archiveBytes": 2391642,
+    "newInputs": 13,
+    "trackedJ1CodeRawReusedBytes": 18956,
+    "newInputBytes": 138457
+  },
+  "helperContract": "readHistoricalInputOrLocal(logical,encoding,localRoot) validates safe relative logical components and index allowlist before IO; absolute root explicit; local-first; ENOENT-only archive fallback; no archive materialization",
+  "coverage": [
+    "13 literal expected SHA/lengths; every old679 logical metadata record and raw payload",
+    "tracked J1 code request/output exact original SHA",
+    "isolatedcwd explicit localRoot, no sdd materialization or prepared-summary overwrite",
+    "local priority; EACCES same error object; unsafe/unlisted inputs reject before local read",
+    "manual/prepare JSON reads and two original framework-surface strict raw pairs"
+  ],
+  "scope": "Existing test-fixture archive/helper, seven test consumers, one pure test and scope only. No product source, baseline, quality gate, FixtureID, dependency or migration change.",
+  "outputPolicy": "Only missing output parents mkdir; original wx writes remain. No input fixture materialized under sdd; no producer replay to create expected data.",
+  "gitReviewScanObjects": [
+    {
+      "path": ".superpowers/sdd/2026-11-05-current13-no-native-entry/manual-expectations.json",
+      "bytes": 1734,
+      "sha256": "9aa56ea9ec1bcb5ca2a9453f639646ef61e7dc98b19a872c2ea3ae3ad93b7aa5",
+      "compiledArtifact": false,
+      "contentKind": "immutable JSON/JSONL fixture or historical producer-receipt metadata",
+      "hasPersonalAbsolutePathMetadata": false
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-05-current13-modified-entry/manual-expectations.json",
+      "bytes": 703,
+      "sha256": "6be61a280950efa783e06cc4a7814ae4750f4a4adbeebee868e605d7760ec47c",
+      "compiledArtifact": false,
+      "contentKind": "immutable JSON/JSONL fixture or historical producer-receipt metadata",
+      "hasPersonalAbsolutePathMetadata": false
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-05-modified-unit-library-positive/library-output/after.request.jsonl",
+      "bytes": 1834,
+      "sha256": "314b12e8b2c038fcd66c347ee5e1b7f96e8883fe7669cea378381cafcfb2c789",
+      "compiledArtifact": false,
+      "contentKind": "immutable JSON/JSONL fixture or historical producer-receipt metadata",
+      "hasPersonalAbsolutePathMetadata": true
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-05-modified-unit-library-positive/library-output/after.output.jsonl",
+      "bytes": 31459,
+      "sha256": "bc586840d4d101f471120125c58d7306d3b749e11d71edf06079a0482932b9f0",
+      "compiledArtifact": false,
+      "contentKind": "immutable JSON/JSONL fixture or historical producer-receipt metadata",
+      "hasPersonalAbsolutePathMetadata": false
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-05-modified-unit-library-positive/rust-verification.json",
+      "bytes": 6015,
+      "sha256": "d283844344c9816e4a3d82e4cc87942866e7841c4795bb42f65ae0c1e229e7a3",
+      "compiledArtifact": false,
+      "contentKind": "immutable JSON/JSONL fixture or historical producer-receipt metadata",
+      "hasPersonalAbsolutePathMetadata": true
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-05-modified-unit-library-positive/node-verification.json",
+      "bytes": 7643,
+      "sha256": "e3a05caf4e6a5b87692486b46fe5cdf428f68bc510cd970c8fa792283f17c1a6",
+      "compiledArtifact": false,
+      "contentKind": "immutable JSON/JSONL fixture or historical producer-receipt metadata",
+      "hasPersonalAbsolutePathMetadata": false
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-05-current13-mixed-entry/manual-expectations.json",
+      "bytes": 1365,
+      "sha256": "a9e15e61090f67ae9a80dfdf2fd2ca2af96d08c47b6247194f3e97f340acc96f",
+      "compiledArtifact": false,
+      "contentKind": "immutable JSON/JSONL fixture or historical producer-receipt metadata",
+      "hasPersonalAbsolutePathMetadata": false
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-05-current13-mixed-entry/mixed-raw-pins.json",
+      "bytes": 313,
+      "sha256": "383321ed7a0e101112b6733d7388e95b1d508cc0447fd0bbd55738ebaa0a3499",
+      "compiledArtifact": false,
+      "contentKind": "immutable JSON/JSONL fixture or historical producer-receipt metadata",
+      "hasPersonalAbsolutePathMetadata": false
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-05-current13-mixed-entry/library-output/mixed.request.jsonl",
+      "bytes": 6701,
+      "sha256": "8db996ea5ae26fd043d0211b5e98cee11e605e3713293cf6f46a8183aa324e2e",
+      "compiledArtifact": false,
+      "contentKind": "immutable JSON/JSONL fixture or historical producer-receipt metadata",
+      "hasPersonalAbsolutePathMetadata": true
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-05-current13-mixed-entry/library-output/mixed.output.jsonl",
+      "bytes": 68145,
+      "sha256": "1099c35d271253284b934efdf7c0c29bf5fee517b025aaa2da9689b4056d8de2",
+      "compiledArtifact": false,
+      "contentKind": "immutable JSON/JSONL fixture or historical producer-receipt metadata",
+      "hasPersonalAbsolutePathMetadata": false
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-05-current13-mixed-entry/prepare-summary.json",
+      "bytes": 8337,
+      "sha256": "446189b520759a1d88030865891f17e803b639ca81a13f069714ccb462bdda08",
+      "compiledArtifact": false,
+      "contentKind": "immutable JSON/JSONL fixture or historical producer-receipt metadata",
+      "hasPersonalAbsolutePathMetadata": false
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-05-current13-workspace-entry/prepare-manual-expectations.json",
+      "bytes": 2884,
+      "sha256": "8bc8424a99f2d34c582eff9e741ae80db8e28f5203d32e7a70300d92c0d435b2",
+      "compiledArtifact": false,
+      "contentKind": "immutable JSON/JSONL fixture or historical producer-receipt metadata",
+      "hasPersonalAbsolutePathMetadata": false
+    },
+    {
+      "path": ".superpowers/sdd/2026-11-05-current13-workspace-entry/entry-manual-expectations.json",
+      "bytes": 1324,
+      "sha256": "b702ab95b0aff84431a79871f8ab9a96e19c59db085cc2cd633aecda07a75fea",
+      "compiledArtifact": false,
+      "contentKind": "immutable JSON/JSONL fixture or historical producer-receipt metadata",
+      "hasPersonalAbsolutePathMetadata": false
+    }
+  ],
+  "privacy": "Some pinned raw requests/producer receipts contain historical local absolute temp/tool paths. They are synthetic/recorded fixture metadata, not compiled artifacts. Preserve original bytes; security reviewer decides public disclosure. No credentials or unrelatedfiles read.",
+  "notRun": [
+    "old49/41/receiver4/N1 suites",
+    "long fullgraph/current13 integrations",
+    "Rust/Native/Git/HOST producer",
+    "dependency install",
+    "CI",
+    "Git stage/commit/push",
+    "D worktree creation"
+  ],
+  "remaining": [
+    "root independent review and status/trace integration",
+    "root-only Git synchronization",
+    "D dependency install/build then selected portability gate",
+    "optional ignored Rust producers/component input5 remain local explicit workflows outside13 scope"
+  ],
+  "sourcePins": {
+    "fixtures/phase1/syntax-contract/ci-portability/historical-inputs.mjs": "c41e124b8930f1c7f808ae679528652a74804298c2982c978951abf31f5d982c",
+    "scripts/mixed-native-current13-no-native-fixture.mjs": "bf03caff4780bd325cb9e66ef686cd414fd890660f41ef10a7921e575778b1a2",
+    "scripts/mixed-native-current13-product-fixture.mjs": "1d90b2a9113fa869d077a45c19950e88d7dd31b497289f2cf9d87480d68837cb",
+    "scripts/mixed-native-current13-mixed-fixture.mjs": "3b3a31d9e9910e5233bc3df0af1716ac98e66915d20187bd3956e54b9e426a06",
+    "scripts/mixed-native-current13-workspace-repo-fixture.mjs": "3ddc1b79fe2c2002f42052ed31ec0835038092534aa8eee1be815cc5cff2671c",
+    "scripts/test-mixed-native-current13-modified-entry.mjs": "ce4d19c7b48866dbf1a902ddb12a829a92e302d975ee6c9604730f17bfe935d1",
+    "scripts/test-mixed-native-current13-workspace-entry.mjs": "f4c51061993beb1aa7f8af8274868e4358c39d72f5ff11c94c20a986918075d8",
+    "scripts/test-mixed-native-current13-workspace-prepare.mjs": "773fb27fdda0455f424f894ea957402473c5737b47623946bc9352c18062ad9e",
+    "fixtures/phase1/syntax-contract/ci-portability/index.json": "830066e540d8da260775d6a5541806c9c234c2154a86a508ffdbcb6ad2427057",
+    "fixtures/phase1/syntax-contract/ci-portability/historical-bytes.json.gz": "f8291839a79d41507f78234720796bbaf4eb92793c1b307b7ff6bf98a5112568",
+    "scripts/test-current13-input-portability.mjs": "1ab36541386fc03505111bd5b7730e9cb8027efc659078b0f9f4bb277d378940",
+    "docs/superpowers/specs/2026-11-06-current13-input-portability.md": "a017ea82d05de302ee4c94f9c6d9b6eb3ae628b995371a8b29081608964f4bd3"
+  },
+  "evidencePins": {
+    "red.log": "e3279de8486c01141e40bc50cd633452fa31f6e3f94232b974ade4aec440dc79",
+    "green-attempt-1.log": "ea53b0a06fcf9e3ba4d877ce277a1999e7fb60a31d51f813588d5d97219dcceb",
+    "green-final.log": "d7e13f1a99810c253bf141db06d26a97b868652407d344cf666d37304f9019ff",
+    "format-final.log": "ab30f1fd953993e10243589133d36d1777a6777d302c2fe74ffe1f85a5990a7e",
+    "before-hashes.json": "9387476d0aa67d7eb14b77f971260b2daaf53437430f1fc78c70777c407899ba",
+    "migration-result.json": "7e5d8aa1efbe04f923dfdea147aa85bf430a97068020c6795e10a40ac6e54976",
+    "apply-portability.mjs": "3835a756cc38247efa4db50f654992706bd0d2ff5e1c4d8ebb9a3103f41c4171"
+  }
+}

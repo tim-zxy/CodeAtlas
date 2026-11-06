@@ -144,6 +144,10 @@ export function readMixedProcessConformance(value, limits) {
             r.status === 'INELIGIBLE' &&
             r.processes[0].queryStatus === 'INJECTED' &&
             h.childPid === null &&
+            h.childExitCode === null &&
+            h.childSignal === null &&
+            h.childClosed === false &&
+            h.childStdout === '' &&
             h.outcome === 'DONE',
         );
       } else {
@@ -151,6 +155,7 @@ export function readMixedProcessConformance(value, limits) {
           h.childPid === r.processes[1].pid &&
             h.childPid !== h.pid &&
             h.childClosed &&
+            r.processes[1].exitSequence < r.processes[0].exitSequence &&
             r.processes.every((p) => p.queryStatus === 'FINAL'),
         );
         if (r.mode === 'SHORT_DESCENDANT')
@@ -165,6 +170,7 @@ export function readMixedProcessConformance(value, limits) {
           check(
             r.status === 'INELIGIBLE' &&
               h.outcome === 'CANCELLED' &&
+              h.childStdout === '' &&
               ((h.childExitCode !== null && h.childExitCode !== 0) || h.childSignal !== null),
           );
       }

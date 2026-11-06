@@ -1,4 +1,5 @@
 import { randomUUID } from 'node:crypto';
+import { types } from 'node:util';
 import nativeOwner, {
   executeNativeRequest,
   NativeClientError,
@@ -12,7 +13,10 @@ import {
 } from '../../providers/dist/native-composition-input.js';
 import type { CodeSyntaxRequest } from '../../providers/dist/native-code-syntax-request.js';
 import type { HistoryContractIdentity } from '../../providers/dist/history-transition-input.js';
-import { MixedSourceWorkflowError } from '../../application/dist/mixed-source-workflow.js';
+import {
+  MixedSourceWorkflowError,
+  validateMixedSourceQualification,
+} from '../../application/dist/mixed-source-workflow.js';
 import {
   captureActivationContext,
   releaseActivationContext,
@@ -58,6 +62,13 @@ type Input = Pick<BudgetedMixedSourceInput, 'database' | 'repository' | 'policy'
   readonly contracts: readonly HistoryContractIdentity[];
   readonly qualificationRef: string;
 };
+type PrivateQualification = {
+  readonly source: NonNullable<BudgetedMixedSourceInput['qualification']>;
+  createNativeLifecycle(
+    role: 'V2' | 'V5',
+  ): NonNullable<Parameters<(typeof nativeOwner)['runOwnedNativeProcess']>[5]>;
+};
+
 type Effects = {
   sourceCommit: 'NOT_ATTEMPTED' | 'UNKNOWN' | 'COMMITTED';
   graphCommit: 'NOT_ATTEMPTED' | 'NOT_COMMITTED' | 'UNKNOWN' | 'COMMITTED';
@@ -86,7 +97,10 @@ function safeCode(e: unknown): string {
   return 'ANALYSIS_FAILED';
 }
 /** Trusted local component only. No public route or physical resource qualification. */
-export default async function runMixedExecution(input: Input) {
+export default async function runMixedExecution(
+  input: Input,
+  qualification: PrivateQualification | null = null,
+) {
   const effects: Effects = {
     sourceCommit: 'NOT_ATTEMPTED',
     graphCommit: 'NOT_ATTEMPTED',
@@ -127,6 +141,25 @@ export default async function runMixedExecution(input: Input) {
       'contracts',
       'qualificationRef',
     ]);
+    let sourceQualification: PrivateQualification['source'] | undefined;
+    let createNativeLifecycle: PrivateQualification['createNativeLifecycle'] | undefined;
+    if (qualification !== null) {
+      exact(qualification, ['source', 'createNativeLifecycle']);
+      check(
+        typeof qualification.createNativeLifecycle === 'function' &&
+          !types.isProxy(qualification.createNativeLifecycle),
+      );
+      sourceQualification = validateMixedSourceQualification(qualification.source);
+      createNativeLifecycle = qualification.createNativeLifecycle.bind(qualification);
+    }
+    const lifecycle = (role: 'V2' | 'V5') => {
+      const value =
+        qualification === null
+          ? null
+          : nativeOwner.validateOwnedNativeLifecycle(createNativeLifecycle!(role));
+      check(qualification === null || typeof value?.beforeSpawn === 'function');
+      return value;
+    };
     check(input.operation === 'FULL' || input.operation === 'INCREMENTAL');
     const config = resolveMixedExecutionConfig(input.configuration);
     const validated = nativeOwner.validateOwnedNativeOptions(input.native.options);
@@ -161,6 +194,7 @@ export default async function runMixedExecution(input: Input) {
     });
     remaining();
     source = await prepareBudgetedMixedSourceOperation({
+      ...(qualification === null ? {} : { qualification: sourceQualification! }),
       database: input.database,
       repository: input.repository,
       request: { ...input.request, config: config.source },
@@ -225,7 +259,10 @@ export default async function runMixedExecution(input: Input) {
         ownerInput: unknown = null;
       if (javaRequest) {
         const startedAt = new Date().toISOString();
-        const actual = await executeNativeRequest(javaRequest, options());
+        const actual =
+          qualification === null
+            ? await executeNativeRequest(javaRequest, options())
+            : await nativeOwner.executeOwnedJavaRequest(javaRequest, options(), lifecycle('V2')!);
         check(actual.request.protocolVersion === 2);
         java = {
           ...id,
@@ -271,7 +308,7 @@ export default async function runMixedExecution(input: Input) {
       );
       if (bytes) {
         const startedAt = new Date().toISOString(),
-          raw = await observe(bytes, options(), null),
+          raw = await observe(bytes, options(), lifecycle('V5')),
           settledAt = new Date().toISOString();
         const metadata = {
           targetSource: p.targetSource,
@@ -309,7 +346,16 @@ export default async function runMixedExecution(input: Input) {
     }
     source?.account.invalidate();
   }
-  if (error) throw new MixedExecutionError(safeCode(error.cause), Object.freeze({ ...effects }));
+  if (error) {
+    const failure = new MixedExecutionError(safeCode(error.cause), Object.freeze({ ...effects }));
+    if (
+      error.cause &&
+      typeof error.cause === 'object' &&
+      Object.getOwnPropertyDescriptor(error.cause, 'cleanupState')?.value === 'UNKNOWN'
+    )
+      Object.assign(failure, { cleanupState: 'UNKNOWN' });
+    throw failure;
+  }
   check(result);
   return Object.freeze({ ...result, effects: Object.freeze({ ...effects }) });
 }

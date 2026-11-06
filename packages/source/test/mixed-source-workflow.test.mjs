@@ -192,3 +192,484 @@ test('A2 Git-ignored directory junction stays outside mixed Source', async (t) =
   const result = await api.observeMixedGitWorktree(f.request, a.account, f.control);
   assert.ok(!result.files.some((x) => x.path.startsWith('linked/')));
 });
+
+// setup installs a self-contained EventEmitter Git double; no forwarding spawn.
+test('A2 private pinned Git gate precedes every spawn and preserves close ownership', async (t) => {
+  const f = await setup(t),
+    a = makeAccount(f.control.signal);
+  let plannedEnvironment;
+  let ready = false,
+    before = 0,
+    after = 0,
+    disposed = 0;
+  f.state.expectedExecutable = process.execPath;
+  f.state.spawnAudit = (_file, _args, options) => {
+    assert.equal(ready, true);
+    ready = false;
+    assert.equal(options.env, plannedEnvironment);
+    assert.equal(options.env.GIT_TERMINAL_PROMPT, '0');
+    for (const key of [
+      'HOMEDRIVE',
+      'HOMEPATH',
+      'LOGONSERVER',
+      'PATH',
+      'SYSTEMDRIVE',
+      'SYSTEMROOT',
+      'TEMP',
+      'USERDOMAIN',
+      'USERNAME',
+      'USERPROFILE',
+      'WINDIR',
+      'NODE_V8_COVERAGE',
+    ])
+      assert.equal(options.env[key], '');
+  };
+  f.control.qualification = {
+    executablePath: process.execPath,
+    environment: { GIT_TERMINAL_PROMPT: '0' },
+    createLifecycle(plan) {
+      plannedEnvironment = plan.environment;
+      assert.equal(plan.executablePath, process.execPath);
+      assert.ok(
+        Object.isFrozen(plan) &&
+          Object.isFrozen(plan.arguments) &&
+          Object.isFrozen(plan.environment),
+      );
+      assert.equal(plan.arguments[0], '-C');
+      assert.match(plan.stdinSha256, /^[a-f0-9]{64}$/);
+      return {
+        async beforeSpawn(p) {
+          assert.equal(p, plan);
+          assert.equal(ready, false);
+          ready = true;
+          before++;
+        },
+        async beforeInput(child) {
+          assert.equal(child.executablePath, process.execPath);
+          assert.ok(child.pid > 0);
+        },
+        async afterClose() {
+          assert.ok(f.state.closes > after);
+          after++;
+        },
+        async dispose() {
+          disposed++;
+        },
+      };
+    },
+  };
+  const v = await api.observeMixedGitWorktree(f.request, a.account, f.control);
+  assert.equal(v.rootPath, f.root);
+  assert.ok(before > 0);
+  assert.equal(before, f.state.calls);
+  assert.equal(after, before);
+  assert.equal(disposed, before);
+});
+for (const mode of ['reject', 'cancel', 'timeout'])
+  test('A2 qualification beforeSpawn ' + mode + ' cannot launch Git', async (t) => {
+    const f = await setup(t),
+      a = makeAccount(f.control.signal);
+    let disposed = 0;
+    if (mode === 'timeout') f.control.deadlineEpochMs = Date.now() + 30;
+    f.control.qualification = {
+      executablePath: process.execPath,
+      environment: {},
+      createLifecycle() {
+        return {
+          async beforeSpawn(_plan, signal) {
+            if (mode === 'reject') throw Error('SENSITIVE_SENTINEL');
+            if (mode === 'cancel') setImmediate(() => f.controller.abort());
+            await new Promise((r) =>
+              signal.aborted ? r() : signal.addEventListener('abort', r, { once: true }),
+            );
+          },
+          async beforeInput() {
+            assert.fail('no child');
+          },
+          async afterClose() {
+            assert.fail('no close');
+          },
+          async dispose() {
+            disposed++;
+          },
+        };
+      },
+    };
+    await assert.rejects(
+      api.observeMixedGitWorktree(f.request, a.account, f.control),
+      code(
+        mode === 'cancel' ? 'CANCELLED' : mode === 'timeout' ? 'DEADLINE_EXCEEDED' : 'GIT_FAILED',
+      ),
+    );
+    assert.equal(f.state.calls, 0);
+    assert.equal(disposed, 1);
+    assert.equal(a.usage.invalid, true);
+  });
+test('A2 relative qualification executable cannot fall back to PATH', async (t) => {
+  const f = await setup(t),
+    a = makeAccount(f.control.signal);
+  f.control.qualification = {
+    executablePath: 'git',
+    environment: {},
+    createLifecycle() {
+      assert.fail('invalid binding');
+    },
+  };
+  await assert.rejects(
+    api.observeMixedGitWorktree(f.request, a.account, f.control),
+    code('GIT_FAILED'),
+  );
+  assert.equal(f.state.calls, 0);
+});
+
+async function boundedGitOutcome(p) {
+  let timer;
+  try {
+    return await Promise.race([
+      p,
+      new Promise((_r, j) => (timer = setTimeout(() => j(Error('UNBOUNDED_GUARD')), 200))),
+    ]);
+  } finally {
+    clearTimeout(timer);
+  }
+}
+for (const stage of ['afterClose', 'dispose'])
+  test(
+    'A2 qualified hanging ' + stage + ' yields deadline refusal with unknown cleanup',
+    async (t) => {
+      const f = await setup(t),
+        a = makeAccount(f.control.signal);
+      let disposed = 0;
+      f.control.deadlineEpochMs = Date.now() + 30;
+      f.control.qualification = {
+        executablePath: process.execPath,
+        environment: {},
+        createLifecycle() {
+          return {
+            async beforeSpawn() {},
+            async beforeInput() {},
+            async afterClose() {
+              if (stage === 'afterClose') await new Promise(() => {});
+            },
+            async dispose() {
+              disposed++;
+              if (stage === 'dispose') await new Promise(() => {});
+            },
+          };
+        },
+      };
+      f.state.expectedExecutable = process.execPath;
+      await assert.rejects(
+        boundedGitOutcome(api.observeMixedGitWorktree(f.request, a.account, f.control)),
+        code('DEADLINE_EXCEEDED'),
+      );
+      assert.equal(disposed, 1);
+      assert.equal(f.state.calls, f.state.closes);
+    },
+  );
+
+test('A2 frozen observer error cannot skip dispose or replace safe primary', async (t) => {
+  const f = await setup(t),
+    a = makeAccount(f.control.signal),
+    { SourceScanError } = await import('../dist/errors.js'),
+    frozen = Object.freeze(new SourceScanError('GIT_FAILED', 'fixture frozen'));
+  let disposed = 0;
+  f.state.expectedExecutable = process.execPath;
+  f.control.qualification = {
+    executablePath: process.execPath,
+    environment: {},
+    createLifecycle() {
+      return {
+        async beforeSpawn() {},
+        async beforeInput() {},
+        async afterClose() {
+          throw frozen;
+        },
+        async dispose() {
+          disposed++;
+        },
+      };
+    },
+  };
+  await assert.rejects(
+    api.observeMixedGitWorktree(f.request, a.account, f.control),
+    (e) => e.code === 'GIT_FAILED' && e.cleanupState === 'UNKNOWN',
+  );
+  assert.equal(disposed, 1);
+});
+
+test('A2 fixed Windows qualification dictionary blocks missing-required host supplementation', async () => {
+  const { validateGitQualification } = await import('../dist/git.js');
+  const required = [
+    'HOMEDRIVE',
+    'HOMEPATH',
+    'LOGONSERVER',
+    'PATH',
+    'SYSTEMDRIVE',
+    'SYSTEMROOT',
+    'TEMP',
+    'USERDOMAIN',
+    'USERNAME',
+    'USERPROFILE',
+    'WINDIR',
+  ];
+  const q = validateGitQualification({
+    executablePath: process.execPath,
+    environment: { SystemRoot: 'FIXED_ROOT' },
+    createLifecycle() {
+      assert.fail('shape only');
+    },
+  });
+  const simulatedParent = Object.fromEntries(required.map((k) => [k, 'FAKE_HOST_SENTINEL'])),
+    consumed = { ...q.environment };
+  for (const key of required)
+    if (!Object.hasOwn(consumed, key)) consumed[key] = simulatedParent[key];
+  for (const key of required) assert.equal(consumed[key], key === 'SYSTEMROOT' ? 'FIXED_ROOT' : '');
+  assert.equal(q.environment.NODE_V8_COVERAGE, '');
+  assert.equal(Object.values(consumed).includes('FAKE_HOST_SENTINEL'), false);
+  assert.ok(Object.isFrozen(q.environment));
+});
+
+// Ownership is a live identity witness, not executable/profile authorization.
+for (const outcome of ['success', 'throw-create', 'reject', 'cancel', 'timeout'])
+  test('A2 owned Git plan proof expires after ' + outcome, async (t) => {
+    const f = await setup(t),
+      a = makeAccount(f.control.signal),
+      gitModule = await import('../dist/git.js'),
+      read = gitModule.default?.readOwnedGitLaunchPlan;
+    assert.equal(typeof read, 'function');
+    assert.equal((await import('../dist/index.js')).readOwnedGitLaunchPlan, undefined);
+    assert.equal(gitModule.readOwnedGitLaunchPlan, undefined);
+    for (const fake of [null, {}, Object.freeze({}), new Proxy({}, {})])
+      assert.throws(() => read(fake), code('GIT_FAILED'));
+    let captured, releaseLate;
+    const late = new Promise((resolve) => {
+      releaseLate = resolve;
+    });
+    let lateRead;
+    const plans = [];
+    f.state.expectedExecutable = process.execPath;
+    f.state.beforeReply = async (args) => {
+      if (args[2] === 'check-ignore') {
+        const { createHash } = await import('node:crypto');
+        assert.equal(
+          captured.stdinSha256,
+          createHash('sha256').update(f.state.inputs.at(-1)).digest('hex'),
+        );
+      }
+    };
+    f.state.spawnAudit = () => assert.throws(() => read(captured), code('GIT_FAILED'));
+    f.control.qualification = {
+      executablePath: process.execPath,
+      environment: {},
+      createLifecycle(plan) {
+        captured = plan;
+        plans.push(plan);
+        assert.deepEqual(Object.keys(plan).sort(), [
+          'arguments',
+          'cwd',
+          'environment',
+          'executablePath',
+          'stdinSha256',
+        ]);
+        const proof = read(plan);
+        assert.ok(Object.isFrozen(proof));
+        assert.equal(proof.role, 'GIT');
+        assert.equal(proof.plan, plan);
+        assert.throws(() => read({ ...plan }), code('GIT_FAILED'));
+        assert.throws(() => read(new Proxy(plan, {})), code('GIT_FAILED'));
+        if (outcome === 'throw-create') throw Error('fixture');
+        return {
+          async beforeSpawn(p, signal) {
+            assert.equal(read(p).plan, plan);
+            if (outcome === 'reject') throw Error('fixture');
+            if (outcome === 'cancel' || outcome === 'timeout') {
+              lateRead = late.then(() => assert.throws(() => read(plan), code('GIT_FAILED')));
+              if (outcome === 'cancel') setImmediate(() => f.controller.abort());
+              else f.control.deadlineEpochMs = Date.now();
+              await new Promise((resolve) =>
+                signal.addEventListener('abort', resolve, { once: true }),
+              );
+              await late;
+              assert.throws(() => read(plan), code('GIT_FAILED'));
+            }
+          },
+          async beforeInput() {
+            assert.throws(() => read(plan), code('GIT_FAILED'));
+          },
+          async afterClose() {
+            assert.throws(() => read(plan), code('GIT_FAILED'));
+          },
+          async dispose() {
+            assert.throws(() => read(plan), code('GIT_FAILED'));
+          },
+        };
+      },
+    };
+    if (outcome === 'timeout') f.control.deadlineEpochMs = Date.now() + 50;
+    const pending = api.observeMixedGitWorktree(f.request, a.account, f.control);
+    if (outcome === 'success') await pending;
+    else
+      await assert.rejects(
+        pending,
+        code(
+          outcome === 'cancel'
+            ? 'CANCELLED'
+            : outcome === 'timeout'
+              ? 'DEADLINE_EXCEEDED'
+              : 'GIT_FAILED',
+        ),
+      );
+    assert.ok(plans.length > 0);
+    for (const plan of plans) assert.throws(() => read(plan), code('GIT_FAILED'));
+    releaseLate();
+    if (lateRead) await lateRead;
+    assert.equal(f.state.calls, outcome === 'success' ? f.state.closes : 0);
+    if (outcome === 'success') {
+      const { createHash } = await import('node:crypto');
+      assert.equal(plans.length, f.state.calls);
+      // Empty stdin commands mint the hash of exactly the bytes sent, too.
+      assert.equal(
+        plans[0].stdinSha256,
+        createHash('sha256').update(Buffer.alloc(0)).digest('hex'),
+      );
+    }
+  });
+
+test('A2 owned Git plan claim is globally one-shot within the active window', async (t) => {
+  const f = await setup(t),
+    a = makeAccount(f.control.signal),
+    gitModule = await import('../dist/git.js'),
+    { readOwnedGitLaunchPlan: read, claimOwnedGitLaunchPlan: claim } = gitModule.default;
+  assert.equal(typeof claim, 'function');
+  assert.equal(gitModule.claimOwnedGitLaunchPlan, undefined);
+  assert.equal((await import('../dist/index.js')).claimOwnedGitLaunchPlan, undefined);
+  for (const fake of [null, {}, new Proxy({}, {})])
+    assert.throws(() => claim(fake), code('GIT_FAILED'));
+  const plans = [];
+  f.state.expectedExecutable = process.execPath;
+  f.control.qualification = {
+    executablePath: process.execPath,
+    environment: {},
+    createLifecycle(plan) {
+      for (const previous of plans) assert.throws(() => claim(previous), code('GIT_FAILED'));
+      plans.push(plan);
+      assert.throws(() => claim({ ...plan }), code('GIT_FAILED'));
+      assert.throws(() => claim(new Proxy(plan, {})), code('GIT_FAILED'));
+      const proof = claim(plan);
+      assert.equal(proof.plan, plan);
+      assert.equal(proof.role, 'GIT');
+      assert.ok(Object.isFrozen(proof));
+      assert.equal(read(plan), proof);
+      assert.equal(read(plan), proof);
+      assert.throws(() => claim(plan), code('GIT_FAILED'));
+      return {
+        async beforeSpawn(p) {
+          // A second consumer of the same genuine object cannot claim it again.
+          const secondConsumer = () => claim(p);
+          assert.throws(secondConsumer, code('GIT_FAILED'));
+          assert.equal(read(p).plan, plan);
+        },
+        async beforeInput() {
+          assert.throws(() => claim(plan), code('GIT_FAILED'));
+        },
+        async afterClose() {},
+        async dispose() {},
+      };
+    },
+  };
+  await api.observeMixedGitWorktree(f.request, a.account, f.control);
+  assert.ok(plans.length > 1);
+  for (const plan of plans) assert.throws(() => claim(plan), code('GIT_FAILED'));
+  const firstCount = plans.length;
+  await api.observeMixedGitWorktree(f.request, a.account, f.control);
+  assert.ok(plans.length > firstCount);
+  assert.equal(new Set(plans).size, plans.length);
+  assert.equal(f.state.calls, f.state.closes);
+});
+
+test('A2 genuine Git gate composes with opaque prepared registration', async (t) => {
+  const f = await setup(t),
+    a = makeAccount(f.control.signal),
+    { createMixedNativePreparedRegistration } =
+      await import('../../../scripts/mixed-native-prepared-registration.mjs');
+  f.state.expectedExecutable = process.execPath;
+  let prepared = 0;
+  f.control.qualification = {
+    executablePath: process.execPath,
+    environment: {},
+    createLifecycle(plan) {
+      // API coupling only: static fields are derived here, not independent run approval.
+      const { stdinSha256, ...command } = plan,
+        registry = createMixedNativePreparedRegistration({
+          contextSha256: 'a'.repeat(64),
+          slots: [
+            { launchId: 'git-' + prepared, role: 'GIT', imageSha256: 'b'.repeat(64), command },
+          ],
+        });
+      return {
+        async beforeSpawn(p) {
+          const receipt = registry.consume(registry.prepare(p));
+          assert.equal(receipt.binding.role, 'GIT');
+          assert.equal(receipt.registrationAuthority, false);
+          assert.equal(receipt.liveTransportConnected, false);
+          prepared++;
+        },
+        async beforeInput() {},
+        async afterClose() {},
+        async dispose() {},
+      };
+    },
+  };
+  await api.observeMixedGitWorktree(f.request, a.account, f.control);
+  assert.ok(prepared > 0);
+  assert.equal(f.state.calls, f.state.closes);
+});
+
+test('A2 owned Git proof refuses synchronously inside gate abort listener', async (t) => {
+  const f = await setup(t),
+    a = makeAccount(f.control.signal),
+    {
+      default: { readOwnedGitLaunchPlan: read, claimOwnedGitLaunchPlan: claim },
+    } = await import('../dist/git.js');
+  const outcomes = [];
+  f.control.qualification = {
+    executablePath: process.execPath,
+    environment: {},
+    createLifecycle(plan) {
+      assert.equal(read(plan).plan, plan);
+      return {
+        async beforeSpawn(_plan, signal) {
+          signal.addEventListener(
+            'abort',
+            () => {
+              for (const check of [read, claim]) {
+                try {
+                  check(plan);
+                  outcomes.push('ACCEPTED');
+                } catch (error) {
+                  outcomes.push(error.code);
+                }
+              }
+            },
+            { once: true },
+          );
+          f.controller.abort();
+        },
+        async beforeInput() {
+          assert.fail('no child');
+        },
+        async afterClose() {
+          assert.fail('no child');
+        },
+        async dispose() {},
+      };
+    },
+  };
+  await assert.rejects(
+    api.observeMixedGitWorktree(f.request, a.account, f.control),
+    code('CANCELLED'),
+  );
+  assert.deepEqual(outcomes, ['GIT_FAILED', 'GIT_FAILED']);
+  assert.equal(f.state.calls, 0);
+});

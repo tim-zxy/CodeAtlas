@@ -1,3 +1,20 @@
+## N1 and HOST B bounded offline contract continuation - 2026-11-06
+
+The selected private allSOURCE NO_OP/deletion and coordinator-owned protected
+consumption lifetime directions are refined for detailed offline implementation
+and memory substitutes. Controlling specs: docs/superpowers/specs/2026-11-06-current13-no-native-offline.md
+and docs/superpowers/specs/2026-11-06-host-consumption-lifetime-offline.md (paths from
+repository root); consolidated plan: docs/superpowers/plans/2026-11-06-n1-host-b-offline.md.
+N1 preserves genuine Application/Storage/Source/Runtime authority, final freshness,
+no-write NO_OP and original atomic deletion; Native branch/priorNative guard stay.
+HOST B changes only the explicitly stated offline trust/lifetime premise: independent
+fixed inventory, known ownership, full consumer join and close-once UNKNOWN handling.
+Pure callbacks/flags never authenticate an actual OS process/path or authorize launch.
+No package dependency edge, IR/schema/migration, AUTO/MANUAL rule, threshold, profile,
+resource formula/value, permission or live-admission change. Original phase/security/
+provider/evaluation gates remain unchanged and unpassed by this approval. Platform
+review remains mandatory; historical denied/unimplemented records are retained.
+
 ## A-runtime 本地实施更新；protocol 最终门禁 OPEN — 2026-10-29
 
 用户已明确批准 D1–D4/T1–T6 本会话顺序实施。Source受控核验、Stage累计账本、v5分发代码/原始流和私有进程屏障已实现；当前 **AR_LOCAL_IMPLEMENTED_PROTOCOL_GATE_OPEN**，不是全包验收通过。最新本地组件107 PASS/1 TODO、注册360/360、纯IPC176/176、Stage333/333、Rust指定库29/29、架构17项目、构建/类型/精确格式通过。文件symlink因EPERM为TODO/C1 OPEN。

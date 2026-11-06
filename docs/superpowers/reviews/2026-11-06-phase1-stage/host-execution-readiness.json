@@ -1,0 +1,71 @@
+{
+  "kind": "HOST_ACTUAL_QUALIFICATION_EXECUTION_REVIEW_PACKET",
+  "utc": "2026-11-06T02:09:59.579880+00:00",
+  "status": "NOT_READY_NO_ACTUAL_EXECUTION_REQUEST",
+  "candidateBuild": "candidate-build/verification.json",
+  "currentSource": "current-source-candidate.json",
+  "historicalCommandSource": "execution-packet-source-map.json",
+  "actualRuntimeCommand": null,
+  "whyNoCommand": "CreateQualificationHostRoot and CreateQualificationDynamicHostLoop have only definitions/metadata tests; no installed production owner calls actual Start. Old Prepare/Collect compile/run a different collector helper and cannot be relabelled HOST qualification.",
+  "exactCurrentBuildObject": {
+    "path": "C:\\Users\\Freya\\.codex\\worktrees\\e4fb\\CodeAtlas\\.superpowers\\sdd\\2026-11-06-host-entry-continuation\\candidate-build\\host-candidate.dll",
+    "bytes": 81408,
+    "sha256": "9fa2007a2c425d6339dd7099b2fe5a98299510063a6174fce0768f62a9c70813"
+  },
+  "existingCompileOnlyInvocation": [
+    "node",
+    "C:\\Users\\Freya\\.codex\\worktrees\\e4fb\\CodeAtlas\\.superpowers\\sdd\\2026-11-06-host-entry-continuation\\candidate-build\\prepare-owner.mjs"
+  ],
+  "futureCommandBoundary": "Must be fixed only after actual owner, protected input and same-owner cleanup contract are implemented/reviewed. No fabricated Run/Collect argv or inherited approval.",
+  "inputScope": {
+    "required": [
+      "independently fixed Node/bootstrap/prehook/tool identities",
+      "current canonical manifest/descriptor and whole module/data graph",
+      "explicit mutable Source/DB exclusions",
+      "same-owner root/descendant identity, final-query/duplicate/EOF/worker join",
+      "exact output paths/counts/no-retry/watchdogs and limits"
+    ],
+    "notFresh": [
+      "10 historical compiler/tool identity records",
+      "old helper source lock",
+      "pre-N1 graph operation SHA"
+    ],
+    "notAllowedNow": [
+      "actual Start/Windows protection probe",
+      "actual Native/Git qualification",
+      "permissions/startup/inheritance changes",
+      "physical formula/numeric profile adoption",
+      "E02 install or P1-10/11 core implementation"
+    ]
+  },
+  "resourceCost": {
+    "currentCompileOnly": {
+      "elapsedMs": 609,
+      "meaning": "Observed outer local compile-only fixture duration, not target HOST/Native estimate or production resource cap",
+      "hardRAMLimit": null,
+      "internalCompilerChildren": "NOT_OBSERVED",
+      "explicitPowerShellBuildHosts": 1
+    },
+    "sourceTextBytes": 166340,
+    "actualHostWallTime": null,
+    "actualHostPeakMemory": null,
+    "actualHostHardRAMLimit": null,
+    "historicalLimitsNotAdopted": "Old helper10s collector/30s watchdog/2-3min estimate are history only; not a new HOST budget or guarantee."
+  },
+  "effects": "Only a new isolated unqualified candidate DLL and logs were built here; real future execution would create debugged root/process/pipe/worker/retained-handle lifetimes and needs separate precise scope. No user/production DB or credentials included.",
+  "stopAndCleanup": [
+    "Refuse drift/wrong tool/source/context/output-root before create; no retry",
+    "Prepare/compile failure or incomplete input coverage forbids actual start",
+    "After any possible process create, preserve partial ownership, abort once and drain existing debug events",
+    "Require actual root/children/final-query/duplicate release and control/stderr/worker joins before release; kill/close alone not proof",
+    "Uncertain creation/exit/close stays UNKNOWN and blocks later stages; no timeout extension or force cleanup inferred"
+  ],
+  "rollback": "Keep live NOT_READY; retain all historical evidence/current candidate unused. Disable only new owned offline path if necessary; no reset/stash/DB rollback or permission change.",
+  "decisionPrerequisites": [
+    "Actual executable owner/scene/count/order/output freeze must exist before asking to execute",
+    "Supported platform/namespace contract and immutable consumption premise must be reviewed without new rights",
+    "Exact actual tool/compiler identity and resource allowance must be separately resolved; current source compilation alone is insufficient"
+  ],
+  "deniedAction": false,
+  "realExecutionAttempted": false
+}

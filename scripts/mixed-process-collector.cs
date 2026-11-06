@@ -12,7 +12,9 @@ using System.Threading.Tasks;
 using Microsoft.Win32.SafeHandles;
 
 // Qualification-only. No arbitrary command, attach, memory inspection or profile.
-public static class MixedProcessCollector {
+public static partial class MixedProcessCollector {
+ // Debugger-owned fixed chain; no console, new console or job breakaway.
+ const uint RootCreationFlags=0x00080409;
  [StructLayout(LayoutKind.Sequential)] struct Security {public int size;public IntPtr descriptor;[MarshalAs(UnmanagedType.Bool)] public bool inherit;}
  [StructLayout(LayoutKind.Sequential,CharSet=CharSet.Unicode)] struct Startup {
   public int cb;public IntPtr reserved,desktop,title;
@@ -71,8 +73,11 @@ public static class MixedProcessCollector {
   var name=new StringBuilder(32768);uint n=GetFinalPathNameByHandleW(file,name,(uint)name.Capacity,0);Require(n>0&&n<name.Capacity);
   string actual=name.ToString();if(actual.StartsWith(@"\\?\",StringComparison.Ordinal))actual=actual.Substring(4);
   entry.imagePath=Path.GetFullPath(actual);
-  if(!String.Equals(entry.imagePath,Path.GetFullPath(expected),StringComparison.OrdinalIgnoreCase))throw new InvalidOperationException("UNEXPECTED_PROCESS");
-  using(var borrowed=new SafeFileHandle(file,false))using(var stream=new FileStream(borrowed,FileAccess.Read)){stream.Position=0;return Hash(stream);}
+  bool expectedImage=String.Equals(entry.imagePath,Path.GetFullPath(expected),StringComparison.OrdinalIgnoreCase);
+  try{using(var borrowed=new SafeFileHandle(file,false))using(var stream=new FileStream(borrowed,FileAccess.Read)){stream.Position=0;entry.imageSha256=Hash(stream);}}
+  catch{if(!expectedImage)throw new InvalidOperationException("UNEXPECTED_PROCESS");throw;}
+  if(!expectedImage)throw new InvalidOperationException("UNEXPECTED_PROCESS");
+  return entry.imageSha256;
  }
  static string ReadPipe(Stream stream,PipeBudget budget){
   using(stream)using(var output=new MemoryStream()){
@@ -81,6 +86,7 @@ public static class MixedProcessCollector {
    return new UTF8Encoding(false,true).GetString(output.ToArray());
   }
  }
+ static bool CleanupComplete(List<Entry> processes,bool rootAnchored,bool untrackedCreateObserved){return rootAnchored&&!untrackedCreateObserved&&processes.Count>0&&processes.All(p=>p.osExited&&p.handleReleased);}
  static uint Left(Stopwatch clock){return (uint)Math.Max(0,10000-clock.ElapsedMilliseconds);}
  public static Result Run(string node,string helper,string mode,string expectedNodeHash,string[] environment){
   if(IntPtr.Size!=8||!new[]{"SHORT_DESCENDANT","CANCEL_DESCENDANT","FINAL_QUERY_FAILURE"}.Contains(mode))throw new InvalidOperationException("INVALID_CONFIGURATION");
@@ -89,7 +95,7 @@ public static class MixedProcessCollector {
   var sa=new Security();sa.size=Marshal.SizeOf(typeof(Security));sa.inherit=true;
   IntPtr inputRead=IntPtr.Zero,inputWrite=IntPtr.Zero,outputRead=IntPtr.Zero,outputWrite=IntPtr.Zero,errorRead=IntPtr.Zero,errorWrite=IntPtr.Zero;
   IntPtr attributeSize=IntPtr.Zero,handleList=IntPtr.Zero,env=IntPtr.Zero;
-  var pi=new ProcessInfo();bool launched=false,pending=false,attributesReady=false;
+  var pi=new ProcessInfo();bool launched=false,pending=false,attributesReady=false,rootAnchored=false,untrackedCreateObserved=false;
   DebugEvent current=new DebugEvent();long sequence=0;
   StreamWriter writer=null;Task<string> stdout=null,stderr=null;
   try{
@@ -105,7 +111,7 @@ public static class MixedProcessCollector {
    string block=String.Join("\0",environment)+"\0\0";env=Marshal.StringToHGlobalUni(block);
    if(node.Contains("\"")||helper.Contains("\""))throw new InvalidOperationException("INVALID_PATH");
    var command=new StringBuilder("\""+node+"\" \""+helper+"\" "+mode);
-   clock.Start();Require(CreateProcessW(node,command,IntPtr.Zero,IntPtr.Zero,true,0x08080401,env,Path.GetDirectoryName(helper),ref si,out pi));launched=true;
+   clock.Start();Require(CreateProcessW(node,command,IntPtr.Zero,IntPtr.Zero,true,RootCreationFlags,env,Path.GetDirectoryName(helper),ref si,out pi));launched=true;
    Require(DebugSetProcessKillOnExit(true));
    Close(ref inputRead);Close(ref outputWrite);Close(ref errorWrite);
    writer=new StreamWriter(new FileStream(new SafeFileHandle(inputWrite,true),FileAccess.Write),new UTF8Encoding(false));inputWrite=IntPtr.Zero;writer.AutoFlush=true;
@@ -117,7 +123,7 @@ public static class MixedProcessCollector {
     if(!WaitForDebugEvent(out current,Left(clock))){if(Marshal.GetLastWin32Error()==121)throw new TimeoutException();throw new Win32Exception(Marshal.GetLastWin32Error());}
     pending=true;sequence++;uint continuation=0x00010002;Entry entry=result.processes.FirstOrDefault(p=>p.pid==current.pid&&!p.osExited);
     if(current.kind==3){
-     int maximum=mode=="FINAL_QUERY_FAILURE"?1:2;if(result.processes.Count>=maximum)throw new InvalidOperationException("UNEXPECTED_PROCESS");
+     int maximum=mode=="FINAL_QUERY_FAILURE"?1:2;if(result.processes.Count>=maximum){untrackedCreateObserved=true;throw new InvalidOperationException("UNEXPECTED_PROCESS");}
      entry=new Entry();entry.instance=result.processes.Count+1;entry.pid=current.pid;entry.createSequence=sequence;result.processes.Add(entry);
      Require(DuplicateHandle(GetCurrentProcess(),current.process,GetCurrentProcess(),out entry.owned,0,false,2));
      long created,exited,kernel,user;Require(GetProcessTimes(entry.owned,out created,out exited,out kernel,out user));entry.creationFileTime=created.ToString(System.Globalization.CultureInfo.InvariantCulture);
@@ -125,6 +131,7 @@ public static class MixedProcessCollector {
      if(entry.imageSha256!=expectedNodeHash)throw new InvalidOperationException("UNEXPECTED_PROCESS");
      if(entry.instance==1){
       if(current.pid!=pi.pid)throw new InvalidOperationException("UNEXPECTED_PROCESS");
+      rootAnchored=true;
       if(pi.process==current.process)pi.process=IntPtr.Zero;else Close(ref pi.process);
       if(pi.thread==current.initialThread)pi.thread=IntPtr.Zero;else Close(ref pi.thread);
      }
@@ -168,13 +175,13 @@ public static class MixedProcessCollector {
      DebugEvent ev;if(!WaitForDebugEvent(out ev,Left(clock)))break;sequence++;
      var p=result.processes.FirstOrDefault(x=>x.pid==ev.pid&&!x.osExited);
      if((ev.kind==3||ev.kind==6)&&ev.fileOrThread!=IntPtr.Zero)CloseHandle(ev.fileOrThread);
-     if(ev.kind==3&&ev.process!=IntPtr.Zero)TerminateProcess(ev.process,1);
+     if(ev.kind==3){untrackedCreateObserved=true;if(ev.process!=IntPtr.Zero)TerminateProcess(ev.process,1);}
      ContinueDebugEvent(ev.pid,ev.tid,ev.kind==1?0x80010001u:0x00010002u);
      if(ev.kind==5&&p!=null){p.exitSequence=sequence;p.osExited=WaitForSingleObject(p.owned,Left(clock))==0;}
     }
    }
    foreach(var p in result.processes){if(p.owned!=IntPtr.Zero){p.handleReleased=CloseHandle(p.owned);p.owned=IntPtr.Zero;}}
-   result.completeCleanup=result.processes.Count>0&&result.processes.All(p=>p.osExited&&p.handleReleased);
+   result.completeCleanup=CleanupComplete(result.processes,rootAnchored,untrackedCreateObserved);
    if(writer!=null)try{writer.Dispose();}catch{result.completeCleanup=false;}
    if(stdout!=null&&stderr!=null)try{if(!Task.WaitAll(new Task[]{stdout,stderr},(int)Left(clock)))result.completeCleanup=false;}catch{result.completeCleanup=false;}
    foreach(var h in new[]{inputRead,inputWrite,outputRead,outputWrite,errorRead,errorWrite,pi.process,pi.thread})if(h!=IntPtr.Zero&&!CloseHandle(h))result.completeCleanup=false;

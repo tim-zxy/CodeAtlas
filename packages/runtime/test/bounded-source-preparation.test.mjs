@@ -162,3 +162,33 @@ test('A4 operation duration tightens caller deadline before later SQL delivery',
     Date.now = originalNow;
   }
 });
+
+test('A4 explicit private qualification reaches Git without entering strict storage control', async (t) => {
+  const f = await base(t);
+  let gates = 0,
+    disposed = 0;
+  f.state.expectedExecutable = process.execPath;
+  f.input.qualification = {
+    executablePath: process.execPath,
+    environment: {},
+    createLifecycle() {
+      return {
+        async beforeSpawn() {
+          gates++;
+        },
+        async beforeInput() {},
+        async afterClose() {},
+        async dispose() {
+          disposed++;
+        },
+      };
+    },
+  };
+  const p = await prep.prepareBudgetedMixedSourceOperation(f.input);
+  assert.equal(p.effects.sourceCommit, 'COMMITTED');
+  assert.ok(gates > 0);
+  const before = gates;
+  await p.verifySelection();
+  assert.ok(gates > before);
+  assert.equal(disposed, gates);
+});

@@ -1,0 +1,1670 @@
+{
+  "kind": "READ_ONLY_E02_GATE_EVIDENCE_MAP",
+  "utc": "2026-11-06T01:43:12.5398304Z",
+  "status": "E02_NOT_EVALUABLE_PROPOSAL_UNINSTALLED",
+  "scope": "Read-only JSON/text/hash analysis. No build, tests, model, Native, binary read, baseline install, dependency or authority/source changes.",
+  "candidate": {
+    "path": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/candidate-v4.json",
+    "sha256": "5ea637009c1f26497904640ac9f355a82111aa52cc0b8c7ee5041ff7acc82584",
+    "version": "proposed-4",
+    "status": "PROPOSED",
+    "installable": false,
+    "formalDenominator": null,
+    "wholeSystemDenominator": null,
+    "thresholdState": "UNSET",
+    "independentReviewOfThisVersion": null
+  },
+  "authorityPins": [
+    {
+      "path": "docs/superpowers/specs/2026-10-22-phase1-evaluation-design.md",
+      "candidatePin": "c3b1c918f84d3d064a77d15928789b600be146ef774d656df98e68fe41d92e06",
+      "currentSha256": "c3b1c918f84d3d064a77d15928789b600be146ef774d656df98e68fe41d92e06",
+      "matches": true
+    },
+    {
+      "path": "docs/superpowers/plans/2026-10-22-phase1-knowledge-and-delivery.md",
+      "candidatePin": "48cf069ca306c7d7ef1f02398688d4b07d644c6bfefa59bea15f91c4a3e69f56",
+      "currentSha256": "48cf069ca306c7d7ef1f02398688d4b07d644c6bfefa59bea15f91c4a3e69f56",
+      "matches": true
+    },
+    {
+      "path": "docs/handoff/PHASE_ACCEPTANCE.md",
+      "candidatePin": "be19ab48db51aabd24f4ccc8776174a263590472eadc3cc650f91f3678c8beac",
+      "currentSha256": "94bc2a96ade5acc531bfd64285a3d15080aa1bc5190eb93598ae26b5870e851b",
+      "matches": false
+    },
+    {
+      "path": "docs/handoff/specs/KNOWLEDGE_WORKFLOW.md",
+      "candidatePin": "008b25f2073d64bdbb075398a34c74ba4347b33eaaf77670de111c87ce1bfa13",
+      "currentSha256": "008b25f2073d64bdbb075398a34c74ba4347b33eaaf77670de111c87ce1bfa13",
+      "matches": true
+    },
+    {
+      "path": "docs/handoff/specs/AGENT_API.md",
+      "candidatePin": "37e985afb019b0a9f213bda505fd7d966964211d794190275baebcff24c1a8bf",
+      "currentSha256": "37e985afb019b0a9f213bda505fd7d966964211d794190275baebcff24c1a8bf",
+      "matches": true
+    },
+    {
+      "path": "docs/handoff/specs/SECURITY.md",
+      "candidatePin": "189ccaf85e3224fd24f85c12ae137aa41e279efbca5677bb758214ce94a22632",
+      "currentSha256": "80ccda0f413b9ed0bb9f19adaa0e7785340c32cd1af88f76a9203bfd68df00f4",
+      "matches": false
+    },
+    {
+      "path": "docs/handoff/adr/ADR-020-phase1-contracts-and-evaluation.md",
+      "candidatePin": "473991421e36aa0b6d3f9ffd9915b2bb8a5396d153e466e1d361ff33e83a51f1",
+      "currentSha256": "a9270e63d3f4993fe3a7f3df755b04c90278a5d3ba2262585f6c11cf8091151f",
+      "matches": false
+    }
+  ],
+  "authoritySemanticDisposition": "Current N1/HOST B prefixes expressly preserve evaluation/phase gates. Exact evaluation-design and Knowledge/Agent spec pins still match. No changed E02 counting/acceptance rule found. Three whole-document pins stale; exact old suffix not reproduced even with newline normalization, so byte-only prefix equivalence is NOT certified. Do not rewrite candidate or inherit old review as current-version approval.",
+  "fourFrameworkSet": {
+    "path": ".superpowers/sdd/2026-11-04-next-gates-approval/e02-proposed/candidate-v2.json",
+    "sha256": "b8178e1ed76444ea265e4dd39ad9bc2a72568202601b1e49a7c3cfd7c639a574",
+    "version": "proposed-2",
+    "scope": "Static source declarations/call sites only; no executable-framework registration or resolved bean credit",
+    "count": {
+      "status": "PROPOSED",
+      "approvedValue": null,
+      "proposedSourceSubsetCount": 21,
+      "entryCount": 9,
+      "boundaryCount": 12,
+      "byFramework": [
+        {
+          "framework": "spring",
+          "total": 8,
+          "entry": 3,
+          "boundary": 5
+        },
+        {
+          "framework": "mongo",
+          "total": 4,
+          "entry": 0,
+          "boundary": 4
+        },
+        {
+          "framework": "kafka",
+          "total": 2,
+          "entry": 1,
+          "boundary": 1
+        },
+        {
+          "framework": "fastapi",
+          "total": 7,
+          "entry": 5,
+          "boundary": 2
+        }
+      ],
+      "countingRule": "One proposed point per source-qualified critical declaration/call boundary slot. Multiple support assertions inside one watch or route are conjunctive, not added points. Declaration and invocation slots are intentionally distinct; reviewer must approve scope and duplicate policy. Unknown/negative/support controls and absent Source gaps have zero recall weight but remain mandatory/non-waived. These are candidate counts, not installed or approved E02 denominators. Constructor-specific rule: One source-qualified typed constructor parameter-to-field assignment declaration is one proposed BOUNDARY point, whether annotated or unannotated. Annotation is an additional Source property, not proof of a concrete bean, provider or runtime injection. Repeated support in a call-site fact does not remove this separately declared constructor slot. This source-only counting rule itself still needs independent review and final approval.",
+      "reviewDecisionsRequired": [
+        "Constructor injection declaration vs resolved runtime boundary semantics",
+        "Shadow/annotation module static entry declarations vs framework-executable entry semantics",
+        "Feign consumer declaration and invocation distinction",
+        "Unresolved-resource Mongo watch expected-unknown guard vs positive partial-boundary denominator policy",
+        "Whole-system/E2E and absent dynamic/lookalike coverage"
+      ]
+    },
+    "criticalSlots": [
+      {
+        "id": "e02-source-v1:spring:SpringSource.items:get-api-items",
+        "framework": "spring",
+        "group": "ENTRY",
+        "proposedRecallWeight": 1
+      },
+      {
+        "id": "e02-source-v1:spring:SpringSource.refresh:scheduled",
+        "framework": "spring",
+        "group": "ENTRY",
+        "proposedRecallWeight": 1
+      },
+      {
+        "id": "e02-source-v1:spring:InventoryClient.items:consumer-inventory",
+        "framework": "spring",
+        "group": "BOUNDARY",
+        "proposedRecallWeight": 1
+      },
+      {
+        "id": "e02-source-v1:spring:SpringSource.constructor:repository-injection-declaration",
+        "framework": "spring",
+        "group": "BOUNDARY",
+        "proposedRecallWeight": 1
+      },
+      {
+        "id": "e02-source-v1:spring:InventoryProxySource.proxy:get-proxy",
+        "framework": "spring",
+        "group": "ENTRY",
+        "proposedRecallWeight": 1
+      },
+      {
+        "id": "e02-source-v1:spring:InventoryProxyClient.items:consumer-inventory",
+        "framework": "spring",
+        "group": "BOUNDARY",
+        "proposedRecallWeight": 1
+      },
+      {
+        "id": "e02-source-v1:spring:InventoryProxySource.proxy:client-items-site",
+        "framework": "spring",
+        "group": "BOUNDARY",
+        "proposedRecallWeight": 1
+      },
+      {
+        "id": "e02-source-v1:mongo:MongoSource.read:events-read",
+        "framework": "mongo",
+        "group": "BOUNDARY",
+        "proposedRecallWeight": 1
+      },
+      {
+        "id": "e02-source-v1:mongo:MongoSource.write:events-write",
+        "framework": "mongo",
+        "group": "BOUNDARY",
+        "proposedRecallWeight": 1
+      },
+      {
+        "id": "e02-source-v1:mongo:MongoWatchSource.watch:atlas-events-lambda",
+        "framework": "mongo",
+        "group": "BOUNDARY",
+        "proposedRecallWeight": 1
+      },
+      {
+        "id": "e02-source-v1:mongo:MongoWatchReferenceSource.watch:atlas-events-reference",
+        "framework": "mongo",
+        "group": "BOUNDARY",
+        "proposedRecallWeight": 1
+      },
+      {
+        "id": "e02-source-v1:kafka:KafkaSource.send:events-producer",
+        "framework": "kafka",
+        "group": "BOUNDARY",
+        "proposedRecallWeight": 1
+      },
+      {
+        "id": "e02-source-v1:kafka:KafkaSource.receive:events-listener",
+        "framework": "kafka",
+        "group": "ENTRY",
+        "proposedRecallWeight": 1
+      },
+      {
+        "id": "e02-source-v1:fastapi:depends-default.handler:get-x",
+        "framework": "fastapi",
+        "group": "ENTRY",
+        "proposedRecallWeight": 1
+      },
+      {
+        "id": "e02-source-v1:fastapi:depends-default.handler.x:default-provider",
+        "framework": "fastapi",
+        "group": "BOUNDARY",
+        "proposedRecallWeight": 1
+      },
+      {
+        "id": "e02-source-v1:fastapi:depends-annotation.handler:get-x",
+        "framework": "fastapi",
+        "group": "ENTRY",
+        "proposedRecallWeight": 1
+      },
+      {
+        "id": "e02-source-v1:fastapi:routes.handler:get-api-v1-items",
+        "framework": "fastapi",
+        "group": "ENTRY",
+        "proposedRecallWeight": 1
+      },
+      {
+        "id": "e02-source-v1:fastapi:routes.handler.dependency:default-provider",
+        "framework": "fastapi",
+        "group": "BOUNDARY",
+        "proposedRecallWeight": 1
+      },
+      {
+        "id": "e02-source-v1:fastapi:depends-shadow.handler:get-shadow-declaration",
+        "framework": "fastapi",
+        "group": "ENTRY",
+        "proposedRecallWeight": 1
+      },
+      {
+        "id": "e02-source-v1:fastapi:inventory-service.items:get-items",
+        "framework": "fastapi",
+        "group": "ENTRY",
+        "proposedRecallWeight": 1
+      },
+      {
+        "id": "e02-source-v1:spring:InventoryProxySource.constructor:client-field-assignment-declaration",
+        "framework": "spring",
+        "group": "BOUNDARY",
+        "proposedRecallWeight": 1
+      }
+    ],
+    "mandatoryControls": [
+      {
+        "id": "e02-source-v1:mongo:MongoSource.watch:resource-unknown",
+        "group": "UNKNOWN",
+        "proposedRecallWeight": 0,
+        "reason": "Positive resolved-resource WATCH recall excludes this unresolved resource only; callback relationship remains mandatory and cannot be replaced by WRITE. Completeness decision remains proposed."
+      },
+      {
+        "id": "e02-source-v1:kafka:KafkaSource.template:single-local-definition",
+        "group": "SUPPORT",
+        "proposedRecallWeight": 0,
+        "reason": "Proof supporting producer slot; not a second producer or separate recall point."
+      },
+      {
+        "id": "e02-source-v1:kafka:KafkaSource:deployment-namespace-unknown",
+        "group": "UNKNOWN",
+        "proposedRecallWeight": 0,
+        "reason": "Namespace/config not declared anywhere in this pinned file; retain unknown rather than invent a deployment. This is a guard, not a successful match."
+      },
+      {
+        "id": "e02-source-v1:kafka:KafkaSource:serialization-schema-unknown",
+        "group": "UNKNOWN",
+        "proposedRecallWeight": 0,
+        "reason": "String generics and parameter types alone do not identify wire schema or compatibility."
+      },
+      {
+        "id": "e02-source-v1:spring:SpringSource.repository:runtime-bean-unknown",
+        "group": "UNKNOWN",
+        "proposedRecallWeight": 0,
+        "reason": "Source assignment/type supports the declaration fact, but no component/provider declaration proves a live bean. Do not claim runtime resolution."
+      },
+      {
+        "id": "e02-source-v1:fastapi:depends-annotation.handler.x:no-default-injection",
+        "group": "NEGATIVE",
+        "proposedRecallWeight": 0,
+        "reason": "Source colon is annotation, not '=' default; no invented Depends default binding. Annotation semantics at framework execution remain unasserted."
+      },
+      {
+        "id": "e02-source-v1:fastapi:depends-shadow.handler.value:no-framework-injection",
+        "group": "NEGATIVE",
+        "proposedRecallWeight": 0,
+        "reason": "The module reassigns Depends before use; identical spelling cannot prove FastAPI dependency. Do not execute this module."
+      },
+      {
+        "id": "e02-source-v1:spring-fastapi:inventory:crossrepo-schema-unknown",
+        "group": "UNKNOWN",
+        "proposedRecallWeight": 0,
+        "reason": "Equal GET /items is not an independently proven service or schema match; E05/E06 not claimed."
+      }
+    ],
+    "scopeGaps": [
+      {
+        "id": "e02-source-v1:missing:dynamic-framework-values",
+        "status": "PROPOSED",
+        "group": "SCOPE_GAP",
+        "proposedRecallWeight": 0,
+        "sourceEvidence": "All pinned route/topic/resource values above are static string literals; no dynamic route/router/topic/Feign placeholder Source control is present.",
+        "affectedObligations": [
+          "SPRING-ROUTE",
+          "SPRING-FEIGN",
+          "KAFKA-NAMESPACE",
+          "FASTAPI-ROUTER"
+        ],
+        "reason": "No literal expected output may be fabricated for absent Source. Required original dynamic/partial probes remain open, not NOT_APPLICABLE at parent scope."
+      },
+      {
+        "id": "e02-source-v1:missing:custom-framework-lookalikes",
+        "status": "PROPOSED",
+        "group": "SCOPE_GAP",
+        "proposedRecallWeight": 0,
+        "sourceEvidence": "Pinned imports identify Spring/Kafka/FastAPI and include Depends reassignment only; no same-name custom Spring annotation or unrelated get decorator file in the 29 pins.",
+        "reason": "Original non-framework controls remain required. This proposal does not exclude them from full E02 or expand source pins."
+      },
+      {
+        "id": "e02-source-v1:missing:two-e2e-critical-scopes",
+        "status": "PROPOSED",
+        "group": "SCOPE_GAP",
+        "proposedRecallWeight": 0,
+        "authority": "docs/superpowers/specs/2026-10-22-phase1-evaluation-design.md:123",
+        "reason": "E02 covers four Plugins plus two E2E. The provided fixed Source subset supplies neither an approved whole-system critical inventory nor actual observations. It cannot be installed as complete E02 baseline."
+      }
+    ],
+    "actualNumerator": null,
+    "review": "independent-review-v2.json PASS only for noninstallable source proposal quality; 21 facts,8 mandatory controls; not formal baseline approval"
+  },
+  "scenarioSets": [
+    {
+      "id": "vulnerability-processing",
+      "version": "proposed-4",
+      "runtimeOracle": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/expected/runtime.json",
+      "runtimeOracleSha256": "dddf86c9af36829ebbdc2212c508867f3d1c25352aa21c7dca9d60266b867929",
+      "probes": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/expected/probes-v2.json",
+      "probesSha256": "e7705914dfd1d430c24aa7fc1cd6c0e94dc7b96fa185197be0f36e11a815ecc1",
+      "proposedSlots": 14,
+      "entries": 5,
+      "boundaries": 9,
+      "formalDenominator": null,
+      "actualNumerator": null,
+      "criticalSlots": [
+        {
+          "id": "va:entry:submit",
+          "group": "ENTRY",
+          "kind": "HTTP_DECLARATION",
+          "applicability": "SYNTHETIC_STATIC_SOURCE_ONLY",
+          "proposedRecallWeight": 1
+        },
+        {
+          "id": "va:entry:score",
+          "group": "ENTRY",
+          "kind": "HTTP_DECLARATION",
+          "applicability": "SYNTHETIC_STATIC_SOURCE_ONLY",
+          "proposedRecallWeight": 1
+        },
+        {
+          "id": "va:entry:consume",
+          "group": "ENTRY",
+          "kind": "KAFKA_LISTENER",
+          "applicability": "SYNTHETIC_STATIC_SOURCE_ONLY",
+          "proposedRecallWeight": 1
+        },
+        {
+          "id": "va:entry:retry",
+          "group": "ENTRY",
+          "kind": "SCHEDULED_JOB",
+          "applicability": "SYNTHETIC_STATIC_SOURCE_ONLY",
+          "proposedRecallWeight": 1
+        },
+        {
+          "id": "va:boundary:api-constructor",
+          "group": "BOUNDARY",
+          "kind": "CONSTRUCTOR_FIELD_ASSIGNMENTS",
+          "applicability": "SYNTHETIC_STATIC_SOURCE_ONLY",
+          "proposedRecallWeight": 1
+        },
+        {
+          "id": "va:boundary:worker-constructor",
+          "group": "BOUNDARY",
+          "kind": "CONSTRUCTOR_FIELD_ASSIGNMENTS",
+          "applicability": "SYNTHETIC_STATIC_SOURCE_ONLY",
+          "proposedRecallWeight": 1
+        },
+        {
+          "id": "va:boundary:submit-write",
+          "group": "BOUNDARY",
+          "kind": "DATA_WRITE",
+          "applicability": "SYNTHETIC_STATIC_SOURCE_ONLY",
+          "proposedRecallWeight": 1
+        },
+        {
+          "id": "va:boundary:publish",
+          "group": "BOUNDARY",
+          "kind": "MESSAGE_PRODUCER",
+          "applicability": "SYNTHETIC_STATIC_SOURCE_ONLY",
+          "proposedRecallWeight": 1
+        },
+        {
+          "id": "va:boundary:scoring-method",
+          "group": "BOUNDARY",
+          "kind": "HTTP_CONSUMER_DECLARATION",
+          "applicability": "SYNTHETIC_STATIC_SOURCE_ONLY",
+          "proposedRecallWeight": 1
+        },
+        {
+          "id": "va:boundary:scoring-call",
+          "group": "BOUNDARY",
+          "kind": "TYPED_HTTP_CALL_SITE",
+          "applicability": "SYNTHETIC_STATIC_SOURCE_ONLY",
+          "proposedRecallWeight": 1
+        },
+        {
+          "id": "va:boundary:worker-read",
+          "group": "BOUNDARY",
+          "kind": "DATA_READ",
+          "applicability": "SYNTHETIC_STATIC_SOURCE_ONLY",
+          "proposedRecallWeight": 1
+        },
+        {
+          "id": "va:boundary:worker-write",
+          "group": "BOUNDARY",
+          "kind": "DATA_WRITE",
+          "applicability": "SYNTHETIC_STATIC_SOURCE_ONLY",
+          "proposedRecallWeight": 1
+        },
+        {
+          "id": "va:boundary:watch",
+          "group": "BOUNDARY",
+          "kind": "DATA_WATCH_CALLBACK",
+          "applicability": "SYNTHETIC_STATIC_SOURCE_ONLY",
+          "proposedRecallWeight": 1
+        },
+        {
+          "id": "va:entry:watch-callback",
+          "group": "ENTRY",
+          "kind": "DATA_CHANGE_EVENT_CALLBACK_DECLARATION",
+          "applicability": "SYNTHETIC_STATIC_SOURCE_ONLY",
+          "proposedRecallWeight": 1
+        }
+      ],
+      "mandatoryControls": [
+        {
+          "id": "va:unknown:dynamic-topic",
+          "group": null,
+          "proposedRecallWeight": null,
+          "reason": null
+        },
+        {
+          "id": "va:unknown:dynamic-service",
+          "group": null,
+          "proposedRecallWeight": null,
+          "reason": null
+        },
+        {
+          "id": "va:guard:watch-not-write",
+          "group": null,
+          "proposedRecallWeight": null,
+          "reason": null
+        }
+      ]
+    },
+    {
+      "id": "spring-fastapi-kafka",
+      "version": "proposed-4",
+      "runtimeOracle": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/spring-fastapi-kafka/expected/runtime-v2.json",
+      "runtimeOracleSha256": "dcd9fb5734c9366c1bf5c49704c49df263c6230d8f74681559b4e211552b2033",
+      "probes": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/spring-fastapi-kafka/expected/probes-v2.json",
+      "probesSha256": "2772314ff05a4db3a911e0356034bda2bedab561aaeb168199fac5c55fbaadbd",
+      "proposedSlots": 16,
+      "entries": 7,
+      "boundaries": 9,
+      "formalDenominator": null,
+      "actualNumerator": null,
+      "criticalSlots": [
+        {
+          "id": "sf:entry:gateway",
+          "group": "ENTRY",
+          "kind": "HTTP_DECLARATION",
+          "applicability": "SYNTHETIC_STATIC_SOURCE_ONLY",
+          "proposedRecallWeight": 1
+        },
+        {
+          "id": "sf:entry:catalog",
+          "group": "ENTRY",
+          "kind": "HTTP_DECLARATION",
+          "applicability": "SYNTHETIC_STATIC_SOURCE_ONLY",
+          "proposedRecallWeight": 1
+        },
+        {
+          "id": "sf:entry:event",
+          "group": "ENTRY",
+          "kind": "KAFKA_LISTENER",
+          "applicability": "SYNTHETIC_STATIC_SOURCE_ONLY",
+          "proposedRecallWeight": 1
+        },
+        {
+          "id": "sf:entry:job",
+          "group": "ENTRY",
+          "kind": "SCHEDULED_JOB",
+          "applicability": "SYNTHETIC_STATIC_SOURCE_ONLY",
+          "proposedRecallWeight": 1
+        },
+        {
+          "id": "sf:entry:other-namespace",
+          "group": "ENTRY",
+          "kind": "KAFKA_LISTENER",
+          "applicability": "SYNTHETIC_STATIC_SOURCE_ONLY",
+          "proposedRecallWeight": 1
+        },
+        {
+          "id": "sf:boundary:gateway-constructor",
+          "group": "BOUNDARY",
+          "kind": "CONSTRUCTOR_FIELD_ASSIGNMENTS",
+          "applicability": "SYNTHETIC_STATIC_SOURCE_ONLY",
+          "proposedRecallWeight": 1
+        },
+        {
+          "id": "sf:boundary:event-constructor",
+          "group": "BOUNDARY",
+          "kind": "CONSTRUCTOR_FIELD_ASSIGNMENTS",
+          "applicability": "SYNTHETIC_STATIC_SOURCE_ONLY",
+          "proposedRecallWeight": 1
+        },
+        {
+          "id": "sf:boundary:catalog-method",
+          "group": "BOUNDARY",
+          "kind": "HTTP_CONSUMER_DECLARATION",
+          "applicability": "SYNTHETIC_STATIC_SOURCE_ONLY",
+          "proposedRecallWeight": 1
+        },
+        {
+          "id": "sf:boundary:catalog-call",
+          "group": "BOUNDARY",
+          "kind": "TYPED_HTTP_CALL_SITE",
+          "applicability": "SYNTHETIC_STATIC_SOURCE_ONLY",
+          "proposedRecallWeight": 1
+        },
+        {
+          "id": "sf:boundary:publish",
+          "group": "BOUNDARY",
+          "kind": "MESSAGE_PRODUCER",
+          "applicability": "SYNTHETIC_STATIC_SOURCE_ONLY",
+          "proposedRecallWeight": 1
+        },
+        {
+          "id": "sf:boundary:depends",
+          "group": "BOUNDARY",
+          "kind": "PARAMETER_DEFAULT_DEPENDENCY",
+          "applicability": "SYNTHETIC_STATIC_SOURCE_ONLY",
+          "proposedRecallWeight": 1
+        },
+        {
+          "id": "sf:boundary:read",
+          "group": "BOUNDARY",
+          "kind": "DATA_READ",
+          "applicability": "SYNTHETIC_STATIC_SOURCE_ONLY",
+          "proposedRecallWeight": 1
+        },
+        {
+          "id": "sf:boundary:write",
+          "group": "BOUNDARY",
+          "kind": "DATA_WRITE",
+          "applicability": "SYNTHETIC_STATIC_SOURCE_ONLY",
+          "proposedRecallWeight": 1
+        },
+        {
+          "id": "sf:boundary:queue-task",
+          "group": "BOUNDARY",
+          "kind": "ASYNC_SUBMISSION_SITE",
+          "applicability": "SYNTHETIC_STATIC_SOURCE_ONLY",
+          "proposedRecallWeight": 1
+        },
+        {
+          "id": "sf:entry:task",
+          "group": "ENTRY",
+          "kind": "QUEUED_TASK_CALLBACK_DECLARATION",
+          "applicability": "SYNTHETIC_STATIC_SOURCE_ONLY",
+          "proposedRecallWeight": 1
+        },
+        {
+          "id": "sf:entry:batch",
+          "group": "ENTRY",
+          "kind": "BATCH_JOB_STEP_DECLARATION",
+          "applicability": "SYNTHETIC_STATIC_SOURCE_ONLY",
+          "proposedRecallWeight": 1
+        }
+      ],
+      "mandatoryControls": [
+        {
+          "id": "sf:negative:custom-annotation",
+          "group": null,
+          "proposedRecallWeight": null,
+          "reason": null
+        },
+        {
+          "id": "sf:negative:unrelated-decorator",
+          "group": null,
+          "proposedRecallWeight": null,
+          "reason": null
+        },
+        {
+          "id": "sf:unknown:dynamic-prefix",
+          "group": null,
+          "proposedRecallWeight": null,
+          "reason": null
+        },
+        {
+          "id": "sf:negative:shadow-depends",
+          "group": null,
+          "proposedRecallWeight": null,
+          "reason": null
+        },
+        {
+          "id": "sf:unknown:dynamic-topic",
+          "group": null,
+          "proposedRecallWeight": null,
+          "reason": null
+        },
+        {
+          "id": "sf:support:batch-driver-and-step",
+          "group": null,
+          "proposedRecallWeight": null,
+          "reason": "Positive Source and explicit driver input; zero additional recall weight because job/step/driver supports belong to the single sf:entry:batch slot. Actual Runtime extraction is not inferred."
+        }
+      ]
+    }
+  ],
+  "perProbe": [
+    {
+      "id": "VA-ENTRY",
+      "required": true,
+      "ratioWeight": 0,
+      "oraclePointer": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/expected/probes-v2.json#/probes/VA-ENTRY",
+      "inputs": {
+        "snapshot": "base",
+        "runtimeOracle": "expected/runtime.json"
+      },
+      "expected": {
+        "entryIds": [
+          "va:entry:submit",
+          "va:entry:score",
+          "va:entry:consume",
+          "va:entry:retry",
+          "va:entry:watch-callback"
+        ],
+        "entryCount": 5,
+        "missingCriticalEntryIsFailure": true,
+        "watchStartupIsNotInferred": true,
+        "startupPlumbingRequiresSupportButAddsNoBusinessEntryPoint": true
+      },
+      "actualNumerator": null,
+      "formalDenominator": null,
+      "evidenceState": "UNMEASURED_FOR_THIS_EXACT_PROPOSED_PROBE",
+      "dependencies": [
+        "No approved actual P1-20 runner/environment/observations are supplied by this authoring."
+      ],
+      "relatedEvidenceOnly": "No independently mapped actual result for this exact proposed probe in reviewed packet"
+    },
+    {
+      "id": "VA-DATA",
+      "required": true,
+      "ratioWeight": 0,
+      "oraclePointer": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/expected/probes-v2.json#/probes/VA-DATA",
+      "inputs": {
+        "id": "VULN-001",
+        "presentRecord": {
+          "id": "VULN-001",
+          "status": "SUBMITTED"
+        },
+        "absentRecord": null
+      },
+      "expected": {
+        "submit": {
+          "operation": "WRITE",
+          "collection": "vulnerabilities",
+          "status": "SUBMITTED"
+        },
+        "process": {
+          "read": true,
+          "writeWhenRecordPresent": true,
+          "writeWhenRecordAbsent": false,
+          "statusWhenWritten": "PROCESSED"
+        },
+        "watch": {
+          "database": "security",
+          "collection": "vulnerabilities",
+          "handler": "VulnerabilityWorker.onChange",
+          "resultRelationshipRequired": true,
+          "ordinarySaveMaySubstitute": false,
+          "startupRegistration": "WatchStartup.registerWatch -> watchExecutor.submit(worker::observeChanges)"
+        },
+        "activeWatchRegistration": "SOURCE_DECLARED_ACTUAL_UNEXECUTED"
+      },
+      "actualNumerator": null,
+      "formalDenominator": null,
+      "evidenceState": "UNMEASURED_FOR_THIS_EXACT_PROPOSED_PROBE",
+      "dependencies": [
+        "No approved actual P1-20 runner/environment/observations supplied.",
+        "Positive watch registration/result/handler Source is complete; actual driver bean startup, live watch registration and owned-resource event lifecycle still require separate execution evidence."
+      ],
+      "relatedEvidenceOnly": "No independently mapped actual result for this exact proposed probe in reviewed packet"
+    },
+    {
+      "id": "VA-BOUNDARY",
+      "required": true,
+      "ratioWeight": 0,
+      "oraclePointer": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/expected/probes-v2.json#/probes/VA-BOUNDARY",
+      "inputs": {
+        "entry": "va:entry:submit",
+        "messageContract": "contracts.json#message",
+        "httpContract": "contracts.json#services"
+      },
+      "expected": {
+        "http": {
+          "from": "VulnerabilityApi.submit",
+          "to": "ScoringClient.score",
+          "provider": "va-scoring:score",
+          "conditionalStatus": "DECLARED_MATCH_PENDING_ACTUAL_SOURCE_ADAPTER"
+        },
+        "message": {
+          "from": "VulnerabilityApi.submit",
+          "to": "VulnerabilityWorker.consume",
+          "topic": "vulnerability.submitted",
+          "namespace": "va-local",
+          "asynchronous": true
+        },
+        "localCalls": [
+          [
+            "consume",
+            "process"
+          ],
+          [
+            "retry",
+            "process"
+          ]
+        ],
+        "forbiddenSynchronousEdges": [
+          [
+            "submit",
+            "consume"
+          ]
+        ],
+        "notOrdered": [
+          [
+            "HTTP:score",
+            "consume"
+          ]
+        ],
+        "unprovenExternalEndpointMayConnect": false
+      },
+      "actualNumerator": null,
+      "formalDenominator": null,
+      "evidenceState": "UNMEASURED_FOR_THIS_EXACT_PROPOSED_PROBE",
+      "dependencies": [
+        "No approved actual P1-20 runner/environment/observations are supplied by this authoring.",
+        "No authenticated cross-repo contract/Source adapter evidence is supplied; declaration match is not executable communication."
+      ],
+      "relatedEvidenceOnly": "No independently mapped actual result for this exact proposed probe in reviewed packet"
+    },
+    {
+      "id": "VA-CROSS",
+      "required": true,
+      "ratioWeight": 0,
+      "oraclePointer": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/expected/probes-v2.json#/probes/VA-CROSS",
+      "inputs": {
+        "revisionSet": "repository-inventory.json",
+        "unknownSource": "va-worker/UnknownBoundaries.java"
+      },
+      "expected": {
+        "repositories": [
+          "va-api",
+          "va-worker",
+          "va-scoring"
+        ],
+        "everyCrossRepoReferenceRequires": [
+          "repoId",
+          "revisionId",
+          "fingerprint"
+        ],
+        "dynamicTopic": {
+          "status": "UNRESOLVED",
+          "topic": null,
+          "selectedProvider": null
+        },
+        "dynamicService": {
+          "status": "UNRESOLVED",
+          "service": null,
+          "selectedProvider": null
+        },
+        "missingProviderIsExternal": false,
+        "changedFingerprintInvalidatesPriorBinding": true
+      },
+      "actualNumerator": null,
+      "formalDenominator": null,
+      "evidenceState": "UNMEASURED_FOR_THIS_EXACT_PROPOSED_PROBE",
+      "dependencies": [
+        "No approved actual P1-20 runner/environment/observations are supplied by this authoring."
+      ],
+      "relatedEvidenceOnly": "Existing task08/09 local checks and current13 workspace offline integration; not exact VA/SF E02 observations"
+    },
+    {
+      "id": "VA-KNOWLEDGE",
+      "required": true,
+      "ratioWeight": 0,
+      "oraclePointer": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/expected/probes-v2.json#/probes/VA-KNOWLEDGE",
+      "inputs": {
+        "oracle": "expected/knowledge-v2.json",
+        "facts": "expected/runtime.json",
+        "document": "va-api/ADR-001.md"
+      },
+      "expected": {
+        "componentCandidates": [
+          "va:component:submission",
+          "va:component:scoring",
+          "va:component:worker"
+        ],
+        "capabilityCandidate": "va:capability:process-vulnerability",
+        "integrationCandidates": [
+          "va:integration:http-scoring",
+          "va:integration:kafka-processing"
+        ],
+        "businessFlowCandidate": "va:business-flow:process-vulnerability",
+        "purposeEvidenceKind": "DECLARED",
+        "unsupportedClaimsAllowed": false,
+        "codeOnlyBusinessPurposeAllowed": false,
+        "expectedAnswers": {
+          "receives": "va-api:VulnerabilityApi.submit",
+          "scores": "va-scoring:score",
+          "processes": "va-worker:VulnerabilityWorker.process",
+          "stores": "security.vulnerabilities"
+        }
+      },
+      "actualNumerator": null,
+      "formalDenominator": null,
+      "evidenceState": "UNMEASURED_FOR_THIS_EXACT_PROPOSED_PROBE",
+      "dependencies": [
+        "No approved actual P1-20 runner/environment/observations are supplied by this authoring.",
+        "No model adapter or model/prompt policy is approved/frozen. Literal candidate contract cannot prove actual semantic synthesis."
+      ],
+      "relatedEvidenceOnly": "No independently mapped actual result for this exact proposed probe in reviewed packet"
+    },
+    {
+      "id": "VA-MANUAL",
+      "required": true,
+      "ratioWeight": 0,
+      "oraclePointer": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/expected/probes-v2.json#/probes/VA-MANUAL",
+      "inputs": {
+        "initialSemanticState": {
+          "publishedRevision": "K0",
+          "sourceSnapshot": "base",
+          "candidateRevision": null
+        },
+        "localOnly": true,
+        "invalidVectors": {
+          "schemaInvalid": {
+            "fault": "required type discriminator absent",
+            "candidateId": "va:capability:process-vulnerability"
+          },
+          "groundingInvalid": {
+            "supportFact": "va:missing:unobserved-fact",
+            "reason": "support key does not exist in any pinned Source/runtime oracle",
+            "candidateId": "va:capability:process-vulnerability"
+          }
+        },
+        "sequencePolicy": "Single ordered case: K0 read -> valid publication K1 -> schema-invalid attempt -> grounding-invalid attempt. No reset between these actions; each invalid attempt retains K1."
+      },
+      "expected": {
+        "read": {
+          "publishedRevision": "K0",
+          "modelCalls": 0,
+          "updateKnowledgeCalls": 0
+        },
+        "validUpdate": {
+          "publishAllowedOnlyByExplicitUpdate": true,
+          "targetRevision": "K1",
+          "beforePublishedRevision": "K0",
+          "afterPublishedRevision": "K1"
+        },
+        "invalidUpdates": {
+          "schemaInvalid": {
+            "publishedRevision": "K1",
+            "newPublishedRevision": false,
+            "beforePublishedRevision": "K1",
+            "afterPublishedRevision": "K1"
+          },
+          "groundingInvalid": {
+            "publishedRevision": "K1",
+            "newPublishedRevision": false,
+            "beforePublishedRevision": "K1",
+            "afterPublishedRevision": "K1"
+          }
+        },
+        "candidateOnlyOutputCannotPublish": true,
+        "transitionVectors": [
+          {
+            "action": "READ",
+            "modelCalls": 0,
+            "newPublishedRevision": false,
+            "updateCalls": 0,
+            "before": "K0",
+            "after": "K0"
+          },
+          {
+            "before": "K0",
+            "action": "VALID_EXPLICIT_UPDATE",
+            "after": "K1",
+            "newPublishedRevision": true
+          },
+          {
+            "before": "K1",
+            "action": "SCHEMA_INVALID_UPDATE",
+            "after": "K1",
+            "newPublishedRevision": false
+          },
+          {
+            "before": "K1",
+            "action": "GROUNDING_INVALID_UPDATE",
+            "after": "K1",
+            "newPublishedRevision": false
+          }
+        ]
+      },
+      "actualNumerator": null,
+      "formalDenominator": null,
+      "evidenceState": "UNMEASURED_FOR_THIS_EXACT_PROPOSED_PROBE",
+      "dependencies": [
+        "No approved actual P1-20 runner/environment/observations are supplied by this authoring.",
+        "K0/K1 are proposed oracle-state labels, not database records. Actual publication APIs, model/basis evidence and transaction behavior are not exercised."
+      ],
+      "relatedEvidenceOnly": "No independently mapped actual result for this exact proposed probe in reviewed packet"
+    },
+    {
+      "id": "VA-CHANGE",
+      "required": true,
+      "ratioWeight": 0,
+      "oraclePointer": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/expected/probes-v2.json#/probes/VA-CHANGE",
+      "inputs": {
+        "mutations": [
+          "VA-TOPIC-RENAME",
+          "VA-ROUTE-CHANGE"
+        ],
+        "publishedRevision": "K0",
+        "changePlan": "mutations.json"
+      },
+      "expected": {
+        "topicRename": {
+          "old": "vulnerability.submitted",
+          "new": "vulnerability.review",
+          "listenerOldTopicRemains": true,
+          "matchingOldConsumer": "UNRESOLVED"
+        },
+        "routeChange": {
+          "oldProviderPath": "/score",
+          "newProviderPath": "/score-v2",
+          "consumerOldPathRemains": true,
+          "match": "UNRESOLVED"
+        },
+        "knowledge": {
+          "freshness": "AFFECTED",
+          "publishedRevision": "K0",
+          "autoSemanticPublish": false
+        },
+        "newRuntimeSupportMustUse": "target snapshot fingerprint",
+        "oldSupportsCannotMasqueradeAsCurrent": true
+      },
+      "actualNumerator": null,
+      "formalDenominator": null,
+      "evidenceState": "UNMEASURED_FOR_THIS_EXACT_PROPOSED_PROBE",
+      "dependencies": [
+        "No approved actual P1-20 runner/environment/observations are supplied by this authoring."
+      ],
+      "relatedEvidenceOnly": "No independently mapped actual result for this exact proposed probe in reviewed packet"
+    },
+    {
+      "id": "VA-IDENTITY",
+      "required": true,
+      "ratioWeight": 0,
+      "oraclePointer": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/expected/probes-v2.json#/probes/VA-IDENTITY",
+      "inputs": {
+        "candidateId": "va:capability:process-vulnerability",
+        "mutations": [
+          "VA-DOC-REWORD",
+          "VA-DOC-RENAME",
+          "VA-DOC-SPLIT"
+        ],
+        "publishedRevision": "K0"
+      },
+      "expected": {
+        "reword": {
+          "sameKnowledgeId": "va:capability:process-vulnerability"
+        },
+        "rename": {
+          "sameKnowledgeId": "va:capability:process-vulnerability"
+        },
+        "split": {
+          "automaticSplit": false,
+          "identityDecision": "REVIEW_REQUIRED",
+          "publishedRevision": "K0"
+        },
+        "sourceRenameIsNotEntityRenameByItself": true
+      },
+      "actualNumerator": null,
+      "formalDenominator": null,
+      "evidenceState": "UNMEASURED_FOR_THIS_EXACT_PROPOSED_PROBE",
+      "dependencies": [
+        "No approved actual P1-20 runner/environment/observations are supplied by this authoring.",
+        "No approved identity decision or actual matching model run is created. Candidate ID is a synthetic oracle semantic key, not an installed Knowledge ID."
+      ],
+      "relatedEvidenceOnly": "No independently mapped actual result for this exact proposed probe in reviewed packet"
+    },
+    {
+      "id": "VA-SECURITY",
+      "required": true,
+      "ratioWeight": 0,
+      "oraclePointer": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/expected/probes-v2.json#/probes/VA-SECURITY",
+      "inputs": {
+        "policy": {
+          "localOnly": true,
+          "remoteOptIn": false
+        },
+        "secretSource": "va-api/.env.example",
+        "untrustedSource": "va-api/untrusted-note.md",
+        "localProviderOutcome": "UNAVAILABLE"
+      },
+      "expected": {
+        "rawSecretIncludedInContext": false,
+        "rawSecretInLogs": false,
+        "rawSecretInPublicAnswer": false,
+        "promptInstructionExecuted": false,
+        "policyChanged": false,
+        "implicitPublish": false,
+        "remoteModelCalls": 0,
+        "remoteFallback": false,
+        "expectedUpdateResult": "NOT_EVALUABLE_OR_EXPLICIT_LOCAL_UNAVAILABLE",
+        "publishedRevision": "K0"
+      },
+      "actualNumerator": null,
+      "formalDenominator": null,
+      "evidenceState": "UNMEASURED_FOR_THIS_EXACT_PROPOSED_PROBE",
+      "dependencies": [
+        "No approved actual P1-20 runner/environment/observations are supplied by this authoring.",
+        "No actual model or secret-filter execution is authorized. This is a literal synthetic sentinel/injection oracle, never a real credential or instruction."
+      ],
+      "relatedEvidenceOnly": "No independently mapped actual result for this exact proposed probe in reviewed packet"
+    },
+    {
+      "id": "VA-WIKI",
+      "required": true,
+      "ratioWeight": 0,
+      "oraclePointer": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/expected/probes-v2.json#/probes/VA-WIKI",
+      "inputs": {
+        "published": "K0",
+        "draft": "K1",
+        "requiredKnowledgeMissing": [
+          "va:capability:process-vulnerability"
+        ],
+        "stale": true
+      },
+      "expected": {
+        "visibleRevision": "K0",
+        "draftK1Visible": false,
+        "missingEntryDiagnostic": true,
+        "inventedReplacementText": false,
+        "staleDiagnostic": true,
+        "reprojectionModelCalls": 0,
+        "reprojectionUpdateKnowledgeCalls": 0,
+        "reprojectionNewKnowledgeRevision": false
+      },
+      "actualNumerator": null,
+      "formalDenominator": null,
+      "evidenceState": "UNMEASURED_FOR_THIS_EXACT_PROPOSED_PROBE",
+      "dependencies": [
+        "No approved actual P1-20 runner/environment/observations are supplied by this authoring."
+      ],
+      "relatedEvidenceOnly": "No independently mapped actual result for this exact proposed probe in reviewed packet"
+    },
+    {
+      "id": "VA-AGENT",
+      "required": true,
+      "ratioWeight": 0,
+      "oraclePointer": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/expected/probes-v2.json#/probes/VA-AGENT",
+      "inputs": {
+        "levels": {
+          "L0": {
+            "include": [
+              "systemSummary"
+            ],
+            "exclude": [
+              "fullWiki",
+              "allEvidence"
+            ]
+          },
+          "L1": {
+            "include": [
+              "taskRelevantKnowledge"
+            ],
+            "exclude": [
+              "allSource"
+            ]
+          },
+          "L2": {
+            "include": [
+              "requestedEngineeringEvidence"
+            ]
+          }
+        },
+        "task": "Explain processing of VULN-001"
+      },
+      "expected": {
+        "L0DoesNotPreloadWiki": true,
+        "L1UsesPublishedTaskRelevantKnowledge": true,
+        "L2FetchesEvidenceOnDemand": true,
+        "readOnlyUpdateCalls": 0,
+        "readOnlyModelCalls": 0,
+        "returnsAffectedStateWhenNeeded": true
+      },
+      "actualNumerator": null,
+      "formalDenominator": null,
+      "evidenceState": "UNMEASURED_FOR_THIS_EXACT_PROPOSED_PROBE",
+      "dependencies": [
+        "No approved actual P1-20 runner/environment/observations are supplied by this authoring.",
+        "Exact approved token/byte budgets remain UNSET; no guessed numeric budget is installed."
+      ],
+      "relatedEvidenceOnly": "No independently mapped actual result for this exact proposed probe in reviewed packet"
+    },
+    {
+      "id": "VA-RECOVERY",
+      "required": true,
+      "ratioWeight": 0,
+      "oraclePointer": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/vulnerability-processing/expected/probes-v2.json#/probes/VA-RECOVERY",
+      "inputs": {
+        "before": {
+          "publishedRevision": "K0",
+          "activation": "A0",
+          "sideEffects": 0
+        },
+        "faults": [
+          "CANCEL_BEFORE_PUBLISH",
+          "CRASH_BEFORE_COMMIT",
+          "SCHEMA_INVALID",
+          "GROUNDING_INVALID",
+          "INTERRUPT_DURING_COMMIT"
+        ],
+        "operationId": "synthetic-va-update-001"
+      },
+      "expected": {
+        "failureBeforeCommit": {
+          "publishedRevision": "K0",
+          "activation": "A0",
+          "sideEffects": 0,
+          "partialPublished": false
+        },
+        "committedRetry": {
+          "publishedRevision": "K1",
+          "logicalPublicationEffects": 1,
+          "duplicateEffects": 0
+        },
+        "commitOutcomeMustMatchDurableReport": true,
+        "uncertainCommitMayNotBeCalledSuccess": true,
+        "duringCommit": {
+          "uncertainOutcomeIsNotSuccess": true,
+          "allowedAtomicStates": [
+            {
+              "publishedRevision": "K0",
+              "logicalPublicationEffects": 0
+            },
+            {
+              "publishedRevision": "K1",
+              "logicalPublicationEffects": 1
+            }
+          ],
+          "partialStateForbidden": true,
+          "retryMayNotDuplicateCommittedEffect": true,
+          "authoritativeReopenRequired": true
+        }
+      },
+      "actualNumerator": null,
+      "formalDenominator": null,
+      "evidenceState": "UNMEASURED_FOR_THIS_EXACT_PROPOSED_PROBE",
+      "dependencies": [
+        "No approved actual P1-20 runner/environment/observations are supplied by this authoring.",
+        "No DB transaction/fault injector or future real cancellation/crash scope is approved here; each fault remains an unexecuted required actual check."
+      ],
+      "relatedEvidenceOnly": "N1 NO_OP/deletion copied full graph2/2; not exact VA/SF mutation baseline"
+    },
+    {
+      "id": "SF-PLUGIN",
+      "required": true,
+      "ratioWeight": 0,
+      "oraclePointer": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/spring-fastapi-kafka/expected/probes-v2.json#/probes/SF-PLUGIN",
+      "inputs": {
+        "runtimeOracle": "expected/runtime-v2.json",
+        "negativeSources": [
+          "sf-gateway/Lookalike.java",
+          "sf-catalog/negative_controls.py"
+        ]
+      },
+      "expected": {
+        "springHttpEntry": "sf:entry:gateway",
+        "fastApiEntry": "sf:entry:catalog",
+        "kafkaEntries": [
+          "sf:entry:event",
+          "sf:entry:other-namespace"
+        ],
+        "mongoReadWrite": [
+          "sf:boundary:read",
+          "sf:boundary:write"
+        ],
+        "customGetMappingSpringEntry": false,
+        "OtherGetFastApiEntry": false,
+        "shadowDependsInjection": false,
+        "everyExpectedFactRequiresSourceSupport": true,
+        "otherNamespaceOwnContext": "sf:event:other-namespace"
+      },
+      "actualNumerator": null,
+      "formalDenominator": null,
+      "evidenceState": "UNMEASURED_FOR_THIS_EXACT_PROPOSED_PROBE",
+      "dependencies": [
+        "No approved actual P1-20 runner/environment/observations are supplied by this authoring."
+      ],
+      "relatedEvidenceOnly": "No independently mapped actual result for this exact proposed probe in reviewed packet"
+    },
+    {
+      "id": "SF-ROUTER",
+      "required": true,
+      "ratioWeight": 0,
+      "oraclePointer": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/spring-fastapi-kafka/expected/probes-v2.json#/probes/SF-ROUTER",
+      "inputs": {
+        "staticPaths": {
+          "spring": "/gateway/items",
+          "python": "/api/v1/items"
+        },
+        "dynamicRouter": "negative_controls.py:dynamic_router"
+      },
+      "expected": {
+        "spring": {
+          "method": "GET",
+          "path": "/gateway/items"
+        },
+        "python": {
+          "method": "GET",
+          "path": "/api/v1/items"
+        },
+        "dynamic": {
+          "methodPath": "/dynamic",
+          "fullPath": null,
+          "prefix": null,
+          "coverage": "PARTIAL",
+          "hardFailureForValidUnknown": false
+        },
+        "executeConfiguredPrefix": false
+      },
+      "actualNumerator": null,
+      "formalDenominator": null,
+      "evidenceState": "UNMEASURED_FOR_THIS_EXACT_PROPOSED_PROBE",
+      "dependencies": [
+        "No approved actual P1-20 runner/environment/observations are supplied by this authoring."
+      ],
+      "relatedEvidenceOnly": "No independently mapped actual result for this exact proposed probe in reviewed packet"
+    },
+    {
+      "id": "SF-MATCH",
+      "required": true,
+      "ratioWeight": 0,
+      "oraclePointer": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/spring-fastapi-kafka/expected/probes-v2.json#/probes/SF-MATCH",
+      "inputs": {
+        "contractDocument": "sf-gateway/contracts.json",
+        "caseIds": [
+          "SF-MATCH-unique",
+          "SF-MATCH-ambiguous",
+          "SF-MATCH-unresolved",
+          "SF-MATCH-conflicted",
+          "SF-MATCH-outside",
+          "SF-MATCH-external"
+        ]
+      },
+      "expected": {
+        "rows": [
+          {
+            "inputCase": "SF-MATCH-unique",
+            "expectedSemanticStatus": "MATCHED",
+            "selectedProvider": "provider-main"
+          },
+          {
+            "inputCase": "SF-MATCH-ambiguous",
+            "expectedSemanticStatus": "AMBIGUOUS",
+            "selectedProvider": null,
+            "candidates": [
+              "provider-a",
+              "provider-b"
+            ]
+          },
+          {
+            "inputCase": "SF-MATCH-unresolved",
+            "expectedSemanticStatus": "UNRESOLVED",
+            "selectedProvider": null
+          },
+          {
+            "inputCase": "SF-MATCH-conflicted",
+            "expectedSemanticStatus": "CONFLICTED",
+            "selectedProvider": null,
+            "reason": "response type string vs integer"
+          },
+          {
+            "inputCase": "SF-MATCH-outside",
+            "expectedSemanticStatus": "OUTSIDE_WORKSPACE",
+            "selectedProvider": null
+          },
+          {
+            "inputCase": "SF-MATCH-external",
+            "expectedSemanticStatus": "KNOWN_EXTERNAL",
+            "selectedProvider": null
+          }
+        ],
+        "namespaceMismatch": {
+          "topic": "catalog.updated",
+          "producerNamespace": "sf-east",
+          "listenerNamespace": "sf-west",
+          "status": "UNRESOLVED",
+          "selectedProvider": null
+        },
+        "onlyMatchedMaySelectProvider": true,
+        "onlySupportedMatchedMayProduceWorkspaceEdge": true
+      },
+      "actualNumerator": null,
+      "formalDenominator": null,
+      "evidenceState": "UNMEASURED_FOR_THIS_EXACT_PROPOSED_PROBE",
+      "dependencies": [
+        "No approved actual P1-20 runner/environment/observations are supplied by this authoring.",
+        "Exact matcher wire enum/declaration-document adapter and source authenticity path require review; alternative symbolic provider cases are not actual deployed Source repositories."
+      ],
+      "relatedEvidenceOnly": "Existing task08/09 local checks and current13 workspace offline integration; not exact VA/SF E02 observations"
+    },
+    {
+      "id": "SF-CONTEXT",
+      "required": true,
+      "ratioWeight": 0,
+      "oraclePointer": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/spring-fastapi-kafka/expected/probes-v2.json#/probes/SF-CONTEXT",
+      "inputs": {
+        "requestEntry": "Gateway.items",
+        "eventEntry": "EventWorker.receive",
+        "jobEntry": "EventWorker.hourly",
+        "taskSite": "EventWorker.queueTask",
+        "batchSource": "BatchConfiguration.catalogBatch"
+      },
+      "expected": {
+        "requiredKinds": [
+          "REQUEST",
+          "EVENT",
+          "JOB",
+          "TASK",
+          "BATCH"
+        ],
+        "requestAndEventNotSameContext": true,
+        "jobAndTaskNotSynchronousRequestCall": true,
+        "taskDeclaration": {
+          "callback": "this::taskBody",
+          "separateAsyncContextRequired": true,
+          "startupDriver": "ScenarioConfiguration.startTask"
+        },
+        "batchDeclaration": {
+          "job": "catalogBatch",
+          "step": "refreshStep",
+          "implementation": "ScenarioConfiguration.refreshStep tasklet -> EventWorker.update(\"batch-fixed\")",
+          "startupDriver": "ScenarioConfiguration.startBatch"
+        },
+        "missingKindCannotPass": true,
+        "independentEventContexts": [
+          {
+            "namespace": "sf-east",
+            "key": "sf:event:receive",
+            "entryFact": "sf:entry:event"
+          },
+          {
+            "incomingCrossRepoEdge": null,
+            "key": "sf:event:other-namespace",
+            "namespace": "sf-west",
+            "body": "EMPTY",
+            "localCalls": [],
+            "entryFact": "sf:entry:other-namespace"
+          }
+        ]
+      },
+      "actualNumerator": null,
+      "formalDenominator": null,
+      "evidenceState": "UNMEASURED_FOR_THIS_EXACT_PROPOSED_PROBE",
+      "dependencies": [
+        "Positive Source for all five required contexts and task/batch startup drivers is supplied.",
+        "Actual Provider/Plugin context extraction, owned executor/JobRepository/transaction resources and runtime registration/lifecycles remain unexecuted; no actual capability qualification is conferred."
+      ],
+      "relatedEvidenceOnly": "Existing task08/09 local checks and current13 workspace offline integration; not exact VA/SF E02 observations"
+    },
+    {
+      "id": "SF-DETERMINISM",
+      "required": true,
+      "ratioWeight": 0,
+      "oraclePointer": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/spring-fastapi-kafka/expected/probes-v2.json#/probes/SF-DETERMINISM",
+      "inputs": {
+        "permutations": [
+          {
+            "repos": [
+              "sf-gateway",
+              "sf-catalog",
+              "sf-events"
+            ],
+            "fileOrder": "ascending",
+            "workers": 1
+          },
+          {
+            "repos": [
+              "sf-events",
+              "sf-catalog",
+              "sf-gateway"
+            ],
+            "fileOrder": "descending",
+            "workers": 2
+          }
+        ],
+        "cycle": "EventWorker.repeat",
+        "oracle": "expected/runtime-v2.json#graphOracle"
+      },
+      "expected": {
+        "canonicalFactIdsPreserved": true,
+        "contextKindsPreserved": true,
+        "completeSupportSetsPreserved": true,
+        "semanticGraphEquivalent": true,
+        "flowStepSupportsNonempty": true,
+        "stepSupportCurrentRevisionMembership": true,
+        "recursiveInfiniteUnrolling": false,
+        "ordinalMeansGlobalTemporalOrder": false
+      },
+      "actualNumerator": null,
+      "formalDenominator": null,
+      "evidenceState": "UNMEASURED_FOR_THIS_EXACT_PROPOSED_PROBE",
+      "dependencies": [
+        "No approved actual P1-20 runner/environment/observations are supplied by this authoring.",
+        "No executable worker-count control/canonical artifacts exist here. Required equivalence is literal expected behavior, not a measured result."
+      ],
+      "relatedEvidenceOnly": "Existing task08/09 local checks and current13 workspace offline integration; not exact VA/SF E02 observations"
+    },
+    {
+      "id": "SF-PYTHON",
+      "required": true,
+      "ratioWeight": 0,
+      "oraclePointer": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/spring-fastapi-kafka/expected/probes-v2.json#/probes/SF-PYTHON",
+      "inputs": {
+        "source": "sf-catalog/catalog.py",
+        "expectedEntry": "sf:entry:catalog",
+        "expectedDependency": "sf:boundary:depends"
+      },
+      "expected": {
+        "handwrittenExpectedMayBeInsertedIntoProduct": false,
+        "replayMayMasqueradeAsActual": false,
+        "providerMustBindExactSourceSha": true,
+        "registeredCapabilityNeedsFixtureEvidence": true,
+        "unsupportedCapabilityMustBeDeclared": true,
+        "noLLMInventedPythonFacts": true
+      },
+      "actualNumerator": null,
+      "formalDenominator": null,
+      "evidenceState": "UNMEASURED_FOR_THIS_EXACT_PROPOSED_PROBE",
+      "dependencies": [
+        "No approved actual P1-20 runner/environment/observations are supplied by this authoring.",
+        "Actual Python Provider, Native qualification/profile, approved resource scope and authentic capture remain absent; this family cannot pass by Source-only authorship."
+      ],
+      "relatedEvidenceOnly": "No independently mapped actual result for this exact proposed probe in reviewed packet"
+    },
+    {
+      "id": "SF-INCREMENTAL",
+      "required": true,
+      "ratioWeight": 0,
+      "oraclePointer": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/spring-fastapi-kafka/expected/probes-v2.json#/probes/SF-INCREMENTAL",
+      "inputs": {
+        "changes": [
+          "SF-PATH-CHANGE",
+          "SF-ADD-ENTRY",
+          "SF-DELETE-ENTRY"
+        ],
+        "restart": true,
+        "mutationPlan": "mutations.json"
+      },
+      "expected": {
+        "changedOnly": true,
+        "unrelatedJavaReparseForbidden": true,
+        "oldRouteSupportRemovedOnDelete": true,
+        "oldContractSupportInvalidatedOnPathChange": true,
+        "retainedUnchangedSupportsPreserved": true,
+        "staleFactPublication": false,
+        "deleteThenReopenDoesNotRestoreDeletedRoute": true,
+        "byChange": {
+          "SF-PATH-CHANGE": {
+            "oldSupportInvalidated": true,
+            "oldPath": "/api/v1/items",
+            "expectedMatch": "UNRESOLVED",
+            "owner": "sf-catalog:items",
+            "gatewayConsumerPath": "/api/v1/items",
+            "newPath": "/api/v1/products"
+          },
+          "SF-ADD-ENTRY": {
+            "retainedId": "sf:entry:catalog",
+            "method": "GET",
+            "newDependency": null,
+            "owner": "sf-catalog:health",
+            "path": "/health",
+            "addedId": "sf:entry:health"
+          },
+          "SF-DELETE-ENTRY": {
+            "removedIds": [
+              "sf:entry:catalog",
+              "sf:boundary:depends"
+            ],
+            "noOldRouteAfterReopen": true,
+            "appRouterRemainDeclared": true,
+            "gatewayConsumerMatch": "UNRESOLVED"
+          }
+        }
+      },
+      "actualNumerator": null,
+      "formalDenominator": null,
+      "evidenceState": "UNMEASURED_FOR_THIS_EXACT_PROPOSED_PROBE",
+      "dependencies": [
+        "No approved actual P1-20 runner/environment/observations are supplied by this authoring.",
+        "Real changed-only/new-process/Source deletion run is not authorized or executed."
+      ],
+      "relatedEvidenceOnly": "N1 NO_OP/deletion copied full graph2/2; not exact VA/SF mutation baseline"
+    },
+    {
+      "id": "SF-STORAGE",
+      "required": true,
+      "ratioWeight": 0,
+      "oraclePointer": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/spring-fastapi-kafka/expected/probes-v2.json#/probes/SF-STORAGE",
+      "inputs": {
+        "baseState": {
+          "codeBasis": "C0",
+          "runtimeActivation": "R0",
+          "publishedKnowledge": "K0"
+        },
+        "faults": [
+          "UPGRADE_FAILURE",
+          "ROLLBACK",
+          "LOCKED_DATABASE",
+          "CHECKSUM_MISMATCH",
+          "TOO_NEW_SCHEMA"
+        ],
+        "schemaAuthorities": [
+          "R010",
+          "W003",
+          "current approved successor migrations"
+        ]
+      },
+      "expected": {
+        "allFaultsRefuseSafely": true,
+        "lastGood": {
+          "codeBasis": "C0",
+          "runtimeActivation": "R0",
+          "publishedKnowledge": "K0"
+        },
+        "partialCommit": false,
+        "sourceFreshnessSeparateFromCompilationCurrency": true,
+        "changedCodeMayCoexistWithAffectedRuntime": true
+      },
+      "actualNumerator": null,
+      "formalDenominator": null,
+      "evidenceState": "UNMEASURED_FOR_THIS_EXACT_PROPOSED_PROBE",
+      "dependencies": [
+        "No approved actual P1-20 runner/environment/observations are supplied by this authoring.",
+        "No database bytes/migration checksum pins, transaction fixture or runner exist in this proposal. R010/W003 names are authority references, not a claim these are the latest schema versions or actual migration proof."
+      ],
+      "relatedEvidenceOnly": "No independently mapped actual result for this exact proposed probe in reviewed packet"
+    },
+    {
+      "id": "SF-QUERY",
+      "required": true,
+      "ratioWeight": 0,
+      "oraclePointer": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/spring-fastapi-kafka/expected/probes-v2.json#/probes/SF-QUERY",
+      "inputs": {
+        "tools": [
+          "get_project_context",
+          "search_knowledge",
+          "understand_symbol",
+          "trace_flow",
+          "get_knowledge_status",
+          "update_knowledge"
+        ],
+        "transport": "real stdio required later",
+        "embeddings": false,
+        "model": null,
+        "published": "K0",
+        "draft": "K1"
+      },
+      "expected": {
+        "FTSAvailableWithoutEmbedding": true,
+        "readOnlyToolsNeverUpdate": true,
+        "businessTraceDraftOnly": {
+          "publishedTrace": false,
+          "diagnostic": "MISSING_PUBLISHED_KNOWLEDGE"
+        },
+        "businessTraceWithPublished": {
+          "revision": "K0"
+        },
+        "unauthorizedUpdateRefused": true,
+        "readOnlyModelCalls": 0
+      },
+      "actualNumerator": null,
+      "formalDenominator": null,
+      "evidenceState": "UNMEASURED_FOR_THIS_EXACT_PROPOSED_PROBE",
+      "dependencies": [
+        "No approved actual P1-20 runner/environment/observations are supplied by this authoring.",
+        "Real stdio transport, FTS database, bounded tool requests and published Knowledge artifacts are absent; actual E2E query gate remains BLOCKED."
+      ],
+      "relatedEvidenceOnly": "No independently mapped actual result for this exact proposed probe in reviewed packet"
+    },
+    {
+      "id": "SF-INSTALL",
+      "required": true,
+      "ratioWeight": 0,
+      "oraclePointer": ".superpowers/sdd/2026-11-04-e02-e2e-proposed/spring-fastapi-kafka/expected/probes-v2.json#/probes/SF-INSTALL",
+      "inputs": {
+        "platform": "UNSET",
+        "packageArchive": null,
+        "toolchain": "Rust absent",
+        "model": null,
+        "ownedConfigRoot": "UNSET"
+      },
+      "expected": {
+        "rustCompilerInvocations": 0,
+        "modelCalls": 0,
+        "implicitIndexOnInit": false,
+        "setupDryRunWrites": 0,
+        "userConfigChanged": false,
+        "statusReportsUnsupportedCapabilities": true,
+        "noSuccessWhenRequiredArtifactMissing": true
+      },
+      "actualNumerator": null,
+      "formalDenominator": null,
+      "evidenceState": "UNMEASURED_FOR_THIS_EXACT_PROPOSED_PROBE",
+      "dependencies": [
+        "No approved actual P1-20 runner/environment/observations are supplied by this authoring.",
+        "Package archive/platform/Node and dependency identities/owned roots/exact command schemas are not frozen. No execution command is invented; this family is BLOCKED until its separate concrete package exists."
+      ],
+      "relatedEvidenceOnly": "No independently mapped actual result for this exact proposed probe in reviewed packet"
+    }
+  ],
+  "countingAndExclusions": {
+    "rule": "One proposed source-qualified business entry, typed constructor declaration or boundary site slot; multiple assertions/supports within one slot are conjunctive. HTTP consumer declaration and invocation, message producer/listener and watch boundary/callback entry are distinct semantic slots. Reused process functions across contexts do not add fact points. Scenario startup drivers/factories and service-role provisioning are mandatory support plumbing, not extra business entry slots. TASK callback and BATCH job count once each with complete driver/Step support. These proposed applicability decisions require independent review.",
+    "overlap": "Scenario repos/revisions/semantic IDs are disjoint from the existing four-framework Source proposal and from each other. Never sum 21, scenario slots or 22 heterogeneous probe families into a formal whole-system denominator. Mutation snapshots are alternatives, not pooled samples. Unknown/negative/support controls remain mandatory with zero positive recall weight, never waived.",
+    "mandatoryControls": "UNKNOWN/negative/support controls have zero positive recall weight but remain required; absent dynamic/lookalike controls are gaps, not parent N/A",
+    "mutationSnapshots": "Alternative snapshots, not pooled denominator",
+    "noFabricatedMetric": "Do not sum21+14+16, probe-family counts, assertions, tests, MATCHED results or edge counts. All required critical probes must pass; this is not an invented100% ratio threshold."
+  },
+  "integrationEvidence": {
+    "currentStatus": "docs/handoff/CURRENT_STATUS.md:35 and :100",
+    "n1": "Full copied product graph2/2, NO_OP22 table images unchanged; deletion19 P1 current origins removed,8 P5 retained; 0 Native. Evidence .superpowers/sdd/2026-11-06-current13-no-native-entry/verification.json and integration/verification-index.json",
+    "workspace": "Prepared-Source FULL J7+P5 current13 to actual Application workspace/atomic Store:1/1 complete test,2 MATCHED,1 HTTP invocation edge,CURRENT and equal fresh readonly reopen. Four preparatory Source operations. .superpowers/sdd/2026-11-05-current13-workspace-entry",
+    "metricDisposition": "Defined local observations only; neither establishes numerator for candidate-v4 exact Source slots/probes. Earlier missing-current13-workspace seam in 2026-11-05 flow map is superseded."
+  },
+  "formalGateSeparation": {
+    "E01": "Task03..07 actual product canonical+support goldens",
+    "E02": "Task00,06,07,20 four Plugins AND both E2E; approved nonempty critical baseline and actual recall",
+    "E03_E04": "Task08 contexts/asynchronous boundaries/deterministic supported Flow; existing local checks are not whole E02",
+    "E05_E06": "Task09 six outcomes/frozen multi-repo basis/actual crossrepo edges; offline workspace integration closes its seam only",
+    "E08_E16": "Knowledge/model/publication and whole two-scenario obligations remain independently required; TEST_DOUBLE cannot replace ACTUAL_MODEL"
+  },
+  "obligations": "Exact executable/version/lock/environment/resource identities, admitted actual Provider/Plugin paths, complete VA/SF runner typed observations and support, all controls/mutations, model/prompt/seed/usage and semantic publication, transaction/recovery, identity, Wiki, MCP stdio/FTS, install/platform evidence. Model not selected/budgeted: NOT_EVALUABLE; no remote/model call authorized here.",
+  "decision": {
+    "reconcilableNow": "Carry forward valid source-only proposal review and exact local integration evidence with their scopes; mark stale pins and superseded historical seam blocker. No new product defect established.",
+    "minimalFutureReview": "Review exact source-slot applicability/count/exclusions for21 fixed framework slots and VA14/SF16 separate proposed sets; constructor declaration vs runtime binding, Feign declaration vs invocation, shadow-module static entry, unknown WATCH zero-weight controls, driver plumbing and dynamic/lookalike full coverage must be explicit. This approves material only, not installed whole-system denominator.",
+    "readyForFinalBaselineApproval": false,
+    "reason": "candidate-v4 lacks its own independent review and exact actual whole-run/model evidence; formal denominatorsnull/thresholdUNSET persist. User final baseline/version/threshold decision follows actual evidence and synchronized governed review."
+  },
+  "reviewedPriorPackets": [
+    ".superpowers/sdd/2026-11-05-remaining-acceptance-disposition/decision-bundle.json",
+    ".superpowers/sdd/2026-11-05-remaining-acceptance-disposition/decision-approval-matrix.json",
+    ".superpowers/sdd/2026-11-05-remaining-acceptance-disposition/decision-review.json",
+    ".superpowers/sdd/2026-11-05-remaining-acceptance-disposition/flow-contract-map.json"
+  ]
+}

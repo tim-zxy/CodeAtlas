@@ -1,0 +1,161 @@
+{
+  "kind": "HOST_PROJECTED_ENTRY_RECEIVER_INTEROP_VERIFICATION",
+  "at": "2026-11-06T01:37:15.0391200Z",
+  "status": "TEST_ONLY_INTEROP_VERIFIED_PENDING_NEW_SLICE_REVIEW",
+  "command": "node --test --test-reporter=tap scripts/test-mixed-native-host-protected-inventory-receiver.mjs",
+  "compilerCommand": "C:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -NoProfile -NonInteractive -File scripts/test-mixed-native-host-protected-inventory-receiver.ps1",
+  "compilerInputs": [
+    "scripts/mixed-native-host-startup.cs",
+    "scripts/mixed-native-host-consumption-lifetime.cs",
+    "scripts/test-mixed-native-host-protected-inventory-receiver-double.cs"
+  ],
+  "final": {
+    "cancelled": 0,
+    "pass": 4,
+    "fail": 0,
+    "observed": {
+      "compilerTesthostProcesses": 1,
+      "addTypeCompilations": 1,
+      "cases": [
+        {
+          "accepted": true,
+          "opened": 17,
+          "closed": [
+            17,
+            16,
+            15,
+            14,
+            13,
+            12,
+            11,
+            10,
+            9,
+            8,
+            7,
+            6,
+            5,
+            4,
+            3,
+            2,
+            1
+          ],
+          "liveAdmission": "NOT_READY"
+        },
+        {
+          "accepted": false,
+          "opened": 0,
+          "closed": [],
+          "stage": "LIFETIME_CONSTRUCTION",
+          "errorType": "System.InvalidOperationException",
+          "liveAdmission": "NOT_READY"
+        },
+        {
+          "accepted": false,
+          "opened": 0,
+          "closed": [],
+          "stage": "LIFETIME_CONSTRUCTION",
+          "errorType": "System.InvalidOperationException",
+          "liveAdmission": "NOT_READY"
+        },
+        {
+          "accepted": false,
+          "opened": 0,
+          "closed": [],
+          "stage": "ENTRY_CONSTRUCTION",
+          "errorType": "System.ArgumentException",
+          "liveAdmission": "NOT_READY"
+        }
+      ]
+    },
+    "rawLog": ".superpowers/sdd/2026-11-06-host-protected-entry-receiver-offline/green-final.log",
+    "exitCode": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "failureHistory": [
+    {
+      "reason": "Absent receiver before implementation; expected RED",
+      "rawLog": ".superpowers/sdd/2026-11-06-host-protected-entry-receiver-offline/red.log",
+      "pass": 0,
+      "fail": 4
+    },
+    {
+      "reason": "Valid ancestor Entry refused; apparent negatives not qualified because shared setup failure",
+      "rawLog": ".superpowers/sdd/2026-11-06-host-protected-entry-receiver-offline/green-attempt-1.log",
+      "pass": 3,
+      "fail": 1
+    },
+    {
+      "reason": "Actual original INVALID_HOST_CONSUMPTION_LIFETIME error exposed",
+      "rawLog": ".superpowers/sdd/2026-11-06-host-protected-entry-receiver-offline/null-marshalling-diagnostic-red.log",
+      "pass": 3,
+      "fail": 1
+    },
+    {
+      "reason": "Strengthened stages prove all cases stopped at Entry construction, not intended later refusals",
+      "rawLog": ".superpowers/sdd/2026-11-06-host-protected-entry-receiver-offline/refusal-stage-red.log",
+      "pass": 0,
+      "fail": 4
+    }
+  ],
+  "fix": "Test-only PowerShell ConstructorInfo.Invoke(object[]) preserves nullable CLR string arguments while invoking unchanged original Entry constructor; exact Enum.Parse retained",
+  "firstFixedRun": {
+    "rawLog": ".superpowers/sdd/2026-11-06-host-protected-entry-receiver-offline/null-preservation-green.log",
+    "pass": 4,
+    "fail": 0
+  },
+  "format": {
+    "command": "node node_modules/prettier/bin/prettier.cjs --write scripts/test-mixed-native-host-protected-inventory-receiver.mjs",
+    "rawLog": ".superpowers/sdd/2026-11-06-host-protected-entry-receiver-offline/format-final.log",
+    "exitCode": 0
+  },
+  "accounting": {
+    "internalCompilerChildProcessCount": "NOT_OBSERVED; no process-tree probe performed",
+    "totalAddTypeInvocations": 5,
+    "beginConsumptionCalls": 0,
+    "explicitQualificationWindowsCalls": 0,
+    "actualToolBinaryReads": 0,
+    "totalNodeMemoryTestInvocations": 6,
+    "settlementCalls": 0,
+    "actualQualificationHostStarts": 0,
+    "missingReceiverAttemptDidNotCompile": true,
+    "totalExplicitPowerShellTesthostLaunches": 6,
+    "graphRuns": 0,
+    "casesPerLaunch": 4,
+    "finalAddTypeInvocations": 1,
+    "executionPolicyChanges": 0,
+    "finalExplicitPowerShellCompilerTesthostLaunches": 1,
+    "actualGitNativeRuns": 0
+  },
+  "contract": "Only test-only Entry[][] stdin data and result telemetry. No new production schema/token/kind/API/admission; no original source changes. Literal synthetic fixture, not fresh real inventory.",
+  "limits": [
+    "actual tool and complete current inventory identity remain NOT_READY",
+    "actual path/ancestor protection and platform semantics unproved",
+    "actual root/descendant/pipe/stderr/worker settlement unproved",
+    "receiver proves field compatibility and pre-consumption memory cleanup only"
+  ],
+  "liveAdmission": "NOT_READY",
+  "frozenPriorFileChecks": {
+    "scripts/mixed-native-host-consumption-lifetime.cs": true,
+    "scripts/test-mixed-native-host-consumption-lifetime-double.cs": true,
+    "scripts/test-mixed-native-host-consumption-lifetime.ps1": true,
+    "scripts/mixed-native-host-protected-inventory.mjs": true,
+    "scripts/test-mixed-native-host-protected-inventory.mjs": true
+  },
+  "sourcePins": {
+    "scripts/test-mixed-native-host-protected-inventory-receiver.mjs": "b482fe603a5f9a9775169f5d391a4bbc4bb59b234296e8bfe7fd3db2b6f6855b",
+    "scripts/test-mixed-native-host-protected-inventory-receiver.ps1": "28ce196883f115be6dc62dd4cf2130d8aeb4136aa3e82cf05d704fbcab9b8d3e",
+    "scripts/test-mixed-native-host-protected-inventory-receiver-double.cs": "d8e40a31f47c87a776c69c6c95bf3d850cbb81ea15d83e01911306c553e32fe2",
+    "docs/superpowers/specs/2026-11-06-host-protected-entry-receiver-offline.md": "81350e4584efe5f8783a05531ba50e452f7cb8853f1ee3c97c34f161298ac2a3",
+    "scripts/mixed-native-host-startup.cs": "5718352a29f82b2021e9a258592555dba7653c6f2defb848964299393af1fcda",
+    "scripts/mixed-native-host-consumption-lifetime.cs": "fddea45a6a6b68c5b6a0711e2d8b8229bf8c5c13a55d70d4f16c9365e452d01f",
+    "scripts/mixed-native-host-protected-inventory.mjs": "f9cff86ee1722be57eab31f3da25463fbf09f69424b06cc3aae63373a17ce52b",
+    ".superpowers/sdd/2026-11-06-host-protected-entry-receiver-offline/red.log": "27922a0648786d279e0e54b1f471c9e88534d8e48fd74277364f95c2d363ca25",
+    ".superpowers/sdd/2026-11-06-host-protected-entry-receiver-offline/green-attempt-1.log": "6f336de7e30c6f25962b8534c99913938b8204ed39abf1c301e5ceab288d7156",
+    ".superpowers/sdd/2026-11-06-host-protected-entry-receiver-offline/null-marshalling-diagnostic-red.log": "a344fbf287c34b6e8071d8c484920686b3010805a3f3ca2a8b6dc95182b19742",
+    ".superpowers/sdd/2026-11-06-host-protected-entry-receiver-offline/refusal-stage-red.log": "9942ab7317c6ecbca2a73e65c75e19704ec1da2c93373a89a2cbbcb5aa47049d",
+    ".superpowers/sdd/2026-11-06-host-protected-entry-receiver-offline/null-preservation-green.log": "354f50429c6ed9564512d071e1358d30d645fea4b1fc9661255ed3353e3ac66b",
+    ".superpowers/sdd/2026-11-06-host-protected-entry-receiver-offline/format-final.log": "675c94d4bdd7930bb00c854170ed16b574bba52c5327a6cc931ba0f33457c6f9",
+    ".superpowers/sdd/2026-11-06-host-protected-entry-receiver-offline/green-final.log": "b85bd0d69ff7d77b062085203048cbb3ef97b2393a8e1f6b662dc255bad1689e"
+  }
+}

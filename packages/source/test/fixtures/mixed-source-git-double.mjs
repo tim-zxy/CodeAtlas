@@ -52,13 +52,16 @@ export async function setup(t) {
       head: 'a'.repeat(40),
       branch: 'main',
       mode: 'ok',
+      expectedExecutable: 'git',
+      spawnAudit: null,
       calls: 0,
       closes: 0,
       inputs: [],
       beforeReply: null,
     };
   cp.spawn = (file, args, options) => {
-    assert.equal(file, 'git');
+    assert.equal(file, state.expectedExecutable);
+    state.spawnAudit?.(file, args, options);
     assert.equal(options.shell, false);
     assert.equal(options.windowsHide, true);
     state.calls++;
@@ -132,6 +135,7 @@ export async function setup(t) {
   const controller = new AbortController();
   return {
     root,
+    spawnDouble: cp.spawn,
     state,
     controller,
     control: { signal: controller.signal, deadlineEpochMs: Date.now() + 60000 },

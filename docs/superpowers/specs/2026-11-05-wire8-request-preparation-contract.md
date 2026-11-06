@@ -1,0 +1,13 @@
+# Existing-contract wire8 request construction
+
+Authority: approved current13 A/B local closure, wire8/SYNTAX_BINDING_V4 and the private offline transport scope. Pending cross-process HOST attestation/REGISTER/role changes are outside this batch and remain unimplemented.
+
+The Runtime A3 default-only request constructor now offers prepareMixedFrameworkSurfaceRequest alongside the unchanged v5 constructor. Both reuse one internal construction core: genuine Stage preparation fields, matching repository locator/id, complete target/owners/removed files, actual owner-map digest, exact selected-language grammar entries, input hard caps and the original History bridge accounting. Wire8 selects protocol8, explicit SYNTAX_BINDING_V4 and existing strict mode8 request validation (including syntax-v2). Wire5 retains its original bytes/fields and strict v5 validation; no public export or route is added.
+
+The input is preparation data, not authorization; only the validated Stage/publication workflow and approved execution owner can use it to publish or actually run. Empty FULL and deletion-only DELTA retain existing shared-core behavior. No formula/default, fixed process-role semantics, Source policy, schema, lifecycle or approval authority changes.
+
+The minimum R013 probe now calls the actual Runtime constructor with the same Stage preparation and Source/Stage HistoryReadBudget; it no longer manually assembles the request owner binding. Its recorded-output-only fixture resealing uses the exact resulting request bytes for checksums. Native/Git remain process-shaped memory substitutes, while real Source/Stage/fixed plugins/authorized Application/atomic Store produce the candidate and publication. No expected candidate is fabricated.
+
+Success is scoped to this implementation gap: current13 request construction/transport/Stage/candidate/atomic publication connects with retained refusal controls and old v5 regression. It does not complete FULL/DELTA orchestration or prove all frameworks, actual Native qualification, physical resource accounting, live dynamic registration, E02 baseline installation or Phase1 exit. Existing original acceptance gates remain open.
+
+Evidence: .superpowers/sdd/2026-11-05-wire8-request-preparation contains RED/GREEN tests, exact commands/exits, final Runtime build, affected regression/fixtures, architecture/format, concentrated review and pinned result. Root alone writes/integrates; all known implementation workers had completed. The initial sandbox process view was incomplete. Broader read-only snapshot saw long-running Codex/Node processes; CIM did not identify a CodeAtlas duplicate command. This does not prove arbitrary desktop-session ownership, and no original session was resumed or stopped.

@@ -50,6 +50,28 @@ export interface NativeRefreshTransportProfile extends Omit<
 // Exact D5 candidates, most recently approved environment first; retain history.
 export const nativeRefreshTransportProfiles: readonly NativeRefreshTransportProfile[] =
   Object.freeze([
+    // R7 exact REFRESH_TRANSPORT candidate separately approved on 2026-11-04.
+    Object.freeze({
+      node: 'v24.15.0',
+      v8: '13.6.233.17-node.48',
+      platform: 'win32',
+      arch: 'x64',
+      zodVersion: '4.6.1',
+      implementationDigest: '726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013',
+      corpusRevision: 'p05-native-metadata-memory-v1',
+      memoryPolicyRevision: 'p05-native-memory-high-water-range-v1',
+      peakMethod: 'resourceUsage.maxRSS',
+      peakUnits: 'bytes',
+      workspace: 'REFRESH_TRANSPORT',
+      transportCorpusRevision: 'p05-native-refresh-transport-memory-v1',
+      transportCorpusDigest: '276fcb50d5cf8e123fe758b35b618846d0227f0baaa31f089bcf8e23160f47e0',
+      reservationBytes: 410738688,
+      evidenceDigest: 'a41b35271e63b1c02b65c159bbd4b1fd50382aa5bf17f48fd93e3548eb14f5bd',
+      memoryCandidateEvidenceDigest:
+        'ee73f0af8073c9000db131d55c8b20fc25c438146f87bdd3bdd12ac646f2c921',
+      observedPeakBytes: 366956544,
+      fluctuationAllowanceBytes: 43782144,
+    }),
     // R5 exact candidate and values approved by the user on 2026-11-03.
     Object.freeze({
       node: 'v24.15.0',

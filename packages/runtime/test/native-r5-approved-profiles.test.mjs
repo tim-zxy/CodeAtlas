@@ -128,7 +128,11 @@ for (const [group, entry, catalog, count] of [
       assert.equal(sha(bytes), digest, group + '/' + name);
       data[name] = JSON.parse(bytes);
     }
-    const selected = catalog.filter(matches);
+    const selected = catalog.filter(
+      (profile) =>
+        matches(profile) &&
+        profile.memoryCandidateEvidenceDigest === entry.memoryCandidateEvidenceDigest,
+    );
     assert.equal(selected.length, 1, 'approved R5 entry missing or duplicated');
     assert.deepEqual(selected[0], entry);
     const candidate = data['candidate.json'];
@@ -164,12 +168,22 @@ for (const [purpose, entry, admit] of [
   ['REFRESH_VERIFY', expected.verification, assertNativeRefreshVerificationAdmission],
   ['REFRESH_TRANSPORT', expected.transport, assertNativeRefreshTransportAdmission],
 ])
-  test('approved R5 ' + purpose + ' admits equality and refuses one byte less', () => {
-    if (matches(nativeMetadataEnvironment())) {
-      assert.doesNotThrow(() => admit(entry.reservationBytes));
-      assert.throws(
-        () => admit(entry.reservationBytes - 1),
-        (error) => error.nativeStateReason === 'RESOURCE_LIMIT_EXCEEDED',
-      );
-    }
-  });
+  test(
+    purpose === 'REFRESH_TRANSPORT'
+      ? 'historical approved R5 transport budgets are refused by its R7 successor'
+      : 'approved R5 ' + purpose + ' admits equality and refuses one byte less',
+    () => {
+      if (matches(nativeMetadataEnvironment())) {
+        if (purpose === 'REFRESH_TRANSPORT') {
+          assert.throws(
+            () => admit(entry.reservationBytes),
+            (error) => error.nativeStateReason === 'RESOURCE_LIMIT_EXCEEDED',
+          );
+        } else assert.doesNotThrow(() => admit(entry.reservationBytes));
+        assert.throws(
+          () => admit(entry.reservationBytes - 1),
+          (error) => error.nativeStateReason === 'RESOURCE_LIMIT_EXCEEDED',
+        );
+      }
+    },
+  );

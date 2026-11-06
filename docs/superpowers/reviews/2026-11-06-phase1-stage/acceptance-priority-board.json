@@ -1,0 +1,232 @@
+{
+  "kind": "CONSOLIDATED_PHASE1_ACCEPTANCE_PRIORITY_BOARD",
+  "utc": "2026-11-06T01:47:04.409528+00:00",
+  "status": "READ_ONLY_DISPOSITION_NOT_ACCEPTANCE_OR_AUTHORIZATION",
+  "actualWorktree": "C:\\Users\\Freya\\.codex\\worktrees\\e4fb\\CodeAtlas",
+  "accepted": [
+    "P1-00",
+    "P1-01",
+    "P1-02",
+    "P1-03"
+  ],
+  "acceptedCount": 4,
+  "parentCount": 21,
+  "openCount": 17,
+  "countReason": "Only the original four parents completed their original five steps and applicable gates. Later library/substitute/interface results are bounded evidence, not signoff for remaining parents. No overlooked completed parent established by this audit.",
+  "parents": [
+    {
+      "id": "P1-04",
+      "title": "Java/limited Python observer",
+      "gate": "E01/E19",
+      "A6Dependency": "required-for-actual-observer",
+      "currentStatus": "OPEN",
+      "concreteRemaining": "Current-build actual Source/process/resource observer qualification missing; recorded/library Syntax evidence is reusable but not whole task."
+    },
+    {
+      "id": "P1-05",
+      "title": "Syntax state and validated apply",
+      "gate": "Original task steps1-5",
+      "A6Dependency": "conditional-actual-observer-integration",
+      "currentStatus": "OPEN",
+      "concreteRemaining": "Stage/Store/N1 recovery seams exist; original complete fixture and actual observer integration receipt missing."
+    },
+    {
+      "id": "P1-06",
+      "title": "Spring/Mongo/Kafka plugins",
+      "gate": "E01/E02/E19",
+      "A6Dependency": "conditional-product-evidence",
+      "currentStatus": "OPEN",
+      "concreteRemaining": "Local extraction exists; complete actual product evidence and approved critical applicability/baseline missing."
+    },
+    {
+      "id": "P1-07",
+      "title": "FastAPI and Python chain",
+      "gate": "E01/E02/E19",
+      "A6Dependency": "conditional-product-evidence",
+      "currentStatus": "OPEN",
+      "concreteRemaining": "Recorded Python/Depends evidence exists; complete actual observer path and critical baseline missing."
+    },
+    {
+      "id": "P1-08",
+      "title": "ExecutionGraph/RuntimeFlow",
+      "gate": "E03/E04",
+      "A6Dependency": "conditional-not-blanket-implementation-block",
+      "currentStatus": "OPEN",
+      "concreteRemaining": "Actual local derive/storage exists; all original context/async/support scenario obligations not accepted. Reuse completed N1/workspace; no repeated integration."
+    },
+    {
+      "id": "P1-09",
+      "title": "Contracts and cross-repository trace",
+      "gate": "E05/E06",
+      "A6Dependency": "conditional-not-blanket-implementation-block",
+      "currentStatus": "OPEN",
+      "concreteRemaining": "Actual Source-grounded workspace2MATCHED/1HTTPedge/reopen exists; complete original outcome/scenario acceptance remains."
+    },
+    {
+      "id": "P1-10",
+      "title": "Documents and ADR structure",
+      "gate": "E07",
+      "A6Dependency": "no-direct-A6",
+      "currentStatus": "OPEN",
+      "concreteRemaining": "Package stub; parser/authorized DTO/W007+W008 contracts pending. Read-only minimum decision prepared."
+    },
+    {
+      "id": "P1-11",
+      "title": "Semantic runtime tasks",
+      "gate": "E08/E14",
+      "A6Dependency": "no-direct-A6",
+      "currentStatus": "OPEN",
+      "concreteRemaining": "Model capability/usage/error/single-run budget contracts pending. Actual model actions separately controlled."
+    },
+    {
+      "id": "P1-12",
+      "title": "Immutable compilation capture",
+      "gate": "E10/E11",
+      "A6Dependency": "conditional-input-ports",
+      "currentStatus": "OPEN",
+      "concreteRemaining": "Actual09 read ports and document-read contract needed; capture implementation absent. W010 persistence belongs14."
+    },
+    {
+      "id": "P1-13",
+      "title": "Exact-only identity and reconciliation",
+      "gate": "E09",
+      "A6Dependency": "none",
+      "currentStatus": "OPEN",
+      "concreteRemaining": "Knowledge package stub; concrete exact-only functions/independent fixtures absent. Technically independent but C/D/E implementation approval pending."
+    },
+    {
+      "id": "P1-14",
+      "title": "Manual atomic publication",
+      "gate": "E08/E10/E11/E21",
+      "A6Dependency": "conditional-downstream",
+      "currentStatus": "OPEN",
+      "concreteRemaining": "W009..W011 and validated publication absent; needs provenance/CAS/idempotency/failure/reopen and10..13 inputs."
+    },
+    {
+      "id": "P1-15",
+      "title": "Published queries and FTS5",
+      "gate": "E12",
+      "A6Dependency": "conditional-downstream",
+      "currentStatus": "OPEN",
+      "concreteRemaining": "Published query/FTS/rebuild implementation absent; needs14 storage."
+    },
+    {
+      "id": "P1-16",
+      "title": "Standard Wiki projection",
+      "gate": "E17/E18/E22",
+      "A6Dependency": "conditional-downstream",
+      "currentStatus": "OPEN",
+      "concreteRemaining": "Needs14/15 published queries and atomic artifact recovery; implementation absent."
+    },
+    {
+      "id": "P1-17",
+      "title": "Six Agent tools and L0/L1/L2",
+      "gate": "E13/E20",
+      "A6Dependency": "conditional-downstream",
+      "currentStatus": "OPEN",
+      "concreteRemaining": "Agent package stub; schemas/permissions/progressive tool implementation absent."
+    },
+    {
+      "id": "P1-18",
+      "title": "MCP stdio and lifecycle",
+      "gate": "E13/E14/E20",
+      "A6Dependency": "conditional-downstream",
+      "currentStatus": "OPEN",
+      "concreteRemaining": "Actual stdio/cancel/reconcile/shutdown missing; exact protocol/dependency choice still needs approved contract."
+    },
+    {
+      "id": "P1-19",
+      "title": "Install/init/setup/doctor/status",
+      "gate": "E15",
+      "A6Dependency": "conditional-actual-native-package",
+      "currentStatus": "OPEN",
+      "concreteRemaining": "Original platform package scope/install/no-Rust/no-LLM evidence missing; no approved fresh Phase1 platform package."
+    },
+    {
+      "id": "P1-20",
+      "title": "Actual E2E and final baseline",
+      "gate": "E16/all22",
+      "A6Dependency": "required-for-actual-observer-paths",
+      "currentStatus": "OPEN",
+      "concreteRemaining": "Existing P1-00 report validator reused; actual runner, whole probes/model evidence and approved baseline missing."
+    }
+  ],
+  "parallelStreams": [
+    {
+      "stream": 1,
+      "executor": "host_b_offline_medium + root integrator",
+      "activity": "One bounded receiver implementation/validation stream and actual-HOST execution preparation",
+      "current": "Receiver final4/4 and independent review complete; root integrates packet/source candidate",
+      "deliveredNode": "Original C# accepts17projected Entry records, closes17..1 before consumption; malformed cases fail at correct boundary/Open0",
+      "originalGate": "Existing B protected-set ownership boundary, not actual A6/parent PASS",
+      "canCloseFormalParent": false,
+      "remaining": "Actual tool/protected inventory, namespace guarantees, installed Start owner and trusted complete consumer settlement not ready."
+    },
+    {
+      "stream": 2,
+      "executor": "e02_acceptance_medium",
+      "activity": "Concurrent read-only evidence/critical set/count/exclusion mapping",
+      "current": "Completed22probe mappings; proposals remain uninstalled",
+      "evidence": "e02-gate-evidence-map.json",
+      "canCloseFormalParent": false,
+      "remaining": "Actual complete E2E/model evidence, independent current-version review and final baseline decision absent."
+    },
+    {
+      "stream": 3,
+      "executor": "n1_tests_medium",
+      "activity": "Concurrent read-only minimum document and semantic contract decisions",
+      "current": "Two separate decisions delivered; W008 ownership corrected toP1-10",
+      "evidence": "p1-10-11-minimum-decisions.json",
+      "canCloseFormalParent": false,
+      "remaining": "Exact contracts/implementation approval, implementation and original gates still required."
+    }
+  ],
+  "parallelInterpretation": "These three streams overlapped in execution: bounded implementation/preparation plus two read-only analysis streams. They are not three simultaneous coding jobs. Workers are completed now; root is the sole integration writer. No duplicated N1/P1-08/09 runs.",
+  "fastestIndependentApprovalCandidate": {
+    "task": "P1-13",
+    "gate": "E09",
+    "technicalA6Dependency": false,
+    "implementationAlreadyAuthorized": false,
+    "approvalBoundary": "2026-11-02 batch delivery strategy explicitly says C/D/E implementation not approved; no blanket implementation permission inferred from this priority board.",
+    "proposedBoundedScope": "Implement original exact-only resolveKnowledgeIdentity({candidate,existingItems,policyRef},control) and reconcileKnowledge(ReconciliationInput) with independent fixtures; preserve null score/threshold/margin when unapproved, non-exact review, manual publication boundary, no model/DB/deferred algorithms.",
+    "files": [
+      "packages/knowledge/src/identity.ts",
+      "packages/knowledge/src/reconciliation.ts",
+      "packages/knowledge/src/index.ts",
+      "packages/knowledge/test/identity.test.mjs",
+      "packages/knowledge/test/reconciliation.test.mjs",
+      "fixtures/phase1/knowledge-identity/"
+    ],
+    "success": "Original rename/reword/update/scope/ambiguity/merge/split/disappearance/CURRENT-TARGET/transition and explicit DEFERRED applicability cases, Knowledge build, fixture registration, architecture and original five-step evidence. Could support P1-13/E09 acceptance if all original obligations pass; approval alone never closes it.",
+    "scopeRisks": [
+      "Accidentally treating name similarity as structural identity",
+      "Inventing scores/thresholds or automatic deprecation",
+      "Pulling publication/storage/model or Phase2 drift into pure scope"
+    ],
+    "rollback": "Disable new exports/owned exact-only implementation, preserve existing data and fixtures/evidence; no user DB or broad Git operations."
+  },
+  "authorities": [
+    {
+      "path": "docs/superpowers/plans/2026-10-22-phase1-foundation-and-runtime.md",
+      "sha256": "b30093438c31075af197c854c5dcfd920c0a52115a769e20aad654eadb0e2ba4"
+    },
+    {
+      "path": "docs/superpowers/plans/2026-10-22-phase1-knowledge-and-delivery.md",
+      "sha256": "48cf069ca306c7d7ef1f02398688d4b07d644c6bfefa59bea15f91c4a3e69f56"
+    },
+    {
+      "path": "docs/superpowers/specs/2026-10-22-phase1-knowledge-and-consumption-design.md",
+      "sha256": "f5b35006b520f29ef04f9ddb7376177445b82353920bdfc1695b7676adc04052"
+    },
+    {
+      "path": "docs/handoff/specs/RECONCILIATION.md",
+      "sha256": "466e0817346ffe7ccd151123dcbc1bb76e2225857b2e0b8b3e3042be7a3099db"
+    },
+    {
+      "path": "docs/superpowers/plans/2026-11-02-phase1-batch-delivery-strategy.md",
+      "sha256": "dd0710405522dde33ef00e0cdee70120797abcc7e98255938f815ba12f7efec5"
+    }
+  ],
+  "phaseAcceptanceTableChanged": false,
+  "timing": "No completion estimate promised before exact scope/approval/dependencies; existing receiver node is completed, other flows are decision readiness only."
+}

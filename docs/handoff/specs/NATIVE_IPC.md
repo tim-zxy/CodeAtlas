@@ -1,3 +1,13 @@
+## Approved dynamic-binding V2 offline implementation - 2026-11-05
+
+User explicitly approved the independent-coordinator/fixed-HOST-attester proposal
+for offline implementation/substitutes. [Exact private contract](../../superpowers/specs/2026-11-05-dynamic-binding-offline-contract.md)
+adds a separate bounded V2 REGISTER/BOUND then strict INTENT/READY lane and distinct
+SURFACE_V8 role, preserving V1/V5. Application retains operation authorization.
+Independent expected artifacts, genuine issuer origin and lifecycle are required;
+JSON/hash receipt is not authority. Live module/OS/channel admission, real runs,
+rights, physical formulas/values and Phase1 acceptance remain unapproved/open.
+
 ## B-F2-B固定7/Syntax3管线有限本地交付 — 2026-10-30
 
 用户已批准[完整后继设计](../../superpowers/specs/2026-10-30-phase1-binding-sufficiency-pipeline-design.md)及J1–J5。J1–J5现已达到B_F2B_BINDING_PIPELINE_LOCAL_EXIT；[范围、Fixture、失败与准确门禁](../../superpowers/reviews/2026-10-30-phase1-binding-sufficiency-pipeline-implementation-review.md)。新域/固定表面支持策略条件适用及持久集合闭包经本地验证；旧版/SQL11保持。库/声明式Store出口不授CLI/物理/语义发布资格，父任务/Phase1保持OPEN。

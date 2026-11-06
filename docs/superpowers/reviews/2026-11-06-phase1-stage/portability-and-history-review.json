@@ -1,0 +1,423 @@
+{
+  "kind": "FOCUSED_CURRENT13_PORTABILITY_AND_GIT_SYNC_DELTA_REVIEW",
+  "utc": "2026-11-06T02:21:30.899955+00:00",
+  "reviewer": "/root/offline_contract_review_medium",
+  "status": "NO_BLOCKING_FINDINGS_SCOPE_TRACEABLE_WITH_METADATA_DISCLOSURE",
+  "method": "Read-only static/helper/consumer/receipt review plus local Git-object and sensitive pattern scan. No tests, producers, Native/Git/HOST runs, network, Git writes or credential reads. Temp reports/scripts only.",
+  "findings": [],
+  "ineligible": [],
+  "unknownScope": [],
+  "portability": {
+    "files": 12,
+    "consumers": 7,
+    "helper": "Safe POSIX logical path and fixed archive allowlist before per-input local IO; explicit absolute localRoot; local read priority; only ENOENT falls back; all other errors propagate; no archive materialization.",
+    "consumerReview": "Only immutable reads changed. Existing source validation and raw SHA checks remain. Two Java raws reuse tracked J1.code with original request/output SHA checks. Added mkdir only ensures existing output parent; create-new wx writes remain.",
+    "archive": {
+      "oldLogicalRecords": 679,
+      "oldBlobs": 359,
+      "oldIndexMetadataPreserved": true,
+      "oldRawPayloadsPreserved": true,
+      "newLogicalRecords": 692,
+      "newBlobs": 372,
+      "newInputs": 13,
+      "newInputBytes": 138457,
+      "compressedBytes": 2391642,
+      "content": "Deterministic gzip JSON/base64 fixture bundle; not compiled binary."
+    },
+    "receipt": {
+      "command": "node --test --test-reporter=tap scripts/test-current13-input-portability.mjs",
+      "passCount": 8,
+      "failCount": 0,
+      "exitCode": 0,
+      "durationMs": 640.6242,
+      "strictOriginalFrameworkSurfacePairs": 2,
+      "qualification": "Focused recorded receipt only. Reviewer did not rerun long N1/workspace/producer or earlier suites. Initial RED and validator test-property correction retained."
+    }
+  },
+  "sensitiveScan": {
+    "objects": 55,
+    "newArchivedObjects": 13,
+    "currentAlreadyCommittedPaths": 14,
+    "localCommitSnapshots": 2,
+    "findings": [],
+    "metadataDisclosure": [
+      {
+        "path": ".superpowers/sdd/2026-11-05-current13-mixed-entry/library-output/mixed.request.jsonl",
+        "type": "pinned historical absolute local temp/tool metadata; no value output"
+      },
+      {
+        "path": ".superpowers/sdd/2026-11-05-modified-unit-library-positive/library-output/after.request.jsonl",
+        "type": "pinned historical absolute local temp/tool metadata; no value output"
+      },
+      {
+        "path": ".superpowers/sdd/2026-11-05-modified-unit-library-positive/rust-verification.json",
+        "type": "pinned historical absolute local temp/tool metadata; no value output"
+      }
+    ],
+    "compiledArtifactsAdded": false,
+    "limitation": "Heuristic scanning cannot guarantee absence of secrets. Only the specified new archive13 and current/two local commit snapshots of14paths scanned; prior292 not repeated."
+  },
+  "committedDelta": {
+    "remoteTip": "e60484a31cf541ada21020df42f3366e1d2787ea",
+    "head": "292760e069879dc5c49ebe3f2b86c8e46090a82c",
+    "ancestor": "Root receipt confirms remote ancestor; no network verification repeated.",
+    "localCommits": [
+      "292760e069879dc5c49ebe3f2b86c8e46090a82c Prepare an isolated R7 qualification layout",
+      "624234edf688fce4e5384f48d454b53c15f90967 Fix Phase1 CI regressions and prepare R6 qualification"
+    ],
+    "paths": [
+      "crates/native-analyzer/src/binding_sufficiency.rs",
+      "crates/native-analyzer/src/binding_syntax.rs",
+      "crates/native-analyzer/src/framework_surface.rs",
+      "crates/native-analyzer/src/java_syntax.rs",
+      "crates/native-analyzer/src/python.rs",
+      "crates/native-analyzer/tests/support/code_syntax.rs",
+      "fixtures/phase1/syntax-contract/ci-portability/historical-inputs.mjs",
+      "packages/runtime/test/helpers/native-refresh-r5-preparation-scope.mjs",
+      "packages/runtime/test/native-refresh-transport-replay.test.mjs",
+      "packages/runtime/test/native-syntax-admission.test.mjs",
+      "scripts/helpers/native-refresh-ci-layout.mjs",
+      "scripts/test-native-refresh-ci-layout.mjs",
+      "scripts/test-native-refresh-ci-pack.mjs",
+      "scripts/test-native-refresh-ci.mjs"
+    ],
+    "pathListMatchesLocalGitDiff": true,
+    "diffCheckExit": 0,
+    "scope": "Existing CodeAtlas Rust analysis/refactoring, portability and native qualification fixture/layout tests; no unrelated path identified. This is ownership/sensitive review, not new behavioral acceptance.",
+    "objects": [
+      {
+        "path": "crates/native-analyzer/src/binding_sufficiency.rs",
+        "version": "current-worktree",
+        "bytes": 45793,
+        "sha256": "818aef3699475c593cd6a4a57705367436cf23eca258918981c8ed2307064cd2",
+        "opaqueBinary": false
+      },
+      {
+        "path": "crates/native-analyzer/src/binding_sufficiency.rs",
+        "version": "292760e069879dc5c49ebe3f2b86c8e46090a82c",
+        "bytes": 45793,
+        "sha256": "818aef3699475c593cd6a4a57705367436cf23eca258918981c8ed2307064cd2",
+        "opaqueBinary": false
+      },
+      {
+        "path": "crates/native-analyzer/src/binding_sufficiency.rs",
+        "version": "624234edf688fce4e5384f48d454b53c15f90967",
+        "bytes": 45793,
+        "sha256": "818aef3699475c593cd6a4a57705367436cf23eca258918981c8ed2307064cd2",
+        "opaqueBinary": false
+      },
+      {
+        "path": "crates/native-analyzer/src/binding_syntax.rs",
+        "version": "current-worktree",
+        "bytes": 24175,
+        "sha256": "cbb1aed16c403a5932dcb2a5912c7f75d9ded5af938c924f281d2c91dda004ce",
+        "opaqueBinary": false
+      },
+      {
+        "path": "crates/native-analyzer/src/binding_syntax.rs",
+        "version": "292760e069879dc5c49ebe3f2b86c8e46090a82c",
+        "bytes": 24175,
+        "sha256": "cbb1aed16c403a5932dcb2a5912c7f75d9ded5af938c924f281d2c91dda004ce",
+        "opaqueBinary": false
+      },
+      {
+        "path": "crates/native-analyzer/src/binding_syntax.rs",
+        "version": "624234edf688fce4e5384f48d454b53c15f90967",
+        "bytes": 24175,
+        "sha256": "cbb1aed16c403a5932dcb2a5912c7f75d9ded5af938c924f281d2c91dda004ce",
+        "opaqueBinary": false
+      },
+      {
+        "path": "crates/native-analyzer/src/framework_surface.rs",
+        "version": "current-worktree",
+        "bytes": 21426,
+        "sha256": "2865c7d8185bae90713775d0fa2cf0e6c72304aefe2cec10cd7dd99cfc62d335",
+        "opaqueBinary": false
+      },
+      {
+        "path": "crates/native-analyzer/src/framework_surface.rs",
+        "version": "292760e069879dc5c49ebe3f2b86c8e46090a82c",
+        "bytes": 21426,
+        "sha256": "2865c7d8185bae90713775d0fa2cf0e6c72304aefe2cec10cd7dd99cfc62d335",
+        "opaqueBinary": false
+      },
+      {
+        "path": "crates/native-analyzer/src/framework_surface.rs",
+        "version": "624234edf688fce4e5384f48d454b53c15f90967",
+        "bytes": 21426,
+        "sha256": "2865c7d8185bae90713775d0fa2cf0e6c72304aefe2cec10cd7dd99cfc62d335",
+        "opaqueBinary": false
+      },
+      {
+        "path": "crates/native-analyzer/src/java_syntax.rs",
+        "version": "current-worktree",
+        "bytes": 27510,
+        "sha256": "84a730e1797ba2ab35e6bf26debd2da89b150e29ddbe862b70e24483c59ed8d3",
+        "opaqueBinary": false
+      },
+      {
+        "path": "crates/native-analyzer/src/java_syntax.rs",
+        "version": "292760e069879dc5c49ebe3f2b86c8e46090a82c",
+        "bytes": 27510,
+        "sha256": "84a730e1797ba2ab35e6bf26debd2da89b150e29ddbe862b70e24483c59ed8d3",
+        "opaqueBinary": false
+      },
+      {
+        "path": "crates/native-analyzer/src/java_syntax.rs",
+        "version": "624234edf688fce4e5384f48d454b53c15f90967",
+        "bytes": 27510,
+        "sha256": "84a730e1797ba2ab35e6bf26debd2da89b150e29ddbe862b70e24483c59ed8d3",
+        "opaqueBinary": false
+      },
+      {
+        "path": "crates/native-analyzer/src/python.rs",
+        "version": "current-worktree",
+        "bytes": 30458,
+        "sha256": "6eff6fbbdb8fe959eb6b04f2f9ae3fdbb13b06ba13632f6fe92f0ddd57d0d5d8",
+        "opaqueBinary": false
+      },
+      {
+        "path": "crates/native-analyzer/src/python.rs",
+        "version": "292760e069879dc5c49ebe3f2b86c8e46090a82c",
+        "bytes": 30458,
+        "sha256": "6eff6fbbdb8fe959eb6b04f2f9ae3fdbb13b06ba13632f6fe92f0ddd57d0d5d8",
+        "opaqueBinary": false
+      },
+      {
+        "path": "crates/native-analyzer/src/python.rs",
+        "version": "624234edf688fce4e5384f48d454b53c15f90967",
+        "bytes": 30458,
+        "sha256": "6eff6fbbdb8fe959eb6b04f2f9ae3fdbb13b06ba13632f6fe92f0ddd57d0d5d8",
+        "opaqueBinary": false
+      },
+      {
+        "path": "crates/native-analyzer/tests/support/code_syntax.rs",
+        "version": "current-worktree",
+        "bytes": 4524,
+        "sha256": "8570a3b091042184a167ec03cab5baa65225cc0a44cedd51344d8640c4274648",
+        "opaqueBinary": false
+      },
+      {
+        "path": "crates/native-analyzer/tests/support/code_syntax.rs",
+        "version": "292760e069879dc5c49ebe3f2b86c8e46090a82c",
+        "bytes": 4524,
+        "sha256": "8570a3b091042184a167ec03cab5baa65225cc0a44cedd51344d8640c4274648",
+        "opaqueBinary": false
+      },
+      {
+        "path": "crates/native-analyzer/tests/support/code_syntax.rs",
+        "version": "624234edf688fce4e5384f48d454b53c15f90967",
+        "bytes": 4524,
+        "sha256": "8570a3b091042184a167ec03cab5baa65225cc0a44cedd51344d8640c4274648",
+        "opaqueBinary": false
+      },
+      {
+        "path": "fixtures/phase1/syntax-contract/ci-portability/historical-inputs.mjs",
+        "version": "current-worktree",
+        "bytes": 4086,
+        "sha256": "c41e124b8930f1c7f808ae679528652a74804298c2982c978951abf31f5d982c",
+        "opaqueBinary": false
+      },
+      {
+        "path": "fixtures/phase1/syntax-contract/ci-portability/historical-inputs.mjs",
+        "version": "292760e069879dc5c49ebe3f2b86c8e46090a82c",
+        "bytes": 3087,
+        "sha256": "e5b81872729b4676a96ebf1ad8ae1e0f820117f4e05aed689f3c5897b2daa455",
+        "opaqueBinary": false
+      },
+      {
+        "path": "fixtures/phase1/syntax-contract/ci-portability/historical-inputs.mjs",
+        "version": "624234edf688fce4e5384f48d454b53c15f90967",
+        "bytes": 3087,
+        "sha256": "e5b81872729b4676a96ebf1ad8ae1e0f820117f4e05aed689f3c5897b2daa455",
+        "opaqueBinary": false
+      },
+      {
+        "path": "packages/runtime/test/helpers/native-refresh-r5-preparation-scope.mjs",
+        "version": "current-worktree",
+        "bytes": 1119,
+        "sha256": "ddf801c55ee3f0e2ecca99f9586aa0cf9e2064f181678c8fbe06e352d69bceb5",
+        "opaqueBinary": false
+      },
+      {
+        "path": "packages/runtime/test/helpers/native-refresh-r5-preparation-scope.mjs",
+        "version": "292760e069879dc5c49ebe3f2b86c8e46090a82c",
+        "bytes": 1119,
+        "sha256": "ddf801c55ee3f0e2ecca99f9586aa0cf9e2064f181678c8fbe06e352d69bceb5",
+        "opaqueBinary": false
+      },
+      {
+        "path": "packages/runtime/test/helpers/native-refresh-r5-preparation-scope.mjs",
+        "version": "624234edf688fce4e5384f48d454b53c15f90967",
+        "bytes": 1084,
+        "sha256": "619bf18c755f6c672021d034044cc1d2e49aa95e34c915a4d810d0477919ed22",
+        "opaqueBinary": false
+      },
+      {
+        "path": "packages/runtime/test/native-refresh-transport-replay.test.mjs",
+        "version": "current-worktree",
+        "bytes": 169548,
+        "sha256": "3bee8d392f72307c8cda76d438aa388f2c506e298fc6545934fb0c39bb8c5512",
+        "opaqueBinary": false
+      },
+      {
+        "path": "packages/runtime/test/native-refresh-transport-replay.test.mjs",
+        "version": "292760e069879dc5c49ebe3f2b86c8e46090a82c",
+        "bytes": 169548,
+        "sha256": "3bee8d392f72307c8cda76d438aa388f2c506e298fc6545934fb0c39bb8c5512",
+        "opaqueBinary": false
+      },
+      {
+        "path": "packages/runtime/test/native-refresh-transport-replay.test.mjs",
+        "version": "624234edf688fce4e5384f48d454b53c15f90967",
+        "bytes": 169548,
+        "sha256": "3bee8d392f72307c8cda76d438aa388f2c506e298fc6545934fb0c39bb8c5512",
+        "opaqueBinary": false
+      },
+      {
+        "path": "packages/runtime/test/native-syntax-admission.test.mjs",
+        "version": "current-worktree",
+        "bytes": 3819,
+        "sha256": "38f184af383ceefb6d7f16c933f2ba14db045d64a454be57337880b85a14299d",
+        "opaqueBinary": false
+      },
+      {
+        "path": "packages/runtime/test/native-syntax-admission.test.mjs",
+        "version": "292760e069879dc5c49ebe3f2b86c8e46090a82c",
+        "bytes": 3819,
+        "sha256": "38f184af383ceefb6d7f16c933f2ba14db045d64a454be57337880b85a14299d",
+        "opaqueBinary": false
+      },
+      {
+        "path": "packages/runtime/test/native-syntax-admission.test.mjs",
+        "version": "624234edf688fce4e5384f48d454b53c15f90967",
+        "bytes": 3819,
+        "sha256": "38f184af383ceefb6d7f16c933f2ba14db045d64a454be57337880b85a14299d",
+        "opaqueBinary": false
+      },
+      {
+        "path": "scripts/helpers/native-refresh-ci-layout.mjs",
+        "version": "current-worktree",
+        "bytes": 8772,
+        "sha256": "584e52cf14e2393b35a883bcdfce0085ff9483af10737ec1e9736054b1b16c5f",
+        "opaqueBinary": false
+      },
+      {
+        "path": "scripts/helpers/native-refresh-ci-layout.mjs",
+        "version": "292760e069879dc5c49ebe3f2b86c8e46090a82c",
+        "bytes": 8772,
+        "sha256": "584e52cf14e2393b35a883bcdfce0085ff9483af10737ec1e9736054b1b16c5f",
+        "opaqueBinary": false
+      },
+      {
+        "path": "scripts/helpers/native-refresh-ci-layout.mjs",
+        "version": "624234edf688fce4e5384f48d454b53c15f90967",
+        "bytes": 8663,
+        "sha256": "d96bbb50654d90e7cea3586c561453117a8df9dfef6d0d0cba6fb8f7a6deb4dc",
+        "opaqueBinary": false
+      },
+      {
+        "path": "scripts/test-native-refresh-ci-layout.mjs",
+        "version": "current-worktree",
+        "bytes": 12758,
+        "sha256": "25f4b6cf94f0d1bfb270f7c9b2c1d6328051e90551d2c13d95e97306e96da081",
+        "opaqueBinary": false
+      },
+      {
+        "path": "scripts/test-native-refresh-ci-layout.mjs",
+        "version": "292760e069879dc5c49ebe3f2b86c8e46090a82c",
+        "bytes": 12758,
+        "sha256": "25f4b6cf94f0d1bfb270f7c9b2c1d6328051e90551d2c13d95e97306e96da081",
+        "opaqueBinary": false
+      },
+      {
+        "path": "scripts/test-native-refresh-ci-layout.mjs",
+        "version": "624234edf688fce4e5384f48d454b53c15f90967",
+        "bytes": 12449,
+        "sha256": "e41725e3370a7fdde913a2e0fdb2ef34e01d418bea034c09626c9d9e6d649d9e",
+        "opaqueBinary": false
+      },
+      {
+        "path": "scripts/test-native-refresh-ci-pack.mjs",
+        "version": "current-worktree",
+        "bytes": 30509,
+        "sha256": "08d5acaac4d6352776c2999098f933f75b2ddc0c74312049a45f31cb5e3dd3ac",
+        "opaqueBinary": false
+      },
+      {
+        "path": "scripts/test-native-refresh-ci-pack.mjs",
+        "version": "292760e069879dc5c49ebe3f2b86c8e46090a82c",
+        "bytes": 30509,
+        "sha256": "08d5acaac4d6352776c2999098f933f75b2ddc0c74312049a45f31cb5e3dd3ac",
+        "opaqueBinary": false
+      },
+      {
+        "path": "scripts/test-native-refresh-ci-pack.mjs",
+        "version": "624234edf688fce4e5384f48d454b53c15f90967",
+        "bytes": 30349,
+        "sha256": "0aa3cdd05224649e3e68eba2e1615309700d09c6934888aa743d8688b0ad88fa",
+        "opaqueBinary": false
+      },
+      {
+        "path": "scripts/test-native-refresh-ci.mjs",
+        "version": "current-worktree",
+        "bytes": 15331,
+        "sha256": "6bef7822e7575643142ad850d0b89b6b04df267c9c91f57c9aabb77ef5bdb72a",
+        "opaqueBinary": false
+      },
+      {
+        "path": "scripts/test-native-refresh-ci.mjs",
+        "version": "292760e069879dc5c49ebe3f2b86c8e46090a82c",
+        "bytes": 15331,
+        "sha256": "6bef7822e7575643142ad850d0b89b6b04df267c9c91f57c9aabb77ef5bdb72a",
+        "opaqueBinary": false
+      },
+      {
+        "path": "scripts/test-native-refresh-ci.mjs",
+        "version": "624234edf688fce4e5384f48d454b53c15f90967",
+        "bytes": 15302,
+        "sha256": "36bc733618345ae15dac14b970347a4ff64604a90a587a5c89ffa5913a8c1a08",
+        "opaqueBinary": false
+      }
+    ]
+  },
+  "historicalScopeResolution": "Parent explicitly confirms prior12 R7/capture-repair paths belong to same CodeAtlas stage and prior approvals; include under user all-code sync, without reinstalling profile or rerunning historical qualification.",
+  "sourcePins": {
+    "fixtures/phase1/syntax-contract/ci-portability/historical-inputs.mjs": "c41e124b8930f1c7f808ae679528652a74804298c2982c978951abf31f5d982c",
+    "scripts/mixed-native-current13-no-native-fixture.mjs": "bf03caff4780bd325cb9e66ef686cd414fd890660f41ef10a7921e575778b1a2",
+    "scripts/mixed-native-current13-product-fixture.mjs": "1d90b2a9113fa869d077a45c19950e88d7dd31b497289f2cf9d87480d68837cb",
+    "scripts/mixed-native-current13-mixed-fixture.mjs": "3b3a31d9e9910e5233bc3df0af1716ac98e66915d20187bd3956e54b9e426a06",
+    "scripts/mixed-native-current13-workspace-repo-fixture.mjs": "3ddc1b79fe2c2002f42052ed31ec0835038092534aa8eee1be815cc5cff2671c",
+    "scripts/test-mixed-native-current13-modified-entry.mjs": "ce4d19c7b48866dbf1a902ddb12a829a92e302d975ee6c9604730f17bfe935d1",
+    "scripts/test-mixed-native-current13-workspace-entry.mjs": "f4c51061993beb1aa7f8af8274868e4358c39d72f5ff11c94c20a986918075d8",
+    "scripts/test-mixed-native-current13-workspace-prepare.mjs": "773fb27fdda0455f424f894ea957402473c5737b47623946bc9352c18062ad9e",
+    "fixtures/phase1/syntax-contract/ci-portability/index.json": "830066e540d8da260775d6a5541806c9c234c2154a86a508ffdbcb6ad2427057",
+    "fixtures/phase1/syntax-contract/ci-portability/historical-bytes.json.gz": "f8291839a79d41507f78234720796bbaf4eb92793c1b307b7ff6bf98a5112568",
+    "scripts/test-current13-input-portability.mjs": "1ab36541386fc03505111bd5b7730e9cb8027efc659078b0f9f4bb277d378940",
+    "docs/superpowers/specs/2026-11-06-current13-input-portability.md": "a017ea82d05de302ee4c94f9c6d9b6eb3ae628b995371a8b29081608964f4bd3"
+  },
+  "evidencePins": {
+    ".superpowers/sdd/2026-11-06-current13-input-portability/verification.json": "4d80c70877d910394d986baf0f265e7202c12cc10830d09c0d84db87017c4280",
+    ".superpowers/sdd/2026-11-06-stage-sync-preflight/remote-ancestry-and-local-history.json": "ef557701e33d30bb6e7e2b0d7099c56e16610c76fa9c81d4b671ae5deda32466",
+    ".superpowers/sdd/2026-11-06-current13-input-portability/green-final.log": "d7e13f1a99810c253bf141db06d26a97b868652407d344cf666d37304f9019ff",
+    ".superpowers/sdd/2026-11-06-current13-input-portability/red.log": "e3279de8486c01141e40bc50cd633452fa31f6e3f94232b974ade4aec440dc79",
+    ".superpowers/sdd/2026-11-06-current13-input-portability/green-attempt-1.log": "ea53b0a06fcf9e3ba4d877ce277a1999e7fb60a31d51f813588d5d97219dcceb",
+    ".superpowers/sdd/2026-11-06-current13-input-portability/migration-result.json": "7e5d8aa1efbe04f923dfdea147aa85bf430a97068020c6795e10a40ac6e54976",
+    ".superpowers/sdd/2026-11-06-current13-input-portability/before-hashes.json": "9387476d0aa67d7eb14b77f971260b2daaf53437430f1fc78c70777c407899ba"
+  },
+  "scanArtifact": {
+    "path": "C:\\Users\\Freya\\AppData\\Local\\Temp\\codeatlas-portability-committed-sensitive-scan-20261106.json",
+    "sha256": "578286955881a75b7aebe3dfe8c18618af893fc5cbcea141677be6a5e0fd118f"
+  },
+  "priorSafetyReview": {
+    "path": "C:/Users/Freya/AppData/Local/Temp/codeatlas-stage-git-safety-review-20261106.json",
+    "sha256": "0cab5d8c5de1613c6b370a49c821c332f7585bf9352cef8320d1c1dd298d8227",
+    "interpretation": "Prior292 source scan reused; current delta review only."
+  },
+  "remaining": [
+    "Root final shared-doc/index integration and final status/hash freshness before staging.",
+    "Root sole Git writer; no git add -A suggestion. NewDworktree must not overwrite originalD or switch/resetC.",
+    "CI-trigger and push authorization handled by separate reviewer/root; no push authorized by this review.",
+    "Actual inventory/consumer/platform/Phase1 gates remain unchanged."
+  ]
+}

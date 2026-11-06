@@ -18,12 +18,20 @@ import type { HistoryReadLimits } from '../../storage/dist/analysis/activation-h
 export type MixedSourcePreparation = Omit<MixedSourcePreparationInput, 'account' | 'control'> & {
   readonly limits: HistoryReadLimits;
   readonly control: SourceAccountControl;
+  readonly qualification?: MixedSourcePreparationInput['control']['qualification'];
 };
 /** Private preparation only. Production must qualify the whole operation before invoking this. */
 export default async function prepareMixedSourceOperation(input: MixedSourcePreparation) {
   const prelude = beginMixedSourceAccount(input.limits, input.control);
   try {
-    const prepared = await prepareMixedSource({ ...input, account: prelude.account });
+    const prepared = await prepareMixedSource({
+      ...input,
+      control: {
+        ...input.control,
+        ...(input.qualification === undefined ? {} : { qualification: input.qualification }),
+      },
+      account: prelude.account,
+    });
     return Object.freeze({ ...prepared, budget: prelude.budget, account: prelude.account });
   } catch (e) {
     prelude.account.invalidate();
@@ -76,7 +84,10 @@ export async function prepareBudgetedMixedSourceOperation(input: BudgetedMixedSo
     const prepared = await prepareMixedSource({
       request: input.request,
       policy: input.policy,
-      control,
+      control: {
+        ...control,
+        ...(input.qualification === undefined ? {} : { qualification: input.qualification }),
+      },
       expectedRepository: input.repository,
       sourceState,
       account: prelude.account,

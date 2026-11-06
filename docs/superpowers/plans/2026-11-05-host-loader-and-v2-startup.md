@@ -1,0 +1,19 @@
+# HOST module bytes and V2 startup offline continuation
+
+Approved scope: D1-D4 HOST-context and dynamic-binding offline direction. No live HOST/Git/Native/OS API, new flags/rights or physical values. Root owns JS context/closure hooks/tests/docs; worker owns four new dynamic HOST Windows adapter/test files. Single root integration.
+
+Assumptions: existing independently expected manifest/module IDs are fixed by coordinator, not HOST messages. Loader is a consistency mechanism, not an eval/fs/process sandbox. Fixed edge bindings and builtin set are coordinator-local refinement of explicit closure, not new authority. Actual bootstrap identity and inherited-channel proof remain external gates.
+
+1. RED: selected real-file byte snapshot + pure resolver/load hook tests. Refactor original context reader only to optionally keep the already-verified exact JS UTF-8 bytes in an opaque closure; original API output unchanged. Caps explicit, reuse maxManifestBytes for serialized local hook plan and existing maxTotalBytes for reads. No new numeric default or physical resource formula.
+2. Hooks use only fixed artifact IDs/edges and explicit Node builtins, deny any unlisted importer/specifier/URL/query/fragment/format; never nextResolve/nextLoad filesystem fallback. Use verified immutable source snapshots, distinct private URL namespace to avoid old ESM cache aliases. Pure invocation tests, no hook installed/actual HOST launched. Missing dependency refuses instead of automatic trust expansion.
+3. Worker reuses old HOST pipe including stderr/ledger/budget in V2 loop via separate nominal adapters. Old Start/factory/pipe ownership untouched. Compile-only Windows seam plus meaningful pure adapters/diagnostics tests; no OS calls.
+4. Targeted old-context, new closure and V2/old HOST tests, architecture/scoped format, one concentrated independent review and status/trace update. Do not repeat full239/last29 without changed dependencies.
+
+Success: exact verified bytes feed closed hooks; graph omissions/drift/alias/format reject; opaque identity not forgeable; old context output/tests preserved; V2 startup pure factory compiles and preserves existing stderr/cleanup requirements. All authentication/execution/production/measurement flags remain false. Actual fixed CLI entry wiring is not invented if bootstrap input/caps/deadline/owner context schema is missing; provide a precise consolidated decision packet instead.
+
+
+## Same-batch continuation: fixed bootstrap plumbing
+
+Independent scope review confirmed ordinary coordinator-fixed input delivery can be implemented without new authority. Added scripts/mixed-native-host-bootstrap.mjs/test-mixed-native-host-bootstrap.mjs and reader fixed-bootstrap-artifact branch. Maintain original two argv values; fixed environment carries explicit existing caps/deadline, no defaults or flags. Canonical bootstrap descriptor is ordinary artifact with exact versioned existing owner fields+edges; derive manifest identity from argv to avoid digest cycle. Snapshot descriptor/modules together in original bounded verified read. Actual Node hook registration encloses entire awaited pinned synthetic operation and finally unregisters. Bootstrap fixes its own parent URL. No opaque capture/auth fields; all authority flags false. CLI guard not executed in tests. Real business current13 entry and complete independently fixed artifact graph remain next implementation, not synthetic completion.
+
+Bootstrap RED, initial Node-parent integration failure and Windows environment-case RED are preserved. Final targeted bootstrap/loader/context/owner test cohort and final architecture/format supersede only corresponding changed JS ranges; first stable C# HOST review/tests are reused, overlapping counts not added. Independent scoped bootstrap review supplements preserved first review. No code/dependency/type changes in packages.

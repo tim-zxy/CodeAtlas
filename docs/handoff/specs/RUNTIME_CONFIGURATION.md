@@ -1,3 +1,13 @@
+## Approved dynamic-binding V2 offline implementation - 2026-11-05
+
+User explicitly approved the independent-coordinator/fixed-HOST-attester proposal
+for offline implementation/substitutes. [Exact private contract](../../superpowers/specs/2026-11-05-dynamic-binding-offline-contract.md)
+adds a separate bounded V2 REGISTER/BOUND then strict INTENT/READY lane and distinct
+SURFACE_V8 role, preserving V1/V5. Application retains operation authorization.
+Independent expected artifacts, genuine issuer origin and lifecycle are required;
+JSON/hash receipt is not authority. Live module/OS/channel admission, real runs,
+rights, physical formulas/values and Phase1 acceptance remain unapproved/open.
+
 ## A5固定混合执行链本地交付完成 — 2026-10-29
 
 获批T1–T4已完成，A5_FIXED_EXECUTION_LOCAL_EXIT：[A5实施结果与作者审查](../../superpowers/plans/2026-10-29-phase1-mixed-execution-closure.md#实施结果与作者审查2026-10-29)；[唯一结果索引](../../../.superpowers/sdd/2026-10-29-phase1-mixed-execution/results.json)。显式Native配置v2、Stage内NO_OP、既有空FULL、固定私有Source→v2/v5→Stage→Store及真实本地结算已接入。最终271 PASS/1原C1 TODO，注册35/35，Storage/Runtime构建、17项目架构及范围格式通过。原Stage/Store方法体、公开路由、IR/wire/SQL schema与原Fixture参考保持。

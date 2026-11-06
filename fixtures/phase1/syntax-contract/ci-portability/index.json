@@ -3,25 +3,373 @@
   "measurementEligible": false,
   "sourceOrHistoryAuthenticated": false,
   "files": {
+    ".superpowers/design/2026-10-25-phase1-syntax-evidence-reuse/review-verification.json": {
+      "sha256": "9d9794b3a2e052496ffdcbfcb53c537c07bd70ae4fd59ff6d63689b9f4ad7bc4",
+      "bytes": 555779
+    },
     ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/before-product/packages/providers/src/index.ts": {
       "sha256": "25120335996e8ddda9ae213313bd7962d5d4ce680c6ec4571d1c5cbc97ade5e8",
       "bytes": 1999
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-observation-scope/old-behavior.json": {
-      "sha256": "fb293528dd3cb1fda4cf7e37ca177cf864654048a361ebb8c242e0424488f1c4",
-      "bytes": 546936
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/depth-capture-root.json": {
+      "sha256": "276a5988ba303999024f7f8b93833f60fbc0beadf7c7098fd0f986f9576faf0f",
+      "bytes": 295
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/old-behavior.json": {
-      "sha256": "73454000587f2161c00b6a8ce2c273db69053780552c8c8b17b3807461c4b19e",
-      "bytes": 2904334
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/depth-execution-inputs.json": {
+      "sha256": "acabd6f788070e5534a38c4e100cd02c77b742d4e100b0c6a7f2cf1140c1bdf5",
+      "bytes": 17803
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/semantic-freeze-final.json": {
-      "sha256": "16625d6a6f3ba6d095c2897ff2e6f549e125ec3bbcf4aac69642f071104ec1dd",
-      "bytes": 40995
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/implementation-verification.json": {
+      "sha256": "0e179ca477a9b2f984cce961f93d32284eb0fe1d2fe93664faa183763981adcd",
+      "bytes": 237529
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/semantic-freeze.json": {
-      "sha256": "ceb9d898b81f1a63f56bd676dc89dfe5a68c89ef16abc8ea05b8f20768e9999c",
-      "bytes": 40725
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/alias-reference-python/events.jsonl": {
+      "sha256": "ce0cd5a984d36dc5221cf4559eb0260aced18cc4c6fcd0436fcee0852b325fb3",
+      "bytes": 7434
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/alias-reference-python/expected.jsonl": {
+      "sha256": "ce0cd5a984d36dc5221cf4559eb0260aced18cc4c6fcd0436fcee0852b325fb3",
+      "bytes": 7434
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/alias-reference-python/manifest.json": {
+      "sha256": "d83859c208e180f3981aed58016fb801267c43095f0efcc084ea9ea241ee3853",
+      "bytes": 502
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/alias-reference-python/request.jsonl": {
+      "sha256": "33a9f65c7017935ca104422675b0628211275c856e3d071598d743f44b6205b1",
+      "bytes": 1453
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/async-python/events.jsonl": {
+      "sha256": "a9c2bf8f391a5796d1b5fa57844f8a284de548baa253e7e334393ade49fd7be6",
+      "bytes": 5504
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/async-python/expected.jsonl": {
+      "sha256": "a9c2bf8f391a5796d1b5fa57844f8a284de548baa253e7e334393ade49fd7be6",
+      "bytes": 5504
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/async-python/manifest.json": {
+      "sha256": "8b8ee5c13283df32bda04c7dfee8882e003527f8b75e9808c9f8134351c1165e",
+      "bytes": 492
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/async-python/request.jsonl": {
+      "sha256": "eab344aaa125d1812ee57af9b8f9a488b475787628534507d23ea58e08ef16f9",
+      "bytes": 1443
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/class-owner-gap/events.jsonl": {
+      "sha256": "f68c99d97d6f6c5c0dbfd6230865930a75eb000baebd410aac8e542fd98b9f01",
+      "bytes": 5007
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/class-owner-gap/expected.jsonl": {
+      "sha256": "f68c99d97d6f6c5c0dbfd6230865930a75eb000baebd410aac8e542fd98b9f01",
+      "bytes": 5007
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/class-owner-gap/manifest.json": {
+      "sha256": "31cba8c48da5bd49d94c33baf0784bbe047b2164e9b18a9f790fee631636524f",
+      "bytes": 495
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/class-owner-gap/request.jsonl": {
+      "sha256": "bb6deef30bf22361afd0fe3a74b516152688b09166ba47defd826e744c3a4fcd",
+      "bytes": 1447
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/class-python/events.jsonl": {
+      "sha256": "7c2be45b3d18aa140909a4ce9e6934a0bdbe17c463eb14a6b0b2309de01ae85b",
+      "bytes": 4330
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/class-python/expected.jsonl": {
+      "sha256": "7c2be45b3d18aa140909a4ce9e6934a0bdbe17c463eb14a6b0b2309de01ae85b",
+      "bytes": 4330
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/class-python/manifest.json": {
+      "sha256": "39e6a0c62a82e92fad11c5c4a1a7269ed76b7705ac46bec60f8ba643900c02bc",
+      "bytes": 492
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/class-python/request.jsonl": {
+      "sha256": "436c0d42475617afcb0a991848b4ed001063e0a06d5e2e3e25948cc6c60cd0cf",
+      "bytes": 1443
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/comment-python/events.jsonl": {
+      "sha256": "47cc7febd5311fb0895a6f92c2c3ce6105e3580c6bba590519ff0f92c9638624",
+      "bytes": 4293
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/comment-python/expected.jsonl": {
+      "sha256": "47cc7febd5311fb0895a6f92c2c3ce6105e3580c6bba590519ff0f92c9638624",
+      "bytes": 4293
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/comment-python/manifest.json": {
+      "sha256": "9542b82992a064b5216a4678961e75371ab8bdd6e94cbadccc09a3e2b8e4b392",
+      "bytes": 494
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/comment-python/request.jsonl": {
+      "sha256": "29f5566ea4ccb4b94ad04215c2b76badad1cabc026187f8b62948102b3a9b9e3",
+      "bytes": 1445
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/cross-consumer-result.json": {
+      "sha256": "5ca265cd3485511fb3bb6978c96a336df2ddaf9a2e715f84529aa9328f3431af",
+      "bytes": 4701
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/discarded-dictionary/events.jsonl": {
+      "sha256": "734b2cbcff7e8613f16fdce7e9ecde93c387e2e9cf02345d59a54229cc721508",
+      "bytes": 5105
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/discarded-dictionary/expected.jsonl": {
+      "sha256": "734b2cbcff7e8613f16fdce7e9ecde93c387e2e9cf02345d59a54229cc721508",
+      "bytes": 5105
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/discarded-dictionary/manifest.json": {
+      "sha256": "88eb4e1df2a526f61c0001e48b1da955d4e0ed330aaa455e538e30ab3627f718",
+      "bytes": 500
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/discarded-dictionary/request.jsonl": {
+      "sha256": "4d0edb7971016518f42ed2945dfc0a642cfe89a31e6911272a66960ec2bbd5c3",
+      "bytes": 1452
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/dynamic-python/events.jsonl": {
+      "sha256": "55380d48a068d402f7334904aaf6d7de759b1e0fbd47b5771d192693409e45f8",
+      "bytes": 9541
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/dynamic-python/expected.jsonl": {
+      "sha256": "55380d48a068d402f7334904aaf6d7de759b1e0fbd47b5771d192693409e45f8",
+      "bytes": 9541
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/dynamic-python/manifest.json": {
+      "sha256": "f377927c91cf1216985edc50416dea97ae54c917757bb054b921577de98fb034",
+      "bytes": 494
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/dynamic-python/request.jsonl": {
+      "sha256": "1c843af41a6959e5eef92dbb1fc1d599649c9611f01611a1af3ad4a537021bdd",
+      "bytes": 1445
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/empty-python/events.jsonl": {
+      "sha256": "82d2668f17bd6b117c2e1d002cf4dd793cbb441658da23425a1a67f0f4a34545",
+      "bytes": 4277
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/empty-python/expected.jsonl": {
+      "sha256": "82d2668f17bd6b117c2e1d002cf4dd793cbb441658da23425a1a67f0f4a34545",
+      "bytes": 4277
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/empty-python/manifest.json": {
+      "sha256": "a1f83a1fcbedf82c1512fe929b039ed4e9cb18b2870775c70e982ec3df47e433",
+      "bytes": 492
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/empty-python/request.jsonl": {
+      "sha256": "59ba93bfd48e38f8afc42ee7e2da2ff4c0557f59c33d1fd08125a8856fc86238",
+      "bytes": 1443
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/java-only/events.jsonl": {
+      "sha256": "d29c001ebba51fe771d0324875df5e27a9683cf12a0a91bc80d7968f864411d0",
+      "bytes": 3329
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/java-only/expected.jsonl": {
+      "sha256": "d29c001ebba51fe771d0324875df5e27a9683cf12a0a91bc80d7968f864411d0",
+      "bytes": 3329
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/java-only/manifest.json": {
+      "sha256": "3dc565374a86253f3760575979cfa8a19f9aaed7f6a29e71e820753dbe25d0ec",
+      "bytes": 489
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/java-only/request.jsonl": {
+      "sha256": "75c0af507899132a8302168220830b97d2caa03bb326f33e2bd030919263c5ad",
+      "bytes": 2251
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/malformed-python/events.jsonl": {
+      "sha256": "410ba9a287a9fbde0e7305fa53a2b53e7d2fe139fbc0be7e83d59b3202b71a2c",
+      "bytes": 7644
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/malformed-python/expected.jsonl": {
+      "sha256": "410ba9a287a9fbde0e7305fa53a2b53e7d2fe139fbc0be7e83d59b3202b71a2c",
+      "bytes": 7644
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/malformed-python/manifest.json": {
+      "sha256": "0f4c6bfb670314a14104b9bc11472524d9544f1151a3b188735ed20a0d307ee7",
+      "bytes": 496
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/malformed-python/request.jsonl": {
+      "sha256": "dccb8156a29ac3ebcd97f9ffab1f3ea068e35606244a95ec4a49b4a7f01adeda",
+      "bytes": 1447
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/mixed/events.jsonl": {
+      "sha256": "dc63de9f2fcd9c070a1c4bf1b52e76f76ea5fd0389d48da61b544893e9573901",
+      "bytes": 9102
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/mixed/expected.jsonl": {
+      "sha256": "dc63de9f2fcd9c070a1c4bf1b52e76f76ea5fd0389d48da61b544893e9573901",
+      "bytes": 9102
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/mixed/manifest.json": {
+      "sha256": "e144317ead997388ec1e623439b7e62c06104eb14db28bac145a5e7b7362938a",
+      "bytes": 485
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/mixed/request.jsonl": {
+      "sha256": "20ea047ac106a33ed4b62cb23690b24eefd91acd924e519eccb976095a4cd328",
+      "bytes": 2678
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/multi-import-from/events.jsonl": {
+      "sha256": "c798ea1391c66ded1b57d437532234f1cb47321598316f7a7a92ef39a81ea220",
+      "bytes": 10503
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/multi-import-from/expected.jsonl": {
+      "sha256": "c798ea1391c66ded1b57d437532234f1cb47321598316f7a7a92ef39a81ea220",
+      "bytes": 10503
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/multi-import-from/manifest.json": {
+      "sha256": "66f58670ce62dcbab8bfbfcd5a0d22249eaf8136be7d31bcf5f3f5d349df8597",
+      "bytes": 497
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/multi-import-from/request.jsonl": {
+      "sha256": "0180295d64f84fb09670603e3661ccc19847a7d7b65a2ffc26013afe45141785",
+      "bytes": 1449
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/nested-python/events.jsonl": {
+      "sha256": "5fa9ac5abe01157950d0019587854201df5e5e29440dad7dcb59d96df80b0c24",
+      "bytes": 6785
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/nested-python/expected.jsonl": {
+      "sha256": "5fa9ac5abe01157950d0019587854201df5e5e29440dad7dcb59d96df80b0c24",
+      "bytes": 6785
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/nested-python/manifest.json": {
+      "sha256": "e880f1d49d3c5ec9adea816ab3722bf5fe2e23f0af5383d0f1b252bde375b994",
+      "bytes": 493
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/nested-python/request.jsonl": {
+      "sha256": "48b6c3d87820da03ca562ff85b76ffa1b2442694b1d49c69d97c270a2ccf3268",
+      "bytes": 1444
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/nested-repeated-values/events.jsonl": {
+      "sha256": "37d30cd67718f4486a0cbf6428af7f8a4a524da51f2e0b59361acba801a1a7c9",
+      "bytes": 6854
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/nested-repeated-values/expected.jsonl": {
+      "sha256": "37d30cd67718f4486a0cbf6428af7f8a4a524da51f2e0b59361acba801a1a7c9",
+      "bytes": 6854
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/nested-repeated-values/manifest.json": {
+      "sha256": "114fa947dc37685224785373cc56bf377672e095814321df240e7abec37437e3",
+      "bytes": 502
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/nested-repeated-values/request.jsonl": {
+      "sha256": "06357563fce73367161f7f67a921c09d47b80bee78961b0d01c8e6fb691b97f4",
+      "bytes": 1454
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/no-files/events.jsonl": {
+      "sha256": "ca324df5695209e5258ea2d98a703d72cd5fd6f839e1b8b5015c3f7ebc79edf9",
+      "bytes": 1482
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/no-files/expected.jsonl": {
+      "sha256": "ca324df5695209e5258ea2d98a703d72cd5fd6f839e1b8b5015c3f7ebc79edf9",
+      "bytes": 1482
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/no-files/manifest.json": {
+      "sha256": "1e67e3b90afc6c0d9d2715b144c38f22b2e332b4ecc7abbd71244101c7358f8a",
+      "bytes": 488
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/no-files/request.jsonl": {
+      "sha256": "6968852f2bd1d43a9502914cd220d5d2712d908a0baf0d3e1fdf92e8717911cf",
+      "bytes": 1123
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/two-python-files/events.jsonl": {
+      "sha256": "6e4dfde17940bda25cc880dca15062b03fc48e27772789500dae025c53d57f0c",
+      "bytes": 10136
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/two-python-files/expected.jsonl": {
+      "sha256": "6e4dfde17940bda25cc880dca15062b03fc48e27772789500dae025c53d57f0c",
+      "bytes": 10136
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/two-python-files/manifest.json": {
+      "sha256": "9ef0f4c9cc8e97ac3db6f2e31dbced45bf4cadb02c9029a378e1e9f2fb1de712",
+      "bytes": 496
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/two-python-files/request.jsonl": {
+      "sha256": "9f6d809883112ca0495313dc60b4900ee24105bf7e299b0f9533b9b539f9167c",
+      "bytes": 1757
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/unicode-control/events.jsonl": {
+      "sha256": "47cabfc651141b2a541a9351163a79e1a853e48faf75b30172b03c392870e9ce",
+      "bytes": 5726
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/unicode-control/expected.jsonl": {
+      "sha256": "47cabfc651141b2a541a9351163a79e1a853e48faf75b30172b03c392870e9ce",
+      "bytes": 5726
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/unicode-control/manifest.json": {
+      "sha256": "5a3c63bbf757f1d03da2eaea0ef1852f4e460a5585cf4f1d1d8251d437ba6449",
+      "bytes": 495
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/unicode-control/request.jsonl": {
+      "sha256": "314302fc8c9666aa749058bf8f4b37d5e0214274acb7318a7b9b157c0de35d0f",
+      "bytes": 1447
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/wildcard-python/events.jsonl": {
+      "sha256": "e59f0f093738ffe2f2b9912d829be31b68dea8ee1993a46ebaef4b99a0976456",
+      "bytes": 4358
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/wildcard-python/expected.jsonl": {
+      "sha256": "e59f0f093738ffe2f2b9912d829be31b68dea8ee1993a46ebaef4b99a0976456",
+      "bytes": 4358
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/wildcard-python/manifest.json": {
+      "sha256": "bdb25560c57329da4386729f21fee1f742ab667fa1f1a50c12b124669ce0e533",
+      "bytes": 495
+    },
+    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/wildcard-python/request.jsonl": {
+      "sha256": "88016026f798ffad7fbdd30d9065b3e10f0a817dc5098bb2c6c16095ea30bcac",
+      "bytes": 1446
+    },
+    ".superpowers/sdd/2026-10-25-phase1-r011-history-capture/fixture-v4-before-support-order/fixtures/phase1/r011-history-capture/fixture.json": {
+      "sha256": "5489fb5b499870fa4ae679a24c99613971445a6420558dd76681e71243d1ff95",
+      "bytes": 384
+    },
+    ".superpowers/sdd/2026-10-25-phase1-syntax-evidence-reuse/source-annotation-freeze.json": {
+      "sha256": "f7f76f910430be5a4294151dea51d053389c2f55a59adca8e031e4f2cf2841e6",
+      "bytes": 214
+    },
+    ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/isolated-tests/codeatlas-portable-9DZClg/fixtures/phase1/ir-contract/fixture.json": {
+      "sha256": "6f71fc4ade6824068abe6aa0d0c3816bd00a2d79c3acb0122ed3ff243d383573",
+      "bytes": 343
+    },
+    ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/originals/scripts/test-declared-raw-history-candidate.mjs": {
+      "sha256": "02d1e15a0e6cf81447c12231a2122ca6bd481a3e7014c56d311803763639e688",
+      "bytes": 23220
+    },
+    ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/registration-successor.json": {
+      "sha256": "bfeb129d5ac5146e7977ed9fc3cd2e4f5ae6f8ff2c91edc5fe13747dd4409564",
+      "bytes": 26918
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/before-execution/scripts/test-declared-observation-scope.mjs": {
+      "sha256": "af3f8f9c7767dcfa120a5023da791709ecab8f701f104a48b5fe5878a8304695",
+      "bytes": 8814
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/before-execution/scripts/test-delta-support-candidate.mjs": {
+      "sha256": "52f7049d13bda25143f74fd63c31e37ee3267e6c4e46ef13e01be0ac048a677d",
+      "bytes": 2411
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/before-execution/scripts/test-history-transition.mjs": {
+      "sha256": "17351856bd692a0e6749dc901d751a11937252bced0743dfc6a9a7517e51e411",
+      "bytes": 2407
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/before-execution/scripts/test-r011-history-capture.mjs": {
+      "sha256": "413fff0c3be26e8abe90b637629243da44906ec794bcbd9650153bb4a19bab66",
+      "bytes": 5785
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/before-execution/scripts/test-syntax-evidence-reuse.mjs": {
+      "sha256": "9076413b1f334c47aa9c7648cd1a456960990598cb14771e104c8f1024aaf62d",
+      "bytes": 21383
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/before-execution/scripts/test-syntax-mapping-preparation.mjs": {
+      "sha256": "fdf5b41261c66980542b299c5ad4d080e2ebbf8c65439529607fe66744a5e818",
+      "bytes": 15202
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/README.md": {
+      "sha256": "76e02caab98aaf176cdfc59f26a2fc08e254705446f2ca7be59168accc3e9152",
+      "bytes": 501
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases.json": {
+      "sha256": "f3678705d366fcb78224f7c6d0684dcb657e4f7fc57cb81813c7e9f3b0ea4490",
+      "bytes": 18783
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R01-python-with-untouched-java/expected.json": {
+      "sha256": "42cde06f904682d9081823ccf0882eabcfa1bfcb5de7fb450a55953fa7ffbe79",
+      "bytes": 18906
     },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R01-python-with-untouched-java/input.json": {
       "sha256": "d2ac18898d1a6fe50b36047aa4d0e4bb9f5e984624f5d069de04364307680802",
@@ -31,17 +379,17 @@
       "sha256": "c9ad4299e6ef76e038579ea39de58a64e8b8dd12f70941d884e09d07c970e16a",
       "bytes": 2624
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R01-python-with-untouched-java/request.jsonl": {
-      "sha256": "99d161ab7e7bfa8941f286e9371d77b66120fc1d7c9c357c4156278d38d5cc14",
-      "bytes": 1562
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R01-python-with-untouched-java/output.jsonl": {
       "sha256": "26e448d7620019a6d08f993a21e03553b0c94986f3315c755cc0d1eec3aa777a",
       "bytes": 4455
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R01-python-with-untouched-java/expected.json": {
-      "sha256": "42cde06f904682d9081823ccf0882eabcfa1bfcb5de7fb450a55953fa7ffbe79",
-      "bytes": 18906
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R01-python-with-untouched-java/request.jsonl": {
+      "sha256": "99d161ab7e7bfa8941f286e9371d77b66120fc1d7c9c357c4156278d38d5cc14",
+      "bytes": 1562
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R02-python-added/expected.json": {
+      "sha256": "9c34b0a23c6bd162b9a508807ad642bf7871d5226eb20ea6cf3f0682f9646c27",
+      "bytes": 19566
     },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R02-python-added/input.json": {
       "sha256": "eb229813f6a57f85484cedb960dda53628d985a714a8df65f79f663e9ab7d27c",
@@ -51,17 +399,17 @@
       "sha256": "904d400eca1f411925cedc030552e09ed9e1182ed75454290917423d1432d483",
       "bytes": 2960
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R02-python-added/request.jsonl": {
-      "sha256": "a998bcd1f715288af92801b845e587abcc4e3bd91f9499b41c605e4934565e5d",
-      "bytes": 1523
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R02-python-added/output.jsonl": {
       "sha256": "23376b6e8103be64422bd4315f8e2a131e0284b8f98b32eacd189a9d7479a64a",
       "bytes": 4283
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R02-python-added/expected.json": {
-      "sha256": "9c34b0a23c6bd162b9a508807ad642bf7871d5226eb20ea6cf3f0682f9646c27",
-      "bytes": 19566
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R02-python-added/request.jsonl": {
+      "sha256": "a998bcd1f715288af92801b845e587abcc4e3bd91f9499b41c605e4934565e5d",
+      "bytes": 1523
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R03-java-modified/expected.json": {
+      "sha256": "703e30acbe8b07b65a3043d16647a8d8af842ee3c1b92c0526d6d3216c19dafe",
+      "bytes": 54049
     },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R03-java-modified/input.json": {
       "sha256": "d910fb89347c6fe81cc5cbdfa06ae27898216a6c13a5013d0129976fca895ae7",
@@ -71,17 +419,17 @@
       "sha256": "d8598d1e96310b8d848cad5e5e5d4d3123277d6110fedae195e27f2ee1d1a8fa",
       "bytes": 18949
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R03-java-modified/request.jsonl": {
-      "sha256": "e6dec0c88ff39ac9d409abc8c493b343101d7bb824c3c04d57a55ced3fda3e9e",
-      "bytes": 3115
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R03-java-modified/output.jsonl": {
       "sha256": "88f333f7f44cbd3f55830da296bddd0e7fa8778574eb7e62d5bffeaf3c42c2c6",
       "bytes": 2306
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R03-java-modified/expected.json": {
-      "sha256": "703e30acbe8b07b65a3043d16647a8d8af842ee3c1b92c0526d6d3216c19dafe",
-      "bytes": 54049
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R03-java-modified/request.jsonl": {
+      "sha256": "e6dec0c88ff39ac9d409abc8c493b343101d7bb824c3c04d57a55ced3fda3e9e",
+      "bytes": 3115
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R04-java-added/expected.json": {
+      "sha256": "01c798688771bec2451cf9ad88dbc1edbb4dbec33ffc3dd918eac500dde4ebba",
+      "bytes": 69724
     },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R04-java-added/input.json": {
       "sha256": "c2913d388962a0060e28fc3302a6705b8134b36be27d5d63748e03df28c70dd2",
@@ -91,17 +439,17 @@
       "sha256": "d96b68849543d3d68b0533d1d4c2bd8cf121c7b7054fe890de97acd5532752e8",
       "bytes": 25051
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R04-java-added/request.jsonl": {
-      "sha256": "982a96b50fe92dae6d19d059efd31694d0f18070fc0a74349ec4ee93ba068f76",
-      "bytes": 4015
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R04-java-added/output.jsonl": {
       "sha256": "25762b23c5c66575506cf1c0d59101e4820476631e3cb1ad9b11f0d184ef7f47",
       "bytes": 2472
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R04-java-added/expected.json": {
-      "sha256": "01c798688771bec2451cf9ad88dbc1edbb4dbec33ffc3dd918eac500dde4ebba",
-      "bytes": 69724
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R04-java-added/request.jsonl": {
+      "sha256": "982a96b50fe92dae6d19d059efd31694d0f18070fc0a74349ec4ee93ba068f76",
+      "bytes": 4015
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R05-java-removed-survivor/expected.json": {
+      "sha256": "ff11e73ccca3f72f3fdaa2585dc2d5ac83c7968933f32cda115dcd639cb3b601",
+      "bytes": 38527
     },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R05-java-removed-survivor/input.json": {
       "sha256": "17b24d1553058b7716599440bdcd8c7c0f45ba4d0dd523738b0e3373c83b0ba0",
@@ -111,17 +459,17 @@
       "sha256": "5221ab8263aec138bd7ed83eab9225edb4fc8d1bafcdab1cb0912b0d0fdbe45d",
       "bytes": 12811
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R05-java-removed-survivor/request.jsonl": {
-      "sha256": "0bca595bbbc3a264606b8220b78bd40efbc2f203bcb8dc745cc242eb96ec155a",
-      "bytes": 2272
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R05-java-removed-survivor/output.jsonl": {
       "sha256": "3c6c68099d2764c70c5582619b4ca1a9abbfede1de79f0720802c2be5e798dbf",
       "bytes": 2125
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R05-java-removed-survivor/expected.json": {
-      "sha256": "ff11e73ccca3f72f3fdaa2585dc2d5ac83c7968933f32cda115dcd639cb3b601",
-      "bytes": 38527
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R05-java-removed-survivor/request.jsonl": {
+      "sha256": "0bca595bbbc3a264606b8220b78bd40efbc2f203bcb8dc745cc242eb96ec155a",
+      "bytes": 2272
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R06-mixed/expected.json": {
+      "sha256": "a7e5d9520c234cda42dfcb6cea668b90775cd77c22aeca1333470166edc34b12",
+      "bytes": 58833
     },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R06-mixed/input.json": {
       "sha256": "d54a3f6a64183a1674a6b952b0155ed1f9d09b3bb61668adb0018cc16fbc340f",
@@ -131,17 +479,17 @@
       "sha256": "e3c8d0c818b88c9506fdc5ef375f81f46fcbf151cf603a2698402ff57501012c",
       "bytes": 18735
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R06-mixed/request.jsonl": {
-      "sha256": "af0a3b93fcf937a6ff889726c4485c143fb9d958faa1d45e5b41c91bddad1aac",
-      "bytes": 3470
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R06-mixed/output.jsonl": {
       "sha256": "1c1ad906258348215c6fc263a122805c45a0c35b0e69eadd5b59400f72f566f5",
       "bytes": 4648
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R06-mixed/expected.json": {
-      "sha256": "a7e5d9520c234cda42dfcb6cea668b90775cd77c22aeca1333470166edc34b12",
-      "bytes": 58833
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R06-mixed/request.jsonl": {
+      "sha256": "af0a3b93fcf937a6ff889726c4485c143fb9d958faa1d45e5b41c91bddad1aac",
+      "bytes": 3470
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R07-python-remove-and-modify/expected.json": {
+      "sha256": "b98e946006cccf4cab17661d4fcffcf8d7b0241b325d1addb50f8a93acb99c25",
+      "bytes": 19548
     },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R07-python-remove-and-modify/input.json": {
       "sha256": "b10034a0c76f7e1dfcb35e57c7204afbbe087f4259cf6029f768ccbd9692cdf5",
@@ -151,17 +499,17 @@
       "sha256": "612adf5da0fb3620228aa5411a760499f5f7854cbdaf10477d8ecefb5f101bfe",
       "bytes": 2622
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R07-python-remove-and-modify/request.jsonl": {
-      "sha256": "b500f07070ef6cd83fdde0d41ddef295311ef7b620cf4c6d4a0879e6507d21e5",
-      "bytes": 1627
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R07-python-remove-and-modify/output.jsonl": {
       "sha256": "5bf915e5fa105539ceca0be4b0e66bca55105c8f91dd94ae436761ffcd99fee5",
       "bytes": 4437
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R07-python-remove-and-modify/expected.json": {
-      "sha256": "b98e946006cccf4cab17661d4fcffcf8d7b0241b325d1addb50f8a93acb99c25",
-      "bytes": 19548
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R07-python-remove-and-modify/request.jsonl": {
+      "sha256": "b500f07070ef6cd83fdde0d41ddef295311ef7b620cf4c6d4a0879e6507d21e5",
+      "bytes": 1627
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R08-native-and-other-removals/expected.json": {
+      "sha256": "edd915735366ab8762362156cce4374cc1f158298e13fe0dacc1f90c791a6086",
+      "bytes": 18745
     },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R08-native-and-other-removals/input.json": {
       "sha256": "f753446d1036dc2db75a1a85cbcf9bf5bcaea9a163974e4b5f3c0187a819c1fb",
@@ -171,17 +519,17 @@
       "sha256": "39078d5360e85865b1ebcbd89ad5233abd43eb12adca38b938f166038a7ec51b",
       "bytes": 2259
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R08-native-and-other-removals/request.jsonl": {
-      "sha256": "53d667147fd3377d3cb3bdbba44f59f0bbfe383b4de660e0f804c49d0105d77c",
-      "bytes": 1629
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R08-native-and-other-removals/output.jsonl": {
       "sha256": "4fc67d64052a2acedcee4733de3a5ed0520ac123d98c5d8fbfb769efdeb9702f",
       "bytes": 4446
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R08-native-and-other-removals/expected.json": {
-      "sha256": "edd915735366ab8762362156cce4374cc1f158298e13fe0dacc1f90c791a6086",
-      "bytes": 18745
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R08-native-and-other-removals/request.jsonl": {
+      "sha256": "53d667147fd3377d3cb3bdbba44f59f0bbfe383b4de660e0f804c49d0105d77c",
+      "bytes": 1629
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R09-other-removal-and-python-modify/expected.json": {
+      "sha256": "163ab5cc45ca1e8b38ce72662a42ccf8614a41160f867ebd4977fd60ea6495a2",
+      "bytes": 18155
     },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R09-other-removal-and-python-modify/input.json": {
       "sha256": "618420b9d2ba4b5c753a8948ba2df09bc8c5a8e93fdffb0f961e43106c813e12",
@@ -191,17 +539,17 @@
       "sha256": "afc49966c2528b0a5615c7b2ab7d7637942988691568e7d725189cd38cc4fe07",
       "bytes": 2265
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R09-other-removal-and-python-modify/request.jsonl": {
-      "sha256": "ab98973f713170d9561ec8d75f282681a92caabc5741916b1c37b07bc224baed",
-      "bytes": 1572
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R09-other-removal-and-python-modify/output.jsonl": {
       "sha256": "5243e129044e6115f85162acb3f121daa23a16dc795482c919fd1b6c8f983b98",
       "bytes": 4500
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R09-other-removal-and-python-modify/expected.json": {
-      "sha256": "163ab5cc45ca1e8b38ce72662a42ccf8614a41160f867ebd4977fd60ea6495a2",
-      "bytes": 18155
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R09-other-removal-and-python-modify/request.jsonl": {
+      "sha256": "ab98973f713170d9561ec8d75f282681a92caabc5741916b1c37b07bc224baed",
+      "bytes": 1572
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R10-native-contract-change/expected.json": {
+      "sha256": "d5970bd059b8ef5e48d1bbb3be9b0447b9354680c667c0818fc0b3add2a9c677",
+      "bytes": 64720
     },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R10-native-contract-change/input.json": {
       "sha256": "2a638b725b81cab13e83b68463a74c3dba7912fd77cfbd394b73da535e2a072e",
@@ -211,17 +559,17 @@
       "sha256": "7101edc50166deafdafd04bb4dda4d558ed6334efaf7b8e5f14b1bc51e783cba",
       "bytes": 19076
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R10-native-contract-change/request.jsonl": {
-      "sha256": "9ef78ca7f933229160f9982942ed20ddfba63089433f9c7825151c0074e9702c",
-      "bytes": 3714
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R10-native-contract-change/output.jsonl": {
       "sha256": "772a533d506b72e60f99278dd92103533a777b8d0026702076eb0fb11cc44a90",
       "bytes": 7200
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R10-native-contract-change/expected.json": {
-      "sha256": "d5970bd059b8ef5e48d1bbb3be9b0447b9354680c667c0818fc0b3add2a9c677",
-      "bytes": 64720
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R10-native-contract-change/request.jsonl": {
+      "sha256": "9ef78ca7f933229160f9982942ed20ddfba63089433f9c7825151c0074e9702c",
+      "bytes": 3714
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R11-same-name-java-owners/expected.json": {
+      "sha256": "8ada2d02b6ef8e771364147a9c5e8597a8a22b869459efbae01820ff93c123bc",
+      "bytes": 54553
     },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R11-same-name-java-owners/input.json": {
       "sha256": "d910fb89347c6fe81cc5cbdfa06ae27898216a6c13a5013d0129976fca895ae7",
@@ -231,17 +579,17 @@
       "sha256": "5a4c65aaca926d8569b18623db1f6a55e4833f723e76556e2d34f4371ae23bde",
       "bytes": 19181
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R11-same-name-java-owners/request.jsonl": {
-      "sha256": "eed2dffdabef8d668864eecd7a7e4cf6286e040c4af2a5f9f471f917157a488a",
-      "bytes": 3131
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R11-same-name-java-owners/output.jsonl": {
       "sha256": "69988f4470713a4f5854a3f1dc328da6c52a9fcbf3723bd25f331935ad2e75da",
       "bytes": 2338
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R11-same-name-java-owners/expected.json": {
-      "sha256": "8ada2d02b6ef8e771364147a9c5e8597a8a22b869459efbae01820ff93c123bc",
-      "bytes": 54553
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R11-same-name-java-owners/request.jsonl": {
+      "sha256": "eed2dffdabef8d668864eecd7a7e4cf6286e040c4af2a5f9f471f917157a488a",
+      "bytes": 3131
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R12-unicode-request-order/expected.json": {
+      "sha256": "488e49e1ed4e6eabe6faf75b13752a2415fb3ef4600ac0fc8b80d1a35ec60dcd",
+      "bytes": 54607
     },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R12-unicode-request-order/input.json": {
       "sha256": "f05e475479c425cf26ecc58bdc746d80936481df30c34703494f02b69ab59936",
@@ -251,17 +599,17 @@
       "sha256": "e2404a044a12a05068b934f394fef6a68eefb74dadaded412ae35674076022bc",
       "bytes": 19206
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R12-unicode-request-order/request.jsonl": {
-      "sha256": "3e1d9ba781649e02c1799dde1d21ad54b90fdb9a6e29a550223bfeb082d3ec79",
-      "bytes": 3136
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R12-unicode-request-order/output.jsonl": {
       "sha256": "acabb3f88720243ccc4670d74a28b89a8aab0e2cd6ce56d3d51c857e60869396",
       "bytes": 2338
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R12-unicode-request-order/expected.json": {
-      "sha256": "488e49e1ed4e6eabe6faf75b13752a2415fb3ef4600ac0fc8b80d1a35ec60dcd",
-      "bytes": 54607
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R12-unicode-request-order/request.jsonl": {
+      "sha256": "3e1d9ba781649e02c1799dde1d21ad54b90fdb9a6e29a550223bfeb082d3ec79",
+      "bytes": 3136
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R13-required-source-omitted/expected.json": {
+      "sha256": "83932c375b5eb4d89d826df13b741256ce003e4047cd546710de397fea4f85bb",
+      "bytes": 33
     },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R13-required-source-omitted/input.json": {
       "sha256": "d2ac18898d1a6fe50b36047aa4d0e4bb9f5e984624f5d069de04364307680802",
@@ -271,15 +619,15 @@
       "sha256": "3b2091eb8e12d3c6a02f30f43f660c3c5ef2121f3f399b1707175df946ca6eec",
       "bytes": 2621
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R13-required-source-omitted/request.jsonl": {
-      "sha256": "4be6699bc65a9eea80a841e496d20697d64043bca89fb2f27adf8c47dc72b133",
-      "bytes": 1299
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R13-required-source-omitted/output.jsonl": {
       "sha256": "3e0a6d0b753490eda9f1620c06b34b13db38dc050a1f12bdc064395dd536631d",
       "bytes": 1932
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R13-required-source-omitted/expected.json": {
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R13-required-source-omitted/request.jsonl": {
+      "sha256": "4be6699bc65a9eea80a841e496d20697d64043bca89fb2f27adf8c47dc72b133",
+      "bytes": 1299
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R14-unchanged-source-added/expected.json": {
       "sha256": "83932c375b5eb4d89d826df13b741256ce003e4047cd546710de397fea4f85bb",
       "bytes": 33
     },
@@ -291,15 +639,15 @@
       "sha256": "46ee315b0e8475a0c03eb869832a935e1919f34ab805ba2706f870fe5dc4b13c",
       "bytes": 2620
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R14-unchanged-source-added/request.jsonl": {
-      "sha256": "294287950bd4fb8abb0913f55ea46b4980a2da117a917b1f696f90c4f6bc84ee",
-      "bytes": 1804
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R14-unchanged-source-added/output.jsonl": {
       "sha256": "13bd4f7d930a7d3d0003a002a8a3618f96bd4a2e97c1ae647e619f7cdd74568c",
       "bytes": 6878
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R14-unchanged-source-added/expected.json": {
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R14-unchanged-source-added/request.jsonl": {
+      "sha256": "294287950bd4fb8abb0913f55ea46b4980a2da117a917b1f696f90c4f6bc84ee",
+      "bytes": 1804
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R15-partial-java-group/expected.json": {
       "sha256": "83932c375b5eb4d89d826df13b741256ce003e4047cd546710de397fea4f85bb",
       "bytes": 33
     },
@@ -311,15 +659,15 @@
       "sha256": "7cf8cfcd877c09cb482c133178dc43772006774a8798e23595c7ec0008713e47",
       "bytes": 19094
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R15-partial-java-group/request.jsonl": {
-      "sha256": "c10956512a8d64bf380f7ebf2fdb5c2e0071367035dadbb6ee5786834ab6812b",
-      "bytes": 2208
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R15-partial-java-group/output.jsonl": {
       "sha256": "f75562fe0a0d677eb8f5d7745436b1813205017dc20bd363b3ba8d89a7485168",
       "bytes": 2126
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R15-partial-java-group/expected.json": {
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R15-partial-java-group/request.jsonl": {
+      "sha256": "c10956512a8d64bf380f7ebf2fdb5c2e0071367035dadbb6ee5786834ab6812b",
+      "bytes": 2208
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R16-source-fingerprint-mismatch/expected.json": {
       "sha256": "83932c375b5eb4d89d826df13b741256ce003e4047cd546710de397fea4f85bb",
       "bytes": 33
     },
@@ -331,15 +679,15 @@
       "sha256": "8a69d996c0818fb96fbf694fc25039160270b3e3b0de0e67ea9702c4ba2bdd7a",
       "bytes": 2625
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R16-source-fingerprint-mismatch/request.jsonl": {
-      "sha256": "97b436e6361509c44cedf0ab200ecc5d8ebe43cfe8ae41cb548fdfc60f6aadf4",
-      "bytes": 1568
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R16-source-fingerprint-mismatch/output.jsonl": {
       "sha256": "75e730ac32e4b9f9738031a8fa2a3ee26b0e338061a7922589c718d73c3301cc",
       "bytes": 4484
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R16-source-fingerprint-mismatch/expected.json": {
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R16-source-fingerprint-mismatch/request.jsonl": {
+      "sha256": "97b436e6361509c44cedf0ab200ecc5d8ebe43cfe8ae41cb548fdfc60f6aadf4",
+      "bytes": 1568
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R17-request-order-mismatch/expected.json": {
       "sha256": "83932c375b5eb4d89d826df13b741256ce003e4047cd546710de397fea4f85bb",
       "bytes": 33
     },
@@ -351,15 +699,15 @@
       "sha256": "700388f6c65a7785417b572781bb360b37f16927cb6a831dd45c31fb8dc49b99",
       "bytes": 19210
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R17-request-order-mismatch/request.jsonl": {
-      "sha256": "466406d597d119e2d0ee90958b1d05064f7b1f2fb65e25250e41e8a3e1ec25a0",
-      "bytes": 3133
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R17-request-order-mismatch/output.jsonl": {
       "sha256": "01372c6f60b6b5126e471847282c8f04a8a1ce41e10fe1c214b39675ac22152f",
       "bytes": 2342
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R17-request-order-mismatch/expected.json": {
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R17-request-order-mismatch/request.jsonl": {
+      "sha256": "466406d597d119e2d0ee90958b1d05064f7b1f2fb65e25250e41e8a3e1ec25a0",
+      "bytes": 3133
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R18-partial-metadata-inventory/expected.json": {
       "sha256": "83932c375b5eb4d89d826df13b741256ce003e4047cd546710de397fea4f85bb",
       "bytes": 33
     },
@@ -371,15 +719,15 @@
       "sha256": "b524c4a17794020c74132e441e7e508e0da31ef342ebb19b9a92fca87f1154a4",
       "bytes": 2260
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R18-partial-metadata-inventory/request.jsonl": {
-      "sha256": "58e6733cb6c15ca42cefca9c2ec0c402b97ae8ba6658f229fe9b9b597f6da726",
-      "bytes": 1562
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R18-partial-metadata-inventory/output.jsonl": {
       "sha256": "eaa9b52caea05db241423528746c1103402bcf6f04bc0c593af4f21ed62e781c",
       "bytes": 4455
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R18-partial-metadata-inventory/expected.json": {
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R18-partial-metadata-inventory/request.jsonl": {
+      "sha256": "58e6733cb6c15ca42cefca9c2ec0c402b97ae8ba6658f229fe9b9b597f6da726",
+      "bytes": 1562
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R19-native-removal-missing/expected.json": {
       "sha256": "83932c375b5eb4d89d826df13b741256ce003e4047cd546710de397fea4f85bb",
       "bytes": 33
     },
@@ -391,15 +739,15 @@
       "sha256": "0c0e960717fb19abae5a198f28ec7cca2e4f956aea13c798b22cb5bf861567f4",
       "bytes": 2620
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R19-native-removal-missing/request.jsonl": {
-      "sha256": "e59fd351bbd17b58077c0e8f896f05fa5b484697c330555bf708ffa2c192973a",
-      "bytes": 1554
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R19-native-removal-missing/output.jsonl": {
       "sha256": "6b8bea0db3549405484fa83e6517ab1779de71672c8046a56504eac7aec109f9",
       "bytes": 4419
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R19-native-removal-missing/expected.json": {
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R19-native-removal-missing/request.jsonl": {
+      "sha256": "e59fd351bbd17b58077c0e8f896f05fa5b484697c330555bf708ffa2c192973a",
+      "bytes": 1554
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R20-other-removal-in-wire/expected.json": {
       "sha256": "83932c375b5eb4d89d826df13b741256ce003e4047cd546710de397fea4f85bb",
       "bytes": 33
     },
@@ -411,15 +759,15 @@
       "sha256": "af9e0e2fab5eeb23a7db4ef0338e446ebececacaa5c943d74a2752ad0205628b",
       "bytes": 2255
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R20-other-removal-in-wire/request.jsonl": {
-      "sha256": "1be90e6d52f5976b3d8b598de05f6e5fe2002c82e614043d511d3c8958719129",
-      "bytes": 1695
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R20-other-removal-in-wire/output.jsonl": {
       "sha256": "093018122b77c9cab5b1de448cace2fdda8d314fb7fbcde3258eb7d2fa7ec934",
       "bytes": 4410
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R20-other-removal-in-wire/expected.json": {
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R20-other-removal-in-wire/request.jsonl": {
+      "sha256": "1be90e6d52f5976b3d8b598de05f6e5fe2002c82e614043d511d3c8958719129",
+      "bytes": 1695
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R21-old-removal-fingerprint-mismatch/expected.json": {
       "sha256": "83932c375b5eb4d89d826df13b741256ce003e4047cd546710de397fea4f85bb",
       "bytes": 33
     },
@@ -431,15 +779,15 @@
       "sha256": "8e168deff7a07521432fb793a93431d1ca2d923340ed49292f0ba37550cddc4c",
       "bytes": 2630
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R21-old-removal-fingerprint-mismatch/request.jsonl": {
-      "sha256": "e9231a5eeaa9869541c84c957beb25c1a2479ae01e56795cdc31323c4e4efe6f",
-      "bytes": 1647
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R21-old-removal-fingerprint-mismatch/output.jsonl": {
       "sha256": "b80746e6eda5b90171d799d2daed0c4d567fca94e0deba7d5ec2499a3c6696bd",
       "bytes": 4509
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R21-old-removal-fingerprint-mismatch/expected.json": {
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R21-old-removal-fingerprint-mismatch/request.jsonl": {
+      "sha256": "e9231a5eeaa9869541c84c957beb25c1a2479ae01e56795cdc31323c4e4efe6f",
+      "bytes": 1647
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R22-old-removal-path-mismatch/expected.json": {
       "sha256": "83932c375b5eb4d89d826df13b741256ce003e4047cd546710de397fea4f85bb",
       "bytes": 33
     },
@@ -451,15 +799,15 @@
       "sha256": "6fd67da68c3f1685e4e928b3d980cd86aeaaf3d587203f169c8c7fb142785bd4",
       "bytes": 2623
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R22-old-removal-path-mismatch/request.jsonl": {
-      "sha256": "0dad3f7bb3bc2d2b7ed7bc1af919546d26de2b7fe2045477aed60a1a9845afa7",
-      "bytes": 1641
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R22-old-removal-path-mismatch/output.jsonl": {
       "sha256": "aad10076416c525f3b75a06edd431dc9cb9ba52297e5232ba06cecc948bcbfe4",
       "bytes": 4446
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R22-old-removal-path-mismatch/expected.json": {
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R22-old-removal-path-mismatch/request.jsonl": {
+      "sha256": "0dad3f7bb3bc2d2b7ed7bc1af919546d26de2b7fe2045477aed60a1a9845afa7",
+      "bytes": 1641
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R23-old-basis-mismatch/expected.json": {
       "sha256": "83932c375b5eb4d89d826df13b741256ce003e4047cd546710de397fea4f85bb",
       "bytes": 33
     },
@@ -471,15 +819,15 @@
       "sha256": "8dd93dea3fd5dd4e0056838c9a7834dc1ff2eea2bdd651e1e16466684522db96",
       "bytes": 2616
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R23-old-basis-mismatch/request.jsonl": {
-      "sha256": "31c240ca88531ba7cf6448f51227c8709728ea23181a798a4d9470be03544b57",
-      "bytes": 1546
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R23-old-basis-mismatch/output.jsonl": {
       "sha256": "3d572c4b157c359fc2d0677faf93eb84e35e9516d839f8557307771711d508f3",
       "bytes": 4383
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R23-old-basis-mismatch/expected.json": {
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R23-old-basis-mismatch/request.jsonl": {
+      "sha256": "31c240ca88531ba7cf6448f51227c8709728ea23181a798a4d9470be03544b57",
+      "bytes": 1546
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R24-target-source-mismatch/expected.json": {
       "sha256": "83932c375b5eb4d89d826df13b741256ce003e4047cd546710de397fea4f85bb",
       "bytes": 33
     },
@@ -491,15 +839,15 @@
       "sha256": "93a4015675719aa11c10d0ef67ad89ecca5a18c62e6851afcd79a2f8ac1d6b0a",
       "bytes": 2620
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R24-target-source-mismatch/request.jsonl": {
-      "sha256": "21ce2b9cbb1603c118035dadff49026f3fc5907a78a37087f5e26a70cefb8601",
-      "bytes": 1539
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R24-target-source-mismatch/output.jsonl": {
       "sha256": "344aae65376ac07863ee20e5eb37eda19678da4cf50c9525affc8df7a6513cf5",
       "bytes": 4389
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R24-target-source-mismatch/expected.json": {
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R24-target-source-mismatch/request.jsonl": {
+      "sha256": "21ce2b9cbb1603c118035dadff49026f3fc5907a78a37087f5e26a70cefb8601",
+      "bytes": 1539
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R25-old-snapshot-id-reused/expected.json": {
       "sha256": "83932c375b5eb4d89d826df13b741256ce003e4047cd546710de397fea4f85bb",
       "bytes": 33
     },
@@ -511,15 +859,15 @@
       "sha256": "e56bc6e485599362827d74ed8da0938eb19671f5592ff9776e7a53f9bb9988c7",
       "bytes": 2594
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R25-old-snapshot-id-reused/request.jsonl": {
-      "sha256": "915a5602e6fa5e501b14a4dcfe6bf0061e0e14d90bc77088722fdc7eb3ddd1d2",
-      "bytes": 1528
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R25-old-snapshot-id-reused/output.jsonl": {
       "sha256": "4f47c1ae4efc09fe476b7df90ae7a4b79be01622748ea8742d64d5602bb7d3f5",
       "bytes": 4393
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R25-old-snapshot-id-reused/expected.json": {
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R25-old-snapshot-id-reused/request.jsonl": {
+      "sha256": "915a5602e6fa5e501b14a4dcfe6bf0061e0e14d90bc77088722fdc7eb3ddd1d2",
+      "bytes": 1528
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R26-component-version-tool-mismatch/expected.json": {
       "sha256": "83932c375b5eb4d89d826df13b741256ce003e4047cd546710de397fea4f85bb",
       "bytes": 33
     },
@@ -531,15 +879,15 @@
       "sha256": "8788c2c2bdb94e2a76afd67164f60c8e72720e183e54a80a5690c9c79c61c267",
       "bytes": 2629
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R26-component-version-tool-mismatch/request.jsonl": {
-      "sha256": "f4777d3a06327f7e0118d42e35f6ea2aa866eac1cd9ee20957b16944651ed059",
-      "bytes": 1572
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R26-component-version-tool-mismatch/output.jsonl": {
       "sha256": "a4309429a0fe7f7aa2a630ad5f662e1288a680f6d5cb35ee31f2406010255992",
       "bytes": 4500
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R26-component-version-tool-mismatch/expected.json": {
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R26-component-version-tool-mismatch/request.jsonl": {
+      "sha256": "f4777d3a06327f7e0118d42e35f6ea2aa866eac1cd9ee20957b16944651ed059",
+      "bytes": 1572
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R27-component-time-range-mismatch/expected.json": {
       "sha256": "83932c375b5eb4d89d826df13b741256ce003e4047cd546710de397fea4f85bb",
       "bytes": 33
     },
@@ -551,15 +899,15 @@
       "sha256": "96023079402784451d1e9b764540e6920b8c21deef9b2e7b4a20d3a8eb15cb25",
       "bytes": 2627
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R27-component-time-range-mismatch/request.jsonl": {
-      "sha256": "67e74fba91f2f8be282ec107a4d409acf770e1b16b0866e7f88564de500b4c20",
-      "bytes": 1568
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R27-component-time-range-mismatch/output.jsonl": {
       "sha256": "d95f05d5e7850a2dab99ecc24b67156a1f2a80df1b61390380fed942b0333ce5",
       "bytes": 4482
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R27-component-time-range-mismatch/expected.json": {
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R27-component-time-range-mismatch/request.jsonl": {
+      "sha256": "67e74fba91f2f8be282ec107a4d409acf770e1b16b0866e7f88564de500b4c20",
+      "bytes": 1568
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R28-active-binding-on-contract-change/expected.json": {
       "sha256": "83932c375b5eb4d89d826df13b741256ce003e4047cd546710de397fea4f85bb",
       "bytes": 33
     },
@@ -571,15 +919,15 @@
       "sha256": "9553f9a64aa82b37807345fdb5b8d9ce99fcb678293950262c2de2f1b04e44c4",
       "bytes": 19395
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R28-active-binding-on-contract-change/request.jsonl": {
-      "sha256": "13945690805f43dd3349da4d84a85b0d9cbd2fbbb6eb48dabdd577abfed83921",
-      "bytes": 3740
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R28-active-binding-on-contract-change/output.jsonl": {
       "sha256": "a2d8e558bca1bf529045a6f6f0f834783db7b5c5abe735ff34905c063eae1a90",
       "bytes": 7406
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R28-active-binding-on-contract-change/expected.json": {
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R28-active-binding-on-contract-change/request.jsonl": {
+      "sha256": "13945690805f43dd3349da4d84a85b0d9cbd2fbbb6eb48dabdd577abfed83921",
+      "bytes": 3740
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R29-original-java-owner-mismatch/expected.json": {
       "sha256": "83932c375b5eb4d89d826df13b741256ce003e4047cd546710de397fea4f85bb",
       "bytes": 33
     },
@@ -591,16 +939,16 @@
       "sha256": "14ea0222354e56d038e4706bee6c0da4dc90324a74171bdae92f2e42a2db510a",
       "bytes": 19384
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R29-original-java-owner-mismatch/request.jsonl": {
-      "sha256": "8925d8e1aa88c58a117ba5ca7b755279dffcbc862fdf79af3eee8f0fa3c644e6",
-      "bytes": 3145
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R29-original-java-owner-mismatch/output.jsonl": {
       "sha256": "628b216e3cb57fe69db9f5b7112f0919f9ce4fed7c2e5d4ac2feef64f972f030",
       "bytes": 2366
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R29-original-java-owner-mismatch/expected.json": {
-      "sha256": "83932c375b5eb4d89d826df13b741256ce003e4047cd546710de397fea4f85bb",
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R29-original-java-owner-mismatch/request.jsonl": {
+      "sha256": "8925d8e1aa88c58a117ba5ca7b755279dffcbc862fdf79af3eee8f0fa3c644e6",
+      "bytes": 3145
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R30-owner-map-checksum-mismatch/expected.json": {
+      "sha256": "34080aab6c6fa34a586b7b6f89aece585c68131d46b8f9e852a09618e66991cf",
       "bytes": 33
     },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R30-owner-map-checksum-mismatch/input.json": {
@@ -611,17 +959,17 @@
       "sha256": "0169d49a17fa57b97efbea17adf746fe07b69d4b4a40ed3a09d39364a5cdf824",
       "bytes": 2625
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R30-owner-map-checksum-mismatch/request.jsonl": {
-      "sha256": "1464d773de8393a0db638e799702a3909fb7d9627397959278f175ff20a82ca1",
-      "bytes": 1564
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R30-owner-map-checksum-mismatch/output.jsonl": {
       "sha256": "f677f3f5cdc75daa48b5ebeae21163f0d4c60b05b66fd09b6a30ee49a0eb47af",
       "bytes": 4464
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R30-owner-map-checksum-mismatch/expected.json": {
-      "sha256": "34080aab6c6fa34a586b7b6f89aece585c68131d46b8f9e852a09618e66991cf",
-      "bytes": 33
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R30-owner-map-checksum-mismatch/request.jsonl": {
+      "sha256": "1464d773de8393a0db638e799702a3909fb7d9627397959278f175ff20a82ca1",
+      "bytes": 1564
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R31-required-java-missing/expected.json": {
+      "sha256": "762224e8f021293697b57dd5839ffaf66a4e691c07f5df4b9c5225a9ca02657f",
+      "bytes": 40
     },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R31-required-java-missing/input.json": {
       "sha256": "d910fb89347c6fe81cc5cbdfa06ae27898216a6c13a5013d0129976fca895ae7",
@@ -631,17 +979,17 @@
       "sha256": "ba46c88db15b404c54c822a91d3e700baa9fce8d7b5f3ff5abd477c16a980aed",
       "bytes": 2617
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R31-required-java-missing/request.jsonl": {
-      "sha256": "246034e05d9b3d504a839daaf8619844fcd1a4db653a7ade21a6332d68f3c75a",
-      "bytes": 3131
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R31-required-java-missing/output.jsonl": {
       "sha256": "8f7de4b0fb9a5c93a64413de19a43472c1301bd16e78454bbc5cb6be06a5a196",
       "bytes": 2338
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R31-required-java-missing/expected.json": {
-      "sha256": "762224e8f021293697b57dd5839ffaf66a4e691c07f5df4b9c5225a9ca02657f",
-      "bytes": 40
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R31-required-java-missing/request.jsonl": {
+      "sha256": "246034e05d9b3d504a839daaf8619844fcd1a4db653a7ade21a6332d68f3c75a",
+      "bytes": 3131
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R32-unrequired-java-supplied/expected.json": {
+      "sha256": "83932c375b5eb4d89d826df13b741256ce003e4047cd546710de397fea4f85bb",
+      "bytes": 33
     },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R32-unrequired-java-supplied/input.json": {
       "sha256": "d2ac18898d1a6fe50b36047aa4d0e4bb9f5e984624f5d069de04364307680802",
@@ -651,17 +999,17 @@
       "sha256": "a3c116635f5c32823896e1b73cca377f8e98459171944a2636c06fa0acf15486",
       "bytes": 19270
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R32-unrequired-java-supplied/request.jsonl": {
-      "sha256": "c98039c4004e04302e3124ec06d48df994bc379def8e3210b6e2452da999b22e",
-      "bytes": 1558
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R32-unrequired-java-supplied/output.jsonl": {
       "sha256": "3f592266a3079022a3a6f09304574716b26a62e3c8e8e6725dd6b5cd23354ca6",
       "bytes": 4437
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R32-unrequired-java-supplied/expected.json": {
-      "sha256": "83932c375b5eb4d89d826df13b741256ce003e4047cd546710de397fea4f85bb",
-      "bytes": 33
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R32-unrequired-java-supplied/request.jsonl": {
+      "sha256": "c98039c4004e04302e3124ec06d48df994bc379def8e3210b6e2452da999b22e",
+      "bytes": 1558
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R33-java-partial-terminal/expected.json": {
+      "sha256": "762224e8f021293697b57dd5839ffaf66a4e691c07f5df4b9c5225a9ca02657f",
+      "bytes": 40
     },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R33-java-partial-terminal/input.json": {
       "sha256": "d910fb89347c6fe81cc5cbdfa06ae27898216a6c13a5013d0129976fca895ae7",
@@ -671,15 +1019,15 @@
       "sha256": "541b4276dfa6c9fae8ce6e07ea54965daf0d8752e12ab0c4c6efc22e612c7df6",
       "bytes": 19174
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R33-java-partial-terminal/request.jsonl": {
-      "sha256": "0a78dceea452a10e60d6e5c60bb15e08838718c87b11906d9291043efab04e5c",
-      "bytes": 3131
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R33-java-partial-terminal/output.jsonl": {
       "sha256": "84773623ddc8312b6342bc1709063e30ce82d594a2d1eaa3d171c12732d29aec",
       "bytes": 2338
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R33-java-partial-terminal/expected.json": {
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R33-java-partial-terminal/request.jsonl": {
+      "sha256": "0a78dceea452a10e60d6e5c60bb15e08838718c87b11906d9291043efab04e5c",
+      "bytes": 3131
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R34-python-partial/expected.json": {
       "sha256": "762224e8f021293697b57dd5839ffaf66a4e691c07f5df4b9c5225a9ca02657f",
       "bytes": 40
     },
@@ -691,15 +1039,15 @@
       "sha256": "bee9aa81440a164bc1bace3422262b17ee4f14afbfe888315e970460811775f4",
       "bytes": 2612
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R34-python-partial/request.jsonl": {
-      "sha256": "d153f3976a86569de589ee96b319b684dc757b7689043edce435d6fc7a59059d",
-      "bytes": 1538
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R34-python-partial/output.jsonl": {
       "sha256": "d1127742cf0610ebde005ccda62480c65aafe17cb82ea1d18b1b649cfa373980",
       "bytes": 4360
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R34-python-partial/expected.json": {
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R34-python-partial/request.jsonl": {
+      "sha256": "d153f3976a86569de589ee96b319b684dc757b7689043edce435d6fc7a59059d",
+      "bytes": 1538
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R35-syntax-partial/expected.json": {
       "sha256": "762224e8f021293697b57dd5839ffaf66a4e691c07f5df4b9c5225a9ca02657f",
       "bytes": 40
     },
@@ -711,17 +1059,17 @@
       "sha256": "3e6a61e5d0015944622af4c170a6f0658f6b0313846e36ab4373b0fd33c3adf5",
       "bytes": 2612
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R35-syntax-partial/request.jsonl": {
-      "sha256": "a719c5f2f230c840e918cedb96060f1fca13dbbd095f6cb588bb77ef67def7bf",
-      "bytes": 1538
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R35-syntax-partial/output.jsonl": {
       "sha256": "12853c03d3b1b0a96b8ff7bd468d997dedb01e029c97ca476ce7f0296b13998d",
       "bytes": 4360
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R35-syntax-partial/expected.json": {
-      "sha256": "762224e8f021293697b57dd5839ffaf66a4e691c07f5df4b9c5225a9ca02657f",
-      "bytes": 40
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R35-syntax-partial/request.jsonl": {
+      "sha256": "a719c5f2f230c840e918cedb96060f1fca13dbbd095f6cb588bb77ef67def7bf",
+      "bytes": 1538
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R36-cancelled-failure-terminal/expected.json": {
+      "sha256": "a97403eec594a21b1c11c7f5078d2339285d8e78dc6154997b2bd462ca77776c",
+      "bytes": 27
     },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R36-cancelled-failure-terminal/input.json": {
       "sha256": "d2ac18898d1a6fe50b36047aa4d0e4bb9f5e984624f5d069de04364307680802",
@@ -731,17 +1079,17 @@
       "sha256": "48d7a26d72b62838ad6230f5c2faa17aeb36405d42c94b20a54aaf1f52a050ab",
       "bytes": 2624
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R36-cancelled-failure-terminal/request.jsonl": {
-      "sha256": "6399650a30b519cad9f45ed5323e57dff4914f44520eb634eca13a3a8c9be8b0",
-      "bytes": 1562
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R36-cancelled-failure-terminal/output.jsonl": {
       "sha256": "4070642f83351c961a31ca8824ccaa234eee9a7722341e12b0f69eba97e5fe54",
       "bytes": 1036
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R36-cancelled-failure-terminal/expected.json": {
-      "sha256": "a97403eec594a21b1c11c7f5078d2339285d8e78dc6154997b2bd462ca77776c",
-      "bytes": 27
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R36-cancelled-failure-terminal/request.jsonl": {
+      "sha256": "6399650a30b519cad9f45ed5323e57dff4914f44520eb634eca13a3a8c9be8b0",
+      "bytes": 1562
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R37-terminal-checksum-mismatch/expected.json": {
+      "sha256": "3fd3699897c953a6b2ef1de9f8e16b619784e00f3af4478e1fcf8156a4a08702",
+      "bytes": 37
     },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R37-terminal-checksum-mismatch/input.json": {
       "sha256": "d2ac18898d1a6fe50b36047aa4d0e4bb9f5e984624f5d069de04364307680802",
@@ -751,15 +1099,15 @@
       "sha256": "028458cd70464760311fd11d17c938bdbb26dd3e04ff2213680745d4a341bd95",
       "bytes": 2624
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R37-terminal-checksum-mismatch/request.jsonl": {
-      "sha256": "f0285665a52f9583ff6024f2a96d3d3824afa0f79127426f70e7e7e9b6d4f77c",
-      "bytes": 1562
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R37-terminal-checksum-mismatch/output.jsonl": {
       "sha256": "64f2354ef37b03be54c6500dea4debba502236dc2d568d2949ce7711348ad1b2",
       "bytes": 4455
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R37-terminal-checksum-mismatch/expected.json": {
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R37-terminal-checksum-mismatch/request.jsonl": {
+      "sha256": "f0285665a52f9583ff6024f2a96d3d3824afa0f79127426f70e7e7e9b6d4f77c",
+      "bytes": 1562
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R38-event-sequence-mismatch/expected.json": {
       "sha256": "3fd3699897c953a6b2ef1de9f8e16b619784e00f3af4478e1fcf8156a4a08702",
       "bytes": 37
     },
@@ -771,15 +1119,15 @@
       "sha256": "7de1753ef72c1778e7fc66c028e1b791221809eac6f56cbc52a963b319a6b7dc",
       "bytes": 2621
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R38-event-sequence-mismatch/request.jsonl": {
-      "sha256": "0362228ef84ee39c96efe7e1e345ef2bb5ca6d6d7806bdc6a60e90f7cf356b26",
-      "bytes": 1556
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R38-event-sequence-mismatch/output.jsonl": {
       "sha256": "233d3bee7e7a1632202e31d451778a444a409e830261de41fee3b86d5e0930d2",
       "bytes": 4429
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R38-event-sequence-mismatch/expected.json": {
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R38-event-sequence-mismatch/request.jsonl": {
+      "sha256": "0362228ef84ee39c96efe7e1e345ef2bb5ca6d6d7806bdc6a60e90f7cf356b26",
+      "bytes": 1556
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R39-invalid-output-utf8/expected.json": {
       "sha256": "3fd3699897c953a6b2ef1de9f8e16b619784e00f3af4478e1fcf8156a4a08702",
       "bytes": 37
     },
@@ -791,15 +1139,15 @@
       "sha256": "d93cf4fa12d8341e1a899d9e393df77da8ec9fa6c50ecf88c94bae11823d71c6",
       "bytes": 2617
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R39-invalid-output-utf8/request.jsonl": {
-      "sha256": "a1bfb21ee7b0104c2bdfa0f156eb64ae9493d9e3f344956d2128c6a1a8d6aa29",
-      "bytes": 1548
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R39-invalid-output-utf8/output.jsonl": {
       "sha256": "e4688624e5f1ad0629505e6768e3bb36244f2f3e33e751215afa820334a76ed3",
       "bytes": 2
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R39-invalid-output-utf8/expected.json": {
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R39-invalid-output-utf8/request.jsonl": {
+      "sha256": "a1bfb21ee7b0104c2bdfa0f156eb64ae9493d9e3f344956d2128c6a1a8d6aa29",
+      "bytes": 1548
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R40-wrong-typed-raw-ref/expected.json": {
       "sha256": "3fd3699897c953a6b2ef1de9f8e16b619784e00f3af4478e1fcf8156a4a08702",
       "bytes": 37
     },
@@ -811,17 +1159,17 @@
       "sha256": "5e22ba06abfe0a6bba781aec179f68c46ecff84e5472bbe9492d1923f17192b2",
       "bytes": 2617
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R40-wrong-typed-raw-ref/request.jsonl": {
-      "sha256": "741e08183d0f4524e780905bc03d02c85feb23d013d528239d591f0188f70ecb",
-      "bytes": 1548
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R40-wrong-typed-raw-ref/output.jsonl": {
       "sha256": "01dbcbef96a805865fcab9e2f4ce691e6f204da21fbc423c77b55bb32f873db1",
       "bytes": 5032
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R40-wrong-typed-raw-ref/expected.json": {
-      "sha256": "3fd3699897c953a6b2ef1de9f8e16b619784e00f3af4478e1fcf8156a4a08702",
-      "bytes": 37
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R40-wrong-typed-raw-ref/request.jsonl": {
+      "sha256": "741e08183d0f4524e780905bc03d02c85feb23d013d528239d591f0188f70ecb",
+      "bytes": 1548
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R41-no-op-extra-raw/expected.json": {
+      "sha256": "a0862415a6c288fdf3666eed7332a805d2ffa8dc8bc1f4fcae61123345ad49c3",
+      "bytes": 35
     },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R41-no-op-extra-raw/input.json": {
       "sha256": "87cf9d9c2aad79a866d285a0bcf3f61f7abaa5e1ac618804a0ce467a65a1a2e6",
@@ -831,15 +1179,15 @@
       "sha256": "35ac78a77ebe595aabbf2796d064ba4cc00630eaf6654fbfe467be76d40843d8",
       "bytes": 2581
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R41-no-op-extra-raw/request.jsonl": {
-      "sha256": "2ac6451a67c403fd786af7b21e78eab5246950bf5501f7580534b8a1525021ab",
-      "bytes": 1259
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R41-no-op-extra-raw/output.jsonl": {
       "sha256": "0a079b73ba2031087df4aa6a8419bc2951224da491022084e22b4bd9ed971bf6",
       "bytes": 1868
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R41-no-op-extra-raw/expected.json": {
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R41-no-op-extra-raw/request.jsonl": {
+      "sha256": "2ac6451a67c403fd786af7b21e78eab5246950bf5501f7580534b8a1525021ab",
+      "bytes": 1259
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R42-deletion-only-extra-raw/expected.json": {
       "sha256": "a0862415a6c288fdf3666eed7332a805d2ffa8dc8bc1f4fcae61123345ad49c3",
       "bytes": 35
     },
@@ -851,17 +1199,17 @@
       "sha256": "21149d3688279a1d328060eb5b6f79fb0d8f09d6204c9c341a4497a01de20395",
       "bytes": 2251
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R42-deletion-only-extra-raw/request.jsonl": {
-      "sha256": "417034360dad373e4a3da61e9a45e5b3dba90d30552141e9c236227a9650883a",
-      "bytes": 1363
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R42-deletion-only-extra-raw/output.jsonl": {
       "sha256": "946b8709970d2ee0ccbdcc046b089eb4a42106489a55c4ac0efd78635cb12c4c",
       "bytes": 1930
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R42-deletion-only-extra-raw/expected.json": {
-      "sha256": "a0862415a6c288fdf3666eed7332a805d2ffa8dc8bc1f4fcae61123345ad49c3",
-      "bytes": 35
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R42-deletion-only-extra-raw/request.jsonl": {
+      "sha256": "417034360dad373e4a3da61e9a45e5b3dba90d30552141e9c236227a9650883a",
+      "bytes": 1363
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R43-current-history-mismatch/expected.json": {
+      "sha256": "63a9ffbc5d0841728db99efb7857562ea9db11050dbafbe50b8584248bf65e46",
+      "bytes": 33
     },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R43-current-history-mismatch/input.json": {
       "sha256": "523dff2f4f17d53145e31806d86bfb2373cc5cf657f139cbc62665992438d1d7",
@@ -871,17 +1219,17 @@
       "sha256": "dc1d3db8ddcd963947cd1c61281254b07e44fbb67c8a38864e883e1a7d9be4fe",
       "bytes": 2590
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R43-current-history-mismatch/request.jsonl": {
-      "sha256": "2ff2ccc3c039c99885e03eb5abdca8d0be3f863e832bad8091b17678ab904127",
-      "bytes": 1526
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R43-current-history-mismatch/output.jsonl": {
       "sha256": "75c8cb29debabf544936abc1625cd5621ec05e72ca99c6064568025d848d3de8",
       "bytes": 4349
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R43-current-history-mismatch/expected.json": {
-      "sha256": "63a9ffbc5d0841728db99efb7857562ea9db11050dbafbe50b8584248bf65e46",
-      "bytes": 33
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R43-current-history-mismatch/request.jsonl": {
+      "sha256": "2ff2ccc3c039c99885e03eb5abdca8d0be3f863e832bad8091b17678ab904127",
+      "bytes": 1526
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R44-external-support-revalidation/expected.json": {
+      "sha256": "986153896743f9955346e9ad2eef8faf8edc898bfb9a36c8c18780f04b8a20dd",
+      "bytes": 54
     },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R44-external-support-revalidation/input.json": {
       "sha256": "e5516722333d746ac8d947b39b6e6662fe04d8edda01518eef7d3c4660aa9255",
@@ -891,17 +1239,17 @@
       "sha256": "e189550d8f3c5eb45f4047380ccbfb98de004192102a5e3986a1223c2c2e5bc9",
       "bytes": 2632
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R44-external-support-revalidation/request.jsonl": {
-      "sha256": "fcf860bb00032302de45c620276880c84cee4d53c1f9cfb2fe24b040fa687f3f",
-      "bytes": 1565
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R44-external-support-revalidation/output.jsonl": {
       "sha256": "8988b61673a6ab61f09fe7b34c35b6b02585383c1330ccf00ff9167bc08976f5",
       "bytes": 4452
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R44-external-support-revalidation/expected.json": {
-      "sha256": "986153896743f9955346e9ad2eef8faf8edc898bfb9a36c8c18780f04b8a20dd",
-      "bytes": 54
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R44-external-support-revalidation/request.jsonl": {
+      "sha256": "fcf860bb00032302de45c620276880c84cee4d53c1f9cfb2fe24b040fa687f3f",
+      "bytes": 1565
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R45-other-only-modification/expected.json": {
+      "sha256": "4f21febb1d0140da3829ff0832194efabb7261f7b8a15a87592c2cb1e42c1e3c",
+      "bytes": 40
     },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R45-other-only-modification/input.json": {
       "sha256": "275f3d21713d7fe303629cea9ef98b4388e60e8dbc315008138e5f47f9ddd399",
@@ -911,15 +1259,15 @@
       "sha256": "5e64e6a61ba8805949cf868b2e5254f4ead0014ece589cdb3265dc90267df9ae",
       "bytes": 2627
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R45-other-only-modification/request.jsonl": {
-      "sha256": "d66e4b02d7135151dcb09ce1839aab98e47b34df87a553045d05c49f7fa3d266",
-      "bytes": 1554
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R45-other-only-modification/output.jsonl": {
       "sha256": "1f010930638779a1d302b00662895dcfad5bb3a49b4d75a81bcfd92f68a332ef",
       "bytes": 4400
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R45-other-only-modification/expected.json": {
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R45-other-only-modification/request.jsonl": {
+      "sha256": "d66e4b02d7135151dcb09ce1839aab98e47b34df87a553045d05c49f7fa3d266",
+      "bytes": 1554
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R46-classification-change/expected.json": {
       "sha256": "4f21febb1d0140da3829ff0832194efabb7261f7b8a15a87592c2cb1e42c1e3c",
       "bytes": 40
     },
@@ -931,17 +1279,17 @@
       "sha256": "5870db08b890290e4aec2ec623b764ed21219e7021bfdcb6b6f9196a4b467373",
       "bytes": 2613
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R46-classification-change/request.jsonl": {
-      "sha256": "eb5ca1ca21253e002513a671a1dd6f961a68a1317be7cac9c9d97ff0854cedec",
-      "bytes": 1548
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R46-classification-change/output.jsonl": {
       "sha256": "1bf2bf368b7b480d13cb3b9c7a6d905e5ac4428ad5589ab44bb4094c89584829",
       "bytes": 4378
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R46-classification-change/expected.json": {
-      "sha256": "4f21febb1d0140da3829ff0832194efabb7261f7b8a15a87592c2cb1e42c1e3c",
-      "bytes": 40
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R46-classification-change/request.jsonl": {
+      "sha256": "eb5ca1ca21253e002513a671a1dd6f961a68a1317be7cac9c9d97ff0854cedec",
+      "bytes": 1548
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R47-history-and-current-unavailable/expected.json": {
+      "sha256": "36190f1ff9eec05c47acc42c549be2df339da783ff30c01749ce92ed1d04c059",
+      "bytes": 37
     },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R47-history-and-current-unavailable/input.json": {
       "sha256": "5edf316f04d24523b5f317e23fc049054b53701ca4cceb0d510d62fa611dc1a7",
@@ -951,17 +1299,17 @@
       "sha256": "b6dcd8d1efdd8b6b13f14351ba3f6dbd1a781760a9888b5679a2e709083adb85",
       "bytes": 2597
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R47-history-and-current-unavailable/request.jsonl": {
-      "sha256": "6ab73a9cdcef76ce3c470da02e125bdbb2d84b4a5517e0f2c378b1fdd9257bab",
-      "bytes": 1355
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R47-history-and-current-unavailable/output.jsonl": {
       "sha256": "c65d4c47760e93116e9b185fcd961ef10d19344d77b35b13c4b231aef5df8d83",
       "bytes": 4042
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R47-history-and-current-unavailable/expected.json": {
-      "sha256": "36190f1ff9eec05c47acc42c549be2df339da783ff30c01749ce92ed1d04c059",
-      "bytes": 37
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R47-history-and-current-unavailable/request.jsonl": {
+      "sha256": "6ab73a9cdcef76ce3c470da02e125bdbb2d84b4a5517e0f2c378b1fdd9257bab",
+      "bytes": 1355
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R48-extra-metadata-authority-field/expected.json": {
+      "sha256": "7e15aa095dcf541ad498cdbeababb5a0b300dc6f1c8a928a96ce1e9ee0fee1ef",
+      "bytes": 31
     },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R48-extra-metadata-authority-field/input.json": {
       "sha256": "d2ac18898d1a6fe50b36047aa4d0e4bb9f5e984624f5d069de04364307680802",
@@ -971,21 +1319,13 @@
       "sha256": "fac80f3ce26fec3d4a958923340b5590c6cbd9ab566b3ae5edc77b805addf055",
       "bytes": 2649
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R48-extra-metadata-authority-field/request.jsonl": {
-      "sha256": "94fc148d733eafbc3fd13ab41c7510f7309576900a4e8c300fab52dc23d21d10",
-      "bytes": 1570
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R48-extra-metadata-authority-field/output.jsonl": {
       "sha256": "10b915c2e873e3d11f24140d9e5df14e4d815b20e281bd9c9fda5e8e9f13bee4",
       "bytes": 4491
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R48-extra-metadata-authority-field/expected.json": {
-      "sha256": "7e15aa095dcf541ad498cdbeababb5a0b300dc6f1c8a928a96ce1e9ee0fee1ef",
-      "bytes": 31
-    },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases.json": {
-      "sha256": "f3678705d366fcb78224f7c6d0684dcb657e4f7fc57cb81813c7e9f3b0ea4490",
-      "bytes": 18783
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/cases/R48-extra-metadata-authority-field/request.jsonl": {
+      "sha256": "94fc148d733eafbc3fd13ab41c7510f7309576900a4e8c300fab52dc23d21d10",
+      "bytes": 1570
     },
     ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/fixture.json": {
       "sha256": "705e52cc08b62b577030d067168368c960706008607c5f24fa1143f95c48fc66",
@@ -995,21 +1335,57 @@
       "sha256": "49eadaf5725f561f7a5ade8c6b8afcc6be21b9b17cbbbcf679547414caeb7c4c",
       "bytes": 39708
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/first-freeze-raw/fixtures/phase1/declared-delta-raw-admission/README.md": {
-      "sha256": "76e02caab98aaf176cdfc59f26a2fc08e254705446f2ca7be59168accc3e9152",
-      "bytes": 501
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/old-behavior.json": {
+      "sha256": "73454000587f2161c00b6a8ce2c273db69053780552c8c8b17b3807461c4b19e",
+      "bytes": 2904334
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-raw-history-candidate/old-behavior.json": {
-      "sha256": "9e613217e45c1c561140bd99fd0cd6cec6d774a277f283703c84fc69d07f4bee",
-      "bytes": 4049541
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/plan-review.json": {
+      "sha256": "1d963492374b71152e3e050f0a0d5304a3ff7942b60a7a8180fc9dac0bb0004c",
+      "bytes": 653956
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-raw-history-candidate/semantic-freeze-final-format.json": {
-      "sha256": "4cbf73219738b5e27320c116c314451847c30803ce407b0b63bae72f013f4c2b",
-      "bytes": 47226
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/semantic-freeze-final.json": {
+      "sha256": "16625d6a6f3ba6d095c2897ff2e6f549e125ec3bbcf4aac69642f071104ec1dd",
+      "bytes": 40995
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-raw-history-candidate/semantic-freeze.json": {
-      "sha256": "5f417996cf604734eeb58fa160db8a8c718a3eab884e97c531b81715cbbfbd37",
-      "bytes": 47088
+    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/semantic-freeze.json": {
+      "sha256": "ceb9d898b81f1a63f56bd676dc89dfe5a68c89ef16abc8ea05b8f20768e9999c",
+      "bytes": 40725
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-observation-scope/old-behavior.json": {
+      "sha256": "fb293528dd3cb1fda4cf7e37ca177cf864654048a361ebb8c242e0424488f1c4",
+      "bytes": 546936
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-raw-history-candidate/before-execution/scripts/test-declared-delta-raw-admission.mjs": {
+      "sha256": "f212799a234c9f1685e95146a2f2265d68f639bf884d3c05b1875447d77cda43",
+      "bytes": 19987
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-raw-history-candidate/before-execution/scripts/test-declared-observation-scope.mjs": {
+      "sha256": "4c19deb696e5e140ece096d6f2735c7369f7bee15bc1a3be91e7b04edbc74433",
+      "bytes": 8814
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-raw-history-candidate/before-execution/scripts/test-delta-support-candidate.mjs": {
+      "sha256": "9b843a65ecd6de08c2a1e811fc5a737fa563ca24ed9dd3f0f4d01cdaa8c58933",
+      "bytes": 2411
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-raw-history-candidate/before-execution/scripts/test-history-transition.mjs": {
+      "sha256": "74fc230287b6a18217a387553b1a745ed62a4343bc8cd345d65467ea23eac1d9",
+      "bytes": 2407
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-raw-history-candidate/before-execution/scripts/test-r011-history-capture.mjs": {
+      "sha256": "710e9f77800a90bdd787b195ba5d7a64dac6edfd210fc45e7d7439b4ee5732ca",
+      "bytes": 5785
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-raw-history-candidate/before-execution/scripts/test-syntax-evidence-reuse.mjs": {
+      "sha256": "badfa662a0c0103a0aadfa83df2a032fac8046c0e5dfd14c0efbcfc77488a608",
+      "bytes": 21383
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-raw-history-candidate/before-execution/scripts/test-syntax-mapping-preparation.mjs": {
+      "sha256": "db07b5174d52b7e0eb3b768c3cbe5c426b19e33a778e29220e8fec55e3e10344",
+      "bytes": 15202
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-raw-history-candidate/consumer-freeze-final-format.json": {
+      "sha256": "403c316104c0d4f7abe684071ef853096ebcc4d96d472a4a3ddfb072399a5e41",
+      "bytes": 592
     },
     ".superpowers/sdd/2026-10-26-phase1-declared-raw-history-candidate/first-freeze-raw/fixtures/phase1/declared-raw-history-candidate/README.md": {
       "sha256": "f376754966ef396260ff8a4ffbd03c7b908ba32e9bfbaedcf077d2120e2b4ac9",
@@ -2307,401 +2683,25 @@
       "sha256": "d03097b9be5789e0fe43622bf365636f9a4d89fc060b2979efcfd017256071c8",
       "bytes": 20465
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/plan-review.json": {
-      "sha256": "1d963492374b71152e3e050f0a0d5304a3ff7942b60a7a8180fc9dac0bb0004c",
-      "bytes": 653956
-    },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/before-execution/scripts/test-history-transition.mjs": {
-      "sha256": "17351856bd692a0e6749dc901d751a11937252bced0743dfc6a9a7517e51e411",
-      "bytes": 2407
-    },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/before-execution/scripts/test-delta-support-candidate.mjs": {
-      "sha256": "52f7049d13bda25143f74fd63c31e37ee3267e6c4e46ef13e01be0ac048a677d",
-      "bytes": 2411
-    },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/before-execution/scripts/test-r011-history-capture.mjs": {
-      "sha256": "413fff0c3be26e8abe90b637629243da44906ec794bcbd9650153bb4a19bab66",
-      "bytes": 5785
-    },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/before-execution/scripts/test-syntax-mapping-preparation.mjs": {
-      "sha256": "fdf5b41261c66980542b299c5ad4d080e2ebbf8c65439529607fe66744a5e818",
-      "bytes": 15202
-    },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/before-execution/scripts/test-syntax-evidence-reuse.mjs": {
-      "sha256": "9076413b1f334c47aa9c7648cd1a456960990598cb14771e104c8f1024aaf62d",
-      "bytes": 21383
-    },
-    ".superpowers/sdd/2026-10-26-phase1-declared-delta-raw-admission/before-execution/scripts/test-declared-observation-scope.mjs": {
-      "sha256": "af3f8f9c7767dcfa120a5023da791709ecab8f701f104a48b5fe5878a8304695",
-      "bytes": 8814
-    },
-    ".superpowers/sdd/2026-10-26-phase1-declared-raw-history-candidate/consumer-freeze-final-format.json": {
-      "sha256": "403c316104c0d4f7abe684071ef853096ebcc4d96d472a4a3ddfb072399a5e41",
-      "bytes": 592
-    },
     ".superpowers/sdd/2026-10-26-phase1-declared-raw-history-candidate/local-command-manifest.json": {
       "sha256": "4691bd7631aaec1d4f214a20b7d9e84f5b369b6944cb22e8d78796c75b7f822a",
       "bytes": 7691
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-raw-history-candidate/old-behavior.json": {
+      "sha256": "9e613217e45c1c561140bd99fd0cd6cec6d774a277f283703c84fc69d07f4bee",
+      "bytes": 4049541
     },
     ".superpowers/sdd/2026-10-26-phase1-declared-raw-history-candidate/planning-start.json": {
       "sha256": "d9c592a58e41527fae6548b9bbcb53226db236d398fd801d7fe177a4e8e73431",
       "bytes": 222999
     },
-    ".superpowers/sdd/2026-10-26-phase1-declared-raw-history-candidate/before-execution/scripts/test-history-transition.mjs": {
-      "sha256": "74fc230287b6a18217a387553b1a745ed62a4343bc8cd345d65467ea23eac1d9",
-      "bytes": 2407
-    },
-    ".superpowers/sdd/2026-10-26-phase1-declared-raw-history-candidate/before-execution/scripts/test-delta-support-candidate.mjs": {
-      "sha256": "9b843a65ecd6de08c2a1e811fc5a737fa563ca24ed9dd3f0f4d01cdaa8c58933",
-      "bytes": 2411
-    },
-    ".superpowers/sdd/2026-10-26-phase1-declared-raw-history-candidate/before-execution/scripts/test-r011-history-capture.mjs": {
-      "sha256": "710e9f77800a90bdd787b195ba5d7a64dac6edfd210fc45e7d7439b4ee5732ca",
-      "bytes": 5785
-    },
-    ".superpowers/sdd/2026-10-26-phase1-declared-raw-history-candidate/before-execution/scripts/test-declared-observation-scope.mjs": {
-      "sha256": "4c19deb696e5e140ece096d6f2735c7369f7bee15bc1a3be91e7b04edbc74433",
-      "bytes": 8814
-    },
-    ".superpowers/sdd/2026-10-26-phase1-declared-raw-history-candidate/before-execution/scripts/test-syntax-mapping-preparation.mjs": {
-      "sha256": "db07b5174d52b7e0eb3b768c3cbe5c426b19e33a778e29220e8fec55e3e10344",
-      "bytes": 15202
-    },
-    ".superpowers/sdd/2026-10-26-phase1-declared-raw-history-candidate/before-execution/scripts/test-syntax-evidence-reuse.mjs": {
-      "sha256": "badfa662a0c0103a0aadfa83df2a032fac8046c0e5dfd14c0efbcfc77488a608",
-      "bytes": 21383
-    },
-    ".superpowers/sdd/2026-10-26-phase1-declared-raw-history-candidate/before-execution/scripts/test-declared-delta-raw-admission.mjs": {
-      "sha256": "f212799a234c9f1685e95146a2f2265d68f639bf884d3c05b1875447d77cda43",
-      "bytes": 19987
-    },
-    ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/registration-successor.json": {
-      "sha256": "bfeb129d5ac5146e7977ed9fc3cd2e4f5ae6f8ff2c91edc5fe13747dd4409564",
-      "bytes": 26918
-    },
-    ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/originals/scripts/test-declared-raw-history-candidate.mjs": {
-      "sha256": "02d1e15a0e6cf81447c12231a2122ca6bd481a3e7014c56d311803763639e688",
-      "bytes": 23220
-    },
-    ".superpowers/sdd/2026-10-29-phase1-runtime-local-readiness/registration-self-successor.json": {
-      "sha256": "d2294d562d5fd18a63a8c675812337fb8453b4d75f9ebf05783fc61926bf261e",
-      "bytes": 1221
-    },
-    ".superpowers/design/2026-10-25-phase1-syntax-evidence-reuse/review-verification.json": {
-      "sha256": "9d9794b3a2e052496ffdcbfcb53c537c07bd70ae4fd59ff6d63689b9f4ad7bc4",
-      "bytes": 555779
-    },
-    ".superpowers/sdd/2026-10-25-phase1-syntax-evidence-reuse/source-annotation-freeze.json": {
-      "sha256": "f7f76f910430be5a4294151dea51d053389c2f55a59adca8e031e4f2cf2841e6",
-      "bytes": 214
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/cross-consumer-result.json": {
-      "sha256": "5ca265cd3485511fb3bb6978c96a336df2ddaf9a2e715f84529aa9328f3431af",
-      "bytes": 4701
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/depth-execution-inputs.json": {
-      "sha256": "acabd6f788070e5534a38c4e100cd02c77b742d4e100b0c6a7f2cf1140c1bdf5",
-      "bytes": 17803
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/depth-capture-root.json": {
-      "sha256": "276a5988ba303999024f7f8b93833f60fbc0beadf7c7098fd0f986f9576faf0f",
-      "bytes": 295
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/implementation-verification.json": {
-      "sha256": "0e179ca477a9b2f984cce961f93d32284eb0fe1d2fe93664faa183763981adcd",
-      "bytes": 237529
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/no-files/manifest.json": {
-      "sha256": "1e67e3b90afc6c0d9d2715b144c38f22b2e332b4ecc7abbd71244101c7358f8a",
-      "bytes": 488
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/no-files/request.jsonl": {
-      "sha256": "6968852f2bd1d43a9502914cd220d5d2712d908a0baf0d3e1fdf92e8717911cf",
-      "bytes": 1123
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/no-files/events.jsonl": {
-      "sha256": "ca324df5695209e5258ea2d98a703d72cd5fd6f839e1b8b5015c3f7ebc79edf9",
-      "bytes": 1482
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/no-files/expected.jsonl": {
-      "sha256": "ca324df5695209e5258ea2d98a703d72cd5fd6f839e1b8b5015c3f7ebc79edf9",
-      "bytes": 1482
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/empty-python/manifest.json": {
-      "sha256": "a1f83a1fcbedf82c1512fe929b039ed4e9cb18b2870775c70e982ec3df47e433",
-      "bytes": 492
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/empty-python/request.jsonl": {
-      "sha256": "59ba93bfd48e38f8afc42ee7e2da2ff4c0557f59c33d1fd08125a8856fc86238",
-      "bytes": 1443
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/empty-python/events.jsonl": {
-      "sha256": "82d2668f17bd6b117c2e1d002cf4dd793cbb441658da23425a1a67f0f4a34545",
-      "bytes": 4277
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/empty-python/expected.jsonl": {
-      "sha256": "82d2668f17bd6b117c2e1d002cf4dd793cbb441658da23425a1a67f0f4a34545",
-      "bytes": 4277
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/comment-python/manifest.json": {
-      "sha256": "9542b82992a064b5216a4678961e75371ab8bdd6e94cbadccc09a3e2b8e4b392",
-      "bytes": 494
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/comment-python/request.jsonl": {
-      "sha256": "29f5566ea4ccb4b94ad04215c2b76badad1cabc026187f8b62948102b3a9b9e3",
-      "bytes": 1445
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/comment-python/events.jsonl": {
-      "sha256": "47cc7febd5311fb0895a6f92c2c3ce6105e3580c6bba590519ff0f92c9638624",
-      "bytes": 4293
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/comment-python/expected.jsonl": {
-      "sha256": "47cc7febd5311fb0895a6f92c2c3ce6105e3580c6bba590519ff0f92c9638624",
-      "bytes": 4293
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/wildcard-python/manifest.json": {
-      "sha256": "bdb25560c57329da4386729f21fee1f742ab667fa1f1a50c12b124669ce0e533",
-      "bytes": 495
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/wildcard-python/request.jsonl": {
-      "sha256": "88016026f798ffad7fbdd30d9065b3e10f0a817dc5098bb2c6c16095ea30bcac",
-      "bytes": 1446
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/wildcard-python/events.jsonl": {
-      "sha256": "e59f0f093738ffe2f2b9912d829be31b68dea8ee1993a46ebaef4b99a0976456",
-      "bytes": 4358
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/wildcard-python/expected.jsonl": {
-      "sha256": "e59f0f093738ffe2f2b9912d829be31b68dea8ee1993a46ebaef4b99a0976456",
-      "bytes": 4358
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/class-python/manifest.json": {
-      "sha256": "39e6a0c62a82e92fad11c5c4a1a7269ed76b7705ac46bec60f8ba643900c02bc",
-      "bytes": 492
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/class-python/request.jsonl": {
-      "sha256": "436c0d42475617afcb0a991848b4ed001063e0a06d5e2e3e25948cc6c60cd0cf",
-      "bytes": 1443
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/class-python/events.jsonl": {
-      "sha256": "7c2be45b3d18aa140909a4ce9e6934a0bdbe17c463eb14a6b0b2309de01ae85b",
-      "bytes": 4330
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/class-python/expected.jsonl": {
-      "sha256": "7c2be45b3d18aa140909a4ce9e6934a0bdbe17c463eb14a6b0b2309de01ae85b",
-      "bytes": 4330
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/nested-python/manifest.json": {
-      "sha256": "e880f1d49d3c5ec9adea816ab3722bf5fe2e23f0af5383d0f1b252bde375b994",
-      "bytes": 493
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/nested-python/request.jsonl": {
-      "sha256": "48b6c3d87820da03ca562ff85b76ffa1b2442694b1d49c69d97c270a2ccf3268",
-      "bytes": 1444
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/nested-python/events.jsonl": {
-      "sha256": "5fa9ac5abe01157950d0019587854201df5e5e29440dad7dcb59d96df80b0c24",
-      "bytes": 6785
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/nested-python/expected.jsonl": {
-      "sha256": "5fa9ac5abe01157950d0019587854201df5e5e29440dad7dcb59d96df80b0c24",
-      "bytes": 6785
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/malformed-python/manifest.json": {
-      "sha256": "0f4c6bfb670314a14104b9bc11472524d9544f1151a3b188735ed20a0d307ee7",
-      "bytes": 496
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/malformed-python/request.jsonl": {
-      "sha256": "dccb8156a29ac3ebcd97f9ffab1f3ea068e35606244a95ec4a49b4a7f01adeda",
-      "bytes": 1447
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/malformed-python/events.jsonl": {
-      "sha256": "410ba9a287a9fbde0e7305fa53a2b53e7d2fe139fbc0be7e83d59b3202b71a2c",
-      "bytes": 7644
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/malformed-python/expected.jsonl": {
-      "sha256": "410ba9a287a9fbde0e7305fa53a2b53e7d2fe139fbc0be7e83d59b3202b71a2c",
-      "bytes": 7644
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/dynamic-python/manifest.json": {
-      "sha256": "f377927c91cf1216985edc50416dea97ae54c917757bb054b921577de98fb034",
-      "bytes": 494
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/dynamic-python/request.jsonl": {
-      "sha256": "1c843af41a6959e5eef92dbb1fc1d599649c9611f01611a1af3ad4a537021bdd",
-      "bytes": 1445
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/dynamic-python/events.jsonl": {
-      "sha256": "55380d48a068d402f7334904aaf6d7de759b1e0fbd47b5771d192693409e45f8",
-      "bytes": 9541
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/dynamic-python/expected.jsonl": {
-      "sha256": "55380d48a068d402f7334904aaf6d7de759b1e0fbd47b5771d192693409e45f8",
-      "bytes": 9541
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/alias-reference-python/manifest.json": {
-      "sha256": "d83859c208e180f3981aed58016fb801267c43095f0efcc084ea9ea241ee3853",
-      "bytes": 502
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/alias-reference-python/request.jsonl": {
-      "sha256": "33a9f65c7017935ca104422675b0628211275c856e3d071598d743f44b6205b1",
-      "bytes": 1453
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/alias-reference-python/events.jsonl": {
-      "sha256": "ce0cd5a984d36dc5221cf4559eb0260aced18cc4c6fcd0436fcee0852b325fb3",
-      "bytes": 7434
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/alias-reference-python/expected.jsonl": {
-      "sha256": "ce0cd5a984d36dc5221cf4559eb0260aced18cc4c6fcd0436fcee0852b325fb3",
-      "bytes": 7434
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/async-python/manifest.json": {
-      "sha256": "8b8ee5c13283df32bda04c7dfee8882e003527f8b75e9808c9f8134351c1165e",
-      "bytes": 492
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/async-python/request.jsonl": {
-      "sha256": "eab344aaa125d1812ee57af9b8f9a488b475787628534507d23ea58e08ef16f9",
-      "bytes": 1443
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/async-python/events.jsonl": {
-      "sha256": "a9c2bf8f391a5796d1b5fa57844f8a284de548baa253e7e334393ade49fd7be6",
-      "bytes": 5504
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/async-python/expected.jsonl": {
-      "sha256": "a9c2bf8f391a5796d1b5fa57844f8a284de548baa253e7e334393ade49fd7be6",
-      "bytes": 5504
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/java-only/manifest.json": {
-      "sha256": "3dc565374a86253f3760575979cfa8a19f9aaed7f6a29e71e820753dbe25d0ec",
-      "bytes": 489
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/java-only/request.jsonl": {
-      "sha256": "75c0af507899132a8302168220830b97d2caa03bb326f33e2bd030919263c5ad",
-      "bytes": 2251
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/java-only/events.jsonl": {
-      "sha256": "d29c001ebba51fe771d0324875df5e27a9683cf12a0a91bc80d7968f864411d0",
-      "bytes": 3329
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/java-only/expected.jsonl": {
-      "sha256": "d29c001ebba51fe771d0324875df5e27a9683cf12a0a91bc80d7968f864411d0",
-      "bytes": 3329
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/mixed/manifest.json": {
-      "sha256": "e144317ead997388ec1e623439b7e62c06104eb14db28bac145a5e7b7362938a",
-      "bytes": 485
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/mixed/request.jsonl": {
-      "sha256": "20ea047ac106a33ed4b62cb23690b24eefd91acd924e519eccb976095a4cd328",
-      "bytes": 2678
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/mixed/events.jsonl": {
-      "sha256": "dc63de9f2fcd9c070a1c4bf1b52e76f76ea5fd0389d48da61b544893e9573901",
-      "bytes": 9102
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/mixed/expected.jsonl": {
-      "sha256": "dc63de9f2fcd9c070a1c4bf1b52e76f76ea5fd0389d48da61b544893e9573901",
-      "bytes": 9102
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/multi-import-from/manifest.json": {
-      "sha256": "66f58670ce62dcbab8bfbfcd5a0d22249eaf8136be7d31bcf5f3f5d349df8597",
-      "bytes": 497
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/multi-import-from/request.jsonl": {
-      "sha256": "0180295d64f84fb09670603e3661ccc19847a7d7b65a2ffc26013afe45141785",
-      "bytes": 1449
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/multi-import-from/events.jsonl": {
-      "sha256": "c798ea1391c66ded1b57d437532234f1cb47321598316f7a7a92ef39a81ea220",
-      "bytes": 10503
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/multi-import-from/expected.jsonl": {
-      "sha256": "c798ea1391c66ded1b57d437532234f1cb47321598316f7a7a92ef39a81ea220",
-      "bytes": 10503
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/nested-repeated-values/manifest.json": {
-      "sha256": "114fa947dc37685224785373cc56bf377672e095814321df240e7abec37437e3",
-      "bytes": 502
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/nested-repeated-values/request.jsonl": {
-      "sha256": "06357563fce73367161f7f67a921c09d47b80bee78961b0d01c8e6fb691b97f4",
-      "bytes": 1454
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/nested-repeated-values/events.jsonl": {
-      "sha256": "37d30cd67718f4486a0cbf6428af7f8a4a524da51f2e0b59361acba801a1a7c9",
-      "bytes": 6854
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/nested-repeated-values/expected.jsonl": {
-      "sha256": "37d30cd67718f4486a0cbf6428af7f8a4a524da51f2e0b59361acba801a1a7c9",
-      "bytes": 6854
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/class-owner-gap/manifest.json": {
-      "sha256": "31cba8c48da5bd49d94c33baf0784bbe047b2164e9b18a9f790fee631636524f",
-      "bytes": 495
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/class-owner-gap/request.jsonl": {
-      "sha256": "bb6deef30bf22361afd0fe3a74b516152688b09166ba47defd826e744c3a4fcd",
-      "bytes": 1447
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/class-owner-gap/events.jsonl": {
-      "sha256": "f68c99d97d6f6c5c0dbfd6230865930a75eb000baebd410aac8e542fd98b9f01",
-      "bytes": 5007
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/class-owner-gap/expected.jsonl": {
-      "sha256": "f68c99d97d6f6c5c0dbfd6230865930a75eb000baebd410aac8e542fd98b9f01",
-      "bytes": 5007
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/unicode-control/manifest.json": {
-      "sha256": "5a3c63bbf757f1d03da2eaea0ef1852f4e460a5585cf4f1d1d8251d437ba6449",
-      "bytes": 495
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/unicode-control/request.jsonl": {
-      "sha256": "314302fc8c9666aa749058bf8f4b37d5e0214274acb7318a7b9b157c0de35d0f",
-      "bytes": 1447
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/unicode-control/events.jsonl": {
-      "sha256": "47cabfc651141b2a541a9351163a79e1a853e48faf75b30172b03c392870e9ce",
-      "bytes": 5726
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/unicode-control/expected.jsonl": {
-      "sha256": "47cabfc651141b2a541a9351163a79e1a853e48faf75b30172b03c392870e9ce",
-      "bytes": 5726
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/two-python-files/manifest.json": {
-      "sha256": "9ef0f4c9cc8e97ac3db6f2e31dbced45bf4cadb02c9029a378e1e9f2fb1de712",
-      "bytes": 496
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/two-python-files/request.jsonl": {
-      "sha256": "9f6d809883112ca0495313dc60b4900ee24105bf7e299b0f9533b9b539f9167c",
-      "bytes": 1757
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/two-python-files/events.jsonl": {
-      "sha256": "6e4dfde17940bda25cc880dca15062b03fc48e27772789500dae025c53d57f0c",
-      "bytes": 10136
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/two-python-files/expected.jsonl": {
-      "sha256": "6e4dfde17940bda25cc880dca15062b03fc48e27772789500dae025c53d57f0c",
-      "bytes": 10136
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/discarded-dictionary/manifest.json": {
-      "sha256": "88eb4e1df2a526f61c0001e48b1da955d4e0ed330aaa455e538e30ab3627f718",
-      "bytes": 500
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/discarded-dictionary/request.jsonl": {
-      "sha256": "4d0edb7971016518f42ed2945dfc0a642cfe89a31e6911272a66960ec2bbd5c3",
-      "bytes": 1452
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/discarded-dictionary/events.jsonl": {
-      "sha256": "734b2cbcff7e8613f16fdce7e9ecde93c387e2e9cf02345d59a54229cc721508",
-      "bytes": 5105
-    },
-    ".superpowers/sdd/2026-10-24-phase1-code-syntax-producer/library-output/b0b2-depth-R3xgxs/discarded-dictionary/expected.jsonl": {
-      "sha256": "734b2cbcff7e8613f16fdce7e9ecde93c387e2e9cf02345d59a54229cc721508",
-      "bytes": 5105
-    },
-    ".superpowers/sdd/2026-10-25-phase1-r011-history-capture/fixture-v4-before-support-order/fixtures/phase1/r011-history-capture/fixture.json": {
-      "sha256": "5489fb5b499870fa4ae679a24c99613971445a6420558dd76681e71243d1ff95",
-      "bytes": 384
+    ".superpowers/sdd/2026-10-26-phase1-declared-raw-history-candidate/semantic-freeze-final-format.json": {
+      "sha256": "4cbf73219738b5e27320c116c314451847c30803ce407b0b63bae72f013f4c2b",
+      "bytes": 47226
+    },
+    ".superpowers/sdd/2026-10-26-phase1-declared-raw-history-candidate/semantic-freeze.json": {
+      "sha256": "5f417996cf604734eeb58fa160db8a8c718a3eab884e97c531b81715cbbfbd37",
+      "bytes": 47088
     },
     ".superpowers/sdd/2026-10-29-phase1-binding-contract/before/fixtures/phase1/syntax-contract/fixture.json": {
       "sha256": "38d415dbbb4718c8ddb65e54da62e1aa58f3d86eb74ecebacac7776322973c0b",
@@ -2711,13 +2711,65 @@
       "sha256": "6f776bebbcde649611b2c258cdee848cad2f5f474b69b7c8a83d6611ca5522bc",
       "bytes": 355
     },
-    ".superpowers/sdd/2026-10-26-phase1-b1b-local-canonical-history-closure/isolated-tests/codeatlas-portable-9DZClg/fixtures/phase1/ir-contract/fixture.json": {
-      "sha256": "6f71fc4ade6824068abe6aa0d0c3816bd00a2d79c3acb0122ed3ff243d383573",
-      "bytes": 343
+    ".superpowers/sdd/2026-10-29-phase1-runtime-local-readiness/registration-self-successor.json": {
+      "sha256": "d2294d562d5fd18a63a8c675812337fb8453b4d75f9ebf05783fc61926bf261e",
+      "bytes": 1221
     },
     ".superpowers/sdd/2026-10-31-phase1-b-remaining-execution/integration-preparation/before/fixtures/evaluation/phase05-code-intelligence/fixture.json": {
       "sha256": "b66d8672c12f66e9185ceb0668c68bbef3bcbabf92411245e103af06b8a8d975",
       "bytes": 711
+    },
+    ".superpowers/sdd/2026-11-05-current13-mixed-entry/library-output/mixed.output.jsonl": {
+      "sha256": "1099c35d271253284b934efdf7c0c29bf5fee517b025aaa2da9689b4056d8de2",
+      "bytes": 68145
+    },
+    ".superpowers/sdd/2026-11-05-current13-mixed-entry/library-output/mixed.request.jsonl": {
+      "sha256": "8db996ea5ae26fd043d0211b5e98cee11e605e3713293cf6f46a8183aa324e2e",
+      "bytes": 6701
+    },
+    ".superpowers/sdd/2026-11-05-current13-mixed-entry/manual-expectations.json": {
+      "sha256": "a9e15e61090f67ae9a80dfdf2fd2ca2af96d08c47b6247194f3e97f340acc96f",
+      "bytes": 1365
+    },
+    ".superpowers/sdd/2026-11-05-current13-mixed-entry/mixed-raw-pins.json": {
+      "sha256": "383321ed7a0e101112b6733d7388e95b1d508cc0447fd0bbd55738ebaa0a3499",
+      "bytes": 313
+    },
+    ".superpowers/sdd/2026-11-05-current13-mixed-entry/prepare-summary.json": {
+      "sha256": "446189b520759a1d88030865891f17e803b639ca81a13f069714ccb462bdda08",
+      "bytes": 8337
+    },
+    ".superpowers/sdd/2026-11-05-current13-modified-entry/manual-expectations.json": {
+      "sha256": "6be61a280950efa783e06cc4a7814ae4750f4a4adbeebee868e605d7760ec47c",
+      "bytes": 703
+    },
+    ".superpowers/sdd/2026-11-05-current13-no-native-entry/manual-expectations.json": {
+      "sha256": "9aa56ea9ec1bcb5ca2a9453f639646ef61e7dc98b19a872c2ea3ae3ad93b7aa5",
+      "bytes": 1734
+    },
+    ".superpowers/sdd/2026-11-05-current13-workspace-entry/entry-manual-expectations.json": {
+      "sha256": "b702ab95b0aff84431a79871f8ab9a96e19c59db085cc2cd633aecda07a75fea",
+      "bytes": 1324
+    },
+    ".superpowers/sdd/2026-11-05-current13-workspace-entry/prepare-manual-expectations.json": {
+      "sha256": "8bc8424a99f2d34c582eff9e741ae80db8e28f5203d32e7a70300d92c0d435b2",
+      "bytes": 2884
+    },
+    ".superpowers/sdd/2026-11-05-modified-unit-library-positive/library-output/after.output.jsonl": {
+      "sha256": "bc586840d4d101f471120125c58d7306d3b749e11d71edf06079a0482932b9f0",
+      "bytes": 31459
+    },
+    ".superpowers/sdd/2026-11-05-modified-unit-library-positive/library-output/after.request.jsonl": {
+      "sha256": "314b12e8b2c038fcd66c347ee5e1b7f96e8883fe7669cea378381cafcfb2c789",
+      "bytes": 1834
+    },
+    ".superpowers/sdd/2026-11-05-modified-unit-library-positive/node-verification.json": {
+      "sha256": "e3a05caf4e6a5b87692486b46fe5cdf428f68bc510cd970c8fa792283f17c1a6",
+      "bytes": 7643
+    },
+    ".superpowers/sdd/2026-11-05-modified-unit-library-positive/rust-verification.json": {
+      "sha256": "d283844344c9816e4a3d82e4cc87942866e7841c4795bb42f65ae0c1e229e7a3",
+      "bytes": 6015
     }
   }
 }
