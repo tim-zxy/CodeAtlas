@@ -1,3 +1,28 @@
+## P1-10 Draft, original positions and compatible structural Store - 2026-11-06
+
+Private Documents maps original UTF16 offsets to zero-based UTF8 byte columns,
+preserving BOM/CRLF and refusing invalid boundaries. Strict immutable Draft checks
+raw SHA256/ranges, preserves supplied IDs/PARTIAL and rejects semantic Claims.
+W007/W008 and private structural Store now implement FK/immutable history, CAS,
+exact tuple reuse/conflict, normalized integrity, rollback and UNKNOWN commit.
+Runtime supports known workspace6/7/8; unknown9 refuses. Old SQL/manifest entries
+and Fixture bytes stay unchanged; checksums retain the original loader newline
+normalization. No user database migration occurred.
+
+Four package builds pass. Integrated124/124, separate storage56/56 and original
+Runtime/migration107/107 pass; strengthened Draft8/8 and architecture17 pass.
+These overlapping runs are not summed as distinct tests. Concentrated review fixes
+have genuine negative controls. [Exact evidence](../superpowers/reviews/2026-11-06-document-draft-storage.json),
+[implementation and remaining boundaries](../superpowers/specs/2026-11-06-document-draft-storage.md).
+
+Source->literal Draft->owned SQLite works as component integration, not actual
+Markdown/secret/capture E2E. Parser adoption, genuine secret clearance, full-run
+accounting/read cancellation and production update-documents remain unready. W008
+schema is not a Claim workflow. Full Document Fixture/E07/P1-12 are not accepted.
+CI132/133 ended TS/Rust green and Native at unchanged R8 prerequisite failure;
+those prior commits do not certify this batch. R9 not run; no numeric adoption.
+Phase1 stays4/21, A6 NOT_QUALIFIED, E02 PROPOSED/uninstalled.
+
 ## P1-10 Application-to-Source raw input chain connected - 2026-11-06
 
 Existing private prepareMixedSource now offers readDocumentBytes(path), reusing its

@@ -39,150 +39,171 @@ const empty = (basis) => ({
   coverage: { status: 'COMPLETE', limitations: [], unverifiedRefs: [] },
   termination: 'COMPLETE',
 });
-test('Workspace authenticates frozen RevisionSet and actual repo binding, commits and marks last-good affected', async (t) => {
-  const { ContractStore } = await api(),
-    f = await historyFixture(t);
-  applyMigrationPlan(f.db, await prefixPlan(13));
-  const repo = new RuntimeFactStore(f.db, f.input.repositoryId),
-    c = repo.readRuntimeBasis(historyLimits),
-    r = repo.applyRuntimeBatch(
-      { expected: c.identity, candidate: empty(c.identity.codeBasis) },
-      historyLimits,
-    ),
-    v = repo.traceRuntime(historyLimits);
-  const db = new DatabaseSync(f.directory + '/workspace.sqlite', {
-    enableForeignKeyConstraints: true,
-  });
-  f.connections.push(db);
-  const plan = await loadMigrationPlan(
-    new URL('../migrations/workspace/manifest.json', import.meta.url),
-    'WORKSPACE',
-  );
-  applyMigrationPlan(db, plan);
-  db.prepare('INSERT INTO workspace(slot,id,root_path)VALUES(1,?,?)').run(
-    'workspace:owned',
-    'owned',
-  );
-  db.prepare('INSERT INTO repositories(repository_id,workspace_id,root_path)VALUES(?,?,?)').run(
-    f.input.repositoryId,
-    'workspace:owned',
-    f.input.tables.repository[0].root_path,
-  );
-  db.prepare(
-    "INSERT INTO revision_sets(id,workspace_id,created_at,frozen)VALUES('set:owned','workspace:owned',0,0)",
-  ).run();
-  db.prepare(
-    "INSERT INTO revision_set_items(revision_set_id,repository_id,revision_id,revision_fingerprint)VALUES('set:owned',?,?,?)",
-  ).run(
-    c.identity.codeBasis.repositoryId,
-    c.identity.codeBasis.revisionId,
-    c.identity.codeBasis.contentFingerprint,
-  );
-  const binding = {
-    repoBasis: c.identity.codeBasis,
-    syntaxActivationId: c.identity.syntaxActivationId,
-    syntaxMembershipDigest: c.identity.syntaxMembershipDigest,
-    runtimeActivationId: r.activationId,
-    runtimeCandidateDigest: v.identity.candidateDigest,
-  };
-  const wb = {
-    workspaceId: 'workspace:owned',
-    revisionSetId: 'set:owned',
-    workspaceActivationDigest: '0'.repeat(64),
-  };
-  const frozen = {
-    workspaceBasis: wb,
-    repositoryBindings: [binding],
-    catalog: { workspaceBasis: wb, services: [], entries: [], contractBindings: [] },
-    contractRefs: [],
-  };
-  wb.workspaceActivationDigest = workspaceRuntimeInputDigest(frozen);
-  const execution = {
-    schema: 'codeatlas.workspace-execution',
-    version: 1,
-    payload: {
-      workspaceBasis: wb,
-      repositoryBindings: [binding],
-      nodes: [],
-      edges: [],
-      coverage: { status: 'COMPLETE', limitations: [], unverifiedRefs: [] },
-      supportInventory: [],
-    },
-  };
-  const input = { expectedOldActivationId: null, frozen, matches: [], execution };
-  const store = new ContractStore(db, 'workspace:owned', [repo]);
-  assert.equal(typeof store.readWorkspaceInputs, 'function');
-  assert.throws(() => store.readWorkspaceInputs(frozen, historyLimits), /FROZEN/);
-  assert.throws(() => store.applyWorkspaceBatch(input, historyLimits), /FROZEN/);
-  db.prepare("UPDATE revision_sets SET frozen=1 WHERE id='set:owned'").run();
-  const forged = structuredClone(input);
-  forged.frozen.repositoryBindings[0].syntaxMembershipDigest = '0'.repeat(64);
-  assert.throws(() => store.applyWorkspaceBatch(forged, historyLimits));
-  db.prepare('UPDATE repositories SET root_path=? WHERE repository_id=?').run(
-    'different-root',
-    f.input.repositoryId,
-  );
-  assert.throws(
-    () => store.applyWorkspaceBatch(input, historyLimits),
-    /WORKSPACE_REPOSITORY_MISMATCH/,
-  );
-  db.prepare('UPDATE repositories SET root_path=? WHERE repository_id=?').run(
-    f.input.tables.repository[0].root_path,
-    f.input.repositoryId,
-  );
-  const prepared = store.readWorkspaceInputs(frozen, historyLimits);
-  assert.equal(prepared.expectedOldActivationId, null);
-  assert.deepEqual(prepared.frozen, frozen);
-  assert.equal(prepared.graphs.length, 1);
-  assert.deepEqual(prepared.graphs[0].candidate, empty(c.identity.codeBasis));
-  assert.throws(() => store.readWorkspaceInputs(frozen, { ...historyLimits, maxRows: 1 }));
-  const out = store.applyWorkspaceBatch(input, historyLimits);
-  assert.equal(out.status, 'COMMITTED');
-  assert.equal(out.freshness, 'CURRENT');
-  const view = store.traceWorkspaceRuntime(historyLimits);
-  assert.equal(view.status, 'CURRENT');
-  assert.deepEqual(view.execution, execution);
-  assert.throws(() => store.applyWorkspaceBatch(input, historyLimits), /WORKSPACE_INPUT_CHANGED/);
-  const next = { ...input, expectedOldActivationId: out.activationId },
-    exec = db.exec.bind(db);
-  db.exec = (sql) => {
-    exec(sql);
-    if (sql === 'COMMIT') throw Error('WORKSPACE_POST_COMMIT');
-  };
-  try {
-    assert.throws(() => store.applyWorkspaceBatch(next, historyLimits), /WORKSPACE_POST_COMMIT/);
-  } finally {
-    db.exec = exec;
-  }
-  const uncertain = store.settlement();
-  assert.equal(uncertain.status, 'COMMIT_OUTCOME_UNKNOWN');
-  assert.ok(uncertain.activationId);
-  assert.equal(typeof store.inspectOutcome, 'function');
-  const recovered = store.inspectOutcome(historyLimits);
-  assert.equal(recovered.status, 'COMMITTED');
-  assert.equal(recovered.activationId, uncertain.activationId);
-  const changed = { ...input, expectedOldActivationId: uncertain.activationId };
-  db.exec = (sql) => {
-    exec(sql);
-    if (sql === 'COMMIT')
-      f.db
-        .prepare('DELETE FROM active_history_pointer WHERE repository_id=?')
-        .run(f.input.repositoryId);
-  };
-  let committed;
-  try {
-    committed = store.applyWorkspaceBatch(changed, historyLimits);
-  } finally {
-    db.exec = exec;
-  }
-  assert.equal(committed.status, 'COMMITTED');
-  assert.equal(committed.freshness, 'AFFECTED');
+for (const workspaceSchema of [6, 7, 8])
+  test(
+    'Workspace authenticates frozen RevisionSet and actual repo binding on schema ' +
+      workspaceSchema,
+    async (t) => {
+      const { ContractStore } = await api(),
+        f = await historyFixture(t);
+      applyMigrationPlan(f.db, await prefixPlan(13));
+      const repo = new RuntimeFactStore(f.db, f.input.repositoryId),
+        c = repo.readRuntimeBasis(historyLimits),
+        r = repo.applyRuntimeBatch(
+          { expected: c.identity, candidate: empty(c.identity.codeBasis) },
+          historyLimits,
+        ),
+        v = repo.traceRuntime(historyLimits);
+      const db = new DatabaseSync(f.directory + '/workspace.sqlite', {
+        enableForeignKeyConstraints: true,
+      });
+      f.connections.push(db);
+      const plan = await loadMigrationPlan(
+        new URL('../migrations/workspace/manifest.json', import.meta.url),
+        'WORKSPACE',
+      );
+      applyMigrationPlan(db, {
+        ...plan,
+        latestVersion: workspaceSchema,
+        migrations: plan.migrations.slice(0, workspaceSchema),
+      });
+      db.prepare('INSERT INTO workspace(slot,id,root_path)VALUES(1,?,?)').run(
+        'workspace:owned',
+        'owned',
+      );
+      db.prepare('INSERT INTO repositories(repository_id,workspace_id,root_path)VALUES(?,?,?)').run(
+        f.input.repositoryId,
+        'workspace:owned',
+        f.input.tables.repository[0].root_path,
+      );
+      db.prepare(
+        "INSERT INTO revision_sets(id,workspace_id,created_at,frozen)VALUES('set:owned','workspace:owned',0,0)",
+      ).run();
+      db.prepare(
+        "INSERT INTO revision_set_items(revision_set_id,repository_id,revision_id,revision_fingerprint)VALUES('set:owned',?,?,?)",
+      ).run(
+        c.identity.codeBasis.repositoryId,
+        c.identity.codeBasis.revisionId,
+        c.identity.codeBasis.contentFingerprint,
+      );
+      const binding = {
+        repoBasis: c.identity.codeBasis,
+        syntaxActivationId: c.identity.syntaxActivationId,
+        syntaxMembershipDigest: c.identity.syntaxMembershipDigest,
+        runtimeActivationId: r.activationId,
+        runtimeCandidateDigest: v.identity.candidateDigest,
+      };
+      const wb = {
+        workspaceId: 'workspace:owned',
+        revisionSetId: 'set:owned',
+        workspaceActivationDigest: '0'.repeat(64),
+      };
+      const frozen = {
+        workspaceBasis: wb,
+        repositoryBindings: [binding],
+        catalog: { workspaceBasis: wb, services: [], entries: [], contractBindings: [] },
+        contractRefs: [],
+      };
+      wb.workspaceActivationDigest = workspaceRuntimeInputDigest(frozen);
+      const execution = {
+        schema: 'codeatlas.workspace-execution',
+        version: 1,
+        payload: {
+          workspaceBasis: wb,
+          repositoryBindings: [binding],
+          nodes: [],
+          edges: [],
+          coverage: { status: 'COMPLETE', limitations: [], unverifiedRefs: [] },
+          supportInventory: [],
+        },
+      };
+      const input = { expectedOldActivationId: null, frozen, matches: [], execution };
+      const store = new ContractStore(db, 'workspace:owned', [repo]);
+      assert.equal(typeof store.readWorkspaceInputs, 'function');
+      assert.throws(() => store.readWorkspaceInputs(frozen, historyLimits), /FROZEN/);
+      assert.throws(() => store.applyWorkspaceBatch(input, historyLimits), /FROZEN/);
+      db.prepare("UPDATE revision_sets SET frozen=1 WHERE id='set:owned'").run();
+      const forged = structuredClone(input);
+      forged.frozen.repositoryBindings[0].syntaxMembershipDigest = '0'.repeat(64);
+      assert.throws(() => store.applyWorkspaceBatch(forged, historyLimits));
+      db.prepare('UPDATE repositories SET root_path=? WHERE repository_id=?').run(
+        'different-root',
+        f.input.repositoryId,
+      );
+      assert.throws(
+        () => store.applyWorkspaceBatch(input, historyLimits),
+        /WORKSPACE_REPOSITORY_MISMATCH/,
+      );
+      db.prepare('UPDATE repositories SET root_path=? WHERE repository_id=?').run(
+        f.input.tables.repository[0].root_path,
+        f.input.repositoryId,
+      );
+      const prepared = store.readWorkspaceInputs(frozen, historyLimits);
+      assert.equal(prepared.expectedOldActivationId, null);
+      assert.deepEqual(prepared.frozen, frozen);
+      assert.equal(prepared.graphs.length, 1);
+      assert.deepEqual(prepared.graphs[0].candidate, empty(c.identity.codeBasis));
+      db.exec('PRAGMA user_version=9');
+      assert.throws(
+        () => store.readWorkspaceInputs(frozen, historyLimits),
+        /INVALID_WORKSPACE_RUNTIME/,
+      );
+      db.exec('PRAGMA user_version=' + workspaceSchema);
+      assert.throws(() => store.readWorkspaceInputs(frozen, { ...historyLimits, maxRows: 1 }));
+      const out = store.applyWorkspaceBatch(input, historyLimits);
+      assert.equal(out.status, 'COMMITTED');
+      assert.equal(out.freshness, 'CURRENT');
+      const view = store.traceWorkspaceRuntime(historyLimits);
+      assert.equal(view.status, 'CURRENT');
+      assert.deepEqual(view.execution, execution);
+      assert.throws(
+        () => store.applyWorkspaceBatch(input, historyLimits),
+        /WORKSPACE_INPUT_CHANGED/,
+      );
+      const next = { ...input, expectedOldActivationId: out.activationId },
+        exec = db.exec.bind(db);
+      db.exec = (sql) => {
+        exec(sql);
+        if (sql === 'COMMIT') throw Error('WORKSPACE_POST_COMMIT');
+      };
+      try {
+        assert.throws(
+          () => store.applyWorkspaceBatch(next, historyLimits),
+          /WORKSPACE_POST_COMMIT/,
+        );
+      } finally {
+        db.exec = exec;
+      }
+      const uncertain = store.settlement();
+      assert.equal(uncertain.status, 'COMMIT_OUTCOME_UNKNOWN');
+      assert.ok(uncertain.activationId);
+      assert.equal(typeof store.inspectOutcome, 'function');
+      const recovered = store.inspectOutcome(historyLimits);
+      assert.equal(recovered.status, 'COMMITTED');
+      assert.equal(recovered.activationId, uncertain.activationId);
+      const changed = { ...input, expectedOldActivationId: uncertain.activationId };
+      db.exec = (sql) => {
+        exec(sql);
+        if (sql === 'COMMIT')
+          f.db
+            .prepare('DELETE FROM active_history_pointer WHERE repository_id=?')
+            .run(f.input.repositoryId);
+      };
+      let committed;
+      try {
+        committed = store.applyWorkspaceBatch(changed, historyLimits);
+      } finally {
+        db.exec = exec;
+      }
+      assert.equal(committed.status, 'COMMITTED');
+      assert.equal(committed.freshness, 'AFFECTED');
 
-  const stale = store.traceWorkspaceRuntime(historyLimits);
-  assert.equal(stale.status, 'AFFECTED');
-  assert.deepEqual(stale.execution, execution);
-  assert.deepEqual(db.prepare('PRAGMA foreign_key_check').all(), []);
-});
+      const stale = store.traceWorkspaceRuntime(historyLimits);
+      assert.equal(stale.status, 'AFFECTED');
+      assert.deepEqual(stale.execution, execution);
+      assert.deepEqual(db.prepare('PRAGMA foreign_key_check').all(), []);
+    },
+  );
 
 test('nonempty owned Runtime contracts publish catalog and matches through Application workspace workflow', async (t) => {
   const { ContractStore } = await api(),

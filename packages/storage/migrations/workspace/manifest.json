@@ -43,6 +43,20 @@
       "file": "006_workspace_execution.sql",
       "checksum": "sha256:7fa20074a8709ebd1c60040ab828b8d8a72422214963811a11d1509e653fcc88",
       "backupRequired": false
+    },
+    {
+      "version": 7,
+      "name": "documents",
+      "file": "007_documents.sql",
+      "checksum": "sha256:7be999fec61e532a460e9501dc5976072030d9c2f8a91d0f39f6fa06bd99866a",
+      "backupRequired": false
+    },
+    {
+      "version": 8,
+      "name": "claims",
+      "file": "008_claims.sql",
+      "checksum": "sha256:5623190b603c666c5e9dd5de493ff4e517354540a477c1504cb096f700f38ec7",
+      "backupRequired": false
     }
   ]
 }

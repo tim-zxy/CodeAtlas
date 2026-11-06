@@ -37,6 +37,7 @@ expectedPackageDependencies.execution = {
 };
 expectedPackageDependencies.contracts = { '@codeatlas/ir': 'workspace:*' };
 expectedPackageDependencies.knowledge = { '@codeatlas/ir': 'workspace:*' };
+expectedPackageDependencies.documents = { '@codeatlas/ir': 'workspace:*' };
 expectedPackageDependencies.evaluation = { '@codeatlas/ir': 'workspace:*' };
 expectedPackageDependencies.source = { '@codeatlas/ir': 'workspace:*' };
 expectedPackageDependencies.storage = { '@codeatlas/ir': 'workspace:*' };

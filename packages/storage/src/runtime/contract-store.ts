@@ -219,7 +219,11 @@ function frozenSet(
   const sql = runtimeSql(db, b),
     basis = input.frozen.workspaceBasis;
   check(basis.workspaceId === workspace);
-  check(sql.read('pragma_user_version', ['user_version'], '1', [])[0]?.user_version === 6);
+  check(
+    [6, 7, 8].includes(
+      sql.read('pragma_user_version', ['user_version'], '1', [])[0]?.user_version as number,
+    ),
+  );
   const sets = sql.read('revision_sets', ['id', 'workspace_id', 'frozen'], 'id=?', [
     basis.revisionSetId,
   ]);

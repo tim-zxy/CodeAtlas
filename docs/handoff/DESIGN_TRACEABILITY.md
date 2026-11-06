@@ -1,3 +1,15 @@
+## P1-10 strict IR to private structural storage - 2026-11-06
+
+Original Source bytes + strict Document IR -> private UTF8 geometry/immutable Draft
+-> additive W007/W008/private structural Store. Scope/FK/CAS/tuple/normalized rows,
+rollback and UNKNOWN controls are covered. Local revision aliasing preserves kind/
+scope and external provenance. Explicit clone/IR copies and request SQL deliveries
+are budgeted before allocation/delivery. [Scoped evidence](../superpowers/reviews/2026-11-06-document-draft-storage.json).
+Old SQL/manifest entries and frozen Fixture bytes stay exact under original loader
+normalization. Known6/7/8 compatibility is explicit, unknown9 still refused.
+Source->literal IR->Store cannot approve parser/scanner/capture or change canonical
+and AUTO/MANUAL authority. No parent gate/resource profile is promoted.
+
 ## P1-10 existing selected Source to Application byte consumption - 2026-11-06
 
 Existing prepared Source context -> canonical selected row/observed hash -> RAW

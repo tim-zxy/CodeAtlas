@@ -57,7 +57,11 @@ importers:
         specifier: workspace:*
         version: link:../ir
 
-  packages/documents: {}
+  packages/documents:
+    dependencies:
+      '@codeatlas/ir':
+        specifier: workspace:*
+        version: link:../ir
 
   packages/evaluation:
     dependencies:

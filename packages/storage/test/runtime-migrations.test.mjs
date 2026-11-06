@@ -13,10 +13,10 @@ const version = (db) => db.prepare('PRAGMA user_version').get().user_version;
 const prefix = (p, n) => ({ ...p, latestVersion: n, migrations: p.migrations.slice(0, n) });
 for (const kind of ['repository', 'workspace']) {
   test(
-    kind + ' runtime migration inventory, empty, upgrade, rerun and read-only reopen',
+    kind + ' historical runtime migration inventory, empty, upgrade, rerun and read-only reopen',
     async (t) => {
       const e = expected[kind],
-        p = await loadMigrationPlan(manifest(kind), kind.toUpperCase());
+        p = prefix(await loadMigrationPlan(manifest(kind), kind.toUpperCase()), e.latestVersion);
       assert.equal(p.latestVersion, e.latestVersion);
       assert.ok(p.migrations.slice(e.previousVersion).every((m) => m.backupRequired === false));
       // Unique retained owned files; never a user database or mutable R4.
@@ -82,14 +82,14 @@ for (const kind of ['repository', 'workspace']) {
         databaseKind: kind.toUpperCase(),
         manifestUrl: manifest(kind),
       });
-      assert.equal(empty.finalVersion, e.latestVersion);
+      assert.equal(empty.finalVersion, kind === 'workspace' ? 8 : e.latestVersion);
     },
   );
   test(
     kind + ' failure rolls back only failing version and retains committed predecessor',
     async (t) => {
       const e = expected[kind],
-        p = await loadMigrationPlan(manifest(kind), kind.toUpperCase());
+        p = prefix(await loadMigrationPlan(manifest(kind), kind.toUpperCase()), e.latestVersion);
       assert.equal(p.latestVersion, e.latestVersion);
       const db = new DatabaseSync(':memory:');
       t.after(() => db.close());

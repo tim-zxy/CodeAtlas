@@ -1,0 +1,149 @@
+{
+  "source": "﻿# 标题 😀\r\n段落\n",
+  "fingerprint": "sha256:ad97871a3d7c3040dee082614eda13a0a48038c393d534e55a90d2f95cbbeda6",
+  "byteLength": 25,
+  "offsets": [0, 1, 3, 5, 6, 8, 10, 12, 13],
+  "positions": [
+    {
+      "line": 0,
+      "column": 0
+    },
+    {
+      "line": 0,
+      "column": 3
+    },
+    {
+      "line": 0,
+      "column": 5
+    },
+    {
+      "line": 0,
+      "column": 11
+    },
+    {
+      "line": 0,
+      "column": 12
+    },
+    {
+      "line": 0,
+      "column": 16
+    },
+    {
+      "line": 1,
+      "column": 0
+    },
+    {
+      "line": 1,
+      "column": 6
+    },
+    {
+      "line": 2,
+      "column": 0
+    }
+  ],
+  "envelope": {
+    "schema": "codeatlas.document-bundle",
+    "version": 1,
+    "payload": {
+      "document": {
+        "id": "doc:one",
+        "workspaceId": "workspace:one",
+        "repositoryId": "repo:one",
+        "logicalPath": "docs/service.md",
+        "mediaType": "text/markdown",
+        "sourceKind": "MARKDOWN",
+        "currentRevisionId": null
+      },
+      "revision": {
+        "id": "doc-revision:one",
+        "documentId": "doc:one",
+        "sourceFingerprint": "sha256:ad97871a3d7c3040dee082614eda13a0a48038c393d534e55a90d2f95cbbeda6",
+        "parserVersion": "test-parser-v1",
+        "policyVersion": "test-policy-v1",
+        "sourceBasis": {
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "contentFingerprint": "content:first",
+          "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "blockRefs": [
+          {
+            "kind": "DOCUMENT_BLOCK",
+            "id": "block:heading",
+            "revisionId": "doc-revision:one"
+          },
+          {
+            "kind": "DOCUMENT_BLOCK",
+            "id": "block:paragraph",
+            "revisionId": "doc-revision:one"
+          }
+        ],
+        "diagnostics": [],
+        "completeness": "COMPLETE"
+      },
+      "externalRefs": [],
+      "supportInventory": [],
+      "sections": [
+        {
+          "id": "section:one",
+          "documentRevisionId": "doc-revision:one",
+          "parentSectionId": null,
+          "headingLevel": 1,
+          "title": "标题 😀",
+          "ordinal": 0,
+          "sourceRange": {
+            "documentRevisionId": "doc-revision:one",
+            "startLine": 0,
+            "startColumn": 3,
+            "endLine": 0,
+            "endColumn": 16
+          }
+        }
+      ],
+      "blocks": [
+        {
+          "id": "block:heading",
+          "documentRevisionId": "doc-revision:one",
+          "sectionId": "section:one",
+          "kind": "HEADING",
+          "ordinal": 0,
+          "sourceRange": {
+            "documentRevisionId": "doc-revision:one",
+            "startLine": 0,
+            "startColumn": 3,
+            "endLine": 0,
+            "endColumn": 16
+          },
+          "payload": {
+            "text": "标题 😀",
+            "level": 1
+          }
+        },
+        {
+          "id": "block:paragraph",
+          "documentRevisionId": "doc-revision:one",
+          "sectionId": "section:one",
+          "kind": "PARAGRAPH",
+          "ordinal": 1,
+          "sourceRange": {
+            "documentRevisionId": "doc-revision:one",
+            "startLine": 1,
+            "startColumn": 0,
+            "endLine": 1,
+            "endColumn": 6
+          },
+          "payload": {
+            "text": "段落"
+          }
+        }
+      ],
+      "tables": [],
+      "links": [],
+      "codeSnippets": [],
+      "mentions": [],
+      "chunks": [],
+      "claims": []
+    }
+  },
+  "independence": "Literal coordinates and Python hashlib source digest fixed before implementation; not a parser oracle"
+}

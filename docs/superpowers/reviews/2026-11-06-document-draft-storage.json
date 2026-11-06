@@ -1,0 +1,210 @@
+{
+  "scope": "P1-10 private structural components, not full Document workflow",
+  "status": "LOCAL_VERIFIED_PENDING_SINGLE_BATCH_SYNC",
+  "baseCommit": "b9580d6ecac1c417043a3ec624b16ac8deaaac7a",
+  "implementation": {
+    "documents": "original UTF8 geometry and strict immutable structural Draft; root exports unchanged",
+    "storage": "W007/W008 additive schema plus private structural Store; nonempty claims unsupported",
+    "runtimeCompatibility": "known workspace schemas6/7/8; unknown9 refused",
+    "externalDependenciesAdded": [],
+    "internalDependencyAdded": "@codeatlas/documents -> @codeatlas/ir workspace:*"
+  },
+  "authority": "existing P1-10 design sections2/7, strict IR and original migration runner; no frozen decision changed",
+  "verification": {
+    "builds": {
+      "documents": 0,
+      "storage": 0,
+      "application": 0,
+      "runtime": 0
+    },
+    "integrated": {
+      "tests": 124,
+      "pass": 124,
+      "fail": 0,
+      "skip": 0,
+      "roots": [
+        "Documents8",
+        "Store39",
+        "document migrations7",
+        "component integration1",
+        "IR49",
+        "workspace20"
+      ]
+    },
+    "storageCompatibilitySeparateRun": {
+      "tests": 56,
+      "pass": 56
+    },
+    "originalRuntimeAndMigrationGatesSeparateRun": {
+      "tests": 107,
+      "pass": 107,
+      "fail": 0
+    },
+    "strengthenedDraftAssertionsRerun": {
+      "tests": 8,
+      "pass": 8
+    },
+    "architectureProjects": 17,
+    "overlappingRunsNotSummedAsUniqueTests": true
+  },
+  "tdd": {
+    "draftMissingApi": {
+      "tests": 5,
+      "fail": 5
+    },
+    "geometryAccountInvalidation": {
+      "tests": 1,
+      "fail": 1
+    },
+    "oldRuntimeSchema8Refusal": {
+      "tests": 1,
+      "fail": 1
+    },
+    "storeDefectsWithActualRed": [
+      "local resolved link revision ref not rebound",
+      "external entity kind/ID collision wrongly rebound",
+      "sync guard rejected Promise left unhandled child failure",
+      "read admission PRAGMA budget omitted",
+      "scope membership budget omitted",
+      "clone/IR copy prepay incomplete; same180 original isolated baseline clones1 vs current0",
+      "persisted normalized ordinal mismatch not detected",
+      "persisted revision tuple mismatch not detected",
+      "persisted document locator mismatch not detected",
+      "schema changed by preflight guard outside actual snapshot",
+      "FK changed by preflight guard outside actual snapshot"
+    ]
+  },
+  "reviews": [
+    {
+      "agent": "phase1_acceptance_medium",
+      "scope": "isolated Temp implementation",
+      "tests": 34,
+      "sharedTreeWrites": false,
+      "receiptSha256": "b5260006bb19c3d32ebbd3b50931a5d3d4f9eca3971e285693c6f49e2afbc260"
+    },
+    {
+      "agent": "n1_tests_medium",
+      "scope": "one concentrated review per independent component plus associated fixes",
+      "resolved": [
+        "geometry invalidation",
+        "copy prepayment",
+        "normalized-column consistency"
+      ],
+      "associatedRecheck": "no blocker; static only"
+    }
+  ],
+  "sourcePins": [
+    {
+      "path": "packages/documents/src/source-positions.ts",
+      "sha256": "8dc40aeff05c18b686e40fe4310944f8ced7b108929009077703b0aa8f453cd2"
+    },
+    {
+      "path": "packages/documents/src/document-draft.ts",
+      "sha256": "48aa4c5ec847c44db749cc19fea2de9043fc64b6264018522296dc9b52929c4c"
+    },
+    {
+      "path": "packages/documents/test/fixtures/source-draft.json",
+      "sha256": "29746dc64064fde444b31e2c35499bb6f9a855f74e8203101211b3a6bc1390d8"
+    },
+    {
+      "path": "packages/storage/migrations/workspace/007_documents.sql",
+      "sha256": "7be999fec61e532a460e9501dc5976072030d9c2f8a91d0f39f6fa06bd99866a"
+    },
+    {
+      "path": "packages/storage/migrations/workspace/008_claims.sql",
+      "sha256": "5623190b603c666c5e9dd5de493ff4e517354540a477c1504cb096f700f38ec7"
+    },
+    {
+      "path": "packages/storage/src/documents/document-store.ts",
+      "sha256": "51ee61232df886089a2d996b20d21556bd506780932aeaef8332f0fe2cf4b81d"
+    }
+  ],
+  "migrationPreservation": {
+    "oldFiles": [
+      "001_workspace_core.sql",
+      "002_repositories.sql",
+      "003_revision_sets.sql",
+      "004_services.sql",
+      "005_contracts.sql",
+      "006_workspace_execution.sql"
+    ],
+    "oldManifestEntriesExact": true,
+    "oldGitCanonicalContentExact": true,
+    "oldChecksumsVerifiedUsingExistingLoaderNewlineNormalization": true,
+    "oldPhysicalSqlNotWritten": true,
+    "newEntries": [
+      {
+        "version": 7,
+        "name": "documents",
+        "file": "007_documents.sql",
+        "checksum": "sha256:7be999fec61e532a460e9501dc5976072030d9c2f8a91d0f39f6fa06bd99866a",
+        "backupRequired": false
+      },
+      {
+        "version": 8,
+        "name": "claims",
+        "file": "008_claims.sql",
+        "checksum": "sha256:5623190b603c666c5e9dd5de493ff4e517354540a477c1504cb096f700f38ec7",
+        "backupRequired": false
+      }
+    ]
+  },
+  "setupFailures": [
+    "initial Python import json omitted after two new source files; dependency update corrected separately",
+    "new unpublished Temp CRLF converted to repository LF before first manifest checksum",
+    "relative URL and Temp runtime test adapter paths corrected",
+    "historical Runtime Fixture unchanged at original prefixes; current empty install separately expects8",
+    "Claim test originally lacked mandatory Evidence; test repaired without IR change",
+    "budget boundary refined250/200 to180; same180 original isolated Store still failed clones1",
+    "first audit incorrectly compared historical raw CRLF SHA to loader-normalized checksum; corrected audit only, old SQL/checksums unchanged"
+  ],
+  "platformReview": {
+    "deniedAction": "remove existing green full-source assertion during wording cleanup",
+    "executed": false,
+    "safeAlternative": "kept original assertion and added byte-field/structured-text checks;8/8 green",
+    "remainingBlocker": false
+  },
+  "remaining": [
+    "actual Markdown parser selection/AST adapter",
+    "genuine final-payload secret detection and trusted Application binding",
+    "full-run shared accounting and read-time cancellation",
+    "production update-documents workflow and P1-12 capture",
+    "W008 Claim write workflow",
+    "full p1-document-ir-v1 Fixture and E07/parent acceptance"
+  ],
+  "priorCi": {
+    "132": {
+      "head": "e99c4583a29f58e6b461d68ba925004ca47006dc",
+      "typescript": "SUCCESS",
+      "rust": "SUCCESS",
+      "native": "FAIL_APPROVED_SCRIPT_CATALOG",
+      "main": {
+        "total": 5049,
+        "pass": 5029,
+        "skip": 20
+      },
+      "B": 82,
+      "final": 124
+    },
+    "133": {
+      "head": "b9580d6ecac1c417043a3ec624b16ac8deaaac7a",
+      "typescript": "SUCCESS",
+      "rust": "SUCCESS",
+      "native": "FAIL_APPROVED_SCRIPT_CATALOG",
+      "main": {
+        "total": 5050,
+        "pass": 5030,
+        "skip": 20
+      },
+      "B": 82,
+      "final": 125
+    },
+    "scope": "prior source only; not certification for this new batch"
+  },
+  "r9": {
+    "authorized": false,
+    "executed": false,
+    "profileOrNumbersChanged": false
+  },
+  "formalAcceptance": "4/21; A6 NOT_QUALIFIED; E02 PROPOSED/uninstalled"
+}
