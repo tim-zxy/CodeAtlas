@@ -51,7 +51,22 @@ with no matching advisories at the recorded time; this is not vulnerability-free
 or malware-free proof. Registry signatures/provenance were not independently
 verified. All archives total590,778 bytes and remain ignored local evidence.
 
-Actual parser install, package-manager lock, offline parser build, runtime/adapter
+Actual parser install, project lock adoption, offline parser build, runtime/adapter
 performance and full integration are NOT tested or authorized. All exact roots,
 transitive versions, digests, license hashes and edges are in the committed audit.
 Major dependency adoption remains pending. No package code was executed.
+
+
+## Preflight recovery and actual candidate lock supplement
+
+Known candidate path/repository conflicts now refuse BEFORE opening selected
+Source, while final strict Draft binding remains. UNKNOWN Source cleanup is
+preserved through sanitized preflight errors without copying raw errors. The
+original two defects were reproduced before the focused fix; related regression
+54/54 and architecture17 pass. No scan outcome gains write authority.
+
+The [adoption decision](2026-11-06-markdown-dependency-adoption.md) now includes an
+actual isolated candidate lock and explicit four-version delta from max-satisfying
+audit. Offline/frozen LOCKFILE-ONLY verification passes with no node_modules,
+package downloads or installs; this is not an offline parser build. The project
+lock/dependencies remain unchanged. Installation/production scanning still pending.

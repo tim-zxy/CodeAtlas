@@ -118,3 +118,41 @@ test('caller envelope changes during async Source read cannot replace inspected 
   assert.equal(r.reason, 'SECRET_COVERAGE_INCOMPLETE');
   assert.equal(r.status, 'NOT_COMMITTED');
 });
+
+test('known candidate path/repository mismatch refuses before opening selected Source', async () => {
+  for (const change of [
+    (f) => {
+      f.input.path = 'other.md';
+    },
+    (f) => {
+      f.input.source.observation.repositoryId = 'repo:foreign';
+    },
+  ]) {
+    const f = input();
+    change(f);
+    let reads = 0;
+    const read = f.input.source.readDocumentBytes;
+    f.input.source.readDocumentBytes = async (...args) => {
+      reads++;
+      return read(...args);
+    };
+    await assert.rejects(() => api.checkDocumentWrite(f.input), { code: 'INVALID_DOCUMENT_INPUT' });
+    assert.equal(reads, 0);
+  }
+});
+test('uncertain Source cleanup survives sanitized preflight failure without leaking raw error', async () => {
+  const f = input();
+  f.input.source.readDocumentBytes = async () => {
+    throw Object.assign(Error('password=synthetic-only'), { cleanupState: 'UNKNOWN' });
+  };
+  await assert.rejects(
+    () => api.checkDocumentWrite(f.input),
+    (e) => {
+      assert.equal(e.cleanupState, 'UNKNOWN');
+      assert.equal(e.code, 'DOCUMENT_PREFLIGHT_FAILED');
+      assert.equal(String(e).includes('synthetic-only'), false);
+      assert.deepEqual(e.sourceEffects, f.input.source.effects);
+      return true;
+    },
+  );
+});

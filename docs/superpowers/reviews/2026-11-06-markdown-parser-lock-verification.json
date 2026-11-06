@@ -1,0 +1,164 @@
+{
+  "kind": "ISOLATED_MARKDOWN_CANDIDATE_LOCK_VERIFICATION",
+  "status": "LOCK_VERIFIED_NOT_ADOPTED_OR_INSTALLED",
+  "roots": {
+    "unified": "11.0.5",
+    "remark-parse": "11.0.0",
+    "remark-gfm": "4.0.1"
+  },
+  "pnpm": "11.19.0",
+  "lockSha256": "37aed2cb8c1a3b5306e01420b98a200ddce63ded2d19dd36e45e2d1e7b2c62ba",
+  "candidateFile": "docs/superpowers/reviews/2026-11-06-markdown-parser-candidate-lock.yaml",
+  "summary": {
+    "nodes": 69,
+    "edges": 212,
+    "identityAndIntegrityMatched": 69,
+    "mitManifestAndLicenseGrant": 69,
+    "archiveBytes": 588342,
+    "installHooks": 0,
+    "nativeBindingGyp": 0,
+    "missingDeclaredExportFiles": 0
+  },
+  "baseAudit": "2026-11-06-markdown-parser-audit.json",
+  "deltaFromBase": [
+    {
+      "name": "mdast-util-gfm-autolink-literal",
+      "originalMaxSatisfying": "2.1.0",
+      "actualLockVersion": "2.0.1",
+      "integrity": "sha512-5HVP2MKaP6L+G6YaxPNjuL0BPrq9orG3TsrZ9YXbA3vDw/ACI4MEsnoDpn6ZNm7GnZgtAcONJyPhOP8tNJQavQ==",
+      "archive": {
+        "name": "mdast-util-gfm-autolink-literal",
+        "version": "2.0.1",
+        "archiveBytes": 6696,
+        "sha256": "5860bd6db7eb6f6336c5ddd4c713900fb973a05cee8dd531cbcb8548a122c77c",
+        "integrityMatched": true,
+        "licenseField": "MIT",
+        "licenseFiles": [
+          {
+            "path": "package/license",
+            "sha256": "536804b3adbff17dbbb9ed0d2bf9655b78f07640278581e37e3d7475282d5e61",
+            "mitGrant": true
+          }
+        ],
+        "installScripts": {},
+        "exports": "./index.js",
+        "missingDeclaredExportFiles": [],
+        "types": null,
+        "gypfile": false,
+        "memberCount": 7,
+        "archiveRoot": "package/"
+      }
+    },
+    {
+      "name": "mdast-util-gfm-task-list-item",
+      "originalMaxSatisfying": "2.0.1",
+      "actualLockVersion": "2.0.0",
+      "integrity": "sha512-IrtvNvjxC1o06taBAVJznEnkiHxLFTzgonUdy8hzFVeDun0uTjxxrRGVaNFqkU1wJR3RBPEfsxmU6jDWPofrTQ==",
+      "archive": {
+        "name": "mdast-util-gfm-task-list-item",
+        "version": "2.0.0",
+        "archiveBytes": 5740,
+        "sha256": "3ca34f4601317823f202df4692310c5d37ca628b76cdda2bd59d32de2c0a5d01",
+        "integrityMatched": true,
+        "licenseField": "MIT",
+        "licenseFiles": [
+          {
+            "path": "package/license",
+            "sha256": "536804b3adbff17dbbb9ed0d2bf9655b78f07640278581e37e3d7475282d5e61",
+            "mitGrant": true
+          }
+        ],
+        "installScripts": {},
+        "exports": "./index.js",
+        "missingDeclaredExportFiles": [],
+        "types": null,
+        "gypfile": false,
+        "memberCount": 7,
+        "archiveRoot": "package/"
+      }
+    },
+    {
+      "name": "mdast-util-to-markdown",
+      "originalMaxSatisfying": "2.2.3",
+      "actualLockVersion": "2.2.2",
+      "integrity": "sha512-ELNT5jYDUdx0B/hlUSSAiAEtvqkY3Oriwkp1KEYseF1Ccu4MnKkmE5yK3oE3WGT/Pq8VTE+XwP0GLL5pafY8yA==",
+      "archive": {
+        "name": "mdast-util-to-markdown",
+        "version": "2.2.2",
+        "archiveBytes": 48245,
+        "sha256": "d8eb533153b295b6edae652f26f841d63f78cad195d20a339e5f9044c582215d",
+        "integrityMatched": true,
+        "licenseField": "MIT",
+        "licenseFiles": [
+          {
+            "path": "package/license",
+            "sha256": "dd1081884a92952802f4803110a6bb543acea9a814c786d58605b4c1219b5ebb",
+            "mitGrant": true
+          }
+        ],
+        "installScripts": {},
+        "exports": "./index.js",
+        "missingDeclaredExportFiles": [],
+        "types": null,
+        "gypfile": false,
+        "memberCount": 154,
+        "archiveRoot": "package/"
+      }
+    },
+    {
+      "name": "vfile-message",
+      "originalMaxSatisfying": "4.0.4",
+      "actualLockVersion": "4.0.3",
+      "integrity": "sha512-QTHzsGd1EhbZs4AsQ20JX1rC3cOlt/IWJruk893DfLRr57lcnOeMaWG4K0JrRta4mIJZKth2Au3mM3u03/JWKw==",
+      "archive": {
+        "name": "vfile-message",
+        "version": "4.0.3",
+        "archiveBytes": 6370,
+        "sha256": "9d6d94ee59296ef0516217a79e902ba417fe3d8816ab1d0527ddf353b455c2cb",
+        "integrityMatched": true,
+        "licenseField": "MIT",
+        "licenseFiles": [
+          {
+            "path": "package/license",
+            "sha256": "dd1081884a92952802f4803110a6bb543acea9a814c786d58605b4c1219b5ebb",
+            "mitGrant": true
+          }
+        ],
+        "installScripts": {},
+        "exports": "./index.js",
+        "missingDeclaredExportFiles": [],
+        "types": null,
+        "gypfile": false,
+        "memberCount": 7,
+        "archiveRoot": "package/"
+      }
+    }
+  ],
+  "selectionReason": {
+    "observed": "Four excluded latest versions were published on 2026-11-06 within24h of resolution. Actual pnpm11 lock selects older satisfying versions; no policy override supplied.",
+    "officialDefault": "pnpm11 minimumReleaseAge defaults1440minutes",
+    "source": "https://github.com/pnpm/pnpm/blob/main/pnpm/docs/settings/dependency-resolution.md",
+    "qualification": "Default policy explains observed selection; explicit config getters undefined, no user secrets/config dump."
+  },
+  "vulnerabilityQuery": {
+    "status": 200,
+    "at": "2026-11-06T19:06:17.377Z",
+    "response": {}
+  },
+  "checks": {
+    "offlineFrozenLockfileOnlyExit": 0,
+    "packageDownloadsDuringLockGeneration": 0,
+    "packageAdds": 0,
+    "nodeModulesPresent": false,
+    "rootManifestsOrWorkspaceLockModified": false,
+    "all212EdgesMatch": true,
+    "all69IntegrityMatch": true
+  },
+  "notVerified": [
+    "actual project pnpm lock integration",
+    "package installation or actual offline parser build/execution",
+    "npm signature/provenance authentication and exhaustive vulnerability/malware absence",
+    "actual AST-to-Canonical adapter, performance and full Fixture acceptance"
+  ],
+  "originalEvidence": ".superpowers/sdd/2026-11-06-markdown-audit/"
+}

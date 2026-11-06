@@ -47,6 +47,14 @@ export async function checkDocumentWrite(input: {
     ensurePhase1Data(input.envelope);
     account.own(input.envelope);
     const envelope = structuredClone(input.envelope);
+    // Refuse known scope/locator conflicts before opening any selected Source file.
+    const document = (
+      envelope as {
+        payload?: { document?: { logicalPath?: unknown; repositoryId?: unknown } };
+      } | null
+    )?.payload?.document;
+    if (!document || document.logicalPath !== path || document.repositoryId !== repositoryId)
+      throw Object.assign(new Error('INVALID_DOCUMENT_INPUT'), { code: 'INVALID_DOCUMENT_INPUT' });
     const raw = await source.readDocumentBytes(path);
     const draft = assembleDocumentDraft(raw.bytes, envelope, account);
     if (
@@ -71,9 +79,16 @@ export async function checkDocumentWrite(input: {
       error !== null && typeof error === 'object'
         ? (Object.getOwnPropertyDescriptor(error, 'code')?.value as unknown)
         : undefined;
-    throw new DocumentWritePreflightError(
+    const failure = new DocumentWritePreflightError(
       typeof code === 'string' && safeCodes.has(code) ? code : 'DOCUMENT_PREFLIGHT_FAILED',
       source.effects,
     );
+    if (
+      error !== null &&
+      typeof error === 'object' &&
+      Object.getOwnPropertyDescriptor(error, 'cleanupState')?.value === 'UNKNOWN'
+    )
+      Object.assign(failure, { cleanupState: 'UNKNOWN' });
+    throw failure;
   }
 }

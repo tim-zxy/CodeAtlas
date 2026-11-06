@@ -1,3 +1,13 @@
+## Private document recovery and dependency lock scope - 2026-11-06
+
+Existing Source-before-consumption/scope and truthful cleanup contracts -> early
+candidate binding refusal + preserved UNKNOWN cleanup, with two REDs and54/54
+related regression. No new permission or scan clearance. Exact dependency decision
+now distinguishes original max-satisfying audit from policy-compliant isolated
+pnpm candidate lock; no install/build claim follows from lock-only verification.
+[Evidence](../superpowers/reviews/2026-11-06-document-preflight-recovery.json).
+Original P1-10/E07/P1-12 and phase gates remain open.
+
 ## Immutable DocumentRevision consumption and explicit detector limits - 2026-11-06
 
 Existing pinned document input/immutable W007 history -> private exact revision

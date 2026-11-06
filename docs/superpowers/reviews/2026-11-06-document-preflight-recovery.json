@@ -1,0 +1,40 @@
+{
+  "kind": "DOCUMENT_PREFLIGHT_RECOVERY_AND_CANDIDATE_LOCK",
+  "base": "f64975cc660e803de50bf2b2373011fe00f778a3",
+  "date": "2026-11-06",
+  "status": "SCOPED_FIX_VERIFIED_ADOPTION_PENDING",
+  "implementation": [
+    "Known candidate locator/repository mismatch rejects before Source read",
+    "UNKNOWN Source cleanup descriptor survives sanitized failure, without raw match/error content"
+  ],
+  "tests": {
+    "red": 2,
+    "preflightGreen": 9,
+    "relatedIntegrated": {
+      "pass": 54,
+      "fail": 0,
+      "skip": 0,
+      "log": ".superpowers/sdd/2026-11-06-document-preflight-recovery/final.log",
+      "command": "node --test --test-concurrency=1 packages/application/test/document-write-preflight.test.mjs packages/application/test/mixed-source-workflow.test.mjs packages/application/test/document-components.test.mjs packages/application/test/operation-policy.test.mjs packages/source/test/document-bytes.test.mjs"
+    },
+    "applicationBuildExit": 0,
+    "architectureProjects": 17,
+    "architectureExit": 0
+  },
+  "review": "single-integrator scoped Source/error-boundary/diff review; no independent review claimed",
+  "lockAudit": "2026-11-06-markdown-parser-lock-verification.json",
+  "remaining": [
+    "candidate lock is isolated, not installed or adopted in project",
+    "actual parser offline build remains untested",
+    "deny-only cannot authorize production writes",
+    "R8/R9 and original parent gates unchanged"
+  ],
+  "toolingCorrections": [
+    "First lock comparison truthfully refused four mismatched versions; re-audited actual pnpm-selected versions, did not override policy.",
+    "An attempted evidence-log write without escalation failed EPERM before writing; continued read-only diagnosis and later used normal approved workspace write process. No approval rejection bypass."
+  ],
+  "sha256": {
+    "packages/application/src/document-write-preflight.ts": "1dffd591fe8df94c07e52250cce2445e1d34afcaed888109aa36a54cbf67814c",
+    "packages/application/test/document-write-preflight.test.mjs": "2004f2ad10afc9ba0bd9d25331d98d1f683117e53f2227d24e44fcd9f42d6f98"
+  }
+}

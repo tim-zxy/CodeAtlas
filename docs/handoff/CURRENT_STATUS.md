@@ -1,3 +1,19 @@
+## Document preflight recovery and actual parser candidate lock - 2026-11-06
+
+Two reproduced preflight defects fixed: known locator/repository mismatch refuses
+before Source is opened; UNKNOWN Source cleanup survives sanitized errors. Final
+strict Draft/Source/control gates remain; deny-only never authorizes writes.
+Application build, related54/54 and architecture17 pass; [evidence](../superpowers/reviews/2026-11-06-document-preflight-recovery.json).
+
+Isolated pnpm lock generation and offline frozen LOCKFILE-ONLY validation pass
+with zero downloads/adds and no node_modules. Actual69-package/212-edge lock
+selects four older transitive versions than the original maximum-satisfying audit,
+consistent with pnpm11's24h release-age default; those four were separately audited.
+No safeguard override or project dependency/lock installation occurred. Exact
+[decision/lock/risk/verification steps](../superpowers/specs/2026-11-06-markdown-dependency-adoption.md)
+are ready; major adoption and actual offline parser build remain pending.
+Phase1 stays4/21, A6 NOT_QUALIFIED, production scan clearance absent; R9 not run.
+
 ## Exact document history read and audited parser candidate - 2026-11-06
 
 Private DocumentStore can read a pinned immutable revision without falling back
