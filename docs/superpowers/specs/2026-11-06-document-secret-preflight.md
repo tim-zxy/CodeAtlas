@@ -29,3 +29,29 @@ Offline build is feasible only after approved exact archives/transitives/types a
 
 ## Evidence / remaining gates
 See the accompanying review JSON for exact RED/GREEN, guard findings and integration commands. Component test uses actual controlled Source with Git doubles and owned SQLite, literal IR; it is not actual parser/scan-clearance/publication E2E. P1-10/E07/P1-12 remain open; phase4/21 and A6 NOT_QUALIFIED unchanged. R9 not run. Original R8 catalog remains immutable.
+
+
+## Versioned indicator corpus and fresh dependency audit
+
+The unchanged deny-only rule set now reports document-secret-indicators-v1.
+`packages/documents/test/fixtures/secret-indicators-v1.json` freezes14 synthetic
+cases: positive PEM/credential/property/diagnostic indicators, ordinary/empty/null
+negatives, known opaque/base64/split/URI misses, and a conservative example block.
+Every negative still has coverage LIMITED and clearance false. This is explicit
+coverage evidence, NOT approval of these indicators as complete secret policy.
+The corpus is an independent literal test input, not a new formal acceptance Fixture.
+
+The fresh [exact69-package audit](../reviews/2026-11-06-markdown-parser-audit.json)
+now replaces historical counts ONLY for this candidate audit:69 registry SRI and
+package identities matched; all69 manifests/license files contain MIT grants;
+no install hooks/native binding.gyp/missing declared export targets found. Registry
+snapshot resolves212 edges with no peer/optional/deprecated nodes. Four declared
+Node engine ranges admit local24.15.0. npm bulk-advisory endpoint returned HTTP200
+with no matching advisories at the recorded time; this is not vulnerability-free
+or malware-free proof. Registry signatures/provenance were not independently
+verified. All archives total590,778 bytes and remain ignored local evidence.
+
+Actual parser install, package-manager lock, offline parser build, runtime/adapter
+performance and full integration are NOT tested or authorized. All exact roots,
+transitive versions, digests, license hashes and edges are in the committed audit.
+Major dependency adoption remains pending. No package code was executed.

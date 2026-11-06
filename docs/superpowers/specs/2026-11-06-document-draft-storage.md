@@ -72,8 +72,12 @@ returns COMMIT_OUTCOME_UNKNOWN, without retry. Caller owns connection and reconc
 
 Request-local HistoryReadBudget covers request admission PRAGMAs, membership queries,
 rows/TEXT and each explicit clone/parser copy. Constructor's two scalar setup probes
-have no request context. Full Source+Draft+Store shared-run accounting and read-time
-cancellation are NOT yet wired. No qualification/resource/profile numbers were adopted.
+have no request context. Full Source+Draft+Store shared-run accounting is NOT yet wired. The later
+[history-read slice](../plans/2026-11-06-document-history-read.md) now adds optional
+synchronous control to readCurrent and required control to exact readRevision,
+using the same per-request budget/snapshot/integrity path; checks occur between
+bounded stages and do not interrupt the SQLite VM. This is not full-run accounting
+or authenticated CompilationInputSnapshot capture. No qualification/resource/profile numbers were adopted.
 Production update-documents remains unavailable rather than treating missing scanner
 execution as secretDetected=false or a supplied digest as authority.
 

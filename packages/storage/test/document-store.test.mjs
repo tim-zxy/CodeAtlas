@@ -527,3 +527,126 @@ for (const change of ['schema', 'foreign-keys'])
     assert.equal(db.isTransaction, false);
     assert.equal(db.prepare('SELECT count(*) n FROM documents').get().n, 0);
   });
+
+test('pinned historical DocumentRevision survives a changed current head without fallback', (t) => {
+  const { db, store } = setup(t);
+  apply(store);
+  apply(store, bundle('rev:two', 'world', 'b'), 'rev:one');
+  let checks = 0;
+  const old = store.readRevision('doc:one', 'rev:one', limits, () => {
+    checks++;
+  });
+  assert.equal(old.revisionId, 'rev:one');
+  assert.equal(old.bundle.payload.blocks[0].payload.text, 'hello');
+  assert.ok(Object.isFrozen(old.bundle.payload.blocks[0]));
+  assert.ok(checks > 1);
+  assert.equal(store.readCurrent('doc:one', limits).revisionId, 'rev:two');
+  assert.equal(
+    store.readRevision('doc:one', 'rev:missing', limits, () => {}),
+    null,
+  );
+  assert.equal(
+    store.readRevision('doc:foreign', 'rev:one', limits, () => {}),
+    null,
+  );
+  assert.equal(db.isTransaction, false);
+});
+test('historical read requires synchronous control and cancels without writes or open snapshot', (t) => {
+  const { db, store } = setup(t);
+  apply(store);
+  const before = image(db);
+  for (const control of [
+    undefined,
+    async () => {},
+    () => Promise.resolve(),
+    () => ({ then() {} }),
+  ]) {
+    assert.throws(() => store.readRevision('doc:one', 'rev:one', limits, control), {
+      code: 'DOCUMENT_SYNC_CHECK_REQUIRED',
+    });
+    assert.equal(db.isTransaction, false);
+  }
+  let calls = 0;
+  assert.throws(
+    () =>
+      store.readRevision('doc:one', 'rev:one', limits, () => {
+        if (++calls === 4) throw Object.assign(Error('cancel'), { code: 'CANCELLED' });
+      }),
+    { code: 'CANCELLED' },
+  );
+  assert.equal(db.isTransaction, false);
+  assert.deepEqual(image(db), before);
+  assert.equal(store.readRevision('doc:one', 'rev:one', limits, () => {}).revisionId, 'rev:one');
+});
+test('readCurrent accepts final cancellation without returning stale result', (t) => {
+  const { db, store } = setup(t);
+  apply(store);
+  assert.throws(
+    () =>
+      store.readCurrent('doc:one', limits, () => {
+        throw Object.assign(Error('cancel'), { code: 'CANCELLED' });
+      }),
+    { code: 'CANCELLED' },
+  );
+  assert.equal(db.isTransaction, false);
+});
+test('historical read retains corruption and explicit bounds refusal', (t) => {
+  const { db, store } = setup(t);
+  apply(store);
+  assert.throws(() =>
+    store.readRevision('doc:one', 'rev:one', { ...limits, maxRows: 1 }, () => {}),
+  );
+  assert.equal(db.isTransaction, false);
+  db.exec('DROP TRIGGER document_blocks_immutable_update');
+  db.exec('UPDATE document_blocks SET ordinal=99');
+  assert.throws(() => store.readRevision('doc:one', 'rev:one', limits, () => {}), {
+    code: 'DOCUMENT_STORAGE_CORRUPT',
+  });
+  assert.equal(db.isTransaction, false);
+});
+
+test('read cancellation inside SQLite snapshot rolls back before returning any historical data', (t) => {
+  const { db, store } = setup(t);
+  apply(store);
+  assert.throws(
+    () =>
+      store.readRevision('doc:one', 'rev:one', limits, () => {
+        if (db.isTransaction) throw Object.assign(Error('cancel'), { code: 'CANCELLED' });
+      }),
+    { code: 'CANCELLED' },
+  );
+  assert.equal(db.isTransaction, false);
+  let count = 0;
+  store.readCurrent('doc:one', limits, () => {
+    count++;
+  });
+  let next = 0;
+  assert.throws(
+    () =>
+      store.readCurrent('doc:one', limits, () => {
+        if (++next === count) {
+          assert.equal(db.isTransaction, true);
+          throw Object.assign(Error('cancel'), { code: 'CANCELLED' });
+        }
+      }),
+    { code: 'CANCELLED' },
+  );
+  assert.equal(db.isTransaction, false);
+});
+test('read control cannot make Store adopt or finish a newly opened caller transaction', (t) => {
+  const { db, store } = setup(t);
+  apply(store);
+  let opened = false;
+  assert.throws(
+    () =>
+      store.readRevision('doc:one', 'rev:one', limits, () => {
+        if (!opened) {
+          db.exec('BEGIN');
+          opened = true;
+        }
+      }),
+    { code: 'DOCUMENT_TRANSACTION_ACTIVE' },
+  );
+  assert.equal(db.isTransaction, true);
+  db.exec('ROLLBACK');
+});

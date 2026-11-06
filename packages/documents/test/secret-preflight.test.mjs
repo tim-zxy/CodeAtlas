@@ -1,3 +1,4 @@
+import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { makeAccount } from '../../source/test/fixtures/mixed-source-git-double.mjs';
@@ -33,7 +34,13 @@ test('candidate properties, prose, diagnostics and nested arrays are inspected',
 });
 test('no known pattern including opaque value never grants clearance', () => {
   const r = scan('ordinary text', { text: 'opaque-unknown-value' });
-  assert.deepEqual(r, { detected: false, coverage: 'LIMITED', clearance: false, rules: [] });
+  assert.deepEqual(r, {
+    ruleSet: 'document-secret-indicators-v1',
+    detected: false,
+    coverage: 'LIMITED',
+    clearance: false,
+    rules: [],
+  });
 });
 test('invalid UTF8, shared/proxy bytes and accessors fail closed', () => {
   let calls = 0;
@@ -78,3 +85,15 @@ test('cancellation and copy-budget failure never yield a partial scan', () => {
   });
   assert.equal(a.usage.invalid, true);
 });
+
+const corpus = JSON.parse(
+  await readFile(new URL('./fixtures/secret-indicators-v1.json', import.meta.url), 'utf8'),
+);
+for (const vector of corpus.cases)
+  test('versioned indicator corpus: ' + vector.id, () => {
+    const r = scan(vector.source, vector.candidate);
+    assert.equal(r.ruleSet, corpus.version);
+    assert.equal(r.detected, vector.detected);
+    assert.equal(r.clearance, false);
+    assert.equal(r.coverage, 'LIMITED');
+  });

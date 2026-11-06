@@ -1,3 +1,23 @@
+## Exact document history read and audited parser candidate - 2026-11-06
+
+Private DocumentStore can read a pinned immutable revision without falling back
+to current head. Existing current read gains optional synchronous control; new
+history read requires it. Both use the original scoped SQLite snapshot, exact
+schema/FK, row/TEXT/item budgets and strict bundle/normalized integrity checks.
+Cancellation releases owned snapshots; caller transactions remain caller-owned.
+This is an input-read port, not authenticated Source or full snapshot capture.
+
+Versioned document-secret-indicators-v1 now has14 literal positive/negative/known-
+miss cases. All negatives retain LIMITED coverage and clearance=false. Three
+builds, final130/130 and architecture17 pass; [exact evidence](../superpowers/reviews/2026-11-06-document-history-read.json).
+The [fresh69-package audit](../superpowers/reviews/2026-11-06-markdown-parser-audit.json)
+records212 dependency edges,69 SRI/identity/MIT grants, no install hooks/native gyp
+or missing declared export files; npm advisory response contains no matches at
+query time. It is not vulnerability-free proof. Archives remain local ignored
+inspection evidence; no package install/execution/pnpm lock/offline parser build.
+Major dependency adoption and actual scan-coverage permission remain pending.
+P1-10/E07/P1-12 open, Phase1 4/21, A6 NOT_QUALIFIED, R9 not run.
+
 ## Document security preflight component - 2026-11-06
 
 Private stdlib detector now inspects actual UTF8 Source and all final structural

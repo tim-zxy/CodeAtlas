@@ -1,0 +1,66 @@
+{
+  "kind": "PRIVATE_DOCUMENT_HISTORY_READ_AND_DEPENDENCY_AUDIT",
+  "date": "2026-11-06",
+  "base": "0f08741427586d4325de0b63b22eedd969dd0174",
+  "status": "LOCAL_COMPONENT_VERIFIED_NOT_PHASE_ACCEPTED",
+  "features": [
+    "exact historical revision under existing SQLite snapshot/FK/normalized integrity and explicit budget",
+    "optional control on existing readCurrent; required synchronous control on new readRevision",
+    "control refusal never returns data, resolves genuine rejected Promises without adopting async authority, preserves outer transaction ownership",
+    "fixed version of unchanged deny-only indicators plus 14 literal positive/negative/known-miss vectors"
+  ],
+  "evidence": {
+    "historicalReadRed": 4,
+    "firstHistoricalStoreGreen": 43,
+    "strengthenedStoreGreen": 45,
+    "indicatorVersionRed": 1,
+    "indicatorAndApplicationGreen": 29,
+    "finalIntegrated": {
+      "pass": 130,
+      "fail": 0,
+      "skip": 0,
+      "log": ".superpowers/sdd/2026-11-06-document-history-read/final-integrated.log",
+      "command": "node --test --test-concurrency=1 packages/storage/test/document-store.test.mjs packages/storage/test/document-migrations.test.mjs packages/storage/test/runtime-migrations.test.mjs packages/storage/test/contract-store.test.mjs packages/documents/test/secret-preflight.test.mjs packages/application/test/document-write-preflight.test.mjs packages/application/test/document-components.test.mjs packages/application/test/mixed-source-workflow.test.mjs scripts/test-workspace-structure.mjs"
+    },
+    "builds": {
+      "storage": 0,
+      "documents": 0,
+      "application": 0
+    },
+    "architecture": {
+      "projects": 17,
+      "exit": 0
+    }
+  },
+  "audit": "2026-11-06-markdown-parser-audit.json",
+  "scopedReview": {
+    "performedBy": "single integrator",
+    "independent": false,
+    "checks": [
+      "no current-head fallback on absent revision",
+      "scoped ownership and strict stored normalized/tuple consistency retained",
+      "SQLite snapshot cleanup on cancellation/null paths",
+      "last control check occurs before snapshot COMMIT/return",
+      "initial control cannot introduce adopted outer transaction",
+      "no additional physical resource formula or implicit cap",
+      "no parser install, public root, DDL/IR, scan clearance or publication authority"
+    ]
+  },
+  "limits": [
+    "control callbacks are trusted application code, not a security sandbox or permission token",
+    "checks run between bounded synchronous stages, not a hard SQLite VM interrupt",
+    "old readCurrent without optional control remains unchanged",
+    "historical rows are not Source authenticity or full CompilationInputSnapshot capture",
+    "shared Source/Draft/Store run ledger remains unconnected",
+    "actual parser offline build/lock/runtime remains unapproved and unexecuted",
+    "negative detector result remains LIMITED/clearance=false",
+    "R9 not run; Native/R8 gate not waived"
+  ],
+  "sha256": {
+    "packages/storage/src/documents/document-store.ts": "dd5c7d0da28ce06f6cd9cefd73e0eaed214ede2242d6fe7e7e30547e58ad6a40",
+    "packages/storage/test/document-store.test.mjs": "633fec659b95bb60a8723c7fdd7cdee36589206abfd79327587201fc5f99dbbb",
+    "packages/documents/src/secret-preflight.ts": "80d44681d75f935eff3ea530e74aa88e579fbb9df44bff1c35af012c5472165f",
+    "packages/documents/test/secret-preflight.test.mjs": "657333400eede9a1d18ae1b4308f94509d0e1534a90573c53a64cad4e8eba8ea",
+    "packages/documents/test/fixtures/secret-indicators-v1.json": "3af3f8c202bfee8cbe3964c90bda5cd66fb5ae09bf6ad2a7108022375ee9867c"
+  }
+}

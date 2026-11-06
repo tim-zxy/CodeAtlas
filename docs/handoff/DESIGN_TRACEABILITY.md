@@ -1,3 +1,14 @@
+## Immutable DocumentRevision consumption and explicit detector limits - 2026-11-06
+
+Existing pinned document input/immutable W007 history -> private exact revision
+read with existing scoped snapshot/integrity/budget and synchronous cancellation
+-> literal historical/current/no-fallback/corruption/control tests. No new identity,
+Source authentication, capture or publication contract. SECURITY deny-only
+indicators -> versioned14-case corpus, including explicit misses and no clearance.
+[Evidence](../superpowers/reviews/2026-11-06-document-history-read.json) and
+[exact public dependency audit](../superpowers/reviews/2026-11-06-markdown-parser-audit.json)
+record what is verified; actual parser install/build and original parent gates stay open.
+
 ## P1-10 candidate inspection without fabricated clearance - 2026-11-06
 
 SECURITY source/secret controls + ADR-004/020 -> private deny-only raw/candidate

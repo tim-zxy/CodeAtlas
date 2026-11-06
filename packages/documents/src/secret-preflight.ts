@@ -18,6 +18,7 @@ export function inspectDocumentSecrets(
   candidate: unknown,
   account: DocumentAccount,
 ): Readonly<{
+  ruleSet: 'document-secret-indicators-v1';
   detected: boolean;
   coverage: 'LIMITED';
   clearance: false;
@@ -63,6 +64,7 @@ export function inspectDocumentSecrets(
     walk(candidate);
     account.checkpoint();
     return Object.freeze({
+      ruleSet: 'document-secret-indicators-v1',
       detected: rules.size > 0,
       coverage: 'LIMITED',
       clearance: false,

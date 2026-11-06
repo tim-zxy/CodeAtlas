@@ -342,17 +342,61 @@ export class DocumentStore {
   readCurrent(
     documentId: string,
     limits: HistoryReadLimits,
+    syncCheck?: () => undefined,
+  ): { revisionId: string; bundle: Bundle } | null {
+    return this.#readDocument(documentId, null, limits, syncCheck);
+  }
+  /** Exact immutable history only; no fallback to head and no Source/scan authority. */
+  readRevision(
+    documentId: string,
+    revisionId: string,
+    limits: HistoryReadLimits,
+    syncCheck: () => undefined,
+  ): { revisionId: string; bundle: Bundle } | null {
+    check(syncCheck !== undefined, 'DOCUMENT_SYNC_CHECK_REQUIRED');
+    return this.#readDocument(documentId, text(revisionId), limits, syncCheck);
+  }
+  #readDocument(
+    documentId: string,
+    requestedRevision: string | null,
+    limits: HistoryReadLimits,
+    syncCheck: (() => undefined) | undefined,
   ): { revisionId: string; bundle: Bundle } | null {
     const { db, workspaceId } = owners.get(this)!;
     check(!db.isTransaction, 'DOCUMENT_TRANSACTION_ACTIVE');
+    if (syncCheck !== undefined)
+      check(
+        typeof syncCheck === 'function' &&
+          !types.isProxy(syncCheck) &&
+          !types.isAsyncFunction(syncCheck),
+        'DOCUMENT_SYNC_CHECK_REQUIRED',
+      );
+    const recheck = () => {
+      if (syncCheck !== undefined) {
+        const result: unknown = syncCheck();
+        if (types.isPromise(result)) Promise.prototype.then.call(result, undefined, () => {});
+        check(result === undefined, 'DOCUMENT_SYNC_CHECK_REQUIRED');
+      }
+    };
+    recheck();
     const b = new HistoryReadBudget(checkedHistoryLimits(limits)),
-      sql = runtimeSql(db, b);
+      baseSql = runtimeSql(db, b);
+    const sql = {
+      ...baseSql,
+      read(...args: Parameters<typeof baseSql.read>) {
+        recheck();
+        const rows = baseSql.read(...args);
+        recheck();
+        return rows;
+      },
+    };
     const version = sql.read('pragma_user_version', ['user_version'], '1', [])[0]?.user_version;
     check(version === 7 || version === 8, 'DOCUMENT_SCHEMA_UNSUPPORTED');
     check(
       sql.read('pragma_foreign_keys', ['foreign_keys'], '1', [])[0]?.foreign_keys === 1,
       'DOCUMENT_FOREIGN_KEYS_REQUIRED',
     );
+    check(!db.isTransaction, 'DOCUMENT_TRANSACTION_ACTIVE');
     db.exec('BEGIN');
     try {
       assertDocumentSchema(sql);
@@ -370,12 +414,13 @@ export class DocumentStore {
         'id=? AND workspace_id=?',
         [text(documentId), workspaceId],
       );
-      if (!docs.length || docs[0]!.current_revision_id === null) {
+      if (!docs.length || (requestedRevision === null && docs[0]!.current_revision_id === null)) {
+        recheck();
         db.exec('COMMIT');
         return null;
       }
       const header = docs[0]!,
-        revisionId = text(header.current_revision_id);
+        revisionId = requestedRevision ?? text(header.current_revision_id);
       const rows = sql.read(
         'document_revisions',
         [
@@ -390,7 +435,13 @@ export class DocumentStore {
         'id=? AND document_id=?',
         [revisionId, documentId],
       );
+      if (!rows.length && requestedRevision !== null) {
+        recheck();
+        db.exec('COMMIT');
+        return null;
+      }
       check(rows.length === 1 && rows[0]!.completeness === 'COMPLETE', 'DOCUMENT_STORAGE_CORRUPT');
+      recheck();
       const parsed = b.parse(text(rows[0]!.payload_json));
       b.own(parsed);
       const bundle = parseDocumentBundle(parsed),
@@ -430,6 +481,7 @@ export class DocumentStore {
         const actual = sql.read(table, columns, 'revision_id=?', [revisionId]);
         check(actual.length === expected.length, 'DOCUMENT_STORAGE_CORRUPT');
         for (const item of expected) {
+          recheck();
           const row = actual.find((r) => r.entity_id === item.id);
           check(row && row.payload_json === canonicalRuntimeJson(item), 'DOCUMENT_STORAGE_CORRUPT');
           if ('parentSectionId' in item)
@@ -445,8 +497,10 @@ export class DocumentStore {
           else check(row.block_id === item.blockRef.id, 'DOCUMENT_STORAGE_CORRUPT');
         }
       }
+      const result = { revisionId, bundle: freeze(bundle) };
+      recheck();
       db.exec('COMMIT');
-      return { revisionId, bundle: freeze(bundle) };
+      return result;
     } catch (error) {
       if (db.isTransaction) db.exec('ROLLBACK');
       throw error;
