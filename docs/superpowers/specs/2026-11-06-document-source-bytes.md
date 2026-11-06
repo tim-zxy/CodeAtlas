@@ -76,3 +76,7 @@ adopted merely by preparing this input path. Actual inline-secret detection sour
 and coverage must be stated and tested; fail-closed whole-document blocking is an
 existing option, while a new security service or changed public redaction semantics
 would require separate governance. No dependency/DDL/scanner was added by this batch.
+
+Canonical-state comparison also precedes each Source refresh, so an already changed
+stored classification refuses without reopening Source. The post-refresh check
+remains required: the first check does not protect the subsequent async interval.

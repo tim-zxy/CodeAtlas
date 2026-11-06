@@ -129,7 +129,7 @@
     "scope": "c037e18 only; new document byte reader not in this CI; Native qualification skipped, not passed"
   },
   "applicationComposition": {
-    "status": "LOCAL_VERIFIED_PENDING_SYNC",
+    "status": "SOURCE_SYNCED",
     "baseCommit": "0c9b12d4f0a7c8d0c998b49c9e289966c9acd98d",
     "red": {
       "missingMethod": {
@@ -176,7 +176,8 @@
       }
     ],
     "effects": "No additional Source write; preserve prior prepare/reconcile COMMITTED effects on read failure",
-    "ci131DoesNotValidateThisDelta": true
+    "ci131DoesNotValidateThisDelta": true,
+    "checkpointCommit": "e99c4583a29f58e6b461d68ba925004ca47006dc"
   },
   "contractTriage": {
     "ordinaryImplementation": [
@@ -195,5 +196,114 @@
       "W007/W008",
       "P1-12 capture"
     ]
+  },
+  "earlyCanonicalPrecheck": {
+    "baseCommit": "e99c4583a29f58e6b461d68ba925004ca47006dc",
+    "status": "LOCAL_VERIFIED",
+    "genuineRed": {
+      "tests": 1,
+      "fail": 1,
+      "reason": "classification already changed but Source Git call count still rose from8 to16"
+    },
+    "fix": "check current canonical state before Source refresh and again afterwards",
+    "green": {
+      "applicationBuild": 0,
+      "applicationTests": 17,
+      "pass": 17,
+      "fail": 0
+    },
+    "files": [
+      {
+        "path": "packages\\application\\src\\mixed-source-workflow.ts",
+        "sha256": "5e7c12a40929b0bdf047f775a56291a37bacdcf2f26554c76d62065afc802b94"
+      },
+      {
+        "path": "packages\\application\\test\\mixed-source-workflow.test.mjs",
+        "sha256": "019de64c75e6d42d4b902b8891e67ba1dd6a35d2597d528a73956b567c0ee6b9"
+      }
+    ],
+    "ci131And132DoNotValidateThisNewDelta": true,
+    "scopedReview": {
+      "agent": "n1_tests_medium",
+      "blocking": [],
+      "type": "static associated recheck only"
+    },
+    "additionalRegression": {
+      "runtimeReadinessAndOperationOrder": {
+        "tests": 355,
+        "pass": 354,
+        "fail": 0,
+        "todo": 1
+      },
+      "samePathSource": {
+        "initial": "FAIL at line29 before invoking production workflow: LF source and CRLF after-oracle did not differ solely GET-to-POST",
+        "rootCause": "after-oracle lacked exact-byte checkout attributes; worktree273bytes/13CRLF vs existing Git260bytes/LF",
+        "fix": "preserve original locally; restore exact existing Git blob; add one -text attribute rule; no Git oracle content change or weakened assertion",
+        "rerun": {
+          "tests": 1,
+          "pass": 1,
+          "fail": 0
+        }
+      },
+      "noSingleCombinedGreenRunClaimed": true
+    }
+  },
+  "sourceCheckpointCi131": {
+    "runId": 42252113275,
+    "head": "0c9b12d4f0a7c8d0c998b49c9e289966c9acd98d",
+    "status": "completed",
+    "conclusion": "failure",
+    "url": "https://github.com/tim-zxy/CodeAtlas/actions/runs/42252113275",
+    "jobs": [
+      {
+        "id": 128009627289,
+        "name": "TypeScript workspace",
+        "conclusion": "success",
+        "failed": [],
+        "skipped": []
+      },
+      {
+        "id": 128009627704,
+        "name": "Native Java analysis integration",
+        "conclusion": "failure",
+        "failed": [
+          "Verify approved script catalog prerequisite"
+        ],
+        "skipped": [
+          "Build Native Analyzer",
+          "Run real-binary Java Fixtures",
+          "Run Native REFRESH composition and replay contracts",
+          "Enforce fresh read-seal, transport and refresh-verification reservations",
+          "Collect every required memory class",
+          "Require approved exact-pack Native REFRESH actual22",
+          "Post Install Node.js"
+        ]
+      },
+      {
+        "id": 128009628107,
+        "name": "Rust workspace",
+        "conclusion": "success",
+        "failed": [],
+        "skipped": []
+      }
+    ],
+    "typescript": {
+      "main": {
+        "total": 5044,
+        "pass": 5024,
+        "fail": 0,
+        "skip": 20
+      },
+      "b": {
+        "total": 82,
+        "pass": 82
+      },
+      "final": {
+        "total": 108,
+        "pass": 108,
+        "rawReaderIncluded": 9
+      }
+    },
+    "scope": "0c9b12d only; no Application composition/early precheck validation; Native heavy qualification skipped"
   }
 }

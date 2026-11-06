@@ -105,3 +105,6 @@ fixtures/queries/code-query/source/QueryGraph.java text eol=lf
 docs/specs/diagram-projection.md text eol=lf
 docs/specs/native-analyzer-scalability.md text eol=lf
 docs/specs/wiki-projection.md text eol=lf
+
+# This literal GET-to-POST oracle must retain its exact committed bytes.
+packages/source/test/fixtures/current13-same-path-after.py -text

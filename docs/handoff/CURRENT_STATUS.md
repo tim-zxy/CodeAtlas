@@ -4,16 +4,27 @@ Existing private prepareMixedSource now offers readDocumentBytes(path), reusing 
 actual selection/config/root/current-state verification. It resolves a selected
 canonical SourceFile, preserves both policy and stored sensitivity checks, reads
 through the controlled same-handle transport, then rechecks full selection/state,
-RAW permission and the account before returning. No replacement root/bytes/token
+RAW permission and the account before returning. Current Canonical state is also
+checked before each Source refresh, refusing known classification changes before
+reopening Source. No replacement root/bytes/token
 parameter or additional database write is introduced. Prior Source COMMITTED
 results remain accurate even when this later read refuses.
 
 Four genuine missing-method REDs and one corrected concurrent-state-change RED
-preceded Application16/16. The first concurrency injection landed too early and
+preceded Application16/16. A further early-refusal RED showed Source calls rose
+from 8 to 16 despite an already changed classification; the pre-refresh Canonical
+check fixes this, with latest Application17/17. The first concurrency injection landed too early and
 was corrected, not counted as RED. Earlier related integration63/63, latest build,
 architecture17 and workspace-structure20 pass; scoped independent review resolved.
 [Exact per-run evidence and implementation boundary](../superpowers/reviews/2026-11-06-document-source-bytes.json).
-CI #131 still covers predecessor 0c9b12d, not this new local delta.
+CI #131 is terminal for 0c9b12d: TypeScript/Rust SUCCESS, Native FAIL only at
+R8 script-catalog prerequisite; heavy qualification skipped. Main 5024 pass/20
+existing skips, B82/82, final108/108 including raw reader9. It does not certify
+the newer Application composition/precheck. CI #132 covers e99c458 separately.
+Additional local Runtime/order checks: 354 pass/0fail/1 original TODO. Same-path
+Source initially failed before product entry due an LF/CRLF oracle checkout
+mismatch; its existing Git blob was retained, original local bytes preserved,
+and one exact-byte attribute rule added. Original strict test now passes1/1.
 
 Private byte/Draft shapes and compatible mapping/transaction details do not need
 separate architecture decisions. Remaining concrete decisions are parser dependency

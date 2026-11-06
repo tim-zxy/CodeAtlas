@@ -155,14 +155,19 @@ export default async function prepareMixedSource(input: MixedSourcePreparationIn
     );
     if (target === null) throw new Error('Missing reconciled Source');
     const state: StoredWorktreeState = target;
+    const verifyCurrentState = () => {
+      input.account.checkpoint();
+      const current = input.sourceState.load(request.repositoryId);
+      input.account.own(current);
+      if (!isDeepStrictEqual(current, state))
+        throw Object.assign(new Error('SOURCE_CHANGED'), { code: 'SOURCE_CHANGED' });
+    };
     async function verifySelection(): Promise<void> {
       try {
+        verifyCurrentState();
         await source.verifyMixedSourceSelection(request, observation, input.account, sourceControl);
         verifyRoot();
-        const current = input.sourceState.load(request.repositoryId);
-        input.account.own(current);
-        if (!isDeepStrictEqual(current, state))
-          throw Object.assign(new Error('SOURCE_CHANGED'), { code: 'SOURCE_CHANGED' });
+        verifyCurrentState();
       } catch (e) {
         fail(e);
       }

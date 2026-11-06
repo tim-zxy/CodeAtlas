@@ -5,6 +5,10 @@ policy without sensitivity downgrade -> full selection/state verification -> sam
 handle byte transport -> full final recheck/authorization/control. Four API REDs
 and one real concurrent Source-sensitivity RED -> Application16/16 and scoped review.
 [Exact evidence](../superpowers/reviews/2026-11-06-document-source-bytes.json).
+Canonical state is checked before reopening Source as well as after refresh;
+latest related Application17/17 and Runtime354pass/1originalTODO are separate runs.
+The same-path literal oracle retains its existing Git bytes with one exact-byte
+checkout rule, preserving strict expected semantics (one genuine failure ->1pass).
 No new root/permission/public schema or database write; raw mutable input is neither
 DocumentRevision nor CompilationInputSnapshot. Parent acceptance is not promoted.
 

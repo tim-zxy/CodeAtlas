@@ -334,3 +334,17 @@ test('document read refuses a canonical sensitivity change during raw consumptio
     syncBuiltinESMExports();
   }
 });
+
+test('document read rejects a changed canonical classification before reopening Source', async (t) => {
+  const f = await documentPreparation(t);
+  const before = f.db.sourceState.load('repo:a2');
+  f.db.sourceState.replace(before, {
+    ...before,
+    files: before.files.map((file) =>
+      file.path === 'note.md' ? { ...file, sensitivity: 'SECRET' } : file,
+    ),
+  });
+  const calls = f.state.calls;
+  await assert.rejects(f.prepared.readDocumentBytes('note.md'), (e) => e.code === 'SOURCE_CHANGED');
+  assert.equal(f.state.calls, calls);
+});
