@@ -191,3 +191,48 @@ test('plan binds the exact supplied content without granting capture authority',
   assert.equal(changed.actions[0].operation, 'UNCHANGED');
   assert.notEqual(changed.inputDigest, first.inputDigest);
 });
+
+test('ordered arrays inside Claim literal JSON remain distinct even under reference-like keys', async () => {
+  const run = (await api()).reconcileKnowledge;
+  for (const key of ['steps', 'participants', 'repositoryIds']) {
+    const x = make();
+    x.subjects[0].stateBinding.claims[0].payload.value = {
+      kind: 'LITERAL',
+      value: { [key]: ['first', 'second'] },
+    };
+    const before = run(x);
+    x.subjects[0].stateBinding.claims[0].payload.value.value[key].reverse();
+    const after = run(x);
+    assert.notEqual(after.inputDigest, before.inputDigest, key);
+  }
+});
+
+test('whole-plan data budget includes literal object key work', async () => {
+  const x = make();
+  x.control.maxItems = 100000;
+  x.subjects[0].stateBinding.claims[0].payload.value = {
+    kind: 'LITERAL',
+    value: { ['x'.repeat(100001)]: null },
+  };
+  const out = (await api()).reconcileKnowledge(x);
+  assert.deepEqual(out.actions, []);
+  assert(out.diagnostics.includes('CONTROL_BUDGET'));
+});
+test('oversized arrays refuse before bulk descriptor materialization', async () => {
+  const { KnowledgeBudget } = await import('../dist/comparison-contract.js');
+  const values = Array(1001).fill(null);
+  const c = control();
+  c.maxItems = 10;
+  const original = Object.getOwnPropertyDescriptors;
+  let bulkReads = 0;
+  try {
+    Object.getOwnPropertyDescriptors = (value) => {
+      if (value === values) bulkReads++;
+      return original(value);
+    };
+    assert.throws(() => new KnowledgeBudget(c).data(values), /CONTROL_BUDGET/);
+    assert.equal(bulkReads, 0);
+  } finally {
+    Object.getOwnPropertyDescriptors = original;
+  }
+});

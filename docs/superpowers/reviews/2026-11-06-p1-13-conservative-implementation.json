@@ -136,5 +136,119 @@
     "A6": "NOT_QUALIFIED",
     "E02": "PROPOSED_UNINSTALLED"
   },
-  "logs": ".superpowers/sdd/2026-11-06-p1-13-conservative-execution/"
+  "logs": ".superpowers/sdd/2026-11-06-p1-13-conservative-execution/",
+  "sourceCheckpointCi129": {
+    "run": 42240191379,
+    "number": 129,
+    "head": "d68c2c0dcf39a46dad34eb5eeb57aa238b035a9c",
+    "status": "completed",
+    "conclusion": "failure",
+    "url": "https://github.com/tim-zxy/CodeAtlas/actions/runs/42240191379",
+    "jobs": [
+      {
+        "id": 127968121632,
+        "name": "Rust workspace",
+        "conclusion": "success",
+        "failed": [],
+        "skipped": []
+      },
+      {
+        "id": 127968122185,
+        "name": "TypeScript workspace",
+        "conclusion": "success",
+        "failed": [],
+        "skipped": []
+      },
+      {
+        "id": 127968122387,
+        "name": "Native Java analysis integration",
+        "conclusion": "failure",
+        "failed": [
+          "Verify approved script catalog prerequisite"
+        ],
+        "skipped": [
+          "Build Native Analyzer",
+          "Run real-binary Java Fixtures",
+          "Run Native REFRESH composition and replay contracts",
+          "Enforce fresh read-seal, transport and refresh-verification reservations",
+          "Collect every required memory class",
+          "Require approved exact-pack Native REFRESH actual22",
+          "Post Install Node.js"
+        ]
+      }
+    ],
+    "typescript": {
+      "main": {
+        "total": 5044,
+        "pass": 5024,
+        "fail": 0,
+        "skip": 20
+      },
+      "runtimeBatch": {
+        "total": 82,
+        "pass": 82
+      },
+      "finalBatchIncludingKnowledge": {
+        "total": 95,
+        "pass": 95,
+        "knowledgeIncluded": 34
+      }
+    },
+    "artifact": {
+      "id": 13514106996,
+      "bytes": 451,
+      "serverReportedSha256": "eedfed2dd4509ddc0e2330d780fa8931d4b2cdd42d886f4094d447834cb9abd4",
+      "downloadBytesLocallyVerified": false
+    },
+    "note": "Evidence applies only to d68c2c0; later local input-integrity fixes require own CI. Native failed only approved script prerequisite; skipped heavy qualification is not pass."
+  },
+  "inputIntegrityContinuation": {
+    "baseCommit": "d68c2c0dcf39a46dad34eb5eeb57aa238b035a9c",
+    "status": "LOCAL_VERIFIED_PENDING_SOURCE_SYNC",
+    "genuineRed": {
+      "tests": 4,
+      "pass": 0,
+      "fail": 4,
+      "cases": [
+        "zero-character strict-key collision",
+        "ordered Claim literal arrays collided in inputDigest",
+        "huge literal object key bypassed logical budget",
+        "oversized array materialized bulk descriptors before refusal"
+      ]
+    },
+    "fixes": [
+      "exact key count and per-key equality",
+      "preserve array order below Claim value JSON without changing five typed knowledge fingerprints",
+      "charge object-key characters against existing maxItems",
+      "reject oversized arrays/key sets before bulk descriptors, retain dense/data checks"
+    ],
+    "green": {
+      "tests": 38,
+      "pass": 38,
+      "fail": 0,
+      "skip": 0
+    },
+    "review": {
+      "executor": "n1_tests_medium",
+      "blocking": [],
+      "scope": "only the four integrity/work-boundary defects"
+    },
+    "sourceFiles": [
+      {
+        "path": "packages/knowledge/src/comparison-contract.ts",
+        "sha256": "5ee0a54487eae182124ce7a0047af42c0f5cde60e1ddeff5ea76025f7fa87196"
+      },
+      {
+        "path": "packages/knowledge/test/identity.test.mjs",
+        "sha256": "8aa232605d53fb7bab805c4ce62a0a3e5f6cb2770bb1826b69ea6ebe78f0f3db"
+      },
+      {
+        "path": "packages/knowledge/test/reconciliation.test.mjs",
+        "sha256": "6bc86ebb0daa08f4b6604bee68e6ce0e1b8739161ec0d0ef951e863ab72cfca3"
+      }
+    ],
+    "identityPolicyOrNumericDefaultChanged": false,
+    "physicalMemoryCapClaimed": false,
+    "ci129DoesNotValidateThisDelta": true
+  }
 }

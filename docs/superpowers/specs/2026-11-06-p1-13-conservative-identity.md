@@ -88,3 +88,16 @@ Only Knowledge's internal IR dependency and exact bootstrap export pins change.
 Rollback disables the new package exports/adapter and preserves all existing IDs/data,
 fixtures and evidence; no DB reset, profile change or deletion. Original P1-13/E09 and
 Phase1 acceptance remain open where the complete original obligations are unproved.
+
+## Ordinary input-integrity correction
+
+Reference-set normalization does not apply within Claim value JSON: literal arrays
+remain ordered even when a user key is named steps/participants/repositoryIds. This
+corrects the private plan inputDigest binding; the five typed knowledge semantic/
+presentation projections and their independent digests remain unchanged. Strict
+object keys compare exact counts and strings, without delimiter-joining aliases.
+No new identity equivalence, lifecycle restoration or publication authority is added.
+
+Logical input work also charges object-key characters, and oversized arrays/key sets
+refuse before bulk descriptor materialization. This uses the existing explicit
+maxItems allowance, with no added default, physical resource number or identity rule.

@@ -40,10 +40,10 @@ const setFields = new Set([
   'availableSupports',
   'evidenceRefs',
 ]);
-export function canonical(value: unknown, field = ''): string {
+export function canonical(value: unknown, field = '', normalizeSets = true): string {
   if (Array.isArray(value)) {
-    const parts = value.map((v) => canonical(v));
-    if (setFields.has(field)) parts.sort(order);
+    const parts = value.map((v) => canonical(v, '', normalizeSets));
+    if (normalizeSets && setFields.has(field)) parts.sort(order);
     return '[' + parts.join(',') + ']';
   }
   if (value !== null && typeof value === 'object') {
@@ -52,7 +52,9 @@ export function canonical(value: unknown, field = ''): string {
       '{' +
       Object.keys(object)
         .sort(order)
-        .map((k) => JSON.stringify(k) + ':' + canonical(object[k], k))
+        .map(
+          (k) => JSON.stringify(k) + ':' + canonical(object[k], k, normalizeSets && k !== 'value'),
+        )
         .join(',') +
       '}'
     );
@@ -121,11 +123,18 @@ export class KnowledgeBudget {
         : Object.getPrototypeOf(value) === Object.prototype ||
             Object.getPrototypeOf(value) === null,
     );
+    if (
+      array &&
+      Object.getOwnPropertyDescriptor(value, 'length')!.value > this.control.maxItems - this.used
+    )
+      throw new KnowledgeControlStop('CONTROL_BUDGET');
     phase1Assert(!this.ancestors.has(value));
     this.ancestors.add(value);
     try {
       const keys = Reflect.ownKeys(value);
       phase1Assert(keys.every((k) => typeof k === 'string'));
+      if (keys.length > this.control.maxItems - this.used + (array ? 1 : 0))
+        throw new KnowledgeControlStop('CONTROL_BUDGET');
       const descriptors = Object.getOwnPropertyDescriptors(value);
       if (array) {
         const length = descriptors.length!.value as number;
@@ -139,6 +148,7 @@ export class KnowledgeBudget {
         }
       } else
         for (const key of keys as string[]) {
+          this.tick(key.length);
           const d = descriptors[key]!;
           phase1Assert('value' in d && d.enumerable);
           this.data(d.value, depth + 1);
@@ -151,7 +161,9 @@ export class KnowledgeBudget {
 export function record(value: unknown, fields: string[]): Record<string, unknown> {
   phase1Assert(value !== null && typeof value === 'object' && !Array.isArray(value));
   const out = value as Record<string, unknown>;
-  phase1Assert(Object.keys(out).sort(order).join('\0') === [...fields].sort(order).join('\0'));
+  const actual = Object.keys(out).sort(order),
+    expected = [...fields].sort(order);
+  phase1Assert(actual.length === expected.length && actual.every((key, i) => key === expected[i]));
   return out;
 }
 export function immutable<T>(value: T): T {

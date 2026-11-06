@@ -279,3 +279,13 @@ test('a deadline crossed after the final state read cannot return NEW', async ()
     Date.now = original;
   }
 });
+
+test('embedded zero in a field name cannot impersonate two required fields', async () => {
+  const run = (await api()).resolveKnowledgeIdentity,
+    x = input();
+  const forged = { candidate: x.candidate, ['existingItems\0policyRef']: x.existingItems };
+  assert.throws(
+    () => run(forged, control()),
+    (e) => e.code === 'IR_VALIDATION_FAILED',
+  );
+});

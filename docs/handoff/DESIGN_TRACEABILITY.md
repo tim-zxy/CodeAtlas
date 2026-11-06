@@ -1,3 +1,14 @@
+## Private input integrity and actual CI head scope - 2026-11-06
+
+Strict data -> exact own keys(noNUL delimiter alias), faithful ordered Claim literal
+JSON, existing logical budget key charging/early descriptor refusal ->4genuine REDs
+then38Knowledge green, independent scoped review. Typed identity projections/domains
+and original5literal fingerprints stay unchanged; no new authority or physical cap.
+[Current and historical evidence](../superpowers/reviews/2026-11-06-p1-13-conservative-implementation.json).
+CI129certifies TS/Rust only for d68c2c0; Native prerequisite failure/qualification skip
+is preserved. R9 conditional launch audit is preparation evidence,not permission or
+an OS hard bound. Original full acceptance is not promoted.
+
 ## Explicit R9 PACK continuation - 2026-11-06
 
 Original same-root geometry -> explicitv9 candidate/holdout/read-only root -> original

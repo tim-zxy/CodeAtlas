@@ -161,5 +161,144 @@
     "sameCandidateHoldoutRootRequired": true,
     "profileHoldoutOwnershipZipGatesUnchanged": true,
     "realPackExecuted": false
+  },
+  "readOnlyExecutionAudit": {
+    "sourceLaunchCodeCommit": "d68c2c0dcf39a46dad34eb5eeb57aa238b035a9c",
+    "reviewer": "host_b_offline_medium",
+    "status": "CONDITIONAL_SOURCE_ANALYSIS_NOT_EXECUTION_APPROVAL",
+    "exactCli": [
+      "node",
+      "scripts/native-refresh-ci.mjs",
+      "prepare",
+      "<fresh-output>",
+      "p05-d5-exact-layout-v9"
+    ],
+    "observations": {
+      "qualification": 22,
+      "calibration": 110,
+      "holdout": 22,
+      "total": 154
+    },
+    "additionalPreparation": {
+      "functionalReplayNodeWorkers": 44,
+      "cancelReferenceNodeWorkers": 2,
+      "successfulTargetFullOracleCases": 13,
+      "targetFullOracleNativeDescribeAndFull": 26,
+      "seedBoundaryNativeCallsUpperBound": 1876
+    },
+    "conditionalRepositoryLaunchBounds": {
+      "nativeAnalyzer": 2066,
+      "nodeChildren": 236,
+      "topLevelBuildTools": 2,
+      "sum": 2304
+    },
+    "assumptions": [
+      "current fixed v9 preparation scopes and unchanged case roster",
+      "normal successful sequential path, no extra retries",
+      "counts repository launch sites only, not OS process creations or transitive descendants"
+    ],
+    "boundaryDetails": [
+      {
+        "families": [
+          "preparation-input",
+          "slow-stdin"
+        ],
+        "nativeUpperEach": 398,
+        "why": "at most394per-fileFULL +4bootstrap calls"
+      },
+      {
+        "families": [
+          "shared-owners"
+        ],
+        "nativeUpperEach": 242,
+        "why": "at most238per-fileFULL +4bootstrap"
+      },
+      {
+        "families": [
+          "complete-coverage",
+          "overlay-retention"
+        ],
+        "nativeUpperEach": 394,
+        "why": "at most390per-fileFULL +4bootstrap"
+      },
+      {
+        "families": [
+          "retained-sites"
+        ],
+        "nativeUpperEach": 6,
+        "why": "accepted/next two points +2bootstrap pairs"
+      },
+      {
+        "families": [
+          "dense-remove"
+        ],
+        "nativeUpperEach": 6,
+        "why": "1981..1982 two points +2bootstrap pairs"
+      },
+      {
+        "families": [
+          "dense-upsert"
+        ],
+        "nativeUpperEach": 10,
+        "why": "oldlower1982..next1987 up to6REFRESH +2bootstrap pairs"
+      },
+      {
+        "families": [
+          "remaining14"
+        ],
+        "nativeUpperTotal": 28,
+        "why": "oneDESCRIBE/FULL bootstrap each"
+      }
+    ],
+    "parallelism": "normal intended coordinator Node -> one replay/reference Node -> one Native OR Node fault process; competitor sequential; no hard global ceiling",
+    "notCounted": [
+      "initial coordinator",
+      "Rustup/Cargo/rustc/build-script/linker descendants",
+      "Windows console hosts",
+      "residuals after timeout/unknown close",
+      "Node/V8/libuv/Rust parser threads are not OS child processes"
+    ],
+    "timeouts": {
+      "nativeRequestMs": 10000,
+      "replayReferenceWorkerMs": 60000,
+      "providerKillGraceMs": 250,
+      "cargoTimeout": null,
+      "wholeBatchHardTimeout": null
+    },
+    "hardLimits": {
+      "memory": null,
+      "osProcessCount": null,
+      "diskBytes": null
+    },
+    "stops": [
+      "corpus preparation failure stops and retains preparation-failure.json/cleanup evidence",
+      "qualification records fixed slots; anyfailure blocks calibration",
+      "calibration/holdout preserve remaining fixed slots then block subsequent phase on failure",
+      "no manual retry/selection of successful samples",
+      "unknown exit/transaction/temp/cleanup blocks further approval"
+    ],
+    "sourceEvidence": [
+      "scripts/native-refresh-ci.mjs",
+      "packages/runtime/test/helpers/native-refresh-transport-replay.mjs",
+      "packages/runtime/test/helpers/native-refresh-cancel-reference.mjs",
+      "packages/runtime/test/helpers/native-refresh-r5-preparation-scope.mjs",
+      "packages/runtime/test/helpers/native-refresh-r5-preparation-scope.json",
+      "packages/providers/src/native-client.ts"
+    ],
+    "observedDirectoriesAndDisk": {
+      "utc": "2026-11-06T16:01:20.339806+00:00",
+      "C_free_bytes": 30504521728,
+      "D_free_bytes": 709860159488,
+      "r9RootExists": false,
+      "executorRootExists": false,
+      "note": "point-in-time free space,not a reservation or a sufficiency/peak guarantee"
+    },
+    "remainingBeforeRun": [
+      "fresh exact source/dist/Node/Native/toolchain/environment freeze after current code batch",
+      "explicit authorization for onebuild,all preparatory tool calls and154observations,acknowledging unknown hard/global limits",
+      "normal platform approval for fixedCroot acquisition",
+      "candidate numeric/profile/PACK/publication remain separate approvals"
+    ],
+    "samplingExecuted": false
   }
 }

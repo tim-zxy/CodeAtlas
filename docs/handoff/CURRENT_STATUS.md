@@ -1,3 +1,28 @@
+## CI129 complete; input-integrity continuation verified - 2026-11-06
+
+Public continuation checkpointd68c2c0 has terminal CI129/run42240191379: Rust and
+TypeScript SUCCESS; Native FAIL solely at the unchanged approved-script prerequisite.
+Main5044 total/5024pass/20existing skips, B82 and final95(including Knowledge34)
+pass. HOST26/Storage161/offline17/lifetime49/OShelper2 and failure preservation pass;
+heavy Native qualification is skipped, not passed. Artifact13514106996 is451bytes,
+server-reported SHAeedfed2dd4509ddc0e2330d780fa8931d4b2cdd42d886f4094d447834cb9abd4.
+No full CI/Native/phase success is inferred. [Exact per-head evidence](../superpowers/reviews/2026-11-06-p1-13-conservative-implementation.json).
+
+Four ordinary private-input defects now have real RED->GREEN corrections: exact
+keys cannot alias through NUL; literal JSON arrays preserve order despite ref-like
+names; object-key work is charged; oversized arrays refuse before bulk descriptors.
+Fresh Knowledge38/38 and related independent review pass; five typed IR fingerprint
+oracles still match. No identity equivalence/default/physical resource value changes.
+This new local delta needs its own source/CI result; d68green jobs do not certify it.
+
+R9 read-only scope audit finds154observations exclude preparation. Under the fixed
+successful path without extra retries, checked repo launch sites total<=2066Native,
+236Node children and2top-level build tools. These are NOT OS process bounds: Cargo
+internal children/console hosts/residuals are unbounded. Original10s/60s controls
+are not a batch deadline; no hard memory/disk cap. C had30504521728bytes free and
+R9/executor roots absent at inspection. [Conditional derivation and approval gaps](../superpowers/reviews/2026-11-06-r9-offline-support.json).
+No R9 run or numerical adoption. Original P1-13/E09/Phase1 gates stay open,4/21.
+
 ## Local integrated batch ready for source checkpoint - 2026-11-06
 
 P1-08 context ordering correction, explicit R9 prepare/PACK wiring and the approved
