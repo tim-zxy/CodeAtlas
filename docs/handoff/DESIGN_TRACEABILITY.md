@@ -1,3 +1,28 @@
+## Exact implementation refusal and isolated R8 development Fixture - 2026-11-06
+
+Actual CI environment/artifact -> implementationDigest1cbaef7 (seven changed built
+Providers/Runtime sources) -> exact profile matching correctly refuses old726ffb9.
+Original Node/V8/platform/Zod/corpus identities match. Java24 and mandatory-memory42
+failures therefore do not authorize rebinding old reservations or rewriting evidence.
+R5 pack environment refusal occurs before Native inventory/ZIP checks; current54
+Native sources also differ from the52-entry approval. REFRESH713 and Storage161pass
+retain their original scopes and cannot replace new implementation qualification.
+
+Existing versioned development Fixture -> isolated defaultv8/fixed R8 -> retain all
+v1..7 routes, EEXIST/owner/alias/one-use and confinement -> same8 historical input
+preparation ranges only. Five-file minimal delta, affected81PASS and concentrated
+independent review; no production source/contract/resource value change. Node digest
+and Native inventory unchanged, actual R8 absent. Initial broader-run sandbox failures
+and accidental owned-temp Git Fixture uncertainty are preserved, not represented as
+successful gates. No actual prepare/collector/Native qualification was executed.
+
+[Terminal CI evidence](../superpowers/reviews/2026-11-06-ci-first-native-terminal.json)
+and [fixed-input next-step proposal](../superpowers/reviews/2026-11-06-native-qualification-execution-proposal.json)
+map new-current-code calibration5reps/class -> frozen candidate -> independent outputs
+-> separate exact numeric/profile/pack approval -> original actual/mandatory CI gates.
+Unmodified high-water/range rules reject verification-as-candidate. None of this closes
+Phase1 A6/E02 or changes the4/21 formal acceptance count.
+
 ## CI environment routing, exact historical bytes and D handoff trace - 2026-11-06
 
 Explicit GitHub/automatic CI approval -> reviewed f8b1a3e checkpoint normal push ->

@@ -1,3 +1,65 @@
+## First CI ended; exact-implementation qualification required - 2026-11-06
+
+First continuation run42151555522 is terminal: Rust succeeded; TypeScript failed15
+cases, each covered by locally reviewed repair commit6d4b7f3; Native failed after
+1h9m4s. Native Java tests90/114 passed and24 refused for no reviewed metadata profile.
+REFRESH composition/replay713/713 and Storage ownership/rollback161/161 passed.
+Mandatory memory tests33/75 passed;42 actual cases refused: READ_SEAL13,
+FULL_TRANSPORT14 and REFRESH_VERIFY15. Approved-mode observations produced27 rows
+and27 failures, with purpose=verification. These rows cannot select a candidate.
+
+CI artifacts confirm the same environment as this D build: Node24.15.0,
+V813.6.233.17-node.48,win32/x64,Zod4.6.1 and implementationDigest
+1cbaef7ba843af6419a39af6dd3dfe0a7241c92851ff70d6ce77213819714bcf.
+The latest reviewed profiles bind726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013.
+The other environment/corpus fields match; seven actual Providers/Runtime source
+changes explain the digest change. Moving the worktree, tests and fixture archives
+do not enter this key. Refusal is required; no old amount/hash was rebound to new code.
+
+actual22 also refused at ARCHIVE: the exact environment assertion precedes Native
+source and ZIP verification. R5's Native inventory has52 entries; current has54,
+including two additions/seven changed files. Existing local R5 packs retain approved
+SHA44cc411d72f5a25539fa8fbdd8e18e7cde9ecfd93f4c1f5353424d6f4541d8e4,
+271749831bytes; all5622 entry names/sizes match. No complete decoded-entry CRC claim.
+This does not support rewriting the old approval. Full hosted artifact remains retained;
+19 small diagnostic JSONs were length/CRC/SHA checked via its ZIP directory and the
+available prefix. The local99MB partial ZIP is not a complete verified archive.
+
+To make the next step concrete, the existing development-Fixture version mechanism
+now registers fixed R8 at C:/CodeAtlas-P05-D5-R8. All old v1..7 paths, original EEXIST,
+owner/alias/extraction-once refusals and all-layout overlap checks remain. The private
+historical preparation range allowlist adds R8 without changing its8 records or
+conferring admission authority. Five source/test files changed;81 affected substitute
+checks pass and independent review has no blocking finding. Original REDs and the
+initial sandbox/canonical-TEMP failures remain. An unrelated temporary Git checkout
+Fixture was accidentally included in that first broad run; its exact failing Git
+subcommand/creation result is unknown, the temporary tree is gone, and product Git
+was not changed. It was excluded from the affected final run, not claimed passed.
+
+R8 has not been created and no real qualification/calibration/prepare ran. The actual
+R7 root is occupied by original evidence/native/temp and remains untouched, including
+during any proposed C cleanup. Current implementationDigest and54-source inventory
+SHA170db22a661681e913a0cf0b201171af3cf2659fcf398ea8373a0b7f91cc716d
+remain unchanged by R8's offline registration. No budget, policy formula, production
+admission, core schema, unknown-process rejection or true execution permission changed.
+
+[CI terminal diagnosis](../superpowers/reviews/2026-11-06-ci-first-native-terminal.json),
+[R8 scope/results](../superpowers/reviews/2026-11-06-refresh-r8-offline-layout.json),
+[independent review](../superpowers/reviews/2026-11-06-refresh-r8-independent-review.json),
+[fixed current identity](../superpowers/reviews/2026-11-06-native-qualification-freeze.json),
+[concrete qualification proposal](../superpowers/reviews/2026-11-06-native-qualification-execution-proposal.json).
+The proposal uses original serial calibration/independent tools and fresh D outputs;
+R8 transport prepare includes a new Rust build and real isolated Native/SQLite/Source
+Fixture work. It requires explicit collection authorization; resulting values/profile
+installation and exact pack/approval publication are separate review decisions. Existing
+formulas/budgets remain. No manual rerun of old-head CI jobs was started. The finished
+repair batch will use the existing three mandatory automatic jobs after normal push;
+new Windows routing/layout checks need cloud verification and Native exact-key
+refusal remains visible until its qualification is approved.
+Existing push/CI authorization and the approved continuation destination are unchanged;
+PR22 remains old head e60484a and is not updated. Formal Phase1 remains4/21,
+A6 NOT_QUALIFIED and E02 PROPOSED/uninstalled. D is the sole development worktree.
+
 ## GitHub checkpoint delivered and D worktree active; CI repairs reviewed - 2026-11-06
 
 Checkpoint f8b1a3eed52aa617ed85524c02fade8c26ef57ae and its two existing local

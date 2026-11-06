@@ -190,6 +190,7 @@ for (const root of [
   'C:\\CodeAtlas-P05-D5-R5',
   'C:\\CodeAtlas-P05-D5-R6',
   'C:\\CodeAtlas-P05-D5-R7',
+  'C:\\CodeAtlas-P05-D5-R8',
 ]) {
   test(`CI commands refuse output into preserved layout before approval or build: ${root}`, async () => {
     // Establish the pure precondition before calling any side-effecting command.

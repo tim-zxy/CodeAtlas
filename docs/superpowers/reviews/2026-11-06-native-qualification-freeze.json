@@ -1,0 +1,294 @@
+{
+  "kind": "CURRENT_IMPLEMENTATION_QUALIFICATION_FREEZE_READ_ONLY_IDENTITY",
+  "environment": {
+    "node": "v24.15.0",
+    "v8": "13.6.233.17-node.48",
+    "platform": "win32",
+    "arch": "x64",
+    "zodVersion": "4.6.1",
+    "implementationDigest": "1cbaef7ba843af6419a39af6dd3dfe0a7241c92851ff70d6ce77213819714bcf",
+    "corpusRevision": "p05-native-metadata-memory-v1"
+  },
+  "nodeExecutable": {
+    "path": "D:\\Program Files\\nodejs\\node.exe",
+    "sha256": "3331e1ffe19874215472217c5e94f5a0c6d8e18c4ac7111d3937aa0ad5e9b4a5"
+  },
+  "nativeSourceInventory": [
+    {
+      "path": "Cargo.lock",
+      "bytes": 17290,
+      "sha256": "72b958d8d35046d3c26c09a4ee1bc7f9249370ecaebf09772d4507fe3cc5d849"
+    },
+    {
+      "path": "Cargo.toml",
+      "bytes": 64,
+      "sha256": "d55a4aa34260d8f79a14e8624d3b0b1b320e99c3812503c8b53fe92de2eb00f9"
+    },
+    {
+      "path": "crates/native-analyzer/Cargo.toml",
+      "bytes": 291,
+      "sha256": "acca64f6bf1f4249c3f6009d7f7687c8516d5af0a7592cc3f32c35e5a0b6317a"
+    },
+    {
+      "path": "crates/native-analyzer/src/analysis_state.rs",
+      "bytes": 22186,
+      "sha256": "985a7b8f65e2147b252f5bc0dfadd0f8c5b59a5d12611e4509106c89f9744594"
+    },
+    {
+      "path": "crates/native-analyzer/src/analyze.rs",
+      "bytes": 87489,
+      "sha256": "36cc88ea7a0239f7d7afa51816500ce38fc019f1c41abadcc94b5a2100939832"
+    },
+    {
+      "path": "crates/native-analyzer/src/analyze/observation.rs",
+      "bytes": 9694,
+      "sha256": "657e4b4dd3750ae085607ce68825d049b525cec32ff346bc15ee3b2f0898aa27"
+    },
+    {
+      "path": "crates/native-analyzer/src/analyze/refresh.rs",
+      "bytes": 60636,
+      "sha256": "197577ad9af4bb7ce56e0b285461ad5eb58f98fc29c9c2c01b8a95c9535e802d"
+    },
+    {
+      "path": "crates/native-analyzer/src/binding_sufficiency.rs",
+      "bytes": 45793,
+      "sha256": "818aef3699475c593cd6a4a57705367436cf23eca258918981c8ed2307064cd2"
+    },
+    {
+      "path": "crates/native-analyzer/src/binding_syntax.rs",
+      "bytes": 24175,
+      "sha256": "cbb1aed16c403a5932dcb2a5912c7f75d9ded5af938c924f281d2c91dda004ce"
+    },
+    {
+      "path": "crates/native-analyzer/src/code_syntax.rs",
+      "bytes": 4610,
+      "sha256": "69e67281765b5bb8a7b1c1b11f47e526be8a102ad3952b9912e082afa7e478a4"
+    },
+    {
+      "path": "crates/native-analyzer/src/code_syntax_producer.rs",
+      "bytes": 18362,
+      "sha256": "96d8387842dac587836f069d219ae251668b6b29fbfe1ee657e5a3c527f0dccc"
+    },
+    {
+      "path": "crates/native-analyzer/src/framework_source_characterization.rs",
+      "bytes": 10720,
+      "sha256": "72adde760623a6126878709fdd26d36359d4acf36f7ed979cb418b86202ee9a3"
+    },
+    {
+      "path": "crates/native-analyzer/src/framework_surface.rs",
+      "bytes": 21426,
+      "sha256": "2865c7d8185bae90713775d0fa2cf0e6c72304aefe2cec10cd7dd99cfc62d335"
+    },
+    {
+      "path": "crates/native-analyzer/src/java.rs",
+      "bytes": 15833,
+      "sha256": "e7dc0ba72deb9127d56e52b4e3f4d12d76961bf6cbe666defd258662fa6074cd"
+    },
+    {
+      "path": "crates/native-analyzer/src/java_relations.rs",
+      "bytes": 16133,
+      "sha256": "6896587a46d04e0585d6528ac51174158e79700fc7638b5f6bf1503bc76281b4"
+    },
+    {
+      "path": "crates/native-analyzer/src/java_syntax.rs",
+      "bytes": 27510,
+      "sha256": "84a730e1797ba2ab35e6bf26debd2da89b150e29ddbe862b70e24483c59ed8d3"
+    },
+    {
+      "path": "crates/native-analyzer/src/language.rs",
+      "bytes": 2984,
+      "sha256": "9cfe637b85db15fff49f6990541287127b1301f0dfa7ae61cfb999f17ff0985c"
+    },
+    {
+      "path": "crates/native-analyzer/src/lib.rs",
+      "bytes": 444,
+      "sha256": "e7a7b8a8db78b2504739623f9d5ecf760bad2847b76a45fe6f0ac54e588b9161"
+    },
+    {
+      "path": "crates/native-analyzer/src/main.rs",
+      "bytes": 1485,
+      "sha256": "3442d4490d6cd629b4d3d310403852ef849287f2147d9eb24bbb5d42794305e0"
+    },
+    {
+      "path": "crates/native-analyzer/src/protocol.rs",
+      "bytes": 32919,
+      "sha256": "29230d6758bce666dfc889acc9f9f3f08da261a522f55917f7f2008564f430e8"
+    },
+    {
+      "path": "crates/native-analyzer/src/python.rs",
+      "bytes": 30458,
+      "sha256": "6eff6fbbdb8fe959eb6b04f2f9ae3fdbb13b06ba13632f6fe92f0ddd57d0d5d8"
+    },
+    {
+      "path": "crates/native-analyzer/src/python/code_syntax_tests.rs",
+      "bytes": 4459,
+      "sha256": "52660f079decb0883756e8e08444e17173c0a6dfe481b376227f59c7e1917257"
+    },
+    {
+      "path": "crates/native-analyzer/src/relation_index.rs",
+      "bytes": 25315,
+      "sha256": "070b638f730aa58504f9d31277a71de4d69ddc2edad5cb54957b6d6177f5209c"
+    },
+    {
+      "path": "crates/native-analyzer/src/request_v3.rs",
+      "bytes": 18398,
+      "sha256": "e47426844a1831f25dc905657d4c4fa61f1bb7baf3f764d24653d5d157631838"
+    },
+    {
+      "path": "crates/native-analyzer/src/retained.rs",
+      "bytes": 11175,
+      "sha256": "c95f737af4df469bcd535379f1d805af8908aa6ded8efb2368b39bc91a905b0f"
+    },
+    {
+      "path": "crates/native-analyzer/src/source_access.rs",
+      "bytes": 4510,
+      "sha256": "cedf77a958259c387d6a65360558965a8e97e20a29568d26a0cc8ffa3a0b02f4"
+    },
+    {
+      "path": "crates/native-analyzer/src/syntax.rs",
+      "bytes": 15854,
+      "sha256": "36918d9f3387ea0ad32dd709f88e1501f72d968a3b720c07e7d33fe365a80de1"
+    },
+    {
+      "path": "crates/native-analyzer/src/syntax_dispatch.rs",
+      "bytes": 3031,
+      "sha256": "d88b60383a78ba9905656e08f8edb2200ee021aadf356d30fa494bb4c31e062a"
+    },
+    {
+      "path": "crates/native-analyzer/src/syntax_producer.rs",
+      "bytes": 8635,
+      "sha256": "7ec6485a3acda45a3de7df5d48173e3628242f96f6aa85bec64b3e0bd89aa90c"
+    },
+    {
+      "path": "crates/native-analyzer/tests/analyze.rs",
+      "bytes": 18013,
+      "sha256": "c46e447af81003623dfe9a4148fa07d4c7c3ddaac5063e0f0884d858307e71f8"
+    },
+    {
+      "path": "crates/native-analyzer/tests/code_syntax_oracle.rs",
+      "bytes": 2805,
+      "sha256": "aa61d6029e2f806509f4360c5743d93e790041c87cfa55e71b121e393c3b2287"
+    },
+    {
+      "path": "crates/native-analyzer/tests/code_syntax_producer_unit.rs",
+      "bytes": 11743,
+      "sha256": "7687cc90e020dc0ddbcdfb8150aa6b25532fbdc065e0ca0c6c82d185f33fbc3b"
+    },
+    {
+      "path": "crates/native-analyzer/tests/code_syntax_request.rs",
+      "bytes": 6753,
+      "sha256": "9be0ac630595582a7bac29f97fb327e22e3c87900aad92796bbb4576edf9b6c2"
+    },
+    {
+      "path": "crates/native-analyzer/tests/coverage_v2.rs",
+      "bytes": 6509,
+      "sha256": "fb72eca5079aa1a99d34d234eac3ede3f1ae91bbd36768e4176168af7b5f8c57"
+    },
+    {
+      "path": "crates/native-analyzer/tests/framework_surface_mixed_unit.rs",
+      "bytes": 7672,
+      "sha256": "d1fc313c892c8b9d40682a9216b913023db9b0124fb62ef9873fbeec2a7feb70"
+    },
+    {
+      "path": "crates/native-analyzer/tests/framework_surface_modified_unit.rs",
+      "bytes": 7627,
+      "sha256": "5055162d096515c360921670b1c8827ed749627bb5aeb27ddf6115e24c5961bd"
+    },
+    {
+      "path": "crates/native-analyzer/tests/handshake.rs",
+      "bytes": 4840,
+      "sha256": "b8c5e7a2cb016a879d00656c89a2ee677406768d1bee4586896a9742943984a8"
+    },
+    {
+      "path": "crates/native-analyzer/tests/java_relations.rs",
+      "bytes": 26189,
+      "sha256": "b29b26a0e50f60a56a1265c4e013a4346b41f3798e8799452ca1244e3fc34ee3"
+    },
+    {
+      "path": "crates/native-analyzer/tests/java_symbols.rs",
+      "bytes": 9301,
+      "sha256": "73406e5c4db792e48a5ef6e1c18144840d8ac0a7a4436fc76c296a042231ffc0"
+    },
+    {
+      "path": "crates/native-analyzer/tests/java_syntax_unit.rs",
+      "bytes": 5861,
+      "sha256": "4a33fa95da9c631b1e88ba86b3785a463135cc1dc19437b885ce0c81288bb8dd"
+    },
+    {
+      "path": "crates/native-analyzer/tests/parse_observation.rs",
+      "bytes": 7467,
+      "sha256": "7f6e9df55f4eccd1beae9c1d1b15c75765869ea885b5a0d7964f3df55c96c6fe"
+    },
+    {
+      "path": "crates/native-analyzer/tests/protocol_fixtures.rs",
+      "bytes": 22993,
+      "sha256": "7e5b72b2386cf1f67070f4f53b1486158bd898e1851e9d8f7e04e8b0fffede11"
+    },
+    {
+      "path": "crates/native-analyzer/tests/python_grammar_compatibility.rs",
+      "bytes": 689,
+      "sha256": "24161b425fb3bb6d249085b91bd85ab115f0a79a9e444152ad35c08987d517bf"
+    },
+    {
+      "path": "crates/native-analyzer/tests/python_syntax_unit.rs",
+      "bytes": 6276,
+      "sha256": "d7d74d4dc927e7a4dd6eb618f9d04af25b66a7a5a853d54059c6b5eb1d63c45f"
+    },
+    {
+      "path": "crates/native-analyzer/tests/request_v3_fixtures.rs",
+      "bytes": 5816,
+      "sha256": "fc339f955e9656ceed17d5ba8178aadb472dbabe6d847d8c20924a4e4793e763"
+    },
+    {
+      "path": "crates/native-analyzer/tests/smoke.rs",
+      "bytes": 3434,
+      "sha256": "42ac719ebb7706e7ef571f8f9ce4fb6aeff44eda1081f70c4910985a8d552518"
+    },
+    {
+      "path": "crates/native-analyzer/tests/source_access.rs",
+      "bytes": 5416,
+      "sha256": "894d4de8b7a66e99d3df963fbce44ae9a6d1568a63f3a95e96a51d39347f8b71"
+    },
+    {
+      "path": "crates/native-analyzer/tests/support/code_syntax.rs",
+      "bytes": 4524,
+      "sha256": "8570a3b091042184a167ec03cab5baa65225cc0a44cedd51344d8640c4274648"
+    },
+    {
+      "path": "crates/native-analyzer/tests/syntax_contract_fixtures.rs",
+      "bytes": 3393,
+      "sha256": "e0dff48da119ebaa4ae91261bc1d3c41f7c61905679243da6774bd9d12a12494"
+    },
+    {
+      "path": "crates/native-analyzer/tests/syntax_dispatch_unit.rs",
+      "bytes": 5350,
+      "sha256": "43d8fe83e1497c8e70258d4d9a30592a24e5547337b102b25412e2fdd208319b"
+    },
+    {
+      "path": "crates/native-analyzer/tests/syntax_initial_absence_oracle.rs",
+      "bytes": 25136,
+      "sha256": "cd73adcd6a1c36372284e706b07a2d73d90eb1c7664ebb4375d6e186bec9b8b4"
+    },
+    {
+      "path": "crates/native-analyzer/tests/syntax_producer_unit.rs",
+      "bytes": 14689,
+      "sha256": "2f9ec7100a2cd659b37cd7c246ee4d3da3bcf8f9125a5730bcf4f452c9f7d177"
+    },
+    {
+      "path": "crates/native-analyzer/tests/syntax_request_fixtures.rs",
+      "bytes": 4046,
+      "sha256": "b197ac79f4a6e1e34e99fba614b46456a07f57160116e0ff418709cecb267a91"
+    },
+    {
+      "path": "rust-toolchain.toml",
+      "bytes": 86,
+      "sha256": "b5c4a6db877d7ecfa826fbce94d61bdb85b8f173e7a943e6bc3e9441825729ee"
+    }
+  ],
+  "nativeSourceInventorySha256": "170db22a661681e913a0cf0b201171af3cf2659fcf398ea8373a0b7f91cc716d",
+  "layoutRevision": "p05-d5-exact-layout-v8",
+  "fixedLayoutRoot": "C:\\CodeAtlas-P05-D5-R8",
+  "realLayoutExists": false,
+  "realCollectionExecuted": false,
+  "status": "PROPOSED_FIXED_INPUT_IDENTITY_NOT_REAL_QUALIFICATION"
+}

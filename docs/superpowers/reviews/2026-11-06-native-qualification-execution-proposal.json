@@ -1,0 +1,201 @@
+{
+  "kind": "CURRENT_IMPLEMENTATION_QUALIFICATION_EXECUTION_PROPOSAL",
+  "utc": "2026-11-06T04:26:52.749150+00:00",
+  "status": "NOT_EXECUTED_NEW_RESOURCE_COLLECTION_AND_PROFILE_APPROVAL_PENDING",
+  "scope": "Existing policy/corpora/formulas and raw-only candidate tools; no new product trust entry or production rule. R8 is a development Fixture version with original1..7 retained.",
+  "workingDirectory": "D:\\workspace\\CodeAtlas-phase1-20261106",
+  "identity": {
+    "baseCodeCommit": "6d4b7f37b1bb40f013c170e53ab8168bb379a4b5",
+    "implementationDigest": "1cbaef7ba843af6419a39af6dd3dfe0a7241c92851ff70d6ce77213819714bcf",
+    "environment": {
+      "node": "v24.15.0",
+      "v8": "13.6.233.17-node.48",
+      "platform": "win32",
+      "arch": "x64",
+      "zodVersion": "4.6.1",
+      "implementationDigest": "1cbaef7ba843af6419a39af6dd3dfe0a7241c92851ff70d6ce77213819714bcf",
+      "corpusRevision": "p05-native-metadata-memory-v1"
+    },
+    "nodeExecutable": {
+      "path": "D:\\Program Files\\nodejs\\node.exe",
+      "sha256": "3331e1ffe19874215472217c5e94f5a0c6d8e18c4ac7111d3937aa0ad5e9b4a5"
+    },
+    "nativeSourceCount": 54,
+    "nativeSourceInventorySha256": "170db22a661681e913a0cf0b201171af3cf2659fcf398ea8373a0b7f91cc716d",
+    "sourceFreezeFile": "2026-11-06-native-qualification-freeze.json",
+    "r8SourcePins": "2026-11-06-refresh-r8-offline-layout.json"
+  },
+  "paths": {
+    "newOutputRoot": "D:/workspace/CodeAtlas-phase1-20261106/.superpowers/native-memory/qualification-1cbaef7-20261106",
+    "rootAbsentAtReview": true,
+    "fixedTransportRoot": "C:/CodeAtlas-P05-D5-R8",
+    "fixedRootAbsentAtReview": true,
+    "existingR7Root": "C:/CodeAtlas-P05-D5-R7",
+    "existingR7Occupied": true,
+    "preserveExistingRoots": true
+  },
+  "samplingOrder": "SERIAL: READ_SEAL then FULL_TRANSPORT then their frozen candidate/independent27; then VERIFY candidate/independent15; then R8 TRANSPORT prepare. No concurrent local sampling/build or code edits.",
+  "steps": [
+    {
+      "name": "READ_SEAL_CALIBRATION",
+      "caseCount": 13,
+      "repetitions": 5,
+      "command": {
+        "argv": [
+          "D:/Program Files/nodejs/node.exe",
+          "scripts/bench-native-metadata-memory.mjs"
+        ],
+        "stdoutExclusive": "D:/workspace/CodeAtlas-phase1-20261106/.superpowers/native-memory/qualification-1cbaef7-20261106/read-full/read-calibration.stdout.json",
+        "stderrExclusive": "D:/workspace/CodeAtlas-phase1-20261106/.superpowers/native-memory/qualification-1cbaef7-20261106/read-full/read-calibration.stderr.log"
+      },
+      "kind": "Node + in-memory SQLite only, no product Native binary"
+    },
+    {
+      "name": "FULL_TRANSPORT_CALIBRATION",
+      "caseCount": 14,
+      "repetitions": 5,
+      "command": {
+        "argv": [
+          "D:/Program Files/nodejs/node.exe",
+          "scripts/bench-native-full-v3-memory.mjs"
+        ],
+        "stdoutExclusive": "D:/workspace/CodeAtlas-phase1-20261106/.superpowers/native-memory/qualification-1cbaef7-20261106/read-full/full-calibration.stdout.json",
+        "stderrExclusive": "D:/workspace/CodeAtlas-phase1-20261106/.superpowers/native-memory/qualification-1cbaef7-20261106/read-full/full-calibration.stderr.log"
+      },
+      "kind": "Node fixture child via process.execPath, no Rust build/product Native binary"
+    },
+    {
+      "name": "READ_FULL_MANIFEST",
+      "action": "Create read-full/calibration-manifest.json with existing schemaVersion1/policyRevision/current environment/currentMemoryCorpora/requiredMemoryCases. Exactly two calibration reports above, each with SHA256 of actual raw stdout, relative path, original command and measured collectionConditions. priorApprovals must include only exact-current-environment eligible approvals; none currently match. Do not promote CI purpose=verification rows."
+    },
+    {
+      "name": "READ_FULL_CANDIDATE",
+      "command": {
+        "argv": [
+          "D:/Program Files/nodejs/node.exe",
+          "scripts/native-memory-profile.mjs",
+          "candidate",
+          "D:/workspace/CodeAtlas-phase1-20261106/.superpowers/native-memory/qualification-1cbaef7-20261106/read-full/calibration-manifest.json",
+          "D:/workspace/CodeAtlas-phase1-20261106/.superpowers/native-memory/qualification-1cbaef7-20261106/read-full"
+        ],
+        "stdoutExclusive": "D:/workspace/CodeAtlas-phase1-20261106/.superpowers/native-memory/qualification-1cbaef7-20261106/read-full/candidate.json",
+        "stderrExclusive": "D:/workspace/CodeAtlas-phase1-20261106/.superpowers/native-memory/qualification-1cbaef7-20261106/read-full/candidate.stderr.log"
+      },
+      "freezeBeforeNext": true
+    },
+    {
+      "name": "READ_FULL_INDEPENDENT",
+      "caseCount": 27,
+      "command": {
+        "argv": [
+          "D:/Program Files/nodejs/node.exe",
+          "scripts/native-memory-observations.mjs",
+          "candidate",
+          "D:/workspace/CodeAtlas-phase1-20261106/.superpowers/native-memory/qualification-1cbaef7-20261106/read-full/independent",
+          "D:/workspace/CodeAtlas-phase1-20261106/.superpowers/native-memory/qualification-1cbaef7-20261106/read-full/candidate.json"
+        ]
+      }
+    },
+    {
+      "name": "REFRESH_VERIFY_CALIBRATION",
+      "caseCount": 15,
+      "repetitions": 5,
+      "command": {
+        "argv": [
+          "D:/Program Files/nodejs/node.exe",
+          "scripts/native-refresh-verification-memory.mjs",
+          "bench",
+          "D:/workspace/CodeAtlas-phase1-20261106/.superpowers/native-memory/qualification-1cbaef7-20261106/verify/calibration.json"
+        ]
+      },
+      "kind": "Original OFFLINE_CALIBRATION_ONLY decoder fixture, no product Native binary"
+    },
+    {
+      "name": "VERIFY_MANIFEST",
+      "action": "Create verify/calibration-manifest.json using the exact existing verification manifest schema. SHA256 binds actual bench report; environment/corpus/case payload identities come from unchanged original generators. No invented measurements or old-key approvals."
+    },
+    {
+      "name": "REFRESH_VERIFY_CANDIDATE",
+      "command": {
+        "argv": [
+          "D:/Program Files/nodejs/node.exe",
+          "scripts/native-refresh-verification-memory.mjs",
+          "candidate",
+          "D:/workspace/CodeAtlas-phase1-20261106/.superpowers/native-memory/qualification-1cbaef7-20261106/verify/calibration-manifest.json",
+          "D:/workspace/CodeAtlas-phase1-20261106/.superpowers/native-memory/qualification-1cbaef7-20261106/verify",
+          "D:/workspace/CodeAtlas-phase1-20261106/.superpowers/native-memory/qualification-1cbaef7-20261106/verify/candidate.json"
+        ]
+      },
+      "freezeBeforeNext": true
+    },
+    {
+      "name": "REFRESH_VERIFY_INDEPENDENT",
+      "caseCount": 15,
+      "command": {
+        "argv": [
+          "D:/Program Files/nodejs/node.exe",
+          "scripts/native-refresh-verification-memory.mjs",
+          "collect",
+          "D:/workspace/CodeAtlas-phase1-20261106/.superpowers/native-memory/qualification-1cbaef7-20261106/verify/candidate.json",
+          "D:/workspace/CodeAtlas-phase1-20261106/.superpowers/native-memory/qualification-1cbaef7-20261106/verify/independent-artifacts",
+          "D:/workspace/CodeAtlas-phase1-20261106/.superpowers/native-memory/qualification-1cbaef7-20261106/verify/holdout.json"
+        ]
+      }
+    },
+    {
+      "name": "REFRESH_TRANSPORT_PREPARE",
+      "qualificationCases": 22,
+      "calibrationCases": 22,
+      "repetitions": 5,
+      "independentCases": 22,
+      "command": {
+        "argv": [
+          "D:/Program Files/nodejs/node.exe",
+          "scripts/native-refresh-ci.mjs",
+          "prepare",
+          "D:/workspace/CodeAtlas-phase1-20261106/.superpowers/native-memory/qualification-1cbaef7-20261106/transport-prepare"
+        ]
+      },
+      "effects": "Original prepare runs rustc --version and cargo build --workspace, checks unchanged54-source inventory across build, acquires previously absent fixed R8 exclusively, copies its own new Native build, then original fixed Native/SQLite/Source fixture qualification/calibration/holdout. Uses original owned D context. No pack/approval installation in prepare.",
+      "successStatus": "NUMERIC_REVIEW_REQUIRED"
+    }
+  ],
+  "coverage": {
+    "nodeOnlyCalibrationCases": 210,
+    "nodeOnlyIndependentCases": 42,
+    "transportQualificationCalibrationIndependentCases": 154,
+    "totalCaseInvocations": 406,
+    "notOSProcessCount": true
+  },
+  "resources": {
+    "existingTransportCallerBudgetBytes": 1000000000,
+    "budgetsAndFormulasChanged": false,
+    "caseTimeouts": "Original READ/FULL/VERIFY worker60s and original TRANSPORT worker limits; no new deadline increases.",
+    "hardOSMemoryIsolation": false,
+    "hardWholeBatchDeadlineProvidedByExistingTools": false,
+    "freeBytesSnapshot": {
+      "C": 32259035136,
+      "D": 710538895360
+    },
+    "estimate": "Several hours may be required, primarily154 TRANSPORT case invocations. Exact new-batch time/peak is unknown until measured; first hosted Native job1h9m4s is not a calibration estimate. Use preserved original R7 timing only as historical reference, never acceptance data.",
+    "sideEffects": "Local synthetic SQLite/Source fixtures, logs, raw reports and a newly built Native executable; fixedC R8 can retain substantial evidence. No production data or credentials, no PR/merge/push or remote publication during this collection proposal.",
+    "dependencies": "Use existing pinned Node24.15.0 and Rust toolchain1.98.1; no dependency/toolchain upgrade. If required pinned cache/tool is unavailable, report before changing environment."
+  },
+  "stopConditions": [
+    "Any source/environment/tool drift from freeze; occupied or aliased output/fixed root; unsupported context or unavailable pinned tool: refuse before acquisition.",
+    "Each command must finish with expected raw structure, complete original cases/repetitions and no unexpected failure; otherwise stop before next phase, retain stdout/stderr/partial ownership and do not retry.",
+    "Internal original tools may finish recording failed slots; do not delete failures, select low peaks or turn verification into calibration.",
+    "Unknown cleanup/ownership is retained as refusal; no blind process kill, root deletion, repair/adoption of R7 or R8, or retry."
+  ],
+  "approvalBoundaries": {
+    "neededNow": "Explicit authorization for these fixed-input new-implementation resource calibration and independent verification invocations, including original R8 prepare Native build/real fixture work.",
+    "notIncluded": "No numeric/profile adoption, no copying old reservations to new key, no archive/approval pin rewrite, no pack publication or production acceptance.",
+    "neededAfterEvidence": "Review exact candidates/raw/independent outputs; approve specific new values/profile installation and exact R8 pack/approval asset. Then perform existing mandatory actual-port/approved observation/actual22 CI gates.",
+    "existingPushCI": "Same continuation branch repair push and its three automatic mandatory CI jobs remain authorized. No manual rerun of old-head jobs. Changed Windows routing/layout tests need new-commit validation; exact-key Native refusal remains until qualification/profile approval. PR22 must stay unchanged."
+  },
+  "limitations": [
+    "This is existing Phase0.5 Native metadata/transport eligibility; it does not complete Phase1 A6 or E02.",
+    "CI 27 purpose=verification observations confirm identity and rejection but cannot select their own candidate or replace post-freeze independent verification.",
+    "No benchmark, calibration, prepare, fixed-root creation or profile installation was executed by preparation of this document."
+  ]
+}

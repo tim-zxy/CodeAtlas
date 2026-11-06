@@ -1,0 +1,307 @@
+{
+  "kind": "FIRST_CONTINUATION_CI_TERMINAL_DIAGNOSIS",
+  "run": 42151555522,
+  "head": "f8b1a3eed52aa617ed85524c02fade8c26ef57ae",
+  "url": "https://github.com/tim-zxy/CodeAtlas/actions/runs/42151555522",
+  "rust": "SUCCESS",
+  "typescript": {
+    "tests": 5028,
+    "pass": 5001,
+    "fail": 15,
+    "skipped": 12,
+    "correspondingRepairCommit": "6d4b7f37b1bb40f013c170e53ab8168bb379a4b5"
+  },
+  "native": {
+    "status": "FAILURE",
+    "jobDurationSeconds": 4144,
+    "javaFixtureTests": {
+      "tests": 114,
+      "pass": 90,
+      "fail": 24,
+      "cause": "Missing reviewed metadata profile for exact current implementation/environment"
+    },
+    "refreshCompositionReplay": {
+      "pass": 713,
+      "fail": 0
+    },
+    "refreshStorage": {
+      "pass": 161,
+      "fail": 0
+    },
+    "mandatoryMemory": {
+      "tests": 75,
+      "pass": 33,
+      "fail": 42,
+      "cause": "13 READ_SEAL +14 FULL_TRANSPORT +15 REFRESH_VERIFY exact-key/profile refusals"
+    },
+    "approvedObservations": {
+      "purpose": "verification",
+      "mode": "approved",
+      "observations": 27,
+      "failures": 27
+    },
+    "diagnosticContractTests": {
+      "pass": 7,
+      "fail": 0
+    },
+    "actual22": {
+      "schemaVersion": 1,
+      "command": "collect",
+      "success": false,
+      "stage": "ARCHIVE",
+      "code": "D5_CI_FAILED"
+    }
+  },
+  "identity": {
+    "current": {
+      "node": "v24.15.0",
+      "v8": "13.6.233.17-node.48",
+      "platform": "win32",
+      "arch": "x64",
+      "zodVersion": "4.6.1",
+      "implementationDigest": "1cbaef7ba843af6419a39af6dd3dfe0a7241c92851ff70d6ce77213819714bcf",
+      "corpusRevision": "p05-native-metadata-memory-v1"
+    },
+    "oldApprovedImplementationDigest": "726ffb9793680e58698fcd3fb3f4d0698228df0fab89217ef04a6846bc6fa013",
+    "mismatchFields": [
+      "implementationDigest"
+    ],
+    "productionFilesCausingKeyChange": 7,
+    "pathMigrationIsCause": false,
+    "testsOrArchiveIsCause": false
+  },
+  "archiveRefusal": {
+    "firstKnownIncompatibleCheck": "scripts/helpers/native-refresh-ci-pack.mjs:219 exact environment before Native inventory and ZIP verification",
+    "oldNativeFiles": 52,
+    "currentNativeFiles": 54,
+    "oldPackByteCount": 271749831,
+    "localOldPackSha256": "44cc411d72f5a25539fa8fbdd8e18e7cde9ecfd93f4c1f5353424d6f4541d8e4",
+    "oldPackEntriesVerifiedNameAndSize": 5622,
+    "oldPackDecodedCRCAllVerified": false,
+    "oldApprovalOrPinsChanged": false
+  },
+  "artifact": {
+    "id": 13474899102,
+    "bytes": 306506777,
+    "githubReportedSha256": "04f79380d56fe7a1610e12e2f8410ad313a47bd35de54150c647739e5b924b6d",
+    "localWholeArchiveShaVerified": false,
+    "partialDownloadBytesRetained": 99172352,
+    "partialDownloadIntentionallyStopped": true,
+    "selectedJsons": [
+      {
+        "name": "approved/observations.json",
+        "bytes": 85194,
+        "sha256": "0dbca05650451a1541e0754186caf7e44fbe34e7f54e89fe7ef65a287ebbfe69",
+        "crcVerified": true,
+        "keys": [
+          "schemaVersion",
+          "purpose",
+          "mode",
+          "environment",
+          "corpora",
+          "observations",
+          "failures"
+        ]
+      },
+      {
+        "name": "corpus/READ_SEAL-4060.json",
+        "bytes": 26757,
+        "sha256": "688de8791233720492e2cf4a955e3e2789f3357bdf3b34c8f726cf16b4608b04",
+        "crcVerified": true,
+        "keys": null
+      },
+      {
+        "name": "corpus/FULL_TRANSPORT-8660.json",
+        "bytes": 42300,
+        "sha256": "e7f72677cb4f9f9901c550af2aa3d24444be8dda1d5c0271af07ef4d3f590338",
+        "crcVerified": true,
+        "keys": null
+      },
+      {
+        "name": "corpus/refresh-verify/burst-output-buffer.json",
+        "bytes": 1373,
+        "sha256": "cf89c0748e69d7da5b08fd0da546b81da51840e84e5923ed791d4072ee08d369",
+        "crcVerified": true,
+        "keys": [
+          "workspace",
+          "name",
+          "child"
+        ]
+      },
+      {
+        "name": "corpus/refresh-verify/deep-unknown-input.json",
+        "bytes": 1371,
+        "sha256": "a1bc2e753dba6337cbab4b93f9316d1eeb06999a501de80eaa0afdef7e4021d4",
+        "crcVerified": true,
+        "keys": [
+          "workspace",
+          "name",
+          "child"
+        ]
+      },
+      {
+        "name": "corpus/refresh-verify/dense-retained-sites.json",
+        "bytes": 1375,
+        "sha256": "40d317cc206a5638e914e0803f967f4ef3cab0bb3adba9d02d19cbda4b733484",
+        "crcVerified": true,
+        "keys": [
+          "workspace",
+          "name",
+          "child"
+        ]
+      },
+      {
+        "name": "corpus/refresh-verify/forged-owner.json",
+        "bytes": 1359,
+        "sha256": "2f2c154b5c71a607816c3020cdcac003eeb08adb97edc7411035c559d52beea7",
+        "crcVerified": true,
+        "keys": [
+          "workspace",
+          "name",
+          "child"
+        ]
+      },
+      {
+        "name": "corpus/refresh-verify/large-patch-ledger.json",
+        "bytes": 1371,
+        "sha256": "7d98b7a7852ec6dbb7c44f2bbce6fc2e8f989e39cca07d9404ba335ae3ae51ec",
+        "crcVerified": true,
+        "keys": [
+          "workspace",
+          "name",
+          "child"
+        ]
+      },
+      {
+        "name": "corpus/refresh-verify/long-ascii.json",
+        "bytes": 1355,
+        "sha256": "0bcb5935ccf52440a39e52c5637cabcf372bae20d3bd316651b0e203ad708db9",
+        "crcVerified": true,
+        "keys": [
+          "workspace",
+          "name",
+          "child"
+        ]
+      },
+      {
+        "name": "corpus/refresh-verify/long-astral.json",
+        "bytes": 1357,
+        "sha256": "d05c7429d7f20d14a9423c880966963e3a1791adbd2dcd7e777431e53e84c7e0",
+        "crcVerified": true,
+        "keys": [
+          "workspace",
+          "name",
+          "child"
+        ]
+      },
+      {
+        "name": "corpus/refresh-verify/long-bmp.json",
+        "bytes": 1351,
+        "sha256": "d7a024a00ac7c094373db06f7b118b2746e0aaac6ff019487675136ddb176791",
+        "crcVerified": true,
+        "keys": [
+          "workspace",
+          "name",
+          "child"
+        ]
+      },
+      {
+        "name": "corpus/refresh-verify/maximum-short-files.json",
+        "bytes": 1373,
+        "sha256": "a253a852a38d02bc74347a5446de36d537d30a2f114771e561d3f08fffb135f1",
+        "crcVerified": true,
+        "keys": [
+          "workspace",
+          "name",
+          "child"
+        ]
+      },
+      {
+        "name": "corpus/refresh-verify/maximum-target-summary.json",
+        "bytes": 1379,
+        "sha256": "87f50c5d1405caed0746cd7bb26f1856bf67a09d5199e53d2801eb0c47361b73",
+        "crcVerified": true,
+        "keys": [
+          "workspace",
+          "name",
+          "child"
+        ]
+      },
+      {
+        "name": "corpus/refresh-verify/oversized-input.json",
+        "bytes": 1365,
+        "sha256": "d13f566105b5529fc93d0a0ee494fb384513e37d8e4eb4ee1d805164f7fb10f1",
+        "crcVerified": true,
+        "keys": [
+          "workspace",
+          "name",
+          "child"
+        ]
+      },
+      {
+        "name": "corpus/refresh-verify/oversized-output.json",
+        "bytes": 1367,
+        "sha256": "8d53b6b314a8bede9fc4ee4fbc25dd660cb7cdf389dcc628398fe77a9f1d7f64",
+        "crcVerified": true,
+        "keys": [
+          "workspace",
+          "name",
+          "child"
+        ]
+      },
+      {
+        "name": "corpus/refresh-verify/repeated-shared-owners.json",
+        "bytes": 1379,
+        "sha256": "5084ae431a594a61364e97cd46195a6b217a08fb7ea1180dde0d989c8f22d455",
+        "crcVerified": true,
+        "keys": [
+          "workspace",
+          "name",
+          "child"
+        ]
+      },
+      {
+        "name": "corpus/refresh-verify/slow-sink.json",
+        "bytes": 1353,
+        "sha256": "978ffc3b6d6cb410e04a458438b0edc2e7d6b34906962a555399a451d1555c9d",
+        "crcVerified": true,
+        "keys": [
+          "workspace",
+          "name",
+          "child"
+        ]
+      },
+      {
+        "name": "corpus/refresh-verify/zero-target.json",
+        "bytes": 1357,
+        "sha256": "e5aed9d8d38f9744623442c94b9f10e2ad11fd88bc391585b8a1e306f66edfe7",
+        "crcVerified": true,
+        "keys": [
+          "workspace",
+          "name",
+          "child"
+        ]
+      },
+      {
+        "name": "exact-pack/acceptance/ci-result.json",
+        "bytes": 117,
+        "sha256": "23dd0d1cbd01c0ddc39c751edcb20c0a1436e36f223069bfae422d0b02849c79",
+        "crcVerified": true,
+        "keys": [
+          "schemaVersion",
+          "command",
+          "success",
+          "stage",
+          "code"
+        ]
+      }
+    ],
+    "retrieval": "Immutable GitHub artifact id; exact HTTP ranges for central directory plus existing prefix; selected decoded lengths/CRC/SHA verified. Partial .zip is not a complete artifact."
+  },
+  "realQualificationRemains": "NOT_QUALIFIED",
+  "phase1Accepted": {
+    "count": 4,
+    "total": 21
+  },
+  "next": "New exact-implementation qualification using unchanged policy; R8 offline version ready and reviewed81pass; actual collection and subsequent numeric/profile adoption remain unexecuted."
+}

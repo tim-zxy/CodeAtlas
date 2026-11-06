@@ -1,0 +1,89 @@
+{
+  "kind": "INDEPENDENT_CONCENTRATED_R8_OFFLINE_LAYOUT_REVIEW",
+  "date": "2026-11-06",
+  "workspace": "D:/workspace/CodeAtlas-phase1-20261106",
+  "base": "6d4b7f3",
+  "verdict": "NO_BLOCKING_FINDING_IN_SCOPED_OFFLINE_DELTA",
+  "blockingFindings": [],
+  "sourcePins": [
+    {
+      "sha256": "617ef25f18c43ba5366718fda5d12dcb00622b3bf281e99e01b14e781ba2f162",
+      "matchesReceipt": true,
+      "path": "scripts/helpers/native-refresh-ci-layout.mjs"
+    },
+    {
+      "sha256": "e6f3abf506cfb8d2703d693a1787fd49d6dc060c1cf9531fd06e388871d417e5",
+      "matchesReceipt": true,
+      "path": "packages/runtime/test/helpers/native-refresh-r5-preparation-scope.mjs"
+    },
+    {
+      "sha256": "d400ff0d5dc70c008d4f558e7ac79ddf49bfd2caed4702e750dd160c7b72a86a",
+      "matchesReceipt": true,
+      "path": "scripts/test-native-refresh-ci-layout.mjs"
+    },
+    {
+      "sha256": "72e95f2d7b62fbec4fd446d718831a5ec40d911a797b19d03ed84bc77f83291b",
+      "matchesReceipt": true,
+      "path": "scripts/test-native-refresh-ci-pack.mjs"
+    },
+    {
+      "sha256": "ad95ada7456c0223c489a161c0b9719805b361d5d54f8e3d55354890b5276b32",
+      "matchesReceipt": true,
+      "path": "scripts/test-native-refresh-ci.mjs"
+    }
+  ],
+  "receipt": {
+    "sha256": "fc781175f2ba9fd69b8071e4c23458b2e35cadf7ae91084100252d266485c32a",
+    "freshPinMatch": true,
+    "path": "docs/superpowers/reviews/2026-11-06-refresh-r8-offline-layout.json"
+  },
+  "inspection": {
+    "changes": "Current development layout revision/default v7→v8; add exact C:\\CodeAtlas-P05-D5-R8 mapping; add v8 to existing output-confinement enumeration and private preparation helper accepted executable paths; focused tests extended accordingly.",
+    "ownership": "createExclusiveRefreshCiRootAt still awaits mkdir(root) without recursive/adopt/catch-EEXIST; partial/preexisting root is refused. Canonical/realpath/symlink/single-link/read-only/extraction-once ownership checks unchanged.",
+    "method": "Read-only exact git diff against6d4b7f3 plus controlling source/test paths and freshSHA matching; no tests repeated.",
+    "allowedWrite": "This single LocalTemp review JSON only.",
+    "confinement": "Existing root-and-descendant overlap predicate remains intact and applies to all v1..v8. Pack/CI preconditions unchanged; tests add R8 refusals. No symmetric ancestor semantics invented or weakened.",
+    "unchangedContracts": "Exact diff contains no source-key/digest algorithm, budget/formula/value, core schema/IR, Runtime admission or production package code change. Read-only diff in ir/storage/providers/runtime src, crates, fixtures, pack/CI production entry validators returned empty.",
+    "historicalRanges": {
+      "diffVsBase": "Empty",
+      "records": 8,
+      "scope": "Historical preparation range data only; no current-boundary/qualification/admission/numeric authority.",
+      "dataPath": "packages/runtime/test/helpers/native-refresh-r5-preparation-scope.json",
+      "dataSha256": "941e4d438949697a177a3725a559192e3d435aab04df211468be78fa15b54703"
+    },
+    "R8RootExists": false,
+    "historical": "All v1..v7 exact root mappings retained. Native preparation helper retains v5..v7 behavior and adds v8 only; v1..v4 behavior not silently widened."
+  },
+  "evidenceAssessment": {
+    "incorrectFilter": "Receipt explicitly excludes the name-filter invocation that hit no intended assertion from RED evidence.",
+    "firstRun": "Receipt honestly retains mistaken whole82 invocation,53PASS29FAIL, sandbox canonical-path refusal and unrelated owned-temp Git checkout case failure. Exact failing init/add/commit/clone subcommand and whether .git existed transiently are UNKNOWN; deleted temp cannot reconstruct it.",
+    "firstRunInterpretation": "Do not describe first run as zero Git attempts, successful Git checkout, or known no .git creation. No product/worktree Git mutation is evidenced by that fixture failure. Reviewer made only read-only Git calls.",
+    "substituteTests": "Receipt reports81 affected substitute tests PASS after canonicalTemp and exclusion of existing unrelated checkout-Gitcase; reused as author evidence, not rerun or independently reproduced here.",
+    "identity": {
+      "nativeSourceInventoryDigest": "170db22a661681e913a0cf0b201171af3cf2659fcf398ea8373a0b7f91cc716d",
+      "status": "Reused receipt/source-diff continuity; reviewer did not rerun environment discovery, Native binary reads/builds or qualification.",
+      "implementationDigest": "1cbaef7ba843af6419a39af6dd3dfe0a7241c92851ff70d6ce77213819714bcf",
+      "nativeSourceCount": 54
+    }
+  },
+  "interpretation": [
+    "This is an extension of existing versioned development Fixture registration mechanism, not actual R8 execution approval.",
+    "New default changes future dev prepare/pack geometry; existing explicit historical approval revisions retain original paths.",
+    "v8 approval parsing is shape/layout support, not signed numeric approval, admission, authenticated execution or successful full22 collection.",
+    "Mapping existing range helper data onto R8 is deliberate test/preparation applicability only; it cannot qualify current source bytes, parser truth, memory or policy.",
+    "81PASS cannot close physical resource/profile/Native/Phase1 gates. New real build/prepare/collector/calibration/holdout and numeric/profile acceptance remain separately scoped approvals.",
+    "No explicit FROZEN prohibition found in reviewed versioned-layout authority; this limited review is not blanket authority to modify frozen models."
+  ],
+  "actions": {
+    "R8RootCreated": 0,
+    "Native": 0,
+    "GitMutations": 0,
+    "prepare": 0,
+    "CI": 0,
+    "tests": 0,
+    "projectWrites": 0,
+    "collector": 0,
+    "realHost": 0
+  },
+  "next": "Root single integration may adopt this reviewed offline delta; preserve evidence and obtain concrete separate authorization before real evidence runs or numeric/profile changes."
+}
