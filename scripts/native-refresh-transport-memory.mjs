@@ -715,7 +715,9 @@ export async function collectRefreshTransportObservations(
   identity,
   scope = 'OFFLINE_CALIBRATION_ONLY',
   dContext,
+  control,
 ) {
+  if (control) await control.checkpoint('HOLDOUT_BEGIN');
   assert.ok(['OFFLINE_CALIBRATION_ONLY', 'ACTUAL_ADMITTED'].includes(scope));
   assert.notEqual(
     path.resolve(candidatePath),
@@ -774,8 +776,21 @@ export async function collectRefreshTransportObservations(
     await persist();
     return holdout;
   }
+  const checkpoint = async (boundary) => {
+    try {
+      if (control) await control.checkpoint(boundary);
+    } catch (error) {
+      holdout.failures.push({
+        code: 'R9_STOPPED',
+        message: 'R9 cooperative stop; incomplete holdout',
+      });
+      await persist();
+      throw error;
+    }
+  };
   await persist();
   for (const name of refreshTransportCases) {
+    await checkpoint('HOLDOUT:' + name + ':BEFORE');
     let child;
     const artifact = path.join(artifactDir, name + '.json');
     try {
@@ -804,8 +819,14 @@ export async function collectRefreshTransportObservations(
       };
       holdout.failures.push(failure);
       await save(artifact, { child: failure.child, failure: failure.message });
+      if (control) {
+        await persist();
+        await control.fail('HOLDOUT:' + name + ':FAILED');
+        throw error;
+      }
     }
     await persist();
+    await checkpoint('HOLDOUT:' + name + ':AFTER');
   }
   try {
     assert.equal(sha(await readFile(candidatePath)), digest, 'Frozen candidate changed');

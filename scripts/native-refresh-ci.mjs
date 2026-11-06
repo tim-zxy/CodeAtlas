@@ -1,3 +1,4 @@
+import { createR9StopControl } from './helpers/native-refresh-r9-stop.mjs';
 // Required development acceptance entry, never a production download or admission bypass.
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
@@ -63,7 +64,10 @@ async function prepareRefreshCiEvidence(outputInput, repositoryPath, revision) {
   assertRefreshCiOutputOutsideLayouts(output);
   await mkdir(output);
   let stage = 'BUILD';
+  const control =
+    revision === 'p05-d5-exact-layout-v9' ? await createR9StopControl(output) : undefined;
   try {
+    if (control) await control.checkpoint('BEFORE_BUILD');
     assert.equal(process.platform, 'win32');
     assert.equal(process.arch, 'x64');
     const environment = nativeMetadataEnvironment();
@@ -90,6 +94,7 @@ async function prepareRefreshCiEvidence(outputInput, repositoryPath, revision) {
       windowsHide: true,
     });
     assert.equal(toolchain.status, 0, 'Pinned Rust descriptor unavailable');
+    if (control) await control.checkpoint('BEFORE_CARGO');
     const build = spawnSync('cargo', ['build', '--workspace'], {
       cwd: repositoryPath,
       encoding: 'utf8',
@@ -112,6 +117,7 @@ async function prepareRefreshCiEvidence(outputInput, repositoryPath, revision) {
       sourceFiles,
       'Native sources changed across build',
     );
+    if (control) await control.checkpoint('AFTER_BUILD');
     stage = 'LAYOUT';
     const layout = await acquireRefreshCiLayout(revision);
     const receipt = {
@@ -129,8 +135,13 @@ async function prepareRefreshCiEvidence(outputInput, repositoryPath, revision) {
     };
     const receiptPath = path.join(output, 'native-build.json');
     await writeFile(receiptPath, encodeRefreshReplayJson(receipt), { flag: 'wx' });
+    if (control) await control.checkpoint('AFTER_LAYOUT');
     stage = 'QUALIFICATION_AND_CALIBRATION';
-    await runRefreshTransportCommand(['bench', layout.evidenceRoot], layout.fixtureContext);
+    await runRefreshTransportCommand(
+      ['bench', layout.evidenceRoot],
+      layout.fixtureContext,
+      control,
+    );
     await copyFile(
       receiptPath,
       path.join(layout.evidenceRoot, 'native-build.json'),
@@ -145,6 +156,7 @@ async function prepareRefreshCiEvidence(outputInput, repositoryPath, revision) {
         candidatePath,
       ],
       layout.fixtureContext,
+      control,
     );
     stage = 'CANDIDATE_FEASIBILITY';
     const raw = JSON.parse(await readFile(path.join(layout.evidenceRoot, 'raw.json'), 'utf8'));
@@ -162,6 +174,7 @@ async function prepareRefreshCiEvidence(outputInput, repositoryPath, revision) {
     const holdout = await runRefreshTransportCommand(
       ['collect', 'candidate', candidatePath, path.join(output, 'independent')],
       layout.fixtureContext,
+      control,
     );
     assert.deepEqual(holdout.failures, []);
     assert.deepEqual(
@@ -176,6 +189,7 @@ async function prepareRefreshCiEvidence(outputInput, repositoryPath, revision) {
       holdoutPath,
       constants.COPYFILE_EXCL,
     );
+    if (control) await control.checkpoint('BEFORE_NUMERIC_REVIEW');
     const proposal = {
       schemaVersion: 1,
       status: 'NUMERIC_REVIEW_REQUIRED',
@@ -192,6 +206,7 @@ async function prepareRefreshCiEvidence(outputInput, repositoryPath, revision) {
     );
     return proposal;
   } catch (error) {
+    if (control) await control.fail(stage + ':FAILED');
     await writeFile(
       path.join(output, 'ci-result.json'),
       JSON.stringify({

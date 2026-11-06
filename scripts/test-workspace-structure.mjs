@@ -188,6 +188,7 @@ test('workspace scripts expose and compose the architecture dependency gate', as
     'node --test packages/providers/test/native-handshake.test.mjs',
   );
   assert.match(manifest.scripts.test, /scripts\/test-architecture-rules\.mjs/);
+  assert.match(manifest.scripts.test, /scripts\/test-native-refresh-r9-stop\.mjs/);
   assert.match(manifest.scripts.test, /packages\/storage\/test\/migration-runner\.test\.mjs/);
   assert.match(
     manifest.scripts.test,

@@ -727,7 +727,8 @@ export async function createRefreshTransportPrefixAudit(root, identity, dContext
 
 // Fixed CLI owner: no supplied child runner, receipt registration or admission
 // override. All preparation/oracles remain outside each measured process.
-export async function runRefreshTransportCommand(args, dContext) {
+export async function runRefreshTransportCommand(args, dContext, control) {
+  if (control) await control.checkpoint('TRANSPORT_BEGIN');
   const fixtureContext =
     dContext === undefined ? undefined : snapshotDRefreshFixtureContext(dContext);
   const [command, a, b, c] = args;
@@ -746,7 +747,7 @@ export async function runRefreshTransportCommand(args, dContext) {
     assert.equal(values[0].schemaVersion, 2, 'Operational evidence requires v2 corpus');
     return values;
   };
-  const measure = async (value, mode, repetition) => {
+  const measureOwned = async (value, mode, repetition) => {
     let primaryFailure;
     try {
       const result = await runRefreshTransportMeasuredReplay(value, mode, repetition);
@@ -797,6 +798,10 @@ export async function runRefreshTransportCommand(args, dContext) {
       }
     }
   };
+  const measure = (value, mode, repetition) =>
+    control
+      ? control.worker('MEASURE:' + value.name, () => measureOwned(value, mode, repetition))
+      : measureOwned(value, mode, repetition);
   if (command === 'candidate') {
     assert.equal(args.length, 4);
     const root = await realpath(b);
@@ -816,23 +821,35 @@ export async function runRefreshTransportCommand(args, dContext) {
   await mkdir(output); // Never adopt or overwrite another run's directory.
   try {
     if (command === 'bench') {
-      await prepareRefreshTransportCorpus(path.join(output, 'corpus'), fixtureContext);
+      await prepareRefreshTransportCorpus(path.join(output, 'corpus'), fixtureContext, control);
       const values = await readCases(output);
       const identity = values[0].identity;
       const qualification = { cases: [], failures: [] };
       const qualificationRows = [];
+      if (control)
+        await writeReplayArtifact(
+          path.join(output, 'qualification.json'),
+          encodeRefreshReplayJson(qualification),
+        );
       for (const value of values) {
+        if (control) await control.checkpoint('QUALIFICATION:' + value.name);
         try {
           qualificationRows.push(await measure(value, 'offline', 0));
           qualification.cases.push({ name: value.name, passed: true });
         } catch (error) {
           qualification.failures.push({ name: value.name, message: String(error.message) });
         }
+        if (control)
+          await writeFile(
+            path.join(output, 'qualification.json'),
+            encodeRefreshReplayJson(qualification),
+          );
       }
-      await writeReplayArtifact(
-        path.join(output, 'qualification.json'),
-        encodeRefreshReplayJson(qualification),
-      );
+      if (!control)
+        await writeReplayArtifact(
+          path.join(output, 'qualification.json'),
+          encodeRefreshReplayJson(qualification),
+        );
       assert.equal(
         qualification.failures.length,
         0,
@@ -868,6 +885,7 @@ export async function runRefreshTransportCommand(args, dContext) {
       await writeReplayArtifact(reportPath, Buffer.from(JSON.stringify(report, null, 2) + '\n'));
       for (const value of values)
         for (let repetition = 0; repetition < 5; repetition++) {
+          if (control) await control.checkpoint('CALIBRATION:' + value.name);
           try {
             report.observations.push(await measure(value, 'offline', repetition));
           } catch (error) {
@@ -942,8 +960,10 @@ export async function runRefreshTransportCommand(args, dContext) {
       identity,
       a === 'approved' ? 'ACTUAL_ADMITTED' : 'OFFLINE_CALIBRATION_ONLY',
       fixtureContext,
+      control,
     );
   } catch (error) {
+    if (control) await control.fail('TRANSPORT_FAILED');
     await writeReplayArtifact(
       path.join(output, 'command-failure.json'),
       encodeRefreshReplayJson({ failure: String(error.message) }),
@@ -1468,7 +1488,8 @@ const lexical = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
 
 // Own only the exclusively created output tree. Failed generation/reference
 // artifacts remain here; never publish a partial Manifest or adopt an old tree.
-export async function prepareRefreshTransportCorpus(outputDirectory, dContext) {
+export async function prepareRefreshTransportCorpus(outputDirectory, dContext, control) {
+  if (control) await control.checkpoint('CORPUS_BEGIN');
   const fixtureContext =
     dContext === undefined ? undefined : snapshotDRefreshFixtureContext(dContext);
   canonicalAbsolutePath(outputDirectory);
@@ -1502,6 +1523,7 @@ export async function prepareRefreshTransportCorpus(outputDirectory, dContext) {
   };
   try {
     for (const name of [...refreshTransportCases].sort()) {
+      if (control) await control.checkpoint('CORPUS:' + name);
       const prefix = `cases/${name}`;
       await mkdir(path.join(artifactRoot, prefix), { recursive: true });
       await mkdir(path.join(replayRoot, name));
@@ -1721,6 +1743,7 @@ export async function prepareRefreshTransportCorpus(outputDirectory, dContext) {
             path.join(artifactRoot, prefix),
             `${prefix}/`,
             fixtureContext,
+            control,
           );
           for (const asset of cancelReference.assets) add(asset, asset.kind);
           await guardOwned();
@@ -1728,158 +1751,175 @@ export async function prepareRefreshTransportCorpus(outputDirectory, dContext) {
         const trials = [];
         let reference;
         for (let repetition = 0; repetition < 2; repetition++) {
-          await guardOwned();
-          const envelope = await runFunctionalReplay(
-            {
-              schemaVersion: 2,
-              outputContract,
-              name,
-              workspacePath,
-              databasePath: f.databasePath,
-              coverage,
-              inputContract: {
-                corpusPayloadDigest: '0'.repeat(64),
-                expectedOutcome,
-                inputBytes: 0,
-                largestLineBytes: 0,
-                outputBytes: 0,
-                eventCount: 0,
-                summaryBytes: 0,
-              },
-              workload: {
-                ...workload,
-                invocationPath: path.join(artifactRoot, invocationPath),
-                optionsPath: path.join(artifactRoot, optionsPath),
-              },
-            },
-            path.join(artifactRoot, prefix),
-            repetition,
-            fixtureContext,
-          );
-          const receiptPath = `${prefix}/trial-${repetition}.json`;
-          for (const stream of ['stdout', 'stderr'])
-            add(await fileAsset(artifactRoot, `${prefix}/trial-${repetition}.${stream}`), 'ORACLE');
-          add(await save(receiptPath, encodeRefreshReplayJson(envelope)), 'ORACLE');
-          const receipt = envelope.receipt;
-          if (name === 'd-cancel') {
-            assert.equal(receipt.wireEvidence.outputBytes, receipt.physical.outputBytes);
-            assert.equal(receipt.wireEvidence.eventCount, receipt.physical.eventCount);
-            await verifyRefreshCancelledPrefix(artifactRoot, cancelReference.referenceAsset, {
-              requestSha256: cancelReference.provenance.requestSha256,
-              wireEvidence: receipt.wireEvidence,
-            });
-          }
-          assert.equal(receipt.observedOutcome, expectedOutcome);
-          assert.equal(receipt.transactionClosed, true);
-          assert.equal(receipt.tempClosed, true);
-          assert.ok(receipt.snapshotMetadata, 'Production snapshot capture unavailable');
-          assert.deepEqual(
-            receipt.snapshotMetadata.entries.map(({ role, snapshotId }) => ({ role, snapshotId })),
-            snapshots,
-          );
-          assert.equal(
-            receipt.mainApplyCalls,
-            expectedOutcome === 'SUCCEEDED' || name === 'd-rollback' ? 1 : 0,
-          );
-          assert.equal(
-            receipt.competitorCommits,
-            ['d-token-race', 'd-source-race'].includes(name) ? 1 : 0,
-          );
-          await assertClosedFile(f.databasePath);
-          await guardOwned();
-          const databasePath = `${prefix}/trial-${repetition}.sqlite`;
-          // Preserve the original result before exclusive original-location restore.
-          await rename(f.databasePath, path.join(artifactRoot, databasePath));
-          const image = add(await fileAsset(artifactRoot, databasePath), 'SQLITE');
-          trials.push({ receiptPath, databasePath });
-          if (repetition === 0) reference = { receipt, image };
-          else {
-            const fixedPhysical = (physical) =>
-              name === 'd-cancel'
-                ? {
-                    inputBytes: physical.inputBytes,
-                    largestLineBytes: physical.largestLineBytes,
-                    summaryBytes: physical.summaryBytes,
-                  }
-                : physical;
-            assert.deepEqual(
-              fixedPhysical(receipt.physical),
-              fixedPhysical(reference.receipt.physical),
-              'Unstable physical identity; contract review required',
-            );
-            assert.equal(receipt.operationThrew, reference.receipt.operationThrew);
-            assert.equal(
-              receipt.operationFailureText?.split('\n')[0],
-              reference.receipt.operationFailureText?.split('\n')[0],
-            );
-            assert.equal(
-              await verifyRefreshReplayBoundSourceActivation(
-                artifactRoot,
-                databasePath,
-                reference.image,
-                {
-                  actual: receipt.snapshotMetadata,
-                  reference: reference.receipt.snapshotMetadata,
-                  snapshots,
+          const runTrial = async () => {
+            await guardOwned();
+            const envelope = await runFunctionalReplay(
+              {
+                schemaVersion: 2,
+                outputContract,
+                name,
+                workspacePath,
+                databasePath: f.databasePath,
+                coverage,
+                inputContract: {
+                  corpusPayloadDigest: '0'.repeat(64),
+                  expectedOutcome,
+                  inputBytes: 0,
+                  largestLineBytes: 0,
+                  outputBytes: 0,
+                  eventCount: 0,
+                  summaryBytes: 0,
                 },
-              ),
-              true,
+                workload: {
+                  ...workload,
+                  invocationPath: path.join(artifactRoot, invocationPath),
+                  optionsPath: path.join(artifactRoot, optionsPath),
+                },
+              },
+              path.join(artifactRoot, prefix),
+              repetition,
+              fixtureContext,
             );
-          }
-          if (expectedOutcome !== 'SUCCEEDED' && !['d-token-race', 'd-source-race'].includes(name))
-            assert.equal(
-              await verifyRefreshReplayPreservedSourceActivation(artifactRoot, databasePath, seed),
-              true,
-            );
-          if (name === 'd-source-race') {
-            const files = f.targetFiles.map((file) => ({
-              ...file,
-              classification: { ...file.classification, role: 'TEST' },
-            }));
-            const fingerprint =
-              'sha256:' + createHash('sha256').update(JSON.stringify(files)).digest('hex');
-            const expected = {
-              ...seedImage,
-              revisions: seedImage.revisions
-                .map((raw) => {
-                  const row = JSON.parse(raw);
-                  row.content_fingerprint = fingerprint;
-                  return JSON.stringify(row);
-                })
-                .sort(),
-              source_files: seedImage.source_files
-                .map((raw) => {
-                  const row = JSON.parse(raw);
-                  row.role = 'TEST';
-                  return JSON.stringify(row);
-                })
-                .sort(),
-            };
+            const receiptPath = `${prefix}/trial-${repetition}.json`;
+            for (const stream of ['stdout', 'stderr'])
+              add(
+                await fileAsset(artifactRoot, `${prefix}/trial-${repetition}.${stream}`),
+                'ORACLE',
+              );
+            add(await save(receiptPath, encodeRefreshReplayJson(envelope)), 'ORACLE');
+            const receipt = envelope.receipt;
+            if (name === 'd-cancel') {
+              assert.equal(receipt.wireEvidence.outputBytes, receipt.physical.outputBytes);
+              assert.equal(receipt.wireEvidence.eventCount, receipt.physical.eventCount);
+              await verifyRefreshCancelledPrefix(artifactRoot, cancelReference.referenceAsset, {
+                requestSha256: cancelReference.provenance.requestSha256,
+                wireEvidence: receipt.wireEvidence,
+              });
+            }
+            assert.equal(receipt.observedOutcome, expectedOutcome);
+            assert.equal(receipt.transactionClosed, true);
+            assert.equal(receipt.tempClosed, true);
+            assert.ok(receipt.snapshotMetadata, 'Production snapshot capture unavailable');
             assert.deepEqual(
-              readSnapshot(path.join(artifactRoot, databasePath), sourceActivationImage),
-              expected,
+              receipt.snapshotMetadata.entries.map(({ role, snapshotId }) => ({
+                role,
+                snapshotId,
+              })),
+              snapshots,
             );
-          }
-          const db = new DatabaseSync(path.join(artifactRoot, databasePath), { readOnly: true });
-          try {
-            if (expectedOutcome === 'SUCCEEDED')
-              assertSourceRelations(db, transition.targetRelations);
-          } finally {
-            db.close();
-          }
-          await verifyRefreshReplayAsset(artifactRoot, seed);
-          await guardOwned(false);
-          await copyFile(
-            path.join(artifactRoot, seedPath),
-            f.databasePath,
-            constants.COPYFILE_EXCL,
-          );
-          databaseInfo = await lstat(f.databasePath, { bigint: true });
-          await guardOwned();
-          assert.deepEqual(
-            await readFile(f.databasePath),
-            await readFile(path.join(artifactRoot, seedPath)),
-          );
+            assert.equal(
+              receipt.mainApplyCalls,
+              expectedOutcome === 'SUCCEEDED' || name === 'd-rollback' ? 1 : 0,
+            );
+            assert.equal(
+              receipt.competitorCommits,
+              ['d-token-race', 'd-source-race'].includes(name) ? 1 : 0,
+            );
+            await assertClosedFile(f.databasePath);
+            await guardOwned();
+            const databasePath = `${prefix}/trial-${repetition}.sqlite`;
+            // Preserve the original result before exclusive original-location restore.
+            await rename(f.databasePath, path.join(artifactRoot, databasePath));
+            const image = add(await fileAsset(artifactRoot, databasePath), 'SQLITE');
+            trials.push({ receiptPath, databasePath });
+            if (repetition === 0) reference = { receipt, image };
+            else {
+              const fixedPhysical = (physical) =>
+                name === 'd-cancel'
+                  ? {
+                      inputBytes: physical.inputBytes,
+                      largestLineBytes: physical.largestLineBytes,
+                      summaryBytes: physical.summaryBytes,
+                    }
+                  : physical;
+              assert.deepEqual(
+                fixedPhysical(receipt.physical),
+                fixedPhysical(reference.receipt.physical),
+                'Unstable physical identity; contract review required',
+              );
+              assert.equal(receipt.operationThrew, reference.receipt.operationThrew);
+              assert.equal(
+                receipt.operationFailureText?.split('\n')[0],
+                reference.receipt.operationFailureText?.split('\n')[0],
+              );
+              assert.equal(
+                await verifyRefreshReplayBoundSourceActivation(
+                  artifactRoot,
+                  databasePath,
+                  reference.image,
+                  {
+                    actual: receipt.snapshotMetadata,
+                    reference: reference.receipt.snapshotMetadata,
+                    snapshots,
+                  },
+                ),
+                true,
+              );
+            }
+            if (
+              expectedOutcome !== 'SUCCEEDED' &&
+              !['d-token-race', 'd-source-race'].includes(name)
+            )
+              assert.equal(
+                await verifyRefreshReplayPreservedSourceActivation(
+                  artifactRoot,
+                  databasePath,
+                  seed,
+                ),
+                true,
+              );
+            if (name === 'd-source-race') {
+              const files = f.targetFiles.map((file) => ({
+                ...file,
+                classification: { ...file.classification, role: 'TEST' },
+              }));
+              const fingerprint =
+                'sha256:' + createHash('sha256').update(JSON.stringify(files)).digest('hex');
+              const expected = {
+                ...seedImage,
+                revisions: seedImage.revisions
+                  .map((raw) => {
+                    const row = JSON.parse(raw);
+                    row.content_fingerprint = fingerprint;
+                    return JSON.stringify(row);
+                  })
+                  .sort(),
+                source_files: seedImage.source_files
+                  .map((raw) => {
+                    const row = JSON.parse(raw);
+                    row.role = 'TEST';
+                    return JSON.stringify(row);
+                  })
+                  .sort(),
+              };
+              assert.deepEqual(
+                readSnapshot(path.join(artifactRoot, databasePath), sourceActivationImage),
+                expected,
+              );
+            }
+            const db = new DatabaseSync(path.join(artifactRoot, databasePath), { readOnly: true });
+            try {
+              if (expectedOutcome === 'SUCCEEDED')
+                assertSourceRelations(db, transition.targetRelations);
+            } finally {
+              db.close();
+            }
+            await verifyRefreshReplayAsset(artifactRoot, seed);
+            await guardOwned(false);
+            await copyFile(
+              path.join(artifactRoot, seedPath),
+              f.databasePath,
+              constants.COPYFILE_EXCL,
+            );
+            databaseInfo = await lstat(f.databasePath, { bigint: true });
+            await guardOwned();
+            assert.deepEqual(
+              await readFile(f.databasePath),
+              await readFile(path.join(artifactRoot, seedPath)),
+            );
+          };
+          if (control) await control.worker('FUNCTIONAL_TRIAL:' + name, runTrial);
+          else await runTrial();
         }
         let graphPath = null;
         if (expectedOutcome === 'SUCCEEDED') {

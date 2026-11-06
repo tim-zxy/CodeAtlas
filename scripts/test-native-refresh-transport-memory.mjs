@@ -956,3 +956,59 @@ test('D candidate validates older frozen holdout provenance without adding its p
   assert.equal(candidate.fluctuationAllowanceBytes, 5120);
   assert.equal(candidate.reservationBytes, 112640);
 });
+
+test('R9 cooperative holdout stop preserves first worker and does not launch a second', async (t) => {
+  const c = await holdoutSetup(t);
+  const { createR9StopControl } = await import('./helpers/native-refresh-r9-stop.mjs');
+  const control = await createR9StopControl(c.root);
+  let calls = 0;
+  await assert.rejects(
+    () =>
+      c.collect(
+        c.candidatePath,
+        c.artifactDir,
+        c.holdoutPath,
+        async (name, rep) => {
+          calls++;
+          await writeFile(path.join(c.root, 'STOP_REQUESTED'), '');
+          return successfulWorker(name, rep);
+        },
+        identity,
+        'OFFLINE_CALIBRATION_ONLY',
+        undefined,
+        control,
+      ),
+    { code: 'R9_STOP_REQUESTED' },
+  );
+  assert.equal(calls, 1);
+  const evidence = JSON.parse(await readFile(c.holdoutPath, 'utf8'));
+  assert.equal(evidence.observations.length, 1);
+  assert.ok(evidence.failures.length > 0);
+});
+test('R9 uncertain holdout worker saves failure and blocks remaining launches', async (t) => {
+  const c = await holdoutSetup(t);
+  const { createR9StopControl } = await import('./helpers/native-refresh-r9-stop.mjs');
+  const control = await createR9StopControl(c.root);
+  let calls = 0;
+  await assert.rejects(() =>
+    c.collect(
+      c.candidatePath,
+      c.artifactDir,
+      c.holdoutPath,
+      async () => {
+        calls++;
+        return { status: null, error: 'UNKNOWN_EXIT', stderr: '', stdout: '' };
+      },
+      identity,
+      'OFFLINE_CALIBRATION_ONLY',
+      undefined,
+      control,
+    ),
+  );
+  assert.equal(calls, 1);
+  assert.equal(JSON.parse(await readFile(c.holdoutPath, 'utf8')).failures.length, 1);
+  assert.equal(
+    JSON.parse(await readFile(path.join(c.root, 'r9-stop-receipt.json'), 'utf8')).cleanupState,
+    'UNKNOWN',
+  );
+});

@@ -1,0 +1,105 @@
+{
+  "kind": "R9_COOPERATIVE_STOP_ONLY_OFFLINE_IMPLEMENTATION",
+  "base": "96150b7a94fef43c1fbe18a4917bce4bf5802e52",
+  "date": "2026-11-06",
+  "status": "OFFLINE_CONTROL_VERIFIED_NOT_R9_EXECUTION_APPROVAL",
+  "activation": "Only explicit p05-d5-exact-layout-v9 prepare creates the control; old default/control-absent paths retain original gates/worker commands",
+  "operatorInterface": {
+    "request": "Create STOP_REQUESTED inside the exclusively created R9 executor output; marker content never read",
+    "receipt": "r9-stop-receipt.json; first write exclusive, redacted and sticky",
+    "notAuthority": "This marker/control can only deny; it grants no execution, permissions, cleanup proof, numeric/profile approval or publication"
+  },
+  "boundaries": [
+    "before Rust descriptor/build",
+    "before Cargo/after build/after layout",
+    "corpus case boundaries and cancelled-reference Node worker boundaries",
+    "complete functional trial execution + preservation + validation + exclusive restoration",
+    "qualification and five-repeat calibration worker boundaries",
+    "holdout worker before/after persisted observation, failure saved before stopping",
+    "before numeric-review material"
+  ],
+  "preserved": [
+    "all complete22/five-repeat/holdout candidate gates",
+    "original Native/Node worker arguments/timeouts and original artifact ownership",
+    "old fixture/profile/numeric/schema contracts",
+    "full original failed artifacts and no manual retry"
+  ],
+  "failureBehavior": [
+    "UNKNOWN or worker failure marks sticky stopped state and blocks later launches",
+    "stop during full functional trial is processed only after original JSON/result DB and restoration checks",
+    "receipt collision/unavailable or changed owned root fails closed; never overwrite original receipt",
+    "incomplete holdout records explicit R9_STOPPED failure and cannot qualify a successful subset"
+  ],
+  "tests": {
+    "initialMissingApiRed": 5,
+    "associatedRed": 3,
+    "firstRelatedGreen": 94,
+    "postReviewStopTests": 7,
+    "registrationError": {
+      "pass": 178,
+      "fail": 1,
+      "cause": "suite added to standalone test:native-refresh alias rather than mandatory root chain",
+      "log": ".superpowers/sdd/2026-11-06-r9-stop-only/registration-before-correction.log",
+      "fix": "restored original alias and registered stop suite exactly once in root test; guard kept"
+    },
+    "finalIntegrated": {
+      "pass": 179,
+      "fail": 0,
+      "skip": 0,
+      "log": ".superpowers/sdd/2026-11-06-r9-stop-only/final-integrated.log",
+      "command": "node --test --test-concurrency=1 scripts/test-native-refresh-r9-stop.mjs scripts/test-native-refresh-ci.mjs scripts/test-native-refresh-transport-memory.mjs scripts/test-native-refresh-ci-layout.mjs scripts/test-native-refresh-ci-pack.mjs scripts/test-workspace-structure.mjs"
+    },
+    "architectureProjects": 17,
+    "architectureExit": 0
+  },
+  "independentReview": {
+    "reviewer": "r9_stop_review_medium",
+    "mode": "read-only source/diff, no tests/execution/writes",
+    "importantFinding": "inner functional worker checkpoint occurred before caller trial receipt/result preservation and seed restore",
+    "fix": "wrap complete original runTrial lifecycle and remove inner worker stop wrapper",
+    "recheck": "No remaining Critical/Important associated issues",
+    "coverageLimit": "New lifecycle test uses synthetic filesystem callback, not actual Native/corpus execution"
+  },
+  "limits": [
+    "cooperative only, not immediate in-flight spawnSync/Cargo interrupt",
+    "checks at case/Node-worker boundaries, not each internal per-file Native seed/bootstrap operation",
+    "no hard global process count/RSS/disk/batch walltime cap",
+    "no full OS process-tree cleanup claim; existing worker timeout alone does not prove grandchildren closed",
+    "new source changes invalidate old full-execution freeze; fresh source/dist/dependency/tool freeze and specific real-run approval still needed",
+    "no R9 sampling, numeric adoption/profile/PACK/publication or parser install"
+  ],
+  "ci137": {
+    "head": "96150b7a94fef43c1fbe18a4917bce4bf5802e52",
+    "run": 42277489976,
+    "typescript": "success",
+    "rust": "success",
+    "native": "failure: R8 script catalog mismatch",
+    "segments": [
+      {
+        "pass": 5031,
+        "skip": 20
+      },
+      {
+        "pass": 84,
+        "skip": 0
+      },
+      {
+        "pass": 217,
+        "skip": 0
+      }
+    ],
+    "notCertificationForThisBatch": true
+  },
+  "sha256": {
+    "scripts/helpers/native-refresh-r9-stop.mjs": "824261f8d9f41557aa25a38dbf547447446b112fcb64d37b0ac31682096c6b5b",
+    "scripts/native-refresh-ci.mjs": "54e571d87f824ea4d651fe176c24c9add39ac8e23830aa383c16aee34f1af3e2",
+    "scripts/native-refresh-transport-memory.mjs": "fc4be1d3bf3337bb4eb136cbd56dd942d152afcc293bb5a68fe0648d20b571cb",
+    "packages/runtime/test/helpers/native-refresh-transport-replay.mjs": "ee80bbfc0e735dba611115c4584457c29f500d5ab7532009d7c6a074c04bcce6",
+    "packages/runtime/test/helpers/native-refresh-cancel-reference.mjs": "37df5c802ce151ad6ead1f8b6976b86bc3608492b063ff02fd83964c2267cf15",
+    "scripts/test-native-refresh-r9-stop.mjs": "1ec67972cadd72cf39b2ed81cf8e3530893ad030b88a6d6d7c426842c0f68ce8",
+    "scripts/test-native-refresh-ci.mjs": "e11edca82bc347fee458fd6ed25a49777deedaf896ccd1ab15d3a441e95809f8",
+    "scripts/test-native-refresh-transport-memory.mjs": "7cb41c6798b155e3e731d5bbcc98623f83bd308df47d1666a3965c7c54b07c72",
+    "scripts/test-workspace-structure.mjs": "b994928694824a5e3d6ddcf72f8381a2374edee4213a5c30e60d167bed82e284",
+    "package.json": "292850bf38e3c16e89dc9247d5bbb6c976f46f50373ee02fc53692bd0a0dc288"
+  }
+}

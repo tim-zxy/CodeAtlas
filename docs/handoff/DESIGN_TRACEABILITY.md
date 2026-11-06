@@ -1,3 +1,14 @@
+## R9 stop-only offline control, not execution authority - 2026-11-06
+
+Explicit user-authorized cooperative stop -> new v9-only executor control ->
+startup/case/complete-worker-lifecycle boundaries -> preserved exclusive stop
+receipt and no later launch on failure/UNKNOWN -> synthetic integration179/179
+plus architecture17 and concentrated independent review. Existing22/110/22 full
+qualification/candidate gates remain unchanged; no successful-subset promotion.
+[Evidence and bounded claims](../superpowers/reviews/2026-11-06-r9-stop-only.json).
+Real sampling, fresh full freeze, hard isolation/permissions/numerics and original
+A6/Phase1 acceptance remain open. No parser or scanner-clearance adoption.
+
 ## Private document recovery and dependency lock scope - 2026-11-06
 
 Existing Source-before-consumption/scope and truthful cleanup contracts -> early

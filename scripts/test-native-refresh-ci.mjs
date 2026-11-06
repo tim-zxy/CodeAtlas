@@ -493,3 +493,35 @@ test('explicit R9 pack selects the original read-only ownership seam without acq
   assert.equal(result.status, 0, result.stderr);
   assert.equal(result.stdout, 'LAYOUT_READ:' + root);
 });
+
+test('explicit R9 stop request prevents even the intercepted first build launch', async (t) => {
+  const parent = await mkdtemp(path.join(tmpdir(), 'codeatlas-r9-stop-entry-'));
+  t.after(() => rm(parent, { recursive: true, force: true }));
+  const output = path.join(parent, 'output');
+  const result = spawnSync(
+    process.execPath,
+    [
+      '--input-type=module',
+      '-e',
+      `
+ import cp from 'node:child_process'; import fs from 'node:fs/promises'; import path from 'node:path'; import {syncBuiltinESMExports} from 'node:module';
+ const mkdir=fs.mkdir;fs.mkdir=async(target,...args)=>{const value=await mkdir(target,...args);if(target===process.argv[1])await fs.writeFile(path.join(target,'STOP_REQUESTED'),'');return value;};
+ cp.spawnSync=()=>{throw Error('UNEXPECTED_TOOL_LAUNCH')};syncBuiltinESMExports();
+ const {runRefreshCiAt}=await import(${JSON.stringify(new URL('./native-refresh-ci.mjs', import.meta.url).href)});
+ try{await runRefreshCiAt(['prepare',process.argv[1],'p05-d5-exact-layout-v9'],process.argv[2]);process.exitCode=2;}catch(error){process.stdout.write(error.code??error.message);}
+ `,
+      output,
+      path.resolve(fileURLToPath(new URL('../', import.meta.url))),
+    ],
+    { encoding: 'utf8', windowsHide: true },
+  );
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(result.stdout, 'R9_STOP_REQUESTED');
+  const receipt = JSON.parse(await readFile(path.join(output, 'r9-stop-receipt.json'), 'utf8'));
+  assert.equal(receipt.boundary, 'BEFORE_BUILD');
+  assert.equal(receipt.status, 'STOPPED');
+  assert.equal(
+    JSON.parse(await readFile(path.join(output, 'ci-result.json'), 'utf8')).success,
+    false,
+  );
+});

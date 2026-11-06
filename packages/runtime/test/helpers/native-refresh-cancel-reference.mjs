@@ -206,7 +206,9 @@ export async function prepareRefreshCancelReference(
   directory,
   relativePrefix = '',
   dContext,
+  control,
 ) {
+  if (control) await control.checkpoint('REFERENCE_BEGIN');
   assert.equal(value.schemaVersion, 2);
   assert.equal(value.name, 'd-cancel');
   assert.equal(await realpath(directory), directory);
@@ -223,6 +225,7 @@ export async function prepareRefreshCancelReference(
   assets.push(seed);
   let first;
   for (let repetition = 0; repetition < 2; repetition++) {
+    if (control) await control.checkpoint('REFERENCE_WORKER_BEFORE');
     const prefix = `reference-${repetition}`;
     const stdoutPath = `${prefix}.jsonl`,
       receiptPath = `${prefix}.json`,
@@ -289,6 +292,7 @@ export async function prepareRefreshCancelReference(
       await asset(directory, resultPath, 'SQLITE'),
     );
     trials.push({ receiptPath, stdoutPath, stderrPath, resultPath });
+    if (control) await control.checkpoint('REFERENCE_WORKER_AFTER');
   }
   const { invocation, options } = await readRefreshReplayWorkloadControls(value, dContext);
   const sourceAssets = [];

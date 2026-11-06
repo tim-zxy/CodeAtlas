@@ -1,3 +1,28 @@
+## R9 cooperative stop-only control verified offline - 2026-11-06
+
+Explicit v9 prepare now owns a sticky deny-only STOP_REQUESTED marker control in
+its fresh executor output. It checks build/layout/corpus/reference/complete
+functional-trial/qualification/calibration/holdout boundaries, preserves first
+exclusive redacted r9-stop-receipt.json and blocks later launches after failure or
+UNKNOWN cleanup. Functional trial stop occurs only AFTER original receipt/result
+preservation, validation and exclusive seed restoration. Partial/stopped evidence
+cannot pass the unchanged complete candidate/holdout gates. Old default worker
+commands/timeouts/eligibility/numbers are unchanged; no scan/publication authority.
+
+Final scoped179/179 and architecture17 pass. Independent review's functional timing
+finding was fixed and rechecked with no associated Critical/Important findings.
+[Exact evidence](../superpowers/reviews/2026-11-06-r9-stop-only.json),
+[scope and limitations](../superpowers/plans/2026-11-06-r9-stop-only.md).
+No actual R9/build/collector execution: tests use synthetic files/workers and
+intercepted build launch. This is cooperative, not immediate in-flight interruption,
+full process-tree cleanup proof or hard resource isolation. Per-file preparation
+inside a running case can delay the next checkpoint. New code requires a fresh
+execution freeze; specific real R9 approval remains pending, as do profile/numeric/
+PACK/publication and parser adoption. Phase1 stays4/21, A6 NOT_QUALIFIED.
+
+CI137 on prior96150b7 terminated TS/Rust success and Native R8 catalog mismatch;
+TS segments5031PASS/20existingSKIP,84PASS,217PASS. It does not qualify this batch.
+
 ## Document preflight recovery and actual parser candidate lock - 2026-11-06
 
 Two reproduced preflight defects fixed: known locator/repository mismatch refuses
