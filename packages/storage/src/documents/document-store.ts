@@ -391,6 +391,44 @@ export class DocumentStore {
       },
     );
   }
+  /** Exact required history in one private database view; no capture/Source authority. */
+  readRevisionBatch(
+    selection: readonly Readonly<{ documentId: string; revisionId: string }>[],
+    limits: HistoryReadLimits,
+    syncCheck: () => undefined,
+  ): readonly Readonly<{ revisionId: string; bundle: Bundle }>[] {
+    check(syncCheck !== undefined, 'DOCUMENT_SYNC_CHECK_REQUIRED');
+    let selected: { documentId: string; revisionId: string }[] = [];
+    return this.#withReadSnapshot(
+      limits,
+      syncCheck,
+      (sql, b, recheck) => {
+        const result: Readonly<{ revisionId: string; bundle: Bundle }>[] = [];
+        for (const item of selected) {
+          recheck();
+          const row = this.#readDocumentRow(sql, b, item.documentId, item.revisionId, recheck);
+          check(row !== null, 'DOCUMENT_REQUIRED_DOCUMENT_MISSING');
+          result.push(Object.freeze(row));
+        }
+        return Object.freeze(result);
+      },
+      (b) => {
+        b.own(selection);
+        ensurePhase1Data(selection);
+        check(Array.isArray(selection), 'INVALID_DOCUMENT_SELECTION');
+        b.own(selection);
+        selected = selection.map((value) => {
+          const row = exact(value, ['documentId', 'revisionId']);
+          return { documentId: text(row.documentId), revisionId: text(row.revisionId) };
+        });
+        // Prepay tuple-key/reference indexes with the same logical request account.
+        b.own(selected);
+        const keys = selected.map((item) => JSON.stringify([item.documentId, item.revisionId]));
+        b.own(keys);
+        check(new Set(keys).size === selected.length, 'DOCUMENT_DUPLICATE_SELECTION');
+      },
+    );
+  }
   #readDocument(
     documentId: string,
     requestedRevision: string | null,

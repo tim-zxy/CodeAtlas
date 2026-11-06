@@ -1,0 +1,55 @@
+{
+  "kind": "PRIVATE_DOCUMENT_EXACT_REVISION_BATCH",
+  "date": "2026-11-06",
+  "base": "9b861a77f2446137a4258846d3b36c381bd9d480",
+  "status": "PRIVATE_HISTORY_READ_COMPONENT_VERIFIED_NOT_P1_12_ACCEPTANCE",
+  "authority": [
+    "existing private readRevision exact immutable historical rows and required synchronous control",
+    "existing P1-12 selected DocumentRevision plus one database view obligation; docs/superpowers/plans/2026-11-06-document-batch-read.md historical continuation"
+  ],
+  "assumptions": [
+    "Explicit document/revision tuples are read selectors, not a compilation selection policy or authority proof",
+    "Different historical revisions of one document remain distinct explicit reads; exact duplicate pairs refuse"
+  ],
+  "implementation": [
+    "private readRevisionBatch uses existing owned SQLite snapshot and request-local HistoryReadBudget",
+    "copy strict selector tuples before control callbacks; preserve caller order; freeze complete output",
+    "require every requested COMPLETE history row; missing/foreign/corrupt/control/limit refuses whole request, no fallback to current head and no database writes",
+    "reuse original header/tuple/normalized row validation and schema/FK guards; no migration/root export/Source permission/snapshot contract"
+  ],
+  "evidence": {
+    "red": {
+      "tests": 4,
+      "fail": 4,
+      "reason": "missing readRevisionBatch method"
+    },
+    "finalTests": {
+      "pass": 73,
+      "fail": 0,
+      "skip": 0,
+      "command": "node --test packages/storage/test/document-store.test.mjs packages/storage/test/document-migrations.test.mjs packages/storage/test/runtime-migrations.test.mjs packages/storage/test/contract-store.test.mjs packages/application/test/document-components.test.mjs",
+      "log": "local temporary codeatlas-document-history-batch-tests.log"
+    },
+    "realSnapshot": "owned SQLite WAL file, second actual writer inserts later selected revision after first document read; first batch must refuse missing revision, next batch sees it; rollback checked",
+    "build": "node node_modules/typescript/bin/tsc -b packages/storage: exit 0",
+    "architectureProjects": 17,
+    "format": "scoped Prettier and git diff --check pass"
+  },
+  "independentReview": {
+    "reviewer": "r9_stop_review_medium",
+    "mode": "read-only specified diff/plan; no test/build/write/R9",
+    "result": "No important findings; no new core contract semantics"
+  },
+  "nextDependencies": [
+    "CompilationInputSnapshot four-contract proposal remains unapproved: strict identity/scope selection, support/value/policy closure, canonical digest/ref, combined repo/workspace capture and final revalidation",
+    "Markdown major dependencies and document body scan clearance remain unapproved",
+    "A6 actual R9 build/sampling needs specific approval, new post-build identity freeze and resource/stopping bounds; old prefreeze remains untouched historical data",
+    "P1-14 persistence/publication and P1-15..18 published consumers depend on authoritative capture/provenance and their original predecessor gates"
+  ],
+  "formalAcceptance": "4/21; A6 NOT_QUALIFIED; E02 PROPOSED/uninstalled",
+  "ci142PriorHead": "9b861a7 TS and Rust passed; Native R8 script catalog prerequisite failed. Prior-head result does not certify this new reader.",
+  "sha256": {
+    "packages/storage/src/documents/document-store.ts": "ea67196a96aea24462b9255b82306951c8ce4ad1d9709a15a3e217bbe9acebf5",
+    "packages/storage/test/document-store.test.mjs": "74255aa9c5cb2bcfe4020c10d904dd276f85ff83cfc984d76be570ef56d0078b"
+  }
+}

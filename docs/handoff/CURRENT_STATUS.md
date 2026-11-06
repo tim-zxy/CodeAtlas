@@ -1,3 +1,27 @@
+## Exact historical document batch read verified - 2026-11-06
+
+Continued the existing P1-12 per-database read obligation without implementing the
+unapproved snapshot contract: private readRevisionBatch accepts explicit document/
+revision pairs, copies strict selectors before callbacks and returns required
+immutable COMPLETE history in caller order from one owned transaction and budget.
+No head fallback, partial success, writes or new selection/permission authority.
+Existing history/current row validation and schema/FK controls are reused.
+
+Four missing-API RED tests now pass; Storage build, affected73/73, architecture17
+and format pass. A real SQLite WAL/second connection inserts a target revision after
+the first read: first batch refuses, next batch sees it. Independent read-only review
+found no important issues or new core-contract semantics.
+[Exact evidence and next dependencies](../superpowers/reviews/2026-11-06-document-history-batch.json).
+
+No local CodeAtlas Node test/build/refresh process was active at task start; unrelated
+Node processes were not touched. CI142 on prior9b861a7 ended TS/Rust success and
+Native R8 catalog prerequisite failure. This is not evidence for the new batch.
+Next complete capture still needs the [four proposed contracts](../superpowers/specs/2026-11-06-compilation-capture-contract-proposal.md);
+parser adoption/scan clearance and actual R9 remain separately pending. No new core
+snapshot schema/digest, W010, parser or real R9 build/sampling was implemented.
+R9 prefreeze stays untouched historical evidence; new Storage source/dist needs a
+fresh approved execution freeze. Phase1 stays4/21; A6 NOT_QUALIFIED.
+
 ## Document read cleanup recovery; capture decisions proposed - 2026-11-06
 
 Actual FileHandle close failure previously replaced primary failure and omitted

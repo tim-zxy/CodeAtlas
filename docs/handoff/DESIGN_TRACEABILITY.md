@@ -1,3 +1,13 @@
+## P1-12 exact historical document batch component - 2026-11-06
+
+Existing readRevision immutable exact semantics + per-database selected document
+read obligation -> private readRevisionBatch using the existing row/snapshot/budget
+path -> strict selection/order/missing/control/budget and actual WAL late-insert
+regressions. Four RED then affected73/73 GREEN; Storage build/architecture17 pass.
+Independent review confirms no new core identity/Source/permission/publication rule.
+[Exact evidence](../superpowers/reviews/2026-11-06-document-history-batch.json).
+This does not install the proposed capture contract or close P1-12/Phase1 acceptance.
+
 ## Document close failure and capture decision boundary - 2026-11-06
 
 Existing UNKNOWN cleanup refusal -> document-bytes safe close-failure wrapper ->

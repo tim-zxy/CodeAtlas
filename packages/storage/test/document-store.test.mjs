@@ -797,3 +797,155 @@ test('batch owns selection before the first permission/control callback can muta
   assert.equal(values.length, 1);
   assert.equal(values[0].revisionId, 'rev:one');
 });
+
+test('exact revision batch preserves caller order and immutable history without advancing heads', (t) => {
+  const { db, store } = setup(t);
+  apply(store);
+  apply(store, bundle('rev:two', 'later', 'c'), 'rev:one');
+  apply(store, secondDocument());
+  const before = db.prepare('SELECT total_changes() n').get().n;
+  const rows = store.readRevisionBatch(
+    [
+      { documentId: 'doc:one', revisionId: 'rev:one' },
+      { documentId: 'doc:two', revisionId: 'rev:b1' },
+      { documentId: 'doc:one', revisionId: 'rev:two' },
+    ],
+    limits,
+    () => {},
+  );
+  assert.deepEqual(
+    rows.map((x) => x.revisionId),
+    ['rev:one', 'rev:b1', 'rev:two'],
+  );
+  assert.deepEqual(
+    rows.map((x) => x.bundle.payload.blocks[0].payload.text),
+    ['hello', 'world', 'later'],
+  );
+  assert.ok(
+    Object.isFrozen(rows) && rows.every((x) => Object.isFrozen(x) && Object.isFrozen(x.bundle)),
+  );
+  assert.equal(db.prepare('SELECT total_changes() n').get().n, before);
+  assert.equal(store.readCurrent('doc:one', limits).revisionId, 'rev:two');
+});
+
+test('exact revision batch refuses missing or foreign revision without falling back to head', (t) => {
+  const { db, store } = setup(t);
+  apply(store);
+  apply(store, secondDocument());
+  for (const selection of [
+    [
+      { documentId: 'doc:one', revisionId: 'rev:one' },
+      { documentId: 'doc:two', revisionId: 'missing' },
+    ],
+    [{ documentId: 'doc:one', revisionId: 'rev:b1' }],
+    [{ documentId: 'missing', revisionId: 'rev:one' }],
+  ]) {
+    assert.throws(() => store.readRevisionBatch(selection, limits, () => {}), {
+      code: 'DOCUMENT_REQUIRED_DOCUMENT_MISSING',
+    });
+    assert.equal(db.isTransaction, false);
+  }
+  assert.deepEqual(
+    store.readRevisionBatch([], limits, () => {}),
+    [],
+  );
+});
+
+test('exact revision batch owns strict selection before control and shares cumulative budget', (t) => {
+  const { db, store } = setup(t);
+  apply(store);
+  apply(store, secondDocument());
+  const selected = [{ documentId: 'doc:one', revisionId: 'rev:one' }];
+  const rows = store.readRevisionBatch(selected, limits, () => {
+    selected[0].revisionId = 'missing';
+    selected.push({ documentId: 'missing', revisionId: 'missing' });
+  });
+  assert.equal(rows.length, 1);
+  assert.equal(rows[0].revisionId, 'rev:one');
+  const one = { documentId: 'doc:one', revisionId: 'rev:one' };
+  assert.equal(store.readRevisionBatch([one], { ...limits, maxRows: 16 }, () => {}).length, 1);
+  assert.throws(() =>
+    store.readRevisionBatch(
+      [one, { documentId: 'doc:two', revisionId: 'rev:b1' }],
+      { ...limits, maxRows: 16 },
+      () => {},
+    ),
+  );
+  for (const control of [undefined, async () => {}, () => Promise.resolve()])
+    assert.throws(() => store.readRevisionBatch([one], limits, control), {
+      code: 'DOCUMENT_SYNC_CHECK_REQUIRED',
+    });
+  const prepare = db.prepare.bind(db);
+  let queries = 0,
+    getters = 0;
+  db.prepare = (...args) => {
+    queries++;
+    return prepare(...args);
+  };
+  const unsafe = { documentId: 'doc:one' };
+  Object.defineProperty(unsafe, 'revisionId', {
+    enumerable: true,
+    get() {
+      getters++;
+      return 'rev:one';
+    },
+  });
+  for (const selection of [[one, one], [unsafe], [{ ...one, extra: true }]])
+    assert.throws(() => store.readRevisionBatch(selection, limits, () => {}));
+  assert.equal(queries, 0);
+  assert.equal(getters, 0);
+  assert.equal(db.isTransaction, false);
+});
+
+test('exact revision batch cannot see a revision committed after its SQLite WAL snapshot began', (t) => {
+  const directory = mkdtempSync(join(tmpdir(), 'codeatlas-doc-batch-'));
+  t.after(() => {
+    assert.equal(resolve(dirname(directory)), resolve(tmpdir()));
+    assert.ok(basename(directory).startsWith('codeatlas-doc-batch-'));
+    rmSync(directory, { recursive: true, force: true });
+  });
+  const file = join(directory, 'owned.sqlite');
+  const { db, store } = setup(t, file);
+  let writer;
+  try {
+    db.exec('PRAGMA journal_mode=WAL');
+    apply(store);
+    apply(store, secondDocument());
+    writer = new DatabaseSync(file);
+    writer.exec('PRAGMA foreign_keys=ON');
+    const other = new api.DocumentStore(writer, 'ws:one');
+    const prepare = db.prepare.bind(db);
+    let changed = false;
+    db.prepare = (sql) => {
+      const statement = prepare(sql);
+      if (sql.startsWith('SELECT "id","workspace_id"') && sql.includes('FROM "documents"')) {
+        const all = statement.all.bind(statement);
+        statement.all = (...args) => {
+          const rows = all(...args);
+          if (args[0] === 'doc:one' && !changed) {
+            changed = true;
+            apply(other, secondDocument('rev:b2', 'later', 'c'), 'rev:b1');
+          }
+          return rows;
+        };
+      }
+      return statement;
+    };
+    const selection = [
+      { documentId: 'doc:one', revisionId: 'rev:one' },
+      { documentId: 'doc:two', revisionId: 'rev:b2' },
+    ];
+    assert.throws(() => store.readRevisionBatch(selection, limits, () => {}), {
+      code: 'DOCUMENT_REQUIRED_DOCUMENT_MISSING',
+    });
+    assert.equal(changed, true);
+    assert.equal(db.isTransaction, false);
+    assert.deepEqual(
+      store.readRevisionBatch(selection, limits, () => {}).map((x) => x.revisionId),
+      ['rev:one', 'rev:b2'],
+    );
+  } finally {
+    if (writer?.isOpen) writer.close();
+    if (db.isOpen) db.close();
+  }
+});
