@@ -6,6 +6,32 @@ import { SourceScanError } from './errors.js';
 import { safeAncestors, assertSameAncestors } from './path-safety.js';
 import type { MixedSourceAccount } from './mixed-source-verification.js';
 
+const cleanupCodes = new Set([
+  'NON_GIT_DIRECTORY',
+  'INVALID_INPUT',
+  'GIT_FAILED',
+  'FILE_READ_FAILED',
+  'SOURCE_CHANGED',
+  'CANCELLED',
+  'DEADLINE_EXCEEDED',
+  'STAGE_LIMIT_EXCEEDED',
+  'HISTORY_LIMIT_EXCEEDED',
+  'STAGE_RELEASED',
+  'PERMISSION_DENIED',
+  'SECURITY_POLICY_BLOCKED',
+]);
+function unknownCleanup(primary: unknown): Error {
+  let code: unknown;
+  try {
+    if (primary !== null && typeof primary === 'object')
+      code = Object.getOwnPropertyDescriptor(primary, 'code')?.value;
+  } catch {
+    /* An unsafe thrown object must not replace the cleanup refusal. */
+  }
+  if (code === 'ENOENT') code = 'SOURCE_CHANGED';
+  const safe = typeof code === 'string' && cleanupCodes.has(code) ? code : 'FILE_READ_FAILED';
+  return Object.assign(new Error(safe), { code: safe, cleanupState: 'UNKNOWN' });
+}
 function changed(): never {
   throw new SourceScanError('SOURCE_CHANGED', 'Document source changed during reading');
 }
@@ -96,6 +122,7 @@ export async function readDocumentSourceBytes(
     const handle = await open(absolute, 'r');
     let length = 0;
     const hash = createHash('sha256');
+    let primary: unknown;
     try {
       await checkRoot();
       await assertSameAncestors(absolute, file.path, ancestors);
@@ -112,8 +139,16 @@ export async function readDocumentSourceBytes(
       }
       if (!sameFile(before, await handle.stat())) changed();
       await assertSameAncestors(absolute, file.path, ancestors);
+    } catch (error) {
+      primary = error;
+      throw error;
     } finally {
-      await handle.close();
+      try {
+        await handle.close();
+      } catch {
+        // Do not mutate a frozen primary or expose filesystem/secret diagnostics.
+        throw unknownCleanup(primary);
+      }
     }
     if (!sameFile(before, await lstat(absolute))) changed();
     await assertSameAncestors(absolute, file.path, ancestors);

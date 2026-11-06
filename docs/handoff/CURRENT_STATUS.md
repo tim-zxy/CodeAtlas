@@ -1,3 +1,27 @@
+## Document read cleanup recovery; capture decisions proposed - 2026-11-06
+
+Actual FileHandle close failure previously replaced primary failure and omitted
+UNKNOWN cleanup. It now refuses bytes, invalidates the account and copies only a
+safe original code into a sanitized UNKNOWN error, without mutating frozen errors.
+Normal close-success behavior and existing selection/hash/permission/budget gates
+remain. Actual-handle acknowledgement fault injection covers successful body and
+frozen CANCELLED primary; test releases its owned real handle before injecting.
+Source build, affected40/40, architecture17 and format pass; concentrated read-only
+review found no important implementation issues. [Exact evidence](../superpowers/reviews/2026-11-06-document-source-cleanup.json).
+
+[Four concrete capture decisions](../superpowers/specs/2026-11-06-compilation-capture-contract-proposal.md)
+remain PROPOSED/NOT APPROVED: strict request/result and selection/basis binding;
+closed typed materialization/support and policy closure; domain-separated canonical
+digest/opaque reference; combined repo/workspace read and mutable Source recheck.
+Review caught omitted selection and WorkspaceBasis; both were added to the proposal
+and rechecked. No contract implementation, permission change or W010 migration.
+Current deny-only scan cannot authorize document body storage. P1-12/14 still open.
+
+CI140/141 prior heads: Rust passed, TypeScript running at last observation; both
+Native logs confirm R8 script catalog mismatch. No rerun. These do not certify this
+new batch. R9 prefreeze stays untouched historical evidence; no real R9, parser
+install, scan clearance or new profile/value/PACK. Phase1 remains4/21, A6 NOT_QUALIFIED.
+
 ## Document Source admitted-root alias fixed - 2026-11-06
 
 Two real-file regressions reproduced caller rootPath mutation across awaited

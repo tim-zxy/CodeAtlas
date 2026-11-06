@@ -1,3 +1,12 @@
+## Document close failure and capture decision boundary - 2026-11-06
+
+Existing UNKNOWN cleanup refusal -> document-bytes safe close-failure wrapper ->
+actual-handle acknowledgement fault injection, primary code/frozen error and no-byte
+result regressions. Source build, affected40/40 and architecture17 pass; independent
+review clear. [Evidence](../superpowers/reviews/2026-11-06-document-source-cleanup.json).
+[Four capture contracts](../superpowers/specs/2026-11-06-compilation-capture-contract-proposal.md)
+are PROPOSED only; no change to current IR, migration, permission or publication.
+
 ## Document Source immutable admitted locator - 2026-11-06
 
 Existing controlled RAW selection/authorization -> document-bytes root string owned

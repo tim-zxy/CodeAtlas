@@ -1,4 +1,6 @@
 import test from 'node:test';
+import fs from 'node:fs/promises';
+import { syncBuiltinESMExports } from 'node:module';
 import assert from 'node:assert/strict';
 import { mkdtemp, writeFile, rm, link, rename, mkdir, symlink } from 'node:fs/promises';
 import { appendFileSync, renameSync, writeFileSync } from 'node:fs';
@@ -305,3 +307,48 @@ test('authorization cannot redirect a missing admitted root to an existing docum
   assert.equal(a.read, 0);
   assert.equal(a.invalid, true);
 });
+
+for (const hasPrimary of [false, true])
+  test(`document close failure refuses bytes with UNKNOWN cleanup (primary=${hasPrimary})`, async (t) => {
+    const { input } = await setup(t);
+    const run = (await api()).readDocumentSourceBytes;
+    const open = fs.open;
+    let closed = 0;
+    fs.open = async (...args) => {
+      const handle = await open(...args);
+      const close = handle.close.bind(handle);
+      handle.close = async () => {
+        await close(); // Test releases its real handle before injecting an uncertain close outcome.
+        closed++;
+        throw Error('synthetic private close detail');
+      };
+      return handle;
+    };
+    syncBuiltinESMExports();
+    try {
+      const primary = hasPrimary
+        ? Object.freeze(Object.assign(Error('private primary detail'), { code: 'CANCELLED' }))
+        : null;
+      {
+        const a = account();
+        if (primary)
+          a.readBytes = () => {
+            throw primary;
+          };
+        await assert.rejects(
+          run(input, a, () => {}),
+          (error) => {
+            assert.equal(error.code, primary ? 'CANCELLED' : 'FILE_READ_FAILED');
+            assert.equal(error.cleanupState, 'UNKNOWN');
+            assert.equal(String(error).includes('private'), false);
+            return true;
+          },
+        );
+        assert.equal(a.invalid, true);
+      }
+      assert.equal(closed, 1);
+    } finally {
+      fs.open = open;
+      syncBuiltinESMExports();
+    }
+  });

@@ -1,0 +1,70 @@
+{
+  "kind": "DOCUMENT_SOURCE_HANDLE_CLEANUP_RECOVERY",
+  "date": "2026-11-06",
+  "base": "71de2c8e7a8f168d5da1a4b84779334656885836",
+  "status": "SCOPED_RECOVERY_VERIFIED_PROPOSAL_UNAPPROVED",
+  "defect": "FileHandle.close failure replaced the primary read failure and lacked cleanupState UNKNOWN.",
+  "implementation": [
+    "Always attempt close once; any close failure returns no bytes and invalidates account",
+    "Copy only a known own data error code into a sanitized UNKNOWN cleanup error, retaining safe frozen primary codes without mutating the original",
+    "Normal close-success thrown values and existing file/root/hash/policy/budget checks remain unchanged"
+  ],
+  "evidence": {
+    "red": "real opened handle close-outcome injection reproduced missing FILE_READ_FAILED code; no UNKNOWN state before fix",
+    "finalTests": {
+      "pass": 40,
+      "fail": 0,
+      "skip": 0,
+      "command": "node --test packages/source/test/document-bytes.test.mjs packages/application/test/mixed-source-workflow.test.mjs packages/application/test/document-components.test.mjs packages/application/test/document-write-preflight.test.mjs",
+      "log": "local temporary codeatlas-document-source-cleanup-tests.log"
+    },
+    "faultInjection": "Actual owned temporary file and FileHandle; wrapper releases its real handle before throwing a synthetic close error. This simulates uncertain acknowledgement, not an actual leaked OS handle. Covers successful body and frozen CANCELLED primary.",
+    "build": "node node_modules/typescript/bin/tsc -b packages/source: exit 0",
+    "architectureProjects": 17,
+    "format": "scoped Prettier and git diff --check pass"
+  },
+  "independentReview": {
+    "reviewer": "r9_stop_review_medium",
+    "implementation": "No important findings",
+    "proposalFindings": [
+      "original selection not persisted/digest-bound",
+      "workspace basis capture/final revalidation missing"
+    ],
+    "proposalFixes": [
+      "explicit normalized selection in snapshot/inputDigest",
+      "WorkspaceCapture with WorkspaceBasis, workspace values/supports, same-workspace-DB document/internal reads and final membership/RevisionSet/digest recheck"
+    ],
+    "recheck": "Both associated proposal findings resolved, no remaining important findings; PROPOSED remains unapproved",
+    "mode": "read-only, no tests/build/writes"
+  },
+  "proposedOnly": "docs/superpowers/specs/2026-11-06-compilation-capture-contract-proposal.md: four explicit contracts and risks, no implementation/approval",
+  "notDone": [
+    "no snapshot schema/digest/authority or W010 changes",
+    "no parser installation or scan clearance",
+    "no real R9 build/sampling, new numeric/profile/PACK/publication"
+  ],
+  "r9": "Saved prefreeze remains untouched historical evidence; Source changes need fresh approved build/freeze before future actual execution.",
+  "formalAcceptance": "4/21; A6 NOT_QUALIFIED; E02 PROPOSED/uninstalled",
+  "sha256": {
+    "packages/source/src/document-bytes.ts": "d5a959b10d134065f1eb9ab44d3fae53ceaa78be5e0c2edeb717d4b0cd94ddb9",
+    "packages/source/test/document-bytes.test.mjs": "17605cde7d02694b5f5a84f93c4021ee6b40c38eaf601d7b7b3563d3219f5168"
+  },
+  "ciAtObservation": {
+    "140": {
+      "head": "43caaa3",
+      "run": 42288885423,
+      "rust": "success",
+      "typescript": "in progress",
+      "native": "R8 script catalog mismatch, verified actual log"
+    },
+    "141": {
+      "head": "71de2c8",
+      "run": 42289682589,
+      "rust": "success",
+      "typescript": "in progress",
+      "native": "R8 script catalog mismatch, verified actual log"
+    },
+    "noRerun": true,
+    "priorHeadsOnly": true
+  }
+}
