@@ -127,5 +127,73 @@
       }
     },
     "scope": "c037e18 only; new document byte reader not in this CI; Native qualification skipped, not passed"
+  },
+  "applicationComposition": {
+    "status": "LOCAL_VERIFIED_PENDING_SYNC",
+    "baseCommit": "0c9b12d4f0a7c8d0c998b49c9e289966c9acd98d",
+    "red": {
+      "missingMethod": {
+        "tests": 4,
+        "fail": 4
+      },
+      "concurrentStateChange": {
+        "tests": 1,
+        "fail": 1,
+        "assertion": "Missing expected rejection after raw reader opened target"
+      },
+      "discardedInjection": "First draft charged-byte threshold changed state during pre-verification and passed; corrected to actual raw-reader open point, not counted as a RED"
+    },
+    "green": {
+      "applicationBuild": 0,
+      "applicationTests": {
+        "total": 16,
+        "pass": 16,
+        "fail": 0,
+        "skip": 0
+      },
+      "earlierIntegratedRun": {
+        "total": 63,
+        "pass": 63,
+        "scope": "Application15 + raw reader9 + original Source selection39 before concurrent-window fix; later Application16 is separate fresh evidence"
+      },
+      "workspaceStructure": 20,
+      "architectureProjects": 17
+    },
+    "review": {
+      "agent": "n1_tests_medium",
+      "issue": "Canonical Source or selection could change during raw consumption",
+      "fix": "hold result; reverify full selection/current state; authorize; checkpoint; return",
+      "associatedRecheck": "no remaining blocker; static only"
+    },
+    "files": [
+      {
+        "path": "packages/application/src/mixed-source-workflow.ts",
+        "sha256": "768db6b21e062af04ae3a851bce6af07064ad04c696ef578de01327f8e3d5665"
+      },
+      {
+        "path": "packages/application/test/mixed-source-workflow.test.mjs",
+        "sha256": "13797fb4efadf326f4314ac65e9ffa27098b9fb7cc8a25aa9be96909d4d05ea9"
+      }
+    ],
+    "effects": "No additional Source write; preserve prior prepare/reconcile COMMITTED effects on read failure",
+    "ci131DoesNotValidateThisDelta": true
+  },
+  "contractTriage": {
+    "ordinaryImplementation": [
+      "private authorized-byte/Draft containers with existing IR/basis",
+      "UTF8 mapping/AST traversal once parser adopted",
+      "W007/W008 transactional implementation preserving existing frozen identity/lifecycle/provenance rules"
+    ],
+    "decisions": [
+      "explicit main Markdown parser dependency adoption/closure",
+      "actual inline-secret detection source/coverage; no constant false substitute"
+    ],
+    "notImplemented": [
+      "parser dependency",
+      "DocumentDraft parser",
+      "inline-secret detector",
+      "W007/W008",
+      "P1-12 capture"
+    ]
   }
 }

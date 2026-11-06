@@ -1,3 +1,25 @@
+## P1-10 Application-to-Source raw input chain connected - 2026-11-06
+
+Existing private prepareMixedSource now offers readDocumentBytes(path), reusing its
+actual selection/config/root/current-state verification. It resolves a selected
+canonical SourceFile, preserves both policy and stored sensitivity checks, reads
+through the controlled same-handle transport, then rechecks full selection/state,
+RAW permission and the account before returning. No replacement root/bytes/token
+parameter or additional database write is introduced. Prior Source COMMITTED
+results remain accurate even when this later read refuses.
+
+Four genuine missing-method REDs and one corrected concurrent-state-change RED
+preceded Application16/16. The first concurrency injection landed too early and
+was corrected, not counted as RED. Earlier related integration63/63, latest build,
+architecture17 and workspace-structure20 pass; scoped independent review resolved.
+[Exact per-run evidence and implementation boundary](../superpowers/reviews/2026-11-06-document-source-bytes.json).
+CI #131 still covers predecessor 0c9b12d, not this new local delta.
+
+Private byte/Draft shapes and compatible mapping/transaction details do not need
+separate architecture decisions. Remaining concrete decisions are parser dependency
+adoption and actual inline-secret detection coverage; no parser/scan/DDL/capture is
+claimed here. Original P1-10/P1-12 and Phase1 gates remain open; R9 is not executed.
+
 ## P1-10 private Source byte transport implemented - 2026-11-06
 
 Added a package-private controlled raw-byte reader using existing SourceFile,

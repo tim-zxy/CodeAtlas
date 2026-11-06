@@ -1,4 +1,12 @@
-import { RepositorySchema, type Repository, type RepositoryRelativePath } from '@codeatlas/ir';
+import {
+  RepositorySchema,
+  RepositoryRelativePathSchema,
+  SourceFileSchema,
+  ensurePhase1Data,
+  type Repository,
+  type RepositoryRelativePath,
+} from '@codeatlas/ir';
+import { readDocumentSourceBytes } from '../../source/dist/document-bytes.js';
 import { isDeepStrictEqual } from 'node:util';
 import source from '../../source/dist/mixed-source-workflow.js';
 import type { MixedSourceAccount } from '../../source/dist/mixed-source-verification.js';
@@ -147,25 +155,74 @@ export default async function prepareMixedSource(input: MixedSourcePreparationIn
     );
     if (target === null) throw new Error('Missing reconciled Source');
     const state: StoredWorktreeState = target;
+    async function verifySelection(): Promise<void> {
+      try {
+        await source.verifyMixedSourceSelection(request, observation, input.account, sourceControl);
+        verifyRoot();
+        const current = input.sourceState.load(request.repositoryId);
+        input.account.own(current);
+        if (!isDeepStrictEqual(current, state))
+          throw Object.assign(new Error('SOURCE_CHANGED'), { code: 'SOURCE_CHANGED' });
+      } catch (e) {
+        fail(e);
+      }
+    }
     return Object.freeze({
       state,
       observation,
       effects: effects(),
-      async verifySelection(): Promise<void> {
+      verifySelection,
+      /** Raw selected input only, not a DocumentRevision or CompilationInputSnapshot. */
+      async readDocumentBytes(requestedPath: RepositoryRelativePath) {
         try {
-          await source.verifyMixedSourceSelection(
-            request,
-            observation,
-            input.account,
-            sourceControl,
-          );
-          verifyRoot();
-          const current = input.sourceState.load(request.repositoryId);
-          input.account.own(current);
-          if (!isDeepStrictEqual(current, state))
+          input.account.checkpoint();
+          input.account.own(requestedPath);
+          const parsedPath = RepositoryRelativePathSchema.safeParse(requestedPath);
+          if (!parsedPath.success)
+            throw Object.assign(new Error('INVALID_INPUT'), { code: 'INVALID_INPUT' });
+          input.account.own(state);
+          ensurePhase1Data(state);
+          const selected = state.files.find((f) => f.path === parsedPath.data);
+          if (!selected)
+            throw Object.assign(new Error('PERMISSION_DENIED'), { code: 'PERMISSION_DENIED' });
+          input.account.own(selected);
+          const file = SourceFileSchema.parse(selected);
+          const observed = observation.files.find((f) => f.path === file.path);
+          if (
+            !observed ||
+            file.repositoryId !== observation.repositoryId ||
+            file.contentFingerprint !== observed.contentFingerprint ||
+            !isDeepStrictEqual(file.classification, observed.classification) ||
+            file.languageHint !== observed.languageHint
+          )
             throw Object.assign(new Error('SOURCE_CHANGED'), { code: 'SOURCE_CHANGED' });
+          const authorize = () => {
+            if (policy.destination !== 'LOCAL' || policy.scope.repositoryId !== file.repositoryId)
+              throw Object.assign(new Error('PERMISSION_DENIED'), { code: 'PERMISSION_DENIED' });
+            // Neither the operation policy nor the stored file classification may be downgraded.
+            for (const classification of [policy.source.classification, file.sensitivity]) {
+              const decision = authorizeOperation({
+                ...policy,
+                operation: 'READ_SOURCE',
+                source: { ...policy.source, path: file.path, form: 'RAW', classification },
+              });
+              if (!decision.allowed)
+                throw Object.assign(new Error(decision.code), { code: decision.code });
+            }
+          };
+          authorize();
+          await verifySelection();
+          const result = await readDocumentSourceBytes(
+            { rootPath: observation.rootPath, file },
+            input.account,
+            authorize,
+          );
+          await verifySelection();
+          authorize();
+          input.account.checkpoint();
+          return result;
         } catch (e) {
-          fail(e);
+          return fail(e);
         }
       },
     });

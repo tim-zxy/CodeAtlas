@@ -1,3 +1,13 @@
+## P1-10 existing selected Source to Application byte consumption - 2026-11-06
+
+Existing prepared Source context -> canonical selected row/observed hash -> RAW
+policy without sensitivity downgrade -> full selection/state verification -> same
+handle byte transport -> full final recheck/authorization/control. Four API REDs
+and one real concurrent Source-sensitivity RED -> Application16/16 and scoped review.
+[Exact evidence](../superpowers/reviews/2026-11-06-document-source-bytes.json).
+No new root/permission/public schema or database write; raw mutable input is neither
+DocumentRevision nor CompilationInputSnapshot. Parent acceptance is not promoted.
+
 ## P1-10 Source byte input slice - 2026-11-06
 
 Knowledge/consumption section 2 + Security RAW READ_SOURCE + existing Source path,

@@ -42,3 +42,37 @@ its test-chain entry; no persistent data, old APIs or permissions require migrat
 P1-10 still needs exact authorized-byte/parser/draft/secret-scanning/W007-W008
 contracts and implementation. P1-12 still needs immutable multi-domain read ports
 and capture contracts; this transport does not substitute for either acceptance.
+
+## Existing Application selection and authorization composition
+
+The existing private prepareMixedSource result now exposes readDocumentBytes(path).
+It accepts no replacement root, byte payload, policy token or supplied observation.
+It looks up the canonical SourceFile from its prepared state, compares the selected
+path/fingerprint/classification/language to its Source observation, then checks the
+existing RAW READ_SOURCE policy. Both the original policy classification and stored
+file sensitivity must allow access; neither can downgrade the other.
+
+The existing verifySelection closure is reused before reading and before returning:
+its genuine Source observation/config binding, full selection refresh, expected root
+and current canonical state comparison remain intact. The raw reader preserves its
+same-handle identity/hash checks. Final authorization and account checkpoint follow
+the second selection verification. Changes or failures invalidate the existing
+account and preserve accurate Source commit effects. Reading adds no database write;
+prepareMixedSource's earlier reconciliation still has its original COMMITTED effect.
+These checks currently refresh selection twice per requested document. Batch capture
+optimization requires preserving the same invariants, not deleting the checks.
+
+This is local raw-input preparation, not immutable DocumentRevision/capture or a
+secret scanner. The existing policy's secretDetected input must not be represented
+as an implemented inline-secret detector. The returned mutable bytes remain subject
+to the parser/consumer lifetime and persistence checks already required.
+
+Contract triage: private authorized-byte/Draft containers, strict existing IR mapping,
+UTF8 position conversion and storage transactions that preserve the specified opaque
+IDs, immutable revisions, CAS and AUTO/MANUAL rules are implementation details. They
+do not individually require new architecture approvals. A new parser main dependency
+still needs explicit selection: the historical remark 69-node closure has not been
+adopted merely by preparing this input path. Actual inline-secret detection source
+and coverage must be stated and tested; fail-closed whole-document blocking is an
+existing option, while a new security service or changed public redaction semantics
+would require separate governance. No dependency/DDL/scanner was added by this batch.

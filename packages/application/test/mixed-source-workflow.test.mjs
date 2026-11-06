@@ -236,3 +236,101 @@ test('A4 expected repository ID refuses before Source and DB', async (t) => {
   assert.equal(reads, 0);
   assert.equal(f.state.calls, 0);
 });
+
+async function documentPreparation(t) {
+  const f = await base(t);
+  const bytes = Buffer.from('\ufeff# \u6587\u6863 \ud83d\ude00\r\nbody\n');
+  await fs.writeFile(path.join(f.root, 'note.md'), bytes);
+  const permissions = policy();
+  const prepared = await api({
+    request: f.request,
+    policy: permissions,
+    account: f.account,
+    control: f.control,
+    sourceState: f.db.sourceState,
+  });
+  return { ...f, bytes, permissions, prepared };
+}
+test('document read composes minted selection, canonical Source and RAW policy without further writes', async (t) => {
+  const f = await documentPreparation(t);
+  const before = f.db.sourceState.load('repo:a2');
+  const result = await f.prepared.readDocumentBytes('note.md');
+  assert.deepEqual(result.bytes, f.bytes);
+  assert.equal(
+    result.contentFingerprint,
+    before.files.find((x) => x.path === 'note.md').contentFingerprint,
+  );
+  assert.deepEqual(f.db.sourceState.load('repo:a2'), before);
+  assert.equal(f.prepared.effects.sourceCommit, 'COMMITTED');
+});
+test('document read rejects non-selected and secret paths instead of accepting supplied bytes or roots', async (t) => {
+  for (const requested of ['.env', 'not-selected.md', '../note.md']) {
+    const f = await documentPreparation(t);
+    await assert.rejects(
+      f.prepared.readDocumentBytes(requested),
+      (e) =>
+        ['INVALID_INPUT', 'PERMISSION_DENIED', 'SECURITY_POLICY_BLOCKED'].includes(e.code) &&
+        e.effects.sourceCommit === 'COMMITTED',
+    );
+  }
+});
+test('document read rechecks revoked permission before any Source re-read', async (t) => {
+  const f = await documentPreparation(t);
+  const calls = f.state.calls;
+  f.permissions.callerCapabilities = ['INDEX'];
+  await assert.rejects(
+    f.prepared.readDocumentBytes('note.md'),
+    (e) => e.code === 'PERMISSION_DENIED' && e.effects.sourceCommit === 'COMMITTED',
+  );
+  assert.equal(f.state.calls, calls);
+});
+test('document read refuses changed selection and tampered Source rows', async (t) => {
+  for (const mode of ['selection', 'state']) {
+    const f = await documentPreparation(t);
+    if (mode === 'selection') f.request.config.exclude.push('note.md');
+    else
+      f.prepared.state.files.find((x) => x.path === 'note.md').contentFingerprint =
+        'sha256:' + '0'.repeat(64);
+    await assert.rejects(
+      f.prepared.readDocumentBytes('note.md'),
+      (e) => e.code === 'SOURCE_CHANGED' && e.effects.sourceCommit === 'COMMITTED',
+    );
+  }
+});
+
+test('document read refuses a canonical sensitivity change during raw consumption', async (t) => {
+  const f = await documentPreparation(t);
+  const before = f.db.sourceState.load('repo:a2');
+  const { syncBuiltinESMExports } = await import('node:module');
+  const originalOpen = fs.open;
+  let opened = 0,
+    changed = false;
+  fs.open = async (...args) => {
+    opened++;
+    return originalOpen(...args);
+  };
+  syncBuiltinESMExports();
+  const read = f.account.readBytes.bind(f.account);
+  f.account.readBytes = (n) => {
+    if (opened > f.prepared.observation.files.length && !changed) {
+      changed = true;
+      f.db.sourceState.replace(before, {
+        ...before,
+        files: before.files.map((file) =>
+          file.path === 'note.md' ? { ...file, sensitivity: 'SECRET' } : file,
+        ),
+      });
+    }
+    read(n);
+  };
+  try {
+    await assert.rejects(
+      f.prepared.readDocumentBytes('note.md'),
+      (e) => e.code === 'SOURCE_CHANGED' && e.effects.sourceCommit === 'COMMITTED',
+    );
+    assert.equal(changed, true);
+  } finally {
+    fs.open = originalOpen;
+    syncBuiltinESMExports();
+  }
+});
