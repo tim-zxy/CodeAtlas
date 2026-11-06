@@ -1,3 +1,13 @@
+## P1-19 private installation admission observation - 2026-11-06
+
+Existing reporting-only inspectInstallCapabilities -> private installed-environment
+observer and unchanged four admission gates -> actual gate parity, strict pre-IO
+input refusal, no child/write, sanitized failure and identity-drift tests. Runtime
+build, affected85/85 and architecture17 pass; independent review clear.
+[Exact evidence](../superpowers/reviews/2026-11-06-install-admission-inspection.json).
+NOT_PROBED binary and no execution authority are explicit. No full installation,
+protocol/platform qualification, CLI/public contract or formal acceptance closure.
+
 ## P1-12 exact historical document batch component - 2026-11-06
 
 Existing readRevision immutable exact semantics + per-database selected document

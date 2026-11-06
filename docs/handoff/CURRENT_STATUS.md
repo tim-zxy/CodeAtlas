@@ -1,3 +1,25 @@
+## Private P1-19 admission inspection component verified - 2026-11-06
+
+Continued an independently useful P1-19 reporting slice: inspectInstallCapabilities
+strictly accepts an explicit caller budget, observes actual installed JS/environment
+and reports the four original resource admission checks. It never probes/executes a
+Native binary or authorizes a run; binary=NOT_PROBED and executionAuthorized=false.
+Unexpected metadata errors are sanitized; changed before/after environment refuses
+the whole report. No Source/DB/model/network/repair/install write path is added.
+
+Three missing-API RED then four focused GREEN; Runtime build, affected85/85,
+architecture17 pass. Read-only independent review found no important defects or
+core-contract expansion. New tests registered in mandatory root command.
+[Exact evidence](../superpowers/reviews/2026-11-06-install-admission-inspection.json).
+
+This is not final CLI/packaging/platform/protocol validation or P1-19 acceptance;
+P1-18/final package predecessors remain. Captured snapshot identity/support/digest
+contracts and parser adoption/scan clearance remain separately pending. No new
+profile/value/permission, real R9 build/sampling or root export was introduced.
+Existing R9 prefreeze is untouched historical data after changed Runtime source/dist.
+CI143 prior1562fcd: Rust passed, TS running and Native failed at last observation;
+no rerun and no certification of this new component. Phase1 remains4/21; A6 not qualified.
+
 ## Exact historical document batch read verified - 2026-11-06
 
 Continued the existing P1-12 per-database read obligation without implementing the
