@@ -23,6 +23,8 @@ import './native-r3-approved-profiles.test.mjs';
 import './native-r4-approved-profiles.test.mjs';
 import './native-r5-approved-profiles.test.mjs';
 import './native-r7-approved-transport-profile.test.mjs';
+import './native-r8-approved-profiles.test.mjs';
+import './native-r8-ci-selection.test.mjs';
 
 const reviewedReservation = 280_453_120;
 const environment = nativeMetadataEnvironment();

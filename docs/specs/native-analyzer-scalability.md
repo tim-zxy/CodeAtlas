@@ -1,3 +1,26 @@
+## Exact R8 fixture publication; runtime semantics unchanged - 2026-11-06
+
+Public prerelease436279924 and uploaded asset716516452 preserve the reviewed R8 ZIP
+SHA542791c28652b255f5c5843f8110a926aa68fda3c53374ab0747d55e541b030b/245270697bytes.
+The separate approval and CI selectors retain exact matching/refusal and existing
+runtime reservation semantics. Local30 controls/pre-acquisition checks do not prove
+actual full-process resource qualification or arbitrary repository capacity. Future
+CI optimizations/deletions remain outside this unchanged-gate integration.
+[Publication and handoff](../superpowers/reviews/2026-11-06-r8-publication-ci.json).
+
+## R8 exact resource-data installation and scope - 2026-11-06
+
+The user approved shared READ/FULL225218560, VERIFY496156672 and Transport403861504
+bytes for exact implementation1cbaef7/Node24.15.0/win32-x64/Zod4.6.1 and the pinned
+corpora. Static entries retain all history; no formula, logical caller budget or
+unknown-environment refusal changes. Fresh-process lifetime maxRSS plus the original
+allowance is a reservation for the declared Node path, not a heap/OS cap or repository
+capacity guarantee. FULL excludes child peak/Apply; no full Native process-chain
+qualification is inferred. Production Native FULL/REFRESH admission uses caller
+budgets; insufficient remaining budget refuses before the guarded workflow.
+One strict local PACK passed; public asset/CI selection and actual runner remain
+pending. [Exact scope, risks and evidence](../superpowers/reviews/2026-11-06-r8-profile-pack-result.json).
+
 ## R5 Q3最终本地结算 — 2026-11-04
 
 用户另行批准一次固定R5 context续接后，D exit0、22/22 ACTUAL_ADMITTED、0failure；实际最高350482432＜批准399069184 bytes，耗时51分47秒。与此前27/27必需profile观察、15/15 ACTUAL_PRIVATE_PORT各自构成本地Q3退出，四用途批准值已安装。候选/环境/22类覆盖/持久状态/transaction与TEMP关闭、原工具及Native pin终审通过。[准确结果与原失败](../superpowers/reviews/2026-11-03-phase1-native-profile-installation-review.md)；唯一索引为原B results.nativeCiQualificationPreparation.q3.finalExit。

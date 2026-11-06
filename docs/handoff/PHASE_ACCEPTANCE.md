@@ -1,3 +1,23 @@
+## R8 publication and CI integration are not parent acceptance - 2026-11-06
+
+The user-approved public R8 asset716516452 is uploaded with the exact reviewed ZIP
+SHA/size. Strict R8 metadata and both CI selections are integrated, including the
+current fixed-volume failure evidence path. Local30 controls and pre-acquisition
+checks pass. The tag run42190830751 tests oldc4c7d65 and is not the new integration
+run. Exact integration-head Actions outcomes must be checked independently; no
+unrun gate is passed. Phase1 remains4/21, A6 NOT_QUALIFIED, E02 PROPOSED/uninstalled.
+[Publication/CI identity and scope](../superpowers/reviews/2026-11-06-r8-publication-ci.json).
+
+## R8 resource profile and local PACK evidence only - 2026-11-06
+
+Explicitly approved R8 data installed after406/406 zero-failure original observations.
+Narrow new/historical admission checks26/26, original dependency closure and architecture17
+passed; one strict local PACK exited0 with exact ZIP hash/size/inventory recorded.
+No fresh actual Windows runner or actual22 gate ran after this installation. Existing
+CI42164555382 remains a historical failed Native result, not relabelled passed.
+Phase1 stays4/21, A6 NOT_QUALIFIED and E02 PROPOSED/uninstalled. Publication and CI
+selection require separate approval; see [bounded result](../superpowers/reviews/2026-11-06-r8-profile-pack-result.json).
+
 ## N1 and HOST B bounded offline contract continuation - 2026-11-06
 
 The selected private allSOURCE NO_OP/deletion and coordinator-owned protected

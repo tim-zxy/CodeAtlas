@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "kind": "R8_PUBLICATION_AND_CONTINUATION_CI_INTEGRATION",
+  "utc": "2026-11-06T09:31:22.949076+00:00",
+  "status": "ASSET_PUBLISHED_STRICT_APPROVAL_READY_FOR_NORMAL_COMMIT_PUSH",
+  "repository": "tim-zxy/CodeAtlas",
+  "public": true,
+  "sourceBaseAndFixtureTagCommit": "c4c7d650ac5c7e965cb17874bc2da3781395d013",
+  "release": {
+    "id": 436279924,
+    "tag": "p05-d5-fixture-fc042b319b7a2d0e4c719f4aa80ecda46eb5b53550eb409e18938260f20a3964",
+    "htmlUrl": "https://github.com/tim-zxy/CodeAtlas/releases/tag/p05-d5-fixture-fc042b319b7a2d0e4c719f4aa80ecda46eb5b53550eb409e18938260f20a3964",
+    "draft": false,
+    "prerelease": true,
+    "makeLatest": false,
+    "notLatestVerified": true,
+    "requestStartedUtc": "2026-11-06T08:52:36.052643+00:00",
+    "publishedUtc": "2026-11-06T08:52:40Z"
+  },
+  "asset": {
+    "id": 716516452,
+    "name": "codeatlas-p05-d5-r8.zip",
+    "state": "uploaded",
+    "bytes": 245270697,
+    "digest": "sha256:542791c28652b255f5c5843f8110a926aa68fda3c53374ab0747d55e541b030b",
+    "url": "https://github.com/tim-zxy/CodeAtlas/releases/download/p05-d5-fixture-fc042b319b7a2d0e4c719f4aa80ecda46eb5b53550eb409e18938260f20a3964/codeatlas-p05-d5-r8.zip",
+    "uploadAttempts": 1,
+    "uploadStartedUtc": "2026-11-06T08:54:10.986459+00:00",
+    "uploadExitedUtc": "2026-11-06T09:15:07.807236+00:00",
+    "uploadExitCode": 0,
+    "uploadElapsedSeconds": 1256.820777
+  },
+  "publicContentAudit": {
+    "entries": 5423,
+    "decodedBytes": 952621184,
+    "jsonParsed": 930,
+    "everyEntryHashAndSizeMatch": true,
+    "fullReadCRC": "PASS",
+    "potentialCredentialFindings": 0,
+    "unexpectedSensitivePaths": 0,
+    "scope": "All ZIP bytes including SQLite pages and Native PE scanned for bounded credential/private-key patterns, ASCII and UTF16-ASCII; all930 JSON parsed for specific credential-valued fields. Original owned synthetic Native fixture closure; approved path metadata remains. Not a universal secret detector.",
+    "connectionInterruption": "Prior read-only audit interrupted by environment disconnect; after restoration no result or Python process existed. This full read-only audit restarted; original PACK not repeated."
+  },
+  "strictPreAcquisitionVerification": {
+    "strictPreAcquisitionPackVerification": true,
+    "archiveBytes": 245270697,
+    "entries": 5423,
+    "releaseId": 436279924,
+    "assetId": 716516452,
+    "actualNativeExecutions": 0,
+    "installOrCollect": false
+  },
+  "approvalPath": "fixtures/ipc/refresh-v3/approved-transport-r8.json",
+  "approvalSha256": "eff2b752f705423ac0db870f9a8aa9934ecce697073498987a44e4aad1620883",
+  "ciChange": {
+    "path": ".github/workflows/ci.yml",
+    "downloadAndTemporarySelection": "R5 -> R8",
+    "historicalRestoreAndMandatoryStepsUnchanged": true,
+    "originalThreeJobsUnchanged": true,
+    "failureFallbackAddedOnly": "C:/CodeAtlas-P05-D5-R8/evidence/corpus/replay",
+    "allHistoricalFallbackPathsRetained": true,
+    "noManualCITriggerOrRerun": true
+  },
+  "localValidation": {
+    "selectedTests": 30,
+    "passed": 30,
+    "failed": 0,
+    "scope": "New and historical profile provenance/boundaries, exact released identity and strict negative controls, CI selection/jobs/restoration/failure retention. No actual Native or sampling.",
+    "initialCISelectionTestDefect": "Matcher initially counted on.push as a job; corrected to jobs-only section, expected original jobs unchanged. RED before R8 path/fallback retained.",
+    "architectureReused": "17-project PASS, production imports unchanged from reviewed profile batch",
+    "implementationAndDependencyClosureReused": "Exact1cbaef7,3161 entries/10 roots unchanged; added test roots/CI/refresh approval are outside frozen producer membership."
+  },
+  "historicalApprovalsRetainedByteSha256": {
+    "fixtures/ipc/refresh-v3/approved-transport.json": "df1413dbca611fb10eebe9cd0cdf181e2506eec7cebd7cec4f6e64b75738b09f",
+    "fixtures/ipc/refresh-v3/approved-transport-r5.json": "3949fafc77579f39e2c0f24dded9f6cd2da6a22a7b136a53392943c50189abdf"
+  },
+  "automaticApprovalReview": {
+    "initialActionDeniedBeforeExecution": true,
+    "reason": "Reviewer did not see prior numeric/profile installation authorization.",
+    "resolution": "Verified original owner approvals for exact values/install/PACK and separate publication/real-ID approval/CI/push. One same-scope normal retry accepted; no bypass or repeated mutation.",
+    "profileValuesOrGatesChangedByRetry": false
+  },
+  "runs": {
+    "tagRun": {
+      "id": 42190830751,
+      "event": "push",
+      "ref": "p05-d5-fixture-fc042b319b7a2d0e4c719f4aa80ecda46eb5b53550eb409e18938260f20a3964",
+      "head": "c4c7d650ac5c7e965cb17874bc2da3781395d013",
+      "note": "Old head retains old profile/CI selection; cannot represent new approval integration. Monitored separately."
+    },
+    "continuationRun": "Will be located by the exact normal integration commit after push; no guessed run ID."
+  },
+  "handoff": {
+    "worktree": "D:\\workspace\\CodeAtlas-phase1-20261106",
+    "targetBranch": "codex/phase1-20261106-continuation",
+    "normalNonForceOnly": true,
+    "pr22Updated": false,
+    "mergePerformed": false,
+    "gitScope": "Source/static profiles, focused tests,13small gzip evidence, strict R8 approval, CI selection/fallback and governed status/reviews. No ZIP/binary/DB/large ignored tree in Git.",
+    "transportClosureBackup": "Public ZIP now durably carries its5423-entry Native/synthetic SQLite/Source evidence closure. It does not back up every C worktree or9.69GB historical raw tree.",
+    "privateLocalExecutionRecords": "D:\\workspace\\CodeAtlas-phase1-20261106\\.superpowers\\sdd\\2026-11-06-r8-profile-pack",
+    "otherLocalOriginalEvidence": "D:\\workspace\\CodeAtlas-phase1-20261106\\.superpowers\\native-memory\\qualification-1cbaef7-20261106",
+    "frozenRootRetained": "C:\\CodeAtlas-P05-D5-R8",
+    "parallelRule": "Freeze the exact CI commit. Hosted CI may overlap independently authorized local source work with one integrator; do not call changed local tools/dist the same R8 closure."
+  },
+  "formalAcceptance": {
+    "phase1Accepted": 4,
+    "parents": 21,
+    "A6": "NOT_QUALIFIED",
+    "E02": "PROPOSED_UNINSTALLED",
+    "freshActualCI": "NOT_YET_REPORTED"
+  },
+  "futureStrategyBoundary": "User prefers cloud source/basic tests and local fast work. Current approved complete R8 gates retained; no deletion, changed acceptance, test/toolchain migration or new permanent policy in this batch."
+}

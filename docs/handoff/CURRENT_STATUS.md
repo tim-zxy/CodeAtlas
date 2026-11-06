@@ -1,3 +1,84 @@
+## R8 fixture published; exact continuation-head CI remains the gate - 2026-11-06
+
+The separately approved public prerelease is436279924, non-draft and not latest.
+Single uploaded asset716516452 is codeatlas-p05-d5-r8.zip,245270697bytes/5423entries,
+SHA542791c28652b255f5c5843f8110a926aa68fda3c53374ab0747d55e541b030b. Complete ZIP
+read953MB,930JSON and all-entry SHA/CRC checks found no listed credential/private-key
+or sensitive-path findings. This is bounded content/provenance checking, not a
+universal detector; approved local path metadata remains in the fixture.
+
+Strict approved-transport-r8.json uses actual release/asset IDs and the exact candidate,
+holdout, Native source/build and inventory. Both original CI selections now point to
+R8. All three jobs, actual22 and byte-exact historical default approval restoration
+remain; R8 fixed-volume replay is added to the retained failure-artifact paths.
+Local30 selected provenance/budget/CI/strict-negative controls and original read-only
+pre-acquisition verification pass. No new calibration or Native execution was added.
+
+The tag push triggered42190830751 on oldc4c7d65; it is monitored separately and cannot
+represent the new profile/approval integration. The final normal continuation push
+runs the mandatory exact-head jobs. See the commit's Actions checks and the local
+execution receipts for fresh outcomes; this source record does not predeclare them.
+No force, PR22 update, merge, old-asset deletion or gate relaxation is included.
+
+A transient automatic review denial before execution was resolved by verified prior
+exact numeric/install and publication approvals; one same-scope retry succeeded.
+No operation was delegated or rewritten to bypass that control.
+
+Only source, focused tests,13small gzip records, strict approval/CI metadata and
+status/reviews are in the precise Git batch. The ZIP is a Release asset, not a Git
+blob. Original C/D worktrees, R7/R8 local originals and large historical evidence
+remain; this does not prove all C content backed up. Fresh computers must use the
+final continuation commit plus its exact R8 approval/asset and matching environment.
+Hosted CI can overlap independent authorized local work after the source head is
+frozen; changed local dist/tools are not the same qualification closure.
+
+Phase1 stays4/21, A6 NOT_QUALIFIED, E02 PROPOSED/uninstalled. User CI/cloud-storage
+optimization preferences are future scoped work, not permission to skip these gates
+or delete existing evidence. [Exact publication, validation and handoff](../superpowers/reviews/2026-11-06-r8-publication-ci.json).
+The following installation/PACK and collection records are historical stage snapshots.
+
+## Approved R8 profiles and one local PACK complete; publication pending - 2026-11-06
+
+The user approved the exact three candidates and one local PACK. Shared READ/FULL
+225218560, VERIFY496156672 and Transport403861504-byte profiles are installed for
+frozen implementation1cbaef7. All history and original406/406 zero-failure evidence
+remain. New7 tests were RED before installation; the original admission root then
+passed26/26 selected new/historical and no-Native boundary checks. Runtime-only build
+changed only three permitted profile data files. Other dist/history bytes, Node
+identity and the3161-entry/10-root dependency closure matched; architecture17 and
+format passed. Independent delta review found no blocking issue.
+
+Exactly one local PACK exited0 at2026-11-06T08:21:16Z. ZIP245270697bytes contains5423
+entries and hashes to542791c28652b255f5c5843f8110a926aa68fda3c53374ab0747d55e541b030b.
+Original strict archive verification and independent whole-file hash plus directory
+name/size checks passed. No separate repeated full decoded-CRC audit is claimed.
+Original PACK processes are gone and the fixed temp root is empty; no roots or
+original evidence were deleted. This is scoped receipt/snapshot cleanup evidence.
+
+No new calibration, holdout, Native build/run, cloud runner, release/asset, CI
+selection, push or PR22 update occurred in this installation/PACK stage. Current
+cloud head remainsc4c7d65; new source/test/docs and13 gzip records73873bytes remain
+local until a precise stage commit/push. The gzip records do not replace the full
+local archive, C R8 closed corpus or other raw evidence. Do not clean those roots.
+
+Next approval: publish the exact new candidate-specific fixture asset, obtain real
+release/asset IDs, create a strict separate R8 approval and switch both existing CI
+selections fromR5. A final frozen continuation push can then run the original three
+CI jobs once; a fresh Windows runner must install/collect because local R8 is occupied.
+Independent authorized local work may overlap hosted CI after its inputs are frozen,
+without conflating changed local dist/tools with the exact R8 pack.
+
+Transport independent peak396722176 leaves7139328bytes; no hard OS memory isolation,
+unseen-corpus proof or arbitrary repository-capacity guarantee. Existing Native FULL/
+REFRESH paths use these reservations against caller budgets, not a live RSS kill cap.
+CI42164555382 still records Rust/TS success and Native profile/ARCHIVE failures before
+installation; it was not rerun or relabelled. Phase1 remains4/21, A6 NOT_QUALIFIED,
+E02 PROPOSED/uninstalled. P1-13 is independent but C/D/E implementation awaits approval.
+
+[Exact installed data, archive, impact, handoff and publication proposal](../superpowers/reviews/2026-11-06-r8-profile-pack-result.json).
+[Original406 collection and independent review](../superpowers/reviews/2026-11-06-r8-qualification-result.json).
+The following first-CI checkpoint is historical and superseded by this bounded result.
+
 ## First CI ended; exact-implementation qualification required - 2026-11-06
 
 First continuation run42151555522 is terminal: Rust succeeded; TypeScript failed15

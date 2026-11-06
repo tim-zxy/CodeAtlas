@@ -1,3 +1,20 @@
+## Explicit R8 publication and exact CI-selection approval - 2026-11-06
+
+The user separately approved public fixture prerelease/asset publication, actual-ID
+R8 approval creation, normal continuation commit/push and mandatory fresh CI. Release
+436279924 / asset716516452 binds the previously approved exact R8 candidate/ZIP;
+no new numeric value, permission model, formula, scope or acceptance change follows.
+Historical R4/R5 records and assets remain. [Publication proof and boundaries](../superpowers/reviews/2026-11-06-r8-publication-ci.json).
+
+## Exact R8 resource-data approval and local PACK - 2026-11-06
+
+The user separately approved the exact R8 candidates: shared READ/FULL225218560,
+VERIFY496156672 and Transport403861504 bytes, their additive installation, necessary
+local checks and one local PACK. Original formulas, caller budgets, strict environment
+and corpus matching, history and empty Syntax profile remain unchanged. This grants
+no HOST/A6, baseline, new execution, publication or CI-selection authority.
+[Exact data, evidence and boundaries](../superpowers/reviews/2026-11-06-r8-profile-pack-result.json).
+
 ## N1 and HOST B bounded offline contract continuation - 2026-11-06
 
 The selected private allSOURCE NO_OP/deletion and coordinator-owned protected

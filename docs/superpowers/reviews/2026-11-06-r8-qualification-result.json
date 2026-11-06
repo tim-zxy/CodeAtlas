@@ -1,0 +1,261 @@
+{
+  "schemaVersion": 1,
+  "kind": "R8_RESOURCE_QUALIFICATION_COMPLETED_PROPOSED_ONLY",
+  "utc": "2026-11-06T07:49:45.320147+00:00",
+  "status": "NUMERIC_REVIEW_REQUIRED",
+  "sourceHead": "c4c7d650ac5c7e965cb17874bc2da3781395d013",
+  "environment": {
+    "node": "v24.15.0",
+    "v8": "13.6.233.17-node.48",
+    "platform": "win32",
+    "arch": "x64",
+    "zodVersion": "4.6.1",
+    "implementationDigest": "1cbaef7ba843af6419a39af6dd3dfe0a7241c92851ff70d6ce77213819714bcf",
+    "corpusRevision": "p05-native-metadata-memory-v1"
+  },
+  "nodeExecutable": {
+    "path": "D:\\Program Files\\nodejs\\node.exe",
+    "sha256": "3331e1ffe19874215472217c5e94f5a0c6d8e18c4ac7111d3937aa0ad5e9b4a5"
+  },
+  "nativeExecutableSha256": "c3a89dfd3edb29c8cdfb8e0a7eafd6418839b508234dbe20cd5eb9c6fbbfdfb4",
+  "nativeSourceCount": 54,
+  "nativeSourceInventorySha256": "170db22a661681e913a0cf0b201171af3cf2659fcf398ea8373a0b7f91cc716d",
+  "transportSession": {
+    "id": 76121,
+    "startedUtc": "2026-11-06T05:06:43.270086+00:00",
+    "exitedUtc": "2026-11-06T07:43:39.305023+00:00",
+    "exitCode": 0,
+    "duplicateRuns": 0
+  },
+  "coverage": {
+    "readSealCalibration": 65,
+    "fullTransportCalibration": 70,
+    "readFullIndependent": 27,
+    "verifyCalibration": 75,
+    "verifyIndependent": 15,
+    "transportQualification": 22,
+    "transportCalibration": 110,
+    "transportIndependent": 22,
+    "totalCaseInvocations": 406,
+    "failures": 0,
+    "notOSProcessCount": true
+  },
+  "candidates": [
+    {
+      "workspace": "READ_SEAL_AND_FULL_TRANSPORT",
+      "path": "D:\\workspace\\CodeAtlas-phase1-20261106\\.superpowers\\native-memory\\qualification-1cbaef7-20261106\\read-full\\candidate.json",
+      "sha256": "71dd2af1a942e26f759f942749b8682c9bf001582e7624a2e2c742fd3e6767ed",
+      "status": "PROVISIONAL_REVIEW_REQUIRED",
+      "reservationBytes": 225218560,
+      "observedPeakBytes": 217829376,
+      "fluctuationAllowanceBytes": 7389184,
+      "priorApprovalFloorBytes": null,
+      "policyRevision": "p05-native-memory-high-water-range-v1"
+    },
+    {
+      "workspace": "REFRESH_VERIFY",
+      "path": "D:\\workspace\\CodeAtlas-phase1-20261106\\.superpowers\\native-memory\\qualification-1cbaef7-20261106\\verify\\candidate.json",
+      "sha256": "6e53b9e0e7e1edc75c4dbffde34ed0c43c9ef018d519c7838b7f7220fff22b3e",
+      "status": "PROVISIONAL_REVIEW_REQUIRED",
+      "reservationBytes": 496156672,
+      "observedPeakBytes": 364281856,
+      "fluctuationAllowanceBytes": 131874816,
+      "priorApprovalFloorBytes": null,
+      "policyRevision": "p05-native-memory-high-water-range-v1"
+    },
+    {
+      "workspace": "REFRESH_TRANSPORT",
+      "path": "C:\\CodeAtlas-P05-D5-R8\\evidence\\candidate.json",
+      "sha256": "fc042b319b7a2d0e4c719f4aa80ecda46eb5b53550eb409e18938260f20a3964",
+      "status": "PROVISIONAL_REVIEW_REQUIRED",
+      "reservationBytes": 403861504,
+      "observedPeakBytes": 368758784,
+      "fluctuationAllowanceBytes": 35102720,
+      "priorApprovalFloorBytes": null,
+      "policyRevision": "p05-native-memory-high-water-range-v1"
+    }
+  ],
+  "transportIndependent": {
+    "sha256": "7ffed2718ec97eda8245938dc2e6195338e1c97b1d3b945ec486c2ee4e4dc43c",
+    "observations": 22,
+    "failures": 0,
+    "peakResidentBytes": 396722176,
+    "headroomBytes": 7139328,
+    "candidateUnchanged": true
+  },
+  "candidateInputFeasibility": {
+    "callerBudgetBytes": 1000000000,
+    "kind": "UNAPPROVED_CANDIDATE_DIAGNOSTIC_ONLY",
+    "maximumAccountedBytes": 410428688,
+    "maximumSqlChargeBytes": 6567184,
+    "referenceReservationBytes": 403861504
+  },
+  "cleanupAudit": {
+    "utc": "2026-11-06T07:45:35.166699+00:00",
+    "transportAttemptDirectories": 154,
+    "cases": 22,
+    "attemptsPerCase": 7,
+    "allWorkerProcessStatusZero": true,
+    "allWorkerSignalsAndErrorsNull": true,
+    "allReceiptsTempClosed": true,
+    "allReceiptsTransactionClosed": true,
+    "allReceiptsCaptureFailedFalse": true,
+    "fixedTempTopEntries": 0,
+    "postExitMatchingProcesses": 0,
+    "snapshotScope": "Original PIDs and related R8 Node/Native command/path matches; not universal absence of all OS descendants.",
+    "fixedRootAndHistoricalR7Preserved": true
+  },
+  "finalIdentityAudit": {
+    "headUnchanged": true,
+    "semanticAndIndexDiffEmptyBeforeDocumentationUpdate": true,
+    "profileSourceEqualsHead": true,
+    "environmentEqualsFreeze": true,
+    "nativeSourceInventoryEqualsFreeze": true,
+    "nativeBinaryEqualsBuildReceipt": true,
+    "nodeBinaryEqualsOwner": true
+  },
+  "independentReview": {
+    "reviewer": "n1_tests_medium",
+    "result": "NO_BLOCKING_FINDING_WITHIN_EXISTING_OFFLINE_SCOPE",
+    "formulaAndAll22GroupsRecomputed": true,
+    "calibrationClassRepetitionsComplete": true,
+    "candidateUsesOnlyRawCalibration": true,
+    "cancelCalibrationAndHoldoutProcessNoncesAndArtifactsDistinct": true,
+    "oldReadFullAndVerifyDigestsUnchanged": true
+  },
+  "ci": {
+    "runId": 42164555382,
+    "head": "c4c7d650ac5c7e965cb17874bc2da3781395d013",
+    "rust": "SUCCESS",
+    "typescript": "SUCCESS",
+    "native": "FAILURE",
+    "javaPassed": 90,
+    "javaFailed": 24,
+    "javaFailure": "No reviewed native metadata profile for this implementation/environment",
+    "refreshPassed": 714,
+    "storagePassed": 161,
+    "resourceGatePassed": 33,
+    "resourceGateFailed": 42,
+    "approvedObservationFailures": 27,
+    "exactPackFailureStage": "ARCHIVE",
+    "evidence": "D:\\workspace\\CodeAtlas-phase1-20261106\\.superpowers\\native-memory\\qualification-1cbaef7-20261106\\ci-second-terminal.json"
+  },
+  "evidenceFiles": [
+    {
+      "path": "D:\\workspace\\CodeAtlas-phase1-20261106\\.superpowers\\native-memory\\qualification-1cbaef7-20261106\\read-full\\read-calibration.stdout.json",
+      "bytes": 145877,
+      "sha256": "548a17f3e5328079511528abcdcb300798a132e7d04abcf3c67c325da1d60a54"
+    },
+    {
+      "path": "D:\\workspace\\CodeAtlas-phase1-20261106\\.superpowers\\native-memory\\qualification-1cbaef7-20261106\\read-full\\full-calibration.stdout.json",
+      "bytes": 230741,
+      "sha256": "0dd3dcb842c63ce1dc366e2c439589a6b31014204892f6ab20606caf1e02bf0d"
+    },
+    {
+      "path": "D:\\workspace\\CodeAtlas-phase1-20261106\\.superpowers\\native-memory\\qualification-1cbaef7-20261106\\read-full\\calibration-manifest.json",
+      "bytes": 2648,
+      "sha256": "7739015c14a335d0320d8e788682e9ef2c49ff39332c989837d984805aa7f963"
+    },
+    {
+      "path": "D:\\workspace\\CodeAtlas-phase1-20261106\\.superpowers\\native-memory\\qualification-1cbaef7-20261106\\read-full\\independent\\observations.json",
+      "bytes": 82184,
+      "sha256": "10449d396101879f695560e57504820a52e5576d67ac671a75e4d73431de29a5"
+    },
+    {
+      "path": "D:\\workspace\\CodeAtlas-phase1-20261106\\.superpowers\\native-memory\\qualification-1cbaef7-20261106\\verify\\calibration.json",
+      "bytes": 173163,
+      "sha256": "c7f2426f1cd3ec18793ad5c64e483951d4737e16f58bfb87fb623d448c938190"
+    },
+    {
+      "path": "D:\\workspace\\CodeAtlas-phase1-20261106\\.superpowers\\native-memory\\qualification-1cbaef7-20261106\\verify\\calibration-manifest.json",
+      "bytes": 716,
+      "sha256": "394710dab88892b4157949a0a62c33b0b978a8d1b999e767535173d077a2cb42"
+    },
+    {
+      "path": "D:\\workspace\\CodeAtlas-phase1-20261106\\.superpowers\\native-memory\\qualification-1cbaef7-20261106\\verify\\holdout.json",
+      "bytes": 35171,
+      "sha256": "07f6bab318c76f294f6a8a3a702e8a2dc4638b097a95689d1bb1cff5e7374196"
+    },
+    {
+      "path": "C:\\CodeAtlas-P05-D5-R8\\evidence\\qualification.json",
+      "bytes": 874,
+      "sha256": "d80c377cca42dab1146134c9af4b34a444d0bbbba220a64372659fd542942459"
+    },
+    {
+      "path": "C:\\CodeAtlas-P05-D5-R8\\evidence\\raw.json",
+      "bytes": 251800,
+      "sha256": "b70fad8498babf8e508c6807072304b92ca5b744973de7dc932f1a2c9ed151c1"
+    },
+    {
+      "path": "C:\\CodeAtlas-P05-D5-R8\\evidence\\evidence-manifest.json",
+      "bytes": 686,
+      "sha256": "d10a0b81bce1c7c6662689f99fbcf80d879a204b526425af7c130bfaa2285fab"
+    },
+    {
+      "path": "C:\\CodeAtlas-P05-D5-R8\\evidence\\candidate-input-feasibility.json",
+      "bytes": 183,
+      "sha256": "d6ab00d3426d53a11e0d7949095ec7590ca4860cd909a78029cee9a4fd3eac11"
+    },
+    {
+      "path": "C:\\CodeAtlas-P05-D5-R8\\evidence\\review\\holdout.json",
+      "bytes": 50901,
+      "sha256": "7ffed2718ec97eda8245938dc2e6195338e1c97b1d3b945ec486c2ee4e4dc43c"
+    },
+    {
+      "path": "D:\\workspace\\CodeAtlas-phase1-20261106\\.superpowers\\native-memory\\qualification-1cbaef7-20261106\\transport-prepare\\numeric-review.json",
+      "bytes": 6323,
+      "sha256": "5acc9b10525c2a0dbd6a34da1d17fa7396e42641973aa4f4809cdf58595812ba"
+    },
+    {
+      "path": "D:\\workspace\\CodeAtlas-phase1-20261106\\.superpowers\\native-memory\\qualification-1cbaef7-20261106\\transport-prepare\\native-build.json",
+      "bytes": 8396,
+      "sha256": "8c9a4d00bf8eb5546fed51bf391ecccd341e76c7b4de8260c801a1743eae132d"
+    },
+    {
+      "path": "D:\\workspace\\CodeAtlas-phase1-20261106\\.superpowers\\native-memory\\qualification-1cbaef7-20261106\\progress.jsonl",
+      "bytes": 3965,
+      "sha256": "28254774ea267862d541cee4382373a1ca3877e2e778ceec3c92f8986fb513fb"
+    }
+  ],
+  "permissions": {
+    "profileInstalled": false,
+    "valuesAdopted": false,
+    "packExecuted": false,
+    "releasePublished": false,
+    "newCITriggeredByThisCollection": false,
+    "pr22Updated": false
+  },
+  "limitations": [
+    "Existing Phase0.5 resource-purpose qualification only; Phase1 remains4/21, A6 NOT_QUALIFIED, E02 PROPOSED/uninstalled.",
+    "Independent samples use the same corpus, not unseen corpus. Transport/VERIFY scope is OFFLINE_CALIBRATION_ONLY; no proof of actual production admission or full process-chain equivalence.",
+    "No hard OS memory isolation. Transport independent peak leaves7139328 bytes below proposed reservation; future environment variation can still cause refusal.",
+    "Existing callerBudgetBytes1000000000, original formulas, original timeouts and strict refusal rules unchanged.",
+    "Exact profile installation and new PACK/publication/CI selection remain pending specific approval.",
+    "Fixed C R8 and other local evidence are not proved fully backed up remotely; do not remove them."
+  ],
+  "nextApproval": {
+    "stage1": "Approve these exact candidate SHAs/values and their exact environment/purpose, additive profile installation retaining history, necessary targeted admission checks/rebuild with identity recheck, and one local read-only PACK to a fresh output. No archive publication or new thresholds.",
+    "profileTarget": "packages/runtime/src/native-metadata-profiles.ts",
+    "packArgv": [
+      "D:\\Program Files\\nodejs\\node.exe",
+      "scripts/native-refresh-ci.mjs",
+      "pack",
+      "C:\\CodeAtlas-P05-D5-R8\\evidence\\candidate.json",
+      "C:\\CodeAtlas-P05-D5-R8\\evidence\\review\\holdout.json",
+      "D:\\workspace\\CodeAtlas-phase1-20261106\\.superpowers\\native-memory\\qualification-1cbaef7-20261106\\pack\\codeatlas-p05-d5-r8.zip"
+    ],
+    "packPrerequisites": [
+      "Original frozen corpus/raw/holdout and Native/build/dependency closure unchanged.",
+      "Installed exact Transport profile matches candidate SHA, environment, corpus and reservation.",
+      "Rebuild may change other dist or declaration files: inspect actual environment and closure, do not assume identity unchanged.",
+      "Use preserved R8 read-only packing path; no new prepare or reuse/acquisition."
+    ],
+    "stage2": "After PACK fixes exact ZIP SHA/bytes/entries, approve the concrete new release/asset, strict R8 approval record and matching continuation-branch CI update/push. Use returned release/asset IDs; retain R4/R5 history and no PR22 change. Platform may require approval of the exact final commit.",
+    "ciDependency": "Current workflow both downloads and temporarily selects approved-transport-r5.json. New R8 record/asset selection must change together; profile installation alone cannot repair ARCHIVE refusal.",
+    "actualValidationEnvironment": "Fresh Windows CI runner. Local collect would reject occupied fixed C R8; do not delete/adopt the root, alter geometry or invent R9.",
+    "risk": "Incomplete scope, environmental peak variance, rebuild drift, mismatched archive/approval/CI selection and publication of wrong asset. All must refuse; never increase numeric values automatically.",
+    "rollback": "Retain history and evidence; remove only newly added profile records/revert the focused new CI selection through normal reviewed edits. Stop promotion/leave new assets unused. Returning to R5 can still fail honestly with new implementation; no force/reset/cleanup.",
+    "conservativeAlternative": "Keep all R8 results PROPOSED and existing CI refusal visible; no installation, PACK or publication."
+  },
+  "currentStatusBeforeUpdateSha256": "c6e08f59794b2ab63f5c1dffbf8b688be82488ef0be0fbee4a3a8dfce82d07e0"
+}

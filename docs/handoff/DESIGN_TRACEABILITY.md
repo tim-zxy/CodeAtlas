@@ -1,3 +1,24 @@
+## Published R8 fixture and strict CI binding - 2026-11-06
+
+Exact ZIP full5423-entry/952621184decoded-byte audit -> non-draft/non-latest public
+prerelease436279924 -> single successful upload -> actual asset716516452,245270697
+bytes, SHA542791c28652b255f5c5843f8110a926aa68fda3c53374ab0747d55e541b030b -> strict
+separate R8 approval -> both original CI selectors. Original jobs/actual22/historical
+restoration stay; current R8 replay failure fallback is added beside old paths.
+Local30 selected controls and original pre-acquisition verification pass; actual CI
+remains an independent gate. [Exact evidence](../superpowers/reviews/2026-11-06-r8-publication-ci.json).
+
+## Approved R8 data installed; local archive verified - 2026-11-06
+
+Original406 serial observations -> frozen three candidates -> explicit exact-value
+approval -> three additive static profiles and13 original-byte gzip records ->
+RED7/7 before installation -> Runtime-only build -> GREEN26/26 original-root controls.
+Old profile source bytes and non-profile dist are preserved; implementation1cbaef7
+and3161 dependencies/10 roots match the original freeze. One PACK exited0 and its
+245270697-byte/5423-entry ZIP hashes to542791c28652b255f5c5843f8110a926aa68fda3c53374ab0747d55e541b030b.
+[Results, provenance, impact and next approval](../superpowers/reviews/2026-11-06-r8-profile-pack-result.json).
+No release/CI selection/push or formal Phase1/A6/E02 acceptance follows.
+
 ## Exact implementation refusal and isolated R8 development Fixture - 2026-11-06
 
 Actual CI environment/artifact -> implementationDigest1cbaef7 (seven changed built
