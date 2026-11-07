@@ -1,3 +1,27 @@
+## Existing-version coexistence preflight implemented offline - 2026-11-07
+
+New private NEW_VERSION check validates physical ancestors top-down, original strict
+container policy on CodeAtlas/releases and exact absent leaf. Enumeration refuses
+occupied file/directory/case alias/dangling link and anomalous sibling reparse;
+links refuse before ACL reads. It creates no directory/reservation/grant. Original
+PREFLIGHT and INSTALLED branches and all protection policy bytes are preserved.
+
+32 owned cases(24new/4first/4installed) match expectations,5 accepts/27 refuses,
+0 premature ACL reads; every old sentinel byte/time retained. ACL subjects/masks
+are in-memory doubles; actual filesystem topology is owned. Integrated8/8 plus
+owner29/preparation8 inner, architecture17, formats and parse-only checker pass.
+No Runtime change/rebuild: frozen dc691cab package/module758439a3 remains. New
+5801-byte checker SHAa7f362284068f2d39cd39906e28da51a51c3b0a02fb9e6fe54e7251062104b4a
+is generated only; no actual installed check, identity or ACL mutation.
+
+[Exact deployment approval package](../superpowers/plans/2026-11-07-principal-dc-coexistence-deployment.md)
+now specifies existing-container preflight, exclusive new-leaf copy, post-copy
+content/ACL checks and conditional one-shot process-only validation. Actual steps
+still require approval; old ac84/guard/failures stay untouched. CI164 terminal
+TS/Rust PASS, Native R8 catalog FAIL covers9fbc724, not this new mode. Phase1
+stays4/21, A6 NOT_QUALIFIED, E02 PROPOSED/uninstalled.
+[Evidence](../superpowers/reviews/2026-11-07-principal-coexistence-preflight.json).
+
 ## Shared long-path ACL read fixed offline - 2026-11-07
 
 Fixed Windows PowerShell reproduces raw Get-Acl failure on owned266-character file

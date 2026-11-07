@@ -26,6 +26,11 @@ test('deployment checker preserves the original owner/ancestor/link/right policy
     .replaceAll('\r\n', '\n');
   const original = template
     .replace('__FIXED_ACL_READER__\n', '')
+    .replace(
+      "ValidateSet('PREFLIGHT','INSTALLED','NEW_VERSION')",
+      "ValidateSet('PREFLIGHT','INSTALLED')",
+    )
+    .replace(/function Preflight-NewVersion\{[\s\S]*?\n\$base=/, '$base=')
     .replaceAll(
       '__FIXED_RELEASE_DIGEST__',
       'ac84dad419c823081d471b6aec288985b01a2f3d9c065e9e666174271bef62b7',
@@ -69,7 +74,7 @@ test(
       'utf8',
     );
     const a = template.indexOf('function Guard('),
-      b = template.indexOf('\n$base=', a);
+      b = template.indexOf('\nfunction Preflight-NewVersion{', a);
     assert.ok(a >= 0 && b > a);
     const input = {
       reader: api.principalAclReader,

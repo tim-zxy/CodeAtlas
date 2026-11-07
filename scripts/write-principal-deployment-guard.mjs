@@ -69,6 +69,7 @@ const receipt = {
   readerSha256: hash(Buffer.from(principalAclReader)),
   templateSha256: hash(Buffer.from(template)),
   requiredChildPSModulePath: 'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\Modules',
+  modes: ['PREFLIGHT', 'INSTALLED', 'NEW_VERSION'],
   guardExecuted: false,
   identityQueries: 0,
   ACLChanges: 0,

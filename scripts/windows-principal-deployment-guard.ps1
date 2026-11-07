@@ -1,4 +1,4 @@
-param([Parameter(Mandatory=$true)][ValidateSet('PREFLIGHT','INSTALLED')][string]$Mode)
+param([Parameter(Mandatory=$true)][ValidateSet('PREFLIGHT','INSTALLED','NEW_VERSION')][string]$Mode)
 $ErrorActionPreference='Stop'
 function Need($v){if(-not $v){throw 'INSTALL_GUARD_REFUSED'}}
 $local=[Environment]::GetFolderPath([Environment+SpecialFolder]::LocalApplicationData)
@@ -26,6 +26,31 @@ function Guard([string]$full,[bool]$directory,[bool]$ancestor=$false){
   if($directory -and $ancestor){$mask=$mask -band (-bnot [long]4)}
   if($ace.AccessControlType -eq [Security.AccessControl.AccessControlType]::Allow -and (($mask -band $critical) -ne 0) -and $trusted -notcontains $ace.IdentityReference.Value){throw 'INSTALL_GUARD_REFUSED'}
  }
+}
+function Preflight-NewVersion{
+ $codeAtlas=Join-Path $programs 'CodeAtlas'
+ $releases=Join-Path $codeAtlas 'releases'
+ $leaf=[IO.Path]::GetFileName($root)
+ Need ($leaf -cmatch '\Arelease-[a-f0-9]{64}\z')
+ $expected=[IO.Path]::GetFullPath((Join-Path $releases $leaf))
+ Need ([IO.Path]::GetFullPath($root).Equals($expected,[StringComparison]::OrdinalIgnoreCase))
+ # Validate from the volume root down, before following any container junction.
+ $chain=[Collections.Generic.List[IO.DirectoryInfo]]::new()
+ for($a=[IO.DirectoryInfo]::new($releases);$null -ne $a;$a=$a.Parent){$chain.Add($a);Need ($chain.Count -le 200000)}
+ for($i=$chain.Count-1;$i -ge 0;$i--){$a=$chain[$i];Need (-not ($a.Attributes -band [IO.FileAttributes]::ReparsePoint));Need $a.Exists;Guard $a.FullName $true $true}
+ # These two containers directly hold the new version; apply the original strict directory policy.
+ foreach($container in @($codeAtlas,$releases)){$item=Get-Item -LiteralPath $container -Force;Need ($item -is [IO.DirectoryInfo] -and -not ($item.Attributes -band [IO.FileAttributes]::ReparsePoint));Guard $item.FullName $true}
+ # Enumerate entries, not Test-Path: a dangling junction still occupies the exact name.
+ foreach($entry in ([IO.DirectoryInfo]::new($releases)).EnumerateFileSystemInfos()){
+  $script:items++;Need ($script:items -le 200000)
+  Need (-not $entry.Name.Equals($leaf,[StringComparison]::OrdinalIgnoreCase))
+  Need (-not ($entry.Attributes -band [IO.FileAttributes]::ReparsePoint))
+ }
+}
+if($Mode -ceq 'NEW_VERSION'){
+ Preflight-NewVersion
+ [pscustomobject]@{kind='INSTALL_ACL_CHECK_ONLY';mode=$Mode;passed=$true;items=$script:items;principalQueries=0;aclChanges=0}|ConvertTo-Json -Compress
+ exit 0
 }
 $base=if($Mode -ceq 'PREFLIGHT'){$programs}else{$root}
 for($a=[IO.DirectoryInfo]::new($base);$null -ne $a;$a=$a.Parent){Need ($a.Exists -and -not ($a.Attributes -band [IO.FileAttributes]::ReparsePoint));Guard $a.FullName $true $true}

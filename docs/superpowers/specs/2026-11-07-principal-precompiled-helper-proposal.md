@@ -144,3 +144,12 @@ the same literal text; the generator also binds the exact candidate production
 module bytes. Own266/270-character fixture reads and synthetic original-rule
 negatives pass. This is implementation compatibility, not a new trust grant or
 actual installation qualification. See ../reviews/2026-11-07-principal-longpath-acl.json.
+
+## Coexistence preparation
+
+NEW_VERSION is a private read-only predicate for the fixed selected new version.
+It reuses original subject/mask/ancestor policies, applies strict container checks,
+and refuses existing target entries and anomalous links. It does not reserve a name
+or confer authority; actual copy must exclusive-create and perform post-copy checks.
+First-install and installed modes remain unchanged. Scope, evidence and actual-
+operation boundary: ../reviews/2026-11-07-principal-coexistence-preflight.json.

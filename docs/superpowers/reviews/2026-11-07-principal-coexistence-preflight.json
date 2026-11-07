@@ -1,0 +1,419 @@
+{
+  "kind": "OWNED_COEXISTENCE_PREFLIGHT_IMPLEMENTED",
+  "date": "2026-11-07",
+  "sourceBase": "9fbc724fb9c10a4e9c569f265663106615e4682c",
+  "scope": "new private read-only predicate only; no real installed check/install/query/ACL mutation",
+  "implementation": {
+    "mode": "NEW_VERSION",
+    "ancestry": "physical top-down, reject reparse before ACL",
+    "containers": "CodeAtlas/releases use original strict directory policy, higher ancestors original ancestor policy",
+    "absence": "enumerate exact parent entries, case-insensitive target occupancy including dangling junctions refuses; no reservation/grant",
+    "sibling": "anomalous reparse refuses without loading old releases",
+    "legacy": "first-install and installed branches plus all ACL policy bytes recover original1fc92716 after removing new dispatch and prior ACL-I/O substitutions"
+  },
+  "verification": {
+    "red": "missing mode/function2/2 failed",
+    "integrated": "8/8 top-level,0fail/cancel/skip/todo; owner29 and preparation8 inner overlap not summed",
+    "ownedFixture": ".superpowers/principal-coexistence-fixture-ZarxKD",
+    "ownedResult": {
+      "kind": "OWNED_COEXISTENCE_PREFLIGHT_ONLY",
+      "cases": 32,
+      "failures": 0,
+      "results": [
+        {
+          "expected": true,
+          "pass": true,
+          "errorId": null,
+          "accepted": true,
+          "name": "safe",
+          "mode": "NEW_VERSION",
+          "prematureReads": 0,
+          "items": 12
+        },
+        {
+          "expected": false,
+          "pass": true,
+          "errorId": "OWNED_PREFLIGHT_TEST_REFUSED",
+          "accepted": false,
+          "name": "missing-code",
+          "mode": "NEW_VERSION",
+          "prematureReads": 0,
+          "items": 7
+        },
+        {
+          "expected": false,
+          "pass": true,
+          "errorId": "OWNED_PREFLIGHT_TEST_REFUSED",
+          "accepted": false,
+          "name": "missing-releases",
+          "mode": "NEW_VERSION",
+          "prematureReads": 0,
+          "items": 8
+        },
+        {
+          "expected": false,
+          "pass": true,
+          "errorId": "OWNED_PREFLIGHT_TEST_REFUSED",
+          "accepted": false,
+          "name": "code-file",
+          "mode": "NEW_VERSION",
+          "prematureReads": 0,
+          "items": 7
+        },
+        {
+          "expected": false,
+          "pass": true,
+          "errorId": "OWNED_PREFLIGHT_TEST_REFUSED",
+          "accepted": false,
+          "name": "releases-file",
+          "mode": "NEW_VERSION",
+          "prematureReads": 0,
+          "items": 8
+        },
+        {
+          "expected": false,
+          "pass": true,
+          "errorId": "OWNED_PREFLIGHT_TEST_REFUSED",
+          "accepted": false,
+          "name": "programs-junction",
+          "mode": "NEW_VERSION",
+          "prematureReads": 0,
+          "items": 6
+        },
+        {
+          "expected": false,
+          "pass": true,
+          "errorId": "OWNED_PREFLIGHT_TEST_REFUSED",
+          "accepted": false,
+          "name": "code-junction",
+          "mode": "NEW_VERSION",
+          "prematureReads": 0,
+          "items": 7
+        },
+        {
+          "expected": false,
+          "pass": true,
+          "errorId": "OWNED_PREFLIGHT_TEST_REFUSED",
+          "accepted": false,
+          "name": "releases-junction",
+          "mode": "NEW_VERSION",
+          "prematureReads": 0,
+          "items": 8
+        },
+        {
+          "expected": false,
+          "pass": true,
+          "errorId": "OWNED_PREFLIGHT_TEST_REFUSED",
+          "accepted": false,
+          "name": "higher-ancestor-junction",
+          "mode": "NEW_VERSION",
+          "prematureReads": 0,
+          "items": 6
+        },
+        {
+          "expected": false,
+          "pass": true,
+          "errorId": "OWNED_PREFLIGHT_TEST_REFUSED",
+          "accepted": false,
+          "name": "code-dangling-container",
+          "mode": "NEW_VERSION",
+          "prematureReads": 0,
+          "items": 7
+        },
+        {
+          "expected": false,
+          "pass": true,
+          "errorId": "OWNED_PREFLIGHT_TEST_REFUSED",
+          "accepted": false,
+          "name": "target-directory",
+          "mode": "NEW_VERSION",
+          "prematureReads": 0,
+          "items": 13
+        },
+        {
+          "expected": false,
+          "pass": true,
+          "errorId": "OWNED_PREFLIGHT_TEST_REFUSED",
+          "accepted": false,
+          "name": "target-file",
+          "mode": "NEW_VERSION",
+          "prematureReads": 0,
+          "items": 13
+        },
+        {
+          "expected": false,
+          "pass": true,
+          "errorId": "OWNED_PREFLIGHT_TEST_REFUSED",
+          "accepted": false,
+          "name": "target-junction",
+          "mode": "NEW_VERSION",
+          "prematureReads": 0,
+          "items": 13
+        },
+        {
+          "expected": false,
+          "pass": true,
+          "errorId": "OWNED_PREFLIGHT_TEST_REFUSED",
+          "accepted": false,
+          "name": "target-dangling-junction",
+          "mode": "NEW_VERSION",
+          "prematureReads": 0,
+          "items": 13
+        },
+        {
+          "expected": false,
+          "pass": true,
+          "errorId": "OWNED_PREFLIGHT_TEST_REFUSED",
+          "accepted": false,
+          "name": "target-case-alias",
+          "mode": "NEW_VERSION",
+          "prematureReads": 0,
+          "items": 13
+        },
+        {
+          "expected": false,
+          "pass": true,
+          "errorId": "OWNED_PREFLIGHT_TEST_REFUSED",
+          "accepted": false,
+          "name": "sibling-junction",
+          "mode": "NEW_VERSION",
+          "prematureReads": 0,
+          "items": 12
+        },
+        {
+          "expected": false,
+          "pass": true,
+          "errorId": "OWNED_PREFLIGHT_TEST_REFUSED",
+          "accepted": false,
+          "name": "ancestor-owner",
+          "mode": "NEW_VERSION",
+          "prematureReads": 0,
+          "items": 7
+        },
+        {
+          "expected": false,
+          "pass": true,
+          "errorId": "INSTALL_GUARD_REFUSED",
+          "accepted": false,
+          "name": "ancestor-writer",
+          "mode": "NEW_VERSION",
+          "prematureReads": 0,
+          "items": 7
+        },
+        {
+          "expected": false,
+          "pass": true,
+          "errorId": "OWNED_PREFLIGHT_TEST_REFUSED",
+          "accepted": false,
+          "name": "container-owner",
+          "mode": "NEW_VERSION",
+          "prematureReads": 0,
+          "items": 8
+        },
+        {
+          "expected": false,
+          "pass": true,
+          "errorId": "INSTALL_GUARD_REFUSED",
+          "accepted": false,
+          "name": "container-create-child",
+          "mode": "NEW_VERSION",
+          "prematureReads": 0,
+          "items": 10
+        },
+        {
+          "expected": false,
+          "pass": true,
+          "errorId": "INSTALL_GUARD_REFUSED",
+          "accepted": false,
+          "name": "releases-generic-write",
+          "mode": "NEW_VERSION",
+          "prematureReads": 0,
+          "items": 9
+        },
+        {
+          "expected": false,
+          "pass": true,
+          "errorId": "INSTALL_GUARD_REFUSED",
+          "accepted": false,
+          "name": "releases-inherited-write",
+          "mode": "NEW_VERSION",
+          "prematureReads": 0,
+          "items": 11
+        },
+        {
+          "expected": true,
+          "pass": true,
+          "errorId": null,
+          "accepted": true,
+          "name": "container-read-only",
+          "mode": "NEW_VERSION",
+          "prematureReads": 0,
+          "items": 12
+        },
+        {
+          "expected": false,
+          "pass": true,
+          "errorId": "OWNED_PREFLIGHT_TEST_REFUSED",
+          "accepted": false,
+          "name": "target-parent-mismatch",
+          "mode": "NEW_VERSION",
+          "prematureReads": 0,
+          "items": 0
+        },
+        {
+          "expected": true,
+          "pass": true,
+          "errorId": null,
+          "accepted": true,
+          "name": "first-install",
+          "mode": "PREFLIGHT",
+          "prematureReads": 0,
+          "items": 7
+        },
+        {
+          "expected": false,
+          "pass": true,
+          "errorId": "OWNED_PREFLIGHT_TEST_REFUSED",
+          "accepted": false,
+          "name": "first-existing-refuses",
+          "mode": "PREFLIGHT",
+          "prematureReads": 0,
+          "items": 7
+        },
+        {
+          "expected": false,
+          "pass": true,
+          "errorId": "INSTALL_GUARD_REFUSED",
+          "accepted": false,
+          "name": "first-ancestor-writer",
+          "mode": "PREFLIGHT",
+          "prematureReads": 0,
+          "items": 1
+        },
+        {
+          "expected": true,
+          "pass": true,
+          "errorId": null,
+          "accepted": true,
+          "name": "first-ancestor-sibling-create",
+          "mode": "PREFLIGHT",
+          "prematureReads": 0,
+          "items": 7
+        },
+        {
+          "expected": true,
+          "pass": true,
+          "errorId": null,
+          "accepted": true,
+          "name": "installed",
+          "mode": "INSTALLED",
+          "prematureReads": 0,
+          "items": 12
+        },
+        {
+          "expected": false,
+          "pass": true,
+          "errorId": "INSTALL_GUARD_REFUSED",
+          "accepted": false,
+          "name": "installed-writer",
+          "mode": "INSTALLED",
+          "prematureReads": 0,
+          "items": 1
+        },
+        {
+          "expected": false,
+          "pass": true,
+          "errorId": "OWNED_PREFLIGHT_TEST_REFUSED",
+          "accepted": false,
+          "name": "installed-unknown-link",
+          "mode": "INSTALLED",
+          "prematureReads": 0,
+          "items": 11
+        },
+        {
+          "expected": false,
+          "pass": true,
+          "errorId": "OWNED_PREFLIGHT_TEST_REFUSED",
+          "accepted": false,
+          "name": "installed-outside-link",
+          "mode": "INSTALLED",
+          "prematureReads": 0,
+          "items": 11
+        }
+      ],
+      "identityQueries": 0,
+      "ACLWrites": 0
+    },
+    "oldSentinels": "all physically retained sentinel bytes and mtime unchanged, fixture moves bounded by resolved owned paths",
+    "securityData": "explicit ACL method doubles, no WindowsIdentity/GetCurrent/Query",
+    "architecture": "17 projects PASS",
+    "format": "all4 affected JS/JSON PASS",
+    "syntax": {
+      "status": 0,
+      "signal": null,
+      "errorCode": null,
+      "stdout": "[{\"characters\":10086,\"name\":\"production\",\"errors\":0},{\"characters\":5801,\"name\":\"checker\",\"errors\":0}]\r\n",
+      "stderr": ""
+    },
+    "logs": [
+      "C:/Users/Freya/AppData/Local/Temp/codeatlas-coexistence-red.log",
+      "C:/Users/Freya/AppData/Local/Temp/codeatlas-coexistence-integrated-final2.log"
+    ]
+  },
+  "frozenRuntime": {
+    "digest": "dc691cab03650644ef5c6f6948b1a4fd221ae21dd5631beb1a60a5b33ae004c3",
+    "moduleSha256": "758439a355aeecd07eeb37b408c68abc3b7c0881f5268c3359a3ee46519203c5",
+    "rebuilt": false,
+    "files": 3053,
+    "aliases": 11,
+    "payloadBytes": 17513812,
+    "manifestBytes": 450696
+  },
+  "checker": {
+    "kind": "FIXED_DEPLOYMENT_GUARD_PREPARATION_ONLY",
+    "sourceRelative": ".superpowers/closed-runtime-20261107-acl-01/release-dc691cab03650644ef5c6f6948b1a4fd221ae21dd5631beb1a60a5b33ae004c3",
+    "contentDigest": "dc691cab03650644ef5c6f6948b1a4fd221ae21dd5631beb1a60a5b33ae004c3",
+    "candidateModuleSha256": "758439a355aeecd07eeb37b408c68abc3b7c0881f5268c3359a3ee46519203c5",
+    "guardSha256": "a7f362284068f2d39cd39906e28da51a51c3b0a02fb9e6fe54e7251062104b4a",
+    "guardBytes": 5801,
+    "readerSha256": "64f8b3a834c74cc7f169e18a2d6c70c327678568325abe5b7920b5006fef8758",
+    "templateSha256": "1ef871e0e7cb6854821ca02a94e857d20cdf9584a03596d930481cc30a641c3a",
+    "requiredChildPSModulePath": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\Modules",
+    "modes": [
+      "PREFLIGHT",
+      "INSTALLED",
+      "NEW_VERSION"
+    ],
+    "guardExecuted": false,
+    "identityQueries": 0,
+    "ACLChanges": 0
+  },
+  "deploymentPlan": "../plans/2026-11-07-principal-dc-coexistence-deployment.md",
+  "ci164": {
+    "run": 42376951339,
+    "head": "9fbc724fb9c10a4e9c569f265663106615e4682c",
+    "TypeScript": "success",
+    "Rust": "success",
+    "Native": "failure: R8 script catalog mismatch",
+    "reruns": 0,
+    "doesNotCoverThisNewMode": true
+  },
+  "notExecuted": [
+    "protected install or existing-installed-directory guard",
+    "WindowsIdentity/GetCurrent/Principal Query",
+    "filesystem ACL/security/global environment mutation",
+    "user project Source/database, model, Native/R9",
+    "old directory/guard/failed receipt overwrite or deletion"
+  ],
+  "phase1": "4/21",
+  "A6": "NOT_QUALIFIED",
+  "E02": "PROPOSED/uninstalled",
+  "files": {
+    "scripts/windows-principal-deployment-guard.ps1": "1ef871e0e7cb6854821ca02a94e857d20cdf9584a03596d930481cc30a641c3a",
+    "scripts/write-principal-deployment-guard.mjs": "ecad3a25030cf129e880ddc58601354dcf4667bbf9c3589b5488ff5342ac65b8",
+    "scripts/test-principal-coexistence.ps1": "63e26e66db375d46eb6bcb4c48cded1d68dc9fc6c424978ebfa20e955533e2c5",
+    "packages/runtime/test/principal-coexistence.test.mjs": "e783df782294231f16d95eb9fe23cbfdba8c3a90a1c27988f9dd0f7a07f01b0a",
+    "packages/runtime/test/windows-principal-acl.test.mjs": "0a555ce1356397a6f9e6b4e3e187d35b1041e5799461310860c3b3a743711136",
+    "package.json": "0dccac2c66c579b1d81151cf6621a1fe406f779a64011bbf384a0e1cbc5ea0fd"
+  }
+}

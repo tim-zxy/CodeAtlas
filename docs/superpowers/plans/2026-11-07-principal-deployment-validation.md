@@ -76,3 +76,12 @@ The original checker PREFLIGHT restriction remains first-install-only. A future
 side-by-side version plan must review existing CodeAtlas/releases protection and
 a fresh absent leaf, then obtain actual-operation approval. No installed-tree
 check/query was retried by this fix. See ../reviews/2026-11-07-principal-longpath-acl.json.
+
+## Coexistence preflight gap resolved offline
+
+NEW_VERSION now implements/tests the existing-container and exact-absent-leaf checks.
+Old PREFLIGHT/INSTALLED semantics remain. Frozen Runtime dc691cab is reused; the
+new5801-byte checker is a7f362284068f2d39cd39906e28da51a51c3b0a02fb9e6fe54e7251062104b4a.
+Actual install/query remain unexecuted; use the precise current plan at
+2026-11-07-principal-dc-coexistence-deployment.md rather than the old first-install
+sequence. No original guard or installed version has been replaced.
