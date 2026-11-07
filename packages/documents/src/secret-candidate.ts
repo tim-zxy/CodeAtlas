@@ -27,23 +27,34 @@ export function inspectDocumentSecretCandidate(
       for (const match of text.matchAll(/[^\s<>"']+/g)) {
         account.checkpoint();
         const token = match[0];
-        const separator = token.indexOf('://');
-        if (separator < 1) continue;
-        let start = separator;
-        while (start > 0 && /[a-z0-9+.-]/i.test(token[start - 1]!)) {
+        let previousStart = -1;
+        const inspectUri = (end: number) => {
+          if (previousStart < 0) return;
           account.checkpoint();
-          account.visitItem();
-          start--;
+          account.reserveBuffer((end - previousStart) * 2);
+          // Local syntax only: never follow links or log parser errors.
+          try {
+            if (new URL(token.slice(previousStart, end)).password.length) rules.add('URI_PASSWORD');
+          } catch {
+            // An invalid URI must not suppress later URI candidates in this token.
+          }
+        };
+        for (
+          let separator = token.indexOf('://');
+          separator >= 0;
+          separator = token.indexOf('://', separator + 3)
+        ) {
+          let start = separator;
+          while (start > 0 && /[a-z0-9+.-]/i.test(token[start - 1]!)) {
+            account.checkpoint();
+            account.visitItem();
+            start--;
+          }
+          if (!/[a-z]/i.test(token[start]!)) continue;
+          inspectUri(start);
+          previousStart = start;
         }
-        if (!/[a-z]/i.test(token[start]!)) continue;
-        // URL parsing is local syntax only: never follow links or log parser errors.
-        let password = '';
-        try {
-          password = new URL(token.slice(start)).password;
-        } catch {
-          continue;
-        }
-        if (password.length) rules.add('URI_PASSWORD');
+        inspectUri(token.length);
       }
     };
     account.reserveBuffer(bytes.length * 2);

@@ -1,3 +1,23 @@
+## P1-12 joined URI fix and typed capture evaluation - 2026-11-07
+
+Candidate URI scanner now enumerates all adjacent schemes, independently parses
+bounded segments, and continues after malformed prefixes. Three positive RED
+cases now pass; expanded independent19-vector corpus includes a joined no-password
+negative. PROPOSED/LIMITED/clearance=false and v1 behavior remain unchanged.
+Private Application inspectCapturedCompilationValues validates exact snapshot/
+support closure before scanning captured values, including support-only data;
+returns CAPTURED_VALUES_ONLY/originalSource NOT_INSPECTED. No Source or permission
+owner is issued. Original control is retained through scan/final checkpoints;
+review-found post-parse cancellation defect was reproduced then fixed, with
+replacement-signal/extended-deadline refusal tested. No production caller/export.
+Documents/Application builds,127 related tests and architecture17 pass. CI167/168
+terminal: TS/Rust success, Native R8 catalog prerequisite failure; no reruns.
+[Exact scope/evidence](../superpowers/specs/2026-11-07-secret-coverage-candidate.md).
+Production coverage approval, authorized complete original input and consumption
+binding still missing; ordinary capture stays scan-denied. No user data, installed
+update, real identity, model, migration, publication or R9. Phase1 stays4/21,
+A6 NOT_QUALIFIED, E02 PROPOSED/uninstalled; no new acceptance claim.
+
 ## P1-12 offline coverage candidate and capture boundary map - 2026-11-07
 
 Private `secret-candidate.ts` composes unchanged v1 detection with local URI-password

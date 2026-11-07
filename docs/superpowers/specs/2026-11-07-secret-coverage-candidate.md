@@ -1,6 +1,30 @@
 # Offline secret coverage candidate and P1-12 boundary map
 
-Fresh evidence: initial15 RED corpus cases failed before implementation; final
+## Follow-up: joined URI and typed capture evaluation
+
+Joined URI defect is fixed: enumerate every scheme in each token and parse the
+nonoverlapping adjacent-scheme segments. Invalid preceding URI does not suppress
+later candidates. Reserve substring bytes before allocation; all text and scheme
+walks share the existing account. Three positive cases reproduced RED before fix;
+middle-password, malformed-prefix and no-password negatives are now covered.
+Candidate corpus now19 vectors; v1 source/corpus remain unchanged.
+
+Private Application `inspectCapturedCompilationValues(input,control,account)`
+first validates the complete snapshot schema/digest/selection/support closure,
+then runs the candidate over all captured values, including support-only values.
+Result explicitly says CAPTURED_VALUES_ONLY and originalSource NOT_INSPECTED.
+It authenticates no Source, permissions or consumer. A caller-owned DTO/digest
+does not become provenance. No production call or public export is added.
+Control fields are snapshotted without invoking accessors; original signal and
+deadline cover parsing, scan checkpoints and final return. An independent review
+found post-parse cancellation could previously return; the new regression failed
+before the fix and now proves replacement signal/deadline cannot revive evaluation.
+Final Documents/Application builds,127 affected tests and architecture17 passed.
+No new approval/clearance, installed update, user data, model, migration or R9.
+
+## Initial candidate evidence (1526f32; retained history)
+
+Initial15 RED corpus cases failed before implementation; final
 16-vector corpus plus unsafe-input/cancel/budget tests passed. Documents build,
 121 combined detector/preflight/capture-contract/lifecycle tests, architecture17
 passed with no skips. Tests: Node --test, concurrency1, Documents secret-preflight;
@@ -22,8 +46,8 @@ SECURITY controls, capture private schema-v1 and v1 detector remain authoritativ
 nonshared UTF8 source and plain-data candidate using the shared account. It runs
 the unchanged v1 PEM/credential-assignment/string-property rules, then inspects
 original text plus every candidate string and key for URI passwords. The URI rule
-tokenizes at whitespace/angle brackets/quotes, finds the first `://` in each token,
-finds its preceding scheme, locally parses with Node URL, and flags nonempty
+tokenizes at whitespace/angle brackets/quotes, enumerates `://` schemes in each token,
+parses each adjacent-scheme segment locally with Node URL, and flags nonempty
 password. It neither follows URLs nor emits parser errors/raw matches. Account
 checkpoints and work charges cover complete strings, including no-hit input.
 Result reports `document-secret-indicators-v2-candidate`, status PROPOSED,
@@ -35,8 +59,8 @@ Independent literal corpus: `packages/documents/test/fixtures/secret-indicators-
 Positives include raw/payload/diagnostic/key URI password, percent-encoded password,
 v1 assignment/property and conservative examples. Negatives include ordinary URI,
 empty password, port and `@` in query. Explicit known misses retain invalid URI,
-opaque token, base64 and split fragments. Joined multiple URIs without delimiters,
-unknown token formats and nonstring secret values are not covered. Placeholders
+opaque token, base64 and split fragments. Unknown token formats and nonstring
+secret values are not covered. Placeholders
 may overblock. URI username-only is deliberately not a password indicator; this
 does not classify it as safe. No no-hit result proves absence of secrets.
 

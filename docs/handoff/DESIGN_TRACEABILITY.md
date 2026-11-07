@@ -1,3 +1,14 @@
+## P1-12 adjacent URI fix and captured-value evaluation - 2026-11-07
+
+Private Documents candidate now checks every adjacent scheme; three original
+misses RED-to-GREEN, independent corpus19. Private Application
+compilation-secret-candidate.ts reuses strict snapshot/support closure and scans
+all captured values while explicitly denying original-Source inspection claims.
+Control snapshot/intrinsic cancellation/deadline checkpoints cover the entire
+offline invocation. Independent review's post-parse cancellation finding was
+reproduced RED then fixed; final127 tests/builds/architecture17 pass. No new
+authority, production call, public API, schema, policy installation or gate closure.
+
 ## P1-12 versioned offline coverage candidate - 2026-11-07
 
 SECURITY source/candidate scanning maps to private Documents secret-candidate.ts:

@@ -3,6 +3,8 @@ import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import * as contract from '../dist/compilation-input-contract.js';
+const inspection = await import('../dist/compilation-secret-candidate.js').catch(() => ({}));
+const { makeAccount } = await import('../../source/test/fixtures/mixed-source-git-double.mjs');
 
 test('private DTO declarations do not leak a direct Zod package dependency', () => {
   const declaration = readFileSync(
@@ -120,6 +122,79 @@ function addSourceSupport(v) {
   });
   return v;
 }
+
+test('offline captured-value inspection includes support-only values and never claims original Source inspection', () => {
+  const input = addSourceSupport(codeCapture());
+  input.repositories[0].entities.shift();
+  const support = input.repositories[0].supports[0];
+  support.value.languageHint = 'https://user:synthetic-only@example.invalid';
+  support.ref.valueDigest = createHash('sha256')
+    .update(
+      'codeatlas-phase1-support-value-v1\0' +
+        contract.canonicalCompilationJson(support.value, control()),
+    )
+    .digest('hex');
+  support.capturedValueDigest = contract.compilationCaptureValueDigest(
+    support.valueSchemaRef,
+    support.value,
+    control(),
+  );
+  const result = inspection.inspectCapturedCompilationValues(
+    create(input),
+    control(),
+    makeAccount().account,
+  );
+  assert.equal(result.inputKind, 'CAPTURED_VALUES_ONLY');
+  assert.equal(result.originalSource, 'NOT_INSPECTED');
+  assert.equal(result.scan.detected, true);
+  assert.ok(result.scan.rules.includes('URI_PASSWORD'));
+  assert.equal(result.scan.status, 'PROPOSED');
+  assert.equal(result.scan.clearance, false);
+});
+
+test('offline captured-value inspection refuses broken support digests and cancelled control', () => {
+  const input = structuredClone(create(addSourceSupport(withSource())));
+  input.repositories[0].supports[0].capturedValueDigest = zero;
+  const owner = makeAccount();
+  assert.throws(() => inspection.inspectCapturedCompilationValues(input, control(), owner.account));
+  assert.equal(owner.usage.invalid, true);
+  const controller = new AbortController();
+  controller.abort();
+  const stopped = makeAccount();
+  assert.throws(() =>
+    inspection.inspectCapturedCompilationValues(
+      create(),
+      control({ signal: controller.signal }),
+      stopped.account,
+    ),
+  );
+  assert.equal(stopped.usage.invalid, true);
+});
+
+test('offline captured-value inspection retains original cancellation and deadline through scanning', (t) => {
+  for (const failure of ['cancel', 'deadline']) {
+    const controller = new AbortController();
+    const requestControl = control({ signal: controller.signal });
+    const owner = makeAccount();
+    let owns = 0;
+    owner.account.own = () => {
+      if (++owns !== 2) return;
+      if (failure === 'cancel') {
+        controller.abort();
+        requestControl.signal = new AbortController().signal;
+      } else {
+        const expiredAt = requestControl.deadlineEpochMs + 1;
+        t.mock.method(Date, 'now', () => expiredAt);
+        requestControl.deadlineEpochMs = expiredAt + 60000;
+      }
+    };
+    assert.throws(() =>
+      inspection.inspectCapturedCompilationValues(create(), requestControl, owner.account),
+    );
+    assert.equal(owner.usage.invalid, true);
+    t.mock.restoreAll();
+  }
+});
 
 test('independent handwritten canonical bytes and literal SHA256 vectors', () => {
   assert.equal(
