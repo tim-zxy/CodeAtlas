@@ -1,6 +1,6 @@
 # Compilation capture private schema v1
 
-Status: LOCKED PRIVATE V1 REFINEMENT FOR APPROVED OFFLINE IMPLEMENTATION, NOT YET IMPLEMENTED. The four directions
+Status: LOCKED PRIVATE V1; OFFLINE IMPLEMENTATION AND OWNED SQLITE/SUBSTITUTE VERIFICATION RECORDED BELOW. The four directions
 in [the capture proposal](2026-11-06-compilation-capture-contract-proposal.md) were
 approved for this bounded specification work. This file fixes private DTO shape,
 allowlists and validation order; it does not install a public IR, migration,
@@ -408,6 +408,13 @@ not authority, record identity or an idempotency key. P1-14 compares the exact
 authorized normalized request and actual stored inputDigest; no update-in-place.
 
 ## 7. Exact offline implementation and verification order
+
+Implementation update 2026-11-07: private DTO/closure/digests, owned repository and
+workspace compositions and Application/Runtime offline capture are implemented.
+[Integrated evidence](../reviews/2026-11-07-capture-markdown-integration.json)
+distinguishes genuine SQLite ownership from substituted Source/policy evidence;
+body scanning, unavailable support recipes, W010, publication and actual R9 remain
+closed. The sequence below retains the original refinement-time plan/history.
 
 No commands in this section were run for this documentation-only refinement.
 Future implementation follows these dependencies, within separately authorized

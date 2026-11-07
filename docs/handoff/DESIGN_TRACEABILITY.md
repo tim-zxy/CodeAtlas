@@ -1,3 +1,17 @@
+## Private capture and Markdown adapter offline implementation - 2026-11-07
+
+P1-12/14 approved scope -> locked private capture v1 -> Application
+compilation-input-contract/capture-compilation-input -> owned R013/Workspace
+Storage compositions -> private Runtime compilation-input bridge -> independent
+canonical vectors, WAL/connection owner/cleanup/authority refusal tests.
+P1-10 exact approved69-node parser closure -> private parse-document AST adapter ->
+original source geometry and existing Document bundle -> genuine CommonMark/GFM
+fixtures, including lossless unequal-width fallback. No public IR/permission or
+publication contract changed. Review fixes, reproducible validation and remaining
+Source/scan/W010/R9 gaps are in
+[one integrated receipt](../superpowers/reviews/2026-11-07-capture-markdown-integration.json).
+These are component results, not E02 installation, A6 or parent task acceptance.
+
 ## Approved capture refinement and parser adoption - 2026-11-07
 
 P1-12/14 authorized capture scope -> [locked exact schema](../superpowers/specs/2026-11-06-compilation-capture-schema-v1.md)

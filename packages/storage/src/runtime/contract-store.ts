@@ -1,12 +1,13 @@
 import {
   FrozenContractSetV2Schema,
+  ensurePhase1Data,
   parseFrozenContractSetV2,
   workspaceRuntimeInputDigestV2,
   canonicalRuntimeJson,
   frozenContractReferenceContext,
   type FrozenContractSetV2,
 } from '@codeatlas/ir';
-import { DatabaseSync } from 'node:sqlite';
+import { DatabaseSync, type StatementSync } from 'node:sqlite';
 import { isDeepStrictEqual, types } from 'node:util';
 import {
   FrozenContractSetSchema,
@@ -20,9 +21,15 @@ import {
   scopedRefKey,
   type FrozenContractSet,
 } from '@codeatlas/ir';
-import { RuntimeFactStore, readRuntimeBindingForWorkspace } from './runtime-fact-store.js';
+import {
+  RuntimeFactStore,
+  readRuntimeBindingForWorkspace,
+  repositoryCompilationWorkspaceSnapshot,
+} from './runtime-fact-store.js';
+import { readDocumentRowForWorkspaceCompilation } from '../documents/document-store.js';
 import {
   HistoryReadBudget,
+  HistoryCaptureError,
   checkedHistoryLimits,
   exact,
   record,
@@ -270,7 +277,12 @@ function frozenSet(
 }
 const owners = new WeakMap<
   object,
-  { db: DatabaseSync; workspace: string; repositories: readonly RuntimeFactStore[] }
+  {
+    db: DatabaseSync;
+    workspace: string;
+    repositories: readonly RuntimeFactStore[];
+    marker: StatementSync;
+  }
 >();
 const outcomes = new WeakMap<object, WorkspaceRuntimeOutcome>();
 function snapshots(stores: readonly RuntimeFactStore[], b: HistoryReadBudget) {
@@ -315,7 +327,12 @@ export class ContractStore {
         !types.isProxy(repositories) &&
         repositories.every((s) => s instanceof RuntimeFactStore),
     );
-    owners.set(this, { db, workspace: text(workspaceId), repositories: [...repositories] });
+    owners.set(this, {
+      db,
+      workspace: text(workspaceId),
+      repositories: [...repositories],
+      marker: db.prepare('SELECT 1 WHERE 0'),
+    });
   }
   /** Authenticate an explicit frozen set against owned repository snapshots and W003.
    * Per-database snapshots are not a cross-database atomic moment. No writes or repair. */
@@ -669,7 +686,7 @@ function readWorkspaceActivation(
   workspace: string,
   id: string,
   b: HistoryReadBudget,
-) {
+): WorkspaceCompilationRuntime {
   const sql = runtimeSql(db, b),
     rows = sql.read(
       'workspace_runtime_activations',
@@ -847,4 +864,466 @@ function readWorkspaceActivation(
     execution,
     ...(format === 2 ? { formatVersion: 2 as const } : {}),
   };
+}
+
+type CompilationDocumentSelection = Readonly<{ documentId: string; documentRevisionId: string }>;
+type CompilationRepository = Readonly<{ store: RuntimeFactStore; handle: object }>;
+interface WorkspaceCompilationSelection {
+  workspaceId: string;
+  revisionSetId: string;
+  registeredRepositories: { repositoryId: string; rootPath: string }[];
+  revisionSetEntries: { repositoryId: string; revisionId: string; revisionFingerprint: string }[];
+}
+interface WorkspaceCompilationRuntime {
+  activationId: string;
+  frozen: FrozenContractSet | FrozenContractSetV2;
+  matches: WorkspaceRuntimeBatch['matches'];
+  execution: Execution;
+  formatVersion?: 2;
+}
+interface WorkspaceCompilationView extends WorkspaceCompilationSelection {
+  workspaceRuntimeRead: 'REQUESTED' | 'NOT_REQUESTED';
+  workspaceRuntime: WorkspaceCompilationRuntime | null;
+  documents: NonNullable<ReturnType<typeof readDocumentRowForWorkspaceCompilation>>[];
+}
+interface WorkspaceCompilationFrame {
+  view: WorkspaceCompilationView;
+  documentHeads: { documentId: string; rows: ReturnType<ReturnType<typeof runtimeSql>['read']> }[];
+}
+interface WorkspaceCompilationCapture {
+  readonly handle: object;
+  readonly view: WorkspaceCompilationView;
+}
+
+function compilationControl(syncCheck: () => undefined): void {
+  check(
+    typeof syncCheck === 'function' &&
+      !types.isProxy(syncCheck) &&
+      !types.isAsyncFunction(syncCheck),
+    'WORKSPACE_SYNC_CHECK_REQUIRED',
+  );
+  const result: unknown = syncCheck();
+  if (types.isPromise(result)) Promise.prototype.then.call(result, undefined, () => {});
+  check(result === undefined, 'WORKSPACE_SYNC_CHECK_REQUIRED');
+}
+function compilationFreeze<T>(value: T): T {
+  if (value && typeof value === 'object') {
+    for (const child of Object.values(value)) compilationFreeze(child);
+    Object.freeze(value);
+  }
+  return value;
+}
+function compilationWorkspaceOwner(store: ContractStore) {
+  check(store !== null && typeof store === 'object' && !types.isProxy(store));
+  const owner = owners.get(store);
+  check(owner && owner.db.isOpen && !owner.db.isTransaction, 'WORKSPACE_CAPTURE_UNAVAILABLE');
+  try {
+    owner.marker.setReadBigInts(false);
+  } catch {
+    throw Error('WORKSPACE_CAPTURE_UNAVAILABLE');
+  }
+  return owner;
+}
+function compilationSql(db: DatabaseSync, b: HistoryReadBudget, syncCheck: () => undefined) {
+  check(b instanceof HistoryReadBudget && !types.isProxy(b), 'INVALID_WORKSPACE_BUDGET');
+  const base = runtimeSql(db, b);
+  return {
+    ...base,
+    read(...args: Parameters<typeof base.read>) {
+      compilationControl(syncCheck);
+      const result = base.read(...args);
+      compilationControl(syncCheck);
+      return result;
+    },
+  };
+}
+function compilationSelection(
+  sql: ReturnType<typeof runtimeSql>,
+  workspaceId: string,
+  revisionSetId: string,
+): WorkspaceCompilationSelection {
+  const version = sql.read('pragma_user_version', ['user_version'], '1', [])[0]?.user_version;
+  check(version === 6 || version === 7 || version === 8, 'WORKSPACE_SCHEMA_UNSUPPORTED');
+  check(
+    sql.read('pragma_foreign_keys', ['foreign_keys'], '1', [])[0]?.foreign_keys === 1,
+    'WORKSPACE_FOREIGN_KEYS_REQUIRED',
+  );
+  check(
+    sql.read('workspace', ['id'], 'id=?', [workspaceId]).length === 1,
+    'WORKSPACE_SCOPE_CHANGED',
+  );
+  const registeredRepositories = sql
+    .read('repositories', ['repository_id', 'root_path'], 'workspace_id=?', [workspaceId])
+    .map((row) => ({ repositoryId: text(row.repository_id), rootPath: text(row.root_path) }))
+    .sort((a, b) =>
+      a.repositoryId < b.repositoryId ? -1 : a.repositoryId > b.repositoryId ? 1 : 0,
+    );
+  const sets = sql.read('revision_sets', ['id', 'workspace_id', 'frozen'], 'id=?', [revisionSetId]);
+  check(
+    sets.length === 1 && sets[0]!.workspace_id === workspaceId && sets[0]!.frozen === 1,
+    'WORKSPACE_REQUIRES_FROZEN_SET',
+  );
+  const revisionSetEntries = sql
+    .read(
+      'revision_set_items',
+      ['repository_id', 'revision_id', 'revision_fingerprint'],
+      'revision_set_id=?',
+      [revisionSetId],
+    )
+    .map((row) => ({
+      repositoryId: text(row.repository_id),
+      revisionId: text(row.revision_id),
+      revisionFingerprint: text(row.revision_fingerprint),
+    }))
+    .sort((a, b) =>
+      a.repositoryId < b.repositoryId ? -1 : a.repositoryId > b.repositoryId ? 1 : 0,
+    );
+  check(
+    new Set(registeredRepositories.map((x) => x.repositoryId)).size ===
+      registeredRepositories.length,
+  );
+  check(new Set(revisionSetEntries.map((x) => x.repositoryId)).size === revisionSetEntries.length);
+  for (const entry of revisionSetEntries)
+    check(
+      registeredRepositories.some((x) => x.repositoryId === entry.repositoryId),
+      'WORKSPACE_REPOSITORY_MISMATCH',
+    );
+  return { workspaceId, revisionSetId, registeredRepositories, revisionSetEntries };
+}
+function compilationTransaction<T>(
+  store: ContractStore,
+  budget: HistoryReadBudget,
+  syncCheck: () => undefined,
+  read: (
+    sql: ReturnType<typeof runtimeSql>,
+    owner: ReturnType<typeof compilationWorkspaceOwner>,
+  ) => T,
+): T {
+  const owner = compilationWorkspaceOwner(store),
+    { db } = owner;
+  const sql = compilationSql(db, budget, syncCheck);
+  compilationControl(syncCheck);
+  compilationWorkspaceOwner(store);
+  check(!db.isTransaction, 'WORKSPACE_TRANSACTION_ACTIVE');
+  db.exec('BEGIN');
+  let transaction = true;
+  try {
+    const result = read(sql, owner);
+    compilationControl(syncCheck);
+    try {
+      owner.marker.setReadBigInts(false);
+    } catch {
+      throw Error('WORKSPACE_CAPTURE_UNAVAILABLE');
+    }
+    check(db.isOpen && db.isTransaction, 'WORKSPACE_CAPTURE_UNAVAILABLE');
+    db.exec('COMMIT');
+    transaction = false;
+    compilationWorkspaceOwner(store);
+    return compilationFreeze(result);
+  } catch (error) {
+    try {
+      // Never adopt a new transaction on a reopened connection.
+      owner.marker.setReadBigInts(false);
+      if (transaction && db.isOpen && db.isTransaction) db.exec('ROLLBACK');
+    } catch {
+      throw new HistoryCaptureError('CONTEXT_UNAVAILABLE');
+    }
+    throw error;
+  }
+}
+/** Metadata only: trusted Application authorizes selection before any body read. */
+export function readWorkspaceCompilationSelection(
+  store: ContractStore,
+  revisionSetId: string,
+  budget: HistoryReadBudget,
+  syncCheck: () => undefined,
+): WorkspaceCompilationSelection {
+  try {
+    const id = text(revisionSetId);
+    return compilationTransaction(store, budget, syncCheck, (sql, owner) => {
+      const result = compilationSelection(sql, owner.workspace, id);
+      budget.own(result);
+      return result;
+    });
+  } catch (error) {
+    if (error instanceof HistoryCaptureError) throw error;
+    throw new HistoryCaptureError('INVALID_HISTORY');
+  }
+}
+function compilationRepositories(
+  input: readonly CompilationRepository[],
+  budget: HistoryReadBudget,
+): CompilationRepository[] {
+  check(Array.isArray(input) && !types.isProxy(input), 'WORKSPACE_REPOSITORY_MISMATCH');
+  // Prepay the owned descriptor/index collection with the shared logical account.
+  budget.add('items', input.length);
+  const descriptors = Object.getOwnPropertyDescriptors(input);
+  check(Reflect.ownKeys(descriptors).length === input.length + 1, 'WORKSPACE_REPOSITORY_MISMATCH');
+  const result: CompilationRepository[] = [];
+  for (let index = 0; index < input.length; index++) {
+    const descriptor = descriptors[String(index)];
+    check(
+      descriptor && 'value' in descriptor && descriptor.enumerable,
+      'WORKSPACE_REPOSITORY_MISMATCH',
+    );
+    const item: unknown = descriptor.value;
+    check(
+      item &&
+        typeof item === 'object' &&
+        !types.isProxy(item) &&
+        Object.getPrototypeOf(item) === Object.prototype,
+      'WORKSPACE_REPOSITORY_MISMATCH',
+    );
+    const fields = Object.getOwnPropertyDescriptors(item);
+    check(
+      Reflect.ownKeys(fields).length === 2 &&
+        fields.store &&
+        fields.handle &&
+        'value' in fields.store &&
+        'value' in fields.handle &&
+        fields.store.enumerable &&
+        fields.handle.enumerable,
+      'WORKSPACE_REPOSITORY_MISMATCH',
+    );
+    const store: unknown = fields.store.value,
+      handle: unknown = fields.handle.value;
+    check(
+      !types.isProxy(store) &&
+        store instanceof RuntimeFactStore &&
+        handle &&
+        typeof handle === 'object' &&
+        !types.isProxy(handle),
+      'WORKSPACE_REPOSITORY_MISMATCH',
+    );
+    result.push({ store, handle });
+  }
+  return result;
+}
+function readCompilationWorkspace(
+  store: ContractStore,
+  revisionSetId: string,
+  selected: readonly CompilationDocumentSelection[],
+  repositories: readonly CompilationRepository[],
+  includeWorkspaceRuntime: boolean,
+  budget: HistoryReadBudget,
+  syncCheck: () => undefined,
+): WorkspaceCompilationFrame {
+  return compilationTransaction(store, budget, syncCheck, (sql, owner) => {
+    const selection = compilationSelection(sql, owner.workspace, revisionSetId);
+    const current: Snapshot[] = [];
+    const seen = new Set<RuntimeFactStore>();
+    for (const repository of repositories) {
+      check(
+        owner.repositories.includes(repository.store) && !seen.has(repository.store),
+        'WORKSPACE_REPOSITORY_MISMATCH',
+      );
+      seen.add(repository.store);
+      const snapshot = repositoryCompilationWorkspaceSnapshot(repository.store, repository.handle);
+      if (snapshot) current.push(snapshot);
+    }
+    const state = includeWorkspaceRuntime
+      ? sql.read(
+          'workspace_runtime_state',
+          ['activation_id', 'revision_set_id'],
+          'workspace_id=?',
+          [owner.workspace],
+        )
+      : [];
+    check(state.length <= 1);
+    let workspaceRuntime: ReturnType<typeof readWorkspaceActivation> | null = null;
+    if (state.length) {
+      check(state[0]!.revision_set_id === revisionSetId, 'WORKSPACE_INPUT_CHANGED');
+      workspaceRuntime = readWorkspaceActivation(
+        owner.db,
+        owner.workspace,
+        text(state[0]!.activation_id),
+        budget,
+      );
+      // Reuse original full candidate/reference checks after storage integrity validation.
+      validated(
+        {
+          expectedOldActivationId: workspaceRuntime.activationId,
+          frozen: workspaceRuntime.frozen,
+          matches: workspaceRuntime.matches,
+          execution: workspaceRuntime.execution,
+        },
+        current,
+        budget,
+        workspaceRuntime.formatVersion === 2 ? budget.remaining().maxSerializedBytes : undefined,
+      );
+      frozenSet(
+        owner.db,
+        owner.workspace,
+        { frozen: workspaceRuntime.frozen, expectedOldActivationId: workspaceRuntime.activationId },
+        budget,
+        current,
+      );
+    }
+    compilationControl(syncCheck);
+    const documents = selected.map((item) => {
+      const row = readDocumentRowForWorkspaceCompilation(
+        owner.workspace,
+        sql,
+        budget,
+        item.documentId,
+        item.documentRevisionId,
+        () => compilationControl(syncCheck),
+      );
+      check(row, 'DOCUMENT_REQUIRED_DOCUMENT_MISSING');
+      const repo = row.bundle.payload.document.repositoryId;
+      check(
+        repo === null || selection.registeredRepositories.some((x) => x.repositoryId === repo),
+        'WORKSPACE_REPOSITORY_MISMATCH',
+      );
+      return row;
+    });
+    // Head changes invalidate a capture without rewriting immutable historical bundles.
+    const documentHeads = selected.map((item) => ({
+      documentId: item.documentId,
+      rows: sql.read('documents', ['current_revision_id'], 'id=? AND workspace_id=?', [
+        item.documentId,
+        owner.workspace,
+      ]),
+    }));
+    const result = {
+      view: {
+        ...selection,
+        workspaceRuntimeRead: includeWorkspaceRuntime
+          ? ('REQUESTED' as const)
+          : ('NOT_REQUESTED' as const),
+        workspaceRuntime,
+        documents,
+      },
+      documentHeads,
+    };
+    budget.own(result);
+    return result;
+  });
+}
+const compilationOwners = new WeakMap<
+  object,
+  {
+    store: ContractStore;
+    db: DatabaseSync;
+    marker: StatementSync;
+    selected: readonly CompilationDocumentSelection[];
+    includeWorkspaceRuntime: boolean;
+    captured: ReturnType<typeof readCompilationWorkspace> | null;
+  }
+>();
+function compilationHandle(store: ContractStore, handle: object) {
+  check(
+    handle !== null && typeof handle === 'object' && !types.isProxy(handle),
+    'WORKSPACE_CAPTURE_UNAVAILABLE',
+  );
+  const entry = compilationOwners.get(handle);
+  check(
+    entry &&
+      entry.store === store &&
+      entry.captured &&
+      entry.db.isOpen &&
+      owners.get(store)?.db === entry.db,
+    'WORKSPACE_CAPTURE_UNAVAILABLE',
+  );
+  try {
+    entry.marker.setReadBigInts(false);
+  } catch {
+    throw Error('WORKSPACE_CAPTURE_UNAVAILABLE');
+  }
+  return entry;
+}
+/** Private owned composition. Payload validation does not grant Source/scan permission. */
+export function captureWorkspaceCompilationInputs(
+  store: ContractStore,
+  revisionSetId: string,
+  documents: readonly CompilationDocumentSelection[],
+  repositories: readonly CompilationRepository[],
+  includeWorkspaceRuntime: boolean,
+  budget: HistoryReadBudget,
+  syncCheck: () => undefined,
+): WorkspaceCompilationCapture {
+  try {
+    check(
+      budget instanceof HistoryReadBudget && !types.isProxy(budget),
+      'INVALID_WORKSPACE_BUDGET',
+    );
+    const ownedRepositories = compilationRepositories(repositories, budget);
+    check(typeof includeWorkspaceRuntime === 'boolean');
+    budget.own(documents);
+    ensurePhase1Data(documents);
+    const selected = array(documents).map((value) => {
+      const row = exact(value, ['documentId', 'documentRevisionId']);
+      return { documentId: text(row.documentId), documentRevisionId: text(row.documentRevisionId) };
+    });
+    check(
+      new Set(selected.map((x) => x.documentId)).size === selected.length,
+      'DOCUMENT_DUPLICATE_SELECTION',
+    );
+    budget.own(selected);
+    const id = text(revisionSetId);
+    const captured = readCompilationWorkspace(
+      store,
+      id,
+      selected,
+      ownedRepositories,
+      includeWorkspaceRuntime,
+      budget,
+      syncCheck,
+    );
+    const db = owners.get(store)!.db,
+      handle = Object.freeze({});
+    compilationOwners.set(handle, {
+      store,
+      db,
+      marker: db.prepare('SELECT 1 WHERE 0'),
+      selected,
+      includeWorkspaceRuntime,
+      captured,
+    });
+    return Object.freeze({ handle, view: captured.view });
+  } catch (error) {
+    if (error instanceof HistoryCaptureError) throw error;
+    throw new HistoryCaptureError('INVALID_HISTORY');
+  }
+}
+export function recheckWorkspaceCompilationInputs(
+  store: ContractStore,
+  handle: object,
+  repositories: readonly CompilationRepository[],
+  budget: HistoryReadBudget,
+  syncCheck: () => undefined,
+): void {
+  try {
+    const entry = compilationHandle(store, handle);
+    const ownedRepositories = compilationRepositories(repositories, budget);
+    const fresh = readCompilationWorkspace(
+      store,
+      entry.captured!.view.revisionSetId,
+      entry.selected,
+      ownedRepositories,
+      entry.includeWorkspaceRuntime,
+      budget,
+      syncCheck,
+    );
+    compilationHandle(store, handle);
+    if (!isDeepStrictEqual(entry.captured, fresh)) throw new HistoryCaptureError('HISTORY_CHANGED');
+  } catch (error) {
+    if (error instanceof HistoryCaptureError) throw error;
+    throw new HistoryCaptureError('INVALID_HISTORY');
+  }
+}
+export function releaseWorkspaceCompilationInputs(store: ContractStore, handle: object): void {
+  try {
+    check(
+      handle !== null && typeof handle === 'object' && !types.isProxy(handle),
+      'WORKSPACE_CAPTURE_UNAVAILABLE',
+    );
+    const entry = compilationOwners.get(handle);
+    check(entry && entry.store === store && entry.captured, 'WORKSPACE_CAPTURE_UNAVAILABLE');
+    entry.captured = null;
+    compilationOwners.delete(handle);
+  } catch (error) {
+    if (error instanceof HistoryCaptureError) throw error;
+    throw new HistoryCaptureError('INVALID_HISTORY');
+  }
 }

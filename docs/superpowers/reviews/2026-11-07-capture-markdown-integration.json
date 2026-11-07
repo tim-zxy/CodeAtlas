@@ -1,0 +1,123 @@
+{
+  "kind": "APPROVED_PRIVATE_CAPTURE_AND_MARKDOWN_OFFLINE_INTEGRATION",
+  "date": "2026-11-07",
+  "baseCommit": "d3828784e2b24f95da29662f3088b4fae9ffcb22",
+  "worktree": "D:/workspace/CodeAtlas-phase1-20261106",
+  "branch": "codex/phase1-20261106-continuation",
+  "status": "OFFLINE_COMPONENTS_INTEGRATED_NOT_PARENT_ACCEPTANCE",
+  "implementation": [
+    "strict private DTOs and closed IR value allowlists; typed closure and independent canonical bytes/SHA vectors",
+    "owned repository R013 and workspace combined views with shared explicit budgets and genuine store/incarnation handles",
+    "Application authority-before-read and final Source/DB/actual-permission/policy rechecks; settle-all cleanup and final digest recomputation",
+    "private Runtime Storage bridge; original activation value_digest unchanged",
+    "pinned Markdown AST to existing Canonical Document bundle; exact original UTF8 ranges; lossless OTHER/PARTIAL fallback"
+  ],
+  "validation": {
+    "builds": [
+      {
+        "command": "node node_modules/typescript/bin/tsc -p packages/documents/tsconfig.json",
+        "exitCode": 0
+      },
+      {
+        "command": "node node_modules/typescript/bin/tsc -p packages/storage/tsconfig.json",
+        "exitCode": 0
+      },
+      {
+        "command": "node node_modules/typescript/bin/tsc -p packages/application/tsconfig.json",
+        "exitCode": 0
+      },
+      {
+        "command": "node node_modules/typescript/bin/tsc -p packages/runtime/tsconfig.json",
+        "exitCode": 0
+      }
+    ],
+    "affectedCohort": {
+      "command": "node --test --test-concurrency=1 packages/application/test/compilation-input-contract.test.mjs packages/application/test/compilation-input.test.mjs packages/application/test/document-components.test.mjs packages/application/test/document-write-preflight.test.mjs packages/storage/test/repository-compilation-input.test.mjs packages/storage/test/workspace-compilation-input.test.mjs packages/storage/test/runtime-fact-store.test.mjs packages/storage/test/runtime-sql-budget.test.mjs packages/storage/test/document-store.test.mjs packages/storage/test/contract-store.test.mjs packages/storage/test/declared-schema-contract-store.test.mjs packages/runtime/test/compilation-input.test.mjs packages/documents/test/source-draft.test.mjs packages/documents/test/secret-preflight.test.mjs packages/documents/test/markdown-runtime.test.mjs packages/documents/test/parse-document.test.mjs packages/evaluation/test/fixture-manifest.test.mjs packages/evaluation/test/fixture-registry.test.mjs packages/evaluation/test/canonical-comparator.test.mjs scripts/test-workspace-structure.mjs",
+      "exitCode": 0,
+      "tests": 288,
+      "pass": 288,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "durationMs": 25033.2223
+    },
+    "architecture": {
+      "command": "node scripts/check-architecture.mjs",
+      "exitCode": 0,
+      "projects": 17
+    },
+    "priorSchema10R011Regression": {
+      "pass": 196,
+      "fail": 0,
+      "scope": "repository composition owner agent prior run; not added to the integrated288 count"
+    },
+    "format": {
+      "command": "node node_modules/prettier/bin/prettier.cjs --check docs/handoff/CURRENT_STATUS.md docs/handoff/DESIGN_TRACEABILITY.md docs/superpowers/reviews/2026-11-07-capture-markdown-integration.json docs/superpowers/specs/2026-11-06-compilation-capture-schema-v1.md package.json packages/application/src/capture-compilation-input.ts packages/application/src/compilation-input-contract.ts packages/application/test/compilation-input-contract.test.mjs packages/application/test/compilation-input.test.mjs packages/documents/src/parse-document.ts packages/documents/test/parse-document.test.mjs packages/runtime/src/compilation-input.ts packages/runtime/test/compilation-input.test.mjs packages/storage/src/documents/document-store.ts packages/storage/src/runtime/contract-store.ts packages/storage/src/runtime/runtime-fact-store.ts packages/storage/test/repository-compilation-input.test.mjs packages/storage/test/workspace-compilation-input.test.mjs",
+      "exitCode": 0,
+      "files": 18,
+      "paths": [
+        "docs/handoff/CURRENT_STATUS.md",
+        "docs/handoff/DESIGN_TRACEABILITY.md",
+        "docs/superpowers/reviews/2026-11-07-capture-markdown-integration.json",
+        "docs/superpowers/specs/2026-11-06-compilation-capture-schema-v1.md",
+        "package.json",
+        "packages/application/src/capture-compilation-input.ts",
+        "packages/application/src/compilation-input-contract.ts",
+        "packages/application/test/compilation-input-contract.test.mjs",
+        "packages/application/test/compilation-input.test.mjs",
+        "packages/documents/src/parse-document.ts",
+        "packages/documents/test/parse-document.test.mjs",
+        "packages/runtime/src/compilation-input.ts",
+        "packages/runtime/test/compilation-input.test.mjs",
+        "packages/storage/src/documents/document-store.ts",
+        "packages/storage/src/runtime/contract-store.ts",
+        "packages/storage/src/runtime/runtime-fact-store.ts",
+        "packages/storage/test/repository-compilation-input.test.mjs",
+        "packages/storage/test/workspace-compilation-input.test.mjs"
+      ]
+    },
+    "diffWhitespace": {
+      "command": "git diff --check",
+      "exitCode": 0
+    }
+  },
+  "review": {
+    "mode": "independent read-only, scoped final delta review",
+    "resolved": [
+      "unequal-width GFM table rejected by IR -> lossless OTHER/PARTIAL",
+      "rejected Promise in synchronous callback -> settle rejection before refusing",
+      "reopened connection rollback -> verify original marker, preserve new caller transaction",
+      "falsy thrown value -> explicit failed state",
+      "mutable returned frame handle -> bind immutable outer frame retaining original token",
+      "policy version equality alone -> repeat actual permissions after materialization",
+      "control mutation -> descriptor snapshot with intrinsic AbortSignal",
+      "coverage status -> preserve UNSUPPORTED, original owner validators still refuse unsupported activations",
+      "declaration imports -> explicit existing IR types, no undeclared Zod dependency"
+    ],
+    "remainingImportantFindings": 0,
+    "reviewDidNotExecuteTests": true
+  },
+  "priorCi": {
+    "runNumber": 146,
+    "runId": 42316799609,
+    "head": "d3828784e2b24f95da29662f3088b4fae9ffcb22",
+    "url": "https://github.com/tim-zxy/CodeAtlas/actions/runs/42316799609",
+    "typescript": "success",
+    "rust": "success",
+    "native": "failure",
+    "nativeReason": "R8 script catalog mismatch at approved catalog prerequisite; full log verified",
+    "doesNotCertifyThisBatch": true,
+    "rerun": false
+  },
+  "limits": [
+    "real SQLite ownership/snapshot/validation tested; Source/authorization/policy are explicitly offline substitutes",
+    "document body scan permission absent: Application refuses before body reads",
+    "missing original support recipes refuse; capture digest is not an authority or substitute recipe",
+    "cross-DB capture window, not a common instant or permanent permission",
+    "no W010 immutable persistence, model, semantic publication or public route",
+    "no actual R9 build/sampling or resource/profile/threshold change",
+    "E02 PROPOSED and uninstalled; Phase1 4/21; A6 NOT_QUALIFIED",
+    "source/lock synced independently of ignored local caches/dist/raw evidence; no local cleanup or backup claim"
+  ]
+}

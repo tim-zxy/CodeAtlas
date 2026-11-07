@@ -1,3 +1,44 @@
+## Private capture and Markdown adapter integrated offline - 2026-11-07
+
+Implemented the approved private v1 DTO/type allowlists, typed dependency closure
+and canonical digest validator with independent expected bytes and SHA256 vectors.
+Repository R013 capture reads Code/Evidence/Syntax/full Runtime in one owned DB
+view; workspace capture reads registration/frozen RevisionSet/Workspace Runtime
+and exact Document history in one view. Original validators, digest recipes,
+shared explicit read budgets and old schema10 entry remain intact. Opaque handles
+bind the actual store/connection incarnation, recheck drift, and release once.
+
+Application capture now orders authority before inventory reads, checks exact
+scope/revision pins, then validates closure and rechecks Source, DB views, actual
+permissions and policy versions. It settles all handles even on abort/falsy thrown
+values/cleanup failure; only then completes the window and recomputes the digest.
+The private Runtime bridge connects genuine owned SQLite views to this workflow.
+Owned SQLite + explicitly substituted Source/policy tests are offline evidence,
+not proof of actual Source authenticity or production authority. No common instant
+across DBs is claimed. Document-body capture remains denied before reads because
+no genuine scan clearance exists; unavailable owner support recipes still refuse.
+No W010 persistence, model, semantic publication or new public entry point.
+
+The pinned Markdown AST now adapts to the existing Document bundle/draft structure
+using original UTF8 ranges (including BOM/CRLF/emoji) and caller-allocated opaque
+IDs. Unsupported constructs and unequal-width GFM tables preserve original text
+as OTHER/PARTIAL; code/HTML/links stay data. This completes a parser component,
+not P1-10 production delivery or scan clearance. Exact approved dependency
+adoption is installed (not pending); E02 remains PROPOSED/uninstalled.
+
+Independent review found and fixed table-width refusal, unhandled Promise
+rejection, cross-incarnation rollback ownership, falsy error success, mutable
+frame token binding, original-control mutation and coverage-state preservation.
+Declaration leakage was fixed with explicit existing IR types, without adding
+Zod dependencies or relaxing compiler checks. New tests are in the mandatory root
+command. Fresh commands/results and limitations are recorded in
+[the integrated receipt](../superpowers/reviews/2026-11-07-capture-markdown-integration.json).
+
+CI146 on d382878 ended TypeScript/Rust success; Native failed at the unchanged
+R8 script-catalog prerequisite. Its logs do not certify this later batch, and
+known failing Native was not rerun locally. R9 actual build/sampling remains
+unapproved and unexecuted. Phase1 acceptance remains4/21; A6 NOT_QUALIFIED.
+
 ## Approved capture schema locked; exact Markdown closure installed - 2026-11-07
 
 New approval unlocks the capture and parser mainline within strict offline bounds.

@@ -14,6 +14,8 @@ import {
   CanonicalNodeSchema,
   CanonicalEdgeSchema,
   SourceFileSchema,
+  EvidenceSchema,
+  type Evidence,
   parseSyntaxEvidenceV3,
   validateSyntaxBindingScopeClosure,
   type CanonicalNode,
@@ -36,9 +38,13 @@ import {
   scopedRefKey,
   type RepoBasis,
 } from '@codeatlas/ir';
-import { readRuntimeActivationInputs } from '../analysis/activation-history.js';
+import {
+  readRuntimeActivationInputs,
+  type CapturedActivationContext,
+} from '../analysis/activation-history.js';
 import {
   HistoryReadBudget,
+  HistoryCaptureError,
   encodeHistoryValue as bJson,
   checkedHistoryLimits,
   record,
@@ -873,7 +879,7 @@ function readRuntimeActivation(db: DatabaseSync, repo: string, id: string, b: Hi
   );
   verifyRuntimeRows(db, id, candidate, b);
 
-  return { identity, candidate };
+  return { identity, candidate, valueDigest: text(r.value_digest) };
 }
 
 /** Internal workspace adapter. Every repository read uses the same caller budget,
@@ -882,7 +888,7 @@ export interface RuntimeWorkspaceSnapshot {
   binding: RepositoryRuntimeBinding;
   rootPath: string;
   candidate: RuntimeBatchCandidate;
-  values: { support: ReturnType<typeof SupportRefSchema.parse>; value: unknown }[];
+  values: { support: SupportRef; value: unknown }[];
 }
 export function readRuntimeBindingForWorkspace(
   store: RuntimeFactStore,
@@ -1031,4 +1037,266 @@ function candidateDigest(candidate: AnyRuntimeBatchCandidate) {
   return 'derivation' in candidate
     ? runtimeCandidateDigestV2(candidate)
     : runtimeCandidateDigest(candidate);
+}
+
+/** Private capture; the caller must authorize every value before invoking this read. */
+export interface RepositoryCompilationInputsView {
+  identity: RuntimeInputIdentity;
+  targetSource: CapturedActivationContext['view']['targetSource'];
+  targetInventory: CapturedActivationContext['view']['targetInventory'];
+  nodes: CanonicalNode[];
+  edges: CanonicalEdge[];
+  sourceFiles: SourceFile[];
+  evidence: Evidence[];
+  syntaxEvidence: Record<string, unknown>[];
+  runtimeActivation: {
+    activationId: string;
+    identity: Record<string, unknown>;
+    candidate: AnyRuntimeBatchCandidate;
+    valueDigest: string;
+  } | null;
+  values: { support: SupportRef; value: unknown }[];
+  rootPath: string;
+}
+type RepositoryCompilationOwner = {
+  store: RuntimeFactStore;
+  db: DatabaseSync;
+  marker: ReturnType<DatabaseSync['prepare']>;
+  captured: ReturnType<typeof readRepositoryCompilationInputs> | null;
+};
+const compilationOwners = new WeakMap<object, RepositoryCompilationOwner>();
+function compilationCheck(value: unknown): asserts value {
+  if (!value) throw new HistoryCaptureError('CONTEXT_UNAVAILABLE');
+}
+function compilationControl(callback: () => undefined) {
+  compilationCheck(
+    typeof callback === 'function' && !types.isProxy(callback) && !types.isAsyncFunction(callback),
+  );
+  try {
+    const result: unknown = callback();
+    if (types.isPromise(result))
+      void Promise.prototype.then.call(result, undefined, () => undefined);
+    compilationCheck(result === undefined);
+  } catch {
+    throw new HistoryCaptureError('CONTEXT_UNAVAILABLE');
+  }
+}
+/** Same account, with checks at each budget operation used by the existing readers. */
+function compilationBudget(b: HistoryReadBudget, callback: () => undefined): HistoryReadBudget {
+  compilationCheck(
+    b instanceof HistoryReadBudget &&
+      !types.isProxy(b) &&
+      Object.getPrototypeOf(b) === HistoryReadBudget.prototype,
+  );
+  compilationControl(callback);
+  const guarded = Object.create(HistoryReadBudget.prototype) as HistoryReadBudget;
+  Object.defineProperty(guarded, 'limits', { value: b.limits });
+  for (const key of ['rows', 'serializedBytes', 'items', 'retainedLogicalBytes'] as const)
+    Object.defineProperty(guarded, key, {
+      get: () => b[key],
+      set: (v: number) => {
+        b[key] = v;
+      },
+    });
+  for (const key of ['add', 'pin', 'own', 'parse', 'remaining'] as const)
+    Object.defineProperty(guarded, key, {
+      value: (...args: unknown[]) => {
+        compilationControl(callback);
+        const result: unknown = Reflect.apply(HistoryReadBudget.prototype[key], guarded, args);
+        compilationControl(callback);
+        return result;
+      },
+    });
+  return guarded;
+}
+function compilationFreeze<T>(value: T): T {
+  if (value !== null && typeof value === 'object' && !Object.isFrozen(value)) {
+    for (const child of Object.values(value)) compilationFreeze(child);
+    Object.freeze(value);
+  }
+  return value;
+}
+function readRepositoryCompilationInputs(
+  db: DatabaseSync,
+  repo: string,
+  b: HistoryReadBudget,
+  syncCheck: () => undefined,
+) {
+  const c = capture(db, repo, b);
+  compilationCheck(c.identity);
+  compilationControl(syncCheck);
+  const basis = c.identity.codeBasis;
+  const nodes = (c.details.entries.NODE ?? []).map((v) => CanonicalNodeSchema.parse(v));
+  const edges = (c.details.entries.EDGE ?? []).map((v) => CanonicalEdgeSchema.parse(v));
+  const sourceFiles = (c.details.entries.SOURCE_FILE ?? []).map((v) => SourceFileSchema.parse(v));
+  const evidence = (c.details.entries.EVIDENCE ?? []).map((v) => EvidenceSchema.parse(v));
+  const syntaxEvidence = c.details.projections.map((p) => record(b.parse(text(p.envelope_json))));
+  const values: RuntimeWorkspaceSnapshot['values'] = [];
+  for (const [kind, items] of [
+    ['CODE_NODE', nodes],
+    ['CODE_EDGE', edges],
+    ['SOURCE_FILE', sourceFiles],
+  ] as const)
+    for (const value of items)
+      values.push({
+        support: SupportRefSchema.parse({
+          basis,
+          entity: { kind, id: value.id, revisionId: basis.revisionId },
+          valueDigest: runtimeHash('codeatlas-phase1-support-value-v1', bJson(value, b)),
+        }),
+        value,
+      });
+  for (const value of syntaxEvidence)
+    values.push({
+      support: SupportRefSchema.parse({
+        basis,
+        entity: {
+          kind: 'SYNTAX_EVIDENCE',
+          id: text(record(value.payload).id),
+          revisionId: basis.revisionId,
+        },
+        valueDigest: runtimeHash('runtime-syntax-support-v1', bJson(value, b)),
+      }),
+      value,
+    });
+  compilationControl(syncCheck);
+  const activation = c.runtimeActivationId
+    ? readRuntimeActivation(db, repo, c.runtimeActivationId, b)
+    : null;
+  if (activation)
+    compilationCheck(
+      isDeepStrictEqual(activation.identity.codeBasis, basis) &&
+        activation.identity.syntaxActivationId === c.identity.syntaxActivationId &&
+        activation.identity.syntaxMembershipDigest === c.identity.syntaxMembershipDigest,
+    );
+  if (activation) authenticatedSupports(activation.candidate, c, b);
+  const runtimeActivation = activation
+    ? { activationId: c.runtimeActivationId!, ...activation }
+    : null;
+  const roots = runtimeSql(db, b).read('repository', ['id', 'root_path'], 'id=?', [repo]);
+  compilationCheck(roots.length === 1);
+  const rootPath = text(roots[0]!.root_path);
+  const view: RepositoryCompilationInputsView = {
+    identity: c.identity,
+    targetSource: c.details.view.targetSource,
+    targetInventory: c.details.view.targetInventory,
+    nodes,
+    edges,
+    sourceFiles,
+    evidence,
+    syntaxEvidence,
+    runtimeActivation,
+    values,
+    rootPath,
+  };
+  const workspace: RuntimeWorkspaceSnapshot | null = activation
+    ? {
+        binding: RepositoryRuntimeBindingSchema.parse({
+          repoBasis: basis,
+          syntaxActivationId: c.identity.syntaxActivationId,
+          syntaxMembershipDigest: c.identity.syntaxMembershipDigest,
+          runtimeActivationId: c.runtimeActivationId,
+          runtimeCandidateDigest: text(activation.identity.candidateDigest),
+        }),
+        rootPath,
+        candidate: activation.candidate,
+        values,
+      }
+    : null;
+  b.own(view);
+  compilationControl(syncCheck);
+  return compilationFreeze({ view, workspace, details: c.details });
+}
+function compilationRead(
+  store: RuntimeFactStore,
+  budget: HistoryReadBudget,
+  syncCheck: () => undefined,
+) {
+  const owner = connections.get(store);
+  compilationCheck(owner && owner.db.isOpen && !owner.db.isTransaction);
+  const { db, repo } = owner;
+  const marker = db.prepare('SELECT 1 WHERE 0');
+  let reading = false;
+  const guardedCheck = () => {
+    compilationControl(syncCheck);
+    try {
+      marker.get();
+    } catch {
+      throw new HistoryCaptureError('CONTEXT_UNAVAILABLE');
+    }
+    compilationCheck(db.isOpen && db.isTransaction === reading);
+    return undefined;
+  };
+  const b = compilationBudget(budget, guardedCheck);
+  db.exec('BEGIN');
+  reading = true;
+  try {
+    const captured = readRepositoryCompilationInputs(db, repo, b, guardedCheck);
+    compilationControl(guardedCheck);
+    db.exec('COMMIT');
+    return captured;
+  } catch (error) {
+    try {
+      marker.get();
+      if (db.isTransaction) db.exec('ROLLBACK');
+    } catch {
+      throw new HistoryCaptureError('CONTEXT_UNAVAILABLE');
+    }
+    if (error instanceof HistoryCaptureError) throw error;
+    throw new HistoryCaptureError('INVALID_HISTORY');
+  }
+}
+function compilationOwner(store: RuntimeFactStore, handle: object) {
+  compilationCheck(handle !== null && typeof handle === 'object' && !types.isProxy(handle));
+  const owner = compilationOwners.get(handle);
+  compilationCheck(
+    owner &&
+      owner.store === store &&
+      owner.captured &&
+      connections.get(store)?.db === owner.db &&
+      owner.db.isOpen &&
+      !owner.db.isTransaction,
+  );
+  try {
+    owner.marker.get();
+  } catch {
+    throw new HistoryCaptureError('CONTEXT_UNAVAILABLE');
+  }
+  return owner;
+}
+export function captureRepositoryCompilationInputs(
+  store: RuntimeFactStore,
+  budget: HistoryReadBudget,
+  syncCheck: () => undefined,
+) {
+  const captured = compilationRead(store, budget, syncCheck);
+  const db = connections.get(store)!.db;
+  const handle = Object.freeze({});
+  compilationOwners.set(handle, { store, db, marker: db.prepare('SELECT 1 WHERE 0'), captured });
+  return Object.freeze({ handle, view: captured.view });
+}
+export function recheckRepositoryCompilationInputs(
+  store: RuntimeFactStore,
+  handle: object,
+  budget: HistoryReadBudget,
+  syncCheck: () => undefined,
+): void {
+  const owner = compilationOwner(store, handle);
+  const fresh = compilationRead(store, budget, syncCheck);
+  compilationOwner(store, handle);
+  if (!isDeepStrictEqual(fresh, owner.captured)) throw new HistoryCaptureError('HISTORY_CHANGED');
+}
+export function releaseRepositoryCompilationInputs(store: RuntimeFactStore, handle: object): void {
+  // Release remains possible after connection closure; no SQL or transaction is retained.
+  compilationCheck(handle !== null && typeof handle === 'object' && !types.isProxy(handle));
+  const owner = compilationOwners.get(handle);
+  compilationCheck(owner && owner.store === store && owner.captured);
+  owner.captured = null;
+  compilationOwners.delete(handle);
+}
+export function repositoryCompilationWorkspaceSnapshot(
+  store: RuntimeFactStore,
+  handle: object,
+): RuntimeWorkspaceSnapshot | null {
+  return compilationOwner(store, handle).captured!.workspace;
 }
