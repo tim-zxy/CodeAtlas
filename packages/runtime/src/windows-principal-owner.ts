@@ -8,6 +8,7 @@ import { types } from 'node:util';
 import type { captureCompilationInput } from '../../application/dist/capture-compilation-input.js';
 type RuntimeRequestControl = Parameters<typeof captureCompilationInput>[1];
 import { decodeWindowsProcessPrincipalReply } from './windows-process-principal.js';
+import { preparePrecompiledPrincipal } from './windows-principal-precompiled.js';
 
 // This private binding is for the reviewed local Windows installation only.
 // OS updates/different hosts refuse, never become trusted from request hashes.
@@ -44,13 +45,22 @@ type FailurePhase =
   | 'CONTROLS'
   | 'HOST_IDENTITY'
   | 'HELPER_IDENTITY'
+  | 'DEPLOYMENT'
   | 'TEMP_CREATE'
   | 'CHILD_RUN'
   | 'POST_HOST_IDENTITY'
   | 'CLEANUP'
   | 'REPLY_VALIDATION';
 type HelperFailurePhase =
-  'BOOTSTRAP' | 'TEMP_ANCESTRY' | 'TEMP_OWNER' | 'COMPILE' | 'QUERY' | 'SERIALIZE' | 'UNAVAILABLE';
+  | 'BOOTSTRAP'
+  | 'DEPLOYMENT'
+  | 'LOAD'
+  | 'TEMP_ANCESTRY'
+  | 'TEMP_OWNER'
+  | 'COMPILE'
+  | 'QUERY'
+  | 'SERIALIZE'
+  | 'UNAVAILABLE';
 interface FailureDiagnostic {
   readonly phase: FailurePhase;
   readonly helperPhase: HelperFailurePhase;
@@ -123,6 +133,7 @@ function lifetime(value: RuntimeRequestControl) {
     signal,
     check,
     remaining,
+    deadlineEpochMs: deadline,
     maxItems: c.maxItems as number,
     maxDepth: c.maxDepth as number,
     dispose: () => removeListener.call(signal, 'abort', stop),
@@ -230,6 +241,21 @@ export async function acquireCurrentWindowsPrincipal(
   control: RuntimeRequestControl,
   limits: { readonly maxInputBytes: number; readonly maxOutputBytes: number },
 ): Promise<object> {
+  return acquireOwnedWindowsPrincipal(control, limits, false);
+}
+/** Private production DLL route. An unavailable deployment never selects the
+ * legacy compiler path; both routes share the same process-local owner/epochs. */
+export async function acquirePrecompiledWindowsPrincipal(
+  control: RuntimeRequestControl,
+  limits: { readonly maxInputBytes: number; readonly maxOutputBytes: number },
+): Promise<object> {
+  return acquireOwnedWindowsPrincipal(control, limits, true);
+}
+async function acquireOwnedWindowsPrincipal(
+  control: RuntimeRequestControl,
+  limits: { readonly maxInputBytes: number; readonly maxOutputBytes: number },
+  precompiled: boolean,
+): Promise<object> {
   need(process.platform === 'win32' && process.arch === 'x64' && !busy && !poisoned && !uncertain);
   const sizes = data(limits, ['maxInputBytes', 'maxOutputBytes']);
   for (const n of Object.values(sizes)) need(Number.isSafeInteger(n) && (n as number) > 0);
@@ -255,6 +281,7 @@ export async function acquireCurrentWindowsPrincipal(
       childExitCode,
       childSignalObserved,
     });
+  let prepared: Awaited<ReturnType<typeof preparePrecompiledPrincipal>> | undefined;
   let directory: string | undefined, identity: { dev: number; ino: number } | undefined;
   let created = false,
     normalClose = false,
@@ -263,30 +290,49 @@ export async function acquireCurrentWindowsPrincipal(
     clock.check();
     await verifiedHost(maxInput);
     clock.check();
-    phase = 'HELPER_IDENTITY';
-    const sourceBytes = await fs.readFile(helperUrl);
-    clock.check();
-    need(sourceBytes.length <= maxInput && helperHashes.has(hash(sourceBytes)));
-    const source = new TextDecoder('utf-8', { fatal: true, ignoreBOM: true }).decode(sourceBytes);
-    phase = 'TEMP_CREATE';
-    const tempParent = os.tmpdir();
-    const tempRoot = path.win32.parse(tempParent).root;
-    need(
-      path.win32.isAbsolute(tempParent) &&
-        tempRoot.length === 3 &&
-        /^[A-Za-z]:$/.test(tempRoot.slice(0, 2)),
-    );
-    directory = await fs.mkdtemp(path.win32.join(tempParent, 'codeatlas-principal-'));
-    const stat = await fs.lstat(directory);
-    need(stat.isDirectory() && !stat.isSymbolicLink());
-    identity = { dev: stat.dev, ino: stat.ino };
-    clock.check();
+    let payload: Record<string, unknown>;
+    if (precompiled) {
+      phase = 'DEPLOYMENT';
+      prepared = await preparePrecompiledPrincipal({
+        maxInputBytes: maxInput,
+        maxItems: clock.maxItems,
+        maxDepth: clock.maxDepth,
+        deadlineEpochMs: clock.deadlineEpochMs,
+        check: clock.check,
+      });
+      clock.check();
+      payload = prepared.payload;
+    } else {
+      phase = 'HELPER_IDENTITY';
+      const sourceBytes = await fs.readFile(helperUrl);
+      clock.check();
+      need(sourceBytes.length <= maxInput && helperHashes.has(hash(sourceBytes)));
+      const source = new TextDecoder('utf-8', { fatal: true, ignoreBOM: true }).decode(sourceBytes);
+      phase = 'TEMP_CREATE';
+      const tempParent = os.tmpdir();
+      const tempRoot = path.win32.parse(tempParent).root;
+      need(
+        path.win32.isAbsolute(tempParent) &&
+          tempRoot.length === 3 &&
+          /^[A-Za-z]:$/.test(tempRoot.slice(0, 2)),
+      );
+      directory = await fs.mkdtemp(path.win32.join(tempParent, 'codeatlas-principal-'));
+      const stat = await fs.lstat(directory);
+      need(stat.isDirectory() && !stat.isSymbolicLink());
+      identity = { dev: stat.dev, ino: stat.ino };
+      clock.check();
+      payload = { source, tempParent, tempPath: directory };
+    }
     const challenge = randomUUID();
-    const input = Buffer.from(
-      JSON.stringify({ pid: ownerPid, challenge, source, tempParent, tempPath: directory }),
-    );
+    const input = Buffer.from(JSON.stringify({ ...payload, pid: ownerPid, challenge }));
     need(input.length <= maxInput);
-    const args = ['-NoLogo', '-NoProfile', '-NonInteractive', '-Command', program];
+    const args = [
+      '-NoLogo',
+      '-NoProfile',
+      '-NonInteractive',
+      '-Command',
+      prepared?.program ?? program,
+    ];
     phase = 'CHILD_RUN';
     const child = childProcess.spawn(hostPath, args, {
       shell: false,
@@ -298,8 +344,7 @@ export async function acquireCurrentWindowsPrincipal(
         SYSTEMDRIVE: 'C:',
         PATH: '',
         PSModulePath: 'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\Modules',
-        TEMP: directory,
-        TMP: directory,
+        ...(directory ? { TEMP: directory, TMP: directory } : {}),
       },
       stdio: ['pipe', 'pipe', 'pipe'],
     });
@@ -403,7 +448,7 @@ export async function acquireCurrentWindowsPrincipal(
         if (!stderrTruncated) {
           const text = Buffer.concat(stderr).toString('utf8');
           const match =
-            /^CODEATLAS_PRINCIPAL_FAILURE:(BOOTSTRAP|TEMP_ANCESTRY|TEMP_OWNER|COMPILE|QUERY|SERIALIZE)\r?\n$/.exec(
+            /^CODEATLAS_PRINCIPAL_FAILURE:(BOOTSTRAP|DEPLOYMENT|LOAD|TEMP_ANCESTRY|TEMP_OWNER|COMPILE|QUERY|SERIALIZE)\r?\n$/.exec(
               text,
             );
           // Full-input match: JS $ alone can also match before a trailing newline.
@@ -431,7 +476,8 @@ export async function acquireCurrentWindowsPrincipal(
         void done
           .then(
             async () => {
-              await removeOwned(directory!, identity!, clock.maxItems, clock.maxDepth);
+              if (prepared) await prepared.recheck();
+              else await removeOwned(directory!, identity!, clock.maxItems, clock.maxDepth);
               directory = undefined;
               busy = false;
               uncertain = false;
@@ -452,9 +498,19 @@ export async function acquireCurrentWindowsPrincipal(
     phase = 'POST_HOST_IDENTITY';
     await verifiedHost(maxInput);
     clock.check();
-    phase = 'CLEANUP';
-    await removeOwned(directory, identity, clock.maxItems, clock.maxDepth);
-    directory = undefined;
+    if (prepared) {
+      phase = 'DEPLOYMENT';
+      try {
+        await prepared.recheck();
+      } catch (error) {
+        poisoned = true;
+        throw error;
+      }
+    } else {
+      phase = 'CLEANUP';
+      await removeOwned(directory!, identity!, clock.maxItems, clock.maxDepth);
+      directory = undefined;
+    }
     clock.check();
     phase = 'REPLY_VALIDATION';
     const reply = decodeWindowsProcessPrincipalReply(
@@ -487,6 +543,16 @@ export async function acquireCurrentWindowsPrincipal(
     busy = false;
     return handle;
   } catch (error) {
+    // An acquisition may fail before returning a child while still owning an
+    // unresolved package FileHandle/Dir. No-frame is not proof of settlement.
+    if (
+      !created &&
+      error &&
+      typeof error === 'object' &&
+      !types.isProxy(error) &&
+      Object.getOwnPropertyDescriptor(error, 'cleanupState')?.value === 'UNKNOWN'
+    )
+      poisoned = true;
     if (!background) {
       if (created && !normalClose) poisoned = true;
       if (directory) {

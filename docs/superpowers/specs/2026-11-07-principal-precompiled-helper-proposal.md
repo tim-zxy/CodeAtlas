@@ -111,3 +111,15 @@ is retained under ignored .superpowers/principal-artifact-2S6bWj; source scripts
 small receipts may sync, raw DLL is not installed or committed. Its unsigned assembly
 identity and measured MVID are provenance, not a cryptographic publisher signature.
 Only fixed-byte equality and existing trusted deployment can support later admission.
+
+## Approved offline wiring result
+
+Private precompiled acquisition and closed-directory package verification now exist.
+Production-shaped root derives from module location, never a caller-selected trust root.
+Canonical catalog is data; fixed copied DLL bytes plus later KnownFolder/OS protection
+checks remain mandatory. Exact internal aliases preserve module singleton identities.
+Legacy path remains; DLL mode cannot fall back to temporary compilation. Resource
+close uncertainty retains UNKNOWN and poisons admission. No installed deployment or
+actual identity query has been validated. Exact evidence and the unresolved pure
+loader NOT_FOUND test are in ../reviews/2026-11-07-precompiled-runtime-wiring.json.
+Rollback leaves private route unused; no permissions, database or schema to revert.

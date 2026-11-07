@@ -1,0 +1,95 @@
+{
+  "kind": "OFFLINE_PRECOMPILED_RUNTIME_WIRING",
+  "date": "2026-11-07",
+  "sourceBase": "3320c56cf040d43dd7385a3178fc037a017d0fbd",
+  "sourceMayBeDirty": true,
+  "scope": "owned offline directory package and substitutes only",
+  "productionQualified": false,
+  "phase1": "4/21",
+  "A6": "NOT_QUALIFIED",
+  "E02": "PROPOSED/uninstalled",
+  "package": {
+    "root": ".superpowers/closed-runtime-20261107-wiring-03/release-703e5d712df4903f94be62094b68011b9e2806d3b0872fc45703b37029a1f94d",
+    "contentDigest": "703e5d712df4903f94be62094b68011b9e2806d3b0872fc45703b37029a1f94d",
+    "digestMeaning": "SHA256 of raw canonical directory catalog; not ZIP hash or authority",
+    "manifestBytes": 450541,
+    "files": 3052,
+    "payloadBytes": 17506638,
+    "aliases": 11,
+    "workspacePackages": 11,
+    "externalPackages": 71,
+    "artifactBytes": 6656,
+    "artifactSha256": "4ee3e48cfa2f6c4d883a983a2f7b5739ecf7b01d515c94cecbed9f87e3bb7147",
+    "integration": {
+      "kind": "OWNED_CLOSED_PACKAGE_INTEGRATION",
+      "packageDigest": "703e5d712df4903f94be62094b68011b9e2806d3b0872fc45703b37029a1f94d",
+      "singleton": [
+        {
+          "a": "packages/storage/dist/runtime/runtime-fact-store.js",
+          "b": "node_modules/@codeatlas/storage/dist/runtime/runtime-fact-store.js",
+          "sameNamespace": true,
+          "sameRealpath": true
+        },
+        {
+          "a": "packages/storage/dist/analysis/activation-history-format.js",
+          "b": "node_modules/@codeatlas/storage/dist/analysis/activation-history-format.js",
+          "sameNamespace": true,
+          "sameRealpath": true
+        },
+        {
+          "a": "packages/application/dist/capture-compilation-input.js",
+          "b": "node_modules/@codeatlas/application/dist/capture-compilation-input.js",
+          "sameNamespace": true,
+          "sameRealpath": true
+        }
+      ],
+      "ownedRootNotTrusted": true,
+      "childSpawns": 0,
+      "identityQueries": 0,
+      "userDatabasesOpened": 0
+    }
+  },
+  "verification": {
+    "build": "cached pnpm -r run build: exit0, 16 workspace projects; latest Runtime tsc exit0",
+    "initialBuildIssue": "root recipe failed before compilation because command-name pnpm not on PATH; expanded same recursive recipe succeeded",
+    "affectedNodeTests": "80/80 across closed package, precompiled, Principal owner and decoder; local-capture-operation wrapper separately1/1, inner13; owner inner29; precompiled inner8; closed45",
+    "architecture": "22/22 regression fixtures and actual dependency gate17 projects pass",
+    "architectureRed": "3 targeted cases:2 pass/1 fail on old scanner; actual scanner repeated token without advancing and OOM; official installed TypeScript AST replaces context-free scanning, same dependency policies",
+    "scriptParse": "fixed PowerShell program and pure loader AST parse only; no execution of full identity program",
+    "CI161": "TS new readiness race reproduced/fixed with readiness event and60turn delayed-source control; Rust pass; Native known R8 catalog fail; old head not proof for this batch"
+  },
+  "blocked": {
+    "action": "physical execution of exact exported pure DLL loader",
+    "target": ".superpowers/principal-artifact-2S6bWj/product-loader-036a552a-42d3-4ef3-b28e-a51e4705b687.ps1",
+    "status": "FAILED_NOT_FOUND; script disappearance cause UNKNOWN",
+    "exitCode": 1,
+    "receipt": ".superpowers/principal-artifact-2S6bWj/product-loader-036a552a-42d3-4ef3-b28e-a51e4705b687.ps1.json",
+    "notClaimed": "old component9 groups do not certify this new exact function",
+    "response": "no alternate path, encoding, restore, exclusion or retry; no Defender matching events is not proof of cause"
+  },
+  "limitations": [
+    "No actual identity query, protected installation, ACL change, persistent access, user DB or R9",
+    "Node topology/metadata and future fixed PS OS checks complement each other; no hard isolation or full OS loader closure proof",
+    "Raw DLL and directory package stay local ignored, not backed up by Git source sync",
+    "Catalog/source base not reproducible build or publisher signature; own directory never trusted",
+    "Failed close retains actual handle and UNKNOWN; acquisition poisoned, no cleanup retry or GC reliance"
+  ],
+  "preservedAttempts": [
+    "wiring-01 empty partial WORKSPACE_CLOSURE_CHANGED",
+    "wiring-02 old successful candidate before final resource/proxy fixes, retained",
+    "first inline integration teardown error corrected in explicit script after process exit"
+  ],
+  "files": {
+    "packages/runtime/src/closed-runtime-package.ts": "0a6063a494844900013acbec38c98c52783afd3b3fea1da41871b5a2777dc7f4",
+    "packages/runtime/src/windows-principal-precompiled.ts": "1c9b34a743f3b90b45f0bc67b0100774becbca394f2c70325c50458a73d2c70a",
+    "packages/runtime/src/windows-principal-owner.ts": "391cd6802279acc9b20c6ef481c924d05b5a3dbb7f3b3986e6bf4fdc0e0d9f1d",
+    "packages/runtime/test/closed-runtime-package.test.mjs": "556166e3cce8f65df06fa5442a3c5e825768f2e6b06255defeb2aa6377a97db9",
+    "packages/runtime/test/windows-principal-precompiled.test.mjs": "bcd294457d1a3ec8e47ed62f6cc088a6c4fb2183d8b0eff7bf780fe8201bc408",
+    "packages/runtime/test/windows-principal-owner.test.mjs": "3a61d5e17989a4b9712119a4d58e47f5ac758d57cc30b8c11f0b9b5d99738f73",
+    "scripts/build-closed-runtime-package.mjs": "f42eae1109701fd986eada34e247a15eb419bb3bc73a121efb99d28b4e3ed479",
+    "scripts/test-closed-runtime-package.mjs": "a5daacd1a1b8cf6ec9e208e5c033e66469f85b90361a20b41cc98ba670ec20bf",
+    "scripts/check-architecture.mjs": "2664b3f34ce1d54bc4628f1fb5de48de3b7066e7e7c9721d1dc02e829247fed9",
+    "scripts/test-architecture-rules.mjs": "729a62ba9fb3ec83f6e9130d7a252ca91e004742c40f63ecb0021e55929ea5cd",
+    "package.json": "1e694fc9512acc8eb5637c6ad581a2d6a260ad46431b4d1262bc289a953fe8bd"
+  }
+}

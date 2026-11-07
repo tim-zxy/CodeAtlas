@@ -369,3 +369,61 @@ test('the real workspace satisfies the architecture dependency rules', () => {
   assert.equal(result.stdout, 'Architecture dependency check passed for 17 projects.\n');
   assert.equal(result.stderr, '');
 });
+
+function runBoundedTemplateChecker(root) {
+  return spawnSync(process.execPath, ['--max-old-space-size=64', checkerPath, root], {
+    cwd: repositoryRoot,
+    encoding: 'utf8',
+    timeout: 30000,
+    maxBuffer: 1000000,
+  });
+}
+test('fixture interpolated path followed by raw script is bounded and ignores import-looking text', async (t) => {
+  const root = await createFixture(t, [
+    { id: 'packages/ir', name: '@codeatlas/ir' },
+    { id: 'packages/providers', name: '@codeatlas/providers' },
+    {
+      id: 'packages/documents',
+      name: '@codeatlas/documents',
+      dependencies: { '@codeatlas/ir': 'workspace:*' },
+      source:
+        "import '@codeatlas/ir';\nconst path = `a/${'x'}/b`;\nconst script=String.raw`\n# data: import('@codeatlas/providers')\n`;\nexport {};\n",
+    },
+  ]);
+  const result = runBoundedTemplateChecker(root);
+  assert.equal(result.status, 0, result.stdout + result.stderr);
+});
+test('fixture template expression still rejects real forbidden dynamic import with a brace regexp', async (t) => {
+  const root = await createFixture(t, [
+    { id: 'packages/providers', name: '@codeatlas/providers' },
+    {
+      id: 'packages/documents',
+      name: '@codeatlas/documents',
+      source:
+        "const text = `x${/}/.test('}') ? import('@codeatlas/providers') : ''}y`;\nexport {};\n",
+    },
+  ]);
+  const result = runBoundedTemplateChecker(root);
+  assert.equal(result.status, 1, result.stdout + result.stderr);
+  assert.match(
+    result.stderr,
+    /FORBIDDEN_DEPENDENCY: @codeatlas\/documents -> @codeatlas\/providers/,
+  );
+});
+test('fixture template nested function and import type retain source dependency checks', async (t) => {
+  const root = await createFixture(t, [
+    { id: 'packages/providers', name: '@codeatlas/providers' },
+    {
+      id: 'packages/documents',
+      name: '@codeatlas/documents',
+      source:
+        "type X=import('@codeatlas/providers').X;\nconst text=`${(()=>{if(true) /}/.test('}');return import('@codeatlas/providers')})()}`;\n",
+    },
+  ]);
+  const result = runBoundedTemplateChecker(root);
+  assert.equal(result.status, 1, result.stdout + result.stderr);
+  assert.match(
+    result.stderr,
+    /FORBIDDEN_DEPENDENCY: @codeatlas\/documents -> @codeatlas\/providers/,
+  );
+});

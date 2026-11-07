@@ -1,3 +1,31 @@
+## Precompiled Runtime offline wiring and closed package - 2026-11-07
+
+Approved private DLL route now shares existing Principal epoch, close/EOF, cancellation
+and UNKNOWN ownership. It uses bounded single-read catalog/content validation, fixed
+DLL digest, copied-byte load and metadata-only settlement recheck; no compiler/temp
+fallback. Failed file/directory close retains the actual handle and poisons admission;
+Proxy errors cannot trigger prototype/descriptor hooks. Legacy/public route unchanged.
+
+Owned final directory package has3052 files,11 internal aliases,11 workspace and71
+external packages. Catalog SHA703e5d712df4903f94be62094b68011b9e2806d3b0872fc45703b37029a1f94d
+is a directory-catalog digest, not a ZIP/publisher signature. Three actual module pairs
+share namespace/realpath. Own development root refuses before spawn (spawn/query0).
+The directory and DLL remain local ignored artifacts; Git sync backs up source only.
+
+Expanded recursive TypeScript build passed16 projects; final Runtime emit passed.
+Affected tests80/80 plus operation wrapper1/1 (inner13), architecture fixtures22/22
+and actual17-project gate pass. Existing scanner stalled in template content/OOM;
+installed TypeScript AST now preserves real import checks without scanning script data.
+CI161 TS readiness race fixed by explicit input readiness, with delayed-read control;
+old CI does not validate this new batch. Full Windows trust/account execution untested.
+
+One exact pure loader execution FAILED_NOT_FOUND: generated owned script disappeared,
+reason UNKNOWN; receipt retained, no path/encoding retry or security-control changes.
+Static parsing and historical component tests do not prove that new function executed.
+No account query, protected install, ACL, persistent access, user DB or R9.
+Phase1 remains4/21, A6 NOT_QUALIFIED, E02 PROPOSED/uninstalled.
+[Exact evidence](../superpowers/reviews/2026-11-07-precompiled-runtime-wiring.json).
+
 ## Approved precompiled Principal preparation - 2026-11-07
 
 Explicit controlled-build approval -> frozen source/compiler/config/references ->

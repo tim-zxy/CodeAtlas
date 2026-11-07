@@ -38,7 +38,7 @@ if (!childLane) {
     );
     assert.ifError(r.error);
     assert.equal(r.status, 0, r.stdout + r.stderr);
-    for (const line of ['tests 23', 'pass 23', 'fail 0', 'cancelled 0', 'skipped 0', 'todo 0'])
+    for (const line of ['tests 29', 'pass 29', 'fail 0', 'cancelled 0', 'skipped 0', 'todo 0'])
       assert.ok(r.stdout.split(/\r?\n/).includes('# ' + line), r.stdout + r.stderr);
   });
 } else {
@@ -101,10 +101,12 @@ if (!childLane) {
       },
       async readFile(p) {
         if (p instanceof URL) {
+          f.sourceReads++;
           assert.equal(
             p.href,
             new URL('../../../scripts/windows-process-principal.cs', import.meta.url).href,
           );
+          await f.sourceReadGate;
           const bytes = await realFs.readFile(p);
           return f.mode === 'helper' ? Buffer.concat([bytes, Buffer.from('tampered')]) : bytes;
         }
@@ -115,6 +117,7 @@ if (!childLane) {
           : Buffer.from(hostBytes);
       },
       async mkdtemp(prefix) {
+        f.tempCreates++;
         assert.equal(prefix, win('C:', 'TEST_DOUBLE_TEMP', 'codeatlas-principal-'));
         f.onMkdtemp?.();
         return directory;
@@ -128,6 +131,30 @@ if (!childLane) {
         assert.deepEqual(options, { recursive: true });
         f.cleanups++;
         if (f.mode === 'cleanup') throw Error('TEST_DOUBLE cleanup refused');
+      },
+    },
+  });
+  await mock.module(new URL('../dist/windows-principal-precompiled.js', import.meta.url).href, {
+    exports: {
+      async preparePrecompiledPrincipal(options) {
+        options.check();
+        const state = f;
+        state.precompiled = true;
+        state.precompiledReads++;
+        if (state.mode === 'precompiled-unavailable') throw Error('TEST_DOUBLE_UNKNOWN_DEPLOYMENT');
+        if (state.mode === 'precompiled-file-close-unknown')
+          throw Object.assign(Error('TEST_DOUBLE_FILE_CLOSE_UNKNOWN'), { cleanupState: 'UNKNOWN' });
+        return Object.freeze({
+          program: 'TEST_DOUBLE_PRECOMPILED_FIXED_PROGRAM',
+          payload: Object.freeze({
+            deploymentRoot: 'TEST_DOUBLE_INSTALLED_ROOT',
+            artifactBase64: 'TEST_DOUBLE_BYTES',
+          }),
+          async recheck() {
+            state.deploymentChecks++;
+            if (state.mode === 'deployment-drift') throw Error('TEST_DOUBLE_DEPLOYMENT_CHANGED');
+          },
+        });
       },
     },
   });
@@ -146,7 +173,11 @@ if (!childLane) {
         assert.equal(options.windowsHide, true);
         assert.deepEqual(options.stdio, ['pipe', 'pipe', 'pipe']);
         assert.equal(options.cwd, win('C:', 'Windows', 'System32', 'WindowsPowerShell', 'v1.0'));
-        assert.equal(options.env.TEMP, directory);
+        if (f.precompiled) {
+          assert.equal(args[4], 'TEST_DOUBLE_PRECOMPILED_FIXED_PROGRAM');
+          assert.equal(Object.hasOwn(options.env, 'TEMP'), false);
+          assert.equal(Object.hasOwn(options.env, 'TMP'), false);
+        } else assert.equal(options.env.TEMP, directory);
         assert.equal(options.env.PATH, '');
         assert.equal(Object.hasOwn(options.env, 'NODE_OPTIONS'), false);
         const child = new EventEmitter();
@@ -165,7 +196,11 @@ if (!childLane) {
             queueMicrotask(() => {
               assert.equal(f.input.pid, process.pid);
               assert.equal(f.input.challenge, nonce);
-              assert.equal(f.input.tempPath, directory);
+              if (f.precompiled) {
+                assert.equal(f.input.deploymentRoot, 'TEST_DOUBLE_INSTALLED_ROOT');
+                for (const key of ['source', 'tempPath', 'tempParent'])
+                  assert.equal(Object.hasOwn(f.input, key), false);
+              } else assert.equal(f.input.tempPath, directory);
               const reply = {
                 schema: 'codeatlas.windows-process-principal',
                 version: 1,
@@ -199,6 +234,7 @@ if (!childLane) {
                   ),
                 );
               };
+              f.readiness.emit('ready');
               if (!f.hold) f.close();
             });
           },
@@ -208,8 +244,19 @@ if (!childLane) {
       },
     },
   });
-  async function fixture(t, mode = 'success', hold = false) {
-    f = { mode, hold, spawns: 0, cleanups: 0, hostReads: 0 };
+  async function fixture(t, mode = 'success', hold = false, precompiled = false) {
+    f = {
+      mode,
+      hold,
+      spawns: 0,
+      cleanups: 0,
+      hostReads: 0,
+      sourceReads: 0,
+      tempCreates: 0,
+      precompiledReads: 0,
+      deploymentChecks: 0,
+      readiness: new EventEmitter(),
+    };
     const api = await import(
       new URL('../dist/windows-principal-owner.js?TEST_DOUBLE=' + serial++, import.meta.url)
     );
@@ -233,10 +280,85 @@ if (!childLane) {
       control,
       limits,
       state,
-      acquire: () => api.acquireCurrentWindowsPrincipal(control, limits),
+      acquire: () =>
+        precompiled
+          ? api.acquirePrecompiledWindowsPrincipal(control, limits)
+          : api.acquireCurrentWindowsPrincipal(control, limits),
     };
   }
   const unavailable = (e) => e.code === 'WINDOWS_PRINCIPAL_UNAVAILABLE';
+  test('unsettled package acquisition poisons before child creation instead of reporting SETTLED', async (t) => {
+    const x = await fixture(t, 'precompiled-file-close-unknown', false, true);
+    await assert.rejects(x.acquire(), (e) => unavailable(e) && e.cleanupState === 'UNKNOWN');
+    assert.equal(x.state.spawns, 0);
+    assert.equal(x.state.sourceReads + x.state.tempCreates + x.state.cleanups, 0);
+    await assert.rejects(x.acquire(), unavailable);
+    assert.equal(x.state.precompiledReads, 1);
+  });
+
+  test('precompiled owner joins and rechecks before minting without source/temp/compiler fallback', async (t) => {
+    const x = await fixture(t, 'success', true, true);
+    let minted = false;
+    const pending = x.acquire().then((h) => {
+      minted = true;
+      return h;
+    });
+    await ready(x, pending);
+    assert.equal(minted, false);
+    assert.equal(x.state.deploymentChecks, 0);
+    x.state.close();
+    const handle = await pending;
+    x.api.assertCurrentWindowsPrincipal(handle);
+    assert.equal(x.state.precompiledReads, 1);
+    assert.equal(x.state.deploymentChecks, 1);
+    assert.equal(x.state.hostReads, 2);
+    assert.equal(x.state.sourceReads, 0);
+    assert.equal(x.state.tempCreates, 0);
+    assert.equal(x.state.cleanups, 0);
+    x.api.releaseCurrentWindowsPrincipal(handle);
+  });
+  test('post-close deployment drift refuses and poisons the owner rather than falling back', async (t) => {
+    const x = await fixture(t, 'deployment-drift', false, true);
+    await assert.rejects(x.acquire(), (e) => unavailable(e) && e.cleanupState === 'UNKNOWN');
+    assert.equal(x.state.deploymentChecks, 1);
+    await assert.rejects(x.acquire(), unavailable);
+    assert.equal(x.state.spawns, 1);
+    assert.equal(x.state.sourceReads + x.state.tempCreates + x.state.cleanups, 0);
+  });
+  test('cancelled precompiled child settles through actual close and metadata recheck without deleting legacy temp', async (t) => {
+    const x = await fixture(t, 'success', true, true);
+    const pending = x.acquire();
+    await ready(x, pending);
+    x.controller.abort();
+    await assert.rejects(pending, (e) => unavailable(e) && e.cleanupState === 'UNKNOWN');
+    assert.equal(x.state.deploymentChecks, 0);
+    x.state.close();
+    for (let i = 0; i < 50 && x.state.deploymentChecks === 0; i++) await turn();
+    await turn();
+    assert.equal(x.state.deploymentChecks, 1);
+    assert.equal(x.state.cleanups, 0);
+    x.state.hold = false;
+    const nextControl = {
+      ...x.control,
+      signal: new AbortController().signal,
+      deadlineEpochMs: Date.now() + 10000,
+    };
+    const next = await x.api.acquirePrecompiledWindowsPrincipal(nextControl, x.limits);
+    x.api.assertCurrentWindowsPrincipal(next);
+    x.api.releaseCurrentWindowsPrincipal(next);
+  });
+
+  test('precompiled acquisition refuses unknown deployment without legacy source or temp fallback', async (t) => {
+    const x = await fixture(t, 'precompiled-unavailable');
+    await assert.rejects(
+      async () => x.api.acquirePrecompiledWindowsPrincipal(x.control, x.limits),
+      unavailable,
+    );
+    assert.equal(x.state.spawns, 0);
+    assert.equal(x.state.cleanups, 0);
+    assert.equal(x.state.hostReads <= 1, true);
+  });
+
   test('a fixed diagnostic marker never permits a zero-exit helper to authorize', async (t) => {
     const x = await fixture(t, 'diagnostic-zero');
     await assert.rejects(x.acquire(), (e) => {
@@ -304,11 +426,50 @@ if (!childLane) {
   });
 
   async function ready(x, pending) {
-    // Observe early failure while bounding the synthetic scheduling wait.
-    pending.catch(() => {});
-    for (let i = 0; i < 50 && !x.state.close; i++) await turn();
+    // Wait for the simulated child event, not a count of event-loop turns: a real
+    // helper-source read can legitimately take longer on a cold hosted runner.
+    if (typeof x.state.close !== 'function') {
+      await new Promise((resolve, reject) => {
+        const finish = (error) => {
+          clearTimeout(timer);
+          x.state.readiness.removeListener('ready', onReady);
+          error ? reject(error) : resolve();
+        };
+        const onReady = () => finish();
+        const timer = setTimeout(
+          () => finish(Error('TEST_DOUBLE_CHILD_NOT_READY_BEFORE_DEADLINE')),
+          Math.max(1, x.control.deadlineEpochMs - Date.now()),
+        );
+        x.state.readiness.once('ready', onReady);
+        void pending.then(() => {
+          if (typeof x.state.close === 'function') finish();
+          else finish(Error('TEST_DOUBLE_OWNER_ENDED_BEFORE_CHILD_READY'));
+        }, finish);
+      });
+    }
     assert.equal(typeof x.state.close, 'function');
   }
+  test('readiness waits for actual input event beyond fifty event-loop turns', async (t) => {
+    const x = await fixture(t, 'success', true);
+    let release;
+    x.state.sourceReadGate = new Promise((resolve) => {
+      release = resolve;
+    });
+    const pending = x.acquire();
+    let observed = false;
+    const waiting = ready(x, pending).then(() => {
+      observed = true;
+    });
+    for (let i = 0; i < 60; i++) await turn();
+    assert.equal(observed, false);
+    assert.equal(x.state.close, undefined);
+    release();
+    await waiting;
+    x.state.close();
+    const handle = await pending;
+    x.api.assertCurrentWindowsPrincipal(handle);
+    x.api.releaseCurrentWindowsPrincipal(handle);
+  });
   test('opaque principal waits for close EOF host recheck and exact cleanup; rejects clones DTO released and foreign incarnation', async (t) => {
     const x = await fixture(t, 'success', true);
     let resolved = false;

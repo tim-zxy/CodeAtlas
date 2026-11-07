@@ -3,7 +3,8 @@ import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 import { parse as parseToml } from 'smol-toml';
-import { LanguageVariant, SyntaxKind, createScanner } from 'typescript/unstable/ast';
+import { SyntaxKind } from 'typescript/unstable/ast';
+import { API } from 'typescript/unstable/sync';
 
 const codeatlasPrefix = '@codeatlas/';
 const dependencyFields = [
@@ -265,124 +266,48 @@ async function checkNativeAnalyzer(workspaceRoot) {
   return { diagnostics: [...diagnostics], projectCount: 1 };
 }
 
-function importSpecifiers(filePath, sourceText) {
-  const scanner = createScanner(true, LanguageVariant.Standard, sourceText);
-  const tokens = [];
-  const imports = [];
-
-  for (let kind = scanner.scan(); kind !== SyntaxKind.EndOfFile; kind = scanner.scan()) {
-    tokens.push({
-      kind,
-      start: scanner.getTokenStart(),
-      value: scanner.getTokenValue(),
-    });
-  }
-
-  function isStringLiteral(token) {
-    return (
-      token?.kind === SyntaxKind.StringLiteral ||
-      token?.kind === SyntaxKind.NoSubstitutionTemplateLiteral
-    );
-  }
-
-  function isRequireToken(token) {
-    return (
-      token?.kind === SyntaxKind.RequireKeyword ||
-      (token?.kind === SyntaxKind.Identifier && token.value === 'require')
-    );
-  }
-
-  function lineNumber(position) {
-    let line = 1;
-    for (let index = 0; index < position; index += 1) {
-      if (sourceText[index] === '\n') line += 1;
-    }
-    return line;
-  }
-
-  function record(originIndex, specifierIndex) {
-    if (!isStringLiteral(tokens[specifierIndex])) return;
-    imports.push({
-      specifier: tokens[specifierIndex].value,
-      line: lineNumber(tokens[originIndex].start),
-    });
-  }
-
-  function statementEnd(startIndex) {
-    for (let index = startIndex; index < tokens.length; index += 1) {
-      if (tokens[index].kind === SyntaxKind.SemicolonToken) return index;
-    }
-    return tokens.length;
-  }
-
-  for (let index = 0; index < tokens.length; index += 1) {
-    const token = tokens[index];
-
-    if (token.kind === SyntaxKind.ImportKeyword) {
-      if (tokens[index + 1]?.kind === SyntaxKind.OpenParenToken) {
-        record(index, index + 2);
-        continue;
-      }
-
-      if (isStringLiteral(tokens[index + 1])) {
-        record(index, index + 1);
-        continue;
-      }
-
-      const end = statementEnd(index + 1);
-      for (let cursor = index + 1; cursor < end; cursor += 1) {
-        if (tokens[cursor].kind === SyntaxKind.FromKeyword && isStringLiteral(tokens[cursor + 1])) {
-          record(index, cursor + 1);
-          break;
-        }
-        if (
-          isRequireToken(tokens[cursor]) &&
-          tokens[cursor + 1]?.kind === SyntaxKind.OpenParenToken
-        ) {
-          record(index, cursor + 2);
-          break;
-        }
-      }
-      continue;
-    }
-
-    if (token.kind === SyntaxKind.ExportKeyword) {
-      const end = statementEnd(index + 1);
-      for (let cursor = index + 1; cursor < end; cursor += 1) {
-        if (tokens[cursor].kind === SyntaxKind.FromKeyword && isStringLiteral(tokens[cursor + 1])) {
-          record(index, cursor + 1);
-          break;
-        }
-      }
-      continue;
-    }
-
+function importSpecifiers(sourceFile) {
+  const imports = [],
+    seen = new Set();
+  function record(origin, literal) {
     if (
-      (token.kind === SyntaxKind.ModuleKeyword ||
-        (token.kind === SyntaxKind.Identifier && token.value === 'module')) &&
-      tokens[index + 1]?.kind === SyntaxKind.DotToken &&
-      isRequireToken(tokens[index + 2]) &&
-      tokens[index + 3]?.kind === SyntaxKind.OpenParenToken
-    ) {
-      record(index, index + 4);
-      continue;
-    }
-
-    if (
-      isRequireToken(token) &&
-      tokens[index - 1]?.kind !== SyntaxKind.DotToken &&
-      tokens[index + 1]?.kind === SyntaxKind.OpenParenToken
-    ) {
-      record(index, index + 2);
+      literal?.kind !== SyntaxKind.StringLiteral &&
+      literal?.kind !== SyntaxKind.NoSubstitutionTemplateLiteral
+    )
+      return;
+    if (typeof literal.text !== 'string') return;
+    const line = sourceFile.getLineAndCharacterOfPosition(origin.getStart(sourceFile)).line + 1;
+    const key = literal.text + '\0' + line;
+    if (!seen.has(key)) {
+      seen.add(key);
+      imports.push({ specifier: literal.text, line });
     }
   }
-
-  return imports.filter(
-    (entry, index) =>
-      imports.findIndex(
-        (candidate) => candidate.specifier === entry.specifier && candidate.line === entry.line,
-      ) === index,
-  );
+  function visit(node) {
+    if (node.kind === SyntaxKind.ImportDeclaration || node.kind === SyntaxKind.ExportDeclaration)
+      record(node, node.moduleSpecifier);
+    else if (
+      node.kind === SyntaxKind.ImportEqualsDeclaration &&
+      node.moduleReference?.kind === SyntaxKind.ExternalModuleReference
+    )
+      record(node, node.moduleReference.expression);
+    else if (node.kind === SyntaxKind.ImportType) record(node, node.argument?.literal);
+    else if (node.kind === SyntaxKind.CallExpression) {
+      const target = node.expression;
+      if (
+        target.kind === SyntaxKind.ImportKeyword ||
+        (target.kind === SyntaxKind.Identifier && target.text === 'require') ||
+        (target.kind === SyntaxKind.PropertyAccessExpression &&
+          target.expression.kind === SyntaxKind.Identifier &&
+          target.expression.text === 'module' &&
+          target.name.text === 'require')
+      )
+        record(node, node.arguments[0]);
+    }
+    node.forEachChild(visit);
+  }
+  visit(sourceFile);
+  return imports;
 }
 
 function allowedTargets(project) {
@@ -445,91 +370,111 @@ export async function checkArchitecture(workspaceRoot) {
     edgeOrigins.set(key, origins);
   }
 
-  for (const project of projects) {
-    if (!allowedTargets(project)) {
-      diagnostics.add(`UNCLASSIFIED_PROJECT: ${project.manifest.name} (${project.id})`);
-    }
-
-    const declaredDependencies = new Set();
-    for (const field of dependencyFields) {
-      for (const dependency of Object.keys(project.manifest[field] ?? {})) {
-        declaredDependencies.add(dependency);
+  const projectFiles = new Map(
+    await Promise.all(
+      projects.map(async (project) => [project.id, await sourceFiles(project.root)]),
+    ),
+  );
+  const allFiles = [...projectFiles.values()].flat();
+  const compiler = allFiles.length ? new API() : undefined;
+  let snapshot;
+  try {
+    if (compiler) snapshot = compiler.updateSnapshot({ openFiles: allFiles });
+    for (const project of projects) {
+      if (!allowedTargets(project)) {
+        diagnostics.add(`UNCLASSIFIED_PROJECT: ${project.manifest.name} (${project.id})`);
       }
-    }
 
-    for (const dependency of [...declaredDependencies].sort()) {
-      if (!dependency.startsWith(codeatlasPrefix)) continue;
-      const target = byName.get(dependency);
-      if (!target) {
-        diagnostics.add(
-          `UNKNOWN_PROJECT_DEPENDENCY: ${project.manifest.name} -> ${dependency} (${project.id}/package.json)`,
-        );
-      } else if (target !== project) {
-        addEdge(project, target, `${project.id}/package.json`);
-      }
-    }
-
-    for (const filePath of await sourceFiles(project.root)) {
-      const relativeFile = normalizePath(path.relative(workspaceRoot, filePath));
-      const sourceText = await readFile(filePath, 'utf8');
-      for (const imported of importSpecifiers(filePath, sourceText)) {
-        let target;
-        let internalName;
-
-        if (imported.specifier.startsWith(codeatlasPrefix)) {
-          internalName = `${codeatlasPrefix}${packageSegment(imported.specifier)}`;
-          target = byName.get(internalName);
-        } else if (imported.specifier.startsWith('.')) {
-          const resolved = path.resolve(path.dirname(filePath), imported.specifier);
-          target = projects.find((candidate) => isWithin(candidate.root, resolved));
-          internalName = target?.manifest.name;
+      const declaredDependencies = new Set();
+      for (const field of dependencyFields) {
+        for (const dependency of Object.keys(project.manifest[field] ?? {})) {
+          declaredDependencies.add(dependency);
         }
+      }
 
-        if (!internalName) continue;
-        const origin = `${relativeFile}:${imported.line}`;
+      for (const dependency of [...declaredDependencies].sort()) {
+        if (!dependency.startsWith(codeatlasPrefix)) continue;
+        const target = byName.get(dependency);
         if (!target) {
           diagnostics.add(
-            `UNKNOWN_PROJECT_DEPENDENCY: ${project.manifest.name} -> ${internalName} (${origin})`,
+            `UNKNOWN_PROJECT_DEPENDENCY: ${project.manifest.name} -> ${dependency} (${project.id}/package.json)`,
           );
-          continue;
+        } else if (target !== project) {
+          addEdge(project, target, `${project.id}/package.json`);
         }
-        if (target === project) continue;
+      }
 
-        addEdge(project, target, origin);
-        if (!declaredDependencies.has(target.manifest.name)) {
+      for (const filePath of projectFiles.get(project.id)) {
+        const relativeFile = normalizePath(path.relative(workspaceRoot, filePath));
+        const sourceFile = snapshot
+          ?.getDefaultProjectForFile(filePath)
+          ?.program.getSourceFile(filePath);
+        if (!sourceFile) throw new Error(`ARCHITECTURE_SOURCE_UNAVAILABLE: ${relativeFile}`);
+        for (const imported of importSpecifiers(sourceFile)) {
+          let target;
+          let internalName;
+
+          if (imported.specifier.startsWith(codeatlasPrefix)) {
+            internalName = `${codeatlasPrefix}${packageSegment(imported.specifier)}`;
+            target = byName.get(internalName);
+          } else if (imported.specifier.startsWith('.')) {
+            const resolved = path.resolve(path.dirname(filePath), imported.specifier);
+            target = projects.find((candidate) => isWithin(candidate.root, resolved));
+            internalName = target?.manifest.name;
+          }
+
+          if (!internalName) continue;
+          const origin = `${relativeFile}:${imported.line}`;
+          if (!target) {
+            diagnostics.add(
+              `UNKNOWN_PROJECT_DEPENDENCY: ${project.manifest.name} -> ${internalName} (${origin})`,
+            );
+            continue;
+          }
+          if (target === project) continue;
+
+          addEdge(project, target, origin);
+          if (!declaredDependencies.has(target.manifest.name)) {
+            diagnostics.add(
+              `UNDECLARED_PROJECT_DEPENDENCY: ${project.manifest.name} -> ${target.manifest.name} (${origin})`,
+            );
+          }
+        }
+      }
+    }
+
+    for (const project of projects) {
+      const allowed = allowedTargets(project);
+      if (!allowed) continue;
+      for (const targetName of [...edges.get(project.manifest.name)].sort()) {
+        const target = byName.get(targetName);
+        if (target && !allowed.has(target.directory)) {
+          const origins = edgeOrigins.get(`${project.manifest.name}\0${targetName}`).sort();
           diagnostics.add(
-            `UNDECLARED_PROJECT_DEPENDENCY: ${project.manifest.name} -> ${target.manifest.name} (${origin})`,
+            `FORBIDDEN_DEPENDENCY: ${project.manifest.name} -> ${targetName} (${origins[0]})`,
           );
         }
       }
     }
-  }
 
-  for (const project of projects) {
-    const allowed = allowedTargets(project);
-    if (!allowed) continue;
-    for (const targetName of [...edges.get(project.manifest.name)].sort()) {
-      const target = byName.get(targetName);
-      if (target && !allowed.has(target.directory)) {
-        const origins = edgeOrigins.get(`${project.manifest.name}\0${targetName}`).sort();
-        diagnostics.add(
-          `FORBIDDEN_DEPENDENCY: ${project.manifest.name} -> ${targetName} (${origins[0]})`,
-        );
-      }
+    for (const cycle of findCycles(projects, edges)) {
+      diagnostics.add(`DEPENDENCY_CYCLE: ${cycle.join(' -> ')}`);
+    }
+
+    const nativeAnalyzer = await checkNativeAnalyzer(workspaceRoot);
+    for (const diagnostic of nativeAnalyzer.diagnostics) diagnostics.add(diagnostic);
+
+    return {
+      diagnostics: [...diagnostics].sort(),
+      projectCount: projects.length + nativeAnalyzer.projectCount,
+    };
+  } finally {
+    try {
+      snapshot?.dispose();
+    } finally {
+      compiler?.close();
     }
   }
-
-  for (const cycle of findCycles(projects, edges)) {
-    diagnostics.add(`DEPENDENCY_CYCLE: ${cycle.join(' -> ')}`);
-  }
-
-  const nativeAnalyzer = await checkNativeAnalyzer(workspaceRoot);
-  for (const diagnostic of nativeAnalyzer.diagnostics) diagnostics.add(diagnostic);
-
-  return {
-    diagnostics: [...diagnostics].sort(),
-    projectCount: projects.length + nativeAnalyzer.projectCount,
-  };
 }
 
 async function main() {
