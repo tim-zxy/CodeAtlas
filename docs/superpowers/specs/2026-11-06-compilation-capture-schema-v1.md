@@ -462,3 +462,21 @@ Evidence relational capture; actual source/scan/policy clearance and later W010.
 These are not solved by Boolean/digest receipts. This specification does not prove any product adapter, test, Native/R9 run, migration,
 permission or publication gate. Dependency adoption has its separate exact evidence;
 it is not a Source/scan/capture authorization proof.
+
+## Acquired owner-frame cleanup clarification
+
+Application registers the exact frame returned by each successful owner acquisition
+for reverse-order cleanup before inspecting that frame. Frame shape is the existing
+private owner-port shape (repository handle/capture; workspace handle/selection/
+workspaceCapture/documents), with own enumerable data properties; getters/proxies
+are not evaluated as capture data. After validation, a frozen snapshot binds the
+same opaque handle for later cleanup. If frame validation fails, release is still
+attempted against the original acquired frame. Failed release remains UNKNOWN and
+does not prevent release of other acquired owners. No snapshot escapes failed or
+unsettled capture; this clarifies the existing cleanup/no-getter invariant only.
+
+A synchronous frame is registered without await/thenable assimilation. Only genuine
+Promises on the declared asynchronous port are awaited. An asynchronous producer
+must validate its closed, non-thenable frame before resolving and retain cleanup
+responsibility on failure; Application cannot undo thenable assimilation that has
+already happened inside a producer Promise. No new thenable protocol is admitted.

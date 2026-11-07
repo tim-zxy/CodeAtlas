@@ -1,0 +1,79 @@
+{
+  "schema": "codeatlas.capture-frame-cleanup-evidence",
+  "version": 1,
+  "baseCommit": "bb5a0940690d9fed24a5c164814540051f7f7e46",
+  "task": "P1-12 existing capture owner cleanup/no-accessor invariants",
+  "assumptions": [
+    "Owner ports remain trusted private Runtime composition; malformed returned frame is not authority",
+    "Any returned acquired owner must enter reverse-order cleanup before frame data is inspected",
+    "No new permissions, identity route, public schema, migration or capture source scope"
+  ],
+  "successCriteria": [
+    "Frame accessors never execute",
+    "Malformed repository/workspace frame still attempts original owner release",
+    "Release failure remains UNKNOWN and does not prevent other releases",
+    "Valid frame data snapshot preserves stable cleanup handle and existing capture behavior"
+  ],
+  "red": {
+    "command": "node --test packages/application/test/compilation-input.test.mjs",
+    "pass": 15,
+    "fail": 4,
+    "observed": "Object spread executes getter before release registration; cleanup callbacks omitted and UNKNOWN failures falsely SETTLED"
+  },
+  "green": {
+    "applicationBuild": "node node_modules/typescript/bin/tsc -p packages/application/tsconfig.json",
+    "buildExitCode": 0,
+    "command": "node --test --test-concurrency=1 packages/application/test/compilation-input.test.mjs packages/application/test/compilation-input-contract.test.mjs packages/application/test/compilation-source.test.mjs packages/runtime/test/compilation-input.test.mjs packages/runtime/test/compilation-source.test.mjs",
+    "pass": 79,
+    "fail": 0,
+    "skipped": 0,
+    "todo": 0,
+    "architectureProjects": 17,
+    "architectureExitCode": 0,
+    "formatExitCode": 0,
+    "diffCheckExitCode": 0
+  },
+  "testProvenance": "Offline owner-port failure injection plus existing owned SQLite and genuine local Source byte-mutation controls; no Principal lookup, Native or production qualification",
+  "actualIdentityQueries": 0,
+  "aclChanges": 0,
+  "unknownDirectoryCleanup": false,
+  "precompiledHelperImplemented": false,
+  "formalStatus": {
+    "phase1": "4/21",
+    "a6": "NOT_QUALIFIED",
+    "e02": "PROPOSED/uninstalled"
+  },
+  "filesSha256": {
+    "packages/application/src/capture-compilation-input.ts": "b96aa5c830bb4421905610e5e6899b911c8d7e1a67cc584a368ec037eea9827c",
+    "packages/application/test/compilation-input.test.mjs": "4050cc9c44e2b8d342b7dcc05dee88e3371b82dc59225f8f5067536e458c67f1"
+  },
+  "reviewCounterexample": {
+    "command": "node --test packages/application/test/compilation-input.test.mjs",
+    "pass": 19,
+    "fail": 2,
+    "reason": "await on raw synchronous frame invokes unknown then getter before registration"
+  },
+  "additionalControls": [
+    "Synchronous frame then accessor never invoked; acquired owner still released",
+    "Genuine Promise frames retain original success and reverse cleanup"
+  ],
+  "asyncProducerBoundary": "Promise producers must validate closed non-thenable frames and own failure cleanup before resolution; Application cannot reverse assimilation already performed inside a producer Promise.",
+  "independentReview": "No remaining important issue after synchronous then-getter fix; async producer responsibility documented. Static review only.",
+  "ci157": {
+    "runId": 42338339225,
+    "head": "1bdcbd4af9fb2912ded1a03d151f76f7d8e4b8c4",
+    "typescript": "success",
+    "rust": "success",
+    "native": "failure",
+    "nativeReason": "Retained exact R8 script catalog mismatch",
+    "coversThisCaptureFix": false
+  },
+  "ci158LastObserved": {
+    "runId": 42339057872,
+    "head": "bb5a0940690d9fed24a5c164814540051f7f7e46",
+    "typescript": "in_progress Run tests",
+    "rust": "success",
+    "native": "failure",
+    "coversThisCaptureFix": false
+  }
+}

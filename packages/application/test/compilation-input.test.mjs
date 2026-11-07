@@ -425,3 +425,94 @@ test('permission revoked during asynchronous owner cleanup refuses the final sna
   assert.equal(f.events.filter((e) => e === 'release-repository').length, 1);
   assert.equal(f.events.filter((e) => e === 'release-workspace').length, 1);
 });
+
+for (const kind of ['repository', 'workspace'])
+  test(`acquired ${kind} accessor frame refuses without invoking getter and still releases owner`, async () => {
+    const f = fixture();
+    const raw = kind === 'repository' ? f.repository : f.workspace;
+    const field = kind === 'repository' ? 'capture' : 'selection';
+    let getters = 0,
+      releases = 0;
+    Object.defineProperty(raw, field, {
+      enumerable: true,
+      configurable: true,
+      get() {
+        getters++;
+        throw Error('private source text getter');
+      },
+    });
+    const method = kind === 'repository' ? 'releaseRepository' : 'releaseWorkspace';
+    f.ports[method] = (frame) => {
+      releases++;
+      assert.equal(frame, raw);
+      assert.equal(Object.getOwnPropertyDescriptor(frame, 'handle').value, raw.handle);
+      f.events.push('release-' + kind);
+    };
+    await refuses(f, 'CAPTURE_FAILED');
+    assert.equal(getters, 0);
+    assert.equal(releases, 1);
+    assert.equal(f.events.includes('source'), false);
+    assert.equal(f.events.at(-1), 'invalidate');
+    if (kind === 'workspace')
+      assert.ok(f.events.indexOf('release-workspace') < f.events.indexOf('release-repository'));
+  });
+
+for (const kind of ['repository', 'workspace'])
+  test(`unsettled ${kind} accessor frame cleanup remains UNKNOWN and other acquired owners still release`, async () => {
+    const f = fixture();
+    const raw = kind === 'repository' ? f.repository : f.workspace;
+    const field = kind === 'repository' ? 'capture' : 'selection';
+    Object.defineProperty(raw, field, {
+      enumerable: true,
+      get() {
+        throw Error('private source text');
+      },
+    });
+    const method = kind === 'repository' ? 'releaseRepository' : 'releaseWorkspace';
+    f.ports[method] = () => {
+      f.events.push('release-' + kind);
+      throw Error('private source text cleanup');
+    };
+    await assert.rejects(run(f), (e) => {
+      assert.equal(e.code, 'CAPTURE_FAILED');
+      assert.equal(e.cleanupState, 'UNKNOWN');
+      assert.equal(e.message.includes('private source text'), false);
+      return true;
+    });
+    assert.equal(f.events.filter((x) => x === 'release-' + kind).length, 1);
+    if (kind === 'workspace') assert.equal(f.events.includes('release-repository'), true);
+  });
+
+for (const kind of ['repository', 'workspace'])
+  test(`synchronous ${kind} frame then getter cannot run before cleanup registration`, async () => {
+    const f = fixture();
+    const raw = kind === 'repository' ? f.repository : f.workspace;
+    let getters = 0,
+      releases = 0;
+    Object.defineProperty(raw, 'then', {
+      enumerable: true,
+      get() {
+        getters++;
+        throw Error('private source text thenable');
+      },
+    });
+    const method = kind === 'repository' ? 'releaseRepository' : 'releaseWorkspace';
+    f.ports[method] = (frame) => {
+      assert.equal(frame, raw);
+      releases++;
+    };
+    await refuses(f, 'CAPTURE_FAILED');
+    assert.equal(getters, 0);
+    assert.equal(releases, 1);
+  });
+
+test('genuine asynchronous acquired frames preserve the original capture and release path', async () => {
+  const f = fixture();
+  f.ports.acquireRepository = () => Promise.resolve(f.repository);
+  f.ports.acquireWorkspace = () => Promise.resolve(f.workspace);
+  const result = await run(f);
+  assert.equal(result.snapshotId, 'opaque-capture');
+  assert.equal(f.events.filter((x) => x === 'release-workspace').length, 1);
+  assert.equal(f.events.filter((x) => x === 'release-repository').length, 1);
+  assert.ok(f.events.indexOf('release-workspace') < f.events.indexOf('release-repository'));
+});

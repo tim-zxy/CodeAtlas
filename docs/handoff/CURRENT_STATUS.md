@@ -1,3 +1,31 @@
+## P1-12 acquired-frame cleanup ordering defect corrected - 2026-11-07
+
+An independent existing capture defect was reproduced without Principal acquisition:
+Application spread acquired repository/workspace frames before registering cleanup.
+A data getter could execute/throw, omit release entirely and falsely report SETTLED.
+Four new regressions failed on the old implementation (15PASS/4FAIL). Acquisition now
+registers its exact original frame first, inspects only own data descriptors without
+invoking getters, and replaces the cleanup reference with a frozen stable snapshot
+only after validation. Malformed frames still attempt release; failed release stays
+UNKNOWN and does not skip other acquired owners. Successful ordering and final
+Source/policy checks remain; no capture scope, authority or schema changes.
+
+Independent review found await could still invoke a synchronous frame then getter;
+two further REDs reproduced this. Only genuine Promises are awaited, and synchronous
+frames enter cleanup without assimilation; a genuine asynchronous success control
+also passes. Producer Promises must validate non-thenable frames and own failures
+before resolution; Application cannot undo already performed producer assimilation.
+Application build and five related Application/Runtime capture files79/79 pass,
+including existing real owned SQLite and local Source mutation controls; architecture17,
+format and diff checks pass. No actual identity retry, ACL change, UNKNOWN directory
+cleanup, user migration, scan clearance, R9 or helper build/loading implementation.
+Helper proposal remains unapproved/unimplemented. No stage acceptance inferred.
+CI157 on1bdcbd4 is terminal TS/Rust PASS, Native retained exact R8 catalog FAIL;
+CI158 onbb5a094 still has TS tests running, Rust PASS and Native FAIL. These heads
+do not include this new capture correction; no older CI result is transferred.
+[Evidence](../superpowers/reviews/2026-11-07-capture-frame-cleanup.json).
+Phase1 remains4/21; A6 NOT_QUALIFIED; E02 evaluation baseline PROPOSED/uninstalled.
+
 ## Principal failure diagnostics; precompiled helper remains proposed - 2026-11-07
 
 The approved independent offline batch adds fixed Node/helper failure phases, child

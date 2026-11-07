@@ -112,6 +112,26 @@ function freeze<T>(value: T): T {
   return value;
 }
 const codeKinds = new Set(['SOURCE_FILE', 'CODE_NODE', 'CODE_EDGE', 'EVIDENCE', 'SYNTAX_EVIDENCE']);
+/** Snapshot trusted owner frames without invoking accessors. Cleanup must already
+ * be registered against the acquired frame before any inspection can refuse. */
+function captureFrame<T extends { handle: object }>(
+  value: T,
+  keys: readonly (keyof T)[],
+): Readonly<T> {
+  requireValue(value && typeof value === 'object' && !types.isProxy(value));
+  const descriptors = Object.getOwnPropertyDescriptors(value);
+  requireValue(Reflect.ownKeys(descriptors).length === keys.length);
+  for (const key of keys) {
+    const descriptor = descriptors[key];
+    requireValue(descriptor && descriptor.enumerable && Object.hasOwn(descriptor, 'value'));
+  }
+  const handle: unknown = descriptors.handle!.value;
+  requireValue(handle && typeof handle === 'object' && !types.isProxy(handle));
+  return Object.freeze(
+    Object.fromEntries(keys.map((key) => [key, descriptors[key]!.value])),
+  ) as Readonly<T>;
+}
+
 /** Capture window only: each DB owns its own view, not a shared cross-DB instant.
  * No document body scan authority exists on this route yet: deny before reads.
  * Nothing here writes a snapshot record, calls a model, or publishes knowledge. */
@@ -224,10 +244,16 @@ export async function captureCompilationInput(
     const frames: RepositoryCaptureFrame[] = [];
     for (const repositoryId of request.repositoryIds) {
       await checked(() => ports.authorizeRepositoryRead(request, repositoryId));
-      const frame = Object.freeze({ ...(await ports.acquireRepository(repositoryId)) });
-      // Register the acquired owner before touching data or checking cancellation.
-      releases.push(() => ports.releaseRepository(frame));
-      requireValue(frame && typeof frame === 'object' && !types.isProxy(frame));
+      const pending = ports.acquireRepository(repositoryId);
+      // Do not await a synchronous frame: Promise assimilation would invoke an
+      // unknown `then` getter before its acquired owner enters cleanup.
+      const acquired: RepositoryCaptureFrame = types.isPromise(pending) ? await pending : pending;
+      // Register before inspecting the returned frame; a malformed data field must
+      // not hide an acquired owner's release or falsely report settled cleanup.
+      let cleanupFrame = acquired;
+      releases.push(() => ports.releaseRepository(cleanupFrame));
+      const frame = captureFrame(acquired, ['handle', 'capture']);
+      cleanupFrame = frame;
       const capture = owned(frame.capture),
         pin = pins.get(repositoryId)!;
       requireValue(
@@ -242,10 +268,19 @@ export async function captureCompilationInput(
       (ref) => !codeKinds.has(ref.entity.kind),
     );
     await checked(() => ports.authorizeWorkspaceRead(request, includeRuntime));
-    const workspace = Object.freeze({
-      ...(await ports.acquireWorkspace(request, frames, includeRuntime)),
-    });
-    releases.push(() => ports.releaseWorkspace(workspace));
+    const pendingWorkspace = ports.acquireWorkspace(request, frames, includeRuntime);
+    const acquiredWorkspace: WorkspaceCaptureFrame = types.isPromise(pendingWorkspace)
+      ? await pendingWorkspace
+      : pendingWorkspace;
+    let workspaceCleanupFrame = acquiredWorkspace;
+    releases.push(() => ports.releaseWorkspace(workspaceCleanupFrame));
+    const workspace = captureFrame(acquiredWorkspace, [
+      'handle',
+      'selection',
+      'workspaceCapture',
+      'documents',
+    ]);
+    workspaceCleanupFrame = workspace;
     const workspaceData = owned({
       selection: workspace.selection,
       workspaceCapture: workspace.workspaceCapture,

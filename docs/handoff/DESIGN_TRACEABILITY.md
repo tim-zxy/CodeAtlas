@@ -1,3 +1,14 @@
+## Capture owner acquired-frame cleanup ordering - 2026-11-07
+
+Existing no-getter/unsettled-capture refusal -> four acquired-frame accessor and
+release-failure REDs -> register original owner before descriptor inspection, freeze
+valid data snapshot -> reverse release always attempted, UNKNOWN preserved and other
+owners released. Review then-getter RED -> synchronous frames are not awaited,
+while genuine Promise success stays compatible. Async producers retain pre-resolution
+validation/cleanup responsibility. Capture/Source/policy/cleanup tests79/79; no new authority,
+public contract, migration or helper loading decision.
+[Evidence](../superpowers/reviews/2026-11-07-capture-frame-cleanup.json).
+
 ## Fixed private Principal failure diagnostics - 2026-11-07
 
 Approved bounded redacted diagnostic -> missing-field RED -> fixed phase/scalars,
