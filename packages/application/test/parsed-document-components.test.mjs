@@ -170,6 +170,11 @@ async function base(t, text) {
 }
 for (const [kind, text, reason] of [
   [
+    'unrepresentable-link',
+    '# Heading\n\ntext [x](< >) and [ok](https://example.invalid)\n',
+    'SECRET_COVERAGE_INCOMPLETE',
+  ],
+  [
     'complete',
     '\ufeff# Heading\r\n\r\n中文😀\r\n\r\n```js\r\nthrow new Error("must not execute");\r\n```\r\n',
     'SECRET_COVERAGE_INCOMPLETE',

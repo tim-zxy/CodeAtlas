@@ -1,3 +1,13 @@
+## P1-10 strict link boundary and parser provenance - 2026-11-07
+
+Existing IR target Text -> guarded original Markdown target -> lossless inline
+fallback/PARTIAL instead of whole-document refusal -> actual Source/preflight
+last-good regression. Adapter-v1.1 binds the corrected output to a distinct
+immutable parser tuple; dependency/schema identities and old history remain.
+[Evidence](../superpowers/reviews/2026-11-07-markdown-link-boundary.json).
+Policy/lifecycle proposal refinements remain unapproved design options, with
+actual parent keys, settled-writer proof and all-pending backup rejection clarified.
+
 ## P1-10 Source-to-parser preflight and capture settlement - 2026-11-07
 
 Approved parser + existing selected Source read -> private checkParsedDocumentWrite

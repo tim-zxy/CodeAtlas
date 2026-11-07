@@ -1,0 +1,78 @@
+{
+  "kind": "P1_10_MARKDOWN_STRICT_LINK_BOUNDARY_FIX",
+  "date": "2026-11-07",
+  "baseCommit": "e81edc97cbad3e4438182dac9e76e2c79c67c0f7",
+  "worktree": "D:/workspace/CodeAtlas-phase1-20261106",
+  "before": "legal whitespace destination link caused IR_VALIDATION_FAILED and whole preflight refusal",
+  "after": "preserve original inline literal and ranges, mark PARTIAL, omit unrepresentable typed target and retain valid adjacent links",
+  "parserVersion": "codeatlas-markdown-adapter-v1.1/unified-11.0.5/remark-parse-11.0.0/remark-gfm-4.0.1",
+  "versionReason": "existing immutable (document,sourceFingerprint,parserVersion,policyVersion) tuple rejects changed payload under the same label; ordinary adapter provenance update, not schema/dependency change",
+  "validation": {
+    "build": {
+      "command": "node node_modules/typescript/bin/tsc -p packages/documents/tsconfig.json",
+      "exitCode": 0
+    },
+    "tests": {
+      "command": "node --test --test-concurrency=1 packages/documents/test/source-draft.test.mjs packages/documents/test/secret-preflight.test.mjs packages/documents/test/markdown-runtime.test.mjs packages/documents/test/parse-document.test.mjs packages/application/test/parsed-document-write-preflight.test.mjs packages/application/test/parsed-document-components.test.mjs packages/application/test/document-write-preflight.test.mjs packages/application/test/document-components.test.mjs",
+      "tests": 81,
+      "pass": 81,
+      "fail": 0,
+      "skip": 0,
+      "todo": 0,
+      "cancelled": 0,
+      "durationMs": 5169.6994,
+      "exitCode": 0
+    },
+    "architecture": {
+      "command": "node scripts/check-architecture.mjs",
+      "projects": 17,
+      "exitCode": 0
+    },
+    "format": {
+      "command": "node node_modules/prettier/bin/prettier.cjs --check docs/handoff/CURRENT_STATUS.md docs/handoff/DESIGN_TRACEABILITY.md docs/superpowers/reviews/2026-11-07-markdown-link-boundary.json docs/superpowers/specs/2026-11-07-policy-lifecycle-decision-proposal.md packages/application/test/parsed-document-components.test.mjs packages/documents/src/parse-document.ts packages/documents/test/parse-document.test.mjs",
+      "exitCode": 0
+    },
+    "diffWhitespace": {
+      "command": "git diff --check",
+      "exitCode": 0
+    }
+  },
+  "redGreen": [
+    "six parser cases: legal whitespace targets in paragraph/heading/list/quote/table plus empty destination literal;17total11pass6fail before fix",
+    "actual Source to AST preflight new case:6total5pass1fail before fix",
+    "actual changed-output parserVersion literal v1.1 failed against v1, passed after adapter-only version update"
+  ],
+  "review": {
+    "independentReadOnly": true,
+    "importantFindings": 0,
+    "schemaNotWidened": true,
+    "claimsEmpty": true
+  },
+  "decisionPacket": {
+    "path": "docs/superpowers/specs/2026-11-07-policy-lifecycle-decision-proposal.md",
+    "status": "PROPOSED_ONLY",
+    "D1D3": "two real entry choices; trusted consent origin unresolved; exact private principal/capability/policy records; no DTO/YAML grants",
+    "D5D7": "verified W004/W007 parent keys, missing document composite key, W009/W011 provenance keys, state/receipt/sole-writer recovery constraints, install and backup choices",
+    "criticalRecoveryRule": "no visible snapshot does not prove NOT_COMMITTED until original writer has genuinely settled or cannot execute again; otherwise UNKNOWN/no retry",
+    "inspectionDoesNotInventReused": true,
+    "runnerBackupBehavior": "any pending backupRequired=true rejects entire pending batch before W009; no manual receipt bypass",
+    "implementedAuthority": false,
+    "installedMigration": false
+  },
+  "ci149": {
+    "id": 42323862025,
+    "head": "e81edc97cbad3e4438182dac9e76e2c79c67c0f7",
+    "typescript": "in_progress at last check",
+    "rust": "success",
+    "native": "failure",
+    "nativeLogVerifiedReason": "R8 script catalog mismatch",
+    "rerun": false,
+    "notEvidenceForCurrentChange": true
+  },
+  "limits": [
+    "real Source filesystem and two SQLite fixtures, Git/policy explicit offline substitutes",
+    "no URL execution, trimming, new identity/resolution/schema or dependency",
+    "no real R9, scan clearance, production publication or authority creation",
+    "Phase1 4/21; A6 NOT_QUALIFIED; E02 source/oracle evaluation baseline PROPOSED/uninstalled"
+  ]
+}

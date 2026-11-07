@@ -1,3 +1,28 @@
+## Valid Markdown link boundary fixed; decision options refined - 2026-11-07
+
+A real P1-10 defect is fixed: legal Markdown such as [x](< >) previously made the
+whole Draft/preflight fail because its target cannot inhabit existing IR Text.
+The adapter now preserves the exact inline Markdown, emits explicit PARTIAL and
+skips only that typed link; valid adjacent links and original UTF8 ranges remain.
+No target trimming, URL execution, new resolution rule or schema widening.
+
+Adapter provenance is now v1.1 (the approved dependency versions and bundle/schema
+v1 are unchanged). This distinguishes changed output under the existing immutable
+content/parser/policy tuple; old versions/rows/evidence are not rewritten. Six
+parser regressions and an actual Source/two-owned-DB preflight case prove the fix.
+Final affected81/81, Documents build and architecture17 pass. Independent review
+found no important issue; deny-only/no-publication behavior remains.
+[Evidence](../superpowers/reviews/2026-11-07-markdown-link-boundary.json).
+
+The existing PROPOSED policy/lifecycle decision packet now gives D1-D3 entry
+options/closed owner records and D5-D7 exact parent/FK mapping, run/inspection
+states, sole-writer recovery and backup choices. Absence alone is never proof of
+NOT_COMMITTED; an unsettled writer keeps UNKNOWN without retry. None of these
+candidate contracts has created a permission issuer or installed W009-W011.
+Phase1 remains4/21; A6 NOT_QUALIFIED; E02 PROPOSED/uninstalled; actual R9/production
+scan/publication remain unexecuted. CI149 is reused; its prior-head results cannot
+certify this later change.
+
 ## Source-to-AST deny-only document workflow completed - 2026-11-07
 
 Continued an independent P1-10 implementation while policy/W010 decisions remain

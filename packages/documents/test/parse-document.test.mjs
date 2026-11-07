@@ -41,6 +41,65 @@ async function parse(raw, kind) {
     account(),
   );
 }
+test('unrepresentable whitespace link target preserves literal with original BOM/CRLF range and valid neighbors', async () => {
+  const out = (await parse('\ufeff[x](< >) [ok](./ok.md) [](./empty.md)\r\n')).payload;
+  assert.equal(out.blocks[0].payload.text, '[x](< >) ok ');
+  assert.equal(out.revision.completeness, 'PARTIAL');
+  assert.deepEqual(
+    out.links.map((link) => [link.typedContent.label, link.typedContent.target]),
+    [
+      ['ok', './ok.md'],
+      ['', './empty.md'],
+    ],
+  );
+  assert.deepEqual(out.revision.diagnostics, [
+    {
+      code: 'MARKDOWN_LINK_TARGET_NOT_TYPED',
+      sourceRange: {
+        documentRevisionId: 'doc-revision:one',
+        startLine: 0,
+        startColumn: 3,
+        endLine: 0,
+        endColumn: 11,
+      },
+    },
+  ]);
+  assert.deepEqual(out.claims, []);
+});
+for (const [name, raw, content] of [
+  ['heading', '# [x](< >) [ok](./ok.md)\n', (out) => out.blocks[0].payload.text],
+  ['list', '- [x](< >) [ok](./ok.md)\n', (out) => out.blocks[0].payload.items[0].text],
+  ['quote', '> [x](< >) [ok](./ok.md)\n', (out) => out.blocks[0].payload.text],
+  [
+    'table',
+    '| X |\n| - |\n| [x](< >) [ok](./ok.md) |\n',
+    (out) => out.tables[0].typedContent.rows[0][0],
+  ],
+])
+  test(`unrepresentable link target preserves inline syntax inside ${name}`, async () => {
+    const out = (await parse(raw)).payload;
+    assert.equal(content(out), '[x](< >) ok');
+    assert.equal(out.revision.completeness, 'PARTIAL');
+    assert.deepEqual(
+      out.links.map((link) => link.typedContent.target),
+      ['./ok.md'],
+    );
+    assert.ok(out.revision.diagnostics.some((d) => d.code === 'MARKDOWN_LINK_TARGET_NOT_TYPED'));
+    assert.deepEqual(out.claims, []);
+  });
+test('empty destinations preserve raw inline syntax without creating same-document target rules', async () => {
+  const out = (await parse('[empty]() [ok](./ok.md)\n')).payload;
+  assert.equal(
+    out.revision.parserVersion,
+    'codeatlas-markdown-adapter-v1.1/unified-11.0.5/remark-parse-11.0.0/remark-gfm-4.0.1',
+  );
+  assert.equal(out.blocks[0].payload.text, '[empty]() ok');
+  assert.equal(out.revision.completeness, 'PARTIAL');
+  assert.deepEqual(
+    out.links.map((link) => link.typedContent.target),
+    ['./ok.md'],
+  );
+});
 test('literal BOM CRLF Unicode coordinates and repeated heading identities', async () => {
   const out = (
     await parse('\ufeff# Same\r\n\r\n\u4e2d\ud83d\ude00\r\n\r\n## Same\r\n\r\n# Same\r\n')

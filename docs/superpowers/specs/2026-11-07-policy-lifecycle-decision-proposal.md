@@ -210,3 +210,164 @@ changes report actual COMMITTED/AFFECTED rather than pretending rollback.
 Principal/scan confusion, mistaken UNKNOWN retry, cross-workspace provenance and
 fake successful model metadata are the primary risks. The safer alternative is
 read-only capture with no migration or issuer, which remains the current state.
+## Technical review refinement: D1-D3 and D5-D7
+
+All candidate schemas/choices in this section remain N/PROPOSED, except the
+explicitly identified existing migration keys and run-state vocabulary. No code
+in this proposal is a grant, executable migration or recovery credential.
+
+### D1-D3: two concrete entry choices
+
+| Choice | Required real origin and impact | Failure boundary |
+| --- | --- | --- |
+| Recommended first slice: local ONE_SHOT bootstrap operator consent | A trusted launcher obtains actual operator consent and creates this operation session. Add a private CLI consent adapter, Runtime owner/composition and Application session contract/tests; no automatic MCP-service extension. | Launcher/channel/threat boundary is not defined yet. TTY, OS username, stdin, --yes and YAML cannot prove consent if an Agent can control that channel. |
+| Named authenticated desktop Host adapter | A specifically selected Host API must authenticate the subject and bind this process/workspace, consent, current policy and revocation. Share the same Runtime/Application enforcement; substitute the Host adapter for CLI consent. | No such API or adapter has been identified in this repository. A claimed Host name, principal string or JSON receipt cannot mint a session. |
+
+Both avoid remote authentication, persistent credentials and SQL. D1 must name the
+actual trusted channel and its protection against Agent substitution/replay, not
+just select a mode label. If neither can be established, issuer stays UNAVAILABLE.
+
+Refine the private records above to these closed shapes (handles remain opaque):
+
+```text
+Principal = {issuerHandle,issuerIncarnation,principalHandle,principalId,sessionId}
+PolicyState = {policyOwnerHandle,securityPolicyRef,domainPolicyRef,
+               policyGeneration,revocationGeneration}
+CapabilitySession = {principal,operationId,operation,phase,callerCapabilities,
+ grantedOperations,workspaceId,repositoryIds,revisionSetId,admittedSelection,
+ destination,sourceForm,resourceConstraints,policy,signal,deadlineEpochMs,state}
+```
+
+phase is the existing PRIMARY/REPAIR/FALLBACK literal bound by the trusted command
+owner, never a caller switch that bypasses fallback restrictions.
+
+principalId/sessionId are nonempty correlation strings. workspace/repository IDs,
+selection and operations use existing schemas; repositoryIds is an explicit unique
+set. callerCapabilities is the trusted adapter's ceiling; grantedOperations is
+current genuine consent. Both feed existing independent authorizeOperation checks.
+No null repository set creates implicit all-repository permission. Generations are
+monotonic safe integers read from the actual owner, never caller values; no initial
+number, TTL or budget default is specified. Config can restrict grants, not create
+them. D2 recommends QUERY plus READ_SOURCE for Source checks, plus UPDATE_KNOWLEDGE
+when used for update; no implied INDEX/model/remote/scan grant. D3 must identify the
+real policy/revocation owner and update channel; same-version revocation invalidates.
+Restart, logout, workspace detach or session close invalidates the opaque handles.
+
+### D5: exact candidate FK/parent mapping and installation choices
+
+Existing keys: W004 already supplies revision_sets(workspace_id,id); W007 supplies
+repositories(repository_id,workspace_id). documents has id PK but no exact
+(id,workspace_id) UNIQUE; its locator expression index is not an FK parent.
+These are verified from current SQL, not assumed proposed parents.
+
+```text
+snapshots(workspace_id) -> workspace(id)
+snapshots(workspace_id,revision_set_id) -> revision_sets(workspace_id,id)
+snapshot_supports(workspace_id,snapshot_id,revision_set_id)
+ -> compilation_input_snapshots(workspace_id,id,revision_set_id)
+compilation_runs(workspace_id,revision_set_id) -> revision_sets(workspace_id,id)
+compilation_runs(workspace_id,snapshot_id,revision_set_id)
+ -> compilation_input_snapshots(workspace_id,id,revision_set_id)
+publication_runs(workspace_id,run_id,snapshot_id,revision_set_id)
+ -> compilation_runs(workspace_id,id,snapshot_id,revision_set_id)
+source_changes(repository_id,workspace_id) -> repositories(repository_id,workspace_id)
+source_changes(document_id,workspace_id) -> documents(id,workspace_id)
+impacts(workspace_id,source_change_id) -> source_changes(workspace_id,id)
+impacts(workspace_id,knowledge_revision_id) -> knowledge_revisions(workspace_id,id)
+```
+
+`snapshots` abbreviates compilation_input_snapshots only in this mapping. W010
+would add documents(id,workspace_id) UNIQUE plus the new tables' exact parent keys
+already listed above. W009 must first define knowledge_revisions(workspace_id,id).
+FKs alone do not prove frozen=1: insertion and each admitted writer must check the
+actual frozen RevisionSet. Use NO ACTION/RESTRICT, not cascading history deletion.
+
+source_changes CHECK candidates: REPOSITORY requires repository_id/non-null and
+document_id/null; DOCUMENT the reverse; WORKSPACE both null. Each non-null before/
+after basis must be a valid JSON object, with at least one present and the same
+logical owner. These conditions do not authorize a source-change writer.
+
+W009 candidate keys must also include knowledge_items(workspace_id,id),
+knowledge_revisions(workspace_id,item_id,id), and revision's complete provenance
+key (workspace_id,id,compilation_run_id,input_snapshot_id,evaluation_id,revision_set_id).
+The published pointer candidate is items(workspace_id,id,published_revision_id)
+-> revisions(workspace_id,item_id,id), deferred until transaction end.
+
+W011 provenance is proposed as (workspace_id,revision_id,run_id,snapshot_id,
+evaluation_id,revision_set_id), PK(workspace_id,revision_id). Composite FKs bind
+its revision's entire provenance tuple, actual run/snapshot/revision-set tuple and
+actual evaluation(workspace_id,id,run_id,snapshot_id). The evaluation parent key
+and W009 complete DDL are not yet defined. W009/W010 triggers must not refer to
+nonexistent W011 tables; add publication guards in W011. Missing full W011 still
+refuses publication rather than omitting provenance validation.
+
+D5 choices: A publishes the fully reviewed 009/010/011 manifest together and runs
+sequentially; B first publishes complete009/010, later only appends the already
+reviewed011. Recommend B for bounded snapshot-only capability, provided all forward
+contracts are frozen first. Neither permits incomplete mutable W010 or publication
+before W011/policy/Evaluation. No numbering change is necessary for A or B.
+
+### D6: precise state, inspection and sole-writer constraints
+
+Existing design vocabulary is CREATED/CAPTURING/GENERATING/VALIDATING/READY/
+PUBLISHED/FAILED/CANCELLED/INTERRUPTED. Proposed transition guards:
+
+```text
+CREATED(snapshot=null) -> CAPTURING(snapshot=null)
+CAPTURING(null) -> CAPTURING(bound once)
+CAPTURING(bound) -> GENERATING -> VALIDATING -> READY -> PUBLISHED
+any nonterminal -> FAILED | CANCELLED | INTERRUPTED
+```
+
+All nine states may be represented in DDL without enabling unimplemented paths.
+First writer permits creation/capture and actual failure endings only. Generating
+and later require non-null snapshot; terminal states require finished_at_ms>=
+created_at_ms; nonterminal states require null finish time. Snapshot never clears
+or changes, including on failure. INTERRUPTED needs real ended/settled-owner proof;
+inspect does not change run state or resume the old writer.
+
+Keep the write receipt above; inspection has a different closed union:
+
+```text
+{status:'COMMITTED',workspaceId,runId,snapshotId,revisionSetId,inputDigest}
+{status:'NOT_COMMITTED',workspaceId,runId,attemptedSnapshotId}
+{status:'COMMIT_OUTCOME_UNKNOWN',workspaceId,runId,attemptedSnapshotId,
+ diagnostic:'OWNER_UNSETTLED'|'DATABASE_UNAVAILABLE'|'CLEANUP_UNCERTAIN'}
+```
+
+Inspection has no reused field: persisted rows do not prove whether the original
+put call reused an existing record. Corruption is a safe typed error, not absence.
+COMMITTED requires complete run/request/snapshot/support validation and says
+nothing about publication. A later FAILED/CANCELLED run does not uncommit a snapshot.
+
+**Absence is insufficient for NOT_COMMITTED.** A writer with no visible row may
+still be in flight or commit later. Require actual settle/join of the original
+writer, or genuine proof its connection/process ended and cannot execute again,
+before combining complete absence with NOT_COMMITTED. Otherwise return UNKNOWN,
+without retry, generating another snapshot, changing state or calling a model.
+The exact owner/settlement proof remains a D6 decision, never a caller Boolean.
+
+Idempotency remains UNIQUE(workspace_id,caller_subject_id,request_key). Same request
+with null snapshot returns query/in-progress only; it cannot obtain a second writer.
+Different normalized request or actual digest conflicts. Reuse of a committed
+record still requires new authorization and full validation. The actual subject (including its trusted issuer namespace and restart-stable
+identity, not a display label), sole-writer proof and closed request/metadata/error
+encodings must be frozen; different issuers must not collide in the subject key.
+
+### D7: backup and rollback options
+
+The actual runner checks pending.some(backupRequired) BEFORE any migration; any
+true rejects the entire pending batch before W009. It does not first upgrade to
+the version preceding that entry. There is no manual-backup-receipt bypass.
+
+- All false: require explicit per-migration approval after exact additive DDL and
+  owned upgrade/failure/reopen evidence. Old exemptions do not apply.
+- Any true: retain current refusal until separately designed/approved actual backup
+  orchestration exists; do not bypass runner admission.
+- No installation: keep current schema/read-only capture pending these decisions.
+
+Each migration still has its own BEGIN IMMEDIATE. A failed migration rolls back
+itself, not earlier committed versions. Snapshot put failure rolls back snapshot,
+supports and run binding together; uncertain cleanup stays UNKNOWN. Rollback is
+closing the new writer and preserving history, not user_version downgrade or SQL
+checksum edits; restoring a verified backup remains an independently approved act.

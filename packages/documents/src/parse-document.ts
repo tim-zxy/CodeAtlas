@@ -8,6 +8,7 @@ import {
   DocumentRevisionSchema,
   EntityIdSchema,
   Phase1DigestSchema,
+  Phase1ExactStringSchema,
   ensurePhase1Data,
 } from '@codeatlas/ir';
 import { assembleDocumentDraft, type DocumentDraft } from './document-draft.js';
@@ -35,7 +36,7 @@ export interface DocumentParseInput {
   allocateId(kind: EntityKind): string;
 }
 export const MARKDOWN_PARSER_VERSION =
-  'codeatlas-markdown-adapter-v1/unified-11.0.5/remark-parse-11.0.0/remark-gfm-4.0.1';
+  'codeatlas-markdown-adapter-v1.1/unified-11.0.5/remark-parse-11.0.0/remark-gfm-4.0.1';
 type Ast = {
   type: string;
   position: { start: { offset: number }; end: { offset: number } };
@@ -163,11 +164,18 @@ export function parseDocument(
       account.own(item);
       diagnostics.push(item);
     }
+    const linkTarget = (node: Ast) =>
+      node.type === 'link' ? node.url : definitions.get(node.identifier!)?.url;
     function text(node: Ast): string {
       account.checkpoint();
       account.visitItem();
       if (node.type === 'text' || node.type === 'inlineCode') return node.value!;
       if (node.type === 'break') return '\n';
+      if (
+        (node.type === 'link' || node.type === 'linkReference') &&
+        !Phase1ExactStringSchema.safeParse(linkTarget(node)).success
+      )
+        return literal(node);
       if (
         [
           'emphasis',
@@ -193,8 +201,9 @@ export function parseDocument(
       account.checkpoint();
       account.visitItem();
       if (node.type === 'link' || node.type === 'linkReference') {
-        const target = node.type === 'link' ? node.url : definitions.get(node.identifier!)?.url;
-        if (target) {
+        const target = linkTarget(node);
+        const parsedTarget = Phase1ExactStringSchema.safeParse(target);
+        if (parsedTarget.success) {
           const item: Bundle['links'][number] = {
             id: allocateId('DOCUMENT_LINK'),
             documentRevisionId: revision.id,
@@ -202,15 +211,23 @@ export function parseDocument(
             sourceRange: range(node),
             typedContent: {
               label: (node.children ?? []).map(text).join(''),
-              target,
-              resolution: /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(target) ? 'EXTERNAL' : 'UNRESOLVED',
+              target: parsedTarget.data,
+              resolution: /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(parsedTarget.data)
+                ? 'EXTERNAL'
+                : 'UNRESOLVED',
               targetRef: null,
               candidates: [],
             },
           };
           account.own(item);
           links.push(item);
-        } else limitation(node, 'MARKDOWN_REFERENCE_UNRESOLVED');
+        } else
+          limitation(
+            node,
+            target === undefined
+              ? 'MARKDOWN_REFERENCE_UNRESOLVED'
+              : 'MARKDOWN_LINK_TARGET_NOT_TYPED',
+          );
       }
       for (const child of node.children ?? []) extractLinks(child, blockId);
     }
