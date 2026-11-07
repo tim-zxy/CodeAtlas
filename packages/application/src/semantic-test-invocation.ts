@@ -7,10 +7,18 @@ import {
   parseClaim,
   parseKnowledgeCandidate,
   parsePhase1ReferenceContext,
+  ScopedRefSchema,
+  scopedRefKey,
+  supportKey,
+  type ScopedRef,
+  type SupportRef,
   type RuntimeRequestControl,
 } from '@codeatlas/ir';
 import type { DocumentAccount } from '../../documents/dist/source-positions.js';
-import { canonicalCompilationJson } from './compilation-input-contract.js';
+import {
+  canonicalCompilationJson,
+  parseCompilationInputSnapshot,
+} from './compilation-input-contract.js';
 
 type Code =
   | 'MODEL_REQUEST_INVALID'
@@ -88,6 +96,145 @@ function errorField(error: unknown, key: string): unknown {
   return error && typeof error === 'object' && !types.isProxy(error)
     ? Object.getOwnPropertyDescriptor(error, key)?.value
     : undefined;
+}
+
+/** Private self-owned fixture preparation only; snapshot validation is neither
+ * capture provenance nor read/redaction/model permission. No I/O or truncation. */
+export function buildCapturedSemanticTestRequest(
+  input: unknown,
+  options: unknown,
+  controlValue: RuntimeRequestControl,
+  account: DocumentAccount,
+) {
+  try {
+    const c = fields(controlValue, ['signal', 'deadlineEpochMs', 'maxItems', 'maxDepth']);
+    const control = Object.freeze({ ...c }) as unknown as RuntimeRequestControl;
+    if (!control.signal || types.isProxy(control.signal)) fail('MODEL_REQUEST_INVALID');
+    nativeAborted.call(control.signal);
+    assertRuntimeRequestControl(control);
+    const checkpoint = () => {
+      account.checkpoint();
+      if (nativeAborted.call(control.signal)) fail('CANCELLED');
+      if (Date.now() >= control.deadlineEpochMs) fail('DEADLINE');
+    };
+    checkpoint();
+    const o = fields(options, ['taskKind', 'promptRef', 'modelPolicyRef', 'invocationBudget']);
+    const b = fields(o.invocationBudget, ['maxInputBytes', 'maxOutputBytes']);
+    if (
+      !positive(b.maxInputBytes) ||
+      !positive(b.maxOutputBytes) ||
+      !text(o.promptRef) ||
+      !text(o.modelPolicyRef)
+    )
+      fail('MODEL_REQUEST_INVALID');
+    // Higher-level synthesis also needs the validated structural-draft/knowledge
+    // context, which this captured-facts-only entry deliberately cannot invent.
+    if (!['COMPONENT_SUMMARY', 'CLAIM_EXTRACTION'].includes(o.taskKind as string))
+      fail(tasks.has(o.taskKind as string) ? 'CAPABILITY_UNAVAILABLE' : 'MODEL_REQUEST_INVALID');
+    const maxInputBytes = b.maxInputBytes;
+    account.own(input);
+    account.reserveBuffer(maxInputBytes);
+    const bytes = canonicalCompilationJson(input, control);
+    if (Buffer.byteLength(bytes) > maxInputBytes) fail('MODEL_INPUT_TOO_LARGE');
+    checkpoint();
+    const snapshot = parseCompilationInputSnapshot(JSON.parse(bytes), control);
+    account.own(snapshot);
+    const entities = new Map<string, ScopedRef>(),
+      supports = new Map<string, SupportRef>();
+    for (const { repoBasis } of snapshot.repositories) {
+      checkpoint();
+      account.visitItem();
+      const ref = ScopedRefSchema.parse({
+        scope: 'REPOSITORY',
+        repositoryId: repoBasis.repositoryId,
+        entity: {
+          kind: 'REPOSITORY',
+          id: repoBasis.repositoryId,
+          revisionId: repoBasis.revisionId,
+        },
+      });
+      entities.set(scopedRefKey(ref), ref);
+    }
+    const captures = [
+      ...snapshot.repositories,
+      ...snapshot.documents,
+      ...(snapshot.workspaceCapture ? [snapshot.workspaceCapture] : []),
+    ];
+    for (const capture of captures) {
+      checkpoint();
+      for (const entity of capture.entities) {
+        account.visitItem();
+        entities.set(scopedRefKey(entity.ref), entity.ref);
+      }
+      for (const support of capture.supports) {
+        checkpoint();
+        account.visitItem();
+        const basis = support.ref.basis;
+        const ref = ScopedRefSchema.parse(
+          'repositoryId' in basis
+            ? { scope: 'REPOSITORY', repositoryId: basis.repositoryId, entity: support.ref.entity }
+            : { scope: 'WORKSPACE', workspaceId: snapshot.workspaceId, entity: support.ref.entity },
+        );
+        entities.set(scopedRefKey(ref), ref);
+        supports.set(supportKey(support.ref), support.ref);
+      }
+    }
+    const ordered = <T>(map: Map<string, T>) =>
+      [...map]
+        .sort(([a], [b]) => {
+          checkpoint();
+          account.visitItem();
+          return a < b ? -1 : a > b ? 1 : 0;
+        })
+        .map(([, value]) => value);
+    const authorizedContext = {
+      instructionRef: o.promptRef,
+      dataLabel: 'UNTRUSTED_DATA' as const,
+      scope: snapshot.scope,
+      inputSnapshotRef: { kind: 'COMPILATION_INPUT_SNAPSHOT', id: snapshot.snapshotId },
+      data: { snapshot },
+      referenceContext: {
+        availableEntities: ordered(entities),
+        availableSupports: ordered(supports),
+      },
+    };
+    account.own(authorizedContext);
+    account.reserveBuffer(maxInputBytes);
+    const request = {
+      taskKind: o.taskKind,
+      promptRef: o.promptRef,
+      modelPolicyRef: o.modelPolicyRef,
+      outputSchemaRef:
+        o.taskKind === 'CLAIM_EXTRACTION' ? 'codeatlas.claim@1' : 'codeatlas.knowledge-candidate@1',
+      authorizedContext,
+      inputDigest: hash(canonicalCompilationJson(authorizedContext, control)),
+      invocationBudget: { maxInputBytes, maxOutputBytes: b.maxOutputBytes },
+    };
+    account.own(request);
+    account.reserveBuffer(maxInputBytes);
+    if (Buffer.byteLength(canonicalCompilationJson(request, control)) > maxInputBytes)
+      fail('MODEL_INPUT_TOO_LARGE');
+    return freeze(request, checkpoint);
+  } catch (error) {
+    const value = errorField(error, 'code');
+    let code: Code =
+      error instanceof SemanticTestInvocationError ? error.code : 'MODEL_REQUEST_INVALID';
+    if (value === 'CANCELLED') code = 'CANCELLED';
+    if (value === 'DEADLINE' || value === 'DEADLINE_EXCEEDED') code = 'DEADLINE';
+    if (
+      value === 'BUDGET_EXCEEDED' ||
+      value === 'HISTORY_LIMIT_EXCEEDED' ||
+      value === 'STAGE_LIMIT_EXCEEDED'
+    )
+      code = 'BUDGET_EXCEEDED';
+    let unknown = errorField(error, 'cleanupState') === 'UNKNOWN';
+    try {
+      account.invalidate();
+    } catch {
+      unknown = true;
+    }
+    throw new SemanticTestInvocationError(code, unknown ? 'UNKNOWN' : 'SETTLED');
+  }
 }
 
 /** Private local-double boundary only. A DTO, port label or checked schema never

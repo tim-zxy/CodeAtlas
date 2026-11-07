@@ -1,3 +1,26 @@
+## P1-11 captured-facts context to local-double integration - 2026-11-07
+
+Private buildCapturedSemanticTestRequest validates a complete P1-12 snapshot and
+derives its immutable untrusted context, sorted allowlist and input digest for the
+existing invocation boundary. Scope/schema/snapshot/ref context are not caller
+overrides; support-only values and repository metadata references are preserved.
+Explicit limits cover preparation plus invocation under the same account; no
+truncation to fit. COMPONENT_SUMMARY/CLAIM_EXTRACTION preparation is available;
+Capability/BusinessFlow require the still-unimplemented structural-draft context
+and refuse here. The original four-task invocation remains compatible.
+The self-owned snapshot -> derived request -> local Claim result chain passed.
+Application build,63 related tests (23 semantic/40 capture contract) and architecture17
+passed. Independent review found missing repository refs; a RED-to-GREEN test now
+proves exact repository-level Claim success and foreign-repository refusal.
+[Exact behavior/evidence](../superpowers/specs/2026-11-07-semantic-test-invocation.md).
+This is TEST_DOUBLE/NOT_EVALUABLE with context authorization NOT_ESTABLISHED;
+production context authorization/redaction, structural drafts, actual model and
+quality/publication remain separate obligations. No user data, identity query,
+installed update, migration, scan clearance or R9. Phase1 remains4/21, A6
+NOT_QUALIFIED, E02 PROPOSED/uninstalled. CI173 on prior ec9d2b4: Rust passed,
+Native catalog prerequisite failed; TypeScript still running when checked.
+No new Native run or frozen-manifest relaxation was attempted.
+
 ## P1-11 offline safety boundary / W010 authority correction - 2026-11-07
 
 Private Application semantic-test-invocation implements the existing four-task

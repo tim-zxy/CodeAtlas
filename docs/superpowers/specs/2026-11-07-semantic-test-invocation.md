@@ -62,3 +62,36 @@ Independent review identified cancelled-attempt usage loss; the strengthened tes
 failed before the settlement fix, then passed with deadline/unknown-usage cases.
 Initial API-absence tests and W010 candidate-state test also demonstrated RED.
 No real model, user body, permission, production adapter or database was involved.
+
+## Captured-facts preparation and invocation integration
+
+Private buildCapturedSemanticTestRequest(input,options,control,account) now joins
+the P1-12 structural snapshot to this boundary. options has exactly taskKind,
+promptRef,modelPolicyRef,invocationBudget; scope/snapshot/schema/data/allowlist and
+context digest are derived, never separately supplied. Independently validate the
+entire snapshot, including producer/capture support digests and closure, then keep
+all of it under untrusted data. Derive a deduplicated sorted reference context
+from captured entities, support-only entities/supports, and the exact REPOSITORY
+references already permitted by snapshot repoBasis. Document support entities use
+the existing WORKSPACE scope. Preserve policies, coverage, limitations and bases.
+No dropping facts/supports to fit: input/request UTF8 ceilings and the same account
+apply to preparation as well as generation. Copies and control are independent;
+original cancellation remains effective even if caller replaces its signal.
+
+This facts-only preparation supports COMPONENT_SUMMARY and CLAIM_EXTRACTION.
+CAPABILITY_SYNTHESIS/BUSINESS_FLOW_SYNTHESIS return CAPABILITY_UNAVAILABLE here:
+their structural-draft/knowledge context has not been implemented. The original
+four-task TEST_DOUBLE invocation port remains unchanged. No fake Component or
+RuntimeFlow reference is invented to make higher-level synthesis appear connected.
+The helper performs no Source/body I/O, permission/scan checks or model call and
+is not a trusted SemanticContextBuilder. It must only receive self-owned fixtures
+in this offline phase; digest validity is not permission or provenance. Existing
+result flags continue to refuse quality/publication/authorization claims.
+
+Five new tests first failed before implementation. Independent review identified
+the omitted legal repository-level reference; its regression failed before the
+fix and now proves exact repository Claim success and foreign repository refusal.
+Application build,63 related tests (23 semantic,40 snapshot contract) and17-project
+architecture check passed. No dependency, public export, installed Runtime or
+acceptance gate changed. This connects self-owned snapshot -> request -> local
+Claim result, not authorized capture -> real model -> validated publication.

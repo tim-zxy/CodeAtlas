@@ -1,3 +1,16 @@
+## P1-11 snapshot-derived TEST_DOUBLE context - 2026-11-07
+
+knowledge-and-consumption section4's facts/ref/context separation connects to the
+existing P1-12 snapshot contract through private buildCapturedSemanticTestRequest.
+Exact validated snapshot/closure -> immutable untrusted data and derived allowlist
+-> existing local invocation -> schema/ref-checked Claim, all under caller-owned
+budget/control. No authority derives from a DTO. Structural-draft-dependent tasks
+are explicitly unavailable in this preparation path. Five cases cover complete
+closure, support-only input, foreign refs, tampering, controls and refusal;
+repository-ref review regression demonstrated RED before its correction.
+Application build,63 related tests and architecture17 pass. No public API/schema,
+new dependency, production permission, migration or model/quality gate changed.
+
 ## P1-11 private TEST_DOUBLE safety / W010 candidate correction - 2026-11-07
 
 knowledge-and-consumption section4 maps to Application semantic-test-invocation:

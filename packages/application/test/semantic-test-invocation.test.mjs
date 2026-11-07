@@ -115,6 +115,231 @@ function fixture(taskKind = 'COMPONENT_SUMMARY', limits = {}) {
 const run = (f) => api.runSemanticTestDouble(f.request, f.port, f.control, f.account);
 const code = (expected) => (error) => error.code === expected && error.message === expected;
 
+async function capturedFixture() {
+  const { createCompilationInputSnapshot } = await import('../dist/compilation-input-contract.js');
+  const f = fixture('CLAIM_EXTRACTION');
+  const value = {
+    id: 'file:one',
+    repositoryId: 'repo:one',
+    revisionId: 'rev:one',
+    path: 'owned.txt',
+    contentFingerprint: 'sha256:' + '0'.repeat(64),
+    classification: { role: 'SOURCE', provenance: 'AUTHORED', contentKind: 'TEXT' },
+    languageHint: 'text',
+    sensitivity: 'INTERNAL',
+  };
+  const ref = {
+    scope: 'REPOSITORY',
+    repositoryId: value.repositoryId,
+    entity: { kind: 'SOURCE_FILE', id: value.id, revisionId: value.revisionId },
+  };
+  const repoBasis = {
+    repositoryId: value.repositoryId,
+    revisionId: value.revisionId,
+    contentFingerprint: value.contentFingerprint,
+    codeActivationDigest: '0'.repeat(64),
+  };
+  const support = {
+    ref: {
+      basis: repoBasis,
+      entity: ref.entity,
+      valueDigest: createHash('sha256')
+        .update('codeatlas-phase1-support-value-v1\0' + canonical(value))
+        .digest('hex'),
+    },
+    valueSchemaRef: 'SourceFile@1',
+    value,
+    capturedValueDigest: createHash('sha256')
+      .update('codeatlas.capture-value.v1\n' + canonical({ valueSchemaRef: 'SourceFile@1', value }))
+      .digest('hex'),
+  };
+  const coverage = { status: 'PARTIAL', limitations: ['SELF_OWNED_FIXTURE'], unverifiedRefs: [] };
+  const snapshot = createCompilationInputSnapshot(
+    {
+      schemaVersion: 1,
+      snapshotId: 'snapshot:owned',
+      workspaceId: 'workspace:one',
+      scope: { kind: 'REPOSITORY', repositoryId: value.repositoryId },
+      revisionSetId: 'set:one',
+      selection: {
+        repositoryIds: [value.repositoryId],
+        selectedEntityRefs: [ref],
+        selectedDocumentRevisions: [],
+      },
+      workspaceCapture: null,
+      repositories: [
+        {
+          repoBasis,
+          runtimeActivationDigest: null,
+          entities: [{ ref, valueSchemaRef: 'SourceFile@1', value }],
+          supports: [support],
+          coverage,
+        },
+      ],
+      documents: [],
+      policyVersions: { securityPolicyRef: 'security:one', domainPolicyRef: 'domain:one' },
+      captureWindow: {
+        startedAt: '2026-11-07T00:00:00.000Z',
+        completedAt: '2026-11-07T00:00:01.000Z',
+      },
+      coverage,
+    },
+    f.control,
+  );
+  return {
+    ...f,
+    snapshot,
+    ref,
+    support,
+    options: {
+      taskKind: 'CLAIM_EXTRACTION',
+      promptRef: 'prompt:owned-v1',
+      modelPolicyRef: 'model:offline-v1',
+      invocationBudget: { maxInputBytes: 100000, maxOutputBytes: 100000 },
+    },
+  };
+}
+
+test('captured context derives full closure and allowlist, then reaches the local model boundary', async () => {
+  const f = await capturedFixture();
+  const request = api.buildCapturedSemanticTestRequest(f.snapshot, f.options, f.control, f.account);
+  assert.deepEqual(request.authorizedContext.data, { snapshot: f.snapshot });
+  assert.deepEqual(request.authorizedContext.referenceContext, {
+    availableEntities: [
+      {
+        scope: 'REPOSITORY',
+        repositoryId: 'repo:one',
+        entity: { kind: 'REPOSITORY', id: 'repo:one', revisionId: 'rev:one' },
+      },
+      f.ref,
+    ],
+    availableSupports: [f.support.ref],
+  });
+  assert.deepEqual(request.authorizedContext.inputSnapshotRef, {
+    kind: 'COMPILATION_INPUT_SNAPSHOT',
+    id: f.snapshot.snapshotId,
+  });
+  assert.equal(request.inputDigest, digest(request.authorizedContext));
+  assert.equal(
+    Object.isFrozen(request.authorizedContext.data.snapshot.repositories[0].supports),
+    true,
+  );
+  f.response.structuredOutput.payload.subject = structuredClone(f.ref);
+  f.response.structuredOutput.payload.scope = structuredClone(f.snapshot.scope);
+  f.response.structuredOutput.payload.evidenceRefs = [structuredClone(f.support.ref)];
+  f.response.outputDigest = digest(f.response.structuredOutput);
+  const output = await api.runSemanticTestDouble(request, f.port, f.control, f.account);
+  assert.equal(output.evidenceKind, 'TEST_DOUBLE');
+  assert.equal(output.contextAuthorization, 'NOT_ESTABLISHED');
+  assert.equal(output.publicationEffect, 'NOT_ATTEMPTED');
+});
+
+test('captured preparation rejects tampering, caller allowlists and unavailable synthesis before calling a model', async () => {
+  for (const change of [
+    (f) => {
+      f.snapshot = structuredClone(f.snapshot);
+      f.snapshot.repositories[0].supports = [];
+    },
+    (f) => {
+      f.options.referenceContext = { availableEntities: [], availableSupports: [] };
+    },
+    (f) => {
+      f.options.taskKind = 'CAPABILITY_SYNTHESIS';
+    },
+    (f) => {
+      f.options.taskKind = 'BUSINESS_FLOW_SYNTHESIS';
+    },
+    (f) => {
+      f.options.invocationBudget.maxInputBytes = 1;
+    },
+  ]) {
+    const f = await capturedFixture();
+    change(f);
+    assert.throws(() =>
+      api.buildCapturedSemanticTestRequest(f.snapshot, f.options, f.control, f.account),
+    );
+    assert.equal(f.calls.length, 0);
+    assert.equal(f.usage.invalid, true);
+  }
+});
+
+test('captured repository metadata permits only its exact repository-level Claim reference', async () => {
+  for (const foreign of [false, true]) {
+    const f = await capturedFixture();
+    const request = api.buildCapturedSemanticTestRequest(
+      f.snapshot,
+      f.options,
+      f.control,
+      f.account,
+    );
+    const ref = {
+      scope: 'REPOSITORY',
+      repositoryId: foreign ? 'repo:foreign' : 'repo:one',
+      entity: {
+        kind: 'REPOSITORY',
+        id: foreign ? 'repo:foreign' : 'repo:one',
+        revisionId: 'rev:one',
+      },
+    };
+    f.response.structuredOutput.payload.subject = ref;
+    f.response.structuredOutput.payload.scope = structuredClone(f.snapshot.scope);
+    f.response.structuredOutput.payload.evidenceRefs = [structuredClone(f.support.ref)];
+    f.response.outputDigest = digest(f.response.structuredOutput);
+    const pending = api.runSemanticTestDouble(request, f.port, f.control, f.account);
+    if (foreign) await assert.rejects(pending, code('MODEL_OUTPUT_INVALID'));
+    else assert.deepEqual((await pending).structuredOutput.payload.subject, ref);
+  }
+});
+
+test('support-only references remain available and no input is truncated to fit a budget', async () => {
+  const f = await capturedFixture();
+  const { createCompilationInputSnapshot } = await import('../dist/compilation-input-contract.js');
+  const input = structuredClone(f.snapshot);
+  delete input.inputDigest;
+  input.repositories[0].entities = [];
+  const snapshot = createCompilationInputSnapshot(input, f.control);
+  const request = api.buildCapturedSemanticTestRequest(snapshot, f.options, f.control, f.account);
+  assert(
+    request.authorizedContext.referenceContext.availableEntities.some(
+      (ref) => canonical(ref) === canonical(f.ref),
+    ),
+  );
+  assert.equal(request.authorizedContext.data.snapshot.repositories[0].supports.length, 1);
+  assert.equal(request.authorizedContext.data.snapshot.coverage.status, 'PARTIAL');
+});
+
+test('captured preparation rejects accessors and cancellation without using replacement controls', async () => {
+  const f = await capturedFixture();
+  let hooks = 0;
+  Object.defineProperty(f.options, 'promptRef', {
+    get() {
+      hooks++;
+      return 'unsafe';
+    },
+  });
+  assert.throws(() =>
+    api.buildCapturedSemanticTestRequest(f.snapshot, f.options, f.control, f.account),
+  );
+  assert.equal(hooks, 0);
+  const cancelled = await capturedFixture();
+  const own = cancelled.account.own.bind(cancelled.account);
+  cancelled.account.own = (value) => {
+    own(value);
+    cancelled.controller.abort();
+    cancelled.control.signal = new AbortController().signal;
+  };
+  assert.throws(
+    () =>
+      api.buildCapturedSemanticTestRequest(
+        cancelled.snapshot,
+        cancelled.options,
+        cancelled.control,
+        cancelled.account,
+      ),
+    code('CANCELLED'),
+  );
+});
+
 for (const task of [
   'COMPONENT_SUMMARY',
   'CAPABILITY_SYNTHESIS',
