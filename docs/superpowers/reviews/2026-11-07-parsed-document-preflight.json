@@ -1,0 +1,140 @@
+{
+  "kind": "SOURCE_TO_AST_DENY_ONLY_DOCUMENT_WORKFLOW",
+  "date": "2026-11-07",
+  "baseCommit": "e91ca68898a6ebf9cd1d5ce4f32a33e38e1ed0de",
+  "worktree": "D:/workspace/CodeAtlas-phase1-20261106",
+  "status": "ACTUAL_OFFLINE_COMPONENT_INTEGRATION_NOT_PRODUCTION_ACCEPTANCE",
+  "implementation": [
+    "strict pre-read metadata and opaque allocator snapshot; preserve legacy envelope API",
+    "one selected Source body read -> original fingerprint -> private charged byte snapshot -> actual approved AST -> existing secret indicator scan -> final Source verify",
+    "NOT_COMMITTED only; no raw candidate/bytes, clearance, Store or publication",
+    "safe fresh primary error/effects and UNKNOWN for any failed invalidation, including falsy throws; Proxy error descriptors not executed",
+    "capture final actual authorization after all owned-handle settlement; revocation during cleanup refuses"
+  ],
+  "validation": {
+    "builds": [
+      {
+        "command": "node node_modules/typescript/bin/tsc -p packages/application/tsconfig.json",
+        "exitCode": 0
+      },
+      {
+        "command": "node node_modules/typescript/bin/tsc -p packages/runtime/tsconfig.json",
+        "exitCode": 0
+      }
+    ],
+    "architecture": {
+      "command": "node scripts/check-architecture.mjs",
+      "projects": 17,
+      "exitCode": 0
+    },
+    "affected": {
+      "command": "node --test --test-concurrency=1 packages/application/test/parsed-document-write-preflight.test.mjs packages/application/test/parsed-document-components.test.mjs packages/application/test/document-write-preflight.test.mjs packages/application/test/document-components.test.mjs packages/application/test/compilation-input.test.mjs packages/runtime/test/compilation-input.test.mjs packages/application/test/compilation-source.test.mjs packages/runtime/test/compilation-source.test.mjs scripts/test-workspace-structure.mjs",
+      "tests": 93,
+      "pass": 93,
+      "fail": 0,
+      "cancelled": 0,
+      "skip": 0,
+      "todo": 0,
+      "durationMs": 11093.6319,
+      "exitCode": 0
+    },
+    "initialIntegratedRun": {
+      "tests": 93,
+      "pass": 91,
+      "fail": 2,
+      "reason": "Runtime tests asserted old release-at-tail ordering; updated to enforce release-before-final-authorization plus exact one-time cleanup and expired-handle checks, without weakening any gate"
+    },
+    "formatPaths": [
+      "docs/handoff/CURRENT_STATUS.md",
+      "docs/handoff/DESIGN_TRACEABILITY.md",
+      "docs/superpowers/reviews/2026-11-07-parsed-document-preflight.json",
+      "docs/superpowers/specs/2026-11-07-policy-lifecycle-decision-proposal.md",
+      "package.json",
+      "packages/application/src/document-write-preflight.ts",
+      "packages/application/src/capture-compilation-input.ts",
+      "packages/application/test/compilation-input.test.mjs",
+      "packages/runtime/test/compilation-input.test.mjs",
+      "packages/application/test/parsed-document-write-preflight.test.mjs",
+      "packages/application/test/parsed-document-components.test.mjs"
+    ],
+    "format": {
+      "command": "node node_modules/prettier/bin/prettier.cjs --check docs/handoff/CURRENT_STATUS.md docs/handoff/DESIGN_TRACEABILITY.md docs/superpowers/reviews/2026-11-07-parsed-document-preflight.json docs/superpowers/specs/2026-11-07-policy-lifecycle-decision-proposal.md package.json packages/application/src/document-write-preflight.ts packages/application/src/capture-compilation-input.ts packages/application/test/compilation-input.test.mjs packages/runtime/test/compilation-input.test.mjs packages/application/test/parsed-document-write-preflight.test.mjs packages/application/test/parsed-document-components.test.mjs",
+      "exitCode": 0
+    },
+    "diffWhitespace": {
+      "command": "git diff --check",
+      "exitCode": 0
+    }
+  },
+  "review": {
+    "independentReadOnly": true,
+    "resolved": [
+      "allocator raw-buffer mutation made parser/scanner inspect different bytes -> same private snapshot",
+      "invalidate ordinary/falsy failure omitted UNKNOWN -> independent failure flag",
+      "Proxy error descriptor trap -> reject proxy before property inspection",
+      "capture permission revoked during asynchronous cleanup -> final authorization after settlement"
+    ],
+    "redGreenEvidence": [
+      "new parsed API absence observed after correcting old fixture RepoBasis to its correct DocumentBasis",
+      "five private-byte/invalidation/Proxy regressions observed RED then GREEN",
+      "cleanup-time revocation regression14PASS/1FAIL ->15PASS",
+      "actual Source/two-owned-DB cases complete/secret/PARTIAL/changed bytes/metadata mismatch all preserve last-good"
+    ],
+    "remainingImportantFindings": 0
+  },
+  "proposal": {
+    "path": "docs/superpowers/specs/2026-11-07-policy-lifecycle-decision-proposal.md",
+    "status": "PROPOSED_ONLY_NOT_AUTHORITY",
+    "preparedInParallel": true,
+    "decisions": {
+      "D1": "real bootstrap principal/consent issuer",
+      "D2": "mapping to existing operations without implicit grants",
+      "D3": "authoritative policy/version/revocation source",
+      "D4": "separately approved scan/redaction issuer; remains deny-only",
+      "D5": "exact W009-W011 DDL/FK/create order",
+      "D6": "subject/idempotency/receipt/recovery/state/metadata encodings",
+      "D7": "explicit backupRequired choices; no inherited exemption"
+    },
+    "reviewFixes": [
+      "settle before final permissions/generation check, no await before exposure",
+      "expected/result heads stored as closed heads-array objects, consistent with JSON-object encoding"
+    ],
+    "implementedIssuer": false,
+    "installedMigration": false
+  },
+  "priorCi": {
+    "number": 148,
+    "id": 42321847905,
+    "head": "e91ca68898a6ebf9cd1d5ce4f32a33e38e1ed0de",
+    "url": "https://github.com/tim-zxy/CodeAtlas/actions/runs/42321847905",
+    "typescript": "success",
+    "rust": "success",
+    "native": "failure",
+    "nativeFullLogReason": "R8 script catalog mismatch at approved prerequisite",
+    "typescriptCohorts": [
+      {
+        "pass": 5031,
+        "skip": 20,
+        "fail": 0
+      },
+      {
+        "pass": 84,
+        "fail": 0
+      },
+      {
+        "pass": 373,
+        "fail": 0
+      }
+    ],
+    "rerun": false,
+    "notEvidenceForLaterCommit": true
+  },
+  "limits": [
+    "Source filesystem and Source/workspace SQLite are real owned fixtures; Git and initial policy are explicit substitutes",
+    "new Source/parser/preflight private DI does not authenticate Workspace/principal or grant permission",
+    "PARTIAL remains explicit, no known secret match never permits storage",
+    "synchronous Markdown parser has no internal cancellation or physical RSS qualification claim",
+    "no production scan clearance, publication, authority creation, migration install or actual R9",
+    "Phase1 4/21; A6 NOT_QUALIFIED; E02 evaluation source/oracle baseline PROPOSED/uninstalled, distinct from installed parser dependencies"
+  ]
+}

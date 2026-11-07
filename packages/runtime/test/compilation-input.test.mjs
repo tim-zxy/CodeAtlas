@@ -191,7 +191,14 @@ test('real owned SQLite through Runtime and Application captures exact SourceFil
   assert.deepEqual(snapshot.repositories[0].entities[0].value, f.file);
   assert.deepEqual(parseCompilationInputSnapshot(snapshot, f.control), snapshot);
   assert.ok(f.events.indexOf('authorize-repository-offline') < f.events.indexOf('read-repository'));
-  assert.deepEqual(f.events.slice(-2), ['release-workspace', 'release-repository']);
+  assert.deepEqual(f.events.slice(-6), [
+    'release-workspace',
+    'release-repository',
+    'authorize-selection-offline',
+    'authorize-repository-offline',
+    'authorize-workspace-offline',
+    'policies',
+  ]);
   assert.deepEqual([changes(f.f.db), changes(f.db)], before);
   assert.equal(f.f.db.isTransaction || f.db.isTransaction, false);
   assert.throws(() => f.owned.recheckRepository(f.frames[0]));
@@ -241,7 +248,16 @@ test('Source/policy offline substitutes retain separate refusal and cleanup boun
       run(f),
       (error) => error.code === (where === 'source' ? 'SOURCE_CHANGED' : 'CAPTURE_POLICY_CHANGED'),
     );
-    assert.deepEqual(f.events.slice(-3), ['release-workspace', 'release-repository', 'invalidate']);
+    assert.deepEqual(
+      f.events.filter((event) => event.startsWith('release-') || event === 'invalidate'),
+      ['release-workspace', 'release-repository', 'invalidate'],
+    );
+    if (where === 'policy')
+      assert.ok(
+        f.events.lastIndexOf('authorize-repository-offline') >
+          f.events.indexOf('release-repository'),
+      );
+    assert.throws(() => f.owned.recheckRepository(f.frames[0]));
   }
 });
 test('Runtime handles authenticate independently of copied outer frame and reject foreign factories', async (t) => {

@@ -1,3 +1,43 @@
+## Source-to-AST deny-only document workflow completed - 2026-11-07
+
+Continued an independent P1-10 implementation while policy/W010 decisions remain
+open: private checkParsedDocumentWrite now validates and owns exact metadata
+before reading one selected Source body, verifies its fingerprint, runs the actual
+pinned Markdown AST adapter, scans that derived Draft plus original bytes, and
+performs the original final Source recheck. It returns only NOT_COMMITTED with
+safe scan/effects metadata; no raw Draft/body, scan clearance, Store call or
+publication. Legacy checkDocumentWrite remains compatible.
+
+Parser and scanner share an account-charged private byte snapshot, so allocator
+mutation of the returned Source buffer cannot change the inspection basis.
+Failures keep safe effects/UNKNOWN even when invalidation throws a falsy value;
+Proxy exceptions do not execute descriptor traps. Real temporary Source and
+workspace SQLite tests retain last-good document head/claims for normal, secret,
+PARTIAL, changed-Source and invalid-metadata cases. Git/policy remain explicit
+substitutes; workspace/source port structures do not authenticate a principal.
+
+Also fixed a real capture gap: final actual permission/policy checks now occur
+AFTER asynchronous owned-handle settlement. A grant revoked during cleanup refuses
+rather than returning a snapshot. Runtime regressions enforce cleanup before this
+last authorization and retain actual one-time release assertions.
+
+Fresh Application/Runtime builds, architecture17 and nine-file93/93 regression
+pass with0fail/skip/todo; new tests are in the mandatory root command. Independent
+review findings were corrected with genuine RED-to-GREEN controls.
+[Execution evidence](../superpowers/reviews/2026-11-07-parsed-document-preflight.json).
+
+[Policy/lifecycle decision proposal](../superpowers/specs/2026-11-07-policy-lifecycle-decision-proposal.md)
+now records concrete private owner fields/ports and six-table storage/receipt/
+idempotency/FK/rollback choices. F denotes existing requirements; N denotes new
+proposals. D1-D7 are decisions, not approvals. No issuer, principal, permission,
+W009-W011 migration or production writer was installed. E02 evaluation baseline
+remains PROPOSED/uninstalled; parser dependencies are separately already installed.
+
+CI148 on e91ca68 ended TS/Rust success; Native failed at the unchanged R8 catalog
+prerequisite (logs checked). Its TS cohorts were5031PASS+20existingSKIP,84PASS,
+373PASS,0fail; they certify that head only. This later batch needs its own CI.
+Phase1 remains4/21; A6 NOT_QUALIFIED; real R9/scan clearance/publication unexecuted.
+
 ## Genuine Source verifier binding; remaining authority/persistence contracts - 2026-11-07
 
 The private capture Source port now routes actual Storage-owned identity (root,

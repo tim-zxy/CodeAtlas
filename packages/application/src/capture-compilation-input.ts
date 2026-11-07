@@ -125,6 +125,7 @@ export async function captureCompilationInput(
   let failure: unknown;
   let failed = false;
   let prepared: CompilationInputSnapshot | undefined;
+  let finalAuthorization: (() => Promise<void>) | undefined;
   let startedAt = '';
   let control: RuntimeRequestControl;
   const account = ports.account;
@@ -296,14 +297,17 @@ export async function captureCompilationInput(
     for (const frame of frames) await checked(() => ports.verifySource(frame, request));
     for (const frame of frames) await checked(() => ports.recheckRepository(frame));
     await checked(() => ports.recheckWorkspace(workspace));
-    await checked(() => ports.authorizeSelection(request));
-    for (const frame of frames)
-      await checked(() =>
-        ports.authorizeRepositoryRead(request, frame.capture.repoBasis.repositoryId),
-      );
-    await checked(() => ports.authorizeWorkspaceRead(request, includeRuntime));
-    await policies();
-    checkpoint();
+    // Owned cleanup can await and observe revocation; authorize only after it settles.
+    finalAuthorization = async () => {
+      await checked(() => ports.authorizeSelection(request));
+      for (const frame of frames)
+        await checked(() =>
+          ports.authorizeRepositoryRead(request, frame.capture.repoBasis.repositoryId),
+        );
+      await checked(() => ports.authorizeWorkspaceRead(request, includeRuntime));
+      await policies();
+      checkpoint();
+    };
   } catch (error) {
     failed = true;
     failure = error;
@@ -320,7 +324,8 @@ export async function captureCompilationInput(
     }
   }
   try {
-    if (failed || unknownCleanup || !prepared) throw failure ?? new Error();
+    if (failed || unknownCleanup || !prepared || !finalAuthorization) throw failure ?? new Error();
+    await finalAuthorization();
     account.checkpoint();
     requireValue(!aborted.call(control!.signal), 'CANCELLED');
     requireValue(Date.now() < control!.deadlineEpochMs, 'DEADLINE');
@@ -333,6 +338,7 @@ export async function captureCompilationInput(
     account.own(result);
     return result;
   } catch (error) {
+    unknownCleanup ||= errorField(error, 'cleanupState') === 'UNKNOWN';
     try {
       account.invalidate();
     } catch {

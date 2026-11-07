@@ -1,3 +1,15 @@
+## P1-10 Source-to-parser preflight and capture settlement - 2026-11-07
+
+Approved parser + existing selected Source read -> private checkParsedDocumentWrite
+-> exact metadata/one private byte basis -> real AST -> existing deny-only scanner
+-> original Source final check -> NOT_COMMITTED. Real two-DB last-good integration
+and byte/metadata/control negative cases are in the mandatory test command.
+P1-12 final authorization now follows owned-handle settlement, closing the
+cleanup/revocation window. [Evidence](../superpowers/reviews/2026-11-07-parsed-document-preflight.json).
+[Concrete policy/W009-W011 proposal](../superpowers/specs/2026-11-07-policy-lifecycle-decision-proposal.md)
+is PROPOSED ONLY; fields/DDL/receipt decisions do not create grants or install a
+migration. No E02/phase gate is changed by these component results.
+
 ## Source verifier binding within private capture contract - 2026-11-07
 
 P1-12 source recheck -> existing controlled mixed Source issuer -> private Source

@@ -182,12 +182,12 @@ test('offline owner ports produce immutable exact selected input after checks an
     'source',
     'recheck-repository',
     'recheck-workspace',
+    'release-workspace',
+    'release-repository',
     'authorize-selection',
     'authorize-repository',
     'authorize-workspace',
     'policy',
-    'release-workspace',
-    'release-repository',
   ]);
   assert.equal('publication' in got || 'scanClearance' in got, false);
 });
@@ -404,4 +404,24 @@ test('actual read permissions are rechecked after materialization even when poli
     assert.equal(f.events.filter((e) => e === 'release-repository').length, 1);
     assert.equal(f.events.filter((e) => e === 'release-workspace').length, 1);
   }
+});
+
+test('permission revoked during asynchronous owner cleanup refuses the final snapshot', async () => {
+  const f = fixture();
+  let revoked = false;
+  const authorize = f.ports.authorizeRepositoryRead;
+  f.ports.authorizeRepositoryRead = (...args) => {
+    if (revoked)
+      throw Object.assign(new Error('private raw payload'), { code: 'PERMISSION_DENIED' });
+    return authorize(...args);
+  };
+  const release = f.ports.releaseWorkspace;
+  f.ports.releaseWorkspace = async (...args) => {
+    await Promise.resolve();
+    release(...args);
+    revoked = true;
+  };
+  await refuses(f, 'PERMISSION_DENIED');
+  assert.equal(f.events.filter((e) => e === 'release-repository').length, 1);
+  assert.equal(f.events.filter((e) => e === 'release-workspace').length, 1);
 });
