@@ -1,0 +1,80 @@
+{
+  "schema": "codeatlas.capture-acquisition-rollback-evidence",
+  "version": 1,
+  "baseCommit": "090b2965db53bb0d1945b56cfe25c6796250496b",
+  "scope": "P1-12 existing Runtime/SQLite acquisition producer failure/cleanup responsibility",
+  "producerInspection": {
+    "runtimeFactory": "createOwnedCompilationInputPorts",
+    "repository": "synchronous; release Storage capture after mapping/control failure",
+    "workspace": "synchronous; release Storage capture after mapping/control failure",
+    "sqlite": "synchronous per-connection transaction; commit before opaque owner frame",
+    "actualAsyncOrThenableProducerFound": false,
+    "thenableProtocolAdded": false
+  },
+  "assumptions": [
+    "Use only owned disposable fixture databases",
+    "A failed ROLLBACK cannot certify cleanup settlement",
+    "No returned frame does not imply acquisition cleanup settled"
+  ],
+  "successCriteria": [
+    "Real denied ROLLBACK leaves transaction active and reports UNKNOWN",
+    "Original CONTEXT_UNAVAILABLE error code preserved",
+    "No snapshot/frame escapes failed capture",
+    "Already acquired sibling owner still releases",
+    "Test alone repairs its injected authorizer after assertions"
+  ],
+  "red": {
+    "command": "node --test --test-name-pattern=\"failed SQLite rollback\" packages/runtime/test/compilation-input.test.mjs",
+    "fail": 2,
+    "reason": "Actual SQLite authorizer refuses ROLLBACK; Application incorrectly returns SETTLED"
+  },
+  "targetedGreen": {
+    "pass": 2,
+    "fail": 0,
+    "realRollbackRefusalsPerCase": 1,
+    "activeTransactionAssertedPerCase": true
+  },
+  "regression": {
+    "command": "node --test --test-concurrency=1 packages/storage/test/repository-compilation-input.test.mjs packages/storage/test/workspace-compilation-input.test.mjs packages/runtime/test/compilation-input.test.mjs",
+    "fail": 0,
+    "status": "passed",
+    "passCount": 46,
+    "skipped": 0,
+    "todo": 0
+  },
+  "storageBuild": {
+    "command": "node node_modules/typescript/bin/tsc -p packages/storage/tsconfig.json",
+    "exitCode": 0
+  },
+  "changes": "Only mark original CONTEXT_UNAVAILABLE as cleanupState UNKNOWN when capture rollback/connection witness settlement throws; no error-code, schema, migration, permission or success-path change",
+  "actualIdentityQueries": 0,
+  "userDatabaseAccess": false,
+  "platformAclChanges": 0,
+  "testOwnedConnectionAuthorizerOnly": true,
+  "unknownDirectoryTouched": false,
+  "precompiledHelperImplemented": false,
+  "ci159": {
+    "runId": 42339720804,
+    "head": "090b2965db53bb0d1945b56cfe25c6796250496b",
+    "typescript": "in_progress",
+    "rust": "success",
+    "native": "failure exact R8 script catalog mismatch",
+    "coversThisFix": false
+  },
+  "formalStatus": {
+    "phase1": "4/21",
+    "a6": "NOT_QUALIFIED",
+    "e02": "PROPOSED/uninstalled"
+  },
+  "filesSha256": {
+    "packages/storage/src/runtime/runtime-fact-store.ts": "1d9edbca8d1d181d638c0a6708bbdb3f75cb97f29d7d6f09c244ae4b4a48ef1f",
+    "packages/storage/src/runtime/contract-store.ts": "a4992dad5d99af638e59ca35f1b043729cd6f9876471587c0b8235ddc35f6815",
+    "packages/runtime/test/compilation-input.test.mjs": "e77092fc0b20af9b55e6035f787e3d266e286033854d7024305fdfc2b35d32ec"
+  },
+  "architecture": {
+    "command": "node scripts/check-architecture.mjs",
+    "projects": 17,
+    "exitCode": 0
+  },
+  "independentReview": "No important issue or scope expansion; original error type/code retained, own UNKNOWN propagates, test-only SQLite authorizer restoration does not add production repair."
+}

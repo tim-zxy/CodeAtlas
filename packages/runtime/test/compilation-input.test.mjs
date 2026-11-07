@@ -549,3 +549,57 @@ test('Source identity comes exclusively from the genuine captured Store handle',
   f.owned.releaseRepository(frame);
   assert.throws(() => f.owned.repositorySourceIdentity({ handle: frame.handle }));
 });
+
+for (const kind of ['repository', 'workspace'])
+  test(`failed SQLite rollback during ${kind} acquisition remains UNKNOWN before any frame escapes`, async (t) => {
+    const { constants } = await import('node:sqlite');
+    const f = await setup(t);
+    const target = kind === 'repository' ? f.f.db : f.db;
+    let injected = false,
+      rollbackDenied = 0,
+      repositoryFrame,
+      repositoryReleases = 0;
+    const owned = createOwnedCompilationInputPorts({
+      ...f.options,
+      syncCheck: () => {
+        if (!injected && target.isTransaction) {
+          injected = true;
+          target.setAuthorizer((action, detail) => {
+            if (action === constants.SQLITE_TRANSACTION && detail === 'ROLLBACK') {
+              rollbackDenied++;
+              return constants.SQLITE_DENY;
+            }
+            return constants.SQLITE_OK;
+          });
+          throw Error('TEST_OWNED_READ_FAILURE');
+        }
+        return undefined;
+      },
+    });
+    f.ports.acquireRepository = (id) => {
+      repositoryFrame = owned.acquireRepository(id);
+      return repositoryFrame;
+    };
+    f.ports.acquireWorkspace = (...args) => owned.acquireWorkspace(...args);
+    f.ports.releaseRepository = (frame) => {
+      repositoryReleases++;
+      return owned.releaseRepository(frame);
+    };
+    try {
+      await assert.rejects(run(f), (error) => {
+        assert.equal(error.code, 'CONTEXT_UNAVAILABLE');
+        assert.equal(error.cleanupState, 'UNKNOWN');
+        return true;
+      });
+      assert.equal(injected, true);
+      assert.equal(rollbackDenied, 1);
+      assert.equal(target.isTransaction, true); // Real SQLite refusal, not a fake Error.
+      assert.equal(repositoryReleases, kind === 'workspace' ? 1 : 0);
+      if (repositoryFrame) assert.throws(() => owned.recheckRepository(repositoryFrame));
+      assert.equal(f.events.includes('source-offline-substitute'), false);
+    } finally {
+      // Only the test-owned connection is repaired after the refusal is asserted.
+      target.setAuthorizer(null);
+      if (target.isTransaction) target.exec('ROLLBACK');
+    }
+  });

@@ -1,3 +1,12 @@
+## Capture acquisition failed-rollback settlement - 2026-11-07
+
+Original owned transaction/UNKNOWN invariant -> actual SQLite authorizer-denied
+ROLLBACK in repository/workspace acquisition -> original CONTEXT_UNAVAILABLE now
+retains UNKNOWN through Runtime/Application. Active transaction and sibling release
+asserted; no returned frame, scope/permission/schema/error-code expansion. Actual
+producers are synchronous; no invented async implementation. Related46/46 pass.
+[Evidence](../superpowers/reviews/2026-11-07-capture-acquisition-rollback.json).
+
 ## Capture owner acquired-frame cleanup ordering - 2026-11-07
 
 Existing no-getter/unsettled-capture refusal -> four acquired-frame accessor and

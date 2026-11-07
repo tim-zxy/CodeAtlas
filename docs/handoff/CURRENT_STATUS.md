@@ -1,3 +1,27 @@
+## P1-12 actual rollback failure retains UNKNOWN - 2026-11-07
+
+Inspection found no asynchronous/thenable production acquisition in this capture
+chain: Runtime and SQLite repository/workspace producers are synchronous and return
+closed frames. Runtime releases captured Storage owners on mapping/control failure;
+SQLite finishes its per-connection transaction before minting a frame. No speculative
+async producer or thenable protocol was added.
+
+A real failure-path defect was reproduced on two disposable owned SQLite fixtures:
+read failure after BEGIN plus an authorizer denying ROLLBACK leaves a real transaction
+active, but the original CONTEXT_UNAVAILABLE error lacked cleanupState, so Application
+misreported SETTLED. Both initial tests failed. Only the existing repository/workspace
+rollback-failure catches now attach UNKNOWN to the original error. Original code,
+success path, schema, budgets and authorization remain. No frame/snapshot escapes;
+already acquired repository owner still releases when workspace acquisition fails.
+The tests restore only their own transient authorizers and roll back after assertions.
+
+Storage build, three affected Storage/Runtime files46/46 and architecture17 pass.
+No user database, persistent/security/ACL setting, identity retry, UNKNOWN directory
+cleanup, helper build/load, scan clearance or R9 changed. CI159 is reused: Rust PASS,
+Native exact R8 catalog FAIL, TS still running at last check; its old head does not
+cover this new correction. Phase1 remains4/21; A6 NOT_QUALIFIED; E02 PROPOSED/uninstalled.
+[Evidence](../superpowers/reviews/2026-11-07-capture-acquisition-rollback.json).
+
 ## P1-12 acquired-frame cleanup ordering defect corrected - 2026-11-07
 
 An independent existing capture defect was reproduced without Principal acquisition:

@@ -480,3 +480,10 @@ Promises on the declared asynchronous port are awaited. An asynchronous producer
 must validate its closed, non-thenable frame before resolving and retain cleanup
 responsibility on failure; Application cannot undo thenable assimilation that has
 already happened inside a producer Promise. No new thenable protocol is admitted.
+
+An acquisition that throws before returning a frame still owns its transaction
+settlement. If rollback or its connection witness fails, the existing
+CONTEXT_UNAVAILABLE refusal retains cleanupState UNKNOWN through Runtime/Application;
+absence of a returned frame does not imply SETTLED. Other already acquired owners
+are still released. No automatic retry, transaction adoption or repair is permitted
+by this error; the producer's existing connection/transaction guards remain.

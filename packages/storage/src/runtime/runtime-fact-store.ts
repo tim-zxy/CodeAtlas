@@ -1247,7 +1247,9 @@ function compilationRead(
       marker.get();
       if (db.isTransaction) db.exec('ROLLBACK');
     } catch {
-      throw new HistoryCaptureError('CONTEXT_UNAVAILABLE');
+      throw Object.assign(new HistoryCaptureError('CONTEXT_UNAVAILABLE'), {
+        cleanupState: 'UNKNOWN' as const,
+      });
     }
     if (error instanceof HistoryCaptureError) throw error;
     throw new HistoryCaptureError('INVALID_HISTORY');

@@ -1033,7 +1033,9 @@ function compilationTransaction<T>(
       owner.marker.setReadBigInts(false);
       if (transaction && db.isOpen && db.isTransaction) db.exec('ROLLBACK');
     } catch {
-      throw new HistoryCaptureError('CONTEXT_UNAVAILABLE');
+      throw Object.assign(new HistoryCaptureError('CONTEXT_UNAVAILABLE'), {
+        cleanupState: 'UNKNOWN' as const,
+      });
     }
     throw error;
   }
