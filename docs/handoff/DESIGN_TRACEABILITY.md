@@ -1,3 +1,16 @@
+## P1-12 original input candidate set/integrity - 2026-11-07
+
+Private compilation-secret-candidate.ts maps strict capture support closure to
+required original descriptors, and validates supplied byte-set/hash/UTF8 before
+independent raw/final-value evaluation. Snapshot/policy refs are data correlations,
+not provenance/authorization; all results stay PROPOSED/LIMITED/clearance=false.
+Eight literal/refusal/lifetime cases added to compilation-input-contract tests;
+initial5 RED, final149 related tests/build/architecture17 pass, independent static
+review no high/important issue. Existing value-only API semantics stay unchanged.
+Spec explicitly separates pre-read authorized metadata inventory from post-capture
+manifest, and records unapproved trusted-consumer sequence. No production policy,
+Source grant, token, public schema, user data or formal acceptance change.
+
 ## P1-12 owned selected-document original/consumer binding - 2026-11-07
 
 Existing Source/SECURITY RAW and document preflight boundaries map to private

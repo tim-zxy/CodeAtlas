@@ -1,5 +1,70 @@
 # Offline secret coverage candidate and P1-12 boundary map
 
+## Candidate complete-original manifest and supplied-byte evaluation
+
+This slice implements a private offline candidate, not a production inventory
+contract. `planCompilationOriginals(snapshot,control,account)` strictly parses the
+capture, enumerates every captured SourceFile in entities/supports and every
+DocumentCapture original, deduplicates identical descriptors and sorts stable
+locator keys. Each requirement records kind, exact repository/revision/entity,
+path and contentFingerprint; document requirements also retain workspace identity.
+Keys are JSON locator tuples, never Knowledge IDs, provenance or permissions.
+Binary required SourceFile is uninspectable and refuses; nothing is silently omitted.
+Plan scope is CAPTURED_SUPPORT_CLOSURE_ONLY, originalSource NOT_INSPECTED,
+authorization NOT_ESTABLISHED, status PROPOSED and clearance false. Empty plan
+means no originals represented by this snapshot, never full-repository coverage.
+
+`inspectSuppliedCompilationOriginals(snapshot,originals,control,account)` accepts
+an ordinary Map from the plan's exact keys to synthetic/owner-supplied Uint8Arrays.
+It derives its own plan again; missing/extra inputs refuse. Copy/UTF8-check each
+required original under the shared account; hash those same consumed bytes and
+require exact stored fingerprint before candidate inspection. Inspect the same
+validated captured-value snapshot as the final payload separately. Return sorted
+rule IDs, policy version, expected count and originalSource SUPPLIED_BYTES_ONLY,
+authorization NOT_ESTABLISHED, PROPOSED/LIMITED/clearance=false. No raw original,
+Draft, receipt capability, file read or write is exposed. Getters/proxies/shared
+bytes, cancellation/deadline, budget failure or mismatch yield no partial result.
+
+Production must instead bind the exact admitted complete raw-input inventory to
+the actual operation and genuine Source owners, enforce per-file RAW permission
+before every read and final use, preserve full-source state/selection checks, bind
+the exact transformed payload/digest to a live consumer, and fail on uninspectable
+required input or unsettled cleanup. These private data-only functions cannot
+establish that authority. Keep production denial (recommended now), or separately
+approve that concrete inventory/coverage/consumption policy after residual-miss
+review; the latter risks omitted dependencies, false positives, accepted missed
+forms and extra resource cost. No Boolean or no-hit grants approval.
+
+Verification plan: literal manifest for SourceFile plus document; required
+support-only originals; missing/extra/wrong hash/invalid bytes/binary refusal;
+raw-only secret detection, no-hit denial and original control lifetime regression.
+Then existing capture/preflight suites, builds and architecture; exact-stage and
+one normal source-sync push. No user data or installed package is touched.
+
+Implemented evidence: initial5 tests failed before these functions existed. Eight
+new cases now cover literal Source/document manifests, support-only inventory and
+deduplication, raw-only secret detection, missing/extra/hash/UTF8/binary failures,
+empty-set non-clearance, Proxy/shared rejection and cancellation despite signal
+replacement. Application build,149 related detector/capture/Source/preflight tests
+and architecture17 passed. Independent static review found no high/important
+issue; tests were executed by the integrator, not the read-only reviewer. The
+existing captured-value evaluator keeps its output and fixed-control semantics.
+
+The post-materialization candidate manifest CANNOT bootstrap capture read
+permissions: production inventory must first come from authorized metadata ports
+before any materialization, then be compared to this derived manifest afterward.
+Minimum proposed trusted-consumption sequence (NOT implemented/approved here):
+bind actual workspace/revision/policy to the live operation; resolve admitted
+metadata inventory; authorize every required path/classification before reading;
+reuse genuine prepared Source contexts without auto-granting INDEX; read/check
+same owned bytes; inspect originals and exact final payload under the approved
+detector version; verify Source/store/policy/permissions and settled cleanup again;
+permit only the bound live operation to consume that exact frozen payload.
+Expiry/revocation/mismatch must refuse. A serialized plan, supplied Map or scan
+summary can never stand in for this owner-held lifecycle. Choice1 retains current
+production denial; choice2 requires explicitly approving these inventory, coverage
+and operation/consumer rules. No token or privilege is minted by this slice.
+
 ## Owned selected-document consumption (offline composition)
 
 Private `checkOwnedCompilationDocument(handle,{path,metadata})` authenticates the

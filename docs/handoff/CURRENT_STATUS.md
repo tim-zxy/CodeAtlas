@@ -1,3 +1,25 @@
+## P1-12 original-input candidate manifest/evaluation - 2026-11-07
+
+Private planCompilationOriginals derives exact required SourceFile originals from
+all captured entities/supports and originals for each DocumentCapture; deduplicates
+identical bindings, rejects required binary/non-Markdown inputs, binds snapshot
+digest/policy refs, and says CAPTURED_SUPPORT_CLOSURE_ONLY/NOT_INSPECTED. Private
+inspectSuppliedCompilationOriginals rederives this plan, requires exact supplied
+Map keys, copies/UTF8-checks and hashes each consumed original, independently scans
+the same validated final payload, and emits only PROPOSED/LIMITED/clearance=false/
+authorization NOT_ESTABLISHED. Nonempty input is SUPPLIED_BYTES_ONLY; empty remains
+NOT_INSPECTED. No Source provenance/read permission/whole-repository claim or
+trusted-consumer token; production ordinary capture stays scan-denied.
+Eight new offline tests, Application build,149 related tests and architecture17
+pass; independent static review found no high/important issue. Existing inspector
+control binding is reused. [Exact fields, sequence, risks and decisions](../superpowers/specs/2026-11-07-secret-coverage-candidate.md).
+Production must authorize inventory from metadata BEFORE materialization and then
+compare the derived plan; this post-capture manifest cannot authorize its own read.
+No user data, installed update, real identity, model, migration, publication or R9.
+Phase1 stays4/21/A6 NOT_QUALIFIED/E02 PROPOSED/uninstalled. CI169 terminal TS/Rust
+success, Native catalog failure; CI170 TS still running when checked (Rust success,
+Native same prerequisite failure). Neither earlier head verifies this new batch.
+
 ## P1-12 owned selected-document consumption wired offline - 2026-11-07
 
 Private checkOwnedCompilationDocument binds the genuine Source owner to the

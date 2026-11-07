@@ -92,6 +92,169 @@ const emptyCanonical =
 const sourceHash = '94973574233c8a067e0a6628553570f4b0829f63a1dcd7232b9cc4a1001931ae';
 const emptyHash = '13bf816d9f4588dde253cfbe0475cae04ef2daf3e167d7936f1d784f21f9da4a';
 const create = (v = snapshot(), c = control()) => contract.createCompilationInputSnapshot(v, c);
+function originalFixture(bytes = Buffer.from('password=synthetic-only')) {
+  const input = withSource();
+  input.repositories[0].entities[0].value.contentFingerprint =
+    'sha256:' + createHash('sha256').update(bytes).digest('hex');
+  return {
+    snapshot: create(input),
+    bytes,
+    key: JSON.stringify(['SOURCE_FILE', 'w', 'r', 'v', 'f']),
+  };
+}
+
+test('candidate original manifest enumerates exact source and document bindings without authority', () => {
+  const f = originalFixture();
+  const plan = inspection.planCompilationOriginals(f.snapshot, control(), makeAccount().account);
+  assert.deepEqual(plan.required, [
+    {
+      key: f.key,
+      kind: 'SOURCE_FILE',
+      workspaceId: 'w',
+      repositoryId: 'r',
+      revisionId: 'v',
+      entityId: 'f',
+      path: 'src/A.java',
+      contentFingerprint: 'sha256:' + createHash('sha256').update(f.bytes).digest('hex'),
+    },
+  ]);
+  assert.equal(plan.scope, 'CAPTURED_SUPPORT_CLOSURE_ONLY');
+  assert.equal(plan.originalSource, 'NOT_INSPECTED');
+  assert.equal(plan.authorization, 'NOT_ESTABLISHED');
+  assert.equal(plan.clearance, false);
+  const docs = inspection.planCompilationOriginals(
+    create(documentCapture()),
+    control(),
+    makeAccount().account,
+  );
+  assert.equal(docs.required.length, 1);
+  assert.equal(docs.required[0].kind, 'DOCUMENT_REVISION');
+  assert.equal(docs.required[0].repositoryId, null);
+  assert.equal(docs.required[0].path, 'note.md');
+});
+
+test('supplied-original evaluation detects a raw-only secret without granting consumption', () => {
+  const f = originalFixture();
+  const result = inspection.inspectSuppliedCompilationOriginals(
+    f.snapshot,
+    new Map([[f.key, f.bytes]]),
+    control(),
+    makeAccount().account,
+  );
+  assert.equal(result.detected, true);
+  assert.equal(result.originalSource, 'SUPPLIED_BYTES_ONLY');
+  assert.equal(result.inputsChecked, 1);
+  assert.equal(result.authorization, 'NOT_ESTABLISHED');
+  assert.equal(result.status, 'PROPOSED');
+  assert.equal(result.coverage, 'LIMITED');
+  assert.equal(result.clearance, false);
+  assert.equal(JSON.stringify(result).includes('synthetic-only'), false);
+});
+
+test('supplied-original evaluation refuses missing, extra, wrong-hash and invalid UTF8 input', () => {
+  const f = originalFixture();
+  for (const originals of [
+    new Map(),
+    new Map([
+      [f.key, f.bytes],
+      ['foreign', f.bytes],
+    ]),
+    new Map([[f.key, Buffer.from('changed')]]),
+    new Map([[f.key, Buffer.from([255])]]),
+  ]) {
+    const owner = makeAccount();
+    assert.throws(() =>
+      inspection.inspectSuppliedCompilationOriginals(
+        f.snapshot,
+        originals,
+        control(),
+        owner.account,
+      ),
+    );
+    assert.equal(owner.usage.invalid, true);
+  }
+});
+
+test('uninspectable required binary input refuses instead of disappearing from manifest', () => {
+  const input = withSource();
+  input.repositories[0].entities[0].value.classification.contentKind = 'BINARY';
+  const owner = makeAccount();
+  assert.throws(() => inspection.planCompilationOriginals(create(input), control(), owner.account));
+  assert.equal(owner.usage.invalid, true);
+});
+
+test('empty captured closure never claims original inspection or clearance', () => {
+  const result = inspection.inspectSuppliedCompilationOriginals(
+    create(),
+    new Map(),
+    control(),
+    makeAccount().account,
+  );
+  assert.equal(result.inputsChecked, 0);
+  assert.equal(result.originalSource, 'NOT_INSPECTED');
+  assert.equal(result.clearance, false);
+});
+
+test('original manifest includes support-only files and deduplicates identical captured bindings', () => {
+  const input = addSourceSupport(codeCapture());
+  input.repositories[0].entities.shift();
+  const plan = inspection.planCompilationOriginals(create(input), control(), makeAccount().account);
+  assert.equal(plan.required.length, 1);
+  assert.equal(plan.required[0].entityId, 'f');
+  const duplicate = inspection.planCompilationOriginals(
+    create(addSourceSupport(withSource())),
+    control(),
+    makeAccount().account,
+  );
+  assert.equal(duplicate.required.length, 1);
+});
+
+test('supplied-original evaluation rejects proxy maps without hooks and shared byte backing', () => {
+  const f = originalFixture();
+  let hooks = 0;
+  const proxy = new Proxy(new Map(), {
+    getPrototypeOf() {
+      hooks++;
+      return Map.prototype;
+    },
+  });
+  for (const originals of [proxy, new Map([[f.key, new Uint8Array(new SharedArrayBuffer(4))]])]) {
+    const owner = makeAccount();
+    assert.throws(() =>
+      inspection.inspectSuppliedCompilationOriginals(
+        f.snapshot,
+        originals,
+        control(),
+        owner.account,
+      ),
+    );
+    assert.equal(owner.usage.invalid, true);
+  }
+  assert.equal(hooks, 0);
+});
+
+test('cancellation during original byte accounting survives caller signal replacement', () => {
+  const f = originalFixture(),
+    controller = new AbortController();
+  const requestControl = control({ signal: controller.signal }),
+    owner = makeAccount();
+  owner.account.reserveBuffer = (size) => {
+    if (size === f.bytes.length) {
+      controller.abort();
+      requestControl.signal = new AbortController().signal;
+    }
+  };
+  assert.throws(() =>
+    inspection.inspectSuppliedCompilationOriginals(
+      f.snapshot,
+      new Map([[f.key, f.bytes]]),
+      requestControl,
+      owner.account,
+    ),
+  );
+  assert.equal(controller.signal.aborted, true);
+  assert.equal(owner.usage.invalid, true);
+});
 const bad = (f, code) =>
   assert.throws(f, (e) => e.name === 'CompilationInputContractError' && (!code || e.code === code));
 function withSource() {
