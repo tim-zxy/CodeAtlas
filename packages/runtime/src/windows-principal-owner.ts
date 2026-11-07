@@ -40,9 +40,41 @@ interface RecordState {
   check(): void;
   dispose(): void;
 }
+type FailurePhase =
+  | 'CONTROLS'
+  | 'HOST_IDENTITY'
+  | 'HELPER_IDENTITY'
+  | 'TEMP_CREATE'
+  | 'CHILD_RUN'
+  | 'POST_HOST_IDENTITY'
+  | 'CLEANUP'
+  | 'REPLY_VALIDATION';
+type HelperFailurePhase =
+  'BOOTSTRAP' | 'TEMP_ANCESTRY' | 'TEMP_OWNER' | 'COMPILE' | 'QUERY' | 'SERIALIZE' | 'UNAVAILABLE';
+interface FailureDiagnostic {
+  readonly phase: FailurePhase;
+  readonly helperPhase: HelperFailurePhase;
+  readonly stderrObserved: boolean;
+  readonly stderrTruncated: boolean;
+  readonly spawnObserved: boolean;
+  readonly childExitCode: number | null;
+  readonly childSignalObserved: boolean;
+}
+const noDiagnostic: FailureDiagnostic = Object.freeze({
+  phase: 'CONTROLS',
+  helperPhase: 'UNAVAILABLE',
+  stderrObserved: false,
+  stderrTruncated: false,
+  spawnObserved: false,
+  childExitCode: null,
+  childSignalObserved: false,
+});
 export class WindowsPrincipalOwnerError extends Error {
   readonly code = 'WINDOWS_PRINCIPAL_UNAVAILABLE';
-  constructor(readonly cleanupState: 'SETTLED' | 'UNKNOWN' = 'SETTLED') {
+  constructor(
+    readonly cleanupState: 'SETTLED' | 'UNKNOWN' = 'SETTLED',
+    readonly diagnostic: Readonly<FailureDiagnostic> = noDiagnostic,
+  ) {
     super('Windows principal unavailable');
     this.name = 'WindowsPrincipalOwnerError';
   }
@@ -110,12 +142,15 @@ async function verifiedHost(max: number) {
 // application module above. No execution-policy switch, profile or PATH lookup.
 const program = String.raw`
 $ErrorActionPreference='Stop';$ProgressPreference='SilentlyContinue'
+$principalStage='BOOTSTRAP'
+try {
 [Console]::InputEncoding=New-Object System.Text.UTF8Encoding($false,$true)
 [Console]::OutputEncoding=New-Object System.Text.UTF8Encoding($false,$true)
 if($ExecutionContext.SessionState.LanguageMode -ne 'FullLanguage'){throw 'PRINCIPAL_UNAVAILABLE'}
 $inputData=[Console]::In.ReadToEnd()|ConvertFrom-Json
 $id=[System.Security.Principal.WindowsIdentity]::GetCurrent()
 try{$ownSid=$id.User.Value}finally{$id.Dispose()}
+$principalStage='TEMP_ANCESTRY'
 $local=[Environment]::GetFolderPath([Environment+SpecialFolder]::LocalApplicationData)
 $known=[IO.Path]::GetFullPath([IO.Path]::Combine($local,'Temp'))
 $parent=[IO.DirectoryInfo]::new([string]$inputData.tempParent)
@@ -138,19 +173,27 @@ for($cursor=$parent;$null -ne $cursor;$cursor=$cursor.Parent){
   if(($ace.FileSystemRights -band $mask) -and $trusted -notcontains $ace.IdentityReference.Value){throw 'PRINCIPAL_UNAVAILABLE'}
  }
 }
+$principalStage='TEMP_OWNER'
 $work=[IO.DirectoryInfo]::new([string]$inputData.tempPath)
 if(-not $work.Exists -or ($work.Attributes -band [IO.FileAttributes]::ReparsePoint) -or -not [String]::Equals($work.Parent.FullName,$parent.FullName,[StringComparison]::OrdinalIgnoreCase)){throw 'PRINCIPAL_UNAVAILABLE'}
 $workAcl=$work.GetAccessControl([Security.AccessControl.AccessControlSections]::Owner)
 if($workAcl.GetOwner([Security.Principal.SecurityIdentifier]).Value -cne $ownSid){throw 'PRINCIPAL_UNAVAILABLE'}
 $env:TEMP=[string]$inputData.tempPath;$env:TMP=$env:TEMP
 if('WindowsProcessPrincipal' -as [type]){throw 'PRINCIPAL_UNAVAILABLE'}
+$principalStage='COMPILE'
 $compiled=@(Add-Type -TypeDefinition ([string]$inputData.source) -PassThru -ErrorAction Stop)
 $type=@($compiled|Where-Object FullName -eq 'WindowsProcessPrincipal')
 if($type.Count -ne 1){throw 'PRINCIPAL_UNAVAILABLE'}
+$principalStage='QUERY'
 $result=$type[0].GetMethod('Query').Invoke($null,@([long]$inputData.pid,[string]$inputData.challenge))
 if($result.sid -cne $ownSid){throw 'PRINCIPAL_UNAVAILABLE'}
+$principalStage='SERIALIZE'
 $wire=$type[0].GetMethod('Serialize').Invoke($null,@($result))
 [Console]::Out.WriteLine([string]$wire)
+} catch {
+ [Console]::Error.WriteLine('CODEATLAS_PRINCIPAL_FAILURE:'+$principalStage)
+ exit 1
+}
 `;
 async function removeOwned(
   directory: string,
@@ -194,6 +237,24 @@ export async function acquireCurrentWindowsPrincipal(
     maxOutput = sizes.maxOutputBytes as number;
   const clock = lifetime(control);
   busy = true;
+  let phase: FailurePhase = 'HOST_IDENTITY';
+  let helperPhase: HelperFailurePhase = 'UNAVAILABLE';
+  let stderrObserved = false,
+    stderrTruncated = false,
+    spawnObserved = false;
+  let childExitCode: number | null = null,
+    childSignalObserved = false;
+  // These fixed diagnostic scalars never participate in admission or cleanup.
+  const diagnostic = (): Readonly<FailureDiagnostic> =>
+    Object.freeze({
+      phase,
+      helperPhase,
+      stderrObserved,
+      stderrTruncated,
+      spawnObserved,
+      childExitCode,
+      childSignalObserved,
+    });
   let directory: string | undefined, identity: { dev: number; ino: number } | undefined;
   let created = false,
     normalClose = false,
@@ -202,10 +263,12 @@ export async function acquireCurrentWindowsPrincipal(
     clock.check();
     await verifiedHost(maxInput);
     clock.check();
+    phase = 'HELPER_IDENTITY';
     const sourceBytes = await fs.readFile(helperUrl);
     clock.check();
     need(sourceBytes.length <= maxInput && helperHashes.has(hash(sourceBytes)));
     const source = new TextDecoder('utf-8', { fatal: true, ignoreBOM: true }).decode(sourceBytes);
+    phase = 'TEMP_CREATE';
     const tempParent = os.tmpdir();
     const tempRoot = path.win32.parse(tempParent).root;
     need(
@@ -224,6 +287,7 @@ export async function acquireCurrentWindowsPrincipal(
     );
     need(input.length <= maxInput);
     const args = ['-NoLogo', '-NoProfile', '-NonInteractive', '-Command', program];
+    phase = 'CHILD_RUN';
     const child = childProcess.spawn(hostPath, args, {
       shell: false,
       windowsHide: true,
@@ -242,6 +306,9 @@ export async function acquireCurrentWindowsPrincipal(
     created = true;
     need(child.stdin && child.stdout && child.stderr);
     const stdout: Buffer[] = [];
+    const stderr: Buffer[] = [];
+    let stderrBytes = 0;
+    const stderrDiagnosticLimit = 96;
     let count = 0,
       spawnSeen = false,
       outEnd = false,
@@ -267,6 +334,7 @@ export async function acquireCurrentWindowsPrincipal(
     const done = new Promise<void>((resolve, reject) => {
       child.once('spawn', () => {
         spawnSeen = true;
+        spawnObserved = true;
         if (!child.pid || child.spawnfile !== hostPath) bad = true;
       });
       child.once('error', () => {
@@ -288,7 +356,27 @@ export async function acquireCurrentWindowsPrincipal(
         }
       });
       child.stderr!.on('data', (bytes: Buffer) => {
-        if (bytes.length) bad = true;
+        try {
+          need(bytes && !types.isProxy(bytes) && bytes instanceof Uint8Array);
+          const storage = bytesBuffer.call(bytes),
+            length = bytesLength.call(bytes);
+          need(!(storage instanceof SharedArrayBuffer));
+          if (!length) return;
+          bad = true;
+          stderrObserved = true;
+          if (length > stderrDiagnosticLimit - stderrBytes) {
+            stderrTruncated = true;
+            stderr.length = 0;
+          } else if (!stderrTruncated) {
+            stderrBytes += length;
+            stderr.push(Buffer.from(new Uint8Array(storage, bytesOffset.call(bytes), length)));
+          }
+        } catch {
+          bad = true;
+          stderrObserved = true;
+          stderrTruncated = true;
+          stderr.length = 0;
+        }
       });
       child.stdout!.once('end', () => {
         outEnd = true;
@@ -309,6 +397,20 @@ export async function acquireCurrentWindowsPrincipal(
         bad = true;
       });
       child.once('close', (code, signal) => {
+        childExitCode =
+          Number.isInteger(code) && code! >= -2147483648 && code! <= 2147483647 ? code : null;
+        childSignalObserved = signal !== null;
+        if (!stderrTruncated) {
+          const text = Buffer.concat(stderr).toString('utf8');
+          const match =
+            /^CODEATLAS_PRINCIPAL_FAILURE:(BOOTSTRAP|TEMP_ANCESTRY|TEMP_OWNER|COMPILE|QUERY|SERIALIZE)\r?\n$/.exec(
+              text,
+            );
+          // Full-input match: JS $ alone can also match before a trailing newline.
+          if (match && match[0].length === text.length)
+            helperPhase = match[1] as HelperFailurePhase;
+        }
+        stderr.length = 0;
         normalClose = spawnSeen && code === 0 && signal === null && outEnd && errEnd && inputEnd;
         clearTimeout(timer);
         removeListener.call(clock.signal, 'abort', abort);
@@ -347,11 +449,14 @@ export async function acquireCurrentWindowsPrincipal(
     }
     need(!bad && !stopped);
     clock.check();
+    phase = 'POST_HOST_IDENTITY';
     await verifiedHost(maxInput);
     clock.check();
+    phase = 'CLEANUP';
     await removeOwned(directory, identity, clock.maxItems, clock.maxDepth);
     directory = undefined;
     clock.check();
+    phase = 'REPLY_VALIDATION';
     const reply = decodeWindowsProcessPrincipalReply(
       Buffer.concat(stdout),
       { pid: ownerPid, challenge },
@@ -400,7 +505,10 @@ export async function acquireCurrentWindowsPrincipal(
       busy = false;
       if (!poisoned && (!created || normalClose)) uncertain = false;
     }
-    throw new WindowsPrincipalOwnerError(background || poisoned ? 'UNKNOWN' : 'SETTLED');
+    throw new WindowsPrincipalOwnerError(
+      background || poisoned ? 'UNKNOWN' : 'SETTLED',
+      diagnostic(),
+    );
   }
 }
 export function assertCurrentWindowsPrincipal(handle: object): void {

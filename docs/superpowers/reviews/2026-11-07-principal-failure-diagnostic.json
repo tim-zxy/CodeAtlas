@@ -1,0 +1,65 @@
+{
+  "schema": "codeatlas.principal-failure-diagnostic-evidence",
+  "version": 1,
+  "baseCommit": "1bdcbd4af9fb2912ded1a03d151f76f7d8e4b8c4",
+  "successCriteria": [
+    "Only fixed phase/scalar diagnostics exposed",
+    "At most96 stderr bytes transiently retained; raw stderr never exported",
+    "Diagnostic content never authorizes or changes original cleanup/refusal",
+    "No real identity query, ACL change or UNKNOWN-directory cleanup"
+  ],
+  "red": {
+    "command": "node --experimental-test-module-mocks --test --test-reporter=tap packages/runtime/test/windows-principal-owner.test.mjs",
+    "pass": 18,
+    "fail": 3,
+    "reason": "Existing implementation has no diagnostic fields"
+  },
+  "green": {
+    "runtimeBuildExitCode": 0,
+    "command": "node --test --test-concurrency=1 packages/runtime/test/windows-principal-owner.test.mjs packages/runtime/test/local-capture-operation.test.mjs packages/runtime/test/windows-process-principal.test.mjs",
+    "outerPass": 35,
+    "outerFail": 0,
+    "principalChildPass": 23,
+    "operationChildPass": 13,
+    "decoderOuterPass": 33,
+    "note": "Wrapper inner totals overlap, do not sum as separate suites",
+    "astCharacters": 4158,
+    "astValid": true,
+    "astExecuted": false,
+    "architectureProjects": 17,
+    "architectureExitCode": 0
+  },
+  "newCases": [
+    "Chunked exact fixed marker",
+    "Arbitrary and over96B sensitive stderr redacted",
+    "Pre-spawn fixed host phase",
+    "Marker with zero exit still refuses",
+    "Extra stderr tail not canonical marker"
+  ],
+  "diagnosticFields": [
+    "phase",
+    "helperPhase",
+    "stderrObserved",
+    "stderrTruncated",
+    "spawnObserved",
+    "childExitCode",
+    "childSignalObserved"
+  ],
+  "sensitiveFieldsExported": [],
+  "actualIdentityQueries": 0,
+  "aclChanges": 0,
+  "retainedUnknownDirectoryTouched": false,
+  "proposal": "../specs/2026-11-07-principal-precompiled-helper-proposal.md",
+  "proposalStatus": "PROPOSED; no build/install/load/query; output hash unknown; KnownFolder/load/provenance contract requires explicit decision",
+  "formalStatus": {
+    "phase1": "4/21",
+    "a6": "NOT_QUALIFIED",
+    "e02": "PROPOSED/uninstalled"
+  },
+  "filesSha256": {
+    "packages/runtime/src/windows-principal-owner.ts": "692ceef926e7adcebe8573e144329876e7477d4c229b82c281aa86b8aff95cc1",
+    "packages/runtime/test/windows-principal-owner.test.mjs": "5b3b6d8e4a064d487cd983c1cdc8f9ffaf0455eae36012758f1da7327c117606",
+    "packages/runtime/test/windows-principal-live-probe.mjs": "41db7d3bc39fb01ee1f2300c879555195028c7266a0a3601b91fc710d9a7f7c9"
+  },
+  "independentReview": "No important issue; bounded enum-only redaction and frozen snapshots do not participate in admission or cleanup; static review only."
+}

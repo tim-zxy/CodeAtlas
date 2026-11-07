@@ -1,3 +1,13 @@
+## Fixed private Principal failure diagnostics - 2026-11-07
+
+Approved bounded redacted diagnostic -> missing-field RED -> fixed phase/scalars,
+96-byte transient stderr cap and exact enum marker -> chunk/tail/secret/zero-exit
+negative proofs. Diagnostics never enter admission or cleanup decisions. No change
+to actual identity, operation grants, KnownFolder, sandbox ACL or Native gates.
+[Evidence](../superpowers/reviews/2026-11-07-principal-failure-diagnostic.json).
+Precompiled DLL provenance/loading/Temp replacement is a separate unimplemented
+[decision candidate](../superpowers/specs/2026-11-07-principal-precompiled-helper-proposal.md).
+
 ## Private scoped local-account handle ownership - 2026-11-07
 
 Accepted current-process same-account boundary -> fixed image/helper plus actual

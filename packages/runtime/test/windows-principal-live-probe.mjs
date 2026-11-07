@@ -157,6 +157,7 @@ try {
       success: false,
       code: error?.code ?? 'PROBE_FAILED',
       cleanupState: error?.cleanupState ?? 'SETTLED',
+      diagnostic: error?.diagnostic,
     }),
   );
   process.exitCode = 1;

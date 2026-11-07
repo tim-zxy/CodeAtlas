@@ -1,3 +1,28 @@
+## Principal failure diagnostics; precompiled helper remains proposed - 2026-11-07
+
+The approved independent offline batch adds fixed Node/helper failure phases, child
+exit/spawn booleans and bounded redacted stderr metadata. At most96 stderr bytes are
+transiently copied; only an exact one-line fixed enum marker can be exposed. Raw
+stderr, SID, paths, source and arbitrary exception detail never enter diagnostics.
+Markers never participate in admission/cleanup; even marker+exit0 still refuses.
+Timeout snapshots remain immutable; later background completion cannot turn a failed
+diagnostic into a grant. Original refusal, current-account and KnownFolder rules stay.
+
+Three initial regressions failed on missing diagnostic fields; after implementation
+Runtime builds, outer35/35 (Principal child23/23, Operation child13/13) and nonexecuting
+4158-character fixed-program AST pass; architecture17 passes. No actual query or
+compile/install of a new helper, ACL change or UNKNOWN directory cleanup occurred.
+This does not repair the historical failure or prove its exact cause.
+
+[Precompiled helper proposal](../superpowers/specs/2026-11-07-principal-precompiled-helper-proposal.md)
+recommends exact-byte managed DLL loading by the fixed host, with frozen compiler /
+source / references and installed artifact identity. No DLL exists; output hash is
+unknown. Replacing KnownFolder runtime compilation and declaring artifact trust /
+lifecycle needs a concrete decision; no fallback is enabled. Existing sandbox Temp
+writers must not be removed/whitelisted. Historical empty directory stays UNKNOWN.
+[Evidence](../superpowers/reviews/2026-11-07-principal-failure-diagnostic.json).
+Phase1 remains4/21; A6 NOT_QUALIFIED; E02 baseline PROPOSED/uninstalled.
+
 ## Private Principal/Operation owner: offline complete, actual admission blocked - 2026-11-07
 
 Accepted same-account boundary now has private fixed-host/helper Principal ownership

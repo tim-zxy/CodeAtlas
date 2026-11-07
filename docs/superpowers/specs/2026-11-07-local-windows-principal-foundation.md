@@ -86,3 +86,16 @@ change occurred. Actual successful owner integration and Application bootstrap r
 open. A protected compilation location or precompiled helper must be reviewed as a
 concrete lifecycle/security decision before a new actual attempt, never a guard bypass.
 See ../reviews/2026-11-07-local-principal-operation.json for reproducible evidence.
+
+## Private redacted failure diagnostics
+
+WindowsPrincipalOwnerError retains the original refusal code/cleanup state and adds
+an immutable diagnostic snapshot: fixed phase/helperPhase, stderrObserved,
+stderrTruncated, spawnObserved, nullable bounded signed-32-bit childExitCode and
+childSignalObserved. No SID, path, input, arbitrary exception or stderr text is exposed.
+At most96 stderr bytes are copied transiently; excess discards the whole diagnostic
+text. Only exact CODEATLAS_PRINCIPAL_FAILURE:<fixed-helper-phase> plus one LF/CRLF
+becomes helperPhase; arbitrary/extra/invalid bytes yield UNAVAILABLE. Fixed program
+catch emits this stage only. Any stderr still rejects, including marker with exit0.
+A snapshot describes observation, not a unique cause, cleanup settlement or grant.
+No real retry or KnownFolder/loading contract change accompanies this addition.

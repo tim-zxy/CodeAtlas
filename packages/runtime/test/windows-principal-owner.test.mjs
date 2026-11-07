@@ -38,7 +38,7 @@ if (!childLane) {
     );
     assert.ifError(r.error);
     assert.equal(r.status, 0, r.stdout + r.stderr);
-    for (const line of ['tests 18', 'pass 18', 'fail 0', 'cancelled 0', 'skipped 0', 'todo 0'])
+    for (const line of ['tests 23', 'pass 23', 'fail 0', 'cancelled 0', 'skipped 0', 'todo 0'])
       assert.ok(r.stdout.split(/\r?\n/).includes('# ' + line), r.stdout + r.stderr);
   });
 } else {
@@ -180,10 +180,24 @@ if (!childLane) {
                   : Buffer.from(JSON.stringify(reply) + '\n'),
               );
               if (f.mode === 'stderr') child.stderr.write('TEST_DOUBLE diagnostic');
+              if (['diagnostic-stage', 'diagnostic-zero', 'diagnostic-tail'].includes(f.mode)) {
+                child.stderr.write('CODEATLAS_PRINCIPAL_FAILURE:TEMP_');
+                child.stderr.write(f.mode === 'diagnostic-tail' ? 'ANCESTRY\n\n' : 'ANCESTRY\n');
+              }
+              if (f.mode === 'diagnostic-secret')
+                child.stderr.write(
+                  'PRIVATE_SOURCE SID=S-1-5-21-1-2-3-1001 C:/private ' + 'x'.repeat(300),
+                );
               f.close = () => {
                 if (f.mode !== 'eof') child.stdout.end();
                 child.stderr.end();
-                setImmediate(() => child.emit('close', f.mode === 'nonzero' ? 1 : 0, null));
+                setImmediate(() =>
+                  child.emit(
+                    'close',
+                    ['nonzero', 'diagnostic-stage', 'diagnostic-secret'].includes(f.mode) ? 1 : 0,
+                    null,
+                  ),
+                );
               };
               if (!f.hold) f.close();
             });
@@ -223,6 +237,72 @@ if (!childLane) {
     };
   }
   const unavailable = (e) => e.code === 'WINDOWS_PRINCIPAL_UNAVAILABLE';
+  test('a fixed diagnostic marker never permits a zero-exit helper to authorize', async (t) => {
+    const x = await fixture(t, 'diagnostic-zero');
+    await assert.rejects(x.acquire(), (e) => {
+      assert.equal(e.diagnostic.helperPhase, 'TEMP_ANCESTRY');
+      assert.equal(e.diagnostic.childExitCode, 0);
+      assert.equal(e.cleanupState, 'SETTLED');
+      return true;
+    });
+    assert.equal(x.state.cleanups, 1);
+  });
+  test('extra stderr tail is not a canonical fixed helper phase', async (t) => {
+    const x = await fixture(t, 'diagnostic-tail');
+    await assert.rejects(x.acquire(), (e) => {
+      assert.equal(e.diagnostic.helperPhase, 'UNAVAILABLE');
+      assert.equal(e.diagnostic.stderrTruncated, false);
+      return true;
+    });
+  });
+
+  test('fixed helper failure diagnostic survives chunk boundaries without becoming authority', async (t) => {
+    const x = await fixture(t, 'diagnostic-stage');
+    await assert.rejects(x.acquire(), (e) => {
+      assert.equal(e.cleanupState, 'UNKNOWN');
+      assert.deepEqual(e.diagnostic, {
+        phase: 'CHILD_RUN',
+        helperPhase: 'TEMP_ANCESTRY',
+        stderrObserved: true,
+        stderrTruncated: false,
+        spawnObserved: true,
+        childExitCode: 1,
+        childSignalObserved: false,
+      });
+      assert.ok(Object.isFrozen(e.diagnostic));
+      return true;
+    });
+    assert.equal(x.state.cleanups, 0);
+    await assert.rejects(x.acquire(), unavailable);
+  });
+  test('arbitrary and over-cap stderr never appears in bounded failure diagnostic', async (t) => {
+    const x = await fixture(t, 'diagnostic-secret');
+    await assert.rejects(x.acquire(), (e) => {
+      assert.equal(e.diagnostic.helperPhase, 'UNAVAILABLE');
+      assert.equal(e.diagnostic.stderrTruncated, true);
+      assert.equal(e.diagnostic.stderrObserved, true);
+      const wire = JSON.stringify(e);
+      assert.ok(wire.length < 500);
+      for (const secret of ['PRIVATE_SOURCE', 'S-1-5-21', 'C:/private', 'xxxxxxxx'])
+        assert.equal(wire.includes(secret), false);
+      return true;
+    });
+    assert.equal(x.state.cleanups, 0);
+  });
+  test('pre-spawn fixed-host refusal has a fixed local phase without source details', async (t) => {
+    const x = await fixture(t, 'host');
+    await assert.rejects(x.acquire(), (e) => {
+      assert.equal(e.diagnostic.phase, 'HOST_IDENTITY');
+      assert.equal(e.diagnostic.helperPhase, 'UNAVAILABLE');
+      assert.equal(e.diagnostic.stderrObserved, false);
+      assert.equal(e.diagnostic.spawnObserved, false);
+      assert.equal(e.diagnostic.childExitCode, null);
+      assert.equal(e.cleanupState, 'SETTLED');
+      return true;
+    });
+    assert.equal(x.state.spawns, 0);
+  });
+
   async function ready(x, pending) {
     // Observe early failure while bounding the synthetic scheduling wait.
     pending.catch(() => {});
