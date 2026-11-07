@@ -1,0 +1,91 @@
+{
+  "schema": "codeatlas.local-principal-batch-evidence",
+  "version": 1,
+  "date": "2026-11-07",
+  "baseCommit": "9ec9ac288a07ddc905db4a7b7dda062c8b545be7",
+  "authority": "Accepted same-Windows-account single-machine boundary including same-SID Agents; current process and specified operation only; not human consent",
+  "successCriteria": [
+    "Fixed host/helper identity before opaque principal mint",
+    "Reply DTO, copied or foreign handles cannot authorize",
+    "Original scoped QUERY/READ_SOURCE policy and shared budget preserved",
+    "Abort, observed expiry, identity, scope and cleanup failures refuse"
+  ],
+  "filesSha256": {
+    "packages/runtime/src/windows-principal-owner.ts": "ba47e18953abb3cb79ac9f231229f86c8255ed607c92c4f3f7a00f519e67a1a6",
+    "packages/runtime/src/local-capture-operation.ts": "049d9106b619fb9bded88690a580aeb8f7765c9143f193a308b26fca6c715d76",
+    "packages/runtime/test/windows-principal-owner.test.mjs": "972cee2dbf45776b65caaae9fbf58caa03b6eae5c5d1cc2788b719f248b4de17",
+    "packages/runtime/test/local-capture-operation.test.mjs": "48b4ada7a5bebe85482ad7ff9583d8e7ab636847e759e4698f1249700f560e86",
+    "packages/runtime/test/windows-principal-live-probe.mjs": "e2d266bcbb22c0595aecf9757cd6c119c3429896e8b4bc5bc49149c40e6e77b2"
+  },
+  "offline": {
+    "runtimeBuild": {
+      "command": "node node_modules/typescript/bin/tsc -p packages/runtime/tsconfig.json",
+      "exitCode": 0
+    },
+    "tests": {
+      "command": "node --test --test-concurrency=1 packages/runtime/test/windows-principal-owner.test.mjs packages/runtime/test/local-capture-operation.test.mjs packages/runtime/test/windows-process-principal.test.mjs",
+      "outerPass": 35,
+      "outerFail": 0,
+      "principalIsolatedChildPass": 18,
+      "operationIsolatedChildPass": 13,
+      "decoderOuterPass": 33,
+      "note": "Two wrappers validate child TAP counts. These totals overlap and must not be added as separate full suites. No OS identity lookup in these tests."
+    },
+    "fixedPowerShellAst": {
+      "valid": true,
+      "nonemptyCharacters": 3889,
+      "execution": false
+    },
+    "architecture": {
+      "command": "node scripts/check-architecture.mjs",
+      "projects": 17,
+      "exitCode": 0
+    },
+    "diffCheck": {
+      "command": "git diff --check",
+      "exitCode": 0
+    }
+  },
+  "realProbe": {
+    "command": "node packages/runtime/test/windows-principal-live-probe.mjs --current-process-only",
+    "attempts": 1,
+    "exitCode": 1,
+    "stage": "principal-acquire",
+    "code": "WINDOWS_PRINCIPAL_UNAVAILABLE",
+    "cleanupState": "UNKNOWN",
+    "principalMinted": false,
+    "operationMinted": false,
+    "memoryScopePhaseReached": false,
+    "retainedDirectory": "C:/Users/Freya/AppData/Local/Temp/codeatlas-principal-VU96KA",
+    "retry": false,
+    "deletion": false,
+    "stderrNotPreserved": true,
+    "diagnosis": "Read-only ACL check found two Allow Modify,Synchronize entries outside the fixed trusted set on Temp; no reparse or untrusted critical writer found on ancestors. This violates the fixed guard precondition but cannot establish the unique exit cause without retained stderr.",
+    "retainedDirectoryEntries": 0,
+    "helperExited": true,
+    "helperProcessesObservedAfterExit": 0
+  },
+  "ci156": {
+    "runId": 42333734243,
+    "head": "9ec9ac288a07ddc905db4a7b7dda062c8b545be7",
+    "typescript": "success",
+    "rust": "success",
+    "native": "failure",
+    "nativeFailure": "R8 script catalog mismatch: exact prerequisite refusal",
+    "coversCurrentUncommittedOwner": false
+  },
+  "limitations": [
+    "Actual current-machine Principal/Operation success remains unproved",
+    "Full Application capture bootstrap not wired",
+    "No authenticated desktop human-consent boundary",
+    "No process-tree hard isolation or Native qualification",
+    "Temp ancestry refusal must not be removed or solved by silent ACL changes",
+    "No user DB migration, persistent access, remote/model grant, scan clearance, publication or R9"
+  ],
+  "formalStatus": {
+    "phase1": "4/21",
+    "a6": "NOT_QUALIFIED",
+    "e02": "PROPOSED/uninstalled"
+  },
+  "independentReview": "No remaining important offline finding; actual admission must remain refused. Do not whitelist the observed Temp writers or change ACL. Protected location/precompiled helper needs concrete security and lifecycle review."
+}

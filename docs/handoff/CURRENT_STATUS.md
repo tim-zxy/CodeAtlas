@@ -1,3 +1,35 @@
+## Private Principal/Operation owner: offline complete, actual admission blocked - 2026-11-07
+
+Accepted same-account boundary now has private fixed-host/helper Principal ownership
+and scoped CAPTURE Operation handles. Material assumption: installed Runtime code and
+protected Windows platform image are trusted; same-SID Agents are within the accepted
+account boundary, not evidence of human consent. Success requires actual host/helper
+binding, close/EOF/owned cleanup, opaque handles, original scope/policy and budget,
+and refusal after cancellation, expiry, scope drift or unknown cleanup.
+
+Runtime build and focused outer35/35 pass; isolated Principal18/18 and Operation13/13
+are enforced by two wrappers (not additive suite totals). Fixed PowerShell AST parses
+3889 nonempty characters without execution. Independent review closed signal hooks,
+budget restoration, scope failure revival and pre-spawn unsafe-cleanup issues.
+The two offline wrappers are registered in pnpm test; live probe is explicitly opt-in.
+
+Exactly one approved current-process identity probe failed at principal-acquire:
+WINDOWS_PRINCIPAL_UNAVAILABLE, cleanup UNKNOWN, exit1. No Principal or Operation was
+minted; test-owned memory scope was not reached. The helper exited; an empty owned
+Temp directory is retained. Read-only ACL checks found two untrusted Allow Modify
+entries on Temp, violating the fixed ancestry guard; stderr was not retained, so this
+is an observed blocking precondition, not proof of the unique exit cause. No retry,
+recursive deletion, ACL modification, unsafe fallback or permission expansion occurred.
+A protected compilation location or packaged helper requires a concrete security /
+lifecycle decision before another actual attempt; current rejection is preserved.
+
+CI156 on9ec9ac2 is terminal: TS/Rust PASS; Native exact R8 catalog precheck FAIL.
+It does not cover these new owner files. Full Application capture bootstrap, actual
+successful identity admission, user migrations, W011, scan clearance and R9 remain
+unresolved/closed. No persistent access, remote/model permission or publication added.
+Phase1 stays4/21; A6 NOT_QUALIFIED; E02 baseline PROPOSED/uninstalled.
+[Evidence](../superpowers/reviews/2026-11-07-local-principal-operation.json).
+
 ## CI154 Git timer correction and local-principal offline foundation - 2026-11-07
 
 CI154 is not only the retained Native R8 failure: TypeScript first cohort ended

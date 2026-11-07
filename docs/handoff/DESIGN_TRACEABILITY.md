@@ -1,3 +1,16 @@
+## Private scoped local-account handle ownership - 2026-11-07
+
+Accepted current-process same-account boundary -> fixed image/helper plus actual
+PID/birth/SID/challenge -> private WeakMap Principal -> original Store scope,
+QUERY/READ_SOURCE policy and shared budget -> private Operation with final validation.
+DTO/copy/restart/foreign-module handles cannot grant; no public export or grant schema.
+Offline lifecycle/identity/policy counterexamples pass; one actual query attempt
+refused with UNKNOWN cleanup and no handle. Temp ACL precondition fails; guard and
+retained empty directory remain intact, no retry/security change. Actual success and
+Application entry integration remain open. Original Native/E02/phase gates unchanged.
+[Contract](../superpowers/specs/2026-11-07-local-windows-principal-foundation.md),
+[evidence](../superpowers/reviews/2026-11-07-local-principal-operation.json).
+
 ## CI154 deadline provenance and local-account identity foundation - 2026-11-07
 
 Existing bounded Git qualification -> wall-clock-lag timer counterexample -> actual

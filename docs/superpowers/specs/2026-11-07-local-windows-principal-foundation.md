@@ -41,3 +41,48 @@ No await or source callback occurs between that view and decode. The output is
 independent frozen scalar data; this still supplies no authenticated principal.
 The helper attempts buffer/token/process cleanup even if an earlier release fails;
 failed handle release refuses a Query result. Actual OS behavior remains untested.
+
+## Private owner implementation and actual admission result
+
+The foundation-only statements above describe the retained initial batch. The next
+batch implements private windows-principal-owner and local-capture-operation modules;
+neither is publicly exported or a user-facing grant endpoint. Reply DTOs remain data.
+
+The only host profile is C:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe,
+SHA256 60c9b29843624dd8af6b6a7b26147753be6aeef65098b9a503cc50850afe410f.
+Helper LF SHA256 1cfe23cd44422131131e29fe3eecf7f1c95c3b4281e4d3f06a0a03a4cfa11f25
+and CRLF fd4cad83224e64fdb584444f0e1138ae00353b48a854a73e147b49c0e4b390d6
+bind the installed source; no caller hash/path is accepted. The protected Windows
+platform/.NET compiler and installed Runtime code are part of the trust base. Host
+updates or other installations refuse; this is not a portable qualification profile.
+The fixed program uses no ExecutionPolicy bypass, user profile, PATH resolution,
+impersonation or ACL change. Temporary compilation requires the actual known-folder
+Temp ancestry to have trusted owners/no reparse/no untrusted critical writers.
+Trusted subjects are the actual current account, SYSTEM, Administrators and protected
+Windows-directory owner. This requirement has not been relaxed to admit this machine.
+
+Principal mint requires bounded exact bytes, real spawn, stdin finish, both EOFs,
+normal close, post-host identity, exact owned cleanup and original live controls.
+Cancellation/unknown exit invalidates previous principals; unresolved cleanup refuses
+new lookup. No process-tree hard isolation is claimed. Pre-spawn failure does not
+recursively delete a directory before the fixed program has checked its ancestry.
+Handles are frozen opaque WeakMap keys bound to module incarnation/current PID and
+actual process birth/SID; copies/restart/other modules do not reconstruct authority.
+
+CAPTURE owns only QUERY/READ_SOURCE, genuine current ContractStore selection and a
+single existing HistoryReadBudget. Security config can restrict, not create grants.
+Scope/version/policy checks occur at acquisition/read/finalization; memory checkpoints
+avoid duplicate per-entity SQL. Failure latches cannot revive when state/budgets are
+restored; finalization closes even on failure. Authentic repeated close is idempotent.
+No INDEX/model/remote/scan/publication grant or database migration is introduced.
+
+Offline tests use isolated platform/identity doubles, actual test-owned SQLite and
+original policy. An explicit one-shot real current-process probe was attempted and
+refused at Principal acquisition with UNKNOWN cleanup. No handle escaped; memory
+scope was not reached. Empty Temp/codeatlas-principal-VU96KA is retained. Read-only
+ACL inspection found two untrusted Modify rules on Temp, violating the fixed guard;
+stderr was not retained, so exact exit cause remains unproved. No retry/deletion/ACL
+change occurred. Actual successful owner integration and Application bootstrap remain
+open. A protected compilation location or precompiled helper must be reviewed as a
+concrete lifecycle/security decision before a new actual attempt, never a guard bypass.
+See ../reviews/2026-11-07-local-principal-operation.json for reproducible evidence.
