@@ -55,3 +55,13 @@ cleanup. Target now exists and must not be reinstalled/overwritten. See
 ../reviews/2026-11-07-principal-installation-stopped.json. Any continuation must first
 review the exact check environment and obtain approval for checking the existing
 target; this plan has not executed that continuation.
+
+## Approved existing-directory supplement outcome - 2026-11-07
+
+One supplement reverified existing content and used the unchanged guard with only
+child PSModulePath fixed. Module loading progressed; Get-Acl failed on the original
+266-code-unit DLL path, while Node still reads exact accepted bytes. Stopped without
+retry; conditional Principal validation never started. No actual continuation is
+remaining implicitly authorized after this first-failure stop. Preserve existing
+tree; next work is an offline compatible ACL read proof, with production/checker
+semantics kept aligned. See ../reviews/2026-11-07-principal-protection-supplement-stopped.json.

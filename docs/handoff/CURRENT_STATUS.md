@@ -1,3 +1,25 @@
+## Approved existing-directory supplement stopped at DLL ACL path - 2026-11-07
+
+User approved one original guard with only child PSModulePath fixed, then one
+current-process probe only on success. Existing ac84dad4 directory content/topology
+reverified. No reinstall, overwrite, ACL/system-environment change. Original guard
+unchanged; Security module loaded this time. Get-Acl then exited1 at the installed
+DLL with GetAcl_PathNotFound. Wrapper stopped immediately; Principal probe attempts0.
+
+Read-only diagnosis: the exact non-reparse DLL still exists,6656bytes, accepted
+SHA4ee3e48cfa2f6c4d883a983a2f7b5739ecf7b01d515c94cecbed9f87e3bb7147.
+Its original Windows path is266 UTF16 code units, the sole catalog path over259.
+Windows PowerShell path handling is the leading explanation, not a proven modified-
+API fix. This is not an established ACL rule refusal or platform approval rejection.
+The production program uses the same Get-Acl, so an offline compatibility fix must
+preserve identical owner/ACE checks in both paths before another actual attempt.
+
+Both processes exited; no matching residual observed. Installed tree and old failure
+receipts retained; historical UNKNOWN Temp timestamps unchanged. Receipt remains
+conservative UNKNOWN; no deletion/retry, actual identity, user Source/DB, network or
+R9. Phase1 stays4/21, A6 NOT_QUALIFIED, E02 PROPOSED/uninstalled.
+[Exact evidence](../superpowers/reviews/2026-11-07-principal-protection-supplement-stopped.json).
+
 ## Approved Principal installation stopped before real validation - 2026-11-07
 
 User approved fixed new-directory installation then one current-process-only probe,

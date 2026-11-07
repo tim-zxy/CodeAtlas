@@ -1,0 +1,113 @@
+{
+  "kind": "APPROVED_INSTALLED_PROTECTION_SUPPLEMENT_STOPPED",
+  "date": "2026-11-07",
+  "sourceHead": "42b4bf938a1c41d69fecdda2ca160e9487f7e509",
+  "authorization": "one original guard with child-only fixed Windows system module path; existing directory only; conditionally one not-yet-run principal validation; fail-stop",
+  "result": {
+    "kind": "APPROVED_EXISTING_INSTALL_SUPPLEMENT_AND_ONE_PROBE",
+    "status": "STOPPED",
+    "stage": "GUARD",
+    "cleanupState": "UNKNOWN",
+    "target": "C:/Users/Freya/AppData/Local/Programs/CodeAtlas/releases/release-ac84dad419c823081d471b6aec288985b01a2f3d9c065e9e666174271bef62b7",
+    "digest": "ac84dad419c823081d471b6aec288985b01a2f3d9c065e9e666174271bef62b7",
+    "probeAttempts": 0,
+    "retries": 0,
+    "ACLChanges": 0,
+    "code": "ERR_ASSERTION",
+    "errorName": "AssertionError"
+  },
+  "acl": {
+    "status": 1,
+    "signal": null,
+    "errorCode": null,
+    "stdout": "",
+    "stderr": "Get-Acl : �Ҳ���·����C:\\Users\\Freya\\AppData\\Local\\Programs\\CodeAtlas\\releases\\release-ac84dad419c823081d471b6aec288985b\r\n01a2f3d9c065e9e666174271bef62b7\\packages\\runtime\\dist\\principal\\win32-x64\\4ee3e48cfa2f6c4d883a983a2f7b5739ecf7b01d515c9\r\n4cecbed9f87e3bb7147\\windows-process-principal.dll������Ϊ��·�������ڡ�\r\n����λ�� D:\\workspace\\CodeAtlas-phase1-20261106\\.superpowers\\principal-install-20261107\\guard.ps1:19 �ַ�: 7\r\n+  $acl=Get-Acl -LiteralPath $full\r\n+       ~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : ObjectNotFound: (:) [Get-Acl], ItemNotFoundException\r\n    + FullyQualifiedErrorId : GetAcl_PathNotFound,Microsoft.PowerShell.Commands.GetAclCommand\r\n \r\n"
+  },
+  "events": [
+    {
+      "utc": "2026-11-07T12:44:17.129Z",
+      "stage": "EXISTING_CONTENT_VERIFIED",
+      "target": "C:/Users/Freya/AppData/Local/Programs/CodeAtlas/releases/release-ac84dad419c823081d471b6aec288985b01a2f3d9c065e9e666174271bef62b7",
+      "digest": "ac84dad419c823081d471b6aec288985b01a2f3d9c065e9e666174271bef62b7",
+      "reinstalled": false,
+      "overwritten": false
+    },
+    {
+      "utc": "2026-11-07T12:44:17.135Z",
+      "stage": "GUARD_START",
+      "host": "C:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+      "mode": "INSTALLED",
+      "PSModulePath": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\Modules",
+      "scope": "one child only, no system environment change"
+    },
+    {
+      "utc": "2026-11-07T12:44:20.846Z",
+      "stage": "GUARD_EXIT",
+      "status": 1,
+      "signal": null,
+      "errorCode": null
+    },
+    {
+      "utc": "2026-11-07T12:44:20.850Z",
+      "stage": "GUARD",
+      "kind": "APPROVED_EXISTING_INSTALL_SUPPLEMENT_AND_ONE_PROBE",
+      "status": "STOPPED",
+      "cleanupState": "UNKNOWN",
+      "target": "C:/Users/Freya/AppData/Local/Programs/CodeAtlas/releases/release-ac84dad419c823081d471b6aec288985b01a2f3d9c065e9e666174271bef62b7",
+      "digest": "ac84dad419c823081d471b6aec288985b01a2f3d9c065e9e666174271bef62b7",
+      "probeAttempts": 0,
+      "retries": 0,
+      "ACLChanges": 0,
+      "code": "ERR_ASSERTION",
+      "errorName": "AssertionError"
+    }
+  ],
+  "completed": [
+    "existing full catalog/content/topology reverified exact ac84dad419c823081d471b6aec288985b01a2f3d9c065e9e666174271bef62b7",
+    "original guard SHA1fc92716df86e262f59b74bf2ea0265c26b05cd770faf78bfa3d69cbb012a6a1 unchanged",
+    "Get-Acl module now loaded and failure progressed to exact installed DLL ACL read",
+    "guard exited1, wrapper exited1; no matching residual process observed"
+  ],
+  "readOnlyDiagnosis": {
+    "failure": "GetAcl_PathNotFound,Microsoft.PowerShell.Commands.GetAclCommand",
+    "file": "C:\\Users\\Freya\\AppData\\Local\\Programs\\CodeAtlas\\releases\\release-ac84dad419c823081d471b6aec288985b01a2f3d9c065e9e666174271bef62b7\\packages\\runtime\\dist\\principal\\win32-x64\\4ee3e48cfa2f6c4d883a983a2f7b5739ecf7b01d515c94cecbed9f87e3bb7147\\windows-process-principal.dll",
+    "utf16CodeUnits": 266,
+    "nodeExists": true,
+    "nodeFile": true,
+    "nodeReparse": false,
+    "bytes": 6656,
+    "sha256": "4ee3e48cfa2f6c4d883a983a2f7b5739ecf7b01d515c94cecbed9f87e3bb7147",
+    "maximumCatalogPathLength": 266,
+    "catalogPathsLongerThan259": 1,
+    "powershellConfig": "no explicit long-path AppContext override found; no configuration changed",
+    "rootCause": "path-handling compatibility is leading explanation, not validated by a modified guard; Node reads exact file while fixed Windows PowerShell Get-Acl reports PathNotFound"
+  },
+  "notExecuted": {
+    "principalProbeAttempts": 0,
+    "retries": 0,
+    "ACLChanges": 0,
+    "systemEnvironmentChanges": 0,
+    "reinstallations": 0,
+    "overwrites": 0,
+    "userSourceOrDBAccess": 0,
+    "networkCalls": 0,
+    "R9Runs": 0
+  },
+  "preservation": {
+    "oldInstallReceiptSha256": "7a79309cb6d6562479fc09a78aacda0b8651803c768a85878a882b17f018b340",
+    "oldGuardFailureSha256": "79817509b81563dd34b7835012aba16b5123ca9f77378122207ca3f03bcbf6f4",
+    "oldUnknownTemp": "unchanged creation/write times",
+    "installedTree": "retained, unqualified, no cleanup/deletion attempted",
+    "processes": "known exited; directory/acceptance state remains conservative UNKNOWN"
+  },
+  "nextOnly": "offline demonstrate a long-path-compatible ACL read preserving exact owner/ACE checks; production guard uses same Get-Acl and must stay consistent; no further real supplement/query without approval",
+  "files": {
+    "supplement-01.mjs": "ffa43f888c273f69bb063ac5e147ac08d6e3fc090584b573d9557b64e0d45e10",
+    "supplement-01-result.json": "bb51de6bf7299b89c920b125002e4ed133c7ac4242a8ebb3b40ee4e411d519c0",
+    "supplement-01-acl-result.json": "8a3299d728ffe794662ae8407d6a036e1d1595e844945f7b43e00493c00c6324",
+    "supplement-01-events.jsonl": "3468c667b8f6f11899f130bc6eb4951271a8a5b110430264145896e736e95a89"
+  },
+  "phase1": "4/21",
+  "A6": "NOT_QUALIFIED",
+  "E02": "PROPOSED/uninstalled"
+}
