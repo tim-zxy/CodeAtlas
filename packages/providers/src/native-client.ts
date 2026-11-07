@@ -949,13 +949,23 @@ async function runProcess<
     }, 250);
     graceTimer.unref();
   };
+  let unknownCleanup = false;
   const recordFailure = (error: NativeClientError) => {
+    unknownCleanup ||=
+      Object.getOwnPropertyDescriptor(error, 'cleanupState')?.value === 'UNKNOWN' ||
+      (failure !== undefined &&
+        Object.getOwnPropertyDescriptor(failure, 'cleanupState')?.value === 'UNKNOWN');
     if (
       failure === undefined ||
       FAILURE_PRECEDENCE[error.code] > FAILURE_PRECEDENCE[failure.code]
     ) {
       failure = error;
     }
+    if (
+      unknownCleanup &&
+      Object.getOwnPropertyDescriptor(failure, 'cleanupState')?.value !== 'UNKNOWN'
+    )
+      failure = withUnknownCleanup(failure);
     stop.abort(failure);
     terminate();
   };
@@ -1114,7 +1124,8 @@ async function runProcess<
           if (lifecycle.beforeSpawn && failure) failure = withUnknownCleanup(failure);
         }
       }
-      if (failure !== undefined) throw withStderr(failure, stderr);
+      if (failure !== undefined)
+        throw withStderr(unknownCleanup ? withUnknownCleanup(failure) : failure, stderr);
       if (output === undefined) {
         throw clientError('PROCESS_FAILED', 'Native process failed', request, { stderr });
       }
@@ -1193,6 +1204,8 @@ async function waitOwnedLifecycle(
   other?: AbortSignal,
 ): Promise<void> {
   const stop = new AbortController();
+  let actionStarted = false;
+  let actionSettled = false;
   let reason: NativeClientError | undefined;
   let rejectStop!: (error: NativeClientError) => void;
   const stopped = new Promise<never>((_resolve, reject) => {
@@ -1215,16 +1228,32 @@ async function waitOwnedLifecycle(
   try {
     if (signal?.aborted || other?.aborted || Date.now() >= deadline) fail();
     await Promise.race([
-      Promise.resolve().then(() => {
-        if (stop.signal.aborted && !cleanup) throw reason;
-        return action(stop.signal);
-      }),
+      Promise.resolve()
+        .then(() => {
+          if (stop.signal.aborted && !cleanup) throw reason;
+          actionStarted = true;
+          return action(stop.signal);
+        })
+        .then(
+          () => {
+            actionSettled = true;
+          },
+          (error: unknown) => {
+            actionSettled = true;
+            throw error;
+          },
+        ),
       stopped,
     ]);
     if (signal?.aborted || other?.aborted || Date.now() >= deadline) {
       fail();
       throw reason;
     }
+  } catch (error) {
+    // A bounded wait ending does not prove the user callback has settled.
+    if (actionStarted && !actionSettled)
+      throw withUnknownCleanup(asClientError(error, request, 'Native lifecycle did not settle'));
+    throw error;
   } finally {
     clearTimeout(timer);
     signal?.removeEventListener('abort', fail);

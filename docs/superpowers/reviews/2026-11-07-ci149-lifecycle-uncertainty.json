@@ -1,0 +1,102 @@
+{
+  "kind": "CI149_PROVIDER_LIFECYCLE_UNCERTAINTY_FIX",
+  "date": "2026-11-07",
+  "baseCommit": "160657932d6ca9628a8321569167a5bc6feee14e",
+  "worktree": "D:/workspace/CodeAtlas-phase1-20261106",
+  "ci149": {
+    "runId": 42323862025,
+    "head": "e81edc97cbad3e4438182dac9e76e2c79c67c0f7",
+    "jobId": 128254469815,
+    "typescript": "failure",
+    "firstCohort": {
+      "tests": 5051,
+      "pass": 5030,
+      "fail": 1,
+      "skip": 20,
+      "todo": 0
+    },
+    "failure": "AR qualified hanging beforeInput is bounded even when callback ignores abort",
+    "expected": "TIMEOUT and cleanupState UNKNOWN",
+    "actual": "TIMEOUT without UNKNOWN",
+    "laterChainedTsCohorts": "not executed",
+    "logFullyRead": true,
+    "nativeFailureIsSeparate": true
+  },
+  "rootCause": {
+    "proven": "waitOwnedLifecycle raced stop against callback without tracking its actual settlement; recordFailure could discard equal-priority UNKNOWN or replace it with higher-priority error lacking marker",
+    "deterministicReproduction": "fixed Date.now with real30ms timer; beforeInput remains pending while cleanup completes before wall-clock deadline -> TIMEOUT missing UNKNOWN",
+    "ciSpecificClockCaveat": "CI did not log precise clock/entry state; deterministic reproduction proves matching defect, not a measured CI wall-clock adjustment"
+  },
+  "fix": [
+    "track actual actionStarted/actionSettled; only started pending action adds UNKNOWN on bounded wait failure",
+    "retain UNKNOWN independently across original code priority; avoid redundant error copying",
+    "original CI test controls preparation clock until beforeInput entry, asserts entered1, retains real timer/30ms/200ms guard/UNKNOWN/dispose1/no stdin",
+    "separate lagging-clock and higher-priority cancellation regressions",
+    "UNKNOWN is a private monotonic fact, not a later read of mutable error fields; final error copy restores observed uncertainty before emission"
+  ],
+  "validation": {
+    "build": {
+      "command": "node node_modules/typescript/bin/tsc -p packages/providers/tsconfig.json",
+      "exitCode": 0
+    },
+    "tests": {
+      "command": "node --test --test-concurrency=1 packages/providers/test/native-code-syntax-client.test.mjs packages/providers/test/native-client.test.mjs packages/providers/test/native-syntax-client.test.mjs packages/providers/test/native-framework-surface-client.test.mjs packages/providers/test/native-full-v3-client.test.mjs packages/providers/test/native-refresh-v3-client.test.mjs",
+      "tests": 130,
+      "pass": 130,
+      "fail": 0,
+      "skip": 0,
+      "todo": 0,
+      "cancelled": 0,
+      "durationMs": 14874.3871,
+      "exitCode": 0
+    },
+    "redGreen": [
+      "lagging-clock test failed before wait/merge fix",
+      "higher-priority replacement after original marker deletion failed before private fact latch",
+      "successful afterClose erasing primary marker failed before final owned error copy",
+      "all130 related cases pass with original deadline/assertions retained"
+    ],
+    "architecture": {
+      "command": "node scripts/check-architecture.mjs",
+      "projects": 17,
+      "exitCode": 0
+    },
+    "formatPaths": [
+      "docs/handoff/CURRENT_STATUS.md",
+      "docs/handoff/DESIGN_TRACEABILITY.md",
+      "docs/superpowers/specs/2026-11-07-policy-lifecycle-decision-proposal.md",
+      "docs/superpowers/reviews/2026-11-07-ci149-lifecycle-uncertainty.json",
+      "packages/providers/src/native-client.ts",
+      "packages/providers/test/native-code-syntax-client.test.mjs"
+    ],
+    "diffWhitespace": {
+      "command": "git diff --check",
+      "exitCode": 0
+    },
+    "format": {
+      "command": "node node_modules/prettier/bin/prettier.cjs --check docs/handoff/CURRENT_STATUS.md docs/handoff/DESIGN_TRACEABILITY.md docs/superpowers/specs/2026-11-07-policy-lifecycle-decision-proposal.md docs/superpowers/reviews/2026-11-07-ci149-lifecycle-uncertainty.json packages/providers/src/native-client.ts packages/providers/test/native-code-syntax-client.test.mjs",
+      "exitCode": 0
+    }
+  },
+  "review": {
+    "independentReadOnly": true,
+    "importantFindings": 0,
+    "latePromiseRejectionObservedByRaceChain": true,
+    "originalErrorPriorityPreserved": true
+  },
+  "ci150": {
+    "runId": 42325177893,
+    "head": "160657932d6ca9628a8321569167a5bc6feee14e",
+    "containsProviderFix": false,
+    "statusAtLastCheck": "TS in_progress; Rust success; Native failure with R8 mismatch log verified",
+    "rerun": false,
+    "cancelled": false
+  },
+  "proposalStatus": "PROPOSED only; D6 genuine owner settlement cannot be replaced by timeout/abort-wrapper completion",
+  "limits": [
+    "client regression suite includes owned Node fixture child processes, not real Rust Native or actual R9 qualification",
+    "no timeout/budget/default/priority/permission/schema/profile-value change",
+    "no issuer, production scan clearance, migration install or publication",
+    "Phase1 4/21; A6 NOT_QUALIFIED; E02 source/oracle baseline PROPOSED/uninstalled"
+  ]
+}

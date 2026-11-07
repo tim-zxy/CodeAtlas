@@ -577,13 +577,19 @@ test('AR synthetic Windows clear dictionary composes with binding digest without
 
 test('AR qualified hanging beforeInput is bounded even when callback ignores abort', async (t) => {
   const h = await harness(t);
-  let disposed = 0;
+  let disposed = 0,
+    entered = 0;
+  const now = Date.now,
+    preparationEpoch = now();
+  // Select the beforeInput phase regardless of host preparation scheduling.
+  t.mock.method(Date, 'now', () => (entered ? now() : preparationEpoch));
   await assert.rejects(
     boundedOutcome(
       h.run(
         {
           async beforeSpawn() {},
           async beforeInput() {
+            entered++;
             await new Promise(() => {});
           },
           async afterClose() {},
@@ -596,6 +602,7 @@ test('AR qualified hanging beforeInput is bounded even when callback ignores abo
     ),
     (e) => e.code === 'TIMEOUT' && e.cleanupState === 'UNKNOWN',
   );
+  assert.equal(entered, 1);
   assert.equal(disposed, 1);
   assert.equal(h.writes.length, 0);
 });
@@ -1152,4 +1159,88 @@ test('Native prepared origin rejects inside the synchronous abort notification',
   assert.equal(readRejected, true);
   assert.equal(claimRejected, true);
   assert.equal(h.events.includes('spawn'), false);
+});
+
+test('AR timed out pending beforeInput stays UNKNOWN when wall clock lags timer', async (t) => {
+  const h = await harness(t);
+  const epoch = Date.now();
+  t.mock.method(Date, 'now', () => epoch);
+  let entered = 0,
+    disposed = 0;
+  await assert.rejects(
+    boundedOutcome(
+      h.run(
+        {
+          async beforeSpawn() {},
+          async beforeInput() {
+            entered++;
+            await new Promise(() => {});
+          },
+          async afterClose() {},
+          async dispose() {
+            disposed++;
+          },
+        },
+        { timeoutMs: 30 },
+      ),
+    ),
+    (e) => e.code === 'TIMEOUT' && e.cleanupState === 'UNKNOWN',
+  );
+  assert.equal(entered, 1);
+  assert.equal(disposed, 1);
+  assert.equal(h.writes.length, 0);
+});
+test('AR higher priority cancellation retains earlier unknown lifecycle cleanup', async (t) => {
+  const h = await harness(t),
+    controller = new AbortController();
+  const { NativeClientError } = await import('../dist/native-client.js');
+  const primary = Object.assign(
+    new NativeClientError('PROCESS_FAILED', 'fixture lifecycle refusal'),
+    {
+      cleanupState: 'UNKNOWN',
+    },
+  );
+  h.child.once('exit', () => {
+    delete primary.cleanupState; // Already-observed uncertainty belongs to the owner.
+    controller.abort();
+  });
+  let disposed = 0;
+  await assert.rejects(
+    h.run(
+      {
+        async beforeInput() {
+          throw primary;
+        },
+        async afterClose() {},
+        async dispose() {
+          disposed++;
+        },
+      },
+      { signal: controller.signal },
+    ),
+    (e) => e.code === 'CANCELLED' && e.cleanupState === 'UNKNOWN',
+  );
+  assert.equal(disposed, 1);
+  assert.equal(h.writes.length, 0);
+});
+
+test('AR successful cleanup cannot erase already observed unknown evidence', async (t) => {
+  const h = await harness(t);
+  const { NativeClientError } = await import('../dist/native-client.js');
+  const primary = Object.assign(new NativeClientError('PROCESS_FAILED', 'fixture refusal'), {
+    cleanupState: 'UNKNOWN',
+  });
+  await assert.rejects(
+    h.run({
+      async beforeInput() {
+        throw primary;
+      },
+      async afterClose() {
+        delete primary.cleanupState;
+      },
+      async dispose() {},
+    }),
+    (e) => e.code === 'PROCESS_FAILED' && e.cleanupState === 'UNKNOWN' && e !== primary,
+  );
+  assert.equal(h.writes.length, 0);
 });

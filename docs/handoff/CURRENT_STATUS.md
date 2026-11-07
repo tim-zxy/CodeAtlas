@@ -1,3 +1,34 @@
+## CI149 independent TypeScript failure diagnosed and fixed - 2026-11-07
+
+Correction: CI149 was NOT only the existing Native catalog failure. Its TypeScript
+first cohort ended5030PASS/1FAIL/20SKIP: AR qualified hanging beforeInput expected
+TIMEOUT with UNKNOWN, but received TIMEOUT without cleanupState. Remaining chained
+TS cohorts did not execute. Full job log was read; original failure is retained.
+
+The real client defect is independently reproduced with a fixed wall clock and a
+real30ms timer: a stopped Promise.race did not prove the action settled, while
+later cleanup could complete before the wall-clock deadline and erase uncertainty.
+waitOwnedLifecycle now tracks started/settled independently; stopped pending work
+is UNKNOWN. recordFailure preserves that evidence across equal/higher code
+priorities without changing existing priority or process/time/budget defaults.
+
+The original CI case now asserts entry into beforeInput with preparation clock
+controlled only in the test; its real timer,30ms timeout,200ms guard,UNKNOWN,
+once-dispose and zero-input checks remain. A separate lagging-clock regression
+failed before the fix and passes now; cancellation and final error emission retain already observed UNKNOWN even if
+a lifecycle callback later deletes the original error marker.
+Providers build, six-client130/130, architecture17 and format pass; independent
+read-only review has no important findings.
+[Evidence](../superpowers/reviews/2026-11-07-ci149-lifecycle-uncertainty.json).
+
+CI150 uses1606579 and has no Provider fix; it remains the original run, not rerun
+or cancelled. A passing150 would not establish this defect is fixed. Its Native
+log separately confirms R8 script-catalog mismatch. Fresh fix-head CI is required.
+Policy/lifecycle packet remains PROPOSED; timeout-wrapper completion is explicitly
+not D6 writer settlement. No real Native/R9 qualification, issuer, scan clearance,
+profile value, migration or publication changed. Phase1 4/21; A6 NOT_QUALIFIED;
+E02 evaluation baseline PROPOSED/uninstalled.
+
 ## Valid Markdown link boundary fixed; decision options refined - 2026-11-07
 
 A real P1-10 defect is fixed: legal Markdown such as [x](< >) previously made the

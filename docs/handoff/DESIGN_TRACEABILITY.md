@@ -1,3 +1,13 @@
+## CI149 lifecycle uncertainty correction - 2026-11-07
+
+Existing bounded lifecycle/UNKNOWN contract -> real timer plus lagging wall-clock
+negative -> independent action started/settled tracking -> sticky cleanup evidence
+across original failure precedence ->130 related client checks. Original CI test
+is not skipped or loosened. [Evidence](../superpowers/reviews/2026-11-07-ci149-lifecycle-uncertainty.json).
+CI149 TS failure is distinct from Native R8 preflight; CI150 lacks this fix.
+D6 proposal now explicitly rejects treating a timeout wrapper as writer settlement;
+no proposed authority/persistence contract has been implemented.
+
 ## P1-10 strict link boundary and parser provenance - 2026-11-07
 
 Existing IR target Text -> guarded original Markdown target -> lossless inline

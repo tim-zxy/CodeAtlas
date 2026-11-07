@@ -346,6 +346,9 @@ writer, or genuine proof its connection/process ended and cannot execute again,
 before combining complete absence with NOT_COMMITTED. Otherwise return UNKNOWN,
 without retry, generating another snapshot, changing state or calling a model.
 The exact owner/settlement proof remains a D6 decision, never a caller Boolean.
+A timeout/abort wrapper ending is not proof that its callback settled. An unrelated
+child process exit is not proof that the original writer ended. CI149 exposed this
+class of lifecycle uncertainty; D6 must require the actual matching owner proof.
 
 Idempotency remains UNIQUE(workspace_id,caller_subject_id,request_key). Same request
 with null snapshot returns query/in-progress only; it cannot obtain a second writer.
