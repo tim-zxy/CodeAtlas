@@ -1,0 +1,364 @@
+{
+  "kind": "OWNED_OFFLINE_PRINCIPAL_LONG_PATH_ACL_FIX",
+  "date": "2026-11-07",
+  "sourceBase": "d8cf9219cc6ba6fc37f4b291f7e8aa9cac1276e6",
+  "sourceMayBeDirty": true,
+  "authorization": "owned offline reproduction and minimum shared production/checker compatibility only; no installed-tree retry or real identity query",
+  "rootCause": {
+    "fixedHost": "Windows PowerShell5.1, SHA60c9b29843624dd8af6b6a7b26147753be6aeef65098b9a503cc50850afe410f",
+    "observations": [
+      {
+        "name": "SHORT_CMDLET",
+        "length": 94,
+        "status": "READ",
+        "sddlSha256": "9b3a1d08e39e32a76517b7adef37cbc196060d4d15e0f7fbd4c521d7d780369e",
+        "type": "System.Security.AccessControl.FileSecurity",
+        "rules": 4
+      },
+      {
+        "name": "SHORT_EXTENDED_CMDLET",
+        "length": 94,
+        "status": "READ",
+        "sddlSha256": "9b3a1d08e39e32a76517b7adef37cbc196060d4d15e0f7fbd4c521d7d780369e",
+        "type": "System.Security.AccessControl.FileSecurity",
+        "rules": 4
+      },
+      {
+        "name": "SHORT_FILEINFO",
+        "length": 94,
+        "status": "READ",
+        "sddlSha256": "9b3a1d08e39e32a76517b7adef37cbc196060d4d15e0f7fbd4c521d7d780369e",
+        "type": "System.Security.AccessControl.FileSecurity",
+        "rules": 4
+      },
+      {
+        "name": "SHORT_EXTENDED_FILEINFO",
+        "length": 94,
+        "status": "READ",
+        "sddlSha256": "9b3a1d08e39e32a76517b7adef37cbc196060d4d15e0f7fbd4c521d7d780369e",
+        "type": "System.Security.AccessControl.FileSecurity",
+        "rules": 4
+      },
+      {
+        "name": "LONG266_CMDLET",
+        "length": 266,
+        "status": "REFUSED",
+        "errorId": "GetAcl_PathNotFound,Microsoft.PowerShell.Commands.GetAclCommand",
+        "exception": "System.Management.Automation.ItemNotFoundException"
+      },
+      {
+        "name": "LONG266_EXTENDED_CMDLET",
+        "length": 266,
+        "status": "READ",
+        "sddlSha256": "9b3a1d08e39e32a76517b7adef37cbc196060d4d15e0f7fbd4c521d7d780369e",
+        "type": "System.Security.AccessControl.FileSecurity",
+        "rules": 4
+      },
+      {
+        "name": "LONG266_FILEINFO",
+        "length": 266,
+        "status": "REFUSED",
+        "errorId": "ArgumentException",
+        "exception": "System.Management.Automation.MethodInvocationException"
+      },
+      {
+        "name": "LONG266_EXTENDED_FILEINFO",
+        "length": 266,
+        "status": "READ",
+        "sddlSha256": "9b3a1d08e39e32a76517b7adef37cbc196060d4d15e0f7fbd4c521d7d780369e",
+        "type": "System.Security.AccessControl.FileSecurity",
+        "rules": 4
+      },
+      {
+        "name": "LONG_DIRECTORY_CMDLET",
+        "length": 270,
+        "status": "REFUSED",
+        "errorId": "GetAcl_PathNotFound,Microsoft.PowerShell.Commands.GetAclCommand",
+        "exception": "System.Management.Automation.ItemNotFoundException"
+      },
+      {
+        "name": "LONG_DIRECTORY_EXTENDED_CMDLET",
+        "length": 270,
+        "status": "READ",
+        "sddlSha256": "f54d4f41ad3eda402b623da6153c30009e5dbf1d17b08749abeb0ceba806d2db",
+        "type": "System.Security.AccessControl.DirectorySecurity",
+        "rules": 8
+      },
+      {
+        "name": "LONG_DIRECTORY_EXTENDED_DIRECTORYINFO",
+        "length": 270,
+        "status": "READ",
+        "sddlSha256": "f54d4f41ad3eda402b623da6153c30009e5dbf1d17b08749abeb0ceba806d2db",
+        "type": "System.Security.AccessControl.DirectorySecurity",
+        "rules": 8
+      }
+    ],
+    "conclusion": "same fixed host reproduces GetAcl_PathNotFound at266/270 characters; extended DOS ACL I/O reads the same raw descriptors as independent FileInfo/DirectoryInfo, with short-path equality controls",
+    "scope": "confirmed owned-fixture compatibility defect; actual installed tree not rerun"
+  },
+  "implementation": {
+    "sharedExport": "principalAclReader / Read-PhysicalAcl",
+    "boundary": "validate canonical absolute DOS, then add extended prefix only to Get-Acl; keep original paths as all identity/topology keys",
+    "unchanged": "trusted subjects, Windows owner, ancestor/reparse/junction/target checks, critical mask0x500D0156, inheritance exceptions, deadline, byte limits, opaque ownership and no fallback",
+    "oldCheckerReverseNormalizedSha256": "1fc92716df86e262f59b74bf2ea0265c26b05cd770faf78bfa3d69cbb012a6a1",
+    "generator": "explicit owned DATA preparation, no execution; candidate production-module exact byte hash binding rejects mismatches before output"
+  },
+  "tests": {
+    "initialReaderRed": "2 failures for absent shared reader; no result claimed from unregistered filtered case",
+    "moduleVersionRed": "registered negative failed before adding module binding; dummy recheck was reached",
+    "finalIntegrated": "6/6 top-level,0fail/cancel/skip/todo; includes owner29 inner and preparation8 inner; overlapping counts are not summed",
+    "physical": {
+      "kind": "OWNED_LONG_PATH_ACL_ONLY",
+      "physicalCases": 6,
+      "invalidPaths": 10,
+      "policyCases": 28,
+      "failures": 0,
+      "results": [
+        {
+          "policy": "Guard-Acl",
+          "case": "trusted-owner",
+          "pass": true
+        },
+        {
+          "policy": "Guard",
+          "case": "trusted-owner",
+          "pass": true
+        },
+        {
+          "policy": "Guard-Acl",
+          "case": "unknown-owner",
+          "pass": true
+        },
+        {
+          "policy": "Guard",
+          "case": "unknown-owner",
+          "pass": true
+        },
+        {
+          "policy": "Guard-Acl",
+          "case": "unknown-read",
+          "pass": true
+        },
+        {
+          "policy": "Guard",
+          "case": "unknown-read",
+          "pass": true
+        },
+        {
+          "policy": "Guard-Acl",
+          "case": "write-data",
+          "pass": true
+        },
+        {
+          "policy": "Guard",
+          "case": "write-data",
+          "pass": true
+        },
+        {
+          "policy": "Guard-Acl",
+          "case": "delete",
+          "pass": true
+        },
+        {
+          "policy": "Guard",
+          "case": "delete",
+          "pass": true
+        },
+        {
+          "policy": "Guard-Acl",
+          "case": "write-dac",
+          "pass": true
+        },
+        {
+          "policy": "Guard",
+          "case": "write-dac",
+          "pass": true
+        },
+        {
+          "policy": "Guard-Acl",
+          "case": "write-owner",
+          "pass": true
+        },
+        {
+          "policy": "Guard",
+          "case": "write-owner",
+          "pass": true
+        },
+        {
+          "policy": "Guard-Acl",
+          "case": "generic-write",
+          "pass": true
+        },
+        {
+          "policy": "Guard",
+          "case": "generic-write",
+          "pass": true
+        },
+        {
+          "policy": "Guard-Acl",
+          "case": "generic-all",
+          "pass": true
+        },
+        {
+          "policy": "Guard",
+          "case": "generic-all",
+          "pass": true
+        },
+        {
+          "policy": "Guard-Acl",
+          "case": "ancestor-sibling-create",
+          "pass": true
+        },
+        {
+          "policy": "Guard",
+          "case": "ancestor-sibling-create",
+          "pass": true
+        },
+        {
+          "policy": "Guard-Acl",
+          "case": "inside-child-create",
+          "pass": true
+        },
+        {
+          "policy": "Guard",
+          "case": "inside-child-create",
+          "pass": true
+        },
+        {
+          "policy": "Guard-Acl",
+          "case": "ancestor-inherit-only",
+          "pass": true
+        },
+        {
+          "policy": "Guard",
+          "case": "ancestor-inherit-only",
+          "pass": true
+        },
+        {
+          "policy": "Guard-Acl",
+          "case": "inside-inherit-only",
+          "pass": true
+        },
+        {
+          "policy": "Guard",
+          "case": "inside-inherit-only",
+          "pass": true
+        },
+        {
+          "policy": "Guard-Acl",
+          "case": "creator-owner-inherit-only",
+          "pass": true
+        },
+        {
+          "policy": "Guard",
+          "case": "creator-owner-inherit-only",
+          "pass": true
+        }
+      ],
+      "principalQueries": 0,
+      "ACLWrites": 0
+    },
+    "physicalFixture": ".superpowers/principal-acl-fixture-BaI4D1",
+    "runtimeBuild": "tsc -p packages/runtime/tsconfig.json exit0",
+    "architecture": "17 projects PASS",
+    "format": "all5 changed JS/TS/JSON files PASS",
+    "syntax": {
+      "status": 0,
+      "signal": null,
+      "stdout": "[{\"characters\":10086,\"name\":\"production\",\"errors\":0},{\"characters\":4084,\"name\":\"checker\",\"errors\":0}]\r\n",
+      "stderr": ""
+    },
+    "checkerSyntaxReuse": "final02 guard bytes identical to parsed01",
+    "logs": [
+      "C:/Users/Freya/AppData/Local/Temp/codeatlas-acl-longpath-red.log",
+      "C:/Users/Freya/AppData/Local/Temp/codeatlas-acl-checker-version-red-final.log",
+      "C:/Users/Freya/AppData/Local/Temp/codeatlas-acl-integrated-final2.log"
+    ],
+    "harnessCorrection": "generic FileSystemRights enum constructor rejected raw generic bits; replaced only test ACL construction with explicit in-memory method doubles retaining expected bitmask decisions; no filesystem ACL modification"
+  },
+  "candidate": {
+    "root": ".superpowers/closed-runtime-20261107-acl-01/release-dc691cab03650644ef5c6f6948b1a4fd221ae21dd5631beb1a60a5b33ae004c3",
+    "contentDigest": "dc691cab03650644ef5c6f6948b1a4fd221ae21dd5631beb1a60a5b33ae004c3",
+    "manifestBytes": 450696,
+    "files": 3053,
+    "payloadBytes": 17513812,
+    "aliases": 11,
+    "meaning": "directory catalog digest, not archive/publisher proof",
+    "dllUnchangedSha256": "4ee3e48cfa2f6c4d883a983a2f7b5739ecf7b01d515c94cecbed9f87e3bb7147",
+    "integration": {
+      "kind": "OWNED_CLOSED_PACKAGE_INTEGRATION",
+      "packageDigest": "dc691cab03650644ef5c6f6948b1a4fd221ae21dd5631beb1a60a5b33ae004c3",
+      "singleton": [
+        {
+          "a": "packages/storage/dist/runtime/runtime-fact-store.js",
+          "b": "node_modules/@codeatlas/storage/dist/runtime/runtime-fact-store.js",
+          "sameNamespace": true,
+          "sameRealpath": true
+        },
+        {
+          "a": "packages/storage/dist/analysis/activation-history-format.js",
+          "b": "node_modules/@codeatlas/storage/dist/analysis/activation-history-format.js",
+          "sameNamespace": true,
+          "sameRealpath": true
+        },
+        {
+          "a": "packages/application/dist/capture-compilation-input.js",
+          "b": "node_modules/@codeatlas/application/dist/capture-compilation-input.js",
+          "sameNamespace": true,
+          "sameRealpath": true
+        }
+      ],
+      "ownedRootNotTrusted": true,
+      "childSpawns": 0,
+      "identityQueries": 0,
+      "userDatabasesOpened": 0
+    }
+  },
+  "checker": {
+    "kind": "FIXED_DEPLOYMENT_GUARD_PREPARATION_ONLY",
+    "sourceRelative": ".superpowers/closed-runtime-20261107-acl-01/release-dc691cab03650644ef5c6f6948b1a4fd221ae21dd5631beb1a60a5b33ae004c3",
+    "contentDigest": "dc691cab03650644ef5c6f6948b1a4fd221ae21dd5631beb1a60a5b33ae004c3",
+    "candidateModuleSha256": "758439a355aeecd07eeb37b408c68abc3b7c0881f5268c3359a3ee46519203c5",
+    "guardSha256": "b64ce8e87667d9108e2454d55952eca2a2287747c47a84f0a551bf54261b0c6d",
+    "guardBytes": 4084,
+    "readerSha256": "64f8b3a834c74cc7f169e18a2d6c70c327678568325abe5b7920b5006fef8758",
+    "templateSha256": "b341fd68f280435399c876c9583f91f153a46551f778fabe604c468bda1916e5",
+    "requiredChildPSModulePath": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\Modules",
+    "guardExecuted": false,
+    "identityQueries": 0,
+    "ACLChanges": 0
+  },
+  "preserved": {
+    "oldGuardUnchanged": true,
+    "failedSupplementUnchanged": true,
+    "installedAc84": "not accessed or modified by this batch; retains old implementation and unqualified status",
+    "priorD8cf921": "retained in commit ancestry"
+  },
+  "notExecuted": [
+    "real installed protection supplement",
+    "WindowsIdentity/GetCurrent or Principal Query",
+    "ACL/security/registry/system environment changes",
+    "protected install or path shortening",
+    "Native/CSharp compiler/profile/R9",
+    "user project Source/database, model, network/push"
+  ],
+  "limits": [
+    "ACL I/O compatibility only; arbitrary longer metadata traversal is not qualified",
+    "Generated checker is not authority; Windows identity/production still unverified",
+    "New source changes require new frozen release, not overwriting ac84 manifest",
+    "Original PREFLIGHT first-install absence restriction retained; any future side-by-side install must first review existing container protection and exact new absent leaf",
+    "Raw candidate/checker/fixtures local ignored, no artifact backup or reproducible build claim"
+  ],
+  "phase1": "4/21",
+  "A6": "NOT_QUALIFIED",
+  "E02": "PROPOSED/uninstalled",
+  "files": {
+    "packages/runtime/src/windows-principal-precompiled.ts": "35f13330147a0697402b37aeec0037aaef8eb1d1e19b58de11fde8d86dc3e203",
+    "packages/runtime/test/windows-principal-precompiled.test.mjs": "21df653213b3a02b5a8d8e28a3be528b4a0b911bf3c275406e121e7e290f3ee8",
+    "packages/runtime/test/windows-principal-acl.test.mjs": "0bb1a795e51ac19c742c6fb2e34aae4b14ac2892a15060eec18767bd3cbe4232",
+    "scripts/test-windows-principal-acl.ps1": "b33fca5f10d6fcfb04d008d86a511e348480e53f166e372db11616a0da90062f",
+    "scripts/windows-principal-deployment-guard.ps1": "b341fd68f280435399c876c9583f91f153a46551f778fabe604c468bda1916e5",
+    "scripts/write-principal-deployment-guard.mjs": "60d4ac95c77e2fc759722f532f7c8c8faf1fea1ed969d1d30197aea51e408e77",
+    "package.json": "3f1250a409fe8f360fa74363ca14ad603a77f1d8800c11d3a470c03659f4e093"
+  }
+}

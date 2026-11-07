@@ -1,3 +1,30 @@
+## Shared long-path ACL read fixed offline - 2026-11-07
+
+Fixed Windows PowerShell reproduces raw Get-Acl failure on owned266-character file
+and270-character directory; extended DOS ACL reads agree with independent descriptor
+controls. Shared inert Read-PhysicalAcl now validates canonical DOS input and applies
+the prefix only at ACL I/O, retaining original identity/topology paths. Production
+and reproducibly generated checker share the same reader. All owner/ancestor/link/
+critical-right rules remain; reverse-normalized checker equals original1fc92716 bytes.
+
+Final6/6 integrated tests pass, including actual owned ACL reads,10 invalid-input
+refusals and28 synthetic policy decisions; owner29/preparation8 inner cases pass.
+Runtime build, architecture17, formats/diff and parse-only production/checker checks
+pass. Generated checker also binds exact candidate production-module bytes; mismatch
+refuses before output. Initial absent-reader RED and generic-enum test-harness failure
+remain recorded. No actual WindowsIdentity/Principal Query or ACL mutation ran.
+
+New owned directory candidate SHA dc691cab03650644ef5c6f6948b1a4fd221ae21dd5631beb1a60a5b33ae004c3
+has3053 files/11 aliases; module singleton and owned-root refusal pass. Checker SHA
+b64ce8e87667d9108e2454d55952eca2a2287747c47a84f0a551bf54261b0c6d
+is4084bytes, generated/parsed only. Original installedac84 and old guard/failures
+remain unchanged, unqualified; fixing only its checker would leave old production
+code. Future actual work needs a reviewed new-version install/check plan, including
+existing container protection; original first-install PREFLIGHT restriction remains.
+No installed-tree retry/path shortening, user Source/DB, network/push or R9.
+Phase1 stays4/21; A6 NOT_QUALIFIED; E02 PROPOSED/uninstalled.
+[Evidence](../superpowers/reviews/2026-11-07-principal-longpath-acl.json).
+
 ## Approved existing-directory supplement stopped at DLL ACL path - 2026-11-07
 
 User approved one original guard with only child PSModulePath fixed, then one

@@ -133,3 +133,14 @@ the earlier missing-file cause remains unknown. Deployment and actual query stil
 require separate approvals. See ../plans/2026-11-07-principal-deployment-validation.md
 and ../reviews/2026-11-07-principal-probe-deployment-routing.json for exact current
 candidate and boundary. No frozen public contract, new grant or budget is introduced.
+
+## Long-path ACL compatibility refinement
+
+The original canonical path remains the identity/topology key. A shared fixed reader
+accepts canonical DOS only and uses the extended DOS representation solely for the
+existing Get-Acl operation. Owner/rights/ancestor/link rules, profile and permission
+semantics do not change. Production and offline generated deployment checkers use
+the same literal text; the generator also binds the exact candidate production
+module bytes. Own266/270-character fixture reads and synthetic original-rule
+negatives pass. This is implementation compatibility, not a new trust grant or
+actual installation qualification. See ../reviews/2026-11-07-principal-longpath-acl.json.

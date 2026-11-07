@@ -125,6 +125,8 @@ if (!childLane) {
     );
     assert.ok(Object.isFrozen(result) && Object.isFrozen(result.payload));
     assert.ok(result.program.includes(api.principalAssemblyLoader));
+    assert.ok(result.program.includes(api.principalAclReader));
+    assert.equal(result.program.match(/Get-Acl -LiteralPath/g)?.length, 1);
   });
   test('real development/self-owned checkout refuses before package read', async () => {
     await assert.rejects(api.preparePrecompiledPrincipal(fixture('development')));

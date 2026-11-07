@@ -27,6 +27,16 @@ Need (($imports -join '|') -ceq 'advapi32.dll|kernel32.dll')
 return ,$assembly
 }`;
 
+// Only the ACL I/O boundary uses extended DOS syntax. Original canonical paths
+// remain the identity/topology keys; this text grants no permission or Principal.
+export const principalAclReader = String.raw`function Read-PhysicalAcl([string]$full){
+Need ($full -cmatch '\A[A-Za-z]:\\')
+if($full.Length -gt 3){foreach($part in $full.Substring(3).Split('\')){
+ Need ($part -ne '' -and $part -ne '.' -and $part -ne '..' -and $part -notmatch '[\x00-\x1f<>:"/|?*]' -and $part -notmatch '[. ]\z' -and $part -notmatch '^(?:CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])(?:\.|$)')
+}}
+return (Get-Acl -LiteralPath ('\\?\'+$full))
+}`;
+
 const program = String.raw`
 $ErrorActionPreference='Stop';$ProgressPreference='SilentlyContinue';$principalStage='DEPLOYMENT'
 [Console]::InputEncoding=New-Object System.Text.UTF8Encoding($false,$true)
@@ -48,16 +58,17 @@ $local=[Environment]::GetFolderPath([Environment+SpecialFolder]::LocalApplicatio
 Need (-not [string]::IsNullOrEmpty($local))
 $expected=[IO.Path]::GetFullPath([IO.Path]::Combine($local,'Programs','CodeAtlas','releases',$leaf))
 Need ($root.Equals($expected,[StringComparison]::OrdinalIgnoreCase))
+__FIXED_ACL_READER__
 $identity=[Security.Principal.WindowsIdentity]::GetCurrent()
 try{$ownSid=$identity.User.Value}finally{$identity.Dispose()}
 $windows=[Environment]::GetFolderPath([Environment+SpecialFolder]::Windows)
 Need (-not [string]::IsNullOrEmpty($windows))
-$windowsOwner=(Get-Acl -LiteralPath $windows).GetOwner([Security.Principal.SecurityIdentifier]).Value
+$windowsOwner=(Read-PhysicalAcl $windows).GetOwner([Security.Principal.SecurityIdentifier]).Value
 $trusted=@($ownSid,'S-1-5-18','S-1-5-32-544',$windowsOwner)
 $critical=[long]0x500D0156 # WriteData/Append/EA/Attributes/Delete/WriteDac/WriteOwner plus generic WRITE/ALL
 function Guard-Acl([string]$full,[bool]$directory,[bool]$ancestor=$false){
  Check-Time
- $acl=Get-Acl -LiteralPath $full
+ $acl=Read-PhysicalAcl $full
  Need ($trusted -contains $acl.GetOwner([Security.Principal.SecurityIdentifier]).Value)
  foreach($ace in $acl.GetAccessRules($true,$true,[Security.Principal.SecurityIdentifier])){
   $inheritOnly=($ace.PropagationFlags -band [Security.AccessControl.PropagationFlags]::InheritOnly) -ne 0
@@ -130,7 +141,9 @@ Need ($before.Count -eq $after.Count);foreach($key in $before.Keys){Need ($after
 $principalStage='SERIALIZE';Check-Time
 $wire=$type.GetMethod('Serialize').Invoke($null,@($result));[Console]::Out.WriteLine([string]$wire)
 }catch{[Console]::Error.WriteLine('CODEATLAS_PRINCIPAL_FAILURE:'+$principalStage);exit 1}
-`.replace('__FIXED_ASSEMBLY_LOADER__', principalAssemblyLoader);
+`
+  .replace('__FIXED_ASSEMBLY_LOADER__', principalAssemblyLoader)
+  .replace('__FIXED_ACL_READER__', principalAclReader);
 
 /** Preparation data only: caller cannot choose a root, artifact, digest or issuer. */
 export async function preparePrecompiledPrincipal(options: {

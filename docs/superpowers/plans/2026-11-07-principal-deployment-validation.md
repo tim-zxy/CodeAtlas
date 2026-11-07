@@ -65,3 +65,14 @@ retry; conditional Principal validation never started. No actual continuation is
 remaining implicitly authorized after this first-failure stop. Preserve existing
 tree; next work is an offline compatible ACL read proof, with production/checker
 semantics kept aligned. See ../reviews/2026-11-07-principal-protection-supplement-stopped.json.
+
+## Offline compatibility result / next actual boundary
+
+Shared ACL I/O compatibility is implemented and tested only in owned fixtures. New
+candidate dc691cab03650644ef5c6f6948b1a4fd221ae21dd5631beb1a60a5b33ae004c3
+and generated4084-byte checker b64ce8e87667d9108e2454d55952eca2a2287747c47a84f0a551bf54261b0c6d
+are local/uninstalled; originalac84 must not be overwritten or relabeled fixed.
+The original checker PREFLIGHT restriction remains first-install-only. A future
+side-by-side version plan must review existing CodeAtlas/releases protection and
+a fresh absent leaf, then obtain actual-operation approval. No installed-tree
+check/query was retried by this fix. See ../reviews/2026-11-07-principal-longpath-acl.json.
