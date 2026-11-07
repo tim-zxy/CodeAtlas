@@ -1,3 +1,16 @@
+## Approved capture refinement and parser adoption - 2026-11-07
+
+P1-12/14 authorized capture scope -> [locked exact schema](../superpowers/specs/2026-11-06-compilation-capture-schema-v1.md)
+with closed IR fields/types, selection/support/scope binding, unchanged activation
+value_digest and exact ordering; specification only, adapters remain unimplemented.
+P1-10 approved parser target ->69-node/SRI/lock identity comparison -> scripts-disabled
+cache fill and strict offline installs -> actual CommonMark/GFM data handling and
+BOM-relative UTF16 to original UTF8 mapping. Original27 lock identities preserved.
+Documents/Application/Runtime builds, affected65/65 and architecture17 pass; read-only
+review clear. [Evidence](../superpowers/reviews/2026-11-07-capture-markdown-unblock.json).
+No scanner production clearance, public Canonical IR change, publication, real R9
+or formal Phase1 closure follows. Setup client schema/merge remains unspecified.
+
 ## P1-19 CLI read-only diagnostics wiring - 2026-11-06
 
 Existing inspectInstallCapabilities + persisted index status -> doctor explicit

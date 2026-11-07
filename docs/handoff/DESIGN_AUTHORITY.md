@@ -1,3 +1,18 @@
+## Approved private capture and exact Markdown adoption - 2026-11-07
+
+User approved bounded capture scope/revision binding, authorized fact/support reads,
+one snapshot per database and final Source rechecks, without cross-database common-
+instant claims or unapproved body clearance. [Locked private v1 refinement](../superpowers/specs/2026-11-06-compilation-capture-schema-v1.md)
+fixes strict fields/type allowlists, selection/support closure, sorting and digest
+rules. Existing fully validated activation value_digest is the Runtime activation
+binding; no old digest recipe, IR or production permission is changed.
+
+The exact unified11.0.5 / remark-parse11.0.0 / remark-gfm4.0.1 audited69-node candidate
+was approved for scripts-disabled offline adoption and local parser verification.
+Original27 package identities remain; exact evidence records verified cache fill
+and offline/frozen installation. [Result and limits](../superpowers/reviews/2026-11-07-capture-markdown-unblock.json).
+No scan production clearance, publication, real R9 or resource/profile change.
+
 ## Explicit R8 publication and exact CI-selection approval - 2026-11-06
 
 The user separately approved public fixture prerelease/asset publication, actual-ID

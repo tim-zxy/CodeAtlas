@@ -37,7 +37,12 @@ expectedPackageDependencies.execution = {
 };
 expectedPackageDependencies.contracts = { '@codeatlas/ir': 'workspace:*' };
 expectedPackageDependencies.knowledge = { '@codeatlas/ir': 'workspace:*' };
-expectedPackageDependencies.documents = { '@codeatlas/ir': 'workspace:*' };
+expectedPackageDependencies.documents = {
+  '@codeatlas/ir': 'workspace:*',
+  unified: '11.0.5',
+  'remark-parse': '11.0.0',
+  'remark-gfm': '4.0.1',
+};
 expectedPackageDependencies.evaluation = { '@codeatlas/ir': 'workspace:*' };
 expectedPackageDependencies.source = { '@codeatlas/ir': 'workspace:*' };
 expectedPackageDependencies.storage = { '@codeatlas/ir': 'workspace:*' };
@@ -162,7 +167,7 @@ for (const name of appNames) {
 test('continuous integration runs every bootstrap gate', async () => {
   const workflow = await readFile('.github/workflows/ci.yml', 'utf8');
   const requiredCommands = [
-    'pnpm install --frozen-lockfile',
+    'pnpm install --frozen-lockfile --ignore-scripts',
     'pnpm format:check',
     'pnpm build',
     'pnpm test',

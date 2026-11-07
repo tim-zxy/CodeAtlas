@@ -24,7 +24,7 @@ jobs:
           node-version: 24
           cache: pnpm
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile --ignore-scripts
       - name: Check formatting
         run: pnpm format:check
       - name: Build workspace
@@ -70,7 +70,7 @@ jobs:
           node-version: 24.15.0
           cache: pnpm
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile --ignore-scripts
       - name: Install Rust toolchain
         run: rustup toolchain install 1.98.1 --profile default
       - name: Build TypeScript workspace

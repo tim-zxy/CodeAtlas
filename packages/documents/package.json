@@ -19,6 +19,9 @@
     "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@codeatlas/ir": "workspace:*"
+    "@codeatlas/ir": "workspace:*",
+    "remark-gfm": "4.0.1",
+    "remark-parse": "11.0.0",
+    "unified": "11.0.5"
   }
 }

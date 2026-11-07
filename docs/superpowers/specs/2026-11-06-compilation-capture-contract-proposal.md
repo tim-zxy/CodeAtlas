@@ -1,6 +1,8 @@
 # Compilation capture: four concrete decisions
 
-Status: PROPOSED, NOT APPROVED OR IMPLEMENTED. This narrows the existing P1-12/14
+Status: DIRECTIONS APPROVED FOR BOUNDED OFFLINE IMPLEMENTATION; product capture is not yet implemented.
+[Locked private v1 refinement](2026-11-06-compilation-capture-schema-v1.md) now controls exact fields and adapters.
+The prior request/proposal wording below is retained as historical context. This narrows the existing P1-12/14
 architecture; it does not change IR, SQL, permissions or acceptance gates. No new
 snapshot API, capture authority or production clearance is installed by this file.
 

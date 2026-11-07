@@ -81,6 +81,7 @@ export function documentSourceGeometry(source: Uint8Array, account: DocumentAcco
     const geometry = Object.freeze({
       fingerprint,
       sizeBytes: bytes.length,
+      leadingBomUtf16Units: bytes[0] === 0xef && bytes[1] === 0xbb && bytes[2] === 0xbf ? 1 : 0,
       assertRange(range: {
         startLine: number;
         startColumn: number;
@@ -181,4 +182,34 @@ export function mapDocumentOffsets(
   account: DocumentAccount,
 ) {
   return documentSourceGeometry(source, account).positionsAt(offsets);
+}
+
+/** Pinned remark/micromark offsets omit one leading BOM. Restore original UTF16
+ * offsets before mapping to original zero-based UTF8 byte coordinates. No parse,
+ * Source authorization, redaction or publication authority is supplied here. */
+export function mapMarkdownOffsets(
+  source: Uint8Array,
+  offsets: readonly number[],
+  account: DocumentAccount,
+): readonly DocumentPosition[] {
+  try {
+    account.own(offsets);
+    ensurePhase1Data(offsets);
+    assert(Array.isArray(offsets));
+    account.own(offsets);
+    const fixed = offsets.map((offset) => {
+      assert(
+        Number.isSafeInteger(offset) && offset >= 0 && !Object.is(offset, -0),
+        'INVALID_DOCUMENT_RANGE',
+      );
+      return offset;
+    });
+    const geometry = documentSourceGeometry(source, account);
+    account.own(fixed);
+    const original = fixed.map((offset) => offset + geometry.leadingBomUtf16Units);
+    return geometry.positionsAt(original);
+  } catch (error) {
+    account.invalidate();
+    throw error;
+  }
 }

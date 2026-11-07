@@ -1,3 +1,38 @@
+## Approved capture schema locked; exact Markdown closure installed - 2026-11-07
+
+New approval unlocks the capture and parser mainline within strict offline bounds.
+[Private capture v1](../superpowers/specs/2026-11-06-compilation-capture-schema-v1.md)
+now locks exact fields/IR allowlists/support closure/sorting. Runtime binding uses
+fully validated existing activation value_digest, not a new recipe or candidate-only
+equivalence. Pure DTO validation, complete R013/workspace combined reads and actual
+Application capture are NEXT IMPLEMENTATION, not completed by the specification.
+
+Installed only unified11.0.5, remark-parse11.0.0 and remark-gfm4.0.1 plus the exact
+reviewed69-node closure. Candidate file/Git blob SHA matches;69 local archives SRI
+verified. Original27 lock identities and69 candidate snapshots remain unchanged.
+Initial offline cache miss was retained; frozen official-registry scripts-disabled
+fetch filled20 missing cache entries, then isolated and actual project offline/
+frozen/ignore-scripts installs succeeded (project downloaded0). No release-age or
+trust override, new version resolution, installation scripts or user config writes.
+Cache/raw records remain local; lock/manifests/source are the syncable deliverables.
+Both CI dependency-install steps now disable lifecycle scripts with the frozen lock;
+all original build/test/architecture/Native gates remain.
+
+Pinned remark excludes one leading BOM from UTF16 offsets. New private mapper
+restores the original offset before existing original UTF8 geometry; raw hash/BOM/
+CRLF stay intact. Actual CommonMark/GFM code/links/HTML remain data. Documents,
+Application and Runtime builds, affected65/65, architecture17 and scoped format
+pass; independent read-only review has no important findings.
+[Exact execution evidence](../superpowers/reviews/2026-11-07-capture-markdown-unblock.json).
+
+Setup dry-run target client schema/path/merge/real MCP launch contract is still
+undefined; no guessed configuration was generated. Work moved to approved capture/
+parser instead. Complete AST-to-Canonical/workflow, secret production clearance,
+W010/publication and real R9 remain open. Existing R9 prefreeze unchanged/historical;
+new dependency/source/dist identities need a fresh approved actual execution freeze.
+CI144/145 prior heads ended TS/Rust success/Native failure, no rerun. They do not
+certify this new batch. Phase1 remains4/21; A6 NOT_QUALIFIED; E02 PROPOSED/uninstalled.
+
 ## P1-19 readonly doctor/status CLI connected - 2026-11-06
 
 Actual CLI doctor requires an explicit positive safe decimal --memory-budget-bytes

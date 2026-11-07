@@ -1,4 +1,10 @@
-# Markdown dependency adoption decision (pending)
+# Markdown dependency adoption: approved exact closure
+
+The user approved the three roots and audited69-package candidate lock for scripts-
+disabled offline installation and local parser verification. Production scanner
+clearance, publication and actual R9 remain excluded. Earlier NOT INSTALLED / future
+request wording below records the pre-approval audit; fresh adoption evidence is
+recorded separately and does not rewrite that historical audit.
 
 ## Exact recommended object
 Adopt only unified11.0.5, remark-parse11.0.0 and remark-gfm4.0.1 under private

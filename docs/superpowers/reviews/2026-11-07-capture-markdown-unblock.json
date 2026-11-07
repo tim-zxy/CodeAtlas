@@ -1,0 +1,112 @@
+{
+  "kind": "APPROVED_CAPTURE_CONTRACT_AND_MARKDOWN_ADOPTION",
+  "date": "2026-11-07",
+  "base": "44b02e174319d1d8cfdd6d44caf63d8bd567ded2",
+  "status": "EXACT_DEPENDENCIES_INSTALLED_OFFLINE_AND_PRIVATE_CAPTURE_SCHEMA_LOCKED",
+  "approvedScope": [
+    "private capture scope/revision/typed support closure, one DB snapshot and final Source recheck; no cross-DB simultaneous-state assertion",
+    "unified11.0.5 remark-parse11.0.0 remark-gfm4.0.1 and exact audited69-node lock, scripts disabled and offline installation",
+    "no scan production clearance, production publication or real R9 sampling"
+  ],
+  "dependencyEvidence": {
+    "candidateSha256": "37aed2cb8c1a3b5306e01420b98a200ddce63ded2d19dd36e45e2d1e7b2c62ba",
+    "gitBlobAndWorktreeCandidateBytesIdentical": true,
+    "archivesFreshSriVerified": 69,
+    "baselinePackagesPreserved": 27,
+    "candidatePackagesAndSnapshotsMatched": 69,
+    "projectPackages": 96,
+    "unreviewedResolutionChanges": 0,
+    "lockComparison": {
+      "status": "EXACT_REVIEWED_CLOSURE_MERGED",
+      "roots": {
+        "@codeatlas/ir": "workspace:*",
+        "remark-gfm": "4.0.1",
+        "remark-parse": "11.0.0",
+        "unified": "11.0.5"
+      },
+      "baselinePackages": 27,
+      "addedPackages": 69,
+      "totalPackages": 96,
+      "baselineIdentityChanged": 0,
+      "unreviewedResolution": 0,
+      "reviewedSnapshotsMatched": 69
+    },
+    "storePopulation": [
+      "Verified local tarballs added with pnpm --config.offline=true --config.ignore-scripts=true store add; ordinary store-add flags were unsupported and npm_config env was not active, so no operation was performed under those failed settings checks",
+      "First isolated frozen offline install failed missing registry-key cache (npmmirror default); root project had not been switched",
+      "Frozen candidate pnpm fetch used explicit official https://registry.npmjs.org and scripts disabled; reused49/downloaded20, no dependency re-resolution",
+      "Subsequent isolated install --offline --ignore-scripts --frozen-lockfile succeeded",
+      "Project install --offline --ignore-scripts --frozen-lockfile succeeded; resolved69/reused69/downloaded0/added69, original27 identity entries and all69 candidate snapshots rechecked"
+    ],
+    "pnpm": "11.19.0",
+    "corepackNetwork": "disabled; cached pnpm version used",
+    "localRawEvidence": ".superpowers/sdd/2026-11-06-markdown-adoption/ and prior audit; package cache local D: store, not Git backup",
+    "officialPnpm11ConfigReference": "https://pnpm.io/blog/releases/11.0"
+  },
+  "implementation": [
+    "Original byte geometry exposes BOM-prefix length from its owned copy; private mapMarkdownOffsets restores pinned parser UTF16 offsets before original UTF8 positionsAt, without normalizing source/hash",
+    "Actual locked CommonMark/GFM parser test covers duplicate headings/table/task/delete/reference/code/HTML as data; no fetch/code execution",
+    "Mandatory root tests include parser version/69-node lock comparison and BOM/CRLF/Chinese/emoji mapping; existing dependency inventory explicitly updated for only approved roots",
+    "Both existing CI dependency-install steps now use frozen-lockfile plus ignore-scripts; build/test/architecture/Native gates are unchanged. Existing workspace CI guard updated to require this install command."
+  ],
+  "captureContract": {
+    "file": "docs/superpowers/specs/2026-11-06-compilation-capture-schema-v1.md",
+    "fields": "strict request/result/selection, per-kind IR field/version allowlists, support producer binding and required membership closure, path-specific wrapper-set ordering vs nested sequences",
+    "runtimeDigest": "existing fully verified runtime_activations.value_digest under unchanged runtime-storage-value-v1; original candidate_digest and workspace binding remain independently checked",
+    "notImplemented": [
+      "pure capture DTO/digest validator",
+      "R013 combined repository/workspace reads and final Application capture",
+      "remaining original support producer relational adapters; Source/scan/policy real admission"
+    ]
+  },
+  "verification": {
+    "red": "CommonMark/GFM library execution passed; two missing mapMarkdownOffsets API tests failed before implementation",
+    "affected": {
+      "pass": 65,
+      "fail": 0,
+      "skip": 0,
+      "command": "node --test packages/documents/test/markdown-runtime.test.mjs packages/documents/test/source-draft.test.mjs packages/documents/test/secret-preflight.test.mjs packages/application/test/document-write-preflight.test.mjs packages/application/test/document-components.test.mjs scripts/test-workspace-structure.mjs",
+      "log": "local temporary codeatlas-markdown-adoption-final.log"
+    },
+    "builds": [
+      "tsc -p packages/documents/tsconfig.json",
+      "tsc -p packages/application/tsconfig.json",
+      "tsc -p packages/runtime/tsconfig.json"
+    ],
+    "architectureProjects": 17,
+    "format": "scoped Prettier and git diff --check pass",
+    "ciInstallPolicyDelta": {
+      "pass": 25,
+      "fail": 0,
+      "skip": 0,
+      "command": "node --test scripts/test-workspace-structure.mjs packages/documents/test/markdown-runtime.test.mjs",
+      "note": "overlaps the affected65; do not add counts"
+    }
+  },
+  "parallelWork": {
+    "capture_schema_v1_medium": "isolated new specification file only; no shared code/lock/status writes",
+    "root": "dependency adoption, original-position bridge, tests and sole integration",
+    "r9_stop_review_medium": "read-only capture schema/Runtime mapping and dependency/BOM mapper review; no important findings; did not independently rerun installation/SRI/build/tests; final two-line CI ignore-scripts delta reviewed, no important risk"
+  },
+  "setupDryRun": "Client config format/path/version, real MCP launch/workspace arguments and safe merge/conflict/secret-diff rules are not yet specified; current MCP only smoke. No guessed client config/snippet, reads of user config or writes. Work pivoted to newly approved mainline.",
+  "notDone": [
+    "no full Markdown AST-to-Canonical parser/workflow production route",
+    "deny-only secret scanner unchanged; no body storage clearance",
+    "no Source/capture/scan authority proof, W010/publication or Phase1 closure",
+    "no real R9/compiler/helper sampling/new profile/value/PACK/release"
+  ],
+  "formalAcceptance": "4/21; A6 NOT_QUALIFIED; E02 PROPOSED/uninstalled",
+  "r9": "Original prefreeze and old evidence untouched; new source/dependency/dist identities require a fresh authorized freeze before actual execution.",
+  "ciPriorHeads": "144 and145 ended TS/Rust success, Native failure;145 Native complete log confirms R8 catalog mismatch and TS segments5031PASS/20existingSKIP,84PASS,255PASS. No rerun; not evidence for this new adoption.",
+  "sha256": {
+    "packages/documents/package.json": "edb9dbaaf23a925d3f2ded60f0f0caf8c621b5e2e83e316f90e03ec2864a02a1",
+    "pnpm-lock.yaml": "23167a4d0df3f384933f3986d17a2736ceecd41cd742da8f9cc28c161dca3d84",
+    "packages/documents/src/source-positions.ts": "ff47d6ed8b4d215e057c9b24f63e444168db3d22a4845512d4b12192d6076ae8",
+    "packages/documents/test/markdown-runtime.test.mjs": "d4a2b0ee9412b1df0261bc1e4c46ca7566fdec34ab4b36978aa108d6ab18eb5f",
+    "scripts/test-workspace-structure.mjs": "92302b91daf3c591bae23cd861d5aa1437f38f7fd1a4176c01410dadce805afd",
+    "package.json": "de32bb928ba117404e587710892be2e92ae21c2c87f56c5c60bb72b81ba69c8b",
+    "docs/superpowers/specs/2026-11-06-compilation-capture-schema-v1.md": "182b4fe13eca140c06a0ef363ae7875a80263a0492933d451f1767cd96f57fd9",
+    ".github/workflows/ci.yml": "4cb645788ec274095f31229a9a3ba895461eca3a82410f1df803394e386e3b08"
+  },
+  "sha256Scope": "local working bytes, not a Native/R9 executable qualification pin"
+}

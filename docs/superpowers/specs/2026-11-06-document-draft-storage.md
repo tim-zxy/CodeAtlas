@@ -120,3 +120,15 @@ actual detection patterns/provider, coverage and final-payload binding must be
 specified and tested. No scanner exists in this repo beyond policy flags today;
 missing execution cannot be labeled scanned. A new detection service or changed
 security meaning needs a decision; ordinary private DTO/transaction details do not.
+
+
+## Approved parser dependency and original-offset bridge continuation
+
+The separately approved exact three Markdown dependencies/69-node closure are now
+installed with scripts disabled and verified offline. Pinned remark offsets omit
+one initial BOM. mapMarkdownOffsets derives that prefix from the geometry's owned
+original copy, restores UTF16 offsets, then uses the existing original UTF8 mapper.
+BOM/raw fingerprint/CRLF are not normalized; surrogate/CRLF midpoints still refuse.
+This is a position bridge and verified parser runtime, not complete AST-to-Canonical
+production parsing or scan clearance. Existing deny-only write refusal remains.
+[Exact adoption evidence](../reviews/2026-11-07-capture-markdown-unblock.json).
