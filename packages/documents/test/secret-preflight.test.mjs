@@ -5,6 +5,152 @@ import { makeAccount } from '../../source/test/fixtures/mixed-source-git-double.
 const api = await import('../dist/secret-preflight.js').catch(() => ({}));
 const scan = (raw, candidate = {}) =>
   api.inspectDocumentSecrets(Buffer.from(raw), candidate, makeAccount().account);
+const masking = await import('../dist/document-range-mask.js').catch(() => ({}));
+
+test('offline range mask preserves exact byte offsets, CRLF and the original Unicode input', () => {
+  const original = Buffer.from([0x41, 0xc3, 0xa9, 13, 10, 0x42, 0xf0, 0x9f, 0x98, 0x80, 0x43]);
+  const before = Buffer.from(original);
+  const ranges = [{ startByte: 1, endByte: 10 }];
+  const result = masking.maskDocumentRanges(original, ranges, makeAccount().account);
+  assert.deepEqual([...result], [0x41, 42, 42, 13, 10, 42, 42, 42, 42, 42, 0x43]);
+  assert.deepEqual(original, before);
+  assert.deepEqual(ranges, [{ startByte: 1, endByte: 10 }]);
+  assert.equal(result.length, original.length);
+  assert.equal(result.toString('utf8').includes('\ufffd'), false);
+  assert.equal(result.clearance, undefined);
+  result[0] = 0;
+  assert.deepEqual(original, before);
+});
+
+test('offline range mask snapshots only the selected typed-array view; empty ranges grant nothing', () => {
+  const backing = Buffer.from('OUTsecretOUT');
+  const result = masking.maskDocumentRanges(backing.subarray(3, 9), [], makeAccount().account);
+  assert.equal(result.toString(), 'secret');
+  result.fill(42);
+  assert.equal(backing.toString(), 'OUTsecretOUT');
+  assert.equal(result.clearance, undefined);
+});
+
+test('offline range mask refuses invalid, reordered, overlapping and mid-scalar ranges', () => {
+  for (const ranges of [
+    [{ startByte: 1, endByte: 2 }],
+    [{ startByte: 0, endByte: 1 }],
+    [{ startByte: 2, endByte: 2 }],
+    [{ startByte: -1, endByte: 1 }],
+    [{ startByte: 0, endByte: 99 }],
+    [{ startByte: 0.5, endByte: 2 }],
+    [
+      { startByte: 2, endByte: 3 },
+      { startByte: 0, endByte: 2 },
+    ],
+    [
+      { startByte: 0, endByte: 3 },
+      { startByte: 2, endByte: 3 },
+    ],
+    [{ startByte: 0, endByte: 2, clearance: true }],
+  ]) {
+    const owner = makeAccount();
+    assert.throws(() => masking.maskDocumentRanges(Buffer.from('éx'), ranges, owner.account));
+    assert.equal(owner.usage.invalid, true);
+  }
+});
+
+test('offline range mask rejects getters, proxies, invalid UTF8 and shared bytes without hooks', () => {
+  let called = 0;
+  for (const [bytes, ranges] of [
+    [Buffer.from([255]), []],
+    [new Uint8Array(new SharedArrayBuffer(1)), []],
+    [new Proxy(Buffer.from('x'), {}), []],
+    [
+      Buffer.from('x'),
+      [
+        {
+          get startByte() {
+            called++;
+            return 0;
+          },
+          endByte: 1,
+        },
+      ],
+    ],
+    [
+      Buffer.from('x'),
+      new Proxy([], {
+        get() {
+          called++;
+          return 0;
+        },
+      }),
+    ],
+  ]) {
+    const owner = makeAccount();
+    assert.throws(() => masking.maskDocumentRanges(bytes, ranges, owner.account));
+    assert.equal(owner.usage.invalid, true);
+  }
+  assert.equal(called, 0);
+});
+
+test('offline range mask cancellation and allocation failure return no partial output', () => {
+  const controller = new AbortController();
+  controller.abort();
+  const cancelled = makeAccount(controller.signal);
+  assert.throws(() => masking.maskDocumentRanges(Buffer.from('secret'), [], cancelled.account), {
+    code: 'CANCELLED',
+  });
+  assert.equal(cancelled.usage.invalid, true);
+  const limited = makeAccount();
+  limited.account.reserveBuffer = () => {
+    throw Object.assign(Error('budget'), { code: 'HISTORY_LIMIT_EXCEEDED' });
+  };
+  assert.throws(() => masking.maskDocumentRanges(Buffer.from('secret'), [], limited.account), {
+    code: 'HISTORY_LIMIT_EXCEEDED',
+  });
+  assert.equal(limited.usage.invalid, true);
+});
+
+test('offline range mask adjacent ranges work; cancellation during masking leaves source untouched', () => {
+  const source = Buffer.from('abc');
+  assert.equal(
+    masking
+      .maskDocumentRanges(
+        source,
+        [
+          { startByte: 0, endByte: 1 },
+          { startByte: 1, endByte: 3 },
+        ],
+        makeAccount().account,
+      )
+      .toString(),
+    '***',
+  );
+  const controller = new AbortController();
+  const owner = makeAccount(controller.signal);
+  owner.account.visitItem = () => {
+    if (++owner.usage.items === 2) controller.abort();
+  };
+  assert.throws(
+    () => masking.maskDocumentRanges(source, [{ startByte: 0, endByte: 3 }], owner.account),
+    { code: 'CANCELLED' },
+  );
+  assert.equal(source.toString(), 'abc');
+  assert.equal(owner.usage.invalid, true);
+});
+
+test('offline range mask charges work for every byte even with empty or sparse ranges', () => {
+  for (const ranges of [[], [{ startByte: 5, endByte: 6 }]]) {
+    const owner = makeAccount();
+    const source = Buffer.from('abcdef');
+    owner.account.visitItem = () => {
+      if (++owner.usage.items > ranges.length + 1)
+        throw Object.assign(Error('budget'), { code: 'HISTORY_LIMIT_EXCEEDED' });
+    };
+    assert.throws(() => masking.maskDocumentRanges(source, ranges, owner.account), {
+      code: 'HISTORY_LIMIT_EXCEEDED',
+    });
+    assert.equal(owner.usage.invalid, true);
+    assert.equal(source.toString(), 'abcdef');
+  }
+});
 test('private secret detector exists', () =>
   assert.equal(typeof api.inspectDocumentSecrets, 'function'));
 for (const raw of [

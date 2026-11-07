@@ -1,3 +1,14 @@
+## P1-12 bounded offline redaction preparation - 2026-11-07
+
+SECURITY source controls and KNOWLEDGE_WORKFLOW redaction map to private
+`packages/documents/src/document-range-mask.ts`; explicit UTF8 byte intervals only,
+no detector coverage or permission inferred. Seven synthetic cases in
+`packages/documents/test/secret-preflight.test.mjs` cover geometry, ownership,
+invalid input, cancellation and budgets. Independent review's empty/sparse work
+bypass was reproduced RED, then fixed GREEN. Documents build,59 affected tests and
+architecture17 passed. Existing detector rules/public APIs and R8 evidence stay
+unchanged; private range-mask spec lists production prerequisites. No gate closed.
+
 ## P1-12 ordinary private capture entry / scan refusal - 2026-11-07
 
 Approved capture schema-v1 and existing complete-inventory authorization boundary

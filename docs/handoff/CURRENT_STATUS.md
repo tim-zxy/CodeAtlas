@@ -1,3 +1,23 @@
+## P1-12 offline byte masking; production clearance unchanged - 2026-11-07
+
+Private Documents `maskDocumentRanges` masks explicit original UTF8 byte intervals,
+preserving byte length and CR/LF. Original input stays unchanged; invalid scalar
+boundaries/order/overlap/bounds, getter/proxy/shared input refuse. Every input byte
+uses the shared work account even for empty/sparse ranges. Cancellation/budget
+failure invalidates without partial output. Unicode character columns need reparsing.
+No detector policy, clearance receipt, production caller, public export or storage.
+
+Independent review found an empty/sparse work-budget bypass; a new regression
+failed before the fix, then passed with full-byte accounting. Documents build,
+59 affected detector/Application preparation tests and architecture17 passed.
+Tests use synthetic bytes, Git doubles and test-owned SQLite only. Exact production
+conditions and pending coverage-policy approval are in the
+[component spec](../superpowers/specs/2026-11-07-document-range-mask.md);
+[batch evidence](../superpowers/plans/2026-11-07-document-range-mask.md).
+No installed update, real identity query, user data, scan clearance, model, migration,
+publication or R9. Ordinary capture stays scan-denied; Phase1 stays4/21;
+A6 NOT_QUALIFIED; E02 PROPOSED/uninstalled.
+
 ## P1-12 ordinary capture composition remains scan-denied - 2026-11-07
 
 Private Runtime `captureLocalCompilationInput` composes the existing genuine
