@@ -1,0 +1,115 @@
+{
+  "kind": "FENCED_LANGUAGE_BOUNDARY_AND_CI151_CONFIRMATION",
+  "date": "2026-11-07",
+  "baseCommit": "b326423cd1755d7551f204b4fad3d7ac31f8f1e2",
+  "worktree": "D:/workspace/CodeAtlas-phase1-20261106",
+  "implementation": [
+    "raw fenced language not representable by original ExactString falls back to entire raw OTHER/PARTIAL and no Snippet",
+    "normal js/no-language code and source ranges remain; no trimming/execution/IR widening",
+    "adapter-v1.2 records behavior provenance; exact dependencies and schema v1 unchanged"
+  ],
+  "validation": {
+    "build": {
+      "command": "node node_modules/typescript/bin/tsc -p packages/documents/tsconfig.json",
+      "exitCode": 0
+    },
+    "tests": {
+      "command": "node --test --test-concurrency=1 packages/documents/test/parse-document.test.mjs packages/application/test/parsed-document-write-preflight.test.mjs packages/application/test/parsed-document-components.test.mjs",
+      "tests": 40,
+      "pass": 40,
+      "fail": 0,
+      "skip": 0,
+      "todo": 0,
+      "cancelled": 0,
+      "durationMs": 3156.0145,
+      "exitCode": 0
+    },
+    "architecture": {
+      "command": "node scripts/check-architecture.mjs",
+      "projects": 17,
+      "exitCode": 0
+    },
+    "formatPaths": [
+      "docs/handoff/CURRENT_STATUS.md",
+      "docs/handoff/DESIGN_TRACEABILITY.md",
+      "docs/superpowers/reviews/2026-11-07-fenced-language-and-ci151.json",
+      "docs/superpowers/specs/2026-11-07-policy-lifecycle-decision-proposal.md",
+      "docs/superpowers/specs/2026-11-07-w009-w011-ddl-review-candidate.md",
+      "packages/documents/src/parse-document.ts",
+      "packages/documents/test/parse-document.test.mjs",
+      "packages/application/test/parsed-document-components.test.mjs"
+    ],
+    "format": {
+      "command": "node node_modules/prettier/bin/prettier.cjs --check docs/handoff/CURRENT_STATUS.md docs/handoff/DESIGN_TRACEABILITY.md docs/superpowers/reviews/2026-11-07-fenced-language-and-ci151.json docs/superpowers/specs/2026-11-07-policy-lifecycle-decision-proposal.md docs/superpowers/specs/2026-11-07-w009-w011-ddl-review-candidate.md packages/documents/src/parse-document.ts packages/documents/test/parse-document.test.mjs packages/application/test/parsed-document-components.test.mjs",
+      "exitCode": 0
+    },
+    "diffWhitespace": {
+      "command": "git diff --check",
+      "exitCode": 0
+    }
+  },
+  "redGreen": [
+    "two entity/NBSP fence cases failed IR_VALIDATION_FAILED plus version literal failed before fix; parser19/19 after fix",
+    "actual Source to parser/preflight new case failed DOCUMENT_PREFLIGHT_FAILED before fix, passes preserving last-good after"
+  ],
+  "review": {
+    "independentReadOnly": true,
+    "importantFindings": 0,
+    "codeExecuted": false
+  },
+  "ci151": {
+    "id": 42326638360,
+    "head": "b326423cd1755d7551f204b4fad3d7ac31f8f1e2",
+    "url": "https://github.com/tim-zxy/CodeAtlas/actions/runs/42326638360",
+    "typescript": "success",
+    "rust": "success",
+    "native": "failure",
+    "nativeVerifiedReason": "R8 script catalog mismatch",
+    "originalCi149CasePassed": true,
+    "laggingClockCasePassed": true,
+    "priorityAndFinalEmissionUnknownCasesPassed": true,
+    "typescriptCohorts": [
+      {
+        "pass": 5034,
+        "skip": 20,
+        "fail": 0
+      },
+      {
+        "pass": 84,
+        "fail": 0
+      },
+      {
+        "pass": 400,
+        "fail": 0
+      }
+    ],
+    "rerun": false,
+    "doesNotCertifyThisLaterCode": true
+  },
+  "decisionPacket": {
+    "status": "PROPOSED_STATIC_ONLY",
+    "policyModels": [
+      "A trusted actual OS subject includes same-SID Agents; not human consent",
+      "B authenticated external Host API still unavailable",
+      "C OS-isolated broker requires new architecture/deployment approval"
+    ],
+    "restart": "stable audit subject is not authority; new incarnation invalidates old handles and approval replay",
+    "expandedDdl": "docs/superpowers/specs/2026-11-07-w009-w011-ddl-review-candidate.md",
+    "sqlWasExecuted": false,
+    "migrationOrManifestCreated": false,
+    "unresolved": [
+      "W009 relation projection and actual writer policy",
+      "W011 real production Evaluation schema/identity/validator/publication qualification, not fixture report relabel",
+      "genuine sole-writer/restart settlement and known-commit/uncertain-cleanup write result",
+      "named workspace9/10/11 reader compatibility; old readers reject new versions",
+      "backupRequired choices and actual backup orchestration if true"
+    ],
+    "recovery": "closed record inspection union; no reused inference; absence/timeouts do not prove writer settlement; no blind retry",
+    "staticReview": "W009/W010 parent/FK/trigger checks no major finding; W011 conditional, not installable"
+  },
+  "limits": [
+    "real Source/SQLite fixtures but original Git/policy substitutes; no production permission claim",
+    "no user DB migration, issuer, scan clearance, publication or real R9",
+    "Phase1 4/21; A6 NOT_QUALIFIED; E02 source/oracle evaluation baseline PROPOSED/uninstalled"
+  ]
+}

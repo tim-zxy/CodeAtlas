@@ -1,3 +1,12 @@
+## P1-10 fenced language boundary; CI151 and candidate schema - 2026-11-07
+
+Original ExactString language contract -> entity/NBSP failing fence -> raw OTHER/
+PARTIAL with no Snippet -> Source/preflight last-good integration; adapter-v1.2
+preserves immutable tuple distinction. [Evidence](../superpowers/reviews/2026-11-07-fenced-language-and-ci151.json).
+CI151 confirms original/new lifecycle UNKNOWN cases in cloud TS, separate from R8
+Native failure. D1 trust/restart choices and expanded candidate SQL/recovery are
+static PROPOSED records; no real issuer, schema admission widening or migration.
+
 ## CI149 lifecycle uncertainty correction - 2026-11-07
 
 Existing bounded lifecycle/UNKNOWN contract -> real timer plus lagging wall-clock

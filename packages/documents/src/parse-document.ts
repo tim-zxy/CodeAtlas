@@ -36,7 +36,7 @@ export interface DocumentParseInput {
   allocateId(kind: EntityKind): string;
 }
 export const MARKDOWN_PARSER_VERSION =
-  'codeatlas-markdown-adapter-v1.1/unified-11.0.5/remark-parse-11.0.0/remark-gfm-4.0.1';
+  'codeatlas-markdown-adapter-v1.2/unified-11.0.5/remark-parse-11.0.0/remark-gfm-4.0.1';
 type Ast = {
   type: string;
   position: { start: { offset: number }; end: { offset: number } };
@@ -261,7 +261,14 @@ export function parseDocument(
         block = { ...base, kind: 'HEADING', payload: { text: text(node), level: node.depth! } };
       else if (node.type === 'paragraph')
         block = { ...base, kind: 'PARAGRAPH', payload: { text: text(node) } };
-      else if (node.type === 'code') {
+      else if (
+        node.type === 'code' &&
+        node.lang != null &&
+        !Phase1ExactStringSchema.safeParse(node.lang).success
+      ) {
+        block = { ...base, kind: 'OTHER', payload: { text: literal(node) } };
+        limitation(node, 'MARKDOWN_CODE_LANGUAGE_NOT_TYPED');
+      } else if (node.type === 'code') {
         block = {
           ...base,
           kind: 'CODE',

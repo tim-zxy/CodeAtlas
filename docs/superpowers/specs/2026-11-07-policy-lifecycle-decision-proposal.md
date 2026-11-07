@@ -31,12 +31,14 @@ body reads. Unknown principal, ownership, policy or cleanup always refuses.
 N: use one process-local Host authorization owner; Runtime holds necessary private
 ports and Application constructs/enforces actual OperationPolicyInput. No public
 JSON grant factory, persistent credentials, cross-process token or remote identity.
-Restart closes all sessions. The first implementation must name the real bootstrap
-adapter: local operator explicit consent or an existing authenticated desktop Host.
-Neither adapter exists in the present code. **D1: choose and define that actual
-principal/consent source before issuance; do not infer it from OS username, a
-configuration file or the requesting Agent.** A local bootstrap-only first slice
-is recommended over introducing remote authentication.
+Restart closes all sessions. D1 must choose a real trust model, not merely name a
+launcher: A explicitly trusts the local OS calling subject (including same-SID
+Agents); B requires an actually authenticated external Host channel; C introduces
+an OS-isolated broker and therefore a separate architecture/deployment decision.
+No such adapter is currently implemented. If local Agents must be excluded from
+operator authority, A is insufficient; TTY, username or a prompt does not fix it.
+A is the minimum standalone option only if its wider trust boundary is explicitly
+accepted. Otherwise keep issuer UNAVAILABLE pending a real B or separately approved C.
 
 N: owner fields are private; opaque handles are identity-checked objects, never
 serialized proof. String IDs are correlation only.
@@ -44,7 +46,7 @@ serialized proof. String IDs are correlation only.
 | Field | Exact proposed meaning/source |
 | --- | --- |
 | issuerHandle, issuerIncarnation | Real bootstrap Host owner and this process instance; D1 must define its origin. |
-| principalHandle, principalId, sessionId | Host-authenticated subject and consent session; never caller labels. |
+| principalHandle, principalId, sessionId | Authenticated subject and authorization session under the selected model; never caller labels. |
 | operationId, operation | New opaque request instance and one existing PolicyOperation literal. |
 | workspaceId, repositoryIds | Actual workspace registration intersected with current Host grant; no implicit wildcard. |
 | revisionSetId, admittedSelection | Concrete frozen RevisionSet and exact selected refs/revisions; closure cannot enlarge scope. |
@@ -72,7 +74,7 @@ assertLive(operationHandle)
 finishOperation(operationHandle)
 ```
 
-N: order is Host authentication/consent -> request and allowed metadata resolution
+N: order is principal authentication + applicable deployment grant(A) or Host approval(B) -> request and allowed metadata resolution
 -> freeze current scope/operations/generations -> authorize the full actual dataset
 before each body read -> existing one-view-per-DB capture and Source checks ->
 settle all owned work -> final recheck of current permissions, generations and
@@ -216,16 +218,28 @@ All candidate schemas/choices in this section remain N/PROPOSED, except the
 explicitly identified existing migration keys and run-state vocabulary. No code
 in this proposal is a grant, executable migration or recovery credential.
 
-### D1-D3: two concrete entry choices
+### D1-D3: concrete channels and restart boundary
 
-| Choice | Required real origin and impact | Failure boundary |
+| Choice | Actual trust model and implementation impact | Required decision / limitation |
 | --- | --- | --- |
-| Recommended first slice: local ONE_SHOT bootstrap operator consent | A trusted launcher obtains actual operator consent and creates this operation session. Add a private CLI consent adapter, Runtime owner/composition and Application session contract/tests; no automatic MCP-service extension. | Launcher/channel/threat boundary is not defined yet. TTY, OS username, stdin, --yes and YAML cannot prove consent if an Agent can control that channel. |
-| Named authenticated desktop Host adapter | A specifically selected Host API must authenticate the subject and bind this process/workspace, consent, current policy and revocation. Share the same Runtime/Application enforcement; substitute the Host adapter for CLI consent. | No such API or adapter has been identified in this repository. A claimed Host name, principal string or JSON receipt cannot mint a session. |
+| A: local OS invoker trusted | A real OS-token/SID adapter identifies the calling subject; an explicitly approved deployment rule grants only the command/dataset ceiling. ONE_SHOT only initially; no automatic MCP service extension. | Same-SID Agents are trusted too. This is not human consent and cannot isolate canonical files/DBs from a malicious same-SID process. TTY, stdin, --yes, process name or username cannot distinguish the human. The OS adapter and deployment rule do not exist yet. |
+| B: external authenticated Host | Name and verify a real Host API/channel that authenticates the subject and approves this process incarnation/session/challenge/operation/scope/policy. Application and Runtime share the same enforcement. | No real API has been identified or integrated. Ordinary desktop UI alone is not proof if an Agent controls it; no caller receipt/Host-name string can mint approval. |
+| C: OS-isolated broker | A distinct OS subject protects policy and approval state; authenticated/ACL-protected IPC binds both endpoints, requests, challenges and upgrades/recovery. | New process, deployment and security boundary require separate architecture approval. Another same-SID process or SID-only named pipe does not isolate that Agent. |
 
-Both avoid remote authentication, persistent credentials and SQL. D1 must name the
-actual trusted channel and its protection against Agent substitution/replay, not
-just select a mode label. If neither can be established, issuer stays UNAVAILABLE.
+D1 must choose the trust boundary and exact usable channel. Recommend A only when
+same-SID Agent trust is acceptable; if it is not, B needs a real API or C needs a
+separate design. Do not simulate these preconditions through new callback factories.
+No remote authentication or persistent credentials are implicitly introduced.
+
+Stable subject key is {issuerNamespace,subjectId}, obtained from the actual OS
+identity in A or authenticated Host in B. It supports audit/idempotency, not access.
+Each process start creates a new issuerIncarnation; principal/session/operation
+handles must be newly issued and never serialized/restored. Reusing the same stable
+subject or policy version after restart cannot revive an old grant. Generations
+are monotonic within one incarnation; resetting them on restart requires rejecting
+old incarnations first and rereading actual current policy/revocation. Reconnect
+must not replay old approvals; B must bind challenge, consumption-once, validity,
+revocation and disconnect semantics to the actual channel.
 
 Refine the private records above to these closed shapes (handles remain opaque):
 
@@ -244,7 +258,7 @@ owner, never a caller switch that bypasses fallback restrictions.
 principalId/sessionId are nonempty correlation strings. workspace/repository IDs,
 selection and operations use existing schemas; repositoryIds is an explicit unique
 set. callerCapabilities is the trusted adapter's ceiling; grantedOperations is
-current genuine consent. Both feed existing independent authorizeOperation checks.
+the current authentic grant under the chosen model. Both feed existing independent authorizeOperation checks.
 No null repository set creates implicit all-repository permission. Generations are
 monotonic safe integers read from the actual owner, never caller values; no initial
 number, TTL or budget default is specified. Config can restrict grants, not create
@@ -374,3 +388,18 @@ itself, not earlier committed versions. Snapshot put failure rolls back snapshot
 supports and run binding together; uncertain cleanup stays UNKNOWN. Rollback is
 closing the new writer and preserving history, not user_version downgrade or SQL
 checksum edits; restoring a verified backup remains an independently approved act.
+
+### Expanded physical candidate and unresolved producer boundaries
+
+[Expanded W009/W010 SQL review text and conditional W011 provenance](2026-11-07-w009-w011-ddl-review-candidate.md)
+is PROPOSED/static-only, not migration SQL, not executed and not installation-ready.
+W009 relation rows propose only ComponentContent.relationships ordinal projection;
+other relation semantics are not invented. W011 cannot borrow the fixture/oracle
+Evaluation report as production publication qualification or assume its inputDigest
+equals the snapshot digest. Production persisted-report schema/validation ownership
+and actual quality admission remain decisions.
+
+D5 must also approve named workspace9/10/11 reader compatibility: current
+DocumentStore7/8 and ContractStore6/7/8 reject those new versions. No >= admission
+or repo-schema10 widening is proposed. Migration/reader changes must be coordinated
+before any user database upgrade; publication stays closed pending full W011.

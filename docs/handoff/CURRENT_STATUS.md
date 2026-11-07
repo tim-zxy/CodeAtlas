@@ -1,3 +1,34 @@
+## CI151 confirms lifecycle fix; fenced-language boundary and review packet - 2026-11-07
+
+CI151 on b326423 ended TypeScript/Rust success. Full TS log confirms the original
+CI149 hanging-beforeInput case and all three new UNKNOWN regressions passed;
+cohorts5034PASS+20existingSKIP,84PASS,400PASS,0fail. Native separately failed at the
+unchanged R8 script-catalog prerequisite. This confirms the TS fix, not Native or
+Phase1 qualification; no old CI was rerun or cancelled.
+
+Independent P1-10 work continued: legal fenced language info that decodes to
+whitespace (entity/NBSP) previously rejected the whole Draft. It now preserves the
+entire raw fence/body as OTHER with explicit PARTIAL, no Snippet; normal language
+and language-less CODE remain. Adapter-v1.2 distinguishes changed output under the
+original immutable parser tuple; dependency/schema versions stay unchanged.
+Documents build, targeted40/40, architecture17 and independent review pass.
+[Evidence](../superpowers/reviews/2026-11-07-fenced-language-and-ci151.json).
+
+The policy proposal now distinguishes A: local OS invoker trust INCLUDING same-SID
+Agents (not human consent), B: an actual authenticated Host API not yet available,
+and C: a separately approved OS-isolated broker. Stable subjects are not restartable
+grants; new process incarnations invalidate old handles/approvals/generations.
+[Expanded W009/W010 SQL review text](../superpowers/specs/2026-11-07-w009-w011-ddl-review-candidate.md)
+was generated and statically reviewed ONLY; no SQLite execution, migration file or
+manifest. W011 is deliberately conditional: current fixture Evaluation cannot
+supply production publication admission. Relations projection, real validation/
+writer proof and exact workspace9/10/11 reader compatibility remain decisions.
+The closed inspection union, restart/UNKNOWN rules and per-migration failure/backup
+matrix are explicit; the packet is not an approved installable release.
+
+No issuer, user-DB migration, production scanning/publication or actual R9 ran.
+Phase1 remains4/21; A6 NOT_QUALIFIED; E02 evaluation baseline PROPOSED/uninstalled.
+
 ## CI149 independent TypeScript failure diagnosed and fixed - 2026-11-07
 
 Correction: CI149 was NOT only the existing Native catalog failure. Its TypeScript

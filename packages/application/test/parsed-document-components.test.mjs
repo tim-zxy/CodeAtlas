@@ -170,6 +170,11 @@ async function base(t, text) {
 }
 for (const [kind, text, reason] of [
   [
+    'unrepresentable-code-language',
+    '# Heading\n\n```&#32;\nthrow new Error("must remain data");\n```\n\n```js\nconst ok = 1;\n```\n',
+    'SECRET_COVERAGE_INCOMPLETE',
+  ],
+  [
     'unrepresentable-link',
     '# Heading\n\ntext [x](< >) and [ok](https://example.invalid)\n',
     'SECRET_COVERAGE_INCOMPLETE',

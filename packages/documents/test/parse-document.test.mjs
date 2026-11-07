@@ -91,7 +91,7 @@ test('empty destinations preserve raw inline syntax without creating same-docume
   const out = (await parse('[empty]() [ok](./ok.md)\n')).payload;
   assert.equal(
     out.revision.parserVersion,
-    'codeatlas-markdown-adapter-v1.1/unified-11.0.5/remark-parse-11.0.0/remark-gfm-4.0.1',
+    'codeatlas-markdown-adapter-v1.2/unified-11.0.5/remark-parse-11.0.0/remark-gfm-4.0.1',
   );
   assert.equal(out.blocks[0].payload.text, '[empty]() ok');
   assert.equal(out.revision.completeness, 'PARTIAL');
@@ -100,6 +100,46 @@ test('empty destinations preserve raw inline syntax without creating same-docume
     ['./ok.md'],
   );
 });
+for (const [label, language] of [
+  ['entity whitespace', '&#32;'],
+  ['NBSP', '\u00a0'],
+])
+  test(`unrepresentable fenced ${label} language preserves whole raw fence and neighboring CODE`, async () => {
+    const fence = '```' + language + '\r\nx\r\n```';
+    const out = (
+      await parse('\ufeff' + fence + '\r\n\r\n```js\r\nsafe\r\n```\r\n\r\n```\r\nplain\r\n```\r\n')
+    ).payload;
+    assert.deepEqual(
+      out.blocks.map((block) => block.kind),
+      ['OTHER', 'CODE', 'CODE'],
+    );
+    assert.equal(out.blocks[0].payload.text, fence);
+    assert.deepEqual(out.blocks[0].sourceRange, {
+      documentRevisionId: 'doc-revision:one',
+      startLine: 0,
+      startColumn: 3,
+      endLine: 2,
+      endColumn: 3,
+    });
+    assert.deepEqual(
+      out.codeSnippets.map((snippet) => snippet.typedContent.language),
+      ['js', null],
+    );
+    assert.deepEqual(
+      out.blocks.slice(1).map((block) => block.payload.text),
+      ['safe', 'plain'],
+    );
+    assert.equal(out.revision.completeness, 'PARTIAL');
+    assert.deepEqual(
+      out.revision.diagnostics.map((diagnostic) => diagnostic.code),
+      ['MARKDOWN_CODE_LANGUAGE_NOT_TYPED'],
+    );
+    assert.equal(
+      out.revision.parserVersion,
+      'codeatlas-markdown-adapter-v1.2/unified-11.0.5/remark-parse-11.0.0/remark-gfm-4.0.1',
+    );
+    assert.deepEqual(out.claims, []);
+  });
 test('literal BOM CRLF Unicode coordinates and repeated heading identities', async () => {
   const out = (
     await parse('\ufeff# Same\r\n\r\n\u4e2d\ud83d\ude00\r\n\r\n## Same\r\n\r\n# Same\r\n')
