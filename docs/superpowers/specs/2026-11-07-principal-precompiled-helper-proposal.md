@@ -153,3 +153,13 @@ and refuses existing target entries and anomalous links. It does not reserve a n
 or confer authority; actual copy must exclusive-create and perform post-copy checks.
 First-install and installed modes remain unchanged. Scope, evidence and actual-
 operation boundary: ../reviews/2026-11-07-principal-coexistence-preflight.json.
+
+## Fixed-profile installed proof
+
+After explicit operation approval, the frozen dc version passed coexistence/content/
+ACL checks and one actual current-process Principal/owned-memory operation probe.
+Raw replies are data; opaque ownership, scope denial and closed-handle assertions
+were verified in the installed module instance. No user data/default CLI/persistent
+access was activated. This refines implementation evidence only; trusted subjects,
+permission semantics and acceptance gates remain unchanged. See
+../reviews/2026-11-07-principal-dc-install-and-probe-passed.json.

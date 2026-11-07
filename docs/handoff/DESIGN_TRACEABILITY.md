@@ -1,3 +1,30 @@
+## Fixed dc version installed; single actual Principal probe passed - 2026-11-07
+
+User approved coexistence install then one process-only validation, stop first
+failure/UNKNOWN. Fixed dc691cab catalog/guard/Node/PowerShell pins and single writer
+were rechecked. NEW_VERSION guard passed11 items; exact absent version leaf was
+exclusive-created,3053 files/11 internal junctions copied; full content/topology
+verified. INSTALLED guard passed3311 items, normal exit; post-content/host/old-root
+metadata checks passed. Installer exited0 and no relevant process remained before
+starting the one separately recorded current-process probe.
+
+Actual installed PRECOMPILED_DLL probe Node16364 exited0, attempts1/retries0,stderr
+empty. OS account/process-birth/challenge binding succeeded; opaque Principal and
+real test-owned :memory: QUERY/READ_SOURCE operation passed. DTO copies, INDEX and
+sensitive paths refused; closed handles invalid. No user database or project body
+read. Only flags/receipts are exported, no raw SID or transferable authority.
+
+Current flow cleanup SETTLED; helper join/EOF/host/tree checks precede mint, and
+external inventory found no relevant Node/helper children. Old ac84 root identity/
+times/catalog stayed unchanged, no old writes/deletes; old guard/failure hashes
+and historical VU96KA timestamps remain. Historical UNKNOWN is not reclassified.
+No ACL/security/global environment/default-entry change, network, model, secret
+clearance, publication or R9. New version is installed for explicit validation only;
+ordinary CLI/general capture remains separate. This is one fixed-profile normal
+success path, not A6 or Phase1 acceptance. Phase1 stays4/21; A6 NOT_QUALIFIED;
+E02 PROPOSED/uninstalled. Single-use actual validation is consumed, not repeatable
+by inference. [Exact evidence](../superpowers/reviews/2026-11-07-principal-dc-install-and-probe-passed.json).
+
 ## Existing-version coexistence preflight implemented offline - 2026-11-07
 
 New private NEW_VERSION check validates physical ancestors top-down, original strict

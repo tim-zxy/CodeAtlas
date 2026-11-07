@@ -1,0 +1,220 @@
+{
+  "kind": "APPROVED_DC_INSTALL_AND_SINGLE_ACTUAL_PRINCIPAL_PASSED",
+  "date": "2026-11-07",
+  "sourceHead": "33d1afaa8ccf5b44350c615eecf5558167642b06",
+  "authorization": "fixed coexistence installation then at most one current-process-only verification; stop first failure/unknown, no ACL/system/default changes, old versions retained, no network/user Source/DB/R9",
+  "installation": {
+    "kind": "DC_FIXED_NEW_VERSION_INSTALLATION",
+    "status": "PASSED",
+    "cleanupState": "SETTLED",
+    "target": "C:\\Users\\Freya\\AppData\\Local\\Programs\\CodeAtlas\\releases\\release-dc691cab03650644ef5c6f6948b1a4fd221ae21dd5631beb1a60a5b33ae004c3",
+    "source": "D:\\workspace\\CodeAtlas-phase1-20261106\\.superpowers\\closed-runtime-20261107-acl-01\\release-dc691cab03650644ef5c6f6948b1a4fd221ae21dd5631beb1a60a5b33ae004c3",
+    "digest": "dc691cab03650644ef5c6f6948b1a4fd221ae21dd5631beb1a60a5b33ae004c3",
+    "files": 3053,
+    "aliases": 11,
+    "preflight": {
+      "kind": "INSTALL_ACL_CHECK_ONLY",
+      "mode": "NEW_VERSION",
+      "passed": true,
+      "items": 11,
+      "principalQueries": 0,
+      "aclChanges": 0
+    },
+    "protection": {
+      "kind": "INSTALL_ACL_CHECK_ONLY",
+      "mode": "INSTALLED",
+      "passed": true,
+      "items": 3311,
+      "principalQueries": 0,
+      "aclChanges": 0
+    },
+    "oldRootAndCatalogUnchanged": true,
+    "oldBefore": {
+      "dev": 2055960833,
+      "ino": 138204213565209090,
+      "birthtimeMs": 1794045951194.5593,
+      "mtimeMs": 1794045954596.2427,
+      "catalogSha256": "ac84dad419c823081d471b6aec288985b01a2f3d9c065e9e666174271bef62b7"
+    },
+    "principalProbe": "NOT_RUN",
+    "principalQueries": 0,
+    "retries": 0,
+    "ACLChanges": 0,
+    "systemEnvironmentChanges": 0,
+    "defaultEntryChanges": 0,
+    "networkCalls": 0
+  },
+  "events": [
+    {
+      "utc": "2026-11-07T14:49:19.232Z",
+      "stage": "SOURCE_VERIFIED",
+      "digest": "dc691cab03650644ef5c6f6948b1a4fd221ae21dd5631beb1a60a5b33ae004c3",
+      "files": 3053,
+      "aliases": 11
+    },
+    {
+      "utc": "2026-11-07T14:49:19.252Z",
+      "stage": "GUARD_START",
+      "mode": "NEW_VERSION"
+    },
+    {
+      "utc": "2026-11-07T14:49:19.829Z",
+      "stage": "GUARD_EXIT",
+      "mode": "NEW_VERSION",
+      "status": 0,
+      "signal": null,
+      "errorCode": null
+    },
+    {
+      "utc": "2026-11-07T14:49:20.654Z",
+      "stage": "TARGET_CREATED",
+      "target": "C:\\Users\\Freya\\AppData\\Local\\Programs\\CodeAtlas\\releases\\release-dc691cab03650644ef5c6f6948b1a4fd221ae21dd5631beb1a60a5b33ae004c3"
+    },
+    {
+      "utc": "2026-11-07T14:49:21.204Z",
+      "stage": "FILES_COPIED",
+      "count": 500
+    },
+    {
+      "utc": "2026-11-07T14:49:21.755Z",
+      "stage": "FILES_COPIED",
+      "count": 1000
+    },
+    {
+      "utc": "2026-11-07T14:49:22.289Z",
+      "stage": "FILES_COPIED",
+      "count": 1500
+    },
+    {
+      "utc": "2026-11-07T14:49:22.815Z",
+      "stage": "FILES_COPIED",
+      "count": 2000
+    },
+    {
+      "utc": "2026-11-07T14:49:23.347Z",
+      "stage": "FILES_COPIED",
+      "count": 2500
+    },
+    {
+      "utc": "2026-11-07T14:49:23.910Z",
+      "stage": "FILES_COPIED",
+      "count": 3000
+    },
+    {
+      "utc": "2026-11-07T14:49:29.457Z",
+      "stage": "INSTALLED_CONTENT_VERIFIED",
+      "files": 3053,
+      "aliases": 11
+    },
+    {
+      "utc": "2026-11-07T14:49:29.460Z",
+      "stage": "GUARD_START",
+      "mode": "INSTALLED"
+    },
+    {
+      "utc": "2026-11-07T14:49:34.880Z",
+      "stage": "GUARD_EXIT",
+      "mode": "INSTALLED",
+      "status": 0,
+      "signal": null,
+      "errorCode": null
+    },
+    {
+      "utc": "2026-11-07T14:49:36.823Z",
+      "stage": "INSTALLATION_COMPLETE",
+      "status": "PASSED",
+      "principalQueries": 0
+    }
+  ],
+  "probe": {
+    "stdout": "{\"kind\":\"CURRENT_PROCESS_LOCAL_PRINCIPAL_PROBE\",\"acquisition\":\"PRECOMPILED_DLL\",\"identityLookups\":1,\"opaquePrincipal\":true,\"replyDtoRejected\":true,\"scopeFacts\":\"TEST_OWNED_MEMORY_METADATA_ONLY\",\"fixedQueryReadSource\":true,\"indexDenied\":true,\"secretPathDenied\":true,\"closedHandlesInvalid\":true,\"userDatabasesOpened\":0,\"projectBodiesRead\":0,\"securitySettingsChanged\":false,\"nativeQualification\":false}\n",
+    "status": "PASSED",
+    "retries": 0,
+    "proof": {
+      "kind": "CURRENT_PROCESS_LOCAL_PRINCIPAL_PROBE",
+      "acquisition": "PRECOMPILED_DLL",
+      "identityLookups": 1,
+      "opaquePrincipal": true,
+      "replyDtoRejected": true,
+      "scopeFacts": "TEST_OWNED_MEMORY_METADATA_ONLY",
+      "fixedQueryReadSource": true,
+      "indexDenied": true,
+      "secretPathDenied": true,
+      "closedHandlesInvalid": true,
+      "userDatabasesOpened": 0,
+      "projectBodiesRead": 0,
+      "securitySettingsChanged": false,
+      "nativeQualification": false
+    },
+    "exited": true,
+    "attempts": 1,
+    "stderr": "",
+    "exitCode": 0,
+    "cleanupState": "SETTLED",
+    "endUtc": "2026-11-07T14:53:24.3970851Z",
+    "pid": 16364,
+    "kind": "FIXED_INSTALLED_PRINCIPAL_ONCE"
+  },
+  "probeStart": {
+    "target": "C:\\Users\\Freya\\AppData\\Local\\Programs\\CodeAtlas\\releases\\release-dc691cab03650644ef5c6f6948b1a4fd221ae21dd5631beb1a60a5b33ae004c3",
+    "attempt": 1,
+    "mode": "--precompiled-current-process-only",
+    "utc": "2026-11-07T14:53:01.6990741Z"
+  },
+  "verificationDurationMs": 22698,
+  "actualScope": {
+    "principalAcquisitions": 1,
+    "validationNodePid": 16364,
+    "currentProcessOnly": true,
+    "creationTimeAndAccountSid": "checked internally; raw SID/birth data not exported",
+    "operationScope": "actual QUERY/READ_SOURCE owner over test-owned in-memory metadata only",
+    "notHumanConsentProof": true
+  },
+  "settlement": {
+    "installExecutor": "exit0",
+    "preflightGuard": "exit0 signalnull",
+    "installedGuard": "exit0 signalnull",
+    "validationNode": "exit0",
+    "helper": "existing owner required stdin finish/both EOF/normal close/pre-post host identity and protected tree rechecks before mint",
+    "closedOperationAndPrincipal": "asserted invalid by actual probe",
+    "externalProcessInventory": "no matching validation Node/PID16364 children/helper/installation guard processes observed after completion",
+    "state": "SETTLED for this new flow only",
+    "historicalUnknownTemp": "VU96KA unchanged creation2026-11-07T04:20:19.8719161Z/write04:20:20.0236949Z; remains retained/UNKNOWN",
+    "oldAc84": "no write/overwrite/delete by this flow; directory identity/times and catalog digest checked unchanged"
+  },
+  "postRunCriticalHashes": {
+    "catalog": "dc691cab03650644ef5c6f6948b1a4fd221ae21dd5631beb1a60a5b33ae004c3",
+    "productionModule": "758439a355aeecd07eeb37b408c68abc3b7c0881f5268c3359a3ee46519203c5",
+    "dll": "4ee3e48cfa2f6c4d883a983a2f7b5739ecf7b01d515c94cecbed9f87e3bb7147",
+    "oldGuard": "1fc92716df86e262f59b74bf2ea0265c26b05cd770faf78bfa3d69cbb012a6a1",
+    "oldFailedSupplement": "bb51de6bf7299b89c920b125002e4ed133c7ac4242a8ebb3b40ee4e411d519c0"
+  },
+  "notDone": [
+    "ordinary CLI/default-entry activation",
+    "general product capture or user Source/DB access",
+    "user database migrations",
+    "ACL/security/system environment/persistent access changes",
+    "model/secret-scan clearance/production publication",
+    "Native qualification/R9/resource profile changes",
+    "network/GitHub push or extra CI during approved local run"
+  ],
+  "remaining": [
+    "P1-12 general Runtime/Application trusted Source/policy/store composition still separate from this explicit verification entry",
+    "Only this installed fixed Windows/profile normal success path is observed; no portable/general account qualification",
+    "Any further real identity call needs applicable authorization; this single-use validation is consumed",
+    "A6/Phase1 full resource/process/fixture gates remain open; raw artifacts remain local"
+  ],
+  "files": {
+    "install-only.mjs": "f85897f1c2c0646ada78cf4d2fe74cf81dfd6080c51d20b6bf33e556e1ce69d5",
+    "install-events.jsonl": "8ebbf080e5cceab2da3947a650bddabbdafa88417b2e7ac2a904bd643c3c5f39",
+    "install-result.json": "2f12581beb55f496c1b33f8fe7957f33a313bad29134d4280105e1ac660d4b12",
+    "new_version-result.json": "f950d3eff3b43f753cec9f27b663bc916e7697ca69e94f350d3f134212fef4e2",
+    "installed-result.json": "6ec17245ae893ad3792bb1a5804b4d226f29b87adb6ebd1169157f3fdf98552a",
+    "principal-once-started.json": "92bec9de6333d46f13ea13c54f86071be4b2be745bd5b4a512a1505a1ed0264d",
+    "principal-process.json": "840c9765a39d8c37c6e03105a377e07db4a4bbcea6877e2f02a0f421393c3575",
+    "principal-once-result.json": "e645367843b5271706a02bf64557e83f8a390bd270370198b29f1a1214b52024"
+  },
+  "phase1": "4/21",
+  "A6": "NOT_QUALIFIED",
+  "E02": "PROPOSED/uninstalled"
+}

@@ -36,3 +36,14 @@ Current-account Agent trust remains accepted, not proof of a human click. Actual
 Rollback is to stop selecting this explicit new path and release settled handles; restart after poisoned ownership. Retain old and partial/new directories and receipts, with UNKNOWN if settlement cannot be proved. No automatic pointer or user data was changed, so no permission/data restoration is required. Old ac84 is not asserted functional. Any later deletion needs its own known-owned-path proof and approval.
 
 Offline evidence:32 owned topology/policy cases(24 NEW_VERSION,4 PREFLIGHT,4 INSTALLED),5 expected accepts/27 refuses,0 premature ACL reads, unchanged sentinel bytes/times; ACL subjects/access masks are explicit in-memory doubles, not real identity proof. Original first/install branches and ACL policy recover exact1fc92716 guard bytes. Local integrated8/8, architecture17, formats and parse-only new checker pass. CI164 passed TS/Rust for old9fbc724; Native remained R8 catalog fail. No formal Phase1/A6 acceptance follows. See ../reviews/2026-11-07-principal-coexistence-preflight.json.
+
+## Explicit approval / actual execution result
+
+The pre-execution status above is retained as history. User approved this fixed
+sequence. NEW_VERSION, exclusive install, complete content/topology and INSTALLED
+checks passed; install executor/helpers exited before one actual installed-process
+validation. That Node exited0 with attempt1, no retries, no user Source/DB and invalid
+closed handles. Current-flow cleanup SETTLED; old versions/failures retained and no
+ACL/system/default setting change. The one actual authorization is consumed. Exact
+steps, timestamps, pins and proof are in ../reviews/2026-11-07-principal-dc-install-and-probe-passed.json.
+This does not authorize another real query or qualify general capture/A6/Phase1.
