@@ -1,9 +1,10 @@
 # W009-W011 physical schema review candidate
 
-Status: **PROPOSED / STATIC REVIEW ONLY / NOT EXECUTED OR APPROVED**. These SQL
-blocks are expanded candidate text under docs, not migration files or manifest
-entries. No database was opened to run them. Syntax and upgrade/recovery are not
-claimed validated. All physical choices are N; existing IR enums/invariants are F.
+Status: **PROPOSED / TEST-OWNED EXPERIMENT ONLY / NOT APPROVED FOR INSTALLATION**.
+These SQL blocks are candidate text under docs, not migration files or manifest
+entries. W009/W010 are exercised only in isolated owned tests; no user database,
+production writer or new production reader admission is enabled. W011 remains
+conditional and unexecuted. All physical choices are N; existing IR invariants are F.
 Controlling discussion: [policy/lifecycle decision packet](2026-11-07-policy-lifecycle-decision-proposal.md).
 
 W009/W010 below make the physical choices concrete for review. They are not a
@@ -104,6 +105,17 @@ CREATE TRIGGER proposed_items_fixed_identity BEFORE UPDATE ON knowledge_items
 WHEN NEW.id IS NOT OLD.id OR NEW.workspace_id IS NOT OLD.workspace_id
   OR NEW.type IS NOT OLD.type OR NEW.scope_json IS NOT OLD.scope_json
 BEGIN SELECT RAISE(ABORT,'immutable item identity'); END;
+
+-- Reject every declared duplicate key before conflict replacement can delete history.
+CREATE TRIGGER proposed_knowledge_items_no_duplicate_insert BEFORE INSERT ON knowledge_items
+WHEN EXISTS(SELECT 1 FROM knowledge_items WHERE id=NEW.id)
+BEGIN SELECT RAISE(ABORT,'duplicate immutable key'); END;
+CREATE TRIGGER proposed_knowledge_revisions_no_duplicate_insert BEFORE INSERT ON knowledge_revisions
+WHEN EXISTS(SELECT 1 FROM knowledge_revisions WHERE id=NEW.id)
+BEGIN SELECT RAISE(ABORT,'duplicate immutable key'); END;
+CREATE TRIGGER proposed_knowledge_relations_no_duplicate_insert BEFORE INSERT ON knowledge_relations
+WHEN EXISTS(SELECT 1 FROM knowledge_relations WHERE workspace_id=NEW.workspace_id AND revision_id=NEW.revision_id AND ordinal=NEW.ordinal)
+BEGIN SELECT RAISE(ABORT,'duplicate immutable key'); END;
 ```
 
 ## W010 candidate
@@ -290,6 +302,26 @@ WHEN NOT(NEW.state=OLD.state
  OR (OLD.state='READY' AND NEW.state='PUBLISHED')
  OR NEW.state IN ('FAILED','CANCELLED','INTERRUPTED'))
 BEGIN SELECT RAISE(ABORT,'invalid run transition'); END;
+
+-- Reject every declared duplicate key before conflict replacement can delete history.
+CREATE TRIGGER proposed_compilation_input_snapshots_no_duplicate_insert BEFORE INSERT ON compilation_input_snapshots
+WHEN EXISTS(SELECT 1 FROM compilation_input_snapshots WHERE id=NEW.id)
+BEGIN SELECT RAISE(ABORT,'duplicate immutable key'); END;
+CREATE TRIGGER proposed_snapshot_supports_no_duplicate_insert BEFORE INSERT ON snapshot_supports
+WHEN EXISTS(SELECT 1 FROM snapshot_supports WHERE workspace_id=NEW.workspace_id AND snapshot_id=NEW.snapshot_id AND (support_key=NEW.support_key OR (basis_key=NEW.basis_key AND entity_key=NEW.entity_key)))
+BEGIN SELECT RAISE(ABORT,'duplicate immutable key'); END;
+CREATE TRIGGER proposed_compilation_runs_no_duplicate_insert BEFORE INSERT ON compilation_runs
+WHEN EXISTS(SELECT 1 FROM compilation_runs WHERE id=NEW.id OR (workspace_id=NEW.workspace_id AND caller_subject_id=NEW.caller_subject_id AND request_key=NEW.request_key))
+BEGIN SELECT RAISE(ABORT,'duplicate immutable key'); END;
+CREATE TRIGGER proposed_publication_runs_no_duplicate_insert BEFORE INSERT ON publication_runs
+WHEN EXISTS(SELECT 1 FROM publication_runs WHERE id=NEW.id OR (workspace_id=NEW.workspace_id AND run_id=NEW.run_id))
+BEGIN SELECT RAISE(ABORT,'duplicate immutable key'); END;
+CREATE TRIGGER proposed_source_changes_no_duplicate_insert BEFORE INSERT ON source_changes
+WHEN EXISTS(SELECT 1 FROM source_changes WHERE id=NEW.id)
+BEGIN SELECT RAISE(ABORT,'duplicate immutable key'); END;
+CREATE TRIGGER proposed_impacts_no_duplicate_insert BEFORE INSERT ON impacts
+WHEN EXISTS(SELECT 1 FROM impacts WHERE id=NEW.id OR (workspace_id=NEW.workspace_id AND source_change_id=NEW.source_change_id AND knowledge_revision_id=NEW.knowledge_revision_id AND basis_key=NEW.basis_key))
+BEGIN SELECT RAISE(ABORT,'duplicate immutable key'); END;
 ```
 
 ## W011: required key interface, not an invented Evaluation implementation
@@ -495,4 +527,36 @@ Current beforeAcquire is synchronous and before BEGIN; it is not a backup owner,
 async join primitive or lock-transfer API. Any pending backupRequired=true still
 rejects the whole batch. No external file/receipt/Boolean bypass is introduced.
 Real backup orchestration, maintenance trust/fencing, restart evidence and user-DB
-installation remain decisions; no backup or candidate migration ran here.
+installation remain decisions. Separate owned tests exercise a tiny SQLite WAL
+backup and the candidate9/10 text; they do not implement those production contracts.
+
+
+## Owned experiments and duplicate-key correction - 2026-11-07
+
+The compatibility harness runs exact W009/W010 blocks against real W008 in fresh
+owned SQLite only. It compares every original table row and sqlite_schema object,
+including two real DocumentStore head/history revisions; tests additive prefixes,
+per-step rollback, deferred same-item pointer FK, full run/snapshot/set tuples and
+one-shot run binding. Existing production readers still reject9/10. No current
+Runtime activation nonempty-data compatibility or durable user-DB upgrade is
+claimed, and W011 is never executed or replaced by a fake Evaluation parent.
+
+An actual counterexample showed UPDATE/DELETE guards alone permit INSERT OR
+REPLACE with recursive_triggers=OFF. The candidate now adds BEFORE INSERT duplicate
+checks for every declared primary/UNIQUE conflict, including alternate support,
+request, publication and impact tuples. The desired rejection test first failed.
+This avoids relying on connection recursive_triggers and preserves existing rows
+before SQLite conflict replacement. It also rejects duplicate INSERT OR IGNORE or
+UPSERT attempts: a future idempotent writer must validate/reuse an existing row
+in the same BEGIN IMMEDIATE before plain INSERT, never rely on conflict SQL to replace or silently ignore it.
+RAISE(ABORT) only aborts the statement: an owned experiment confirms earlier
+transaction work remains until explicit owner rollback. A duplicate error alone
+cannot prove reused:true. That writer and this exact candidate remain unapproved; no old migration changes.
+These guards do not defend against arbitrary schema/trigger/PRAGMA manipulation
+by an untrusted SQLite writer, authenticate JSON, or supply publication authority.
+
+The independent backup experiment uses tiny owned SQLite with committed data proven
+present only in WAL, a separate guard and readonly source, and real awaited backup.
+It verifies standalone destination reopen/integrity/FKs/sentinel and confirms the
+runner still refuses locks and backupRequired. It proves neither maintenance gate,
+atomic lock handoff, cancellation, automatic restore nor production compatibility.

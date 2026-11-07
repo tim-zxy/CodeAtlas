@@ -1,3 +1,14 @@
+## Owned compatibility and backup verification - 2026-11-07
+
+Proposed W009/W010 -> exact candidate text on real W008-owned fixtures -> old
+head/history/schema preservation, per-step rollback, composite FK/run checks.
+REPLACE bypass counterexample -> proposed duplicate INSERT guards for all UNIQUE
+keys -> conflict SQL refusal plus explicit transaction rollback. Tiny genuine WAL
+-> actual Node backup Promise -> independent reopen -> original lock/backup refusal.
+[Evidence](../superpowers/reviews/2026-11-07-owned-schema-backup-experiments.json).
+These test-owned experiments do not approve candidate DDL, production readers,
+user migration, authority, W011 or production backup/restart settlement.
+
 ## Existing SQLite migration target binding - 2026-11-07
 
 Original requested database/manifest -> private request and URL snapshots before

@@ -1,0 +1,73 @@
+{
+  "kind": "OWNED_CANDIDATE_COMPATIBILITY_AND_WAL_BACKUP_EXPERIMENTS",
+  "date": "2026-11-07",
+  "baseCommit": "45525c4e9ba820c4242ae25509aa34d92036dd3e",
+  "worktree": "D:/workspace/CodeAtlas-phase1-20261106",
+  "scope": "test-owned databases and unapproved candidate text only; no production implementation",
+  "bindings": {
+    "packages/storage/test/proposed-workspace-compatibility.test.mjs": "f3ca0990cd1337b847c019013d21d5e7449fa1327fef85df1755af1aa8b296fd",
+    "packages/storage/test/sqlite-backup-boundaries.test.mjs": "880ca8034b0aa92b2e02e6f434eee9e64db59422468cbe91ee11a35be51dd30a",
+    "docs/superpowers/specs/2026-11-07-w009-w011-ddl-review-candidate.md": "bcf15ae4fd907a81d9873473c2ef9efb717ca9bf31568dd17bc4d29f9d10b97e"
+  },
+  "validation": {
+    "tests": {
+      "command": "node --test --test-concurrency=1 packages/storage/test/proposed-workspace-compatibility.test.mjs packages/storage/test/sqlite-backup-boundaries.test.mjs",
+      "tests": 10,
+      "pass": 10,
+      "fail": 0,
+      "cancelled": 0,
+      "skip": 0,
+      "todo": 0,
+      "durationMs": 639.4802,
+      "exitCode": 0
+    },
+    "format": {
+      "command": "node node_modules/prettier/bin/prettier.cjs --check package.json packages/storage/test/proposed-workspace-compatibility.test.mjs packages/storage/test/sqlite-backup-boundaries.test.mjs",
+      "exitCode": 0
+    },
+    "architecture": {
+      "command": "node scripts/check-architecture.mjs",
+      "projects": 17,
+      "exitCode": 0
+    },
+    "diffWhitespace": {
+      "command": "git diff --check",
+      "exitCode": 0
+    }
+  },
+  "redGreen": [
+    "Original candidate REPLACE succeeds with recursive_triggers=OFF despite UPDATE/DELETE guards; isolated transaction rolled back",
+    "Desired rejection failed Missing expected exception before candidate duplicate guards; now refuses original PK and secondary UNIQUE replacement",
+    "Early probe expected a particular one-shot error first; real transition guard rejected first instead; no schema change to reorder guards",
+    "New duplicate INSERT guard changes duplicate support SQL diagnostic from SQLite UNIQUE to duplicate immutable key; expected diagnostic updated, rejection and unchanged rows retained"
+  ],
+  "coverage": [
+    "All old W008 table rows and sqlite_schema objects retained across candidate9/10; two DocumentStore head/history revisions",
+    "Failed candidate9 leaves8; failed10 retains committed9; no version downgrade or reader bypass",
+    "Deferred same-item publication pointer FK and wrong-item COMMIT refusal (SQL probes only, not publication evidence)",
+    "Full run/snapshot/revision-set tuple, independent same-digest snapshots, initial/one-shot/terminal guards",
+    "Alternate UNIQUE support key collision; REPLACE/IGNORE/UPSERT refuse; statement ABORT requires explicit whole-owner rollback",
+    "Actual tiny owned WAL data absent from unchanged main file; backup through independent readonly connection while guard holds; real Promise settlement",
+    "Independent target reopen with integrity/FK/version/sentinel, no copied source sidecars",
+    "Guard prevents runner lock acquisition and actual completed backup never bypasses backupRequired"
+  ],
+  "limits": [
+    "No nonempty Runtime activation migration or durable user-DB upgrade certified",
+    "W011 conditional block not executed; no invented Evaluation parent/report",
+    "No production schema admission, grant, scan clearance, publisher, backup orchestration, lock handoff, restart negative proof, cancellation or R9",
+    "Candidate duplicate guards are N; idempotent writer must SELECT/validate within same BEGIN IMMEDIATE before plain INSERT; duplicate exception does not prove reused"
+  ],
+  "review": {
+    "status": "complete",
+    "result": "No important findings on final candidate duplicate guards, owned DB scope, actual backup settlement and no production admission changes",
+    "reviewer": "independent read-only agent; no repeated tests"
+  },
+  "ci153": {
+    "runId": 42330058507,
+    "head": "45525c4e9ba820c4242ae25509aa34d92036dd3e",
+    "typescript": "in_progress",
+    "rust": "success",
+    "native": "failure; full log checked separately",
+    "newBatchCoverage": false
+  }
+}

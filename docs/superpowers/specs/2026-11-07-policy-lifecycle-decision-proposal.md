@@ -1,7 +1,8 @@
 # Private policy owner and W009-W011 persistence: decision proposal
 
 Status: **PROPOSED ONLY, NOT APPROVED OR IMPLEMENTED**. No permission issuer,
-principal, migration, scan clearance, model invocation or publication is created.
+principal, production migration, scan clearance, model invocation or publication is created.
+Isolated owned SQLite candidate/backup experiments are not production implementation.
 This records the two concrete decisions blocking later production capture/storage;
 it does not replace current specifications. Independent P1-10 parser/preflight
 implementation continues without either decision.
@@ -311,7 +312,7 @@ W011 provenance is proposed as (workspace_id,revision_id,run_id,snapshot_id,
 evaluation_id,revision_set_id), PK(workspace_id,revision_id). Composite FKs bind
 its revision's entire provenance tuple, actual run/snapshot/revision-set tuple and
 actual evaluation(workspace_id,id,run_id,snapshot_id). The evaluation parent key
-and W009 complete DDL are not yet defined. W009/W010 triggers must not refer to
+remains undefined; W009 complete DDL is an unapproved physical candidate only. W009/W010 triggers must not refer to
 nonexistent W011 tables; add publication guards in W011. Missing full W011 still
 refuses publication rather than omitting provenance validation.
 
@@ -392,7 +393,9 @@ checksum edits; restoring a verified backup remains an independently approved ac
 ### Expanded physical candidate and unresolved producer boundaries
 
 [Expanded W009/W010 SQL review text and conditional W011 provenance](2026-11-07-w009-w011-ddl-review-candidate.md)
-is PROPOSED/static-only, not migration SQL, not executed and not installation-ready.
+remains PROPOSED and is not registered migration SQL or installation-ready. W009/
+W010 now have isolated owned compatibility/constraint experiments; W011 remains
+conditional and unexecuted. No user database or production reader admission changed.
 W009 relation rows propose only ComponentContent.relationships ordinal projection;
 other relation semantics are not invented. W011 cannot borrow the fixture/oracle
 Evaluation report as production publication qualification or assume its inputDigest

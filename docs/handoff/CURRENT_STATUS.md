@@ -1,3 +1,32 @@
+## Owned workspace-prefix and WAL backup experiments - 2026-11-07
+
+The next approved preparation batch now executes candidate W009/W010 text only in
+fresh owned SQLite initialized by real W001-W008. Old DocumentStore commits two
+revisions; additive9/10 preserve every old row/schema object, and failed9/10 roll
+back only that step. Deferred same-item pointer, full run/snapshot/set FK, support
+uniqueness and one-shot transition probes pass. Production Document/Contract/
+combined readers still reject9/10; W011 is not executed or faked. These are physical
+experiments, not production Capture/Knowledge/Evaluation evidence or user upgrades.
+
+An actual candidate defect was reproduced: recursive_triggers=OFF let REPLACE
+bypass UPDATE/DELETE-only history guards. The desired rejection failed before
+candidate correction. Proposed BEFORE INSERT guards now cover every PK/UNIQUE,
+including alternate tuples; owned tests reject REPLACE/IGNORE/UPSERT. ABORT keeps
+earlier transaction work until explicit rollback, so a duplicate error cannot
+prove reuse. Candidate physical choices remain N and unapproved for installation.
+
+A separate tiny real SQLite WAL experiment proves data absent from unchanged main
+file but committed in WAL survives actual awaited backup and independent target
+reopen with integrity/FK/version/sentinel checks. A separate guard still blocks the
+runner; completed backup does not bypass backupRequired. No atomic lock handoff,
+maintenance isolation, cancellation, automatic restore or production backup is
+claimed. New experiment files are included in the original pnpm test command.
+[Reproducible evidence](../superpowers/reviews/2026-11-07-owned-schema-backup-experiments.json).
+
+No production code, registered SQL/manifest/checksum, reader version set, authority,
+scan clearance, resource value or R9 execution changed. Phase1 4/21; A6 remains
+NOT_QUALIFIED; E02 evaluation baseline PROPOSED/uninstalled.
+
 ## Existing migration target binding and reader admission batch - 2026-11-07
 
 CI152 on944e09f ended TypeScript/Rust success; Native full log again confirms
