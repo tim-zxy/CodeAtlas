@@ -1,0 +1,109 @@
+{
+  "kind": "PRODUCT_LOADER_ORIGINAL_PATH_INSTRUMENTED_ONCE",
+  "date": "2026-11-07",
+  "sourceHead": "c4e4cc60ab976f87df9fc971ac3d5592de4f6173",
+  "authorization": "one original-path pure load test with complete lifecycle records; no account query, ACL or installation",
+  "receipt": {
+    "kind": "PRODUCT_LOADER_PURE_INSTRUMENTED_ONCE",
+    "script": "D:\\workspace\\CodeAtlas-phase1-20261106\\.superpowers\\principal-artifact-2S6bWj\\product-loader-036a552a-42d3-4ef3-b28e-a51e4705b687.ps1",
+    "trace": "D:\\workspace\\CodeAtlas-phase1-20261106\\.superpowers\\principal-artifact-2S6bWj\\product-loader-036a552a-42d3-4ef3-b28e-a51e4705b687.ps1.instrumented.jsonl",
+    "status": 0,
+    "signal": null,
+    "errorCode": null,
+    "stdout": "{\"kind\":\"PRODUCT_LOADER_PURE_RESULT\",\"groups\":3,\"queryCalls\":0}\r\n",
+    "stderr": "",
+    "scriptSha256": "8991639ceddaf5c5d5340178d125f03c9e2885b08b04d0555e38d7cf792f6d54",
+    "scriptExistsAfter": true,
+    "oldReceiptUnchanged": true,
+    "queryCalls": 0
+  },
+  "events": [
+    {
+      "utc": "2026-11-07T06:38:40.234Z",
+      "stage": "INPUTS_VERIFIED",
+      "cwd": "D:\\workspace\\CodeAtlas-phase1-20261106",
+      "script": "D:\\workspace\\CodeAtlas-phase1-20261106\\.superpowers\\principal-artifact-2S6bWj\\product-loader-036a552a-42d3-4ef3-b28e-a51e4705b687.ps1",
+      "host": "C:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+      "loaderTextSha256": "a1844f2bace6aecf526ab547f8c1a0cd17628c79769f66478166a5566c1a6211",
+      "scriptSha256": "8991639ceddaf5c5d5340178d125f03c9e2885b08b04d0555e38d7cf792f6d54",
+      "scriptBytes": 11038,
+      "encoding": "UTF-8 no BOM",
+      "oldReceiptSha256": "080e6448ae0f49810933777de9bc7e9bfdaa4d0a13c58daf449c815bba4d381f",
+      "historicalHarnessTextUnavailable": true
+    },
+    {
+      "utc": "2026-11-07T06:38:40.237Z",
+      "stage": "SCRIPT_OPENED"
+    },
+    {
+      "utc": "2026-11-07T06:38:40.241Z",
+      "stage": "WRITE_AND_FSYNC_COMPLETED",
+      "bytes": 11038
+    },
+    {
+      "utc": "2026-11-07T06:38:40.242Z",
+      "stage": "SCRIPT_CLOSE_COMPLETED"
+    },
+    {
+      "utc": "2026-11-07T06:38:40.244Z",
+      "stage": "PRE_EXEC_EXISTS_AND_HASH_VERIFIED",
+      "bytes": 11038,
+      "device": "1197563547",
+      "inode": "844424930667158",
+      "mtimeNs": "1794033520240562700",
+      "args": [
+        "-NoLogo",
+        "-NoProfile",
+        "-NonInteractive",
+        "-Command",
+        "& 'D:\\workspace\\CodeAtlas-phase1-20261106\\.superpowers\\principal-artifact-2S6bWj\\product-loader-036a552a-42d3-4ef3-b28e-a51e4705b687.ps1'"
+      ]
+    },
+    {
+      "utc": "2026-11-07T06:38:40.676Z",
+      "stage": "CHILD_RETURNED",
+      "status": 0,
+      "signal": null,
+      "errorCode": null
+    },
+    {
+      "utc": "2026-11-07T06:38:40.678Z",
+      "stage": "POST_EXEC_PATH",
+      "exists": true,
+      "sha256": "8991639ceddaf5c5d5340178d125f03c9e2885b08b04d0555e38d7cf792f6d54"
+    },
+    {
+      "utc": "2026-11-07T06:38:40.681Z",
+      "stage": "RECEIPT_WRITTEN",
+      "receipt": "D:\\workspace\\CodeAtlas-phase1-20261106\\.superpowers\\principal-artifact-2S6bWj\\product-loader-036a552a-42d3-4ef3-b28e-a51e4705b687.ps1.instrumented.json"
+    }
+  ],
+  "receiptSha256": "d20011d83bddb144b44e0c3f33dafda720c87a9396551da371fffad5c388c7ca",
+  "oldFailedReceiptSha256": "080e6448ae0f49810933777de9bc7e9bfdaa4d0a13c58daf449c815bba4d381f",
+  "historicalDiagnosis": {
+    "originalScriptBodyRetained": false,
+    "writeCloseBeforeExecEvidenceRetained": false,
+    "rootCause": "UNKNOWN; not reproduced in this authorized instrumented run",
+    "defenderAppLockerCodeIntegrityWindow": "NoMatchingEventsFound 05:44-05:47UTC",
+    "powershellWindow": "6 engine lifecycle events only, no target path",
+    "localExecutionLogs": "13 rows in window, no target match"
+  },
+  "scopeLimits": [
+    "Exact exported loader text unchanged; historical complete harness text unavailable, not asserted byte-identical",
+    "Pure reflection/load only; no Query, WindowsIdentity, protected installation, ACL changes or R9",
+    "Historical failure remains; no antivirus attribution or defense bypass",
+    "Full production OS trust/authentication remains unverified"
+  ],
+  "ci162": {
+    "run": 42347158319,
+    "head": "c4e4cc60ab976f87df9fc971ac3d5592de4f6173",
+    "TypeScript": "success",
+    "Rust": "success",
+    "Native": "failure",
+    "NativeReason": "R8 script catalog mismatch",
+    "reruns": 0
+  },
+  "phase1": "4/21",
+  "A6": "NOT_QUALIFIED",
+  "E02": "PROPOSED/uninstalled"
+}

@@ -1,3 +1,20 @@
+## Exact pure Principal loader instrumented validation - 2026-11-07
+
+One newly authorized pure test used the original script path, unchanged exported
+loader SHAa1844f2bace6aecf526ab547f8c1a0cd17628c79769f66478166a5566c1a6211,
+same DLL and fixed PowerShell. Durable events prove write/fsync, close, pre-execution
+existence/hash and post-execution existence/hash. Process exited0; tamper refusal,
+valid copied-byte load and duplicate refusal pass (3 groups), Query0. Old failed
+receipt remains unchanged; earlier missing-script cause stays UNKNOWN. Historical
+complete harness was not retained, so byte-identical reproduction is not claimed.
+No changed path/encoding/security protection, actual account, install, ACL or R9.
+
+CI162 for c4e4cc60 is terminal: TypeScript/Rust PASS; Native FAIL remains exact
+R8 script catalog mismatch. No rerun. A6 not qualified, Phase1 still4/21 and E02
+PROPOSED/uninstalled. This resolves the current pure-load evidence gap only; full
+installed-root trust/account validation remains separate.
+[Evidence](../superpowers/reviews/2026-11-07-principal-loader-instrumented.json).
+
 ## Precompiled Runtime offline wiring and closed package - 2026-11-07
 
 Approved private DLL route now shares existing Principal epoch, close/EOF, cancellation
