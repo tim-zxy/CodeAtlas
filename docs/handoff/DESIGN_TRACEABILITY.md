@@ -1,3 +1,19 @@
+## P1-11 private TEST_DOUBLE safety / W010 candidate correction - 2026-11-07
+
+knowledge-and-consumption section4 maps to Application semantic-test-invocation:
+four tasks, seven request/six result fields, explicit budgets, immutable untrusted
+context, existing IR allowlist validation, cancellation settlement and no fallback.
+Root test command includes18 offline cases. No public schema/export or real model;
+semantic quality/provenance/permission/publication remain unproved and disabled.
+Independent review's usage-accounting issue has a RED-to-GREEN cancellation test.
+Section5/ADR020 and DESIGN_AUTHORITY, with be41b9b/1606579/944e09f history, identify
+the W010 INTERRUPTED persistence as candidate error. Candidate packet/SQL now use
+eight states; owned-memory test proves forbidden ninth-state writes leave the row
+unchanged and permitted failure transitions work. No formal migration changed.
+Application build,47 affected tests and architecture17 passed. Controlling specs,
+thresholds, acceptance count and production refusal remain unchanged. Details in
+the semantic-test-invocation and policy-lifecycle-decision-proposal records.
+
 ## P1-13 bounded reconciliation preprocessing reuse - 2026-11-07
 
 ADR007/exact-reference-v1 semantics unchanged. identity.ts separates its internal

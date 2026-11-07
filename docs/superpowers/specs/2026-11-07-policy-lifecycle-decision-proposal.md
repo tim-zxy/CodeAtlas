@@ -17,6 +17,18 @@ F below means an existing requirement; N means a proposed refinement requiring
 review. Approving field names alone cannot establish a real issuer or authorize
 body reads. Unknown principal, ownership, policy or cleanup always refuses.
 
+Authority correction (2026-11-07): D6's previous ninth persisted state was a
+candidate transcription error, not an approved change. The controlling
+knowledge-and-consumption section5 eight-state wording is traceable to be41b9b;
+the erroneous nine-state candidate appeared in1606579 and its SQL in944e09f.
+ADR020 accepts the Phase1 design package; DESIGN_AUTHORITY precedence does not
+let a later PROPOSED packet supersede that contract. INTERRUPTED remains a
+startup diagnostic only. No accepted ADR/DCP authorizing a ninth state was found.
+The candidate text/SQL now align with section5; remaining physical choices stay
+PROPOSED. An owned-memory test first demonstrated the erroneous SQL accepted
+INTERRUPTED, then proved refusal without changing CAPTURING/null finished_at;
+FAILED/CANCELLED transitions still work. No production migration was changed.
+
 ## A. Process-local authorization owner
 
 ### Existing authority
@@ -330,22 +342,25 @@ before W011/policy/Evaluation. No numbering change is necessary for A or B.
 
 ### D6: precise state, inspection and sole-writer constraints
 
-Existing design vocabulary is CREATED/CAPTURING/GENERATING/VALIDATING/READY/
-PUBLISHED/FAILED/CANCELLED/INTERRUPTED. Proposed transition guards:
+Controlling knowledge-and-consumption section5 defines eight persisted run states:
+CREATED/CAPTURING/GENERATING/VALIDATING/READY/PUBLISHED/FAILED/CANCELLED.
+INTERRUPTED is a startup diagnostic only, not a ninth state. Proposed guards:
 
 ```text
 CREATED(snapshot=null) -> CAPTURING(snapshot=null)
 CAPTURING(null) -> CAPTURING(bound once)
 CAPTURING(bound) -> GENERATING -> VALIDATING -> READY -> PUBLISHED
-any nonterminal -> FAILED | CANCELLED | INTERRUPTED
+any nonterminal -> FAILED | CANCELLED
 ```
 
-All nine states may be represented in DDL without enabling unimplemented paths.
+Only those eight states may be represented in the candidate DDL; unavailable paths
+remain disabled.
 First writer permits creation/capture and actual failure endings only. Generating
 and later require non-null snapshot; terminal states require finished_at_ms>=
 created_at_ms; nonterminal states require null finish time. Snapshot never clears
-or changes, including on failure. INTERRUPTED needs real ended/settled-owner proof;
-inspect does not change run state or resume the old writer.
+or changes, including on failure. Under section5's unfinished/no-live-owner condition,
+INTERRUPTED is diagnostic only: it changes neither state nor finished_at_ms, proves
+no NOT_COMMITTED outcome, and never resumes the old writer. Inspection remains read-only.
 
 Keep the write receipt above; inspection has a different closed union:
 

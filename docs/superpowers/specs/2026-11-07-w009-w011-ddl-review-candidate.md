@@ -178,10 +178,10 @@ CREATE TABLE compilation_runs (
   PRIMARY KEY(id),
   UNIQUE(workspace_id,caller_subject_id,request_key),
   UNIQUE(workspace_id,id,snapshot_id,revision_set_id),
-  CHECK(state IN ('CREATED','CAPTURING','GENERATING','VALIDATING','READY','PUBLISHED','FAILED','CANCELLED','INTERRUPTED')),
+  CHECK(state IN ('CREATED','CAPTURING','GENERATING','VALIDATING','READY','PUBLISHED','FAILED','CANCELLED')),
   CHECK(state<>'CREATED' OR snapshot_id IS NULL),
   CHECK(state NOT IN ('GENERATING','VALIDATING','READY','PUBLISHED') OR snapshot_id IS NOT NULL),
-  CHECK((state IN ('PUBLISHED','FAILED','CANCELLED','INTERRUPTED') AND finished_at_ms IS NOT NULL AND finished_at_ms>=created_at_ms) OR (state NOT IN ('PUBLISHED','FAILED','CANCELLED','INTERRUPTED') AND finished_at_ms IS NULL)),
+  CHECK((state IN ('PUBLISHED','FAILED','CANCELLED') AND finished_at_ms IS NOT NULL AND finished_at_ms>=created_at_ms) OR (state NOT IN ('PUBLISHED','FAILED','CANCELLED') AND finished_at_ms IS NULL)),
   FOREIGN KEY(workspace_id) REFERENCES workspace(id),
   FOREIGN KEY(workspace_id,revision_set_id) REFERENCES revision_sets(workspace_id,id),
   FOREIGN KEY(workspace_id,snapshot_id,revision_set_id) REFERENCES compilation_input_snapshots(workspace_id,id,revision_set_id)
@@ -286,7 +286,7 @@ WHEN NEW.id IS NOT OLD.id OR NEW.workspace_id IS NOT OLD.workspace_id
   OR NEW.created_at_ms IS NOT OLD.created_at_ms
 BEGIN SELECT RAISE(ABORT,'immutable run request'); END;
 CREATE TRIGGER proposed_runs_terminal BEFORE UPDATE ON compilation_runs
-WHEN OLD.state IN ('PUBLISHED','FAILED','CANCELLED','INTERRUPTED')
+WHEN OLD.state IN ('PUBLISHED','FAILED','CANCELLED')
 BEGIN SELECT RAISE(ABORT,'terminal run'); END;
 CREATE TRIGGER proposed_runs_snapshot_once BEFORE UPDATE ON compilation_runs
 WHEN (OLD.snapshot_id IS NOT NULL AND NEW.snapshot_id IS NOT OLD.snapshot_id)
@@ -300,7 +300,7 @@ WHEN NOT(NEW.state=OLD.state
  OR (OLD.state='GENERATING' AND NEW.state='VALIDATING')
  OR (OLD.state='VALIDATING' AND NEW.state='READY')
  OR (OLD.state='READY' AND NEW.state='PUBLISHED')
- OR NEW.state IN ('FAILED','CANCELLED','INTERRUPTED'))
+ OR NEW.state IN ('FAILED','CANCELLED'))
 BEGIN SELECT RAISE(ABORT,'invalid run transition'); END;
 
 -- Reject every declared duplicate key before conflict replacement can delete history.

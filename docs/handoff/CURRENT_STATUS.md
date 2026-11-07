@@ -1,3 +1,27 @@
+## P1-11 offline safety boundary / W010 authority correction - 2026-11-07
+
+Private Application semantic-test-invocation implements the existing four-task
+request/result boundary using self-owned context and TEST_DOUBLE only. Explicit
+byte/call/token accounting, frozen context/control, task/schema/ref/scope/snapshot
+checks and settled cancellation refusal; no retry or remote fallback. Schema/ref
+checks cannot prove semantic truth or production authority: outputs explicitly
+say NOT_EVALUABLE/NOT_VERIFIED/contextAuthorization NOT_ESTABLISHED. Usage is
+settled even when completed output is rejected on cancellation/deadline; unknown
+usage and cleanup remain explicit. No public export, real adapter or dependency.
+W010's ninth persisted state was an erroneous PROPOSED candidate transcription;
+history/ADR020/authority precedence support the existing eight-state contract.
+Corrected candidate text and test-only SQL, leaving INTERRUPTED diagnostic-only.
+No production migration/reader admission or frozen specification was changed.
+Application build,47 related tests (18 semantic/29 storage) and architecture17
+passed. Independent review found the usage issue; its regression was RED before
+the fix and GREEN afterward. [Boundary/evidence](../superpowers/specs/2026-11-07-semantic-test-invocation.md),
+[authority finding](../superpowers/specs/2026-11-07-policy-lifecycle-decision-proposal.md).
+No user bodies, identity query, install, scan clearance, model, migration, publication
+or R9. Phase1 stays4/21; A6 NOT_QUALIFIED, E02 PROPOSED/uninstalled, P1-11/E08/E14
+and W009-W011 production obligations open. CI172 at4282418 ended TS/Rust success,
+Native catalog prerequisite failure (expected189/current206: added17,changed11).
+That prior head does not verify this batch; no old R8 manifest was weakened.
+
 ## P1-13 invocation-local reconciliation efficiency - 2026-11-07
 
 After checking the current roadmap/dependencies, independently improved the

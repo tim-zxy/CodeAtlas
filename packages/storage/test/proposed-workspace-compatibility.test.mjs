@@ -125,6 +125,50 @@ function applyCandidate(db, version, fail = false) {
     throw error;
   }
 }
+
+test('candidate run states preserve the eight-state contract; INTERRUPTED is diagnostic only', (t) => {
+  const f = fixture(t);
+  applyCandidate(f.db, 9);
+  applyCandidate(f.db, 10);
+  for (const ending of ['FAILED', 'CANCELLED']) {
+    f.db
+      .prepare('INSERT INTO compilation_runs VALUES(?,?,?,?,?,?,?,?,?,?,?)')
+      .run(
+        'run:' + ending,
+        'ws:one',
+        'set:one',
+        'subject:owned',
+        'key:' + ending,
+        '{}',
+        'CREATED',
+        null,
+        '{}',
+        0,
+        null,
+      );
+    f.db.prepare("UPDATE compilation_runs SET state='CAPTURING' WHERE id=?").run('run:' + ending);
+    assert.throws(() =>
+      f.db
+        .prepare("UPDATE compilation_runs SET state='INTERRUPTED',finished_at_ms=1 WHERE id=?")
+        .run('run:' + ending),
+    );
+    assert.deepEqual(
+      {
+        ...f.db
+          .prepare('SELECT state,finished_at_ms FROM compilation_runs WHERE id=?')
+          .get('run:' + ending),
+      },
+      { state: 'CAPTURING', finished_at_ms: null },
+    );
+    f.db
+      .prepare('UPDATE compilation_runs SET state=?,finished_at_ms=1 WHERE id=?')
+      .run(ending, 'run:' + ending);
+    assert.equal(
+      f.db.prepare('SELECT state FROM compilation_runs WHERE id=?').get('run:' + ending).state,
+      ending,
+    );
+  }
+});
 function assertOldPhysicalState(f) {
   assert.deepEqual(f.image(), f.oldImage);
   const current = new Map(f.schema().map((row) => [row.name, row]));
