@@ -10,6 +10,7 @@ import prepareMixedSource, {
   MixedSourceWorkflowError,
   type MixedSourcePreparationInput,
 } from './mixed-source-workflow.js';
+import { checkParsedDocumentWrite } from './document-write-preflight.js';
 
 type Prepared = Awaited<ReturnType<typeof prepareMixedSource>>;
 export interface CompilationSourceIdentity {
@@ -191,6 +192,76 @@ export async function verifyCompilationSource(
     return refusal(error, prepared.effects, account);
   }
 }
+/** Private selected-document preparation only. The genuine Source reader keeps
+ * its original per-file RAW authorization/freshness checks. No scan clearance,
+ * complete-repository claim, write callback or Source ownership transfer. */
+export async function checkOwnedCompilationDocument(
+  handle: object,
+  input: Omit<Parameters<typeof checkParsedDocumentWrite>[0], 'source' | 'account'>,
+): Promise<
+  Awaited<ReturnType<typeof checkParsedDocumentWrite>> & {
+    originalSource: 'SELECTED_DOCUMENT_ONLY';
+  }
+> {
+  const owner = ownerFor(handle),
+    { prepared, account } = owner;
+  const unchanged = () => {
+    account.checkpoint();
+    if (
+      owners.get(handle) !== owner ||
+      !isDeepStrictEqual(prepared.state, owner.state) ||
+      !isDeepStrictEqual(prepared.observation, owner.observation)
+    )
+      throw new CompilationSourceError('SOURCE_CONTEXT_UNAVAILABLE', prepared.effects);
+  };
+  try {
+    const data = (value: unknown, key: string): unknown => {
+      if (!value || typeof value !== 'object' || types.isProxy(value))
+        throw new CompilationSourceError('SOURCE_CONTEXT_UNAVAILABLE', prepared.effects);
+      const descriptor = Object.getOwnPropertyDescriptor(value, key);
+      if (!descriptor || !Object.hasOwn(descriptor, 'value'))
+        throw new CompilationSourceError('SOURCE_CONTEXT_UNAVAILABLE', prepared.effects);
+      return descriptor.value;
+    };
+    unchanged();
+    const path = data(input, 'path');
+    const metadata = data(input, 'metadata');
+    const document = owned(data(metadata, 'document'), account);
+    const revision = owned(data(metadata, 'revision'), account);
+    const allocateId = data(metadata, 'allocateId');
+    if (Reflect.ownKeys(input).length !== 2 || Reflect.ownKeys(metadata as object).length !== 3)
+      throw new CompilationSourceError('SOURCE_CONTEXT_UNAVAILABLE', prepared.effects);
+    if (data(document, 'workspaceId') !== owner.workspaceId)
+      throw new CompilationSourceError('SOURCE_CHANGED', prepared.effects);
+    const result = await checkParsedDocumentWrite({
+      path: path as string,
+      metadata: { document, revision, allocateId } as Parameters<
+        typeof checkParsedDocumentWrite
+      >[0]['metadata'],
+      account,
+      source: {
+        observation: owner.observation,
+        effects: prepared.effects,
+        async readDocumentBytes(selectedPath) {
+          unchanged();
+          const bytes = await prepared.readDocumentBytes(selectedPath);
+          unchanged();
+          return bytes;
+        },
+        async verifySelection() {
+          unchanged();
+          await prepared.verifySelection();
+          unchanged();
+        },
+      },
+    });
+    unchanged();
+    return Object.freeze({ ...result, originalSource: 'SELECTED_DOCUMENT_ONLY' as const });
+  } catch (error) {
+    return refusal(error, prepared.effects, account);
+  }
+}
+
 export function releaseCompilationSource(handle: object): void {
   ownerFor(handle);
   owners.delete(handle);

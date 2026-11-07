@@ -1,3 +1,22 @@
+## P1-12 owned selected-document consumption wired offline - 2026-11-07
+
+Private checkOwnedCompilationDocument binds the genuine Source owner to the
+existing selected-file RAW authorization, parser and raw/final-Draft deny-only
+preflight. Document metadata is owned before awaits; foreign workspace/unknown
+fields refuse. Source owner/lifetime checked around reads, final verification and
+return; release during mapping refuses. No Source/account/policy override, raw
+bytes or Draft is exposed. Caller retains Source ownership. Even no-hit returns
+NOT_COMMITTED/clearance=false/originalSource SELECTED_DOCUMENT_ONLY; captured-only
+evaluation remains originalSource NOT_INSPECTED. No production/public entry added.
+Five new offline cases, Application build,51 related Source/Runtime/parser/preflight
+tests and architecture17 pass. Independent static review: no high/important issue.
+[Exact boundary, evidence and pending policy choices](../superpowers/specs/2026-11-07-secret-coverage-candidate.md).
+Full admitted original inventory/coverage/consumption policy still unapproved;
+ordinary capture remains scan-denied. No user data, installed update, real identity,
+model, migration, publishing or R9. Phase1 remains4/21/A6 NOT_QUALIFIED/E02 PROPOSED.
+CI169 Rust passed, Native catalog prerequisite failed, TS still running when checked;
+that earlier head does not verify this new Source composition.
+
 ## P1-12 joined URI fix and typed capture evaluation - 2026-11-07
 
 Candidate URI scanner now enumerates all adjacent schemes, independently parses

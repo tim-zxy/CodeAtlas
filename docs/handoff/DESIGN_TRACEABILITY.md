@@ -1,3 +1,15 @@
+## P1-12 owned selected-document original/consumer binding - 2026-11-07
+
+Existing Source/SECURITY RAW and document preflight boundaries map to private
+checkOwnedCompilationDocument in compilation-source.ts. Genuine owner, copied
+metadata/workspace, unchanged per-file reader authorization and owner checks around
+async consumption bind actual selected original bytes to existing parser/final-Draft
+denial. No full-inventory/clearance claim; Source ownership remains caller-held.
+Compilation-source tests add5 cases; initial3 RED-before-entry, final51 related
+tests/build/architecture17 pass; independent static review found no high/important
+issue. No public API/policy/schema/migration or production gate change; exact
+remaining policy choices are in the existing secret-coverage candidate spec.
+
 ## P1-12 adjacent URI fix and captured-value evaluation - 2026-11-07
 
 Private Documents candidate now checks every adjacent scheme; three original

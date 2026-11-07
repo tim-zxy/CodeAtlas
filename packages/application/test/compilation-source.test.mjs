@@ -35,9 +35,10 @@ function policy() {
     },
   };
 }
-async function context(t) {
-  const f = await setup(t),
-    db = await openR010FixtureDatabase(path.join(f.root, 'source.sqlite'), 'repo:a2', f.root);
+async function context(t, documentText) {
+  const f = await setup(t);
+  if (documentText !== undefined) await fs.writeFile(path.join(f.root, 'note.md'), documentText);
+  const db = await openR010FixtureDatabase(path.join(f.root, 'source.sqlite'), 'repo:a2', f.root);
   f.state.closeOwnedDatabase = () => db.close();
   f.request.config.exclude = ['source.sqlite', 'source.sqlite-*'];
   const account = makeAccount(f.control.signal).account;
@@ -66,6 +67,101 @@ async function context(t) {
   };
   return { ...f, db, prepared, identity };
 }
+async function documentInput(f, allocateId) {
+  const vector = JSON.parse(
+    await fs.readFile(
+      new URL('../../documents/test/fixtures/source-draft.json', import.meta.url),
+      'utf8',
+    ),
+  );
+  const document = {
+    ...vector.envelope.payload.document,
+    workspaceId: 'workspace:a2',
+    repositoryId: 'repo:a2',
+    logicalPath: 'note.md',
+    currentRevisionId: null,
+  };
+  const fingerprint = f.identity.targetInventory.find(
+    (file) => file.path === 'note.md',
+  ).contentFingerprint;
+  let next = 0;
+  return {
+    path: 'note.md',
+    metadata: {
+      document,
+      revision: {
+        id: 'revision:owned',
+        documentId: document.id,
+        sourceFingerprint: fingerprint,
+        policyVersion: 'policy:offline',
+        sourceBasis: {
+          documentId: document.id,
+          documentRevisionId: 'revision:owned',
+          contentFingerprint: fingerprint,
+        },
+      },
+      allocateId: allocateId ?? ((kind) => `owned:${kind}:${++next}`),
+    },
+  };
+}
+
+test('owned selected-document preflight binds real Source bytes and always refuses commitment', async (t) => {
+  const f = await context(t, '# Owned\n\npassword=synthetic-only\n');
+  const before = f.db.sourceState.load('repo:a2');
+  const result = await api.checkOwnedCompilationDocument(f.prepared.handle, await documentInput(f));
+  assert.equal(result.status, 'NOT_COMMITTED');
+  assert.equal(result.reason, 'SECRET_DETECTED');
+  assert.equal(result.originalSource, 'SELECTED_DOCUMENT_ONLY');
+  assert.equal(result.scan.clearance, false);
+  assert.equal(JSON.stringify(result).includes('synthetic-only'), false);
+  assert.deepEqual(f.db.sourceState.load('repo:a2'), before);
+  api.releaseCompilationSource(f.prepared.handle);
+});
+
+test('owned document preflight rejects copied handles and foreign workspace before Source reads', async (t) => {
+  const f = await context(t, '# Owned\n');
+  const input = await documentInput(f),
+    calls = f.state.calls;
+  await assert.rejects(api.checkOwnedCompilationDocument({}, input));
+  input.metadata.document.workspaceId = 'foreign';
+  await assert.rejects(api.checkOwnedCompilationDocument(f.prepared.handle, input));
+  assert.equal(f.state.calls, calls);
+  api.releaseCompilationSource(f.prepared.handle);
+});
+
+test('owned document consumption refuses if Source handle is released during mapping', async (t) => {
+  const f = await context(t, '# Owned\n');
+  let once = false;
+  const input = await documentInput(f, () => {
+    if (!once) {
+      once = true;
+      api.releaseCompilationSource(f.prepared.handle);
+    }
+    return 'section:closed';
+  });
+  await assert.rejects(api.checkOwnedCompilationDocument(f.prepared.handle, input));
+  assert.equal(once, true);
+});
+
+test('owned clean document is still NOT_COMMITTED with incomplete scan coverage', async (t) => {
+  const f = await context(t, '# Owned\n');
+  const result = await api.checkOwnedCompilationDocument(f.prepared.handle, await documentInput(f));
+  assert.equal(result.status, 'NOT_COMMITTED');
+  assert.equal(result.reason, 'SECRET_COVERAGE_INCOMPLETE');
+  assert.equal(result.scan.clearance, false);
+  assert.equal(result.originalSource, 'SELECTED_DOCUMENT_ONLY');
+  api.releaseCompilationSource(f.prepared.handle);
+});
+
+test('owned document bytes changed after preparation refuse without Source state writes', async (t) => {
+  const f = await context(t, '# Owned\n');
+  const input = await documentInput(f),
+    before = f.db.sourceState.load('repo:a2');
+  await fs.writeFile(path.join(f.root, 'note.md'), '# Changed\n');
+  await assert.rejects(api.checkOwnedCompilationDocument(f.prepared.handle, input));
+  assert.deepEqual(f.db.sourceState.load('repo:a2'), before);
+  api.releaseCompilationSource(f.prepared.handle);
+});
 test('private genuine Source context API exists', () => {
   for (const name of [
     'prepareCompilationSource',

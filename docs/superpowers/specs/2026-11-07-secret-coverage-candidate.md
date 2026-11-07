@@ -1,5 +1,42 @@
 # Offline secret coverage candidate and P1-12 boundary map
 
+## Owned selected-document consumption (offline composition)
+
+Private `checkOwnedCompilationDocument(handle,{path,metadata})` authenticates the
+existing genuine CompilationSource WeakMap owner, snapshots document/revision and
+allocator before asynchronous reading, and checks workspace before any file read.
+It delegates unchanged selected-file RAW READ_SOURCE policy and same-handle content
+checks to the existing prepared Source reader, then uses existing pinned parser/
+raw-and-Draft v1 deny-only preflight. Source owner state and handle lifetime are
+checked around each asynchronous read/verification and again before return. No
+caller can replace Source/account/root/policy; unknown input fields refuse.
+No original bytes or Draft escape. Result is always NOT_COMMITTED/clearance=false
+and explicitly originalSource SELECTED_DOCUMENT_ONLY, never full-repository proof.
+The caller still owns/releases Source; no grant or ownership transfer is issued.
+The captured-values-only evaluator still says originalSource NOT_INSPECTED.
+
+Three initial tests failed before this entry existed. Five added tests cover
+secret/no-hit refusal, fabricated handle/foreign scope, release during mapping,
+and changed original bytes. Actual self-owned temporary files/SQLite and Git
+doubles only. Application build,51 related Source/Runtime/parser/preflight tests
+and architecture17 pass. Independent static review found no high/important issue;
+reviewer did not execute SQLite tests, integrator executed the declared suite.
+No user data, installed change, actual account query, model, migration or R9.
+
+Remaining policy choices (not implemented or approved by this slice):
+1. Keep current selected-document/typed-values offline evaluation and production
+   scan denial. Lowest exposure, but cannot close complete original-input capture.
+2. Explicitly freeze the complete admitted raw-input inventory and versioned
+   detection/consumption policy: include all required original SourceFile/document
+   supports, retain per-file RAW permissions and all path/classification blocks,
+   reject required missing/binary/uninspectable inputs, and bind exact originals/
+   transformed values to one live operation before consumption. Risks include
+   false positives, accepted detector misses, omitted transitive input and resource
+   cost. Existing transport does support selected TEXT; that alone is not policy
+   approval or authenticated full-inventory consumption. This choice requires a
+   concrete policy/coverage decision; no general raw-read or production permission
+   is inferred. Recommend retaining option1 while completing that decision package.
+
 ## Follow-up: joined URI and typed capture evaluation
 
 Joined URI defect is fixed: enumerate every scheme in each token and parse the
