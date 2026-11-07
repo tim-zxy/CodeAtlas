@@ -1,0 +1,159 @@
+{
+  "schema": "codeatlas.precompiled-principal-preparation-evidence",
+  "version": 1,
+  "baseCommit": "c8f92d26cc7efb112fb3c4a210a8111b3869234b",
+  "authority": "Explicit user approval of controlled precompiled component preparation/validation only; no actual identity query, ACL/protected install/persistent permissions or R9",
+  "assumptions": [
+    "This is a test-owned build location, not a trusted production installation",
+    "Protected Windows compiler/CLR are the declared platform trust base; no hermetic full platform proof",
+    "An artifact/manifest or load success grants no Principal"
+  ],
+  "build": {
+    "kind": "PRINCIPAL_HELPER_BUILD_ONLY",
+    "inputs": [
+      {
+        "path": "D:\\workspace\\CodeAtlas-phase1-20261106\\scripts\\windows-process-principal.cs",
+        "sha256": "1cfe23cd44422131131e29fe3eecf7f1c95c3b4281e4d3f06a0a03a4cfa11f25",
+        "bytes": 5395
+      },
+      {
+        "path": "C:/Windows/Microsoft.NET/Framework64/v4.0.30319/csc.exe",
+        "sha256": "46809206887326d2d24db1eff1f3064de972c3451abe766b49111450a5e08e00",
+        "bytes": 2569832
+      },
+      {
+        "path": "C:/Windows/Microsoft.NET/Framework64/v4.0.30319/csc.exe.config",
+        "sha256": "2d4610ade011e530d817dd3ba4fc787e5dc0c2297cc520c30a643b8fb13f9093",
+        "bytes": 182
+      },
+      {
+        "path": "C:/Windows/Microsoft.NET/Framework64/v4.0.30319/mscorlib.dll",
+        "sha256": "11ac114c43ecf6996bef58ba3c99fba3693a4560a84eeadde54d193060dc626c",
+        "bytes": 5445432
+      },
+      {
+        "path": "C:/Windows/Microsoft.NET/Framework64/v4.0.30319/System.dll",
+        "sha256": "2b3c17c6208a0b4b6beb94e1a066f99ba06cdb2ea919479e99d47e8c6d96dc71",
+        "bytes": 3545264
+      }
+    ],
+    "args": [
+      "/nologo",
+      "/noconfig",
+      "/nostdlib+",
+      "/target:library",
+      "/platform:x64",
+      "/optimize+",
+      "/debug-",
+      "/unsafe-",
+      "/reference:C:/Windows/Microsoft.NET/Framework64/v4.0.30319/mscorlib.dll",
+      "/reference:C:/Windows/Microsoft.NET/Framework64/v4.0.30319/System.dll",
+      "/out:D:\\workspace\\CodeAtlas-phase1-20261106\\.superpowers\\principal-artifact-2S6bWj\\windows-process-principal.dll",
+      "D:\\workspace\\CodeAtlas-phase1-20261106\\.superpowers\\principal-artifact-2S6bWj\\windows-process-principal.cs"
+    ],
+    "directory": "D:\\workspace\\CodeAtlas-phase1-20261106\\.superpowers\\principal-artifact-2S6bWj",
+    "artifact": "D:\\workspace\\CodeAtlas-phase1-20261106\\.superpowers\\principal-artifact-2S6bWj\\windows-process-principal.dll",
+    "status": 0,
+    "signal": null,
+    "errorCode": null,
+    "compilerOutputObserved": false,
+    "identityQueries": 0,
+    "installed": false,
+    "sha256": "4ee3e48cfa2f6c4d883a983a2f7b5739ecf7b01d515c94cecbed9f87e3bb7147",
+    "bytes": 6656,
+    "compilerTempEntries": []
+  },
+  "buildCommand": "node scripts/build-windows-principal-artifact.mjs --build-only --max-build-ms 30000 --max-artifact-bytes 1048576",
+  "testCommand": "C:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -NoLogo -NoProfile -NonInteractive -File scripts/test-windows-principal-artifact.ps1 -ArtifactPath D:\\workspace\\CodeAtlas-phase1-20261106\\.superpowers\\principal-artifact-2S6bWj\\windows-process-principal.dll -ExpectedSha256 4ee3e48cfa2f6c4d883a983a2f7b5739ecf7b01d515c94cecbed9f87e3bb7147 -MaxArtifactBytes 1048576",
+  "firstTestAttempt": {
+    "exitCode": 1,
+    "identityQueries": 0,
+    "reason": "Harness initialized ImageFileMachine with undefined enum value0 after byte-loading; process exited. Corrected placeholder to I386; same artifact reused, not recompiled."
+  },
+  "finalTest": {
+    "exitCode": 0,
+    "passedGroups": 9,
+    "identityQueries": 0,
+    "identityApiCalls": 0,
+    "artifactBytes": 6656,
+    "artifactSha256": "4ee3e48cfa2f6c4d883a983a2f7b5739ecf7b01d515c94cecbed9f87e3bb7147",
+    "assembly": "windows-process-principal, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "mvid": "e23de7e4-f3ae-43de-8f4e-e0257a01bf73",
+    "machine": "AMD64",
+    "peKind": "ILOnly, PE32Plus",
+    "assemblyReferences": [
+      "mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+    ],
+    "nativeImports": [
+      "advapi32.dll",
+      "kernel32.dll"
+    ],
+    "artifactReads": 1,
+    "replacementFixtureReads": 1,
+    "loadCalls": 1,
+    "loadedFromMemory": true,
+    "pathReplacedAfterRead": true,
+    "installed": false
+  },
+  "groups": [
+    "Wrong digest rejected before any load",
+    "Tampered bytes rejected before any load",
+    "Artifact byte cap refused before any load",
+    "Noncanonical digest refused before any load",
+    "One-read replacement fixture still loads original verified bytes in memory",
+    "x64 PE/assembly metadata",
+    "Exact managed references and native import names",
+    "Pure ValidateInput and canonical Serialize on synthetic DTO",
+    "Existing loaded type refuses duplicate load"
+  ],
+  "hostObservedSha256": "60c9b29843624dd8af6b6a7b26147753be6aeef65098b9a503cc50850afe410f",
+  "compilerBuildAttempts": 1,
+  "helperTestAttempts": 2,
+  "processesObservedAfterExit": 0,
+  "compilerTempEntries": [],
+  "verification": {
+    "architectureProjects": 17,
+    "architectureExitCode": 0,
+    "scriptFormatExitCode": 0,
+    "diffCheckExitCode": 0
+  },
+  "productionOwnerChanged": false,
+  "knownFolderGuardRemoved": false,
+  "actualIdentityQueries": 0,
+  "aclChanges": 0,
+  "protectedInstallation": false,
+  "unknownDirectoryTouched": false,
+  "remaining": [
+    "Fixed production artifact location/deployment protection and adopted artifact identity",
+    "Actual host token/lifecycle and genuine identity query separately authorized and validated",
+    "No deterministic-build claim or full CLR/native closure qualification",
+    "No production grant, scan clearance, migration, R9 or Phase1 acceptance"
+  ],
+  "ci159": {
+    "runId": 42339720804,
+    "head": "090b2965db53bb0d1945b56cfe25c6796250496b",
+    "typescript": "success",
+    "rust": "success",
+    "native": "failure exact R8 script catalog mismatch",
+    "coversPreparation": false
+  },
+  "ci160LastObserved": {
+    "runId": 42340253385,
+    "head": "c8f92d26cc7efb112fb3c4a210a8111b3869234b",
+    "typescript": "in_progress",
+    "rust": "success",
+    "native": "failure",
+    "coversPreparation": false
+  },
+  "formalStatus": {
+    "phase1": "4/21",
+    "a6": "NOT_QUALIFIED",
+    "e02": "PROPOSED/uninstalled"
+  },
+  "filesSha256": {
+    "scripts/build-windows-principal-artifact.mjs": "d2083932ce5ace8930dbe72bae386135940aeb5cae40b47dcf94b5df8656672b",
+    "scripts/test-windows-principal-artifact.ps1": "b2fa399cb0155929b139ac69f57b41f5deea0c646c63fa910e34f094ba719f6d"
+  },
+  "independentReview": "No important issue within controlled preparation scope; supplied digest/manifest are consistency test data, not production trust; no actual dependency closure or reproducible-build proof."
+}

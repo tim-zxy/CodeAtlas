@@ -96,3 +96,18 @@ Mitigate with frozen inputs, exact copied bytes, explicit dependencies and negat
 artifact/ordering/lifecycle tests before any real query. Rollback disables the new
 path and leaves acquisition unavailable, without granting access or deleting evidence.
 Offline substitutes cannot prove actual OS success or A6 qualification.
+
+## Controlled preparation approval and result
+
+The proposal-only/no-build statements above are the retained pre-approval snapshot.
+User has now approved controlled preparation/validation, expressly excluding actual
+account query, protected installation, ACL or persistent access. One local candidate
+build and byte-load/negative/pure-protocol verification completed; exact hashes,
+commands, dependencies, initial harness failure and limits are recorded in
+../reviews/2026-11-07-precompiled-principal-preparation.json. This is not adoption of
+a production install path, removal of Runtime KnownFolder checks or identity success.
+DLL6656bytes/SHA4ee3e48cfa2f6c4d883a983a2f7b5739ecf7b01d515c94cecbed9f87e3bb7147
+is retained under ignored .superpowers/principal-artifact-2S6bWj; source scripts and
+small receipts may sync, raw DLL is not installed or committed. Its unsigned assembly
+identity and measured MVID are provenance, not a cryptographic publisher signature.
+Only fixed-byte equality and existing trusted deployment can support later admission.

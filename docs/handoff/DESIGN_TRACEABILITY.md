@@ -1,3 +1,13 @@
+## Approved precompiled Principal preparation - 2026-11-07
+
+Explicit controlled-build approval -> frozen source/compiler/config/references ->
+actual x64 DLL identity/dependency record -> bounded copied-byte hash/load, mismatch/
+tamper/cap/duplicate refusal and physical post-read path replacement -> pure protocol
+without Query. Production owner/KnownFolder and permission boundaries stay unchanged.
+[Evidence](../superpowers/reviews/2026-11-07-precompiled-principal-preparation.json).
+No loaded component or manifest is authority; actual installation and identity remain
+separate. Historical harness enum failure and original UNKNOWN Temp evidence retained.
+
 ## Capture acquisition failed-rollback settlement - 2026-11-07
 
 Original owned transaction/UNKNOWN invariant -> actual SQLite authorizer-denied

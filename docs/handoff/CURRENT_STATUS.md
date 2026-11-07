@@ -1,3 +1,33 @@
+## Precompiled Principal component controlled preparation passed - 2026-11-07
+
+User approved controlled build/validation only, without real account query, ACL or
+protected installation/persistent permission. Exactly one build freezes actual LF
+source, compiler, compiler config and both explicit Framework references before /
+after compilation; no response file/default references or download. Fresh ignored
+owned directory retains source, manifest and DLL. Compiler exited0, no output or
+temp entry. Candidate DLL6656bytes SHA256
+4ee3e48cfa2f6c4d883a983a2f7b5739ecf7b01d515c94cecbed9f87e3bb7147.
+
+Fixed PowerShell tests perform one bounded read per load-input fixture, copy/hash
+then Assembly.Load the same owned bytes without reopening the path. Wrong digest,
+tamper, cap, malformed digest and duplicate type refuse before load. Replacing only
+a new test fixture after reading does not change the loaded assembly. Nine groups
+pass; reflection confirms AMD64/ILOnly PE32Plus, mscorlib/System refs, kernel32/advapi32
+import names. Pure input/serialization uses synthetic DTO; Query is never invoked.
+First test failed on an invalid enum0 harness initializer after loading; after known
+process exit, corrected I386 placeholder and reused the same unchanged DLL. No
+rebuild, actual identity call or silent failure deletion. Both processes exited.
+
+Production owner/KnownFolder guard are unchanged. Artifact/manifest/load success is
+not a grant; installation trust and exact production loading remain unresolved.
+No full platform/native closure or deterministic build is claimed. Build/test scripts
+are explicit local preparation tools, not an automatic CI identity/bootstrap entry.
+CI159 ended TS/Rust PASS, Native retained R8 catalog FAIL; CI160 TS still running at
+last check, Rust PASS, Native FAIL. Neither proves this new preparation batch.
+No user DB, scan clearance, UNKNOWN directory cleanup or R9. Phase1 stays4/21;
+A6 NOT_QUALIFIED; E02 baseline PROPOSED/uninstalled.
+[Exact evidence](../superpowers/reviews/2026-11-07-precompiled-principal-preparation.json).
+
 ## P1-12 actual rollback failure retains UNKNOWN - 2026-11-07
 
 Inspection found no asynchronous/thenable production acquisition in this capture
