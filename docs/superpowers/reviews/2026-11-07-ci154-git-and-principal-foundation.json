@@ -1,0 +1,136 @@
+{
+  "kind": "CI154_GIT_TIMER_AND_LOCAL_PRINCIPAL_OFFLINE_FOUNDATION",
+  "date": "2026-11-07",
+  "baseCommit": "ef42b17e8aa5f2666ca6e5c558eada204985a308",
+  "worktree": "D:/workspace/CodeAtlas-phase1-20261106",
+  "bindings": {
+    "packages/source/src/git.ts": "3e287e2a2e9c5866aa4095beb22ae8171556d172d70a9de3ee9fbc567acf928b",
+    "packages/source/test/mixed-source-workflow.test.mjs": "207ad649deac09fe0c00ec5ad9f4cc9d96b857c54c174353030adff9f0d7d835",
+    "packages/runtime/src/windows-process-principal.ts": "94e894edf83e7b889154d17ca260b149bed128b066485568c3b163f0d5f9b49a",
+    "packages/runtime/test/windows-process-principal.test.mjs": "b7d9612c824749fceb9fe47d7725317973918cc579b79274e428463bc327d2cc",
+    "scripts/windows-process-principal.cs": "1cfe23cd44422131131e29fe3eecf7f1c95c3b4281e4d3f06a0a03a4cfa11f25",
+    "scripts/test-windows-process-principal.ps1": "8af069d9efdb1c620ed3187e40b011444d40fd8bf8072daa36d35f9dd3853ded",
+    ".github/workflows/ci.yml": "d4852f0d3bf4709bd13dea4dda9b2fc7cb98c8c750a805f04dd8c39ee6685b11",
+    "package.json": "0ca4fb06b12e8ca2dfeb6d611c771f0eee26828ea490201ba9c477f8ca85893e"
+  },
+  "ci154": {
+    "runId": 42331125508,
+    "head": "76e4fb0522a285eabf1ee014ca3d3e3b3a5fec74",
+    "typescriptJob": 128277637681,
+    "status": "failure",
+    "tests": 5059,
+    "pass": 5038,
+    "fail": 1,
+    "skip": 20,
+    "todo": 0,
+    "durationMs": 860174.946398,
+    "case": "A2 qualification beforeSpawn timeout cannot launch Git",
+    "actual": "SourceScanError Git qualification failed; gitFailure191/Timeout.fail285",
+    "expected": "DEADLINE_EXCEEDED",
+    "laterCohorts": "not executed",
+    "native": "separate retained R8 catalog failure"
+  },
+  "ci155": {
+    "runId": 42332022262,
+    "head": "ef42b17e8aa5f2666ca6e5c558eada204985a308",
+    "typescript": "success; full log confirms previous Runtime/compatibility/WAL cases",
+    "hasSourceFix": false,
+    "hasPrincipalFoundation": false,
+    "rust": "success",
+    "native": "failure; exact R8 script catalog mismatch confirmed in full log",
+    "cohorts": [
+      {
+        "pass": 5039,
+        "skip": 20,
+        "fail": 0
+      },
+      {
+        "pass": 89,
+        "skip": 0,
+        "fail": 0
+      },
+      {
+        "pass": 431,
+        "skip": 0,
+        "fail": 0
+      }
+    ]
+  },
+  "redGreen": [
+    "Source deterministic fixedDate+real30ms timer 0pass1fail before fix, identical CI stack; original CI test unchanged",
+    "Principal tiny Uint8Array ownvalueOf returned longer valid bytes, defeating prior cap: Missing expected exception before intrinsic-view fix; passes after",
+    "Proposed JS dollar trailing-newline weakness NOT reproduced in Node24.15.0; all LF/CR/U2028/U2029 protocol tests already rejected before any regex change; regex unchanged",
+    "C# initial pure serializer rejected supported hex SID vector; pure bounded validator aligned and offline tests pass",
+    "Initial missing Runtime module while writing new tests was scaffolding, not a product regression"
+  ],
+  "validation": {
+    "sourceBuild": {
+      "command": "node node_modules/typescript/bin/tsc -p packages/source/tsconfig.json",
+      "exitCode": 0
+    },
+    "sourceTests": {
+      "command": "node --test --test-concurrency=1 packages/source/test/mixed-source-workflow.test.mjs packages/source/test/mixed-source-verification.test.mjs packages/source/test/document-bytes.test.mjs packages/application/test/mixed-source-workflow.test.mjs",
+      "tests": 91,
+      "pass": 90,
+      "fail": 0,
+      "todo": 1,
+      "skip": 0,
+      "durationMs": 4309.185,
+      "exitCode": 0,
+      "note": "Existing C1 symlink TODO retained; original workflow40/40 overlaps this result"
+    },
+    "runtimeBuild": {
+      "command": "node node_modules/typescript/bin/tsc -p packages/runtime/tsconfig.json",
+      "exitCode": 0
+    },
+    "principalTests": {
+      "command": "node --test packages/runtime/test/windows-process-principal.test.mjs",
+      "tests": 33,
+      "pass": 33,
+      "fail": 0,
+      "cancelled": 0,
+      "skip": 0,
+      "todo": 0,
+      "durationMs": 148.1271,
+      "exitCode": 0,
+      "scope": "synthetic helper replies only"
+    },
+    "csharpOffline": {
+      "command": "powershell.exe -NoProfile -NonInteractive -File scripts/test-windows-process-principal.ps1",
+      "groups": 28,
+      "identityQueries": 0,
+      "identityApiCalls": 0,
+      "durationMs": 667,
+      "exitCode": 0
+    },
+    "format": {
+      "command": "node node_modules/prettier/bin/prettier.cjs --check package.json .github/workflows/ci.yml packages/source/src/git.ts packages/source/test/mixed-source-workflow.test.mjs packages/runtime/src/windows-process-principal.ts packages/runtime/test/windows-process-principal.test.mjs",
+      "exitCode": 0
+    },
+    "architecture": {
+      "command": "node scripts/check-architecture.mjs",
+      "projects": 17,
+      "exitCode": 0
+    },
+    "diffWhitespace": {
+      "command": "git diff --check",
+      "exitCode": 0
+    },
+    "workflowYaml": {
+      "result": "Parsed with existing Runtime yaml dependency; offline helper step and all three original jobs retained",
+      "exitCode": 0,
+      "note": "Initial root-level yaml import was unresolved; no dependency installed, reused package-local dependency"
+    }
+  },
+  "review": {
+    "source": "Independent final read-only review no important findings; abort event wrapper and listener removal/cancel priority preserved",
+    "principal": "Important byte-hook finding reproduced/fixed/rereviewed; trailing-newline finding withdrawn after actual tests; C# rights/buffer/cleanup statically reviewed"
+  },
+  "limitations": [
+    "C# Query/Win32 identity calls not executed; offline compile/serialization is not OS validation",
+    "Fixed host/helper identity, real spawn/join/lifetime and Principal/Operation handles not implemented",
+    "No current Windows user SID queried/logged or permissions issued",
+    "No new dependency, public package export, migration, profile, numeric resource default, actual R9, scan/publication/model/remote or persistent access",
+    "Existing CI remains mandatory; old-head results cannot qualify new Source code"
+  ]
+}

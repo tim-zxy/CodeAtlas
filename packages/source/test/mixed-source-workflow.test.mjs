@@ -691,3 +691,44 @@ test('A2 owned Git proof refuses synchronously inside gate abort listener', asyn
   assert.deepEqual(outcomes, ['GIT_FAILED', 'GIT_FAILED']);
   assert.equal(f.state.calls, 0);
 });
+
+test('A2 qualification timer retains deadline refusal when wall clock lags', async (t) => {
+  const f = await setup(t),
+    a = makeAccount(f.control.signal),
+    epoch = Date.now();
+  t.mock.method(Date, 'now', () => epoch);
+  f.control.deadlineEpochMs = epoch + 30;
+  let entered = 0,
+    disposed = 0;
+  f.control.qualification = {
+    executablePath: process.execPath,
+    environment: {},
+    createLifecycle() {
+      return {
+        async beforeSpawn(_plan, signal) {
+          entered++;
+          await new Promise((resolve) =>
+            signal.aborted ? resolve() : signal.addEventListener('abort', resolve, { once: true }),
+          );
+        },
+        async beforeInput() {
+          assert.fail('no child');
+        },
+        async afterClose() {
+          assert.fail('no close');
+        },
+        async dispose() {
+          disposed++;
+        },
+      };
+    },
+  };
+  await assert.rejects(
+    boundedGitOutcome(api.observeMixedGitWorktree(f.request, a.account, f.control)),
+    code('DEADLINE_EXCEEDED'),
+  );
+  assert.equal(entered, 1);
+  assert.equal(disposed, 1);
+  assert.equal(f.state.calls, 0);
+  assert.equal(a.usage.invalid, true);
+});

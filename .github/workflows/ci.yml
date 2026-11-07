@@ -75,6 +75,11 @@ jobs:
         run: rustup toolchain install 1.98.1 --profile default
       - name: Build TypeScript workspace
         run: pnpm build
+      - name: Compile Windows principal helper and run offline protocol tests
+        shell: pwsh
+        run: |
+          & "$env:SystemRoot/System32/WindowsPowerShell/v1.0/powershell.exe" -NoProfile -NonInteractive -File scripts/test-windows-process-principal.ps1
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Run HOST launch inventory memory checks
         shell: pwsh
         run: |

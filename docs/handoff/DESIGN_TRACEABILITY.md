@@ -1,3 +1,15 @@
+## CI154 deadline provenance and local-account identity foundation - 2026-11-07
+
+Existing bounded Git qualification -> wall-clock-lag timer counterexample -> actual
+timer cause retained as DEADLINE_EXCEEDED, cancel precedence and cleanup unchanged.
+Accepted current-process same-account trust -> minimal query-only OS identity data
+helper + private bounded canonical wire decoder -> pure C#/synthetic Node tests.
+Decoded data cannot grant operations; source byte hooks cannot substitute uncharged
+reply bytes. Actual host/helper/lifecycle and policy ownership remain unimplemented.
+[Evidence](../superpowers/reviews/2026-11-07-ci154-git-and-principal-foundation.json)
+and [foundation contract](../superpowers/specs/2026-11-07-local-windows-principal-foundation.md).
+No new Canonical/public schema, Node package export or model/scan/publication grant.
+
 ## Existing Repository Runtime header admission - 2026-11-07
 
 Original exact SQL13/UTF-8 capture requirement -> trace/inspection missing-header

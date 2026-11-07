@@ -1,3 +1,41 @@
+## CI154 Git timer correction and local-principal offline foundation - 2026-11-07
+
+CI154 is not only the retained Native R8 failure: TypeScript first cohort ended
+5059total/5038PASS/1FAIL/20existingSKIP. A2 beforeSpawn timeout expected
+DEADLINE_EXCEEDED but Git gate recomputed Date.now after its real timer fired and
+could return GIT_FAILED when the wall clock lagged. Later chained cohorts did not
+run, so154 does not certify the new candidate/WAL experiments. CI155 onef42b17
+subsequently ended TS/Rust success: actual logs confirm Runtime admission, all four
+nonempty disk cases and WAL backup tests passed (cohorts5039PASS+20existingSKIP,
+89PASS,431PASS). Native still fails exact R8 catalog precheck. CI155 lacks this
+Source timer fix and the principal foundation, so it cannot qualify either change.
+
+A fixed-wall-clock/real30ms regression reproduced the same CI stack. Timer source
+now explicitly selects deadline refusal; cancellation still wins. Abort listeners
+use a zero-argument wrapper so an Event cannot become a deadline flag, and exact
+listener cleanup remains. Original CI assertion, timeout, budgets and cleanup are
+unchanged. Source build and four affected suites90PASS/0FAIL/1existingC1TODO pass.
+
+After the accepted local-account boundary, implementation started with a minimal
+identity-data foundation: query-only C# process/TokenUser helper plus strict private
+Runtime decoder. C# only compiles/tests input and serialization (28 groups); Query
+and identity APIs were not called. Runtime build and33 synthetic reply tests pass.
+Review reproduced raw typed-array valueOf substituting bytes beyond the checked
+ceiling; intrinsic buffer/offset/length view now avoids all source conversion hooks.
+The separate suggested JS trailing-newline issue did NOT reproduce; existing
+non-multiline regexes already refuse all four tails. Negative coverage was added,
+with no unnecessary regex change. Independent final review has no important issue.
+
+The original test command includes the decoder; existing Windows Native CI adds a
+pure offline helper compile/protocol test before all unchanged qualification gates.
+No principal/operation handle, real OS query, fixed host binding or actual issuer
+is enabled. PID/SID/challenge JSON is data, not authority or human consent. Fixed
+host/helper identity, actual spawn/join and operation/policy ownership remain next
+integration work. No persistent access, security setting, user migration, remote/
+model permission, scan clearance, publication or actual R9 changed.
+[Evidence](../superpowers/reviews/2026-11-07-ci154-git-and-principal-foundation.json).
+Phase1 remains4/21; A6 NOT_QUALIFIED; E02 evaluation baseline PROPOSED/uninstalled.
+
 ## Local account trust boundary accepted; issuer implementation next - 2026-11-07
 
 The user accepts current single-machine Windows-account trust INCLUDING same-SID

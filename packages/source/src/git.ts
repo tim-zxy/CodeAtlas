@@ -349,18 +349,19 @@ async function gitGate(
   const stopped = new Promise<never>((_resolve, reject) => {
     rejectStop = reject;
   });
-  const fail = () => {
+  const fail = (deadlineExpired = false) => {
     const error = control.signal.aborted
       ? sourceStop('CANCELLED')
-      : Date.now() >= control.deadlineEpochMs
+      : deadlineExpired || Date.now() >= control.deadlineEpochMs
         ? sourceStop('DEADLINE_EXCEEDED')
         : gitFailure();
     stop.abort(error);
     rejectStop(error);
   };
-  const timer = setTimeout(fail, Math.max(0, control.deadlineEpochMs - Date.now()));
-  control.signal.addEventListener('abort', fail, { once: true });
-  other?.addEventListener('abort', fail, { once: true });
+  const abort = () => fail();
+  const timer = setTimeout(() => fail(true), Math.max(0, control.deadlineEpochMs - Date.now()));
+  control.signal.addEventListener('abort', abort, { once: true });
+  other?.addEventListener('abort', abort, { once: true });
   try {
     if (control.signal.aborted || other?.aborted || Date.now() >= control.deadlineEpochMs) fail();
     await Promise.race([
@@ -374,8 +375,8 @@ async function gitGate(
     if (Date.now() >= control.deadlineEpochMs) throw sourceStop('DEADLINE_EXCEEDED');
   } finally {
     clearTimeout(timer);
-    control.signal.removeEventListener('abort', fail);
-    other?.removeEventListener('abort', fail);
+    control.signal.removeEventListener('abort', abort);
+    other?.removeEventListener('abort', abort);
   }
 }
 /** Private bounded owner; optional qualification hooks never enter public Source exports. */

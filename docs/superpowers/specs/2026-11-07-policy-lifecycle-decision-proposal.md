@@ -412,3 +412,13 @@ D5 must also approve named workspace9/10/11 reader compatibility: current
 DocumentStore7/8 and ContractStore6/7/8 reject those new versions. No >= admission
 or repo-schema10 widening is proposed. Migration/reader changes must be coordinated
 before any user database upgrade; publication stays closed pending full W011.
+
+
+### Accepted A boundary: foundation implementation status
+
+The [private identity-data foundation](2026-11-07-local-windows-principal-foundation.md)
+now has query-only C# source and a bounded Runtime wire decoder, tested offline.
+No actual identity query or issuer is activated; no DTO is a PrincipalHandle.
+This is implementation preparation within A, not approval of W009-W011, model,
+scan clearance or publication. Fixed helper/host identities, actual private child
+channel/join and current-operation/policy ownership remain the next integration.
