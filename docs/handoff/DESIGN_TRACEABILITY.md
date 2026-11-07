@@ -1,3 +1,28 @@
+## Approved Principal installation stopped before real validation - 2026-11-07
+
+User approved fixed new-directory installation then one current-process-only probe,
+with first-failure stop, no ACL mutation/overwrite/retry. Existing six-ancestor
+preflight guard passed using own installer security context for ACL comparison only.
+Created the absent LocalAppData/Programs/CodeAtlas/releases/release-ac84dad419c823081d471b6aec288985b01a2f3d9c065e9e666174271bef62b7
+from the frozen owned bundle;3053 files and11 internal junctions copied, exact
+installed catalog/content/topology validation passed. No previous target overwritten.
+
+Post-copy Windows PowerShell guard exited1: Get-Acl could not autoload
+Microsoft.PowerShell.Security (CouldNotAutoloadMatchingModule). This is a check-tool
+failure, not evidence that ACL rules failed and not an automatic-approval rejection.
+Stopped without retry. The real Principal probe/Query was NEVER run. Two installer
+guards read their own security context for ACL comparison; no account grant minted.
+
+Both processes exited; no matching residual process observed. Newly created tree
+remains unqualified and retained, with conservative UNKNOWN installation cleanup.
+No automatic deletion/repair. Old codeatlas-principal-VU96KA timestamps unchanged.
+No ACL mutation, user Source/DB, network, publication or R9. Inherited module search
+order is a candidate cause only; failed-child environment was not separately saved.
+Need a reviewed fixed module environment and separately authorized continuation of
+post-install checks on the existing exact target, without reinstall/overwrite.
+Phase1 stays4/21; A6 NOT_QUALIFIED; E02 PROPOSED/uninstalled.
+[Exact failure and actions](../superpowers/reviews/2026-11-07-principal-installation-stopped.json).
+
 ## Explicit precompiled validation entry and deployment plan - 2026-11-07
 
 Closed-package integration exposed a real handoff gap: the explicit one-shot probe

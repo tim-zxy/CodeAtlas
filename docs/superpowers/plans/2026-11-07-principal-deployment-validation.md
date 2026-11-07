@@ -44,3 +44,14 @@ Offline route RED4 cases had1PASS/3FAIL; GREEN4/4 uses Principal module doubles 
 Risks: same-account modification remains within accepted trust boundary; copy/junction/ACL race or unknown inherited rights; fixed host/Node changes force refusal; Windows OS dependency closure and actual subject may still refuse; soft limits are not hard memory containment; local DLL/pack are not in Git. No claim of deterministic compiler output. Obtain separately approved artifact backup/transfer before relying on another computer.
 
 Rollback is to stop using the private new route and retain the old/default unavailable state, release any settled process-local handles and restart if poisoned. Do not claim old legacy route will work here. No automatic release pointer, permission or user data has changed; any deletion of installed/partial files needs exact owned-path/cleanup proof and approval. Conservative alternative is leaving real admission disabled and continuing offline work; it cannot prove actual Principal or A6 success.
+
+## Approved execution outcome - 2026-11-07
+
+The original READY/NOT EXECUTED statements above are retained pre-approval snapshots.
+User approved installation and one validation. Copy/content verification completed in
+the fixed absent target; post-copy ACL guard failed on Security module autoload.
+The sequence stopped before the one real validation, without retry/ACL change or
+cleanup. Target now exists and must not be reinstalled/overwritten. See
+../reviews/2026-11-07-principal-installation-stopped.json. Any continuation must first
+review the exact check environment and obtain approval for checking the existing
+target; this plan has not executed that continuation.

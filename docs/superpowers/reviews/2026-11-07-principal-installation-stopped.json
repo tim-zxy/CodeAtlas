@@ -1,0 +1,143 @@
+{
+  "kind": "APPROVED_PRINCIPAL_INSTALLATION_STOPPED_BEFORE_QUERY",
+  "date": "2026-11-07",
+  "sourceHead": "643195a462945ef9e25447049d285751b47fdaa4",
+  "authorization": "new fixed directory installation then one current-process-only validation; fail-stop, no retry or ACL change",
+  "install": {
+    "kind": "FIXED_NEW_VERSION_INSTALLATION",
+    "status": "STOPPED",
+    "cleanupState": "UNKNOWN",
+    "target": "C:/Users/Freya/AppData/Local/Programs/CodeAtlas/releases/release-ac84dad419c823081d471b6aec288985b01a2f3d9c065e9e666174271bef62b7",
+    "mutated": true,
+    "code": "ERR_ASSERTION",
+    "name": "AssertionError",
+    "principalQueries": 0,
+    "ACLChanges": 0,
+    "retries": 0
+  },
+  "acl": {
+    "status": 1,
+    "signal": null,
+    "errorCode": null,
+    "stdout": "",
+    "stderr": "D:\\workspace\\CodeAtlas-phase1-20261106\\.superpowers\\principal-install-20261107\\guard.ps1 : ��ģ�顰Microsoft.PowerShell.\r\nSecurity�����ҵ���Get-Acl��������޷����ظ�ģ�顣�й���ϸ��Ϣ�������С�Import-Module Microsoft.PowerShell.Security����\r\n    + CategoryInfo          : ObjectNotFound: (Get-Acl:String) [guard.ps1], CommandNotFoundException\r\n    + FullyQualifiedErrorId : CouldNotAutoloadMatchingModule,guard.ps1\r\n \r\n"
+  },
+  "events": [
+    {
+      "utc": "2026-11-07T10:05:51.187Z",
+      "stage": "SOURCE_VERIFIED",
+      "source": "D:\\workspace\\CodeAtlas-phase1-20261106\\.superpowers\\closed-runtime-20261107-deployment-01\\release-ac84dad419c823081d471b6aec288985b01a2f3d9c065e9e666174271bef62b7",
+      "target": "C:/Users/Freya/AppData/Local/Programs/CodeAtlas/releases/release-ac84dad419c823081d471b6aec288985b01a2f3d9c065e9e666174271bef62b7",
+      "digest": "ac84dad419c823081d471b6aec288985b01a2f3d9c065e9e666174271bef62b7",
+      "files": 3053,
+      "aliases": 11
+    },
+    {
+      "utc": "2026-11-07T10:05:51.195Z",
+      "stage": "TARGET_CREATED"
+    },
+    {
+      "utc": "2026-11-07T10:05:51.773Z",
+      "stage": "FILES_COPIED",
+      "count": 500
+    },
+    {
+      "utc": "2026-11-07T10:05:52.345Z",
+      "stage": "FILES_COPIED",
+      "count": 1000
+    },
+    {
+      "utc": "2026-11-07T10:05:52.889Z",
+      "stage": "FILES_COPIED",
+      "count": 1500
+    },
+    {
+      "utc": "2026-11-07T10:05:53.433Z",
+      "stage": "FILES_COPIED",
+      "count": 2000
+    },
+    {
+      "utc": "2026-11-07T10:05:53.987Z",
+      "stage": "FILES_COPIED",
+      "count": 2500
+    },
+    {
+      "utc": "2026-11-07T10:05:54.533Z",
+      "stage": "FILES_COPIED",
+      "count": 3000
+    },
+    {
+      "utc": "2026-11-07T10:06:00.286Z",
+      "stage": "INSTALLED_CONTENT_VERIFIED",
+      "files": 3053,
+      "aliases": 11
+    },
+    {
+      "utc": "2026-11-07T10:06:00.776Z",
+      "stage": "INSTALLATION_STOPPED",
+      "kind": "FIXED_NEW_VERSION_INSTALLATION",
+      "status": "STOPPED",
+      "cleanupState": "UNKNOWN",
+      "target": "C:/Users/Freya/AppData/Local/Programs/CodeAtlas/releases/release-ac84dad419c823081d471b6aec288985b01a2f3d9c065e9e666174271bef62b7",
+      "mutated": true,
+      "code": "ERR_ASSERTION",
+      "name": "AssertionError",
+      "principalQueries": 0,
+      "ACLChanges": 0,
+      "retries": 0
+    }
+  ],
+  "preflight": {
+    "knownFolder": "C:/Users/Freya/AppData/Local",
+    "targetInitiallyAbsent": true,
+    "physicalAncestors": 6,
+    "ACLGuardPassed": true,
+    "currentInstallerSecurityContextRead": true,
+    "authorityMinted": false
+  },
+  "completed": [
+    "all3053 files and unchanged450696-byte catalog copied into a new absent target",
+    "all11 internal junctions recreated under installed root",
+    "full bounded installed content/topology validation passed exact ac84dad419c823081d471b6aec288985b01a2f3d9c065e9e666174271bef62b7",
+    "both installer/check child processes exited; no matching residual process observed",
+    "old codeatlas-principal-VU96KA creation/write timestamps unchanged"
+  ],
+  "failure": {
+    "stage": "POST_COPY_ACL_CHECK",
+    "type": "CouldNotAutoloadMatchingModule,guard.ps1",
+    "command": "Get-Acl",
+    "module": "Microsoft.PowerShell.Security",
+    "classification": "check-tool module autoload failure, not a demonstrated ACL denial or platform approval rejection",
+    "rootCause": "not proven; inherited module search path includes Codex PowerShell modules ahead of Windows PowerShell modules",
+    "sourceOfEvidence": "failed child stderr plus read-only current environment/manifests; failed child environment was not captured separately"
+  },
+  "currentContextReads": {
+    "purpose": "installer ACL subject comparison only, two guard invocations",
+    "principalHelperQueries": 0,
+    "accountProofIssued": false
+  },
+  "notExecuted": [
+    "installed windows-principal-live-probe",
+    "Principal helper Query",
+    "user Source/database access",
+    "ACL mutation",
+    "network/publish",
+    "R9"
+  ],
+  "nextProposedOnly": [
+    "review/freeze a fixed system-module environment for post-install guard, matching existing production owner",
+    "after new approval inspect existing exact target without overwrite/copy/reinstall, verify content and run ACL guard once",
+    "only if guard succeeds, use previously frozen one-shot process-only probe; stop first failure"
+  ],
+  "rollback": "no automatic deletion, overwrite or permission fix; keep new unqualified directory and all receipts; installed tree is not yet trusted/usable",
+  "files": {
+    "install.mjs": "4196359c5a59aff40414646aac6aaea86e5834c97060e1838a3532881809ca04",
+    "guard.ps1": "1fc92716df86e262f59b74bf2ea0265c26b05cd770faf78bfa3d69cbb012a6a1",
+    "install-result.json": "7a79309cb6d6562479fc09a78aacda0b8651803c768a85878a882b17f018b340",
+    "installed-acl-result.json": "79817509b81563dd34b7835012aba16b5123ca9f77378122207ca3f03bcbf6f4",
+    "install-events.jsonl": "5eec73a2a2930834e047ddc016c36d679a4d12c14066bb91c647c49d6abf48e2"
+  },
+  "phase1": "4/21",
+  "A6": "NOT_QUALIFIED",
+  "E02": "PROPOSED/uninstalled"
+}
