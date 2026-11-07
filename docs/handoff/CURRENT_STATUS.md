@@ -1,3 +1,28 @@
+## P1-12 ordinary capture composition remains scan-denied - 2026-11-07
+
+Private Runtime `captureLocalCompilationInput` composes the existing genuine
+Principal/operation owner, shared HistoryReadBudget, owned SQLite capture ports,
+Source verifier and Application orchestrator. It owns/closes its operation on
+every post-acquisition exit; caller retains Principal and Source ownership. No
+new issuer, public API, scanner grant or Source preparation is introduced.
+Current whole-inventory clearance is unavailable: both repository and workspace
+materialization refuse CAPTURE_SCAN_UNAVAILABLE before fact/body acquisition.
+Caller scan flags cannot grant access; input getters/proxies are rejected without
+execution. This connects the ordinary private entry's refusal path, NOT a successful
+production snapshot or CLI activation. Underlying Source verification and Storage
+success paths remain separately tested; the new ordinary path does not reach them.
+
+Reproduce: runtime build; Node --test --test-concurrency=1 runtime tests
+local-capture-operation, compilation-input and compilation-source; architecture
+check. Result: build passed,22 outer tests passed (operation lane17 inner tests),
+17-project architecture passed. Tests use a Node-intrinsic Principal double and
+test-owned SQLite; Source tests use original Git doubles. No real identity query,
+Native, model, user database migration, secret clearance, publication or R9.
+CI #165 at33d1afa is terminal: TS/Rust success; Native failed at the approved-script
+catalog prerequisite. That result does not verify this new commit. Phase1 remains
+4/21; A6 NOT_QUALIFIED; E02 PROPOSED/uninstalled. Installed dc package is unchanged
+and does not contain this newly added entry; deployment is not updated by a push.
+
 ## Fixed dc version installed; single actual Principal probe passed - 2026-11-07
 
 User approved coexistence install then one process-only validation, stop first

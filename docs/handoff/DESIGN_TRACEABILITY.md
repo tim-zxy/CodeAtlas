@@ -1,3 +1,18 @@
+## P1-12 ordinary private capture entry / scan refusal - 2026-11-07
+
+Approved capture schema-v1 and existing complete-inventory authorization boundary
+map to `packages/runtime/src/local-compilation-capture.ts`: genuine operation owner
+and shared budget bind owned Storage and Source ports to Application capture.
+Repository/workspace materialization remains explicitly scan-denied; no DTO flag
+or identity success supplies clearance. Operation closes on exit, while Principal
+and Source remain caller-owned. Input accessors/proxies never execute.
+`packages/runtime/test/local-capture-operation.test.mjs` adds four offline entry
+cases: scan denial before repository acquisition, forged Principal refusal, scan
+flag cannot grant, and accessor/proxy rejection. Runtime capture/Source suites
+retain successful underlying owner coverage separately. Runtime build,22 outer
+tests (17 inner operation cases) and17-project architecture check passed. No new
+public contract, deployment, real query, migration, scan clearance or acceptance.
+
 ## Fixed dc version installed; single actual Principal probe passed - 2026-11-07
 
 User approved coexistence install then one process-only validation, stop first

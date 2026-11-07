@@ -24,7 +24,7 @@ if (!childLane) {
     );
     assert.ifError(result.error);
     assert.equal(result.status, 0, result.stdout + result.stderr);
-    for (const summary of ['tests 13', 'pass 13', 'fail 0', 'cancelled 0', 'skipped 0', 'todo 0'])
+    for (const summary of ['tests 17', 'pass 17', 'fail 0', 'cancelled 0', 'skipped 0', 'todo 0'])
       assert.ok(
         result.stdout.split(/\r?\n/).includes('# ' + summary),
         result.stdout + result.stderr,
@@ -43,6 +43,7 @@ if (!childLane) {
     },
   });
   const api = await import('../dist/local-capture-operation.js');
+  const { captureLocalCompilationInput } = await import('../dist/local-compilation-capture.js');
   const { DatabaseSync } = await import('node:sqlite');
   const { mkdtempSync, rmSync } = await import('node:fs');
   const { tmpdir } = await import('node:os');
@@ -151,6 +152,71 @@ if (!childLane) {
       create,
     };
   }
+  test('ordinary capture refuses missing inventory clearance before any repository access', async (t) => {
+    const f = setup(t);
+    // An empty repository map would fail acquisition if the scan boundary were bypassed.
+    await assert.rejects(
+      captureLocalCompilationInput({
+        ...f.input,
+        repositories: new Map(),
+        sources: new Map(),
+      }),
+      (error) => error.code === 'CAPTURE_SCAN_UNAVAILABLE' && error.cleanupState === 'SETTLED',
+    );
+    assert.equal(f.db.isTransaction, false);
+  });
+  test('ordinary capture rejects a Principal DTO before data capture', async (t) => {
+    const f = setup(t);
+    await assert.rejects(
+      captureLocalCompilationInput({
+        ...f.input,
+        principalHandle: {},
+        repositories: new Map(),
+        sources: new Map(),
+      }),
+    );
+    assert.equal(f.db.isTransaction, false);
+  });
+  test('ordinary capture cannot turn a caller scan flag into inventory authority', async (t) => {
+    const f = setup(t);
+    await assert.rejects(
+      captureLocalCompilationInput({
+        ...f.input,
+        repositories: new Map(),
+        sources: new Map(),
+        scanApproved: true,
+      }),
+      (error) => error.code === 'CAPTURE_SCAN_UNAVAILABLE' && error.cleanupState === 'SETTLED',
+    );
+    assert.equal(f.db.isTransaction, false);
+  });
+  test('ordinary capture rejects input accessors and proxies without invoking them', async (t) => {
+    const f = setup(t);
+    let calls = 0;
+    const input = { ...f.input, repositories: new Map(), sources: new Map() };
+    Object.defineProperty(input, 'principalHandle', {
+      get() {
+        calls++;
+        return f.principal;
+      },
+    });
+    await assert.rejects(captureLocalCompilationInput(input));
+    await assert.rejects(
+      captureLocalCompilationInput(
+        new Proxy(
+          {},
+          {
+            getPrototypeOf() {
+              calls++;
+              return Object.prototype;
+            },
+          },
+        ),
+      ),
+    );
+    assert.equal(calls, 0);
+    assert.equal(f.db.isTransaction, false);
+  });
   test('pure policy refs are deterministic data; real store membership and principal are mandatory', (t) => {
     const f = setup(t),
       first = f.create();
