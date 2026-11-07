@@ -141,9 +141,10 @@ export async function loadMigrationPlan(
   if (expectedKind !== 'REPOSITORY' && expectedKind !== 'WORKSPACE') {
     failManifest('Expected database kind must be REPOSITORY or WORKSPACE');
   }
+  const location = new URL(manifestUrl.href);
   let manifest: MigrationManifestV1;
   try {
-    const bytes = await readFile(manifestUrl);
+    const bytes = await readFile(location);
     const content = new TextDecoder('utf-8', { fatal: true, ignoreBOM: true }).decode(bytes);
     if (content.charCodeAt(0) === 0xfeff) failManifest('Manifest must not contain a BOM');
     manifest = parseManifest(JSON.parse(content) as unknown, expectedKind);
@@ -156,7 +157,7 @@ export async function loadMigrationPlan(
     );
   }
 
-  const manifestDirectory = dirname(fileURLToPath(manifestUrl));
+  const manifestDirectory = dirname(fileURLToPath(location));
   const realDirectory = await realpath(manifestDirectory);
   const loaded: LoadedMigration[] = [];
   for (const entry of manifest.migrations) {

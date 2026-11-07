@@ -165,3 +165,85 @@ test('invalid request is rejected before database creation', async () => {
     await temporary.remove();
   }
 });
+
+test('migration request retains its original target while the plan is loading', async () => {
+  const original = await temporaryDatabase();
+  const redirected = await temporaryDatabase();
+  try {
+    const request = {
+      databasePath: original.databasePath,
+      databaseKind: 'REPOSITORY',
+      manifestUrl: new URL(upgrade),
+      lockTimeoutMs: 0,
+    };
+    const pending = runMigrations(request);
+    request.databasePath = redirected.databasePath;
+    request.databaseKind = 'WORKSPACE';
+    request.lockTimeoutMs = -1;
+    const result = await pending;
+    assert.equal(result.databaseKind, 'REPOSITORY');
+    assert.deepEqual(result.appliedVersions, [1, 2]);
+    const database = new DatabaseSync(original.databasePath);
+    const other = new DatabaseSync(redirected.databasePath);
+    try {
+      assert.equal(database.prepare('PRAGMA user_version').get().user_version, 2);
+      assert.equal(other.prepare('PRAGMA user_version').get().user_version, 0);
+      assert.equal(
+        other.prepare("SELECT count(*) AS n FROM sqlite_master WHERE type='table'").get().n,
+        0,
+      );
+    } finally {
+      database.close();
+      other.close();
+    }
+  } finally {
+    await original.remove();
+    await redirected.remove();
+  }
+});
+
+test('relative migration target is bound before asynchronous loading', async () => {
+  const original = await temporaryDatabase();
+  const redirected = await temporaryDatabase();
+  const cwd = process.cwd();
+  try {
+    process.chdir(join(original.databasePath, '..'));
+    const pending = runMigrations({
+      databasePath: 'fixture.sqlite',
+      databaseKind: 'REPOSITORY',
+      manifestUrl: upgrade,
+    });
+    process.chdir(join(redirected.databasePath, '..'));
+    const result = await pending;
+    assert.deepEqual(result.appliedVersions, [1, 2]);
+    const database = new DatabaseSync(original.databasePath);
+    const other = new DatabaseSync(redirected.databasePath);
+    try {
+      assert.equal(database.prepare('PRAGMA user_version').get().user_version, 2);
+      assert.equal(other.prepare('PRAGMA user_version').get().user_version, 0);
+    } finally {
+      database.close();
+      other.close();
+    }
+  } finally {
+    process.chdir(cwd);
+    await original.remove();
+    await redirected.remove();
+  }
+});
+
+test('in-memory migration target keeps its SQLite special meaning', async () => {
+  assert.deepEqual(
+    await runMigrations({
+      databasePath: ':memory:',
+      databaseKind: 'REPOSITORY',
+      manifestUrl: upgrade,
+    }),
+    {
+      databaseKind: 'REPOSITORY',
+      initialVersion: 0,
+      finalVersion: 2,
+      appliedVersions: [1, 2],
+    },
+  );
+});

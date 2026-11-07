@@ -136,3 +136,17 @@ test('loader rejects invalid UTF-8, BOM, changed checksum, and wrong kind', asyn
     loadMigrationPlan(upgradeManifestUrl, 'WORKSPACE'),
   );
 });
+
+test('loader retains the original manifest directory after caller URL mutation', async () => {
+  const { loadMigrationPlan } = await import('../dist/index.js');
+  const url = new URL(upgradeManifestUrl);
+  const pending = loadMigrationPlan(url, 'REPOSITORY');
+  url.pathname = new URL('missing-original-directory/manifest.json', fixtureRoot).pathname;
+  const plan = await pending;
+  assert.equal(plan.latestVersion, 2);
+  assert.equal(plan.databaseKind, 'REPOSITORY');
+  assert.equal(
+    plan.migrations[0].sql,
+    'CREATE TABLE migration_probe (id INTEGER PRIMARY KEY, value TEXT NOT NULL);\n',
+  );
+});

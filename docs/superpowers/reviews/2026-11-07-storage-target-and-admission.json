@@ -1,0 +1,92 @@
+{
+  "kind": "EXISTING_STORAGE_TARGET_BINDING_AND_SCHEMA_ADMISSION",
+  "date": "2026-11-07",
+  "baseCommit": "944e09f091d823dca11e4ee1ba500e27fa66f62d",
+  "worktree": "D:/workspace/CodeAtlas-phase1-20261106",
+  "implementation": [
+    "Migration request primitive fields/URL privately captured before await; filesystem paths resolved at entry, :memory: preserved",
+    "Loader URL copy binds original manifest read and SQL directory",
+    "Legacy Contract prepare/apply/trace/non-null inspection enforce original workspace6/7/8 and FK=ON in their own transactions through charged runtimeSql; combined admission unchanged"
+  ],
+  "redGreen": [
+    "Original migration target and loader URL tests:13total,11pass,2fail before fix",
+    "Entry-cwd regression:8total,7pass,1fail before absolute-path fix; memory case passed",
+    "Final migration five-suite36/36; later backup-required still rejects entire pending batch",
+    "Contract old implementation:12/12fail then two separately added apply/FK cases2/2fail; no single14-test RED run; final14 included in39/39"
+  ],
+  "validation": {
+    "storageBuild": {
+      "command": "node node_modules/typescript/bin/tsc -p packages/storage/tsconfig.json",
+      "exitCode": 0
+    },
+    "migrationTests": {
+      "command": "node --test --test-concurrency=1 packages/storage/test/migration-runner.test.mjs packages/storage/test/migration-runner-application.test.mjs packages/storage/test/migration-runner-failures.test.mjs packages/storage/test/document-migrations.test.mjs packages/storage/test/runtime-migrations.test.mjs",
+      "tests": 36,
+      "pass": 36,
+      "fail": 0,
+      "cancelled": 0,
+      "skip": 0,
+      "todo": 0,
+      "durationMs": 2159.074,
+      "exitCode": 0
+    },
+    "contractTests": {
+      "command": "node --test packages/storage/test/contract-schema-admission.test.mjs packages/storage/test/contract-store.test.mjs packages/storage/test/declared-schema-contract-store.test.mjs packages/storage/test/workspace-compilation-input.test.mjs packages/storage/test/runtime-sql-budget.test.mjs",
+      "tests": 39,
+      "pass": 39,
+      "fail": 0,
+      "cancelled": 0,
+      "skip": 0,
+      "todo": 0,
+      "exitCode": 0,
+      "durationMs": 6162.8216
+    },
+    "integration": {
+      "command": "node --test --test-concurrency=1 packages/runtime/test/compilation-input.test.mjs packages/application/test/compilation-input.test.mjs",
+      "tests": 27,
+      "pass": 27,
+      "fail": 0,
+      "cancelled": 0,
+      "skip": 0,
+      "todo": 0,
+      "durationMs": 4380.458,
+      "exitCode": 0
+    },
+    "architecture": {
+      "command": "node scripts/check-architecture.mjs",
+      "projects": 17,
+      "exitCode": 0
+    },
+    "format": {
+      "command": "node node_modules/prettier/bin/prettier.cjs --check package.json packages/storage/src/migrations/runner.ts packages/storage/src/migrations/manifest.ts packages/storage/src/runtime/contract-store.ts packages/storage/test/migration-runner.test.mjs packages/storage/test/migration-runner-application.test.mjs packages/storage/test/migration-runner-failures.test.mjs packages/storage/test/contract-schema-admission.test.mjs",
+      "exitCode": 0
+    },
+    "diffWhitespace": {
+      "command": "git diff --check",
+      "exitCode": 0
+    }
+  },
+  "review": {
+    "migration": "Initial independent review found cwd gap; fixed with genuine RED/GREEN and rereview has no important findings",
+    "contract": "Independent review confirms all frozenSet call paths gated, own-view inspection and unchanged combined checks; no important findings"
+  },
+  "proposalOnly": [
+    "Explicit workspace9/10/11 compatibility inventory requires approved exact DDL",
+    "Writer restart negative proof remains unavailable; no absence-as-noncommit",
+    "Node24.15.0 backup API/no cancellation/overwrite/restart behavior locally checked without backup execution",
+    "Maintenance gate, owned destination, WAL/reopen validation and guard-to-runner lock gap require approval"
+  ],
+  "unchanged": [
+    "No user database, candidate migration, SQL manifest/checksum, permission issuer, production scan/publication, R9, budget or default changed",
+    "FormalPhase1=4/21; A6=NOT_QUALIFIED; E02=PROPOSED/uninstalled evaluation baseline"
+  ],
+  "ci152": {
+    "runId": 42328745068,
+    "head": "944e09f091d823dca11e4ee1ba500e27fa66f62d",
+    "rust": "success",
+    "native": "failure: R8 script catalog mismatch / D5_SCRIPT_PREREQUISITE_FAILED",
+    "typescript": "success (terminal job128270080426)",
+    "newBatchCoverage": false,
+    "status": "completed; overall failure solely retained Native prerequisite"
+  }
+}

@@ -222,3 +222,24 @@ test('concurrent version advance is re-read under lock and not replayed', async 
     await tmp.remove();
   }
 });
+
+test('backup-required later migration rejects the entire pending batch', async () => {
+  const plan = await loadMigrationPlan(upgrade, 'REPOSITORY');
+  const guarded = {
+    ...plan,
+    migrations: plan.migrations.map((migration) => ({
+      ...migration,
+      backupRequired: migration.version === 2,
+    })),
+  };
+  const database = new DatabaseSync(':memory:');
+  try {
+    assert.throws(() => applyMigrationPlan(database, guarded), {
+      code: 'MIGRATION_BACKUP_REQUIRED',
+    });
+    assert.equal(version(database), 0);
+    assert.equal(hasTable(database, 'migration_probe'), false);
+  } finally {
+    database.close();
+  }
+});

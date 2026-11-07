@@ -1,3 +1,16 @@
+## Existing SQLite migration target binding - 2026-11-07
+
+Original requested database/manifest -> private request and URL snapshots before
+await -> entry-cwd filesystem target -> original checksum/transaction/backup gates.
+Caller mutation and cwd drift each have real RED/GREEN regression evidence;
+:memory: retains its SQLite meaning. No new migration, schema, grant or backup
+bypass. Original Contract6/7/8/FK admission -> own-transaction charged checks on
+prepare/apply/trace/inspection -> unknown-version/no-pointer and real activation
+recovery regressions -> old runtime format1/2 and last-good preserved.
+[Evidence](../superpowers/reviews/2026-11-07-storage-target-and-admission.json).
+Reader/restart/backup candidate refinements for9/10/11 remain PROPOSED and cannot
+supply user-DB installation or cross-process termination authority.
+
 ## P1-10 fenced language boundary; CI151 and candidate schema - 2026-11-07
 
 Original ExactString language contract -> entity/NBSP failing fence -> raw OTHER/

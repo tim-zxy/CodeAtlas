@@ -216,6 +216,14 @@ function validated(
   b.own(result);
   return result;
 }
+function assertWorkspaceRuntimeSchema(sql: ReturnType<typeof runtimeSql>): void {
+  check(
+    [6, 7, 8].includes(
+      sql.read('pragma_user_version', ['user_version'], '1', [])[0]?.user_version as number,
+    ),
+  );
+  check(sql.read('pragma_foreign_keys', ['foreign_keys'], '1', [])[0]?.foreign_keys === 1);
+}
 function frozenSet(
   db: DatabaseSync,
   workspace: string,
@@ -226,11 +234,6 @@ function frozenSet(
   const sql = runtimeSql(db, b),
     basis = input.frozen.workspaceBasis;
   check(basis.workspaceId === workspace);
-  check(
-    [6, 7, 8].includes(
-      sql.read('pragma_user_version', ['user_version'], '1', [])[0]?.user_version as number,
-    ),
-  );
   const sets = sql.read('revision_sets', ['id', 'workspace_id', 'frozen'], 'id=?', [
     basis.revisionSetId,
   ]);
@@ -362,6 +365,7 @@ export class ContractStore {
     const { frozen } = authenticatedFrozen(input, current, b, maxInputBytes);
     db.exec('BEGIN');
     try {
+      assertWorkspaceRuntimeSchema(runtimeSql(db, b));
       const pointer = runtimeSql(db, b).read(
         'workspace_runtime_state',
         ['activation_id'],
@@ -411,6 +415,7 @@ export class ContractStore {
       committing = false;
     try {
       db.exec('BEGIN IMMEDIATE');
+      assertWorkspaceRuntimeSchema(runtimeSql(db, b));
       const current = snapshots(repositories, b);
       frozenSet(db, workspace, prepared, b, current);
       check(sameBindings(current, prepared.frozen), 'WORKSPACE_INPUT_CHANGED');
@@ -615,6 +620,7 @@ export class ContractStore {
       db = new DatabaseSync(path, { readOnly: true, enableForeignKeyConstraints: true });
     try {
       db.exec('BEGIN');
+      assertWorkspaceRuntimeSchema(runtimeSql(db, b));
       const rows = runtimeSql(db, b).read(
         'workspace_runtime_activations',
         ['id'],
@@ -658,10 +664,11 @@ export class ContractStore {
     db.exec('BEGIN');
     let stored: ReturnType<typeof readWorkspaceActivation> | null = null;
     try {
-      const sql = runtimeSql(db, b),
-        state = sql.read('workspace_runtime_state', ['activation_id'], 'workspace_id=?', [
-          workspace,
-        ]);
+      const sql = runtimeSql(db, b);
+      assertWorkspaceRuntimeSchema(sql);
+      const state = sql.read('workspace_runtime_state', ['activation_id'], 'workspace_id=?', [
+        workspace,
+      ]);
       check(state.length <= 1);
       if (state.length)
         stored = readWorkspaceActivation(db, workspace, text(state[0]!.activation_id), b);

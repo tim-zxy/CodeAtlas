@@ -394,7 +394,7 @@ type SnapshotInspection =
       workspaceId: EntityId;
       runId: EntityId;
       attemptedSnapshotId: EntityId;
-      diagnostic: 'WRITER_NOT_SETTLED' | 'STORAGE_UNAVAILABLE' | 'CLEANUP_UNCERTAIN';
+      diagnostic: 'OWNER_UNSETTLED' | 'DATABASE_UNAVAILABLE' | 'CLEANUP_UNCERTAIN';
     };
 ```
 
@@ -413,3 +413,86 @@ write orchestration's typed known-commit-plus-UNKNOWN-cleanup error/result encod
 must also be frozen under D6 before implementation; do not mislabel that case
 NOT_COMMITTED or blindly repeat the write. Inspection's own uncertain cleanup
 exposes no successful read result.
+
+## Reader compatibility implementation order (still PROPOSED)
+
+The current admission matrix is concrete: DocumentStore constructor/read/write
+admit workspace7/8 and FK=ON; Contract prepare/apply admit6/7/8 through frozenSet;
+combined compilation selection admits6/7/8 and FK=ON. The independent existing
+Contract admission fix checks original6/7/8 and FK=ON in prepare/apply/trace and
+non-null activation inspection transactions. It does not admit9/10/11. Constructor
+creation alone is not a successful read or schema capability. Fresh inspection
+uses its own readonly FK-enabled connection, not the caller connection pragma.
+
+Future reader admission must use explicit version sets after exact DDL approval.
+Version9 needs W009 parent/unique keys and guards;10 additionally needs all six
+W010 tables plus documents(id,workspace_id) UNIQUE;11 needs the real approved
+Evaluation/provenance producer and guards. Preserve W001-W008 tables, old document
+head/history and runtime format1/2 validation at every committed upgrade prefix.
+Do not support only11 while a successful009/failed010 leaves version9 unreadable.
+
+Current runtimeSql performs bounded specified-column reads; FK=ON is not a full
+schema or historical-integrity certificate. Required future table_xinfo/FK/index/
+trigger checks must be frozen from approved DDL, accounted in existing budgets,
+and exercised with missing/wrong objects and old-head/WAL/failed-prefix cases.
+Table presence, a working SELECT or an unbudgeted full-database scan is insufficient.
+No9/10/11 reader capability is implemented by this proposal.
+
+## Attempt ownership and backup execution boundary (still PROPOSED)
+
+A private attempt owner must bind the real Store, connection incarnation, run,
+normalized request and attemptedSnapshotId before writing. Real acknowledged
+COMMIT proves committed; successful rollback plus join of all writer work can
+prove not committed. An old WeakMap receipt is not serializable authority; a new
+Store's default NOT_COMMITTED is not evidence about a pre-restart attempt.
+Recommend initially supporting same-process settlement only. After restart,
+complete verified persistent rows may prove COMMITTED; without a real trusted
+manager's matching process-instance/all-writer exit evidence, absence stays
+UNKNOWN. No timeout, PID reuse, available lock or caller Boolean closes that gap.
+
+Local Node24.15.0 exports node:sqlite backup. Its local type documentation defines
+backup(DatabaseSync,path,{source?,target?,rate?,progress?}):Promise<number>, no
+AbortSignal. Existing destinations are overwritten; concurrent other-connection
+changes can restart copying. These are API facts, not executed backup evidence.
+Use SQLite backup, not independent copying of a live main/WAL/SHM file set.
+
+The minimum future orchestration must explicitly approve:
+
+1. A real maintenance owner that prevents new application writers and joins all
+   existing ones, binding logical database kind/owner and actual source/connection
+   identity. Cooperative process gating is not protection against arbitrary
+   same-account database writers. Missing exclusion or path-stability proof rejects.
+2. An exclusive owned destination directory with a new non-overlapping destination,
+   no link/replacement or existing-user-file overwrite. Backup's overwrite support
+   is not authorization to overwrite. Fixed identities must survive asynchronous
+   work; path strings alone do not prove file identity.
+3. An actual backup baseline and DDL handoff. A separate guard connection may hold
+   BEGIN IMMEDIATE while a different readonly source connection backs up, but that
+   guard cannot retain its SQLite write lock while the current runner acquires its
+   own write transaction. Releasing/reacquiring is not an atomic lock transfer.
+   The genuine maintenance gate must cover the whole gap and batch, or a separately
+   approved runner-owned design must remove it. Do not describe the current hook
+   as providing this guarantee.
+4. Real backup Promise settlement before any DDL. A deadline requests stop of later
+   work; it cannot cancel this API or make its Promise settled. Uncertain completion
+   preserves isolated partial output and UNKNOWN; no migration or second backup.
+5. Reopen validation of integrity_check, foreign_key_check, logical owner, exact
+   schema/version and committed WAL-resident sentinel data in owned tests; verify
+   the sealed backup is independently usable without omitted sidecars. A final
+   backup-file digest identifies that sealed result, not the live source's main-file
+   digest or an automatically restorable state.
+6. Explicit baseline choice: one pre-batch baseline plus exact per-step receipts
+   is the smaller proposed plan; per-migration backups cost more and create more
+   settlement boundaries. Either needs approval. If009 commits and010 fails, keep
+   actual9 and stop; restoring the pre-batch8 backup is a separate approved action,
+   never an automatic downgrade that discards new history.
+7. Cleanup only registered owned artifacts after actual settlement. Uncertain
+   rollback/close/backup/cleanup stops subsequent writes. Restoring a backup needs
+   a new maintenance window, target checks and authorization; never edit
+   user_version/checksums or overwrite a live user database to simulate rollback.
+
+Current beforeAcquire is synchronous and before BEGIN; it is not a backup owner,
+async join primitive or lock-transfer API. Any pending backupRequired=true still
+rejects the whole batch. No external file/receipt/Boolean bypass is introduced.
+Real backup orchestration, maintenance trust/fencing, restart evidence and user-DB
+installation remain decisions; no backup or candidate migration ran here.

@@ -1,3 +1,4 @@
+import { resolve } from 'node:path';
 import { DatabaseSync, constants } from 'node:sqlite';
 import { StorageMigrationError } from './errors.js';
 import { loadMigrationPlan, type LoadedMigrationPlan } from './manifest.js';
@@ -17,25 +18,28 @@ function invalidRequest(message: string): never {
 function validateRunRequest(request: RunMigrationsRequest): RunMigrationsRequest {
   if (request === null || typeof request !== 'object')
     invalidRequest('Migration request must be an object');
+  const { databasePath, databaseKind, manifestUrl, lockTimeoutMs } = request;
   if (
-    typeof request.databasePath !== 'string' ||
-    request.databasePath.length === 0 ||
-    request.databasePath.trim() !== request.databasePath ||
-    request.databasePath.includes('\0')
+    typeof databasePath !== 'string' ||
+    databasePath.length === 0 ||
+    databasePath.trim() !== databasePath ||
+    databasePath.includes('\0')
   )
     invalidRequest('Database path must be a non-empty unpadded string');
-  if (request.databaseKind !== 'REPOSITORY' && request.databaseKind !== 'WORKSPACE') {
+  if (databaseKind !== 'REPOSITORY' && databaseKind !== 'WORKSPACE') {
     invalidRequest('Database kind must be REPOSITORY or WORKSPACE');
   }
-  if (!(request.manifestUrl instanceof URL) || request.manifestUrl.protocol !== 'file:') {
+  if (!(manifestUrl instanceof URL) || manifestUrl.protocol !== 'file:') {
     invalidRequest('Manifest location must be a file URL');
   }
-  if (
-    request.lockTimeoutMs !== undefined &&
-    (!Number.isSafeInteger(request.lockTimeoutMs) || request.lockTimeoutMs < 0)
-  )
+  if (lockTimeoutMs !== undefined && (!Number.isSafeInteger(lockTimeoutMs) || lockTimeoutMs < 0))
     invalidRequest('Lock timeout must be a safe non-negative integer');
-  return request;
+  return Object.freeze({
+    databasePath: databasePath === ':memory:' ? databasePath : resolve(databasePath),
+    databaseKind,
+    manifestUrl: new URL(manifestUrl.href),
+    ...(lockTimeoutMs === undefined ? {} : { lockTimeoutMs }),
+  });
 }
 
 function readVersion(database: DatabaseSync): number {

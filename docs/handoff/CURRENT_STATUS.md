@@ -1,3 +1,40 @@
+## Existing migration target binding and reader admission batch - 2026-11-07
+
+CI152 on944e09f ended TypeScript/Rust success; Native full log again confirms
+R8 script-catalog mismatch/D5_SCRIPT_PREREQUISITE_FAILED. This is evidence for
+that previous parser commit only, not this new Storage batch; no rerun/cancellation.
+
+The original migration runner now owns its validated request before asynchronous
+plan loading: database path/kind/timeout and a private file-URL copy. Filesystem
+paths resolve against the entry cwd; :memory: keeps its original SQLite meaning.
+The loader also owns its URL, so manifest bytes and SQL directory cannot diverge
+when the caller mutates the URL. These are existing request-binding fixes, not
+file-handle/path-replacement protection or migration authorization.
+
+Three real temporary-DB/loader regressions first failed, then passed. Storage build
+and affected migration/document/runtime36/36 pass, including relative-cwd and
+:memory: cases plus later-backupRequired whole-batch rejection.
+No SQL/manifest/checksum/schema/error/default/backup admission changed.
+
+A second independent existing defect is fixed: legacy Contract trace could return
+NOT_AVAILABLE on unknown workspace schema, and activation inspection omitted
+version admission. Prepare/apply/trace/non-null inspection now check original6/7/8
+and FK=ON inside their own transactions through the existing charged runtimeSql.
+Old errors, all budgets, format1/2 and committed receipts remain. Combined capture
+keeps its own original admission; no9/10/11 support or constructor capability is
+implied. Storage build and five affected Contract suites39/39 pass; genuine owned
+SQLite Runtime/Application integration27/27 and architecture17 pass. The new test
+is in the original pnpm test command; independent review has no important findings.
+[Reproducible evidence](../superpowers/reviews/2026-11-07-storage-target-and-admission.json).
+
+The candidate packet now gives exact old reader admission, required9/10/11
+compatibility ordering, same-process-only negative writer settlement and the
+missing cross-restart proof. Node24.15.0 backup API exists but has no AbortSignal;
+its overwrite/restart behavior, owned destination, WAL/reopen verification and
+maintenance/DDL lock-handoff gap are explicit. This is PROPOSED only: current
+backup-required batches still refuse. User authority, user-DB migration, backup
+execution, scan clearance and actual R9 remain closed.
+
 ## CI151 confirms lifecycle fix; fenced-language boundary and review packet - 2026-11-07
 
 CI151 on b326423 ended TypeScript/Rust success. Full TS log confirms the original
