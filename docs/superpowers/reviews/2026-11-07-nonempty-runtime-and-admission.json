@@ -1,0 +1,106 @@
+{
+  "kind": "NONEMPTY_DURABLE_RUNTIME_COMPATIBILITY_AND_EXISTING_ADMISSION_FIX",
+  "date": "2026-11-07",
+  "baseCommit": "76e4fb0522a285eabf1ee014ca3d3e3b3a5fec74",
+  "worktree": "D:/workspace/CodeAtlas-phase1-20261106",
+  "bindings": {
+    "packages/storage/src/runtime/runtime-fact-store.ts": "f721aa0d55be57a2a2e44745ea47371d5dfffc769ae58ac5abc31db42b5e9feb",
+    "packages/storage/test/runtime-fact-store.test.mjs": "e4f604c7587ef95252279b40c8895ebfe512d96ca54d4b5c3db4f8c37ca05ecf",
+    "packages/storage/test/proposed-workspace-compatibility.test.mjs": "392af671e1917181bb4169fde161385ffbfc3d98a7025d38e7c29242d328296f",
+    "packages/storage/test/helpers/nonempty-workspace-runtime-fixture.mjs": "28178779b684d8ee7edb37a0c0d4e30729a8cb4e32146c7c1f349bba32ac5111"
+  },
+  "candidateSqlBlockSha256": [
+    "3feb15ef9a84bf26ef3c11724b9acc43b7b841d3388240d928f5d28cab9870ee",
+    "afe6fb0e97d34d89676565beab50683a64f767f5778f2b6fb252b9a22dede4cd"
+  ],
+  "productFix": "Existing exact repository SQL13/UTF8 header now checked in trace formats1/2 and non-null fresh inspection own transactions through original charged runtimeSql; original capture and FK contract unchanged",
+  "redGreen": [
+    "Four new genuine owned Repository tests all failed Missing expected exception before product fix",
+    "Later UTF16 actual schema13 refusal and fresh readonly transaction evidence pass; not separately run as old-product RED",
+    "Nonempty helper initial four failures were wrong relative manifest path (harness setup), corrected; not product RED"
+  ],
+  "validation": {
+    "storageBuild": {
+      "command": "node node_modules/typescript/bin/tsc -p packages/storage/tsconfig.json",
+      "exitCode": 0
+    },
+    "bMainline": {
+      "command": "node --test --test-concurrency=1 scripts/test-phase1-b-runtime.mjs",
+      "tests": 88,
+      "pass": 88,
+      "fail": 0,
+      "cancelled": 0,
+      "skip": 0,
+      "todo": 0,
+      "durationMs": 11255.6095,
+      "exitCode": 0,
+      "note": "Final production code; before later UTF16 test and extra inspection instrumentation, which are covered below"
+    },
+    "runtimeTests": {
+      "command": "node --test packages/storage/test/runtime-fact-store.test.mjs",
+      "tests": 13,
+      "pass": 13,
+      "fail": 0,
+      "cancelled": 0,
+      "skip": 0,
+      "todo": 0,
+      "durationMs": 3652.2169,
+      "exitCode": 0
+    },
+    "compatibilityTests": {
+      "command": "node --test packages/storage/test/proposed-workspace-compatibility.test.mjs",
+      "tests": 12,
+      "pass": 12,
+      "fail": 0,
+      "cancelled": 0,
+      "skip": 0,
+      "todo": 0,
+      "durationMs": 3234.0148,
+      "exitCode": 0,
+      "note": "Eight prior memory cases plus four new disk/reopen cases; not twelve durable cases"
+    },
+    "architecture": {
+      "command": "node scripts/check-architecture.mjs",
+      "projects": 17,
+      "exitCode": 0
+    },
+    "format": {
+      "command": "node node_modules/prettier/bin/prettier.cjs --check packages/storage/src/runtime/runtime-fact-store.ts packages/storage/test/runtime-fact-store.test.mjs packages/storage/test/proposed-workspace-compatibility.test.mjs packages/storage/test/helpers/nonempty-workspace-runtime-fixture.mjs",
+      "exitCode": 0
+    },
+    "diffWhitespace": {
+      "command": "git diff --check",
+      "exitCode": 0
+    }
+  },
+  "counts": {
+    "workspaceActivations": 2,
+    "workspaceState": 1,
+    "services": 2,
+    "serviceIdentities": 2,
+    "contracts": 4,
+    "matches": 2,
+    "matchCandidates": 2,
+    "workspaceNodes": 4,
+    "workspaceEdges": 2,
+    "documents": 1,
+    "documentRevisions": 2,
+    "paragraphBlocks": 2,
+    "repositoryRuntimeNodes": 2,
+    "repositoryRuntimeEdges": 1,
+    "repositoryRuntimeContracts": 2,
+    "repositoryRuntimeBindings": 1,
+    "repositoryRuntimeSupportMembership": "nonempty; not hardcoded exact row count"
+  },
+  "retention": "Compare all old workspace and repo table raw values, payload JSON, old schema definitions and actual head/parent; close both DBs then readonly reopen at9/10 or failed8/9; repo remains13",
+  "review": {
+    "product": "Independent read-only review no important findings",
+    "nonemptyExperiment": "Independent read-only review confirms genuine Store/matcher/derive, own cleanup, real parent/head/raw-row checks, inspection before close and no W011 fabrication"
+  },
+  "notClaimed": [
+    "No arbitrary user-DB upgrade, production new-version allowlist, authority, secret scan clearance or R9",
+    "No real Source/Native producer qualification from declared fixture inputs",
+    "No physical resource profile equivalence or new numeric budget",
+    "No tests counts added across overlapping B/runtime suites; no prior-head CI applied to new code"
+  ]
+}

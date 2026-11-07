@@ -126,6 +126,11 @@ const activationColumns = [
   'payload_json',
   'value_digest',
 ] as const;
+function assertRuntimeSchema(sql: ReturnType<typeof runtimeSql>): void {
+  const version = sql.read('pragma_user_version', ['user_version'], '1', [])[0]?.user_version;
+  const encoding = sql.read('pragma_encoding', ['encoding'], '1', [])[0]?.encoding;
+  if (version !== 13 || encoding !== 'UTF-8') throw new HistoryCaptureError('CONTEXT_UNAVAILABLE');
+}
 function capture(db: DatabaseSync, repo: string, b: HistoryReadBudget) {
   const h = readRuntimeActivationInputs(db, repo, b),
     d = h.details!;
@@ -621,11 +626,12 @@ export class RuntimeFactStore {
     const db = new DatabaseSync(path, { readOnly: true, enableForeignKeyConstraints: true });
     try {
       db.exec('BEGIN');
-      const sql = runtimeSql(db, b),
-        rows = sql.read('runtime_activations', ['id'], 'repository_id=? AND id=?', [
-          repo,
-          receipt.activationId,
-        ]);
+      const sql = runtimeSql(db, b);
+      assertRuntimeSchema(sql);
+      const rows = sql.read('runtime_activations', ['id'], 'repository_id=? AND id=?', [
+        repo,
+        receipt.activationId,
+      ]);
       if (rows.length === 1) {
         readRuntimeActivation(db, repo, receipt.activationId, b);
         db.exec('COMMIT');
@@ -661,8 +667,9 @@ export class RuntimeFactStore {
     check(!db.isTransaction);
     db.exec('BEGIN');
     try {
-      const sql = runtimeSql(db, b),
-        state = sql.read('runtime_state', ['activation_id'], 'repository_id=?', [repo]);
+      const sql = runtimeSql(db, b);
+      assertRuntimeSchema(sql);
+      const state = sql.read('runtime_state', ['activation_id'], 'repository_id=?', [repo]);
       check(state.length <= 1);
       if (!state.length) {
         db.exec('COMMIT');

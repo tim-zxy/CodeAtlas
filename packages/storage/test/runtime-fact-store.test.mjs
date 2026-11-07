@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { existsSync } from 'node:fs';
 import test from 'node:test';
+import { DatabaseSync } from 'node:sqlite';
 import { historyFixture, historyLimits, prefixPlan } from './helpers/r011-history-fixture.mjs';
 import { applyMigrationPlan } from '../dist/migrations/runner.js';
 const api = async () => {
@@ -373,4 +374,96 @@ test('framework inputs are authenticated current SQLite values and reject stale 
     () => oldStore.readFrameworkInputs(oldBasis, historyLimits),
     /RUNTIME_SYNTAX_VERSION_NOT_SUPPORTED/,
   );
+});
+
+for (const format of [1, 2])
+  test('empty Runtime trace format' + format + ' refuses unknown repository schema', async (t) => {
+    const { RuntimeFactStore } = await api(),
+      f = await historyFixture(t);
+    applyMigrationPlan(f.db, await prefixPlan(13));
+    const store = new RuntimeFactStore(f.db, f.input.repositoryId);
+    f.db.exec('PRAGMA user_version=14');
+    const trace = () =>
+      format === 1 ? store.traceRuntime(historyLimits) : store.traceRuntimeV2(historyLimits);
+    assert.throws(trace, (error) => error.code === 'CONTEXT_UNAVAILABLE');
+    assert.equal(f.db.isTransaction, false);
+    assert.equal(f.db.prepare('SELECT count(*) n FROM runtime_state').get().n, 0);
+  });
+
+test('Runtime committed recovery checks schema in its fresh view without erasing commit fact', async (t) => {
+  const { RuntimeFactStore } = await api(),
+    f = await historyFixture(t);
+  applyMigrationPlan(f.db, await prefixPlan(13));
+  const store = new RuntimeFactStore(f.db, f.input.repositoryId);
+  const expected = store.readRuntimeBasis(historyLimits).identity;
+  const result = store.applyRuntimeBatch(
+    { expected, candidate: candidate(expected.codeBasis) },
+    historyLimits,
+  );
+  const prepare = DatabaseSync.prototype.prepare,
+    headers = [];
+  DatabaseSync.prototype.prepare = function (sql) {
+    if (/pragma_(?:user_version|encoding)/.test(sql))
+      headers.push({ own: this !== f.db, transaction: this.isTransaction, sql });
+    return Reflect.apply(prepare, this, [sql]);
+  };
+  try {
+    assert.equal(store.inspectOutcome(historyLimits).activationId, result.activationId);
+  } finally {
+    DatabaseSync.prototype.prepare = prepare;
+  }
+  assert.ok(headers.some((row) => /pragma_user_version/.test(row.sql)));
+  assert.ok(headers.some((row) => /pragma_encoding/.test(row.sql)));
+  assert.ok(headers.every((row) => row.own && row.transaction));
+  f.db.exec('PRAGMA user_version=14');
+  assert.throws(
+    () => store.inspectOutcome(historyLimits),
+    (error) => error.code === 'CONTEXT_UNAVAILABLE',
+  );
+  assert.equal(store.settlement().status, 'COMMITTED');
+  assert.equal(store.settlement().activationId, result.activationId);
+  assert.equal(f.db.prepare('SELECT count(*) n FROM runtime_activations').get().n, 1);
+  assert.equal(f.db.isTransaction, false);
+});
+
+test('empty Runtime trace charges header admission before any stored body', async (t) => {
+  const { RuntimeFactStore } = await api(),
+    f = await historyFixture(t);
+  applyMigrationPlan(f.db, await prefixPlan(13));
+  const store = new RuntimeFactStore(f.db, f.input.repositoryId);
+  const prepare = f.db.prepare.bind(f.db),
+    queries = [];
+  f.db.prepare = (sql) => {
+    queries.push({ sql, transaction: f.db.isTransaction });
+    return prepare(sql);
+  };
+  try {
+    assert.throws(
+      () => store.traceRuntime({ ...historyLimits, maxRows: 1 }),
+      (error) => error.code === 'HISTORY_LIMIT_EXCEEDED',
+    );
+  } finally {
+    f.db.prepare = prepare;
+  }
+  assert.equal(queries.length, 1);
+  assert.match(queries[0].sql, /pragma_user_version/);
+  assert.equal(queries[0].transaction, true);
+  assert.equal(f.db.isTransaction, false);
+});
+
+test('Runtime empty trace refuses a genuine schema13 database with non-UTF8 encoding', async (t) => {
+  const { RuntimeFactStore } = await api();
+  const db = new DatabaseSync(':memory:', { enableForeignKeyConstraints: true });
+  t.after(() => db.close());
+  db.exec("PRAGMA encoding='UTF-16le'");
+  applyMigrationPlan(db, await prefixPlan(13));
+  assert.equal(db.prepare('PRAGMA user_version').get().user_version, 13);
+  assert.equal(db.prepare('PRAGMA encoding').get().encoding, 'UTF-16le');
+  const store = new RuntimeFactStore(db, 'repo:owned');
+  assert.throws(
+    () => store.traceRuntime(historyLimits),
+    (error) => error.code === 'CONTEXT_UNAVAILABLE',
+  );
+  assert.equal(db.isTransaction, false);
+  assert.equal(db.prepare('SELECT count(*) n FROM runtime_state').get().n, 0);
 });

@@ -1,6 +1,12 @@
 # Private policy owner and W009-W011 persistence: decision proposal
 
-Status: **PROPOSED ONLY, NOT APPROVED OR IMPLEMENTED**. No permission issuer,
+Status: **PARTIAL BOUNDARY APPROVAL; REMAINING CONTRACTS PROPOSED**.
+The user accepted option A's local same-Windows-account trust boundary on2026-11-07,
+including same-SID Agents, not human consent. Current-process/specified-operation
+scope and restart invalidation are required; no remote/model/scan clearance,
+production publication, persistent access/security change or user-DB migration is
+approved. This does not accept all proposed fields, W009-W011 or backup/Evaluation.
+Issuer integration is a subsequent batch, not implemented by this record. No permission issuer,
 principal, production migration, scan clearance, model invocation or publication is created.
 Isolated owned SQLite candidate/backup experiments are not production implementation.
 This records the two concrete decisions blocking later production capture/storage;

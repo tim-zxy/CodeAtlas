@@ -356,3 +356,213 @@ test('candidate duplicate guards reject REPLACE independently of recursive trigg
   assert.equal(f.db.prepare('SELECT count(*) n FROM snapshot_supports').get().n, 1);
   assert.deepEqual(f.db.prepare('PRAGMA foreign_key_check').all(), []);
 });
+import { nonemptyWorkspaceRuntimeFixture } from './helpers/nonempty-workspace-runtime-fixture.mjs';
+import { historyLimits } from './helpers/r011-history-fixture.mjs';
+import { RuntimeFactStore } from '../dist/runtime/runtime-fact-store.js';
+
+const tableNames = (db) =>
+  db
+    .prepare(
+      "SELECT name FROM sqlite_schema WHERE type='table' AND name NOT LIKE 'sqlite_%' ORDER BY name",
+    )
+    .all()
+    .map((row) => row.name);
+const physicalRows = (db, names) =>
+  names.map((name) => [name, db.prepare('SELECT * FROM "' + name + '" ORDER BY rowid').all()]);
+const physicalSchema = (db) =>
+  db
+    .prepare(
+      "SELECT type,name,tbl_name,sql FROM sqlite_schema WHERE name NOT LIKE 'sqlite_%' ORDER BY type,name",
+    )
+    .all();
+async function retainedRuntimeFixture(t) {
+  const f = await nonemptyWorkspaceRuntimeFixture(t);
+  const documents = new DocumentStore(f.db, f.workspaceId);
+  for (const [id, digest, previous, text] of [
+    ['rev:old', 'a', null, 'retained old declaration note'],
+    ['rev:head', 'b', 'rev:old', 'current declaration note'],
+  ]) {
+    // The existing literal DocumentStore paragraph shape, not a Source/scan receipt.
+    const document = bundle(id, digest),
+      p = document.payload;
+    p.document.workspaceId = f.workspaceId;
+    p.revision.blockRefs = [{ kind: 'DOCUMENT_BLOCK', id: 'block:note', revisionId: id }];
+    p.blocks = [
+      {
+        id: 'block:note',
+        documentRevisionId: id,
+        sectionId: null,
+        ordinal: 0,
+        sourceRange: {
+          documentRevisionId: id,
+          startLine: 0,
+          startColumn: 0,
+          endLine: 0,
+          endColumn: text.length,
+        },
+        kind: 'PARAGRAPH',
+        payload: { text },
+      },
+    ];
+    assert.equal(
+      documents.applyDocuments(
+        { bundle: document, expectedCurrentRevisionId: previous },
+        limits,
+        () => {},
+      ).status,
+      'COMMITTED',
+    );
+  }
+  assert.equal(documents.readCurrent('doc:one', limits).revisionId, 'rev:head');
+  assert.equal(
+    documents.readRevision('doc:one', 'rev:old', limits, () => {}).bundle.payload.blocks[0].payload
+      .text,
+    'retained old declaration note',
+  );
+  const oldNames = tableNames(f.db),
+    repositoryNames = tableNames(f.repositoryDb);
+  return {
+    ...f,
+    documents,
+    oldNames,
+    oldRows: physicalRows(f.db, oldNames),
+    oldSchema: physicalSchema(f.db),
+    repositoryNames,
+    repositoryRows: physicalRows(f.repositoryDb, repositoryNames),
+  };
+}
+function assertRetainedRuntime(f, workspaceDb, repositoryDb, version) {
+  assert.equal(workspaceDb.prepare('PRAGMA user_version').get().user_version, version);
+  assert.equal(repositoryDb.prepare('PRAGMA user_version').get().user_version, 13);
+  assert.deepEqual(physicalRows(workspaceDb, f.oldNames), f.oldRows);
+  assert.deepEqual(physicalRows(repositoryDb, f.repositoryNames), f.repositoryRows);
+  const schema = new Map(physicalSchema(workspaceDb).map((row) => [row.name, row]));
+  for (const old of f.oldSchema) assert.deepEqual(schema.get(old.name), old);
+  assert.equal(
+    workspaceDb.prepare('SELECT activation_id FROM workspace_runtime_state').get().activation_id,
+    f.activationId,
+  );
+  assert.equal(
+    workspaceDb
+      .prepare('SELECT parent_id FROM workspace_runtime_activations WHERE id=?')
+      .get(f.activationId).parent_id,
+    f.firstActivationId,
+  );
+  assert.equal(
+    workspaceDb.prepare("SELECT current_revision_id FROM documents WHERE id='doc:one'").get()
+      .current_revision_id,
+    'rev:head',
+  );
+  assert.equal(workspaceDb.prepare('SELECT count(*) n FROM document_blocks').get().n, 2);
+  assert.equal(
+    workspaceDb
+      .prepare(
+        "SELECT count(*) n FROM sqlite_schema WHERE name IN ('evaluation_runs','knowledge_revision_provenance')",
+      )
+      .get().n,
+    0,
+  );
+  for (const db of [workspaceDb, repositoryDb]) {
+    assert.deepEqual(db.prepare('PRAGMA foreign_key_check').all(), []);
+    assert.equal(db.prepare('PRAGMA integrity_check').get().integrity_check, 'ok');
+  }
+  const runtime = new RuntimeFactStore(repositoryDb, f.input.repositoryId).traceRuntime(
+    historyLimits,
+  );
+  assert.equal(runtime.status, 'CURRENT');
+  assert.equal(runtime.candidate.facts.payload.nodes.length, 2);
+  assert.equal(runtime.candidate.facts.payload.edges.length, 1);
+  assert.equal(runtime.candidate.facts.payload.contracts.length, 2);
+  assert.equal(runtime.candidate.bindings.payload.bindings.length, 1);
+}
+function reopenRetainedRuntime(f) {
+  f.db.close();
+  f.repositoryDb.close();
+  const workspaceDb = new DatabaseSync(f.workspaceDatabasePath, {
+    readOnly: true,
+    enableForeignKeyConstraints: true,
+  });
+  const repositoryDb = new DatabaseSync(f.repositoryDatabasePath, {
+    readOnly: true,
+    enableForeignKeyConstraints: true,
+  });
+  f.connections.push(workspaceDb, repositoryDb);
+  return { workspaceDb, repositoryDb };
+}
+function assertRefusedCandidateReaders(f, db, repositoryDb) {
+  assert.throws(() => new DocumentStore(db, f.workspaceId), {
+    code: 'DOCUMENT_SCHEMA_UNSUPPORTED',
+  });
+  const repository = new RuntimeFactStore(repositoryDb, f.input.repositoryId);
+  const contracts = new ContractStore(db, f.workspaceId, [repository]);
+  assert.throws(() => contracts.traceWorkspaceRuntime(historyLimits), {
+    message: 'INVALID_WORKSPACE_RUNTIME',
+  });
+  assert.throws(
+    () =>
+      readWorkspaceCompilationSelection(
+        contracts,
+        f.revisionSetId,
+        new HistoryReadBudget(historyLimits),
+        () => {},
+      ),
+    { code: 'INVALID_HISTORY' },
+  );
+  assert.equal(db.isTransaction, false);
+}
+for (const version of [9, 10])
+  test(
+    'nonempty retained Runtime and document heads survive candidate prefix ' +
+      version +
+      ' and genuine readonly reopen',
+    async (t) => {
+      const f = await retainedRuntimeFixture(t);
+      for (let step = 9; step <= version; step++) applyCandidate(f.db, step);
+      assertRetainedRuntime(f, f.db, f.repositoryDb, version);
+      assert.throws(() => f.documents.readCurrent('doc:one', limits), {
+        code: 'DOCUMENT_SCHEMA_UNSUPPORTED',
+      });
+      assert.throws(() => f.store.traceWorkspaceRuntime(historyLimits), {
+        message: 'INVALID_WORKSPACE_RUNTIME',
+      });
+      assert.throws(() => f.store.inspectOutcome(historyLimits), {
+        message: 'INVALID_WORKSPACE_RUNTIME',
+      });
+      const { workspaceDb, repositoryDb } = reopenRetainedRuntime(f);
+      assertRetainedRuntime(f, workspaceDb, repositoryDb, version);
+      assertRefusedCandidateReaders(f, workspaceDb, repositoryDb);
+    },
+  );
+for (const failed of [9, 10])
+  test(
+    'nonempty retained Runtime candidate failure at ' +
+      failed +
+      ' preserves its committed disk prefix and readonly history',
+    async (t) => {
+      const f = await retainedRuntimeFixture(t);
+      if (failed === 10) applyCandidate(f.db, 9);
+      const schemaBefore = physicalSchema(f.db);
+      assert.throws(() => applyCandidate(f.db, failed, true), /candidate_fault_missing_table/);
+      assert.deepEqual(physicalSchema(f.db), schemaBefore);
+      assert.equal(f.db.isTransaction, false);
+      assertRetainedRuntime(f, f.db, f.repositoryDb, failed - 1);
+      const { workspaceDb, repositoryDb } = reopenRetainedRuntime(f);
+      assertRetainedRuntime(f, workspaceDb, repositoryDb, failed - 1);
+      if (failed === 9) {
+        const documents = new DocumentStore(workspaceDb, f.workspaceId);
+        assert.equal(documents.readCurrent('doc:one', limits).revisionId, 'rev:head');
+        assert.equal(
+          documents.readRevision('doc:one', 'rev:old', limits, () => {}).revisionId,
+          'rev:old',
+        );
+        const contracts = new ContractStore(workspaceDb, f.workspaceId, [
+          new RuntimeFactStore(repositoryDb, f.input.repositoryId),
+        ]);
+        const traced = contracts.traceWorkspaceRuntime(historyLimits);
+        assert.equal(traced.activationId, f.activationId);
+        assert.equal(traced.matches[0].payload.status, 'MATCHED');
+        assert.equal(traced.execution.payload.nodes.length, 2);
+        assert.equal(traced.execution.payload.edges.length, 1);
+      } else assertRefusedCandidateReaders(f, workspaceDb, repositoryDb);
+    },
+  );

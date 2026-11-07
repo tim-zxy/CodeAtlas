@@ -1,3 +1,42 @@
+## Local account trust boundary accepted; issuer implementation next - 2026-11-07
+
+The user accepts current single-machine Windows-account trust INCLUDING same-SID
+Agents; this is not human consent. Grants remain current-process/specified-operation
+only; restart invalidates old grants and handles. Remote/model/secret-scan clearance,
+production publication, persistent access/security changes and user-DB migration
+are not granted. The account-boundary decision does not install W009-W011 or settle
+backup/Evaluation contracts. Concrete issuer integration is the next batch; no
+real issuer or OS identity query was created by the retained-data batch below.
+
+## Repository Runtime admission omission corrected - 2026-11-07
+
+The independent candidate experiment now includes four NEW disk cases (the prior
+eight remain memory-only). Existing declared nonempty inputs go through genuine
+RuntimeFactStore, matcher/derive and ContractStore to create two Workspace
+activations with a real parent chain. Services/identities/contracts/matches/
+candidates/execution children, repository runtime support and two Document
+revisions/paragraphs are nonempty. All old raw rows, payload JSON, schema objects
+and head survive candidate9/10 and failed9-to8/failed10-to9. Both DBs close then
+readonly reopen at their real versions; repository remains13. No version downgrade
+is used to read old rows; production9/10 readers/old-instance inspection refuse.
+Full compatibility file12/12 pass; first path-setup failures were harness defects,
+not product RED. This does not certify real Source/Native/authority or user upgrade.
+[Reproducible batch evidence](../superpowers/reviews/2026-11-07-nonempty-runtime-and-admission.json).
+
+Runtime capture already requires exact repository SQL13/UTF-8, but empty trace and
+fresh activation inspection previously bypassed that header check. Four genuine
+owned regressions failed on the old implementation. Both trace formats and
+non-null inspect now check the original header inside their own transaction,
+through charged runtimeSql, before state/body delivery. Existing
+CONTEXT_UNAVAILABLE and all budgets remain; no additional FK contract or supported
+version is introduced. Inspect refusal preserves the actual COMMITTED settlement.
+
+Storage build and original B mainline88/88 pass; subsequent complete Runtime file
+13/13 includes genuine UTF-16 schema13 refusal and proof inspection checks its own
+fresh readonly view. These are overlapping evidence sets, not additive test totals.
+Independent read-only review finds no important issue. No Source run, Native,
+resource value, schema/manifest, permission, scan clearance or R9 changed.
+
 ## Owned workspace-prefix and WAL backup experiments - 2026-11-07
 
 The next approved preparation batch now executes candidate W009/W010 text only in

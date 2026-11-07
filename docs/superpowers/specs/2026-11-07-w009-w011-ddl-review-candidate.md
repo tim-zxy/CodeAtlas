@@ -537,9 +537,13 @@ The compatibility harness runs exact W009/W010 blocks against real W008 in fresh
 owned SQLite only. It compares every original table row and sqlite_schema object,
 including two real DocumentStore head/history revisions; tests additive prefixes,
 per-step rollback, deferred same-item pointer FK, full run/snapshot/set tuples and
-one-shot run binding. Existing production readers still reject9/10. No current
-Runtime activation nonempty-data compatibility or durable user-DB upgrade is
-claimed, and W011 is never executed or replaced by a fake Evaluation parent.
+one-shot run binding. Existing production readers still reject9/10. A later four-
+case owned disk extension retains two nonempty Runtime activations and their parent
+chain, normalized children and old document head/history across successful9/10 and
+failed9-to8/failed10-to9 prefixes, followed by close and readonly reopen. It uses
+existing declaration fixtures through genuine Store/matcher/derive, not real Source
+or Native qualification. No user-DB upgrade is certified; W011 is never executed
+or replaced by a fake Evaluation parent.
 
 An actual counterexample showed UPDATE/DELETE guards alone permit INSERT OR
 REPLACE with recursive_triggers=OFF. The candidate now adds BEFORE INSERT duplicate

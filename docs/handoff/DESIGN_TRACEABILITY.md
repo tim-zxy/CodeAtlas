@@ -1,3 +1,16 @@
+## Existing Repository Runtime header admission - 2026-11-07
+
+Original exact SQL13/UTF-8 capture requirement -> trace/inspection missing-header
+counterexamples -> charged own-transaction checks before empty/result delivery ->
+format1/2 unknown-schema and non-UTF8 refusal, unchanged committed settlement.
+No wider schema compatibility or new FK/public error contract. Original B workflow
+and owned regression evidence remain separate from actual Native qualification.
+Nonempty declaration fixture -> actual repo/Workspace Store and matcher/derive ->
+two immutable activation generations plus old head/history -> exact physical
+candidate9/10 and failed-prefix raw-row preservation -> both connections closed and
+readonly reopened at unchanged true version. Production reader refusal is retained.
+[Evidence](../superpowers/reviews/2026-11-07-nonempty-runtime-and-admission.json).
+
 ## Owned compatibility and backup verification - 2026-11-07
 
 Proposed W009/W010 -> exact candidate text on real W008-owned fixtures -> old
