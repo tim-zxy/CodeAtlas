@@ -237,6 +237,125 @@ export function buildCapturedSemanticTestRequest(
   }
 }
 
+/** Joins self-owned captured input to the local double and retains input coverage.
+ * Does not authorize consumption or establish semantic grounding/quality. */
+export async function runCapturedSemanticTestDouble(
+  input: unknown,
+  options: unknown,
+  port: unknown,
+  controlValue: RuntimeRequestControl,
+  account: SemanticInvocationAccount,
+) {
+  let phase: 'SETUP' | 'PREPARING' | 'INVOKING' | 'VALIDATING' = 'SETUP';
+  try {
+    const control = Object.freeze({
+      ...fields(controlValue, ['signal', 'deadlineEpochMs', 'maxItems', 'maxDepth']),
+    }) as unknown as RuntimeRequestControl;
+    phase = 'PREPARING';
+    const request = buildCapturedSemanticTestRequest(input, options, control, account);
+    phase = 'INVOKING';
+    const result = await runSemanticTestDouble(request, port, control, account);
+    phase = 'VALIDATING';
+    const checkpoint = () => {
+      account.checkpoint();
+      if (nativeAborted.call(control.signal)) fail('CANCELLED');
+      if (Date.now() >= control.deadlineEpochMs) fail('DEADLINE');
+    };
+    checkpoint();
+    const snapshot = request.authorizedContext.data.snapshot;
+    const rank = { UNSUPPORTED: 0, PARTIAL: 1, COMPLETE: 2 };
+    let status = snapshot.coverage.status;
+    const inputLimitations = new Set<string>(),
+      inputUnverified = new Map<string, ScopedRef>();
+    const coverages = [
+      snapshot.coverage,
+      ...snapshot.repositories.map((capture) => capture.coverage),
+      ...snapshot.documents.map((capture) => capture.coverage),
+      ...(snapshot.workspaceCapture ? [snapshot.workspaceCapture.coverage] : []),
+    ];
+    for (const coverage of coverages) {
+      checkpoint();
+      account.own(coverage);
+      if (rank[coverage.status] < rank[status]) status = coverage.status;
+      for (const limitation of coverage.limitations) {
+        checkpoint();
+        account.visitItem();
+        inputLimitations.add(limitation);
+      }
+      for (const ref of coverage.unverifiedRefs) {
+        checkpoint();
+        account.visitItem();
+        inputUnverified.set(scopedRefKey(ref), ref);
+      }
+    }
+    const compare = (a: string, b: string) => {
+      checkpoint();
+      account.visitItem();
+      return a < b ? -1 : a > b ? 1 : 0;
+    };
+    const capturedCoverage = {
+      status,
+      limitations: [...inputLimitations].sort(compare),
+      unverifiedRefs: [...inputUnverified].sort(([a], [b]) => compare(a, b)).map(([, ref]) => ref),
+    };
+    account.own(capturedCoverage);
+    const payload = result.structuredOutput.payload;
+    if ('coverage' in payload) {
+      const coverage = payload.coverage;
+      account.own(coverage);
+      if (rank[coverage.status] > rank[capturedCoverage.status]) fail('MODEL_OUTPUT_INVALID');
+      const limitations = new Set(coverage.limitations);
+      const unverified = new Set(coverage.unverifiedRefs.map(scopedRefKey));
+      for (const limitation of capturedCoverage.limitations) {
+        checkpoint();
+        account.visitItem();
+        if (!limitations.has(limitation)) fail('MODEL_OUTPUT_INVALID');
+      }
+      for (const ref of capturedCoverage.unverifiedRefs) {
+        checkpoint();
+        account.visitItem();
+        if (!unverified.has(scopedRefKey(ref))) fail('MODEL_OUTPUT_INVALID');
+      }
+    }
+    const output = {
+      ...result,
+      capturedInputDigest: snapshot.inputDigest,
+      capturedCoverage,
+    };
+    account.own(output);
+    return freeze(output, checkpoint);
+  } catch (error) {
+    // These owned stages already invalidate/report their failure; never settle twice.
+    if (phase === 'PREPARING' || phase === 'INVOKING') throw error;
+    const value = errorField(error, 'code');
+    let code: Code =
+      error instanceof SemanticTestInvocationError
+        ? error.code
+        : phase === 'SETUP'
+          ? 'MODEL_REQUEST_INVALID'
+          : 'MODEL_OUTPUT_INVALID';
+    if (value === 'CANCELLED') code = 'CANCELLED';
+    if (value === 'DEADLINE' || value === 'DEADLINE_EXCEEDED') code = 'DEADLINE';
+    if (
+      value === 'BUDGET_EXCEEDED' ||
+      value === 'HISTORY_LIMIT_EXCEEDED' ||
+      value === 'STAGE_LIMIT_EXCEEDED'
+    )
+      code = 'BUDGET_EXCEEDED';
+    let unknown = errorField(error, 'cleanupState') === 'UNKNOWN';
+    try {
+      account.invalidate();
+    } catch {
+      unknown = true;
+    }
+    throw new SemanticTestInvocationError(
+      code,
+      unknown ? 'UNKNOWN' : 'SETTLED',
+      phase === 'VALIDATING' ? 'RECORDED' : 'NOT_ATTEMPTED',
+    );
+  }
+}
+
 /** Private local-double boundary only. A DTO, port label or checked schema never
  * authorizes production context, real generation, semantic truth or publication.
  * The trusted port must join its tasks before its promise settles. */

@@ -1,3 +1,15 @@
+## P1-11 captured invocation / honest inherited coverage - 2026-11-07
+
+knowledge-and-consumption sections3/4 and P1-12 snapshot restrictions map to private
+runCapturedSemanticTestDouble: joined control/account, actual typed Code input,
+existing schema/ref checks, no input-coverage upgrade/lost limitations or unverified
+refs across any capture layer. Evidence remains TEST_DOUBLE/NOT_EVALUABLE, not
+semantic quality or authorization. Three API-absence REDs and independent review's
+top-only-coverage RED preceded the final66 related passing cases/build/architecture17.
+Claim schema/public exports, stable identity, database and publication are unchanged.
+The semantic-test-invocation record identifies the unimplemented stable Component
+draft/ref binding; pre-supplied identity fixture contexts do not authorize it.
+
 ## P1-11 snapshot-derived TEST_DOUBLE context - 2026-11-07
 
 knowledge-and-consumption section4's facts/ref/context separation connects to the

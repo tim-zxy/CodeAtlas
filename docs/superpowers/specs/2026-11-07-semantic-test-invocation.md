@@ -95,3 +95,37 @@ Application build,63 related tests (23 semantic,40 snapshot contract) and17-proj
 architecture check passed. No dependency, public export, installed Runtime or
 acceptance gate changed. This connects self-owned snapshot -> request -> local
 Claim result, not authorized capture -> real model -> validated publication.
+
+## Joined captured invocation and inherited coverage
+
+runCapturedSemanticTestDouble joins preparation and invocation under the same
+fixed original control/account. Existing owned-stage failures propagate without
+second invalidation; validation after successful generation retains RECORDED
+usage, refuses incomplete/overstated results and invalidates once. It returns the
+captured input digest and conservative capturedCoverage alongside the unchanged
+TEST_DOUBLE/NOT_EVALUABLE/NOT_ESTABLISHED result annotations. No publisher or
+production authorization is introduced.
+
+Coverage includes the snapshot plus every repository/document/workspace capture,
+not just the top-level summary: use the weakest status and union of limitations
+and exact unverified references. A KnowledgeCandidate must not claim stronger
+coverage or omit any of these restrictions; it can add uncertainty. Claims retain
+this coverage as result metadata without adding a field to the Claim schema.
+Snapshot/digest validation does not prove actual completeness or semantic truth.
+Self-owned Component fixtures use actual typed CODE_NODE inputs and SourceFile
+support; no fake COMPONENT identity is inserted into the capture registry.
+
+Three new tests first failed before the joined entry existed. Independent review
+found the initial top-only coverage check; a valid COMPLETE-top/PARTIAL-child case
+demonstrated the missed rejection before the fix. Tests cover honest partial
+output, overstated status, missing limitations, unsupported input and nested
+unverified references. Application build,66 related tests (26 semantic/40 capture
+contract) and architecture17 passed. No real model, user data, database or R9.
+
+Higher-level synthesis remains refused: current Knowledge IR/identity fixtures
+describe Component references but do not define how a pre-identity structural
+candidate becomes that stable COMPONENT ScopedRef/revision. The current capture
+value registry does not contain Knowledge/Component records. Reusing fixture
+allowlists or candidate IDs would invent a binding. A precise draft/reference
+binding or a validated reader of existing published knowledge is still required;
+this batch does not choose one or change identity/publication contracts.

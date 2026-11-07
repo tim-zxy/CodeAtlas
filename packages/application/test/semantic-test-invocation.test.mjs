@@ -340,6 +340,138 @@ test('captured preparation rejects accessors and cancellation without using repl
   );
 });
 
+test('captured invocation joins preparation and generation without promoting authority', async () => {
+  const f = await capturedFixture();
+  f.response.structuredOutput.payload.subject = structuredClone(f.ref);
+  f.response.structuredOutput.payload.scope = structuredClone(f.snapshot.scope);
+  f.response.structuredOutput.payload.evidenceRefs = [structuredClone(f.support.ref)];
+  f.response.outputDigest = digest(f.response.structuredOutput);
+  const result = await api.runCapturedSemanticTestDouble(
+    f.snapshot,
+    f.options,
+    f.port,
+    f.control,
+    f.account,
+  );
+  assert.equal(result.capturedInputDigest, f.snapshot.inputDigest);
+  assert.deepEqual(result.capturedCoverage, f.snapshot.coverage);
+  assert.equal(result.contextAuthorization, 'NOT_ESTABLISHED');
+  assert.equal(result.quality, 'NOT_EVALUABLE');
+  assert.equal(f.calls.length, 1);
+});
+
+test('captured candidate cannot erase input limitations or upgrade partial/unsupported coverage', async () => {
+  for (const mode of [
+    'honest',
+    'complete',
+    'missing-limitation',
+    'unsupported-upgrade',
+    'child-partial',
+    'child-unsupported',
+    'child-unverified',
+  ]) {
+    const f = await capturedFixture();
+    const { createCompilationInputSnapshot } =
+      await import('../dist/compilation-input-contract.js');
+    const raw = structuredClone(f.snapshot);
+    delete raw.inputDigest;
+    const nodeRef = {
+      ...f.ref,
+      entity: { kind: 'CODE_NODE', id: 'node:one', revisionId: 'rev:one' },
+    };
+    raw.selection.selectedEntityRefs = [nodeRef];
+    raw.repositories[0].entities.push({
+      ref: nodeRef,
+      valueSchemaRef: 'CanonicalNode@1',
+      value: {
+        id: 'node:one',
+        factKey: 'owned-node',
+        repositoryId: 'repo:one',
+        revisionId: 'rev:one',
+        name: 'run',
+        qualifiedName: 'Owned.run',
+        kind: 'SYMBOL',
+        symbolKind: 'METHOD',
+        sourceRange: {
+          sourceFileId: 'file:one',
+          startLine: 0,
+          startColumn: 0,
+          endLine: 1,
+          endColumn: 0,
+        },
+        confidence: { score: 1, method: 'fixture', reasons: ['owned literal'] },
+      },
+    });
+    if (mode === 'unsupported-upgrade') {
+      raw.coverage.status = 'UNSUPPORTED';
+      raw.repositories[0].coverage.status = 'UNSUPPORTED';
+    }
+    if (mode === 'child-partial' || mode === 'child-unsupported') {
+      raw.coverage = { status: 'COMPLETE', limitations: [], unverifiedRefs: [] };
+      raw.repositories[0].coverage.status = mode === 'child-partial' ? 'PARTIAL' : 'UNSUPPORTED';
+    }
+    if (mode === 'child-unverified') raw.repositories[0].coverage.unverifiedRefs = [nodeRef];
+    f.snapshot = createCompilationInputSnapshot(raw, f.control);
+    f.options.taskKind = 'COMPONENT_SUMMARY';
+    f.response.structuredOutput = structuredClone(
+      rows.find((row) => row.name === 'COMPONENT').candidate.candidateEnvelope,
+    );
+    const c = f.response.structuredOutput.payload;
+    c.scope = structuredClone(f.snapshot.scope);
+    c.inputSnapshotRef = { kind: 'COMPILATION_INPUT_SNAPSHOT', id: f.snapshot.snapshotId };
+    c.structuredContent.implementationRefs = [nodeRef];
+    c.structuredContent.entryPointRefs = [];
+    c.structuredContent.responsibilityClaims = [];
+    c.structuredContent.relationships = [];
+    c.supportRefs = [structuredClone(f.support.ref)];
+    c.coverage = {
+      status: 'PARTIAL',
+      limitations: mode === 'missing-limitation' ? [] : ['SELF_OWNED_FIXTURE'],
+      unverifiedRefs: [],
+    };
+    if (mode === 'complete' || mode === 'child-partial' || mode === 'child-unsupported')
+      c.coverage = { status: 'COMPLETE', limitations: [], unverifiedRefs: [] };
+    f.response.outputDigest = digest(f.response.structuredOutput);
+    const { parseKnowledgeCandidate } = await import('../../ir/dist/index.js');
+    parseKnowledgeCandidate(f.response.structuredOutput, {
+      availableEntities: [f.ref, nodeRef],
+      availableSupports: [f.support.ref],
+    });
+    const pending = api.runCapturedSemanticTestDouble(
+      f.snapshot,
+      f.options,
+      f.port,
+      f.control,
+      f.account,
+    );
+    if (mode === 'honest') {
+      const result = await pending;
+      assert.equal(result.structuredOutput.payload.coverage.status, 'PARTIAL');
+    } else
+      await assert.rejects(
+        pending,
+        (error) => code('MODEL_OUTPUT_INVALID')(error) && error.usageSettlement === 'RECORDED',
+      );
+    assert.equal(f.calls.length, 1);
+  }
+});
+
+test('captured joined invocation keeps original cancellation and never calls the model after preparation fails', async () => {
+  const f = await capturedFixture();
+  const own = f.account.own.bind(f.account);
+  f.account.own = (value) => {
+    own(value);
+    f.controller.abort();
+    f.control.signal = new AbortController().signal;
+  };
+  await assert.rejects(
+    api.runCapturedSemanticTestDouble(f.snapshot, f.options, f.port, f.control, f.account),
+    code('CANCELLED'),
+  );
+  assert.equal(f.calls.length, 0);
+  assert.equal(f.usage.invalid, true);
+});
+
 for (const task of [
   'COMPONENT_SUMMARY',
   'CAPABILITY_SYNTHESIS',

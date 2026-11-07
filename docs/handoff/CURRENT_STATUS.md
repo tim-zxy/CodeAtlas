@@ -1,3 +1,24 @@
+## P1-11 joined captured invocation / inherited coverage - 2026-11-07
+
+Private runCapturedSemanticTestDouble now composes the snapshot-derived builder
+and local invocation with one fixed control/account. It retains input digest and
+the weakest coverage across snapshot and every repository/document/workspace
+capture. Candidate status cannot overstate input or discard limitations/exact
+unverified refs; Claim results carry this coverage as metadata. TEST_DOUBLE,
+NOT_EVALUABLE and authorization NOT_ESTABLISHED remain explicit. Existing failure
+stages are not invalidated twice, and post-generation failure preserves usage.
+Application build,66 related tests (26 semantic/40 snapshot contract) and17-project
+architecture check passed. Independent review found a top-only coverage hole;
+valid COMPLETE-top/PARTIAL-child input proved the missed rejection, then passed
+with the corrected refusal. Honest partial Component and Claim paths also pass.
+[Exact boundary, evidence and synthesis dependency](../superpowers/specs/2026-11-07-semantic-test-invocation.md).
+Capability/BusinessFlow remain refused: no approved candidate-to-COMPONENT stable
+reference/revision binding or implemented captured Knowledge reader was found.
+Existing fixture IDs cannot establish that identity. No user data, model call,
+scan clearance, installed update, migration, publication or R9; Phase1 remains4/21,
+A6 NOT_QUALIFIED, E02 PROPOSED/uninstalled. CI174 on prior efc5704: Rust passed,
+Native old catalog precheck failed; TS still running when checked. No rerun.
+
 ## P1-11 captured-facts context to local-double integration - 2026-11-07
 
 Private buildCapturedSemanticTestRequest validates a complete P1-12 snapshot and
