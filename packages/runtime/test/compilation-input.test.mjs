@@ -504,3 +504,32 @@ test('workspace frame handle getters are never evaluated', async (t) => {
   assert.throws(() => f.owned.releaseWorkspace(frame));
   assert.equal(invoked, false);
 });
+
+test('Source identity comes exclusively from the genuine captured Store handle', async (t) => {
+  const f = await setup(t),
+    frame = f.owned.acquireRepository(f.basis.repositoryId);
+  const identity = f.owned.repositorySourceIdentity({ handle: frame.handle });
+  assert.deepEqual(identity.repoBasis, f.basis);
+  assert.deepEqual(identity.targetSource, {
+    repositoryId: f.basis.repositoryId,
+    revisionId: f.basis.revisionId,
+    contentFingerprint: f.basis.contentFingerprint,
+  });
+  assert.deepEqual(identity.targetInventory, f.f.expected.targetInventory);
+  assert.equal(
+    identity.rootPath,
+    f.f.db.prepare('SELECT root_path FROM repository').get().root_path,
+  );
+  assert.ok(Object.isFrozen(identity) && Object.isFrozen(identity.targetInventory));
+  const fabricated = structuredClone(frame.capture);
+  fabricated.repoBasis.contentFingerprint = 'caller-cannot-replace-original';
+  assert.deepEqual(
+    f.owned.repositorySourceIdentity({ handle: frame.handle, capture: fabricated }),
+    identity,
+  );
+  const other = createOwnedCompilationInputPorts(f.options);
+  assert.throws(() => other.repositorySourceIdentity({ handle: frame.handle }));
+  assert.throws(() => f.owned.repositorySourceIdentity({ handle: {} }));
+  f.owned.releaseRepository(frame);
+  assert.throws(() => f.owned.repositorySourceIdentity({ handle: frame.handle }));
+});

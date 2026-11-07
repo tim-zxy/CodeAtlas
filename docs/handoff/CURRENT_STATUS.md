@@ -1,3 +1,47 @@
+## Genuine Source verifier binding; remaining authority/persistence contracts - 2026-11-07
+
+The private capture Source port now routes actual Storage-owned identity (root,
+basis, target Source and full inventory) to a genuine Source context. Separate
+preparation reuses the existing controlled Source issuer/reconciliation workflow;
+capture verification never calls preparation or writes Source. Fixed context
+state, original issuer verifySelection, workspace/root/inventory equality and
+owner liveness checks reject copied tokens, changed bytes under the same revision,
+foreign scope, released contexts and caller capture DTO substitution. Failure
+after preparation preserves actual Source commit effects, including allocation/
+cancellation and UNKNOWN failure handling without mutating frozen errors.
+
+This is code integration with real owned FS/SQLite and the original Git double.
+Runtime verifier tests explicitly substitute the ownedInputs token port; actual
+Storage identity issuance has its own real-owner tests. The complete production
+Source+Storage+permission route, actual Git/Native and R9 remain unproved/unrun.
+No new permission, scan clearance, publication route or public contract was added.
+Production policy issuer is not supplied by this Source context.
+
+Source/Application/Runtime affected regression:148 PASS,0 FAIL,1 existing OS-link
+TODO (149 total); Application/Runtime builds and architecture17 pass. New Source
+suites are mandatory in root tests. Independent delta review fixes are included.
+[Reproducible evidence and exact gaps](../superpowers/reviews/2026-11-07-compilation-source-binding.json).
+
+Support audit found no missing existing recipe to enable: Code/SourceFile and
+Syntax1..4 cover all7 existing producer variants. Runtime/Contract/Flow inherit
+these supports.22 other typed support kinds lack producer recipes and still refuse;
+workspace row integrity and document content/chunk hashes cannot substitute.
+
+W010 was inspected, not installed: current migrations stop atW008. Its table
+responsibilities/invariants are accepted, but exact DDL, SnapshotReceipt, run/
+idempotency identity and W009-W011 composite FK/create order remain undefined.
+The real policy issuer is also absent: bootstrap WorkspaceContext is a placeholder,
+configuration/OperationPolicyInput are data, authorizeOperation is a pure evaluator,
+and no principal/capability/version/revocation owner exists. Creating grants or
+inventing these core contracts is outside the present bounded implementation.
+
+CI147 on9729bbe ended TS/Rust success; Native failed at unchanged R8 script-catalog
+prerequisite (log verified). TS cohorts:5031PASS+20existingSKIP,84PASS,356PASS.
+Those results certify that head only, not this later Source batch. No duplicate
+Native/R9 run or weakening of gates. E02 evaluation source/oracle baseline remains
+PROPOSED/uninstalled (separate from installed Markdown dependencies); Phase1 4/21,
+A6 NOT_QUALIFIED.
+
 ## Private capture and Markdown adapter integrated offline - 2026-11-07
 
 Implemented the approved private v1 DTO/type allowlists, typed dependency closure

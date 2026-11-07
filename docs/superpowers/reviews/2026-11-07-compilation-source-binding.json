@@ -1,0 +1,147 @@
+{
+  "kind": "PRIVATE_COMPILATION_SOURCE_VERIFIER_BINDING",
+  "date": "2026-11-07",
+  "baseCommit": "9729bbe7c54d354a173eb2c279d71055f84cc793",
+  "status": "SOURCE_COMPONENTS_BOUND_OFFLINE_PRODUCTION_AUTHORITY_AND_W010_STILL_BLOCKED",
+  "worktree": "D:/workspace/CodeAtlas-phase1-20261106",
+  "implementation": [
+    "genuine Source context, fixed state/observation and existing issuer verifySelection; no caller-supplied prepared result accepted",
+    "separate preparation retains existing Source effects; capture verifier performs no reconciliation or SQL writes",
+    "Storage identity comes from real private handle owner, not frame.capture",
+    "Runtime routes frozen source handle mapping by actual owner repository identity",
+    "owner liveness after async verify and safe fresh errors preserving actual Source effects/UNKNOWN"
+  ],
+  "validation": {
+    "builds": [
+      {
+        "command": "node node_modules/typescript/bin/tsc -p packages/application/tsconfig.json",
+        "exitCode": 0
+      },
+      {
+        "command": "node node_modules/typescript/bin/tsc -p packages/runtime/tsconfig.json",
+        "exitCode": 0
+      }
+    ],
+    "affected": {
+      "command": "node --test --test-concurrency=1 packages/application/test/compilation-source.test.mjs packages/runtime/test/compilation-source.test.mjs packages/runtime/test/compilation-input.test.mjs packages/application/test/compilation-input.test.mjs packages/application/test/mixed-source-workflow.test.mjs packages/application/test/document-write-preflight.test.mjs packages/source/test/mixed-source-workflow.test.mjs packages/source/test/mixed-source-verification.test.mjs scripts/test-workspace-structure.mjs",
+      "exitCode": 0,
+      "tests": 149,
+      "pass": 148,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 1,
+      "durationMs": 11596.1792,
+      "todoNote": "existing OS link permission test; not counted as passed or qualified"
+    },
+    "architecture": {
+      "command": "node scripts/check-architecture.mjs",
+      "projects": 17,
+      "exitCode": 0
+    },
+    "formatPaths": [
+      "docs/handoff/CURRENT_STATUS.md",
+      "docs/handoff/DESIGN_TRACEABILITY.md",
+      "docs/superpowers/reviews/2026-11-07-compilation-source-binding.json",
+      "package.json",
+      "packages/application/src/compilation-source.ts",
+      "packages/application/test/compilation-source.test.mjs",
+      "packages/runtime/src/compilation-source.ts",
+      "packages/runtime/test/compilation-source.test.mjs",
+      "packages/runtime/src/compilation-input.ts",
+      "packages/runtime/test/compilation-input.test.mjs"
+    ]
+  },
+  "evidenceBoundaries": [
+    "real Source issuer code, owned filesystem and R010 SQLite state; Git is original controlled substitute",
+    "Runtime source verifier ownedInputs is explicit token stub; genuine factory identity issuance independently tested",
+    "no complete production Source/Storage/principal chain claim",
+    "preparation may reconcile existing Source; capture verification does not write",
+    "no new real Git/Native/observer/R9 execution, scan permission or publication"
+  ],
+  "review": {
+    "independentReadOnly": true,
+    "resolved": [
+      "post-preparation allocation error preserves actual COMMITTED effects",
+      "release during async verification refuses before success",
+      "frozen typed primary plus invalidate failure yields fresh error with effects and UNKNOWN"
+    ],
+    "remainingImportantFindings": 0
+  },
+  "supportAudit": {
+    "existingProducerVariants": 7,
+    "implemented": [
+      "SourceFile@1",
+      "CanonicalNode@1",
+      "CanonicalEdge@1",
+      "SyntaxEvidence@1",
+      "SyntaxEvidence@2",
+      "SyntaxEvidence@3",
+      "SyntaxEvidence@4"
+    ],
+    "codeRecipe": "codeatlas-phase1-support-value-v1 + NUL + canonical(payload)",
+    "syntaxRecipe": "runtime-syntax-support-v1 + NUL + canonical(exact versioned envelope)",
+    "missingProducerRecipeKinds": 22,
+    "behavior": "SUPPORT_RECIPE_UNAVAILABLE; never substitute row integrity or content/chunk digests",
+    "sources": [
+      "packages/storage/src/runtime/runtime-fact-store.ts",
+      "packages/storage/src/runtime/contract-store.ts",
+      "packages/contracts/src/match-contracts.ts",
+      "packages/execution/src/derive-runtime-flow.ts",
+      "packages/documents/src/parse-document.ts"
+    ]
+  },
+  "blockers": [
+    {
+      "action": "bind actual production policy ports",
+      "target": "Runtime workspace/principal/capability/security-domain policy authority",
+      "reason": "WorkspaceContext is placeholder; config/policy DTO and pure authorizeOperation are not issuers; principal, capability origin, version and revocation owner contract absent",
+      "state": "not executed; requires concrete architecture/security authority decision",
+      "completed": "existing policy evaluator preserved; Source proof explicitly grants no permission"
+    },
+    {
+      "action": "implement/install W010 persistence",
+      "target": "W009-W011 lifecycle/provenance and CompilationInputStore",
+      "reason": "no exact DDL, SnapshotReceipt, run/idempotency key binding or composite workspace FK/create order; only migrations001..008 exist",
+      "state": "not executed; exact governed contract required",
+      "authority": [
+        "docs/superpowers/plans/2026-10-22-phase1-knowledge-and-delivery.md:62",
+        "docs/superpowers/plans/2026-10-22-phase1-knowledge-and-delivery.md:84",
+        "docs/superpowers/specs/2026-10-22-phase1-knowledge-and-consumption-design.md:114",
+        "docs/superpowers/specs/2026-10-22-phase1-knowledge-and-consumption-design.md:117",
+        "docs/handoff/adr/ADR-020-phase1-contracts-and-evaluation.md:464"
+      ]
+    }
+  ],
+  "priorCi": {
+    "number": 147,
+    "runId": 42320360898,
+    "head": "9729bbe7c54d354a173eb2c279d71055f84cc793",
+    "url": "https://github.com/tim-zxy/CodeAtlas/actions/runs/42320360898",
+    "typescript": "success",
+    "rust": "success",
+    "native": "failure",
+    "nativeLogVerifiedReason": "R8 script catalog mismatch at approved prerequisite",
+    "typescriptCohorts": [
+      {
+        "pass": 5031,
+        "skip": 20,
+        "fail": 0
+      },
+      {
+        "pass": 84,
+        "fail": 0
+      },
+      {
+        "pass": 356,
+        "fail": 0
+      }
+    ],
+    "notEvidenceForLaterCommit": true
+  },
+  "acceptance": {
+    "phase1": "4/21",
+    "A6": "NOT_QUALIFIED",
+    "E02": "PROPOSED/uninstalled evaluation source/oracle baseline; Markdown dependency installation separate"
+  }
+}

@@ -1,3 +1,14 @@
+## Source verifier binding within private capture contract - 2026-11-07
+
+P1-12 source recheck -> existing controlled mixed Source issuer -> private Source
+context fixed before exposure -> Runtime genuine repositorySourceIdentity handle
+lookup -> capture verifySource. Original Source checks remain; no preparation/
+reconciliation in capture, no caller DTO proof or Source-to-permission promotion.
+[Evidence and blockers](../superpowers/reviews/2026-11-07-compilation-source-binding.json)
+records independent review, actual SQLite/FS versus Git/owner-port substitutes,
+producer recipe audit and unresolved policy issuer/W009-W011 exact contracts.
+No W010 migration, E02 installation or acceptance gate has been marked complete.
+
 ## Private capture and Markdown adapter offline implementation - 2026-11-07
 
 P1-12/14 approved scope -> locked private capture v1 -> Application

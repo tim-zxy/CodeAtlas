@@ -49,6 +49,12 @@ type RuntimeRequestControl = Parameters<typeof compilationCaptureValueDigest>[2]
 type ScopedRef = CapturedEntity['ref'];
 type SupportRef = CapturedSupport['ref'];
 type Phase1Coverage = RepositoryCapture['coverage'];
+export interface OwnedRepositorySourceIdentity {
+  readonly rootPath: string;
+  readonly repoBasis: RepositoryCompilationInputsView['identity']['codeBasis'];
+  readonly targetSource: RepositoryCompilationInputsView['targetSource'];
+  readonly targetInventory: RepositoryCompilationInputsView['targetInventory'];
+}
 export type OwnedRepositoryCompilationFrame = { handle: object; capture: RepositoryCapture };
 export type OwnedWorkspaceCompilationFrame = {
   handle: object;
@@ -256,7 +262,14 @@ export function createOwnedCompilationInputPorts(options: {
   const aborted = Object.getOwnPropertyDescriptor(AbortSignal.prototype, 'aborted')!.get!;
   check(typeof aborted.call(control.signal) === 'boolean');
   const repositories = new Map(options.repositories);
-  const repos = new WeakMap<object, { store: RuntimeFactStore; capture: RepositoryCapture }>();
+  const repos = new WeakMap<
+    object,
+    {
+      store: RuntimeFactStore;
+      capture: RepositoryCapture;
+      sourceIdentity: OwnedRepositorySourceIdentity;
+    }
+  >();
   const workspaces = new WeakMap<
     object,
     { repositories: { store: RuntimeFactStore; handle: object }[] }
@@ -308,7 +321,14 @@ export function createOwnedCompilationInputPorts(options: {
         const capture = freeze(repositoryInventory(captured.view, control, sync));
         budget.own(capture);
         sync();
-        repos.set(captured.handle, { store, capture });
+        const sourceIdentity: OwnedRepositorySourceIdentity = freeze({
+          rootPath: captured.view.rootPath,
+          repoBasis: captured.view.identity.codeBasis,
+          targetSource: captured.view.targetSource,
+          targetInventory: captured.view.targetInventory,
+        });
+        budget.own(sourceIdentity);
+        repos.set(captured.handle, { store, capture, sourceIdentity });
         return Object.freeze({ handle: captured.handle, capture });
       } catch {
         return cleanup(() => releaseRepositoryCompilationInputs(store, captured.handle));
@@ -352,6 +372,13 @@ export function createOwnedCompilationInputPorts(options: {
       } catch {
         return cleanup(() => releaseWorkspaceCompilationInputs(workspaceStore, captured.handle));
       }
+    },
+    /** Original owned DB identity only. This performs no Source work or authorization. */
+    repositorySourceIdentity(
+      frame: Pick<OwnedRepositoryCompilationFrame, 'handle'>,
+    ): OwnedRepositorySourceIdentity {
+      sync();
+      return repoOwner(frame).sourceIdentity;
     },
     recheckRepository(frame: Pick<OwnedRepositoryCompilationFrame, 'handle'>) {
       sync();
