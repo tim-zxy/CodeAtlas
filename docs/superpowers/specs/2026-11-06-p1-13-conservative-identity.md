@@ -1,5 +1,35 @@
 # Accepted bounded P1-13 conservative identity implementation
 
+## Invocation-local preprocessing reuse
+
+Routine implementation optimization within the unchanged exact-only contract:
+reconciliation already validates/prepares every subject and existing item, then
+repeats that work in each identity comparison. Reuse those prepared values within
+the same synchronous invocation and same KnowledgeBudget; never cache across calls
+or trust an externally supplied prepared object. Standalone identity still validates
+all its inputs. Keep duplicate checks, current/historical/state/scope partitioning,
+exact anchors, fingerprints, review outcomes, inputDigest and final control gates.
+Charge actual comparisons and retained validation; no maxItems/default/threshold
+change. Fewer repeated visits may allow a valid batch under its existing caller
+budget, representing less work, not waived validation.
+
+Baseline synthetic8-by8 ambiguous batch needs more than200000 maxItems solely due
+to repeated preparation (200000 returns CONTROL_BUDGET;400000 returns8 review
+actions). Add RED under200000, preserve the literal ambiguity/review/no-retained-ID
+expectations and equality to the high-budget plan, run all five-type fixture roots,
+then build/architecture checks and independent review. No publication/data/ID change.
+
+Implemented verification: the200000 batch failed with CONTROL_BUDGET before the
+change, now returns exactly the same8 review actions/inputDigest as the high-budget
+plan. maxItems1 still returns no actions and CONTROL_BUDGET. Combined five-type
+batch retains the original exact opaque IDs. Knowledge build,40 identity/reconcile
+tests and architecture17 passed. Independent review found no high/important issue
+and independently ran the17 reconciliation cases (a subset of40, not extra cases).
+No public index export, schema, policy/threshold/default, fixture fingerprint,
+cross-request cache, Source grant, database, publication or actual model change.
+Rollback replaces the internal prepared call with the previous validated entry;
+no persisted state or ID migration. Original P1-13/E09 acceptance remains open.
+
 Status: approved conservative rule scope, implemented offline. This extends private
 comparison/plan detail under ADR007 and existing exact-only rules; it changes no
 Canonical schema, opaque ID format, AUTO/MANUAL rule, numeric threshold or publisher.

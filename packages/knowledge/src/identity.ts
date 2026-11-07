@@ -9,6 +9,7 @@ import {
   immutable,
   prepareCandidate,
   prepareExisting,
+  type PreparedComparison,
 } from './comparison-contract.js';
 export type IdentityDecision = {
   outcome:
@@ -63,6 +64,16 @@ export function resolveIdentityWithBudget(
   const candidate = prepareCandidate(v.candidate, budget),
     existing = v.existingItems.map((x) => prepareExisting(x, budget));
   phase1Assert(new Set(existing.map((x) => x.item!.id)).size === existing.length);
+  return resolvePreparedIdentityWithBudget(candidate, existing, budget);
+}
+
+/** Package-private reuse within one validated synchronous invocation only.
+ * Prepared comparisons are not external authority or a cross-request cache. */
+export function resolvePreparedIdentityWithBudget(
+  candidate: PreparedComparison,
+  existing: PreparedComparison[],
+  budget: KnowledgeBudget,
+): IdentityDecision {
   if (!candidate.state) return reviewIdentity(candidate.stateReason!);
   const out = reviewIdentity('NO_EXACT_STRUCTURE'),
     exact: typeof existing = [];

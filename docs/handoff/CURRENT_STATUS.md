@@ -1,3 +1,23 @@
+## P1-13 invocation-local reconciliation efficiency - 2026-11-07
+
+After checking the current roadmap/dependencies, independently improved the
+existing accepted exact-only identity path: reconciliation reuses the candidates/
+existing items it has already strictly prepared instead of revalidating/rebuilding
+the entire existing set for every candidate. No cross-call cache or external
+prepared input; standalone validation and all comparison/control ticks remain.
+8x8 ambiguous batch previously exhausted maxItems200000; now equals its high-budget
+8-review-action plan/inputDigest, while maxItems1 still refuses without actions.
+The five-type joint batch retains exact opaque IDs. Knowledge build,40 related
+tests and architecture17 passed; independent review no high/important issue and
+17 reconciliation cases passed separately (included in40). Public index, frozen
+identity policy/fingerprints/thresholds/defaults and fixture files unchanged.
+[Exact scope/evidence](../superpowers/specs/2026-11-06-p1-13-conservative-identity.md).
+Production original-input/secret clearance remains refused; no data/model/migration/
+installation/R9 activity. Phase1 stays4/21; A6 NOT_QUALIFIED; E02 PROPOSED/uninstalled;
+P1-13/E09 full obligations remain open. CI171 terminal TS/Rust success, Native
+approved-script catalog prerequisite failure, no new regression/repeated run.
+That prior head does not verify this new optimization commit.
+
 ## P1-12 original-input candidate manifest/evaluation - 2026-11-07
 
 Private planCompilationOriginals derives exact required SourceFile originals from

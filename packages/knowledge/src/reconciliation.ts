@@ -12,7 +12,7 @@ import {
   identityPolicyRef,
   canonical,
 } from './comparison-contract.js';
-import { resolveIdentityWithBudget, type IdentityDecision } from './identity.js';
+import { resolvePreparedIdentityWithBudget, type IdentityDecision } from './identity.js';
 export type ReconciliationAction = {
   candidateId: string | null;
   candidateIds: string[];
@@ -102,17 +102,17 @@ export function reconcileKnowledge(input: ReconciliationInput): ReconciliationPl
     };
     if (policy !== identityPolicyRef)
       return immutable({ ...plan, reviewRequired: true, diagnostics: ['POLICY_NOT_APPROVED'] });
-    const subjects = new Map<string, unknown>(),
+    const subjects = new Map<string, ReturnType<typeof prepareCandidate>>(),
       existing = new Map<string, ReturnType<typeof prepareExisting>>();
     for (const s of v.subjects) {
       budget.tick();
-      prepareCandidate(s, budget);
+      const prepared = prepareCandidate(s, budget);
       const id = (
         record((s as Record<string, unknown>).candidateEnvelope, ['schema', 'version', 'payload'])
           .payload as { id: string }
       ).id;
       phase1Assert(!subjects.has(id));
-      subjects.set(id, s);
+      subjects.set(id, prepared);
     }
     for (const s of v.existingItems) {
       budget.tick();
@@ -182,13 +182,11 @@ export function reconcileKnowledge(input: ReconciliationInput): ReconciliationPl
       });
     }
     const retained = new Set<string>();
+    const comparableExisting = [...existing.values()];
     for (const [id, subject] of [...subjects].sort(([a], [b]) => order(a, b))) {
       if (usedSubjects.has(id)) continue;
       budget.tick();
-      const d = resolveIdentityWithBudget(
-        { candidate: subject, existingItems: v.existingItems, policyRef: policy },
-        budget,
-      );
+      const d = resolvePreparedIdentityWithBudget(subject, comparableExisting, budget);
       if (d.matchedId) {
         phase1Assert(!usedExisting.has(d.matchedId) && !retained.has(d.matchedId));
         retained.add(d.matchedId);

@@ -19,6 +19,55 @@ const make = () => ({
   control: control(),
 });
 const api = () => import('../dist/index.js');
+
+function batch(count, sourceRows = Array(count).fill(rows[0])) {
+  const x = make();
+  x.subjects = sourceRows.map((row, i) => {
+    const candidate = structuredClone(row.candidate);
+    candidate.candidateEnvelope.payload.id = `candidate:bulk:${i}`;
+    return candidate;
+  });
+  x.existingItems = sourceRows.map((row, i) => {
+    const existing = structuredClone(row.existing);
+    existing.itemEnvelope.payload.id = `knowledge:bulk:${i}`;
+    existing.revisionEnvelope.payload.itemId = existing.itemEnvelope.payload.id;
+    existing.revisionEnvelope.payload.id = `revision:bulk:${i}`;
+    existing.itemEnvelope.payload.publishedRevisionId = existing.revisionEnvelope.payload.id;
+    return existing;
+  });
+  return x;
+}
+
+test('bounded batch reuses validated inputs while preserving every ambiguity/review action', async () => {
+  const run = (await api()).reconcileKnowledge;
+  const x = batch(8),
+    reference = run(x);
+  assert.equal(reference.actions.length, 8);
+  for (const action of reference.actions) {
+    assert.equal(action.operation, 'REVIEW_REQUIRED');
+    assert.equal(action.requiresReview, true);
+    assert.equal(action.retainedItemId, null);
+    assert.equal(action.existingItemIds.length, 8);
+    assert.deepEqual(action.reasons, ['AMBIGUOUS_EXACT_IDENTITIES']);
+  }
+  x.control = { ...control(), maxItems: 200000 };
+  assert.deepEqual(run(x), reference);
+  x.control = { ...control(), maxItems: 1 };
+  assert.deepEqual(run(x).actions, []);
+  assert.deepEqual(run(x).diagnostics, ['CONTROL_BUDGET']);
+});
+
+test('one reconciliation batch preserves exact identities across all five approved types', async () => {
+  const input = batch(rows.length, rows);
+  const result = (await api()).reconcileKnowledge(input);
+  assert.equal(result.actions.length, 5);
+  for (let i = 0; i < 5; i++) {
+    const action = result.actions.find((value) => value.candidateId === `candidate:bulk:${i}`);
+    assert.equal(action.operation, 'UNCHANGED');
+    assert.equal(action.retainedItemId, `knowledge:bulk:${i}`);
+    assert.equal(action.revisionIntent, 'NONE');
+  }
+});
 test('reconciliation emits bound plans, never writes or allocates identities', async () => {
   const run = (await api()).reconcileKnowledge;
   assert.equal(typeof run, 'function');

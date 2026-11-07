@@ -1,3 +1,13 @@
+## P1-13 bounded reconciliation preprocessing reuse - 2026-11-07
+
+ADR007/exact-reference-v1 semantics unchanged. identity.ts separates its internal
+prepared comparison from standalone input validation; reconciliation.ts reuses
+strictly prepared values within one synchronous invocation and one KnowledgeBudget.
+No public export/cache/provenance change. New reconciliation cases prove the8x8
+200000-budget RED-to-GREEN plan equivalence, low-budget refusal and five-type exact
+ID retention. Build,40 related tests and architecture17 pass; independent review
+no high/important issue. Fixture fingerprints, thresholds and formal gates unchanged.
+
 ## P1-12 original input candidate set/integrity - 2026-11-07
 
 Private compilation-secret-candidate.ts maps strict capture support closure to
