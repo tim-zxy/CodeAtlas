@@ -1,3 +1,26 @@
+## Explicit precompiled validation entry and deployment plan - 2026-11-07
+
+Closed-package integration exposed a real handoff gap: the explicit one-shot probe
+selected only legacy acquisition and was absent from the catalog. Added private
+--precompiled-current-process-only selection, without fallback or ordinary CLI
+auto-acquisition, and included the exact entry in package/source-state. No new
+authority/permissions/default budgets. Prior legacy mode remains.
+
+RED1/4PASS then GREEN4/4 with isolated Principal doubles, real owned-memory SQLite
+and existing OperationPolicy; no actual OS query. Runtime compile, architecture17,
+format/diff pass. New directory catalog SHAac84dad419c823081d471b6aec288985b01a2f3d9c065e9e666174271bef62b7
+binds3053 files/11 aliases; actual singleton pairs, probe hash and owned-root refusal
+pass (child/query0). This supersedes only the prior package candidate, retaining it.
+
+[Precise deployment/one-shot plan](../superpowers/plans/2026-11-07-principal-deployment-validation.md)
+specifies target, closure, junction relocation, original protection checks, exact
+command/controls, first-failure stop and rollback. No protected install, ACL change,
+account lookup, user DB, scan clearance or R9 executed. It is not a full Phase1
+installer or general product capture. Phase1 remains4/21; A6 NOT_QUALIFIED; E02
+PROPOSED/uninstalled. Evidence-only9069d44 joins this functional source sync; CI162
+TS/Rust PASS and Native R8 catalog FAIL remain results for c4e4cc60 only.
+[Evidence](../superpowers/reviews/2026-11-07-principal-probe-deployment-routing.json).
+
 ## Exact pure Principal loader instrumented validation - 2026-11-07
 
 One newly authorized pure test used the original script path, unchanged exported

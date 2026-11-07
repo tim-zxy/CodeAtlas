@@ -1,0 +1,101 @@
+{
+  "kind": "EXPLICIT_PRECOMPILED_PROBE_ROUTING_OFFLINE",
+  "date": "2026-11-07",
+  "sourceBase": "9069d4410e94170589b3ed7275db3d3bf9f32d0e",
+  "sourceMayBeDirty": true,
+  "scope": "explicit verification entry only, not ordinary CLI auto-acquisition",
+  "implementation": "new --precompiled-current-process-only selects private precompiled acquisition once, legacy explicit mode remains, no fallback; entry added to closed catalog/source-state",
+  "red": {
+    "tests": 4,
+    "pass": 1,
+    "fail": 3,
+    "log": "C:/Users/Freya/AppData/Local/Temp/codeatlas-principal-probe-route-red.log"
+  },
+  "green": {
+    "tests": 4,
+    "pass": 4,
+    "fail": 0,
+    "log": "C:/Users/Freya/AppData/Local/Temp/codeatlas-principal-probe-route-green.log",
+    "principal": "Node isolated module TEST_DOUBLE",
+    "scopeStore": "real test-owned in-memory SQLite, existing operation policy",
+    "cases": [
+      "precompiled success plus closed operation/Principal",
+      "legacy explicit compatibility",
+      "precompiled UNKNOWN without fallback",
+      "unknown mode performs no acquisition"
+    ]
+  },
+  "verification": {
+    "runtimeBuild": "tsc -p packages/runtime/tsconfig.json exit0",
+    "architecture": "17 projects PASS",
+    "format": "all5 changed source/test/config files PASS",
+    "diffCheck": "PASS",
+    "identityQueries": 0,
+    "protectedInstalls": 0,
+    "ACLChanges": 0,
+    "R9Runs": 0
+  },
+  "package": {
+    "root": ".superpowers/closed-runtime-20261107-deployment-01/release-ac84dad419c823081d471b6aec288985b01a2f3d9c065e9e666174271bef62b7",
+    "digest": "ac84dad419c823081d471b6aec288985b01a2f3d9c065e9e666174271bef62b7",
+    "manifestBytes": 450696,
+    "files": 3053,
+    "payloadBytes": 17512905,
+    "aliases": 11,
+    "workspacePackages": 11,
+    "externalPackages": 71,
+    "probe": {
+      "bytes": 6108,
+      "path": "packages/runtime/test/windows-principal-live-probe.mjs",
+      "sha256": "e27b4a292f46c7fb7928b2e167f38b1ff8e7948be08ade3ea60a91b6fccd6275"
+    },
+    "dllSha256": "4ee3e48cfa2f6c4d883a983a2f7b5739ecf7b01d515c94cecbed9f87e3bb7147",
+    "integration": {
+      "kind": "OWNED_CLOSED_PACKAGE_INTEGRATION",
+      "packageDigest": "ac84dad419c823081d471b6aec288985b01a2f3d9c065e9e666174271bef62b7",
+      "singleton": [
+        {
+          "a": "packages/storage/dist/runtime/runtime-fact-store.js",
+          "b": "node_modules/@codeatlas/storage/dist/runtime/runtime-fact-store.js",
+          "sameNamespace": true,
+          "sameRealpath": true
+        },
+        {
+          "a": "packages/storage/dist/analysis/activation-history-format.js",
+          "b": "node_modules/@codeatlas/storage/dist/analysis/activation-history-format.js",
+          "sameNamespace": true,
+          "sameRealpath": true
+        },
+        {
+          "a": "packages/application/dist/capture-compilation-input.js",
+          "b": "node_modules/@codeatlas/application/dist/capture-compilation-input.js",
+          "sameNamespace": true,
+          "sameRealpath": true
+        }
+      ],
+      "ownedRootNotTrusted": true,
+      "childSpawns": 0,
+      "identityQueries": 0,
+      "userDatabasesOpened": 0
+    },
+    "meaning": "owned directory candidate only; catalog SHA not archive hash, trust or complete Phase1 installer"
+  },
+  "deploymentPlan": "../plans/2026-11-07-principal-deployment-validation.md",
+  "remaining": [
+    "operation-time protected install approval and exact installer execution",
+    "actual inherited full-ancestry protection and launcher/caller verification",
+    "one separately approved actual current-process account acquisition",
+    "full product bootstrap/capture remains separate from explicit validation entry",
+    "R8 catalog qualification/R9 remains separately blocked"
+  ],
+  "phase1": "4/21",
+  "A6": "NOT_QUALIFIED",
+  "E02": "PROPOSED/uninstalled",
+  "files": {
+    "packages/runtime/test/windows-principal-live-probe.mjs": "e27b4a292f46c7fb7928b2e167f38b1ff8e7948be08ade3ea60a91b6fccd6275",
+    "packages/runtime/test/windows-principal-probe-routing.test.mjs": "c4e9137b2becb21eae6f07a7f82f86cacafde468893c80976ff97b371e64fdbc",
+    "packages/runtime/src/windows-principal-precompiled.ts": "dc68d614eb6529a909b555ec95a998001bc6b2b498e8a552772d5385066141c8",
+    "scripts/build-closed-runtime-package.mjs": "6de00e17a52602a3a07354a92ab292300c26d11158427817e442a06907c9816a",
+    "package.json": "4cee528c2f3d62e6a36d1886ae75614f8c9693c444806167391044a5a6443152"
+  }
+}

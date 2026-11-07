@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import { DatabaseSync } from 'node:sqlite';
 import {
   acquireCurrentWindowsPrincipal,
+  acquirePrecompiledWindowsPrincipal,
   assertCurrentWindowsPrincipal,
   releaseCurrentWindowsPrincipal,
 } from '../dist/windows-principal-owner.js';
@@ -19,8 +20,16 @@ import { HistoryReadBudget } from '../../storage/dist/analysis/activation-histor
 import { ContractStore } from '../../storage/dist/runtime/contract-store.js';
 import { loadMigrationPlan } from '../../storage/dist/migrations/manifest.js';
 import { applyMigrationPlan } from '../../storage/dist/migrations/runner.js';
-if (process.argv.length !== 3 || process.argv[2] !== '--current-process-only')
+const mode = process.argv[2];
+if (
+  process.argv.length !== 3 ||
+  !['--current-process-only', '--precompiled-current-process-only'].includes(mode)
+)
   throw Error('EXPLICIT_CURRENT_PROCESS_PROBE_REQUIRED');
+const precompiled = mode === '--precompiled-current-process-only';
+const acquirePrincipal = precompiled
+  ? acquirePrecompiledWindowsPrincipal
+  : acquireCurrentWindowsPrincipal;
 const abort = new AbortController();
 const control = {
   maxItems: 200000,
@@ -47,7 +56,7 @@ let principal,
   operation,
   stage = 'principal-acquire';
 try {
-  principal = await acquireCurrentWindowsPrincipal(control, {
+  principal = await acquirePrincipal(control, {
     maxInputBytes: 4 * 1024 * 1024,
     maxOutputBytes: 16 * 1024,
   });
@@ -135,6 +144,7 @@ try {
   console.log(
     JSON.stringify({
       kind: 'CURRENT_PROCESS_LOCAL_PRINCIPAL_PROBE',
+      acquisition: precompiled ? 'PRECOMPILED_DLL' : 'LEGACY_SOURCE',
       identityLookups: 1,
       opaquePrincipal: true,
       replyDtoRejected: true,
@@ -153,6 +163,7 @@ try {
   console.log(
     JSON.stringify({
       kind: 'CURRENT_PROCESS_LOCAL_PRINCIPAL_PROBE',
+      acquisition: precompiled ? 'PRECOMPILED_DLL' : 'LEGACY_SOURCE',
       stage,
       success: false,
       code: error?.code ?? 'PROBE_FAILED',

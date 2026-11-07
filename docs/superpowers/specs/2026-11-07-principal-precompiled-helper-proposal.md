@@ -123,3 +123,13 @@ close uncertainty retains UNKNOWN and poisons admission. No installed deployment
 actual identity query has been validated. Exact evidence and the unresolved pure
 loader NOT_FOUND test are in ../reviews/2026-11-07-precompiled-runtime-wiring.json.
 Rollback leaves private route unused; no permissions, database or schema to revert.
+
+## Explicit validation handoff refinement
+
+The private one-shot validation entry now has an explicit precompiled mode and is
+part of the closed catalog. It does not enable ordinary CLI acquisition. Pure loader
+validation later passed3/3 in the original path with recorded write/close/exec order;
+the earlier missing-file cause remains unknown. Deployment and actual query still
+require separate approvals. See ../plans/2026-11-07-principal-deployment-validation.md
+and ../reviews/2026-11-07-principal-probe-deployment-routing.json for exact current
+candidate and boundary. No frozen public contract, new grant or budget is introduced.

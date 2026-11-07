@@ -222,6 +222,7 @@ async function buildInputs(workspaces, lockBytes) {
     'Cargo.lock',
     'rust-toolchain.toml',
     'scripts/windows-process-principal.cs',
+    'packages/runtime/test/windows-principal-live-probe.mjs',
   ]);
   async function sourceFiles(directory, prefix, depth = 0) {
     tick(depth);
@@ -284,7 +285,12 @@ try {
   }
   for (const item of external)
     await copyDirectory(item.source, 'node_modules/' + item.manifest.name);
-  for (const name of ['Cargo.lock', 'rust-toolchain.toml', 'scripts/windows-process-principal.cs'])
+  for (const name of [
+    'Cargo.lock',
+    'rust-toolchain.toml',
+    'scripts/windows-process-principal.cs',
+    'packages/runtime/test/windows-principal-live-probe.mjs',
+  ])
     await copyFile(path.join(workspace, ...name.split('/')), name);
   const dll = await readSource(dllSource);
   need(dll.length === 6656 && hash(dll) === dllHash, 'PRECOMPILED_DLL_IDENTITY_MISMATCH');

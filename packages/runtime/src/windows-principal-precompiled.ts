@@ -10,8 +10,8 @@ function need(value: unknown): asserts value {
   if (!value) throw unavailable();
 }
 
-// Fixed source, never executed by offline preparation/tests. All OS trust checks
-// occur before Assembly.Load or Query; catalog hashes alone confer no authority.
+// Fixed pure byte loader; offline validation never calls Query. The full program
+// below checks OS trust before loading/querying; catalog hashes confer no authority.
 export const principalAssemblyLoader = String.raw`function Load-VerifiedPrincipal([byte[]]$artifact){
 function Need($v){if(-not $v){throw 'PRINCIPAL_UNAVAILABLE'}}
 function Hash([byte[]]$b){$h=[Security.Cryptography.SHA256]::Create();try{return ([BitConverter]::ToString($h.ComputeHash($b))).Replace('-','').ToLowerInvariant()}finally{$h.Dispose()}}
