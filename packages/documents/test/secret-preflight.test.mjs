@@ -6,6 +6,90 @@ const api = await import('../dist/secret-preflight.js').catch(() => ({}));
 const scan = (raw, candidate = {}) =>
   api.inspectDocumentSecrets(Buffer.from(raw), candidate, makeAccount().account);
 const masking = await import('../dist/document-range-mask.js').catch(() => ({}));
+const candidateScanner = await import('../dist/secret-candidate.js').catch(() => ({}));
+const candidateCorpus = JSON.parse(
+  await readFile(
+    new URL('./fixtures/secret-indicators-v2-candidate.json', import.meta.url),
+    'utf8',
+  ),
+);
+for (const vector of candidateCorpus.cases)
+  test('proposed coverage corpus: ' + vector.id, () => {
+    const result = candidateScanner.inspectDocumentSecretCandidate(
+      Buffer.from(vector.source),
+      vector.candidate,
+      makeAccount().account,
+    );
+    assert.equal(result.ruleSet, candidateCorpus.version);
+    assert.equal(result.status, 'PROPOSED');
+    assert.equal(result.detected, vector.detected);
+    assert.equal(result.coverage, 'LIMITED');
+    assert.equal(result.clearance, false);
+    assert.equal(JSON.stringify(result).includes('synthetic-only'), false);
+    assert.equal(Object.isFrozen(result) && Object.isFrozen(result.rules), true);
+  });
+
+test('proposed scanner rejects invalid bytes and candidate accessors without returning a receipt', () => {
+  let calls = 0;
+  for (const [source, candidate] of [
+    [Buffer.from([255]), {}],
+    [new Uint8Array(new SharedArrayBuffer(4)), {}],
+    [
+      Buffer.from('ordinary'),
+      {
+        get text() {
+          calls++;
+          return 'ordinary';
+        },
+      },
+    ],
+    [
+      Buffer.from('ordinary'),
+      new Proxy(
+        {},
+        {
+          ownKeys() {
+            calls++;
+            return [];
+          },
+        },
+      ),
+    ],
+  ]) {
+    const owner = makeAccount();
+    assert.throws(() =>
+      candidateScanner.inspectDocumentSecretCandidate(source, candidate, owner.account),
+    );
+    assert.equal(owner.usage.invalid, true);
+  }
+  assert.equal(calls, 0);
+});
+
+test('proposed scanner cannot yield a receipt after cancellation or work budget failure', () => {
+  const controller = new AbortController();
+  controller.abort();
+  const cancelled = makeAccount(controller.signal);
+  assert.throws(
+    () =>
+      candidateScanner.inspectDocumentSecretCandidate(
+        Buffer.from('ordinary'),
+        {},
+        cancelled.account,
+      ),
+    { code: 'CANCELLED' },
+  );
+  assert.equal(cancelled.usage.invalid, true);
+  const limited = makeAccount();
+  limited.account.visitItem = () => {
+    throw Object.assign(Error('budget'), { code: 'HISTORY_LIMIT_EXCEEDED' });
+  };
+  assert.throws(
+    () =>
+      candidateScanner.inspectDocumentSecretCandidate(Buffer.from('ordinary'), {}, limited.account),
+    { code: 'HISTORY_LIMIT_EXCEEDED' },
+  );
+  assert.equal(limited.usage.invalid, true);
+});
 
 test('offline range mask preserves exact byte offsets, CRLF and the original Unicode input', () => {
   const original = Buffer.from([0x41, 0xc3, 0xa9, 13, 10, 0x42, 0xf0, 0x9f, 0x98, 0x80, 0x43]);

@@ -1,3 +1,14 @@
+## P1-12 versioned offline coverage candidate - 2026-11-07
+
+SECURITY source/candidate scanning maps to private Documents secret-candidate.ts:
+unchanged v1 plus URI-password syntax detection, never network or clearance.
+Literal16-vector candidate corpus records positives/negatives/misses; two refusal
+tests cover unsafe inputs, cancellation and budget. Initial15 RED tests failed
+before implementation. Documents build,121 scan/preflight/capture-closure/lifecycle
+tests and architecture17 pass. Review found no high/important issue; joined-URI
+minor is an explicit missed-form case. v1/corpus/public APIs and R8 unchanged.
+Candidate spec maps lifecycle checks and gaps; no policy installation or gate closed.
+
 ## P1-12 bounded offline redaction preparation - 2026-11-07
 
 SECURITY source controls and KNOWLEDGE_WORKFLOW redaction map to private

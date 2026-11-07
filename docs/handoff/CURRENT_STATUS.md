@@ -1,3 +1,25 @@
+## P1-12 offline coverage candidate and capture boundary map - 2026-11-07
+
+Private `secret-candidate.ts` composes unchanged v1 detection with local URI-password
+inspection over original UTF8 text and every candidate string value/key. It returns
+sorted rule IDs and PROPOSED/LIMITED/clearance=false; no production caller, policy
+installation or authority. Independent literal16-vector corpus covers positive,
+negative and missed forms. Invalid data/shared bytes/accessors/proxies, cancellation
+and budget failures return no receipt. v1 source and14-case corpus have zero diff.
+
+Documents build,121 detector/preflight/capture-contract/lifecycle tests and
+architecture17 passed. Independent review: no high/important issue; joined-URI
+miss recorded as minor and pinned explicitly in the corpus. Complete inventory,
+support closure, original/final payload and final permission/policy/Source checks
+are mapped to current implementation/tests in the
+[candidate spec](../superpowers/specs/2026-11-07-secret-coverage-candidate.md).
+Remaining: document-only candidate does not authenticate consumed payloads, grant
+inventory access or approve production coverage. Ordinary capture stays scan-denied.
+No installed update, real identity, user data, model, migration, publication or R9.
+Phase1 stays4/21/A6 NOT_QUALIFIED/E02 PROPOSED/uninstalled. CI166 terminal TS/Rust
+success, Native catalog failure; CI167 still running when recorded. These prior
+heads do not verify this candidate commit.
+
 ## P1-12 offline byte masking; production clearance unchanged - 2026-11-07
 
 Private Documents `maskDocumentRanges` masks explicit original UTF8 byte intervals,
