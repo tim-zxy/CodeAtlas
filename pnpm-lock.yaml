@@ -43,6 +43,9 @@ importers:
       '@codeatlas/ir':
         specifier: workspace:*
         version: link:../ir
+      '@codeatlas/knowledge':
+        specifier: workspace:*
+        version: link:../knowledge
       '@codeatlas/source':
         specifier: workspace:*
         version: link:../source

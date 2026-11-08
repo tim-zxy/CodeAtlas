@@ -1,3 +1,16 @@
+## Approved self-owned publication mechanics - 2026-11-08
+
+Knowledge-consumption sections3/5/7 and user-approved bounded publication contract
+map to IR offline-publication-contract, Application offline-publication and Storage
+offline-publication-store. Existing Reconciliation review requirements, opaque
+identity and fingerprints retained. Scope is mechanical owned-test publication,
+not production quality/W011 or a new production layout. Stable logical request,
+private origin continuation and durable attempt link complete set -> revisions ->
+receipt -> CAS heads; old history retained, UNKNOWN inspection-only.
+Five builds/98 scoped tests/architecture17 and associated review recorded in the
+[implementation plan](../superpowers/plans/2026-11-08-offline-publication.md).
+Actual model quality, production authorization, W011 and original acceptance stay open.
+
 ## Approved bounded Evaluation-record implementation - 2026-11-08
 
 Existing knowledge-consumption sections3/5 and W011 decision packet map to private

@@ -1,3 +1,28 @@
+## Approved self-owned publication mechanics - 2026-11-08
+
+Private Application prepares complete candidate sets using actual current heads,
+existing conservative Reconciliation/fingerprints and explicit non-authority test
+review. Opaque issuer-bound command handles prevent caller identity substitution.
+Stable logical lookup precedes re-planning/ID allocation/review, preserving original
+IDs and receipts on real retries. Production quality remains NOT_EVALUABLE and
+productionPublication NOT_AUTHORIZED.
+
+Private Storage experiment registers immutable attempts, then commits all revisions,
+receipt and final head CAS together in self-owned temporary SQLite only. Head
+races/partial faults preserve old heads; unknown acknowledgements cannot resume.
+Known publication COMMITTED and cleanup UNKNOWN remain separate. No W011, public
+query route, production relation projection or real quality approval.
+
+Five package builds and98/98 targeted tests passed(new19 included,0fail/skip).
+Initial architecture check exposed an undeclared existing internal Knowledge
+dependency; manifest+internal lock link corrected, final architecture17 passed.
+Source/package/lock formatting and diff checks pass. Independent associated review
+found no remaining material issue. [Exact contract](../superpowers/specs/2026-11-08-offline-publication.md)
+and [commands/failures](../superpowers/plans/2026-11-08-offline-publication.md).
+No user DB/body, real model/scan, production publication/migration, installed
+package or Native/R9 operation. Phase1 remains4/21; A6 NOT_QUALIFIED; E02 PROPOSED.
+CI186 at48e1512 finished TS/Rust success, Native old R8 catalog failure.
+
 ## Bounded self-owned Evaluation record - 2026-11-08
 
 Approved private Application structural evaluator now binds actual candidates to
