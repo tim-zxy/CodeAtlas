@@ -1322,7 +1322,15 @@ export function readRepositorySourceFileMetadata(
   },
   budget: HistoryReadBudget,
   syncCheck: () => undefined,
-) {
+): {
+  kind: 'FULL_CURRENT_REVISION';
+  basis: Pick<RepoBasis, 'repositoryId' | 'revisionId' | 'contentFingerprint'>;
+  rootPath: string;
+  sourceFiles: SourceFile[];
+  authorization: 'NOT_ESTABLISHED';
+  supportClosure: 'NOT_ESTABLISHED';
+  sourceFreshness: 'NOT_OBSERVED';
+} {
   compilationCheck(store && !types.isProxy(store));
   const owner = connections.get(store);
   compilationCheck(owner && owner.db.isOpen && !owner.db.isTransaction);
