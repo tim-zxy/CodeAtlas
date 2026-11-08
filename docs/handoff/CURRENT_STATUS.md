@@ -1,3 +1,28 @@
+## Adopted EVOLVABLE Wiki profile v1, owned-data slice - 2026-11-08
+
+Implemented codeatlas.standard@1.0.0 with required overview and provenance/coverage/
+freshness, five optional typed sections, complete diagnostics and approved status
+precedence. Explicit allowPartial never clears missing required data, review or stale
+conditions. Private Application binds a fixed query and scope; Knowledge deterministically
+renders selected published revisions only. Immutable memory artifacts preserve older
+versions and the old current pointer on failures; no durable file writer is claimed.
+
+Five builds,135/135 integrated tests(new16 included,0fail/skip), architecture17,
+format and associated independent review passed. Review fixes bind canonical selection
+digest and consumed workspace/document support to scope. Real owned publication stays
+AFFECTED -> STALE/NOT_WRITTEN without changing canonical experiment history. Complete
+positive cases use explicit synthetic records and prove only this profile's structural
+behavior, never real freshness/quality/permission. [Scope](../superpowers/specs/2026-11-08-locked-wiki-profile.md),
+[reproduction](../superpowers/plans/2026-11-08-locked-wiki-profile.md), and
+[controlling versioned profile](../specs/wiki-projection.md#phase-1-locked-standard-profile-100).
+
+CI189 at a62bdad ended TS/Rust success, Native old R8 script catalog failure;
+actual qualification skipped. No duplicate run. Production query/publication, user
+DB, real models/Source scanning and Native/R9 stay closed. Full P1-16/Wiki and
+formal acceptance remain OPEN; Phase1 stays4/21, A6 NOT_QUALIFIED,
+E02 PROPOSED/uninstalled. Production authorization/read freshness and atomic filesystem
+artifact output are remaining dependencies, not granted by this private slice.
+
 ## Private P1-15 exact published-version read - 2026-11-08
 
 Added the next owned-data business slice: publication -> actual FTS5 hit -> exact

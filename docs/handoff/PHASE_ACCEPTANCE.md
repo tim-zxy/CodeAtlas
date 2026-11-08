@@ -1217,6 +1217,8 @@ Task 6 draft gates remain unchecked: ten bootstrap-dependent B3 cases currently 
 - [ ] If source-grounded degraded candidates are enabled, they retain evidence, generation method, coverage and unverified-relation limitations, and pass the normal Reconciliation/Quality Gate before publication; local-only and security blocks never trigger remote fallback.
 - [ ] Standard System Wiki sections use only published Knowledge and report missing or stale cross-repository support rather than inventing contracts, flows, or migration state.
 
+Phase1 standard Wiki profile baseline: [codeatlas.standard@1.0.0](../specs/wiki-projection.md#phase-1-locked-standard-profile-100) fixes required overview/provenance, five optional sections and diagnostic precedence. Private owned-data tests and memory artifact compatibility are component evidence only. The original Wiki gates above remain unchecked until authorized production query, actual copy-on-write filesystem output and original end-to-end quality evidence exist. No gate, scope or numeric threshold is removed or lowered.
+
 ## Phase 2 exit direction
 
 Detailed numeric baselines are set during Phase 2 planning. Acceptance must cover architecture/decision/migration knowledge, state-aware consistency and drift, curated feedback, advanced reconciliation, hybrid retrieval with rebuildable vectors, impact/change context, usage/agent utility, richer documents, daemon/local HTTP, and expanded authorization. Core behavior must still work in LITE mode without vectors.

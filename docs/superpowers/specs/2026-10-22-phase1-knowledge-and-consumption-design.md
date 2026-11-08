@@ -134,6 +134,8 @@ copy-on-write输出：在获准目标目录创建独占临时文件→完整写�
 
 reprojection是显式手动命令，与update_knowledge分开；不得enqueue语义更新、调用LLM补缺失或改变knowledge revision。缺required为MISSING_DATA，旧源为STALE，显式允许部分输出为PARTIAL，全部支持齐全才COMPLETE。LOCKED非法customization整体拒绝，不能悄悄部分采用。
 
+首版标准 profile 的 EVOLVABLE 细化已采用：codeatlas.standard@1.0.0，概览与来源/coverage/freshness 必需，其余五类章节可选且缺失明确 PARTIAL；状态顺序 REVIEW_REQUIRED > MISSING_DATA > STALE > PARTIAL > COMPLETE，保留全部诊断，allowPartial 不覆盖必需缺失/过期/复核。精确表、兼容范围与自有测试基线见 [Wiki profile](../../specs/wiki-projection.md#phase-1-locked-standard-profile-100)。当前只实现自有数据及内存产物；生产查询、文件发布和原正式门禁仍关闭。
+
 ## 9. Agent API与MCP
 
 RequestContext={workspaceId,repositorySelection/revisionSet或null,scope,budget,callerCapabilities,permissionContext,deadline/cancel}。响应严格`{data,meta:ResultMeta}`或typed error，成功空结果必须和权限/不可用错误区分。

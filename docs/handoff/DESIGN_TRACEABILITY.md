@@ -1,3 +1,16 @@
+## Adopted P1-16 locked Wiki profile v1 - 2026-11-08
+
+ADR-013 and knowledge-and-consumption section8 retain published-Knowledge-only,
+no canonical writes/semantic update, LOCKED customization and phase allocations.
+The authorized EVOLVABLE profile table/status order now maps to private Knowledge
+offline-wiki and Application OfflineWikiProjector. Explicit owned query selection,
+scope/support/provenance binding, complete diagnostics, deterministic Markdown and
+copy-on-write memory history are covered by16 new cases and the independent v1
+expected JSON baseline. Five builds/135 integrated tests/architecture17/format and
+associated review are recorded in the [plan](../superpowers/plans/2026-11-08-locked-wiki-profile.md).
+Controlling wiki-projection and section8 agree; no public API, W011, production
+permission, durable artifact writer, real quality or formal acceptance is inferred.
+
 ## Existing P1-15 exact published revision read - 2026-11-08
 
 Knowledge-and-consumption sections5/7 and agent-api view_knowledge map to private

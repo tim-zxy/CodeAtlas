@@ -1,0 +1,15 @@
+{
+  "profileId": "codeatlas.standard",
+  "profileVersion": "1.0.0",
+  "requiredSections": ["overview", "provenance"],
+  "optionalSections": [
+    "components",
+    "capabilities",
+    "integrations",
+    "runtime-flows",
+    "business-flows"
+  ],
+  "statusPriority": ["REVIEW_REQUIRED", "MISSING_DATA", "STALE", "PARTIAL", "COMPLETE"],
+  "partialMayMaterialize": ["PARTIAL"],
+  "fixtureKind": "OWNED_SYNTHETIC_PROJECTION_NOT_QUALITY"
+}
