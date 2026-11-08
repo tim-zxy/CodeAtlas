@@ -1,3 +1,21 @@
+## Approved descriptive SourceFile metadata projection - 2026-11-08
+
+P1-12 scope preparation maps to private RuntimeFactStore
+readRepositorySourceFileMetadata and its registered repository-source-metadata
+tests. Projection reuses existing SourceFile fields from analysis/code-context-read,
+without Code/Syntax/history materialization. Existing exact13/FK, current indexed
+revision/fingerprint and logical budget constraints remain. Explicit limitations
+are authorization NOT_ESTABLISHED, supportClosure NOT_ESTABLISHED and
+sourceFreshness NOT_OBSERVED. It does not authenticate file permission or Source.
+
+Commits c64f39e/2958273 include original implementation and explicit existing IR
+return aliases fixing CI183's downstream Zod declaration leak. Fresh Storage/
+Runtime builds,21 owned-database tests, architecture17 and independent review
+passed. CI184 TS/Rust passed; old R8 Native prerequisite remains blocked. Exact
+commands, failure history and limitations are in CURRENT_STATUS. No new schema,
+public API, scan admission, policy or formal acceptance change. This is a factual
+implementation mapping under separately approved record-writing authority.
+
 ## Existing approved offline modules compose through persisted snapshots - 2026-11-08
 
 P1-12 inspection -> approved temporary P1-14 Store -> reopen/support verification

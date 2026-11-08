@@ -1,3 +1,47 @@
+## Approved private SourceFile metadata read and declaration fix - 2026-11-08
+
+Commits c64f39e and2958273 are on the continuation branch. The private
+RuntimeFactStore readRepositorySourceFileMetadata reads only current indexed
+repository/revision and SourceFile identity/path/fingerprint/classification
+metadata from exact schema13. It pins the descriptive three-field basis, checks
+FKs and table columns, and uses existing SQL/request budgets. No Code/Syntax/
+history body is materialized. Results explicitly establish no authorization,
+support closure or Source freshness; no public index export or scanning permit.
+
+A private random savepoint detects transaction loss/replacement by the callback
+and preserves foreign transactions; uncertain ownership remains UNKNOWN.
+Prototype-bound budget forwarding covers both request and SQL checks. Independent
+review findings on these two boundaries were fixed and associated review passed.
+Storage build and21/21 tests (new metadata12 plus existing Store9,0fail/skip) passed:
+
+`node node_modules/typescript/bin/tsc -p packages/storage/tsconfig.json`
+
+`node node_modules/typescript/bin/tsc -p packages/runtime/tsconfig.json`
+
+`node --test --test-concurrency=1 packages/storage/test/repository-source-metadata.test.mjs packages/storage/test/compilation-input-store.test.mjs`
+
+Tests use self-owned temporary SQLite only. Query-only success, mismatched pins,
+unsupported schema/FK/columns, malformed classification, original budgets, source
+row preflight, cancellation, connection reincarnation and replaced transactions
+are covered. Initial validation exposed a callback return-type error and two test
+setup mistakes (inclusive row boundary; SQLite CHECK rejecting malformed seed).
+These were corrected without weakening validation. Test registered once.
+
+CI183 exposed a real new regression: inferred return declarations expanded Zod
+brands, causing Runtime TS2307. The explicit existing RepoBasis/SourceFile return
+types in2958273 eliminate that dependency leak without changing behavior. Fresh
+Storage AND downstream Runtime builds and the same21 tests passed; architecture17,
+format/diff checks and independent associated review passed. CI184 at2958273
+finished TS/Rust SUCCESS; Native failed the old R8 script-catalog prerequisite.
+CI183's missing memory artifact directory was secondary to its build failure.
+CI184: https://github.com/tim-zxy/CodeAtlas/actions/runs/42478351373
+
+No user database/body access, production scan/consumption, model, migration,
+installed-package, Native/R9, resource value or public API change. Phase1 remains
+4/21; A6 NOT_QUALIFIED and E02 PROPOSED/uninstalled. Earlier attempted status/trace
+writes were rejected before execution; user separately approved this factual
+record only. No governing architecture, acceptance or security rule is changed.
+
 ## Complete self-owned inspection/persistence/review slice - 2026-11-08
 
 New mandatory offline-reviewed-snapshot test connects real owned temporary
