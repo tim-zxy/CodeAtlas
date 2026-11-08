@@ -1,3 +1,32 @@
+## Captured binding to Integration candidate - 2026-11-08
+
+Approved private WorkspaceCapture optional contractBindings{schemaVersion:1,bindings}
+now preserves actual frozen contract/service/support registrations. Exact duplicate,
+foreign/missing ref/support and unknown-field/version checks use existing bounded
+closure. Legacy absent fields and literal digest remain unchanged; present empty
+is distinct. Selection follows contract registration dependencies and retains
+services/supports; Runtime copies its real owned frozen catalog rather than
+inferring from repository or optional Contract.serviceRef.
+Private buildCapturedIntegrationCandidate consumes an explicit MATCHED boundary,
+requires exact distinct-service registrations and endpoint directions, validates
+existing KnowledgeCandidate schema, and carries weakest input coverage/limitations.
+Candidate ID remains an opaque candidate label; no identity inheritance. Output
+explicitly says authorization NOT_ESTABLISHED, quality NOT_EVALUABLE and publication
+NOT_ATTEMPTED. Legacy input without mappings refuses this operation.
+IR/Application/Runtime builds pass; capture contract43 and Runtime14 pass. A
+separate capture/semantic/persistence/registration batch106 passes, including8 new
+candidate cases. These disjoint suites total163, with no skips. Architecture17
+passes. Independent review found two accounting defects: unused output
+serialization before reservation, and lost inherited UNKNOWN cleanup; both fixed
+and associated read-only recheck found no remaining Critical/Important issue.
+Nested getter/refusal, sanitized codes and UNKNOWN regression pass.
+[Scope and compatibility](../superpowers/specs/2026-11-08-captured-integration-candidate.md),
+[commands/evidence](../superpowers/plans/2026-11-08-captured-integration-candidate.md).
+No user DB/migration, real model/scan clearance, publication, installed update or
+Native/R9. This is an offline candidate slice, not full P1-12/14/E08 acceptance;
+Phase1 stays4/21/A6 NOT_QUALIFIED/E02 PROPOSED/uninstalled. CI177 on prior0018da5
+ended TS/Rust success and oldR8 catalog failure; it does not verify this new head.
+
 ## Approved production reader-only W009/W010 compatibility - 2026-11-08
 
 User explicitly approved read-only compatibility separately from the prior denied

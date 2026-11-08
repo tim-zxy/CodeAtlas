@@ -1,3 +1,13 @@
+## Approved captured Integration slice - 2026-11-08
+
+knowledge-and-consumption section4 deterministic Integration -> actual frozen
+contract registration -> optional capture binding extension/digest/full closure ->
+private Application MATCHED candidate. Exact Service participants/revisions and
+supports; no repository ownership inference, stable Knowledge IDs or publication.
+Legacy literal hash/absent property, exact missing/foreign evidence and selected
+closure tests accompany the amendment. Existing candidate schema and mandatory
+root test registration retained. [Scope/evidence](../superpowers/specs/2026-11-08-captured-integration-candidate.md).
+
 ## Approved exact W009/W010 reader-only compatibility - 2026-11-08
 
 P1-10/12/14 existing Document/Workspace capture readers -> prepared pinned exact

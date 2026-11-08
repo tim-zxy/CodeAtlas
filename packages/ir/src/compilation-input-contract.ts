@@ -347,6 +347,10 @@ export type RepositoryCapture = Inventory & {
 };
 export type WorkspaceCapture = Inventory & {
   workspaceBasis: ir.FrozenContractSet['workspaceBasis'];
+  contractBindings?: {
+    schemaVersion: 1;
+    bindings: ir.FrozenContractSet['catalog']['contractBindings'];
+  };
 };
 export type DocumentCapture = Inventory & {
   documentBasis: Extract<ir.SupportRef['basis'], { documentId: ir.DocumentId }>;
@@ -568,8 +572,25 @@ function repository(value: unknown, m: Meter): RepositoryCapture {
   };
 }
 function workspace(value: unknown, m: Meter): WorkspaceCapture {
-  const v = exact(value, ['workspaceBasis', 'entities', 'supports', 'coverage']);
-  return { workspaceBasis: ir.WorkspaceBasisSchema.parse(v.workspaceBasis), ...inventory(v, m) };
+  const fields = ['workspaceBasis', 'entities', 'supports', 'coverage'];
+  const extended = Object.hasOwn(object(value), 'contractBindings');
+  const v = exact(value, extended ? [...fields, 'contractBindings'] : fields);
+  const result: WorkspaceCapture = {
+    workspaceBasis: ir.WorkspaceBasisSchema.parse(v.workspaceBasis),
+    ...inventory(v, m),
+  };
+  if (extended) {
+    const extension = exact(v.contractBindings, ['schemaVersion', 'bindings']);
+    check(extension.schemaVersion === 1);
+    const bindings = ir.FrozenServiceCatalogSchema.shape.contractBindings.parse(extension.bindings);
+    for (const binding of bindings)
+      binding.supportRefs = sorted(binding.supportRefs, ir.supportKey, m);
+    result.contractBindings = {
+      schemaVersion: 1,
+      bindings: sorted(bindings, (b) => ir.scopedRefKey(b.contractRef), m),
+    };
+  }
+  return result;
 }
 function document(value: unknown, m: Meter): DocumentCapture {
   const v = exact(value, [
@@ -854,9 +875,25 @@ function closure(s: CompilationInputSnapshot, m: Meter, select: boolean) {
     }
     for (const child of Object.values(v)) visit(child, item, out);
   }
+  const registeredBindings = new Map<
+    string,
+    { serviceRef: ir.ScopedRef; supportRefs: ir.SupportRef[] }
+  >();
+  for (const binding of s.workspaceCapture?.contractBindings?.bindings ?? []) {
+    m.tick();
+    const key = ckey(binding.contractRef);
+    const item = items.get(key);
+    check(item?.valueSchemaRef === 'Contract@1', 'CAPTURE_CLOSURE_MISSING');
+    registeredBindings.set(key, binding);
+    // Registration is an independent captured fact, never inferred from repository
+    // membership or the optional Contract.serviceRef. Validate its whole closure.
+    visit(binding, item, new Set<string>());
+  }
   for (const [key, item] of items) {
     const out = new Set<string>();
     visit(item.value, item, out);
+    const registration = registeredBindings.get(key);
+    if (registration) visit(registration, item, out);
     if (item.valueSchemaRef === 'CanonicalEdge@1') {
       const e = item.value as ir.CanonicalEdge;
       check(item.ref.scope === 'REPOSITORY');
@@ -986,6 +1023,11 @@ function closure(s: CompilationInputSnapshot, m: Meter, select: boolean) {
       }
   }
   if (select) {
+    if (s.workspaceCapture?.contractBindings)
+      s.workspaceCapture.contractBindings.bindings =
+        s.workspaceCapture.contractBindings.bindings.filter((b) =>
+          reachable.has(ckey(b.contractRef)),
+        );
     for (const capture of captures) {
       capture.entities = capture.entities.filter((e) => reachable.has(ckey(e.ref)));
       capture.supports = capture.supports.filter((sup) => {

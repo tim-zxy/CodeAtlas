@@ -1234,7 +1234,7 @@ test('support-only Canonical facts keep collection identity uniqueness', () => {
   bad(() => create(v));
 });
 
-test('Runtime Contract can retain a workspace Service in the structural reference context', () => {
+function registeredRuntimeCapture() {
   const v = runtimeCapture(),
     entry = v.repositories[0].entities.find((e) => e.ref.entity.kind === 'ENTRY_POINT');
   const serviceRef = {
@@ -1287,7 +1287,10 @@ test('Runtime Contract can retain a workspace Service in the structural referenc
   const c = v.repositories[0].entities.at(-1).value;
   for (const k of ['triggerKind', 'ownerRef', 'contextKind', 'contractRef', 'taskRef']) delete c[k];
   entry.value.contractRef = ref('CONTRACT', 'contract');
-  assert.equal(create(v).workspaceCapture.entities.length, 1);
+  return v;
+}
+test('Runtime Contract can retain a workspace Service in the structural reference context', () => {
+  assert.equal(create(registeredRuntimeCapture()).workspaceCapture.entities.length, 1);
 });
 
 test('control snapshot refuses accessors/proxies and intrinsic cancellation cannot be shadowed', () => {
@@ -1336,4 +1339,73 @@ test('logical budgets charge long scalar/key text and are not physical RSS reser
     () => contract.canonicalCompilationJson({ ['a'.repeat(1000)]: 1 }, control({ maxItems: 50 })),
     'BUDGET_EXCEEDED',
   );
+});
+
+function withContractBindings() {
+  const v = registeredRuntimeCapture();
+  const contract = v.repositories[0].entities.find((e) => e.valueSchemaRef === 'Contract@1');
+  const service = v.workspaceCapture.entities[0];
+  v.workspaceCapture.contractBindings = {
+    schemaVersion: 1,
+    bindings: [
+      {
+        contractRef: contract.ref,
+        serviceRef: service.ref,
+        supportRefs: [v.repositories[0].supports[0].ref],
+      },
+    ],
+  };
+  // Ownership must come from the captured registration, not Contract.serviceRef.
+  contract.value.serviceRef = null;
+  return v;
+}
+test('captured registration preserves legacy absence and binds exact bytes in input digest', () => {
+  const legacy = registeredRuntimeCapture(),
+    old = create(legacy);
+  assert.equal(Object.hasOwn(old.workspaceCapture, 'contractBindings'), false);
+  const extended = structuredClone(legacy);
+  extended.workspaceCapture.contractBindings = { schemaVersion: 1, bindings: [] };
+  const empty = create(extended);
+  assert.notEqual(old.inputDigest, empty.inputDigest);
+  assert.deepEqual(contract.parseCompilationInputSnapshot(old, control()), old);
+  assert.equal(create().inputDigest, emptyHash);
+  const v = withContractBindings(),
+    got = create(v);
+  assert.equal(got.workspaceCapture.contractBindings.bindings.length, 1);
+  assert.notEqual(got.inputDigest, old.inputDigest);
+  const changed = structuredClone(got);
+  changed.workspaceCapture.contractBindings.bindings = [];
+  bad(() => contract.parseCompilationInputSnapshot(changed, control()));
+});
+test('captured registration rejects duplicate, foreign and unavailable bindings/supports', () => {
+  for (const mutate of [
+    (v) => (v.workspaceCapture.contractBindings.schemaVersion = 2),
+    (v) => (v.workspaceCapture.contractBindings.extra = true),
+    (v) =>
+      v.workspaceCapture.contractBindings.bindings.push(
+        structuredClone(v.workspaceCapture.contractBindings.bindings[0]),
+      ),
+    (v) => (v.workspaceCapture.contractBindings.bindings[0].serviceRef.workspaceId = 'other'),
+    (v) => (v.workspaceCapture.contractBindings.bindings[0].serviceRef.entity.id = 'missing'),
+    (v) =>
+      (v.workspaceCapture.contractBindings.bindings[0].contractRef.entity.revisionId = 'other'),
+    (v) =>
+      (v.workspaceCapture.contractBindings.bindings[0].supportRefs[0].valueDigest = 'f'.repeat(64)),
+  ]) {
+    const v = withContractBindings();
+    mutate(v);
+    bad(() => create(v));
+  }
+});
+test('selected contract retains registered service and support closure', () => {
+  const v = withContractBindings();
+  v.selection.selectedEntityRefs = [ref('CONTRACT', 'contract')];
+  const got = contract.selectCompilationCaptureClosure(v, control());
+  assert.equal(
+    got.workspaceCapture.entities.find((e) => e.valueSchemaRef === 'Service@1').value.id,
+    'svc',
+  );
+  assert.equal(got.workspaceCapture.contractBindings.bindings.length, 1);
+  assert.equal(got.repositories[0].supports.length > 0, true);
+  assert.deepEqual(contract.parseCompilationInputSnapshot(got, control()), got);
 });

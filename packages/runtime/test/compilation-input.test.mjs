@@ -402,7 +402,22 @@ test('nonempty Runtime Contract and Workspace Service map exact original IR valu
   const frozen = {
     workspaceBasis,
     repositoryBindings: [runtime.binding],
-    catalog: { workspaceBasis, services: [service], entries: [], contractBindings: [] },
+    catalog: {
+      workspaceBasis,
+      services: [service],
+      entries: [],
+      contractBindings: [
+        {
+          contractRef: ref('CONTRACT', contract.id),
+          serviceRef: {
+            scope: 'WORKSPACE',
+            workspaceId: workspaceBasis.workspaceId,
+            entity: { kind: 'SERVICE', id: service.id, revisionId: workspaceBasis.revisionSetId },
+          },
+          supportRefs: [support],
+        },
+      ],
+    },
     contractRefs: [{ ref: ref('CONTRACT', contract.id), contract }],
   };
   workspaceBasis.workspaceActivationDigest = workspaceRuntimeInputDigest(frozen);
@@ -443,6 +458,10 @@ test('nonempty Runtime Contract and Workspace Service map exact original IR valu
     workspace.workspaceCapture.entities.find((e) => e.valueSchemaRef === 'Service@1').value,
     service,
   );
+  assert.deepEqual(workspace.workspaceCapture.contractBindings, {
+    schemaVersion: 1,
+    bindings: frozen.catalog.contractBindings,
+  });
   assert.deepEqual(workspace.workspaceCapture.supports, []); // Source support belongs to repository capture.
   assert.equal(workspace.workspaceCapture.coverage.status, 'PARTIAL');
   f.owned.recheckRepository(frame);

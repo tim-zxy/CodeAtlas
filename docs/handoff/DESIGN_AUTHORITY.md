@@ -1,3 +1,12 @@
+## Approved captured service-binding continuation - 2026-11-08
+
+User approved preserving actual frozen contract/service/support bindings in the
+private capture input and digest, then generating deterministic Integration
+candidates. Exact scope: [captured Integration](../superpowers/specs/2026-11-08-captured-integration-candidate.md).
+Legacy inputs remain compatible; no inferred ownership, stable-ID inheritance,
+public schema, production migration, user data access or publication. This
+approval does not establish scan clearance, model authority, W011 or Native/R9.
+
 ## Approved production reader-only compatibility - 2026-11-08
 
 User approved code-only DocumentStore/ContractStore reads of fully validated9/10

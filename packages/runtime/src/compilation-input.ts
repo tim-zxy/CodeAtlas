@@ -220,6 +220,7 @@ function workspaceInventory(
   // workspace-value support recipe; a required workspace-owned support refuses.
   return {
     workspaceBasis: basis,
+    contractBindings: { schemaVersion: 1, bindings: runtime.frozen.catalog.contractBindings },
     entities,
     supports: [],
     coverage: coverage(runtime.execution.payload.coverage),

@@ -1,3 +1,15 @@
+## Approved explicit service-binding extension - 2026-11-08
+
+User approved the optional versioned WorkspaceCapture.contractBindings extension
+[specified here](2026-11-08-captured-integration-candidate.md). It carries only
+existing exact frozen contractRef/serviceRef/supportRefs registrations and enters
+inputDigest/ref/support closure. Absent legacy fields remain absent with the same
+original digest; legacy absence is not proof of ownership. New consumers must
+refuse candidate generation when required bindings are missing or conflicting.
+Original schemaVersion1 request/snapshot, historical vectors and all authority
+restrictions below remain unchanged. Older strict consumers can reject the new
+extension; no stripping or silent downgrade is permitted.
+
 # Compilation capture private schema v1
 
 Status: LOCKED PRIVATE V1; OFFLINE IMPLEMENTATION AND OWNED SQLITE/SUBSTITUTE VERIFICATION RECORDED BELOW. The four directions
