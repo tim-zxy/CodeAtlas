@@ -1,3 +1,15 @@
+## Approved bounded Evaluation-record implementation - 2026-11-08
+
+Existing knowledge-consumption sections3/5 and W011 decision packet map to private
+IR evaluation-record-contract, Application evaluation-record and Storage
+evaluation-record-store. User approved minimum workspace/run/snapshot/candidate/
+rule binding and self-owned validation. Existing Candidate/reference and snapshot
+schemas/digests retained; full-record/candidate domains are separate structural
+record identities. No Fixture report is promoted to production admission.
+32 scoped tests/builds/architecture17 and associated review support only the
+[bounded implementation](../superpowers/specs/2026-11-08-offline-evaluation-record.md).
+Production Evaluation quality/producer, W011 and publication remain undecided/closed.
+
 ## Approved descriptive SourceFile metadata projection - 2026-11-08
 
 P1-12 scope preparation maps to private RuntimeFactStore

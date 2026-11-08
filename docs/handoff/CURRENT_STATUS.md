@@ -1,3 +1,24 @@
+## Bounded self-owned Evaluation record - 2026-11-08
+
+Approved private Application structural evaluator now binds actual candidates to
+workspace/run/snapshot/RevisionSet, full snapshot and sorted candidate digests,
+and a fixed structural-rule version. Shared private IR recomputes exact format;
+Storage verifies real CompilationInputStore association and immutable records in
+a separate test-owned SQLite experiment. No W011 installation or production
+layout decision. PURE_CONTRACT / VALID structure remains NOT_EVALUABLE quality
+and NOT_AUTHORIZED publication. Caller PASS is not accepted.
+
+IR/Storage/Application/Runtime builds,32/32 targeted tests (new9 included,0fail/skip),
+architecture17 and independent associated review passed. Actual persistence/reopen,
+input substitution, cross-workspace/run, row immutability, cancellation/budgets,
+callback mutation, COMMIT acknowledgement loss and concurrent WAL views tested.
+Review findings corrected; original failure history and exact command are in
+[implementation plan](../superpowers/plans/2026-11-08-offline-evaluation-record.md).
+[Private format/limitations](../superpowers/specs/2026-11-08-offline-evaluation-record.md).
+No user data, production scan/model/quality baseline/publication, migration or
+Native/R9 execution. Phase1 stays4/21; A6 NOT_QUALIFIED, E02 PROPOSED/uninstalled.
+CI185 at7f3c781 finished TS/Rust success, Native old R8 catalog failure.
+
 ## Approved private SourceFile metadata read and declaration fix - 2026-11-08
 
 Commits c64f39e and2958273 are on the continuation branch. The private
