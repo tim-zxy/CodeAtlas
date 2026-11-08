@@ -1,3 +1,18 @@
+## P1-12/14 bounded owned snapshot persistence - 2026-11-08
+
+The approved temporary-store slice maps the existing capture contract to private
+Storage compilation-input-store and pinned unregistered candidate009/010 SQL.
+Full private validator is shared through IR without schema/hash/public export
+changes; Application keeps its old private import path. Genuine original-instance
+write ownership, frozen request/pins, atomic support/run binding, read snapshots,
+exact9/10 metadata and commit/cleanup distinction preserve existing requirements.
+Nine owned Store cases,126 related,76 Runtime/document and66 package/registration
+cases pass with builds and architecture17; independent review found no blocker. New-instance resume was
+RED before its fix. Full production reader admission was rejected by automatic
+approval and remains unchanged/OPEN, as do manifest8, backupRequired, W011 and
+publication. No candidate receipt authenticates Source, principal or scan clearance.
+See the2026-11-08-owned-snapshot-persistence specification for exact limits/effects.
+
 ## P1-11 captured invocation / honest inherited coverage - 2026-11-07
 
 knowledge-and-consumption sections3/4 and P1-12 snapshot restrictions map to private

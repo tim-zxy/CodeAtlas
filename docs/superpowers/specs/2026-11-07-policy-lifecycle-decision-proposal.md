@@ -1,6 +1,9 @@
 # Private policy owner and W009-W011 persistence: decision proposal
 
 Status: **PARTIAL BOUNDARY APPROVAL; REMAINING CONTRACTS PROPOSED**.
+The separately approved [owned temporary Store slice](2026-11-08-owned-snapshot-persistence.md)
+implements capture persistence/inspection only. It does not approve this packet's
+whole production schema, reader admission, backup, user-DB upgrade or publication.
 The user accepted option A's local same-Windows-account trust boundary on2026-11-07,
 including same-SID Agents, not human consent. Current-process/specified-operation
 scope and restart invalidation are required; no remote/model/scan clearance,

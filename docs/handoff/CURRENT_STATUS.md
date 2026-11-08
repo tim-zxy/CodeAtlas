@@ -1,3 +1,31 @@
+## W009/W010 private owned snapshot persistence - 2026-11-08
+
+Implemented private createRun/putSnapshot/readSnapshot/inspectCommit over owned
+temporary SQLite. Existing Application capture now roundtrips a nonempty support
+closure through real disk and close/reopen. Full canonical DTO/digest/header/support
+membership and actual frozen RevisionSet/repository pins revalidate; immutable
+history/idempotency remain. Real original-instance ownership is required for an
+unbound run. Lost COMMIT acknowledgement stays UNKNOWN; complete inspection can
+recover COMMITTED. Known commit survives later cleanup uncertainty, with later
+writes refused; reopened absence is UNKNOWN and cannot resume the old writer.
+Moved the unchanged pure validator privately to IR, preserving the Application
+re-export. No new public API/schema/dependency. Pinned candidate SQL lives outside
+the production manifest, still8; private exact9/10 schema recognition only.
+Automatic review rejected production DocumentStore/ContractStore widening beyond
+this temporary-store scope. That action did not execute or retry; the safer private
+path proceeds and original production reader guards remain unchanged. Full reader
+admission/user migration/backup/publication/W011 remain OPEN.
+IR/Storage/Application/Runtime builds pass;126 snapshot/capture/model/schema/backup
+tests plus76 Runtime/document compatibility and66 packaging/registration tests
+pass; architecture17 and changed-file formatting pass.
+Independent review found no blocker and confirmed old readers/manifest unchanged
+and the validator's import-only relocation. [Scope, exact effects and evidence](../superpowers/specs/2026-11-08-owned-snapshot-persistence.md),
+[implementation plan](../superpowers/plans/2026-11-08-owned-snapshot-persistence.md).
+No user DB, actual Source body/model, installed update, Native/R9/profile or publishing.
+Phase1 remains4/21, A6 NOT_QUALIFIED, E02 PROPOSED/uninstalled. CI175 on prior c6304ca
+ended TS/Rust success and Native old-catalog prerequisite failure, not this batch's
+verification. The c6304ca catalog candidate is historical after this new source.
+
 ## P1-11 joined captured invocation / inherited coverage - 2026-11-07
 
 Private runCapturedSemanticTestDouble now composes the snapshot-derived builder

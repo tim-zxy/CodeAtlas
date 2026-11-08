@@ -1,6 +1,10 @@
 # W009-W011 physical schema review candidate
 
 Status: **PROPOSED / TEST-OWNED EXPERIMENT ONLY / NOT APPROVED FOR INSTALLATION**.
+The separately approved [owned Store continuation](2026-11-08-owned-snapshot-persistence.md)
+uses these same009/010 blocks as pinned unregistered files and implements private
+temporary-database persistence. Production manifest/readers and W011 stay closed;
+the physical production candidate below is not implicitly accepted or installed.
 These SQL blocks are candidate text under docs, not migration files or manifest
 entries. W009/W010 are exercised only in isolated owned tests; no user database,
 production writer or new production reader admission is enabled. W011 remains
