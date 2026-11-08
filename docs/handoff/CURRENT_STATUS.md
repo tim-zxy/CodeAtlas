@@ -1,3 +1,30 @@
+## Private P1-15 lexical component and CI187 correction - 2026-11-08
+
+Explicit in-memory SQLite FTS5 rebuild/search now consumes only owned experimental
+published head display fields. Dedicated permission-preflight projection avoids
+materializing full snapshot/support/Claim bodies in JS. Literal phrase search,
+bm25+stable IDs, explicit result caps/truncation, nonfresh warnings and typed
+unavailable/denied/stale results are implemented. Changed head/text requires
+explicit rebuild; no semantic update or history write. Test permission assertions
+and field projections grant no production/secret/quality clearance.
+
+Five builds and108/108 related tests passed(new10 included,0fail/skip); architecture17
+and independent associated review passed. Review fixes enforce raw UTF8 processing
+budget before JSON work, ACTIVE/PUBLISHED checks and UNKNOWN stop for illegal
+permission Promises. [Private boundary](../superpowers/specs/2026-11-08-offline-knowledge-search.md)
+and [exact commands/failures](../superpowers/plans/2026-11-08-offline-knowledge-search.md).
+
+CI187 at1d6b7e9: Rust success, TS failed strict module-dependency expectation,
+Native failed old R8 catalog prerequisite. Previous98 local tests preceded the
+subsequent dependency manifest edit; they did not verify that exact commit. Fixed
+only the expected Application->existing Knowledge workspace entry, preserving
+strict comparison and existing architecture rules. Local20/21 reproducer then
+corrected structure21/21 and integrated108/108 confirm the regression fix.
+
+No user DB/body, production query/publication, W011/index migration, model or
+Native/R9 execution. Full P1-15 public query/token/graph and original quality
+gates remain OPEN; Phase1 stays4/21, A6 NOT_QUALIFIED, E02 PROPOSED/uninstalled.
+
 ## Approved self-owned publication mechanics - 2026-11-08
 
 Private Application prepares complete candidate sets using actual current heads,

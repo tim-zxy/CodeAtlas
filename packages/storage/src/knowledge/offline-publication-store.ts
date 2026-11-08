@@ -1,13 +1,14 @@
 import { DatabaseSync, type SQLOutputValue } from 'node:sqlite';
 import { randomUUID } from 'node:crypto';
 import { types } from 'node:util';
-import { type RuntimeRequestControl } from '@codeatlas/ir';
+import { KnowledgeScopeSchema, type RuntimeRequestControl } from '@codeatlas/ir';
 import { canonicalCompilationJson } from '../../../ir/dist/compilation-input-contract.js';
 import {
   parseOfflinePublicationCommand,
   readOfflinePublicationCommand,
   parseOfflineHeadRecord,
   offlinePublicationState,
+  publicationDigest,
   publicationCheck as check,
   type OfflinePublicationCommand,
   type OfflinePublicationState,
@@ -67,6 +68,28 @@ definitions.push([
   'offline_heads_delete',
   "CREATE TRIGGER offline_heads_delete BEFORE DELETE ON offline_heads BEGIN SELECT RAISE(ABORT,'experiment history retained'); END",
 ]);
+export type OfflineSearchManifest = {
+  workspaceId: string;
+  heads: { itemId: string; revisionId: string }[];
+  fields: readonly string[];
+  evidenceKind: 'TEST_SEARCH_PERMISSIONS_NOT_AUTHORITY';
+};
+export type OfflineSearchRecord = {
+  itemId: string;
+  revisionId: string;
+  scopeJson: string;
+  sourceFreshness: string;
+  compilationCurrency: string;
+  title: string;
+  summary: string;
+  goal: string;
+};
+export type OfflineSearchProjection = {
+  kind: 'OWNED_TEST_PUBLICATION';
+  manifest: OfflineSearchManifest;
+  headDigest: string;
+  records: OfflineSearchRecord[];
+};
 type Sql = ReturnType<typeof runtimeSql>;
 type Row = Record<string, SQLOutputValue>;
 type Owner = {
@@ -134,11 +157,11 @@ export class OfflinePublicationStore {
       throw new OfflinePublicationError('OFFLINE_CONNECTION_CHANGED', 'UNKNOWN');
     }
   }
-  private sql(limits: HistoryReadLimits, c: RuntimeRequestControl) {
+  private sql(limits: HistoryReadLimits, c: RuntimeRequestControl, budget?: HistoryReadBudget) {
     this.live();
     check(this.#db.isTransaction);
     canonicalCompilationJson(null, c);
-    const sql = runtimeSql(this.#db, new HistoryReadBudget(checkedHistoryLimits(limits)));
+    const sql = runtimeSql(this.#db, budget ?? new HistoryReadBudget(checkedHistoryLimits(limits)));
     const actual = sql
         .read('sqlite_schema', ['name', 'sql'], "name NOT LIKE 'sqlite_%'", [])
         .sort((a, b) => String(a.name).localeCompare(String(b.name))),
@@ -262,6 +285,225 @@ export class OfflinePublicationStore {
       const cleanup = this.rollback();
       if (cleanup === 'UNKNOWN')
         throw new OfflinePublicationError('OFFLINE_READ_UNAVAILABLE', cleanup);
+      throw error;
+    }
+  }
+  /** Field projection only: never loads command/snapshot/support/Claim bodies. */
+  readSearchProjection(
+    permissionCheck: (manifest: OfflineSearchManifest) => undefined,
+    limits: HistoryReadLimits,
+    control: RuntimeRequestControl,
+    metadataOnly = false,
+  ): OfflineSearchProjection {
+    const c = ownControl(control),
+      ownedLimits = checkedHistoryLimits(JSON.parse(canonicalCompilationJson(limits, c)));
+    check(
+      typeof permissionCheck === 'function' &&
+        !types.isProxy(permissionCheck) &&
+        !types.isAsyncFunction(permissionCheck),
+    );
+    this.live();
+    check(!this.#db.isTransaction);
+    const token = 'search_' + randomUUID().replaceAll('-', '');
+    let began = false,
+      savepoint = false;
+    try {
+      this.#db.exec('BEGIN');
+      began = true;
+      this.#db.exec('SAVEPOINT ' + token);
+      savepoint = true;
+      const b = new HistoryReadBudget(ownedLimits),
+        sql = this.sql(ownedLimits, c, b),
+        readHeads = () =>
+          sql
+            .read('offline_heads', ['item_id', 'revision_id'], 'workspace_id=?', [
+              this.#workspaceId,
+            ])
+            .map((r) => {
+              check(typeof r.item_id === 'string' && typeof r.revision_id === 'string');
+              return { itemId: r.item_id, revisionId: r.revision_id };
+            })
+            .sort((a, b) => (a.itemId < b.itemId ? -1 : 1));
+      const heads = readHeads(),
+        fields = Object.freeze([
+          'ITEM_SCOPE',
+          'SOURCE_FRESHNESS',
+          'COMPILATION_CURRENCY',
+          'TITLE',
+          'SUMMARY',
+          'GOAL',
+          'PROVENANCE_IDS',
+        ]);
+      const manifest: OfflineSearchManifest = Object.freeze({
+        workspaceId: this.#workspaceId,
+        heads: Object.freeze(
+          heads.map((v) => Object.freeze(v)),
+        ) as unknown as OfflineSearchManifest['heads'],
+        fields,
+        evidenceKind: 'TEST_SEARCH_PERMISSIONS_NOT_AUTHORITY',
+      });
+      const guard = () => {
+        canonicalCompilationJson(null, c);
+        this.live();
+        check(this.#db.isTransaction);
+        let value: unknown;
+        try {
+          value = permissionCheck(manifest);
+        } catch {
+          throw new OfflinePublicationError('SEARCH_PERMISSION_DENIED');
+        }
+        if (types.isPromise(value)) {
+          void Promise.prototype.then.call(value, undefined, () => {});
+          throw new OfflinePublicationError('SEARCH_PERMISSION_DENIED', 'UNKNOWN');
+        }
+        if (value !== undefined) throw new OfflinePublicationError('SEARCH_PERMISSION_DENIED');
+        canonicalCompilationJson(null, c);
+        this.live();
+        check(this.#db.isTransaction);
+        this.#db.exec('RELEASE ' + token);
+        this.#db.exec('SAVEPOINT ' + token);
+        check(canonicalCompilationJson(readHeads(), c) === canonicalCompilationJson(heads, c));
+        this.sql(ownedLimits, c, b);
+      };
+      guard();
+      const records: OfflineSearchRecord[] = [];
+      if (!metadataOnly) {
+        const expr: Record<string, string> = {
+          item_id: 'h.item_id',
+          revision_id: 'h.revision_id',
+          record_item: "json_extract(r.payload_json,'$.itemEnvelope.payload.id')",
+          record_head: "json_extract(r.payload_json,'$.itemEnvelope.payload.publishedRevisionId')",
+          record_revision: "json_extract(r.payload_json,'$.revisionEnvelope.payload.id')",
+          revision_item: "json_extract(r.payload_json,'$.revisionEnvelope.payload.itemId')",
+          scope_json: "json_extract(r.payload_json,'$.itemEnvelope.payload.scope')",
+          source_freshness: "json_extract(r.payload_json,'$.itemEnvelope.payload.sourceFreshness')",
+          compilation_currency:
+            "json_extract(r.payload_json,'$.itemEnvelope.payload.compilationCurrency')",
+          title:
+            "json_extract(r.payload_json,'$.revisionEnvelope.payload.structuredContent.title')",
+          summary:
+            "json_extract(r.payload_json,'$.revisionEnvelope.payload.structuredContent.summary')",
+          goal: "json_extract(r.payload_json,'$.revisionEnvelope.payload.structuredContent.goal')",
+          title_type:
+            "json_type(r.payload_json,'$.revisionEnvelope.payload.structuredContent.title')",
+          summary_type:
+            "json_type(r.payload_json,'$.revisionEnvelope.payload.structuredContent.summary')",
+          goal_type:
+            "json_type(r.payload_json,'$.revisionEnvelope.payload.structuredContent.goal')",
+          valid:
+            "(a.workspace_id=h.workspace_id AND json_extract(r.payload_json,'$.itemEnvelope.schema')='codeatlas.knowledge-item' AND json_extract(r.payload_json,'$.itemEnvelope.version')=1 AND json_extract(r.payload_json,'$.revisionEnvelope.schema')='codeatlas.knowledge-revision' AND json_extract(r.payload_json,'$.revisionEnvelope.version')=1 AND json_extract(r.payload_json,'$.itemEnvelope.payload.lifecycleState')='ACTIVE' AND json_extract(r.payload_json,'$.revisionEnvelope.payload.publicationState')='PUBLISHED' AND json_extract(r.payload_json,'$.itemEnvelope.payload.type')=json_extract(r.payload_json,'$.revisionEnvelope.payload.structuredContent.kind') AND json_extract(a.payload_json,'$.kind')='OWNED_TEST_PUBLICATION' AND json_extract(a.payload_json,'$.quality')='NOT_EVALUABLE' AND json_extract(a.payload_json,'$.productionPublication')='NOT_AUTHORIZED' AND EXISTS(SELECT 1 FROM json_each(p.payload_json,'$.heads') x WHERE json_extract(x.value,'$.itemId')=h.item_id AND json_extract(x.value,'$.revisionId')=h.revision_id) AND EXISTS(SELECT 1 FROM json_each(a.payload_json,'$.entries') e WHERE json_extract(e.value,'$.record.itemEnvelope.payload.id')=h.item_id AND json_extract(e.value,'$.record.revisionEnvelope.payload.id')=h.revision_id AND json_extract(e.value,'$.record')=r.payload_json))",
+        };
+        const from =
+          ' FROM offline_heads h LEFT JOIN offline_revisions r ON r.id=h.revision_id AND r.item_id=h.item_id LEFT JOIN offline_attempts a ON a.id=r.attempt_id LEFT JOIN offline_receipts p ON p.attempt_id=a.id WHERE h.workspace_id=?';
+        b.own([this.#workspaceId]);
+        b.add('rows', 1);
+        const raw = this.#db
+          .prepare(
+            'SELECT count(*) n,coalesce(sum(coalesce(length(CAST(r.payload_json AS BLOB)),0)+coalesce(length(CAST(a.payload_json AS BLOB)),0)+coalesce(length(CAST(p.payload_json AS BLOB)),0)),0) bytes' +
+              from,
+          )
+          .get(this.#workspaceId)!;
+        check(
+          typeof raw.n === 'number' &&
+            Number.isSafeInteger(raw.n) &&
+            raw.n === heads.length &&
+            typeof raw.bytes === 'number' &&
+            Number.isSafeInteger(raw.bytes),
+        );
+        b.add('serializedBytes', raw.bytes);
+        b.pin(raw.bytes);
+        b.add('rows', 1);
+        const n = this.#db
+          .prepare(
+            'SELECT count(*) n,coalesce(sum(' +
+              Object.values(expr)
+                .map((x) => 'coalesce(length(CAST(' + x + ' AS BLOB)),0)')
+                .join('+') +
+              '),0) bytes' +
+              from,
+          )
+          .get(this.#workspaceId)!;
+        check(
+          typeof n.n === 'number' &&
+            Number.isSafeInteger(n.n) &&
+            n.n === heads.length &&
+            typeof n.bytes === 'number' &&
+            Number.isSafeInteger(n.bytes),
+        );
+        b.add('rows', n.n);
+        b.add('serializedBytes', n.bytes);
+        b.pin(n.bytes);
+        const rows = this.#db
+          .prepare(
+            'SELECT ' +
+              Object.entries(expr)
+                .map(([name, value]) => value + ' AS ' + name)
+                .join(',') +
+              from +
+              ' ORDER BY h.item_id,h.revision_id',
+          )
+          .all(this.#workspaceId);
+        check(rows.length === heads.length);
+        b.own(rows, false);
+        for (const r of rows) {
+          check(
+            r.valid === 1 &&
+              r.record_item === r.item_id &&
+              r.record_head === r.revision_id &&
+              r.record_revision === r.revision_id &&
+              r.revision_item === r.item_id &&
+              typeof r.scope_json === 'string',
+          );
+          KnowledgeScopeSchema.parse(JSON.parse(r.scope_json));
+          check(
+            ['FRESH', 'AFFECTED', 'STALE'].includes(String(r.source_freshness)) &&
+              ['CURRENT', 'OUTDATED_WORKFLOW', 'OUTDATED_PROMPT', 'OUTDATED_MODEL_POLICY'].includes(
+                String(r.compilation_currency),
+              ),
+          );
+          for (const key of ['title', 'summary', 'goal'])
+            check(r[key + '_type'] === null || r[key + '_type'] === 'text');
+          records.push({
+            itemId: String(r.item_id),
+            revisionId: String(r.revision_id),
+            scopeJson: r.scope_json,
+            sourceFreshness: String(r.source_freshness),
+            compilationCurrency: String(r.compilation_currency),
+            title: r.title === null ? '' : String(r.title),
+            summary: r.summary === null ? '' : String(r.summary),
+            goal: r.goal === null ? '' : String(r.goal),
+          });
+        }
+      }
+      guard();
+      const result: OfflineSearchProjection = {
+        kind: 'OWNED_TEST_PUBLICATION',
+        manifest,
+        headDigest: publicationDigest(
+          'codeatlas.offline-search.heads.v1',
+          { workspaceId: this.#workspaceId, heads },
+          c,
+        ),
+        records,
+      };
+      canonicalCompilationJson(result, c);
+      this.#db.exec('RELEASE ' + token);
+      savepoint = false;
+      this.#db.exec('COMMIT');
+      began = false;
+      this.live();
+      return result;
+    } catch (error) {
+      try {
+        this.live();
+        if (savepoint) {
+          check(this.#db.isTransaction);
+          this.#db.exec('ROLLBACK TO ' + token);
+          this.#db.exec('ROLLBACK');
+        } else if (began && this.#db.isTransaction) this.#db.exec('ROLLBACK');
+      } catch {
+        throw new OfflinePublicationError('SEARCH_SOURCE_UNAVAILABLE', 'UNKNOWN');
+      }
       throw error;
     }
   }

@@ -51,6 +51,7 @@ expectedPackageDependencies.application = {
   '@codeatlas/documents': 'workspace:*',
   '@codeatlas/execution': 'workspace:*',
   '@codeatlas/ir': 'workspace:*',
+  '@codeatlas/knowledge': 'workspace:*',
   '@codeatlas/source': 'workspace:*',
 };
 const expectedAppDependencies = {

@@ -1,3 +1,16 @@
+## Existing P1-15 lexical projection component - 2026-11-08
+
+Knowledge-consumption section7 and P1-15 map to private Storage
+offline-knowledge-search plus dedicated readSearchProjection. Actual owned FTS5
+proves derived index behavior with before-read/before-MATCH/before-output test
+permission checks, stable head/text binding, explicit rebuild and typed failures.
+No production PublishedKnowledgeQuery contract or permission model is adopted.
+The old broad experimental reader is deliberately not used for search projection;
+Source/support/Claim bodies are not delivered as derived-text permission.
+New10 cases included in108 integrated tests; builds/architecture17/review and CI187
+expectation correction recorded in the [plan](../superpowers/plans/2026-11-08-offline-knowledge-search.md).
+Production W011/classification/full query/graph and original acceptance stay open.
+
 ## Approved self-owned publication mechanics - 2026-11-08
 
 Knowledge-consumption sections3/5/7 and user-approved bounded publication contract
