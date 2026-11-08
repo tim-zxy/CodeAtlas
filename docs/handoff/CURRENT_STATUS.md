@@ -1,3 +1,31 @@
+## Owned Wiki files and restart read capability - 2026-11-08
+
+Private Storage now persists actual owned Wiki projector artifacts in exclusively
+new OS temporary directories, with immutable revision files, bounded owner/hash
+verification, CAS and atomic current-manifest replacement. Reopening reads previous
+versions; same version/same bytes is UNCHANGED. No arbitrary user outputTarget or
+production file-publication route is accepted. Canonical data/permissions stay unchanged.
+
+Confirmed rename remains COMMITTED even if later checks/cleanup are UNKNOWN;
+uncertain rename keeps pending and blocks writes across reopen. The old UNKNOWN
+instance stays blocked. A new owner must explicitly inspect valid current/hash and
+absence of pending/lock before new writes; inspection never automatically rewrites.
+Actual hardlink/junction, close/rename/unlink failure and restart tests cover these
+boundaries. The final associated review reports no remaining concrete blocker.
+
+Storage/Runtime builds,148/148 integrated tests(new13 included,0fail/skip),
+architecture17 and exact formatting pass. Earlier147/148 caught a stale lease
+inspection issue, corrected before the final run. [Scope](../superpowers/specs/2026-11-08-owned-wiki-files.md)
+and [reproducible evidence/failures](../superpowers/plans/2026-11-08-owned-wiki-files.md).
+Small fresh self-owned temporary directories/aliases remain for evidence; no old
+workspace/install directory was moved or cleaned.
+
+CI190 atff30ec0 ended TS/Rust success, Native old R8 catalog prerequisite failure;
+actual qualification skipped. No duplicate run. Production query/publication, trusted
+user output-path integration, hostile-process path stability, power-loss durability
+and original end-to-end quality remain unverified/closed. Phase1 stays4/21,
+A6 NOT_QUALIFIED, E02 PROPOSED/uninstalled; full P1-16/Wiki gates stay OPEN.
+
 ## Adopted EVOLVABLE Wiki profile v1, owned-data slice - 2026-11-08
 
 Implemented codeatlas.standard@1.0.0 with required overview and provenance/coverage/

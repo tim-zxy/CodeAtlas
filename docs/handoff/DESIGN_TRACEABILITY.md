@@ -1,3 +1,17 @@
+## Existing P1-16 owned filesystem lifecycle - 2026-11-08
+
+Knowledge-and-consumption section8's exclusive temporary file -> immutable version
+-> atomic current pointer maps to private Storage offline-wiki-files. It consumes
+actual labeled Application projector artifacts but grants no production publication.
+Owner/ancestor/file identities, explicit byte budget, digests, CAS, immutable history,
+persistent unknown attempt and explicit read-before-write reopen inspection are
+covered by13 real-files cases and148 integrated tests. Confirmed commit is separate
+from cleanup UNKNOWN; old owner cannot resume. Existing IR, public query, SQLite
+schema, permissions and standard profile are unchanged. [Implementation scope](../superpowers/specs/2026-11-08-owned-wiki-files.md)
+and [commands/review findings](../superpowers/plans/2026-11-08-owned-wiki-files.md)
+record Storage/Runtime builds, architecture17 and final focused review. Production
+path protection/permission/quality and original phase acceptance remain open.
+
 ## Adopted P1-16 locked Wiki profile v1 - 2026-11-08
 
 ADR-013 and knowledge-and-consumption section8 retain published-Knowledge-only,
