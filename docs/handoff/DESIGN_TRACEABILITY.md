@@ -1,3 +1,17 @@
+## Existing Agent API BUSINESS trace, owned-data component - 2026-11-08
+
+AGENT_API and knowledge-and-consumption section9's explicit BUSINESS trace maps to
+private Knowledge offline-business-trace and Application OfflineBusinessFlowTracer.
+Existing BusinessFlowContentSchema stepKey/nextStepKeys are the only traversal
+edges; no Code/ExecutionGraph/RuntimeFlow equivalence or new identity is inferred.
+The existing published-selection validator is shared with Wiki, preserving original
+scope/reference/provenance checks. Original support/coverage/freshness and exact
+historical/current-head distinctions are returned. New12 cases and160 integrated
+regressions, four affected builds, architecture17/format and focused review are
+recorded in the [plan](../superpowers/plans/2026-11-08-owned-business-trace.md).
+Public schemas, token accounting, production query/permission and phase quality
+acceptance are unchanged/open; synthetic positives grant no real quality authority.
+
 ## Existing P1-16 owned filesystem lifecycle - 2026-11-08
 
 Knowledge-and-consumption section8's exclusive temporary file -> immutable version

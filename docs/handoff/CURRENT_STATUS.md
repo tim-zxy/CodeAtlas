@@ -1,3 +1,28 @@
+## Owned published BusinessFlow step trace - 2026-11-08
+
+Implemented the existing BUSINESS trace slice for one exact published Knowledge
+revision: deterministic bounded forward/backward BFS over declared nextStepKeys,
+with original actions/support, branch/merge/cycle handling and explicit frontier.
+All depth/step/edge/full-response UTF8 byte budgets are caller-explicit; no token
+formula/default or runtime-execution inference. Affected coverage/freshness/currency
+and limits remain visible. Historical revision and current head are separate, with
+an ID-derived history warning even when the query omits warnings.
+
+Application binds a fixed owned published query and workspace. Wiki's existing
+published-selection/scope/provenance validator is reused without running its profile
+or renderer; original Wiki behavior is preserved. Positive graph tests are explicit
+synthetic published fixtures, not semantic quality or production publication evidence.
+Actual self-owned Store INTEGRATION input refuses BUSINESS coercion without changing
+its four canonical tables. [Scope](../superpowers/specs/2026-11-08-owned-business-trace.md)
+and [reproducible evidence](../superpowers/plans/2026-11-08-owned-business-trace.md).
+
+Knowledge/Application/Storage/Runtime builds,160/160 related tests(new12 included,
+0fail/skip), architecture17, formatting and associated independent review passed.
+CI191 at a75fb50 ended TS/Rust success, Native old R8 catalog failure; actual
+qualification skipped, no duplicate run. No user DB, model or production query/
+publication is enabled. Public trace_flow/MCP/token/ResultMeta integration and real
+quality remain open. Phase1 stays4/21, A6 NOT_QUALIFIED, E02 PROPOSED/uninstalled.
+
 ## Owned Wiki files and restart read capability - 2026-11-08
 
 Private Storage now persists actual owned Wiki projector artifacts in exclusively

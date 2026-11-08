@@ -142,15 +142,24 @@ function jsonBlock(value: unknown, control: RuntimeRequestControl): string {
   const fence = '`'.repeat(longest + 1);
   return fence + 'json\n' + json + '\n' + fence;
 }
-/** Private deterministic projection only: test permission is never production authority. */
-export function projectOwnedWiki(
-  requestInput: unknown,
+export type OwnedPublishedScope = Pick<
+  OwnedWikiRequest,
+  'workspaceId' | 'repositoryIds' | 'selectedPublishedRevisionRefs'
+>;
+export type OwnedPublishedRecord = {
+  itemEnvelope: ReturnType<typeof parseKnowledgeItem>;
+  revisionEnvelope: ReturnType<typeof parseKnowledgeRevision>;
+  coverage: ReturnType<typeof Phase1CoverageSchema.parse>;
+  provenance: Record<string, unknown>;
+  currentHeadRevisionId: string;
+  warnings: string[];
+};
+/** Shared owned published-only validation; performs no Wiki rendering or profile decision. */
+export function validateOwnedPublishedSelection(
+  request: OwnedPublishedScope,
   knowledgeInput: unknown,
-  control: RuntimeRequestControl,
-): OwnedWikiProjection {
-  const budget = new KnowledgeBudget(control),
-    request = parseOwnedWikiRequest(requestInput, budget.control);
-  budget.data(requestInput);
+  budget: KnowledgeBudget,
+): OwnedPublishedRecord[] {
   budget.data(knowledgeInput);
   const knowledge = record(JSON.parse(JSON.stringify(knowledgeInput)), [
     'kind',
@@ -291,6 +300,18 @@ export function projectOwnedWiki(
     })
     .sort((a, b) => order(a.revisionEnvelope.payload.id, b.revisionEnvelope.payload.id));
   requireWiki(!selected.size, 'WIKI_QUERY_MISMATCH');
+  return immutable(rows);
+}
+/** Private deterministic projection only: test permission is never production authority. */
+export function projectOwnedWiki(
+  requestInput: unknown,
+  knowledgeInput: unknown,
+  control: RuntimeRequestControl,
+): OwnedWikiProjection {
+  const budget = new KnowledgeBudget(control),
+    request = parseOwnedWikiRequest(requestInput, budget.control);
+  budget.data(requestInput);
+  const rows = validateOwnedPublishedSelection(request, knowledgeInput, budget);
   const diagnostics: OwnedWikiProjection['diagnostics'] = [],
     sections: OwnedWikiProjection['sections'] = [];
   const lines = ['# Standard Wiki', '', 'OWNED_TEST_WIKI — NOT_EVALUABLE / NOT_AUTHORIZED', ''];
