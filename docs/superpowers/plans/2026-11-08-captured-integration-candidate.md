@@ -51,3 +51,19 @@ pass51/51, no skips. The11 generator tests are included, not additional.
 Architecture17 and changed-file formatting/diff checks pass. Independent read-only
 review found no Critical/Important issue. No new public API/dependency/policy,
 identity allocation or state evidence; production/full workflow remain open.
+
+## Same-invocation offline composition verification
+
+New private module and mandatory integration-state-test-double.test.mjs test use
+the extracted unchanged self-owned captured-integration-fixture helper. Application
+build passed. Integrator ran:
+
+`node --test --test-concurrency=1 packages/application/test/integration-state-test-double.test.mjs packages/application/test/integration-candidate.test.mjs packages/application/test/semantic-test-invocation.test.mjs packages/knowledge/test/identity.test.mjs packages/knowledge/test/reconciliation.test.mjs scripts/test-workspace-structure.mjs`
+
+105/105 passed before localized signal-proxy correction; final new suite8/8 passed
+after correction (overlapping, not additive), Application rebuilt. Same-label
+changed-content digests differ; incorrect output hash/scope/support rejects and
+usage settles once. Actual generated unrelated/conflicting states review. Raw
+control getters/proxies and signal proxy traps execute zero times. Architecture17,
+changed-file format/diff checks pass; independent associated final review no
+Critical/Important issue. Production evidence selection remains undecided.

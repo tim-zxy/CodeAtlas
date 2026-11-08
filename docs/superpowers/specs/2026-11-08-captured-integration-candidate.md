@@ -42,3 +42,25 @@ planner must yield REVIEW_REQUIRED/STATE_EVIDENCE_MISSING, no allocated ID or
 new revision intent. This connects the actual snapshot-generated candidate to
 the existing review plan, not publication, state issuance or identity acceptance.
 The existing authorization/quality/publication limitations remain attached.
+
+## Approved same-invocation TEST_DOUBLE state composition
+
+User approved a private offline composition using only self-owned data. Own the
+snapshot/options/control before awaits; derive one fixed CLAIM_EXTRACTION request
+and run the actual existing TEST_DOUBLE boundary once. Never accept a supplied
+Claim envelope/result as proof that this invocation completed. Bind Integration
+capturedInputDigest to the request snapshot digest, completed inputDigest to the
+canonical authorized-context digest, and outputDigest to actual validated output.
+These digests have different meanings. Same snapshot ID is insufficient.
+
+Return the same validated candidate/referenceContext and existing stateBinding
+with the actual generated Claim. Keep TEST_DOUBLE/NOT_VERIFIED/NOT_EVALUABLE,
+NOT_ESTABLISHED and NOT_ATTEMPTED. Existing Reconciliation alone determines
+missing/conflicting/unrelated-state review; malformed/incorrect-digest output
+refuses and UNKNOWN cleanup never becomes SETTLED. No automatic retry or second
+model call. This may produce a NEW planning intent, never an allocated stable ID,
+verified fact or publication. Existing null-state entry remains available.
+
+No Claim input-registry extension, production producer/authority/selection rule,
+user data, real model or publication. Rollback disables only this private entry,
+retaining original snapshots/history and the previous missing-state review path.

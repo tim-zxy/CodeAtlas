@@ -1,3 +1,27 @@
+## Same-invocation offline Claim state composition - 2026-11-08
+
+Private runCapturedIntegrationStateTestDouble owns input/options/control, builds
+one fixed CLAIM_EXTRACTION request and awaits one actual local-double invocation.
+Integration capturedInputDigest, request context inputDigest and actual validated
+outputDigest remain distinct and bound. No supplied result DTO proves completion.
+The candidate is revalidated under the same request-derived reference context,
+including legal repository metadata refs; unrelated subjects reach conservative
+review. Generated state is attached through existing stateBinding only, never
+added to the input snapshot or promoted to verified truth. TEST_DOUBLE,
+NOT_VERIFIED, NOT_EVALUABLE, NOT_ESTABLISHED and NOT_ATTEMPTED remain explicit.
+Actual Reconciliation may propose NEW without allocating an ID/publishing;
+unrelated/conflicting states review. Original null-state route stays available.
+Application build and integrated generator/semantic/identity/registration105/105
+passed. After final localized signal-proxy correction, new8/8 passed; counts
+overlap and are not added. Architecture17/format passed. Independent review
+control-accessor/signal-proxy findings resolved; final associated check found no
+Critical/Important issue. Output digest reuses the inner verified invocation,
+not an extra unreserved serialization. No snapshot format/production evidence
+selection, producer/authority rule, user data, model, migration, publish or R9.
+[Exact scope](../superpowers/specs/2026-11-08-captured-integration-candidate.md).
+CI179 on prior8608fa2 ended TS/Rust success and oldR8 catalog precheck failure;
+not this batch's validation. Phase1 remains4/21, A6 NOT_QUALIFIED, E02 PROPOSED.
+
 ## Captured Integration to conservative review plan - 2026-11-08
 
 The private generator now returns the existing P1-13 reconciliation subject with

@@ -1,3 +1,13 @@
+## Same-invocation TEST_DOUBLE state to existing P1-13 - 2026-11-08
+
+Knowledge design section5 capture-before-generation and approved P1-13 binding
+map to private Application runCapturedIntegrationStateTestDouble: exact owned
+snapshot -> fixed request -> actual awaited Claim -> existing stateBinding and
+conservative plan. Context digest differs from snapshot digest; actual output
+digest is verified inside existing invocation. No new snapshot field, state
+trust selection or publication. Verification/limits are in the captured
+Integration scope and plan; original missing-state route remains.
+
 ## Captured Integration to existing P1-13 subject - 2026-11-08
 
 P1-12 capture -> deterministic Integration candidate -> exact same validated
