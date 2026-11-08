@@ -1,3 +1,11 @@
+## Captured Integration to existing P1-13 subject - 2026-11-08
+
+P1-12 capture -> deterministic Integration candidate -> exact same validated
+reference context -> existing conservative reconciliation subject/plan. Missing
+Claim state stays null and REVIEW_REQUIRED; no MATCHED-to-CURRENT implication,
+ID allocation, new revision, permission or publication. Actual51-test integrated
+check and independent review recorded in the captured Integration specification.
+
 ## Approved captured Integration slice - 2026-11-08
 
 knowledge-and-consumption section4 deterministic Integration -> actual frozen

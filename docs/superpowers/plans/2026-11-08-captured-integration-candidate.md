@@ -41,3 +41,13 @@ not product relaxation. Architecture17 and changed-file formatting/diff checks.
 
 Remaining production clearance, full lifecycle/W011, stable Component refs and
 Native qualification remain separately governed; no stage acceptance claim.
+
+## Existing reconciliation connection
+
+Return the exact validated candidate/context as P1-13 subject with null state.
+Three missing-output RED tests precede implementation; final Application build and
+`node --test --test-concurrency=1 packages/application/test/integration-candidate.test.mjs packages/knowledge/test/identity.test.mjs packages/knowledge/test/reconciliation.test.mjs`
+pass51/51, no skips. The11 generator tests are included, not additional.
+Architecture17 and changed-file formatting/diff checks pass. Independent read-only
+review found no Critical/Important issue. No new public API/dependency/policy,
+identity allocation or state evidence; production/full workflow remain open.

@@ -179,6 +179,10 @@ export function buildCapturedIntegrationCandidate(
         unverified.set(scopedRefKey(ref), ref);
       }
     }
+    const referenceContext = {
+      availableEntities: [...entities.values()].map((e) => e.ref),
+      availableSupports: ordered(supports),
+    };
     const candidate = parseKnowledgeCandidate(
       {
         schema: 'codeatlas.knowledge-candidate',
@@ -213,13 +217,12 @@ export function buildCapturedIntegrationCandidate(
           publicationState: 'CANDIDATE',
         },
       },
-      {
-        availableEntities: [...entities.values()].map((e) => e.ref),
-        availableSupports: ordered(supports),
-      },
+      referenceContext,
     );
     const result = {
       candidate,
+      // MATCHED is a structural fact, not CURRENT/TARGET/HISTORICAL state evidence.
+      reconciliationSubject: { candidateEnvelope: candidate, referenceContext, stateBinding: null },
       capturedInputDigest: snapshot.inputDigest,
       authorization: 'NOT_ESTABLISHED' as const,
       quality: 'NOT_EVALUABLE' as const,

@@ -341,3 +341,59 @@ test('incoming unknown cleanup remains unknown even when invalidation succeeds',
     cleanupState: 'UNKNOWN',
   });
 });
+
+import { reconcileKnowledge } from '../../knowledge/dist/index.js';
+const reconcile = (subject, c = control()) =>
+  reconcileKnowledge({
+    subjects: [subject],
+    existingItems: [],
+    policyRef: 'knowledge-exact-reference-v1',
+    intents: [],
+    disappearedItemIds: [],
+    control: c,
+  });
+test('captured Integration directly supplies conservative Reconciliation with honest missing state', () => {
+  const snapshot = createCompilationInputSnapshot(fixture().raw, control());
+  const result = build(snapshot),
+    subject = result.reconciliationSubject;
+  assert.ok(subject);
+  assert.equal(subject.candidateEnvelope, result.candidate);
+  assert.equal(subject.stateBinding, null);
+  assert.ok(Object.isFrozen(subject.referenceContext.availableEntities));
+  const plan = reconcile(subject);
+  assert.equal(plan.actions.length, 1);
+  const action = plan.actions[0];
+  assert.equal(action.operation, 'REVIEW_REQUIRED');
+  assert.deepEqual(action.reasons, ['STATE_EVIDENCE_MISSING']);
+  assert.equal(action.revisionIntent, 'NONE');
+  assert.equal(action.retainedItemId, null);
+  assert.equal(action.previousRevisionId, null);
+  assert.equal(action.candidateId, 'draft');
+  assert.equal(plan.reviewRequired, true);
+});
+test('Reconciliation revalidates changed candidate refs and context instead of trusting generator result', () => {
+  const s = build(createCompilationInputSnapshot(fixture().raw, control())).reconciliationSubject;
+  assert.ok(s);
+  const changed = structuredClone(s);
+  changed.candidateEnvelope.payload.structuredContent.participantRefs[0].entity.revisionId =
+    'stale';
+  assert.throws(() => reconcile(changed));
+  const missing = structuredClone(s);
+  missing.referenceContext.availableEntities = [];
+  assert.throws(() => reconcile(missing));
+  const brokenSupport = structuredClone(s);
+  brokenSupport.referenceContext.availableSupports = [];
+  assert.throws(() => reconcile(brokenSupport));
+});
+test('captured Reconciliation control refusal returns no applicable actions', () => {
+  const s = build(createCompilationInputSnapshot(fixture().raw, control())).reconciliationSubject;
+  assert.ok(s);
+  const low = reconcile(s, control({ maxItems: 1 }));
+  assert.deepEqual(low.actions, []);
+  assert.deepEqual(low.diagnostics, ['CONTROL_BUDGET']);
+  const controller = new AbortController();
+  controller.abort();
+  const cancelled = reconcile(s, control({ signal: controller.signal }));
+  assert.deepEqual(cancelled.actions, []);
+  assert.deepEqual(cancelled.diagnostics, ['CONTROL_CANCELLED']);
+});

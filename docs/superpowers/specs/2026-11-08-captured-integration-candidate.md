@@ -30,3 +30,15 @@ No public API, production migration, W011 or qualification/profile change.
 Rollback disables the private generator/new producer extension; preserve old
 inputs and history. Old binaries may reject extended strict inputs, so keep
 producer/consumer versions together rather than downgrade or strip evidence.
+
+## Captured candidate to conservative reconciliation
+
+Existing approved P1-13 expects {candidateEnvelope,referenceContext,stateBinding}.
+The private generator exposes the exact validated candidate and already-derived
+reference context in that shape; it never accepts a caller-replacement context.
+StateBinding remains null: the capture registry has no Claim state records, and
+MATCHED is contract resolution, not CURRENT semantic state. The unchanged Knowledge
+planner must yield REVIEW_REQUIRED/STATE_EVIDENCE_MISSING, no allocated ID or
+new revision intent. This connects the actual snapshot-generated candidate to
+the existing review plan, not publication, state issuance or identity acceptance.
+The existing authorization/quality/publication limitations remain attached.

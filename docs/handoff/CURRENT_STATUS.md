@@ -1,3 +1,21 @@
+## Captured Integration to conservative review plan - 2026-11-08
+
+The private generator now returns the existing P1-13 reconciliation subject with
+the same validated candidate/reference context and stateBinding:null. Actual
+Knowledge reconciliation yields REVIEW_REQUIRED/STATE_EVIDENCE_MISSING with no
+retained ID or new revision intent. MATCHED never implies CURRENT; the capture
+registry supplies no Claim-state evidence. Tampered refs/context/supports refuse;
+budget/cancel gives no partial applicable actions. All output remains immutable
+and authorization NOT_ESTABLISHED, quality NOT_EVALUABLE, publication NOT_ATTEMPTED.
+Application build and combined generator/identity/reconcile51/51 pass; three new
+missing-output REDs preceded implementation. Architecture17 and formatting pass;
+independent read-only review found no Critical/Important issue.
+[Existing scope and evidence](../superpowers/specs/2026-11-08-captured-integration-candidate.md).
+CI178 on prior672b8c8 ended TS/Rust success, Native confirmed oldR8 script-catalog
+precheck failure; not verification of this new change. No user data, migration,
+model/scan clearance, publication or Native/R9. Phase1 remains4/21, A6 NOT_QUALIFIED,
+E02 PROPOSED/uninstalled. Full state-bound identity/publication remains open.
+
 ## Captured binding to Integration candidate - 2026-11-08
 
 Approved private WorkspaceCapture optional contractBindings{schemaVersion:1,bindings}
