@@ -1,3 +1,16 @@
+## Existing P1-15 exact published revision read - 2026-11-08
+
+Knowledge-and-consumption sections5/7 and agent-api view_knowledge map to private
+Storage readPublishedKnowledge on the owned experiment. Original Item/Revision,
+reference and coverage schemas are reused. Exact historical selection never silently
+becomes latest; current head is separate. Explicit test field checks, snapshot and
+byte budgets, exact candidate/entry/receipt/lineage binding and metadata-only context
+prevent broad body reads. Actual publication->FTS5->read case preserves all history.
+Five builds/118 related tests, final Storage/Runtime builds/31 focused tests,
+architecture17 and associated review are recorded in the [plan](../superpowers/plans/2026-11-08-offline-published-knowledge.md).
+No production authority, W011, Source body permission, Wiki profile policy or
+formal quality admission is introduced; original acceptance remains open.
+
 ## Existing P1-15 lexical projection component - 2026-11-08
 
 Knowledge-consumption section7 and P1-15 map to private Storage

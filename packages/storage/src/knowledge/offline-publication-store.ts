@@ -1,7 +1,20 @@
 import { DatabaseSync, type SQLOutputValue } from 'node:sqlite';
 import { randomUUID } from 'node:crypto';
 import { types } from 'node:util';
-import { KnowledgeScopeSchema, type RuntimeRequestControl } from '@codeatlas/ir';
+import {
+  KnowledgeScopeSchema,
+  EntityIdSchema,
+  KnowledgeRevisionSchema,
+  parseKnowledgeItem,
+  parseKnowledgeRevision,
+  parsePhase1ReferenceContext,
+  ScopedRefSchema,
+  SupportRefSchema,
+  Phase1CoverageSchema,
+  scopedRefKey,
+  supportKey,
+  type RuntimeRequestControl,
+} from '@codeatlas/ir';
 import { canonicalCompilationJson } from '../../../ir/dist/compilation-input-contract.js';
 import {
   parseOfflinePublicationCommand,
@@ -90,6 +103,39 @@ export type OfflineSearchProjection = {
   headDigest: string;
   records: OfflineSearchRecord[];
 };
+export type OfflineKnowledgeManifest = {
+  workspaceId: string;
+  heads: { itemId: string; revisionId: string }[];
+  fields: readonly string[];
+  evidenceKind: 'TEST_KNOWLEDGE_READ_NOT_AUTHORITY';
+};
+export type OfflineKnowledgePermissions = {
+  kind: 'TEST_KNOWLEDGE_READ_NOT_AUTHORITY';
+  check(manifest: OfflineKnowledgeManifest): undefined;
+};
+export type OfflinePublishedKnowledge = {
+  kind: 'OWNED_TEST_PUBLICATION';
+  workspaceId: string;
+  selectionDigest: string;
+  records: {
+    itemEnvelope: ReturnType<typeof parseKnowledgeItem>;
+    revisionEnvelope: ReturnType<typeof parseKnowledgeRevision>;
+    referenceContext: ReturnType<typeof parsePhase1ReferenceContext>;
+    coverage: ReturnType<typeof Phase1CoverageSchema.parse>;
+    provenance: {
+      attemptId: string;
+      runId: string;
+      snapshotId: string;
+      revisionSetId: string;
+      evaluationId: string;
+    };
+    currentHeadRevisionId: string;
+    isCurrentHead: boolean;
+    warnings: string[];
+  }[];
+  productionQuery: 'NOT_AUTHORIZED';
+  quality: 'NOT_EVALUABLE';
+};
 type Sql = ReturnType<typeof runtimeSql>;
 type Row = Record<string, SQLOutputValue>;
 type Owner = {
@@ -138,6 +184,7 @@ export class OfflinePublicationStore {
   #owners = new WeakMap<object, Owner>();
   #byId = new Map<string, Owner>();
   #blocked = false;
+  #knowledgeReadUnsettled = false;
   #marker;
   #db: DatabaseSync;
   #workspaceId: string;
@@ -487,6 +534,14 @@ export class OfflinePublicationStore {
         records,
       };
       canonicalCompilationJson(result, c);
+      const pending: unknown[] = [result];
+      while (pending.length) {
+        const value = pending.pop();
+        if (value && typeof value === 'object' && !Object.isFrozen(value)) {
+          pending.push(...Object.values(value));
+          Object.freeze(value);
+        }
+      }
       this.#db.exec('RELEASE ' + token);
       savepoint = false;
       this.#db.exec('COMMIT');
@@ -505,6 +560,429 @@ export class OfflinePublicationStore {
         throw new OfflinePublicationError('SEARCH_SOURCE_UNAVAILABLE', 'UNKNOWN');
       }
       throw error;
+    }
+  }
+  /** Exact published versions with selected-body/ref metadata grants only. */
+  readPublishedKnowledge(
+    references: unknown,
+    permissions: OfflineKnowledgePermissions,
+    limits: HistoryReadLimits,
+    control: RuntimeRequestControl,
+  ): OfflinePublishedKnowledge {
+    if (this.#knowledgeReadUnsettled)
+      throw new OfflinePublicationError('KNOWLEDGE_SOURCE_UNAVAILABLE', 'UNKNOWN');
+    const c = ownControl(control),
+      ownedLimits = checkedHistoryLimits(JSON.parse(canonicalCompilationJson(limits, c))),
+      verify = (v: unknown, code = 'KNOWLEDGE_RECORD_INVALID') => {
+        if (!v) throw new OfflinePublicationError(code);
+      };
+    let selected: { itemId: string; revisionId: string }[];
+    try {
+      const raw = JSON.parse(canonicalCompilationJson(references, c));
+      verify(Array.isArray(raw) && raw.length > 0, 'KNOWLEDGE_QUERY_INVALID');
+      selected = raw.map((r: Record<string, unknown>) => {
+        verify(
+          r &&
+            typeof r === 'object' &&
+            !Array.isArray(r) &&
+            Object.keys(r).sort().join(',') === 'itemId,revisionId',
+          'KNOWLEDGE_QUERY_INVALID',
+        );
+        return {
+          itemId: EntityIdSchema.parse(r.itemId),
+          revisionId: EntityIdSchema.parse(r.revisionId),
+        };
+      });
+      verify(
+        new Set(selected.map((r) => canonicalCompilationJson(r, c))).size === selected.length,
+        'KNOWLEDGE_QUERY_INVALID',
+      );
+      selected.sort((a, b) =>
+        a.itemId === b.itemId
+          ? a.revisionId < b.revisionId
+            ? -1
+            : a.revisionId > b.revisionId
+              ? 1
+              : 0
+          : a.itemId < b.itemId
+            ? -1
+            : 1,
+      );
+    } catch (error) {
+      const code =
+        error && typeof error === 'object' && !types.isProxy(error)
+          ? Object.getOwnPropertyDescriptor(error, 'code')?.value
+          : null;
+      if (['CANCELLED', 'DEADLINE', 'BUDGET_EXCEEDED', 'HISTORY_LIMIT_EXCEEDED'].includes(code))
+        throw error;
+      throw new OfflinePublicationError('KNOWLEDGE_QUERY_INVALID');
+    }
+    verify(
+      permissions && typeof permissions === 'object' && !types.isProxy(permissions),
+      'KNOWLEDGE_PERMISSION_DENIED',
+    );
+    const d = Object.getOwnPropertyDescriptors(permissions);
+    verify(
+      d.kind &&
+        'value' in d.kind &&
+        d.kind.value === 'TEST_KNOWLEDGE_READ_NOT_AUTHORITY' &&
+        d.check &&
+        'value' in d.check &&
+        typeof d.check.value === 'function' &&
+        !types.isProxy(d.check.value) &&
+        !types.isAsyncFunction(d.check.value),
+      'KNOWLEDGE_PERMISSION_DENIED',
+    );
+    const permissionCheck = (d.check!.value as OfflineKnowledgePermissions['check']).bind(
+      permissions,
+    );
+    this.live();
+    verify(!this.#db.isTransaction, 'KNOWLEDGE_SOURCE_UNAVAILABLE');
+    const token = 'knowledge_' + randomUUID().replaceAll('-', '');
+    let began = false,
+      savepoint = false;
+    try {
+      this.#db.exec('BEGIN');
+      began = true;
+      this.#db.exec('SAVEPOINT ' + token);
+      savepoint = true;
+      const b = new HistoryReadBudget(ownedLimits);
+      this.sql(ownedLimits, c, b);
+      const manifest: OfflineKnowledgeManifest = Object.freeze({
+        workspaceId: this.#workspaceId,
+        heads: Object.freeze(
+          selected.map((r) => Object.freeze({ ...r })),
+        ) as unknown as OfflineKnowledgeManifest['heads'],
+        fields: Object.freeze([
+          'PUBLISHED_ITEM',
+          'PUBLISHED_REVISION',
+          'REFERENCE_CONTEXT_METADATA',
+          'COVERAGE',
+          'PROVENANCE_IDS',
+          'CURRENT_HEAD_ID',
+        ]),
+        evidenceKind: 'TEST_KNOWLEDGE_READ_NOT_AUTHORITY',
+      });
+      const guard = () => {
+        canonicalCompilationJson(null, c);
+        this.live();
+        verify(this.#db.isTransaction, 'KNOWLEDGE_SOURCE_UNAVAILABLE');
+        let value: unknown;
+        try {
+          value = permissionCheck(manifest);
+        } catch {
+          throw new OfflinePublicationError('KNOWLEDGE_PERMISSION_DENIED');
+        }
+        if (types.isPromise(value)) {
+          void Promise.prototype.then.call(value, undefined, () => {});
+          this.#knowledgeReadUnsettled = true;
+          throw new OfflinePublicationError('KNOWLEDGE_PERMISSION_DENIED', 'UNKNOWN');
+        }
+        verify(value === undefined, 'KNOWLEDGE_PERMISSION_DENIED');
+        canonicalCompilationJson(null, c);
+        this.live();
+        verify(this.#db.isTransaction, 'KNOWLEDGE_SOURCE_UNAVAILABLE');
+        this.#db.exec('RELEASE ' + token);
+        this.#db.exec('SAVEPOINT ' + token);
+        this.sql(ownedLimits, c, b);
+      };
+      guard();
+      const query = (
+        columns: Record<string, string>,
+        from: string,
+        args: import('node:sqlite').SQLInputValue[],
+      ) => {
+        canonicalCompilationJson(null, c);
+        b.own(args);
+        b.add('rows', 1);
+        const size = this.#db
+          .prepare(
+            'SELECT count(*) n,coalesce(sum(' +
+              Object.values(columns)
+                .map((x) => 'coalesce(length(CAST(' + x + ' AS BLOB)),0)')
+                .join('+') +
+              '),0) bytes' +
+              from,
+          )
+          .get(...args)!;
+        verify(
+          typeof size.n === 'number' &&
+            Number.isSafeInteger(size.n) &&
+            typeof size.bytes === 'number' &&
+            Number.isSafeInteger(size.bytes),
+        );
+        b.add('rows', size.n as number);
+        b.add('serializedBytes', size.bytes as number);
+        b.pin(size.bytes as number);
+        const rows = this.#db
+          .prepare(
+            'SELECT ' +
+              Object.entries(columns)
+                .map(([name, value]) => value + ' AS ' + name)
+                .join(',') +
+              from,
+          )
+          .all(...args);
+        verify(rows.length === size.n);
+        b.own(rows, false);
+        return rows;
+      };
+      const wanted = canonicalCompilationJson(selected, c),
+        args = [wanted, this.#workspaceId];
+      const from =
+        " FROM json_each(?) w LEFT JOIN offline_revisions r ON r.item_id=json_extract(w.value,'$.itemId') AND r.id=json_extract(w.value,'$.revisionId') AND EXISTS(SELECT 1 FROM offline_attempts scope_owner WHERE scope_owner.id=r.attempt_id AND scope_owner.workspace_id=?) LEFT JOIN offline_attempts a ON a.id=r.attempt_id LEFT JOIN offline_receipts p ON p.attempt_id=a.id LEFT JOIN offline_heads h ON h.item_id=r.item_id AND h.workspace_id=a.workspace_id";
+      const metadata = query(
+        {
+          item_id: "json_extract(w.value,'$.itemId')",
+          revision_id: "json_extract(w.value,'$.revisionId')",
+          actual_item: 'r.item_id',
+          actual_revision: 'r.id',
+          attempt_id: 'a.id',
+          receipt_id: 'p.attempt_id',
+          current_head: 'h.revision_id',
+          raw_bytes:
+            'coalesce(length(CAST(r.payload_json AS BLOB)),0)+coalesce(length(CAST(a.payload_json AS BLOB)),0)+coalesce(length(CAST(p.payload_json AS BLOB)),0)',
+          record_bytes: 'coalesce(length(CAST(r.payload_json AS BLOB)),0)',
+        },
+        from,
+        args,
+      );
+      verify(metadata.length === selected.length);
+      for (const row of metadata) {
+        verify(
+          row.actual_item === row.item_id &&
+            row.actual_revision === row.revision_id &&
+            row.attempt_id !== null &&
+            row.receipt_id !== null,
+          'KNOWLEDGE_REVISION_NOT_FOUND',
+        );
+        verify(
+          typeof row.current_head === 'string' &&
+            typeof row.raw_bytes === 'number' &&
+            Number.isSafeInteger(row.raw_bytes) &&
+            typeof row.record_bytes === 'number' &&
+            Number.isSafeInteger(row.record_bytes),
+        );
+        b.add('serializedBytes', row.raw_bytes as number);
+        b.pin(row.raw_bytes as number);
+      }
+      const candidateId =
+        "(SELECT json_extract(e.value,'$.candidateId') FROM json_each(a.payload_json,'$.entries') e WHERE json_extract(e.value,'$.record.itemEnvelope.payload.id')=r.item_id AND json_extract(e.value,'$.record.revisionEnvelope.payload.id')=r.id)";
+      const proof =
+        "(json_extract(r.payload_json,'$.itemEnvelope.schema')='codeatlas.knowledge-item' AND json_extract(r.payload_json,'$.itemEnvelope.version')=1 AND json_extract(r.payload_json,'$.revisionEnvelope.schema')='codeatlas.knowledge-revision' AND json_extract(r.payload_json,'$.revisionEnvelope.version')=1 AND json_extract(r.payload_json,'$.itemEnvelope.payload.lifecycleState')='ACTIVE' AND json_extract(r.payload_json,'$.itemEnvelope.payload.publishedRevisionId')=r.id AND json_extract(r.payload_json,'$.revisionEnvelope.payload.publicationState')='PUBLISHED' AND json_extract(r.payload_json,'$.revisionEnvelope.payload.itemId')=r.item_id AND json_extract(r.payload_json,'$.revisionEnvelope.payload.id')=r.id AND json_extract(r.payload_json,'$.revisionEnvelope.payload.compilationRunId')=json_extract(a.payload_json,'$.request.runId') AND json_extract(r.payload_json,'$.revisionEnvelope.payload.inputSnapshotRef.id')=json_extract(a.payload_json,'$.request.snapshot.snapshotId') AND json_extract(r.payload_json,'$.revisionEnvelope.payload.revisionSetId')=json_extract(a.payload_json,'$.request.snapshot.revisionSetId') AND json_extract(r.payload_json,'$.revisionEnvelope.payload.evaluationRef.id')=json_extract(a.payload_json,'$.request.evaluation.evaluationId') AND json_extract(a.payload_json,'$.kind')='OWNED_TEST_PUBLICATION' AND json_extract(a.payload_json,'$.quality')='NOT_EVALUABLE' AND json_extract(a.payload_json,'$.productionPublication')='NOT_AUTHORIZED' AND json_extract(p.payload_json,'$.kind')='OWNED_TEST_PUBLICATION' AND json_extract(p.payload_json,'$.attemptId')=a.id AND json_extract(p.payload_json,'$.workspaceId')=a.workspace_id AND json_extract(p.payload_json,'$.requestDigest')=a.request_digest AND json_extract(p.payload_json,'$.commandDigest')=a.command_digest AND json_array_length(p.payload_json,'$.heads')=json_array_length(a.payload_json,'$.entries') AND json_array_length(p.payload_json,'$.heads')=(SELECT count(*) FROM offline_revisions all_rows WHERE all_rows.attempt_id=a.id) AND NOT EXISTS(SELECT 1 FROM json_each(p.payload_json,'$.heads') all_heads WHERE NOT EXISTS(SELECT 1 FROM offline_revisions member WHERE member.attempt_id=a.id AND member.item_id=json_extract(all_heads.value,'$.itemId') AND member.id=json_extract(all_heads.value,'$.revisionId'))) AND EXISTS(SELECT 1 FROM json_each(p.payload_json,'$.heads') rh WHERE json_extract(rh.value,'$.itemId')=r.item_id AND json_extract(rh.value,'$.revisionId')=r.id) AND (SELECT count(*) FROM json_each(a.payload_json,'$.entries') e WHERE json_extract(e.value,'$.record.itemEnvelope.payload.id')=r.item_id AND json_extract(e.value,'$.record.revisionEnvelope.payload.id')=r.id AND json_extract(e.value,'$.record')=r.payload_json)=1 AND (SELECT count(*) FROM json_each(a.payload_json,'$.request.candidates') c WHERE json_extract(c.value,'$.payload.id')=" +
+        candidateId +
+        ')=1)';
+      const candidateBinding = [
+        ...['type', 'scope', 'importance'].map(
+          (field) =>
+            "json_extract(c.value,'$.payload." +
+            field +
+            "')=json_extract(r.payload_json,'$.itemEnvelope.payload." +
+            field +
+            "')",
+        ),
+        ...['structuredContent', 'supportRefs', 'inputSnapshotRef'].map(
+          (field) =>
+            "json_extract(c.value,'$.payload." +
+            field +
+            "')=json_extract(r.payload_json,'$.revisionEnvelope.payload." +
+            field +
+            "')",
+        ),
+        "json_extract(c.value,'$.payload.type')=json_extract(r.payload_json,'$.revisionEnvelope.payload.structuredContent.kind')",
+      ].join(' AND ');
+      const lineage =
+        "json_extract(r.payload_json,'$.revisionEnvelope.payload.previousRevisionId') IS r.previous_id AND (r.previous_id IS NULL OR EXISTS(SELECT 1 FROM offline_revisions prior WHERE prior.item_id=r.item_id AND prior.id=r.previous_id)) AND EXISTS(SELECT 1 FROM json_each(a.payload_json,'$.entries') e WHERE json_extract(e.value,'$.record.revisionEnvelope.payload.id')=r.id AND json_extract(e.value,'$.record.itemEnvelope.payload.id')=r.item_id AND json_extract(e.value,'$.record')=r.payload_json AND json_extract(e.value,'$.expectedHead') IS r.previous_id AND json_extract(e.value,'$.operation')=CASE WHEN r.previous_id IS NULL THEN 'NEW' ELSE 'UPDATE' END) AND EXISTS(SELECT 1 FROM json_each(p.payload_json,'$.heads') rh WHERE json_extract(rh.value,'$.itemId')=r.item_id AND json_extract(rh.value,'$.revisionId')=r.id AND json_extract(rh.value,'$.previousRevisionId') IS r.previous_id)";
+      const boundProof =
+        '(' +
+        proof +
+        ' AND ' +
+        lineage +
+        " AND EXISTS(SELECT 1 FROM json_each(a.payload_json,'$.request.candidates') c WHERE json_extract(c.value,'$.payload.id')=" +
+        candidateId +
+        ' AND ' +
+        candidateBinding +
+        '))';
+      const body = query(
+        {
+          item_id: 'r.item_id',
+          revision_id: 'r.id',
+          item_json: "json_extract(r.payload_json,'$.itemEnvelope')",
+          revision_json: "json_extract(r.payload_json,'$.revisionEnvelope')",
+          coverage_json:
+            "(SELECT json_extract(c.value,'$.payload.coverage') FROM json_each(a.payload_json,'$.request.candidates') c WHERE json_extract(c.value,'$.payload.id')=" +
+            candidateId +
+            ')',
+          valid: boundProof,
+        },
+        from,
+        args,
+      );
+      verify(body.length === selected.length);
+      const records: OfflinePublishedKnowledge['records'] = [];
+      for (const row of body) {
+        verify(
+          row.valid === 1 &&
+            typeof row.item_json === 'string' &&
+            typeof row.revision_json === 'string' &&
+            typeof row.coverage_json === 'string',
+        );
+        const meta = metadata.find(
+          (m) => m.item_id === row.item_id && m.revision_id === row.revision_id,
+        )!;
+        verify(meta);
+        const itemEnvelope = parseKnowledgeItem(b.parse(String(row.item_json))),
+          rawRevision = b.parse(String(row.revision_json)) as {
+            schema: unknown;
+            version: unknown;
+            payload: unknown;
+          };
+        verify(rawRevision.schema === 'codeatlas.knowledge-revision' && rawRevision.version === 1);
+        const payload = KnowledgeRevisionSchema.parse(rawRevision.payload);
+        verify(
+          itemEnvelope.payload.id === row.item_id &&
+            itemEnvelope.payload.publishedRevisionId === row.revision_id &&
+            itemEnvelope.payload.lifecycleState === 'ACTIVE' &&
+            payload.id === row.revision_id &&
+            payload.itemId === row.item_id &&
+            payload.publicationState === 'PUBLISHED',
+        );
+        verify(
+          canonicalCompilationJson(itemEnvelope, c) === row.item_json &&
+            canonicalCompilationJson(
+              { schema: rawRevision.schema, version: rawRevision.version, payload },
+              c,
+            ) === row.revision_json,
+        );
+        const entityRefs = new Map<string, ReturnType<typeof ScopedRefSchema.parse>>(),
+          supportRefs = new Map<string, ReturnType<typeof SupportRefSchema.parse>>(),
+          stack: unknown[] = [payload];
+        while (stack.length) {
+          canonicalCompilationJson(null, c);
+          b.add('items', 1);
+          const v = stack.pop();
+          if (!v || typeof v !== 'object') continue;
+          const o = v as Record<string, unknown>;
+          if ((o.scope === 'REPOSITORY' || o.scope === 'WORKSPACE') && o.entity) {
+            const ref = ScopedRefSchema.parse(v);
+            entityRefs.set(scopedRefKey(ref), ref);
+          }
+          if (o.basis && o.entity && typeof o.valueDigest === 'string') {
+            const ref = SupportRefSchema.parse(v);
+            supportRefs.set(supportKey(ref), ref);
+            const basis = ref.basis,
+              entity = ScopedRefSchema.parse(
+                'repositoryId' in basis
+                  ? { scope: 'REPOSITORY', repositoryId: basis.repositoryId, entity: ref.entity }
+                  : {
+                      scope: 'WORKSPACE',
+                      workspaceId: 'workspaceId' in basis ? basis.workspaceId : this.#workspaceId,
+                      entity: ref.entity,
+                    },
+              );
+            entityRefs.set(scopedRefKey(entity), entity);
+          }
+          stack.push(...Object.values(v));
+        }
+        const contextRows = (
+          path: 'availableEntities' | 'availableSupports',
+          values: unknown[],
+        ) => {
+          b.add('serializedBytes', meta.record_bytes as number);
+          b.pin(meta.record_bytes as number);
+          const wantedRefs = canonicalCompilationJson(values, c);
+          return query(
+            { ref_json: 'e.value' },
+            " FROM offline_revisions r JOIN offline_attempts a ON a.id=r.attempt_id JOIN json_each(r.payload_json,'$.referenceContext." +
+              path +
+              "') e WHERE r.id=? AND r.item_id=? AND a.workspace_id=? AND EXISTS(SELECT 1 FROM json_each(?) wanted_ref WHERE wanted_ref.value=e.value)",
+            [String(row.revision_id), String(row.item_id), this.#workspaceId, wantedRefs],
+          ).map((v) => b.parse(String(v.ref_json)));
+        };
+        const availableEntities = contextRows('availableEntities', [...entityRefs.values()]),
+          availableSupports = contextRows('availableSupports', [...supportRefs.values()]);
+        verify(
+          availableEntities.length === entityRefs.size &&
+            availableSupports.length === supportRefs.size,
+        );
+        const referenceContext = parsePhase1ReferenceContext({
+            availableEntities,
+            availableSupports,
+          }),
+          revisionEnvelope = parseKnowledgeRevision(rawRevision, referenceContext),
+          coverage = Phase1CoverageSchema.parse(b.parse(String(row.coverage_json)));
+        verify(canonicalCompilationJson(coverage, c) === row.coverage_json);
+        const currentHeadRevisionId = String(meta.current_head),
+          isCurrentHead = currentHeadRevisionId === payload.id,
+          warnings = ['LIVE_SOURCE_NOT_OBSERVED'];
+        if (itemEnvelope.payload.sourceFreshness !== 'FRESH')
+          warnings.push(itemEnvelope.payload.sourceFreshness);
+        if (!isCurrentHead) warnings.push('HISTORICAL_PUBLISHED_REVISION');
+        records.push({
+          itemEnvelope,
+          revisionEnvelope,
+          referenceContext,
+          coverage,
+          provenance: {
+            attemptId: String(meta.attempt_id),
+            runId: payload.compilationRunId,
+            snapshotId: payload.inputSnapshotRef.id,
+            revisionSetId: payload.revisionSetId,
+            evaluationId: payload.evaluationRef.id,
+          },
+          currentHeadRevisionId,
+          isCurrentHead,
+          warnings,
+        });
+      }
+      guard();
+      const result: OfflinePublishedKnowledge = {
+        kind: 'OWNED_TEST_PUBLICATION',
+        workspaceId: this.#workspaceId,
+        selectionDigest: publicationDigest(
+          'codeatlas.offline-knowledge.selection.v1',
+          { workspaceId: this.#workspaceId, refs: selected },
+          c,
+        ),
+        records,
+        productionQuery: 'NOT_AUTHORIZED',
+        quality: 'NOT_EVALUABLE',
+      };
+      canonicalCompilationJson(result, c);
+      const pending: unknown[] = [result];
+      while (pending.length) {
+        const value = pending.pop();
+        if (value && typeof value === 'object' && !Object.isFrozen(value)) {
+          pending.push(...Object.values(value));
+          Object.freeze(value);
+        }
+      }
+      this.#db.exec('RELEASE ' + token);
+      savepoint = false;
+      this.#db.exec('COMMIT');
+      began = false;
+      this.live();
+      return result;
+    } catch (error) {
+      try {
+        this.live();
+        if (savepoint) {
+          verify(this.#db.isTransaction, 'KNOWLEDGE_SOURCE_UNAVAILABLE');
+          this.#db.exec('ROLLBACK TO ' + token);
+          this.#db.exec('ROLLBACK');
+        } else if (began && this.#db.isTransaction) this.#db.exec('ROLLBACK');
+      } catch {
+        this.#knowledgeReadUnsettled = true;
+        throw new OfflinePublicationError('KNOWLEDGE_SOURCE_UNAVAILABLE', 'UNKNOWN');
+      }
+      if (error instanceof OfflinePublicationError) throw error;
+      const code =
+        error && typeof error === 'object' && !types.isProxy(error)
+          ? Object.getOwnPropertyDescriptor(error, 'code')?.value
+          : null;
+      if (['CANCELLED', 'DEADLINE', 'BUDGET_EXCEEDED', 'HISTORY_LIMIT_EXCEEDED'].includes(code))
+        throw error;
+      throw new OfflinePublicationError('KNOWLEDGE_RECORD_INVALID');
     }
   }
   private expected(sql: Sql, command: OfflinePublicationCommand, c: RuntimeRequestControl) {

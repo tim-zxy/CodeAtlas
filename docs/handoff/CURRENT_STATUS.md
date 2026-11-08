@@ -1,3 +1,26 @@
+## Private P1-15 exact published-version read - 2026-11-08
+
+Added the next owned-data business slice: publication -> actual FTS5 hit -> exact
+published Knowledge Item/Revision read, including historical versions with separate
+current-head metadata. Dedicated permission-preflight SQL projects only selected
+records, original matching coverage, provenance IDs and required reference metadata;
+no broad snapshot/stateBinding/Claim body. Missing/denied/corrupt members fail the
+whole selection. Stored AFFECTED and historical warnings do not assert live Source.
+
+Five builds and118/118 related tests passed; after the final association refinement
+and added full-use case, Storage/Runtime builds and31/31 focused tests passed
+(reader11 included). Architecture17 and focused independent review passed. Candidate
+coverage/type/content and entry/receipt/previous-pointer binding defects found in
+review were corrected with independent corrupt-data cases. See [scope](../superpowers/specs/2026-11-08-offline-published-knowledge.md)
+and [commands/evidence](../superpowers/plans/2026-11-08-offline-published-knowledge.md).
+
+CI188 at2c4b8bd is terminal: TS/Rust success, Native old R8 catalog prerequisite
+failure; actual qualification skipped. No duplicate CI dispatch. This batch has not
+opened production query/publication, accessed user data or executed Native/R9.
+Full P1-15/Wiki/public query remains OPEN; Phase1 stays4/21, A6 NOT_QUALIFIED,
+E02 PROPOSED/uninstalled. Wiki profile requiredness/status precedence still needs
+an exact existing-contract resolution before a projection is implemented.
+
 ## Private P1-15 lexical component and CI187 correction - 2026-11-08
 
 Explicit in-memory SQLite FTS5 rebuild/search now consumes only owned experimental
