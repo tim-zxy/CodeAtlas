@@ -1,3 +1,14 @@
+## Approved offline original inspection experiment - 2026-11-08
+
+Existing Source/capture/limited detector rules map to a private TEST_PORTS owner:
+pre-read declared metadata -> per-file authorization/read -> raw fingerprint and
+scan -> materialize/strict exact closure -> final scan -> settle/recheck -> fixed
+same-frozen-payload consumer. Structural tests do not authenticate production
+metadata/permissions/Source or adopt the candidate policy. Snapshot/public schemas
+and production denial stay unchanged.12 cases in the128 integrated batch and
+independent review recorded in the offline inspection spec/plan. No governing
+security/authority change is claimed; that attempted record edit was rejected.
+
 ## Same-invocation TEST_DOUBLE state to existing P1-13 - 2026-11-08
 
 Knowledge design section5 capture-before-generation and approved P1-13 binding

@@ -1,3 +1,32 @@
+## Offline pre-read inventory to same-payload test consumption - 2026-11-08
+
+Private Application one-shot create/runOfflineCompilationInspection now fixes a
+TEST_PORTS-only owner, binding, control/account and consumer. Independent pre-read
+metadata is validated before each file permission/read. Actual byte fingerprints
+and raw candidate detection precede materialization; protected original copies
+and materializer copies must retain exact keys/bytes, including after settlement.
+Strict final snapshot/derived-original manifest and scope/basis/policies match,
+then final payload scans and full-payload/input/metadata digests bind consumption.
+After producer cleanup, permissions and Source/policy test contracts recheck
+before the same frozen payload reaches the fixed test consumer. Denial/cancel/
+secret/mismatch/UNKNOWN stops; consumer throw and repeat preserve UNKNOWN effect.
+Classification and Source/permission assertions are designated test-port duties,
+not independently authenticated production facts. Always TEST_PORTS_NOT_AUTHORITY,
+SUPPLIED_BYTES_ONLY, authorization NOT_ESTABLISHED and clearancefalse.
+Application build, combined128/128 tests, architecture17 and format/diff checks
+pass;12 new real-own-temp-file cases included. Independent final review confirms
+map mutation, nested invalidation UNKNOWN, early metadata validation, successful
+cleanup then revoked permission and sticky effects corrections; no remaining
+Critical/Important issue. [Exact scope](../superpowers/specs/2026-11-08-offline-compilation-inspection.md),
+[reproducible tests](../superpowers/plans/2026-11-08-offline-compilation-inspection.md).
+An attempted authority/security/candidate governance record edit was rejected
+before execution and not retried. Original governing files remain unchanged;
+review confirms this private test implementation does not revise production
+policy. No user project scan, production consumption, real model, migration,
+publish, installed update or Native/R9; ordinary capture stays scan-denied.
+Phase1 remains4/21/A6 NOT_QUALIFIED/E02 PROPOSED. CI180 on prior8920714 ended
+TS/Rust success, Native oldR8 catalog failure; not this batch's evidence.
+
 ## Same-invocation offline Claim state composition - 2026-11-08
 
 Private runCapturedIntegrationStateTestDouble owns input/options/control, builds
