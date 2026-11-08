@@ -949,3 +949,83 @@ test('exact revision batch cannot see a revision committed after its SQLite WAL 
     if (db.isOpen) db.close();
   }
 });
+
+import { readFile } from 'node:fs/promises';
+import { prepareSnapshotSchemas } from '../dist/knowledge/snapshot-schema.js';
+async function extendOwnedSchema(db, version) {
+  await prepareSnapshotSchemas();
+  for (let v = 9; v <= version; v++) {
+    db.exec(
+      await readFile(
+        new URL(
+          '../migrations/workspace-proposed/' +
+            (v === 9 ? '009_knowledge.sql' : '010_lifecycle.sql'),
+          import.meta.url,
+        ),
+        'utf8',
+      ),
+    );
+    db.exec('PRAGMA user_version=' + v);
+  }
+}
+test('new schema requires explicit reference preparation before read admission', async (t) => {
+  const { db, store } = setup(t);
+  db.exec(
+    await readFile(
+      new URL('../migrations/workspace-proposed/009_knowledge.sql', import.meta.url),
+      'utf8',
+    ),
+  );
+  db.exec('PRAGMA user_version=9');
+  assert.throws(() => new api.DocumentStore(db, 'ws:one'), { code: 'DOCUMENT_SCHEMA_UNSUPPORTED' });
+  assert.throws(() => store.readCurrent('absent', limits), { code: 'DOCUMENT_SCHEMA_UNSUPPORTED' });
+});
+for (const version of [9, 10]) {
+  test(
+    'exact document schema' + version + ' reads last-good history but refuses all writes',
+    async (t) => {
+      const { db, store } = setup(t);
+      apply(store);
+      const before = image(db);
+      await extendOwnedSchema(db, version);
+      const reader = new api.DocumentStore(db, 'ws:one');
+      db.exec('PRAGMA query_only=ON');
+      assert.equal(reader.readCurrent('doc:one', limits).revisionId, 'rev:one');
+      assert.equal(
+        reader.readRevision('doc:one', 'rev:one', limits, () => {}).revisionId,
+        'rev:one',
+      );
+      assert.equal(reader.readCurrentBatch(['doc:one'], limits, () => {}).length, 1);
+      assert.equal(
+        reader.readRevisionBatch(
+          [{ documentId: 'doc:one', revisionId: 'rev:one' }],
+          limits,
+          () => {},
+        ).length,
+        1,
+      );
+      db.exec('PRAGMA query_only=OFF');
+      assert.throws(() => apply(reader, bundle('rev:two'), 'rev:one'), {
+        code: 'DOCUMENT_SCHEMA_UNSUPPORTED',
+      });
+      assert.deepEqual(image(db), before);
+      assert.throws(() => reader.readCurrent('doc:one', { ...limits, maxRows: 1 }), {
+        code: 'HISTORY_LIMIT_EXCEEDED',
+      });
+      db.exec('PRAGMA foreign_keys=OFF');
+      assert.throws(() => reader.readCurrent('doc:one', limits), {
+        code: 'DOCUMENT_FOREIGN_KEYS_REQUIRED',
+      });
+      db.exec('PRAGMA foreign_keys=ON');
+      db.exec('DROP TRIGGER proposed_knowledge_revisions_no_update');
+      assert.throws(() => reader.readCurrent('doc:one', limits), {
+        code: 'DOCUMENT_SCHEMA_UNSUPPORTED',
+      });
+      assert.equal(db.isTransaction, false);
+      db.exec('PRAGMA user_version=11');
+      assert.throws(() => new api.DocumentStore(db, 'ws:one'), {
+        code: 'DOCUMENT_SCHEMA_UNSUPPORTED',
+      });
+    },
+  );
+}

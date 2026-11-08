@@ -38,6 +38,7 @@ import {
   type HistoryReadLimits,
 } from '../analysis/activation-history-format.js';
 import { runtimeSql, runtimeHash } from './runtime-sql.js';
+import { exactCaptureSchema } from '../knowledge/snapshot-schema.js';
 type Execution = ReturnType<typeof parseWorkspaceExecution>;
 export type WorkspaceRuntimeBatch = {
   expectedOldActivationId: string | null;
@@ -224,6 +225,12 @@ function assertWorkspaceRuntimeSchema(sql: ReturnType<typeof runtimeSql>): void 
   );
   check(sql.read('pragma_foreign_keys', ['foreign_keys'], '1', [])[0]?.foreign_keys === 1);
 }
+// Keep the original writer gate separate from exact new-schema reads.
+function assertWorkspaceRuntimeReadSchema(sql: ReturnType<typeof runtimeSql>): void {
+  const version = sql.read('pragma_user_version', ['user_version'], '1', [])[0]?.user_version;
+  check([6, 7, 8].includes(version as number) || exactCaptureSchema(sql, version));
+  check(sql.read('pragma_foreign_keys', ['foreign_keys'], '1', [])[0]?.foreign_keys === 1);
+}
 function frozenSet(
   db: DatabaseSync,
   workspace: string,
@@ -365,7 +372,7 @@ export class ContractStore {
     const { frozen } = authenticatedFrozen(input, current, b, maxInputBytes);
     db.exec('BEGIN');
     try {
-      assertWorkspaceRuntimeSchema(runtimeSql(db, b));
+      assertWorkspaceRuntimeReadSchema(runtimeSql(db, b));
       const pointer = runtimeSql(db, b).read(
         'workspace_runtime_state',
         ['activation_id'],
@@ -620,7 +627,7 @@ export class ContractStore {
       db = new DatabaseSync(path, { readOnly: true, enableForeignKeyConstraints: true });
     try {
       db.exec('BEGIN');
-      assertWorkspaceRuntimeSchema(runtimeSql(db, b));
+      assertWorkspaceRuntimeReadSchema(runtimeSql(db, b));
       const rows = runtimeSql(db, b).read(
         'workspace_runtime_activations',
         ['id'],
@@ -665,7 +672,7 @@ export class ContractStore {
     let stored: ReturnType<typeof readWorkspaceActivation> | null = null;
     try {
       const sql = runtimeSql(db, b);
-      assertWorkspaceRuntimeSchema(sql);
+      assertWorkspaceRuntimeReadSchema(sql);
       const state = sql.read('workspace_runtime_state', ['activation_id'], 'workspace_id=?', [
         workspace,
       ]);
@@ -950,7 +957,10 @@ function compilationSelection(
   revisionSetId: string,
 ): WorkspaceCompilationSelection {
   const version = sql.read('pragma_user_version', ['user_version'], '1', [])[0]?.user_version;
-  check(version === 6 || version === 7 || version === 8, 'WORKSPACE_SCHEMA_UNSUPPORTED');
+  check(
+    version === 6 || version === 7 || version === 8 || exactCaptureSchema(sql, version),
+    'WORKSPACE_SCHEMA_UNSUPPORTED',
+  );
   check(
     sql.read('pragma_foreign_keys', ['foreign_keys'], '1', [])[0]?.foreign_keys === 1,
     'WORKSPACE_FOREIGN_KEYS_REQUIRED',

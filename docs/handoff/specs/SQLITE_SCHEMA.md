@@ -1,3 +1,13 @@
+## Approved bounded reader compatibility - 2026-11-08
+
+Existing DocumentStore and ContractStore may read exact prepared W009/W010
+reference schemas under caller budgets and original FK/read snapshot and payload
+validation. This does not authorize their writers on9/10: document writes remain
+7/8, workspace writes6/7/8. Preparation is private reference construction, never
+a migration of the borrowed database; absent preparation fails closed. No version
+range admission, schema repair, manifest/checksum change or user migration.
+See [exact scope and evidence](../../superpowers/specs/2026-11-08-production-readonly-schema-compatibility.md).
+
 ## B5同批binding引用实施核验 — 2026-10-31
 
 无schema/迁移改动。正式Graph的FRAMEWORK_BINDING边界引用指向同一Runtime activation中已严格验证并按payload/digest持久化的runtime_bindings记录；Runtime写入/历史读取均验证repo/revision/id闭包。Code/Source/Syntax external支持仍来自当前权威事实/历史支持归档；不得为了binding引用生成虚假Source SupportRef。Workspace新增只读准备复用既有冻结集、完整候选、根与指针认证，最终写锁内重核保持。

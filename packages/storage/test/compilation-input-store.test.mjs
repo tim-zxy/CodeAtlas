@@ -376,11 +376,13 @@ for (const version of [9, 10])
   test(
     'private exact prefix' +
       version +
-      ' rejects changed guards while production readers remain closed',
+      ' rejects changed guards while production writers remain closed',
     async (t) => {
       const f = await fixture(t, version);
       await f.open();
-      assert.throws(() => new DocumentStore(f.db, 'ws:one'), {
+      const reader = new DocumentStore(f.db, 'ws:one');
+      assert.equal(reader.readCurrent('doc:absent', limits), null);
+      assert.throws(() => reader.applyDocuments({}, limits, check), {
         code: 'DOCUMENT_SCHEMA_UNSUPPORTED',
       });
       f.db.exec('DROP TRIGGER proposed_knowledge_revisions_no_update');

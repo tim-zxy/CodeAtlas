@@ -9,6 +9,7 @@ import {
   type HistoryReadLimits,
 } from '../analysis/activation-history-format.js';
 import { runtimeSql } from '../runtime/runtime-sql.js';
+import { captureSchemaPrepared, exactCaptureSchema } from '../knowledge/snapshot-schema.js';
 
 type Bundle = ReturnType<typeof parseDocumentBundle>;
 export interface DocumentBatch {
@@ -35,6 +36,18 @@ function check(value: unknown, code: string): asserts value {
 function assertDocumentSchema(sql: ReturnType<typeof runtimeSql>): void {
   const version = sql.read('pragma_user_version', ['user_version'], '1', [])[0]?.user_version;
   check(version === 7 || version === 8, 'DOCUMENT_SCHEMA_UNSUPPORTED');
+  check(
+    sql.read('pragma_foreign_keys', ['foreign_keys'], '1', [])[0]?.foreign_keys === 1,
+    'DOCUMENT_FOREIGN_KEYS_REQUIRED',
+  );
+}
+// Read compatibility only; the original writer guard remains unchanged.
+function assertDocumentReadSchema(sql: ReturnType<typeof runtimeSql>): void {
+  const version = sql.read('pragma_user_version', ['user_version'], '1', [])[0]?.user_version;
+  check(
+    version === 7 || version === 8 || exactCaptureSchema(sql, version),
+    'DOCUMENT_SCHEMA_UNSUPPORTED',
+  );
   check(
     sql.read('pragma_foreign_keys', ['foreign_keys'], '1', [])[0]?.foreign_keys === 1,
     'DOCUMENT_FOREIGN_KEYS_REQUIRED',
@@ -135,7 +148,10 @@ export class DocumentStore {
       'INVALID_DOCUMENT_DATABASE',
     );
     const schemaVersion = db.prepare('PRAGMA user_version').get()?.user_version;
-    check(schemaVersion === 7 || schemaVersion === 8, 'DOCUMENT_SCHEMA_UNSUPPORTED');
+    check(
+      schemaVersion === 7 || schemaVersion === 8 || captureSchemaPrepared(schemaVersion),
+      'DOCUMENT_SCHEMA_UNSUPPORTED',
+    );
     check(
       db.prepare('PRAGMA foreign_keys').get()?.foreign_keys === 1,
       'DOCUMENT_FOREIGN_KEYS_REQUIRED',
@@ -501,7 +517,10 @@ export class DocumentStore {
       },
     };
     const version = sql.read('pragma_user_version', ['user_version'], '1', [])[0]?.user_version;
-    check(version === 7 || version === 8, 'DOCUMENT_SCHEMA_UNSUPPORTED');
+    check(
+      version === 7 || version === 8 || captureSchemaPrepared(version),
+      'DOCUMENT_SCHEMA_UNSUPPORTED',
+    );
     check(
       sql.read('pragma_foreign_keys', ['foreign_keys'], '1', [])[0]?.foreign_keys === 1,
       'DOCUMENT_FOREIGN_KEYS_REQUIRED',
@@ -509,7 +528,7 @@ export class DocumentStore {
     check(!db.isTransaction, 'DOCUMENT_TRANSACTION_ACTIVE');
     db.exec('BEGIN');
     try {
-      assertDocumentSchema(sql);
+      assertDocumentReadSchema(sql);
       const result = read(sql, b, recheck);
       recheck();
       db.exec('COMMIT');

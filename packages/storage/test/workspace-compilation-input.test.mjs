@@ -658,3 +658,35 @@ test('private workspace declarations preserve IR named types without undeclared 
   );
   assert.doesNotMatch(declaration, /import\(['"]zod['"]\)/);
 });
+
+import { readFile } from 'node:fs/promises';
+import { prepareSnapshotSchemas } from '../dist/knowledge/snapshot-schema.js';
+for (const version of [9, 10])
+  test(
+    'exact workspace schema' + version + ' retains full compilation capture validation',
+    async (t) => {
+      const f = await setup(t);
+      await prepareSnapshotSchemas();
+      for (let v = 9; v <= version; v++) {
+        f.db.exec(
+          await readFile(
+            new URL(
+              '../migrations/workspace-proposed/' +
+                (v === 9 ? '009_knowledge.sql' : '010_lifecycle.sql'),
+              import.meta.url,
+            ),
+            'utf8',
+          ),
+        );
+        f.db.exec('PRAGMA user_version=' + v);
+      }
+      f.db.exec('PRAGMA query_only=ON');
+      const got = capture(f);
+      assert.equal(got.view.documents[0].revisionId, 'rev:one');
+      api.recheckWorkspaceCompilationInputs(f.store, got.handle, [], budget(), control);
+      api.releaseWorkspaceCompilationInputs(f.store, got.handle);
+      f.db.exec('PRAGMA query_only=OFF; DROP TRIGGER proposed_knowledge_revisions_no_update');
+      assert.throws(() => capture(f));
+      assert.equal(f.db.isTransaction, false);
+    },
+  );

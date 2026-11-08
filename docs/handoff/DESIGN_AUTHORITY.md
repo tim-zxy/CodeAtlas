@@ -1,3 +1,13 @@
+## Approved production reader-only compatibility - 2026-11-08
+
+User approved code-only DocumentStore/ContractStore reads of fully validated9/10
+schemas, with self-owned database verification and unchanged writer gates.
+[Exact compatible implementation scope](../superpowers/specs/2026-11-08-production-readonly-schema-compatibility.md).
+This is distinct from the prior rejected shared read/write gate expansion;
+no retry of that patch, production manifest/DDL change, user migration, publication
+or new authority. Historical reader-compatibility OPEN notes describe the prior
+state. Production migration/backup/publication/W011 obligations remain OPEN.
+
 ## Approved private capture and exact Markdown adoption - 2026-11-07
 
 User approved bounded capture scope/revision binding, authorized fact/support reads,

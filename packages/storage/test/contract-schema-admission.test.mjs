@@ -234,3 +234,56 @@ for (const format of [1, 2])
     assert.equal(f.db.isTransaction, false);
     assert.deepEqual(image(f.db), before);
   });
+
+import { readFile } from 'node:fs/promises';
+import { prepareSnapshotSchemas } from '../dist/knowledge/snapshot-schema.js';
+for (const version of [9, 10])
+  for (const format of [1, 2])
+    test(
+      'exact workspace schema' + version + ' format' + format + ' admits reads only',
+      async (t) => {
+        const f = await fixture(t, 8, format),
+          before = image(f.db);
+        await prepareSnapshotSchemas();
+        for (let v = 9; v <= version; v++) {
+          f.db.exec(
+            await readFile(
+              new URL(
+                '../migrations/workspace-proposed/' +
+                  (v === 9 ? '009_knowledge.sql' : '010_lifecycle.sql'),
+                import.meta.url,
+              ),
+              'utf8',
+            ),
+          );
+          f.db.exec('PRAGMA user_version=' + v);
+        }
+        f.db.exec('PRAGMA query_only=ON');
+        assert.equal(f.trace().status, 'CURRENT');
+        assert.equal(f.read().expectedOldActivationId, f.committed.activationId);
+        assert.equal(f.store.inspectOutcome(historyLimits).status, 'COMMITTED');
+        f.db.exec('PRAGMA query_only=OFF');
+        assert.throws(() => f.trace({ ...historyLimits, maxRows: 1 }), {
+          code: 'HISTORY_LIMIT_EXCEEDED',
+        });
+        f.db.exec('PRAGMA foreign_keys=OFF');
+        assert.throws(() => f.trace(), invalid);
+        const triggerSql = f.db
+          .prepare(
+            "SELECT sql FROM sqlite_schema WHERE name='proposed_knowledge_revisions_no_update'",
+          )
+          .get().sql;
+        f.db.exec('PRAGMA foreign_keys=ON; DROP TRIGGER proposed_knowledge_revisions_no_update');
+        assert.throws(() => f.trace(), invalid);
+        assert.throws(() => f.read(), invalid);
+        assert.throws(() => f.store.inspectOutcome(historyLimits), invalid);
+        f.db.exec(triggerSql);
+        assert.equal(f.trace().status, 'CURRENT'); // Exact intact schema before writer refusal.
+        assert.throws(
+          () => f.apply({ ...f.batch, expectedOldActivationId: f.committed.activationId }),
+          invalid,
+        );
+        assert.deepEqual(image(f.db), before);
+        assert.equal(f.db.isTransaction, false);
+      },
+    );

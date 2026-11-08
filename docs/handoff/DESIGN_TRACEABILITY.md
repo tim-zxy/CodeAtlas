@@ -1,3 +1,13 @@
+## Approved exact W009/W010 reader-only compatibility - 2026-11-08
+
+P1-10/12/14 existing Document/Workspace capture readers -> prepared pinned exact
+9/10 schema -> original budgeted read snapshots and row/IR/support validation.
+Original Document7/8 and workspace6/7/8 write guards and manifest8 stay intact.
+Self-owned last-good document/Runtime tests cover query-only current/history/batch,
+trace/recovery/capture, malformed guards, FK-off, budgets and rejected writes.
+No production migration, user data or publication. Exact scope and rollback:
+[reader-only compatibility](../superpowers/specs/2026-11-08-production-readonly-schema-compatibility.md).
+
 ## P1-12/14 bounded owned snapshot persistence - 2026-11-08
 
 The approved temporary-store slice maps the existing capture contract to private

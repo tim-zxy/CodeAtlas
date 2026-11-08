@@ -1,3 +1,29 @@
+## Approved production reader-only W009/W010 compatibility - 2026-11-08
+
+User explicitly approved read-only compatibility separately from the prior denied
+shared read/write gate expansion. Existing DocumentStore and ContractStore read
+paths now recognize only exact prepared9/10 schema shape, under the original
+budget, FK and SQLite read snapshots. Explicit private prepareSnapshotSchemas
+remains required; cold/unknown or changed schema refuses. Document apply7/8 and
+workspace apply6/7/8 guards are unchanged. Current/history/batch document reads,
+workspace preparation/trace/fresh-connection recovery and compilation capture
+retain their existing row/IR/support/scope/lifetime validation. No reader mutates
+or migrates the database; tests also run positives with query_only=ON.
+Storage build passed; seven-suite owned-SQLite batch118/118 passed, no skips,
+including9 new cases. Initial8/8 RED established the missing compatibility; a
+missed recovery read gate was corrected. An intermediate114/118 result exposed
+a test-order error: rejected apply legitimately clears its attempted settlement,
+so corrupt recovery is now checked before that rejected write. No recovery
+semantics were changed. Architecture17 and diff checks pass. Independent read-only review found no
+Critical/Important production issue; its intact-schema write-refusal test coverage
+note was addressed and the associated admission suite reverified.
+[Exact approved scope](../superpowers/specs/2026-11-08-production-readonly-schema-compatibility.md),
+[plan and reproducible commands](../superpowers/plans/2026-11-08-production-readonly-schema-compatibility.md).
+Production migration manifest stays8; no user database, publication, installed
+update, real model/scan, Native build or R9. Phase1 remains4/21, A6 NOT_QUALIFIED,
+E02 PROPOSED/uninstalled. CI176 for prior5d5f438 ended TS/Rust success and oldR8
+catalog prerequisite failure; that result does not verify this new batch.
+
 ## W009/W010 private owned snapshot persistence - 2026-11-08
 
 Implemented private createRun/putSnapshot/readSnapshot/inspectCommit over owned
