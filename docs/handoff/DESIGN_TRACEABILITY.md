@@ -1,3 +1,12 @@
+## Existing approved offline modules compose through persisted snapshots - 2026-11-08
+
+P1-12 inspection -> approved temporary P1-14 Store -> reopen/support verification
+-> same-invocation TEST_DOUBLE -> conservative P1-13 plan. The registered
+offline-reviewed-snapshot fixture tests one complete self-owned path and two
+actual commit/cleanup faults; capture-only persisted state and no publication
+are explicit. Existing module contracts, Source/authority limitations and governing
+files are unchanged; this is integration evidence, not a new production workflow.
+
 ## Approved offline original inspection experiment - 2026-11-08
 
 Existing Source/capture/limited detector rules map to a private TEST_PORTS owner:

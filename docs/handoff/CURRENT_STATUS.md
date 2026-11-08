@@ -1,3 +1,26 @@
+## Complete self-owned inspection/persistence/review slice - 2026-11-08
+
+New mandatory offline-reviewed-snapshot test connects real owned temporary
+original reads -> offline inspection -> fixed owned W010 putSnapshot consumer ->
+real SQLite close/reopen -> actual TEST_DOUBLE Claim/Integration -> existing
+Knowledge plan. Full canonical payload digest (not just inputDigest), exact
+SQL support tuple/digests/payload and original control/shared account are checked.
+The run stays CAPTURING with null finish; knowledge/publication tables stay empty.
+NEW is a plan intent with null retained ID, not a published/allocated identity.
+Real snapshot-COMMIT lost acknowledgement and postcommit cleanup uncertainty
+prove durable commit independently of consumer UNKNOWN. Both stop all generation
+and repeat put; read-only inspectCommit may prove COMMITTED but never resumes.
+Three new tests included in the integrated93/93,0fail/skip; format/diff checks pass.
+Independent read-only review found no Critical/Important issue. Strengthened SQL
+payload assertion first failed because expected raw value rather than stored
+CapturedSupport envelope; corrected to compare the full actual contract.
+No product source/API/dependency/schema/authority change, so previous unchanged
+build/architecture evidence reused instead of rerunning. No user data/production
+scan or consumption/model/migration/publication/Native/R9. TEST_PORTS and
+NOT_VERIFIED/NOT_EVALUABLE remain. Phase1 stays4/21, A6 NOT_QUALIFIED, E02 PROPOSED.
+[Exact command and scope](../superpowers/plans/2026-11-08-offline-compilation-inspection.md).
+No retry or workaround of rejected governance edits; controlling files untouched.
+
 ## Offline pre-read inventory to same-payload test consumption - 2026-11-08
 
 Private Application one-shot create/runOfflineCompilationInspection now fixes a

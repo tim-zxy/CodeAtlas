@@ -30,3 +30,22 @@ settlement. Independent findings fixed with map/bytes mutation, invalidation
 UNKNOWN, malformed metadata and true post-settle revocation regressions. Final
 associated review no Critical/Important. Architecture17, named Prettier and
 `git diff --check` pass. No production policy or governing document change.
+
+## Complete persisted review slice
+
+Added only packages/storage/test/offline-reviewed-snapshot.test.mjs plus mandatory
+registration and evidence records. Reuses the approved owned snapshot Store with
+real temporary schema9/10 SQLite, actual raw tempfile inspection and actual local
+double invocation; no new product wrapper. Happy path closes/reopens and checks
+full payload hash, exact support SQL rows, CAPTURING/nullfinish and zero Knowledge/
+publication rows. Lost real snapshot COMMIT ack and acknowledged commit followed
+by cleanupUNKNOWN both retain commit separately, stop generation and prohibit
+repeat puts/automatic continuation. Shared original control spans the whole slice.
+
+`node --test --test-concurrency=1 packages/storage/test/offline-reviewed-snapshot.test.mjs packages/storage/test/compilation-input-store.test.mjs packages/application/test/offline-compilation-inspection.test.mjs packages/application/test/integration-state-test-double.test.mjs packages/knowledge/test/identity.test.mjs packages/knowledge/test/reconciliation.test.mjs scripts/test-workspace-structure.mjs`
+
+93/93,0fail/skip. New3 included; independent review no Critical/Important.
+Strengthened support SQL expectation corrected from raw value to full stored
+CapturedSupport envelope after2pass/1failure; final new3 and merged93 passed.
+No product source change, new build, permission/schema/admission/authority or
+formal acceptance change. Existing unchanged build/architecture evidence reused.
