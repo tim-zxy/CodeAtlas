@@ -1,3 +1,4 @@
+import { randomUUID } from 'node:crypto';
 import {
   RuntimeDerivationV2Schema,
   runtimeCandidateDigestV2,
@@ -25,6 +26,7 @@ import {
   type SupportRef,
   type ScopedRef,
   RepoBasisSchema,
+  ensurePhase1Data,
   SupportRefSchema,
   Phase1CoverageSchema,
   RepositoryRuntimeBindingSchema,
@@ -1308,4 +1310,208 @@ export function repositoryCompilationWorkspaceSnapshot(
   handle: object,
 ): RuntimeWorkspaceSnapshot | null {
   return compilationOwner(store, handle).captured!.workspace;
+}
+
+/** Private descriptive full-current-file metadata, not Source/read authority or
+ * selected-support completeness. Never materializes Code/Syntax/history bodies. */
+export function readRepositorySourceFileMetadata(
+  store: RuntimeFactStore,
+  request: {
+    kind: 'FULL_CURRENT_REVISION';
+    basis: Pick<RepoBasis, 'repositoryId' | 'revisionId' | 'contentFingerprint'>;
+  },
+  budget: HistoryReadBudget,
+  syncCheck: () => undefined,
+) {
+  compilationCheck(store && !types.isProxy(store));
+  const owner = connections.get(store);
+  compilationCheck(owner && owner.db.isOpen && !owner.db.isTransaction);
+  compilationCheck(budget instanceof HistoryReadBudget && !types.isProxy(budget));
+  compilationBudget(budget, () => undefined).own(request);
+  ensurePhase1Data(request);
+  const input = exact(request, ['kind', 'basis']);
+  compilationCheck(input.kind === 'FULL_CURRENT_REVISION');
+  const basis = RepoBasisSchema.omit({ codeActivationDigest: true }).parse(input.basis);
+  compilationCheck(basis.repositoryId === owner.repo);
+  const { db, repo } = owner;
+  const marker = db.prepare('SELECT 1 WHERE 0');
+  const alive = () => {
+    compilationCheck(connections.get(store) === owner && db.isOpen);
+    try {
+      marker.setReadBigInts(false);
+    } catch {
+      throw new HistoryCaptureError('CONTEXT_UNAVAILABLE');
+    }
+  };
+  const token = 'metadata_' + randomUUID().replaceAll('-', '');
+  const exec = (sql: string) => DatabaseSync.prototype.exec.call(db, sql);
+  let active = false;
+  const checkpoint = () => {
+    alive();
+    if (active) compilationCheck(db.isTransaction);
+    compilationControl(syncCheck);
+    alive();
+    if (active) {
+      compilationCheck(db.isTransaction);
+      exec('RELEASE ' + token);
+      exec('SAVEPOINT ' + token);
+    }
+    return undefined;
+  };
+  const guardedBudget = compilationBudget(budget, checkpoint);
+  const base = runtimeSql(db, guardedBudget);
+  const sql = {
+    ...base,
+    read(...args: Parameters<typeof base.read>) {
+      checkpoint();
+      const rows = base.read(...args);
+      checkpoint();
+      return rows;
+    },
+  };
+  checkpoint();
+  compilationCheck(!db.isTransaction);
+  exec('BEGIN');
+  let initialized = false;
+  try {
+    exec('SAVEPOINT ' + token);
+    active = true;
+    initialized = true;
+    assertRuntimeSchema(sql);
+    compilationCheck(
+      sql.read('pragma_foreign_keys', ['foreign_keys'], '1', [])[0]?.foreign_keys === 1,
+    );
+    for (const [table, columns] of [
+      ['repository', ['slot', 'id', 'root_path']],
+      ['repository_state', ['repository_id', 'indexed_revision_id', 'indexed_content_fingerprint']],
+      [
+        'revisions',
+        [
+          'id',
+          'repository_id',
+          'kind',
+          'content_fingerprint',
+          'commit_identity',
+          'base_revision_id',
+          'source_revision_id',
+        ],
+      ],
+      [
+        'source_files',
+        [
+          'revision_id',
+          'id',
+          'repository_id',
+          'path',
+          'content_fingerprint',
+          'role',
+          'provenance',
+          'content_kind',
+          'language_hint',
+          'sensitivity',
+        ],
+      ],
+    ] as const) {
+      const placeholders = columns.map(() => '?').join(',');
+      compilationCheck(
+        sql.read(
+          'sqlite_schema',
+          ['name'],
+          "type='table' AND name=? AND (SELECT count(*) FROM pragma_table_info(?))=? AND (SELECT count(*) FROM pragma_table_info(?) WHERE name IN (" +
+            placeholders +
+            '))=?',
+          [table, table, columns.length, table, ...columns, columns.length],
+        ).length === 1,
+      );
+    }
+    const repositories = sql.read('repository', ['id', 'root_path'], 'slot=1', []);
+    compilationCheck(repositories.length === 1 && repositories[0]!.id === repo);
+    const states = sql.read(
+      'repository_state',
+      ['indexed_revision_id', 'indexed_content_fingerprint'],
+      'repository_id=?',
+      [repo],
+    );
+    compilationCheck(
+      states.length === 1 &&
+        states[0]!.indexed_revision_id === basis.revisionId &&
+        states[0]!.indexed_content_fingerprint === basis.contentFingerprint,
+    );
+    const revisions = sql.read(
+      'revisions',
+      ['id', 'repository_id', 'content_fingerprint'],
+      'id=? AND repository_id=?',
+      [basis.revisionId, repo],
+    );
+    compilationCheck(
+      revisions.length === 1 && revisions[0]!.content_fingerprint === basis.contentFingerprint,
+    );
+    const rows = sql.read(
+      'source_files',
+      [
+        'id',
+        'repository_id',
+        'revision_id',
+        'path',
+        'content_fingerprint',
+        'role',
+        'provenance',
+        'content_kind',
+        'language_hint',
+        'sensitivity',
+      ],
+      'repository_id=? AND revision_id=?',
+      [repo, basis.revisionId],
+    );
+    const sourceFiles = rows.map((r) => {
+      checkpoint();
+      return SourceFileSchema.parse({
+        id: r.id,
+        repositoryId: r.repository_id,
+        revisionId: r.revision_id,
+        path: r.path,
+        contentFingerprint: r.content_fingerprint,
+        classification: { role: r.role, provenance: r.provenance, contentKind: r.content_kind },
+        languageHint: r.language_hint,
+        sensitivity: r.sensitivity,
+      });
+    });
+    guardedBudget.own(sourceFiles);
+    sourceFiles.sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
+    compilationCheck(
+      new Set(sourceFiles.map((f) => f.id)).size === sourceFiles.length &&
+        new Set(sourceFiles.map((f) => f.path)).size === sourceFiles.length,
+    );
+    const result = {
+      kind: 'FULL_CURRENT_REVISION' as const,
+      basis,
+      rootPath: text(repositories[0]!.root_path),
+      sourceFiles,
+      authorization: 'NOT_ESTABLISHED' as const,
+      supportClosure: 'NOT_ESTABLISHED' as const,
+      sourceFreshness: 'NOT_OBSERVED' as const,
+    };
+    guardedBudget.own(result);
+    checkpoint();
+    compilationCheck(db.isTransaction);
+    const frozen = compilationFreeze(result);
+    checkpoint();
+    exec('RELEASE ' + token);
+    active = false;
+    exec('COMMIT');
+    alive();
+    return frozen;
+  } catch (error) {
+    try {
+      alive();
+      compilationCheck(db.isTransaction);
+      if (initialized) exec('ROLLBACK TO ' + token);
+      exec('ROLLBACK');
+    } catch {
+      throw Object.assign(new HistoryCaptureError('CONTEXT_UNAVAILABLE'), {
+        cleanupState: 'UNKNOWN',
+      });
+    }
+    throw error;
+  }
 }
