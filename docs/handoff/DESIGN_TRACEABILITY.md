@@ -1,3 +1,14 @@
+## Owned search first-page component - 2026-11-09
+
+Existing P1-15/17/18 and knowledge-and-consumption sections7/9 map to restricted
+Store search evidence/type projection, FTS5 searchPage, Application searchOwnedKnowledge,
+Agent knowledge-search-contract/tool and the separate owned search MCP factory.
+[Approved exact contract](../superpowers/specs/2026-11-09-owned-knowledge-search.md);
+[87-test/build/review evidence and failures](../superpowers/plans/2026-11-09-owned-knowledge-search.md).
+No complete tool-suite or formal parent closure: only fixed-workspace phrase/typed
+first page, no graph/cursor/production data, no Chinese quality claim. Old BUSINESS
+factory/shell and original phase gates remain;4/21,A6 NOT_QUALIFIED,E02 PROPOSED.
+
 ## Approved SDK 1.32.2 owned BUSINESS stdio - 2026-11-09
 
 Existing P1-18/AGENT_API/knowledge-and-consumption section9 maps the approved

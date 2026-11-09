@@ -11,6 +11,11 @@ import {
   McpError,
 } from '@modelcontextprotocol/sdk/types.js';
 import {
+  knowledgeSearchWireSchemas,
+  knowledgeSearchResponseSchema,
+  knowledgeSearchFailure,
+  serializeKnowledgeSearchResponse,
+  type createOwnedKnowledgeSearchSession,
   businessTraceWireSchemas,
   businessTraceResponseSchema,
   businessTraceFailure,
@@ -18,6 +23,7 @@ import {
   type createOwnedBusinessTraceSession,
 } from '@codeatlas/agent-api';
 
+type SearchSession = ReturnType<typeof createOwnedKnowledgeSearchSession>;
 type Session = ReturnType<typeof createOwnedBusinessTraceSession>;
 export interface OwnedBusinessStdioLimits {
   maxMessageBytes: number;
@@ -42,6 +48,23 @@ export function createOwnedBusinessTraceMcpServer(
   options: { session: Session; limits: OwnedBusinessStdioLimits },
   streams: { input: Readable; output: Writable },
 ) {
+  return createOwnedQueryMcpServer(options, streams, 'trace_flow');
+}
+export function createOwnedKnowledgeSearchMcpServer(
+  options: { session: SearchSession; limits: OwnedBusinessStdioLimits },
+  streams: { input: Readable; output: Writable },
+) {
+  return createOwnedQueryMcpServer(options, streams, 'search_knowledge');
+}
+function createOwnedQueryMcpServer(
+  options: { session: Session | SearchSession; limits: OwnedBusinessStdioLimits },
+  streams: { input: Readable; output: Writable },
+  tool: 'trace_flow' | 'search_knowledge',
+) {
+  const isSearch = tool === 'search_knowledge';
+  const failure = isSearch ? knowledgeSearchFailure : businessTraceFailure;
+  const responseSchema = isSearch ? knowledgeSearchResponseSchema : businessTraceResponseSchema;
+  const serialize = isSearch ? serializeKnowledgeSearchResponse : serializeBusinessTraceResponse;
   const o = record(options, ['session', 'limits']);
   const s = record(o.session!.value, ['context', 'descriptor', 'execute', 'close']);
   if (
@@ -70,11 +93,11 @@ export function createOwnedBusinessTraceMcpServer(
   const limits = Object.freeze(
     Object.fromEntries(Object.entries(l).map(([k, v]) => [k, v.value])),
   ) as unknown as OwnedBusinessStdioLimits;
-  const execute = s.execute!.value.bind(o.session!.value) as Session['execute'];
+  const execute = s.execute!.value.bind(o.session!.value) as (Session | SearchSession)['execute'];
   const invalidate = s.close!.value.bind(o.session!.value) as Session['close'];
   const context: unknown = s.context!.value;
   const server = new Server(
-    { name: 'codeatlas-owned-business', version: '1' },
+    { name: isSearch ? 'codeatlas-owned-search' : 'codeatlas-owned-business', version: '1' },
     { capabilities: { tools: {} } },
   );
   const transport = new StdioServerTransport(streams.input, streams.output, {
@@ -181,12 +204,16 @@ export function createOwnedBusinessTraceMcpServer(
       pending.delete(sending);
     }
   };
-  const { input: inputSchema, output: outputSchema } = businessTraceWireSchemas();
+  const { input: inputSchema, output: outputSchema } = isSearch
+    ? knowledgeSearchWireSchemas()
+    : businessTraceWireSchemas();
   server.setRequestHandler(ListToolsRequestSchema, async () => ({
     tools: [
       {
-        name: 'trace_flow',
-        description: 'Self-owned BUSINESS trace only; production access unavailable.',
+        name: tool,
+        description: isSearch
+          ? 'Self-owned lexical phrase first page only; no graph or production access.'
+          : 'Self-owned BUSINESS trace only; production access unavailable.',
         inputSchema,
         outputSchema,
         annotations: { readOnlyHint: true, destructiveHint: false, openWorldHint: false },
@@ -194,7 +221,7 @@ export function createOwnedBusinessTraceMcpServer(
     ],
   }));
   server.setRequestHandler(CallToolRequestSchema, (request, extra) => {
-    if (request.params.name !== 'trace_flow')
+    if (request.params.name !== tool)
       throw new McpError(ErrorCode.MethodNotFound, 'Tool unavailable.');
     const control = Object.freeze({
       signal: AbortSignal.any([extra.signal, shutdown.signal]),
@@ -205,35 +232,32 @@ export function createOwnedBusinessTraceMcpServer(
     if (!Number.isSafeInteger(control.deadlineEpochMs))
       throw new McpError(ErrorCode.InvalidRequest, 'Invalid request deadline.');
     const reply = (body: unknown) => {
-      const value = businessTraceResponseSchema.parse(body);
+      const value = responseSchema.parse(body);
       return {
         content: [
           {
             type: 'text' as const,
-            text:
-              'error' in value
-                ? JSON.stringify(value)
-                : serializeBusinessTraceResponse(value, control),
+            text: 'error' in value ? JSON.stringify(value) : serialize(value, control),
           },
         ],
         structuredContent: value,
         isError: 'error' in value,
       };
     };
-    if (closing) return reply(businessTraceFailure('CONTEXT_UNAVAILABLE'));
-    if (active >= limits.maxConcurrentCalls) return reply(businessTraceFailure('BUDGET_EXCEEDED'));
+    if (closing) return reply(failure('CONTEXT_UNAVAILABLE'));
+    if (active >= limits.maxConcurrentCalls) return reply(failure('BUDGET_EXCEEDED'));
     active++;
     const task = (async () => {
       let value;
       try {
         value = await execute(request.params.arguments, context, control);
       } catch {
-        value = businessTraceFailure('PROVIDER_UNAVAILABLE');
+        value = failure('PROVIDER_UNAVAILABLE');
       }
       // Cancellation and close must not turn a late result into a successful delivery.
-      if (closing) value = businessTraceFailure('CONTEXT_UNAVAILABLE');
-      else if (extra.signal.aborted) value = businessTraceFailure('CANCELLED');
-      else if (Date.now() >= control.deadlineEpochMs) value = businessTraceFailure('DEADLINE');
+      if (closing) value = failure('CONTEXT_UNAVAILABLE');
+      else if (extra.signal.aborted) value = failure('CANCELLED');
+      else if (Date.now() >= control.deadlineEpochMs) value = failure('DEADLINE');
       return reply(value);
     })();
     pending.add(task);

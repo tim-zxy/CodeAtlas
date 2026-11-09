@@ -57,3 +57,5 @@ export { deriveWorkspaceRuntimeV3 } from './derive-workspace-runtime.js';
 export type { WorkspacePreparationInputsV2 } from './derive-workspace-runtime.js';
 
 export { OfflineBusinessFlowTracer } from './offline-business-trace.js';
+
+export { searchOwnedKnowledge } from './offline-knowledge-search.js';

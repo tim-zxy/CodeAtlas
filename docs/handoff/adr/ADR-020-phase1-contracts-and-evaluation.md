@@ -1,3 +1,13 @@
+## Approved owned search_knowledge v1 slice - 2026-11-09
+
+User approved the [fixed-workspace phrase/type-filter first-page contract](../../superpowers/specs/2026-11-09-owned-knowledge-search.md)
+and self-owned implementation/validation. Explicit version/mode, precise published
+refs/evidence, all-or-refuse field permission, full response budgets, null empty/mixed
+aggregates and no graph/cursor are implementation boundaries, not relaxed final
+P1-15/17/18 gates. No Canonical IR/migration/dependency or production authority
+change.Final scoped evidence is87/87 and17 architecture
+projects; see the linked plan for reproducible commands and retained failures.
+
 ## Approved SDK 1.32.2 owned BUSINESS stdio - 2026-11-09
 
 User's conditional SDK approval is satisfied by independent origin/closure/license

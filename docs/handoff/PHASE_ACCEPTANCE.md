@@ -1,3 +1,10 @@
+## Owned search component evidence - 2026-11-09
+
+The approved first-page phrase/type search has87/87 related tests,5 builds and
+architecture17 plus independent associated review. This is self-owned data evidence
+only. Graph/pagination/full six tools, production query/quality and actual Native
+qualification remain open; Phase1 count stays4/21. [Exact scope and failures](../superpowers/plans/2026-11-09-owned-knowledge-search.md).
+
 ## Approved SDK 1.32.2 owned BUSINESS stdio - 2026-11-09
 
 The conditionally approved dependency and owned host stdio component have fresh

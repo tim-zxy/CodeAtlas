@@ -3,6 +3,9 @@ import { randomUUID } from 'node:crypto';
 import { types } from 'node:util';
 import {
   KnowledgeScopeSchema,
+  Phase1KnowledgeTypeSchema,
+  type SupportRef,
+  type ScopedRef,
   EntityIdSchema,
   KnowledgeRevisionSchema,
   parseKnowledgeItem,
@@ -87,7 +90,25 @@ export type OfflineSearchManifest = {
   fields: readonly string[];
   evidenceKind: 'TEST_SEARCH_PERMISSIONS_NOT_AUTHORITY';
 };
+export type OfflineSearchEvidence = {
+  supportScopeRefs: ScopedRef[];
+  coverage: {
+    status: 'COMPLETE' | 'PARTIAL' | 'UNSUPPORTED';
+    limitations: string[];
+    unverifiedRefs: ScopedRef[];
+  };
+  supportRefs: SupportRef[];
+  provenance: {
+    attemptId: string;
+    runId: string;
+    snapshotId: string;
+    revisionSetId: string;
+    evaluationId: string;
+  };
+};
 export type OfflineSearchRecord = {
+  type: 'COMPONENT' | 'CAPABILITY' | 'RUNTIME_FLOW_REFERENCE' | 'BUSINESS_FLOW' | 'INTEGRATION';
+  evidence?: OfflineSearchEvidence;
   itemId: string;
   revisionId: string;
   scopeJson: string;
@@ -341,6 +362,7 @@ export class OfflinePublicationStore {
     limits: HistoryReadLimits,
     control: RuntimeRequestControl,
     metadataOnly = false,
+    withEvidence = false,
   ): OfflineSearchProjection {
     const c = ownControl(control),
       ownedLimits = checkedHistoryLimits(JSON.parse(canonicalCompilationJson(limits, c)));
@@ -374,6 +396,8 @@ export class OfflinePublicationStore {
       const heads = readHeads(),
         fields = Object.freeze([
           'ITEM_SCOPE',
+          'ITEM_TYPE',
+          ...(withEvidence ? ['COVERAGE', 'SUPPORT_METADATA'] : []),
           'SOURCE_FRESHNESS',
           'COMPILATION_CURRENCY',
           'TITLE',
@@ -418,6 +442,7 @@ export class OfflinePublicationStore {
         const expr: Record<string, string> = {
           item_id: 'h.item_id',
           revision_id: 'h.revision_id',
+          item_type: "json_extract(r.payload_json,'$.itemEnvelope.payload.type')",
           record_item: "json_extract(r.payload_json,'$.itemEnvelope.payload.id')",
           record_head: "json_extract(r.payload_json,'$.itemEnvelope.payload.publishedRevisionId')",
           record_revision: "json_extract(r.payload_json,'$.revisionEnvelope.payload.id')",
@@ -440,6 +465,32 @@ export class OfflinePublicationStore {
           valid:
             "(a.workspace_id=h.workspace_id AND json_extract(r.payload_json,'$.itemEnvelope.schema')='codeatlas.knowledge-item' AND json_extract(r.payload_json,'$.itemEnvelope.version')=1 AND json_extract(r.payload_json,'$.revisionEnvelope.schema')='codeatlas.knowledge-revision' AND json_extract(r.payload_json,'$.revisionEnvelope.version')=1 AND json_extract(r.payload_json,'$.itemEnvelope.payload.lifecycleState')='ACTIVE' AND json_extract(r.payload_json,'$.revisionEnvelope.payload.publicationState')='PUBLISHED' AND json_extract(r.payload_json,'$.itemEnvelope.payload.type')=json_extract(r.payload_json,'$.revisionEnvelope.payload.structuredContent.kind') AND json_extract(a.payload_json,'$.kind')='OWNED_TEST_PUBLICATION' AND json_extract(a.payload_json,'$.quality')='NOT_EVALUABLE' AND json_extract(a.payload_json,'$.productionPublication')='NOT_AUTHORIZED' AND EXISTS(SELECT 1 FROM json_each(p.payload_json,'$.heads') x WHERE json_extract(x.value,'$.itemId')=h.item_id AND json_extract(x.value,'$.revisionId')=h.revision_id) AND EXISTS(SELECT 1 FROM json_each(a.payload_json,'$.entries') e WHERE json_extract(e.value,'$.record.itemEnvelope.payload.id')=h.item_id AND json_extract(e.value,'$.record.revisionEnvelope.payload.id')=h.revision_id AND json_extract(e.value,'$.record')=r.payload_json))",
         };
+        if (withEvidence) {
+          const candidateId =
+            "(SELECT json_extract(e.value,'$.candidateId') FROM json_each(a.payload_json,'$.entries') e WHERE json_extract(e.value,'$.record.itemEnvelope.payload.id')=h.item_id AND json_extract(e.value,'$.record.revisionEnvelope.payload.id')=h.revision_id)";
+          expr.coverage_json =
+            "(SELECT json_extract(c.value,'$.payload.coverage') FROM json_each(a.payload_json,'$.request.candidates') c WHERE json_extract(c.value,'$.payload.id')=" +
+            candidateId +
+            ')';
+          expr.entities_json =
+            "json_extract(r.payload_json,'$.referenceContext.availableEntities')";
+          expr.support_json =
+            "json_extract(r.payload_json,'$.revisionEnvelope.payload.supportRefs')";
+          expr.attempt_id = 'a.id';
+          for (const [key, p] of Object.entries({
+            run_id: 'compilationRunId',
+            snapshot_id: 'inputSnapshotRef.id',
+            revision_set_id: 'revisionSetId',
+            evaluation_id: 'evaluationRef.id',
+          }))
+            expr[key] = "json_extract(r.payload_json,'$.revisionEnvelope.payload." + p + "')";
+          expr.valid =
+            '(' +
+            expr.valid +
+            " AND json_extract(r.payload_json,'$.revisionEnvelope.payload.compilationRunId')=json_extract(a.payload_json,'$.request.runId') AND json_extract(r.payload_json,'$.revisionEnvelope.payload.inputSnapshotRef.id')=json_extract(a.payload_json,'$.request.snapshot.snapshotId') AND json_extract(r.payload_json,'$.revisionEnvelope.payload.revisionSetId')=json_extract(a.payload_json,'$.request.snapshot.revisionSetId') AND json_extract(r.payload_json,'$.revisionEnvelope.payload.evaluationRef.id')=json_extract(a.payload_json,'$.request.evaluation.evaluationId') AND json_extract(p.payload_json,'$.attemptId')=a.id AND json_extract(p.payload_json,'$.requestDigest')=a.request_digest AND json_extract(p.payload_json,'$.commandDigest')=a.command_digest AND (SELECT count(*) FROM json_each(a.payload_json,'$.request.candidates') c WHERE json_extract(c.value,'$.payload.id')=" +
+            candidateId +
+            " AND json_extract(c.value,'$.payload.type')=json_extract(r.payload_json,'$.itemEnvelope.payload.type') AND json_extract(c.value,'$.payload.scope')=json_extract(r.payload_json,'$.itemEnvelope.payload.scope') AND json_extract(c.value,'$.payload.structuredContent')=json_extract(r.payload_json,'$.revisionEnvelope.payload.structuredContent') AND json_extract(c.value,'$.payload.supportRefs')=json_extract(r.payload_json,'$.revisionEnvelope.payload.supportRefs') AND json_extract(c.value,'$.payload.inputSnapshotRef')=json_extract(r.payload_json,'$.revisionEnvelope.payload.inputSnapshotRef'))=1)";
+        }
         const from =
           ' FROM offline_heads h LEFT JOIN offline_revisions r ON r.id=h.revision_id AND r.item_id=h.item_id LEFT JOIN offline_attempts a ON a.id=r.attempt_id LEFT JOIN offline_receipts p ON p.attempt_id=a.id WHERE h.workspace_id=?';
         b.own([this.#workspaceId]);
@@ -510,7 +561,31 @@ export class OfflinePublicationStore {
           );
           for (const key of ['title', 'summary', 'goal'])
             check(r[key + '_type'] === null || r[key + '_type'] === 'text');
+          let evidence: OfflineSearchEvidence | undefined;
+          if (withEvidence) {
+            check(typeof r.coverage_json === 'string' && typeof r.support_json === 'string');
+            const coverage = Phase1CoverageSchema.parse(b.parse(String(r.coverage_json)));
+            const refs = b.parse(String(r.support_json));
+            check(Array.isArray(refs));
+            check(typeof r.entities_json === 'string');
+            const entities = b.parse(String(r.entities_json));
+            check(Array.isArray(entities));
+            evidence = {
+              supportScopeRefs: (entities as unknown[]).map((v) => ScopedRefSchema.parse(v)),
+              coverage,
+              supportRefs: (refs as unknown[]).map((v) => SupportRefSchema.parse(v)),
+              provenance: {
+                attemptId: EntityIdSchema.parse(r.attempt_id),
+                runId: EntityIdSchema.parse(r.run_id),
+                snapshotId: EntityIdSchema.parse(r.snapshot_id),
+                revisionSetId: EntityIdSchema.parse(r.revision_set_id),
+                evaluationId: EntityIdSchema.parse(r.evaluation_id),
+              },
+            };
+          }
           records.push({
+            type: Phase1KnowledgeTypeSchema.parse(r.item_type),
+            ...(evidence ? { evidence } : {}),
             itemId: String(r.item_id),
             revisionId: String(r.revision_id),
             scopeJson: r.scope_json,

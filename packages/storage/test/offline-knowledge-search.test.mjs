@@ -6,7 +6,7 @@ import { OfflinePublicationPreparer } from '../../application/dist/offline-publi
 import { evaluateCandidateRecord } from '../../application/dist/evaluation-record.js';
 import { initializeOfflinePublicationStore } from '../dist/knowledge/offline-publication-store.js';
 import { OfflineKnowledgeSearchIndex } from '../dist/knowledge/offline-knowledge-search.js';
-async function setup(t, publish = true, make = sampleSet) {
+async function setup(t, publish = true, make = sampleSet, evidence = false) {
   const f = make(),
     db = new DatabaseSync(':memory:');
   let store,
@@ -28,7 +28,8 @@ async function setup(t, publish = true, make = sampleSet) {
         assert.equal(manifest.workspaceId, 'w');
         assert.ok(Object.isFrozen(manifest.heads));
         assert.ok(manifest.fields.includes('TITLE'));
-        assert.ok(!manifest.fields.some((f) => /SNAPSHOT|SUPPORT|CLAIM/.test(f)));
+        assert.ok(!manifest.fields.some((f) => /SNAPSHOT|CLAIM/.test(f)));
+        if (!evidence) assert.ok(!manifest.fields.includes('SUPPORT_METADATA'));
         callback(manifest);
         if (deny) throw Error('denied');
       },
@@ -106,12 +107,12 @@ test('permission denial happens before text SELECT and generic full-command read
   assert.equal(textReads, 0);
   f.setDeny(false);
   f.index.rebuild(limits, f.c);
-  assert.equal(textReads, 1);
+  assert.equal(textReads, 2);
   assert.equal(
     f.index.search({ text: 'Matched contract', maxResults: 10 }, limits, f.c).results.length,
     2,
   );
-  assert.equal(textReads, 2);
+  assert.equal(textReads, 4);
 });
 test('permission loss after MATCH refuses result delivery; failed rebuild preserves old index', async (t) => {
   const f = await setup(t);
@@ -294,4 +295,110 @@ test('consistently corrupted candidate/draft status cannot masquerade as publish
     .run(JSON.stringify(command), revision.attempt_id);
   for (const ddl of triggers) f.db.exec(ddl);
   assert.throws(() => f.index.rebuild(limits, f.c), { code: 'INDEX_UNAVAILABLE' });
+});
+
+test('owned filtered first page returns exact projected provenance and filters before limit', async (t) => {
+  const f = await setup(t, true, sampleSet, true);
+  f.index.rebuild(limits, f.c);
+  assert.equal(typeof f.index.searchPage, 'function');
+  const r = f.index.searchPage(
+    { text: 'Matched contract', maxResults: 1, types: ['INTEGRATION'] },
+    limits,
+    f.c,
+  );
+  assert.equal(r.results.length, 1);
+  assert.equal(r.truncated, true);
+  const hit = r.results[0];
+  assert.equal(hit.type, 'INTEGRATION');
+  assert.ok(hit.supportRefs.length > 0);
+  assert.ok(hit.coverage);
+  assert.equal(hit.provenance.runId, 'run:set');
+  const other = f.index.searchPage(
+    { text: 'Matched contract', maxResults: 1, types: ['COMPONENT'] },
+    limits,
+    f.c,
+  );
+  assert.deepEqual(other.results, []);
+  assert.equal(other.truncated, false);
+  assert.throws(
+    () => f.index.searchPage({ text: 'Matched contract', maxResults: 1, types: [] }, limits, f.c),
+    { code: 'QUERY_INVALID' },
+  );
+  assert.throws(
+    () =>
+      f.index.searchPage({ text: 'Matched contract', maxResults: 1, types: ['BAD'] }, limits, f.c),
+    { code: 'QUERY_INVALID' },
+  );
+});
+
+test('type filtering excludes an unrelated derived row before LIMIT', async (t) => {
+  const exec = DatabaseSync.prototype.exec;
+  DatabaseSync.prototype.exec = function (sql) {
+    const result = exec.call(this, sql);
+    if (sql.startsWith('CREATE VIRTUAL TABLE lexical'))
+      this.prepare(
+        'INSERT INTO lexical(item_id,revision_id,item_type,title,summary,goal) VALUES(?,?,?,?,?,?)',
+      ).run(
+        '0:derived-component',
+        'derived:revision',
+        'COMPONENT',
+        'Matched contract',
+        'Matched contract',
+        'Matched contract',
+      );
+    return result;
+  };
+  let f;
+  try {
+    f = await setup(t, true, sampleSet, true);
+    f.index.rebuild(limits, f.c);
+  } finally {
+    DatabaseSync.prototype.exec = exec;
+  }
+  const r = f.index.searchPage(
+    { text: 'Matched contract', maxResults: 1, types: ['INTEGRATION'] },
+    limits,
+    f.c,
+  );
+  assert.equal(r.results.length, 1);
+  assert.equal(r.results[0].type, 'INTEGRATION');
+  assert.equal(r.totalMatches, 2);
+});
+test('evidence projection requires its own metadata permission', async (t) => {
+  const f = await setup(t, true, sampleSet, false);
+  f.index.rebuild(limits, f.c);
+  assert.throws(
+    () => f.index.searchPage({ text: 'Matched contract', maxResults: 1, types: null }, limits, f.c),
+    { code: 'PERMISSION_DENIED' },
+  );
+});
+
+test('same-head projected text drift after MATCH refuses delivery', async (t) => {
+  const f = await setup(t, true, sampleSet, true);
+  f.index.rebuild(limits, f.c);
+  const proto = Object.getPrototypeOf(f.store),
+    read = proto.readSearchProjection;
+  let full = 0;
+  proto.readSearchProjection = function (...args) {
+    const value = read.apply(this, args);
+    if (!args[3] && ++full === 2) {
+      const changed = structuredClone(value);
+      changed.records[0].title = 'Changed after MATCH';
+      return changed;
+    }
+    return value;
+  };
+  try {
+    assert.throws(
+      () =>
+        f.index.searchPage(
+          { text: 'Matched contract', maxResults: 1, types: ['INTEGRATION'] },
+          limits,
+          f.c,
+        ),
+      { code: 'INDEX_UNAVAILABLE' },
+    );
+  } finally {
+    proto.readSearchProjection = read;
+  }
 });

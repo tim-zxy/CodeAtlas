@@ -30,3 +30,5 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
 }
 
 export { createOwnedBusinessTraceMcpServer } from './owned-business-stdio.js';
+
+export { createOwnedKnowledgeSearchMcpServer } from './owned-business-stdio.js';

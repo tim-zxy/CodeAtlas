@@ -87,3 +87,21 @@ binding. Shutdown invalidates and aborts, closes protocol and joins pending read
 and writes; failed output reports UNKNOWN. Ignoring external providers can keep
 completion pending. No hard OS sandbox, remote/model/tokenizer access, production
 service or P1-18 acceptance is inferred from this component.
+
+## Approved owned search_knowledge first-page v1 - 2026-11-09
+
+[Exact approved slice](../../superpowers/specs/2026-11-09-owned-knowledge-search.md):
+LEXICAL_PHRASE/WORKSPACE only, strict five-type filter, first-page positive limit and
+null cursor, zero graph depth. Phrase/title-summary-goal search uses existing
+unicode61 FTS, BM25 then IDs; no semantic search or Chinese quality guarantee.
+Owned session fixes workspace/allowed repositories, pre-read/pre-delivery field
+permission and exact byte/token ceilings. Public hits retain exact published refs,
+scoped support/provenance/coverage and original freshness/currency. Empty or mixed
+aggregate metadata stays null; MAX_RESULTS explicitly marks the page bound.
+
+Missing/changed index, denial, malformed evidence/control or absent token policy
+refuse with static typed errors; counts/rank/raw source are not public. Full
+projected records are rechecked after MATCH/rebuild. A separate host-supplied
+search-only stdio factory shares the existing SDK lifecycle; BUSINESS-only factory
+and normal CLI behavior remain compatible. No user data/production authority is
+enabled, no complete P1-17/18 closure. [Evidence](../../superpowers/plans/2026-11-09-owned-knowledge-search.md).

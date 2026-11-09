@@ -1,6 +1,6 @@
 import { DatabaseSync } from 'node:sqlite';
 import { types } from 'node:util';
-import { type RuntimeRequestControl } from '@codeatlas/ir';
+import { Phase1KnowledgeTypeSchema, type RuntimeRequestControl } from '@codeatlas/ir';
 import { canonicalCompilationJson } from '../../../ir/dist/compilation-input-contract.js';
 import { publicationDigest } from '../../../ir/dist/offline-publication-contract.js';
 import {
@@ -105,13 +105,19 @@ export class OfflineKnowledgeSearchIndex {
       this.#unsettled = true;
     return safe(error);
   }
-  private projection(limits: HistoryReadLimits, c: RuntimeRequestControl, metadataOnly = false) {
+  private projection(
+    limits: HistoryReadLimits,
+    c: RuntimeRequestControl,
+    metadataOnly = false,
+    withEvidence = false,
+  ) {
     return OfflinePublicationStore.prototype.readSearchProjection.call(
       this.#source,
       this.#check,
       limits,
       c,
       metadataOnly,
+      withEvidence,
     );
   }
   rebuild(limitsValue: HistoryReadLimits, control: RuntimeRequestControl) {
@@ -123,7 +129,7 @@ export class OfflineKnowledgeSearchIndex {
       const projection = this.projection(limits, c);
       fresh = new DatabaseSync(':memory:');
       fresh.exec(
-        "CREATE VIRTUAL TABLE lexical USING fts5(item_id UNINDEXED,revision_id UNINDEXED,title,summary,goal,tokenize='unicode61')",
+        "CREATE VIRTUAL TABLE lexical USING fts5(item_id UNINDEXED,revision_id UNINDEXED,item_type UNINDEXED,title,summary,goal,tokenize='unicode61')",
       );
       const b = new HistoryReadBudget(limits),
         sql = runtimeSql(fresh, b);
@@ -131,6 +137,7 @@ export class OfflineKnowledgeSearchIndex {
       for (const row of projection.records) {
         canonicalCompilationJson(row, c);
         sql.insert('lexical', {
+          item_type: row.type,
           item_id: row.itemId,
           revision_id: row.revisionId,
           title: row.title,
@@ -140,11 +147,16 @@ export class OfflineKnowledgeSearchIndex {
       }
       fresh.exec('COMMIT');
       fresh.exec('PRAGMA query_only=ON');
-      const after = this.projection(limits, c, true);
-      check(after.headDigest === projection.headDigest);
+      const after = this.projection(limits, c);
+      check(
+        after.headDigest === projection.headDigest &&
+          canonicalCompilationJson(after.records, c) ===
+            canonicalCompilationJson(projection.records, c),
+      );
       const contentDigest = publicationDigest(
-          'codeatlas.offline-search.text.v1',
+          'codeatlas.offline-search.text.v2',
           projection.records.map((r) => ({
+            type: r.type,
             itemId: r.itemId,
             revisionId: r.revisionId,
             title: r.title,
@@ -177,6 +189,17 @@ export class OfflineKnowledgeSearchIndex {
     }
   }
   search(input: unknown, limitsValue: HistoryReadLimits, control: RuntimeRequestControl) {
+    return this.searchInternal(input, limitsValue, control, false);
+  }
+  searchPage(input: unknown, limitsValue: HistoryReadLimits, control: RuntimeRequestControl) {
+    return this.searchInternal(input, limitsValue, control, true);
+  }
+  private searchInternal(
+    input: unknown,
+    limitsValue: HistoryReadLimits,
+    control: RuntimeRequestControl,
+    page: boolean,
+  ) {
     if (this.#unsettled) throw new OfflineKnowledgeSearchError('INDEX_UNAVAILABLE', 'UNKNOWN');
     const c = ownControl(control),
       limits = checkedHistoryLimits(JSON.parse(canonicalCompilationJson(limitsValue, c)));
@@ -184,7 +207,8 @@ export class OfflineKnowledgeSearchIndex {
       const request = JSON.parse(canonicalCompilationJson(input, c));
       check(
         request &&
-          Object.keys(request).sort().join(',') === 'maxResults,text' &&
+          Object.keys(request).sort().join(',') ===
+            (page ? 'maxResults,text,types' : 'maxResults,text') &&
           typeof request.text === 'string' &&
           request.text.trim().length > 0 &&
           Number.isSafeInteger(request.maxResults) &&
@@ -192,13 +216,24 @@ export class OfflineKnowledgeSearchIndex {
           request.maxResults <= limits.maxRows,
         'QUERY_INVALID',
       );
+      let filterTypes: string[] = [];
+      if (page && request.types !== null) {
+        check(Array.isArray(request.types) && request.types.length > 0, 'QUERY_INVALID');
+        filterTypes = request.types.map((v: unknown) => {
+          const p = Phase1KnowledgeTypeSchema.safeParse(v);
+          check(p.success, 'QUERY_INVALID');
+          return p.data!;
+        });
+        check(new Set(filterTypes).size === filterTypes.length, 'QUERY_INVALID');
+      }
       const state = this.#state;
       check(state && state.db.isOpen);
-      const before = this.projection(limits, c);
+      const before = this.projection(limits, c, false, page);
       check(this.#state === state && before.headDigest === state.headDigest);
       const currentDigest = publicationDigest(
-        'codeatlas.offline-search.text.v1',
+        'codeatlas.offline-search.text.v2',
         before.records.map((r) => ({
+          type: r.type,
           itemId: r.itemId,
           revisionId: r.revisionId,
           title: r.title,
@@ -211,20 +246,28 @@ export class OfflineKnowledgeSearchIndex {
       const currentRecords = new Map(before.records.map((r) => [r.itemId, r]));
       const phrase = '"' + request.text.replaceAll('"', '""') + '"',
         b = new HistoryReadBudget(limits);
-      b.own([phrase, request.maxResults]);
+      const where =
+        'lexical MATCH ?' +
+        (filterTypes.length
+          ? ' AND item_type IN (' + filterTypes.map(() => '?').join(',') + ')'
+          : '');
+      const queryArgs = [phrase, ...filterTypes];
+      b.own([...queryArgs, request.maxResults]);
       b.add('rows', 1);
       const total = state.db
-        .prepare('SELECT count(*) n FROM lexical WHERE lexical MATCH ?')
-        .get(phrase)!.n;
+        .prepare('SELECT count(*) n FROM lexical WHERE ' + where)
+        .get(...queryArgs)!.n;
       check(typeof total === 'number' && Number.isSafeInteger(total) && total >= 0);
       const hits =
-        'WITH hits AS MATERIALIZED (SELECT item_id,revision_id,bm25(lexical) AS rank FROM lexical WHERE lexical MATCH ? ORDER BY rank,item_id,revision_id LIMIT ?) ';
+        'WITH hits AS MATERIALIZED (SELECT item_id,revision_id,bm25(lexical) AS rank FROM lexical WHERE ' +
+        where +
+        ' ORDER BY rank,item_id,revision_id LIMIT ?) ';
       const size = state.db
         .prepare(
           hits +
             'SELECT count(*) n,coalesce(sum(length(CAST(item_id AS BLOB))+length(CAST(revision_id AS BLOB))+length(CAST(rank AS BLOB))),0) bytes FROM hits',
         )
-        .get(phrase, request.maxResults)!;
+        .get(...queryArgs, request.maxResults)!;
       check(
         typeof size.n === 'number' &&
           typeof size.bytes === 'number' &&
@@ -238,11 +281,16 @@ export class OfflineKnowledgeSearchIndex {
         .prepare(
           hits + 'SELECT item_id,revision_id,rank FROM hits ORDER BY rank,item_id,revision_id',
         )
-        .all(phrase, request.maxResults);
+        .all(...queryArgs, request.maxResults);
       check(rows.length === size.n);
       b.own(rows, false);
-      const after = this.projection(limits, c, true);
-      check(this.#state === state && after.headDigest === state.headDigest);
+      const after = this.projection(limits, c, false, page);
+      check(
+        this.#state === state &&
+          after.headDigest === state.headDigest &&
+          canonicalCompilationJson(after.records, c) ===
+            canonicalCompilationJson(before.records, c),
+      );
       const results = rows.map((r) => {
         const record = currentRecords.get(String(r.item_id));
         check(
@@ -252,6 +300,7 @@ export class OfflineKnowledgeSearchIndex {
             Number.isFinite(r.rank),
         );
         return {
+          ...(page ? { type: record.type, ...record.evidence } : {}),
           itemId: record.itemId,
           revisionId: record.revisionId,
           rank: r.rank,

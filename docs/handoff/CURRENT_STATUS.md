@@ -1,3 +1,33 @@
+## Approved owned search_knowledge first page - 2026-11-09
+
+User-approved fixed-workspace LEXICAL_PHRASE v1 is implemented for self-owned data:
+strict knowledge-type filters precede FTS5 ranking/LIMIT; title/summary/goal only,
+unicode61 phrase semantics, explicit first page/no cursor/no graph. This does not
+guarantee Chinese search quality or complete P1-15/17/18 acceptance.
+
+Real temporary SQLite publication -> restricted type/evidence projection -> FTS5 ->
+Application -> owned Agent session -> official SDK child stdio is tested. Exact
+revision/provenance/support/coverage/freshness/currency survive; full response
+bytes and exact fixture token policy bind the complete envelope. Empty/mixed
+aggregate metadata is null, not fabricated COMPLETE/FRESH. Invalid/denied/stale
+index/control/measurement failures refuse; ordinary queries do not rebuild.
+
+87/87 final related tests,5 builds(Storage/Application/Agent API/Runtime/MCP),
+architecture17 and independent associated review pass. Source projection is now
+compared in full before/after search and rebuild, closing the reviewed same-head
+text drift interval; strict response association tests and an unrelated derived
+FTS row verify metadata and filter-before-LIMIT. Exact export inventory was updated
+after the first integration caught86/87; failure evidence is retained.
+
+[Contract](../superpowers/specs/2026-11-09-owned-knowledge-search.md),
+[commands/failures](../superpowers/plans/2026-11-09-owned-knowledge-search.md).
+Separate one-session factories preserve existing BUSINESS-only binding and add
+search-only binding; normal production CLI remains closed. No user DB/data,
+production query/publication, actual scanner/model/tokenizer, Native/R9, package
+update or new dependency. CI194 at529458e ended TS/Rust success and old R8 Native
+prerequisite failure; its result is not this new source's CI. Phase1 remains4/21,
+A6 NOT_QUALIFIED, E02 PROPOSED/uninstalled.
+
 ## Approved SDK 1.32.2 owned BUSINESS stdio - 2026-11-09
 
 Conditionally approved SDK1.32.2/fast-uri3.1.9 now belongs to apps/mcp's exact
