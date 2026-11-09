@@ -156,7 +156,7 @@ for (const name of packageNames) {
     } else if (name === 'agent-api') {
       assert.equal(
         source,
-        "export * from './business-trace-contract.js';\nexport * from './business-trace-tool.js';\n\nexport * from './knowledge-search-contract.js';\nexport * from './knowledge-search-tool.js';\n",
+        "export * from './business-trace-contract.js';\nexport * from './business-trace-tool.js';\n\nexport * from './knowledge-search-contract.js';\nexport * from './knowledge-search-tool.js';\n\nexport * from './project-context-contract.js';\nexport * from './project-context-tool.js';\n",
       );
     } else if (name === 'source') {
       assert.match(source, /scanGitRepository/);

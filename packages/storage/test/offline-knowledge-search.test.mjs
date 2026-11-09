@@ -402,3 +402,33 @@ test('same-head projected text drift after MATCH refuses delivery', async (t) =>
     proto.readSearchProjection = read;
   }
 });
+
+test('explicit context metadata selects exact refs before display projection and never substitutes current versions', async (t) => {
+  const f = await setup(t, true, sampleSet, true);
+  assert.equal(typeof f.store.readProjectContextProjection, 'function');
+  const rows = f.db.prepare('SELECT item_id,revision_id FROM offline_heads ORDER BY item_id').all();
+  const selected = [{ itemId: rows[0].item_id, revisionId: rows[0].revision_id }];
+  let manifests = [];
+  const r = f.store.readProjectContextProjection(
+    selected,
+    (m) => {
+      manifests.push(m);
+    },
+    limits,
+    f.c,
+  );
+  assert.equal(r.records.length, 1);
+  assert.equal(r.records[0].itemId, selected[0].itemId);
+  assert.ok(
+    manifests.every((m) => m.heads.length === 1 && m.heads[0].itemId === selected[0].itemId),
+  );
+  assert.deepEqual(
+    f.store.readProjectContextProjection(
+      [{ ...selected[0], revisionId: 'historical:not-current' }],
+      () => {},
+      limits,
+      f.c,
+    ).records,
+    [],
+  );
+});

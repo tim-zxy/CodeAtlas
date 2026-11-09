@@ -105,3 +105,20 @@ projected records are rechecked after MATCH/rebuild. A separate host-supplied
 search-only stdio factory shares the existing SDK lifecycle; BUSINESS-only factory
 and normal CLI behavior remain compatible. No user data/production authority is
 enabled, no complete P1-17/18 closure. [Evidence](../../superpowers/plans/2026-11-09-owned-knowledge-search.md).
+
+## Approved selected L0 get_project_context v1 - 2026-11-09
+
+[Exact owned slice](../../superpowers/specs/2026-11-09-owned-l0-context.md) fixes
+explicit server-selected current published refs and stable ID order. Request only
+selects L0 and bounded item/byte/token controls; no task/query, auto retrieval or
+arbitrary scope/path. Read exact metadata before/after using existing restricted
+Store projection; never replace missing/historical refs with current versions.
+Return literal title/summary/source, labelled stored-goal fallback, support/coverage/
+freshness/currency/provenance, disjoint missing/omitted refs and safe typed failures.
+
+EXPLICIT_SELECTION_ONLY and projectCompleteness NOT_ASSESSED are mandatory.
+AVAILABLE describes only the selected finite set; empty is MISSING_DATA, and
+missing/truncated subsets remain explicit. Full metadata is byte/token-bounded;
+no production tokenizer/permission, whole overview, L1/L2 or production query is
+implied. Separate one-session SDK factory preserves existing two factory contracts
+and normal CLI closure. [100-test evidence](../../superpowers/plans/2026-11-09-owned-l0-context.md).

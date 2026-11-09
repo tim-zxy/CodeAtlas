@@ -1,3 +1,34 @@
+## Approved selected L0 project context - 2026-11-09
+
+Implemented the user-approved get_project_context v1 owned-data slice: only explicit
+server-selected current published item/revision metadata, literal titles/summaries
+with labelled stored-goal fallback, original support/provenance/freshness/currency.
+Exact refs restrict SQL before display/evidence materialization; missing exact
+current refs are never substituted or declared globally nonexistent. Empty selection
+reads no store. No FTS/search, Source, model, auto retrieval or update port exists
+in the L0 composition.
+
+Every success states EXPLICIT_SELECTION_ONLY and projectCompleteness NOT_ASSESSED.
+AVAILABLE describes the finite selection only; missing/omitted refs are partitioned
+explicitly and yield PARTIAL or MISSING_DATA. Complete canonical output byte/token
+measurement, pre-read/pre-delivery authorization and current opaque context are
+required. A separate single-tool SDK factory reuses bounded lifecycle; old Business
+and search factory behaviors remain tested. Ordinary CLI and production stay closed.
+
+Fresh final100/100,0fail/cancel/skip/todo,25981.3791ms; Storage/Application/Agent API/
+Runtime/MCP builds and architecture17 pass. Independent read-only review found no
+P1/P2 blocker. Initial APIabsence2/2 RED and fixture-only null-prototype/frozen-data
+assertion failures are retained; first integration99/100 was corrected by cloning
+the test-owned projection, not by weakening immutability.
+
+[Contract](../superpowers/specs/2026-11-09-owned-l0-context.md),
+[commands/failures](../superpowers/plans/2026-11-09-owned-l0-context.md).
+CI195 exact fca8ca1 is terminal TS/Rust success, Native old R8 catalog prerequisite
+failure with actual qualification skipped; it does not verify this new batch.
+No user DB/data, production query/publication, actual model/tokenizer, installed
+package, Native/R9 or new dependency. Phase1 stays4/21, A6 NOT_QUALIFIED,
+E02 PROPOSED/uninstalled; full overview/L1/L2/six tools/whole-phase gates remain open.
+
 ## Approved owned search_knowledge first page - 2026-11-09
 
 User-approved fixed-workspace LEXICAL_PHRASE v1 is implemented for self-owned data:

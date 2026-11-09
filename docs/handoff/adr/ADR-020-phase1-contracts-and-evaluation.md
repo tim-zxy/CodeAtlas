@@ -1,3 +1,13 @@
+## Approved bounded selected L0 context - 2026-11-09
+
+User approved the [selected published L0 contract](../../superpowers/specs/2026-11-09-owned-l0-context.md)
+for self-owned implementation/tests. Version1 fixes explicit current refs, stable
+ID order, honest missing/omitted partition, literal metadata and NOT_ASSESSED whole
+project completeness. No Canonical identity/schema/migration/permission change,
+automatic retrieval or source/model path. Separate SDK factory shares lifecycle.
+Final scoped100/100 and architecture17 plus independent review do not close full
+L0 engineering overview/L1/L2/tool-suite or phase acceptance.
+
 ## Approved owned search_knowledge v1 slice - 2026-11-09
 
 User approved the [fixed-workspace phrase/type-filter first-page contract](../../superpowers/specs/2026-11-09-owned-knowledge-search.md)

@@ -1,3 +1,13 @@
+## Owned selected L0 context - 2026-11-09
+
+Existing P1-17/18, AGENT_API and knowledge-consumption section9 map to exact-current
+Store readProjectContextProjection, Application readOwnedProjectContext, Agent
+project-context contract/session and separate get_project_context SDK factory.
+[Approved finite selection contract](../superpowers/specs/2026-11-09-owned-l0-context.md);
+[100-test/build/review evidence](../superpowers/plans/2026-11-09-owned-l0-context.md).
+L0 only, no full-project claim, auto retrieval, source/model or production authority.
+Original formal gates and4/21 count remain; missing/truncated selection is explicit.
+
 ## Owned search first-page component - 2026-11-09
 
 Existing P1-15/17/18 and knowledge-and-consumption sections7/9 map to restricted

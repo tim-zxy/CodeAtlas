@@ -1,3 +1,11 @@
+## Owned L0 context component evidence - 2026-11-09
+
+Selected-current published metadata -> Application -> Agent -> real SDK child
+stdio has100/100 related tests,5 builds,architecture17 and independent review.
+This finite self-owned selection is not full-project context or production query
+acceptance; original P1-17/18 and Phase1 stay open/4of21.
+[Reproducible evidence/limitations](../superpowers/plans/2026-11-09-owned-l0-context.md).
+
 ## Owned search component evidence - 2026-11-09
 
 The approved first-page phrase/type search has87/87 related tests,5 builds and

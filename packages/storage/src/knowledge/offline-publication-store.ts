@@ -357,12 +357,41 @@ export class OfflinePublicationStore {
     }
   }
   /** Field projection only: never loads command/snapshot/support/Claim bodies. */
+  /** Exact selected current-published metadata only; no search, body or version substitution. */
+  readProjectContextProjection(
+    refs: unknown,
+    permissionCheck: (manifest: OfflineSearchManifest) => undefined,
+    limits: HistoryReadLimits,
+    control: RuntimeRequestControl,
+  ): OfflineSearchProjection {
+    const c = ownControl(control),
+      l = checkedHistoryLimits(JSON.parse(canonicalCompilationJson(limits, c))),
+      raw = JSON.parse(canonicalCompilationJson(refs, c));
+    check(Array.isArray(raw) && raw.length <= l.maxRows);
+    const selected = raw.map((v: Record<string, unknown>) => {
+      check(v && typeof v === 'object' && Object.keys(v).sort().join(',') === 'itemId,revisionId');
+      return {
+        itemId: EntityIdSchema.parse(v.itemId),
+        revisionId: EntityIdSchema.parse(v.revisionId),
+      };
+    });
+    check(
+      new Set(
+        selected.map((v: { itemId: string; revisionId: string }) => canonicalCompilationJson(v, c)),
+      ).size === selected.length,
+    );
+    const before = this.readSearchProjection(permissionCheck, l, c, false, true, selected);
+    const after = this.readSearchProjection(permissionCheck, l, c, false, true, selected);
+    check(canonicalCompilationJson(before, c) === canonicalCompilationJson(after, c));
+    return before;
+  }
   readSearchProjection(
     permissionCheck: (manifest: OfflineSearchManifest) => undefined,
     limits: HistoryReadLimits,
     control: RuntimeRequestControl,
     metadataOnly = false,
     withEvidence = false,
+    selectedRefs?: readonly { itemId: string; revisionId: string }[],
   ): OfflineSearchProjection {
     const c = ownControl(control),
       ownedLimits = checkedHistoryLimits(JSON.parse(canonicalCompilationJson(limits, c)));
@@ -373,6 +402,15 @@ export class OfflinePublicationStore {
     );
     this.live();
     check(!this.#db.isTransaction);
+    const selectionJson =
+      selectedRefs === undefined ? undefined : canonicalCompilationJson(selectedRefs, c);
+    const projectionArgs =
+      selectionJson === undefined ? [this.#workspaceId] : [this.#workspaceId, selectionJson];
+    const headWhere =
+      'workspace_id=?' +
+      (selectionJson === undefined
+        ? ''
+        : " AND EXISTS(SELECT 1 FROM json_each(?) selection WHERE json_extract(selection.value,'$.itemId')=item_id AND json_extract(selection.value,'$.revisionId')=revision_id)");
     const token = 'search_' + randomUUID().replaceAll('-', '');
     let began = false,
       savepoint = false;
@@ -385,9 +423,7 @@ export class OfflinePublicationStore {
         sql = this.sql(ownedLimits, c, b),
         readHeads = () =>
           sql
-            .read('offline_heads', ['item_id', 'revision_id'], 'workspace_id=?', [
-              this.#workspaceId,
-            ])
+            .read('offline_heads', ['item_id', 'revision_id'], headWhere, projectionArgs)
             .map((r) => {
               check(typeof r.item_id === 'string' && typeof r.revision_id === 'string');
               return { itemId: r.item_id, revisionId: r.revision_id };
@@ -492,15 +528,18 @@ export class OfflinePublicationStore {
             " AND json_extract(c.value,'$.payload.type')=json_extract(r.payload_json,'$.itemEnvelope.payload.type') AND json_extract(c.value,'$.payload.scope')=json_extract(r.payload_json,'$.itemEnvelope.payload.scope') AND json_extract(c.value,'$.payload.structuredContent')=json_extract(r.payload_json,'$.revisionEnvelope.payload.structuredContent') AND json_extract(c.value,'$.payload.supportRefs')=json_extract(r.payload_json,'$.revisionEnvelope.payload.supportRefs') AND json_extract(c.value,'$.payload.inputSnapshotRef')=json_extract(r.payload_json,'$.revisionEnvelope.payload.inputSnapshotRef'))=1)";
         }
         const from =
-          ' FROM offline_heads h LEFT JOIN offline_revisions r ON r.id=h.revision_id AND r.item_id=h.item_id LEFT JOIN offline_attempts a ON a.id=r.attempt_id LEFT JOIN offline_receipts p ON p.attempt_id=a.id WHERE h.workspace_id=?';
-        b.own([this.#workspaceId]);
+          ' FROM offline_heads h LEFT JOIN offline_revisions r ON r.id=h.revision_id AND r.item_id=h.item_id LEFT JOIN offline_attempts a ON a.id=r.attempt_id LEFT JOIN offline_receipts p ON p.attempt_id=a.id WHERE h.workspace_id=?' +
+          (selectionJson === undefined
+            ? ''
+            : " AND EXISTS(SELECT 1 FROM json_each(?) selection WHERE json_extract(selection.value,'$.itemId')=h.item_id AND json_extract(selection.value,'$.revisionId')=h.revision_id)");
+        b.own(projectionArgs);
         b.add('rows', 1);
         const raw = this.#db
           .prepare(
             'SELECT count(*) n,coalesce(sum(coalesce(length(CAST(r.payload_json AS BLOB)),0)+coalesce(length(CAST(a.payload_json AS BLOB)),0)+coalesce(length(CAST(p.payload_json AS BLOB)),0)),0) bytes' +
               from,
           )
-          .get(this.#workspaceId)!;
+          .get(...projectionArgs)!;
         check(
           typeof raw.n === 'number' &&
             Number.isSafeInteger(raw.n) &&
@@ -520,7 +559,7 @@ export class OfflinePublicationStore {
               '),0) bytes' +
               from,
           )
-          .get(this.#workspaceId)!;
+          .get(...projectionArgs)!;
         check(
           typeof n.n === 'number' &&
             Number.isSafeInteger(n.n) &&
@@ -540,7 +579,7 @@ export class OfflinePublicationStore {
               from +
               ' ORDER BY h.item_id,h.revision_id',
           )
-          .all(this.#workspaceId);
+          .all(...projectionArgs);
         check(rows.length === heads.length);
         b.own(rows, false);
         for (const r of rows) {

@@ -11,6 +11,11 @@ import {
   McpError,
 } from '@modelcontextprotocol/sdk/types.js';
 import {
+  projectContextWireSchemas,
+  projectContextResponseSchema,
+  projectContextFailure,
+  serializeProjectContextResponse,
+  type createOwnedProjectContextSession,
   knowledgeSearchWireSchemas,
   knowledgeSearchResponseSchema,
   knowledgeSearchFailure,
@@ -23,6 +28,7 @@ import {
   type createOwnedBusinessTraceSession,
 } from '@codeatlas/agent-api';
 
+type ContextSession = ReturnType<typeof createOwnedProjectContextSession>;
 type SearchSession = ReturnType<typeof createOwnedKnowledgeSearchSession>;
 type Session = ReturnType<typeof createOwnedBusinessTraceSession>;
 export interface OwnedBusinessStdioLimits {
@@ -56,15 +62,34 @@ export function createOwnedKnowledgeSearchMcpServer(
 ) {
   return createOwnedQueryMcpServer(options, streams, 'search_knowledge');
 }
-function createOwnedQueryMcpServer(
-  options: { session: Session | SearchSession; limits: OwnedBusinessStdioLimits },
+export function createOwnedProjectContextMcpServer(
+  options: { session: ContextSession; limits: OwnedBusinessStdioLimits },
   streams: { input: Readable; output: Writable },
-  tool: 'trace_flow' | 'search_knowledge',
+) {
+  return createOwnedQueryMcpServer(options, streams, 'get_project_context');
+}
+function createOwnedQueryMcpServer(
+  options: { session: Session | SearchSession | ContextSession; limits: OwnedBusinessStdioLimits },
+  streams: { input: Readable; output: Writable },
+  tool: 'trace_flow' | 'search_knowledge' | 'get_project_context',
 ) {
   const isSearch = tool === 'search_knowledge';
-  const failure = isSearch ? knowledgeSearchFailure : businessTraceFailure;
-  const responseSchema = isSearch ? knowledgeSearchResponseSchema : businessTraceResponseSchema;
-  const serialize = isSearch ? serializeKnowledgeSearchResponse : serializeBusinessTraceResponse;
+  const isContext = tool === 'get_project_context';
+  const failure = isContext
+    ? projectContextFailure
+    : isSearch
+      ? knowledgeSearchFailure
+      : businessTraceFailure;
+  const responseSchema = isContext
+    ? projectContextResponseSchema
+    : isSearch
+      ? knowledgeSearchResponseSchema
+      : businessTraceResponseSchema;
+  const serialize = isContext
+    ? serializeProjectContextResponse
+    : isSearch
+      ? serializeKnowledgeSearchResponse
+      : serializeBusinessTraceResponse;
   const o = record(options, ['session', 'limits']);
   const s = record(o.session!.value, ['context', 'descriptor', 'execute', 'close']);
   if (
@@ -93,11 +118,20 @@ function createOwnedQueryMcpServer(
   const limits = Object.freeze(
     Object.fromEntries(Object.entries(l).map(([k, v]) => [k, v.value])),
   ) as unknown as OwnedBusinessStdioLimits;
-  const execute = s.execute!.value.bind(o.session!.value) as (Session | SearchSession)['execute'];
+  const execute = s.execute!.value.bind(o.session!.value) as (
+    Session | SearchSession | ContextSession
+  )['execute'];
   const invalidate = s.close!.value.bind(o.session!.value) as Session['close'];
   const context: unknown = s.context!.value;
   const server = new Server(
-    { name: isSearch ? 'codeatlas-owned-search' : 'codeatlas-owned-business', version: '1' },
+    {
+      name: isContext
+        ? 'codeatlas-owned-context'
+        : isSearch
+          ? 'codeatlas-owned-search'
+          : 'codeatlas-owned-business',
+      version: '1',
+    },
     { capabilities: { tools: {} } },
   );
   const transport = new StdioServerTransport(streams.input, streams.output, {
@@ -204,16 +238,20 @@ function createOwnedQueryMcpServer(
       pending.delete(sending);
     }
   };
-  const { input: inputSchema, output: outputSchema } = isSearch
-    ? knowledgeSearchWireSchemas()
-    : businessTraceWireSchemas();
+  const { input: inputSchema, output: outputSchema } = isContext
+    ? projectContextWireSchemas()
+    : isSearch
+      ? knowledgeSearchWireSchemas()
+      : businessTraceWireSchemas();
   server.setRequestHandler(ListToolsRequestSchema, async () => ({
     tools: [
       {
         name: tool,
-        description: isSearch
-          ? 'Self-owned lexical phrase first page only; no graph or production access.'
-          : 'Self-owned BUSINESS trace only; production access unavailable.',
+        description: isContext
+          ? 'Self-owned selected published L0 only; not a complete project; no production access.'
+          : isSearch
+            ? 'Self-owned lexical phrase first page only; no graph or production access.'
+            : 'Self-owned BUSINESS trace only; production access unavailable.',
         inputSchema,
         outputSchema,
         annotations: { readOnlyHint: true, destructiveHint: false, openWorldHint: false },
