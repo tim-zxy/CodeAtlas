@@ -1,3 +1,15 @@
+## Existing three-tool owned stdio integration - 2026-11-09
+
+P1-18's frozen one-workspace/bounded lifecycle now maps to additive
+createOwnedReadToolsMcpServer and real SDK41-test regression. Exact existing
+BUSINESS/search/L0 wire schemas and per-tool authorizations remain unchanged;
+source scope is captured once and all3 session invalidations/pending work join.
+[Evidence](../superpowers/plans/2026-11-09-owned-read-toolset.md).
+Remaining status/symbol/update tools are not implemented or advertised;
+[decision note](../superpowers/reviews/2026-11-09-remaining-agent-tools.md) is proposed.
+Original P1-17/18/phase gates and4/21 count do not close. No production/source/model/
+Native/R9 or user DB action.
+
 ## Owned selected L0 context - 2026-11-09
 
 Existing P1-17/18, AGENT_API and knowledge-consumption section9 map to exact-current

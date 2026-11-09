@@ -1,3 +1,36 @@
+## Three approved owned read tools in one stdio process - 2026-11-09
+
+Existing P1-18 one-workspace/lifecycle rules now compose the unchanged BUSINESS
+trace, lexical first page and selected L0 contracts in a single official SDK
+Server/Transport. The additive host factory accepts one common workspace/repository
+scope and constructs all three genuine sessions itself; per-tool scope overrides,
+getters and proxies refuse. Scope and shared transport ceilings are captured before
+host function binding, with separate copies per session, so host mutation cannot
+alter later sessions' selection. This is not a new authority or six-tool completion.
+
+Real SDK child tests successfully call all3, retain exact schemas/errors/budgets,
+reject future tools/caller scope changes and prove startup performs no domain-port
+query. Shutdown invalidates all sessions and joins ignoring pending reads from two
+different tools; global calls/writes/stop behavior stays shared. Existing three
+single-tool factories and ordinary CLI behavior remain compatible/closed.
+
+Final41/41 related tests,0fail/cancel/skip/todo,15883.4869ms; MCP build,architecture17,
+format/whitespace and independent review passed. A custom-bind host mutation
+regression first reproduced scope inconsistency; one descriptor-only bounded scope
+snapshot fixed it. Initial grouped factory absence was RED. No user DB/data,
+production query/publication, Source/model/tokenizer, dependency, Native/R9 or
+client configuration choice. Business source is an explicitly synthetic approved
+fixture; search/L0 use real self-owned temporary SQLite, not production quality.
+
+[Composition/evidence](../superpowers/plans/2026-11-09-owned-read-toolset.md);
+[consolidated remaining-tool decision note](../superpowers/reviews/2026-11-09-remaining-agent-tools.md)
+is PROPOSED, not implemented. get_knowledge_status/understand_symbol/update_knowledge
+are unadvertised. Source enum mapping, provider/run unknown states and public
+adapter semantics require a concentrated decision; no fictitious healthy/default
+state was introduced. Phase1 stays4/21,A6 NOT_QUALIFIED,E02 PROPOSED/uninstalled.
+CI196 exact33e6a90 terminal TS/Rust success; Native old R8 approved script catalog
+prerequisite failed, actual qualification skipped. New source requires its own CI.
+
 ## Approved selected L0 project context - 2026-11-09
 
 Implemented the user-approved get_project_context v1 owned-data slice: only explicit

@@ -15,17 +15,17 @@ import {
   projectContextResponseSchema,
   projectContextFailure,
   serializeProjectContextResponse,
-  type createOwnedProjectContextSession,
+  createOwnedProjectContextSession,
   knowledgeSearchWireSchemas,
   knowledgeSearchResponseSchema,
   knowledgeSearchFailure,
   serializeKnowledgeSearchResponse,
-  type createOwnedKnowledgeSearchSession,
+  createOwnedKnowledgeSearchSession,
   businessTraceWireSchemas,
   businessTraceResponseSchema,
   businessTraceFailure,
   serializeBusinessTraceResponse,
-  type createOwnedBusinessTraceSession,
+  createOwnedBusinessTraceSession,
 } from '@codeatlas/agent-api';
 
 type ContextSession = ReturnType<typeof createOwnedProjectContextSession>;
@@ -49,6 +49,27 @@ function record(value: unknown, keys: readonly string[]): PropertyDescriptorMap 
     throw Error('INVALID_OWNED_STDIO_OPTIONS');
   return descriptors;
 }
+function stdioLimits(value: unknown): OwnedBusinessStdioLimits {
+  const l = record(value, [
+    'maxMessageBytes',
+    'maxConcurrentCalls',
+    'maxItems',
+    'maxDepth',
+    'requestTimeoutMs',
+  ]);
+  for (const key of Object.keys(l)) {
+    const value = l[key]!.value;
+    if (
+      !Number.isSafeInteger(value) ||
+      Object.is(value, -0) ||
+      value < (key === 'maxDepth' ? 0 : 1)
+    )
+      throw Error('INVALID_OWNED_STDIO_OPTIONS');
+  }
+  return Object.freeze(
+    Object.fromEntries(Object.entries(l).map(([k, v]) => [k, v.value])),
+  ) as unknown as OwnedBusinessStdioLimits;
+}
 /** Explicit self-owned host binding only. No production issuer, fixture, DB or Source opener. */
 export function createOwnedBusinessTraceMcpServer(
   options: { session: Session; limits: OwnedBusinessStdioLimits },
@@ -68,68 +89,169 @@ export function createOwnedProjectContextMcpServer(
 ) {
   return createOwnedQueryMcpServer(options, streams, 'get_project_context');
 }
+type ToolName = 'trace_flow' | 'search_knowledge' | 'get_project_context';
+type ReadSession = Session | SearchSession | ContextSession;
+type Scope = { workspaceId: string; repositoryIds: string[] };
+type ScopedPorts<T> = Omit<T, 'workspaceId' | 'repositoryIds'>;
+function portFields(value: unknown, keys: readonly string[]) {
+  if (!value || typeof value !== 'object' || types.isProxy(value))
+    throw Error('INVALID_OWNED_STDIO_OPTIONS');
+  const d = record(value, [
+    ...keys,
+    ...(Object.hasOwn(value, 'tokenCounter') ? ['tokenCounter'] : []),
+  ]);
+  return Object.fromEntries(Object.entries(d).map(([key, v]) => [key, v.value]));
+}
+/** Three existing read contracts, one constructor-owned scope; no startup read or production authority. */
+export function createOwnedReadToolsMcpServer(
+  options: {
+    scope: Scope;
+    business: ScopedPorts<Parameters<typeof createOwnedBusinessTraceSession>[0]>;
+    search: ScopedPorts<Parameters<typeof createOwnedKnowledgeSearchSession>[0]>;
+    projectContext: ScopedPorts<Parameters<typeof createOwnedProjectContextSession>[0]>;
+    limits: OwnedBusinessStdioLimits;
+  },
+  streams: { input: Readable; output: Writable },
+) {
+  const d = record(options, ['scope', 'business', 'search', 'projectContext', 'limits']);
+  const p = record(d.scope!.value, ['workspaceId', 'repositoryIds']);
+  const limits = stdioLimits(d.limits!.value);
+  const rawRepos = p.repositoryIds!.value;
+  if (
+    typeof p.workspaceId!.value !== 'string' ||
+    !Array.isArray(rawRepos) ||
+    types.isProxy(rawRepos)
+  )
+    throw Error('INVALID_OWNED_STDIO_OPTIONS');
+  const rd = Object.getOwnPropertyDescriptors(rawRepos as object),
+    length = rd.length!.value;
+  if (
+    !Number.isSafeInteger(length) ||
+    length < 1 ||
+    length > limits.maxItems ||
+    Reflect.ownKeys(rd).length !== length + 1
+  )
+    throw Error('INVALID_OWNED_STDIO_OPTIONS');
+  const repos: string[] = [];
+  for (let i = 0; i < length; i++) {
+    const v = rd[String(i)];
+    if (!v?.enumerable || !Object.hasOwn(v, 'value') || typeof v.value !== 'string')
+      throw Error('INVALID_OWNED_STDIO_OPTIONS');
+    repos.push(v.value);
+  }
+  const workspaceId = p.workspaceId!.value as string;
+  // Snapshot once before invoking host function binding; do not share the caller's mutable scope array.
+  const scope = () => ({ workspaceId, repositoryIds: [...repos] });
+  const business = portFields(d.business!.value, [
+    'limits',
+    'authorize',
+    'knowledgeQuery',
+  ]) as ScopedPorts<Parameters<typeof createOwnedBusinessTraceSession>[0]>;
+  const search = portFields(d.search!.value, [
+    'limits',
+    'authorize',
+    'knowledgeQuery',
+  ]) as ScopedPorts<Parameters<typeof createOwnedKnowledgeSearchSession>[0]>;
+  const projectContext = portFields(d.projectContext!.value, [
+    'selectedRefs',
+    'limits',
+    'authorize',
+    'knowledgeQuery',
+  ]) as ScopedPorts<Parameters<typeof createOwnedProjectContextSession>[0]>;
+  const made: ReadSession[] = [];
+  try {
+    const traceSession = createOwnedBusinessTraceSession({ ...business, ...scope() });
+    made.push(traceSession);
+    const searchSession = createOwnedKnowledgeSearchSession({ ...search, ...scope() });
+    made.push(searchSession);
+    const contextSession = createOwnedProjectContextSession({ ...projectContext, ...scope() });
+    made.push(contextSession);
+    return createOwnedQueryMcpServer(
+      { session: traceSession, limits },
+      streams,
+      'trace_flow',
+      new Map<ToolName, ReadSession>([
+        ['search_knowledge', searchSession],
+        ['get_project_context', contextSession],
+      ]),
+    );
+  } catch (error) {
+    for (const session of made) session.close();
+    throw error;
+  }
+}
 function createOwnedQueryMcpServer(
   options: { session: Session | SearchSession | ContextSession; limits: OwnedBusinessStdioLimits },
   streams: { input: Readable; output: Writable },
-  tool: 'trace_flow' | 'search_knowledge' | 'get_project_context',
+  tool: ToolName,
+  additional: ReadonlyMap<ToolName, ReadSession> = new Map(),
 ) {
-  const isSearch = tool === 'search_knowledge';
-  const isContext = tool === 'get_project_context';
-  const failure = isContext
-    ? projectContextFailure
-    : isSearch
-      ? knowledgeSearchFailure
-      : businessTraceFailure;
-  const responseSchema = isContext
-    ? projectContextResponseSchema
-    : isSearch
-      ? knowledgeSearchResponseSchema
-      : businessTraceResponseSchema;
-  const serialize = isContext
-    ? serializeProjectContextResponse
-    : isSearch
-      ? serializeKnowledgeSearchResponse
-      : serializeBusinessTraceResponse;
   const o = record(options, ['session', 'limits']);
-  const s = record(o.session!.value, ['context', 'descriptor', 'execute', 'close']);
-  if (
-    typeof s.execute!.value !== 'function' ||
-    types.isProxy(s.execute!.value) ||
-    typeof s.close!.value !== 'function' ||
-    types.isProxy(s.close!.value)
-  )
-    throw Error('INVALID_OWNED_STDIO_OPTIONS');
-  const l = record(o.limits!.value, [
-    'maxMessageBytes',
-    'maxConcurrentCalls',
-    'maxItems',
-    'maxDepth',
-    'requestTimeoutMs',
-  ]);
-  for (const key of Object.keys(l)) {
-    const value = l[key]!.value;
-    if (
-      !Number.isSafeInteger(value) ||
-      Object.is(value, -0) ||
-      value < (key === 'maxDepth' ? 0 : 1)
-    )
-      throw Error('INVALID_OWNED_STDIO_OPTIONS');
-  }
-  const limits = Object.freeze(
-    Object.fromEntries(Object.entries(l).map(([k, v]) => [k, v.value])),
-  ) as unknown as OwnedBusinessStdioLimits;
-  const execute = s.execute!.value.bind(o.session!.value) as (
-    Session | SearchSession | ContextSession
-  )['execute'];
-  const invalidate = s.close!.value.bind(o.session!.value) as Session['close'];
-  const context: unknown = s.context!.value;
+  const bindings = new Map(
+    [...new Map<ToolName, ReadSession>([[tool, o.session!.value], ...additional])].map(
+      ([name, session]) => {
+        const isSearch = name === 'search_knowledge',
+          isContext = name === 'get_project_context';
+        const s = record(session, ['context', 'descriptor', 'execute', 'close']);
+        if (
+          typeof s.execute!.value !== 'function' ||
+          types.isProxy(s.execute!.value) ||
+          typeof s.close!.value !== 'function' ||
+          types.isProxy(s.close!.value)
+        )
+          throw Error('INVALID_OWNED_STDIO_OPTIONS');
+        const wire = isContext
+          ? projectContextWireSchemas()
+          : isSearch
+            ? knowledgeSearchWireSchemas()
+            : businessTraceWireSchemas();
+        return [
+          name,
+          {
+            execute: s.execute!.value.bind(session) as ReadSession['execute'],
+            invalidate: s.close!.value.bind(session) as Session['close'],
+            context: s.context!.value as unknown,
+            failure: isContext
+              ? projectContextFailure
+              : isSearch
+                ? knowledgeSearchFailure
+                : businessTraceFailure,
+            responseSchema: isContext
+              ? projectContextResponseSchema
+              : isSearch
+                ? knowledgeSearchResponseSchema
+                : businessTraceResponseSchema,
+            serialize: isContext
+              ? serializeProjectContextResponse
+              : isSearch
+                ? serializeKnowledgeSearchResponse
+                : serializeBusinessTraceResponse,
+            descriptor: {
+              name,
+              description: isContext
+                ? 'Self-owned selected published L0 only; not a complete project; no production access.'
+                : isSearch
+                  ? 'Self-owned lexical phrase first page only; no graph or production access.'
+                  : 'Self-owned BUSINESS trace only; production access unavailable.',
+              inputSchema: wire.input,
+              outputSchema: wire.output,
+              annotations: { readOnlyHint: true, destructiveHint: false, openWorldHint: false },
+            },
+          },
+        ] as const;
+      },
+    ),
+  );
+  const limits = stdioLimits(o.limits!.value);
   const server = new Server(
     {
-      name: isContext
-        ? 'codeatlas-owned-context'
-        : isSearch
-          ? 'codeatlas-owned-search'
-          : 'codeatlas-owned-business',
+      name: additional.size
+        ? 'codeatlas-owned-read-tools'
+        : tool === 'get_project_context'
+          ? 'codeatlas-owned-context'
+          : tool === 'search_knowledge'
+            ? 'codeatlas-owned-search'
+            : 'codeatlas-owned-business',
       version: '1',
     },
     { capabilities: { tools: {} } },
@@ -154,10 +276,12 @@ function createOwnedQueryMcpServer(
     closing = true;
     shutdown.abort();
     let invalidationFailed = false;
-    try {
-      invalidate();
-    } catch {
-      invalidationFailed = true;
+    for (const binding of bindings.values()) {
+      try {
+        binding.invalidate();
+      } catch {
+        invalidationFailed = true;
+      }
     }
     closeTask = Promise.resolve().then(async () => {
       let transportFailed = false;
@@ -238,29 +362,13 @@ function createOwnedQueryMcpServer(
       pending.delete(sending);
     }
   };
-  const { input: inputSchema, output: outputSchema } = isContext
-    ? projectContextWireSchemas()
-    : isSearch
-      ? knowledgeSearchWireSchemas()
-      : businessTraceWireSchemas();
   server.setRequestHandler(ListToolsRequestSchema, async () => ({
-    tools: [
-      {
-        name: tool,
-        description: isContext
-          ? 'Self-owned selected published L0 only; not a complete project; no production access.'
-          : isSearch
-            ? 'Self-owned lexical phrase first page only; no graph or production access.'
-            : 'Self-owned BUSINESS trace only; production access unavailable.',
-        inputSchema,
-        outputSchema,
-        annotations: { readOnlyHint: true, destructiveHint: false, openWorldHint: false },
-      },
-    ],
+    tools: [...bindings.values()].map((binding) => binding.descriptor),
   }));
   server.setRequestHandler(CallToolRequestSchema, (request, extra) => {
-    if (request.params.name !== tool)
-      throw new McpError(ErrorCode.MethodNotFound, 'Tool unavailable.');
+    const binding = bindings.get(request.params.name as ToolName);
+    if (!binding) throw new McpError(ErrorCode.MethodNotFound, 'Tool unavailable.');
+    const { failure, responseSchema, serialize, execute, context } = binding;
     const control = Object.freeze({
       signal: AbortSignal.any([extra.signal, shutdown.signal]),
       maxItems: limits.maxItems,

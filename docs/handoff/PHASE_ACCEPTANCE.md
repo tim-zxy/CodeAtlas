@@ -1,3 +1,10 @@
+## Owned three-tool stdio composition evidence - 2026-11-09
+
+Unchanged BUSINESS/search/L0 contracts run in one fixed-workspace SDK process;
+41/41 related tests, MCP build,architecture17 and independent review pass. This
+is not all six tools, full scopes, production service or P1-17/18 acceptance.
+Phase1 remains4/21. [Scope and retained failures](../superpowers/plans/2026-11-09-owned-read-toolset.md).
+
 ## Owned L0 context component evidence - 2026-11-09
 
 Selected-current published metadata -> Application -> Agent -> real SDK child

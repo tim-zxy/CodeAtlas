@@ -122,3 +122,17 @@ missing/truncated subsets remain explicit. Full metadata is byte/token-bounded;
 no production tokenizer/permission, whole overview, L1/L2 or production query is
 implied. Separate one-session SDK factory preserves existing two factory contracts
 and normal CLI closure. [100-test evidence](../../superpowers/plans/2026-11-09-owned-l0-context.md).
+
+## Existing-contract three-tool owned stdio host - 2026-11-09
+
+The additive [host composition](../../superpowers/specs/2026-11-09-owned-read-toolset.md)
+constructs the three already-approved sessions from one captured workspace/repository
+scope. It rejects per-tool scope fields and does not trust returned descriptors
+as authority. A descriptor-only snapshot precedes host callback binding; independent
+copies prevent construction-time caller mutation from changing later sessions.
+No startup domain-port reads, model or updates; only trace_flow(BUSINESS),
+search_knowledge(first page) and get_project_context(selected L0) advertise.
+Every exact wire schema, context, authorization and local ceiling is preserved;
+global call/write bounds and joined shutdown span all three. Existing single-tool
+factories remain compatible. Normal CLI/production, watcher/reconciliation and the
+remaining three tools are not enabled. [41-test evidence](../../superpowers/plans/2026-11-09-owned-read-toolset.md).
