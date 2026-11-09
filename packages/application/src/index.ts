@@ -61,3 +61,8 @@ export { OfflineBusinessFlowTracer } from './offline-business-trace.js';
 export { searchOwnedKnowledge } from './offline-knowledge-search.js';
 
 export { readOwnedProjectContext } from './offline-project-context.js';
+
+export { readOwnedKnowledgeStatus } from './offline-knowledge-status.js';
+
+export { readOwnedSymbolUnderstanding } from './owned-symbol-query.js';
+export type { OwnedSymbolCodeSession } from './owned-symbol-query.js';

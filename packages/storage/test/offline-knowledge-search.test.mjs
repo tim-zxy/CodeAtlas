@@ -432,3 +432,37 @@ test('explicit context metadata selects exact refs before display projection and
     [],
   );
 });
+
+test('status projection never selects display fields and authorizes only selected metadata', async (t) => {
+  const f = await setup(t, true, sampleSet, true);
+  assert.equal(typeof f.store.readKnowledgeStatusProjection, 'function');
+  const rows = f.db.prepare('SELECT item_id,revision_id FROM offline_heads ORDER BY item_id').all();
+  const selected = [{ itemId: rows[0].item_id, revisionId: rows[0].revision_id }];
+  const prepare = f.db.prepare.bind(f.db);
+  let statusQueries = 0;
+  f.db.prepare = (sql) => {
+    if (sql.includes('FROM offline_heads h')) {
+      assert.doesNotMatch(
+        sql,
+        /structuredContent\.(?:title|summary|goal)| AS (?:title|summary|goal)(?:,| FROM)/,
+      );
+      statusQueries++;
+    }
+    return prepare(sql);
+  };
+  const r = f.store.readKnowledgeStatusProjection(
+    selected,
+    (m) => {
+      assert.ok(!m.fields.some((f) => ['TITLE', 'SUMMARY', 'GOAL'].includes(f)));
+      assert.equal(m.heads.length, 1);
+    },
+    limits,
+    f.c,
+  );
+  assert.equal(r.records.length, 1);
+  assert.equal(r.records[0].title, undefined);
+  assert.equal(r.records[0].summary, undefined);
+  assert.equal(r.records[0].goal, undefined);
+  assert.ok(r.records[0].evidence.coverage);
+  assert.ok(statusQueries > 0);
+});

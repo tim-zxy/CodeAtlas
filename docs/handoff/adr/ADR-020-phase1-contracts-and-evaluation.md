@@ -1,3 +1,17 @@
+## Approved status and stored symbol v1 refinements - 2026-11-09
+
+User explicitly approved [two bounded readonly contracts](../../superpowers/specs/2026-11-09-status-symbol.md)
+for self-owned data. Status is exact current-selection metadata only, with explicit
+unobserved/unavailable provider/run fields and no global health assertion. Symbol
+uses existing strict UNDERSTAND and exact expected code revision; original code
+freshness/coverage/refs remain nested and knowledge-only wrapper meta is null/not
+applicable, not a new Canonical enum or invented CodeBasis. Runtime relevance is
+NOT_EVALUATED. Both preserve original permission/budget/cancel/closed-production
+boundaries; async cleanup failure remains UNKNOWN, aborts/poisons and forbids
+reopen, while SDK joins invalidation. No architecture dependency, schema migration,
+threshold, production update or phase acceptance changed. Old proposal notes remain
+history under this bounded refinement.
+
 ## Approved bounded selected L0 context - 2026-11-09
 
 User approved the [selected published L0 contract](../../superpowers/specs/2026-11-09-owned-l0-context.md)

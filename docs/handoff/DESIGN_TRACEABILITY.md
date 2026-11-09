@@ -1,3 +1,17 @@
+## Approved bounded status/symbol + five-read SDK - 2026-11-09
+
+P1-17/18 plus AGENT_API/knowledge-consumption section9 map to Store
+readKnowledgeStatusProjection, Application readOwnedKnowledgeStatus and
+readOwnedSymbolUnderstanding, Agent knowledge-status/symbol-understanding schemas/
+sessions and additive five-read SDK host. [Exact approved scope](../superpowers/specs/2026-11-09-status-symbol.md),
+[evidence](../superpowers/plans/2026-11-09-status-symbol.md): initial148/148, then
+post-cleanup38/38 overlapping affected tests, fresh builds/architecture17 and independent
+associated review. No global health or runtime inference; knowledge meta null only
+for new symbol contract, original code freshness preserved. No title/body SELECT
+in status, no user DB/model/Source-body/production/Native/R9. UNKNOWN cleanup is
+retained and poisoned session cannot reopen. Original full task/phase gates stay
+open;4/21,A6 NOT_QUALIFIED,E02 PROPOSED unchanged.
+
 ## Existing three-tool owned stdio integration - 2026-11-09
 
 P1-18's frozen one-workspace/bounded lifecycle now maps to additive

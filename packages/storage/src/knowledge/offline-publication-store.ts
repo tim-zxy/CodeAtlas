@@ -118,6 +118,9 @@ export type OfflineSearchRecord = {
   summary: string;
   goal: string;
 };
+export type OfflineKnowledgeStatusProjection = Omit<OfflineSearchProjection, 'records'> & {
+  records: Omit<OfflineSearchRecord, 'title' | 'summary' | 'goal'>[];
+};
 export type OfflineSearchProjection = {
   kind: 'OWNED_TEST_PUBLICATION';
   manifest: OfflineSearchManifest;
@@ -385,6 +388,38 @@ export class OfflinePublicationStore {
     check(canonicalCompilationJson(before, c) === canonicalCompilationJson(after, c));
     return before;
   }
+  readKnowledgeStatusProjection(
+    refs: unknown,
+    permissionCheck: (manifest: OfflineSearchManifest) => undefined,
+    limits: HistoryReadLimits,
+    control: RuntimeRequestControl,
+  ): OfflineKnowledgeStatusProjection {
+    const c = ownControl(control),
+      l = checkedHistoryLimits(JSON.parse(canonicalCompilationJson(limits, c))),
+      raw = JSON.parse(canonicalCompilationJson(refs, c));
+    check(Array.isArray(raw) && raw.length <= l.maxRows);
+    const selected = raw.map((v: Record<string, unknown>) => {
+      check(v && typeof v === 'object' && Object.keys(v).sort().join(',') === 'itemId,revisionId');
+      return {
+        itemId: EntityIdSchema.parse(v.itemId),
+        revisionId: EntityIdSchema.parse(v.revisionId),
+      };
+    });
+    check(
+      new Set(
+        selected.map((v: { itemId: string; revisionId: string }) => canonicalCompilationJson(v, c)),
+      ).size === selected.length,
+    );
+    const before = this.readSearchProjection(permissionCheck, l, c, false, true, selected, true);
+    const after = this.readSearchProjection(permissionCheck, l, c, false, true, selected, true);
+    check(canonicalCompilationJson(before, c) === canonicalCompilationJson(after, c));
+    return {
+      ...before,
+      records: before.records.map(
+        ({ title: _title, summary: _summary, goal: _goal, ...record }) => record,
+      ),
+    };
+  }
   readSearchProjection(
     permissionCheck: (manifest: OfflineSearchManifest) => undefined,
     limits: HistoryReadLimits,
@@ -392,6 +427,7 @@ export class OfflinePublicationStore {
     metadataOnly = false,
     withEvidence = false,
     selectedRefs?: readonly { itemId: string; revisionId: string }[],
+    statusOnly = false,
   ): OfflineSearchProjection {
     const c = ownControl(control),
       ownedLimits = checkedHistoryLimits(JSON.parse(canonicalCompilationJson(limits, c)));
@@ -436,9 +472,7 @@ export class OfflinePublicationStore {
           ...(withEvidence ? ['COVERAGE', 'SUPPORT_METADATA'] : []),
           'SOURCE_FRESHNESS',
           'COMPILATION_CURRENCY',
-          'TITLE',
-          'SUMMARY',
-          'GOAL',
+          ...(statusOnly ? [] : ['TITLE', 'SUMMARY', 'GOAL']),
           'PROVENANCE_IDS',
         ]);
       const manifest: OfflineSearchManifest = Object.freeze({
@@ -527,6 +561,9 @@ export class OfflinePublicationStore {
             candidateId +
             " AND json_extract(c.value,'$.payload.type')=json_extract(r.payload_json,'$.itemEnvelope.payload.type') AND json_extract(c.value,'$.payload.scope')=json_extract(r.payload_json,'$.itemEnvelope.payload.scope') AND json_extract(c.value,'$.payload.structuredContent')=json_extract(r.payload_json,'$.revisionEnvelope.payload.structuredContent') AND json_extract(c.value,'$.payload.supportRefs')=json_extract(r.payload_json,'$.revisionEnvelope.payload.supportRefs') AND json_extract(c.value,'$.payload.inputSnapshotRef')=json_extract(r.payload_json,'$.revisionEnvelope.payload.inputSnapshotRef'))=1)";
         }
+        if (statusOnly)
+          for (const key of ['title', 'summary', 'goal', 'title_type', 'summary_type', 'goal_type'])
+            delete expr[key];
         const from =
           ' FROM offline_heads h LEFT JOIN offline_revisions r ON r.id=h.revision_id AND r.item_id=h.item_id LEFT JOIN offline_attempts a ON a.id=r.attempt_id LEFT JOIN offline_receipts p ON p.attempt_id=a.id WHERE h.workspace_id=?' +
           (selectionJson === undefined
@@ -598,8 +635,9 @@ export class OfflinePublicationStore {
                 String(r.compilation_currency),
               ),
           );
-          for (const key of ['title', 'summary', 'goal'])
-            check(r[key + '_type'] === null || r[key + '_type'] === 'text');
+          if (!statusOnly)
+            for (const key of ['title', 'summary', 'goal'])
+              check(r[key + '_type'] === null || r[key + '_type'] === 'text');
           let evidence: OfflineSearchEvidence | undefined;
           if (withEvidence) {
             check(typeof r.coverage_json === 'string' && typeof r.support_json === 'string');
@@ -630,9 +668,9 @@ export class OfflinePublicationStore {
             scopeJson: r.scope_json,
             sourceFreshness: String(r.source_freshness),
             compilationCurrency: String(r.compilation_currency),
-            title: r.title === null ? '' : String(r.title),
-            summary: r.summary === null ? '' : String(r.summary),
-            goal: r.goal === null ? '' : String(r.goal),
+            title: statusOnly ? '' : r.title === null ? '' : String(r.title),
+            summary: statusOnly ? '' : r.summary === null ? '' : String(r.summary),
+            goal: statusOnly ? '' : r.goal === null ? '' : String(r.goal),
           });
         }
       }

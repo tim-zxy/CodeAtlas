@@ -1,3 +1,12 @@
+## Bounded status + exact symbol component evidence - 2026-11-09
+
+Approved self-owned status/symbol and five-read SDK paths have initial148 related
+checks green; cleanup correction then passed38 affected checks, fresh App/Agent/MCP
+builds and architecture17 with associated review. Counts overlap, not a full153
+post-fix claim. This does not accept full P1-17/18: production/runtime health,
+whole scopes and update/publication remain unavailable. Phase1 stays4/21.
+[Commands, failures and limits](../superpowers/plans/2026-11-09-status-symbol.md).
+
 ## Owned three-tool stdio composition evidence - 2026-11-09
 
 Unchanged BUSINESS/search/L0 contracts run in one fixed-workspace SDK process;

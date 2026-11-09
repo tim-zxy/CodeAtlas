@@ -1,3 +1,41 @@
+## Approved selected status + exact stored symbol read tools - 2026-11-09
+
+The user-approved two readonly v1 slices are implemented: get_knowledge_status
+reads only explicit current published metadata (no title/summary/goal/body SELECT),
+returns exact missing/omitted/count partition and stored freshness/currency/coverage/
+sources; providerHealth is NOT_OBSERVED and compilationRuns UNAVAILABLE, not healthy
+or zero activity. wholeProjectStatus stays NOT_ASSESSED/EXPLICIT_SELECTION_ONLY.
+
+understand_symbol uses genuine existing UNDERSTAND over a host-fixed readonly code
+repository, requires exact Canonical symbol and expected active revision before node
+lookup, refuses missing/unindexed/wrong-version, and never guesses names/positions
+or runtime association. Original code CURRENT/STALE/UNKNOWN, persisted-source
+NOT_OBSERVED, Provider coverage/refs/confidence/truncation remain in engineeringResult.
+Knowledge-only wrapper fields are explicitly null/not applicable; Canonical enums
+and CodeBasis are not changed or fabricated. Entry/runtime stays NOT_EVALUATED.
+
+Actual five-read-tool stdio host enforces one captured workspace/repository scope,
+per-tool permission/complete output counter and limits; old 1/3-tool paths remain.
+update_knowledge is not advertised. No Source-body/model/user database/production
+query or publication, new dependency, installed component, Native/R9 or numeric gate.
+
+Parallel nonoverlapping development produced metadata status and symbol modules,
+then root integrated shared exports/SDK. Initial full related148/148,5 builds and
+architecture17 passed. Final resource audit found cleanup failure could leave a
+symbol context reusable and SDK could discard async invalidation failure. App now
+retains UNKNOWN; symbol invalidates/aborts, registers source work before opener,
+joins cleanup and refuses reopen; SDK observes/joins all invalidation promises.
+Post-fix38/38 affected symbol/SDK cases, fresh App/Agent/MCP builds and architecture17
+pass; these overlap148 and are not summed or called a final full153 run. Independent
+initial and associated reviews find no remaining P1/P2 blocker; formatting passes.
+
+[Approved contract](../superpowers/specs/2026-11-09-status-symbol.md),
+[exact commands/RED failures and evidence](../superpowers/plans/2026-11-09-status-symbol.md).
+CI197 exactfd68d05 terminal TS/Rust success; Native old R8 script catalog prerequisite
+failed with actual qualification skipped; it does not verify this new source.
+Phase1 remains4/21,A6 NOT_QUALIFIED,E02 PROPOSED/uninstalled; full tools/scopes/
+production runtime, provider/run health producer and whole phase acceptance stay open.
+
 ## Three approved owned read tools in one stdio process - 2026-11-09
 
 Existing P1-18 one-workspace/lifecycle rules now compose the unchanged BUSINESS

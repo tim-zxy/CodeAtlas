@@ -136,3 +136,22 @@ Every exact wire schema, context, authorization and local ceiling is preserved;
 global call/write bounds and joined shutdown span all three. Existing single-tool
 factories remain compatible. Normal CLI/production, watcher/reconciliation and the
 remaining three tools are not enabled. [41-test evidence](../../superpowers/plans/2026-11-09-owned-read-toolset.md).
+
+## Approved status and stored-symbol v1, owned data - 2026-11-09
+
+[Strict contracts](../../superpowers/specs/2026-11-09-status-symbol.md) add
+get_knowledge_status(SELECTED_PUBLISHED) and understand_symbol(STORED_CODE) with
+fixed host scope, complete canonical byte/token limits and pre-read/pre-delivery
+authorization. Status omits display/body SQL expressions and exposes only selected
+metadata, partitioned missing/omitted refs/counts, NOT_ASSESSED whole-project state
+and NOT_OBSERVED/UNAVAILABLE provider/run fields. Symbol pins exact Canonical ID
+and active revision, uses actual existing code query and preserves original code
+freshness/coverage/refs; knowledge meta null means NOT_APPLICABLE, runtime relevance
+is NOT_EVALUATED, not a guessed relation. Source body/production remain closed.
+
+An additive five-read SDK factory reuses captured common scope and global limits;
+old single/three factories remain compatible, update is absent. Symbol close
+invalidates and aborts immediately, joins registered source work, preserves UNKNOWN
+on cleanup failure and forbids reopening. SDK observes and joins each async
+invalidation once; UNKNOWN is never reported SETTLED. No wire cleanup fields were
+added, nor a real tokenizer/production authority. [148 + affected38 overlapping evidence](../../superpowers/plans/2026-11-09-status-symbol.md).

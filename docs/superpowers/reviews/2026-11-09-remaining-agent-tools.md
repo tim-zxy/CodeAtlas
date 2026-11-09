@@ -1,3 +1,11 @@
+## Bounded status/symbol decision accepted and implemented - 2026-11-09
+
+User approved the two readonly first slices; the controlling [exact contract](../specs/2026-11-09-status-symbol.md)
+and [evidence](../plans/2026-11-09-status-symbol.md) now govern only this self-owned
+implementation. The original PROPOSED note below remains historical. Broader
+provider/run production admission, full symbol/runtime semantics and update remain
+closed; this is not approval for user DB, Source/model or production publication.
+
 # Remaining Agent tools: consolidated decision note
 
 Status PROPOSED_NOT_APPROVED, not a new frozen contract or permission. Source inspected at33e6a90; current batch changes only existing three-tool SDK composition.

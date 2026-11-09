@@ -11,6 +11,16 @@ import {
   McpError,
 } from '@modelcontextprotocol/sdk/types.js';
 import {
+  createOwnedKnowledgeStatusSession,
+  knowledgeStatusWireSchemas,
+  knowledgeStatusResponseSchema,
+  knowledgeStatusFailure,
+  serializeKnowledgeStatusResponse,
+  createOwnedSymbolUnderstandingSession,
+  symbolUnderstandingWireSchemas,
+  symbolUnderstandingResponseSchema,
+  symbolUnderstandingFailure,
+  serializeSymbolUnderstandingResponse,
   projectContextWireSchemas,
   projectContextResponseSchema,
   projectContextFailure,
@@ -28,6 +38,8 @@ import {
   createOwnedBusinessTraceSession,
 } from '@codeatlas/agent-api';
 
+type StatusSession = ReturnType<typeof createOwnedKnowledgeStatusSession>;
+type SymbolSession = ReturnType<typeof createOwnedSymbolUnderstandingSession>;
 type ContextSession = ReturnType<typeof createOwnedProjectContextSession>;
 type SearchSession = ReturnType<typeof createOwnedKnowledgeSearchSession>;
 type Session = ReturnType<typeof createOwnedBusinessTraceSession>;
@@ -89,8 +101,13 @@ export function createOwnedProjectContextMcpServer(
 ) {
   return createOwnedQueryMcpServer(options, streams, 'get_project_context');
 }
-type ToolName = 'trace_flow' | 'search_knowledge' | 'get_project_context';
-type ReadSession = Session | SearchSession | ContextSession;
+type ToolName =
+  | 'trace_flow'
+  | 'search_knowledge'
+  | 'get_project_context'
+  | 'get_knowledge_status'
+  | 'understand_symbol';
+type ReadSession = Session | SearchSession | ContextSession | StatusSession | SymbolSession;
 type Scope = { workspaceId: string; repositoryIds: string[] };
 type ScopedPorts<T> = Omit<T, 'workspaceId' | 'repositoryIds'>;
 function portFields(value: unknown, keys: readonly string[]) {
@@ -103,17 +120,54 @@ function portFields(value: unknown, keys: readonly string[]) {
   return Object.fromEntries(Object.entries(d).map(([key, v]) => [key, v.value]));
 }
 /** Three existing read contracts, one constructor-owned scope; no startup read or production authority. */
-export function createOwnedReadToolsMcpServer(
-  options: {
-    scope: Scope;
-    business: ScopedPorts<Parameters<typeof createOwnedBusinessTraceSession>[0]>;
-    search: ScopedPorts<Parameters<typeof createOwnedKnowledgeSearchSession>[0]>;
-    projectContext: ScopedPorts<Parameters<typeof createOwnedProjectContextSession>[0]>;
-    limits: OwnedBusinessStdioLimits;
-  },
+type ThreeReadOptions = {
+  scope: Scope;
+  business: ScopedPorts<Parameters<typeof createOwnedBusinessTraceSession>[0]>;
+  search: ScopedPorts<Parameters<typeof createOwnedKnowledgeSearchSession>[0]>;
+  projectContext: ScopedPorts<Parameters<typeof createOwnedProjectContextSession>[0]>;
+  limits: OwnedBusinessStdioLimits;
+};
+type FiveReadOptions = ThreeReadOptions & {
+  status: ScopedPorts<Parameters<typeof createOwnedKnowledgeStatusSession>[0]>;
+  symbol: ScopedPorts<Parameters<typeof createOwnedSymbolUnderstandingSession>[0]>;
+};
+export function createOwnedKnowledgeStatusMcpServer(
+  options: { session: StatusSession; limits: OwnedBusinessStdioLimits },
   streams: { input: Readable; output: Writable },
 ) {
-  const d = record(options, ['scope', 'business', 'search', 'projectContext', 'limits']);
+  return createOwnedQueryMcpServer(options, streams, 'get_knowledge_status');
+}
+export function createOwnedSymbolUnderstandingMcpServer(
+  options: { session: SymbolSession; limits: OwnedBusinessStdioLimits },
+  streams: { input: Readable; output: Writable },
+) {
+  return createOwnedQueryMcpServer(options, streams, 'understand_symbol');
+}
+export function createOwnedReadToolsMcpServer(
+  options: ThreeReadOptions,
+  streams: { input: Readable; output: Writable },
+) {
+  return createOwnedReadToolset(options, streams, false);
+}
+export function createOwnedFiveReadToolsMcpServer(
+  options: FiveReadOptions,
+  streams: { input: Readable; output: Writable },
+) {
+  return createOwnedReadToolset(options, streams, true);
+}
+function createOwnedReadToolset(
+  options: ThreeReadOptions | FiveReadOptions,
+  streams: { input: Readable; output: Writable },
+  includeStatusAndSymbol: boolean,
+) {
+  const d = record(options, [
+    'scope',
+    'business',
+    'search',
+    'projectContext',
+    'limits',
+    ...(includeStatusAndSymbol ? ['status', 'symbol'] : []),
+  ]);
   const p = record(d.scope!.value, ['workspaceId', 'repositoryIds']);
   const limits = stdioLimits(d.limits!.value);
   const rawRepos = p.repositoryIds!.value;
@@ -166,14 +220,35 @@ export function createOwnedReadToolsMcpServer(
     made.push(searchSession);
     const contextSession = createOwnedProjectContextSession({ ...projectContext, ...scope() });
     made.push(contextSession);
+    const additional = new Map<ToolName, ReadSession>([
+      ['search_knowledge', searchSession],
+      ['get_project_context', contextSession],
+    ]);
+    if (includeStatusAndSymbol) {
+      const status = portFields(d.status!.value, [
+        'selectedRefs',
+        'limits',
+        'authorize',
+        'knowledgeQuery',
+      ]) as ScopedPorts<Parameters<typeof createOwnedKnowledgeStatusSession>[0]>;
+      const symbol = portFields(d.symbol!.value, [
+        'repositoryId',
+        'limits',
+        'authorize',
+        'openCodeQuery',
+      ]) as ScopedPorts<Parameters<typeof createOwnedSymbolUnderstandingSession>[0]>;
+      const statusSession = createOwnedKnowledgeStatusSession({ ...status, ...scope() });
+      made.push(statusSession);
+      additional.set('get_knowledge_status', statusSession);
+      const symbolSession = createOwnedSymbolUnderstandingSession({ ...symbol, ...scope() });
+      made.push(symbolSession);
+      additional.set('understand_symbol', symbolSession);
+    }
     return createOwnedQueryMcpServer(
       { session: traceSession, limits },
       streams,
       'trace_flow',
-      new Map<ToolName, ReadSession>([
-        ['search_knowledge', searchSession],
-        ['get_project_context', contextSession],
-      ]),
+      additional,
     );
   } catch (error) {
     for (const session of made) session.close();
@@ -181,7 +256,7 @@ export function createOwnedReadToolsMcpServer(
   }
 }
 function createOwnedQueryMcpServer(
-  options: { session: Session | SearchSession | ContextSession; limits: OwnedBusinessStdioLimits },
+  options: { session: ReadSession; limits: OwnedBusinessStdioLimits },
   streams: { input: Readable; output: Writable },
   tool: ToolName,
   additional: ReadonlyMap<ToolName, ReadSession> = new Map(),
@@ -190,8 +265,47 @@ function createOwnedQueryMcpServer(
   const bindings = new Map(
     [...new Map<ToolName, ReadSession>([[tool, o.session!.value], ...additional])].map(
       ([name, session]) => {
-        const isSearch = name === 'search_knowledge',
-          isContext = name === 'get_project_context';
+        const config = {
+          trace_flow: {
+            wire: businessTraceWireSchemas,
+            failure: businessTraceFailure,
+            responseSchema: businessTraceResponseSchema,
+            serialize: serializeBusinessTraceResponse,
+            description: 'Self-owned BUSINESS trace only; production access unavailable.',
+          },
+          search_knowledge: {
+            wire: knowledgeSearchWireSchemas,
+            failure: knowledgeSearchFailure,
+            responseSchema: knowledgeSearchResponseSchema,
+            serialize: serializeKnowledgeSearchResponse,
+            description:
+              'Self-owned lexical phrase first page only; no graph or production access.',
+          },
+          get_project_context: {
+            wire: projectContextWireSchemas,
+            failure: projectContextFailure,
+            responseSchema: projectContextResponseSchema,
+            serialize: serializeProjectContextResponse,
+            description:
+              'Self-owned selected published L0 only; not a complete project; no production access.',
+          },
+          get_knowledge_status: {
+            wire: knowledgeStatusWireSchemas,
+            failure: knowledgeStatusFailure,
+            responseSchema: knowledgeStatusResponseSchema,
+            serialize: serializeKnowledgeStatusResponse,
+            description:
+              'Self-owned selected published metadata only; global health/runs unobserved; no production access.',
+          },
+          understand_symbol: {
+            wire: symbolUnderstandingWireSchemas,
+            failure: symbolUnderstandingFailure,
+            responseSchema: symbolUnderstandingResponseSchema,
+            serialize: serializeSymbolUnderstandingResponse,
+            description:
+              'Self-owned exact stored code symbol/revision only; runtime relevance unevaluated; no production access.',
+          },
+        }[name];
         const s = record(session, ['context', 'descriptor', 'execute', 'close']);
         if (
           typeof s.execute!.value !== 'function' ||
@@ -200,39 +314,19 @@ function createOwnedQueryMcpServer(
           types.isProxy(s.close!.value)
         )
           throw Error('INVALID_OWNED_STDIO_OPTIONS');
-        const wire = isContext
-          ? projectContextWireSchemas()
-          : isSearch
-            ? knowledgeSearchWireSchemas()
-            : businessTraceWireSchemas();
+        const wire = config.wire();
         return [
           name,
           {
             execute: s.execute!.value.bind(session) as ReadSession['execute'],
-            invalidate: s.close!.value.bind(session) as Session['close'],
+            invalidate: s.close!.value.bind(session) as ReadSession['close'],
             context: s.context!.value as unknown,
-            failure: isContext
-              ? projectContextFailure
-              : isSearch
-                ? knowledgeSearchFailure
-                : businessTraceFailure,
-            responseSchema: isContext
-              ? projectContextResponseSchema
-              : isSearch
-                ? knowledgeSearchResponseSchema
-                : businessTraceResponseSchema,
-            serialize: isContext
-              ? serializeProjectContextResponse
-              : isSearch
-                ? serializeKnowledgeSearchResponse
-                : serializeBusinessTraceResponse,
+            failure: config.failure,
+            responseSchema: config.responseSchema,
+            serialize: config.serialize,
             descriptor: {
               name,
-              description: isContext
-                ? 'Self-owned selected published L0 only; not a complete project; no production access.'
-                : isSearch
-                  ? 'Self-owned lexical phrase first page only; no graph or production access.'
-                  : 'Self-owned BUSINESS trace only; production access unavailable.',
+              description: config.description,
               inputSchema: wire.input,
               outputSchema: wire.output,
               annotations: { readOnlyHint: true, destructiveHint: false, openWorldHint: false },
@@ -276,9 +370,12 @@ function createOwnedQueryMcpServer(
     closing = true;
     shutdown.abort();
     let invalidationFailed = false;
+    const invalidations: Promise<unknown>[] = [];
     for (const binding of bindings.values()) {
       try {
-        binding.invalidate();
+        const invalidation = Promise.resolve(binding.invalidate());
+        void invalidation.catch(() => undefined); // Observe immediately while the transport and requests settle.
+        invalidations.push(invalidation);
       } catch {
         invalidationFailed = true;
       }
@@ -291,6 +388,9 @@ function createOwnedQueryMcpServer(
         transportFailed = true;
       }
       await Promise.allSettled([...pending]);
+      const settledInvalidations = await Promise.allSettled(invalidations);
+      if (settledInvalidations.some((result) => result.status === 'rejected'))
+        invalidationFailed = true;
       await setImmediate(); // Writable may emit error after its write callback.
       const result = Object.freeze({
         cleanupState:
