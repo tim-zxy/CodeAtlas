@@ -1,3 +1,7 @@
+## Replay catalog policy compatibility - 2026-11-09
+
+P1 Native qualification preparation: approved pnpm policy is accepted by a finite parser while raw YAML and actual recursive dependency membership stay bound. Unknown/duplicate/malformed policy refuses; historicalv2 and sanctioned exclusions unchanged. Related33/33 and architecture17 pass. [Evidence and remaining topology decision](../superpowers/plans/2026-11-09-replay-workspace-policy.md). Actual current catalog still refuses multi-version resolution; no R9/build/profile or Phase1 acceptance claimed.
+
 ## Existing P1-18 event port -> fresh-owned native directory observer - 2026-11-09
 
 Existing CHANGE/OVERFLOW + readonly abort/managed-close path -> Runtime

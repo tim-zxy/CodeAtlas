@@ -2373,16 +2373,56 @@ export async function discoverRefreshReplayDependenciesAt({
   const workspace = await readFile(path.join(repository, 'pnpm-workspace.yaml'), 'utf8');
   const lines = workspace
     .split(/\r?\n/)
-    .map((line) => line.replace(/\s+#.*$/, '').trim())
-    .filter((line) => line && !line.startsWith('#'));
+    .map((line) => line.replace(/\s+#.*$/, '').trimEnd())
+    .filter((line) => line.trim() && !line.trimStart().startsWith('#'));
   assert.equal(lines.shift(), 'packages:', 'Unsupported workspace catalog configuration');
-  const patterns = lines.map((line) => {
-    const match = /^-\s+(?:'([^']+)'|"([^"]+)"|([^\s]+))$/.exec(line);
-    assert.ok(match, 'Unsupported workspace catalog configuration');
-    const pattern = match[1] ?? match[2] ?? match[3];
-    assert.ok(/^[a-zA-Z0-9_-]+\/\*$/.test(pattern), 'Unsupported workspace catalog pattern');
-    return pattern;
-  });
+  const patterns = [];
+  let section = 'packages';
+  const sections = new Set([section]);
+  const entries = new Map([[section, new Set()]]);
+  for (const line of lines) {
+    if (/^[^\s]/.test(line)) {
+      assert.ok(
+        ['overrides:', 'minimumReleaseAgeExclude:'].includes(line),
+        'Unsupported workspace catalog configuration',
+      );
+      section = line.slice(0, -1);
+      assert.ok(!sections.has(section), 'Duplicate workspace policy section');
+      sections.add(section);
+      entries.set(section, new Set());
+      continue;
+    }
+    let key;
+    if (section === 'overrides') {
+      const match =
+        /^  (?:'([^']+)'|"([^"]+)"|([A-Za-z0-9_][A-Za-z0-9@/_.>+-]*)): (\d+\.\d+\.\d+)$/.exec(line);
+      assert.ok(match, 'Unsupported workspace override policy');
+      key = match[1] ?? match[2] ?? match[3];
+      assert.ok(/^[A-Za-z0-9@/_.>+-]+$/.test(key), 'Unsupported workspace override selector');
+    } else {
+      const match = /^-\s+(?:'([^']+)'|"([^"]+)"|([^\s]+))$/.exec(
+        section === 'packages' ? line.trim() : line.startsWith('  - ') ? line.slice(2) : '',
+      );
+      assert.ok(match, 'Unsupported workspace catalog configuration');
+      key = match[1] ?? match[2] ?? match[3];
+      if (section === 'packages') {
+        assert.ok(/^[a-zA-Z0-9_-]+\/\*$/.test(key), 'Unsupported workspace catalog pattern');
+        patterns.push(key);
+      } else {
+        assert.ok(match[3] === undefined || !key.startsWith('@'), 'Quote scoped workspace policy');
+        assert.ok(
+          /^(?:@[a-z0-9_.-]+\/)?[a-z0-9_.-]+@\d+\.\d+\.\d+$/.test(key),
+          'Unsupported workspace release-age policy',
+        );
+      }
+    }
+    assert.ok(!entries.get(section).has(key), 'Duplicate workspace policy entry');
+    entries.get(section).add(key);
+  }
+  assert.ok(
+    [...entries.values()].every((values) => values.size > 0),
+    'Empty workspace policy',
+  );
   assert.ok(
     patterns.length > 0 && new Set(patterns).size === patterns.length,
     'Invalid workspace patterns',

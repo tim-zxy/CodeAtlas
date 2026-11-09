@@ -1821,6 +1821,53 @@ async function catalogFixture(t) {
   return { directory, repositoryPath, externalPath, nativeExecutablePath, files, options };
 }
 
+test('D5 catalog binds approved dependency policy without treating it as package membership', async (t) => {
+  const f = await catalogFixture(t);
+  const file = path.join(f.repositoryPath, 'pnpm-workspace.yaml');
+  const yaml =
+    "packages:\n  - packages/*\noverrides:\n  '@modelcontextprotocol/sdk@1.32.2>jose': 6.2.16\n  ajv@8.20.0>fast-uri: 3.1.9\nminimumReleaseAgeExclude:\n  - jose@6.2.16\n  - '@scope/pkg@1.2.3'\n";
+  await writeFile(file, yaml);
+  const original = await replay.discoverRefreshReplayDependenciesAt(f.options);
+  assert.equal(
+    original.dependencies.find((x) => x.path === 'repository/pnpm-workspace.yaml').sha256,
+    createHash('sha256').update(yaml).digest('hex'),
+  );
+  await writeFile(file, yaml.replace('6.2.16', '6.2.17'));
+  const changed = await replay.discoverRefreshReplayDependenciesAt(f.options);
+  await assert.rejects(
+    replay.verifyRefreshReplayDependencyCatalog(changed, original.roots, original.dependencies),
+  );
+  assert.deepEqual(
+    changed.dependencies.map((x) => x.path),
+    original.dependencies.map((x) => x.path),
+  );
+});
+
+for (const tail of [
+  'unknownSetting: true\n',
+  'overrides:\n  @scope/pkg: 1.2.3\n',
+  'overrides:\n  >thing: 1.2.3\n',
+  'overrides:\n  thing: latest\n',
+  'overrides:\n  thing: 1.0.0\n  thing: 2.0.0\n',
+  'overrides:\n  thing: 1.0.0\noverrides:\n  other: 1.0.0\n',
+  'minimumReleaseAgeExclude:\n  - *anchor\n',
+  'minimumReleaseAgeExclude:\n  - @scope/pkg@1.2.3\n',
+  'overrides:\n    thing: 1.0.0\n',
+  'overrides:\n',
+]) {
+  test('D5 catalog refuses unsupported dependency policy ' + JSON.stringify(tail), async (t) => {
+    const f = await catalogFixture(t);
+    await writeFile(
+      path.join(f.repositoryPath, 'pnpm-workspace.yaml'),
+      f.files['pnpm-workspace.yaml'] + tail,
+    );
+    await assert.rejects(
+      replay.discoverRefreshReplayDependenciesAt(f.options),
+      /workspace|override|policy/i,
+    );
+  });
+}
+
 test('D5 v3 catalog ignores only exact regular workspace build caches across add/change/remove', async (t) => {
   const f = await catalogFixture(t);
   const original = await replay.discoverRefreshReplayDependenciesAt(f.options);

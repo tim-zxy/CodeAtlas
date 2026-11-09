@@ -1,3 +1,9 @@
+## Replay catalog recognizes approved workspace policy - 2026-11-09
+
+Fixed a real R9 preparation defect: dependency overrides/release-age exclusions were parsed as workspace globs. Finite syntax now preserves raw configuration hashing and actual manifest traversal, rejecting unknown/duplicate/empty/malformed policy and unquoted YAML indicators. No dependency, catalog exclusion, old baseline or topology guard changed. Final related33/33 and architecture17 pass; independent review findings were corrected with counterexamples. [Reproduction, command and remaining blocker](../superpowers/plans/2026-11-09-replay-workspace-policy.md).
+
+Current read-only discovery now reaches the original unbound multi-version topology refusal. Metadata-only audit observed content-type1.0.5/2.1.0 and zod4.6.1/4.6.7; no accepted current catalog or qualification follows. Need a versioned importer-to-package-instance binding decision before real build/sampling preparation can close. No Native/build/R9, user data, production access or numeric adoption executed. Phase1 remains4/21; A6 NOT_QUALIFIED; E02 PROPOSED/uninstalled.
+
 ## Owned temporary OS observer connected - 2026-11-09
 
 Existing P1-18 lifecycle now has actual Node filesystem event input, strictly limited
