@@ -1,3 +1,11 @@
+## Approved replay topology implemented offline - 2026-11-09
+
+Additive Manifest3/generator4/binding3 now binds actual package instances and importer resolution, raw inventories and local physical roots. Default layout8/generator3, oldR8 and all old gates stay unchanged. New layout10 is explicit; capsule/workload/wire evidence stay2. Unknown/missing/mixed/changed inputs refuse, and independent topology rediscovery is required at original read/revalidation/PACK boundaries. [Contract](../superpowers/specs/2026-11-09-replay-topology-v4.md); [commands, failures and limitations](../superpowers/plans/2026-11-09-replay-topology-v4.md).
+
+New topology14/14; legacy record/catalog78/78; layout/PACK/stop96/96; architecture17 and independent review pass. Reviewer workspace-peer finding was fixed with both peer/optional-peer cases. A broad initial selector also ran3 old materializer cases, which stopped at unchanged default generator3 multi-version refusal before Native preparation; retained as blocked, not erased or called passing. Actual development discovery4 refuses the SDK's earlier audited Temp installation outside checkout. No reinstall/build/current accepted closure/real R10 preparation or sampling occurred. Need controlled frozen in-checkout dependency layout before an authorized real build and qualification plan can close; all affected profile families still require fresh reviewed evidence.
+
+CI203 for8831106 is terminal:TypeScript/Rust PASS,Native FAIL at oldR8 script prerequisite. This does not verify the new local changes. No dependency versions, resource numbers, installed components, user data or production permissions changed. Phase1 remains4/21; A6 NOT_QUALIFIED; E02 PROPOSED/uninstalled.
+
 ## Replay catalog recognizes approved workspace policy - 2026-11-09
 
 Fixed a real R9 preparation defect: dependency overrides/release-age exclusions were parsed as workspace globs. Finite syntax now preserves raw configuration hashing and actual manifest traversal, rejecting unknown/duplicate/empty/malformed policy and unquoted YAML indicators. No dependency, catalog exclusion, old baseline or topology guard changed. Final related33/33 and architecture17 pass; independent review findings were corrected with counterexamples. [Reproduction, command and remaining blocker](../superpowers/plans/2026-11-09-replay-workspace-policy.md).

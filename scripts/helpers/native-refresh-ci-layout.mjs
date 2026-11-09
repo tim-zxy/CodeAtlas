@@ -17,9 +17,19 @@ export function refreshCiLayoutRootForRevision(revision) {
   if (revision === 'p05-d5-exact-layout-v6') return 'C:\\CodeAtlas-P05-D5-R6';
   if (revision === 'p05-d5-exact-layout-v7') return 'C:\\CodeAtlas-P05-D5-R7';
   if (revision === 'p05-d5-exact-layout-v8') return 'C:\\CodeAtlas-P05-D5-R8';
+  if (revision === 'p05-d5-exact-layout-v10') return 'C:\\CodeAtlas-P05-D5-R10';
   assert.equal(revision, 'p05-d5-exact-layout-v9', 'Unsupported CI layout revision');
   return 'C:\\CodeAtlas-P05-D5-R9';
 }
+export function refreshCiReplayGeneratorForRevision(revision) {
+  refreshCiLayoutRootForRevision(revision);
+  return revision === 'p05-d5-exact-layout-v1'
+    ? 'p05-refresh-replay-v2'
+    : revision === 'p05-d5-exact-layout-v10'
+      ? 'p05-refresh-replay-v4'
+      : 'p05-refresh-replay-v3';
+}
+
 export const refreshCiLayoutRoot = refreshCiLayoutRootForRevision(refreshCiLayoutRevision);
 
 export function assertRefreshCiOutputOutsideLayouts(output) {
@@ -34,6 +44,7 @@ export function assertRefreshCiOutputOutsideLayouts(output) {
     'p05-d5-exact-layout-v7',
     'p05-d5-exact-layout-v8',
     'p05-d5-exact-layout-v9',
+    'p05-d5-exact-layout-v10',
   ]) {
     const relative = path.relative(refreshCiLayoutRootForRevision(revision), output);
     assert.ok(

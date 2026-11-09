@@ -1,3 +1,7 @@
+## Explicit replay topology fixture version - 2026-11-09
+
+The approved private development contract [topology v4](../../superpowers/specs/2026-11-09-replay-topology-v4.md) adds opt-in p05-d5-exact-layout-v10 at C:/CodeAtlas-P05-D5-R10. prepare/PACK select it explicitly; default layout8/generator3 remains. All original roots and10 are protected from output overlap. New layout uses cooperative stop-only controls and existing finite preparation scopes; no hard process-tree/RAM/batch-time isolation is implied. No actual layout acquisition, build or sampling follows from code support. Production configuration, resource formulas, numeric reservations, permissions and old records are unchanged.
+
 ## Fresh-owned OS observer implementation of existing event port - 2026-11-09
 
 The additive [owned directory observer](../../superpowers/specs/2026-11-09-owned-directory-observer.md)

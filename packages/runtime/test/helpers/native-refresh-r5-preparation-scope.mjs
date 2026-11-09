@@ -19,6 +19,7 @@ const executablePaths = [
   'p05-d5-exact-layout-v7',
   'p05-d5-exact-layout-v8',
   'p05-d5-exact-layout-v9',
+  'p05-d5-exact-layout-v10',
 ].map((revision) =>
   path.join(refreshCiLayoutRootForRevision(revision), 'native', 'codeatlas-native-analyzer.exe'),
 );

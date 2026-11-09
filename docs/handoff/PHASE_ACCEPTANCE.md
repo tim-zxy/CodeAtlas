@@ -1,3 +1,7 @@
+## Additive replay topology component evidence - 2026-11-09
+
+New explicit Manifest3/generator4/binding3/layout10 and unchanged execution evidence2 have self-owned offline component coverage. New topology14/14; affected legacy catalog/record78/78; CI layout/PACK/stop96/96; architecture17 and independent review pass. [Commands, original failures and readiness limits](../superpowers/plans/2026-11-09-replay-topology-v4.md). Original acceptance checkboxes, R8 pin and default path stay unchanged. The installed SDK currently resolves outside checkout into the earlier audited temporary SDK tree; new discovery refuses. No current accepted closure, Native/build/measurement or production result follows. Phase1 stays4/21; A6 NOT_QUALIFIED; E02 PROPOSED/uninstalled.
+
 ## Actual owned-temporary event transport evidence - 2026-11-09
 
 Native nonrecursive events from factory-created fresh temp directories feed the

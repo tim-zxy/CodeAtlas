@@ -16,6 +16,7 @@ import {
   refreshCiLayoutRoot,
   refreshCiLayoutRevision,
   refreshCiLayoutRootForRevision,
+  refreshCiReplayGeneratorForRevision,
   assertRefreshCiOutputOutsideLayouts,
 } from './helpers/native-refresh-ci-layout.mjs';
 import {
@@ -64,8 +65,9 @@ async function prepareRefreshCiEvidence(outputInput, repositoryPath, revision) {
   assertRefreshCiOutputOutsideLayouts(output);
   await mkdir(output);
   let stage = 'BUILD';
-  const control =
-    revision === 'p05-d5-exact-layout-v9' ? await createR9StopControl(output) : undefined;
+  const control = ['p05-d5-exact-layout-v9', 'p05-d5-exact-layout-v10'].includes(revision)
+    ? await createR9StopControl(output)
+    : undefined;
   try {
     if (control) await control.checkpoint('BEFORE_BUILD');
     assert.equal(process.platform, 'win32');
@@ -141,6 +143,7 @@ async function prepareRefreshCiEvidence(outputInput, repositoryPath, revision) {
       ['bench', layout.evidenceRoot],
       layout.fixtureContext,
       control,
+      refreshCiReplayGeneratorForRevision(revision),
     );
     await copyFile(
       receiptPath,
@@ -260,13 +263,19 @@ export async function runRefreshCiAt(args, repositoryPath) {
   if (args[0] === 'prepare') {
     assert.ok(args.length === 2 || args.length === 3, 'Invalid prepare arguments');
     if (args.length === 3)
-      assert.equal(args[2], 'p05-d5-exact-layout-v9', 'Unsupported prepare layout revision');
+      assert.ok(
+        ['p05-d5-exact-layout-v9', 'p05-d5-exact-layout-v10'].includes(args[2]),
+        'Unsupported prepare layout revision',
+      );
     return prepareRefreshCiEvidence(args[1], repositoryPath, args[2] ?? refreshCiLayoutRevision);
   }
   if (args[0] === 'pack') {
     assert.ok(args.length === 4 || args.length === 5, 'Invalid pack arguments');
     if (args.length === 5)
-      assert.equal(args[4], 'p05-d5-exact-layout-v9', 'Unsupported pack layout revision');
+      assert.ok(
+        ['p05-d5-exact-layout-v9', 'p05-d5-exact-layout-v10'].includes(args[4]),
+        'Unsupported pack layout revision',
+      );
     const revision = args[4] ?? refreshCiLayoutRevision;
     const packRoot = refreshCiLayoutRootForRevision(revision);
     assert.equal(
@@ -281,6 +290,7 @@ export async function runRefreshCiAt(args, repositoryPath) {
     );
     const result = await createRefreshCiPack({
       layout: await readRefreshCiPackLayout(revision),
+      layoutRevision: revision,
       candidatePath: args[1],
       holdoutPath: args[2],
       outputArchive: args[3],

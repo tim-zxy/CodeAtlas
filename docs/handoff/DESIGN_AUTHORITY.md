@@ -1,3 +1,7 @@
+## Approved versioned replay topology - 2026-11-09
+
+User explicitly approved the new package-instance/import-resolution catalog and validation contract, retaining R8 and all existing gates. [Exact offline schema and scope](../superpowers/specs/2026-11-09-replay-topology-v4.md) specifies explicit Manifest3/generator4/binding3/layout10, original execution evidence2, raw bytes/physical binding, failure closure and legacy defaults. No build/sampling, dependency reinstall, numeric/profile adoption, PACK/publication, production access or CI fixture-reference switch is authorized by this approval.
+
 ## Approved captured service-binding continuation - 2026-11-08
 
 User approved preserving actual frozen contract/service/support bindings in the

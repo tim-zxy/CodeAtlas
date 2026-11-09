@@ -21,6 +21,7 @@ import {
   hashRefreshCiFile,
   refreshCiFixtureContext,
   refreshCiLayoutRootForRevision,
+  refreshCiReplayGeneratorForRevision,
   assertRefreshCiOutputOutsideLayouts,
   verifyRefreshCiLayoutOwnership,
 } from './native-refresh-ci-layout.mjs';
@@ -223,6 +224,19 @@ export async function verifyRefreshCiPack({ approval: input, archivePath, reposi
 }
 
 // Necessary script-membership prerequisite only. A match is never Native qualification.
+export function assertRefreshCiReplayFormat(revision, manifest) {
+  assert.equal(
+    manifest.generator.revision,
+    refreshCiReplayGeneratorForRevision(revision),
+    'Pack generator/layout revision differs',
+  );
+  assert.equal(
+    manifest.schemaVersion === 3,
+    revision === 'p05-d5-exact-layout-v10',
+    'Pack manifest/layout version differs',
+  );
+}
+
 export async function inspectRefreshCiScriptCatalog({
   approval: input,
   manifestBytes,
@@ -390,13 +404,7 @@ export async function installRefreshCiPackAt(args, root) {
     manifest,
   );
   assert.deepEqual(manifest.corpus, approval.corpus, 'Pack corpus differs');
-  assert.equal(
-    manifest.generator.revision,
-    approval.layoutRevision === 'p05-d5-exact-layout-v1'
-      ? 'p05-refresh-replay-v2'
-      : 'p05-refresh-replay-v3',
-    'Pack generator/layout revision differs',
-  );
+  assertRefreshCiReplayFormat(approval.layoutRevision, manifest);
   assert.equal(binding.artifactRoot, path.dirname(manifestPath), 'Pack artifact geometry differs');
   assert.equal(
     binding.replayRoot,
@@ -419,6 +427,7 @@ export async function installRefreshCiPackAt(args, root) {
     catalog,
     catalog.roots,
     manifest.generator.dependencies,
+    manifest.generator.topology,
   );
   // This locator alone is explicitly nonsemantic; all other archived bytes stay pinned.
   const localBinding = validateRefreshReplayLocalBindingRecord(
@@ -559,7 +568,13 @@ async function ownedPackInventory(layout) {
   return freeze(entries);
 }
 
-export async function createRefreshCiPack({ layout, candidatePath, holdoutPath, outputArchive }) {
+export async function createRefreshCiPack({
+  layout,
+  candidatePath,
+  holdoutPath,
+  outputArchive,
+  layoutRevision,
+}) {
   assertRefreshCiOutputOutsideLayouts(outputArchive);
   await verifyRefreshCiLayoutOwnership(layout);
   // Refuse live SQLite state before copying review evidence or creating output.
@@ -584,6 +599,22 @@ export async function createRefreshCiPack({ layout, candidatePath, holdoutPath, 
   const fixtureContext = refreshCiFixtureContext(layout);
   const manifestPath = path.join(layout.evidenceRoot, 'corpus', 'artifacts', 'manifest.json');
   const bindingPath = path.join(layout.evidenceRoot, 'corpus', 'local-binding.json');
+  const manifest = validateRefreshReplayManifestRecord(
+    decodeRefreshReplayJson(await readFile(manifestPath)),
+  );
+  const revision =
+    layoutRevision ??
+    (layout.root === refreshCiLayoutRootForRevision('p05-d5-exact-layout-v10')
+      ? 'p05-d5-exact-layout-v10'
+      : undefined);
+  if (revision !== undefined) {
+    assert.equal(
+      layout.root,
+      refreshCiLayoutRootForRevision(revision),
+      'Pack layout root/revision differs',
+    );
+    assertRefreshCiReplayFormat(revision, manifest);
+  } else assert.notEqual(manifest.schemaVersion, 3, 'Topology pack requires explicit layout10');
   const values = await readRefreshTransportReplayCorpus(manifestPath, bindingPath, fixtureContext);
   const candidate = await readEvidenceJson(candidatePath);
   relativePath(candidate.manifest?.path);

@@ -1,3 +1,7 @@
+## Approved importer-to-instance catalog amendment - 2026-11-09
+
+User explicitly approved additive versioned topology and validation. [Controlling contract](../../superpowers/specs/2026-11-09-replay-topology-v4.md) adds Manifest3/generator4/binding3 with explicit layout10; original1..9, default8, R8 evidence and approvals remain. Generator4 binds independently discovered package instances, declared import kinds, exact resolution/sharing, raw inventories and local physical roots. Capsule/workload/wire evidence remain2. This extends development qualification identity only; no eligibility, numerical value, standard or real execution is granted. Root-relative installation locators preserve only the existing independent checkout-root binding step, never logical Native/corpus equivalence. New closure failure cannot fall back to R8; rollback closes the additive entry and preserves all history.
+
 ## R5 Q3最终本地结算 — 2026-11-04
 
 用户另行批准一次固定R5 context续接后，D exit0、22/22 ACTUAL_ADMITTED、0failure；实际最高350482432＜批准399069184 bytes，耗时51分47秒。与此前27/27必需profile观察、15/15 ACTUAL_PRIVATE_PORT各自构成本地Q3退出，四用途批准值已安装。候选/环境/22类覆盖/持久状态/transaction与TEMP关闭、原工具及Native pin终审通过。[准确结果与原失败](../../superpowers/reviews/2026-11-03-phase1-native-profile-installation-review.md)；唯一索引为原B results.nativeCiQualificationPreparation.q3.finalExit。

@@ -235,6 +235,7 @@ async function revalidateReplayInputs(owner) {
     await discoverRefreshReplayDependencies(owner.dContext, owner.manifest.generator.revision),
     owner.binding.dependencyRoots,
     owner.manifest.generator.dependencies,
+    owner.manifest.generator.topology,
   );
 }
 
@@ -277,6 +278,7 @@ async function readRefreshTransportReplays(manifestPath, bindingPath, names, dCo
     await discoverRefreshReplayDependencies(fixtureContext, manifest.generator.revision),
     binding.dependencyRoots,
     manifest.generator.dependencies,
+    manifest.generator.topology,
   );
   const pins = [];
   const pin = async (file, sha256) => pins.push({ file, sha256, info: await realRegular(file) });
@@ -424,7 +426,7 @@ async function readRefreshTransportReplays(manifestPath, bindingPath, names, dCo
       assert.equal(item.assets.find((asset) => asset.path === trial.receiptPath)?.kind, 'ORACLE');
       assert.equal(item.assets.find((asset) => asset.path === trial.databasePath)?.kind, 'SQLITE');
     }
-    if (manifest.schemaVersion === 2 && item.name === 'd-cancel') {
+    if (manifest.schemaVersion >= 2 && item.name === 'd-cancel') {
       const { qualifyRefreshCancelReference } =
         await import('./native-refresh-cancel-reference.mjs');
       owner.cancelReference = await qualifyRefreshCancelReference(
@@ -447,7 +449,7 @@ async function readRefreshTransportReplays(manifestPath, bindingPath, names, dCo
   await revalidateReplayInputs(selected[0]);
   return selected.map((owner) => {
     const value = freezeReplayRecord({
-      ...(manifest.schemaVersion === 2
+      ...(manifest.schemaVersion >= 2
         ? {
             schemaVersion: 2,
             outputContract: owner.item.outputContract,
@@ -467,7 +469,7 @@ async function readRefreshTransportReplays(manifestPath, bindingPath, names, dCo
             item.name,
             {
               ...item.inputContract,
-              ...(manifest.schemaVersion === 2
+              ...(manifest.schemaVersion >= 2
                 ? {
                     outputContract: item.outputContract,
                     outputReference:
@@ -696,7 +698,7 @@ export async function createRefreshTransportPrefixAudit(root, identity, dContext
     };
     const core = {
       ...proof,
-      verificationDigest: identityHash('p05-refresh-replay-verification-v2', {
+      verificationDigest: refreshReplayVerificationDigest(owner.manifest.schemaVersion, {
         caseDigest: value.caseDigest,
         resultSha256: artifact.assets.result.sha256,
         receiptSha256: artifact.assets.envelope.sha256,
@@ -728,7 +730,12 @@ export async function createRefreshTransportPrefixAudit(root, identity, dContext
 
 // Fixed CLI owner: no supplied child runner, receipt registration or admission
 // override. All preparation/oracles remain outside each measured process.
-export async function runRefreshTransportCommand(args, dContext, control) {
+export async function runRefreshTransportCommand(
+  args,
+  dContext,
+  control,
+  generatorRevision = 'p05-refresh-replay-v3',
+) {
   if (control) await control.checkpoint('TRANSPORT_BEGIN');
   const fixtureContext =
     dContext === undefined ? undefined : snapshotDRefreshFixtureContext(dContext);
@@ -822,7 +829,12 @@ export async function runRefreshTransportCommand(args, dContext, control) {
   await mkdir(output); // Never adopt or overwrite another run's directory.
   try {
     if (command === 'bench') {
-      await prepareRefreshTransportCorpus(path.join(output, 'corpus'), fixtureContext, control);
+      await prepareRefreshTransportCorpus(
+        path.join(output, 'corpus'),
+        fixtureContext,
+        control,
+        generatorRevision,
+      );
       const values = await readCases(output);
       const identity = values[0].identity;
       const qualification = { cases: [], failures: [] };
@@ -1021,7 +1033,7 @@ async function runOwnedRefreshReplay(value, measurement) {
     let functionalReceipt = receipt;
     if (measurement) {
       recordKeys(receipt, [
-        ...(owner.manifest.schemaVersion === 2 ? ['schemaVersion'] : []),
+        ...(owner.manifest.schemaVersion >= 2 ? ['schemaVersion'] : []),
         'name',
         'repetition',
         'mode',
@@ -1053,14 +1065,14 @@ async function runOwnedRefreshReplay(value, measurement) {
       assert.equal(receipt.workspacePath, value.workspacePath);
       const sidecar = decodeRefreshReplayJson(await readFile(envelope.sidecar.path));
       recordKeys(sidecar, [
-        ...(owner.manifest.schemaVersion === 2 ? ['schemaVersion', 'wireEvidence'] : []),
+        ...(owner.manifest.schemaVersion >= 2 ? ['schemaVersion', 'wireEvidence'] : []),
         'snapshotMetadata',
         'mainApplyCalls',
         'competitorCommits',
         'cleanupFailureText',
       ]);
       functionalReceipt = freezeReplayRecord({
-        ...(owner.manifest.schemaVersion === 2 ? { wireEvidence: sidecar.wireEvidence } : {}),
+        ...(owner.manifest.schemaVersion >= 2 ? { wireEvidence: sidecar.wireEvidence } : {}),
         observedOutcome: receipt.observedOutcome,
         operationThrew: receipt.operationThrew,
         operationFailureText: receipt.operationFailureText,
@@ -1073,7 +1085,7 @@ async function runOwnedRefreshReplay(value, measurement) {
       });
     }
     recordKeys(functionalReceipt, [
-      ...(owner.manifest.schemaVersion === 2 ? ['wireEvidence'] : []),
+      ...(owner.manifest.schemaVersion >= 2 ? ['wireEvidence'] : []),
       'observedOutcome',
       'operationThrew',
       'operationFailureText',
@@ -1303,7 +1315,7 @@ export async function verifyRefreshTransportReplay(value, receiptValue) {
     await verifyRefreshReplayAsset(binding.artifactRoot, graph);
   }
   const { corpusPayloadDigest, expectedOutcome, ...physical } = item.inputContract;
-  const cancelledPrefix = owner.manifest.schemaVersion === 2 && item.name === 'd-cancel';
+  const cancelledPrefix = owner.manifest.schemaVersion >= 2 && item.name === 'd-cancel';
   let outputProof = null;
   const fixedPhysical = (value) =>
     cancelledPrefix
@@ -1351,7 +1363,7 @@ export async function verifyRefreshTransportReplay(value, receiptValue) {
   await guardIssuedReplayReceipt(issued);
   await revalidateReplayInputs(owner);
   const proof = {
-    ...(owner.manifest.schemaVersion === 2 ? { outputProof } : {}),
+    ...(owner.manifest.schemaVersion >= 2 ? { outputProof } : {}),
     persistentStateVerified,
     transactionClosed: receipt.transactionClosed === true,
     tempClosed: receipt.tempClosed === true,
@@ -1359,24 +1371,21 @@ export async function verifyRefreshTransportReplay(value, receiptValue) {
   };
   const core = {
     ...proof,
-    verificationDigest: identityHash(
-      `p05-refresh-replay-verification-v${owner.manifest.schemaVersion}`,
-      {
-        caseDigest: value.caseDigest,
-        resultSha256: issued.resultSha256,
-        ...(owner.manifest.schemaVersion === 2
-          ? {
-              receiptSha256: bytesHash(
-                await readFile(path.join(issued.artifactDirectory, 'receipt.json')),
-              ),
-              sidecarSha256: issued.measurement
-                ? bytesHash(await readFile(path.join(issued.artifactDirectory, 'metadata.json')))
-                : null,
-            }
-          : { receipt: bytesHash(encodeRefreshReplayJson(receiptValue)) }),
-        proof,
-      },
-    ),
+    verificationDigest: refreshReplayVerificationDigest(owner.manifest.schemaVersion, {
+      caseDigest: value.caseDigest,
+      resultSha256: issued.resultSha256,
+      ...(owner.manifest.schemaVersion >= 2
+        ? {
+            receiptSha256: bytesHash(
+              await readFile(path.join(issued.artifactDirectory, 'receipt.json')),
+            ),
+            sidecarSha256: issued.measurement
+              ? bytesHash(await readFile(path.join(issued.artifactDirectory, 'metadata.json')))
+              : null,
+          }
+        : { receipt: bytesHash(encodeRefreshReplayJson(receiptValue)) }),
+      proof,
+    }),
   };
   let proofArtifact = null;
   if (cancelledPrefix && issued.measurement && !issued.verification) {
@@ -1421,7 +1430,7 @@ export async function verifyRefreshTransportReplay(value, receiptValue) {
   } else if (issued.verification) proofArtifact = issued.verification.proofArtifact ?? null;
   const verification = freezeReplayRecord({
     ...core,
-    ...(owner.manifest.schemaVersion === 2 ? { proofArtifact } : {}),
+    ...(owner.manifest.schemaVersion >= 2 ? { proofArtifact } : {}),
   });
   if (issued.verification) assert.deepEqual(verification, issued.verification);
   else {
@@ -1537,7 +1546,17 @@ export async function failRefreshPreparation(
   throw error;
 }
 
-export async function prepareRefreshTransportCorpus(outputDirectory, dContext, control) {
+export async function prepareRefreshTransportCorpus(
+  outputDirectory,
+  dContext,
+  control,
+  generatorRevision = 'p05-refresh-replay-v3',
+) {
+  assert.ok(
+    ['p05-refresh-replay-v3', 'p05-refresh-replay-v4'].includes(generatorRevision),
+    'Unsupported preparation generator',
+  );
+  const manifestVersion = generatorRevision === 'p05-refresh-replay-v4' ? 3 : 2;
   if (control) await control.checkpoint('CORPUS_BEGIN');
   const fixtureContext =
     dContext === undefined ? undefined : snapshotDRefreshFixtureContext(dContext);
@@ -1548,7 +1567,7 @@ export async function prepareRefreshTransportCorpus(outputDirectory, dContext, c
   const replayRoot = path.join(outputDirectory, 'replay');
   await mkdir(artifactRoot);
   await mkdir(replayRoot);
-  const catalog = await discoverRefreshReplayDependencies(fixtureContext);
+  const catalog = await discoverRefreshReplayDependencies(fixtureContext, generatorRevision);
   const cases = [];
   const retainedFixturePaths = [];
   const cleanupFailures = [];
@@ -2095,7 +2114,7 @@ export async function prepareRefreshTransportCorpus(outputDirectory, dContext, c
           inputContract,
           outputContract,
         };
-        item.caseDigest = identityHash('p05-refresh-replay-case-v2', item);
+        item.caseDigest = identityHash('p05-refresh-replay-case-v' + manifestVersion, item);
         item.inputContract = { ...inputContract, corpusPayloadDigest: item.caseDigest };
         cases.push(item);
       } catch (error) {
@@ -2109,21 +2128,29 @@ export async function prepareRefreshTransportCorpus(outputDirectory, dContext, c
       }
     }
     await verifyRefreshReplayDependencyCatalog(
-      await discoverRefreshReplayDependencies(fixtureContext),
+      await discoverRefreshReplayDependencies(fixtureContext, generatorRevision),
       catalog.roots,
       catalog.dependencies,
+      catalog.topology,
     );
     const manifest = {
-      schemaVersion: 2,
+      schemaVersion: manifestVersion,
       workspace: 'REFRESH_TRANSPORT',
       corpus: { revision: 'p05-native-refresh-transport-memory-v1' },
-      generator: { revision: 'p05-refresh-replay-v3', dependencies: catalog.dependencies },
+      generator: {
+        revision: generatorRevision,
+        dependencies: catalog.dependencies,
+        ...(manifestVersion === 3 ? { topology: catalog.topology } : {}),
+      },
       cases,
     };
-    manifest.corpus.digest = identityHash('p05-refresh-replay-corpus-v2', manifest);
+    manifest.corpus.digest = identityHash(
+      'p05-refresh-replay-corpus-v' + manifestVersion,
+      manifest,
+    );
     validateRefreshReplayManifestRecord(manifest);
     const binding = {
-      schemaVersion: 2,
+      schemaVersion: manifestVersion,
       workspace: 'REFRESH_TRANSPORT',
       corpusDigest: manifest.corpus.digest,
       artifactRoot,
@@ -2286,7 +2313,9 @@ export async function discoverRefreshReplayDependenciesAt({
   generatorRevision = 'p05-refresh-replay-v3',
 }) {
   assert.ok(
-    ['p05-refresh-replay-v2', 'p05-refresh-replay-v3'].includes(generatorRevision),
+    ['p05-refresh-replay-v2', 'p05-refresh-replay-v3', 'p05-refresh-replay-v4'].includes(
+      generatorRevision,
+    ),
     'Unsupported replay generator revision',
   );
   const repository = await realpath(repositoryPath);
@@ -2300,6 +2329,11 @@ export async function discoverRefreshReplayDependenciesAt({
   const physicalPackages = new Set();
   const packageInventories = new Map();
   const packageIdentities = new Map();
+  const topologyEnabled = generatorRevision === 'p05-refresh-replay-v4';
+  const instances = [];
+  const imports = [];
+  const workspaceNodes = [];
+  const workspaceIds = new Map();
 
   async function inventory(root, relative = '', skip = () => false) {
     const destination = path.join(root, relative);
@@ -2461,7 +2495,7 @@ export async function discoverRefreshReplayDependenciesAt({
         repository,
         `${relative}/dist`,
         (file) =>
-          (generatorRevision === 'p05-refresh-replay-v3' &&
+          (['p05-refresh-replay-v3', 'p05-refresh-replay-v4'].includes(generatorRevision) &&
             file === `${relative}/dist/.tsbuildinfo`) ||
           file === 'packages/runtime/dist/native-metadata-profiles.js' ||
           file === 'packages/runtime/dist/native-metadata-profiles.js.map' ||
@@ -2486,60 +2520,159 @@ export async function discoverRefreshReplayDependenciesAt({
   }
   include('native', await inventory(path.dirname(native), path.basename(native)));
 
-  async function visitDependencies(directory, value, tooling = false) {
+  if (topologyEnabled) {
+    for (const [name, { directory }] of workspaces) {
+      const relative = path.relative(repository, directory).split(path.sep).join('/');
+      const id = 'workspace-' + identityHash('p05-refresh-workspace-v1', relative);
+      workspaceIds.set(name, id);
+      workspaceNodes.push({ id, name, path: relative });
+    }
+  }
+  const physicalIds = new Map();
+  async function visitDependencies(directory, value, tooling = false, from = 'repository') {
+    const declarations = new Map();
+    if (topologyEnabled) {
+      for (const name of Object.keys(value.peerDependencies ?? {}))
+        declarations.set(
+          name,
+          value.peerDependenciesMeta?.[name]?.optional === true ? 'OPTIONAL_PEER' : 'PEER',
+        );
+    }
+    if (tooling)
+      for (const name of Object.keys(value.devDependencies ?? {}))
+        declarations.set(name, 'TOOLING');
+    for (const name of Object.keys(value.dependencies ?? {})) declarations.set(name, 'DEPENDENCY');
+    for (const name of Object.keys(value.optionalDependencies ?? {}))
+      declarations.set(name, 'OPTIONAL');
     const required = { ...(tooling ? value.devDependencies : {}), ...value.dependencies };
     const optional = value.optionalDependencies ?? {};
-    for (const name of Object.keys({ ...required, ...optional }).sort()) {
+    for (const name of [...declarations.keys()].sort()) {
       if (name.startsWith('node:')) continue;
+      const kind = declarations.get(name);
+      const edge = (target) => {
+        if (topologyEnabled) imports.push({ from, specifier: name, kind, target });
+      };
       if (workspaces.has(name)) {
-        // Workspace packages are all enumerated and traversed independently below.
         assert.ok(
-          String(required[name] ?? optional[name]).startsWith('workspace:'),
+          String(
+            topologyEnabled && ['PEER', 'OPTIONAL_PEER'].includes(kind)
+              ? value.peerDependencies[name]
+              : topologyEnabled && kind === 'OPTIONAL'
+                ? optional[name]
+                : (required[name] ?? optional[name]),
+          ).startsWith('workspace:'),
           'Workspace package resolution is not explicit',
         );
+        if (topologyEnabled) {
+          let target;
+          try {
+            target = await resolvePackageRoot(name, directory);
+          } catch (error) {
+            if (['OPTIONAL', 'OPTIONAL_PEER'].includes(kind) && error.code === 'MODULE_NOT_FOUND') {
+              edge(null);
+              continue;
+            }
+            throw error;
+          }
+          assert.equal(
+            await realpath(target),
+            workspaces.get(name).directory,
+            'Workspace resolution topology differs',
+          );
+        }
+        edge(workspaceIds.get(name));
         continue;
       }
       let resolved;
       try {
         resolved = await resolvePackageRoot(name, directory);
       } catch (error) {
-        if (Object.hasOwn(optional, name) && error.code === 'MODULE_NOT_FOUND') continue;
+        if (['OPTIONAL', 'OPTIONAL_PEER'].includes(kind) && error.code === 'MODULE_NOT_FOUND') {
+          edge(null);
+          continue;
+        }
         throw error;
       }
       const physical = await realpath(resolved);
       const external = await manifest(physical);
       assert.equal(external.name, name, 'Package alias resolution topology is not represented');
-      if (physicalPackages.has(physical)) continue;
-      physicalPackages.add(physical);
+      if (physicalPackages.has(physical)) {
+        edge(physicalIds.get(physical));
+        continue;
+      }
+      const entries = await inventory(physical, '', (relative) => relative === 'node_modules');
+      const inventoryDigest = identityHash('p05-refresh-instance-files-v1', entries);
+      const instancePath = path.relative(repository, physical).split(path.sep).join('/');
+      if (topologyEnabled) canonicalRelativePath(instancePath);
       const rootName =
         'package-' +
-        createHash('sha256').update(`${external.name}\0${external.version}`).digest('hex');
-      assert.ok(
-        !packageIdentities.has(name) || packageIdentities.get(name) === rootName,
-        'Multiple versions have unbound package resolution topology',
-      );
-      packageIdentities.set(name, rootName);
-      const entries = await inventory(physical, '', (relative) => relative === 'node_modules');
-      if (packageInventories.has(rootName)) {
-        assert.deepEqual(
-          entries,
-          packageInventories.get(rootName),
-          'Conflicting package installations',
+        (topologyEnabled
+          ? identityHash('p05-refresh-instance-v1', {
+              name: external.name,
+              version: external.version,
+              path: instancePath,
+              inventoryDigest,
+            })
+          : createHash('sha256')
+              .update(external.name + '\0' + external.version)
+              .digest('hex'));
+      if (!topologyEnabled) {
+        assert.ok(
+          !packageIdentities.has(name) || packageIdentities.get(name) === rootName,
+          'Multiple versions have unbound package resolution topology',
         );
-        // A flat name/version root cannot identify each importer's physical
-        // resolution. Even identical bytes do not prove that topology.
-        assert.fail('Multiple physical package installations need catalog contract review');
-      } else {
-        packageInventories.set(rootName, entries);
-        roots.set(rootName, physical);
-        include(rootName, entries);
+        packageIdentities.set(name, rootName);
+        if (packageInventories.has(rootName)) {
+          assert.deepEqual(
+            entries,
+            packageInventories.get(rootName),
+            'Conflicting package installations',
+          );
+          assert.fail('Multiple physical package installations need catalog contract review');
+        }
       }
-      await visitDependencies(physical, external);
+      physicalPackages.add(physical);
+      physicalIds.set(physical, rootName);
+      packageInventories.set(rootName, entries);
+      roots.set(rootName, physical);
+      include(rootName, entries);
+      if (topologyEnabled)
+        instances.push({
+          id: rootName,
+          name: external.name,
+          version: external.version,
+          path: instancePath,
+          inventoryDigest,
+        });
+      edge(rootName);
+      await visitDependencies(physical, external, false, rootName);
     }
   }
-  for (const { directory, value } of workspaces.values()) await visitDependencies(directory, value);
+  for (const [name, { directory, value }] of workspaces)
+    await visitDependencies(directory, value, false, workspaceIds.get(name));
   await visitDependencies(repository, await manifest(repository), true);
+  let topology;
+  if (topologyEnabled) {
+    const core = {
+      schemaVersion: 1,
+      workspaces: workspaceNodes.sort((a, b) => lexical(a.id, b.id)),
+      instances: instances.sort((a, b) => lexical(a.id, b.id)),
+      imports: imports.sort((a, b) => lexical(topologyImportKey(a), topologyImportKey(b))),
+    };
+    topology = { ...core, digest: identityHash('p05-refresh-topology-v1', core) };
+  }
   return Object.freeze({
+    ...(topologyEnabled
+      ? {
+          topology: validateRefreshReplayTopologyRecord(
+            topology,
+            [...dependencies]
+              .sort(([a], [b]) => lexical(a, b))
+              .map(([path, sha256]) => ({ path, sha256 })),
+            [...roots].map(([name, path]) => ({ name, path })),
+          ),
+        }
+      : {}),
     roots: Object.freeze(
       [...roots]
         .sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))
@@ -2577,11 +2710,163 @@ async function resolveInstalledPackage(name, importer) {
   }
 }
 
+function topologyImportKey(edge) {
+  return edge.from + '\0' + edge.kind + '\0' + edge.specifier;
+}
+
+export function validateRefreshReplayTopologyRecord(input, dependencies, roots) {
+  const topology = decodeRefreshReplayJson(encodeRefreshReplayJson(input));
+  dependencies = decodeRefreshReplayJson(encodeRefreshReplayJson(dependencies));
+  if (roots !== undefined) roots = decodeRefreshReplayJson(encodeRefreshReplayJson(roots));
+  recordKeys(topology, ['schemaVersion', 'workspaces', 'instances', 'imports', 'digest']);
+  assert.equal(topology.schemaVersion, 1, 'Unsupported dependency topology');
+  ordered(topology.workspaces, (x) => x.id);
+  ordered(topology.instances, (x) => x.id);
+  ordered(topology.imports, topologyImportKey);
+  const nodes = new Map([['repository', null]]);
+  const instancePaths = new Set();
+  const importNames = new Set();
+  const names = new Set();
+  const paths = new Set();
+  for (const workspace of topology.workspaces) {
+    recordKeys(workspace, ['id', 'name', 'path']);
+    nonempty(workspace.name);
+    canonicalRelativePath(workspace.path);
+    assert.equal(
+      workspace.id,
+      'workspace-' + identityHash('p05-refresh-workspace-v1', workspace.path),
+      'Workspace topology identity mismatch',
+    );
+    assert.ok(
+      !names.has(workspace.name) && !paths.has(workspace.path),
+      'Duplicate topology workspace',
+    );
+    names.add(workspace.name);
+    paths.add(workspace.path);
+    nodes.set(workspace.id, workspace.name);
+  }
+  assert.ok(topology.workspaces.length > 0, 'Empty topology workspaces');
+  for (const instance of topology.instances) {
+    recordKeys(instance, ['id', 'name', 'version', 'path', 'inventoryDigest']);
+    canonicalRelativePath(instance.path);
+    assert.ok(!instancePaths.has(instance.path), 'Duplicate topology instance locator');
+    instancePaths.add(instance.path);
+    assert.equal(
+      instance.id,
+      'package-' +
+        identityHash('p05-refresh-instance-v1', {
+          name: instance.name,
+          version: instance.version,
+          path: instance.path,
+          inventoryDigest: instance.inventoryDigest,
+        }),
+      'Instance identity mismatch',
+    );
+    assert.match(instance.id, /^package-[a-f0-9]{64}$/);
+    nonempty(instance.name);
+    nonempty(instance.version);
+    digest(instance.inventoryDigest);
+    assert.ok(!nodes.has(instance.id), 'Duplicate topology instance');
+    nodes.set(instance.id, instance.name);
+    const entries = dependencies
+      .filter((x) => x.path.startsWith(instance.id + '/'))
+      .map((x) => ({ path: x.path.slice(instance.id.length + 1), sha256: x.sha256 }));
+    ordered(entries, (x) => x.path);
+    assert.ok(
+      entries.length > 0 && entries.some((x) => x.path === 'package.json'),
+      'Missing instance inventory',
+    );
+    for (const item of entries) {
+      canonicalRelativePath(item.path);
+      digest(item.sha256);
+    }
+    assert.equal(
+      instance.inventoryDigest,
+      identityHash('p05-refresh-instance-files-v1', entries),
+      'Instance inventory digest mismatch',
+    );
+    if (roots !== undefined) {
+      const root = roots.find((x) => x.name === instance.id);
+      assert.ok(root, 'Missing topology instance root');
+      canonicalAbsolutePath(root.path);
+      const repositoryRoot = roots.find((x) => x.name === 'repository');
+      assert.ok(repositoryRoot, 'Missing topology repository');
+      assert.equal(
+        root.path,
+        path.join(repositoryRoot.path, instance.path),
+        'Instance physical identity mismatch',
+      );
+    }
+  }
+  for (const entry of dependencies) {
+    const root = entry.path.split('/')[0];
+    assert.ok(
+      ['repository', 'native'].includes(root) || topology.instances.some((x) => x.id === root),
+      'Unbound topology inventory',
+    );
+  }
+  if (roots !== undefined)
+    assert.deepEqual(
+      roots.map((x) => x.name).sort(),
+      ['repository', 'native', ...topology.instances.map((x) => x.id)].sort(),
+      'Unbound topology root',
+    );
+  for (const edge of topology.imports) {
+    recordKeys(edge, ['from', 'specifier', 'kind', 'target']);
+    assert.ok(nodes.has(edge.from), 'Unknown topology importer');
+    const importName = edge.from + '\0' + edge.specifier;
+    assert.ok(!importNames.has(importName), 'Duplicate topology import name');
+    importNames.add(importName);
+    assert.match(edge.specifier, /^(?:@[a-zA-Z0-9_.-]+\/)?[a-zA-Z0-9_.-]+$/);
+    assert.ok(
+      ['DEPENDENCY', 'OPTIONAL', 'PEER', 'OPTIONAL_PEER', 'TOOLING'].includes(edge.kind),
+      'Unknown topology dependency kind',
+    );
+    assert.ok(edge.kind !== 'TOOLING' || edge.from === 'repository', 'Foreign tooling importer');
+    if (edge.target === null)
+      assert.ok(
+        ['OPTIONAL', 'OPTIONAL_PEER'].includes(edge.kind),
+        'Missing required topology target',
+      );
+    else assert.equal(nodes.get(edge.target), edge.specifier, 'Unknown or aliased topology target');
+  }
+  const reached = new Set(['repository', ...topology.workspaces.map((x) => x.id)]);
+  const queue = [...reached];
+  for (let i = 0; i < queue.length; i++)
+    for (const edge of topology.imports.filter((x) => x.from === queue[i]))
+      if (edge.target !== null && !reached.has(edge.target)) {
+        reached.add(edge.target);
+        queue.push(edge.target);
+      }
+  assert.ok(
+    topology.instances.every((x) => reached.has(x.id)),
+    'Unreachable topology instance',
+  );
+  const { digest: actual, ...core } = topology;
+  digest(actual);
+  assert.equal(
+    actual,
+    identityHash('p05-refresh-topology-v1', core),
+    'Dependency topology digest mismatch',
+  );
+  return freezeReplayRecord(topology);
+}
+
 export async function verifyRefreshReplayDependencyCatalog(
   current,
   declaredRoots,
   declaredDependencies,
+  declaredTopology,
 ) {
+  assert.equal(
+    current.topology !== undefined,
+    declaredTopology !== undefined,
+    'Missing or mixed dependency topology',
+  );
+  if (current.topology !== undefined) {
+    validateRefreshReplayTopologyRecord(declaredTopology, declaredDependencies, declaredRoots);
+    assert.deepEqual(current.topology, declaredTopology, 'Dependency topology drift');
+  }
   // Compare full independent membership before any replay consumer receives a case.
   assert.deepEqual(declaredRoots, current.roots, 'Dependency root resolution drift');
   assert.deepEqual(
@@ -2667,6 +2952,11 @@ function ordered(items, key) {
   for (let index = 1; index < items.length; index++)
     assert.ok(key(items[index - 1]) < key(items[index]), 'Unsorted or duplicate replay list');
 }
+export function refreshReplayVerificationDigest(version, value) {
+  assert.ok([1, 2, 3].includes(version), 'Unsupported replay verification version');
+  return identityHash('p05-refresh-replay-verification-v' + version, value);
+}
+
 function identityHash(domain, value) {
   return createHash('sha256')
     .update(domain + '\0')
@@ -2727,6 +3017,12 @@ export function validateRefreshReplayLocalBindingRecord(value, manifestValue) {
     binding.dependencyRoots.some((root) => root.name === 'native'),
     'Missing native root',
   );
+  if (manifest.schemaVersion === 3)
+    validateRefreshReplayTopologyRecord(
+      manifest.generator.topology,
+      manifest.generator.dependencies,
+      binding.dependencyRoots,
+    );
   return freezeReplayRecord(binding);
 }
 
@@ -2736,7 +3032,7 @@ export function validateRefreshReplayCapsuleRecord(value, manifestValue, binding
   const binding = validateRefreshReplayLocalBindingRecord(bindingValue, manifest);
   const capsule = decodeRefreshReplayJson(encodeRefreshReplayJson(value));
   recordKeys(capsule, [
-    ...(manifest.schemaVersion === 2 ? ['schemaVersion', 'outputContract'] : []),
+    ...(manifest.schemaVersion >= 2 ? ['schemaVersion', 'outputContract'] : []),
     'name',
     'workspacePath',
     'databasePath',
@@ -2746,7 +3042,7 @@ export function validateRefreshReplayCapsuleRecord(value, manifestValue, binding
   ]);
   const item = manifest.cases.find((entry) => entry.name === capsule.name);
   assert.ok(item, 'Unknown capsule case');
-  if (manifest.schemaVersion === 2) {
+  if (manifest.schemaVersion >= 2) {
     assert.equal(capsule.schemaVersion, 2, 'Mixed replay capsule version');
     assert.deepEqual(capsule.outputContract, item.outputContract);
   }
@@ -2789,12 +3085,32 @@ export function validateRefreshReplayManifestRecord(value) {
   // Snapshot own-data JSON before accessing fields; also validates scalars/accessors/cycles.
   const manifest = decodeRefreshReplayJson(encodeRefreshReplayJson(value));
   recordKeys(manifest, ['schemaVersion', 'workspace', 'corpus', 'generator', 'cases']);
-  assert.ok([1, 2].includes(manifest.schemaVersion), 'Unsupported replay manifest version');
+  assert.ok([1, 2, 3].includes(manifest.schemaVersion), 'Unsupported replay manifest version');
   assert.equal(manifest.workspace, 'REFRESH_TRANSPORT');
   recordKeys(manifest.corpus, ['revision', 'digest']);
   assert.equal(manifest.corpus.revision, 'p05-native-refresh-transport-memory-v1');
   digest(manifest.corpus.digest);
-  recordKeys(manifest.generator, ['revision', 'dependencies']);
+  recordKeys(manifest.generator, [
+    'revision',
+    'dependencies',
+    ...(manifest.schemaVersion === 3 ? ['topology'] : []),
+  ]);
+  if (manifest.schemaVersion === 3) {
+    assert.equal(
+      manifest.generator.revision,
+      'p05-refresh-replay-v4',
+      'Mixed replay generator version',
+    );
+    validateRefreshReplayTopologyRecord(
+      manifest.generator.topology,
+      manifest.generator.dependencies,
+    );
+  } else
+    assert.notEqual(
+      manifest.generator.revision,
+      'p05-refresh-replay-v4',
+      'Mixed replay manifest version',
+    );
   nonempty(manifest.generator.revision);
   ordered(manifest.generator.dependencies, (item) => item.path);
   for (const item of manifest.generator.dependencies) {
@@ -2809,7 +3125,7 @@ export function validateRefreshReplayManifestRecord(value) {
   );
   for (const item of manifest.cases) {
     recordKeys(item, [
-      ...(manifest.schemaVersion === 2 ? ['outputContract'] : []),
+      ...(manifest.schemaVersion >= 2 ? ['outputContract'] : []),
       'name',
       'sourceTransition',
       'expectedOutcome',
@@ -2844,7 +3160,7 @@ export function validateRefreshReplayManifestRecord(value) {
     };
     reference(item.seedPath, 'SQLITE');
     reference(item.capsulePath, 'REPLAY_CAPSULE');
-    if (manifest.schemaVersion === 2) {
+    if (manifest.schemaVersion >= 2) {
       validateRefreshOutputContract(item.name, item.inputContract, item.outputContract);
       if (item.name === 'd-cancel') {
         reference(item.outputContract.referencePath, 'ORACLE');
@@ -2908,7 +3224,7 @@ export function validateRefreshReplayManifestRecord(value) {
       'summaryBytes',
     ])
       if (!(
-        manifest.schemaVersion === 2 &&
+        manifest.schemaVersion >= 2 &&
         item.name === 'd-cancel' &&
         ['outputBytes', 'eventCount'].includes(field)
       ))

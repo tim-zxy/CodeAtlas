@@ -1,3 +1,7 @@
+## Approved replay topology -> explicit offline version - 2026-11-09
+
+ADR019 amendment and [versioned contract](../superpowers/specs/2026-11-09-replay-topology-v4.md) map to native-refresh-transport-replay discovery/manifest/binding/revalidation, CI layout/prepare/PACK gates and new topology tests. Legacy defaults and execution evidence2 remain. Evidence:14/14 new topology,78/78 scoped records/catalog,96/96 layout/PACK/stop; architecture17; independent review with workspace-peer fix verified. [Exact scope, commands and unresolved installation/real qualification](../superpowers/plans/2026-11-09-replay-topology-v4.md). No original gate or baseline rewritten.
+
 ## Replay catalog policy compatibility - 2026-11-09
 
 P1 Native qualification preparation: approved pnpm policy is accepted by a finite parser while raw YAML and actual recursive dependency membership stay bound. Unknown/duplicate/malformed policy refuses; historicalv2 and sanctioned exclusions unchanged. Related33/33 and architecture17 pass. [Evidence and remaining topology decision](../superpowers/plans/2026-11-09-replay-workspace-policy.md). Actual current catalog still refuses multi-version resolution; no R9/build/profile or Phase1 acceptance claimed.

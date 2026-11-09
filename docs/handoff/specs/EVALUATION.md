@@ -1,3 +1,7 @@
+## Replay topology identity checks - 2026-11-09
+
+Approved [Manifest3/generator4](../../superpowers/specs/2026-11-09-replay-topology-v4.md) binds per-instance inventory, importer-to-target edges and physical binding into the corpus digest; independent rediscovery is required before handoff and after consumption. New identity tests cover differing versions, equal-byte installations, changed sharing/resolution, cycles/peers, missing dependencies, aliases and mixed-version refusal. These are offline structural/integrity checks, not Native qualification or model quality. Old R8, profile approvals,22/110/22 and actual22, source/tool/build closure and every Phase gate remain. No old observation may select or qualify a changed topology.
+
 ## Pinned R8 asset available for the original CI gates - 2026-11-06
 
 User-approved asset716516452/release436279924 carries the exact R8 frozen ZIP and

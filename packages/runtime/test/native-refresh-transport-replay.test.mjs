@@ -2432,6 +2432,94 @@ function versionTwoRecordFixture(name = 'd-cancel') {
   f.capsule.inputContract = input;
   return f;
 }
+function versionThreeRecordFixture() {
+  const f = versionTwoRecordFixture();
+  const lexical = (value) =>
+    Array.isArray(value)
+      ? value.map(lexical)
+      : value && typeof value === 'object'
+        ? Object.fromEntries(
+            Object.entries(value)
+              .sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))
+              .map(([k, v]) => [k, lexical(v)]),
+          )
+        : value;
+  const hash = (domain, value) =>
+    createHash('sha256')
+      .update(domain + '\0' + JSON.stringify(lexical(value)) + '\n')
+      .digest('hex');
+  const core = {
+    schemaVersion: 1,
+    workspaces: [
+      {
+        id: 'workspace-' + hash('p05-refresh-workspace-v1', 'packages/a'),
+        name: '@fixture/a',
+        path: 'packages/a',
+      },
+    ],
+    instances: [],
+    imports: [],
+  };
+  f.manifest.schemaVersion = 3;
+  f.manifest.generator = {
+    ...f.manifest.generator,
+    revision: 'p05-refresh-replay-v4',
+    topology: { ...core, digest: hash('p05-refresh-topology-v1', core) },
+  };
+  for (const item of f.manifest.cases) {
+    const { caseDigest, inputContract, ...rest } = item;
+    const { corpusPayloadDigest, ...input } = inputContract;
+    item.caseDigest = hash('p05-refresh-replay-case-v3', { ...rest, inputContract: input });
+    item.inputContract.corpusPayloadDigest = item.caseDigest;
+  }
+  const { digest, ...corpus } = f.manifest.corpus;
+  f.manifest.corpus.digest = hash('p05-refresh-replay-corpus-v3', { ...f.manifest, corpus });
+  f.binding.schemaVersion = 3;
+  f.binding.corpusDigest = f.manifest.corpus.digest;
+  return f;
+}
+test('D5 topology manifest3 binding3 retains independently hashed v2 capsule and output contract', () => {
+  const f = versionThreeRecordFixture();
+  const m = replay.validateRefreshReplayManifestRecord(f.manifest);
+  assert.equal(m.schemaVersion, 3);
+  assert.equal(replay.validateRefreshReplayLocalBindingRecord(f.binding, m).schemaVersion, 3);
+  assert.equal(replay.validateRefreshReplayCapsuleRecord(f.capsule, m, f.binding).schemaVersion, 2);
+  for (const patch of [{ schemaVersion: 2 }, { schemaVersion: 4 }])
+    assert.throws(() =>
+      replay.validateRefreshReplayLocalBindingRecord({ ...f.binding, ...patch }, m),
+    );
+  assert.throws(() =>
+    replay.validateRefreshReplayCapsuleRecord({ ...f.capsule, schemaVersion: 3 }, m, f.binding),
+  );
+  assert.throws(() =>
+    replay.validateRefreshReplayManifestRecord({ ...f.manifest, schemaVersion: 2 }),
+  );
+  assert.throws(() =>
+    replay.validateRefreshReplayManifestRecord({
+      ...f.manifest,
+      generator: { ...f.manifest.generator, revision: 'p05-refresh-replay-v3' },
+    }),
+  );
+  const missing = structuredClone(f.manifest);
+  delete missing.cases[0].outputContract;
+  assert.throws(() => replay.validateRefreshReplayManifestRecord(missing));
+});
+test('D5 topology verification domain is versioned independently from execution wire2', () => {
+  const input = { caseDigest: 'a'.repeat(64), resultSha256: 'b'.repeat(64) };
+  for (const version of [1, 2, 3])
+    assert.equal(
+      replay.refreshReplayVerificationDigest(version, input),
+      createHash('sha256')
+        .update('p05-refresh-replay-verification-v' + version + '\0' + JSON.stringify(input) + '\n')
+        .digest('hex'),
+    );
+  assert.notEqual(
+    replay.refreshReplayVerificationDigest(2, input),
+    replay.refreshReplayVerificationDigest(3, input),
+  );
+  assert.throws(() => replay.refreshReplayVerificationDigest(4, input));
+});
+
 test('D5 cancellation prefix v2 manifest capsule and locator use independent digests', () => {
   const f = versionTwoRecordFixture();
   const manifest = replay.validateRefreshReplayManifestRecord(f.manifest);
