@@ -45,7 +45,13 @@ function frame(template, summary, memberCount) {
   });
   return value;
 }
-export async function preparedDenseRemoveBoundary(t, onReadDiagnostic, replayRoot, dContext) {
+export async function preparedDenseRemoveBoundary(
+  t,
+  onReadDiagnostic,
+  replayRoot,
+  dContext,
+  control,
+) {
   const pair = JSON.parse(
     await readFile(
       new URL('./native-refresh-retained-sites-preparation.json', import.meta.url),
@@ -88,11 +94,20 @@ export async function preparedDenseRemoveBoundary(t, onReadDiagnostic, replayRoo
     boundFrame,
     onReadDiagnostic,
     dContext,
+    control,
   );
   assert.ok(accepted.metrics.memberCount >= lowerSeed);
   assert.equal(next.metrics.memberCount, accepted.metrics.memberCount + 1);
   const row = transition(accepted.metrics.memberCount);
-  const fixture = await preparedSourceRefresh(t, row, 1, onReadDiagnostic, replayRoot, dContext);
+  const fixture = await preparedSourceRefresh(
+    t,
+    row,
+    1,
+    onReadDiagnostic,
+    replayRoot,
+    dContext,
+    control,
+  );
   assert.deepEqual(fixture.prepared.baseline.summaries, accepted.baseline.summaries);
   accepted = frame(
     fixture.prepared.request,

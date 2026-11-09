@@ -63,7 +63,13 @@ export function frameSourceRefreshBoundary(
   };
 }
 
-export async function preparedSourceInputBoundary(t, onReadDiagnostic, replayRoot, dContext) {
+export async function preparedSourceInputBoundary(
+  t,
+  onReadDiagnostic,
+  replayRoot,
+  dContext,
+  control,
+) {
   return preparedFileBoundary(
     t,
     'Empty.java',
@@ -72,10 +78,17 @@ export async function preparedSourceInputBoundary(t, onReadDiagnostic, replayRoo
     onReadDiagnostic,
     replayRoot,
     dContext,
+    control,
   );
 }
 
-export async function preparedSharedOwnersBoundary(t, onReadDiagnostic, replayRoot, dContext) {
+export async function preparedSharedOwnersBoundary(
+  t,
+  onReadDiagnostic,
+  replayRoot,
+  dContext,
+  control,
+) {
   return preparedFileBoundary(
     t,
     'SharedA.java',
@@ -84,10 +97,17 @@ export async function preparedSharedOwnersBoundary(t, onReadDiagnostic, replayRo
     onReadDiagnostic,
     replayRoot,
     dContext,
+    control,
   );
 }
 
-export async function preparedCompleteCoverageBoundary(t, onReadDiagnostic, replayRoot, dContext) {
+export async function preparedCompleteCoverageBoundary(
+  t,
+  onReadDiagnostic,
+  replayRoot,
+  dContext,
+  control,
+) {
   return preparedFileBoundary(
     t,
     'Empty.java',
@@ -96,6 +116,7 @@ export async function preparedCompleteCoverageBoundary(t, onReadDiagnostic, repl
     onReadDiagnostic,
     replayRoot,
     dContext,
+    control,
   );
 }
 
@@ -107,6 +128,7 @@ async function preparedFileBoundary(
   onReadDiagnostic,
   replayRoot,
   dContext,
+  control,
 ) {
   const scope = r5PreparationScope(transitionId, dContext);
   const rowAt = (count) => {
@@ -132,6 +154,7 @@ async function preparedFileBoundary(
     (diagnostic) => onReadDiagnostic?.(diagnostic, 'GENERATOR_SEED'),
     undefined,
     dContext,
+    control,
   );
   const template = seed.prepared.request;
   const summaries = [...seed.prepared.baseline.summaries];
@@ -157,6 +180,7 @@ async function preparedFileBoundary(
     };
     const { payload } = template;
     let summary;
+    if (control) await control.checkpoint('BOUNDARY_FILE:BEFORE');
     const { terminal } = await streamNativeFullAnalysisV3(
       {
         protocolVersion: 3,
@@ -190,6 +214,7 @@ async function preparedFileBoundary(
     assert.deepEqual(summary.sourceFile, file);
     summaries.push(summary);
     next = frame(template, summaries);
+    if (control) await control.checkpoint('BOUNDARY_FILE:AFTER');
     if (
       next.metrics.inputBytes > NATIVE_CLIENT_HARD_LIMITS.maxStdinBytes ||
       next.metrics.largestLineBytes + 1 > NATIVE_CLIENT_HARD_LIMITS.maxLineBytes
@@ -199,7 +224,15 @@ async function preparedFileBoundary(
   }
   // Real multi-file bootstrap + Store publication + close/reopen + D1 preparation.
   const row = rowAt(accepted.metrics.fileCount - Object.keys(base.baseline).length);
-  const fixture = await preparedSourceRefresh(t, row, 1, onReadDiagnostic, replayRoot, dContext);
+  const fixture = await preparedSourceRefresh(
+    t,
+    row,
+    1,
+    onReadDiagnostic,
+    replayRoot,
+    dContext,
+    control,
+  );
   assert.deepEqual(fixture.prepared.baseline.summaries, accepted.baseline.summaries);
   accepted = frame(fixture.prepared.request, fixture.prepared.baseline.summaries);
   assert.deepEqual(accepted.request, fixture.prepared.request);

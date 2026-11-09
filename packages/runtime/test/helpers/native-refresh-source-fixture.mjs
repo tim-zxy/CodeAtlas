@@ -106,6 +106,7 @@ export async function preparedSourceRefresh(
   onReadDiagnostic,
   replayRoot,
   dContext,
+  control,
 ) {
   const fixtureContext =
     dContext === undefined ? undefined : snapshotDRefreshFixtureContext(dContext);
@@ -182,7 +183,9 @@ export async function preparedSourceRefresh(
       'utf8',
     ),
   );
+  if (control) await control.checkpoint('PREPARE_DESCRIBE:BEFORE');
   const handshake = await providers.executeNativeRequest(describe, { ...options, arguments: [] });
+  if (control) await control.checkpoint('PREPARE_DESCRIBE:AFTER');
   const descriptor = handshake.terminal.payload;
   async function inventory(entries, role = 'SOURCE') {
     const files = [];
@@ -257,12 +260,14 @@ export async function preparedSourceRefresh(
     await applyFullAnalysis(expected, {
       observeAndStage: async () => {
         const startedAt = new Date().toISOString();
+        if (control) await control.checkpoint('PREPARE_FULL:BEFORE');
         const { terminal } = await providers.streamNativeFullAnalysisV3(request, options, {
           async accept(event) {
             if (event.type === 'ANALYSIS_SUMMARY') await full.acceptNativeSummary(event.payload);
             else await full.accept(event);
           },
         });
+        if (control) await control.checkpoint('PREPARE_FULL:AFTER');
         const snapshot = parseFullAnalysisSnapshot({
           id: request.payload.providerSnapshotId,
           repositoryId: expected.repositoryId,

@@ -20,7 +20,7 @@ export function denseUpsertTransition(count) {
     generatedSources: { 'baseline.java': sourceAt(0), 'target.java': sourceAt(count) },
   };
 }
-export async function prepareDenseUpsertBoundary(t, onReadDiagnostic, dContext) {
+export async function prepareDenseUpsertBoundary(t, onReadDiagnostic, dContext, control) {
   const pair = JSON.parse(
     await readFile(
       new URL('./native-refresh-retained-sites-preparation.json', import.meta.url),
@@ -41,6 +41,7 @@ export async function prepareDenseUpsertBoundary(t, onReadDiagnostic, dContext) 
     (diagnostic) => onReadDiagnostic?.(diagnostic, 'GENERATOR_SEED'),
     undefined,
     dContext,
+    control,
   );
   const before = activationImage(fixture.db);
   let accepted;
@@ -68,6 +69,7 @@ export async function prepareDenseUpsertBoundary(t, onReadDiagnostic, dContext) 
     let pending = Buffer.alloc(0),
       failedTerminal,
       lastRecord;
+    if (control) await control.checkpoint('BOUNDARY_REFRESH:BEFORE');
     const observed = await observeNativeWire(
       () =>
         streamNativeRefreshV3(
@@ -127,10 +129,12 @@ export async function prepareDenseUpsertBoundary(t, onReadDiagnostic, dContext) 
       );
       entry.producerError = failedTerminal.payload.error;
       next = entry;
+      if (control) await control.checkpoint('BOUNDARY_REFRESH:AFTER');
       break;
     }
     assert.equal(entry.symbolSites, count + 1);
     accepted = entry;
+    if (control) await control.checkpoint('BOUNDARY_REFRESH:AFTER');
   }
   assert.equal(fixture.db.isTransaction, false);
   fixture.db.close();

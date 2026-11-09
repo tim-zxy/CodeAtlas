@@ -1620,7 +1620,13 @@ export async function prepareRefreshTransportCorpus(
           (row) => row.id === refreshTransportRecipes[name][0],
         );
         if (boundary) {
-          const generated = await boundary(lifetime, undefined, workspacePath, fixtureContext);
+          const generated = await boundary(
+            lifetime,
+            undefined,
+            workspacePath,
+            fixtureContext,
+            control,
+          );
           f = generated.fixture;
           transition = generated.transition;
           await save(
@@ -1632,7 +1638,12 @@ export async function prepareRefreshTransportCorpus(
           );
         } else {
           if (name === 'd-dense-upsert') {
-            const generated = await prepareDenseUpsertBoundary(lifetime, undefined, fixtureContext);
+            const generated = await prepareDenseUpsertBoundary(
+              lifetime,
+              undefined,
+              fixtureContext,
+              control,
+            );
             transition = denseUpsertTransition(generated.accepted.memberCount);
             await save(`${prefix}/boundary.json`, encodeRefreshReplayJson(generated));
           }
@@ -1643,6 +1654,7 @@ export async function prepareRefreshTransportCorpus(
             undefined,
             workspacePath,
             fixtureContext,
+            control,
           );
         }
         const {
@@ -2010,6 +2022,7 @@ export async function prepareRefreshTransportCorpus(
               undefined,
               undefined,
               fixtureContext,
+              control,
             );
             full.db.exec('PRAGMA wal_checkpoint(TRUNCATE)');
             full.db.close();

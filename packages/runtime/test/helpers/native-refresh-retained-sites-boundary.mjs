@@ -38,6 +38,7 @@ export async function sizeRetainedSitesBoundary(
   frame = measured,
   onReadDiagnostic,
   dContext,
+  control,
 ) {
   const seed = await preparedSourceRefresh(
     t,
@@ -46,6 +47,7 @@ export async function sizeRetainedSitesBoundary(
     (diagnostic) => onReadDiagnostic?.(diagnostic, 'GENERATOR_SEED'),
     undefined,
     dContext,
+    control,
   );
   const template = seed.prepared.request;
   let accepted = frame(template, seed.prepared.baseline.summaries[0], 0);
@@ -61,6 +63,7 @@ export async function sizeRetainedSitesBoundary(
     };
     const { payload } = template;
     let summary;
+    if (control) await control.checkpoint('BOUNDARY_SITES:BEFORE');
     const { terminal } = await streamNativeFullAnalysisV3(
       {
         protocolVersion: 3,
@@ -94,6 +97,7 @@ export async function sizeRetainedSitesBoundary(
     assert.deepEqual(summary.sourceFile, file);
     assert.equal(summary.symbols.length, count + 1);
     next = frame(template, summary, count);
+    if (control) await control.checkpoint('BOUNDARY_SITES:AFTER');
     if (
       next.metrics.inputBytes > NATIVE_CLIENT_HARD_LIMITS.maxStdinBytes ||
       next.metrics.largestLineBytes + 1 > NATIVE_CLIENT_HARD_LIMITS.maxLineBytes
@@ -105,13 +109,19 @@ export async function sizeRetainedSitesBoundary(
   return { accepted, next };
 }
 // Explicit offline regeneration; never repeat this growth inside measured workers.
-export async function generateRetainedSitesBoundary(t, dContext) {
+export async function generateRetainedSitesBoundary(t, dContext, control) {
   function* counts() {
     for (let count = 1; ; count++) yield count;
   }
-  return sizeRetainedSitesBoundary(t, counts(), measured, undefined, dContext);
+  return sizeRetainedSitesBoundary(t, counts(), measured, undefined, dContext, control);
 }
-export async function preparedRetainedSitesBoundary(t, onReadDiagnostic, replayRoot, dContext) {
+export async function preparedRetainedSitesBoundary(
+  t,
+  onReadDiagnostic,
+  replayRoot,
+  dContext,
+  control,
+) {
   const pair = JSON.parse(
     await readFile(
       new URL('./native-refresh-retained-sites-preparation.json', import.meta.url),
@@ -139,6 +149,7 @@ export async function preparedRetainedSitesBoundary(t, onReadDiagnostic, replayR
       },
       onReadDiagnostic,
       dContext,
+      control,
     );
   let accepted, next;
   const scope = r5PreparationScope(id, dContext);
@@ -165,7 +176,15 @@ export async function preparedRetainedSitesBoundary(t, onReadDiagnostic, replayR
     assert.equal(next.metrics.memberCount, accepted.metrics.memberCount + 1);
   }
   const row = transition(accepted.metrics.memberCount);
-  const fixture = await preparedSourceRefresh(t, row, 1, onReadDiagnostic, replayRoot, dContext);
+  const fixture = await preparedSourceRefresh(
+    t,
+    row,
+    1,
+    onReadDiagnostic,
+    replayRoot,
+    dContext,
+    control,
+  );
   assert.deepEqual(fixture.prepared.baseline.summaries, accepted.baseline.summaries);
   accepted = measured(
     fixture.prepared.request,
