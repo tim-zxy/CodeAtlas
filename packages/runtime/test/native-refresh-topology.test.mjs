@@ -265,13 +265,18 @@ test('topology explicit prepare10 refuses unsupported host or reaches intercepte
   assert.equal(receipt.stage, 'BUILD');
 });
 
-test('topology instance inventory and identity match independent canonical preimages', async (t) => {
+test('topology instance inventory and identity match independent canonical preimages with nested paths', async (t) => {
   const f = await fixture(t);
+  await mkdir(path.join(f.external[0], 'request'));
+  await writeFile(path.join(f.external[0], 'request.js'), 'export const request = 1;\n');
+  await writeFile(path.join(f.external[0], 'request/constants.js'), 'export const constant = 2;\n');
   const c = await replay.discoverRefreshReplayDependenciesAt(f.options);
   const raw = (x) => createHash('sha256').update(x).digest('hex');
   const entries = [
     { path: 'index.js', sha256: raw('export {};\n') },
     { path: 'package.json', sha256: raw(JSON.stringify({ name: 'p', version: '1.0.0' })) },
+    { path: 'request.js', sha256: raw('export const request = 1;\n') },
+    { path: 'request/constants.js', sha256: raw('export const constant = 2;\n') },
   ];
   const inventoryDigest = raw('p05-refresh-instance-files-v1\0' + JSON.stringify(entries) + '\n');
   const preimage = { inventoryDigest, name: 'p', path: 'installed0', version: '1.0.0' };

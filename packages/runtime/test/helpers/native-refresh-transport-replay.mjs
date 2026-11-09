@@ -2601,6 +2601,7 @@ export async function discoverRefreshReplayDependenciesAt({
         continue;
       }
       const entries = await inventory(physical, '', (relative) => relative === 'node_modules');
+      if (topologyEnabled) entries.sort((left, right) => lexical(left.path, right.path));
       const inventoryDigest = identityHash('p05-refresh-instance-files-v1', entries);
       const instancePath = path.relative(repository, physical).split(path.sep).join('/');
       if (topologyEnabled) canonicalRelativePath(instancePath);

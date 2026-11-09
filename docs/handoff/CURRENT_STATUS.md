@@ -1,3 +1,9 @@
+## Generator4 nested-path inventory correction - 2026-11-09
+
+Fixed discovery to sort full relative package paths before generator4 inventory and instance identity hashing, matching the existing contract and validator. Generator2/3, defaults, old R8 and all gates remain unchanged. A sibling file plus nested directory independently reproduces the old mismatch; final topology14/14 and selected legacy record/catalog78/78 pass, architecture17 and scoped formatting pass. Independent readonly review found no P1/P2. [Commands, retained failure and identity boundary](../superpowers/plans/2026-11-09-replay-topology-v4.md#nested-path-ordering-correction---2026-11-09).
+
+The retained cd42d20 manual candidate now has16 TypeScript workspaces built and25 entry edges resolving, but its unchanged generator4 fails the recorded readonly catalog check. This source correction requires a new exact source freeze; no patched-candidate or new accepted catalog is claimed. Old Native build environment remains ineligible for the current implementation. No local Native build/prepare/sampling, profile adoption or baseline change. Phase1 stays4/21; A6 NOT_QUALIFIED; E02 PROPOSED/uninstalled. New commit CI is tracked separately from historical runs.
+
 ## Approved replay topology implemented offline - 2026-11-09
 
 Additive Manifest3/generator4/binding3 now binds actual package instances and importer resolution, raw inventories and local physical roots. Default layout8/generator3, oldR8 and all old gates stay unchanged. New layout10 is explicit; capsule/workload/wire evidence stay2. Unknown/missing/mixed/changed inputs refuse, and independent topology rediscovery is required at original read/revalidation/PACK boundaries. [Contract](../superpowers/specs/2026-11-09-replay-topology-v4.md); [commands, failures and limitations](../superpowers/plans/2026-11-09-replay-topology-v4.md).

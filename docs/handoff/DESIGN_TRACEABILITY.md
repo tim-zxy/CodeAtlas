@@ -1,3 +1,7 @@
+## Sorted raw inventories -> generator4 identity correction - 2026-11-09
+
+Existing approved sorted-file-record rule -> generator4-only full-path sort before digest -> nested sibling/directory independent hash and instance-ID vector RED then GREEN. Validator and legacy formats are unchanged. Topology14/14, scoped legacy78/78, architecture17 and independent review support the correction; no qualification or cross-identity build reuse follows. [Exact commands and frozen-candidate boundary](../superpowers/plans/2026-11-09-replay-topology-v4.md#nested-path-ordering-correction---2026-11-09).
+
 ## Approved replay topology -> explicit offline version - 2026-11-09
 
 ADR019 amendment and [versioned contract](../superpowers/specs/2026-11-09-replay-topology-v4.md) map to native-refresh-transport-replay discovery/manifest/binding/revalidation, CI layout/prepare/PACK gates and new topology tests. Legacy defaults and execution evidence2 remain. Evidence:14/14 new topology,78/78 scoped records/catalog,96/96 layout/PACK/stop; architecture17; independent review with workspace-peer fix verified. [Exact scope, commands and unresolved installation/real qualification](../superpowers/plans/2026-11-09-replay-topology-v4.md). No original gate or baseline rewritten.
