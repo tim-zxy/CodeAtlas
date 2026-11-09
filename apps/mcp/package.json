@@ -10,6 +10,8 @@
     "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@codeatlas/runtime": "workspace:*"
+    "@codeatlas/runtime": "workspace:*",
+    "@codeatlas/agent-api": "workspace:*",
+    "@modelcontextprotocol/sdk": "1.32.2"
   }
 }

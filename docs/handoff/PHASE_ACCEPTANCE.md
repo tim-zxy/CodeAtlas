@@ -1,3 +1,13 @@
+## Approved SDK 1.32.2 owned BUSINESS stdio - 2026-11-09
+
+The conditionally approved dependency and owned host stdio component have fresh
+64 focused assertions and independent review; this does not close original P1-17/18.
+Only BUSINESS is implemented with supplied owned session; other tools and production
+CLI binding are not claimed. No watcher/reconciliation, real model/tokenizer, user
+data, production authorization or original E2E quality evidence is supplied.
+Existing checkboxes/thresholds remain unchanged; Phase1 stays4/21, A6 NOT_QUALIFIED,
+E02 PROPOSED/uninstalled. [Exact evidence](../superpowers/plans/2026-11-09-owned-mcp-stdio.md).
+
 ## BUSINESS public contract v1: owned-data scope only - 2026-11-09
 
 The user-approved [strict contract](../superpowers/specs/2026-11-09-business-trace-public-contract.md)

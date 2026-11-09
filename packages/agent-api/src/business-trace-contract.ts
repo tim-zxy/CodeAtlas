@@ -204,3 +204,11 @@ export function businessTraceFailure(code: BusinessTraceErrorCode): BusinessTrac
     error: Object.freeze({ code, message: businessTraceErrorMessages[code] }),
   });
 }
+
+/** Generate wire schemas with this package's own Zod instance; do not cross-cast Zod versions. */
+export function businessTraceWireSchemas() {
+  return {
+    input: { ...z.toJSONSchema(businessTraceRequestSchema), type: 'object' as const },
+    output: { ...z.toJSONSchema(businessTraceResponseSchema), type: 'object' as const },
+  };
+}

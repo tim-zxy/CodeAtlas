@@ -1,3 +1,21 @@
+## Approved SDK 1.32.2 owned BUSINESS stdio - 2026-11-09
+
+Existing P1-18/AGENT_API/knowledge-and-consumption section9 maps the approved
+BUSINESS component to apps/mcp/src/owned-business-stdio.ts and the unchanged Agent API
+session. Official SDK owns parsing, handlers and serialization; Node write callbacks
+settle output error/close which SDK1.32.2's drain-only send cannot settle. No manual
+JSON-RPC implementation or schema relaxation. Only host-supplied owned binding;
+production main, six-tool service, watch/reconciliation and phase acceptance stay OPEN.
+
+[92-package origin/license/security audit](../superpowers/reviews/2026-11-09-sdk1322-audit.json)
+records47 signatures+44 source-lock+one full-source proof, raw OSV92, exact package
+hashes and narrow jose age exception. Agent API creates wire JSON schemas using its
+own Zod4.6.1; SDK uses its isolated4.6.7. Local app DOM type library resolves SDK
+HeadersInit declarations without opening HTTP/browser capabilities. Tests11 cover
+actual child stdio/schema/fixture, refusal, deadlines, caps, cancellation, joined
+close and output backpressure/failure. Builds64/64/architecture17/format and review
+are recorded in the [plan](../superpowers/plans/2026-11-09-owned-mcp-stdio.md).
+
 ## BUSINESS public trace v1, owned-data implementation - 2026-11-09
 
 Approved BUSINESS public-contract refinement maps AGENT_API and ADR-020 to

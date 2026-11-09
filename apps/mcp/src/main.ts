@@ -28,3 +28,5 @@ export async function runMcp(args = process.argv.slice(2)): Promise<number> {
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   process.exitCode = await runMcp();
 }
+
+export { createOwnedBusinessTraceMcpServer } from './owned-business-stdio.js';

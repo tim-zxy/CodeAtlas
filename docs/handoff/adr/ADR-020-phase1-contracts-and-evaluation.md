@@ -1,3 +1,15 @@
+## Approved SDK 1.32.2 owned BUSINESS stdio - 2026-11-09
+
+User's conditional SDK approval is satisfied by independent origin/closure/license
+review and self-owned protocol validation. Adopt SDK1.32.2 and fast-uri3.1.9 exact
+reviewed tree for the [owned host stdio component](../../superpowers/specs/2026-11-09-owned-mcp-stdio.md).
+Low-level SDK preserves the approved union; high-level registerTool erased it in
+validation and is not used. Apps -> Agent API/Runtime edges remain within the original
+guardrail; Canonical/SQL/identity/public BUSINESS fields are unchanged.
+The narrowly reviewed jose6.2.16 version exception follows pnpm11's existing default
+non-strict behavior; no general release-age/strict/trustLockfile bypass. This grants
+no production Principal/data/publish/model/tokenizer or Native/R9 authority.
+
 ## Approved BUSINESS public contract v1, owned-data delivery - 2026-11-09
 
 User approved the limited versioned BUSINESS contract and implementation with self-owned

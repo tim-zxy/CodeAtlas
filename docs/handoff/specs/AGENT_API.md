@@ -70,3 +70,20 @@ no real tokenizer, production principal or public MCP transport is installed.
 This additive contract does not make the six-tool service complete. Existing private
 trace/Wiki and production admission remain separate; P1-17/18 and original quality
 gates stay open. [Implementation/evidence](../../superpowers/plans/2026-11-09-business-trace-public-contract.md).
+
+## Approved SDK-backed owned stdio component - 2026-11-09
+
+SDK1.32.2/fast-uri3.1.9 is conditionally adopted after the independent92-package
+[artifact audit](../../superpowers/reviews/2026-11-09-sdk1322-audit.json). Official
+low-level Server handlers/stdio input parser/serializer retain the existing strict
+BUSINESS union and six-field ResultMeta. Agent API exports fresh wire schemas
+using its own Zod instance; no cross-version class casts or public field changes.
+
+The [host-supplied owned service](../../superpowers/specs/2026-11-09-owned-mcp-stdio.md)
+fixes its existing session/context and explicit limits. It never reads caller
+permissions/workspace paths into authority, and only advertises trace_flow.
+Other selectors/tools refuse; normal CLI still requires a real approved Runtime
+binding. Shutdown invalidates and aborts, closes protocol and joins pending reads
+and writes; failed output reports UNKNOWN. Ignoring external providers can keep
+completion pending. No hard OS sandbox, remote/model/tokenizer access, production
+service or P1-18 acceptance is inferred from this component.

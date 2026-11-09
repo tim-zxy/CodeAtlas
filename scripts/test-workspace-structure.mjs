@@ -62,7 +62,11 @@ expectedPackageDependencies.application = {
 const expectedAppDependencies = {
   cli: { '@codeatlas/runtime': 'workspace:*' },
   daemon: {},
-  mcp: { '@codeatlas/runtime': 'workspace:*' },
+  mcp: {
+    '@codeatlas/runtime': 'workspace:*',
+    '@codeatlas/agent-api': 'workspace:*',
+    '@modelcontextprotocol/sdk': '1.32.2',
+  },
 };
 
 async function readJson(path) {

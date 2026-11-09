@@ -1,3 +1,39 @@
+## Approved SDK 1.32.2 owned BUSINESS stdio - 2026-11-09
+
+Conditionally approved SDK1.32.2/fast-uri3.1.9 now belongs to apps/mcp's exact
+reviewed92-package tree. Independent provenance covers47 current-key signatures,
+44 official source-lock matches and cookie's five exact official-tag files;95
+installation nodes and160 merged dependency/peer edges were independently checked.
+Fresh raw OSV92-query/result evidence has zero known findings; permissive license
+files and no install hooks were checked. [Portable audit](../superpowers/reviews/2026-11-09-sdk1322-audit.json).
+
+The host-supplied owned session now has a real official SDK low-level Server/stdio
+entry, exact union input/output schemas, bounded messages/calls/writes, cancellation
+and joined close. Only trace_flow is advertised; unsupported kinds and tool names
+refuse. Original production CLI/--smoke remain closed/unchanged; no fixture is
+automatically loaded by product code. This is not the six-tool Runtime service.
+
+Agent API/MCP builds,64/64 focused tests(11 new), architecture17 and scoped formatting
+passed. The final associated review reports no remaining blocker. It corrected
+deadline error serialization and SDK drain-only failure settlement: output errors
+now yield UNKNOWN, and true pending reads/writes must finish before close settles.
+PNPM frozen workspace lock verification passed186 policy entries; only text
+formatting differed, parsed lock entries were identical. Old dependency entries
+and existing Zod4.6.1 consumers remain unchanged; SDK has reviewed Zod4.6.7.
+
+PNPM11's default non-strict age rule generated the explicitly reviewed single-version
+jose6.2.16 exception, independently reviewed within this adoption scope. General
+age/strict/trust policies were not lowered. An initial import ignored npm_config_offline
+and read mirror metadata(downloaded0); its wrong jose6.2.15 candidate was abandoned.
+The final candidate used explicit offline config, unchanged local packuments and
+exact scoped pins. No package-network fetch or install scripts were used for adoption.
+
+[Scope](../superpowers/specs/2026-11-09-owned-mcp-stdio.md) and [commands/failures](../superpowers/plans/2026-11-09-owned-mcp-stdio.md).
+CI193 at a3d0a15 ended TS/Rust success and old R8 Native catalog failure, actual
+qualification skipped; it does not verify this new source. No user DB/data, production
+permission/query/publication, actual model/tokenizer, Native/R9 or stage acceptance.
+Phase1 stays4/21; A6 NOT_QUALIFIED; E02 PROPOSED/uninstalled.
+
 ## BUSINESS public trace v1, owned-data implementation - 2026-11-09
 
 Implemented the user-approved strict BUSINESS request/data/meta/error contract in
