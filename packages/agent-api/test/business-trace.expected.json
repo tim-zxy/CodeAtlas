@@ -1,0 +1,117 @@
+{
+  "data": {
+    "kind": "BUSINESS",
+    "startRef": {
+      "revisionId": "knowledge-revision:one",
+      "id": "knowledge:one",
+      "kind": "KNOWLEDGE_ITEM"
+    },
+    "startStepKey": "accept",
+    "direction": "FORWARD",
+    "title": "Accept item",
+    "goal": "Accept a valid item",
+    "steps": [
+      {
+        "stepKey": "accept",
+        "depth": 0,
+        "supportRefs": [
+          {
+            "basis": {
+              "repositoryId": "repo:one",
+              "revisionId": "revision:worktree",
+              "contentFingerprint": "content:first",
+              "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "entity": {
+              "kind": "CODE_NODE",
+              "id": "code:handler",
+              "revisionId": "revision:worktree"
+            },
+            "valueDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ],
+        "action": "Accept item"
+      }
+    ],
+    "edges": [],
+    "currentHeadRevisionId": "knowledge-revision:one",
+    "isCurrentHead": true,
+    "participants": [
+      {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo:one",
+        "entity": {
+          "kind": "COMPONENT",
+          "id": "component:one",
+          "revisionId": "revision:worktree"
+        }
+      }
+    ],
+    "runtimeFlowRefs": [
+      {
+        "scope": "REPOSITORY",
+        "repositoryId": "repo:one",
+        "entity": {
+          "kind": "RUNTIME_FLOW",
+          "id": "runtime:flow",
+          "revisionId": "revision:worktree"
+        }
+      }
+    ],
+    "supportRefs": [
+      {
+        "basis": {
+          "repositoryId": "repo:one",
+          "revisionId": "revision:worktree",
+          "contentFingerprint": "content:first",
+          "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "entity": {
+          "kind": "CODE_NODE",
+          "id": "code:handler",
+          "revisionId": "revision:worktree"
+        },
+        "valueDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      }
+    ],
+    "provenance": {
+      "runId": "compilation:one",
+      "revisionSetId": "revision-set:one",
+      "attemptId": "owned-public-business:synthetic",
+      "evaluationId": "evaluation:one",
+      "snapshotId": "snapshot:one"
+    },
+    "limitations": [],
+    "quality": "NOT_EVALUABLE",
+    "productionQuery": "NOT_AUTHORIZED"
+  },
+  "meta": {
+    "basisRefs": [
+      {
+        "repositoryId": "repo:one",
+        "revisionId": "revision:worktree",
+        "contentFingerprint": "content:first",
+        "codeActivationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    ],
+    "sourceFreshness": "FRESH",
+    "compilationCurrency": "CURRENT",
+    "coverage": {
+      "limitations": [],
+      "status": "COMPLETE",
+      "unverifiedRefs": []
+    },
+    "warnings": [
+      "DECLARED_BUSINESS_STEPS_ONLY",
+      "LIVE_SOURCE_NOT_OBSERVED",
+      "NO_PRODUCTION_AUTHORITY",
+      "NO_QUALITY_ADMISSION",
+      "OWNED_TEST_ONLY"
+    ],
+    "truncation": {
+      "reasons": [],
+      "frontier": [],
+      "truncated": false
+    }
+  }
+}

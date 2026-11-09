@@ -1,3 +1,22 @@
+## BUSINESS public trace v1, owned-data implementation - 2026-11-09
+
+Approved BUSINESS public-contract refinement maps AGENT_API and ADR-020 to
+packages/agent-api/src/business-trace-contract.ts and business-trace-tool.ts,
+with a single existing Application reexport and original flow supportRefs retained
+by Knowledge. Exact strict schemas, opaque session identity, fixed complete read
+manifest, final authorization and matching server counter policy/full-JSON digest
+are exercised in18 owned tests plus the independent literal JSON. Existing Zod4.6.1
+and permitted App/IR workspace edges are declared exactly; no new external version
+or SDK, Canonical schema, migration or production issuer.
+
+[Scope](../superpowers/specs/2026-11-09-business-trace-public-contract.md) and
+[reproducible commands/review](../superpowers/plans/2026-11-09-business-trace-public-contract.md)
+record six builds,176 integrated tests before associated review fixes, final18
+affected cases,3 association checks, architecture17 and format. Counts overlap.
+Public MCP transport, actual reviewed tokenizer, production permission/data and
+original quality acceptance remain unimplemented/unproved. Existing four-kind/
+six-tool requirements are not waived by this BUSINESS-only component.
+
 ## Existing Agent API BUSINESS trace, owned-data component - 2026-11-08
 
 AGENT_API and knowledge-and-consumption section9's explicit BUSINESS trace maps to

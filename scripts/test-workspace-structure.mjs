@@ -27,6 +27,11 @@ expectedPackageDependencies.runtime = {
   '@codeatlas/storage': 'workspace:*',
   yaml: '2.8.2',
 };
+expectedPackageDependencies['agent-api'] = {
+  '@codeatlas/application': 'workspace:*',
+  '@codeatlas/ir': 'workspace:*',
+  zod: '4.6.1',
+};
 expectedPackageDependencies.ir = { zod: '4.6.1' };
 expectedPackageDependencies.providers = { '@codeatlas/ir': 'workspace:*', zod: '4.6.1' };
 expectedPackageDependencies.plugins = { '@codeatlas/ir': 'workspace:*', zod: '4.6.1' };
@@ -143,6 +148,11 @@ for (const name of packageNames) {
       assert.equal(
         source,
         "export { resolveKnowledgeIdentity } from './identity.js';\nexport type { IdentityDecision } from './identity.js';\nexport { reconcileKnowledge } from './reconciliation.js';\nexport type {\n  ReconciliationInput,\n  ReconciliationPlan,\n  ReconciliationAction,\n} from './reconciliation.js';\n",
+      );
+    } else if (name === 'agent-api') {
+      assert.equal(
+        source,
+        "export * from './business-trace-contract.js';\nexport * from './business-trace-tool.js';\n",
       );
     } else if (name === 'source') {
       assert.match(source, /scanGitRepository/);

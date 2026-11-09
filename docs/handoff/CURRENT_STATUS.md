@@ -1,3 +1,27 @@
+## BUSINESS public trace v1, owned-data implementation - 2026-11-09
+
+Implemented the user-approved strict BUSINESS request/data/meta/error contract in
+Agent API over the genuine fixed Application trace. Exact revision/step, server-owned
+context and read manifest, pre-query/pre-delivery permission, clamped traversal and
+complete canonical response byte/token enforcement are covered by an independent
+literal expected JSON. CODE/EXECUTION/RUNTIME explicitly refuse; missing or estimated
+counter refuses before query. No SDK or production tokenizer is installed.
+
+Knowledge/Application/Agent API/Storage/Runtime/MCP shell builds passed. Integrated
+176/176 tests passed (new16); review then identified cancellation classification and
+Promise-observer ordering defects. Both were corrected; final affected18/18 and
+independent associated3/3 passed, with no remaining specific review blocker. These
+counts overlap and are not summed as a single new full run. Architecture17, scoped
+format and Git whitespace checks passed. [Exact commands, failures and limits](../superpowers/plans/2026-11-09-business-trace-public-contract.md).
+
+CI192 at127ae32 is terminal: TS/Rust success; Native old R8 script catalog prerequisite
+failed, actual qualification skipped. It is not evidence for this new source. The
+next normal branch push is a separate automatic run, not a rerun. Owned counter
+doubles prove mechanics only; exotic host Promise observation cannot certify
+work settlement, and the session stays closed. No user DB/source, production
+query/publication, scanner/model or Native/R9 has been enabled. Phase1 stays4/21,
+A6 NOT_QUALIFIED, E02 PROPOSED/uninstalled; original P1-17/18 gates stay OPEN.
+
 ## Owned published BusinessFlow step trace - 2026-11-08
 
 Implemented the existing BUSINESS trace slice for one exact published Knowledge

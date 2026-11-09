@@ -50,3 +50,23 @@ Agent context has L0 bounded project summary, L1 task-relevant published knowled
 
 When published knowledge is affected or stale, return its `SourceFreshness`, `CompilationCurrency`, coverage, and evidence limitations, then use an authorized read-only query of current engineering facts where needed. Never present older knowledge as fresh or infer missing cross-repository relationships. Ordinary `get_project_context`, `search_knowledge`, `understand_symbol`, and `trace_flow` calls remain read-only and must not implicitly enqueue or invoke `update_knowledge`. This refines future Phase 1 behavior without changing the current Phase 0 API shell or rewriting the six named tools.
 
+
+## Versioned BUSINESS public contract, owned-data implementation - 2026-11-09
+
+The user-approved [v1 contract](../../superpowers/specs/2026-11-09-business-trace-public-contract.md)
+fixes strict arguments and complete data/meta/failure envelopes. BUSINESS selects an
+exact published Knowledge item/revision and local starting step; forward/backward
+declared-step traversal preserves source, current-head/history and explicit frontier.
+Other known trace kinds return FEATURE_UNAVAILABLE without a query.
+
+The owned Agent API session captures server workspace/repositories, maximum limits,
+authorization/query/counter ports and an opaque process-local context. It checks the
+entire read manifest before query and delivery. The complete canonical success JSON,
+including all metadata, is byte-bounded and measured by a matching fixed exact local
+counter policy and SHA256. Missing/estimated counts refuse before read; malformed or
+mismatched measurements refuse delivery. Fixture counters prove enforcement only;
+no real tokenizer, production principal or public MCP transport is installed.
+
+This additive contract does not make the six-tool service complete. Existing private
+trace/Wiki and production admission remain separate; P1-17/18 and original quality
+gates stay open. [Implementation/evidence](../../superpowers/plans/2026-11-09-business-trace-public-contract.md).

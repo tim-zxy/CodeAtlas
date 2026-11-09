@@ -55,6 +55,7 @@ export type OwnedBusinessTrace = {
   compilationCurrency: string;
   coverage: OwnedPublishedRecord['coverage'];
   provenance: OwnedPublishedRecord['provenance'];
+  supportRefs: OwnedPublishedRecord['revisionEnvelope']['payload']['supportRefs'];
   participants: unknown[];
   runtimeFlowRefs: unknown[];
   limitations: string[];
@@ -239,6 +240,7 @@ export function traceOwnedBusinessFlow(
     compilationCurrency: row.itemEnvelope.payload.compilationCurrency,
     coverage: row.coverage,
     provenance: row.provenance,
+    supportRefs: row.revisionEnvelope.payload.supportRefs,
     participants: content.participants,
     runtimeFlowRefs: content.runtimeFlowRefs,
     limitations: content.limitations,

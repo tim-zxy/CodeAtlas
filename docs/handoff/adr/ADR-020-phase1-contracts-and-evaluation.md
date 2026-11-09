@@ -1,3 +1,15 @@
+## Approved BUSINESS public contract v1, owned-data delivery - 2026-11-09
+
+User approved the limited versioned BUSINESS contract and implementation with self-owned
+data. [Exact fields, server context and counter contract](../../superpowers/specs/2026-11-09-business-trace-public-contract.md)
+retain exact Knowledge revision/step and existing Canonical/identity/AUTO-MANUAL rules.
+Only BUSINESS is supported; known other trace kinds refuse explicitly. Fixed server
+workspace/repository selection, pre-read/pre-delivery authorization, explicit clamped
+limits and exact whole-response counter policy/digest are required. No production
+counter, principal, SDK/MCP route, new dependency version, user data, publication,
+Native/R9 or formal phase acceptance is authorized or installed by this amendment.
+Rollback disables the new owned session/export consumers without rewriting history.
+
 ## Approved captured service-binding continuation - 2026-11-08
 
 User approved preserving actual frozen contract/service/support bindings in the

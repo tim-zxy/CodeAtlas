@@ -1,3 +1,14 @@
+## BUSINESS public contract v1: owned-data scope only - 2026-11-09
+
+The user-approved [strict contract](../superpowers/specs/2026-11-09-business-trace-public-contract.md)
+is implemented through the owned Agent API session and genuine Application tracer.
+It introduces no production authority, SDK transport, actual tokenizer or new quality
+baseline. Positive exact-output fixtures and counter doubles are explicitly synthetic.
+Original P1-17/18, six-tool/MCP/quality and Native gates remain unchecked. No existing
+acceptance checkbox or frozen threshold is changed; Phase1 stays4/21, A6
+NOT_QUALIFIED, E02 PROPOSED/uninstalled. Reproducible component evidence belongs to
+the [implementation plan](../superpowers/plans/2026-11-09-business-trace-public-contract.md).
+
 ## Bounded launch/inventory and E02 proposal continuation - 2026-11-06
 
 The original protected-consumption contract now has a pure launch-plan/Entry correlation primitive with26 integrated memory assertions and independent delta review. Actual Start/OS path protection/authentication/full-consumer settlement remain unproved; no admission token or original parent acceptance follows. E02 source/oracle proposals are made portable and may receive only a metadata/authority PROPOSED revision;21/14/16 stay separate, denominators null, thresholds UNSET and baseline uninstalled. Current-version independent review is required, not inherited. CI127 passed on prior d64fb85 only. Phase1 stays4/21 and A6 NOT_QUALIFIED; all original gates below remain unchanged.
