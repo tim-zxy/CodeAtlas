@@ -1,3 +1,7 @@
+## Preserve frozen calibration provenance with isolated stop orchestration — 2026-11-09
+
+CI206 five provenance regressions -> exact legacy CLI/policy-test byte restoration -> unchanged historical corpus/profile gates; new private calibration helper separately pinned before/after worker execution -> sticky R9 control. Original five tests restored unchanged, full related120/120 and independent code review. No current-corpus retagging, raw/pin/Fixture/numeric/standard change or real qualification. [Correction and read-only54-file build reuse audit](../superpowers/plans/2026-11-06-r9-stop-only.md#ci206-frozen-corpus-regression-correction--2026-11-09).
+
 ## Existing qualification fail-stop coverage across families — 2026-11-09
 
 Existing R9 stop-only plan -> trusted local identity assertion + sticky stage/worker control -> import-safe READ/FULL loops and optional paired/VERIFY collection -> owned simulation71/71, original Transport/prepare stop checks and independent race regression. Historical reports/pins remain; current source mismatch refuses admission. No new schema/Fixture/profile/value or phase exit. [Reproduction, workload and remaining physical limits](../superpowers/plans/2026-11-06-r9-stop-only.md#cross-family-coordinator-continuation--2026-11-09).

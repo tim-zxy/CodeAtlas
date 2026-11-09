@@ -14,7 +14,6 @@ const sha = (value) => createHash('sha256').update(value).digest('hex');
 async function setup(t, environment = nativeMetadataEnvironment()) {
   const directory = await mkdtemp(path.join(tmpdir(), 'codeatlas-memory-collection-'));
   t.after(() => rm(directory, { recursive: true, force: true }));
-  const currentCorpora = await (await import('./native-memory-profile.mjs')).currentMemoryCorpora();
   const reports = [],
     corpora = {},
     requiredCases = {},
@@ -33,8 +32,6 @@ async function setup(t, environment = nativeMetadataEnvironment()) {
     // Never relabel or rewrite the immutable captured report on disk.
     const report = JSON.parse(captured);
     report.environment = environment;
-    // Unit-only copy follows current scripts; immutable captured bytes stay unchanged.
-    report.corpusDigest = currentCorpora[workspace].digest;
     for (const row of report.observations) row.environment = environment;
     const bytes = Buffer.from(JSON.stringify(report));
     corpora[workspace] = { revision: report.corpusRevision, digest: report.corpusDigest };
