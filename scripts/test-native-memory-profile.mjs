@@ -42,6 +42,7 @@ for (const groups of [
 async function fixture(t, diagnostic = false) {
   const root = await mkdtemp(path.join(tmpdir(), 'codeatlas-memory-policy-'));
   t.after(() => rm(root, { recursive: true, force: true }));
+  const currentCorpora = await api.currentMemoryCorpora();
   const reports = [];
   let environment,
     corpora = {},
@@ -60,6 +61,8 @@ async function fixture(t, diagnostic = false) {
     );
     r.observations.forEach((o, i) => (o.peakResidentBytes = i % 2 ? low : base));
     r.reservationBytes = base;
+    // Synthetic unit report, not a new measurement or an update to the captured file.
+    r.corpusDigest = currentCorpora[workspace].digest;
     environment = r.environment;
     corpora[workspace] = { revision: r.corpusRevision, digest: r.corpusDigest };
     requiredCases[workspace] = r.cases;
@@ -230,7 +233,29 @@ test('omitted history cannot evade identity matching by reordering keys', async 
 test('pinned stability candidate and independent holdout retain complete provenance', async () => {
   const root = new URL('../fixtures/storage/native-analysis-state/', import.meta.url);
   const candidatePath = new URL('memory-stability-candidate.json', root);
-  const { candidate, digest } = await api.loadNativeMemoryCandidate(candidatePath);
+  const raw = await readFile(candidatePath);
+  const candidate = JSON.parse(raw),
+    digest = sha(raw);
+  const currentCorpora = await api.currentMemoryCorpora();
+  if (JSON.stringify(candidate.corpora) === JSON.stringify(currentCorpora)) {
+    assert.deepEqual(await api.loadNativeMemoryCandidate(candidatePath), { candidate, digest });
+  } else {
+    // Historical source identity must refuse current admission; never rewrite its pin.
+    await assert.rejects(
+      () => api.loadNativeMemoryCandidate(candidatePath),
+      (error) => {
+        assert.deepEqual(error.actual, candidate.corpora);
+        assert.deepEqual(error.expected, currentCorpora);
+        return error.code === 'ERR_ASSERTION';
+      },
+    );
+    const manifestRaw = await readFile(new URL('memory-stability-evidence.json', root));
+    assert.equal(sha(manifestRaw), candidate.manifestDigest);
+    const manifest = JSON.parse(manifestRaw);
+    assert.deepEqual(manifest.corpora, candidate.corpora);
+    for (const report of manifest.reports)
+      assert.equal(sha(await readFile(new URL(report.path, root))), report.sha256);
+  }
   const holdout = JSON.parse(await readFile(new URL('memory-stability-holdout.json', root)));
   assert.equal(holdout.schemaVersion, 1);
   assert.equal(holdout.purpose, 'verification');

@@ -1,3 +1,7 @@
+## Existing qualification fail-stop coverage across families — 2026-11-09
+
+Existing R9 stop-only plan -> trusted local identity assertion + sticky stage/worker control -> import-safe READ/FULL loops and optional paired/VERIFY collection -> owned simulation71/71, original Transport/prepare stop checks and independent race regression. Historical reports/pins remain; current source mismatch refuses admission. No new schema/Fixture/profile/value or phase exit. [Reproduction, workload and remaining physical limits](../superpowers/plans/2026-11-06-r9-stop-only.md#cross-family-coordinator-continuation--2026-11-09).
+
 ## Sorted raw inventories -> generator4 identity correction - 2026-11-09
 
 Existing approved sorted-file-record rule -> generator4-only full-path sort before digest -> nested sibling/directory independent hash and instance-ID vector RED then GREEN. Validator and legacy formats are unchanged. Topology14/14, scoped legacy78/78, architecture17 and independent review support the correction; no qualification or cross-identity build reuse follows. [Exact commands and frozen-candidate boundary](../superpowers/plans/2026-11-09-replay-topology-v4.md#nested-path-ordering-correction---2026-11-09).

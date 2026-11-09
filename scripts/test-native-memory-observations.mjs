@@ -14,6 +14,7 @@ const sha = (value) => createHash('sha256').update(value).digest('hex');
 async function setup(t, environment = nativeMetadataEnvironment()) {
   const directory = await mkdtemp(path.join(tmpdir(), 'codeatlas-memory-collection-'));
   t.after(() => rm(directory, { recursive: true, force: true }));
+  const currentCorpora = await (await import('./native-memory-profile.mjs')).currentMemoryCorpora();
   const reports = [],
     corpora = {},
     requiredCases = {},
@@ -32,6 +33,8 @@ async function setup(t, environment = nativeMetadataEnvironment()) {
     // Never relabel or rewrite the immutable captured report on disk.
     const report = JSON.parse(captured);
     report.environment = environment;
+    // Unit-only copy follows current scripts; immutable captured bytes stay unchanged.
+    report.corpusDigest = currentCorpora[workspace].digest;
     for (const row of report.observations) row.environment = environment;
     const bytes = Buffer.from(JSON.stringify(report));
     corpora[workspace] = { revision: report.corpusRevision, digest: report.corpusDigest };
@@ -289,5 +292,35 @@ test('corpus observation is persisted before unchanged gate rejects a peak', asy
   } finally {
     if (previous === undefined) delete process.env.CODEATLAS_NATIVE_MEMORY_ARTIFACT_DIR;
     else process.env.CODEATLAS_NATIVE_MEMORY_ARTIFACT_DIR = previous;
+  }
+});
+
+test('controlled paired holdout stops after worker failure or UNKNOWN and preserves the failure', async (t) => {
+  const { createR9StopControl } = await import('./helpers/native-refresh-r9-stop.mjs');
+  for (const mode of ['failure', 'unknown']) {
+    const f = await setup(t);
+    const control = await createR9StopControl(f.directory);
+    let calls = 0;
+    await assert.rejects(() =>
+      api.collectNativeMemoryObservations(
+        { mode: 'candidate', candidatePath: f.candidatePath, outputDirectory: f.outputDirectory },
+        async () => {
+          calls++;
+          return mode === 'failure'
+            ? { exitCode: 1, stdout: '', stderr: 'synthetic failure' }
+            : { ...(await f.runWorker('READ_SEAL', 'zero-file')), cleanupState: 'UNKNOWN' };
+        },
+        control,
+      ),
+    );
+    assert.equal(calls, 1);
+    const saved = JSON.parse(await readFile(path.join(f.outputDirectory, 'observations.json')));
+    assert.equal(saved.failures.length, 1);
+    await assert.rejects(() =>
+      control.worker('LATER', async () => {
+        calls++;
+      }),
+    );
+    assert.equal(calls, 1);
   }
 });

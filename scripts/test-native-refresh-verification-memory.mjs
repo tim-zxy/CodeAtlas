@@ -259,3 +259,83 @@ test('holdout cannot overwrite its candidate and retains a candidate-mutation fa
     ),
   );
 });
+
+test('controlled VERIFY calibration saves failure and never invokes the next repetition', async (t) => {
+  const { createR9StopControl } = await import('./helpers/native-refresh-r9-stop.mjs');
+  const f = await setup(t);
+  const control = await createR9StopControl(f.root);
+  let calls = 0;
+  const rawPath = path.join(f.root, 'controlled-raw.json');
+  await assert.rejects(() =>
+    api().then(({ benchVerificationMemory }) =>
+      benchVerificationMemory(
+        rawPath,
+        async () => {
+          calls++;
+          return { status: 1, stderr: '', stdout: '{}' };
+        },
+        control,
+        identity,
+      ),
+    ),
+  );
+  assert.equal(calls, 1);
+  assert.equal(JSON.parse(await readFile(rawPath)).failures.length, 1);
+});
+
+test('controlled VERIFY holdout stops after failure or UNKNOWN and preserves the original child', async (t) => {
+  const { createR9StopControl } = await import('./helpers/native-refresh-r9-stop.mjs');
+  const tools = await api();
+  for (const mode of ['failure', 'unknown']) {
+    const f = await setup(t);
+    const candidate = await tools.buildVerificationCandidate(f.path, f.root, identity);
+    await f.save('candidate.json', candidate);
+    const control = await createR9StopControl(f.root);
+    let calls = 0;
+    const holdoutPath = path.join(f.root, 'controlled-holdout.json');
+    await assert.rejects(() =>
+      tools.collectVerificationObservations(
+        path.join(f.root, 'candidate.json'),
+        path.join(f.root, 'children'),
+        holdoutPath,
+        async () => {
+          calls++;
+          return {
+            status: mode === 'failure' ? 1 : 0,
+            stdout: '{}',
+            stderr: '',
+            ...(mode === 'unknown' ? { cleanupState: 'UNKNOWN' } : {}),
+          };
+        },
+        identity,
+        control,
+      ),
+    );
+    assert.equal(calls, 1);
+    const saved = JSON.parse(await readFile(holdoutPath));
+    assert.equal(saved.failures.length, 1);
+    assert.equal(saved.failures[0].child.status, mode === 'failure' ? 1 : 0);
+  }
+});
+
+test('controlled VERIFY fixed calibration slots remain complete with a lightweight owned identity', async (t) => {
+  const { createR9StopControl } = await import('./helpers/native-refresh-r9-stop.mjs');
+  const tools = await api();
+  const f = await setup(t);
+  const control = await createR9StopControl(f.root);
+  let calls = 0;
+  const result = await control.stage('VERIFY_CALIBRATION', () =>
+    tools.benchVerificationMemory(
+      path.join(f.root, 'complete-controlled.json'),
+      async (name, repetition) => {
+        calls++;
+        return { status: 0, stderr: '', stdout: JSON.stringify(row(name, repetition)) };
+      },
+      control,
+      identity,
+    ),
+  );
+  assert.equal(calls, 75);
+  assert.equal(result.observations.length, 75);
+  assert.deepEqual(result.failures, []);
+});

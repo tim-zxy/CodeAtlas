@@ -7,14 +7,16 @@ export const r9StopReceiptFile = 'r9-stop-receipt.json';
 const failure = (code) => Object.assign(new Error(code), { code });
 /** Offline R9 deny-only control. Not execution authority, an in-flight interrupt,
  * a process-tree cleanup proof or OS time/memory/process isolation. */
-export async function createR9StopControl(directory) {
+export async function createR9StopControl(directory, verifyIdentity) {
+  assert.ok(verifyIdentity === undefined || typeof verifyIdentity === 'function');
   assert.equal(path.resolve(directory), directory);
   assert.equal(await realpath(directory), directory);
   const original = await lstat(directory, { bigint: true });
   assert.ok(original.isDirectory() && !original.isSymbolicLink());
   let stopped,
     saved = false,
-    active = false;
+    active = false,
+    stageActive = false;
   const ownedRoot = async () => {
     const current = await lstat(directory, { bigint: true });
     assert.ok(current.isDirectory() && !current.isSymbolicLink());
@@ -57,8 +59,17 @@ export async function createR9StopControl(directory) {
       try {
         await lstat(path.join(directory, r9StopRequestFile));
       } catch (error) {
-        if (error.code === 'ENOENT') return;
-        throw error;
+        if (error.code !== 'ENOENT') throw error;
+        if (verifyIdentity) {
+          try {
+            await verifyIdentity();
+            if (stopped) throw failure(stopped);
+          } catch {
+            await fail(boundary + ':IDENTITY');
+            throw failure(stopped);
+          }
+        }
+        return;
       }
       stopped = 'R9_STOP_REQUESTED';
       await record(boundary, 'REQUESTED', 'NOT_PROVEN');
@@ -68,33 +79,44 @@ export async function createR9StopControl(directory) {
     }
     throw failure(stopped);
   };
+  const run = async (boundary, operation, stage) => {
+    await checkpoint(boundary + ':BEFORE');
+    if (stopped) throw failure(stopped);
+    if (active || (stage && stageActive)) {
+      await fail(boundary + ':CONCURRENT');
+      throw failure(stopped);
+    }
+    if (stage) stageActive = true;
+    else active = true;
+    try {
+      const result = await operation();
+      if (result !== null && typeof result === 'object') {
+        if (Object.getOwnPropertyDescriptor(result, 'cleanupState')?.value === 'UNKNOWN')
+          throw failure('R9_CLEANUP_UNKNOWN');
+        if (stage) {
+          const failures = Object.getOwnPropertyDescriptor(result, 'failures')?.value;
+          if (
+            (Array.isArray(failures) && failures.length > 0) ||
+            Object.getOwnPropertyDescriptor(result, 'passed')?.value === false
+          )
+            throw failure('R9_STAGE_FAILED');
+        }
+      }
+      // Preserve/validate/restore original evidence before post-operation checks.
+      await checkpoint(boundary + ':AFTER');
+      return result;
+    } catch (error) {
+      await fail(boundary + ':FAILED');
+      throw error;
+    } finally {
+      if (stage) stageActive = false;
+      else active = false;
+    }
+  };
   return Object.freeze({
     checkpoint,
     fail,
-    async worker(boundary, operation) {
-      await checkpoint(boundary + ':BEFORE');
-      if (active) {
-        await fail(boundary + ':CONCURRENT');
-        throw failure(stopped);
-      }
-      active = true;
-      try {
-        const result = await operation();
-        if (
-          result !== null &&
-          typeof result === 'object' &&
-          Object.getOwnPropertyDescriptor(result, 'cleanupState')?.value === 'UNKNOWN'
-        )
-          throw failure('R9_CLEANUP_UNKNOWN');
-        // The original operation must finish its artifact/validation/restore path first.
-        await checkpoint(boundary + ':AFTER');
-        return result;
-      } catch (error) {
-        await fail(boundary + ':FAILED');
-        throw error;
-      } finally {
-        active = false;
-      }
-    },
+    worker: (boundary, operation) => run(boundary, operation, false),
+    stage: (boundary, operation) => run(boundary, operation, true),
   });
 }

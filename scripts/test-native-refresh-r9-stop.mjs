@@ -123,3 +123,97 @@ test('during-functional-trial stop waits for receipt, preserved result and origi
   );
   assert.equal(calls, 1);
 });
+
+test('identity verification is checked before and after a worker and latches drift', async (t) => {
+  const f = await setup(t);
+  let identity = 'frozen',
+    calls = 0;
+  const control = await api.createR9StopControl(f.root, async () => {
+    assert.equal(identity, 'frozen');
+  });
+  await assert.rejects(() =>
+    control.worker('FIRST', async () => {
+      calls++;
+      await writeFile(path.join(f.root, 'original.json'), 'preserved');
+      identity = 'changed';
+    }),
+  );
+  identity = 'frozen';
+  await assert.rejects(() =>
+    control.worker('NEXT', async () => {
+      calls++;
+    }),
+  );
+  assert.equal(calls, 1);
+  assert.equal(await readFile(path.join(f.root, 'original.json'), 'utf8'), 'preserved');
+});
+
+test('stage allows serial workers but rejects failed reports and later stages', async (t) => {
+  const f = await setup(t);
+  let calls = 0;
+  await assert.rejects(() =>
+    f.control.stage('READ', async () => {
+      await f.control.worker('FIRST', async () => {
+        calls++;
+      });
+      return { failures: [{ code: 'SYNTHETIC_FAILURE' }] };
+    }),
+  );
+  await assert.rejects(() =>
+    f.control.stage('VERIFY', async () => {
+      await f.control.worker('NEXT', async () => {
+        calls++;
+      });
+    }),
+  );
+  assert.equal(calls, 1);
+});
+
+test('failure while another identity check awaits cannot reopen the worker boundary', async (t) => {
+  const f = await setup(t);
+  let holdIdentity = false,
+    releaseIdentity,
+    identityEntered,
+    failFirst,
+    firstStarted;
+  const identityWait = new Promise((resolve) => {
+    releaseIdentity = resolve;
+  });
+  const entered = new Promise((resolve) => {
+    identityEntered = resolve;
+  });
+  const firstWait = new Promise((resolve) => {
+    failFirst = resolve;
+  });
+  const started = new Promise((resolve) => {
+    firstStarted = resolve;
+  });
+  const control = await api.createR9StopControl(f.root, async () => {
+    if (holdIdentity) {
+      identityEntered();
+      await identityWait;
+    }
+  });
+  let calls = 0;
+  const first = assert.rejects(() =>
+    control.worker('FIRST', async () => {
+      calls++;
+      firstStarted();
+      await firstWait;
+      throw Error('synthetic failure');
+    }),
+  );
+  await started;
+  holdIdentity = true;
+  const next = assert.rejects(() =>
+    control.worker('NEXT', async () => {
+      calls++;
+    }),
+  );
+  await entered;
+  failFirst();
+  await first;
+  releaseIdentity();
+  await next;
+  assert.equal(calls, 1);
+});

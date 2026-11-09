@@ -20,6 +20,7 @@ async function runPinnedMemoryWorker(workspace, caseName) {
 export async function collectNativeMemoryObservations(
   { mode, candidatePath, outputDirectory },
   runWorker = runPinnedMemoryWorker,
+  control,
 ) {
   assert.ok(['candidate', 'approved'].includes(mode));
   assert.ok(typeof outputDirectory === 'string' && outputDirectory.length);
@@ -66,52 +67,62 @@ export async function collectNativeMemoryObservations(
   await save();
   for (const [workspace, names] of Object.entries(tools.requiredMemoryCases))
     for (const name of names) {
-      let child, row;
-      try {
-        child = await runWorker(workspace, name);
-      } catch {
-        artifact.failures.push({ workspace, name, code: 'PROCESS_FAILED' });
+      const failureCount = artifact.failures.length;
+      const collect = async () => {
+        let child, row;
+        try {
+          child = await runWorker(workspace, name);
+          if (control) assert.notEqual(child.cleanupState, 'UNKNOWN');
+        } catch {
+          artifact.failures.push({ workspace, name, code: 'PROCESS_FAILED' });
+          await save();
+          return;
+        }
+        if (child.exitCode !== 0) {
+          artifact.failures.push({
+            workspace,
+            name,
+            code: 'PROCESS_FAILED',
+            exitCode: child.exitCode ?? null,
+          });
+          await save();
+          return;
+        }
+        try {
+          row = JSON.parse(child.stdout);
+          tools.validateNativeMemoryObservation(row, workspace, artifact.environment);
+          assert.equal(row.name, name, 'Observation does not match requested class');
+          if (candidate && workspace === 'READ_SEAL')
+            assert.ok(
+              candidate.groups.some(
+                (group) =>
+                  group.workspace === workspace &&
+                  group.caseName === name &&
+                  group.inputIdentity === row.corpusPayloadDigest,
+              ),
+              'Observation input differs from frozen evidence',
+            );
+        } catch {
+          artifact.failures.push({ workspace, name, code: 'OBSERVATION_INVALID' });
+          await save();
+          return;
+        }
+        artifact.observations.push({ workspace, observation: row });
         await save();
-        continue;
-      }
-      if (child.exitCode !== 0) {
-        artifact.failures.push({
-          workspace,
-          name,
-          code: 'PROCESS_FAILED',
-          exitCode: child.exitCode ?? null,
-        });
-        await save();
-        continue;
-      }
-      try {
-        row = JSON.parse(child.stdout);
-        tools.validateNativeMemoryObservation(row, workspace, artifact.environment);
-        assert.equal(row.name, name, 'Observation does not match requested class');
-        if (candidate && workspace === 'READ_SEAL')
-          assert.ok(
-            candidate.groups.some(
-              (group) =>
-                group.workspace === workspace &&
-                group.caseName === name &&
-                group.inputIdentity === row.corpusPayloadDigest,
-            ),
-            'Observation input differs from frozen evidence',
-          );
-      } catch {
-        artifact.failures.push({ workspace, name, code: 'OBSERVATION_INVALID' });
-        await save();
-        continue;
-      }
-      artifact.observations.push({ workspace, observation: row });
-      await save();
-      try {
-        if (mode === 'candidate') assert.ok(row.peakResidentBytes <= candidate.reservationBytes);
-        else check(row, undefined, true);
-      } catch {
-        artifact.failures.push({ workspace, name, code: 'RESERVATION_REFUSED' });
-        await save();
-      }
+        try {
+          if (mode === 'candidate') assert.ok(row.peakResidentBytes <= candidate.reservationBytes);
+          else check(row, undefined, true);
+        } catch {
+          artifact.failures.push({ workspace, name, code: 'RESERVATION_REFUSED' });
+          await save();
+        }
+      };
+      const controlled = async () => {
+        await collect();
+        if (artifact.failures.length > failureCount) throw Error('R9_OBSERVATION_FAILED');
+      };
+      if (control) await control.worker(workspace + '_HOLDOUT:' + name, controlled);
+      else await collect();
     }
   return { passed: artifact.failures.length === 0, ...artifact };
 }

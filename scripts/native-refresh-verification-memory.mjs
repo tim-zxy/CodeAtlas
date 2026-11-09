@@ -349,8 +349,10 @@ const save = async (file, value, exclusive = false) => {
 export async function benchVerificationMemory(
   rawReportPath,
   runWorker = runPinnedVerificationWorker,
+  control,
+  identity = null,
 ) {
-  const identity = await verificationEvidenceIdentity();
+  identity ??= await verificationEvidenceIdentity();
   const report = {
     schemaVersion: 1,
     workspace,
@@ -362,27 +364,36 @@ export async function benchVerificationMemory(
   await save(rawReportPath, report, true);
   for (const name of verificationCases)
     for (let repetition = 0; repetition < 5; repetition++) {
-      let child;
-      try {
-        child = await runWorker(name, repetition);
-        const row = JSON.parse(child.stdout);
-        // Preserve parsed rows before validation, including malformed diagnostics.
-        report.observations.push(row);
-        assert.equal(child.status, 0);
-        assert.equal(child.stderr, '');
-        assert.equal(row.name, name);
-        assert.equal(row.repetition, repetition);
-        validateVerificationObservation(row, identity);
-      } catch (error) {
-        report.failures.push({
-          name,
-          repetition,
-          code: 'WORKER_OR_EVIDENCE_FAILED',
-          message: String(error.message),
-          child: child ?? null,
-        });
-      }
-      await save(rawReportPath, report);
+      const collect = async () => {
+        let child;
+        try {
+          child = await runWorker(name, repetition);
+          if (control) assert.notEqual(child.cleanupState, 'UNKNOWN');
+          const row = JSON.parse(child.stdout);
+          // Preserve parsed rows before validation, including malformed diagnostics.
+          report.observations.push(row);
+          assert.equal(child.status, 0);
+          assert.equal(child.stderr, '');
+          assert.equal(row.name, name);
+          assert.equal(row.repetition, repetition);
+          validateVerificationObservation(row, identity);
+        } catch (error) {
+          report.failures.push({
+            name,
+            repetition,
+            code: 'WORKER_OR_EVIDENCE_FAILED',
+            message: String(error.message),
+            child: child ?? null,
+          });
+          if (control) {
+            await save(rawReportPath, report);
+            throw error;
+          }
+        }
+        await save(rawReportPath, report);
+      };
+      if (control) await control.worker('VERIFY_CALIBRATION:' + name, collect);
+      else await collect();
     }
   return report;
 }
@@ -392,6 +403,7 @@ export async function collectVerificationObservations(
   holdoutPath,
   runWorker = runPinnedVerificationWorker,
   identity = null,
+  control,
 ) {
   assert.notEqual(
     path.resolve(candidatePath),
@@ -424,34 +436,43 @@ export async function collectVerificationObservations(
   }
   await persist();
   for (const name of verificationCases) {
-    let child, row;
-    try {
-      child = await runWorker(name, 0);
-      await save(path.join(artifactDir, name + '.json'), child);
-      assert.equal(child.status, 0);
-      assert.equal(child.stderr, '');
-      row = JSON.parse(child.stdout);
-      validateVerificationObservation(row, identity);
-      assert.equal(row.name, name);
-      assert.equal(row.repetition, 0);
-      holdout.observations.push(row);
-      assert.ok(
-        row.peakResidentBytes <= loaded.candidate.reservationBytes,
-        'Peak exceeds frozen candidate',
-      );
-    } catch (error) {
-      holdout.failures.push({
-        name,
-        code: 'WORKER_OR_PEAK_FAILED',
-        message: String(error.message),
-        child: child ?? null,
-      });
-      await save(path.join(artifactDir, name + '.json'), {
-        child: child ?? null,
-        failure: String(error.message),
-      });
-    }
-    await persist();
+    const collect = async () => {
+      let child, row;
+      try {
+        child = await runWorker(name, 0);
+        if (control) assert.notEqual(child.cleanupState, 'UNKNOWN');
+        await save(path.join(artifactDir, name + '.json'), child);
+        assert.equal(child.status, 0);
+        assert.equal(child.stderr, '');
+        row = JSON.parse(child.stdout);
+        validateVerificationObservation(row, identity);
+        assert.equal(row.name, name);
+        assert.equal(row.repetition, 0);
+        holdout.observations.push(row);
+        assert.ok(
+          row.peakResidentBytes <= loaded.candidate.reservationBytes,
+          'Peak exceeds frozen candidate',
+        );
+      } catch (error) {
+        holdout.failures.push({
+          name,
+          code: 'WORKER_OR_PEAK_FAILED',
+          message: String(error.message),
+          child: child ?? null,
+        });
+        await save(path.join(artifactDir, name + '.json'), {
+          child: child ?? null,
+          failure: String(error.message),
+        });
+        if (control) {
+          await persist();
+          throw error;
+        }
+      }
+      await persist();
+    };
+    if (control) await control.worker('VERIFY_HOLDOUT:' + name, collect);
+    else await collect();
   }
   if (sha(await readFile(candidatePath)) !== loaded.digest) {
     holdout.failures.push({ code: 'CANDIDATE_CHANGED' });
