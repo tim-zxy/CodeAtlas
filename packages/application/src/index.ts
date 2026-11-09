@@ -68,3 +68,5 @@ export { readOwnedSymbolUnderstanding } from './owned-symbol-query.js';
 export type { OwnedSymbolCodeSession } from './owned-symbol-query.js';
 
 export * from './owned-code-trace.js';
+
+export * from './owned-structure-trace.js';

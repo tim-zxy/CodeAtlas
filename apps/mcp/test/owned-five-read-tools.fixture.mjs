@@ -10,11 +10,16 @@ import { limits as readLimits } from '../../../packages/storage/test/helpers/off
 import {
   createOwnedFiveReadToolsMcpServer,
   createOwnedExtendedReadToolsMcpServer,
+  createOwnedStructureReadToolsMcpServer,
 } from '../dist/owned-business-stdio.js';
 import { withCodeQueryDatabase } from '../../../packages/storage/test/helpers/code-query-fixture.mjs';
 import { openRepositoryCodeQuery } from '../../../packages/storage/dist/index.js';
+import {
+  withOwnedStructureFixture,
+  structureLimits,
+} from '../../../packages/application/test/helpers/owned-structure-fixture.mjs';
 const cleanup = [];
-try {
+async function run(runtimeSeed = null) {
   await withCodeQueryDatabase(
     {
       after(fn) {
@@ -94,11 +99,38 @@ try {
       const authorize = (m) => {
         if (
           m.workspaceId !== 'w' ||
-          JSON.stringify(m.repositoryIds) !== JSON.stringify(['r', seed.repositoryId].sort())
+          JSON.stringify(m.repositoryIds) !==
+            JSON.stringify(
+              [
+                ...new Set([
+                  'r',
+                  seed.repositoryId,
+                  ...(runtimeSeed ? [runtimeSeed.repositoryId] : []),
+                ]),
+              ].sort(),
+            )
         )
           throw Error('SCOPE_MISMATCH');
       };
-      const hostScope = { workspaceId: 'w', repositoryIds: ['r', seed.repositoryId] };
+      const hostScope = {
+        workspaceId: 'w',
+        repositoryIds: [
+          ...new Set(['r', seed.repositoryId, ...(runtimeSeed ? [runtimeSeed.repositoryId] : [])]),
+        ],
+      };
+      if (runtimeSeed)
+        process.stderr.write(
+          'STRUCTURE_SEED ' +
+            JSON.stringify({
+              repositoryId: runtimeSeed.repositoryId,
+              revisionId: runtimeSeed.revisionId,
+              activationId: runtimeSeed.activationId,
+              executionNodeId: runtimeSeed.executionNodeId,
+              flowId: runtimeSeed.flowId,
+              stepKey: runtimeSeed.stepKey,
+            }) +
+            '\n',
+        );
       if (process.argv[2]?.includes('mutate-scope'))
         Object.defineProperty(authorize, 'bind', {
           value(receiver) {
@@ -106,12 +138,46 @@ try {
             return Function.prototype.bind.call(authorize, receiver);
           },
         });
-      const extended = process.argv[2]?.startsWith('extended');
+      const extended = process.argv[2]?.startsWith('extended') || !!runtimeSeed;
       const app = (
-        extended ? createOwnedExtendedReadToolsMcpServer : createOwnedFiveReadToolsMcpServer
+        runtimeSeed
+          ? createOwnedStructureReadToolsMcpServer
+          : extended
+            ? createOwnedExtendedReadToolsMcpServer
+            : createOwnedFiveReadToolsMcpServer
       )(
         {
           scope: hostScope,
+          ...(runtimeSeed
+            ? Object.fromEntries(
+                ['structure', 'l2'].map((name) => [
+                  name,
+                  {
+                    repositoryId: runtimeSeed.repositoryId,
+                    limits: { ...structureLimits, maxTokens: 1000 },
+                    authorize(m) {
+                      authorize(m);
+                      if (
+                        m.purpose !==
+                        (name === 'structure'
+                          ? 'trace_flow/STORED_STRUCTURE'
+                          : 'get_project_context/L2')
+                      )
+                        throw Error('PURPOSE');
+                    },
+                    openRuntimeQuery: async (b, c) => {
+                      reads++;
+                      if (process.argv[2] === 'structure-hold') {
+                        process.stderr.write('HELD_QUERY_STARTED\n');
+                        await new Promise((r) => setTimeout(r, 400));
+                      }
+                      return runtimeSeed.open(b, c);
+                    },
+                    tokenCounter: meter(),
+                  },
+                ]),
+              )
+            : {}),
           ...(extended
             ? {
                 code: {
@@ -218,7 +284,7 @@ try {
           },
           limits: {
             maxMessageBytes: 4000000,
-            maxConcurrentCalls: process.argv[2]?.includes('hold-') ? 1 : 4,
+            maxConcurrentCalls: process.argv[2]?.includes('hold') ? 1 : 4,
             maxItems: 1000000,
             maxDepth: 100,
             requestTimeoutMs: 10000,
@@ -235,6 +301,18 @@ try {
       process.stderr.write('OWNED_GROUP_' + result.cleanupState + '\n');
     },
   );
+}
+try {
+  if (process.argv[2]?.startsWith('structure'))
+    await withOwnedStructureFixture(
+      {
+        after(fn) {
+          cleanup.push(fn);
+        },
+      },
+      run,
+    );
+  else await run();
 } finally {
   for (const fn of cleanup.reverse()) await fn();
 }

@@ -1,3 +1,29 @@
+## Approved stored structure trace + L2 implemented - 2026-11-09
+
+Two isolated streams delivered actual readonly Runtime Store traversal and public
+v3 Trace/L2, then one integrator connected them through the existing SDK. EXECUTION
+uses exact ExecutionNode; RUNTIME exact Flow/step; both require expected activation
+and stored code revision with no fallback. Full IR/identity/candidate/activation
+digests validate, actual v1/v2 readonly temporary databases supply data. Original
+CURRENT/AFFECTED, source/support/confidence, non-resolved edges, branch evidence and
+bounded frontier remain. Results are STORED_DERIVED_NOT_OBSERVED_EXECUTION, never
+real observed execution; explicit L2 is NOT_ASSESSED for project completeness.
+
+Same shared concrete Trace/L2 query avoids duplicate read/meter. Host captures
+scope/limits, checks operation purpose before read/delivery and measures the complete
+chosen envelope once. Source work registers before opener; abort/close joins actual
+handles, UNKNOWN poisons/no reopen. Additive nine-leaf/five-name SDK host preserves
+all old v1/v2 factories/routes and matching v3 host failures. Normal production CLI,
+Source body/model/user data/query/publication and Native/R9 remain closed.
+
+Final concentrated110/110,0fail/cancel/skip/todo,52405.9835ms; fresh Application/Agent/Runtime/MCP builds, architecture17, scoped formatting and independent review pass.
+[Contract](../superpowers/specs/2026-11-09-stored-structure-l2.md),
+[commands/failures/review](../superpowers/plans/2026-11-09-stored-structure-l2.md).
+CI199 exact18f1d30 terminal TypeScript/Rust success; Native fails old R8 script-catalog
+prerequisite D5_SCRIPT_PREREQUISITE_FAILED, qualification skipped. This verifies
+that older head only. Phase1 stays4/21,A6 NOT_QUALIFIED,E02 PROPOSED/uninstalled.
+
+
 ## Approved finite static CODE trace + explicit-query L1 - 2026-11-09
 
 User-approved CODE v2 and L1 v2 are implemented in two isolated streams and unified

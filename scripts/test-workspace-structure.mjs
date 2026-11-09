@@ -156,7 +156,7 @@ for (const name of packageNames) {
     } else if (name === 'agent-api') {
       assert.equal(
         source,
-        "export * from './business-trace-contract.js';\nexport * from './business-trace-tool.js';\n\nexport * from './knowledge-search-contract.js';\nexport * from './knowledge-search-tool.js';\n\nexport * from './project-context-contract.js';\nexport * from './project-context-tool.js';\n\nexport * from './knowledge-status-contract.js';\nexport * from './knowledge-status-tool.js';\n\nexport * from './symbol-understanding-contract.js';\nexport * from './symbol-understanding-tool.js';\n\nexport * from './project-l1-contract.js';\n\nexport * from './code-trace-contract.js';\nexport * from './code-trace-tool.js';\n",
+        "export * from './business-trace-contract.js';\nexport * from './business-trace-tool.js';\n\nexport * from './knowledge-search-contract.js';\nexport * from './knowledge-search-tool.js';\n\nexport * from './project-context-contract.js';\nexport * from './project-context-tool.js';\n\nexport * from './knowledge-status-contract.js';\nexport * from './knowledge-status-tool.js';\n\nexport * from './symbol-understanding-contract.js';\nexport * from './symbol-understanding-tool.js';\n\nexport * from './project-l1-contract.js';\n\nexport * from './code-trace-contract.js';\nexport * from './code-trace-tool.js';\n\nexport * from './stored-structure-contract.js';\nexport * from './stored-structure-tool.js';\n",
       );
     } else if (name === 'source') {
       assert.match(source, /scanGitRepository/);

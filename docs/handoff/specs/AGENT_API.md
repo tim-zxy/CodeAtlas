@@ -1,3 +1,34 @@
+## Approved stored EXECUTION/RUNTIME v3 + explicit L2 - 2026-11-09
+
+[Exact approved refinement](../../superpowers/specs/2026-11-09-stored-structure-l2.md)
+adds trace_flow v3 kinds EXECUTION/RUNTIME and get_project_context v3 depth L2.
+Host fixes workspace/repository and readonly Runtime format1/2 opener. Every request
+pins expectedActivationId and expectedRevisionId; EXECUTION starts at an exact
+ExecutionNode, RUNTIME at an exact RuntimeFlow/stepKey, FORWARD only. No name,
+position, historical/latest-version or exception-driven schema fallback.
+
+Strict complete Runtime IR, identity, candidate and activation digests are validated
+before traversal. The actual existing Store readonly snapshot preserves CURRENT/
+AFFECTED and LOCAL_DECLARED_RUNTIME. BFS retains original members/support/confidence,
+non-resolved targets, selected branches and original outgoing references. Explicit
+depth/node/edge limits return actual frontier; full metadata/control/byte/token
+exhaustion refuses. Original outgoing references outside the selected subset are
+not materialized graph nodes, nor a completeness claim.
+
+Result explicitly states STORED_DERIVED_NOT_OBSERVED_EXECUTION. Code basis, exact
+activation/revision, stored coverage and source evidence remain in engineeringResult;
+knowledge-only wrapper meta is null/not applicable. L2 requires explicit selection,
+EXPLICIT_STORED_STRUCTURE and projectCompleteness NOT_ASSESSED; it uses the same
+actual query and meters its whole chosen response once. No Source body/model/update.
+
+The additive structure-read SDK host constructs nine genuine leaves under one
+captured scope with the same five names; it composes exact v1/v2/v3 routes and
+matching failure formats. Per-operation permissions/ceilings and immediate abort/
+joined close preserve UNKNOWN. Existing factories remain; normal production CLI,
+query/publication, user DB, R9 and all original acceptance gates stay closed/open
+as before. [Reproducible evidence](../../superpowers/plans/2026-11-09-stored-structure-l2.md).
+
+
 ## Approved bounded CODE v2 and explicit-query L1 v2 - 2026-11-09
 
 The [approved exact refinement](../../superpowers/specs/2026-11-09-code-trace-l1.md)

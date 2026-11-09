@@ -1,3 +1,16 @@
+## Approved exact stored structure/L2 refinement - 2026-11-09
+
+User approved bounded EXECUTION/RUNTIME trace and L2 consumption over self-owned
+stored derived structures. [Precise v3 selection/version rules](../../superpowers/specs/2026-11-09-stored-structure-l2.md)
+pin host workspace/repository, exact Runtime activation and code revision, explicit
+node or flow/step and forward budgets. Existing IR/Store identity validation and
+literal source/coverage/truncation remain; stored derivation never means observed
+execution. Additive SDK versions retain old contracts and fail-closed lifecycle.
+No new Canonical model/schema, migration, dependency, numeric gate, production/data
+permission or phase acceptance. Rollback disables new variants/host only; immutable
+history remains. [Implementation evidence](../../superpowers/plans/2026-11-09-stored-structure-l2.md).
+
+
 ## Approved bounded CODE/L1 versioned refinements - 2026-11-09
 
 User approved [exact static CODE trace and explicit published L1 retrieval](../../superpowers/specs/2026-11-09-code-trace-l1.md)

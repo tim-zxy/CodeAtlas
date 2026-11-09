@@ -1,3 +1,13 @@
+## Stored EXECUTION/RUNTIME + L2 component evidence - 2026-11-09
+
+Approved v3 exact activation/code-revision reads run over genuine self-owned v1/v2
+Runtime SQLite snapshots through Trace/L2 and real SDK. Derived structures are not
+observed execution; source/coverage/unresolved/branch/frontier and UNKNOWN cleanup
+remain explicit. Final concentrated110/110,0fail/cancel/skip/todo,52405.9835ms; fresh Application/Agent/Runtime/MCP builds, architecture17, scoped formatting and independent review pass.
+This does not close full P1-17/18, actual E2E quality/Native or production gates;
+Phase1 stays4/21. [Scope and reproduction](../superpowers/plans/2026-11-09-stored-structure-l2.md).
+
+
 ## Bounded static CODE + explicit-query L1 component evidence - 2026-11-09
 
 Approved exact static CODE v2 and explicit published-query L1 v2 run through the

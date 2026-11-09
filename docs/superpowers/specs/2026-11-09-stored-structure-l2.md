@@ -1,0 +1,21 @@
+# Approved stored EXECUTION/RUNTIME trace and L2
+
+User approved the bounded public selection/version rules and self-owned implementation/tests for stored derived structures. Reuse actual immutable Runtime activations, existing strict Runtime IR and readonly RuntimeFactStore; never describe stored derivation as observed execution. Production access, user data, Source body, model, Native/R9, database migrations, numeric/dependency/client-config changes remain closed.
+
+## Concrete selection and compatibility
+
+Add trace_flow version3 kind EXECUTION or RUNTIME, direction FORWARD. Host fixes workspace and one allowed repository, readonly opener and resource ceilings. Request includes exact expectedActivationId and expectedRevisionId. EXECUTION startRef={kind:EXECUTION_NODE,id}; RUNTIME startRef={kind:RUNTIME_FLOW,id,stepKey}. IDs are existing IR entity IDs, not names or positions. Require expected active Runtime pointer and its stored code-basis revision; mismatch refuses with no latest/historical/name fallback. Original CURRENT/AFFECTED state is preserved, never silently made fresh. Reader host pins original Runtime format1 or2; no exception-driven downgrade.
+
+Budget={maxDepth:nonnegative safe integer,maxNodes,maxEdges,maxMetadataRows,maxOutputBytes,maxTokens:positive safe integers}, all explicit and clamped to host ceilings. BFS deterministic, forward only, cycle-safe. EXECUTION retains original selected ExecutionNode/ExecutionEdge and unresolved/ambiguous targets without inventing a target. RUNTIME traverses actual RuntimeFlow.outgoingStepKeys; steps and associated original references remain unchanged. Depth/node/edge truncation includes honest frontier; metadata/byte/token/control exhaustion refuses rather than stripping evidence. Missing activation/start/step is typed failure, not successful emptiness. No cross-repository inferred expansion or runtime execution claim.
+
+L2 request version3 depth L2 selection={kind,expectedActivationId,expectedRevisionId,startRef,direction}, same budget. It invokes the same actual stored traversal only on explicit request, never inference/retrieval/body/model. Response labels contextVersion3, EXPLICIT_STORED_STRUCTURE and projectCompleteness NOT_ASSESSED. No duplicated query or fake token policy; the complete chosen trace/L2 envelope is measured once.
+
+Result data wraps the original selected structure with STORED_DERIVED_NOT_OBSERVED_EXECUTION, LOCAL_DECLARED_RUNTIME, original basis/activation/state/coverage/refs/confidence. Knowledge-only wrapper metadata stays explicitly null/not applicable; no fabricated Canonical enum or probability. Quality NOT_EVALUABLE, productionQuery NOT_AUTHORIZED. Strict response validation and digest cover selection and all metadata/frontier.
+
+Readonly source work is registered before invoking opener. Application always joins close; failure reports QUERY_CLEANUP_FAILED/UNKNOWN. API close invalidates and aborts immediately, joins actual work, poisons UNKNOWN and forbids reopen. Permission is purpose-specific, all-field and checked before read/delivery; no caller DTO is authority.
+
+Additive full-read host reuses genuine leaves and exact version routing, not caller sessions. Existing single/three/five/extended-five factories, CODEv2/BUSINESSv1 and L0v1/L1v2/status/symbol retain schemas/errors. All leaf invalidation is immediate and async settlement joined, failures version-specific. Normal production CLI stays closed. Rollback disables only new factories/variants, preserving immutable history.
+
+## Approach and success criteria
+
+Reuse real owned Runtime Store reads and existing IR; no parallel invented truth model, schema or standalone graph engine. Private bounded projection is needed instead of returning entire candidates, which defeats result limits. Two file-isolated streams (Application+actual Store fixtures; Agent/L2+SDK) converge under one integrator. Tests use genuine self-owned temporary databases and literal expected graph/step evidence, version/missing/stale/budgets/frontier/cancel/cleanup and actual SDK old/new compatibility. Independent review and impacted builds/architecture/format are required. Phase1 stays4/21; actual E2E/model quality and Native qualification are separate.

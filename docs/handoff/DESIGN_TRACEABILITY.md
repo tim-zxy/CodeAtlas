@@ -1,3 +1,17 @@
+## Stored structure trace and L2 - 2026-11-09
+
+[Approved v3 refinement](../superpowers/specs/2026-11-09-stored-structure-l2.md) ->
+existing RuntimeFactStore.traceRuntime/V2 (host-pinned readonly format) -> new
+Application owned-structure-trace exact identity/full-IR/digest checks and bounded
+forward traversal -> shared concrete Agent Trace/L2 purpose/opaque context/full
+response meter -> additive SDK version union over nine real leaves/five tool names.
+Actual temporary Store fixtures preserve original graph/flow members, supports,
+branches and CURRENT/AFFECTED; tests cover version/start refusal, original frontier,
+complete budgets, cancellation/unknown cleanup and old/new SDK coexistence. No new
+Fixture ID/schema/baseline/dependency or production authority; formal gates stay.
+[Commands and exact evidence](../superpowers/plans/2026-11-09-stored-structure-l2.md).
+
+
 ## Approved CODE v2 / explicit L1 v2 traceability - 2026-11-09
 
 [Approved contract](../superpowers/specs/2026-11-09-code-trace-l1.md) -> existing

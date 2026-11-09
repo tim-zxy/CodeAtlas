@@ -11,6 +11,15 @@ import {
   McpError,
 } from '@modelcontextprotocol/sdk/types.js';
 import {
+  createOwnedStoredStructureTraceSession,
+  createOwnedProjectL2Session,
+  storedStructureWireSchemas,
+  storedStructureResponseSchema,
+  storedStructureFailure,
+  serializeStoredStructureResponse,
+  projectL2WireSchemas,
+  projectL2ResponseSchema,
+  serializeProjectL2Response,
   createOwnedCodeTraceSession,
   codeTraceWireSchemas,
   codeTraceFailure,
@@ -125,24 +134,35 @@ type LeafSession =
   | SymbolSession
   | ReturnType<typeof createOwnedCodeTraceSession>
   | ReturnType<typeof createOwnedProjectL1Session>;
-type ReadSession = LeafSession | ReturnType<typeof composeVersions>;
-function matchesVersion(input: unknown, field: 'kind' | 'depth', value: 'CODE' | 'L1') {
+type ReadSession = {
+  context: unknown;
+  descriptor: unknown;
+  execute(input: unknown, handle: unknown, c: Parameters<Session['execute']>[2]): Promise<unknown>;
+  close(): void | Promise<void>;
+};
+function matchesVersion(
+  input: unknown,
+  field: 'kind' | 'depth',
+  value: string | readonly string[],
+  version = 2,
+) {
   if (!input || typeof input !== 'object' || types.isProxy(input)) return false;
   const d = Object.getOwnPropertyDescriptors(input);
   return (
     Object.hasOwn(d.version ?? {}, 'value') &&
-    d.version!.value === 2 &&
+    d.version!.value === version &&
     Object.hasOwn(d[field] ?? {}, 'value') &&
-    d[field]!.value === value
+    (Array.isArray(value) ? value.includes(d[field]!.value) : d[field]!.value === value)
   );
 }
 // This is a private route over genuine constructor-owned leaves, not a new authority.
 function composeVersions(
-  first: LeafSession,
-  second: LeafSession,
+  first: ReadSession,
+  second: ReadSession,
   field: 'kind' | 'depth',
-  value: 'CODE' | 'L1',
-) {
+  value: string | readonly string[],
+  version = 2,
+): ReadSession {
   const context = Object.freeze(Object.create(null));
   let closed = false;
   let task: Promise<void> | undefined;
@@ -156,7 +176,7 @@ function composeVersions(
             ? businessTraceFailure('CONTEXT_UNAVAILABLE')
             : projectContextFailure('CONTEXT_UNAVAILABLE'),
         );
-      const next = matchesVersion(input, field, value);
+      const next = matchesVersion(input, field, value, version);
       const leaf = next ? second : first;
       return leaf.execute(input, leaf.context, control);
     },
@@ -182,15 +202,18 @@ function composeVersions(
     },
   });
 }
-function versionedConfig<A, B>(
+function versionedConfig(
   first: {
     wire: () => { input: object; output: object };
-    responseSchema: { safeParse: (v: unknown) => { success: boolean }; parse: (v: unknown) => A };
+    responseSchema: {
+      safeParse: (v: unknown) => { success: boolean };
+      parse: (v: unknown) => Record<string, unknown>;
+    };
     serialize: (v: unknown, c: Parameters<LeafSession['execute']>[2]) => string;
   },
   second: {
     wire: () => { input: object; output: object };
-    responseSchema: { parse: (v: unknown) => B };
+    responseSchema: { parse: (v: unknown) => Record<string, unknown> };
     serialize: (v: unknown, c: Parameters<LeafSession['execute']>[2]) => string;
   },
 ) {
@@ -200,6 +223,15 @@ function versionedConfig<A, B>(
       output: { type: 'object' as const, anyOf: [first.wire().output, second.wire().output] },
     }),
     responseSchema: {
+      safeParse: (v: unknown) => {
+        try {
+          if (first.responseSchema.safeParse(v).success) first.responseSchema.parse(v);
+          else second.responseSchema.parse(v);
+          return { success: true };
+        } catch {
+          return { success: false };
+        }
+      },
       parse: (v: unknown) => {
         if (first.responseSchema.safeParse(v).success) return first.responseSchema.parse(v);
         return second.responseSchema.parse(v);
@@ -266,11 +298,22 @@ export function createOwnedExtendedReadToolsMcpServer(
 ) {
   return createOwnedReadToolset(options, streams, true, true);
 }
+type StructureReadOptions = ExtendedReadOptions & {
+  structure: ScopedPorts<Parameters<typeof createOwnedStoredStructureTraceSession>[0]>;
+  l2: ScopedPorts<Parameters<typeof createOwnedProjectL2Session>[0]>;
+};
+export function createOwnedStructureReadToolsMcpServer(
+  options: StructureReadOptions,
+  streams: { input: Readable; output: Writable },
+) {
+  return createOwnedReadToolset(options, streams, true, true, true);
+}
 function createOwnedReadToolset(
-  options: ThreeReadOptions | FiveReadOptions | ExtendedReadOptions,
+  options: ThreeReadOptions | FiveReadOptions | ExtendedReadOptions | StructureReadOptions,
   streams: { input: Readable; output: Writable },
   includeStatusAndSymbol: boolean,
   extended = false,
+  stored = false,
 ) {
   const d = record(options, [
     'scope',
@@ -280,6 +323,7 @@ function createOwnedReadToolset(
     'limits',
     ...(includeStatusAndSymbol ? ['status', 'symbol'] : []),
     ...(extended ? ['code', 'l1'] : []),
+    ...(stored ? ['structure', 'l2'] : []),
   ]);
   const p = record(d.scope!.value, ['workspaceId', 'repositoryIds']);
   const limits = stdioLimits(d.limits!.value);
@@ -353,6 +397,30 @@ function createOwnedReadToolset(
       traceSession = composeVersions(traceSession, codeSession, 'kind', 'CODE');
       contextSession = composeVersions(contextSession, l1Session, 'depth', 'L1');
     }
+    if (stored) {
+      const getPorts = (value: unknown) =>
+        portFields(value, [
+          'repositoryId',
+          'limits',
+          'authorize',
+          'openRuntimeQuery',
+        ]) as ScopedPorts<Parameters<typeof createOwnedStoredStructureTraceSession>[0]>;
+      const structureSession = createOwnedStoredStructureTraceSession({
+        ...getPorts(d.structure!.value),
+        ...scope(),
+      });
+      made.push(structureSession);
+      const l2Session = createOwnedProjectL2Session({ ...getPorts(d.l2!.value), ...scope() });
+      made.push(l2Session);
+      traceSession = composeVersions(
+        traceSession,
+        structureSession,
+        'kind',
+        ['EXECUTION', 'RUNTIME'],
+        3,
+      );
+      contextSession = composeVersions(contextSession, l2Session, 'depth', 'L2', 3);
+    }
     const additional = new Map<ToolName, ReadSession>([
       ['search_knowledge', searchSession],
       ['get_project_context', contextSession],
@@ -383,6 +451,7 @@ function createOwnedReadToolset(
       'trace_flow',
       additional,
       extended,
+      stored,
     );
   } catch (error) {
     for (const session of made)
@@ -398,12 +467,13 @@ function createOwnedQueryMcpServer(
   tool: ToolName,
   additional: ReadonlyMap<ToolName, ReadSession> = new Map(),
   extended = false,
+  stored = false,
 ) {
   const o = record(options, ['session', 'limits']);
   const bindings = new Map(
     [...new Map<ToolName, ReadSession>([[tool, o.session!.value], ...additional])].map(
       ([name, session]) => {
-        const config = {
+        const originalConfig = {
           trace_flow: {
             wire: businessTraceWireSchemas,
             failure: businessTraceFailure,
@@ -475,6 +545,30 @@ function createOwnedQueryMcpServer(
               'Self-owned exact stored code symbol/revision only; runtime relevance unevaluated; no production access.',
           },
         }[name];
+        const config =
+          stored && name === 'trace_flow'
+            ? {
+                ...originalConfig,
+                ...versionedConfig(originalConfig, {
+                  wire: storedStructureWireSchemas,
+                  responseSchema: storedStructureResponseSchema,
+                  serialize: serializeStoredStructureResponse,
+                }),
+                description:
+                  'Self-owned bounded CODE/BUSINESS and stored EXECUTION/RUNTIME; derived structures are not observed execution; production closed.',
+              }
+            : stored && name === 'get_project_context'
+              ? {
+                  ...originalConfig,
+                  ...versionedConfig(originalConfig, {
+                    wire: projectL2WireSchemas,
+                    responseSchema: projectL2ResponseSchema,
+                    serialize: serializeProjectL2Response,
+                  }),
+                  description:
+                    'Self-owned selected L0/explicit published L1/explicit stored structure L2; incomplete project; production closed.',
+                }
+              : originalConfig;
         const s = record(session, ['context', 'descriptor', 'execute', 'close']);
         if (
           typeof s.execute!.value !== 'function' ||
@@ -639,15 +733,21 @@ function createOwnedQueryMcpServer(
     if (!binding) throw new McpError(ErrorCode.MethodNotFound, 'Tool unavailable.');
     const { responseSchema, serialize, execute, context } = binding;
     const failure =
-      extended &&
-      request.params.name === 'trace_flow' &&
-      matchesVersion(request.params.arguments, 'kind', 'CODE')
-        ? codeTraceFailure
+      stored &&
+      ((request.params.name === 'trace_flow' &&
+        matchesVersion(request.params.arguments, 'kind', ['EXECUTION', 'RUNTIME'], 3)) ||
+        (request.params.name === 'get_project_context' &&
+          matchesVersion(request.params.arguments, 'depth', 'L2', 3)))
+        ? storedStructureFailure
         : extended &&
-            request.params.name === 'get_project_context' &&
-            matchesVersion(request.params.arguments, 'depth', 'L1')
-          ? projectL1Failure
-          : binding.failure;
+            request.params.name === 'trace_flow' &&
+            matchesVersion(request.params.arguments, 'kind', 'CODE')
+          ? codeTraceFailure
+          : extended &&
+              request.params.name === 'get_project_context' &&
+              matchesVersion(request.params.arguments, 'depth', 'L1')
+            ? projectL1Failure
+            : binding.failure;
     const control = Object.freeze({
       signal: AbortSignal.any([extra.signal, shutdown.signal]),
       maxItems: limits.maxItems,

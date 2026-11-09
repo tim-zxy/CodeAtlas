@@ -17,3 +17,6 @@ export * from './project-l1-contract.js';
 
 export * from './code-trace-contract.js';
 export * from './code-trace-tool.js';
+
+export * from './stored-structure-contract.js';
+export * from './stored-structure-tool.js';
