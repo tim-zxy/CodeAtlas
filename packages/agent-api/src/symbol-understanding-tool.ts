@@ -2,6 +2,17 @@ import { types } from 'node:util';
 import { EntityIdSchema, type RuntimeRequestControl } from '@codeatlas/ir';
 import { type QueryBudget, type QueryControl, type CodeReadPort } from '@codeatlas/application';
 import { readOwnedSymbolUnderstanding } from '../../application/dist/owned-symbol-query.js';
+import { readOwnedCodeTrace } from '../../application/dist/owned-code-trace.js';
+import {
+  codeTraceBudgetSchema,
+  codeTraceRequestSchema,
+  codeTraceResponseSchema,
+  serializeCodeTraceResponse,
+  codeTraceFailure,
+  type CodeTraceBudget,
+  type CodeTraceResponse,
+} from './code-trace-contract.js';
+import type { OwnedCodeTracePorts } from './code-trace-tool.js';
 import { canonicalCompilationJson } from '../../ir/dist/compilation-input-contract.js';
 import {
   symbolUnderstandingBudgetSchema,
@@ -60,6 +71,29 @@ function callback(value: unknown): value is (...args: never[]) => unknown {
   return typeof value === 'function' && !types.isProxy(value);
 }
 export function createOwnedSymbolUnderstandingSession(ports: OwnedSymbolUnderstandingPorts) {
+  const session = createOwnedStoredCodeSession(ports, 'SYMBOL');
+  return Object.freeze({
+    ...session,
+    execute: session.execute as (
+      input: unknown,
+      handle: unknown,
+      c: RuntimeRequestControl,
+    ) => Promise<SymbolUnderstandingResponse>,
+  });
+}
+/** Internal concrete reuse of exact scope, permissions, measurement and cleanup for both code routes. */
+export function createOwnedStoredCodeSession(
+  ports: OwnedSymbolUnderstandingPorts | OwnedCodeTracePorts,
+  variant: 'SYMBOL' | 'CODE',
+) {
+  const budgetSchema = variant === 'CODE' ? codeTraceBudgetSchema : symbolUnderstandingBudgetSchema;
+  const requestSchema =
+    variant === 'CODE' ? codeTraceRequestSchema : symbolUnderstandingRequestSchema;
+  const responseSchema =
+    variant === 'CODE' ? codeTraceResponseSchema : symbolUnderstandingResponseSchema;
+  const serialize =
+    variant === 'CODE' ? serializeCodeTraceResponse : serializeSymbolUnderstandingResponse;
+  const failure = variant === 'CODE' ? codeTraceFailure : symbolUnderstandingFailure;
   const d = properties(ports);
   const workspaceId = EntityIdSchema.parse(d.workspaceId?.value);
   // Capture immutable scope/limits; later mutation of the caller's ports grants nothing.
@@ -76,9 +110,7 @@ export function createOwnedSymbolUnderstandingSession(ports: OwnedSymbolUndersta
   const repos = repositoryIds.map((id) => EntityIdSchema.parse(id)).sort();
   if (new Set(repos).size !== repos.length) throw Error('INVALID_INPUT');
   const limits = freeze(
-    symbolUnderstandingBudgetSchema.parse(
-      JSON.parse(canonicalCompilationJson(d.limits?.value, setupControl)),
-    ),
+    budgetSchema.parse(JSON.parse(canonicalCompilationJson(d.limits?.value, setupControl))),
   );
   const repositoryId = EntityIdSchema.parse(d.repositoryId?.value);
   if (!repos.includes(repositoryId)) throw Error('INVALID_INPUT');
@@ -192,7 +224,7 @@ export function createOwnedSymbolUnderstandingSession(ports: OwnedSymbolUndersta
     input: unknown,
     handle: unknown,
     callerControl: RuntimeRequestControl,
-  ): Promise<SymbolUnderstandingResponse> {
+  ): Promise<SymbolUnderstandingResponse | CodeTraceResponse> {
     try {
       active(handle, callerControl);
       const c = properties(callerControl),
@@ -202,11 +234,11 @@ export function createOwnedSymbolUnderstandingSession(ports: OwnedSymbolUndersta
           deadlineEpochMs: c.deadlineEpochMs!.value,
           signal: AbortSignal.any([c.signal!.value as AbortSignal, sessionAbort.signal]),
         }) as RuntimeRequestControl;
-      let request: ReturnType<typeof symbolUnderstandingRequestSchema.parse>;
+      let request:
+        | ReturnType<typeof symbolUnderstandingRequestSchema.parse>
+        | ReturnType<typeof codeTraceRequestSchema.parse>;
       try {
-        request = symbolUnderstandingRequestSchema.parse(
-          JSON.parse(canonicalCompilationJson(input, control)),
-        );
+        request = requestSchema.parse(JSON.parse(canonicalCompilationJson(input, control)));
       } catch (error) {
         if (['CANCELLED', 'DEADLINE', 'BUDGET_EXCEEDED'].includes(safeCode(error))) throw error;
         fail('INVALID_INPUT');
@@ -216,10 +248,13 @@ export function createOwnedSymbolUnderstandingSession(ports: OwnedSymbolUndersta
           k,
           Math.min(v, request.budget[k as keyof SymbolUnderstandingBudget]),
         ]),
-      ) as SymbolUnderstandingBudget;
+      ) as SymbolUnderstandingBudget & Partial<Pick<CodeTraceBudget, 'maxDepth'>>;
       const manifest = freeze({
         operation: 'QUERY' as const,
-        purpose: 'understand_symbol/STORED_CODE' as const,
+        purpose:
+          variant === 'CODE'
+            ? ('trace_flow/CODE' as const)
+            : ('understand_symbol/STORED_CODE' as const),
         workspaceId,
         repositoryIds: [...repos],
         repositoryId,
@@ -257,16 +292,15 @@ export function createOwnedSymbolUnderstandingSession(ports: OwnedSymbolUndersta
       const work = Promise.resolve()
         .then(() => {
           active(handle, control);
-          return readOwnedSymbolUnderstanding(
-            {
-              repositoryId,
-              symbolId: request.symbolId,
-              expectedRevisionId: request.expectedRevisionId,
-              budget: queryBudget,
-            },
-            open,
-            control,
-          );
+          const queryRequest = {
+            repositoryId,
+            symbolId: request.symbolId,
+            expectedRevisionId: request.expectedRevisionId,
+            budget: queryBudget,
+          };
+          return variant === 'CODE'
+            ? readOwnedCodeTrace({ ...queryRequest, maxDepth: budget.maxDepth! }, open, control)
+            : readOwnedSymbolUnderstanding(queryRequest, open, control);
         })
         .catch((error: unknown) => {
           if (safeCode(error) === 'QUERY_CLEANUP_FAILED') {
@@ -296,13 +330,22 @@ export function createOwnedSymbolUnderstandingSession(ports: OwnedSymbolUndersta
       active(handle, control);
       const reasons = engineeringResult.payload.truncation;
       const response = freeze(
-        symbolUnderstandingResponseSchema.parse({
+        responseSchema.parse({
           data: {
-            mode: 'STORED_CODE',
+            ...(variant === 'CODE'
+              ? {
+                  kind: 'CODE',
+                  queryVersion: 2,
+                  direction: 'OUTGOING_CALLS',
+                  relationshipSemantics: 'STATIC_CALLS_NOT_RUNTIME',
+                }
+              : {
+                  mode: 'STORED_CODE',
+                  entryRuntimeRelevance: { availability: 'NOT_EVALUATED', value: null },
+                }),
             workspaceId,
             repositoryId,
             engineeringResult,
-            entryRuntimeRelevance: { availability: 'NOT_EVALUATED', value: null },
             quality: 'NOT_EVALUABLE',
             productionQuery: 'NOT_AUTHORIZED',
           },
@@ -321,7 +364,7 @@ export function createOwnedSymbolUnderstandingSession(ports: OwnedSymbolUndersta
           },
         }),
       );
-      const text = serializeSymbolUnderstandingResponse(response, control);
+      const text = serialize(response, control);
       if (Buffer.byteLength(text, 'utf8') > budget.maxOutputBytes) fail('BUDGET_EXCEEDED');
       const measurement = sync(
         counter.measure as (...a: never[]) => unknown,
@@ -347,7 +390,7 @@ export function createOwnedSymbolUnderstandingSession(ports: OwnedSymbolUndersta
       return response;
     } catch (error) {
       const code = safeCode(error);
-      return symbolUnderstandingFailure(
+      return failure(
         error instanceof SymbolFailure
           ? error.code
           : ['CANCELLED', 'DEADLINE', 'BUDGET_EXCEEDED'].includes(code)

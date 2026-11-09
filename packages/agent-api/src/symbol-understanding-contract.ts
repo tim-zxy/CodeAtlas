@@ -39,7 +39,7 @@ const truncation = z.enum([
   'OUTGOING_LIMIT',
 ]);
 const coverage = z.enum(['COMPLETE', 'PARTIAL', 'NONE', 'UNKNOWN']);
-const engineeringResult = z.strictObject({
+export const symbolUnderstandingEngineeringResultSchema = z.strictObject({
   schema: z.literal('code-query-result'),
   version: z.literal(1),
   payload: z.strictObject({
@@ -151,7 +151,7 @@ const success = z
       mode: z.literal('STORED_CODE'),
       workspaceId: EntityIdSchema,
       repositoryId: EntityIdSchema,
-      engineeringResult,
+      engineeringResult: symbolUnderstandingEngineeringResultSchema,
       entryRuntimeRelevance: z.strictObject({
         availability: z.literal('NOT_EVALUATED'),
         value: z.null(),

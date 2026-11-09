@@ -1,3 +1,16 @@
+## Approved bounded CODE/L1 versioned refinements - 2026-11-09
+
+User approved [exact static CODE trace and explicit published L1 retrieval](../../superpowers/specs/2026-11-09-code-trace-l1.md)
+for self-owned implementation/validation. CODE v2 reuses existing bounded CODE_TRACE,
+requires exact symbol/revision and declares STATIC_CALLS_NOT_RUNTIME; no new runtime
+semantics, Canonical enum or synthetic CodeBasis. L1 v2 requires explicit phrase/type
+query, preserves published metadata/truncation and NOT_ASSESSED completeness. Both
+retain full-output exact metering, permission, lifecycle and closed-production rules.
+Additive extended SDK host composes versions over genuine leaves; existing v1 contracts
+remain. No schema migration, dependency, threshold, production authority or phase gate
+changes. Rollback disables the additive constructors/host, preserving stored history.
+
+
 ## Approved status and stored symbol v1 refinements - 2026-11-09
 
 User explicitly approved [two bounded readonly contracts](../../superpowers/specs/2026-11-09-status-symbol.md)

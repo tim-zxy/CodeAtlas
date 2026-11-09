@@ -7,7 +7,10 @@ import {
   meter,
 } from '../../../packages/agent-api/test/helpers/knowledge-search-fixture.mjs';
 import { limits as readLimits } from '../../../packages/storage/test/helpers/offline-publication-fixture.mjs';
-import { createOwnedFiveReadToolsMcpServer } from '../dist/owned-business-stdio.js';
+import {
+  createOwnedFiveReadToolsMcpServer,
+  createOwnedExtendedReadToolsMcpServer,
+} from '../dist/owned-business-stdio.js';
 import { withCodeQueryDatabase } from '../../../packages/storage/test/helpers/code-query-fixture.mjs';
 import { openRepositoryCodeQuery } from '../../../packages/storage/dist/index.js';
 const cleanup = [];
@@ -96,16 +99,63 @@ try {
           throw Error('SCOPE_MISMATCH');
       };
       const hostScope = { workspaceId: 'w', repositoryIds: ['r', seed.repositoryId] };
-      if (process.argv[2] === 'mutate-scope')
+      if (process.argv[2]?.includes('mutate-scope'))
         Object.defineProperty(authorize, 'bind', {
           value(receiver) {
             hostScope.repositoryIds.push('foreign');
             return Function.prototype.bind.call(authorize, receiver);
           },
         });
-      const app = createOwnedFiveReadToolsMcpServer(
+      const extended = process.argv[2]?.startsWith('extended');
+      const app = (
+        extended ? createOwnedExtendedReadToolsMcpServer : createOwnedFiveReadToolsMcpServer
+      )(
         {
           scope: hostScope,
+          ...(extended
+            ? {
+                code: {
+                  repositoryId: seed.repositoryId,
+                  limits: {
+                    maxDepth: 10,
+                    maxNodes: 50,
+                    maxEdges: 50,
+                    maxMetadataRows: 10000,
+                    maxOutputBytes: 1000000,
+                    maxTokens: 1000,
+                  },
+                  authorize(m) {
+                    authorize(m);
+                    if (m.purpose !== 'trace_flow/CODE') throw Error('PURPOSE');
+                  },
+                  openCodeQuery: async (_budget, c) => {
+                    reads++;
+                    if (process.argv[2] === 'extended-hold-code') {
+                      process.stderr.write('HELD_QUERY_STARTED\n');
+                      await new Promise((r) => setTimeout(r, 400));
+                    }
+                    return openRepositoryCodeQuery(seed.databasePath, seed.repositoryId, c);
+                  },
+                  tokenCounter: meter(),
+                },
+                l1: {
+                  limits: { maxResults: 20, maxDepth: 0, maxOutputBytes: 1000000, maxTokens: 1000 },
+                  authorize(m) {
+                    authorize(m);
+                    if (m.purpose !== 'get_project_context/L1') throw Error('PURPOSE');
+                  },
+                  knowledgeQuery: async (req, c) => {
+                    reads++;
+                    if (process.argv[2] === 'extended-hold-l1') {
+                      process.stderr.write('HELD_QUERY_STARTED\n');
+                      await new Promise((r) => setTimeout(r, 400));
+                    }
+                    return f.index.searchPage(req, readLimits, c);
+                  },
+                  tokenCounter: meter(),
+                },
+              }
+            : {}),
           business: {
             limits: {
               maxDepth: 20,
@@ -168,7 +218,7 @@ try {
           },
           limits: {
             maxMessageBytes: 4000000,
-            maxConcurrentCalls: 4,
+            maxConcurrentCalls: process.argv[2]?.includes('hold-') ? 1 : 4,
             maxItems: 1000000,
             maxDepth: 100,
             requestTimeoutMs: 10000,

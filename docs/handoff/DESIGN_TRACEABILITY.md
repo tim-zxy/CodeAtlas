@@ -1,3 +1,17 @@
+## Approved CODE v2 / explicit L1 v2 traceability - 2026-11-09
+
+[Approved contract](../superpowers/specs/2026-11-09-code-trace-l1.md) -> existing
+Application CODE_TRACE + shared owned code-resource owner -> exact CODE Agent schema/
+session -> extended SDK trace_flow version union. Existing owned published FTS ->
+shared concrete search/L1 guards -> L1 strict schema/purpose/full response meter ->
+extended get_project_context version union. Self-owned actual SQLite/graph tests
+cover revisions, ambiguity, scope, metadata/refinement, first-page/empty, byte/token
+budgets, cancellation and cleanup; genuine SDK tests preserve old/new routes and
+version-specific host failures. Final274/274 and architecture17 with independent
+review; [commands and limitations](../superpowers/plans/2026-11-09-code-trace-l1.md).
+No new Fixture ID, dependency, Canonical IR/SQL/baseline or production authority.
+
+
 ## Approved bounded status/symbol + five-read SDK - 2026-11-09
 
 P1-17/18 plus AGENT_API/knowledge-consumption section9 map to Store

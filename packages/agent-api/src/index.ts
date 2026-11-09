@@ -12,3 +12,8 @@ export * from './knowledge-status-tool.js';
 
 export * from './symbol-understanding-contract.js';
 export * from './symbol-understanding-tool.js';
+
+export * from './project-l1-contract.js';
+
+export * from './code-trace-contract.js';
+export * from './code-trace-tool.js';

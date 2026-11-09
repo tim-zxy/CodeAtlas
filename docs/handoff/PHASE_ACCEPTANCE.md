@@ -1,3 +1,14 @@
+## Bounded static CODE + explicit-query L1 component evidence - 2026-11-09
+
+Approved exact static CODE v2 and explicit published-query L1 v2 run through the
+extended five-tool stdio host using self-owned data only. Final related274/274,
+4 dependent builds, architecture17, format and independent review pass. Old routes,
+per-operation permission/counters and UNKNOWN cleanup remain; static calls are not
+runtime flows and finite L1 retrieval is not a project overview. This does not close
+full P1-17/18, Native/quality or production gates; Phase1 stays4/21.
+[Reproducible scope and failures](../superpowers/plans/2026-11-09-code-trace-l1.md).
+
+
 ## Bounded status + exact symbol component evidence - 2026-11-09
 
 Approved self-owned status/symbol and five-read SDK paths have initial148 related

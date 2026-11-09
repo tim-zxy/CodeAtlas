@@ -9,14 +9,34 @@ import {
   type QueryControl,
 } from './code-query-contract.js';
 export type OwnedSymbolCodeSession = CodeReadPort & { close(): void | Promise<void> };
-/** Host opens its fixed readonly repository; no name, position, source-body or fallback port. */
+type OwnedCodeRequest = {
+  repositoryId: string;
+  symbolId: string;
+  expectedRevisionId: string;
+  budget: QueryBudget;
+};
+/** Existing symbol entry point retains its exact request semantics. */
 export async function readOwnedSymbolUnderstanding(
-  request: {
-    repositoryId: string;
-    symbolId: string;
-    expectedRevisionId: string;
-    budget: QueryBudget;
-  },
+  request: OwnedCodeRequest,
+  open: (budget: QueryBudget, control: QueryControl) => Promise<OwnedSymbolCodeSession>,
+  control: RuntimeRequestControl,
+) {
+  return readOwnedStoredCodeQuery(
+    {
+      repositoryId: request.repositoryId,
+      symbolId: request.symbolId,
+      expectedRevisionId: request.expectedRevisionId,
+      budget: request.budget,
+      operation: 'UNDERSTAND',
+    },
+    open,
+    control,
+  );
+}
+/** Shared readonly owner for the two approved exact code operations. */
+export async function readOwnedStoredCodeQuery(
+  request: OwnedCodeRequest &
+    ({ operation: 'UNDERSTAND' } | { operation: 'CODE_TRACE'; maxDepth: number }),
   open: (budget: QueryBudget, control: QueryControl) => Promise<OwnedSymbolCodeSession>,
   control: RuntimeRequestControl,
 ) {
@@ -43,16 +63,24 @@ export async function readOwnedSymbolUnderstanding(
       throw Object.assign(Error(), { code: 'REVISION_MISMATCH' });
     const result = parseCodeQueryEnvelope(
       await executeCodeQuery(
-        { operation: 'UNDERSTAND', repositoryId, symbolId, budget },
+        request.operation === 'CODE_TRACE'
+          ? { operation: 'CODE_TRACE', repositoryId, symbolId, budget, maxDepth: request.maxDepth }
+          : { operation: 'UNDERSTAND', repositoryId, symbolId, budget },
         session,
         queryControl,
       ),
     );
+    const rootId =
+      result.payload.operation === 'UNDERSTAND'
+        ? result.payload.symbol.id
+        : result.payload.operation === 'CODE_TRACE'
+          ? result.payload.nodes[0]?.node.id
+          : null;
     if (
-      result.payload.operation !== 'UNDERSTAND' ||
+      result.payload.operation !== request.operation ||
       result.payload.repositoryId !== repositoryId ||
       result.payload.revisionId !== expectedRevisionId ||
-      result.payload.symbol.id !== symbolId
+      rootId !== symbolId
     )
       throw Object.assign(Error(), { code: 'QUERY_DATA_INVALID' });
     canonicalCompilationJson(null, control);

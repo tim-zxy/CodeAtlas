@@ -1,3 +1,28 @@
+## Approved bounded CODE v2 and explicit-query L1 v2 - 2026-11-09
+
+The [approved exact refinement](../../superpowers/specs/2026-11-09-code-trace-l1.md)
+adds two self-owned read variants. trace_flow version2/kind CODE requires exact
+Canonical symbol and active expected revision, OUTGOING_CALLS only, bounded existing
+CODE_TRACE; relationshipSemantics STATIC_CALLS_NOT_RUNTIME explicitly distinguishes
+static calls from runtime execution. Original strict engineering envelope preserves
+code freshness/coverage/evidence and truncation; knowledge-only meta is null/not
+applicable, no fabricated CodeBasis or continuation. Missing/revision mismatch refuses.
+
+get_project_context version2/depth L1 requires an explicit lexical phrase and type
+filter, fixed workspace, first-page maxItems and maxDepth0. It reuses published FTS
+retrieval with purpose get_project_context/L1; response retains search hits/metadata
+plus contextVersion2, EXPLICIT_LEXICAL_QUERY and projectCompleteness NOT_ASSESSED.
+No inferred task, Source body, automatic L2 or model call. Full new envelopes are
+measured once by each genuine server counter before delivery; no internal fake meter.
+
+The additive extended host constructs seven genuine leaf sessions under one captured
+scope and exposes the same five tool names. Strict unions route only exact v2
+discriminators, including matching host-level failure formatters. All leaves are
+invalidated immediately and async cleanup is joined; UNKNOWN remains UNKNOWN.
+Old individual/three/five hosts and v1 BUSINESS/L0/search/status/symbol stay compatible;
+bare v1 CODE remains FEATURE_UNAVAILABLE. No production access or update tool.
+
+
 # Agent API Specification
 
 ## Request and response contract

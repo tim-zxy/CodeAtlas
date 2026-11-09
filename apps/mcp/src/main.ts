@@ -42,3 +42,5 @@ export {
   createOwnedSymbolUnderstandingMcpServer,
   createOwnedFiveReadToolsMcpServer,
 } from './owned-business-stdio.js';
+
+export { createOwnedExtendedReadToolsMcpServer } from './owned-business-stdio.js';

@@ -11,6 +11,16 @@ import {
   McpError,
 } from '@modelcontextprotocol/sdk/types.js';
 import {
+  createOwnedCodeTraceSession,
+  codeTraceWireSchemas,
+  codeTraceFailure,
+  codeTraceResponseSchema,
+  serializeCodeTraceResponse,
+  createOwnedProjectL1Session,
+  projectL1WireSchemas,
+  projectL1Failure,
+  projectL1ResponseSchema,
+  serializeProjectL1Response,
   createOwnedKnowledgeStatusSession,
   knowledgeStatusWireSchemas,
   knowledgeStatusResponseSchema,
@@ -107,7 +117,98 @@ type ToolName =
   | 'get_project_context'
   | 'get_knowledge_status'
   | 'understand_symbol';
-type ReadSession = Session | SearchSession | ContextSession | StatusSession | SymbolSession;
+type LeafSession =
+  | Session
+  | SearchSession
+  | ContextSession
+  | StatusSession
+  | SymbolSession
+  | ReturnType<typeof createOwnedCodeTraceSession>
+  | ReturnType<typeof createOwnedProjectL1Session>;
+type ReadSession = LeafSession | ReturnType<typeof composeVersions>;
+function matchesVersion(input: unknown, field: 'kind' | 'depth', value: 'CODE' | 'L1') {
+  if (!input || typeof input !== 'object' || types.isProxy(input)) return false;
+  const d = Object.getOwnPropertyDescriptors(input);
+  return (
+    Object.hasOwn(d.version ?? {}, 'value') &&
+    d.version!.value === 2 &&
+    Object.hasOwn(d[field] ?? {}, 'value') &&
+    d[field]!.value === value
+  );
+}
+// This is a private route over genuine constructor-owned leaves, not a new authority.
+function composeVersions(
+  first: LeafSession,
+  second: LeafSession,
+  field: 'kind' | 'depth',
+  value: 'CODE' | 'L1',
+) {
+  const context = Object.freeze(Object.create(null));
+  let closed = false;
+  let task: Promise<void> | undefined;
+  return Object.freeze({
+    context,
+    descriptor: Object.freeze({}),
+    execute(input: unknown, handle: unknown, control: Parameters<LeafSession['execute']>[2]) {
+      if (closed || handle !== context)
+        return Promise.resolve(
+          field === 'kind'
+            ? businessTraceFailure('CONTEXT_UNAVAILABLE')
+            : projectContextFailure('CONTEXT_UNAVAILABLE'),
+        );
+      const next = matchesVersion(input, field, value);
+      const leaf = next ? second : first;
+      return leaf.execute(input, leaf.context, control);
+    },
+    close() {
+      if (task) return task;
+      closed = true;
+      const pending: Promise<unknown>[] = [];
+      let failed = false;
+      for (const leaf of [first, second])
+        try {
+          const p = Promise.resolve(leaf.close());
+          void p.catch(() => undefined);
+          pending.push(p);
+        } catch {
+          failed = true;
+        }
+      task = Promise.allSettled(pending).then((results) => {
+        if (failed || results.some((r) => r.status === 'rejected'))
+          throw Error('OWNED_CLEANUP_UNKNOWN');
+      });
+      void task.catch(() => undefined);
+      return task;
+    },
+  });
+}
+function versionedConfig<A, B>(
+  first: {
+    wire: () => { input: object; output: object };
+    responseSchema: { safeParse: (v: unknown) => { success: boolean }; parse: (v: unknown) => A };
+    serialize: (v: unknown, c: Parameters<LeafSession['execute']>[2]) => string;
+  },
+  second: {
+    wire: () => { input: object; output: object };
+    responseSchema: { parse: (v: unknown) => B };
+    serialize: (v: unknown, c: Parameters<LeafSession['execute']>[2]) => string;
+  },
+) {
+  return {
+    wire: () => ({
+      input: { type: 'object' as const, anyOf: [first.wire().input, second.wire().input] },
+      output: { type: 'object' as const, anyOf: [first.wire().output, second.wire().output] },
+    }),
+    responseSchema: {
+      parse: (v: unknown) => {
+        if (first.responseSchema.safeParse(v).success) return first.responseSchema.parse(v);
+        return second.responseSchema.parse(v);
+      },
+    },
+    serialize: (v: unknown, c: Parameters<LeafSession['execute']>[2]) =>
+      first.responseSchema.safeParse(v).success ? first.serialize(v, c) : second.serialize(v, c),
+  };
+}
 type Scope = { workspaceId: string; repositoryIds: string[] };
 type ScopedPorts<T> = Omit<T, 'workspaceId' | 'repositoryIds'>;
 function portFields(value: unknown, keys: readonly string[]) {
@@ -155,10 +256,21 @@ export function createOwnedFiveReadToolsMcpServer(
 ) {
   return createOwnedReadToolset(options, streams, true);
 }
+type ExtendedReadOptions = FiveReadOptions & {
+  code: ScopedPorts<Parameters<typeof createOwnedCodeTraceSession>[0]>;
+  l1: ScopedPorts<Parameters<typeof createOwnedProjectL1Session>[0]>;
+};
+export function createOwnedExtendedReadToolsMcpServer(
+  options: ExtendedReadOptions,
+  streams: { input: Readable; output: Writable },
+) {
+  return createOwnedReadToolset(options, streams, true, true);
+}
 function createOwnedReadToolset(
-  options: ThreeReadOptions | FiveReadOptions,
+  options: ThreeReadOptions | FiveReadOptions | ExtendedReadOptions,
   streams: { input: Readable; output: Writable },
   includeStatusAndSymbol: boolean,
+  extended = false,
 ) {
   const d = record(options, [
     'scope',
@@ -167,6 +279,7 @@ function createOwnedReadToolset(
     'projectContext',
     'limits',
     ...(includeStatusAndSymbol ? ['status', 'symbol'] : []),
+    ...(extended ? ['code', 'l1'] : []),
   ]);
   const p = record(d.scope!.value, ['workspaceId', 'repositoryIds']);
   const limits = stdioLimits(d.limits!.value);
@@ -214,12 +327,32 @@ function createOwnedReadToolset(
   ]) as ScopedPorts<Parameters<typeof createOwnedProjectContextSession>[0]>;
   const made: ReadSession[] = [];
   try {
-    const traceSession = createOwnedBusinessTraceSession({ ...business, ...scope() });
+    let traceSession: ReadSession = createOwnedBusinessTraceSession({ ...business, ...scope() });
     made.push(traceSession);
     const searchSession = createOwnedKnowledgeSearchSession({ ...search, ...scope() });
     made.push(searchSession);
-    const contextSession = createOwnedProjectContextSession({ ...projectContext, ...scope() });
+    let contextSession: ReadSession = createOwnedProjectContextSession({
+      ...projectContext,
+      ...scope(),
+    });
     made.push(contextSession);
+    if (extended) {
+      const code = portFields(d.code!.value, [
+        'repositoryId',
+        'limits',
+        'authorize',
+        'openCodeQuery',
+      ]) as ScopedPorts<Parameters<typeof createOwnedCodeTraceSession>[0]>;
+      const l1 = portFields(d.l1!.value, ['limits', 'authorize', 'knowledgeQuery']) as ScopedPorts<
+        Parameters<typeof createOwnedProjectL1Session>[0]
+      >;
+      const codeSession = createOwnedCodeTraceSession({ ...code, ...scope() });
+      made.push(codeSession);
+      const l1Session = createOwnedProjectL1Session({ ...l1, ...scope() });
+      made.push(l1Session);
+      traceSession = composeVersions(traceSession, codeSession, 'kind', 'CODE');
+      contextSession = composeVersions(contextSession, l1Session, 'depth', 'L1');
+    }
     const additional = new Map<ToolName, ReadSession>([
       ['search_knowledge', searchSession],
       ['get_project_context', contextSession],
@@ -249,9 +382,13 @@ function createOwnedReadToolset(
       streams,
       'trace_flow',
       additional,
+      extended,
     );
   } catch (error) {
-    for (const session of made) session.close();
+    for (const session of made)
+      try {
+        void Promise.resolve(session.close()).catch(() => undefined);
+      } catch {}
     throw error;
   }
 }
@@ -260,6 +397,7 @@ function createOwnedQueryMcpServer(
   streams: { input: Readable; output: Writable },
   tool: ToolName,
   additional: ReadonlyMap<ToolName, ReadSession> = new Map(),
+  extended = false,
 ) {
   const o = record(options, ['session', 'limits']);
   const bindings = new Map(
@@ -271,7 +409,23 @@ function createOwnedQueryMcpServer(
             failure: businessTraceFailure,
             responseSchema: businessTraceResponseSchema,
             serialize: serializeBusinessTraceResponse,
-            description: 'Self-owned BUSINESS trace only; production access unavailable.',
+            description: extended
+              ? 'Self-owned BUSINESS v1 or finite static CODE v2; static calls are not runtime flow; production closed.'
+              : 'Self-owned BUSINESS trace only; production access unavailable.',
+            ...(extended
+              ? versionedConfig(
+                  {
+                    wire: businessTraceWireSchemas,
+                    responseSchema: businessTraceResponseSchema,
+                    serialize: serializeBusinessTraceResponse,
+                  },
+                  {
+                    wire: codeTraceWireSchemas,
+                    responseSchema: codeTraceResponseSchema,
+                    serialize: serializeCodeTraceResponse,
+                  },
+                )
+              : {}),
           },
           search_knowledge: {
             wire: knowledgeSearchWireSchemas,
@@ -286,8 +440,23 @@ function createOwnedQueryMcpServer(
             failure: projectContextFailure,
             responseSchema: projectContextResponseSchema,
             serialize: serializeProjectContextResponse,
-            description:
-              'Self-owned selected published L0 only; not a complete project; no production access.',
+            description: extended
+              ? 'Self-owned selected L0 v1 or explicit-query published L1 v2; incomplete project; production closed.'
+              : 'Self-owned selected published L0 only; not a complete project; no production access.',
+            ...(extended
+              ? versionedConfig(
+                  {
+                    wire: projectContextWireSchemas,
+                    responseSchema: projectContextResponseSchema,
+                    serialize: serializeProjectContextResponse,
+                  },
+                  {
+                    wire: projectL1WireSchemas,
+                    responseSchema: projectL1ResponseSchema,
+                    serialize: serializeProjectL1Response,
+                  },
+                )
+              : {}),
           },
           get_knowledge_status: {
             wire: knowledgeStatusWireSchemas,
@@ -468,7 +637,17 @@ function createOwnedQueryMcpServer(
   server.setRequestHandler(CallToolRequestSchema, (request, extra) => {
     const binding = bindings.get(request.params.name as ToolName);
     if (!binding) throw new McpError(ErrorCode.MethodNotFound, 'Tool unavailable.');
-    const { failure, responseSchema, serialize, execute, context } = binding;
+    const { responseSchema, serialize, execute, context } = binding;
+    const failure =
+      extended &&
+      request.params.name === 'trace_flow' &&
+      matchesVersion(request.params.arguments, 'kind', 'CODE')
+        ? codeTraceFailure
+        : extended &&
+            request.params.name === 'get_project_context' &&
+            matchesVersion(request.params.arguments, 'depth', 'L1')
+          ? projectL1Failure
+          : binding.failure;
     const control = Object.freeze({
       signal: AbortSignal.any([extra.signal, shutdown.signal]),
       maxItems: limits.maxItems,

@@ -66,3 +66,5 @@ export { readOwnedKnowledgeStatus } from './offline-knowledge-status.js';
 
 export { readOwnedSymbolUnderstanding } from './owned-symbol-query.js';
 export type { OwnedSymbolCodeSession } from './owned-symbol-query.js';
+
+export * from './owned-code-trace.js';

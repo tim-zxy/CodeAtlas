@@ -1,3 +1,31 @@
+## Approved finite static CODE trace + explicit-query L1 - 2026-11-09
+
+User-approved CODE v2 and L1 v2 are implemented in two isolated streams and unified
+in an additive five-tool SDK host. CODE uses exact symbol/active stored revision and
+genuine bounded OUTGOING_CALLS; original graph ambiguity, unresolved evidence,
+freshness and truncation survive, labeled STATIC_CALLS_NOT_RUNTIME. L1 requires an
+explicit phrase/type query and returns real first-page published hits, sources and
+truncation with EXPLICIT_LEXICAL_QUERY/NOT_ASSESSED completeness. No Source body,
+inferred task, model or production capability is enabled.
+
+Shared concrete implementations preserve old symbol/search semantics and resource
+ownership. Extended SDK constructs seven genuine leaves from one captured scope,
+routes exact versions, keeps old v1 BUSINESS/L0 paths and all old factories. Exact
+counters measure the complete new envelope once, purposes remain operation-specific,
+and close invalidates/joins all leaves with UNKNOWN preserved. Independent review
+found host-level v2 failures still used v1 messages; corrected with the same exact
+discriminator and real SDK concurrency regressions, associated review resolved.
+
+Final related274/274,0fail/cancel/skip/todo,59278.9656ms; fresh Application/Agent/
+Runtime/MCP builds, architecture17, scoped formatting and independent review pass.
+[Exact contracts](../superpowers/specs/2026-11-09-code-trace-l1.md) and
+[commands, retained failures and evidence](../superpowers/plans/2026-11-09-code-trace-l1.md).
+CI198 exact6eeb06e is terminal TS/Rust success, Native old R8 script-catalog prerequisite
+failure with qualification skipped; it is evidence for that old commit only.
+Phase1 stays4/21, A6 NOT_QUALIFIED, E02 PROPOSED/uninstalled. Full scopes/tool-suite,
+update, runtime trace, production access and real quality/Native gates stay open.
+
+
 ## Approved selected status + exact stored symbol read tools - 2026-11-09
 
 The user-approved two readonly v1 slices are implemented: get_knowledge_status

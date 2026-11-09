@@ -26,6 +26,13 @@ import {
   type KnowledgeSearchResponse,
   type KnowledgeSearchErrorCode,
 } from './knowledge-search-contract.js';
+import {
+  projectL1RequestSchema,
+  projectL1ResponseSchema,
+  projectL1Failure,
+  serializeProjectL1Response,
+  type ProjectL1Response,
+} from './project-l1-contract.js';
 const positive = z.number().int().positive().max(Number.MAX_SAFE_INTEGER);
 const knowledgeSearchLimitsSchema = knowledgeSearchBudgetSchema.extend({ maxResults: positive });
 export interface OwnedKnowledgeSearchPorts {
@@ -98,7 +105,57 @@ function callback(value: unknown): value is (...args: never[]) => unknown {
   return typeof value === 'function' && !types.isProxy(value);
 }
 /** No token algorithm, SDK route, production principal or write port is installed here. */
+export type OwnedProjectL1Ports = Omit<OwnedKnowledgeSearchPorts, 'authorize'> & {
+  authorize: (
+    manifest: Omit<Parameters<OwnedKnowledgeSearchPorts['authorize']>[0], 'purpose'> & {
+      purpose: 'get_project_context/L1';
+    },
+    control: RuntimeRequestControl,
+  ) => unknown;
+};
+type SearchDescriptor = Readonly<{
+  version: 1;
+  supportedModes: readonly ['LEXICAL_PHRASE'];
+  mode: 'OWNED_TEST_ONLY';
+  tokenPolicyRef: string | null;
+}>;
+type L1Descriptor = Readonly<{
+  version: 2;
+  supportedDepths: readonly ['L1'];
+  mode: 'OWNED_TEST_ONLY';
+  tokenPolicyRef: string | null;
+}>;
 export function createOwnedKnowledgeSearchSession(ports: OwnedKnowledgeSearchPorts) {
+  const session = createOwnedPublishedSearchSession(ports, false);
+  return Object.freeze({
+    ...session,
+    descriptor: session.descriptor as SearchDescriptor,
+    execute: session.execute as (
+      input: unknown,
+      handle: unknown,
+      control: RuntimeRequestControl,
+    ) => Promise<KnowledgeSearchResponse>,
+  });
+}
+export function createOwnedProjectL1Session(ports: OwnedProjectL1Ports) {
+  const session = createOwnedPublishedSearchSession(ports, true);
+  return Object.freeze({
+    ...session,
+    descriptor: session.descriptor as L1Descriptor,
+    execute: session.execute as (
+      input: unknown,
+      handle: unknown,
+      control: RuntimeRequestControl,
+    ) => Promise<ProjectL1Response>,
+  });
+}
+function createOwnedPublishedSearchSession(
+  ports: OwnedKnowledgeSearchPorts | OwnedProjectL1Ports,
+  isL1: boolean,
+) {
+  const responseSchema = isL1 ? projectL1ResponseSchema : knowledgeSearchResponseSchema;
+  const failure = isL1 ? projectL1Failure : knowledgeSearchFailure;
+  const serialize = isL1 ? serializeProjectL1Response : serializeKnowledgeSearchResponse;
   const d = properties(ports);
   const workspaceId = EntityIdSchema.parse(d.workspaceId?.value);
   // Capture immutable scope/limits; later mutation of the caller's ports grants nothing.
@@ -146,12 +203,21 @@ export function createOwnedKnowledgeSearchSession(ports: OwnedKnowledgeSearchPor
   }
   let closed = false;
   const context = Object.freeze(Object.create(null)) as object;
-  const descriptor = freeze({
-    version: 1 as const,
-    supportedModes: ['LEXICAL_PHRASE'] as const,
-    mode: 'OWNED_TEST_ONLY' as const,
-    tokenPolicyRef: counter?.policyRef ?? null,
-  });
+  const descriptor = freeze(
+    isL1
+      ? {
+          version: 2 as const,
+          supportedDepths: ['L1'] as const,
+          mode: 'OWNED_TEST_ONLY' as const,
+          tokenPolicyRef: counter?.policyRef ?? null,
+        }
+      : {
+          version: 1 as const,
+          supportedModes: ['LEXICAL_PHRASE'] as const,
+          mode: 'OWNED_TEST_ONLY' as const,
+          tokenPolicyRef: counter?.policyRef ?? null,
+        },
+  );
   const close = () => {
     closed = true;
   };
@@ -211,7 +277,7 @@ export function createOwnedKnowledgeSearchSession(ports: OwnedKnowledgeSearchPor
     input: unknown,
     handle: unknown,
     callerControl: RuntimeRequestControl,
-  ): Promise<KnowledgeSearchResponse> {
+  ): Promise<KnowledgeSearchResponse | ProjectL1Response> {
     try {
       active(handle, callerControl);
       const c = Object.getOwnPropertyDescriptors(callerControl);
@@ -223,9 +289,23 @@ export function createOwnedKnowledgeSearchSession(ports: OwnedKnowledgeSearchPor
       }) as RuntimeRequestControl;
       let request: ReturnType<typeof knowledgeSearchRequestSchema.parse>;
       try {
-        request = knowledgeSearchRequestSchema.parse(
-          JSON.parse(canonicalCompilationJson(input, control)),
-        );
+        const raw = JSON.parse(canonicalCompilationJson(input, control));
+        if (isL1) {
+          const query = projectL1RequestSchema.parse(raw);
+          request = knowledgeSearchRequestSchema.parse({
+            version: 1,
+            mode: query.query.mode,
+            text: query.query.text,
+            scope: 'WORKSPACE',
+            filters: query.query.filters,
+            page: { limit: query.budget.maxItems, cursor: null },
+            budget: {
+              maxDepth: 0,
+              maxOutputBytes: query.budget.maxOutputBytes,
+              maxTokens: query.budget.maxTokens,
+            },
+          });
+        } else request = knowledgeSearchRequestSchema.parse(raw);
       } catch (error) {
         if (['CANCELLED', 'DEADLINE', 'BUDGET_EXCEEDED'].includes(safeCode(error))) throw error;
         fail('INVALID_INPUT');
@@ -235,7 +315,9 @@ export function createOwnedKnowledgeSearchSession(ports: OwnedKnowledgeSearchPor
         maxTokens = Math.min(limits.maxTokens, request.budget.maxTokens);
       const manifest = freeze({
         operation: 'QUERY' as const,
-        purpose: 'search_knowledge/LEXICAL_PHRASE' as const,
+        purpose: isL1
+          ? ('get_project_context/L1' as const)
+          : ('search_knowledge/LEXICAL_PHRASE' as const),
         workspaceId,
         repositoryIds: [...repos],
         fields: [
@@ -375,8 +457,16 @@ export function createOwnedKnowledgeSearchSession(ports: OwnedKnowledgeSearchPor
         ]),
       ].sort();
       const response = freeze(
-        knowledgeSearchResponseSchema.parse({
+        responseSchema.parse({
           data: {
+            ...(isL1
+              ? {
+                  depth: 'L1',
+                  contextVersion: 2,
+                  selectionBasis: 'EXPLICIT_LEXICAL_QUERY',
+                  projectCompleteness: 'NOT_ASSESSED',
+                }
+              : {}),
             mode: 'LEXICAL_PHRASE',
             scope: 'WORKSPACE',
             workspaceId,
@@ -400,7 +490,7 @@ export function createOwnedKnowledgeSearchSession(ports: OwnedKnowledgeSearchPor
           },
         }),
       );
-      const text = serializeKnowledgeSearchResponse(response, control);
+      const text = serialize(response, control);
       if (Buffer.byteLength(text, 'utf8') > maxOutputBytes) fail('BUDGET_EXCEEDED');
       const measurement = sync(
         counter.measure as (...args: never[]) => unknown,
@@ -426,7 +516,7 @@ export function createOwnedKnowledgeSearchSession(ports: OwnedKnowledgeSearchPor
       return response;
     } catch (error) {
       const code = safeCode(error);
-      return knowledgeSearchFailure(
+      return failure(
         error instanceof SearchFailure
           ? error.code
           : ['CANCELLED', 'DEADLINE', 'BUDGET_EXCEEDED'].includes(code)
