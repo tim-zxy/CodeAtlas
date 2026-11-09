@@ -52,3 +52,5 @@ export * from './native-syntax-admission.js';
 export { inspectInstallCapabilities } from './install-capabilities.js';
 
 export { createOwnedReadLifecycle } from './owned-read-lifecycle.js';
+
+export { createOwnedDirectoryObserver } from './owned-directory-observer.js';

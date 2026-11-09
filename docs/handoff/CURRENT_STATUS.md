@@ -1,3 +1,30 @@
+## Owned temporary OS observer connected - 2026-11-09
+
+Existing P1-18 lifecycle now has actual Node filesystem event input, strictly limited
+to an exclusive fresh directory created by its own factory beneath canonical OS temp.
+No input path/adoption/project discovery/recursive watch, body read, filename output,
+user data or production authority. Original CHANGE/OVERFLOW event port and public
+schemas remain; the readonly observer abort signal closes managed service immediately
+on provider loss without a new terminal event or a falsely recovered live session.
+
+Real create/rename/delete tests, cancellation/late attachment/native close confirmation,
+reentrant close, listener/provider errors and UNKNOWN pass. SDK tests use a separate
+known-file writer actor outside the query port and actual readonly owned Runtime
+query; the real OS event changes generation and the waiting old result refuses.
+Metadata reconciliation is still owned stored metadata, not live project Source proof.
+Fresh temp directories are retained; no unrelated cleanup or permissions change.
+
+Final related72/72,0fail/cancel/skip/todo,23776.975ms; Runtime/MCP builds, architecture17,
+scoped format and fresh independent review pass. Earlier10+3 overlap72, not summed.
+[Scope](../superpowers/specs/2026-11-09-owned-directory-observer.md),
+[commands/evidence](../superpowers/plans/2026-11-09-owned-directory-observer.md).
+CI201 exactd9631d5 terminal TypeScript/Rust success; Native log confirms old R8 catalog
+mismatch/D5_SCRIPT_PREREQUISITE_FAILED, qualification skipped. It does not verify this
+new source. Phase1 stays4/21,A6 NOT_QUALIFIED,E02 PROPOSED/uninstalled. Project-root
+observation/authorization, truthful missed-Source reconciliation and production/full
+P1-18 acceptance remain open; Native/R9/model/user database boundaries remain.
+
+
 ## Existing P1-18 owned read lifecycle integrated - 2026-11-09
 
 The next existing-roadmap gap is implemented without new public tool contracts:

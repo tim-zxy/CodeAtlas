@@ -1,5 +1,8 @@
 // Shared fixed-scope self-owned host. Business vector is explicitly synthetic, not quality proof.
 import { readFileSync } from 'node:fs';
+import { writeFile } from 'node:fs/promises';
+import { join } from 'node:path';
+import { createOwnedDirectoryObserver } from '../../../packages/runtime/dist/index.js';
 import { createHash } from 'node:crypto';
 import {
   setup,
@@ -141,6 +144,39 @@ async function run(runtimeSeed = null) {
         });
       const extended = process.argv[2]?.startsWith('extended') || !!runtimeSeed;
       const managed = process.argv[2]?.startsWith('managed');
+      const actualObserver = process.argv[2]?.startsWith('managed-os');
+      const eventActor = process.argv[2] === 'managed-os-event';
+      let observer, readEntered, releaseRead, eventReceived, reconciledEvent, actorError;
+      const enteredRead = new Promise((r) => (readEntered = r)),
+        allowRead = new Promise((r) => (releaseRead = r)),
+        receivedEvent = new Promise((r) => (eventReceived = r)),
+        eventReconciled = new Promise((r) => (reconciledEvent = r));
+      const actor = eventActor
+        ? (async () => {
+            await enteredRead;
+            let timer;
+            try {
+              await writeFile(join(observer.directory, 'owned-event.txt'), 'owned test event\n');
+              await Promise.race([
+                (async () => {
+                  await receivedEvent;
+                  await eventReconciled;
+                })(),
+                new Promise(
+                  (_, reject) =>
+                    (timer = setTimeout(() => reject(Error('OWNED_EVENT_TIMEOUT')), 5000)),
+                ),
+              ]);
+              process.stderr.write('OWNED_OS_EVENT_SEEN\n');
+            } catch (e) {
+              actorError = e;
+            } finally {
+              clearTimeout(timer);
+              releaseRead();
+            }
+          })()
+        : null;
+      if (actor) void actor.catch(() => undefined);
       let emit,
         triggered = false,
         overflowDone;
@@ -160,12 +196,33 @@ async function run(runtimeSeed = null) {
           }
           process.stderr.write('RECONCILE_DONE ' + reason + '\n');
           if (reason === 'OVERFLOW') overflowDone();
+          if (reason === 'CHANGE' || reason === 'OVERFLOW') reconciledEvent();
         },
         ...(process.argv[2] === 'managed-one-shot'
           ? {}
           : {
-              watch: async (listener, scope) => {
+              watch: async (listener, scope, c) => {
                 authorize(scope);
+                if (actualObserver) {
+                  observer = await createOwnedDirectoryObserver(
+                    scope,
+                    (event) => {
+                      listener(event);
+                      eventReceived();
+                    },
+                    c,
+                  );
+                  observer.signal.addEventListener(
+                    'abort',
+                    () => {
+                      void app.close();
+                    },
+                    { once: true },
+                  );
+                  if (observer.signal.aborted) void app.close();
+                  process.stderr.write('OWNED_OS_OBSERVER_ATTACHED\n');
+                  return { close: () => observer.close() };
+                }
                 emit = listener;
                 process.stderr.write('OWNED_OBSERVER_ATTACHED\n');
                 return {
@@ -213,6 +270,17 @@ async function run(runtimeSeed = null) {
                         await new Promise((r) => setTimeout(r, 400));
                       }
                       const source = await runtimeSeed.open(b, c);
+                      if (eventActor && !triggered)
+                        return {
+                          ...source,
+                          read: async () => {
+                            const value = await source.read();
+                            triggered = true;
+                            readEntered();
+                            await allowRead;
+                            return value;
+                          },
+                        };
                       if (managed && process.argv[2] === 'managed-overflow' && !triggered) {
                         return {
                           ...source,
@@ -357,6 +425,8 @@ async function run(runtimeSeed = null) {
         managed ? 'OWNED_GROUP_NO_STARTUP_TOOL_QUERY\n' : 'OWNED_GROUP_NO_STARTUP_READ\n',
       );
       const result = await app.completion;
+      if (triggered && actor) await actor;
+      if (actorError) throw actorError;
       f.close();
       process.stderr.write('OWNED_GROUP_' + result.cleanupState + '\n');
     },

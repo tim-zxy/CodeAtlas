@@ -1,3 +1,13 @@
+## Actual owned-temporary event transport evidence - 2026-11-09
+
+Native nonrecursive events from factory-created fresh temp directories feed the
+existing managed lifecycle. Final72/72 related checks, Runtime/MCP builds,
+architecture17, format and independent review pass. Known file mutations occur in an
+independent fixture actor, not a readonly query port. No arbitrary project root/body
+read or actual missed-project-change proof. This is not full P1-18/OS production
+qualification; Phase1 stays4/21. [Exact scope](../superpowers/plans/2026-11-09-owned-directory-observer.md).
+
+
 ## Owned MCP lifecycle component evidence - 2026-11-09
 
 Existing P1-18 startup/postattach, event coalescing/overflow, generation-bound delivery

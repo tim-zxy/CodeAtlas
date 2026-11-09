@@ -1,3 +1,15 @@
+## Existing P1-18 event port -> fresh-owned native directory observer - 2026-11-09
+
+Existing CHANGE/OVERFLOW + readonly abort/managed-close path -> Runtime
+owned-directory-observer exclusive fresh canonical temp root/native nonrecursive
+watch -> normalized event/no name/body -> lifecycle generation + actual owned
+Runtime query/SDK rejection. Tests cover actual known create/rename/delete, ambiguous
+notifications, late attachment/cancel/reentrant close, real close confirmation and
+UNKNOWN, plus independent file-writer actor/read gate. No new Fixture ID, public
+schema, Source permission, provider capability or production admission. Final72/72,
+2 builds,architecture17 and independent review; [evidence](../superpowers/plans/2026-11-09-owned-directory-observer.md).
+
+
 ## Existing P1-18 read lifecycle -> managed SDK - 2026-11-09
 
 knowledge-and-consumption §9 / RUNTIME_CONFIGURATION / P1-18 -> private Runtime

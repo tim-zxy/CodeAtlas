@@ -1,3 +1,19 @@
+## Fresh-owned OS observer implementation of existing event port - 2026-11-09
+
+The additive [owned directory observer](../../superpowers/specs/2026-11-09-owned-directory-observer.md)
+creates its own exclusive fresh canonical-temp directory and uses native nonrecursive
+notifications. It accepts no path/adoption/project root, reads no body and emits no
+filename. Unknown notification maps to existing OVERFLOW; provider loss/termination
+aborts a readonly signal that the owned managed host wires to its existing close path.
+No event vocabulary, public schema, permission/default/profile/dependency changes.
+
+Actual close confirmation and late ownership are joined; failure is permanently
+closed/UNKNOWN, never reopened automatically. Observed pre/post directory identity
+checks are owned-fixture isolation, not production hostile-path proof. Real flat-temp
+events and SDK generation invalidation are component evidence only, not actual project
+Source observation/freshness or a new grant. Ordinary runtime/CLI stays unchanged.
+
+
 ## Owned P1-18 lifecycle component - 2026-11-09
 
 Existing startup-reconciliation/watch/shutdown rules have a private owned-data
