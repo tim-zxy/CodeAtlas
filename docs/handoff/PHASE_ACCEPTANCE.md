@@ -1,3 +1,13 @@
+## Owned MCP lifecycle component evidence - 2026-11-09
+
+Existing P1-18 startup/postattach, event coalescing/overflow, generation-bound delivery
+and joined cancellation/cleanup have a private coordinator plus managed SDK host.
+Final related107/107,0fail/cancel/skip/todo,53529.0299ms; fresh Runtime/MCP builds, architecture17, scoped format and independent review pass.
+This is controlled observer and self-owned metadata evidence, not real OS watching,
+live missed-Source reconciliation, full six-tool service or production acceptance.
+Phase1 remains4/21; [exact scope and reproduction](../superpowers/plans/2026-11-09-owned-read-lifecycle.md).
+
+
 ## Stored EXECUTION/RUNTIME + L2 component evidence - 2026-11-09
 
 Approved v3 exact activation/code-revision reads run over genuine self-owned v1/v2

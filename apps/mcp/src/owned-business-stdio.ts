@@ -4,6 +4,7 @@ import type { Readable, Writable } from 'node:stream';
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { serializeMessage } from '@modelcontextprotocol/sdk/shared/stdio.js';
+import { createOwnedReadLifecycle } from '@codeatlas/runtime';
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
@@ -308,25 +309,8 @@ export function createOwnedStructureReadToolsMcpServer(
 ) {
   return createOwnedReadToolset(options, streams, true, true, true);
 }
-function createOwnedReadToolset(
-  options: ThreeReadOptions | FiveReadOptions | ExtendedReadOptions | StructureReadOptions,
-  streams: { input: Readable; output: Writable },
-  includeStatusAndSymbol: boolean,
-  extended = false,
-  stored = false,
-) {
-  const d = record(options, [
-    'scope',
-    'business',
-    'search',
-    'projectContext',
-    'limits',
-    ...(includeStatusAndSymbol ? ['status', 'symbol'] : []),
-    ...(extended ? ['code', 'l1'] : []),
-    ...(stored ? ['structure', 'l2'] : []),
-  ]);
-  const p = record(d.scope!.value, ['workspaceId', 'repositoryIds']);
-  const limits = stdioLimits(d.limits!.value);
+function snapshotReadScope(value: unknown, limits: OwnedBusinessStdioLimits) {
+  const p = record(value, ['workspaceId', 'repositoryIds']);
   const rawRepos = p.repositoryIds!.value;
   if (
     typeof p.workspaceId!.value !== 'string' ||
@@ -351,8 +335,162 @@ function createOwnedReadToolset(
     repos.push(v.value);
   }
   const workspaceId = p.workspaceId!.value as string;
-  // Snapshot once before invoking host function binding; do not share the caller's mutable scope array.
-  const scope = () => ({ workspaceId, repositoryIds: [...repos] });
+  return Object.freeze({ workspaceId, repositoryIds: Object.freeze(repos) });
+}
+
+type LifecycleOptions = Parameters<typeof createOwnedReadLifecycle>[0];
+type ManagedReadOptions = StructureReadOptions & {
+  lifecycle: Pick<LifecycleOptions, 'mode' | 'reconcile' | 'watch'>;
+};
+export function createOwnedManagedReadToolsMcpServer(
+  options: ManagedReadOptions,
+  streams: { input: Readable; output: Writable },
+) {
+  const keys = [
+    'scope',
+    'business',
+    'search',
+    'projectContext',
+    'limits',
+    'status',
+    'symbol',
+    'code',
+    'l1',
+    'structure',
+    'l2',
+  ];
+  const d = record(options, [...keys, 'lifecycle']);
+  const limits = stdioLimits(d.limits!.value),
+    scope = snapshotReadScope(d.scope!.value, limits);
+  const value = d.lifecycle!.value;
+  if (!value || typeof value !== 'object' || types.isProxy(value))
+    throw Error('INVALID_OWNED_STDIO_OPTIONS');
+  const l = record(value, [
+    'mode',
+    'reconcile',
+    ...(Object.hasOwn(value, 'watch') ? ['watch'] : []),
+  ]);
+  const lifecycle = createOwnedReadLifecycle({
+    mode: l.mode!.value,
+    workspaceId: scope.workspaceId,
+    repositoryIds: [...scope.repositoryIds],
+    maxItems: limits.maxItems,
+    maxDepth: limits.maxDepth,
+    requestTimeoutMs: limits.requestTimeoutMs,
+    reconcile: l.reconcile!.value,
+    ...(l.watch ? { watch: l.watch.value } : {}),
+  });
+  const plain = Object.fromEntries(keys.map((k) => [k, d[k]!.value]));
+  plain.scope = { workspaceId: scope.workspaceId, repositoryIds: [...scope.repositoryIds] };
+  plain.limits = limits;
+  let app: ReturnType<typeof createOwnedStructureReadToolsMcpServer>;
+  try {
+    app = createOwnedReadToolset(plain as StructureReadOptions, streams, true, true, true, () => {
+      const s = lifecycle.getState();
+      return { ready: s.phase === 'READY' && !s.uncertain, generation: s.generation };
+    });
+  } catch (e) {
+    void lifecycle.close().catch(() => undefined);
+    throw e;
+  }
+  let starting: Promise<void> | undefined,
+    closing: Promise<{ cleanupState: 'SETTLED' | 'UNKNOWN' }> | undefined,
+    closed = false;
+  let completed!: (v: { cleanupState: 'SETTLED' | 'UNKNOWN' }) => void;
+  const completion = new Promise<{ cleanupState: 'SETTLED' | 'UNKNOWN' }>((r) => (completed = r));
+  function close() {
+    if (closing) return closing;
+    closed = true;
+    let finish!: (v: { cleanupState: 'SETTLED' | 'UNKNOWN' }) => void;
+    closing = new Promise((r) => (finish = r));
+    const tasks: Promise<{ cleanupState: 'SETTLED' | 'UNKNOWN' }>[] = [];
+    let failed = false;
+    for (const stop of [() => lifecycle.close(), () => app.close()])
+      try {
+        const p = Promise.resolve(stop());
+        void p.catch(() => undefined);
+        tasks.push(p);
+      } catch {
+        failed = true;
+      }
+    void (async () => {
+      const results = await Promise.allSettled(tasks);
+      if (starting) await Promise.allSettled([starting]);
+      const result = Object.freeze({
+        cleanupState:
+          failed ||
+          results.some((r) => r.status === 'rejected' || r.value.cleanupState === 'UNKNOWN')
+            ? ('UNKNOWN' as const)
+            : ('SETTLED' as const),
+      });
+      finish(result);
+      completed(result);
+    })();
+    return closing;
+  }
+  function start() {
+    if (closed) {
+      const p = Promise.reject(Error('OWNED_MANAGED_CLOSED'));
+      void p.catch(() => undefined);
+      return p;
+    }
+    if (starting) return starting;
+    starting = Promise.resolve()
+      .then(async () => {
+        await lifecycle.start();
+        if (closed) throw Error('OWNED_MANAGED_CLOSED');
+        await app.start();
+        if (closed) throw Error('OWNED_MANAGED_CLOSED');
+      })
+      .catch(() => {
+        void close();
+        throw Error('OWNED_MANAGED_START_FAILED');
+      });
+    void starting.catch(() => undefined);
+    return starting;
+  }
+  lifecycle.signal.addEventListener(
+    'abort',
+    () => {
+      void close();
+    },
+    { once: true },
+  );
+  void app.completion.then(
+    () => close(),
+    () => close(),
+  );
+  void lifecycle.completion.then(
+    () => close(),
+    () => close(),
+  );
+  return Object.freeze({ start, close, completion, getLifecycleState: () => lifecycle.getState() });
+}
+type Readiness = () => Readonly<{ ready: boolean; generation: number }>;
+function createOwnedReadToolset(
+  options: ThreeReadOptions | FiveReadOptions | ExtendedReadOptions | StructureReadOptions,
+  streams: { input: Readable; output: Writable },
+  includeStatusAndSymbol: boolean,
+  extended = false,
+  stored = false,
+  readiness?: Readiness,
+) {
+  const d = record(options, [
+    'scope',
+    'business',
+    'search',
+    'projectContext',
+    'limits',
+    ...(includeStatusAndSymbol ? ['status', 'symbol'] : []),
+    ...(extended ? ['code', 'l1'] : []),
+    ...(stored ? ['structure', 'l2'] : []),
+  ]);
+  const limits = stdioLimits(d.limits!.value);
+  const captured = snapshotReadScope(d.scope!.value, limits);
+  const scope = () => ({
+    workspaceId: captured.workspaceId,
+    repositoryIds: [...captured.repositoryIds],
+  });
   const business = portFields(d.business!.value, [
     'limits',
     'authorize',
@@ -452,6 +590,7 @@ function createOwnedReadToolset(
       additional,
       extended,
       stored,
+      readiness,
     );
   } catch (error) {
     for (const session of made)
@@ -468,6 +607,7 @@ function createOwnedQueryMcpServer(
   additional: ReadonlyMap<ToolName, ReadSession> = new Map(),
   extended = false,
   stored = false,
+  readiness?: Readiness,
 ) {
   const o = record(options, ['session', 'limits']);
   const bindings = new Map(
@@ -769,7 +909,8 @@ function createOwnedQueryMcpServer(
         isError: 'error' in value,
       };
     };
-    if (closing) return reply(failure('CONTEXT_UNAVAILABLE'));
+    const observed = readiness?.();
+    if (closing || (readiness && !observed?.ready)) return reply(failure('CONTEXT_UNAVAILABLE'));
     if (active >= limits.maxConcurrentCalls) return reply(failure('BUDGET_EXCEEDED'));
     active++;
     const task = (async () => {
@@ -780,7 +921,12 @@ function createOwnedQueryMcpServer(
         value = failure('PROVIDER_UNAVAILABLE');
       }
       // Cancellation and close must not turn a late result into a successful delivery.
-      if (closing) value = failure('CONTEXT_UNAVAILABLE');
+      const current = readiness?.();
+      if (
+        closing ||
+        (readiness && (!current?.ready || current.generation !== observed?.generation))
+      )
+        value = failure('CONTEXT_UNAVAILABLE');
       else if (extra.signal.aborted) value = failure('CANCELLED');
       else if (Date.now() >= control.deadlineEpochMs) value = failure('DEADLINE');
       return reply(value);

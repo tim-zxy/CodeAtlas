@@ -11,6 +11,7 @@ import {
   createOwnedFiveReadToolsMcpServer,
   createOwnedExtendedReadToolsMcpServer,
   createOwnedStructureReadToolsMcpServer,
+  createOwnedManagedReadToolsMcpServer,
 } from '../dist/owned-business-stdio.js';
 import { withCodeQueryDatabase } from '../../../packages/storage/test/helpers/code-query-fixture.mjs';
 import { openRepositoryCodeQuery } from '../../../packages/storage/dist/index.js';
@@ -139,15 +140,55 @@ async function run(runtimeSeed = null) {
           },
         });
       const extended = process.argv[2]?.startsWith('extended') || !!runtimeSeed;
+      const managed = process.argv[2]?.startsWith('managed');
+      let emit,
+        triggered = false,
+        overflowDone;
+      const overflowReconciled = new Promise((r) => (overflowDone = r));
+      const lifecycle = {
+        mode: process.argv[2] === 'managed-one-shot' ? 'ONE_SHOT' : 'MCP_STDIO',
+        reconcile: async (reason, scope, c) => {
+          authorize(scope);
+          process.stderr.write('RECONCILE_START ' + reason + '\n');
+          const source = await runtimeSeed.open(structureLimits, c);
+          try {
+            const view = await source.read();
+            if (view.activationId !== runtimeSeed.activationId)
+              throw Error('OWNED_METADATA_CHANGED');
+          } finally {
+            await source.close();
+          }
+          process.stderr.write('RECONCILE_DONE ' + reason + '\n');
+          if (reason === 'OVERFLOW') overflowDone();
+        },
+        ...(process.argv[2] === 'managed-one-shot'
+          ? {}
+          : {
+              watch: async (listener, scope) => {
+                authorize(scope);
+                emit = listener;
+                process.stderr.write('OWNED_OBSERVER_ATTACHED\n');
+                return {
+                  close() {
+                    process.stderr.write('OWNED_OBSERVER_CLOSED\n');
+                  },
+                };
+              },
+            }),
+      };
+
       const app = (
-        runtimeSeed
-          ? createOwnedStructureReadToolsMcpServer
-          : extended
-            ? createOwnedExtendedReadToolsMcpServer
-            : createOwnedFiveReadToolsMcpServer
+        managed
+          ? createOwnedManagedReadToolsMcpServer
+          : runtimeSeed
+            ? createOwnedStructureReadToolsMcpServer
+            : extended
+              ? createOwnedExtendedReadToolsMcpServer
+              : createOwnedFiveReadToolsMcpServer
       )(
         {
           scope: hostScope,
+          ...(managed ? { lifecycle } : {}),
           ...(runtimeSeed
             ? Object.fromEntries(
                 ['structure', 'l2'].map((name) => [
@@ -171,7 +212,24 @@ async function run(runtimeSeed = null) {
                         process.stderr.write('HELD_QUERY_STARTED\n');
                         await new Promise((r) => setTimeout(r, 400));
                       }
-                      return runtimeSeed.open(b, c);
+                      const source = await runtimeSeed.open(b, c);
+                      if (managed && process.argv[2] === 'managed-overflow' && !triggered) {
+                        return {
+                          ...source,
+                          read: async () => {
+                            const value = await source.read();
+                            triggered = true;
+                            emit('OVERFLOW');
+                            await overflowReconciled;
+                            await new Promise((r) => setImmediate(r));
+                            process.stderr.write(
+                              'POST_EVENT_STATE ' + app.getLifecycleState().phase + '\n',
+                            );
+                            return value;
+                          },
+                        };
+                      }
+                      return source;
                     },
                     tokenCounter: meter(),
                   },
@@ -295,7 +353,9 @@ async function run(runtimeSeed = null) {
       if (reads !== 0) throw Error('STARTUP_READ');
       await app.start();
       if (reads !== 0) throw Error('STARTUP_READ');
-      process.stderr.write('OWNED_GROUP_NO_STARTUP_READ\n');
+      process.stderr.write(
+        managed ? 'OWNED_GROUP_NO_STARTUP_TOOL_QUERY\n' : 'OWNED_GROUP_NO_STARTUP_READ\n',
+      );
       const result = await app.completion;
       f.close();
       process.stderr.write('OWNED_GROUP_' + result.cleanupState + '\n');
@@ -303,7 +363,7 @@ async function run(runtimeSeed = null) {
   );
 }
 try {
-  if (process.argv[2]?.startsWith('structure'))
+  if (process.argv[2]?.startsWith('structure') || process.argv[2]?.startsWith('managed'))
     await withOwnedStructureFixture(
       {
         after(fn) {

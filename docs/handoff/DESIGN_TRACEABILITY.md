@@ -1,3 +1,16 @@
+## Existing P1-18 read lifecycle -> managed SDK - 2026-11-09
+
+knowledge-and-consumption §9 / RUNTIME_CONFIGURATION / P1-18 -> private Runtime
+owned-read-lifecycle captured scope/controls -> STARTUP/POST_ATTACH + serialized dirty
+CHANGE/OVERFLOW/generation -> SDK managed host READY/unchanged-generation admission
+and delivery -> immediate abort of all contexts and joined late observer/queries/writes.
+Runtime promise-gate tests cover startup gap, coalescing, failure/no retry, reentrant
+close, late owner, deadline and UNKNOWN. Actual owned Runtime metadata + official SDK
+child tests verify startup order, ONE_SHOT, same scope and rejection after a completed
+intervening reconcile. No Source observer or production grant/health claim, new
+Fixture/schema/baseline/dependency. [Evidence](../superpowers/plans/2026-11-09-owned-read-lifecycle.md).
+
+
 ## Stored structure trace and L2 - 2026-11-09
 
 [Approved v3 refinement](../superpowers/specs/2026-11-09-stored-structure-l2.md) ->

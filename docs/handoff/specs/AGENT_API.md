@@ -1,3 +1,17 @@
+## Owned read lifecycle integration - 2026-11-09
+
+The additive [managed host](../../superpowers/specs/2026-11-09-owned-read-lifecycle.md)
+implements existing P1-18 coordination for the already-approved nine leaves/five
+read names, without new wire schemas. It starts after initial callback reconciliation
+and requires READY plus an unchanged event generation before dispatch/async delivery;
+uncertainty/change refuses with the existing version-correct CONTEXT_UNAVAILABLE.
+Per-tool permission/basis/counter checks remain mandatory. A readonly abort signal
+propagates lifecycle shutdown/failure immediately to leaf contexts; late ownership and
+pending work settle before completion, with UNKNOWN retained. Old factories are
+unchanged. Observer doubles/owned metadata do not prove live Source freshness or
+production readiness; ordinary production CLI, update and data access stay closed.
+
+
 ## Approved stored EXECUTION/RUNTIME v3 + explicit L2 - 2026-11-09
 
 [Exact approved refinement](../../superpowers/specs/2026-11-09-stored-structure-l2.md)

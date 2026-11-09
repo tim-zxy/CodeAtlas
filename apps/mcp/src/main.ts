@@ -46,3 +46,5 @@ export {
 export { createOwnedExtendedReadToolsMcpServer } from './owned-business-stdio.js';
 
 export { createOwnedStructureReadToolsMcpServer } from './owned-business-stdio.js';
+
+export { createOwnedManagedReadToolsMcpServer } from './owned-business-stdio.js';

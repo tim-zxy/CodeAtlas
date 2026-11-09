@@ -1,3 +1,21 @@
+## Owned P1-18 lifecycle component - 2026-11-09
+
+Existing startup-reconciliation/watch/shutdown rules have a private owned-data
+[coordinator and managed read-host implementation](../../superpowers/specs/2026-11-09-owned-read-lifecycle.md).
+It captures one scope and explicit maxItems/maxDepth/requestTimeoutMs, runs STARTUP
+before MCP observer acquisition and POST_ATTACH recheck, coalesces event signals
+without path queues and serializes reconciliation. MCP_STDIO requires an observer
+port; ONE_SHOT reconciles without opening one. Failure closes, never retries-to-green.
+
+READY/generation are coordination diagnostics, not Source observation/freshness or
+permission. The managed SDK gates admission and async delivery by the same READY
+generation. Readonly abort observation immediately invalidates query contexts before
+waiting for late observer/pending callbacks; cleanup UNKNOWN remains UNKNOWN. Existing
+normal bootstrap/CLI and public schemas/rights/defaults stay unchanged. Controlled
+observer doubles plus actual owned metadata reads are component evidence only; real
+Source watcher/production missed-change qualification remains open.
+
+
 ## Approved dynamic-binding V2 offline implementation - 2026-11-05
 
 User explicitly approved the independent-coordinator/fixed-HOST-attester proposal

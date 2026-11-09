@@ -1,3 +1,30 @@
+## Existing P1-18 owned read lifecycle integrated - 2026-11-09
+
+The next existing-roadmap gap is implemented without new public tool contracts:
+private Runtime lifecycle plus additive managed SDK host. Captured scope and explicit
+controls govern STARTUP reconciliation, required MCP observer acquisition, POST_ATTACH
+recheck and serialized/coalesced CHANGE/OVERFLOW passes. ONE_SHOT reconciles without
+an observer. Internal READY only means trusted callbacks settled, not observed Source
+freshness or a new grant. Tests use controlled observer doubles and real readonly
+self-owned Runtime metadata; no real project watcher or Source/Git/Native operation.
+
+Managed SDK starts after initial reconciliation, admits calls only while READY and
+rejects async query results if event generation changed, even when reconciliation
+already returned READY. Shared scope is captured before callback binding; old
+factories and wire versions remain. Close/failed reconciliation immediately aborts
+SDK contexts via readonly lifecycle signal, joins pending startup/late observer/
+queries/writes and preserves UNKNOWN; reentrant close retains one owner/promise.
+No daemon, automatic model/update, user data, public query/production CLI or retry.
+
+Final related107/107,0fail/cancel/skip/todo,53529.0299ms; fresh Runtime/MCP builds, architecture17, scoped format and independent review pass.
+[Scope](../superpowers/specs/2026-11-09-owned-read-lifecycle.md),
+[commands/failures/limits](../superpowers/plans/2026-11-09-owned-read-lifecycle.md).
+CI200 exact0b99ae6 terminal TypeScript/Rust success; Native logs confirm old R8 catalog
+mismatch/D5_SCRIPT_PREREQUISITE_FAILED, qualification skipped. That result does not
+verify this new source. Phase1 stays4/21,A6 NOT_QUALIFIED,E02 PROPOSED/uninstalled;
+real observer/missed-Source reconciliation and full P1-18/production gates remain open.
+
+
 ## Approved stored structure trace + L2 implemented - 2026-11-09
 
 Two isolated streams delivered actual readonly Runtime Store traversal and public
