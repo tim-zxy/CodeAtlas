@@ -78,9 +78,10 @@ No dropping facts/supports to fit: input/request UTF8 ceilings and the same acco
 apply to preparation as well as generation. Copies and control are independent;
 original cancellation remains effective even if caller replaces its signal.
 
-This facts-only preparation supports COMPONENT_SUMMARY and CLAIM_EXTRACTION.
-CAPABILITY_SYNTHESIS/BUSINESS_FLOW_SYNTHESIS return CAPABILITY_UNAVAILABLE here:
-their structural-draft/knowledge context has not been implemented. The original
+The facts-only preparation supports COMPONENT_SUMMARY and CLAIM_EXTRACTION.
+BUSINESS_FLOW_SYNTHESIS additionally requires the explicit structural inputs below;
+CAPABILITY_SYNTHESIS still returns CAPABILITY_UNAVAILABLE because its validated
+knowledge context has not been implemented. The original
 four-task TEST_DOUBLE invocation port remains unchanged. No fake Component or
 RuntimeFlow reference is invented to make higher-level synthesis appear connected.
 The helper performs no Source/body I/O, permission/scan checks or model call and
@@ -122,10 +123,45 @@ output, overstated status, missing limitations, unsupported input and nested
 unverified references. Application build,66 related tests (26 semantic/40 capture
 contract) and architecture17 passed. No real model, user data, database or R9.
 
-Higher-level synthesis remains refused: current Knowledge IR/identity fixtures
+Capability synthesis remains refused: current Knowledge IR/identity fixtures
 describe Component references but do not define how a pre-identity structural
 candidate becomes that stable COMPONENT ScopedRef/revision. The current capture
 value registry does not contain Knowledge/Component records. Reusing fixture
 allowlists or candidate IDs would invent a binding. A precise draft/reference
 binding or a validated reader of existing published knowledge is still required;
 this batch does not choose one or change identity/publication contracts.
+
+
+## Owned BusinessFlow structural inputs (2026-11-10)
+
+Private refinement only: the existing seven request fields, Canonical IR, snapshot
+schema, identity and publication contracts are unchanged. BUSINESS_FLOW_SYNTHESIS
+can now prepare data.businessFlowInputs={schemaVersion:1,capturedInputDigest,flows}.
+Each flow record contains runtimeFlowRef,entryRef,contractRef,serviceRef and original
+bindingSupportRefs. At least one RUNTIME_FLOW must be explicitly selected; closure
+members alone do not expand the selection. Sort by full scoped reference key.
+
+Derive every record only along captured RuntimeFlow.entryRef -> EntryPoint.contractRef
+-> the unique workspace contractBindings entry -> captured Service. Every hop uses
+exact scope/id/revision, the original typed value and complete validated support
+closure. Missing/null/ambiguous bindings or missing typed values refuse with
+CAPABILITY_UNAVAILABLE; malformed snapshots/digests retain existing input errors.
+Never infer service ownership from shared repository, Contract.serviceRef, names,
+model suggestions or candidate IDs. The former facts-only BusinessFlow refusal is
+replaced only for this explicit private structural-input path; legacy facts-only
+snapshots still refuse. Capability synthesis remains unavailable.
+
+Keep the full original snapshot/reference context and hash the complete resulting
+context using the existing inputDigest algorithm. Same account, byte/work budgets,
+cancellation, coverage inheritance and TEST_DOUBLE output checks apply. This is
+untrusted structural association, not business intent, temporal/causal ordering,
+observed execution, Source provenance or permission. No business step/action,
+Component/Knowledge identity or semantic claim is synthesized by this preparation.
+The local double supplies candidate semantics; schema and allowlisted-reference
+checks do not independently prove those semantics or restrict all participants to
+these structural paths. Results remain TEST_DOUBLE/NOT_EVALUABLE/NOT_ESTABLISHED,
+publication NOT_ATTEMPTED. No real model or production consumer is introduced.
+
+Tests use independent literal owned structure and expected scoped paths, not user
+data or a claimed production Runtime activation. Rollback disables this private
+BusinessFlow branch; no database, public API or persisted state changes.

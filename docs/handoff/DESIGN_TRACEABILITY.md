@@ -1,3 +1,45 @@
+## Owned BusinessFlow structural input to TEST_DOUBLE - 2026-11-10
+
+Private captured semantic preparation now admits BUSINESS_FLOW_SYNTHESIS only for
+nonempty explicitly selected RuntimeFlows with the fully captured exact chain
+RuntimeFlow.entryRef -> EntryPoint.contractRef -> unique workspace contractBindings
+-> Service. No shared-repository ownership inference, bare Component/Knowledge
+identity, generated business steps or observed execution claim. Versioned private
+businessFlowInputs keeps original scoped references/supports and capturedInputDigest;
+the entire original snapshot/allowlist and resulting context digest remain bound.
+Missing/ambiguous data refuses; Capability synthesis and legacy facts-only inputs
+remain closed. Existing candidate/coverage checks retain TEST_DOUBLE,
+NOT_EVALUABLE, NOT_ESTABLISHED and publication NOT_ATTEMPTED. The prior private
+BusinessFlow refusal specification is synchronized; Canonical/public/snapshot
+schemas, identity rules, dependencies and persisted data do not change.
+
+Fresh Application build and one concentrated five-file regression pass107/107,
+0fail/cancel/skip/TODO,2213ms; architecture17, scoped format/diff pass. New6 owned
+structure cases are registered in mandatory tests. Independent contract and final
+source/test review found no P1/P2. No dynamic old-dist RED was obtained: shared
+build completed before new tests, so only the old source refusal is established;
+initial fixture selection error was corrected without weakening the validator.
+[Specification](../superpowers/specs/2026-11-07-semantic-test-invocation.md),
+[plan](../superpowers/plans/2026-11-10-captured-business-input.md),
+[review](../superpowers/reviews/2026-11-10-captured-business-input.md).
+Reproduce: node node_modules/typescript/bin/tsc -p packages/application/tsconfig.json;
+node --test --test-concurrency=1 packages/application/test/captured-business-input.test.mjs
+packages/application/test/semantic-test-invocation.test.mjs
+packages/application/test/integration-candidate.test.mjs
+packages/application/test/compilation-input-contract.test.mjs
+scripts/test-workspace-structure.mjs; node scripts/check-architecture.mjs.
+Raw local evidence: .superpowers/sdd/2026-11-10-captured-business-input/targeted-tests.log.
+
+Pure owned structural literals are not actual Runtime provenance or semantic
+quality. The prior applied-runtime MCP fixture has a null entry contract and is
+not silently upgraded to this path. The next real producer requires an actual
+explicit captured association; business intent/causality still needs independently
+validated semantics. No real model, user project/database/config, production
+scan/query/publication, Native/actual22, artifact upload or private repo creation.
+Phase1 stays4/21,A6 NOT_QUALIFIED,E02 PROPOSED/uninstalled. CI214 exact5c19bf8 is
+terminal TypeScript/Rust PASS, Native oldR8 catalog prerequisite FAIL/actual22
+skipped; it does not qualify this new source commit.
+
 ## Owned BusinessFlow publication-to-managed-stdio closure - 2026-11-10
 
 User-approved A/B streams closed a concrete integration gap without product API changes. A captures a fully represented SERVICE participant, actual applied owned RuntimeFlow and source/code support values under the existing closed snapshot whitelist; strict snapshot/Evaluation/Application Preparer/Store begin/publish/read creates genuine owned publication rows (COMMITTED,SETTLED). No bare COMPONENT, fabricated published result, raw SQL publication insertion or new identity rule. Semantics remain PARTIAL/OWNED_DECLARATION_NOT_OBSERVED_EXECUTION,NOT_EVALUABLE,production NOT_AUTHORIZED.

@@ -127,9 +127,12 @@ export function buildCapturedSemanticTestRequest(
       !text(o.modelPolicyRef)
     )
       fail('MODEL_REQUEST_INVALID');
-    // Higher-level synthesis also needs the validated structural-draft/knowledge
-    // context, which this captured-facts-only entry deliberately cannot invent.
-    if (!['COMPONENT_SUMMARY', 'CLAIM_EXTRACTION'].includes(o.taskKind as string))
+    // Capability still needs a separately validated knowledge/draft context.
+    if (
+      !['COMPONENT_SUMMARY', 'CLAIM_EXTRACTION', 'BUSINESS_FLOW_SYNTHESIS'].includes(
+        o.taskKind as string,
+      )
+    )
       fail(tasks.has(o.taskKind as string) ? 'CAPABILITY_UNAVAILABLE' : 'MODEL_REQUEST_INVALID');
     const maxInputBytes = b.maxInputBytes;
     account.own(input);
@@ -139,6 +142,7 @@ export function buildCapturedSemanticTestRequest(
     checkpoint();
     const snapshot = parseCompilationInputSnapshot(JSON.parse(bytes), control);
     account.own(snapshot);
+    const captured = new Map<string, { valueSchemaRef: string; value: unknown }>();
     const entities = new Map<string, ScopedRef>(),
       supports = new Map<string, SupportRef>();
     for (const { repoBasis } of snapshot.repositories) {
@@ -165,6 +169,7 @@ export function buildCapturedSemanticTestRequest(
       for (const entity of capture.entities) {
         account.visitItem();
         entities.set(scopedRefKey(entity.ref), entity.ref);
+        captured.set(scopedRefKey(entity.ref), entity);
       }
       for (const support of capture.supports) {
         checkpoint();
@@ -176,6 +181,7 @@ export function buildCapturedSemanticTestRequest(
             : { scope: 'WORKSPACE', workspaceId: snapshot.workspaceId, entity: support.ref.entity },
         );
         entities.set(scopedRefKey(ref), ref);
+        captured.set(scopedRefKey(ref), support);
         supports.set(supportKey(support.ref), support.ref);
       }
     }
@@ -187,12 +193,67 @@ export function buildCapturedSemanticTestRequest(
           return a < b ? -1 : a > b ? 1 : 0;
         })
         .map(([, value]) => value);
+    // This is only an explicit structural association, never business intent,
+    // causal ordering, execution evidence or a stable knowledge identity.
+    let businessFlowInputs;
+    if (o.taskKind === 'BUSINESS_FLOW_SYNTHESIS') {
+      const bindings = snapshot.workspaceCapture?.contractBindings?.bindings;
+      const selected = new Map<string, ScopedRef>();
+      for (const ref of snapshot.selection.selectedEntityRefs) {
+        checkpoint();
+        account.visitItem();
+        if (ref.entity.kind === 'RUNTIME_FLOW') selected.set(scopedRefKey(ref), ref);
+      }
+      if (!bindings || selected.size === 0) fail('CAPABILITY_UNAVAILABLE');
+      const flows = ordered(selected).map((runtimeFlowRef) => {
+        checkpoint();
+        const flowRecord = captured.get(scopedRefKey(runtimeFlowRef));
+        if (flowRecord?.valueSchemaRef !== 'RuntimeFlow@1') fail('CAPABILITY_UNAVAILABLE');
+        const flow = flowRecord.value as import('@codeatlas/ir').RuntimeFlow;
+        const entryRecord = captured.get(scopedRefKey(flow.entryRef));
+        if (entryRecord?.valueSchemaRef !== 'EntryPoint@1') fail('CAPABILITY_UNAVAILABLE');
+        const entry =
+          entryRecord.value as import('@codeatlas/ir').RuntimeFactSet['entryPoints'][number];
+        const contractRef = entry.contractRef;
+        if (
+          !contractRef ||
+          captured.get(scopedRefKey(contractRef))?.valueSchemaRef !== 'Contract@1'
+        )
+          fail('CAPABILITY_UNAVAILABLE');
+        const matching = bindings.filter((binding) => {
+          checkpoint();
+          account.visitItem();
+          return scopedRefKey(binding.contractRef) === scopedRefKey(contractRef);
+        });
+        if (matching.length !== 1) fail('CAPABILITY_UNAVAILABLE');
+        const binding = matching[0]!;
+        if (captured.get(scopedRefKey(binding.serviceRef))?.valueSchemaRef !== 'Service@1')
+          fail('CAPABILITY_UNAVAILABLE');
+        for (const ref of binding.supportRefs) {
+          checkpoint();
+          account.visitItem();
+          if (!supports.has(supportKey(ref))) fail('CAPABILITY_UNAVAILABLE');
+        }
+        return {
+          runtimeFlowRef,
+          entryRef: flow.entryRef,
+          contractRef,
+          serviceRef: binding.serviceRef,
+          bindingSupportRefs: binding.supportRefs,
+        };
+      });
+      businessFlowInputs = {
+        schemaVersion: 1 as const,
+        capturedInputDigest: snapshot.inputDigest,
+        flows,
+      };
+    }
     const authorizedContext = {
       instructionRef: o.promptRef,
       dataLabel: 'UNTRUSTED_DATA' as const,
       scope: snapshot.scope,
       inputSnapshotRef: { kind: 'COMPILATION_INPUT_SNAPSHOT', id: snapshot.snapshotId },
-      data: { snapshot },
+      data: { snapshot, ...(businessFlowInputs ? { businessFlowInputs } : {}) },
       referenceContext: {
         availableEntities: ordered(entities),
         availableSupports: ordered(supports),
