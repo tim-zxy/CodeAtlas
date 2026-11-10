@@ -1,3 +1,7 @@
+## Subsequent approved PACK-only staging amendment - 2026-11-10
+
+The [separate limited amendment](2026-11-10-r11-staged-pack.md) authorizes a copied-reader numerical catalog and one staged archive after tests/review. Original sampling scope and all source evidence remain historical and unmodified; no actual22, CI switch or publication is implied.
+
 # Approved R11 isolated Transport replacement
 
 Status: ACCEPTED by explicit user approval on 2026-11-10. Implements the approved interrupted-R10 disposition, not a resume protocol.
