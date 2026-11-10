@@ -22,8 +22,12 @@ import {
   withOwnedStructureFixture,
   structureLimits,
 } from '../../../packages/application/test/helpers/owned-structure-fixture.mjs';
+import { withOwnedBusinessPublication } from '../../../packages/application/test/helpers/owned-business-publication-fixture.mjs';
 const cleanup = [];
-async function run(runtimeSeed = null) {
+let ownedBusinessClosed = false;
+async function run(runtimeSeed = null, ownedBusiness = null) {
+  const beforeBusinessHistory = ownedBusiness ? JSON.stringify(ownedBusiness.history()) : null;
+  let businessReads = 0;
   await withCodeQueryDatabase(
     {
       after(fn) {
@@ -99,6 +103,17 @@ async function run(runtimeSeed = null) {
         productionQuery: 'NOT_AUTHORIZED',
         quality: 'NOT_EVALUABLE',
       };
+      if (ownedBusiness)
+        process.stderr.write(
+          'STORE_BUSINESS_SEED ' +
+            JSON.stringify({
+              knowledgeRef: ownedBusiness.knowledgeRef,
+              startStepKey: ownedBusiness.startStepKey,
+              runtimeFlowId: ownedBusiness.runtimeFlowId,
+              expectedStepKeys: ownedBusiness.expectedStepKeys,
+            }) +
+            '\n',
+        );
       let reads = 0;
       const authorize = (m) => {
         if (
@@ -356,10 +371,23 @@ async function run(runtimeSeed = null) {
               maxOutputBytes: 1000000,
               maxTokens: 1000,
             },
-            authorize,
-            knowledgeQuery: async () => {
+            authorize(m) {
+              authorize(m);
+              if (ownedBusiness && m.purpose !== 'trace_flow/BUSINESS') throw Error('PURPOSE');
+              if (ownedBusiness && process.argv[2] === 'managed-store-business-deny')
+                throw Error('OWNED_TEST_BUSINESS_DENIED');
+            },
+            knowledgeQuery: async (req, c) => {
               reads++;
-              return businessResult;
+              if (!ownedBusiness) return businessResult;
+              businessReads++;
+              if (req.workspaceId !== ownedBusiness.workspaceId) throw Error('SCOPE_MISMATCH');
+              return ownedBusiness.store.readPublishedKnowledge(
+                req.selectedPublishedRevisionRefs,
+                ownedBusiness.permissions,
+                ownedBusiness.limits,
+                c,
+              );
             },
             tokenCounter: meter(),
           },
@@ -427,13 +455,29 @@ async function run(runtimeSeed = null) {
       const result = await app.completion;
       if (triggered && actor) await actor;
       if (actorError) throw actorError;
+      if (ownedBusiness) {
+        if (JSON.stringify(ownedBusiness.history()) !== beforeBusinessHistory)
+          throw Error('OWNED_BUSINESS_HISTORY_CHANGED');
+        process.stderr.write('OWNED_BUSINESS_HISTORY_UNCHANGED\n');
+        process.stderr.write('OWNED_BUSINESS_READS ' + businessReads + '\n');
+      }
       f.close();
       process.stderr.write('OWNED_GROUP_' + result.cleanupState + '\n');
     },
   );
 }
 try {
-  if (process.argv[2]?.startsWith('structure') || process.argv[2]?.startsWith('managed'))
+  if (process.argv[2]?.startsWith('managed-store-business')) {
+    await withOwnedBusinessPublication(
+      {
+        after(fn) {
+          cleanup.push(fn);
+        },
+      },
+      (owned) => run(owned.runtimeSeed, owned),
+    );
+    ownedBusinessClosed = true;
+  } else if (process.argv[2]?.startsWith('structure') || process.argv[2]?.startsWith('managed'))
     await withOwnedStructureFixture(
       {
         after(fn) {
@@ -445,4 +489,5 @@ try {
   else await run();
 } finally {
   for (const fn of cleanup.reverse()) await fn();
+  if (ownedBusinessClosed) process.stderr.write('OWNED_BUSINESS_ALL_CLEANED\n');
 }
