@@ -1,3 +1,7 @@
+## Approved isolated R11 replacement - 2026-11-10
+
+User approved the [versioned R11 replacement](../superpowers/specs/2026-11-10-r11-transport-isolated-recovery.md): preserve interrupted R10 and raw evidence, retain252 only under matching identities, and execute a new complete Transport154 plus original preparation after necessary implementation/tests. No resume/adoption/partial-row merge, thresholds, profile/PACK/publication, production access or406 expansion. Phase1 remains4/21; A6 NOT_QUALIFIED; E02 PROPOSED/uninstalled. This is approval, not implementation or qualification evidence.
+
 ## Approved dynamic-binding V2 offline implementation - 2026-11-05
 
 User explicitly approved the independent-coordinator/fixed-HOST-attester proposal

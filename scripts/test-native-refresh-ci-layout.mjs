@@ -345,3 +345,42 @@ test('R9 is explicit and preserves historical defaults, confinement and preparat
     null,
   );
 });
+
+test('R11 isolated replacement preserves defaults and exact finite ranges without adopting R10', async () => {
+  const revision = 'p05-d5-exact-layout-v11',
+    root = 'C:\\CodeAtlas-P05-D5-R11';
+  assert.equal(layout.refreshCiLayoutRootForRevision(revision), root);
+  assert.equal(layout.refreshCiReplayGeneratorForRevision(revision), 'p05-refresh-replay-v4');
+  assert.equal(layout.refreshCiLayoutRevision, 'p05-d5-exact-layout-v8');
+  assert.equal(
+    layout.refreshCiLayoutRootForRevision('p05-d5-exact-layout-v10'),
+    'C:\\CodeAtlas-P05-D5-R10',
+  );
+  for (const output of [root, path.join(root, 'evidence')])
+    assert.throws(() => layout.assertRefreshCiOutputOutsideLayouts(output), /overlap|layout/i);
+  const { r5PreparationScope } =
+    await import('../packages/runtime/test/helpers/native-refresh-r5-preparation-scope.mjs');
+  const executablePath = path.join(root, 'native', 'codeatlas-native-analyzer.exe');
+  for (const [family, accepted, next] of [
+    ['source-empty-input-boundary', 394, 395],
+    ['source-shared-owners-boundary', 238, 239],
+    ['source-complete-coverage-boundary', 392, 393],
+    ['source-field-sites-boundary', 1982, 1983],
+    ['source-dense-remove-boundary', 1981, 1982],
+    ['source-dense-upsert-boundary', 1986, 1987],
+  ]) {
+    assert.deepEqual(r5PreparationScope(family, { executablePath }), { accepted, next });
+    assert.deepEqual(
+      r5PreparationScope(family, { executablePath: executablePath.replace('-R11', '-R10') }),
+      { accepted, next },
+    );
+    assert.equal(
+      r5PreparationScope(family, { executablePath: executablePath.replace('-R11', '-R110') }),
+      null,
+    );
+  }
+  assert.throws(
+    () => layout.refreshCiLayoutRootForRevision('p05-d5-exact-layout-v12'),
+    /revision|layout/i,
+  );
+});

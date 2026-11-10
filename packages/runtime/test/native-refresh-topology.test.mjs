@@ -340,3 +340,28 @@ test('topology explicitly records missing optional workspace resolution', async 
     ),
   );
 });
+
+test('topology R11 replacement requires original version3 and generator4', async () => {
+  const pack = await import('../../../scripts/helpers/native-refresh-ci-pack.mjs');
+  pack.assertRefreshCiReplayFormat('p05-d5-exact-layout-v11', {
+    schemaVersion: 3,
+    generator: { revision: 'p05-refresh-replay-v4' },
+  });
+  for (const [schemaVersion, r] of [
+    [2, 'p05-refresh-replay-v3'],
+    [2, 'p05-refresh-replay-v4'],
+    [3, 'p05-refresh-replay-v3'],
+  ])
+    assert.throws(() =>
+      pack.assertRefreshCiReplayFormat('p05-d5-exact-layout-v11', {
+        schemaVersion,
+        generator: { revision: r },
+      }),
+    );
+  assert.throws(() =>
+    pack.assertRefreshCiReplayFormat('p05-d5-exact-layout-v9', {
+      schemaVersion: 3,
+      generator: { revision: 'p05-refresh-replay-v4' },
+    }),
+  );
+});

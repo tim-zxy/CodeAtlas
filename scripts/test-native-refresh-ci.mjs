@@ -525,3 +525,115 @@ test('explicit R9 stop request prevents even the intercepted first build launch'
     false,
   );
 });
+
+test('explicit R11 preparation reaches the intercepted build without acquiring a fixed root', async (t) => {
+  const parent = await mkdtemp(path.join(tmpdir(), 'codeatlas-r11-preflight-'));
+  t.after(() => rm(parent, { recursive: true, force: true }));
+  const result = spawnSync(
+    process.execPath,
+    [
+      '--input-type=module',
+      '-e',
+      `import cp from 'node:child_process'; import {syncBuiltinESMExports} from 'node:module';
+     cp.spawnSync=()=>{throw new Error('R11_BUILD_CHECKPOINT')}; syncBuiltinESMExports();
+     const {runRefreshCiAt}=await import(${JSON.stringify(new URL('./native-refresh-ci.mjs', import.meta.url).href)});
+     try {await runRefreshCiAt(['prepare',process.argv[1],'p05-d5-exact-layout-v11'],process.argv[2]);process.exitCode=2;}
+     catch(error){process.stdout.write(error.message);}`,
+      path.join(parent, 'output'),
+      path.resolve(fileURLToPath(new URL('../', import.meta.url))),
+    ],
+    { encoding: 'utf8', windowsHide: true },
+  );
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(result.stdout, 'R11_BUILD_CHECKPOINT');
+  assert.deepEqual(await readdir(parent), ['output']);
+  const receipt = JSON.parse(await readFile(path.join(parent, 'output', 'ci-result.json'), 'utf8'));
+  assert.equal(receipt.stage, 'BUILD');
+  assert.equal(receipt.success, false);
+});
+
+test('explicit R11 pack refuses cross-layout geometry and unknown revision before IO', async () => {
+  const root = 'C:\\CodeAtlas-P05-D5-R11';
+  const candidate = path.join(root, 'evidence', 'candidate.json');
+  const holdout = path.join(root, 'evidence', 'review', 'holdout.json');
+  for (const [c, h] of [
+    [candidate.replace('-R11', '-R8'), holdout],
+    [candidate, holdout.replace('-R11', '-R8')],
+  ])
+    await assert.rejects(
+      () =>
+        runner.runRefreshCiAt(
+          ['pack', c, h, 'C:\\not-created.zip', 'p05-d5-exact-layout-v11'],
+          path.resolve('.'),
+        ),
+      /geometry/i,
+    );
+  await assert.rejects(
+    () =>
+      runner.runRefreshCiAt(
+        ['pack', candidate, holdout, 'C:\\not-created.zip', 'other-layout'],
+        path.resolve('.'),
+      ),
+    /revision|layout/i,
+  );
+});
+
+test('explicit R11 pack selects the original read-only ownership seam without acquiring a root', () => {
+  const root = 'C:\\CodeAtlas-P05-D5-R11';
+  // All filesystem lstat calls stop in this test child, before any layout is opened.
+  const result = spawnSync(
+    process.execPath,
+    [
+      '--input-type=module',
+      '-e',
+      `import fs from 'node:fs/promises'; import {syncBuiltinESMExports} from 'node:module';
+     fs.lstat=async target=>{throw new Error('LAYOUT_READ:'+target)};syncBuiltinESMExports();
+     const {runRefreshCiAt}=await import(${JSON.stringify(new URL('./native-refresh-ci.mjs', import.meta.url).href)});
+     try {await runRefreshCiAt(JSON.parse(process.argv[1]),process.argv[2]);process.exitCode=2;}
+     catch(error){process.stdout.write(error.message);}`,
+      JSON.stringify([
+        'pack',
+        path.join(root, 'evidence', 'candidate.json'),
+        path.join(root, 'evidence', 'review', 'holdout.json'),
+        'C:\\not-created.zip',
+        'p05-d5-exact-layout-v11',
+      ]),
+      path.resolve(fileURLToPath(new URL('../', import.meta.url))),
+    ],
+    { encoding: 'utf8', windowsHide: true },
+  );
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(result.stdout, 'LAYOUT_READ:' + root);
+});
+
+test('explicit R11 stop request prevents even the intercepted first build launch', async (t) => {
+  const parent = await mkdtemp(path.join(tmpdir(), 'codeatlas-r11-stop-entry-'));
+  t.after(() => rm(parent, { recursive: true, force: true }));
+  const output = path.join(parent, 'output');
+  const result = spawnSync(
+    process.execPath,
+    [
+      '--input-type=module',
+      '-e',
+      `
+ import cp from 'node:child_process'; import fs from 'node:fs/promises'; import path from 'node:path'; import {syncBuiltinESMExports} from 'node:module';
+ const mkdir=fs.mkdir;fs.mkdir=async(target,...args)=>{const value=await mkdir(target,...args);if(target===process.argv[1])await fs.writeFile(path.join(target,'STOP_REQUESTED'),'');return value;};
+ cp.spawnSync=()=>{throw Error('UNEXPECTED_TOOL_LAUNCH')};syncBuiltinESMExports();
+ const {runRefreshCiAt}=await import(${JSON.stringify(new URL('./native-refresh-ci.mjs', import.meta.url).href)});
+ try{await runRefreshCiAt(['prepare',process.argv[1],'p05-d5-exact-layout-v11'],process.argv[2]);process.exitCode=2;}catch(error){process.stdout.write(error.code??error.message);}
+ `,
+      output,
+      path.resolve(fileURLToPath(new URL('../', import.meta.url))),
+    ],
+    { encoding: 'utf8', windowsHide: true },
+  );
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(result.stdout, 'R9_STOP_REQUESTED');
+  const receipt = JSON.parse(await readFile(path.join(output, 'r9-stop-receipt.json'), 'utf8'));
+  assert.equal(receipt.boundary, 'BEFORE_BUILD');
+  assert.equal(receipt.status, 'STOPPED');
+  assert.equal(
+    JSON.parse(await readFile(path.join(output, 'ci-result.json'), 'utf8')).success,
+    false,
+  );
+});

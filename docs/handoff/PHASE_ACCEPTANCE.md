@@ -1,3 +1,7 @@
+## Approved isolated R11 replacement - 2026-11-10
+
+User approved the [versioned R11 replacement](../superpowers/specs/2026-11-10-r11-transport-isolated-recovery.md): preserve interrupted R10 and raw evidence, retain252 only under matching identities, and execute a new complete Transport154 plus original preparation after necessary implementation/tests. No resume/adoption/partial-row merge, thresholds, profile/PACK/publication, production access or406 expansion. Phase1 remains4/21; A6 NOT_QUALIFIED; E02 PROPOSED/uninstalled. This is approval, not implementation or qualification evidence.
+
 ## Additive replay topology component evidence - 2026-11-09
 
 New explicit Manifest3/generator4/binding3/layout10 and unchanged execution evidence2 have self-owned offline component coverage. New topology14/14; affected legacy catalog/record78/78; CI layout/PACK/stop96/96; architecture17 and independent review pass. [Commands, original failures and readiness limits](../superpowers/plans/2026-11-09-replay-topology-v4.md). Original acceptance checkboxes, R8 pin and default path stay unchanged. The installed SDK currently resolves outside checkout into the earlier audited temporary SDK tree; new discovery refuses. No current accepted closure, Native/build/measurement or production result follows. Phase1 stays4/21; A6 NOT_QUALIFIED; E02 PROPOSED/uninstalled.

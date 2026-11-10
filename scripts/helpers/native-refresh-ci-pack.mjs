@@ -232,7 +232,7 @@ export function assertRefreshCiReplayFormat(revision, manifest) {
   );
   assert.equal(
     manifest.schemaVersion === 3,
-    revision === 'p05-d5-exact-layout-v10',
+    ['p05-d5-exact-layout-v10', 'p05-d5-exact-layout-v11'].includes(revision),
     'Pack manifest/layout version differs',
   );
 }
@@ -604,9 +604,11 @@ export async function createRefreshCiPack({
   );
   const revision =
     layoutRevision ??
-    (layout.root === refreshCiLayoutRootForRevision('p05-d5-exact-layout-v10')
-      ? 'p05-d5-exact-layout-v10'
-      : undefined);
+    (layout.root === refreshCiLayoutRootForRevision('p05-d5-exact-layout-v11')
+      ? 'p05-d5-exact-layout-v11'
+      : layout.root === refreshCiLayoutRootForRevision('p05-d5-exact-layout-v10')
+        ? 'p05-d5-exact-layout-v10'
+        : undefined);
   if (revision !== undefined) {
     assert.equal(
       layout.root,
@@ -614,7 +616,8 @@ export async function createRefreshCiPack({
       'Pack layout root/revision differs',
     );
     assertRefreshCiReplayFormat(revision, manifest);
-  } else assert.notEqual(manifest.schemaVersion, 3, 'Topology pack requires explicit layout10');
+  } else
+    assert.notEqual(manifest.schemaVersion, 3, 'Topology pack requires explicit topology layout');
   const values = await readRefreshTransportReplayCorpus(manifestPath, bindingPath, fixtureContext);
   const candidate = await readEvidenceJson(candidatePath);
   relativePath(candidate.manifest?.path);

@@ -65,7 +65,11 @@ async function prepareRefreshCiEvidence(outputInput, repositoryPath, revision) {
   assertRefreshCiOutputOutsideLayouts(output);
   await mkdir(output);
   let stage = 'BUILD';
-  const control = ['p05-d5-exact-layout-v9', 'p05-d5-exact-layout-v10'].includes(revision)
+  const control = [
+    'p05-d5-exact-layout-v9',
+    'p05-d5-exact-layout-v10',
+    'p05-d5-exact-layout-v11',
+  ].includes(revision)
     ? await createR9StopControl(output)
     : undefined;
   try {
@@ -264,7 +268,9 @@ export async function runRefreshCiAt(args, repositoryPath) {
     assert.ok(args.length === 2 || args.length === 3, 'Invalid prepare arguments');
     if (args.length === 3)
       assert.ok(
-        ['p05-d5-exact-layout-v9', 'p05-d5-exact-layout-v10'].includes(args[2]),
+        ['p05-d5-exact-layout-v9', 'p05-d5-exact-layout-v10', 'p05-d5-exact-layout-v11'].includes(
+          args[2],
+        ),
         'Unsupported prepare layout revision',
       );
     return prepareRefreshCiEvidence(args[1], repositoryPath, args[2] ?? refreshCiLayoutRevision);
@@ -273,7 +279,9 @@ export async function runRefreshCiAt(args, repositoryPath) {
     assert.ok(args.length === 4 || args.length === 5, 'Invalid pack arguments');
     if (args.length === 5)
       assert.ok(
-        ['p05-d5-exact-layout-v9', 'p05-d5-exact-layout-v10'].includes(args[4]),
+        ['p05-d5-exact-layout-v9', 'p05-d5-exact-layout-v10', 'p05-d5-exact-layout-v11'].includes(
+          args[4],
+        ),
         'Unsupported pack layout revision',
       );
     const revision = args[4] ?? refreshCiLayoutRevision;

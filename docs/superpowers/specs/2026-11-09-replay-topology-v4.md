@@ -1,3 +1,7 @@
+## Approved explicit R11 extension - 2026-11-10
+
+[Separate R11 contract](2026-11-10-r11-transport-isolated-recovery.md) adds only an explicit independent root using these same Manifest3/generator4/binding3 rules and original finite preparation data. Versions1..10/default8 and all original gates remain. No R10 resume, observation transfer or production/numeric authority. Original layout10 text below remains historical authority for that version.
+
 # Replay topology v4 (approved offline contract)
 
 Approved 2026-11-09: add package-instance and importer-resolution identity; old R8/approvals and fail-closed gates remain. Scope is development fixture/evaluation preparation, not production/Native eligibility.
