@@ -1,3 +1,28 @@
+## Owned published Component to Capability TEST_DOUBLE - 2026-11-11
+
+Approved private input slice is implemented: actual owned Component publication
+through existing Application/Store -> exact selected current revision -> matching
+original snapshotId/revisionSetId/inputDigest and full captured support closure ->
+Capability TEST_DOUBLE. Source/provenance/coverage/warnings and complete context
+digest remain bound. Same-ID/different-bytes, missing/foreign/stale data, permission,
+control and unsafe outputs refuse. Original facts-only Capability path and public
+query response remain unchanged; no new schema, dependency, migration or ID rule.
+
+Fresh Storage/Application/downstream Runtime builds pass; concentrated84/84 tests,
+0fail/cancel/skip/TODO,11728.153ms; architecture17 pass. Independent review P2 control
+stop classification was reproduced, fixed and narrowly re-reviewed; no remaining
+concrete P1/P2. [Review and exact reproduction](../superpowers/reviews/2026-11-11-owned-capability-input.md),
+[plan](../superpowers/plans/2026-11-11-owned-capability-input.md),
+[contract refinement](../superpowers/specs/2026-11-07-semantic-test-invocation.md#approved-owned-published-component-inputs-2026-11-11).
+Raw log .superpowers/sdd/2026-11-11-owned-capability-input/targeted-tests.log.
+
+Only self-owned memory SQLite and local doubles. No user data/config, production
+scan/query/publication, real model, installed package, profile/PACK/actual22 or
+qualification change. Frozen cloud source79da401/seed remains separate from this
+new development tree; old CI/sampling is not this source's qualification. Phase1
+stays4/21,A6 NOT_QUALIFIED,E02 PROPOSED/uninstalled. Source-only sync/new CI outcome
+is reported separately; no phase closure follows.
+
 ## Owned BusinessFlow structural input to TEST_DOUBLE - 2026-11-10
 
 Private captured semantic preparation now admits BUSINESS_FLOW_SYNTHESIS only for

@@ -1,3 +1,12 @@
+## Approved owned Component / Capability binding - 2026-11-11
+
+User explicitly approved selected, same-snapshot published Component inputs for
+private Capability TEST_DOUBLE. [Exact refinement](../superpowers/specs/2026-11-07-semantic-test-invocation.md#approved-owned-published-component-inputs-2026-11-11)
+requires original source digest/version and full captured reference/support closure.
+It does not grant production query/model/publication, capture-schema or identity
+changes, user database access or qualification rebinding. Existing frozen cloud
+candidate and production refusal rules remain unchanged.
+
 ## Approved independent R11 actual22 coordinator - 2026-11-10
 
 User explicitly approved [this independent deny-only entry](../superpowers/specs/2026-11-10-r11-actual-coordinator.md) for implementation and self-owned substitutes. Frozen script/reader/candidate identities and successful measurement/validation remain unchanged. New executor/request/tool seals do not grant real execution, publication, numerical/production authority or CI switch. Offline50 tests/architecture17 and independent review pass; actual22 and every phase/quality gate remain outstanding. Original failed trees/evidence stay protected.

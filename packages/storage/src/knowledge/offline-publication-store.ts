@@ -721,6 +721,35 @@ export class OfflinePublicationStore {
     limits: HistoryReadLimits,
     control: RuntimeRequestControl,
   ): OfflinePublishedKnowledge {
+    return this.#readPublishedKnowledge(references, permissions, limits, control, null);
+  }
+  /** Private owned semantic-input projection; no production permission or body expansion. */
+  readPublishedCapabilityInputs(
+    references: unknown,
+    permissions: OfflineKnowledgePermissions,
+    limits: HistoryReadLimits,
+    control: RuntimeRequestControl,
+  ): {
+    knowledge: OfflinePublishedKnowledge;
+    sourceInputs: readonly { itemId: string; revisionId: string; capturedInputDigest: string }[];
+  } {
+    const sourceInputs: { itemId: string; revisionId: string; capturedInputDigest: string }[] = [];
+    const knowledge = this.#readPublishedKnowledge(
+      references,
+      permissions,
+      limits,
+      control,
+      sourceInputs,
+    );
+    return Object.freeze({ knowledge, sourceInputs: Object.freeze(sourceInputs) });
+  }
+  #readPublishedKnowledge(
+    references: unknown,
+    permissions: OfflineKnowledgePermissions,
+    limits: HistoryReadLimits,
+    control: RuntimeRequestControl,
+    sourceInputs: { itemId: string; revisionId: string; capturedInputDigest: string }[] | null,
+  ): OfflinePublishedKnowledge {
     if (this.#knowledgeReadUnsettled)
       throw new OfflinePublicationError('KNOWLEDGE_SOURCE_UNAVAILABLE', 'UNKNOWN');
     const c = ownControl(control),
@@ -812,6 +841,7 @@ export class OfflinePublicationStore {
           'COVERAGE',
           'PROVENANCE_IDS',
           'CURRENT_HEAD_ID',
+          ...(sourceInputs ? ['SNAPSHOT_INPUT_DIGEST'] : []),
         ]),
         evidenceKind: 'TEST_KNOWLEDGE_READ_NOT_AUTHORITY',
       });
@@ -892,6 +922,9 @@ export class OfflinePublicationStore {
           attempt_id: 'a.id',
           receipt_id: 'p.attempt_id',
           current_head: 'h.revision_id',
+          ...(sourceInputs
+            ? { snapshot_digest: "json_extract(a.payload_json,'$.request.snapshot.inputDigest')" }
+            : {}),
           raw_bytes:
             'coalesce(length(CAST(r.payload_json AS BLOB)),0)+coalesce(length(CAST(a.payload_json AS BLOB)),0)+coalesce(length(CAST(p.payload_json AS BLOB)),0)',
           record_bytes: 'coalesce(length(CAST(r.payload_json AS BLOB)),0)',
@@ -1070,6 +1103,18 @@ export class OfflinePublicationStore {
         if (itemEnvelope.payload.sourceFreshness !== 'FRESH')
           warnings.push(itemEnvelope.payload.sourceFreshness);
         if (!isCurrentHead) warnings.push('HISTORICAL_PUBLISHED_REVISION');
+        if (sourceInputs) {
+          verify(
+            typeof meta.snapshot_digest === 'string' && /^[a-f0-9]{64}$/.test(meta.snapshot_digest),
+          );
+          sourceInputs.push(
+            Object.freeze({
+              itemId: payload.itemId,
+              revisionId: payload.id,
+              capturedInputDigest: meta.snapshot_digest as string,
+            }),
+          );
+        }
         records.push({
           itemEnvelope,
           revisionEnvelope,

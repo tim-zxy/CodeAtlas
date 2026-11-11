@@ -6,6 +6,7 @@ import {
   KnowledgeScopeSchema,
   parseClaim,
   parseKnowledgeCandidate,
+  parseKnowledgeRevision,
   parsePhase1ReferenceContext,
   ScopedRefSchema,
   scopedRefKey,
@@ -19,6 +20,12 @@ import {
   canonicalCompilationJson,
   parseCompilationInputSnapshot,
 } from './compilation-input-contract.js';
+import { KnowledgeBudget, KnowledgeControlStop } from '../../knowledge/dist/comparison-contract.js';
+import {
+  parseOwnedWikiRequest,
+  validateOwnedPublishedSelection,
+  type OwnedPublishedRecord,
+} from '../../knowledge/dist/offline-wiki.js';
 
 type Code =
   | 'MODEL_REQUEST_INVALID'
@@ -97,6 +104,14 @@ function errorField(error: unknown, key: string): unknown {
     ? Object.getOwnPropertyDescriptor(error, key)?.value
     : undefined;
 }
+function knowledgeStopCode(error: unknown): Code | undefined {
+  if (!(error instanceof KnowledgeControlStop)) return undefined;
+  const message = errorField(error, 'message');
+  if (message === 'CONTROL_CANCELLED') return 'CANCELLED';
+  if (message === 'CONTROL_DEADLINE') return 'DEADLINE';
+  if (message === 'CONTROL_BUDGET' || message === 'CONTROL_DEPTH') return 'BUDGET_EXCEEDED';
+  return undefined;
+}
 
 /** Private self-owned fixture preparation only; snapshot validation is neither
  * capture provenance nor read/redaction/model permission. No I/O or truncation. */
@@ -105,6 +120,7 @@ export function buildCapturedSemanticTestRequest(
   options: unknown,
   controlValue: RuntimeRequestControl,
   account: DocumentAccount,
+  capabilityInput?: unknown,
 ) {
   try {
     const c = fields(controlValue, ['signal', 'deadlineEpochMs', 'maxItems', 'maxDepth']);
@@ -127,11 +143,12 @@ export function buildCapturedSemanticTestRequest(
       !text(o.modelPolicyRef)
     )
       fail('MODEL_REQUEST_INVALID');
-    // Capability still needs a separately validated knowledge/draft context.
+    // Legacy facts-only Capability requests stay unavailable.
     if (
       !['COMPONENT_SUMMARY', 'CLAIM_EXTRACTION', 'BUSINESS_FLOW_SYNTHESIS'].includes(
         o.taskKind as string,
-      )
+      ) &&
+      !(o.taskKind === 'CAPABILITY_SYNTHESIS' && capabilityInput !== undefined)
     )
       fail(tasks.has(o.taskKind as string) ? 'CAPABILITY_UNAVAILABLE' : 'MODEL_REQUEST_INVALID');
     const maxInputBytes = b.maxInputBytes;
@@ -193,6 +210,105 @@ export function buildCapturedSemanticTestRequest(
           return a < b ? -1 : a > b ? 1 : 0;
         })
         .map(([, value]) => value);
+    let capabilityInputs:
+      | {
+          schemaVersion: 1;
+          capturedInputDigest: string;
+          selectionDigest: string;
+          components: OwnedPublishedRecord[];
+        }
+      | undefined;
+    if (o.taskKind === 'CAPABILITY_SYNTHESIS') {
+      account.own(capabilityInput);
+      account.reserveBuffer(maxInputBytes);
+      const encoded = canonicalCompilationJson(capabilityInput, control);
+      if (Buffer.byteLength(encoded) > maxInputBytes) fail('MODEL_INPUT_TOO_LARGE');
+      const input = fields(JSON.parse(encoded), [
+        'selectedComponents',
+        'knowledge',
+        'sourceInputs',
+      ]);
+      const selection = parseOwnedWikiRequest(
+        {
+          workspaceId: snapshot.workspaceId,
+          repositoryIds: snapshot.selection.repositoryIds,
+          selectedPublishedRevisionRefs: input.selectedComponents,
+          customizationPolicy: 'LOCKED',
+          allowPartial: false,
+        },
+        control,
+      );
+      if (!selection.selectedPublishedRevisionRefs.length) fail('CAPABILITY_UNAVAILABLE');
+      const components = validateOwnedPublishedSelection(
+        selection,
+        input.knowledge,
+        new KnowledgeBudget(control),
+      );
+      if (!Array.isArray(input.sourceInputs) || input.sourceInputs.length !== components.length)
+        fail('CAPABILITY_UNAVAILABLE');
+      const bindings = new Map<string, string>();
+      for (const value of input.sourceInputs) {
+        checkpoint();
+        account.visitItem();
+        const b = fields(value, ['itemId', 'revisionId', 'capturedInputDigest']);
+        const key = canonicalCompilationJson([b.itemId, b.revisionId], control);
+        if (bindings.has(key) || b.capturedInputDigest !== snapshot.inputDigest)
+          fail('CAPABILITY_UNAVAILABLE');
+        bindings.set(key, b.capturedInputDigest as string);
+      }
+      const capturedContext = {
+        availableEntities: ordered(entities),
+        availableSupports: ordered(supports),
+      };
+      for (const row of components) {
+        checkpoint();
+        account.visitItem();
+        const item = row.itemEnvelope.payload,
+          revision = row.revisionEnvelope.payload;
+        const key = canonicalCompilationJson([item.id, revision.id], control);
+        if (
+          item.type !== 'COMPONENT' ||
+          revision.structuredContent.kind !== 'COMPONENT' ||
+          row.currentHeadRevisionId !== revision.id ||
+          !bindings.delete(key) ||
+          row.provenance.snapshotId !== snapshot.snapshotId ||
+          row.provenance.revisionSetId !== snapshot.revisionSetId
+        )
+          fail('CAPABILITY_UNAVAILABLE');
+        // Stored metadata is not a substitute for the full captured support values.
+        parseKnowledgeRevision(row.revisionEnvelope, capturedContext);
+        for (const support of revision.supportRefs) {
+          checkpoint();
+          account.visitItem();
+          if (!supports.has(supportKey(support))) fail('CAPABILITY_UNAVAILABLE');
+        }
+        for (const ref of row.coverage.unverifiedRefs) {
+          checkpoint();
+          account.visitItem();
+          if (!entities.has(scopedRefKey(ref))) fail('CAPABILITY_UNAVAILABLE');
+        }
+      }
+      if (bindings.size) fail('CAPABILITY_UNAVAILABLE');
+      // Only the selected opaque published IDs become new allowed references.
+      for (const row of components) {
+        checkpoint();
+        account.visitItem();
+        const item = row.itemEnvelope.payload;
+        const ref = ScopedRefSchema.parse({
+          ...(item.scope.kind === 'REPOSITORY'
+            ? { scope: 'REPOSITORY', repositoryId: item.scope.repositoryId }
+            : { scope: 'WORKSPACE', workspaceId: item.scope.workspaceId }),
+          entity: { kind: 'COMPONENT', id: item.id, revisionId: row.revisionEnvelope.payload.id },
+        });
+        entities.set(scopedRefKey(ref), ref);
+      }
+      capabilityInputs = {
+        schemaVersion: 1,
+        capturedInputDigest: snapshot.inputDigest,
+        selectionDigest: (input.knowledge as { selectionDigest: string }).selectionDigest,
+        components,
+      };
+    }
     // This is only an explicit structural association, never business intent,
     // causal ordering, execution evidence or a stable knowledge identity.
     let businessFlowInputs;
@@ -253,7 +369,11 @@ export function buildCapturedSemanticTestRequest(
       dataLabel: 'UNTRUSTED_DATA' as const,
       scope: snapshot.scope,
       inputSnapshotRef: { kind: 'COMPILATION_INPUT_SNAPSHOT', id: snapshot.snapshotId },
-      data: { snapshot, ...(businessFlowInputs ? { businessFlowInputs } : {}) },
+      data: {
+        snapshot,
+        ...(businessFlowInputs ? { businessFlowInputs } : {}),
+        ...(capabilityInputs ? { capabilityInputs } : {}),
+      },
       referenceContext: {
         availableEntities: ordered(entities),
         availableSupports: ordered(supports),
@@ -279,7 +399,9 @@ export function buildCapturedSemanticTestRequest(
   } catch (error) {
     const value = errorField(error, 'code');
     let code: Code =
-      error instanceof SemanticTestInvocationError ? error.code : 'MODEL_REQUEST_INVALID';
+      error instanceof SemanticTestInvocationError
+        ? error.code
+        : (knowledgeStopCode(error) ?? 'MODEL_REQUEST_INVALID');
     if (value === 'CANCELLED') code = 'CANCELLED';
     if (value === 'DEADLINE' || value === 'DEADLINE_EXCEEDED') code = 'DEADLINE';
     if (
@@ -306,6 +428,7 @@ export async function runCapturedSemanticTestDouble(
   port: unknown,
   controlValue: RuntimeRequestControl,
   account: SemanticInvocationAccount,
+  capabilityInput?: unknown,
 ) {
   let phase: 'SETUP' | 'PREPARING' | 'INVOKING' | 'VALIDATING' = 'SETUP';
   try {
@@ -313,7 +436,13 @@ export async function runCapturedSemanticTestDouble(
       ...fields(controlValue, ['signal', 'deadlineEpochMs', 'maxItems', 'maxDepth']),
     }) as unknown as RuntimeRequestControl;
     phase = 'PREPARING';
-    const request = buildCapturedSemanticTestRequest(input, options, control, account);
+    const request = buildCapturedSemanticTestRequest(
+      input,
+      options,
+      control,
+      account,
+      capabilityInput,
+    );
     phase = 'INVOKING';
     const result = await runSemanticTestDouble(request, port, control, account);
     phase = 'VALIDATING';
@@ -333,6 +462,8 @@ export async function runCapturedSemanticTestDouble(
       ...snapshot.repositories.map((capture) => capture.coverage),
       ...snapshot.documents.map((capture) => capture.coverage),
       ...(snapshot.workspaceCapture ? [snapshot.workspaceCapture.coverage] : []),
+      ...(request.authorizedContext.data.capabilityInputs?.components.map((row) => row.coverage) ??
+        []),
     ];
     for (const coverage of coverages) {
       checkpoint();
@@ -414,6 +545,115 @@ export async function runCapturedSemanticTestDouble(
       unknown ? 'UNKNOWN' : 'SETTLED',
       phase === 'VALIDATING' ? 'RECORDED' : 'NOT_ATTEMPTED',
     );
+  }
+}
+
+/** Owned Store composition only. The synchronous query must be fixed to an owned
+ * test database; no response value grants production read or generation rights. */
+export async function runOwnedCapabilityTestDouble(
+  input: unknown,
+  options: unknown,
+  readPublished: (
+    refs: readonly { itemId: string; revisionId: string }[],
+    control: RuntimeRequestControl,
+  ) => unknown,
+  port: unknown,
+  controlValue: RuntimeRequestControl,
+  account: SemanticInvocationAccount,
+) {
+  let delegated = false;
+  try {
+    const control = Object.freeze({
+      ...fields(controlValue, ['signal', 'deadlineEpochMs', 'maxItems', 'maxDepth']),
+    }) as unknown as RuntimeRequestControl;
+    const raw = fields(options, [
+      'selectedComponents',
+      'promptRef',
+      'modelPolicyRef',
+      'invocationBudget',
+    ]);
+    account.own(options);
+    const fixed = JSON.parse(canonicalCompilationJson(raw, control));
+    delegated = true;
+    // Own and validate all input before calling even a trusted read callback.
+    const base = buildCapturedSemanticTestRequest(
+      input,
+      {
+        taskKind: 'COMPONENT_SUMMARY',
+        promptRef: fixed.promptRef,
+        modelPolicyRef: fixed.modelPolicyRef,
+        invocationBudget: fixed.invocationBudget,
+      },
+      control,
+      account,
+    );
+    delegated = false;
+    const snapshot = base.authorizedContext.data.snapshot;
+    const selection = parseOwnedWikiRequest(
+      {
+        workspaceId: snapshot.workspaceId,
+        repositoryIds: snapshot.selection.repositoryIds,
+        selectedPublishedRevisionRefs: fixed.selectedComponents,
+        customizationPolicy: 'LOCKED',
+        allowPartial: false,
+      },
+      control,
+    );
+    if (
+      !selection.selectedPublishedRevisionRefs.length ||
+      typeof readPublished !== 'function' ||
+      types.isProxy(readPublished) ||
+      types.isAsyncFunction(readPublished)
+    )
+      fail('CAPABILITY_UNAVAILABLE');
+    account.checkpoint();
+    const received = readPublished(selection.selectedPublishedRevisionRefs, control);
+    if (types.isPromise(received)) {
+      void Promise.prototype.then.call(received, undefined, () => undefined);
+      throw new SemanticTestInvocationError('CAPABILITY_UNAVAILABLE', 'UNKNOWN');
+    }
+    account.checkpoint();
+    const result = fields(received, ['knowledge', 'sourceInputs']);
+    delegated = true;
+    return await runCapturedSemanticTestDouble(
+      snapshot,
+      {
+        taskKind: 'CAPABILITY_SYNTHESIS',
+        promptRef: fixed.promptRef,
+        modelPolicyRef: fixed.modelPolicyRef,
+        invocationBudget: fixed.invocationBudget,
+      },
+      port,
+      control,
+      account,
+      {
+        selectedComponents: selection.selectedPublishedRevisionRefs,
+        knowledge: result.knowledge,
+        sourceInputs: result.sourceInputs,
+      },
+    );
+  } catch (error) {
+    if (delegated) throw error;
+    let unknown = errorField(error, 'cleanupState') === 'UNKNOWN';
+    let code: Code =
+      error instanceof SemanticTestInvocationError
+        ? error.code
+        : (knowledgeStopCode(error) ?? 'CAPABILITY_UNAVAILABLE');
+    const value = errorField(error, 'code');
+    if (value === 'CANCELLED') code = 'CANCELLED';
+    if (value === 'DEADLINE' || value === 'DEADLINE_EXCEEDED') code = 'DEADLINE';
+    if (
+      ['BUDGET_EXCEEDED', 'HISTORY_LIMIT_EXCEEDED', 'STAGE_LIMIT_EXCEEDED'].includes(
+        value as string,
+      )
+    )
+      code = 'BUDGET_EXCEEDED';
+    try {
+      account.invalidate();
+    } catch {
+      unknown = true;
+    }
+    throw new SemanticTestInvocationError(code, unknown ? 'UNKNOWN' : 'SETTLED');
   }
 }
 

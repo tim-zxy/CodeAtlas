@@ -1,3 +1,13 @@
+## P1-11 owned Component input component evidence - 2026-11-11
+
+Approved same-snapshot/version/digest published Component composition reaches the
+existing Capability TEST_DOUBLE via genuine self-owned Store records. Fresh84/84
+related tests,Storage/Application/Runtime builds,architecture17 and independent
+review pass. [Reproduction and limits](../superpowers/reviews/2026-11-11-owned-capability-input.md).
+No actual model/quality, production query/publication, user data, Native/actual22,
+profile or phase gate follows. Phase1 remains4/21,A6 NOT_QUALIFIED,E02 PROPOSED/uninstalled.
+Frozen cloud79da401 evidence cannot be transferred to this new development source.
+
 ## Approved independent R11 actual22 coordinator - 2026-11-10
 
 User explicitly approved [this independent deny-only entry](../superpowers/specs/2026-11-10-r11-actual-coordinator.md) for implementation and self-owned substitutes. Frozen script/reader/candidate identities and successful measurement/validation remain unchanged. New executor/request/tool seals do not grant real execution, publication, numerical/production authority or CI switch. Offline50 tests/architecture17 and independent review pass; actual22 and every phase/quality gate remain outstanding. Original failed trees/evidence stay protected.

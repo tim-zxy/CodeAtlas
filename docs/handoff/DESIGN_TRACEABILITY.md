@@ -1,3 +1,14 @@
+## P1-11 approved owned published Component binding - 2026-11-11
+
+Knowledge-consumption section4 + ADR-007 -> private exact Store source-digest
+projection and runOwnedCapabilityTestDouble -> registered owned-capability-input
+regressions. Same snapshot/version/digest, original support values, selected opaque
+IDs and inherited coverage are mandatory; ordinary facts-only/production paths
+remain refused. Fresh84/84,three builds,architecture17 and independent review with
+fixed control-category regression: [review](../superpowers/reviews/2026-11-11-owned-capability-input.md).
+This is TEST_DOUBLE input composition, not real quality or P1-11/Phase1 acceptance.
+Frozen79da401 cloud candidate is not rebound to the new development source.
+
 ## Owned BusinessFlow structural input to TEST_DOUBLE - 2026-11-10
 
 Private captured semantic preparation now admits BUSINESS_FLOW_SYNTHESIS only for

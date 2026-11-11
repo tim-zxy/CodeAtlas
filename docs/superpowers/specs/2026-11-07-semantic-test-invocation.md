@@ -123,13 +123,15 @@ output, overstated status, missing limitations, unsupported input and nested
 unverified references. Application build,66 related tests (26 semantic/40 capture
 contract) and architecture17 passed. No real model, user data, database or R9.
 
-Capability synthesis remains refused: current Knowledge IR/identity fixtures
+Legacy facts-only Capability synthesis remains refused: current Knowledge IR/identity fixtures
 describe Component references but do not define how a pre-identity structural
 candidate becomes that stable COMPONENT ScopedRef/revision. The current capture
 value registry does not contain Knowledge/Component records. Reusing fixture
 allowlists or candidate IDs would invent a binding. A precise draft/reference
 binding or a validated reader of existing published knowledge is still required;
-this batch does not choose one or change identity/publication contracts.
+that historical batch did not choose one or change identity/publication contracts.
+The approved owned published-Component refinement below supplies a separate
+private path; pre-identity drafts are still not stable Component references.
 
 
 ## Owned BusinessFlow structural inputs (2026-11-10)
@@ -149,7 +151,7 @@ CAPABILITY_UNAVAILABLE; malformed snapshots/digests retain existing input errors
 Never infer service ownership from shared repository, Contract.serviceRef, names,
 model suggestions or candidate IDs. The former facts-only BusinessFlow refusal is
 replaced only for this explicit private structural-input path; legacy facts-only
-snapshots still refuse. Capability synthesis remains unavailable.
+snapshots still refuse. Facts-only Capability synthesis remains unavailable.
 
 Keep the full original snapshot/reference context and hash the complete resulting
 context using the existing inputDigest algorithm. Same account, byte/work budgets,
@@ -165,3 +167,50 @@ publication NOT_ATTEMPTED. No real model or production consumer is introduced.
 Tests use independent literal owned structure and expected scoped paths, not user
 data or a claimed production Runtime activation. Rollback disables this private
 BusinessFlow branch; no database, public API or persisted state changes.
+
+## Approved owned published-Component inputs (2026-11-11)
+
+User approved explicitly selected, same-snapshot published Components for local
+Capability TEST_DOUBLE development. No new identity, public schema, capture value
+type, migration, production read/model/scan/publication authority follows.
+
+Private runOwnedCapabilityTestDouble(snapshot,options,readPublished,model,control,
+account) accepts exactly selectedComponents,promptRef,modelPolicyRef,invocationBudget.
+Selection is nonempty unique {itemId,revisionId}, sorted by the existing exact
+published selection parser. Snapshot/options/control are owned before the trusted
+synchronous read callback. Async functions refuse without invocation; returned
+Promises invalidate with UNKNOWN and are not adopted as read completion.
+
+The callback uses owned OfflinePublicationStore.readPublishedCapabilityInputs.
+This reuses the original strict read transaction and guards, adding only
+SNAPSHOT_INPUT_DIGEST to its explicit test permission manifest and projecting the
+original immutable attempt's request.snapshot.inputDigest. Result is {knowledge,
+sourceInputs:[{itemId,revisionId,capturedInputDigest}]}. Original
+readPublishedKnowledge response and permission field list stay byte-compatible.
+No snapshot/Claim body is read by the added projection. This metadata is integrity
+binding under the owned Store contract, not production provenance or permission.
+
+Reuse published-selection validation for scope, exact membership, envelopes,
+publication/attempt/revision lineage and reference context. Require COMPONENT,
+current exact head, equal snapshotId/revisionSetId AND original captured input
+digest. Revalidate every consumed revision reference and support against the full
+original snapshot's allowlist/value closure before adding any Component reference.
+Metadata alone is insufficient; links to uncaptured Components, pre-identity
+drafts or unavailable support values refuse. Only these selected opaque published
+IDs/revisions extend the semantic allowlist; no recursive knowledge expansion.
+
+Private data.capabilityInputs={schemaVersion:1,capturedInputDigest,selectionDigest,
+components} retains validated published envelopes, coverage, provenance and
+warnings. Include it and the unchanged snapshot in inputDigest, using the existing
+canonical context recipe. The original seven request fields and candidate schema
+stay unchanged. This derivation's digest is not a replacement persisted snapshot
+digest or permission to publish under that snapshot.
+
+Use the original caller account/control through both preparation passes, read,
+generation and output checks. No retry or fresh allowance. Weakest input coverage
+now also includes every selected Component's coverage; preserve all limitations
+and unverified refs. No candidate can upgrade it or invent a Component/cyclic
+reference. Results remain TEST_DOUBLE/NOT_EVALUABLE/NOT_ESTABLISHED and publication
+NOT_ATTEMPTED. Missing/conflicting data refuses before generation, and uncertain
+read/cleanup stays UNKNOWN. Disable the private branch for rollback; installed
+Runtime, user databases and frozen qualification candidates are unchanged.
