@@ -1,3 +1,12 @@
+## P1-19 private Workspace initialization leaf - 2026-11-12
+
+RUNTIME_CONFIGURATION initialization + W001/W002 + existing001..008 manifest
+-> private Storage exclusive new-DB initializer -> real reopen/rollback/lost-ack/
+cleanup and existing migration/session regressions. Eleven new mandatory cases;
+final55/55, Storage build, architecture17 and independent review pass. No new
+canonical schema, public export, CLI layout/defaults, user migration or indexing.
+[Scope/evidence/remaining init packet](../superpowers/reviews/2026-11-12-workspace-initialization.md).
+
 ## P1-11 owned chat-JSON request fixture - 2026-11-12
 
 ADR-008/knowledge-consumption4 -> Runtime explicit test binding/request encoder

@@ -1,3 +1,22 @@
+## P1-19 private new Workspace metadata initializer - 2026-11-12
+
+Implemented an explicit-locator/ID new-DB Storage leaf: exclusive creation,
+existing Workspace001..008 migrations and atomic W001/W002 registration. Known
+metadata COMMIT survives cleanup failure; lost acknowledgement remains UNKNOWN,
+with no adoption/rewrite/retry. Canonical identity and explicit control checks
+remain separate from access authority. No public export, DDL/default/layout,
+user DB/config, indexing/Native/model or permission change.
+
+Storage build,55/55 concentrated tests (0fail/cancel/skip/TODO,4694.578ms),
+architecture17, scoped formatting and independent no-P1/P2 review pass.
+[Scope/reproduction/limitations](../superpowers/reviews/2026-11-12-workspace-initialization.md).
+Raw evidence .superpowers/sdd/2026-11-12-workspace-initialization/targeted-tests.log.
+Existing27 unrelated entries retained. CI218 exactdb71605 is terminal TS/Rust
+PASS, Native oldR8 catalog FAIL, actual22 SKIPPED; it does not qualify this change.
+Full CLI init still needs layout/config/default and multi-file recovery packet;
+P1-19/Phase1 not closed. Phase1 remains4/21,A6 NOT_QUALIFIED,E02 PROPOSED/uninstalled.
+Public trust schedule and actual22 untouched.
+
 ## P1-11 owned JSON request/response transport slice - 2026-11-12
 
 Existing private response port now has a request encoder and fake HTTP-shaped
