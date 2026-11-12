@@ -61,3 +61,5 @@ export {
   type WorkspaceInitRequest,
   type WorkspaceInitResult,
 } from './workspace-initialization.js';
+
+export { planAgentSetup } from './agent-setup-plan.js';

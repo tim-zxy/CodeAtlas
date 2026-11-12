@@ -22,6 +22,9 @@ importers:
       '@codeatlas/runtime':
         specifier: workspace:*
         version: link:../../packages/runtime
+      smol-toml:
+        specifier: 1.8.0
+        version: 1.8.0
   apps/daemon: {}
   apps/mcp:
     dependencies:

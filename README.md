@@ -60,3 +60,13 @@ with no overwrite, cleanup or automatic recovery. Active SQLite journals must be
 settled by their existing owner before readonly reentry; init never checkpoints
 them. Use init --help for arguments and the separate explicit index command for
 indexing. This is not full installed-platform or Phase1 acceptance.
+
+## Codex configuration preview
+
+codeatlas setup --dry-run --max-request-bytes <N> --input-timeout-ms <N> reads only
+explicit stdin JSON, never a user configuration path. Supply client (CODEX),
+configToml (string or null), nodeExecutable, mcpEntryPath, workspaceRoot,
+maxConfigBytes and maxPlanBytes, then EOF. All paths are unexecuted preview values.
+The JSON result contains a disabled snippet and conflict/diagnostic status. It
+never applies config, installs, starts MCP or grants permission; exit0 only means
+the preview was written. See setup --help and apps/cli/THIRD_PARTY_NOTICES.md.

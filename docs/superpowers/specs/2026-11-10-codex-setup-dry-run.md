@@ -1,3 +1,21 @@
+## Approved CLI preview extension - 2026-11-12
+
+User approved a Codex CLI preview with explicit inputs only and promotion of the
+already locked smol-toml1.8.0 to CLI runtime dependency, same version/SRI and no new
+transitive packages. This supersedes only the historical private-only/no-CLI/
+no-lock-change restriction below. Apply, install, real user config discovery/read/
+write, MCP launch and production rights remain closed. The pure planner is reused.
+
+CLI: codeatlas setup --dry-run --max-request-bytes <N> --input-timeout-ms <N>.
+Bounded strict UTF8 JSON comes only from stdin: exactly client, configToml(string
+or null), nodeExecutable, mcpEntryPath, workspaceRoot, maxConfigBytes,maxPlanBytes.
+No config path or environment/home lookup. Convert the explicit TOML string to
+owned bytes; generated plans remain enabled=false/applySupported=false and launch
+UNAVAILABLE. Invalid arguments/input/oversize/timeout/output fail without payload
+or parser-error echo; preview status is data, not permission. The input timer is
+cooperative and does not preempt synchronous parser CPU; byte ceilings remain.
+All actual validation uses synthetic request bytes/self-owned test directories.
+
 # Codex setup dry-run planning
 
 Authorized P1-19 first target: Codex; private planAgentSetup(request,ports) only. No public CLI/schema changes, real config discovery/read/write, install, server launch, network or production grants. Existing P1-19 dry-run/conflict/snippet rules and module direction remain. Other clients refuse explicitly and can add separate adapters later.

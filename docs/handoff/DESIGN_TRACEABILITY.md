@@ -1,3 +1,12 @@
+## P1-19 approved Codex CLI preview - 2026-11-12
+
+User-approved preview/parser adoption -> bounded explicit stdin CLI -> original
+planAgentSetup with actual locked smol-toml parser -> disabled snippet/diagnostics.
+Seven new mandatory tests + existing planner/init/doctor/guards:48/48, two builds,
+architecture17 and code review. Lock package/SRI/snapshot closure unchanged;
+only approved CLI importer/dependency expectation added. [Evidence and limits](../superpowers/reviews/2026-11-12-codex-cli-preview.md).
+No apply/install/real-user-config or production launch authority.
+
 ## P1-19 approved init v1 - 2026-11-12
 
 User-approved .ekp/config/database/completion/reentry contract -> Runtime explicit

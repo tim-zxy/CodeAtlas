@@ -1,3 +1,20 @@
+## P1-19 Codex CLI preview - 2026-11-12
+
+Approved explicit stdin JSON now reaches the existing disabled Codex planner.
+No config paths/discovery/read/write, apply/install/MCP launch or access grant.
+Input bytes/time and output bytes are explicit; errors do not echo input/parser
+payloads. CLI runtime smol-toml1.8.0 reuses the existing exact lock/SRI, no new
+package/version/transitives or local install; BSD-3 attribution retained.
+
+Runtime/CLI builds,48/48 concentrated tests (0fail/cancel/skip/TODO,20840.1172ms),
+architecture17 and readonly code review pass. Full lock AST comparison confirms
+only the CLI importer addition. [Scope/reproduction/dependency limits](../superpowers/reviews/2026-11-12-codex-cli-preview.md).
+Raw evidence .superpowers/sdd/2026-11-12-codex-cli-preview/targeted-tests.log.
+CI221 exactc75b330 is terminal TS/Rust PASS, Native oldR8 catalog FAIL, actual22
+SKIPPED; not a result for new source. Original27 changes preserved. Apply/production
+MCP and installed-platform/E15 remain open; Phase1 stays4/21,A6 NOT_QUALIFIED,
+E02 PROPOSED/uninstalled. Public trust schedule/R8/actual22 untouched.
+
 ## P1-19 explicit init v1 owned integration - 2026-11-12
 
 Approved .ekp layout/config/DB/completion contract is implemented with a real CLI

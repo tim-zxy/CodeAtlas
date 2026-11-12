@@ -60,7 +60,7 @@ expectedPackageDependencies.application = {
   '@codeatlas/source': 'workspace:*',
 };
 const expectedAppDependencies = {
-  cli: { '@codeatlas/runtime': 'workspace:*' },
+  cli: { '@codeatlas/runtime': 'workspace:*', 'smol-toml': '1.8.0' },
   daemon: {},
   mcp: {
     '@codeatlas/runtime': 'workspace:*',

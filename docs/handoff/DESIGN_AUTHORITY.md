@@ -1,3 +1,10 @@
+## Approved Codex CLI preview - 2026-11-12
+
+User approved the [setup preview extension](../superpowers/specs/2026-11-10-codex-setup-dry-run.md):
+explicit stdin input, no user-config path/discovery/read/write; existing disabled
+planner and locked smol-toml1.8.0 become CLI-consumable. No apply/install/MCP launch,
+new dependency version, production rights or Public validation trust amendment.
+
 ## Approved explicit workspace init v1 - 2026-11-12
 
 User approved the [minimal P1-19 init contract](../superpowers/specs/2026-11-12-workspace-init-v1.md):

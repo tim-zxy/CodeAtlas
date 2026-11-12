@@ -1571,3 +1571,11 @@ stops and CLI output failure. [117-case evidence](../superpowers/reviews/2026-11
 meets this slice only; installed-platform/package, full E15/p1-install-v1 and
 Phase1 gates remain open. No original gate/threshold/count or public validation
 trust schedule changes. Phase1 remains4/21 and A6 NOT_QUALIFIED.
+
+## P1-19 Codex preview bounded evidence (2026-11-12)
+
+Explicit stdin preview requires no user-config discovery/read/write or launch,
+strict bounds, disabled flags, conflict/error no-echo and output-failure refusal.
+[48-case evidence](../superpowers/reviews/2026-11-12-codex-cli-preview.md) covers
+this additive CLI slice and existing guards; it does not close apply/install,
+production MCP, full E15 or Phase1. Original gates/counters remain unchanged.
