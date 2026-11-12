@@ -225,3 +225,12 @@ canonical contract changed. Duplicate raw keys refuse at both JSON layers;
 parsed output remains available for the original budget check after usage
 settlement. Unknown usage remains UNKNOWN. This is not a complete compatible
 transport or real-model evidence. [Scope and reproducible review](../reviews/2026-11-12-compatible-json-response.md).
+## Owned chat-JSON request coding (2026-11-12)
+
+Private request factory now composes explicit owned prompt/task/schema and policy
+bindings with the response-side TEST_DOUBLE port. Fixed model, JSON mode,
+nonstreaming body and explicit max_tokens; all context stays untrusted user data.
+Byte/binding mismatch and non200 status refuse without retry; fake transport is
+joined on cancellation. No actual HTTP/endpoint/credential/prompt registry,
+production grant, public request/result shape or dependency changed.
+[Exact scope, Native mismatch evidence and tests](../reviews/2026-11-12-compatible-json-request.md).

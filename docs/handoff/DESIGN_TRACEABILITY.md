@@ -1,3 +1,11 @@
+## P1-11 owned chat-JSON request fixture - 2026-11-12
+
+ADR-008/knowledge-consumption4 -> Runtime explicit test binding/request encoder
+-> fake status/body callback -> existing response port -> original Application
+accounting/candidate guards. Six added mandatory cases, concentrated79/79,
+Runtime build/architecture17 and independent review pass. No actual endpoint,
+prompt registry, production permission, canonical data or numeric profile change.
+[Scope/CI baseline evidence](../superpowers/reviews/2026-11-12-compatible-json-request.md).
 ## P1-11 response-side compatible JSON component - 2026-11-12
 
 Knowledge-and-consumption section4 / P1-11 -> private Runtime compatible JSON

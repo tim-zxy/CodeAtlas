@@ -1,3 +1,23 @@
+## P1-11 owned JSON request/response transport slice - 2026-11-12
+
+Existing private response port now has a request encoder and fake HTTP-shaped
+transport composition: explicit owned prompt/policy/task/schema bindings, fixed
+model/JSON mode/output-token cap, unchanged full untrusted context and explicit
+UTF8 request bounds. Mismatch rejects before transport; redirect/server failures
+never retry; cancellation joins settlement and retains known usage. No real HTTP,
+model, credential, production registry/grant, dependency or public DTO changed.
+
+Runtime build, concentrated79/79 (0fail/cancel/skip/TODO,5108.0087ms), architecture17
+and independent narrow review pass. [Scope/reproduction and R8 evidence](../superpowers/reviews/2026-11-12-compatible-json-request.md).
+Raw evidence .superpowers/sdd/2026-11-12-compatible-json-request/targeted-tests.log.
+CI217 exacted8efd4 is terminal TS/Rust PASS, Native oldR8 script preflight FAIL,
+actual22 SKIPPED; new source CI is tracked separately. R8 artifact confirms
+189expected/209current scripts,20added/15changed; original gate remains intact.
+
+P1-19 init still lacks exact creation/default packet;001..008 manifest is not
+permission to install proposed009/010 or choose budgets. No user DB/config,
+Native/actual22 or Public trust-schedule action. Phase1 stays4/21,A6 NOT_QUALIFIED,
+E02 PROPOSED/uninstalled. Existing27 unrelated entries untouched.
 ## P1-11 private compatible JSON response slice - 2026-11-12
 
 Implemented a bounded response-side adapter from an owned fake exchange into the

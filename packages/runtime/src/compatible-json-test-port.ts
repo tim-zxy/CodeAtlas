@@ -127,3 +127,95 @@ export function createCompatibleJsonTestPort(options: Options) {
     },
   });
 }
+
+type RequestOptions = Omit<Options, 'exchange'> & {
+  maxRequestBytes: number;
+  prompt: { promptRef: string; taskKind: string; outputSchemaRef: string; instructions: string };
+  policy: { modelPolicyRef: string; maxOutputTokens: number };
+  transport: (body: string, control: Control) => Promise<{ status: number; body: string }>;
+};
+/** Owned chat-JSON-v1 wire fixture only. Explicit bindings identify test bytes,
+ * not a production prompt registry, model policy or permission to release context. */
+export function createCompatibleJsonRequestTestPort(options: RequestOptions) {
+  const fixed = fields(options, [
+    'identity',
+    'maxResponseBytes',
+    'maxRequestBytes',
+    'prompt',
+    'policy',
+    'transport',
+  ]);
+  const prompt = fields(fixed.prompt, ['promptRef', 'taskKind', 'outputSchemaRef', 'instructions']);
+  const policy = fields(fixed.policy, ['modelPolicyRef', 'maxOutputTokens']);
+  assert(
+    [...Object.values(prompt), policy.modelPolicyRef].every(
+      (value) => typeof value === 'string' && value.length > 0 && value.trim() === value,
+    ),
+    'INVALID_COMPATIBLE_REQUEST_BINDING',
+  );
+  for (const limit of [fixed.maxRequestBytes, policy.maxOutputTokens])
+    assert(
+      Number.isSafeInteger(limit) && (limit as number) > 0,
+      'INVALID_COMPATIBLE_REQUEST_LIMIT',
+    );
+  assert(
+    typeof fixed.transport === 'function' && !types.isProxy(fixed.transport),
+    'INVALID_COMPATIBLE_TEST_TRANSPORT',
+  );
+  const transport = fixed.transport as RequestOptions['transport'];
+  const port = createCompatibleJsonTestPort({
+    identity: fixed.identity as Identity,
+    maxResponseBytes: fixed.maxResponseBytes as number,
+    async exchange(request, control) {
+      const input = fields(request, [
+        'taskKind',
+        'promptRef',
+        'modelPolicyRef',
+        'outputSchemaRef',
+        'authorizedContext',
+        'inputDigest',
+        'invocationBudget',
+      ]);
+      for (const key of ['taskKind', 'promptRef', 'outputSchemaRef'])
+        assert.equal(input[key], prompt[key], 'COMPATIBLE_PROMPT_BINDING_MISMATCH');
+      assert.equal(
+        input.modelPolicyRef,
+        policy.modelPolicyRef,
+        'COMPATIBLE_POLICY_BINDING_MISMATCH',
+      );
+      const budget = fields(input.invocationBudget, ['maxInputBytes', 'maxOutputBytes']);
+      assert(
+        Number.isSafeInteger(budget.maxInputBytes) && (budget.maxInputBytes as number) > 0,
+        'INVALID_COMPATIBLE_REQUEST_LIMIT',
+      );
+      const context = JSON.parse(canonicalCompilationJson(input.authorizedContext, control));
+      assert.equal(context.instructionRef, prompt.promptRef, 'COMPATIBLE_PROMPT_BINDING_MISMATCH');
+      assert.equal(context.dataLabel, 'UNTRUSTED_DATA', 'INVALID_COMPATIBLE_CONTEXT');
+      const body = canonicalCompilationJson(
+        {
+          model: port.identity.modelId,
+          stream: false,
+          max_tokens: policy.maxOutputTokens,
+          response_format: { type: 'json_object' },
+          messages: [
+            { role: 'system', content: prompt.instructions },
+            { role: 'user', content: canonicalCompilationJson(context, control) },
+          ],
+        },
+        control,
+      );
+      const maximum = Math.min(fixed.maxRequestBytes as number, budget.maxInputBytes as number);
+      assert(
+        body.length <= maximum && Buffer.byteLength(body, 'utf8') <= maximum,
+        'COMPATIBLE_REQUEST_TOO_LARGE',
+      );
+      const pending: unknown = transport(body, control);
+      assert(types.isPromise(pending), 'INVALID_COMPATIBLE_TEST_TRANSPORT');
+      const response = fields(await pending, ['status', 'body']);
+      assert.equal(response.status, 200, 'COMPATIBLE_STATUS_REFUSED');
+      assert.equal(typeof response.body, 'string', 'INVALID_COMPATIBLE_RESPONSE');
+      return response.body as string;
+    },
+  });
+  return port;
+}
