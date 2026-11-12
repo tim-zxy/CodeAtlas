@@ -214,3 +214,14 @@ reference. Results remain TEST_DOUBLE/NOT_EVALUABLE/NOT_ESTABLISHED and publicat
 NOT_ATTEMPTED. Missing/conflicting data refuses before generation, and uncertain
 read/cleanup stays UNKNOWN. Disable the private branch for rollback; installed
 Runtime, user databases and frozen qualification candidates are unchanged.
+
+## Private compatible JSON response adapter (2026-11-12)
+
+P1-11 now has a Runtime response-side TEST_DOUBLE adapter using a trusted owned
+exchange callback, explicit identity and response byte ceiling. It reuses the
+existing seven request/six result fields and Application usage/candidate checks.
+No HTTP client/encoder, endpoint, credential, production export, dependency or
+canonical contract changed. Duplicate raw keys refuse at both JSON layers;
+parsed output remains available for the original budget check after usage
+settlement. Unknown usage remains UNKNOWN. This is not a complete compatible
+transport or real-model evidence. [Scope and reproducible review](../reviews/2026-11-12-compatible-json-response.md).

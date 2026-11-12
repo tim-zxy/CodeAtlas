@@ -1,3 +1,12 @@
+## P1-11 response-side compatible JSON component - 2026-11-12
+
+Knowledge-and-consumption section4 / P1-11 -> private Runtime compatible JSON
+response port -> original Application TEST_DOUBLE usage/candidate validation.
+Ten new mandatory tests reuse unchanged owned identity literals; final73/73,
+Runtime build, architecture17 and independent review pass. Duplicate-key and
+budget-classification review regressions retained. No new canonical/public data
+contract, dependency, HTTP/model/credential, production permission or A6 closure.
+[Exact scope and evidence](../superpowers/reviews/2026-11-12-compatible-json-response.md).
 ## P1-11 approved owned published Component binding - 2026-11-11
 
 Knowledge-consumption section4 + ADR-007 -> private exact Store source-digest

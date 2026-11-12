@@ -1,3 +1,25 @@
+## P1-11 private compatible JSON response slice - 2026-11-12
+
+Implemented a bounded response-side adapter from an owned fake exchange into the
+existing Application TEST_DOUBLE port. Fixed explicit identity/byte ceiling,
+one JSON assistant choice, duplicate raw-key rejection and original candidate
+checks; known usage survives invalid/incomplete/cancelled output and budget
+refusal. No HTTP client/request encoder, endpoint/credential, new dependency,
+public export, model or production/data permission was added.
+
+Runtime build, concentrated73/73 tests (0fail/cancel/skip/TODO,4828.9469ms),
+architecture17 and independent narrow review pass. Two review P2 defects were
+reproduced RED and fixed: duplicate JSON keys and swallowed output budget errors.
+[Scope, failures and reproduction](../superpowers/reviews/2026-11-12-compatible-json-response.md).
+Evidence .superpowers/sdd/2026-11-12-compatible-json-response/targeted-tests.log.
+New10 tests are registered in the mandatory root suite. No full verify or hosted
+CI success is inferred; source synchronization is reported separately.
+
+This is a response component, not full P1-11/HTTP adapter or real-model quality.
+P1-19 init remains blocked on exact creation schema/layout/defaults. No user data,
+Native/actual22, Public trust-schedule change, installed-package update or gate
+change. Frozen public79da401 stays separate from new development. Phase1 remains
+4/21; A6 NOT_QUALIFIED; E02 PROPOSED/uninstalled. Existing27 changes untouched.
 ## Owned published Component to Capability TEST_DOUBLE - 2026-11-11
 
 Approved private input slice is implemented: actual owned Component publication
