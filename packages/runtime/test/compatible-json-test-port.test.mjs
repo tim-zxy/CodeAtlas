@@ -414,3 +414,224 @@ test('cancellation joins pending fake HTTP then records usage before refusing ou
   assert.equal(calls, 1);
   assert.equal(f.usage.output, 5);
 });
+
+// Original P1-11 local mock HTTP obligation; all server inputs are owned synthetic data.
+const httpApi = await import('../dist/compatible-loopback-test-transport.js').catch((e) => {
+  if (e.code === 'ERR_MODULE_NOT_FOUND') return {};
+  throw e;
+});
+const { createServer } = await import('node:http');
+async function loopback(t, handler) {
+  const server = createServer(handler),
+    sockets = new Set();
+  server.on('connection', (socket) => {
+    sockets.add(socket);
+    socket.on('close', () => sockets.delete(socket));
+  });
+  await new Promise((resolve, reject) => {
+    server.once('error', reject);
+    server.listen(0, '127.0.0.1', resolve);
+  });
+  t.after(async () => {
+    for (const socket of sockets) socket.destroy();
+    await new Promise((resolve) => server.close(resolve));
+  });
+  return {
+    endpoint: 'http://127.0.0.1:' + server.address().port + '/v1/chat/completions',
+    sockets,
+  };
+}
+function httpTransport(endpoint, changes = {}) {
+  assert.equal(typeof httpApi.createCompatibleLoopbackTestTransport, 'function');
+  return httpApi.createCompatibleLoopbackTestTransport({
+    endpoint,
+    maxRequestBytes: 100000,
+    maxResponseBytes: 100000,
+    ...changes,
+  });
+}
+test('local mock HTTP completes exact request to original candidate validation without credentials', async (t) => {
+  const f = fixture();
+  let calls = 0,
+    observed;
+  const server = await loopback(t, async (req, res) => {
+    calls++;
+    const parts = [];
+    for await (const chunk of req) parts.push(chunk);
+    observed = {
+      method: req.method,
+      url: req.url,
+      authorization: req.headers.authorization,
+      body: JSON.parse(Buffer.concat(parts).toString('utf8')),
+    };
+    res.setHeader('content-type', 'application/json');
+    res.end(JSON.stringify(f.wire));
+  });
+  const { port } = requestPort(f, httpTransport(server.endpoint));
+  const result = await runSemanticTestDouble(f.request, port, f.control, f.account);
+  assert.equal(calls, 1);
+  assert.equal(observed.method, 'POST');
+  assert.equal(observed.url, '/v1/chat/completions');
+  assert.equal(observed.authorization, undefined);
+  assert.equal(
+    observed.body.messages[1].content,
+    canonicalCompilationJson(f.request.authorizedContext, f.control),
+  );
+  assert.equal(result.evidenceKind, 'TEST_DOUBLE');
+  assert.equal(result.quality, 'NOT_EVALUABLE');
+  assert.equal(f.usage.output, 5);
+});
+test('loopback seam rejects external hosts, credentials, alternate paths and nonexplicit limits', () => {
+  for (const endpoint of [
+    'https://127.0.0.1:10/v1/chat/completions',
+    'http://localhost:10/v1/chat/completions',
+    'http://example.invalid/v1/chat/completions',
+    'http://a:b@127.0.0.1:10/v1/chat/completions',
+    'http://127.0.0.1:10/v1/chat/completions?x=y',
+    'http://127.0.0.1:10/other',
+  ])
+    assert.throws(() => httpTransport(endpoint));
+  assert.throws(() =>
+    httpTransport('http://127.0.0.1:10/v1/chat/completions', { maxRequestBytes: undefined }),
+  );
+});
+test('HTTP redirect and server errors never follow or retry or expose response text', async (t) => {
+  for (const status of [302, 503]) {
+    const f = fixture();
+    let calls = 0;
+    const server = await loopback(t, (req, res) => {
+      calls++;
+      res.statusCode = status;
+      res.setHeader('location', 'http://example.invalid/PRIVATE');
+      res.end('PRIVATE_RESPONSE');
+    });
+    const { port } = requestPort(f, httpTransport(server.endpoint));
+    await assert.rejects(
+      runSemanticTestDouble(f.request, port, f.control, f.account),
+      (e) => e.code === 'MODEL_GENERATION_FAILED' && !e.message.includes('PRIVATE'),
+    );
+    assert.equal(calls, 1);
+    assert.equal(f.usage.calls, 1);
+  }
+});
+test('streaming response byte overflow, malformed UTF8 and encoding refuse', async (t) => {
+  for (const mode of ['overflow', 'utf8', 'encoding']) {
+    const f = fixture();
+    let calls = 0;
+    const server = await loopback(t, (req, res) => {
+      calls++;
+      if (mode === 'encoding') res.setHeader('content-encoding', 'gzip');
+      res.end(
+        mode === 'utf8'
+          ? Buffer.from([0xc3, 0x28])
+          : mode === 'overflow'
+            ? 'x'.repeat(4096)
+            : JSON.stringify(f.wire),
+      );
+    });
+    const { port } = requestPort(
+      f,
+      httpTransport(server.endpoint, { maxResponseBytes: mode === 'overflow' ? 1024 : 100000 }),
+    );
+    await assert.rejects(
+      runSemanticTestDouble(f.request, port, f.control, f.account),
+      (e) => e.code === 'MODEL_GENERATION_FAILED' && e.usageSettlement === 'UNKNOWN',
+    );
+    assert.equal(calls, 1);
+  }
+});
+test('HTTP cancellation and deadline stop the client and do not retry', async (t) => {
+  for (const mode of ['cancel', 'deadline']) {
+    const f = fixture();
+    let received;
+    const entered = new Promise((resolve) => (received = resolve));
+    let calls = 0;
+    const server = await loopback(t, () => {
+      calls++;
+      received();
+    });
+    if (mode === 'deadline') f.control.deadlineEpochMs = Date.now() + 500;
+    const { port } = requestPort(f, httpTransport(server.endpoint));
+    const pending = runSemanticTestDouble(f.request, port, f.control, f.account);
+    pending.catch(() => {});
+    await entered;
+    if (mode === 'cancel') f.controller.abort();
+    await assert.rejects(pending, (e) => e.code === (mode === 'cancel' ? 'CANCELLED' : 'DEADLINE'));
+    assert.equal(calls, 1);
+    assert.equal(f.usage.calls, 1);
+  }
+});
+
+test('premature HTTP response closure refuses once with bounded error and unknown usage', async (t) => {
+  const f = fixture();
+  let calls = 0;
+  const server = await loopback(t, (req, res) => {
+    calls++;
+    res.writeHead(200, { 'content-length': 1000 });
+    res.write('PRIVATE_PARTIAL');
+    res.destroy();
+  });
+  const { port } = requestPort(f, httpTransport(server.endpoint));
+  await assert.rejects(
+    runSemanticTestDouble(f.request, port, f.control, f.account),
+    (e) =>
+      e.code === 'MODEL_GENERATION_FAILED' &&
+      e.usageSettlement === 'UNKNOWN' &&
+      !e.message.includes('PRIVATE'),
+  );
+  assert.equal(calls, 1);
+});
+test('loopback factory owns endpoint and limits and refuses options accessors without invocation', async (t) => {
+  const f = fixture();
+  let getter = false;
+  assert.throws(() =>
+    httpApi.createCompatibleLoopbackTestTransport({
+      get endpoint() {
+        getter = true;
+        return 'http://127.0.0.1:10/v1/chat/completions';
+      },
+      maxRequestBytes: 1,
+      maxResponseBytes: 1,
+    }),
+  );
+  assert.equal(getter, false);
+  const server = await loopback(t, (req, res) => res.end(JSON.stringify(f.wire)));
+  const options = { endpoint: server.endpoint, maxRequestBytes: 100000, maxResponseBytes: 100000 },
+    transport = httpApi.createCompatibleLoopbackTestTransport(options);
+  options.endpoint = 'http://example.invalid/PRIVATE';
+  options.maxResponseBytes = 1;
+  const { port } = requestPort(f, transport);
+  const result = await runSemanticTestDouble(f.request, port, f.control, f.account);
+  assert.equal(result.evidenceKind, 'TEST_DOUBLE');
+});
+
+test('mock HTTP uses intrinsic AbortSignal hooks without caller-overridden methods or getters', async (t) => {
+  const f = fixture();
+  let hooks = 0;
+  const signal = f.control.signal;
+  Object.defineProperties(signal, {
+    addEventListener: {
+      value: function () {
+        hooks++;
+        throw Error('OWNED_SIGNAL_ADD_MUST_NOT_RUN');
+      },
+    },
+    removeEventListener: {
+      value: function () {
+        hooks++;
+        throw Error('OWNED_SIGNAL_REMOVE_MUST_NOT_RUN');
+      },
+    },
+    aborted: {
+      get() {
+        hooks++;
+        throw Error('OWNED_SIGNAL_GETTER_MUST_NOT_RUN');
+      },
+    },
+  });
+  const server = await loopback(t, (req, res) => res.end(JSON.stringify(f.wire)));
+  const { port } = requestPort(f, httpTransport(server.endpoint));
+  const result = await runSemanticTestDouble(f.request, port, f.control, f.account);
+  assert.equal(result.evidenceKind, 'TEST_DOUBLE');
+  assert.equal(hooks, 0);
+});

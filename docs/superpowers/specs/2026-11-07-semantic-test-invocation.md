@@ -234,3 +234,13 @@ Byte/binding mismatch and non200 status refuse without retry; fake transport is
 joined on cancellation. No actual HTTP/endpoint/credential/prompt registry,
 production grant, public request/result shape or dependency changed.
 [Exact scope, Native mismatch evidence and tests](../reviews/2026-11-12-compatible-json-request.md).
+
+## Owned local mock HTTP composition (2026-11-12)
+
+Original P1-11 local mock HTTP obligation now composes a private literal IPv4
+loopback transport with the same request/response codecs and Application guards.
+Explicit endpoint/request/response limits, no credentials/redirect/retry/fallback;
+strict complete UTF8 and original cancellation/deadline with client closure join.
+This is only self-owned synthetic server evidence, not local-model identity,
+permission, production API or ACTUAL_MODEL quality. No canonical/public schema
+or dependency changed. [Review and reproduction](../reviews/2026-11-12-compatible-loopback.md).

@@ -1,3 +1,12 @@
+## P1-11 local mock HTTP adapter obligation - 2026-11-12
+
+ADR-008/knowledge-consumption4 + P1-11 Step4 -> private Node loopback transport
+-> existing request/response codecs -> original Application validator/account.
+Eight added mandatory cases, final87/87, Runtime build, architecture17, independent
+review and focused P2 re-review. Genuine signal override RED/fix retained. No
+new public DTO/dependency, real model or production grant; oldR8 gates unchanged.
+[Scope, tests and remaining limits](../superpowers/reviews/2026-11-12-compatible-loopback.md).
+
 ## P1-19 private Workspace initialization leaf - 2026-11-12
 
 RUNTIME_CONFIGURATION initialization + W001/W002 + existing001..008 manifest

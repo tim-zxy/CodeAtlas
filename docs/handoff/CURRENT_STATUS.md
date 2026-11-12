@@ -1,3 +1,21 @@
+## P1-11 local mock HTTP request-to-candidate slice - 2026-11-12
+
+Original P1-11 mock HTTP obligation now has a private Node transport composed
+with existing owned JSON request/response and Application candidate checks.
+Explicit literal IPv4 loopback/port/path, no credentials/DNS/proxy/redirect/retry;
+bounded strict UTF8 response, original deadline/cancel, joined client closure.
+Only owned synthetic server/data; no real model, production grant or new package.
+
+Runtime build,87/87 concentrated tests (0fail/cancel/skip/TODO,5310.6951ms),
+architecture17 and independent review/re-review pass. One real signal-hook P2
+was reproduced RED and fixed; throwing instance hooks are never invoked.
+[Exact scope/reproduction](../superpowers/reviews/2026-11-12-compatible-loopback.md).
+Raw evidence .superpowers/sdd/2026-11-12-compatible-loopback/reviewed-tests.log.
+
+Not full P1-11, P1-19 or Phase1 acceptance. Real model registry/permission/quality
+and full init layout/default/recovery remain separate. Existing27 entries retained;
+Native oldR8 catalog gate/Public owner schedule/actual22 remain untouched.
+
 ## P1-19 private new Workspace metadata initializer - 2026-11-12
 
 Implemented an explicit-locator/ID new-DB Storage leaf: exclusive creation,
