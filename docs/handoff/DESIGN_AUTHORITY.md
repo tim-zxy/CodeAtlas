@@ -1,3 +1,10 @@
+## Approved explicit workspace init v1 - 2026-11-12
+
+User approved the [minimal P1-19 init contract](../superpowers/specs/2026-11-12-workspace-init-v1.md):
+fresh .ekp/config and Workspace/Repository databases, completion marker last,
+readonly matching reentry, no overwrite/resume/delete on failure. Reuse explicit
+EffectiveConfig and existing W001..008/R001..013; no source scan, model, Native,
+user-workspace execution, Public validation trust change or actual22 authority.
 ## Approved owned Component / Capability binding - 2026-11-11
 
 User explicitly approved selected, same-snapshot published Component inputs for

@@ -54,3 +54,10 @@ export { inspectInstallCapabilities } from './install-capabilities.js';
 export { createOwnedReadLifecycle } from './owned-read-lifecycle.js';
 
 export { createOwnedDirectoryObserver } from './owned-directory-observer.js';
+
+export {
+  initializeWorkspace,
+  WorkspaceInitError,
+  type WorkspaceInitRequest,
+  type WorkspaceInitResult,
+} from './workspace-initialization.js';

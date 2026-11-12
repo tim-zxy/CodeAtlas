@@ -44,3 +44,19 @@ is not fresh execution admission. Existing `index status` remains unchanged.
 
 These diagnostic commands do not establish complete installation, protocol/platform
 compatibility or Phase 1 acceptance. No budget defaults are provided.
+
+## Explicit workspace initialization
+
+After build, use codeatlas init --root <workspace-root> --configuration <sources.json>
+--max-config-bytes <N> [--repository <repository-root> ...]. The JSON contains the
+existing ConfigurationSources shape: explicit defaults and maxInputBytes, with
+optional global/workspace/repository YAML strings. No budget or global path is
+guessed; validated resolved workspace configuration is saved as .ekp/config.yaml.
+
+Init only creates metadata/databases and a final completion record. It does not
+scan sources, index, call Git/Native/models or grant access. Complete matching
+workspaces return readonly; incomplete/conflicting state is preserved and refused,
+with no overwrite, cleanup or automatic recovery. Active SQLite journals must be
+settled by their existing owner before readonly reentry; init never checkpoints
+them. Use init --help for arguments and the separate explicit index command for
+indexing. This is not full installed-platform or Phase1 acceptance.

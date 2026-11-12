@@ -8,6 +8,7 @@ import { createBootstrapRuntimeBuilder, type KnowledgeRuntime } from '@codeatlas
 import { runCodeQueryCommand } from './code-query-command.js';
 import { runIndexCommandLine } from './index-command.js';
 import { runDoctorCommand } from './doctor.js';
+import { runInitCommand } from './init.js';
 
 export async function buildCliRuntime(workspaceRoot = process.cwd()): Promise<KnowledgeRuntime> {
   return createBootstrapRuntimeBuilder().build({
@@ -24,6 +25,7 @@ export async function runCli(args = process.argv.slice(2)): Promise<number> {
     return 0;
   }
 
+  if (args[0] === 'init') return runInitCommand(args);
   if (args[0] === 'doctor') return runDoctorCommand(args);
   if (args[0] === 'status') return runIndexCommandLine(['index', 'status', ...args.slice(1)]);
   return args[0] === 'index' ? runIndexCommandLine(args) : runCodeQueryCommand(args);

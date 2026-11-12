@@ -1560,3 +1560,14 @@ Real Runtime derivation precedes final Source verification and original synchron
 atomic Store application; failure refuses publication and preserves UNKNOWN recovery.
 Old V1/V5, public/production admission, physical values and acceptance gates remain.
 No real Git/Native/HOST, rights, baseline installation or Phase1 acceptance approval.
+
+## P1-19 init v1 bounded evidence (2026-11-12)
+
+Owned init acceptance requires real W8/R13 reopen with exact bindings, no index/
+source/model invocation, matching readonly reentry, conflict/incomplete refusal,
+preserved failed state and truthful marker/cleanup effects. New cases additionally
+prove clean WAL no-write, active journal refusal, late file replacement/control
+stops and CLI output failure. [117-case evidence](../superpowers/reviews/2026-11-12-workspace-init-v1.md)
+meets this slice only; installed-platform/package, full E15/p1-install-v1 and
+Phase1 gates remain open. No original gate/threshold/count or public validation
+trust schedule changes. Phase1 remains4/21 and A6 NOT_QUALIFIED.

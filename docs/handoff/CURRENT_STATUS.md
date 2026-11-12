@@ -1,3 +1,24 @@
+## P1-19 explicit init v1 owned integration - 2026-11-12
+
+Approved .ekp layout/config/DB/completion contract is implemented with a real CLI
+entry. Reuses EffectiveConfig and W001..008/R001..013; complete matching reentry
+is readonly, interrupted/conflicting state preserved/refused. No Source/Git/
+Native/model/index or implicit budgets. Closed WAL reads are immutable; active
+journals refuse before open. Descriptor-owned files and scope bindings are
+rechecked; known marker commit, UNKNOWN and cleanup facts remain separate.
+
+Storage/Runtime/CLI builds,117/117 concentrated tests (0fail/cancel/skip/TODO,
+20438.2636ms),architecture17, format/diff and independent review pass. Three real
+review defects reproduced RED/fixed; related final-close lineage/control fixes
+reviewed. [Scope, commands, risks and limits](../superpowers/reviews/2026-11-12-workspace-init-v1.md).
+Evidence .superpowers/sdd/2026-11-12-workspace-init-v1/reviewed-tests.log.
+Only owned temporary roots/SQLite/CLI were executed; no existing user workspace.
+
+CI220 exactad3839c is terminal TS/Rust PASS, Native oldR8 catalog FAIL, actual22
+SKIPPED; new source CI is separate. Original27 unrelated entries preserved.
+P1-19 full packaging/platform/E15, A6 and Phase1 are not accepted:4/21 remains,
+E02 PROPOSED/uninstalled. Public trust schedule/R8 pins/actual22 untouched.
+
 ## P1-11 local mock HTTP request-to-candidate slice - 2026-11-12
 
 Original P1-11 mock HTTP obligation now has a private Node transport composed

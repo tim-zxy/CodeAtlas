@@ -252,3 +252,16 @@ C3-A concrete plan is explicitly confirmed and implemented inline in the origina
 
 
 Final local32-file regression:422PASS/0FAIL/1explicitTODO (423 total;new capture suite100PASS);Storage TypeScript build and architecture17 pass;Fixture registry46/exact20Phase1,Syntax catalog0. The TODO is the existing C1 real-file-symlink EPERM gate,not an A failure or a waived Phase gate. Evidence:.superpowers/sdd/2026-10-23-phase1-code-context-capture/A4-final-schema-matching-regression.log;implementation-verification.json.
+
+## Approved explicit init v1 (2026-11-12)
+
+The [approved init contract](../../superpowers/specs/2026-11-12-workspace-init-v1.md)
+adds explicit codeatlas init with new .ekp/config.yaml, workspace.sqlite,
+repositories/<directoryKey>/index.sqlite and final init.json. Existing config
+version/precedence and W8/R13 stay. No numeric default, implicit global lookup,
+credential resolution, Source scan, Git, Native, index or model call. Complete
+matching reentry is readonly; foreign/incomplete/conflicting state is retained
+and refused, never automatically deleted/resumed. Init-only immutable readers
+require stable closed DB images; active journal files refuse before any SQLite
+open. This is not live writer reconciliation or a new production permission.
+[Owned implementation evidence](../../superpowers/reviews/2026-11-12-workspace-init-v1.md).

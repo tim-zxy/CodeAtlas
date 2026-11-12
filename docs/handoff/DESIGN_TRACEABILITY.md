@@ -1,3 +1,12 @@
+## P1-19 approved init v1 - 2026-11-12
+
+User-approved .ekp/config/database/completion/reentry contract -> Runtime explicit
+init and CLI -> existing Storage W8/R13 creators + init-only immutable metadata
+verification. Seventeen new mandatory owned cases, final117/117,three builds,
+architecture17, independent review/fixes. No Canonical IR/schema/migration/ID
+inheritance/resource default or Native gate change. [Exact evidence](../superpowers/reviews/2026-11-12-workspace-init-v1.md).
+No installed-platform/full E15 or Phase1 closure inferred.
+
 ## P1-11 local mock HTTP adapter obligation - 2026-11-12
 
 ADR-008/knowledge-consumption4 + P1-11 Step4 -> private Node loopback transport

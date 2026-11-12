@@ -4,10 +4,12 @@ import { types } from 'node:util';
 import { lstat, open, realpath } from 'node:fs/promises';
 import type { BigIntStats } from 'node:fs';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { DatabaseSync } from 'node:sqlite';
 import { EntityIdSchema, ensurePhase1Data } from '@codeatlas/ir';
 import { loadMigrationPlan } from '../migrations/manifest.js';
 import { applyMigrationPlan } from '../migrations/runner.js';
+import { openRepositoryIndexSession } from './repository-index-session.js';
 
 type Effect = 'NOT_COMMITTED' | 'COMMITTED' | 'UNKNOWN';
 type Cleanup = 'SETTLED' | 'UNKNOWN';
@@ -15,6 +17,7 @@ type Code =
   | 'WORKSPACE_INPUT_INVALID'
   | 'DATABASE_ALREADY_EXISTS'
   | 'WORKSPACE_INITIALIZATION_FAILED'
+  | 'DEADLINE'
   | 'CANCELLED'
   | 'RESOURCE_LIMIT_EXCEEDED'
   | 'BUDGET_EXCEEDED';
@@ -232,7 +235,9 @@ export async function initializeWorkspaceMetadata(
       error && typeof error === 'object' && !types.isProxy(error)
         ? Object.getOwnPropertyDescriptor(error, 'code')?.value
         : undefined;
-    failure ??= ['CANCELLED', 'RESOURCE_LIMIT_EXCEEDED', 'BUDGET_EXCEEDED'].includes(code)
+    failure ??= ['CANCELLED', 'DEADLINE', 'RESOURCE_LIMIT_EXCEEDED', 'BUDGET_EXCEEDED'].includes(
+      code,
+    )
       ? (code as Code)
       : stage;
   } finally {
@@ -261,4 +266,235 @@ export async function initializeWorkspaceMetadata(
     );
   assert(result);
   return result;
+}
+
+const stopCode = (error: unknown): Code => {
+  const code =
+    error && typeof error === 'object' && !types.isProxy(error)
+      ? Object.getOwnPropertyDescriptor(error, 'code')?.value
+      : undefined;
+  return ['CANCELLED', 'DEADLINE', 'RESOURCE_LIMIT_EXCEEDED', 'BUDGET_EXCEEDED'].includes(code)
+    ? code
+    : 'WORKSPACE_INITIALIZATION_FAILED';
+};
+async function immutableGuard(filename: string) {
+  assert.equal(await realpath(filename), filename);
+  const before = await lstat(filename, { bigint: true });
+  assert(before.isFile() && !before.isSymbolicLink() && before.nlink === 1n);
+  return async () => {
+    for (const suffix of ['-wal', '-shm', '-journal']) {
+      try {
+        await lstat(filename + suffix);
+        throw Error('INIT_DATABASE_IN_USE');
+      } catch (error) {
+        if (Object.getOwnPropertyDescriptor(Object(error), 'code')?.value !== 'ENOENT') throw error;
+      }
+    }
+    const after = await lstat(filename, { bigint: true });
+    sameNode(before, after);
+    assert(
+      after.isFile() &&
+        !after.isSymbolicLink() &&
+        after.nlink === 1n &&
+        before.size === after.size &&
+        before.mtimeNs === after.mtimeNs &&
+        before.ctimeNs === after.ctimeNs,
+    );
+    assert.equal(await realpath(filename), filename);
+  };
+}
+/** Init-only immutable read: no SQLite recovery/SHM writes. Active journal files
+ * refuse before open; guards must still prove a stable closed database image. */
+async function verifyMetadata(
+  filename: string,
+  control: Control,
+  verify: (db: DatabaseSync) => Promise<void>,
+) {
+  let db: DatabaseSync | undefined,
+    failure: Code | undefined,
+    cleanup: Cleanup = 'SETTLED';
+  try {
+    await control.checkpoint();
+    const guard = await immutableGuard(filename);
+    await guard();
+    db = new DatabaseSync(pathToFileURL(filename).href + '?mode=ro&immutable=1', {
+      readOnly: true,
+      allowExtension: false,
+    });
+    db.exec('PRAGMA query_only=ON; BEGIN');
+    await verify(db);
+    db.exec('ROLLBACK');
+    await guard();
+    await control.checkpoint();
+  } catch (error) {
+    failure = stopCode(error);
+    if (
+      error &&
+      typeof error === 'object' &&
+      !types.isProxy(error) &&
+      Object.getOwnPropertyDescriptor(error, 'cleanupState')?.value === 'UNKNOWN'
+    )
+      cleanup = 'UNKNOWN';
+  } finally {
+    if (db)
+      try {
+        db.close();
+        if (db.isOpen) cleanup = 'UNKNOWN';
+      } catch {
+        cleanup = 'UNKNOWN';
+      }
+  }
+  if (failure || cleanup === 'UNKNOWN')
+    throw new WorkspaceInitializationError(
+      failure ?? 'WORKSPACE_INITIALIZATION_FAILED',
+      'NOT_COMMITTED',
+      cleanup,
+    );
+}
+function settleBudget(completion: unknown) {
+  if (completion !== undefined) {
+    if (types.isPromise(completion))
+      void Promise.prototype.then.call(completion, undefined, () => undefined);
+    throw new WorkspaceInitializationError(
+      'WORKSPACE_INITIALIZATION_FAILED',
+      'NOT_COMMITTED',
+      'UNKNOWN',
+    );
+  }
+}
+export async function verifyWorkspaceInitialization(
+  value: unknown,
+  control: Control,
+): Promise<void> {
+  const input = ownInput(value);
+  settleBudget(control.reserveText(Buffer.byteLength(JSON.stringify(input))));
+  await verifyMetadata(input.databasePath, control, async (db) => {
+    const count = (sql: string, params: string[] = []) => {
+      settleBudget(control.chargeMetadataRow());
+      const row = db.prepare(sql).get(...params);
+      assert(row && typeof row.n === 'number' && Number.isSafeInteger(row.n));
+      return row.n;
+    };
+    assert.equal(db.prepare('PRAGMA user_version').get()?.user_version, 8);
+    assert.equal(count('SELECT count(*) n FROM workspace'), 1);
+    assert.equal(
+      count('SELECT count(*) n FROM workspace WHERE slot=1 AND id=? AND root_path=?', [
+        input.workspaceId,
+        input.workspaceRoot,
+      ]),
+      1,
+    );
+    assert.equal(count('SELECT count(*) n FROM repositories'), input.repositories.length);
+    for (const r of input.repositories) {
+      await control.checkpoint();
+      assert.equal(
+        count(
+          'SELECT count(*) n FROM repositories WHERE repository_id=? AND workspace_id=? AND root_path=?',
+          [r.repositoryId, input.workspaceId, r.repositoryRoot],
+        ),
+        1,
+      );
+    }
+  });
+}
+export async function initializeRepositoryMetadata(
+  input: { databasePath: string; repositoryId: string; repositoryRoot: string },
+  control: Control,
+): Promise<void> {
+  const plan = await loadMigrationPlan(
+    new URL('../../migrations/repository/manifest.json', import.meta.url),
+    'REPOSITORY',
+  );
+  assert.equal(plan.latestVersion, 13);
+  let session: Awaited<ReturnType<typeof openRepositoryIndexSession>> | undefined,
+    failure: Code | undefined,
+    cleanup: Cleanup = 'SETTLED';
+  let controlFailure: Code | undefined;
+  const stopped = (error: unknown): never => {
+    const code = stopCode(error);
+    if (code !== 'WORKSPACE_INITIALIZATION_FAILED') controlFailure = code;
+    throw error;
+  };
+  const tracked = {
+    async checkpoint() {
+      try {
+        await control.checkpoint();
+      } catch (error) {
+        stopped(error);
+      }
+    },
+    reserveText(bytes: number) {
+      try {
+        settleBudget(control.reserveText(bytes));
+      } catch (error) {
+        stopped(error);
+      }
+    },
+    chargeMetadataRow() {
+      try {
+        settleBudget(control.chargeMetadataRow());
+      } catch (error) {
+        stopped(error);
+      }
+    },
+  };
+  try {
+    session = await openRepositoryIndexSession(
+      {
+        ...input,
+        repositoryId: EntityIdSchema.parse(input.repositoryId),
+        initialize: true,
+        readOnly: false,
+      },
+      tracked,
+    );
+    assert.equal(session.database.prepare('PRAGMA user_version').get()?.user_version, 13);
+  } catch (error) {
+    failure = controlFailure ?? stopCode(error);
+    if (!session) cleanup = 'UNKNOWN';
+  } finally {
+    if (session)
+      try {
+        session.close();
+        if (session.database.isOpen) cleanup = 'UNKNOWN';
+      } catch {
+        cleanup = 'UNKNOWN';
+      }
+  }
+  if (failure || cleanup === 'UNKNOWN')
+    throw new WorkspaceInitializationError(
+      failure ?? 'WORKSPACE_INITIALIZATION_FAILED',
+      session ? 'COMMITTED' : 'UNKNOWN',
+      cleanup,
+    );
+}
+export async function verifyRepositoryInitialization(
+  input: { databasePath: string; repositoryId: string; repositoryRoot: string },
+  control: Control,
+): Promise<void> {
+  EntityIdSchema.parse(input.repositoryId);
+  absolute(input.databasePath);
+  absolute(input.repositoryRoot);
+  settleBudget(control.reserveText(Buffer.byteLength(JSON.stringify(input))));
+  await verifyMetadata(input.databasePath, control, async (db) => {
+    assert.equal(db.prepare('PRAGMA user_version').get()?.user_version, 13);
+    const count = (sql: string, params: string[] = []) => {
+      settleBudget(control.chargeMetadataRow());
+      const r = db.prepare(sql).get(...params);
+      assert(r && typeof r.n === 'number' && Number.isSafeInteger(r.n));
+      return r.n;
+    };
+    assert.equal(count('SELECT count(*) n FROM repository'), 1);
+    assert.equal(
+      count('SELECT count(*) n FROM repository WHERE slot=1 AND id=? AND root_path=?', [
+        input.repositoryId,
+        input.repositoryRoot,
+      ]),
+      1,
+    );
+    assert.equal(
+      count('SELECT count(*) n FROM repository_state WHERE repository_id=?', [input.repositoryId]),
+      1,
+    );
+  });
 }
