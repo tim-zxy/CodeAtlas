@@ -1,3 +1,17 @@
+## A1 approved fixture and CI integration - 2026-11-13
+
+Frozen code closure a1f8fa9 completed406 observations in [qualification43367211256](https://github.com/tim-zxy/CodeAtlas-validation-public-temp/actions/runs/43367211256):162/90/154, no failed receipts; original holdouts and Transport reconstruction passed. Independent numeric review approved READ/FULL240566272, VERIFY384036864, Transport395624448 bytes. All old profiles/R8/measurements remain.
+
+[PACK43415951789](https://github.com/tim-zxy/CodeAtlas-validation-public-temp/actions/runs/43415951789) passed original review/admission/Create/decode/member/privacy/cleanup in46min. Main prerelease444184827/asset743520777 contains the identical5577-member ZIP,246166928bytes,SHA256b294bf67d19449862697cbfe24e292ff437930c2a4d1589d25fb28f1f6636501. This is PACKED_DECODED_VERIFIED_NOT_QUALIFIED, not actual22 or phase acceptance.
+
+New a1 approval/manifest and three exact catalog entries target implementation7e5e78b981cad1886b7e7cbebc6d3f77ba637cc08700d4f8a5884ea37e764c32. Core/scripts/dependencies/corpus remain frozen; profile JS/maps are excluded by original identity rules. Independent entry under.github (outside generator4 catalog) retains real installer/context, original22/validator and ownership checks, adding existing deny-only R9 fail-stop and physical/byte seals. No ports injection, old R11 identity or TEST_DOUBLE authority. Main CI is the only fresh actual22, tokenless after pinned download,110min operational step cap; no temporary actual22 or new test cases.
+
+Local Runtime TypeScript build and compiled four-purpose n/n-1 admission checks pass with unchanged implementation7e5e78...764c32. Existing stop/coordinator regression29/29,0fail/cancel/skip/TODO,1045.286ms passes; no new test cases or local Native/actual22. New entry syntax and static integration are checked; these substitutes do not claim its real cloud result. Reproduce: node node_modules/typescript/bin/tsc -p packages/runtime/tsconfig.json; node --test --test-concurrency=1 .github/qualification/r11-actual-coordinator.test.mjs scripts/test-native-refresh-r9-stop.mjs.
+
+Architecture17, entry JS syntax, existing Prettier YAML parse and native PowerShell static parse pass. Final independent seven-file review has no blocking P1/P2. JSON/decoded manifest/5577 member identities and live release asset were matched; no frozen-core change or extra test cases. New exact-commit hosted CI remains pending.
+
+Tag CI223 is old a1/R8 reference: Native catalog refused and actual22 skipped; new integration CI is pending at this record. No green result is transferred between commits. Cleanup is observed-process/SETTLED evidence only, not hard OS isolation. Production access, user databases, model/scanning permissions and phase gates are unchanged; Phase1 remains4/21,A6 not accepted,E02 PROPOSED/uninstalled.
+
 ## P1-19 Codex CLI preview - 2026-11-12
 
 Approved explicit stdin JSON now reaches the existing disabled Codex planner.

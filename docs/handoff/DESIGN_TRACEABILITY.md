@@ -1,3 +1,7 @@
+## A1 Native qualification handoff - 2026-11-13
+
+Existing A6/resource purpose gates retain their standards. Frozen a1f8fa9 code closure has406 reviewed observations and identical reconstructed candidate; approved exact profiles240566272/384036864/395624448 and decoded PACK43415951789 bind main fixture444184827/743520777. A1 approval/manifest plus original strict installation/actual22/validator are selected in CI; a deny-only.github entry supplies existing R9 control without changing frozen scripts or creating authority. Main exact-commit CI/actual22 remains pending, not phase acceptance. OldR8/history retained. Fresh evidence and limits: [CURRENT_STATUS](CURRENT_STATUS.md#a1-approved-fixture-and-ci-integration---2026-11-13).
+
 ## P1-19 approved Codex CLI preview - 2026-11-12
 
 User-approved preview/parser adoption -> bounded explicit stdin CLI -> original

@@ -98,14 +98,14 @@ jobs:
           const output = path.resolve('.superpowers/native-memory/script-catalog');
           await mkdir(output, { recursive: true });
           try {
-            const approval = validateRefreshCiApproval(JSON.parse(await readFile('fixtures/ipc/refresh-v3/approved-transport-r8.json', 'utf8')));
+            const approval = validateRefreshCiApproval(JSON.parse(await readFile('fixtures/ipc/refresh-v3/approved-transport-a1.json', 'utf8')));
             const entry = approval.archive.entries.find(item => item.path === 'evidence/corpus/artifacts/manifest.json');
             assert.ok(entry, 'Approved replay manifest missing');
-            const manifestBytes = gunzipSync(await readFile('fixtures/ipc/refresh-v3/approved-transport-r8-manifest.json.gz'), { maxOutputLength: entry.bytes });
+            const manifestBytes = gunzipSync(await readFile('fixtures/ipc/refresh-v3/approved-transport-a1-manifest.json.gz'), { maxOutputLength: entry.bytes });
             const result = await inspectRefreshCiScriptCatalog({ approval, manifestBytes, repositoryPath: process.cwd() });
             await writeFile(path.join(output, 'result.json'), JSON.stringify(result, null, 2) + '\n');
             if (!result.matches) {
-              console.error('R8 script catalog mismatch: Native qualification remains blocked; see script-catalog/result.json.');
+              console.error('A1 script catalog mismatch: Native qualification remains blocked; see script-catalog/result.json.');
               process.exitCode = 1;
             }
           } catch (error) {
@@ -159,6 +159,7 @@ jobs:
         if: always()
         run: node --test --test-concurrency=1 scripts/test-syntax-peak-collector.mjs
       - name: Require approved exact-pack Native REFRESH actual22
+        timeout-minutes: 110
         if: always() && steps.script_catalog.outcome == 'success'
         shell: pwsh
         env:
@@ -173,7 +174,7 @@ jobs:
           const output = path.join(parent, 'exact-pack');
           await mkdir(output);
           try {
-            const approval = JSON.parse(await readFile('fixtures/ipc/refresh-v3/approved-transport-r8.json', 'utf8'));
+            const approval = JSON.parse(await readFile('fixtures/ipc/refresh-v3/approved-transport-a1.json', 'utf8'));
             await downloadRefreshCiArchive(approval, path.join(output, 'approved.zip'), process.env.GITHUB_REPOSITORY);
           } catch {
             await writeFile(path.join(output, 'download-failure.json'), JSON.stringify({ success: false, code: 'D5_PINNED_ASSET_FAILED' }) + '\n', { flag: 'wx' });
@@ -188,20 +189,18 @@ jobs:
           $diagnosticImport = node --input-type=module -e "process.stdout.write(new URL('./packages/runtime/test/fixtures/native-actual-diagnostic.mjs', import.meta.url).href)"
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           $previousNodeOptions = $env:NODE_OPTIONS
-          $approvalPath = Join-Path $env:GITHUB_WORKSPACE 'fixtures/ipc/refresh-v3/approved-transport.json'
-          $r8ApprovalPath = Join-Path $env:GITHUB_WORKSPACE 'fixtures/ipc/refresh-v3/approved-transport-r8.json'
-          $historicalApproval = [IO.File]::ReadAllBytes($approvalPath)
+          $previousGitHubToken = $env:GITHUB_TOKEN
+          $previousGhToken = $env:GH_TOKEN
           try {
-            Copy-Item -LiteralPath $r8ApprovalPath -Destination $approvalPath -ErrorAction Stop
             $env:NODE_OPTIONS = "$previousNodeOptions --import=$diagnosticImport".Trim()
-            node scripts/native-refresh-ci.mjs collect .superpowers/native-memory/exact-pack/approved.zip .superpowers/native-memory/exact-pack/acceptance
+            Remove-Item Env:GITHUB_TOKEN -ErrorAction SilentlyContinue
+            Remove-Item Env:GH_TOKEN -ErrorAction SilentlyContinue
+            node .github/qualification/a1-ci-actual22.mjs
             $collectExitCode = $LASTEXITCODE
           } finally {
-            [IO.File]::WriteAllBytes($approvalPath, $historicalApproval)
-            if ((Get-FileHash -LiteralPath $approvalPath).Hash -ne [Convert]::ToHexString([Security.Cryptography.SHA256]::HashData($historicalApproval))) {
-              throw 'Historical approval restoration hash mismatch'
-            }
             $env:NODE_OPTIONS = $previousNodeOptions
+            $env:GITHUB_TOKEN = $previousGitHubToken
+            $env:GH_TOKEN = $previousGhToken
             Remove-Item Env:CODEATLAS_ACTUAL_DIAGNOSTIC_DIR
           }
           exit $collectExitCode
@@ -224,5 +223,6 @@ jobs:
             C:/CodeAtlas-P05-D5-R4/evidence/corpus/replay
             C:/CodeAtlas-P05-D5-R5/evidence/corpus/replay
             C:/CodeAtlas-P05-D5-R8/evidence/corpus/replay
+            C:/CodeAtlas-P05-D5-R10/evidence/corpus/replay
           # Absent before acquisition is expected; the required actual step still fails.
           if-no-files-found: ignore
