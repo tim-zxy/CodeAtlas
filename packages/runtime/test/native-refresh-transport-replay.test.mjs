@@ -1174,7 +1174,10 @@ test('D5 replay materializer retains a failed generator seed after closing its o
     }
     return statement;
   });
-  await assert.rejects(replay.prepareRefreshTransportCorpus(output), (error) => error === failure);
+  await assert.rejects(
+    replay.prepareRefreshTransportCorpus(output, undefined, undefined, 'p05-refresh-replay-v4'),
+    (error) => error === failure,
+  );
   assert.ok(failedRoot);
   assert.ok((await (await import('node:fs/promises')).lstat(failedRoot)).isDirectory());
   const report = replay.decodeRefreshReplayJson(
@@ -1231,7 +1234,12 @@ async function materializedReplayFixture(t) {
   completeReplayFixture ??= (async () => {
     const parent = await mkdtemp(path.join(tmpdir(), 'codeatlas-corpus-materializer-'));
     t.diagnostic(`Replay preparation and raw trial artifacts retained: ${parent}`);
-    return replay.prepareRefreshTransportCorpus(path.join(await realpath(parent), 'corpus'));
+    return replay.prepareRefreshTransportCorpus(
+      path.join(await realpath(parent), 'corpus'),
+      undefined,
+      undefined,
+      'p05-refresh-replay-v4',
+    );
   })();
   return completeReplayFixture;
 }
@@ -1284,6 +1292,8 @@ test('D5 replay materializer freezes real original22 seeds independent reference
     manifest.cases.map((item) => item.name),
     [...refreshTransportCases].sort(),
   );
+  assert.equal(manifest.schemaVersion, 3);
+  assert.equal(manifest.generator.revision, 'p05-refresh-replay-v4');
   const processes = new Set();
   for (const item of manifest.cases) {
     await replay.verifyRefreshReplayAssets(binding.artifactRoot, item.assets);
@@ -1320,7 +1330,7 @@ test('D5 replay materializer freezes real original22 seeds independent reference
       assert.equal(envelope.receipt.transactionClosed, true);
       assert.equal(envelope.receipt.tempClosed, true);
       const { corpusPayloadDigest, expectedOutcome, ...physical } = item.inputContract;
-      if (manifest.schemaVersion === 2 && item.name === 'd-cancel') {
+      if (item.name === 'd-cancel') {
         assert.deepEqual(
           { ...envelope.receipt.physical, outputBytes: null, eventCount: null },
           physical,

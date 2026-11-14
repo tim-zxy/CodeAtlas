@@ -160,7 +160,7 @@ jobs:
         run: node --test --test-concurrency=1 scripts/test-syntax-peak-collector.mjs
       - name: Require approved exact-pack Native REFRESH actual22
         timeout-minutes: 110
-        if: always() && steps.script_catalog.outcome == 'success'
+        if: success() && !cancelled() && steps.script_catalog.outcome == 'success'
         shell: pwsh
         env:
           GITHUB_TOKEN: ${{ github.token }}

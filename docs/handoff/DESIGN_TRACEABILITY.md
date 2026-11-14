@@ -1,3 +1,19 @@
+## Current replay test explicit generator4 repair - 2026-11-14
+
+Existing approved generator4 topology -> current root replay-test fixture explicitly selects it without changing generator3 defaults -> Manifest3 assertion and retained cancellation-prefix verification. Legacy refusal tests remain. Combined topology/selection23/23 PASS; no Native/cloud run, frozen closure or quality-gate change. Full real replay45-failure closure remains unverified pending clean diagnostic environment. [Evidence and limits](CURRENT_STATUS.md#local-current-replay-fixture-generator4-repair---2026-11-14).
+
+## A4 isolated REFRESH diagnostic evidence - 2026-11-14
+
+Explicit once-only diagnostic authorization -> fixed public sourcea4b54bfc and reviewed6172bbf control -> diagnostic43542706340:74/74 composition,151/151 memory,304/349 replay with45fail; stop before five remaining files. Cloud evidence confirms legacy unbound multi-version topology refusal; it does not establish every failure or restore CI224 unknown actual/cleanup. No actual22/qualification/candidate PACK/retry; original standards and helper defaults unchanged. [Evidence and limits](CURRENT_STATUS.md#a4-isolated-refresh-diagnosis---2026-11-14).
+
+## A1 local actual22 prerequisite scheduling repair - 2026-11-13
+
+Explicit failure-stop authorization -> success()/!cancelled()/catalog-success on the actual22 step, preserving always() for both evidence collectors and all prior mandatory gates. Existing first-two-case integration assertions cover scheduling, no ignored prerequisite failures and evidence retention:8/8 PASS; no new cases, CI or Native execution. Frozen actual validator and measurement closure unchanged. CI224 REFRESH cause/actual worker/cleanup remain UNKNOWN; no retry authority inferred. [Evidence and scope](CURRENT_STATUS.md#a1-local-actual22-prerequisite-stop-repair---2026-11-13).
+
+## A1 CI224 local selection repair - 2026-11-13
+
+Approved A1 fixture selection -> repair only the two obsolete R8 workflow assertions -> existing selection suite 8/8 PASS; historical R8 asset/negative/catalog cases retained. Test file is outside frozen A1 measured closure; no production/frozen contract change. CI224 Native REFRESH failure is separate; cancellation left actual22 worker and cleanup evidence UNKNOWN, with no artifact and logs 404. No new CI or formal run. [Fresh evidence and limits](CURRENT_STATUS.md#a1-ci224-failure-and-local-selection-repair---2026-11-13).
+
 ## A1 Native qualification handoff - 2026-11-13
 
 Existing A6/resource purpose gates retain their standards. Frozen a1f8fa9 code closure has406 reviewed observations and identical reconstructed candidate; approved exact profiles240566272/384036864/395624448 and decoded PACK43415951789 bind main fixture444184827/743520777. A1 approval/manifest plus original strict installation/actual22/validator are selected in CI; a deny-only.github entry supplies existing R9 control without changing frozen scripts or creating authority. Main exact-commit CI/actual22 remains pending, not phase acceptance. OldR8/history retained. Fresh evidence and limits: [CURRENT_STATUS](CURRENT_STATUS.md#a1-approved-fixture-and-ci-integration---2026-11-13).

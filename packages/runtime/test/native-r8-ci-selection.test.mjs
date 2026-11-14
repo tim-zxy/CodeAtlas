@@ -12,20 +12,31 @@ import { validateRefreshCiApproval } from '../../../scripts/helpers/native-refre
 const workflow = () =>
   readFileSync(new URL('../../../.github/workflows/ci.yml', import.meta.url), 'utf8');
 
-test('R8 CI selection uses one exact approval for download and original CLI admission', () => {
+test('A1 CI selection uses one exact approval without replacing historical approvals', () => {
   const text = workflow();
+  const entry = readFileSync(
+    new URL('../../../.github/qualification/a1-ci-actual22.mjs', import.meta.url),
+    'utf8',
+  );
   assert.equal(
-    text.match(/fixtures\/ipc\/refresh-v3\/approved-transport-r8\.json/g)?.length ?? 0,
-    3,
+    text.match(/fixtures\/ipc\/refresh-v3\/approved-transport-a1\.json/g)?.length ?? 0,
+    2,
   );
+  assert.ok(entry.includes('fixtures/ipc/refresh-v3/approved-transport-a1.json'));
   assert.equal(text.includes('approved-transport-r5.json'), false);
+  assert.equal(text.includes('approved-transport-r8.json'), false);
+  assert.equal(text.includes('$historicalApproval'), false);
+  assert.equal(text.includes('Copy-Item -LiteralPath $r8ApprovalPath'), false);
+  assert.match(text, /node \.github\/qualification\/a1-ci-actual22\.mjs/);
   assert.match(
-    text,
-    /Copy-Item -LiteralPath \$r8ApprovalPath -Destination \$approvalPath -ErrorAction Stop/,
+    entry,
+    /const approval = validateRefreshCiApproval\(JSON\.parse\(await readFile\(approvalPath, 'utf8'\)\)\)/,
   );
+  assert.match(entry, /const packArgs = \{ approval, archivePath, repositoryPath \}/);
+  assert.match(entry, /const value = await installRefreshCiPack\(packArgs\)/);
 });
 
-test('R8 CI selection preserves original jobs, actual22 and historical byte restoration', () => {
+test('A1 CI selection preserves jobs, original actual gates, stop control and token restoration', () => {
   const text = workflow();
   const jobs = text.split(/^jobs:\s*$/m)[1];
   assert.ok(jobs, 'Original jobs section required');
@@ -33,17 +44,45 @@ test('R8 CI selection preserves original jobs, actual22 and historical byte rest
     [...jobs.matchAll(/^  ([a-z][a-z-]*):$/gm)].map((m) => m[1]),
     ['typescript', 'rust', 'native-analysis'],
   );
-  assert.match(
-    text,
-    /node scripts\/native-refresh-ci\.mjs collect \.superpowers\/native-memory\/exact-pack\/approved\.zip \.superpowers\/native-memory\/exact-pack\/acceptance/,
+  const step = parse(text).jobs['native-analysis'].steps.find(
+    (step) => step.name === 'Require approved exact-pack Native REFRESH actual22',
   );
-  assert.ok(text.includes('$historicalApproval = [IO.File]::ReadAllBytes($approvalPath)'));
-  assert.match(
-    text,
-    /finally \{[\s\S]*?\[IO.File\]::WriteAllBytes\(\$approvalPath, \$historicalApproval\)/,
+  assert.equal(step['timeout-minutes'], 110);
+  assert.equal(step.if, "success() && !cancelled() && steps.script_catalog.outcome == 'success'");
+  const nativeSteps = parse(text).jobs['native-analysis'].steps;
+  const actualIndex = nativeSteps.findIndex((value) => value.name === step.name);
+  for (const prerequisite of nativeSteps.slice(0, actualIndex))
+    assert.notEqual(prerequisite['continue-on-error'], true);
+  for (const name of [
+    'Preserve memory observations including failures',
+    'Preserve original fixed-volume REFRESH scratch on export failure',
+  ])
+    assert.equal(nativeSteps.find((value) => value.name === name).if, 'always()');
+  assert.match(step.run, /Remove-Item Env:GITHUB_TOKEN -ErrorAction SilentlyContinue/);
+  assert.match(step.run, /Remove-Item Env:GH_TOKEN -ErrorAction SilentlyContinue/);
+  assert.match(step.run, /finally \{[\s\S]*\$env:GITHUB_TOKEN = \$previousGitHubToken/);
+  assert.match(step.run, /finally \{[\s\S]*\$env:GH_TOKEN = \$previousGhToken/);
+  assert.ok(step.run.includes('$env:NODE_OPTIONS = $previousNodeOptions'));
+  const entry = readFileSync(
+    new URL('../../../.github/qualification/a1-ci-actual22.mjs', import.meta.url),
+    'utf8',
   );
-  assert.ok(text.includes("throw 'Historical approval restoration hash mismatch'"));
-  assert.ok(text.includes('$env:NODE_OPTIONS = $previousNodeOptions'));
+  assert.match(entry, /control = await createR9StopControl\(output, verifyIdentity\)/);
+  assert.match(
+    entry,
+    /readRefreshTransportReplayCorpus\(\s*installed\.manifestPath,\s*installed\.bindingPath,\s*installed\.fixtureContext,/,
+  );
+  assert.match(
+    entry,
+    /runRefreshTransportCommand\(\s*\['collect', 'approved', installed\.candidatePath, path\.join\(output, 'actual'\)\],\s*installed\.fixtureContext,\s*control,/,
+  );
+  assert.match(
+    entry,
+    /validateRefreshCiActualReport\(report, \{\s*candidateSha256: approval\.candidate\.sha256,\s*candidate: approval\.candidate,\s*identity: values\[0\]\.identity,/,
+  );
+  assert.match(entry, /await verifyRefreshCiLayoutOwnership\(installed\.layout\)/);
+  assert.match(entry, /assert\.deepEqual\(await readdir\(installed\.layout\.tempRoot\), \[\]\)/);
+  assert.match(entry, /await verifyIdentity\(true\)/);
 });
 
 test('R8 CI selection retains original and current fixed-volume failure evidence', () => {
