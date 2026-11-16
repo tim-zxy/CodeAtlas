@@ -1,3 +1,7 @@
+import {
+  parseReceiptWikiArtifact,
+  receiptWikiDigest,
+} from '../../ir/dist/receipt-wiki-artifact-contract.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -400,4 +404,235 @@ test('a sibling root directory link or junction cannot substitute for its owned 
   assert.deepEqual(writer.readCurrent(c), first);
   assert.deepEqual(writer.readRevision(first.artifactRevisionId, c), first);
   // Preserve both the original owned directory and alias as failure evidence.
+});
+
+test('receipt file flavor is distinct from the legacy artifact writer', async () => {
+  const api = await import('../dist/knowledge/offline-wiki-files.js');
+  assert.equal(typeof api.ReceiptWikiArtifactFiles, 'function');
+});
+
+import { ReceiptWikiArtifactFiles } from '../dist/knowledge/offline-wiki-files.js';
+import { ReceiptWikiArtifactPreparer } from '../../application/dist/owned-freshness-wiki.js';
+import { runOwnedFreshnessWiki } from '../../runtime/dist/owned-freshness-wiki.js';
+import { withFreshnessPublication } from '../../runtime/test/helpers/owned-freshness-fixture.mjs';
+import { withReadyPublication } from './helpers/schema11-publication-fixture.mjs';
+async function observedReceipt(t) {
+  let observed;
+  await withReadyPublication(
+    t,
+    async (f) => {
+      f.writer.publishOwnedPrepared(f.ready.handle, f.limits, f.c);
+      const source = f.owned.freshness;
+      observed = await runOwnedFreshnessWiki(
+        {
+          workspaceId: f.w,
+          repositoryIds: f.owned.repositoryIds,
+          selectedPublishedRevisionRefs: f.refs,
+          customizationPolicy: 'LOCKED',
+          allowPartial: true,
+        },
+        {
+          database: f.db,
+          workspaceStore: source.workspaceStore,
+          repositories: source.repositories,
+          sources: new Map([[f.owned.repositoryIds[0], source.prepared.handle]]),
+          limits: f.limits,
+          authorize: () => undefined,
+          currentPolicyVersions: () => source.policyVersions,
+        },
+        f.c,
+      );
+    },
+    undefined,
+    withFreshnessPublication,
+  );
+  return observed;
+}
+test('genuine observed receipt Wiki writes and reopens as historical-only with exact real sources and unchanged preparation', async (t) => {
+  const result = await observedReceipt(t),
+    c = control(),
+    preparer = new ReceiptWikiArtifactPreparer();
+  assert.throws(
+    () => preparer.prepare(JSON.parse(JSON.stringify(result)), c),
+    /OBSERVATION_UNAVAILABLE/,
+  );
+  const prepared = preparer.prepare(result, c),
+    receipt = createOwnedWikiArtifactDirectory(c),
+    writer = new ReceiptWikiArtifactFiles(receipt, allowance, preparer.identity);
+  assert.throws(() => writer.commit({}, null, c), /HANDLE_UNAVAILABLE/);
+  const first = writer.commit(prepared.handle, null, c);
+  assert.equal(first.effect, 'COMMITTED');
+  assert.equal(first.cleanupState, 'SETTLED');
+  assert.equal(first.artifact.kind, 'SCHEMA11_RECEIPT_WIKI_ARTIFACT');
+  assert.equal(first.artifact.version, 2);
+  assert.equal(first.artifact.projection.status, 'PARTIAL');
+  assert.equal(first.artifact.projection.quality, 'NOT_EVALUABLE');
+  assert.equal(first.artifact.observation.state, 'HISTORICAL_MATCHED_WINDOW');
+  assert.equal(first.artifact.observation.validity, 'ENDED');
+  assert.equal(first.artifact.observation.currentFreshness, 'UNASSESSED');
+  assert.ok(first.artifact.markdown.startsWith('# Historical observed Wiki'));
+  assert.ok(first.artifact.markdown.includes('does not guarantee current Source freshness'));
+  assert.ok(
+    first.artifact.source.records.every(
+      (r) => r.publicationId && r.candidateId && r.inputDigest && !Object.hasOwn(r, 'attemptId'),
+    ),
+  );
+  // Pure structural order vector only: not a new observation or a file publication.
+  const multi = structuredClone(first.artifact),
+    row = multi.source.records[0];
+  multi.source.records = [
+    { ...row, itemId: 'item:a', revisionId: 'revision:z' },
+    { ...row, itemId: 'item:z', revisionId: 'revision:a' },
+  ];
+  multi.projection.provenance.selectedPublishedRevisionRefs = multi.source.records.map((r) => ({
+    itemId: r.itemId,
+    revisionId: r.revisionId,
+  }));
+  multi.projection.provenance.knowledgeRevisionRefs = ['revision:a', 'revision:z'];
+  multi.observation.sourceDigest = receiptWikiDigest(
+    'codeatlas.receipt-wiki.source.v2',
+    multi.source,
+    c,
+  );
+  multi.observation.projectionDigest = receiptWikiDigest(
+    'codeatlas.receipt-wiki.projection.v2',
+    multi.projection,
+    c,
+  );
+  assert.equal(parseReceiptWikiArtifact(multi, c).source.records.length, 2);
+  const reopened = new ReceiptWikiArtifactFiles(
+    receipt,
+    allowance,
+    new ReceiptWikiArtifactPreparer().identity,
+  );
+  assert.deepEqual(reopened.readCurrent(c), first.artifact);
+  assert.ok(Object.isFrozen(reopened.readCurrent(c).observation));
+  assert.deepEqual(reopened.readRevision(first.artifact.artifactRevisionId, c), first.artifact);
+  assert.throws(
+    () => new OwnedWikiArtifactFiles(receipt, allowance).readCurrent(c),
+    /ARTIFACT_INVALID/,
+  );
+  assert.throws(
+    () => writer.commit(prepared.handle, first.artifact.artifactRevisionId, c),
+    /HANDLE_UNAVAILABLE/,
+  );
+  const repeat = preparer.prepare(result, c);
+  assert.equal(
+    writer.commit(repeat.handle, first.artifact.artifactRevisionId, c).effect,
+    'UNCHANGED',
+  );
+  assert.throws(
+    () => new ReceiptWikiArtifactPreparer().prepare(reopened.readCurrent(c), c),
+    /OBSERVATION_UNAVAILABLE/,
+  );
+  const another = new ReceiptWikiArtifactPreparer();
+  const anotherWriter = new ReceiptWikiArtifactFiles(receipt, allowance, another.identity);
+  anotherWriter.readCurrent(c);
+  assert.equal(
+    anotherWriter.commit(another.prepare(result, c).handle, first.artifact.artifactRevisionId, c)
+      .effect,
+    'UNCHANGED',
+  );
+});
+test('receipt writer refuses foreign issuer and legacy artifacts without changing either format', async (t) => {
+  const result = await observedReceipt(t),
+    c = control(),
+    preparer = new ReceiptWikiArtifactPreparer(),
+    receipt = createOwnedWikiArtifactDirectory(c);
+  const foreign = new ReceiptWikiArtifactPreparer(),
+    writer = new ReceiptWikiArtifactFiles(receipt, allowance, preparer.identity);
+  assert.throws(
+    () => writer.commit(foreign.prepare(result, c).handle, null, c),
+    /HANDLE_UNAVAILABLE/,
+  );
+  const old = (await artifacts()).first;
+  const legacy = new OwnedWikiArtifactFiles(receipt, allowance);
+  legacy.commit(old, null, c);
+  assert.throws(() => writer.readCurrent(c), /ARTIFACT_INVALID/);
+  assert.throws(
+    () => writer.commit(preparer.prepare(result, c).handle, old.artifactRevisionId, c),
+    /ARTIFACT_INVALID/,
+  );
+  assert.deepEqual(legacy.readCurrent(c), old);
+});
+test('receipt source/window tampering remains invalid after resealing file-level hashes', async (t) => {
+  const result = await observedReceipt(t),
+    c = control(),
+    preparer = new ReceiptWikiArtifactPreparer(),
+    receipt = createOwnedWikiArtifactDirectory(c),
+    writer = new ReceiptWikiArtifactFiles(receipt, allowance, preparer.identity);
+  writer.commit(preparer.prepare(result, c).handle, null, c);
+  const pointerPath = path.join(receipt.directory, 'current.json'),
+    originalPointer = fs.readFileSync(pointerPath, 'utf8'),
+    pointer = JSON.parse(originalPointer),
+    revisionPath = path.join(receipt.directory, 'revision-' + pointer.revisionKey + '.json'),
+    originalRevision = fs.readFileSync(revisionPath, 'utf8');
+  for (const mutate of [
+    (a) => {
+      a.source.records[0].candidateId = 'substituted';
+    },
+    (a) => {
+      a.observation.currentFreshness = 'FRESH';
+    },
+    (a) => {
+      a.projection.kind = 'OWNED_TEST_WIKI';
+    },
+    (a) => {
+      a.markdown = a.projection.markdown;
+    },
+  ]) {
+    const revision = JSON.parse(originalRevision);
+    mutate(revision.artifact);
+    revision.artifactSha256 = createHash('sha256')
+      .update(canonical(revision.artifact))
+      .digest('hex');
+    const text = canonical(revision);
+    fs.writeFileSync(revisionPath, text);
+    fs.writeFileSync(
+      pointerPath,
+      canonical({ ...pointer, sha256: createHash('sha256').update(text).digest('hex') }),
+    );
+    assert.throws(() =>
+      new ReceiptWikiArtifactFiles(receipt, allowance, preparer.identity).readCurrent(c),
+    );
+  }
+  fs.writeFileSync(revisionPath, originalRevision);
+  fs.writeFileSync(pointerPath, originalPointer);
+  assert.equal(
+    new ReceiptWikiArtifactFiles(receipt, allowance, preparer.identity).readCurrent(c).observation
+      .currentFreshness,
+    'UNASSESSED',
+  );
+});
+test('receipt historical revisions retain original evidence and uncertain pointer acknowledgement never retries', async (t) => {
+  const firstResult = await observedReceipt(t),
+    secondResult = await observedReceipt(t),
+    c = control(),
+    preparer = new ReceiptWikiArtifactPreparer(),
+    receipt = createOwnedWikiArtifactDirectory(c),
+    writer = new ReceiptWikiArtifactFiles(receipt, allowance, preparer.identity);
+  const first = writer.commit(preparer.prepare(firstResult, c).handle, null, c).artifact;
+  const originalRename = fs.renameSync;
+  fs.renameSync = (...args) => {
+    originalRename(...args);
+    throw Error('OWNED_LOST_ACK');
+  };
+  try {
+    assert.throws(
+      () => writer.commit(preparer.prepare(secondResult, c).handle, first.artifactRevisionId, c),
+      (e) => e.publicationEffect === 'UNKNOWN' && e.cleanupState === 'UNKNOWN',
+    );
+  } finally {
+    fs.renameSync = originalRename;
+  }
+  const reopened = new ReceiptWikiArtifactFiles(receipt, allowance, preparer.identity),
+    current = reopened.readCurrent(c);
+  assert.notEqual(current.artifactRevisionId, first.artifactRevisionId);
+  assert.deepEqual(reopened.readRevision(first.artifactRevisionId, c), first);
+  assert.equal(current.observation.currentFreshness, 'UNASSESSED');
+  assert.ok(fs.existsSync(path.join(receipt.directory, 'pending.json')));
+  assert.throws(
+    () => reopened.commit(preparer.prepare(secondResult, c).handle, current.artifactRevisionId, c),
+    /ARTIFACT_WRITER_BLOCKED/,
+  );
 });

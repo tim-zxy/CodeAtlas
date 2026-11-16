@@ -173,3 +173,196 @@ test('async or accessor-based owned identity providers refuse without running th
   );
   assert.equal(invoked, false);
 });
+
+import { withReadyPublication } from '../../storage/test/helpers/schema11-publication-fixture.mjs';
+import { withFreshnessPublication } from './helpers/owned-freshness-fixture.mjs';
+import { runOwnedFreshnessWiki } from '../dist/owned-freshness-wiki.js';
+test('one-shot real Source bytes and genuine Storage identity reconcile before receipt Wiki', async (t) =>
+  withReadyPublication(
+    t,
+    async (f) => {
+      f.writer.publishOwnedPrepared(f.ready.handle, f.limits, f.c);
+      const actual = f.owned.freshness;
+      const result = await runOwnedFreshnessWiki(
+        {
+          workspaceId: f.w,
+          repositoryIds: f.owned.repositoryIds,
+          selectedPublishedRevisionRefs: f.refs,
+          customizationPolicy: 'LOCKED',
+          allowPartial: true,
+        },
+        {
+          database: f.db,
+          workspaceStore: actual.workspaceStore,
+          repositories: actual.repositories,
+          sources: new Map([[f.owned.repositoryIds[0], actual.prepared.handle]]),
+          limits: f.limits,
+          authorize: () => undefined,
+          currentPolicyVersions: () => actual.policyVersions,
+        },
+        f.c,
+      );
+      assert.equal(result.commitState, 'COMMITTED');
+      assert.equal(result.cleanupState, 'SETTLED');
+      assert.equal(result.projection.status, 'PARTIAL');
+      assert.equal(result.quality, 'NOT_EVALUABLE');
+      assert.equal(f.db.isOpen, false);
+      assert.throws(
+        () => releaseCompilationSource(actual.prepared.handle),
+        /SOURCE_CONTEXT_UNAVAILABLE/,
+      );
+    },
+    undefined,
+    withFreshnessPublication,
+  ));
+
+import { writeFileSync } from 'node:fs';
+const freshnessRequest = (f) => ({
+  workspaceId: f.w,
+  repositoryIds: f.owned.repositoryIds,
+  selectedPublishedRevisionRefs: f.refs,
+  customizationPolicy: 'LOCKED',
+  allowPartial: true,
+});
+const freshnessOptions = (f) => ({
+  database: f.db,
+  workspaceStore: f.owned.freshness.workspaceStore,
+  repositories: f.owned.freshness.repositories,
+  sources: new Map([[f.owned.repositoryIds[0], f.owned.freshness.prepared.handle]]),
+  limits: f.limits,
+  authorize: () => undefined,
+  currentPolicyVersions: () => f.owned.freshness.policyVersions,
+});
+test('one-shot rejects actual source-byte drift before CAS and after confirmed commit', async (t) => {
+  for (const afterCommit of [false, true])
+    await withReadyPublication(
+      t,
+      async (f) => {
+        f.writer.publishOwnedPrepared(f.ready.handle, f.limits, f.c);
+        const opts = freshnessOptions(f),
+          actual = f.owned.freshness;
+        let changed = false;
+        const change = () => {
+          changed = true;
+          writeFileSync(path.join(actual.root, 'app.py'), 'pass # changed owned bytes\n');
+        };
+        if (!afterCommit) change();
+        else
+          opts.authorize = () => {
+            if (
+              !changed &&
+              f.db.isOpen &&
+              f.db.prepare('SELECT source_freshness FROM knowledge_items').get()
+                .source_freshness === 'FRESH'
+            )
+              change();
+          };
+        await assert.rejects(
+          runOwnedFreshnessWiki(freshnessRequest(f), opts, f.c),
+          (e) =>
+            e.commitState === (afterCommit ? 'COMMITTED' : 'NOT_ATTEMPTED') &&
+            e.cleanupState === 'SETTLED',
+        );
+        assert.equal(changed, true);
+        assert.equal(f.db.isOpen, false);
+      },
+      undefined,
+      withFreshnessPublication,
+    );
+});
+test('one-shot refuses publication metadata and policy drift during asynchronous Source consumption', async (t) => {
+  for (const change of ['metadata', 'policy'])
+    await withReadyPublication(
+      t,
+      async (f) => {
+        f.writer.publishOwnedPrepared(f.ready.handle, f.limits, f.c);
+        const opts = freshnessOptions(f),
+          actual = f.owned.freshness;
+        let mutated = false,
+          policy = actual.policyVersions;
+        opts.currentPolicyVersions = () => policy;
+        actual.state.beforeReply = async () => {
+          if (
+            !mutated &&
+            f.db.isOpen &&
+            f.db.prepare('SELECT source_freshness FROM knowledge_items').get().source_freshness ===
+              'FRESH'
+          ) {
+            mutated = true;
+            if (change === 'policy') policy = { ...policy, securityPolicyRef: 'changed' };
+            else {
+              const item = JSON.parse(
+                f.db.prepare('SELECT payload_json FROM knowledge_items').get().payload_json,
+              );
+              item.payload.sourceFreshness = 'STALE';
+              f.db
+                .prepare('UPDATE knowledge_items SET source_freshness=?,payload_json=?')
+                .run('STALE', JSON.stringify(item));
+            }
+          }
+        };
+        await assert.rejects(
+          runOwnedFreshnessWiki(freshnessRequest(f), opts, f.c),
+          (e) => e.commitState === 'COMMITTED' && e.cleanupState === 'SETTLED',
+        );
+        assert.equal(mutated, true);
+        assert.equal(f.db.isOpen, false);
+      },
+      undefined,
+      withFreshnessPublication,
+    );
+});
+test('one-shot refuses revocation during close and preserves confirmed commit with UNKNOWN cleanup', async (t) => {
+  for (const failure of ['revoke', 'cancel', 'unknown'])
+    await withReadyPublication(
+      t,
+      async (f) => {
+        f.writer.publishOwnedPrepared(f.ready.handle, f.limits, f.c);
+        const opts = freshnessOptions(f),
+          close = f.db.close.bind(f.db);
+        let revoked = false;
+        opts.authorize = () => {
+          if (revoked) throw Error('REVOKED');
+        };
+        f.db.close = () => {
+          close();
+          if (failure === 'unknown') throw Error('LOST_CLOSE_ACK');
+          if (failure === 'cancel') {
+            f.owned.freshness.controller.abort();
+            f.c.signal = new AbortController().signal; // cannot replace admitted control after cleanup
+          } else revoked = true;
+        };
+        await assert.rejects(
+          runOwnedFreshnessWiki(freshnessRequest(f), opts, f.c),
+          (e) =>
+            e.commitState === 'COMMITTED' &&
+            e.cleanupState === (failure === 'unknown' ? 'UNKNOWN' : 'SETTLED'),
+        );
+        assert.equal(f.db.isOpen, false);
+      },
+      undefined,
+      withFreshnessPublication,
+    );
+});
+test('one-shot initialization refusal cleans transferred real Source handles and memory DB', async (t) =>
+  withReadyPublication(
+    t,
+    async (f) => {
+      f.writer.publishOwnedPrepared(f.ready.handle, f.limits, f.c);
+      const opts = freshnessOptions(f);
+      opts.authorize = () => {
+        throw Error('REVOKED_BEFORE_ACQUIRE');
+      };
+      await assert.rejects(
+        runOwnedFreshnessWiki(freshnessRequest(f), opts, f.c),
+        (e) => e.commitState === 'NOT_ATTEMPTED' && e.cleanupState === 'SETTLED',
+      );
+      assert.equal(f.db.isOpen, false);
+      assert.throws(
+        () => releaseCompilationSource(f.owned.freshness.prepared.handle),
+        /SOURCE_CONTEXT_UNAVAILABLE/,
+      );
+    },
+    undefined,
+    withFreshnessPublication,
+  ));

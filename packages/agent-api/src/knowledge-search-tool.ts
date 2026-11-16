@@ -1,3 +1,4 @@
+import { receiptSourceProvenanceSchema } from './receipt-source-contract.js';
 import { types } from 'node:util';
 import { z } from 'zod';
 import { searchOwnedKnowledge } from '@codeatlas/application';
@@ -16,6 +17,11 @@ import {
 import { canonicalCompilationJson } from '../../ir/dist/compilation-input-contract.js';
 import {
   knowledgeSearchBudgetSchema,
+  knowledgeSearchRequestV2Schema,
+  knowledgeSearchResponseV2Schema,
+  knowledgeSearchFailureV2,
+  serializeKnowledgeSearchResponseV2,
+  type ReceiptKnowledgeSearchResponse,
   knowledgeSearchRequestSchema,
   knowledgeSearchResponseSchema,
   knowledgeSearchFailure,
@@ -87,6 +93,10 @@ const rawPage = z.strictObject({
   productionQuery: z.literal('NOT_AUTHORIZED'),
   limitations: z.array(z.string()),
 });
+const rawPageV2 = rawPage.extend({
+  kind: z.literal('SCHEMA11_RECEIPT'),
+  results: z.array(rawHit.extend({ provenance: receiptSourceProvenanceSchema })),
+});
 function freeze<T>(value: T): T {
   if (value && typeof value === 'object') {
     for (const child of Object.values(value)) freeze(child);
@@ -137,6 +147,21 @@ export function createOwnedKnowledgeSearchSession(ports: OwnedKnowledgeSearchPor
     ) => Promise<KnowledgeSearchResponse>,
   });
 }
+export function createReceiptKnowledgeSearchSession(ports: OwnedKnowledgeSearchPorts) {
+  const session = createOwnedPublishedSearchSession(ports, false, true);
+  return Object.freeze({
+    ...session,
+    descriptor: session.descriptor as Omit<SearchDescriptor, 'version' | 'mode'> & {
+      version: 2;
+      mode: 'SCHEMA11_OWNED_ONLY';
+    },
+    execute: session.execute as (
+      input: unknown,
+      handle: unknown,
+      c: RuntimeRequestControl,
+    ) => Promise<ReceiptKnowledgeSearchResponse>,
+  });
+}
 export function createOwnedProjectL1Session(ports: OwnedProjectL1Ports) {
   const session = createOwnedPublishedSearchSession(ports, true);
   return Object.freeze({
@@ -152,10 +177,23 @@ export function createOwnedProjectL1Session(ports: OwnedProjectL1Ports) {
 function createOwnedPublishedSearchSession(
   ports: OwnedKnowledgeSearchPorts | OwnedProjectL1Ports,
   isL1: boolean,
+  receipt = false,
 ) {
-  const responseSchema = isL1 ? projectL1ResponseSchema : knowledgeSearchResponseSchema;
-  const failure = isL1 ? projectL1Failure : knowledgeSearchFailure;
-  const serialize = isL1 ? serializeProjectL1Response : serializeKnowledgeSearchResponse;
+  const responseSchema = receipt
+    ? knowledgeSearchResponseV2Schema
+    : isL1
+      ? projectL1ResponseSchema
+      : knowledgeSearchResponseSchema;
+  const failure = receipt
+    ? knowledgeSearchFailureV2
+    : isL1
+      ? projectL1Failure
+      : knowledgeSearchFailure;
+  const serialize = receipt
+    ? serializeKnowledgeSearchResponseV2
+    : isL1
+      ? serializeProjectL1Response
+      : serializeKnowledgeSearchResponse;
   const d = properties(ports);
   const workspaceId = EntityIdSchema.parse(d.workspaceId?.value);
   // Capture immutable scope/limits; later mutation of the caller's ports grants nothing.
@@ -208,13 +246,13 @@ function createOwnedPublishedSearchSession(
       ? {
           version: 2 as const,
           supportedDepths: ['L1'] as const,
-          mode: 'OWNED_TEST_ONLY' as const,
+          mode: receipt ? ('SCHEMA11_OWNED_ONLY' as const) : ('OWNED_TEST_ONLY' as const),
           tokenPolicyRef: counter?.policyRef ?? null,
         }
       : {
-          version: 1 as const,
+          version: receipt ? (2 as const) : (1 as const),
           supportedModes: ['LEXICAL_PHRASE'] as const,
-          mode: 'OWNED_TEST_ONLY' as const,
+          mode: receipt ? ('SCHEMA11_OWNED_ONLY' as const) : ('OWNED_TEST_ONLY' as const),
           tokenPolicyRef: counter?.policyRef ?? null,
         },
   );
@@ -277,7 +315,7 @@ function createOwnedPublishedSearchSession(
     input: unknown,
     handle: unknown,
     callerControl: RuntimeRequestControl,
-  ): Promise<KnowledgeSearchResponse | ProjectL1Response> {
+  ): Promise<KnowledgeSearchResponse | ProjectL1Response | ReceiptKnowledgeSearchResponse> {
     try {
       active(handle, callerControl);
       const c = Object.getOwnPropertyDescriptors(callerControl);
@@ -305,7 +343,10 @@ function createOwnedPublishedSearchSession(
               maxTokens: query.budget.maxTokens,
             },
           });
-        } else request = knowledgeSearchRequestSchema.parse(raw);
+        } else
+          request = knowledgeSearchRequestSchema.parse(
+            receipt ? { ...knowledgeSearchRequestV2Schema.parse(raw), version: 1 } : raw,
+          );
       } catch (error) {
         if (['CANCELLED', 'DEADLINE', 'BUDGET_EXCEEDED'].includes(safeCode(error))) throw error;
         fail('INVALID_INPUT');
@@ -362,7 +403,9 @@ function createOwnedPublishedSearchSession(
         fail('PROVIDER_UNAVAILABLE');
       }
       active(handle, control);
-      const page = rawPage.parse(JSON.parse(canonicalCompilationJson(value, control)));
+      const page = (receipt ? rawPageV2 : rawPage).parse(
+        JSON.parse(canonicalCompilationJson(value, control)),
+      );
       if (
         page.workspaceId !== workspaceId ||
         page.results.length !== Math.min(page.totalMatches, maxResults) ||
@@ -458,6 +501,7 @@ function createOwnedPublishedSearchSession(
       ].sort();
       const response = freeze(
         responseSchema.parse({
+          ...(receipt ? { version: 2 } : {}),
           data: {
             ...(isL1
               ? {

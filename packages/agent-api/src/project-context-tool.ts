@@ -1,6 +1,7 @@
+import { receiptSourceProvenanceSchema } from './receipt-source-contract.js';
 import { types } from 'node:util';
 import { z } from 'zod';
-import { readOwnedProjectContext } from '@codeatlas/application';
+import { readOwnedProjectContext, readSchema11SelectedKnowledge } from '@codeatlas/application';
 import {
   EntityIdSchema,
   KnowledgeScopeSchema,
@@ -18,6 +19,11 @@ import { publicationDigest } from '../../ir/dist/offline-publication-contract.js
 import { searchProvenanceSchema } from './knowledge-search-contract.js';
 import {
   projectContextBudgetSchema,
+  projectContextRequestV2Schema,
+  projectContextResponseV2Schema,
+  projectContextFailureV2,
+  serializeProjectContextResponseV2,
+  type ReceiptProjectContextResponse,
   projectContextRequestSchema,
   projectContextResponseSchema,
   projectContextFailure,
@@ -82,6 +88,19 @@ const sourceProjection = z.strictObject({
     }),
   ),
 });
+const sourceProjectionV2 = sourceProjection.extend({
+  kind: z.literal('SCHEMA11_RECEIPT'),
+  manifest: sourceProjection.shape.manifest.extend({
+    evidenceKind: z.literal('SCHEMA11_READ_CANDIDATE_NOT_AUTHORITY'),
+  }),
+  records: z.array(
+    sourceProjection.shape.records.element.extend({
+      evidence: sourceProjection.shape.records.element.shape.evidence.extend({
+        provenance: receiptSourceProvenanceSchema,
+      }),
+    }),
+  ),
+});
 function freeze<T>(value: T): T {
   if (value && typeof value === 'object') {
     for (const child of Object.values(value)) freeze(child);
@@ -101,6 +120,22 @@ function callback(value: unknown): value is (...args: never[]) => unknown {
 }
 /** No token algorithm, SDK route, production principal or write port is installed here. */
 export function createOwnedProjectContextSession(ports: OwnedProjectContextPorts) {
+  return createSelectedProjectContextSession(ports, 1);
+}
+export function createReceiptProjectContextSession(ports: OwnedProjectContextPorts) {
+  return createSelectedProjectContextSession(ports, 2);
+}
+function createSelectedProjectContextSession<V extends 1 | 2>(
+  ports: OwnedProjectContextPorts,
+  version: V,
+) {
+  type Response = V extends 1 ? ProjectContextResponse : ReceiptProjectContextResponse;
+  const requestSchema = version === 1 ? projectContextRequestSchema : projectContextRequestV2Schema;
+  const responseSchema =
+    version === 1 ? projectContextResponseSchema : projectContextResponseV2Schema;
+  const serialize =
+    version === 1 ? serializeProjectContextResponse : serializeProjectContextResponseV2;
+  const failure = version === 1 ? projectContextFailure : projectContextFailureV2;
   const d = properties(ports);
   const workspaceId = EntityIdSchema.parse(d.workspaceId?.value);
   // Capture immutable scope/limits; later mutation of the caller's ports grants nothing.
@@ -168,9 +203,9 @@ export function createOwnedProjectContextSession(ports: OwnedProjectContextPorts
   let closed = false;
   const context = Object.freeze(Object.create(null)) as object;
   const descriptor = freeze({
-    version: 1 as const,
+    version,
     supportedDepths: ['L0'] as const,
-    mode: 'OWNED_TEST_ONLY' as const,
+    mode: version === 1 ? ('OWNED_TEST_ONLY' as const) : ('SCHEMA11_OWNED_ONLY' as const),
     tokenPolicyRef: counter?.policyRef ?? null,
   });
   const close = () => {
@@ -228,7 +263,7 @@ export function createOwnedProjectContextSession(ports: OwnedProjectContextPorts
     input: unknown,
     handle: unknown,
     callerControl: RuntimeRequestControl,
-  ): Promise<ProjectContextResponse> {
+  ): Promise<Response> {
     try {
       active(handle, callerControl);
       const c = Object.getOwnPropertyDescriptors(callerControl),
@@ -238,11 +273,9 @@ export function createOwnedProjectContextSession(ports: OwnedProjectContextPorts
           deadlineEpochMs: c.deadlineEpochMs!.value,
           signal: c.signal!.value,
         }) as RuntimeRequestControl;
-      let request: ReturnType<typeof projectContextRequestSchema.parse>;
+      let request: ReturnType<typeof requestSchema.parse>;
       try {
-        request = projectContextRequestSchema.parse(
-          JSON.parse(canonicalCompilationJson(input, control)),
-        );
+        request = requestSchema.parse(JSON.parse(canonicalCompilationJson(input, control)));
       } catch (error) {
         if (['CANCELLED', 'DEADLINE', 'BUDGET_EXCEEDED'].includes(safeCode(error))) throw error;
         fail('INVALID_INPUT');
@@ -270,6 +303,7 @@ export function createOwnedProjectContextSession(ports: OwnedProjectContextPorts
           'SUPPORT_METADATA',
           'SOURCE_FRESHNESS',
           'COMPILATION_CURRENCY',
+          ...(version === 2 ? ['CANONICAL_BODY_VALIDATION', 'PUBLICATION_RECEIPT_VALIDATION'] : []),
         ],
       });
       const permission = () => {
@@ -285,24 +319,37 @@ export function createOwnedProjectContextSession(ports: OwnedProjectContextPorts
       };
       permission();
       if (!counter) fail('TOKEN_COUNTER_UNAVAILABLE');
-      let records: ReturnType<typeof sourceProjection.parse>['records'] = [];
+      let records: (
+        | ReturnType<typeof sourceProjection.parse>['records'][number]
+        | ReturnType<typeof sourceProjectionV2.parse>['records'][number]
+      )[] = [];
       if (selectedRefs.length) {
         let raw: unknown;
         try {
-          raw = await readOwnedProjectContext(
-            { workspaceId, selectedRefs },
-            { workspaceId, read: query },
-            control,
-          );
+          raw =
+            version === 1
+              ? await readOwnedProjectContext(
+                  { workspaceId, selectedRefs },
+                  { workspaceId, read: query },
+                  control,
+                )
+              : await readSchema11SelectedKnowledge(
+                  { workspaceId, selectedRefs, purpose: 'L0' },
+                  { workspaceId, read: query },
+                  control,
+                );
         } catch (error) {
           active(handle, control);
           const code = safeCode(error);
+          if (version === 2 && code === 'SCHEMA11_SOURCE_INVALID') fail('DATA_INVALID');
           if (/PERMISSION|SCOPE_DENIED/.test(code)) fail('PERMISSION_DENIED');
           if (/BUDGET|LIMIT/.test(code)) fail('BUDGET_EXCEEDED');
           fail('PROVIDER_UNAVAILABLE');
         }
         active(handle, control);
-        const value = sourceProjection.parse(JSON.parse(canonicalCompilationJson(raw, control)));
+        const value = (version === 1 ? sourceProjection : sourceProjectionV2).parse(
+          JSON.parse(canonicalCompilationJson(raw, control)),
+        );
         records = value.records;
         if (value.manifest.workspaceId !== workspaceId) fail('DATA_INVALID');
         const heads = records.map(({ itemId, revisionId }) => ({ itemId, revisionId }));
@@ -417,7 +464,8 @@ export function createOwnedProjectContextSession(ports: OwnedProjectContextPorts
         items.flatMap((h) => h.supportRefs).map((s) => [basisKey(s.basis), s.basis]),
       );
       const response = freeze(
-        projectContextResponseSchema.parse({
+        responseSchema.parse({
+          ...(version === 2 ? { version: 2 } : {}),
           data: {
             depth: 'L0',
             workspaceId,
@@ -449,7 +497,7 @@ export function createOwnedProjectContextSession(ports: OwnedProjectContextPorts
           },
         }),
       );
-      const text = serializeProjectContextResponse(response, control);
+      const text = serialize(response, control);
       if (Buffer.byteLength(text, 'utf8') > budget.maxOutputBytes) fail('BUDGET_EXCEEDED');
       const measurement = sync(
         counter.measure as (...args: never[]) => unknown,
@@ -472,16 +520,16 @@ export function createOwnedProjectContextSession(ports: OwnedProjectContextPorts
         fail('TOKEN_COUNTER_UNAVAILABLE');
       if (m.outputTokens!.value > budget.maxTokens) fail('BUDGET_EXCEEDED');
       permission();
-      return response;
+      return response as Response;
     } catch (error) {
       const code = safeCode(error);
-      return projectContextFailure(
+      return failure(
         error instanceof ContextFailure
           ? error.code
           : ['CANCELLED', 'DEADLINE', 'BUDGET_EXCEEDED'].includes(code)
             ? (code as ProjectContextErrorCode)
             : 'DATA_INVALID',
-      );
+      ) as Response;
     }
   }
   return Object.freeze({ context, descriptor, execute, close });

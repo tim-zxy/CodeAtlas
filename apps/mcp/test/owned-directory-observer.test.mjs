@@ -4,8 +4,11 @@ import { fileURLToPath } from 'node:url';
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
 import * as runtime from '../../../packages/runtime/dist/index.js';
-test('owned-only OS observer adapter exists', () =>
-  assert.equal(typeof runtime.createOwnedDirectoryObserver, 'function'));
+import * as host from '../dist/owned-business-stdio.js';
+test('owned-only OS observer adapter exists', () => {
+  assert.equal(typeof runtime.createOwnedDirectoryObserver, 'function');
+  assert.equal(typeof host.createOwnedDirectoryManagedReadToolsMcpServer, 'function');
+});
 for (const mode of ['managed-os', 'managed-os-event'])
   test('actual fresh-owned OS observer feeds managed SDK ' + mode, { timeout: 30000 }, async () => {
     const transport = new StdioClientTransport({
@@ -33,6 +36,7 @@ for (const mode of ['managed-os', 'managed-os-event'])
     try {
       await client.connect(transport);
       const seed = await seedPromise;
+      assert.match(text, /OWNED_FACTORY_OVERRIDE_REFUSED/);
       assert.match(text, /OWNED_OS_OBSERVER_ATTACHED/);
       assert.match(text, /RECONCILE_DONE POST_ATTACH/);
       const r = await client.callTool({
@@ -68,4 +72,7 @@ for (const mode of ['managed-os', 'managed-os-event'])
     } finally {
       await client.close();
     }
+    assert.match(text, /OWNED_REGISTERED_STORE_CLOSED/);
+    assert.ok(text.indexOf('OWNED_REGISTERED_STORE_CLOSED') < text.indexOf('OWNED_GROUP_SETTLED'));
+    assert.match(text, /OWNED_GROUP_SETTLED/);
   });

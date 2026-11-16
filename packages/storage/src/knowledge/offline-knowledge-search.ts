@@ -1,3 +1,4 @@
+import { Schema11ReadStore } from './schema11-read-store.js';
 import { DatabaseSync } from 'node:sqlite';
 import { types } from 'node:util';
 import { Phase1KnowledgeTypeSchema, type RuntimeRequestControl } from '@codeatlas/ir';
@@ -13,6 +14,7 @@ import {
   OfflinePublicationStore,
   type OfflineSearchManifest,
   type OfflineSearchRecord,
+  type OfflineSearchEvidence,
 } from './offline-publication-store.js';
 export class OfflineKnowledgeSearchError extends Error {
   constructor(
@@ -44,7 +46,7 @@ function safe(error: unknown): never {
     error && typeof error === 'object' && !types.isProxy(error)
       ? Object.getOwnPropertyDescriptor(error, 'code')?.value
       : null;
-  if (code === 'SEARCH_PERMISSION_DENIED') {
+  if (code === 'SEARCH_PERMISSION_DENIED' || code === 'READ11_PERMISSION_DENIED') {
     const unknown =
       error &&
       typeof error === 'object' &&
@@ -65,27 +67,60 @@ export type OfflineSearchPermissions = {
   kind: 'TEST_SEARCH_PERMISSIONS_NOT_AUTHORITY';
   check(manifest: OfflineSearchManifest): undefined;
 };
+export type ReceiptSearchManifest = Omit<OfflineSearchManifest, 'evidenceKind'> & {
+  evidenceKind: 'SCHEMA11_READ_CANDIDATE_NOT_AUTHORITY';
+};
+export type ReceiptSearchPermissions = {
+  kind: 'SCHEMA11_READ_CANDIDATE_NOT_AUTHORITY';
+  check: (manifest: ReceiptSearchManifest) => undefined;
+};
+type ReceiptSearchRecord = Omit<OfflineSearchRecord, 'evidence'> & {
+  evidence: Omit<OfflineSearchEvidence, 'provenance'> & {
+    provenance: {
+      kind: 'SCHEMA11_RECEIPT';
+      version: 1;
+      publicationId: string;
+      candidateId: string;
+      runId: string;
+      snapshotId: string;
+      revisionSetId: string;
+      evaluationId: string;
+    };
+  };
+};
+type SearchRecord = OfflineSearchRecord | ReceiptSearchRecord;
 type IndexState = {
   db: DatabaseSync;
   workspaceId: string;
   headDigest: string;
   contentDigest: string;
-  records: Map<string, OfflineSearchRecord>;
+  records: Map<string, SearchRecord>;
 };
 /** Derived private lexical experiment; not production Query, authority or secret clearance. */
 export class OfflineKnowledgeSearchIndex {
   #state: IndexState | null = null;
   #unsettled = false;
-  #source: OfflinePublicationStore;
-  #check: (manifest: OfflineSearchManifest) => undefined;
-  constructor(source: OfflinePublicationStore, permissions: OfflineSearchPermissions) {
-    check(source instanceof OfflinePublicationStore && !types.isProxy(source));
+  #source: OfflinePublicationStore | Schema11ReadStore;
+  #receipt: boolean;
+  #check: (manifest: OfflineSearchManifest | ReceiptSearchManifest) => undefined;
+  constructor(
+    source: OfflinePublicationStore | Schema11ReadStore,
+    permissions: OfflineSearchPermissions | ReceiptSearchPermissions,
+  ) {
+    check(
+      (source instanceof OfflinePublicationStore || source instanceof Schema11ReadStore) &&
+        !types.isProxy(source),
+    );
+    this.#receipt = source instanceof Schema11ReadStore;
     check(permissions && typeof permissions === 'object' && !types.isProxy(permissions));
     const d = Object.getOwnPropertyDescriptors(permissions);
     check(
       d.kind &&
         'value' in d.kind &&
-        d.kind.value === 'TEST_SEARCH_PERMISSIONS_NOT_AUTHORITY' &&
+        d.kind.value ===
+          (this.#receipt
+            ? 'SCHEMA11_READ_CANDIDATE_NOT_AUTHORITY'
+            : 'TEST_SEARCH_PERMISSIONS_NOT_AUTHORITY') &&
         d.check &&
         'value' in d.check &&
         typeof d.check.value === 'function' &&
@@ -93,7 +128,9 @@ export class OfflineKnowledgeSearchIndex {
         !types.isAsyncFunction(d.check.value),
     );
     this.#source = source;
-    this.#check = d.check.value.bind(permissions);
+    this.#check = d.check.value.bind(permissions) as (
+      manifest: OfflineSearchManifest | ReceiptSearchManifest,
+    ) => undefined;
   }
   private failed(error: unknown): never {
     if (
@@ -111,6 +148,65 @@ export class OfflineKnowledgeSearchIndex {
     metadataOnly = false,
     withEvidence = false,
   ) {
+    if (this.#source instanceof Schema11ReadStore) {
+      const value = Schema11ReadStore.prototype.readCurrentCoveredProjection.call(
+        this.#source,
+        limits,
+        c,
+        (m) =>
+          this.#check({
+            workspaceId: m.workspaceId,
+            heads: m.selectedRefs.map((r) => ({ ...r })),
+            fields: m.fields,
+            evidenceKind: 'SCHEMA11_READ_CANDIDATE_NOT_AUTHORITY',
+          }),
+      );
+      const records: ReceiptSearchRecord[] = value.records.map((r) => {
+        const item = r.itemEnvelope.payload,
+          rev = r.revisionEnvelope.payload,
+          content = rev.structuredContent as { title?: unknown; summary?: unknown; goal?: unknown };
+        check(item.lifecycleState === 'ACTIVE');
+        return {
+          type: item.type,
+          itemId: item.id,
+          revisionId: rev.id,
+          scopeJson: canonicalCompilationJson(item.scope, c),
+          sourceFreshness: item.sourceFreshness,
+          compilationCurrency: item.compilationCurrency,
+          title: typeof content.title === 'string' ? content.title : '',
+          summary: typeof content.summary === 'string' ? content.summary : '',
+          goal: typeof content.goal === 'string' ? content.goal : '',
+          evidence: {
+            supportScopeRefs: r.referenceContext.availableEntities,
+            coverage: r.knowledgeCoverage,
+            supportRefs: rev.supportRefs,
+            provenance: {
+              kind: 'SCHEMA11_RECEIPT',
+              version: 1,
+              publicationId: r.publicationId,
+              candidateId: r.candidateId,
+              ...r.provenance,
+            },
+          },
+        };
+      });
+      const heads = records.map((r) => ({ itemId: r.itemId, revisionId: r.revisionId }));
+      return {
+        kind: 'SCHEMA11_RECEIPT' as const,
+        manifest: {
+          workspaceId: value.workspaceId,
+          heads,
+          fields: ['CURRENT_PUBLISHED_CATALOG', 'PUBLICATION_RECEIPT_VALIDATION'],
+          evidenceKind: 'SCHEMA11_READ_CANDIDATE_NOT_AUTHORITY' as const,
+        },
+        headDigest: publicationDigest(
+          'codeatlas.offline-search.heads.v1',
+          { workspaceId: value.workspaceId, heads },
+          c,
+        ),
+        records,
+      };
+    }
     return OfflinePublicationStore.prototype.readSearchProjection.call(
       this.#source,
       this.#check,
@@ -176,7 +272,7 @@ export class OfflineKnowledgeSearchIndex {
       this.#state = value;
       fresh = null;
       return Object.freeze({
-        kind: 'OWNED_TEST_PUBLICATION' as const,
+        kind: this.#receipt ? ('SCHEMA11_RECEIPT' as const) : ('OWNED_TEST_PUBLICATION' as const),
         workspaceId: value.workspaceId,
         headDigest: value.headDigest,
         contentDigest,
@@ -319,7 +415,7 @@ export class OfflineKnowledgeSearchIndex {
       b.own(results);
       canonicalCompilationJson(results, c);
       return Object.freeze({
-        kind: 'OWNED_TEST_PUBLICATION' as const,
+        kind: this.#receipt ? ('SCHEMA11_RECEIPT' as const) : ('OWNED_TEST_PUBLICATION' as const),
         workspaceId: state.workspaceId,
         headDigest: state.headDigest,
         contentDigest: state.contentDigest,
@@ -345,5 +441,12 @@ export class OfflineKnowledgeSearchIndex {
     } catch (error) {
       return this.failed(error);
     }
+  }
+}
+
+/** Additive receipt-backed derived index; explicit rebuild only, never writes the source Store. */
+export class Schema11KnowledgeSearchIndex extends OfflineKnowledgeSearchIndex {
+  constructor(source: Schema11ReadStore, permissions: ReceiptSearchPermissions) {
+    super(source, permissions);
   }
 }

@@ -1,3 +1,69 @@
+## Receipt Wiki historical file trace - 2026-11-16
+
+P1-16 approved owned delivery -> Application actual completed-observation WeakMap / ReceiptWikiArtifactPreparer -> private IR receipt-wiki-artifact-contract (historical scope/source/window/digests, issuer command) -> Storage shared internal file engine with distinct v1/v2 wrappers -> existing registered file/projection/Runtime tests41. [Exact rules/results](../superpowers/specs/2026-11-08-owned-wiki-files.md#receipt-v2-concrete-format-and-evidence---2026-11-16): atomic CAS/UNKNOWN history and real ID retention, historical notice and ENDED/UNASSESSED reopen, four builds/architecture17/independent review. Existing file guards, Canonical/SQLite authority and production/phase gates unchanged.
+
+## Receipt-backed Component semantic trace - 2026-11-16
+
+P1-11 approved source extension -> schema11-read-store.readSelectedCapabilityInputs (one-view receipt/current Component/inputDigest plus explicit permission) -> shared Application receipt selection -> existing semantic captured-context/support validator -> Capability TEST_DOUBLE. Real source IDs, captured digest and original coverage enter unchanged context hash; no legacy attemptId conversion or new publishing authority. [Contract/evidence](../superpowers/specs/2026-11-07-semantic-test-invocation.md#approved-schema11-receipt-component-inputs---2026-11-16): registered Application45/Store26, builds3/architecture17, independent readonly review. No SQL/Canonical/public API/production or formal acceptance change.
+
+## Owned one-shot freshness trace - 2026-11-16
+
+P1-15/16/18 freshness recovery -> [approved bounded contract](../superpowers/specs/2026-11-16-owned-freshness-wiki.md) -> Application owned-freshness-wiki + existing Source verifier -> Runtime genuine compilation-input owners -> private IR one-use command -> schema11 Store exact snapshot/record CAS -> original receipt Wiki projection -> final observe/CAS/policy/permission checks and transferred-resource close. Existing registered schema11/Source/capture/Wiki tests supply Store24 + neighbors51 plus1 final distinct boundary (76 total), with real synthetic-byte/genuine Storage composition and explicit Git/provider/authorization substitutes. No acceptance checkbox, production route, SQL baseline, immutable receipt or Canonical schema changed.
+
+## Complete receipt-source consumption trace 2026-11-16
+
+P1-15..18 approved owned-data source integration -> schema11-read-store complete transactional current catalog -> existing FTS engine additive receipt source and explicit copy-on-write rebuild -> strict search v2; shared Application covered-source/full-selection adapter -> existing Knowledge declared traversal/Wiki validator and algorithms -> BUSINESS v2 / pure Wiki projection v2 -> independent four-tool official stdio factory with Runtime current-catalog binding and managed resource release. Real IDs/coverage retained, no old attemptId/source relabel. Existing registered Store/Knowledge/Application/Agent/SDK tests give114 distinct bounded checks, builds6/architecture17; original ACTIVE admission and false-empty negative controls are RED/GREEN. Governing contract, exact scope/commands/limits and rollback are in docs/superpowers/specs/2026-11-15-schema11-read-candidate.md latest section. No canonical/schema/dependency/production access or formal acceptance change; old artifacts/receipts and routes remain.
+
+## Receipt-backed selected-tool trace 2026-11-16
+
+P1-15/17/18 approved owned-data delivery -> schema11 covered projection v2 and immutable W010 provenance -> Application schema11-selected-knowledge (explicit IR-derived DTO, exact current body/reference/source validation) -> Agent API receipt-source-contract + status/L0 request/response v2 with shared existing checks -> MCP createReceiptSelectedReadMcpServer, Runtime binding and official SDK stdio/managed release. Old v1 and ordinary routes stay closed/unchanged. Actual publicationId/candidateId replace no old attemptId; coverage is provenance, quality NOT_EVALUABLE and production NOT_AUTHORIZED. Existing Storage fixture shared; registered Store/API/stdio files carry42 distinct bounded checks, builds4 and architecture17. Governing contract/evidence/rollback: docs/superpowers/specs/2026-11-15-schema11-read-candidate.md latest approved section. No Canonical/schema/lock/CI change, real users/production, push or formal acceptance asserted.
+
+## Coverage provenance implementation trace 2026-11-16
+
+P1-14/15/18 internal owned-data lineage: approved knowledge-level coverage binding -> existing W010 publication_runs.receipt_json + unchanged W011 associations -> packages/storage/src/knowledge/schema11-publication-receipt.ts (exact versioned original-command receipt, existing digest replay), schema11-read-store.ts (owned prepared-handle atomic writer, covered projection v2, missing/mismatch refusal) -> existing schema11-read-store.test.mjs (14+1 distinct checks) -> Storage/Runtime builds and architecture17. Governing detail: docs/superpowers/specs/2026-11-15-schema11-read-candidate.md approved coverage section. Metadata v2/projection v1 and Canonical/SQL pins unchanged. Original candidate coverage is provenance, not Evaluation quality or production authority. No production source admission, real data, migrations, push or formal acceptance claimed; rollback additive entrypoints while retaining history.
+
+## P1-18 schema11 current-only internal projection 2026-11-16
+
+The explicitly approved [projection contract](../superpowers/specs/2026-11-15-schema11-read-candidate.md#approved-independent-selected-projection-2026-11-16) adds private readSelectedProjection without changing metadata v2, Canonical IR, DDL or tool source acceptance. Original full validation and explicit delivery grants precede immutable Canonical/reference delivery; real four-ID provenance, NOT_EVALUABLE/UNAVAILABLE/CLOSED and absent knowledge coverage remain separate. Existing registered schema11 test covers original6+new3,9/9; Storage/Runtime builds and architecture17 pass. Single independent code/diff review found no material P1/P2. Production/user-data/quality/A6/phase gates remain open; no old source-marker or qualification reuse.
+
+## P1-18 exact local response counting - 2026-11-16
+
+Approved exact dependency and private Runtime cl100k_base adapter implement the
+existing Agent API counter port without new public request/response or permission
+semantics. Explicit whole-response digest/token policy, caller byte ceiling and
+cooperative stop checks are covered by4 owned-data tests, existing workspace21,
+Runtime build and architecture17. [Contract](specs/AGENT_API.md#approved-private-exact-local-counter-2026-11-16)
+and [scope/evidence/remaining limits](../superpowers/reviews/2026-11-15-tokenizer-audit.md#approved-runtime-adoption-and-resolved-pnpm-wait-2026-11-16).
+Production/A6/phase acceptance and provenance-wide assurance are not inferred.
+
+## Schema11 read candidate and token audit - 2026-11-15
+
+User-approved self-owned refinement adds unregistered/pinned011 read schema and exact readonly metadata v2, retaining production manifest8/old9/10 gates. Nonempty Canonical/provenance/support validation and UNKNOWN/scope review fixes pass focused15/15 (6new+9existing),0fail/cancel/skip/TODO,5089.6233ms; Storage build passes. [Contract/evidence/limits](../superpowers/specs/2026-11-15-schema11-read-candidate.md). Reader always qualityAdmission UNAVAILABLE/productionAccess CLOSED, not a production endpoint. Validation reads can include captured payloads; no source-free real-data grant is implied. [Tokenizer4.1.2 audit](../superpowers/reviews/2026-11-15-tokenizer-audit.md) is blocked on published package integrity/provenance/closure evidence; no install/dependency/lock change. Final independent delta review has no remaining material P1/P2; workspace21/21, architecture17 and scoped format/diff pass. No user DB, migration installation, production permission/entry, Native/qualification, CI or push; original27 changes/frozen evidence retained. Nine batch files are ready for the approved local-only checkpoint.
+
+## Same-batch owned published Runtime-to-stdio chain - 2026-11-14
+
+Private Runtime opaque binding now ties fixed scope, controls and initial publication state to the actual self-owned Store port. The four official SDK tools all read the same real published BusinessFlow revision through existing Application/Agent validation. Forged/cross-owner handles, scope/version-view substitution, revoke/cancel and uncertain cleanup controls covered in focused24/24 (8 Store/binding/SDK +16 owner),0fail/cancel/skip/TODO,12535.0335ms. [Exact boundaries and failure history](../superpowers/specs/2026-11-14-local-published-mcp-binding.md#same-batch-end-to-end-completion). Post-review affected3/3 and final Store-port/wrong-workspace regression1/1 pass (overlapping, not summed); Runtime build and architecture17 pass. Self-owned only; no OS issuer, user data, normal production entry, CI/push or qualification claim. Final independent end-to-end review found no remaining material P1/P2. Original27 changes preserved; seven batch files are ready for the approved local-only checkpoint.
+
+## Local published MCP owned-data binding - 2026-11-14
+
+Approved self-owned scope implements an additive four-read-tool session with process-local binding checks, latched uncertainty, query-result suppression and SDK/resource-owner cleanup. [Exact scope, commands, failure history and production limits](../superpowers/specs/2026-11-14-local-published-mcp-binding.md). MCP build, initial concentrated29/29, post-review affected6/6 and final order regression1/1 pass (overlapping, not summed); existing wire/public main/permissions/Native/CI unchanged. Normal production issuer and user-project access remain closed. No Phase1/A6 acceptance or candidate identity reuse. Independent final review confirms no remaining P1/P2 after snapshot-order fix. Original27 worktree changes retained; no remote push.
+
+## P1-18 registered-owner acquisition boundary - 2026-11-14
+
+Existing embedding ownership + producer rollback/join contract -> private acquisition-to-run adapter -> original managed owner. Confirmed rollback closes registered Store; unconfirmed producer state retains UNKNOWN; late cancel closes acquired server without start. Actual Store constructor-refusal child and16 owner/producer+3OS+3Store checks22/22 pass, MCP build/architecture17 pass. No public permission/schema, generic registry or frozen candidate changes. [Evidence, producer responsibility and limits](CURRENT_STATUS.md#p1-18-registered-owner-acquisition-to-exit-component---2026-11-14).
+
+## P1-18 owned directory factory component - 2026-11-14
+
+Existing fresh-owned-directory event spec -> private fixed-watch MCP factory -> original managed lifecycle plus embedding resource owner. Two original OS child cases prove real event invalidation and registered-Store settlement; caller path/watch/mode overrides refuse.5/5 related plus overlapping3/3 final observer checks, MCP build/architecture17 pass. No public schema, production/query grant or frozen-candidate change; new dist requires its own later integration identity. [Evidence and scope](CURRENT_STATUS.md#p1-18-owned-directory-managed-factory---2026-11-14).
+
+## P1-18 private embedding owner component - 2026-11-14
+
+Existing owned-mcp-stdio embedding-resource responsibility + owned-read-lifecycle join semantics -> runOwnedManagedMcpHost -> real self-owned Store/official SDK success and denial path, plus8 startup/abort/UNKNOWN vectors.20/20 related and final2/2 overlapping Store checks, MCP build/architecture17 pass. Main/smoke, protocol, grants, dependencies and frozen candidates unchanged; next development dist/catalog requires its own evidence. [Reproduction and limits](CURRENT_STATUS.md#p1-18-owned-embedding-resource-owner---2026-11-14). No production/A6/Phase1 claim or OS-wide cleanup assertion.
+
+## Exact c6ac0ba CI closure evidence - 2026-11-14
+
+Approved five-file fix -> exact CI43558241011 -> TS/Rust/Native success, original full REFRESH and actual22 validator success, original artifact uploads retained. Independent22-observation/199-export-file audit and controlled cleanup evidence refer only to this run; historical cancelled cleanup remains UNKNOWN. A6/Phase1 and production permission gates unchanged; ordinary MCP/real-workspace admission remains a separate product decision. [Fresh evidence and limits](CURRENT_STATUS.md#exact-c6ac0ba-integrated-ci-evidence---2026-11-14).
+
 ## Current replay test explicit generator4 repair - 2026-11-14
 
 Existing approved generator4 topology -> current root replay-test fixture explicitly selects it without changing generator3 defaults -> Manifest3 assertion and retained cancellation-prefix verification. Legacy refusal tests remain. Combined topology/selection23/23 PASS; no Native/cloud run, frozen closure or quality-gate change. Full real replay45-failure closure remains unverified pending clean diagnostic environment. [Evidence and limits](CURRENT_STATUS.md#local-current-replay-fixture-generator4-repair---2026-11-14).

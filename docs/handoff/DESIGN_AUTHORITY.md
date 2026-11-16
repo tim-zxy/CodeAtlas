@@ -1,3 +1,31 @@
+## Approved receipt Wiki historical file lifecycle - 2026-11-16
+
+User approved [version2 historical delivery](../superpowers/specs/2026-11-08-owned-wiki-files.md#approved-receipt-wiki-historical-file-version---2026-11-16): actual settled one-shot provenance only, ended observation window and current freshness unassessed, real receipt IDs, temp-only existing atomic writer/recovery, separate v1/v2 formats and old compatibility. No ongoing FRESH, reopened authority, signing/service, SQL/Canonical/public API, production or real project access is introduced.
+
+## Approved receipt Component semantic input - 2026-11-16
+
+User approved [schema11 Component-to-Capability binding](../superpowers/specs/2026-11-07-semantic-test-invocation.md#approved-schema11-receipt-component-inputs---2026-11-16): exact ACTIVE current Component, genuine receipt and immutable snapshot inputDigest, same snapshot/revisionSet/full support closure before existing TEST_DOUBLE. Preserve old source, real publication/candidate IDs and NOT_EVALUABLE/closed production. No SQL, Canonical IR, public tool schema, real model, user project, publication or push.
+
+## Approved owned one-shot freshness reconciliation - 2026-11-16
+
+User approved the [bounded freshness contract](../superpowers/specs/2026-11-16-owned-freshness-wiki.md): only selected current publications and complete captured bases in self-owned temporary memory databases and synthetic Source. Genuine Source/Storage owners plus policies/permissions precede atomic AFFECTED-to-FRESH CAS; no STALE recovery, document-dependent admission, history mutation or durable observation authority. One-shot response withheld through final Source/Store/policy checks and cleanup. Canonical vocabulary, AUTO/MANUAL policy, production gates and frozen qualification remain unchanged. No SQL migration, user project, production enablement or push.
+
+## Approved receipt search, BUSINESS and Wiki sources 2026-11-16
+
+User approved self-owned temporary schema11 source adapters: complete current publication catalog and rebuildable derived FTS with missing-receipt/head-drift refusal; independent search/BUSINESS v2 and Wiki projection v2 with real publication/candidate lineage. Old v1/selected routes, canonical IR, profile/trace/search algorithms and NOT_EVALUABLE/production closure remain. No attemptId fabrication, pagination, graph expansion, SQL migration, backfill, user projects, model/Native, production enablement or push. Original ACTIVE index admission is preserved. Exact rules, failure/recovery, compatible route distinctions, materialization limits and114 bounded checks: docs/superpowers/specs/2026-11-15-schema11-read-candidate.md latest approved section. No open-source download was needed; optional material authorization grants no production rights.
+
+## Approved owned receipt tool versions 2026-11-16
+
+User approved schema11 source admission and status/L0 version2 within self-owned temporary DBs only. Source provenance kind SCHEMA11_RECEIPT/version1 carries real publicationId/candidateId/run/snapshot/revisionSet/evaluation, no invented attemptId; original coverage, NOT_EVALUABLE and closed production retained. Strict v2 requests/responses and private two-tool stdio factory are additive; old v1 and other depth routes remain unchanged. Store/Application validation, fixed scope/process handles, revocation, complete-response exact token/byte budgets and cleanup remain mandatory. No Canonical/migration, production/main enablement, real projects, source text/model, update, dependency or push. Exact schema, edge cases, rollback and fresh bounded evidence are in docs/superpowers/specs/2026-11-15-schema11-read-candidate.md approved receipt tool section.
+
+## Approved bounded coverage provenance extension 2026-11-16
+
+User approved reuse of existing W010 publication_runs.receipt_json for independent provenance receipt v1, preserving validated candidate set plus candidate-to-revision mappings and exact workspace/run/snapshot/revisionSet/evaluation/input/candidate-set digests. Only self-owned temporary schema11 databases: atomic revisions/provenance/pointer/receipt and read-side revalidation. Coverage is candidate-original, never inferred or quality admission. New private covered projection v2; old metadata v2/projection v1 unchanged. No Canonical/SQL migration, user data, production enablement, public-tool admission, push or frozen qualification reuse. Exact rules and bounded verification: docs/superpowers/specs/2026-11-15-schema11-read-candidate.md, approved2026-11-16 coverage section. Rollback disables additive paths and retains immutable history.
+
+## Approved private schema11 selected projection 2026-11-16
+
+User explicitly approved the [independent internal projection](../superpowers/specs/2026-11-15-schema11-read-candidate.md#approved-independent-selected-projection-2026-11-16): current published versions only, validated Canonical bodies and consumed references, four real provenance IDs and explicit delivery fields. Metadata v2 is preserved; qualityAdmission UNAVAILABLE, productionAccess CLOSED, original evaluation NOT_EVALUABLE and absent knowledge coverage remain distinct. Only self-owned temporary databases; tools lacking coverage continue refusing. No old experimental source identity, Canonical IR/DDL/publication change, production access/entry, user DB, migration installation or remote authority follows.
+
 ## Approved Codex CLI preview - 2026-11-12
 
 User approved the [setup preview extension](../superpowers/specs/2026-11-10-codex-setup-dry-run.md):

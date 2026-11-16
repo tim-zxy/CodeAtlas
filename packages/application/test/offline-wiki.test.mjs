@@ -420,3 +420,86 @@ test('real owned publication query remains AFFECTED and cannot create a fresh Wi
   assert.equal(projector.getCurrent(), null);
   assert.deepEqual(history(), before);
 });
+
+import { withReadyPublication } from '../../storage/test/helpers/schema11-publication-fixture.mjs';
+import { projectSchema11Wiki } from '../dist/offline-wiki.js';
+import { readSchema11PublishedSelection } from '../dist/schema11-selected-knowledge.js';
+import { projectOwnedWiki } from '../../knowledge/dist/offline-wiki.js';
+const receiptWikiRequest = (f) => ({
+  workspaceId: f.w,
+  repositoryIds: f.owned.repositoryIds,
+  selectedPublishedRevisionRefs: f.refs,
+  customizationPolicy: 'LOCKED',
+  allowPartial: true,
+});
+test('receipt Wiki projects real published lineage with locked profile and truthful stale status', async (t) =>
+  withReadyPublication(t, async (f) => {
+    f.writer.publishOwnedPrepared(f.ready.handle, f.limits, f.c);
+    const before = f.db.prepare('SELECT total_changes() n').get().n,
+      ports = {
+        workspaceId: f.w,
+        read: async (refs, c) => f.api.readSelectedCoveredProjection(refs, f.limits, c, () => {}),
+      };
+    const result = await projectSchema11Wiki(receiptWikiRequest(f), ports, f.c);
+    assert.equal(result.kind, 'SCHEMA11_RECEIPT_WIKI');
+    assert.equal(result.version, 2);
+    assert.equal(result.status, 'STALE');
+    assert.equal(result.canMaterialize, false);
+    assert.equal(result.quality, 'NOT_EVALUABLE');
+    assert.equal(result.productionPublication, 'NOT_AUTHORIZED');
+    assert.ok(
+      result.markdown.includes('"publicationId"') && result.markdown.includes('"candidateId"'),
+    );
+    assert.ok(!result.markdown.includes('"attemptId"'));
+    assert.ok(Object.isFrozen(result));
+    assert.equal(
+      (await projectSchema11Wiki(receiptWikiRequest(f), ports, f.c)).contentFingerprint,
+      result.contentFingerprint,
+    );
+    const selection = await readSchema11PublishedSelection(receiptWikiRequest(f), ports, f.c);
+    assert.throws(() => projectOwnedWiki(receiptWikiRequest(f), selection, f.c));
+    assert.equal(f.db.prepare('SELECT total_changes() n').get().n, before);
+  }));
+test('receipt Wiki empty selection stays missing without reads; wrong scope and associations refuse', async (t) =>
+  withReadyPublication(t, async (f) => {
+    f.writer.publishOwnedPrepared(f.ready.handle, f.limits, f.c);
+    let reads = 0;
+    const ports = {
+      workspaceId: f.w,
+      read: async (refs, c) => {
+        reads++;
+        return f.api.readSelectedCoveredProjection(refs, f.limits, c, () => {});
+      },
+    };
+    const empty = await projectSchema11Wiki(
+      { ...receiptWikiRequest(f), selectedPublishedRevisionRefs: [] },
+      ports,
+      f.c,
+    );
+    assert.equal(empty.status, 'MISSING_DATA');
+    assert.equal(empty.canMaterialize, false);
+    assert.equal(reads, 0);
+    await assert.rejects(
+      readSchema11PublishedSelection(
+        { ...receiptWikiRequest(f), selectedPublishedRevisionRefs: {} },
+        ports,
+        f.c,
+      ),
+      /SCHEMA11_SOURCE_INVALID/,
+    );
+    await assert.rejects(
+      projectSchema11Wiki({ ...receiptWikiRequest(f), repositoryIds: ['wrong-repo'] }, ports, f.c),
+    );
+    const value = structuredClone(
+      f.api.readSelectedCoveredProjection(f.refs, f.limits, f.c, () => {}),
+    );
+    value.records[0].provenance.evaluationId = 'substituted';
+    await assert.rejects(
+      projectSchema11Wiki(
+        receiptWikiRequest(f),
+        { workspaceId: f.w, read: async () => value },
+        f.c,
+      ),
+      /SCHEMA11_SOURCE_INVALID/,
+    );
+  }));

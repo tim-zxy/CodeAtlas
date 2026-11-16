@@ -1,3 +1,11 @@
+## Approved owned historical Wiki delivery - 2026-11-16
+
+Actual successful one-shot receipt Wiki output can feed a private process-origin preparer and temp-only v2 file writer. The artifact keeps original publication/candidate/snapshot associations and marks observation ENDED and currentFreshness UNASSESSED. It is a historical projection, not a knowledge republish, persistent permission, ongoing Source observation or quality admission. Existing MANUAL semantics, Canonical facts and ordinary production closure remain. [Exact file contract](../../superpowers/specs/2026-11-08-owned-wiki-files.md#approved-receipt-wiki-historical-file-version---2026-11-16).
+
+## Approved owned freshness operation - 2026-11-16
+
+The [one-shot self-owned reconciliation contract](../../superpowers/specs/2026-11-16-owned-freshness-wiki.md) adds an explicit Application operation before Wiki projection. Complete matching genuine Source/Storage bases permit only ACTIVE AFFECTED-to-FRESH metadata CAS in anonymous temporary memory databases. It never recompiles/re-publishes semantic knowledge, changes historical revisions/receipts, recovers STALE, grants clearance or quality, or writes during ordinary read tools. FRESH is scoped to this observation window, not whole-project completeness. Production and real user data remain closed.
+
 # Knowledge Workflow Specification
 
 ## Update model

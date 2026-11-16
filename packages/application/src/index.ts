@@ -70,3 +70,9 @@ export type { OwnedSymbolCodeSession } from './owned-symbol-query.js';
 export * from './owned-code-trace.js';
 
 export * from './owned-structure-trace.js';
+
+export { readSchema11SelectedKnowledge } from './schema11-selected-knowledge.js';
+
+export { readSchema11PublishedSelection } from './schema11-selected-knowledge.js';
+export { ReceiptBusinessFlowTracer } from './offline-business-trace.js';
+export { projectSchema11Wiki } from './offline-wiki.js';

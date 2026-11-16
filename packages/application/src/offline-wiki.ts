@@ -1,3 +1,4 @@
+import { readSchema11PublishedSelection } from './schema11-selected-knowledge.js';
 import { randomUUID } from 'node:crypto';
 import { types } from 'node:util';
 import { type RuntimeRequestControl } from '@codeatlas/ir';
@@ -5,6 +6,8 @@ import { KnowledgeBudget, immutable } from '../../knowledge/dist/comparison-cont
 import {
   parseOwnedWikiRequest,
   projectOwnedWiki,
+  projectReceiptWiki,
+  type ReceiptWikiProjection,
   wikiDigest,
   WikiProjectionError,
   type OwnedWikiRequest,
@@ -129,4 +132,21 @@ export class OfflineWikiProjector {
       this.#busy = false;
     }
   }
+}
+
+/** Additive pure receipt-backed projection. Artifact publication/production remain closed. */
+export async function projectSchema11Wiki(
+  requestInput: unknown,
+  ports: {
+    workspaceId: string;
+    read: (
+      refs: readonly { itemId: string; revisionId: string }[],
+      c: RuntimeRequestControl,
+    ) => Promise<unknown>;
+  },
+  control: RuntimeRequestControl,
+): Promise<ReceiptWikiProjection> {
+  const request = parseOwnedWikiRequest(requestInput, control);
+  const knowledge = await readSchema11PublishedSelection(request, ports, control);
+  return projectReceiptWiki(request, knowledge, control);
 }

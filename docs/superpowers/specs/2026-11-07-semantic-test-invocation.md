@@ -1,3 +1,11 @@
+## Approved schema11 receipt Component inputs - 2026-11-16
+
+User explicitly approved the additional semantic input source only in self-owned temporary databases and local Capability TEST_DOUBLE. Existing runOwnedCapabilityTestDouble may consume schema11 covered projection2 through the shared strict receipt-selection validator; buildCapturedSemanticTestRequest accepts that distinct SCHEMA11_RECEIPT/version2 selection through the existing receipt validator. Old OWNED_TEST_PUBLICATION validation remains unchanged. This is not an attemptId conversion: retain real publicationId/candidateId plus run/snapshot/revisionSet/evaluation, original coverage and NOT_EVALUABLE/NOT_AUTHORIZED.
+
+Storage readSelectedCapabilityInputs uses one guarded read transaction for full receipt/current-head/Canonical/support validation and original immutable compilation snapshot inputDigest. SNAPSHOT_INPUT_DIGEST is explicit in its permission manifest. Only ACTIVE Components; response {knowledge,sourceInputs}, each input maps exact itemId/revisionId to capturedInputDigest. No schema migration/Canonical/public-tool change, source/model access, SQL writer, recursive knowledge generation or publication.
+
+The existing semantic composer rechecks exact selected current versions, snapshotId/inputDigest/revisionSet and complete captured entity/support-value closure before generation. All source data and provenance enter the unchanged authorizedContext/inputDigest recipe; knowledge is additional allowed Component references, never authority, inherited identity or quality. Missing/inconsistent binding, permission/control failure and unsupported source refuse before the model port; old cancellation/usage/cleanup rules remain. No byte fallback, production scan or real-model call. Rollback disables the additive receipt source while preserving immutable history and the old owned source.
+
 # P1-11 private offline semantic invocation boundary
 
 Implements knowledge-and-consumption section4 within existing Application/IR
@@ -244,3 +252,11 @@ strict complete UTF8 and original cancellation/deadline with client closure join
 This is only self-owned synthetic server evidence, not local-model identity,
 permission, production API or ACTUAL_MODEL quality. No canonical/public schema
 or dependency changed. [Review and reproduction](../reviews/2026-11-12-compatible-loopback.md).
+
+## Receipt Capability implementation evidence - 2026-11-16
+
+Real self-owned schema11 Component publication -> guarded read with original snapshot inputDigest -> existing semantic Capability TEST_DOUBLE now passes. The generated context keeps real publicationId/candidateId and associated run/snapshot/revisionSet/evaluation, no attemptId. Wrong captured digest/version/support/provenance association and denied input-digest permission refuse before model call. No generation writes to the source database; coverage/NOT_EVALUABLE and publication NOT_ATTEMPTED remain.
+
+Fresh grouped registered checks: Application capability/semantic/Business45/45 (5508.4312ms), Store26/26 (27972.0127ms), total71, no fail/cancel/skip/TODO. Storage -> Application -> Runtime builds, architecture17 and scoped format pass. Original missing-reader RED retained; inferred branded IDs initially leaked Zod through generated declarations and failed downstream Runtime build, corrected with explicit existing string DTO fields. No dependency added. Early4 targeted checks are included in grouped totals, not extra observations.
+
+Independent readonly implementation/test review found no definiteP1/P2; reviewer did not execute tests/builds or verify final documentation. Original27 byte hashes retained; no migration/manifest/IR/lock/public-tool/production/frozen candidate changes or push. Evidence: local-evidence:codeatlas-receipt-capability-r67munmy/result.json. Ordinary model/production authority and formal Phase1/A6 gates remain open. Rollback only the additive receipt reader/source admission; retain old source and immutable history.

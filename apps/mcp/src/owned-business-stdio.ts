@@ -4,7 +4,7 @@ import type { Readable, Writable } from 'node:stream';
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { serializeMessage } from '@modelcontextprotocol/sdk/shared/stdio.js';
-import { createOwnedReadLifecycle } from '@codeatlas/runtime';
+import { createOwnedReadLifecycle, createOwnedDirectoryObserver } from '@codeatlas/runtime';
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
@@ -57,6 +57,188 @@ import {
   serializeBusinessTraceResponse,
   createOwnedBusinessTraceSession,
 } from '@codeatlas/agent-api';
+
+import {
+  createReceiptKnowledgeSearchSession,
+  createReceiptBusinessTraceSession,
+  knowledgeSearchWireV2Schemas,
+  knowledgeSearchResponseV2Schema,
+  knowledgeSearchFailureV2,
+  serializeKnowledgeSearchResponseV2,
+  businessTraceWireV2Schemas,
+  businessTraceResponseV2Schema,
+  businessTraceFailureV2,
+  serializeBusinessTraceResponseV2,
+  createReceiptKnowledgeStatusSession,
+  createReceiptProjectContextSession,
+  knowledgeStatusWireV2Schemas,
+  knowledgeStatusResponseV2Schema,
+  knowledgeStatusFailureV2,
+  serializeKnowledgeStatusResponseV2,
+  projectContextWireV2Schemas,
+  projectContextResponseV2Schema,
+  projectContextFailureV2,
+  serializeProjectContextResponseV2,
+} from '@codeatlas/agent-api';
+
+/** Explicit owned schema11 selection only. No database opener or production entry. */
+type ReceiptSelectedOptions = {
+  scope: Scope;
+  status: ScopedPorts<Parameters<typeof createReceiptKnowledgeStatusSession>[0]>;
+  projectContext: ScopedPorts<Parameters<typeof createReceiptProjectContextSession>[0]>;
+  limits: OwnedBusinessStdioLimits;
+};
+type ReceiptBinding = {
+  signal: AbortSignal;
+  check: (scope: Readonly<{ workspaceId: string; repositoryIds: readonly string[] }>) => void;
+};
+type ReceiptAdditionalOptions = {
+  search: ScopedPorts<Parameters<typeof createReceiptKnowledgeSearchSession>[0]>;
+  business: ScopedPorts<Parameters<typeof createReceiptBusinessTraceSession>[0]>;
+};
+export function createReceiptSelectedReadMcpServer(
+  options: ReceiptSelectedOptions,
+  binding: ReceiptBinding,
+  streams: { input: Readable; output: Writable },
+) {
+  return createReceiptReadMcpServer(options, binding, streams);
+}
+/** Independent four-tool receipt source route; old two-tool and v1 routes remain unchanged. */
+export function createReceiptPublishedReadMcpServer(
+  options: ReceiptSelectedOptions & ReceiptAdditionalOptions,
+  binding: ReceiptBinding,
+  streams: { input: Readable; output: Writable },
+) {
+  return createReceiptReadMcpServer(options, binding, streams, true);
+}
+function createReceiptReadMcpServer(
+  options: ReceiptSelectedOptions & Partial<ReceiptAdditionalOptions>,
+  binding: ReceiptBinding,
+  streams: { input: Readable; output: Writable },
+  extended = false,
+) {
+  const fields = record(options, [
+      'scope',
+      'status',
+      'projectContext',
+      'limits',
+      ...(extended ? ['search', 'business'] : []),
+    ]),
+    b = record(binding, ['signal', 'check']);
+  const limits = stdioLimits(fields.limits!.value),
+    rawScope = snapshotReadScope(fields.scope!.value, limits);
+  const scope = Object.freeze({
+    workspaceId: rawScope.workspaceId,
+    repositoryIds: Object.freeze([...rawScope.repositoryIds].sort()),
+  });
+  const signal = b.signal!.value as AbortSignal,
+    check = b.check!.value as typeof binding.check;
+  if (
+    !(signal instanceof AbortSignal) ||
+    types.isProxy(signal) ||
+    typeof check !== 'function' ||
+    types.isProxy(check)
+  )
+    throw Error('INVALID_OWNED_STDIO_OPTIONS');
+  const aborted = Object.getOwnPropertyDescriptor(AbortSignal.prototype, 'aborted')!.get!,
+    pid = process.pid;
+  let valid = true;
+  const readiness = () => {
+    if (valid)
+      try {
+        if (aborted.call(signal) || process.pid !== pid) throw Error();
+        const value: unknown = check(scope);
+        if (value !== undefined) {
+          if (types.isPromise(value) && !types.isProxy(value))
+            void Promise.prototype.then.call(value, undefined, () => undefined);
+          throw Error();
+        }
+      } catch {
+        valid = false;
+      }
+    return { ready: valid, generation: 0 };
+  };
+  const makePorts = (raw: unknown, selected = true) => {
+    const ports = portFields(raw, [
+      ...(selected ? ['selectedRefs'] : []),
+      'limits',
+      'authorize',
+      'knowledgeQuery',
+    ]);
+    const authorize = ports.authorize;
+    if (typeof authorize !== 'function' || types.isProxy(authorize))
+      throw Error('INVALID_OWNED_STDIO_OPTIONS');
+    return {
+      ...ports,
+      workspaceId: scope.workspaceId,
+      repositoryIds: [...scope.repositoryIds],
+      authorize: (manifest: unknown, c: unknown) => {
+        if (!readiness().ready) throw Error('OWNED_BINDING_UNAVAILABLE');
+        return Reflect.apply(authorize, raw, [manifest, c]);
+      },
+    };
+  };
+  const status = createReceiptKnowledgeStatusSession(
+    makePorts(fields.status!.value) as Parameters<typeof createReceiptKnowledgeStatusSession>[0],
+  );
+  let context: ReturnType<typeof createReceiptProjectContextSession>;
+  try {
+    context = createReceiptProjectContextSession(
+      makePorts(fields.projectContext!.value) as Parameters<
+        typeof createReceiptProjectContextSession
+      >[0],
+    );
+  } catch (error) {
+    status.close();
+    throw error;
+  }
+  const additional = new Map<ToolName, ReadSession>([['get_project_context', context]]);
+  let app: ReturnType<typeof createOwnedQueryMcpServer>;
+  try {
+    if (extended) {
+      additional.set(
+        'search_knowledge',
+        createReceiptKnowledgeSearchSession(
+          makePorts(fields.search!.value, false) as Parameters<
+            typeof createReceiptKnowledgeSearchSession
+          >[0],
+        ),
+      );
+      additional.set(
+        'trace_flow',
+        createReceiptBusinessTraceSession(
+          makePorts(fields.business!.value, false) as Parameters<
+            typeof createReceiptBusinessTraceSession
+          >[0],
+        ),
+      );
+    }
+    app = createOwnedQueryMcpServer(
+      { session: status, limits },
+      streams,
+      'get_knowledge_status',
+      additional,
+      false,
+      false,
+      readiness,
+      true,
+    );
+  } catch (error) {
+    status.close();
+    for (const session of additional.values()) void session.close();
+    throw error;
+  }
+  const stop = () => {
+    valid = false;
+    void app.close().catch(() => undefined);
+  };
+  EventTarget.prototype.addEventListener.call(signal, 'abort', stop, { once: true });
+  if (aborted.call(signal)) stop();
+  void app.completion
+    .finally(() => EventTarget.prototype.removeEventListener.call(signal, 'abort', stop))
+    .catch(() => undefined);
+  return app;
+}
 
 type StatusSession = ReturnType<typeof createOwnedKnowledgeStatusSession>;
 type SymbolSession = ReturnType<typeof createOwnedSymbolUnderstandingSession>;
@@ -261,6 +443,9 @@ type ThreeReadOptions = {
   projectContext: ScopedPorts<Parameters<typeof createOwnedProjectContextSession>[0]>;
   limits: OwnedBusinessStdioLimits;
 };
+type PublishedReadOptions = ThreeReadOptions & {
+  status: ScopedPorts<Parameters<typeof createOwnedKnowledgeStatusSession>[0]>;
+};
 type FiveReadOptions = ThreeReadOptions & {
   status: ScopedPorts<Parameters<typeof createOwnedKnowledgeStatusSession>[0]>;
   symbol: ScopedPorts<Parameters<typeof createOwnedSymbolUnderstandingSession>[0]>;
@@ -283,6 +468,91 @@ export function createOwnedReadToolsMcpServer(
 ) {
   return createOwnedReadToolset(options, streams, false);
 }
+/** Trusted in-process owned-data binding; never accepts request-supplied grants or opens a database. */
+export function createLocalPublishedReadMcpServer(
+  options: PublishedReadOptions,
+  binding: {
+    signal: AbortSignal;
+    check: (scope: Readonly<{ workspaceId: string; repositoryIds: readonly string[] }>) => void;
+  },
+  streams: { input: Readable; output: Writable },
+) {
+  const b = record(binding, ['signal', 'check']);
+  const signal = b.signal!.value as AbortSignal;
+  const check = b.check!.value as (
+    scope: Readonly<{ workspaceId: string; repositoryIds: readonly string[] }>,
+  ) => void;
+  const fields = record(options, [
+    'scope',
+    'business',
+    'search',
+    'projectContext',
+    'status',
+    'limits',
+  ]);
+  const originalScope = snapshotReadScope(fields.scope!.value, stdioLimits(fields.limits!.value));
+  const scope = Object.freeze({
+    workspaceId: originalScope.workspaceId,
+    repositoryIds: Object.freeze([...originalScope.repositoryIds].sort()),
+  });
+  const captured = Object.fromEntries(Object.entries(fields).map(([k, v]) => [k, v.value]));
+  captured.scope = scope;
+  if (
+    !(signal instanceof AbortSignal) ||
+    types.isProxy(signal) ||
+    typeof check !== 'function' ||
+    types.isProxy(check)
+  )
+    throw Error('INVALID_OWNED_STDIO_OPTIONS');
+  const aborted = Object.getOwnPropertyDescriptor(AbortSignal.prototype, 'aborted')!.get!;
+  const pid = process.pid;
+  let valid = true;
+  const readiness = () => {
+    if (valid) {
+      try {
+        if (aborted.call(signal) || process.pid !== pid) throw Error();
+        const receipt: unknown = check(scope);
+        if (receipt !== undefined) {
+          if (types.isPromise(receipt) && !types.isProxy(receipt))
+            void Promise.prototype.then.call(receipt, undefined, () => undefined);
+          throw Error(); // Async/boolean receipts are not authorization.
+        }
+      } catch {
+        valid = false;
+      }
+    }
+    return { ready: valid, generation: 0 };
+  };
+  const app = createOwnedReadToolset(
+    captured as PublishedReadOptions,
+    streams,
+    'PUBLISHED_ONLY',
+    false,
+    false,
+    readiness,
+  );
+  const stop = () => {
+    valid = false;
+    void app.close().catch(() => undefined);
+  };
+  EventTarget.prototype.addEventListener.call(signal, 'abort', stop, { once: true });
+  if (aborted.call(signal)) stop();
+  void app.completion
+    .finally(() => EventTarget.prototype.removeEventListener.call(signal, 'abort', stop))
+    .catch(() => undefined);
+  return Object.freeze({
+    ...app,
+    start: async () => {
+      if (!readiness().ready) throw Error('LOCAL_PUBLISHED_BINDING_UNAVAILABLE');
+      return app.start();
+    },
+    close: () => {
+      valid = false;
+      return app.close();
+    },
+  });
+}
+
 export function createOwnedFiveReadToolsMcpServer(
   options: FiveReadOptions,
   streams: { input: Readable; output: Writable },
@@ -466,11 +736,66 @@ export function createOwnedManagedReadToolsMcpServer(
   );
   return Object.freeze({ start, close, completion, getLifecycleState: () => lifecycle.getState() });
 }
+type OwnedDirectoryManagedOptions = Omit<ManagedReadOptions, 'lifecycle'> & {
+  lifecycle: Pick<LifecycleOptions, 'mode' | 'reconcile'>;
+};
+/** Fresh-owned-directory wiring only; no caller path, watch override or production grant. */
+export function createOwnedDirectoryManagedReadToolsMcpServer(
+  options: OwnedDirectoryManagedOptions,
+  streams: { input: Readable; output: Writable },
+) {
+  const d = record(options, [
+    'scope',
+    'business',
+    'search',
+    'projectContext',
+    'limits',
+    'status',
+    'symbol',
+    'code',
+    'l1',
+    'structure',
+    'l2',
+    'lifecycle',
+  ]);
+  const l = record(d.lifecycle!.value, ['mode', 'reconcile']);
+  if (l.mode!.value !== 'MCP_STDIO') throw Error('INVALID_OWNED_STDIO_OPTIONS');
+  let observer: Awaited<ReturnType<typeof createOwnedDirectoryObserver>> | undefined;
+  const app = createOwnedManagedReadToolsMcpServer(
+    {
+      ...Object.fromEntries(Object.entries(d).map(([key, value]) => [key, value.value])),
+      lifecycle: {
+        mode: 'MCP_STDIO',
+        reconcile: l.reconcile!.value,
+        watch: async (listener, scope, control) => {
+          const handle = await createOwnedDirectoryObserver(scope, listener, control);
+          observer = handle;
+          handle.signal.addEventListener(
+            'abort',
+            () => {
+              void app.close();
+            },
+            { once: true },
+          );
+          if (handle.signal.aborted) void app.close();
+          return { close: () => handle.close() };
+        },
+      },
+    } as ManagedReadOptions,
+    streams,
+  );
+  return Object.freeze({ ...app, getOwnedDirectory: () => observer?.directory ?? null });
+}
 type Readiness = () => Readonly<{ ready: boolean; generation: number }>;
 function createOwnedReadToolset(
-  options: ThreeReadOptions | FiveReadOptions | ExtendedReadOptions | StructureReadOptions,
+  options:
+    | ThreeReadOptions
+    | PublishedReadOptions
+    | FiveReadOptions
+    | ExtendedReadOptions
+    | StructureReadOptions,
   streams: { input: Readable; output: Writable },
-  includeStatusAndSymbol: boolean,
+  includeStatusAndSymbol: boolean | 'PUBLISHED_ONLY',
   extended = false,
   stored = false,
   readiness?: Readiness,
@@ -481,7 +806,8 @@ function createOwnedReadToolset(
     'search',
     'projectContext',
     'limits',
-    ...(includeStatusAndSymbol ? ['status', 'symbol'] : []),
+    ...(includeStatusAndSymbol ? ['status'] : []),
+    ...(includeStatusAndSymbol === true ? ['symbol'] : []),
     ...(extended ? ['code', 'l1'] : []),
     ...(stored ? ['structure', 'l2'] : []),
   ]);
@@ -570,18 +896,20 @@ function createOwnedReadToolset(
         'authorize',
         'knowledgeQuery',
       ]) as ScopedPorts<Parameters<typeof createOwnedKnowledgeStatusSession>[0]>;
-      const symbol = portFields(d.symbol!.value, [
-        'repositoryId',
-        'limits',
-        'authorize',
-        'openCodeQuery',
-      ]) as ScopedPorts<Parameters<typeof createOwnedSymbolUnderstandingSession>[0]>;
       const statusSession = createOwnedKnowledgeStatusSession({ ...status, ...scope() });
       made.push(statusSession);
       additional.set('get_knowledge_status', statusSession);
-      const symbolSession = createOwnedSymbolUnderstandingSession({ ...symbol, ...scope() });
-      made.push(symbolSession);
-      additional.set('understand_symbol', symbolSession);
+      if (includeStatusAndSymbol === true) {
+        const symbol = portFields(d.symbol!.value, [
+          'repositoryId',
+          'limits',
+          'authorize',
+          'openCodeQuery',
+        ]) as ScopedPorts<Parameters<typeof createOwnedSymbolUnderstandingSession>[0]>;
+        const symbolSession = createOwnedSymbolUnderstandingSession({ ...symbol, ...scope() });
+        made.push(symbolSession);
+        additional.set('understand_symbol', symbolSession);
+      }
     }
     return createOwnedQueryMcpServer(
       { session: traceSession, limits },
@@ -608,83 +936,121 @@ function createOwnedQueryMcpServer(
   extended = false,
   stored = false,
   readiness?: Readiness,
+  receipt = false,
 ) {
   const o = record(options, ['session', 'limits']);
   const bindings = new Map(
     [...new Map<ToolName, ReadSession>([[tool, o.session!.value], ...additional])].map(
       ([name, session]) => {
-        const originalConfig = {
-          trace_flow: {
-            wire: businessTraceWireSchemas,
-            failure: businessTraceFailure,
-            responseSchema: businessTraceResponseSchema,
-            serialize: serializeBusinessTraceResponse,
-            description: extended
-              ? 'Self-owned BUSINESS v1 or finite static CODE v2; static calls are not runtime flow; production closed.'
-              : 'Self-owned BUSINESS trace only; production access unavailable.',
-            ...(extended
-              ? versionedConfig(
-                  {
-                    wire: businessTraceWireSchemas,
-                    responseSchema: businessTraceResponseSchema,
-                    serialize: serializeBusinessTraceResponse,
-                  },
-                  {
-                    wire: codeTraceWireSchemas,
-                    responseSchema: codeTraceResponseSchema,
-                    serialize: serializeCodeTraceResponse,
-                  },
-                )
-              : {}),
-          },
-          search_knowledge: {
-            wire: knowledgeSearchWireSchemas,
-            failure: knowledgeSearchFailure,
-            responseSchema: knowledgeSearchResponseSchema,
-            serialize: serializeKnowledgeSearchResponse,
-            description:
-              'Self-owned lexical phrase first page only; no graph or production access.',
-          },
-          get_project_context: {
-            wire: projectContextWireSchemas,
-            failure: projectContextFailure,
-            responseSchema: projectContextResponseSchema,
-            serialize: serializeProjectContextResponse,
-            description: extended
-              ? 'Self-owned selected L0 v1 or explicit-query published L1 v2; incomplete project; production closed.'
-              : 'Self-owned selected published L0 only; not a complete project; no production access.',
-            ...(extended
-              ? versionedConfig(
-                  {
-                    wire: projectContextWireSchemas,
-                    responseSchema: projectContextResponseSchema,
-                    serialize: serializeProjectContextResponse,
-                  },
-                  {
-                    wire: projectL1WireSchemas,
-                    responseSchema: projectL1ResponseSchema,
-                    serialize: serializeProjectL1Response,
-                  },
-                )
-              : {}),
-          },
-          get_knowledge_status: {
-            wire: knowledgeStatusWireSchemas,
-            failure: knowledgeStatusFailure,
-            responseSchema: knowledgeStatusResponseSchema,
-            serialize: serializeKnowledgeStatusResponse,
-            description:
-              'Self-owned selected published metadata only; global health/runs unobserved; no production access.',
-          },
-          understand_symbol: {
-            wire: symbolUnderstandingWireSchemas,
-            failure: symbolUnderstandingFailure,
-            responseSchema: symbolUnderstandingResponseSchema,
-            serialize: serializeSymbolUnderstandingResponse,
-            description:
-              'Self-owned exact stored code symbol/revision only; runtime relevance unevaluated; no production access.',
-          },
-        }[name];
+        const originalConfig =
+          receipt && name === 'search_knowledge'
+            ? {
+                wire: knowledgeSearchWireV2Schemas,
+                failure: knowledgeSearchFailureV2,
+                responseSchema: knowledgeSearchResponseV2Schema,
+                serialize: serializeKnowledgeSearchResponseV2,
+                description:
+                  'Self-owned receipt lexical phrase first page only; explicit rebuilt index, quality unavailable, production closed.',
+              }
+            : receipt && name === 'trace_flow'
+              ? {
+                  wire: businessTraceWireV2Schemas,
+                  failure: businessTraceFailureV2,
+                  responseSchema: businessTraceResponseV2Schema,
+                  serialize: serializeBusinessTraceResponseV2,
+                  description:
+                    'Self-owned receipt BUSINESS declared steps only; not observed runtime, production closed.',
+                }
+              : receipt && name === 'get_knowledge_status'
+                ? {
+                    wire: knowledgeStatusWireV2Schemas,
+                    failure: knowledgeStatusFailureV2,
+                    responseSchema: knowledgeStatusResponseV2Schema,
+                    serialize: serializeKnowledgeStatusResponseV2,
+                    description:
+                      'Self-owned schema11 receipt status v2; explicit current published selection; quality unavailable and production closed.',
+                  }
+                : receipt && name === 'get_project_context'
+                  ? {
+                      wire: projectContextWireV2Schemas,
+                      failure: projectContextFailureV2,
+                      responseSchema: projectContextResponseV2Schema,
+                      serialize: serializeProjectContextResponseV2,
+                      description:
+                        'Self-owned schema11 receipt L0 v2; explicit selected summaries only, incomplete project, quality unavailable and production closed.',
+                    }
+                  : {
+                      trace_flow: {
+                        wire: businessTraceWireSchemas,
+                        failure: businessTraceFailure,
+                        responseSchema: businessTraceResponseSchema,
+                        serialize: serializeBusinessTraceResponse,
+                        description: extended
+                          ? 'Self-owned BUSINESS v1 or finite static CODE v2; static calls are not runtime flow; production closed.'
+                          : 'Self-owned BUSINESS trace only; production access unavailable.',
+                        ...(extended
+                          ? versionedConfig(
+                              {
+                                wire: businessTraceWireSchemas,
+                                responseSchema: businessTraceResponseSchema,
+                                serialize: serializeBusinessTraceResponse,
+                              },
+                              {
+                                wire: codeTraceWireSchemas,
+                                responseSchema: codeTraceResponseSchema,
+                                serialize: serializeCodeTraceResponse,
+                              },
+                            )
+                          : {}),
+                      },
+                      search_knowledge: {
+                        wire: knowledgeSearchWireSchemas,
+                        failure: knowledgeSearchFailure,
+                        responseSchema: knowledgeSearchResponseSchema,
+                        serialize: serializeKnowledgeSearchResponse,
+                        description:
+                          'Self-owned lexical phrase first page only; no graph or production access.',
+                      },
+                      get_project_context: {
+                        wire: projectContextWireSchemas,
+                        failure: projectContextFailure,
+                        responseSchema: projectContextResponseSchema,
+                        serialize: serializeProjectContextResponse,
+                        description: extended
+                          ? 'Self-owned selected L0 v1 or explicit-query published L1 v2; incomplete project; production closed.'
+                          : 'Self-owned selected published L0 only; not a complete project; no production access.',
+                        ...(extended
+                          ? versionedConfig(
+                              {
+                                wire: projectContextWireSchemas,
+                                responseSchema: projectContextResponseSchema,
+                                serialize: serializeProjectContextResponse,
+                              },
+                              {
+                                wire: projectL1WireSchemas,
+                                responseSchema: projectL1ResponseSchema,
+                                serialize: serializeProjectL1Response,
+                              },
+                            )
+                          : {}),
+                      },
+                      get_knowledge_status: {
+                        wire: knowledgeStatusWireSchemas,
+                        failure: knowledgeStatusFailure,
+                        responseSchema: knowledgeStatusResponseSchema,
+                        serialize: serializeKnowledgeStatusResponse,
+                        description:
+                          'Self-owned selected published metadata only; global health/runs unobserved; no production access.',
+                      },
+                      understand_symbol: {
+                        wire: symbolUnderstandingWireSchemas,
+                        failure: symbolUnderstandingFailure,
+                        responseSchema: symbolUnderstandingResponseSchema,
+                        serialize: serializeSymbolUnderstandingResponse,
+                        description:
+                          'Self-owned exact stored code symbol/revision only; runtime relevance unevaluated; no production access.',
+                      },
+                    }[name];
         const config =
           stored && name === 'trace_flow'
             ? {

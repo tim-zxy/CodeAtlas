@@ -194,3 +194,144 @@ test('response parser rejects inconsistent provenance metadata or first-page fla
     assert.equal(api.knowledgeSearchResponseSchema.safeParse(bad).success, false);
   }
 });
+
+import { withReadyPublication } from '../../storage/test/helpers/schema11-publication-fixture.mjs';
+import { Schema11KnowledgeSearchIndex } from '../../storage/dist/knowledge/offline-knowledge-search.js';
+import { createCl100kTokenCounter } from '../../runtime/dist/local-token-counter.js';
+const receiptSearchBudget = { maxDepth: 0, maxOutputBytes: 1000000, maxTokens: 50000 };
+const receiptSearchArgs = {
+  version: 2,
+  mode: 'LEXICAL_PHRASE',
+  scope: 'WORKSPACE',
+  text: 'Owned declared',
+  filters: { types: null },
+  page: { limit: 1, cursor: null },
+  budget: receiptSearchBudget,
+};
+test('receipt search v2 delivers real current provenance and complete-response exact budget', async (t) =>
+  withReadyPublication(
+    t,
+    async (f) => {
+      f.writer.publishOwnedPrepared(f.ready.handle, f.limits, f.c);
+      const index = new Schema11KnowledgeSearchIndex(f.api, {
+        kind: 'SCHEMA11_READ_CANDIDATE_NOT_AUTHORITY',
+        check() {},
+      });
+      index.rebuild(f.limits, f.c);
+      const counter = createCl100kTokenCounter(1000000),
+        session = api.createReceiptKnowledgeSearchSession({
+          workspaceId: f.w,
+          repositoryIds: f.owned.repositoryIds,
+          limits: { ...receiptSearchBudget, maxResults: 10 },
+          authorize() {},
+          knowledgeQuery: async (r, c) => index.searchPage(r, f.limits, c),
+          tokenCounter: counter,
+        });
+      try {
+        const result = await session.execute(receiptSearchArgs, session.context, f.owned.control());
+        assert.ok(result.data, JSON.stringify(result));
+        assert.equal(result.version, 2);
+        const hit = result.data.results[0];
+        assert.equal(hit.provenance.publicationId, f.ready.command.request.runId);
+        assert.equal(hit.provenance.candidateId, f.ready.command.entries[0].candidateId);
+        assert.equal(hit.provenance.attemptId, undefined);
+        assert.equal(result.data.quality, 'NOT_EVALUABLE');
+        assert.equal(result.data.productionQuery, 'NOT_AUTHORIZED');
+        assert.equal(result.data.page.nextCursor, null);
+        const text = api.serializeKnowledgeSearchResponseV2(result, f.owned.control()),
+          n = counter.measure(text, f.owned.control()).outputTokens;
+        assert.ok(
+          (
+            await session.execute(
+              { ...receiptSearchArgs, budget: { ...receiptSearchBudget, maxTokens: n } },
+              session.context,
+              f.owned.control(),
+            )
+          ).data,
+        );
+        assert.equal(
+          (
+            await session.execute(
+              { ...receiptSearchArgs, budget: { ...receiptSearchBudget, maxTokens: n - 1 } },
+              session.context,
+              f.owned.control(),
+            )
+          ).error.code,
+          'BUDGET_EXCEEDED',
+        );
+        assert.equal(
+          (
+            await session.execute(
+              { ...receiptSearchArgs, version: 1 },
+              session.context,
+              f.owned.control(),
+            )
+          ).error.code,
+          'INVALID_INPUT',
+        );
+        assert.equal(
+          (
+            await session.execute(
+              { ...receiptSearchArgs, page: { limit: 1, cursor: 'not-supported' } },
+              session.context,
+              f.owned.control(),
+            )
+          ).error.code,
+          'INVALID_INPUT',
+        );
+        const none = await session.execute(
+          { ...receiptSearchArgs, filters: { types: ['COMPONENT'] } },
+          session.context,
+          f.owned.control(),
+        );
+        assert.deepEqual(none.data.results, []);
+        assert.equal(none.meta.coverage, null);
+      } finally {
+        session.close();
+        index.close();
+      }
+    },
+    { status: 'PARTIAL', limitations: ['SOURCE_PARTIAL'], unverifiedRefs: [] },
+  ));
+test('receipt search v2 refuses old source markers and unbuilt derived indexes', async (t) =>
+  withReadyPublication(t, async (f) => {
+    f.writer.publishOwnedPrepared(f.ready.handle, f.limits, f.c);
+    const index = new Schema11KnowledgeSearchIndex(f.api, {
+      kind: 'SCHEMA11_READ_CANDIDATE_NOT_AUTHORITY',
+      check() {},
+    });
+    const make = (query) =>
+      api.createReceiptKnowledgeSearchSession({
+        workspaceId: f.w,
+        repositoryIds: f.owned.repositoryIds,
+        limits: { ...receiptSearchBudget, maxResults: 10 },
+        authorize() {},
+        knowledgeQuery: query,
+        tokenCounter: createCl100kTokenCounter(1000000),
+      });
+    const missing = make(async (r, c) => index.searchPage(r, f.limits, c));
+    try {
+      assert.equal(
+        (await missing.execute(receiptSearchArgs, missing.context, f.owned.control())).error.code,
+        'INDEX_UNAVAILABLE',
+      );
+    } finally {
+      missing.close();
+    }
+    index.rebuild(f.limits, f.c);
+    const raw = index.searchPage(
+      { text: 'Owned declared', types: null, maxResults: 1 },
+      f.limits,
+      f.c,
+    );
+    const forged = make(async () => ({ ...raw, kind: 'OWNED_TEST_PUBLICATION' }));
+    try {
+      assert.equal(
+        (await forged.execute(receiptSearchArgs, forged.context, f.owned.control())).error.code,
+        'DATA_INVALID',
+      );
+    } finally {
+      forged.close();
+      index.close();
+    }
+  }));

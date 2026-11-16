@@ -1,3 +1,11 @@
+## Approved historical receipt artifact v2 - 2026-11-16
+
+The [owned receipt file lifecycle](../superpowers/specs/2026-11-08-owned-wiki-files.md#approved-receipt-wiki-historical-file-version---2026-11-16) may persist an actual completed and settled one-shot projection in a self-created temporary directory using the existing atomic/recovery engine. Separate v2 artifact/envelope/current formats retain real publication sources and the ended observation window. Its display Markdown and metadata explicitly say historical, current freshness UNASSESSED; original projection FRESH fields are values at that past window. Reading/restart cannot restore live Source state or authority. Old v1 format remains unchanged; no Canonical/SQL/public tool or production outputTarget follows.
+
+## Approved owned freshness before projection - 2026-11-16
+
+An explicit [self-owned one-shot Application reconciliation](../superpowers/specs/2026-11-16-owned-freshness-wiki.md) may verify full captured bases and CAS ACTIVE AFFECTED metadata to FRESH before reading published knowledge for projection. Wiki itself remains a pure reader of published Knowledge; it does not observe raw Source, change canonical state, infer coverage, or perform semantic compilation. Profile/status precedence and missing/quality/production restrictions are unchanged: FRESH may remove the STALE reason while original PARTIAL or missing/review diagnostics remain. The enclosing operation records its independent observation; the pure projector's LIVE_SOURCE_NOT_OBSERVED limitation describes the projector alone. No production/artifact-file publication follows.
+
 # Versioned Wiki Projection Framework
 
 Status: backward-compatible architecture extension. Authority: [ADR-013](../handoff/adr/ADR-013-versioned-wiki-projection.md). Applies alongside the Engineering Handoff Pack; it does not change Canonical IR, Knowledge identity, or the Evidence -> Claim -> Knowledge chain.

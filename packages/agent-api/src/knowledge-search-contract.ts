@@ -1,3 +1,4 @@
+import { receiptSourceProvenanceSchema } from './receipt-source-contract.js';
 import { z } from 'zod';
 import { createHash } from 'node:crypto';
 import {
@@ -115,7 +116,19 @@ const success = z.strictObject({
     }),
   }),
 });
-const checkedSuccess = success.superRefine((r, ctx) => {
+const successV2 = success.extend({
+  version: z.literal(2),
+  data: success.shape.data.extend({
+    results: z.array(searchHitSchema.extend({ provenance: receiptSourceProvenanceSchema })),
+  }),
+});
+export const knowledgeSearchRequestV2Schema = knowledgeSearchRequestSchema.extend({
+  version: z.literal(2),
+});
+const checkSuccess = (
+  r: z.infer<typeof success> | z.infer<typeof successV2>,
+  ctx: z.RefinementCtx,
+) => {
   const fail = () =>
     ctx.addIssue({ code: 'custom', message: 'Inconsistent owned search metadata' });
   const hits = r.data.results,
@@ -157,7 +170,9 @@ const checkedSuccess = success.superRefine((r, ctx) => {
     ].some((w) => !m.warnings.includes(w as (typeof m.warnings)[number]))
   )
     fail();
-});
+};
+const checkedSuccess = success.superRefine(checkSuccess);
+const checkedSuccessV2 = successV2.superRefine(checkSuccess);
 const failure = z
   .strictObject({ error: z.strictObject({ code, message: z.string() }) })
   .refine((v) => v.error.message === knowledgeSearchErrorMessages[v.error.code]);
@@ -184,5 +199,30 @@ export function knowledgeSearchWireSchemas() {
   return {
     input: { ...z.toJSONSchema(knowledgeSearchRequestSchema), type: 'object' as const },
     output: { ...z.toJSONSchema(knowledgeSearchResponseSchema), type: 'object' as const },
+  };
+}
+
+export const knowledgeSearchResponseV2Schema = z.union([
+  checkedSuccessV2,
+  z
+    .strictObject({ version: z.literal(2), error: z.strictObject({ code, message: z.string() }) })
+    .refine((v) => v.error.message === knowledgeSearchErrorMessages[v.error.code]),
+]);
+export type ReceiptKnowledgeSearchResponse = z.infer<typeof knowledgeSearchResponseV2Schema>;
+export function knowledgeSearchFailureV2(
+  code: KnowledgeSearchErrorCode,
+): ReceiptKnowledgeSearchResponse {
+  return { version: 2, ...knowledgeSearchFailure(code) } as ReceiptKnowledgeSearchResponse;
+}
+export function serializeKnowledgeSearchResponseV2(value: unknown, c: RuntimeRequestControl) {
+  return canonicalCompilationJson(
+    knowledgeSearchResponseV2Schema.parse(JSON.parse(canonicalCompilationJson(value, c))),
+    c,
+  );
+}
+export function knowledgeSearchWireV2Schemas() {
+  return {
+    input: { ...z.toJSONSchema(knowledgeSearchRequestV2Schema), type: 'object' as const },
+    output: { ...z.toJSONSchema(knowledgeSearchResponseV2Schema), type: 'object' as const },
   };
 }

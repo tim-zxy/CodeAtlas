@@ -1,3 +1,4 @@
+import { receiptSourceProvenanceSchema } from './receipt-source-contract.js';
 import { createHash } from 'node:crypto';
 import { z } from 'zod';
 import {
@@ -87,100 +88,111 @@ export const businessTraceWarningCodes = [
   'NO_PRODUCTION_AUTHORITY',
   'UNCLASSIFIED_WARNING',
 ] as const;
-const successSchema = z
-  .strictObject({
-    data: z.strictObject({
-      kind: z.literal('BUSINESS'),
-      startRef: businessTraceStartRefSchema,
-      startStepKey: Phase1ExactStringSchema,
-      direction: z.enum(['FORWARD', 'BACKWARD']),
-      title: Phase1ExactStringSchema,
-      goal: Phase1ExactStringSchema,
-      steps: z
-        .array(
-          z.strictObject({
-            stepKey: Phase1ExactStringSchema,
-            action: Phase1ExactStringSchema,
-            supportRefs: Phase1SupportRefsSchema,
-            depth: nonnegative,
-          }),
-        )
-        .min(1),
-      edges: z.array(
+const successBase = z.strictObject({
+  data: z.strictObject({
+    kind: z.literal('BUSINESS'),
+    startRef: businessTraceStartRefSchema,
+    startStepKey: Phase1ExactStringSchema,
+    direction: z.enum(['FORWARD', 'BACKWARD']),
+    title: Phase1ExactStringSchema,
+    goal: Phase1ExactStringSchema,
+    steps: z
+      .array(
         z.strictObject({
-          fromStepKey: Phase1ExactStringSchema,
-          toStepKey: Phase1ExactStringSchema,
+          stepKey: Phase1ExactStringSchema,
+          action: Phase1ExactStringSchema,
+          supportRefs: Phase1SupportRefsSchema,
+          depth: nonnegative,
         }),
-      ),
-      currentHeadRevisionId: EntityIdSchema,
-      isCurrentHead: z.boolean(),
-      participants: Phase1ScopedRefsSchema,
-      runtimeFlowRefs: Phase1ScopedRefsSchema,
-      supportRefs: Phase1SupportRefsSchema,
-      provenance: z.strictObject({
-        attemptId: EntityIdSchema,
-        runId: EntityIdSchema,
-        snapshotId: EntityIdSchema,
-        revisionSetId: EntityIdSchema,
-        evaluationId: EntityIdSchema,
+      )
+      .min(1),
+    edges: z.array(
+      z.strictObject({
+        fromStepKey: Phase1ExactStringSchema,
+        toStepKey: Phase1ExactStringSchema,
       }),
-      limitations: z.array(Phase1ExactStringSchema),
-      quality: z.literal('NOT_EVALUABLE'),
-      productionQuery: z.literal('NOT_AUTHORIZED'),
+    ),
+    currentHeadRevisionId: EntityIdSchema,
+    isCurrentHead: z.boolean(),
+    participants: Phase1ScopedRefsSchema,
+    runtimeFlowRefs: Phase1ScopedRefsSchema,
+    supportRefs: Phase1SupportRefsSchema,
+    provenance: z.strictObject({
+      attemptId: EntityIdSchema,
+      runId: EntityIdSchema,
+      snapshotId: EntityIdSchema,
+      revisionSetId: EntityIdSchema,
+      evaluationId: EntityIdSchema,
     }),
-    meta: z.strictObject({
-      basisRefs: z.array(Phase1BasisSchema).min(1),
-      sourceFreshness: SourceFreshnessSchema,
-      compilationCurrency: CompilationCurrencySchema,
-      coverage: Phase1CoverageSchema,
-      warnings: z.array(z.enum(businessTraceWarningCodes)),
-      truncation: z.strictObject({
-        truncated: z.boolean(),
-        reasons: z.array(reason),
-        frontier: z.array(frontier),
-      }),
+    limitations: z.array(Phase1ExactStringSchema),
+    quality: z.literal('NOT_EVALUABLE'),
+    productionQuery: z.literal('NOT_AUTHORIZED'),
+  }),
+  meta: z.strictObject({
+    basisRefs: z.array(Phase1BasisSchema).min(1),
+    sourceFreshness: SourceFreshnessSchema,
+    compilationCurrency: CompilationCurrencySchema,
+    coverage: Phase1CoverageSchema,
+    warnings: z.array(z.enum(businessTraceWarningCodes)),
+    truncation: z.strictObject({
+      truncated: z.boolean(),
+      reasons: z.array(reason),
+      frontier: z.array(frontier),
     }),
-  })
-  .superRefine((value, ctx) => {
-    const fail = () =>
-        ctx.addIssue({ code: 'custom', message: 'Inconsistent public trace association' }),
-      d = value.data,
-      m = value.meta;
-    const keys = new Set(d.steps.map((s) => s.stepKey));
-    if (keys.size !== d.steps.length || !keys.has(d.startStepKey)) fail();
-    if (d.isCurrentHead !== (d.currentHeadRevisionId === d.startRef.revisionId)) fail();
-    if (!d.isCurrentHead && !m.warnings.includes('HISTORICAL_PUBLISHED_REVISION')) fail();
-    if (
-      new Set(m.warnings).size !== m.warnings.length ||
-      !m.warnings.includes('OWNED_TEST_ONLY') ||
-      !m.warnings.includes('NO_PRODUCTION_AUTHORITY')
-    )
-      fail();
-    const edges = new Set<string>();
-    for (const edge of d.edges) {
-      const key = JSON.stringify([edge.fromStepKey, edge.toStepKey]);
-      if (edges.has(key) || !keys.has(edge.fromStepKey) || !keys.has(edge.toStepKey)) fail();
-      edges.add(key);
-    }
-    for (const item of m.truncation.frontier)
-      if (!keys.has(d.direction === 'FORWARD' ? item.fromStepKey : item.toStepKey)) fail();
-    const reasons = [...new Set(m.truncation.frontier.map((f) => f.reason))].sort();
-    if (
-      m.truncation.truncated !== m.truncation.frontier.length > 0 ||
-      JSON.stringify([...m.truncation.reasons].sort()) !== JSON.stringify(reasons)
-    )
-      fail();
-    const expected = new Set(
-        [...d.supportRefs, ...d.steps.flatMap((s) => s.supportRefs)].map((s) => basisKey(s.basis)),
-      ),
-      actual = m.basisRefs.map(basisKey);
-    if (
-      actual.length !== expected.size ||
-      new Set(actual).size !== actual.length ||
-      actual.some((k) => !expected.has(k))
-    )
-      fail();
-  });
+  }),
+});
+const successV2 = successBase.extend({
+  version: z.literal(2),
+  data: successBase.shape.data.extend({ provenance: receiptSourceProvenanceSchema }),
+});
+export const businessTraceRequestV2Schema = businessTraceRequestSchema.options[0].extend({
+  version: z.literal(2),
+});
+const checkSuccess = (
+  value: z.infer<typeof successBase> | z.infer<typeof successV2>,
+  ctx: z.RefinementCtx,
+) => {
+  const fail = () =>
+      ctx.addIssue({ code: 'custom', message: 'Inconsistent public trace association' }),
+    d = value.data,
+    m = value.meta;
+  const keys = new Set(d.steps.map((s) => s.stepKey));
+  if (keys.size !== d.steps.length || !keys.has(d.startStepKey)) fail();
+  if (d.isCurrentHead !== (d.currentHeadRevisionId === d.startRef.revisionId)) fail();
+  if (!d.isCurrentHead && !m.warnings.includes('HISTORICAL_PUBLISHED_REVISION')) fail();
+  if (
+    new Set(m.warnings).size !== m.warnings.length ||
+    !m.warnings.includes('OWNED_TEST_ONLY') ||
+    !m.warnings.includes('NO_PRODUCTION_AUTHORITY')
+  )
+    fail();
+  const edges = new Set<string>();
+  for (const edge of d.edges) {
+    const key = JSON.stringify([edge.fromStepKey, edge.toStepKey]);
+    if (edges.has(key) || !keys.has(edge.fromStepKey) || !keys.has(edge.toStepKey)) fail();
+    edges.add(key);
+  }
+  for (const item of m.truncation.frontier)
+    if (!keys.has(d.direction === 'FORWARD' ? item.fromStepKey : item.toStepKey)) fail();
+  const reasons = [...new Set(m.truncation.frontier.map((f) => f.reason))].sort();
+  if (
+    m.truncation.truncated !== m.truncation.frontier.length > 0 ||
+    JSON.stringify([...m.truncation.reasons].sort()) !== JSON.stringify(reasons)
+  )
+    fail();
+  const expected = new Set(
+      [...d.supportRefs, ...d.steps.flatMap((s) => s.supportRefs)].map((s) => basisKey(s.basis)),
+    ),
+    actual = m.basisRefs.map(basisKey);
+  if (
+    actual.length !== expected.size ||
+    new Set(actual).size !== actual.length ||
+    actual.some((k) => !expected.has(k))
+  )
+    fail();
+};
+const successSchema = successBase.superRefine(checkSuccess);
+const successV2Schema = successV2.superRefine(checkSuccess);
 const failureSchema = z
   .strictObject({ error: z.strictObject({ code: errorCode, message: z.string() }) })
   .superRefine((value, ctx) => {
@@ -210,5 +222,31 @@ export function businessTraceWireSchemas() {
   return {
     input: { ...z.toJSONSchema(businessTraceRequestSchema), type: 'object' as const },
     output: { ...z.toJSONSchema(businessTraceResponseSchema), type: 'object' as const },
+  };
+}
+
+export const businessTraceResponseV2Schema = z.union([
+  successV2Schema,
+  z
+    .strictObject({
+      version: z.literal(2),
+      error: z.strictObject({ code: errorCode, message: z.string() }),
+    })
+    .refine((v) => v.error.message === businessTraceErrorMessages[v.error.code]),
+]);
+export type ReceiptBusinessTraceResponse = z.infer<typeof businessTraceResponseV2Schema>;
+export function businessTraceFailureV2(code: BusinessTraceErrorCode): ReceiptBusinessTraceResponse {
+  return { version: 2, ...businessTraceFailure(code) } as ReceiptBusinessTraceResponse;
+}
+export function serializeBusinessTraceResponseV2(value: unknown, c: RuntimeRequestControl) {
+  return canonicalCompilationJson(
+    businessTraceResponseV2Schema.parse(JSON.parse(canonicalCompilationJson(value, c))),
+    c,
+  );
+}
+export function businessTraceWireV2Schemas() {
+  return {
+    input: { ...z.toJSONSchema(businessTraceRequestV2Schema), type: 'object' as const },
+    output: { ...z.toJSONSchema(businessTraceResponseV2Schema), type: 'object' as const },
   };
 }

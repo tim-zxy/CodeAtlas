@@ -1,3 +1,4 @@
+import { receiptSourceProvenanceSchema } from './receipt-source-contract.js';
 import { z } from 'zod';
 import {
   basisKey,
@@ -99,8 +100,20 @@ const success = z.strictObject({
   }),
 });
 
+const successV2 = success.extend({
+  version: z.literal(2),
+  data: success.shape.data.extend({
+    items: z.array(knowledgeStatusItemSchema.extend({ provenance: receiptSourceProvenanceSchema })),
+  }),
+});
+export const knowledgeStatusRequestV2Schema = knowledgeStatusRequestSchema.extend({
+  version: z.literal(2),
+});
 const key = (r: { itemId: string; revisionId: string }) => JSON.stringify([r.itemId, r.revisionId]);
-const checked = success.superRefine((r, ctx) => {
+const checkResponse = (
+  r: z.infer<typeof success> | z.infer<typeof successV2>,
+  ctx: z.RefinementCtx,
+) => {
   const fail = () =>
       ctx.addIssue({ code: 'custom', message: 'Inconsistent limited knowledge status' }),
     d = r.data,
@@ -166,7 +179,9 @@ const checked = success.superRefine((r, ctx) => {
     required.some((w) => !m.warnings.includes(w as (typeof m.warnings)[number]))
   )
     fail();
-});
+};
+const checked = success.superRefine(checkResponse);
+const checkedV2 = successV2.superRefine(checkResponse);
 const failure = z
   .strictObject({ error: z.strictObject({ code, message: z.string() }) })
   .refine((v) => v.error.message === knowledgeStatusErrorMessages[v.error.code]);
@@ -190,5 +205,30 @@ export function knowledgeStatusWireSchemas() {
   return {
     input: { ...z.toJSONSchema(knowledgeStatusRequestSchema), type: 'object' as const },
     output: { ...z.toJSONSchema(knowledgeStatusResponseSchema), type: 'object' as const },
+  };
+}
+
+export const knowledgeStatusResponseV2Schema = z.union([
+  checkedV2,
+  z
+    .strictObject({ version: z.literal(2), error: z.strictObject({ code, message: z.string() }) })
+    .refine((v) => v.error.message === knowledgeStatusErrorMessages[v.error.code]),
+]);
+export type ReceiptKnowledgeStatusResponse = z.infer<typeof knowledgeStatusResponseV2Schema>;
+export function knowledgeStatusFailureV2(
+  code: KnowledgeStatusErrorCode,
+): ReceiptKnowledgeStatusResponse {
+  return { version: 2, ...knowledgeStatusFailure(code) } as ReceiptKnowledgeStatusResponse;
+}
+export function serializeKnowledgeStatusResponseV2(value: unknown, c: RuntimeRequestControl) {
+  return canonicalCompilationJson(
+    knowledgeStatusResponseV2Schema.parse(JSON.parse(canonicalCompilationJson(value, c))),
+    c,
+  );
+}
+export function knowledgeStatusWireV2Schemas() {
+  return {
+    input: { ...z.toJSONSchema(knowledgeStatusRequestV2Schema), type: 'object' as const },
+    output: { ...z.toJSONSchema(knowledgeStatusResponseV2Schema), type: 'object' as const },
   };
 }

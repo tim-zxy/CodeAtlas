@@ -155,3 +155,243 @@ test('status schema rejects healthy/global counts and missing partition corrupti
     assert.equal(contract.knowledgeStatusResponseSchema.safeParse(bad).success, false);
   }
 });
+
+import { withReadyPublication } from '../../storage/test/helpers/schema11-publication-fixture.mjs';
+import { createReceiptKnowledgeStatusSession } from '../dist/knowledge-status-tool.js';
+import { createReceiptProjectContextSession } from '../dist/project-context-tool.js';
+import { createCl100kTokenCounter } from '../../runtime/dist/local-token-counter.js';
+const receiptBudget = { maxItems: 10, maxDepth: 0, maxOutputBytes: 1000000, maxTokens: 50000 };
+const receiptArgs = (kind) => ({
+  version: 2,
+  ...(kind === 'status' ? { mode: 'SELECTED_PUBLISHED' } : { depth: 'L0' }),
+  budget: receiptBudget,
+});
+const receiptMake = (f, kind, overrides = {}) =>
+  (kind === 'status' ? createReceiptKnowledgeStatusSession : createReceiptProjectContextSession)({
+    workspaceId: f.w,
+    repositoryIds: f.owned.repositoryIds,
+    selectedRefs: f.refs,
+    limits: receiptBudget,
+    authorize() {},
+    knowledgeQuery: async (refs, c) =>
+      f.api.readSelectedCoveredProjection(refs, f.limits, c, () => {}),
+    tokenCounter: createCl100kTokenCounter(receiptBudget.maxOutputBytes),
+    ...overrides,
+  });
+
+test('receipt v2 status and L0 retain real lineage, original partial coverage and closed quality', async (t) =>
+  withReadyPublication(
+    t,
+    async (f) => {
+      f.writer.publishOwnedPrepared(f.ready.handle, f.limits, f.c);
+      const before = f.db.prepare('SELECT total_changes() n').get().n;
+      for (const kind of ['status', 'context']) {
+        const grants = [],
+          session = receiptMake(f, kind, {
+            authorize: (m) => {
+              grants.push(m);
+            },
+          });
+        try {
+          assert.equal(session.descriptor.version, 2);
+          const result = await session.execute(
+            receiptArgs(kind),
+            session.context,
+            f.owned.control(),
+          );
+          assert.ok(result.data, JSON.stringify(result));
+          assert.equal(result.version, 2);
+          assert.equal(result.data.productionQuery, 'NOT_AUTHORIZED');
+          assert.equal(result.data.quality, 'NOT_EVALUABLE');
+          const item = result.data.items[0],
+            entry = f.ready.command.entries[0],
+            r = entry.record.revisionEnvelope.payload;
+          assert.deepEqual(item.provenance, {
+            kind: 'SCHEMA11_RECEIPT',
+            version: 1,
+            publicationId: r.compilationRunId,
+            candidateId: entry.candidateId,
+            runId: r.compilationRunId,
+            snapshotId: r.inputSnapshotRef.id,
+            revisionSetId: r.revisionSetId,
+            evaluationId: r.evaluationRef.id,
+          });
+          assert.equal(item.provenance.attemptId, undefined);
+          assert.deepEqual(item.coverage, {
+            status: 'PARTIAL',
+            limitations: ['SOURCE_PARTIAL'],
+            unverifiedRefs: [],
+          });
+          assert.ok(
+            grants.length >= 2 &&
+              grants.every((m) => m.fields.includes('PUBLICATION_RECEIPT_VALIDATION')),
+          );
+          if (kind === 'status') {
+            assert.equal(item.title, undefined);
+            assert.equal(result.data.wholeProjectStatus, 'NOT_ASSESSED');
+          } else {
+            assert.equal(item.title, r.structuredContent.title);
+            assert.equal(item.summary, r.structuredContent.goal);
+            assert.equal(item.summarySource, 'GOAL');
+            assert.equal(result.data.projectCompleteness, 'NOT_ASSESSED');
+          }
+          const bad = await session.execute(
+            { ...receiptArgs(kind), version: 1 },
+            session.context,
+            f.owned.control(),
+          );
+          assert.equal(bad.version, 2);
+          assert.equal(bad.error.code, 'INVALID_INPUT');
+          const tiny = await session.execute(
+            { ...receiptArgs(kind), budget: { ...receiptBudget, maxTokens: 1 } },
+            session.context,
+            f.owned.control(),
+          );
+          assert.equal(tiny.error.code, 'BUDGET_EXCEEDED');
+        } finally {
+          session.close();
+        }
+      }
+      assert.equal(f.db.prepare('SELECT total_changes() n').get().n, before);
+    },
+    { status: 'PARTIAL', limitations: ['SOURCE_PARTIAL'], unverifiedRefs: [] },
+  ));
+
+test('receipt v2 rejects malformed sources, cross-workspace and revision substitution rather than relabeling', async (t) =>
+  withReadyPublication(t, async (f) => {
+    f.writer.publishOwnedPrepared(f.ready.handle, f.limits, f.c);
+    const raw = f.api.readSelectedCoveredProjection(f.refs, f.limits, f.c, () => {});
+    for (const mutate of [
+      (v) => {
+        v.mode = 'OWNED_TEST_PUBLICATION';
+      },
+      (v) => {
+        v.workspaceId = 'wrong-workspace';
+      },
+      (v) => {
+        v.records[0].provenance.snapshotId = 'wrong-snapshot';
+      },
+      (v) => {
+        v.records[0].candidateId = null;
+      },
+      (v) => {
+        delete v.records[0].knowledgeCoverage;
+      },
+      (v) => {
+        v.records[0].currentHeadRevisionId = 'wrong-revision';
+      },
+      (v) => {
+        v.productionAccess = 'OPEN';
+      },
+    ]) {
+      const value = structuredClone(raw);
+      mutate(value);
+      const session = receiptMake(f, 'status', { knowledgeQuery: async () => value });
+      try {
+        const result = await session.execute(
+          receiptArgs('status'),
+          session.context,
+          f.owned.control(),
+        );
+        assert.equal(result.error?.code, 'DATA_INVALID', JSON.stringify(result));
+      } finally {
+        session.close();
+      }
+    }
+    const legacy = api.createOwnedKnowledgeStatusSession({
+      workspaceId: f.w,
+      repositoryIds: f.owned.repositoryIds,
+      selectedRefs: f.refs,
+      limits: receiptBudget,
+      authorize() {},
+      knowledgeQuery: async () => raw,
+      tokenCounter: createCl100kTokenCounter(receiptBudget.maxOutputBytes),
+    });
+    try {
+      const result = await legacy.execute(
+        { version: 1, mode: 'SELECTED_PUBLISHED', budget: receiptBudget },
+        legacy.context,
+        f.owned.control(),
+      );
+      assert.equal(result.error.code, 'DATA_INVALID');
+      assert.equal(result.version, undefined);
+    } finally {
+      legacy.close();
+    }
+  }));
+
+test('receipt v2 enforces live permission, context, cancellation and exact full-response token budget', async (t) =>
+  withReadyPublication(t, async (f) => {
+    f.writer.publishOwnedPrepared(f.ready.handle, f.limits, f.c);
+    let allowed = true;
+    const session = receiptMake(f, 'status', {
+      authorize() {
+        if (!allowed) throw Error('DENIED');
+      },
+      knowledgeQuery: async (refs, c) => {
+        const value = f.api.readSelectedCoveredProjection(refs, f.limits, c, () => {});
+        allowed = false;
+        return value;
+      },
+    });
+    try {
+      assert.equal(
+        (await session.execute(receiptArgs('status'), session.context, f.owned.control())).error
+          .code,
+        'PERMISSION_DENIED',
+      );
+    } finally {
+      session.close();
+    }
+    const next = receiptMake(f, 'context');
+    try {
+      assert.equal(
+        (await next.execute(receiptArgs('context'), {}, f.owned.control())).error.code,
+        'CONTEXT_UNAVAILABLE',
+      );
+      assert.equal(
+        (
+          await next.execute(receiptArgs('context'), next.context, {
+            ...f.owned.control(),
+            signal: AbortSignal.abort(),
+          })
+        ).error.code,
+        'CANCELLED',
+      );
+      const result = await next.execute(receiptArgs('context'), next.context, f.owned.control());
+      const { serializeProjectContextResponseV2 } =
+        await import('../dist/project-context-contract.js');
+      const text = serializeProjectContextResponseV2(result, f.owned.control());
+      const n = createCl100kTokenCounter(receiptBudget.maxOutputBytes).measure(
+        text,
+        f.owned.control(),
+      ).outputTokens;
+      assert.ok(n > 1);
+      assert.ok(
+        (
+          await next.execute(
+            { ...receiptArgs('context'), budget: { ...receiptBudget, maxTokens: n } },
+            next.context,
+            f.owned.control(),
+          )
+        ).data,
+      );
+      assert.equal(
+        (
+          await next.execute(
+            { ...receiptArgs('context'), budget: { ...receiptBudget, maxTokens: n - 1 } },
+            next.context,
+            f.owned.control(),
+          )
+        ).error.code,
+        'BUDGET_EXCEEDED',
+      );
+      next.close();
+      assert.equal(
+        (await next.execute(receiptArgs('context'), next.context, f.owned.control())).error.code,
+        'CONTEXT_UNAVAILABLE',
+      );
+    } finally {
+      next.close();
+    }
+  }));

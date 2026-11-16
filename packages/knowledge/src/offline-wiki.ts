@@ -160,9 +160,25 @@ export function validateOwnedPublishedSelection(
   knowledgeInput: unknown,
   budget: KnowledgeBudget,
 ): OwnedPublishedRecord[] {
+  return validatePublishedSelection(request, knowledgeInput, budget, 1);
+}
+export function validateReceiptPublishedSelection(
+  request: OwnedPublishedScope,
+  knowledgeInput: unknown,
+  budget: KnowledgeBudget,
+): OwnedPublishedRecord[] {
+  return validatePublishedSelection(request, knowledgeInput, budget, 2);
+}
+function validatePublishedSelection(
+  request: OwnedPublishedScope,
+  knowledgeInput: unknown,
+  budget: KnowledgeBudget,
+  sourceVersion: 1 | 2,
+): OwnedPublishedRecord[] {
   budget.data(knowledgeInput);
   const knowledge = record(JSON.parse(JSON.stringify(knowledgeInput)), [
     'kind',
+    ...(sourceVersion === 2 ? ['version'] : []),
     'workspaceId',
     'selectionDigest',
     'records',
@@ -170,7 +186,8 @@ export function validateOwnedPublishedSelection(
     'quality',
   ]);
   requireWiki(
-    knowledge.kind === 'OWNED_TEST_PUBLICATION' &&
+    knowledge.kind === (sourceVersion === 2 ? 'SCHEMA11_RECEIPT' : 'OWNED_TEST_PUBLICATION') &&
+      (sourceVersion === 1 || knowledge.version === 2) &&
       knowledge.productionQuery === 'NOT_AUTHORIZED' &&
       knowledge.quality === 'NOT_EVALUABLE',
   );
@@ -229,13 +246,22 @@ export function validateOwnedPublishedSelection(
           'WIKI_SCOPE_DENIED',
         );
       const provenance = record(row.provenance, [
-        'attemptId',
+        ...(sourceVersion === 2
+          ? ['kind', 'version', 'publicationId', 'candidateId']
+          : ['attemptId']),
         'runId',
         'snapshotId',
         'revisionSetId',
         'evaluationId',
       ]);
-      for (const value of Object.values(provenance)) EntityIdSchema.parse(value);
+      if (sourceVersion === 2)
+        requireWiki(
+          provenance.kind === 'SCHEMA11_RECEIPT' &&
+            provenance.version === 1 &&
+            row.isCurrentHead === true,
+        );
+      for (const [key, value] of Object.entries(provenance))
+        if (sourceVersion === 1 || !['kind', 'version'].includes(key)) EntityIdSchema.parse(value);
       requireWiki(
         provenance.runId === revision.compilationRunId &&
           provenance.snapshotId === revision.inputSnapshotRef.id &&
@@ -303,18 +329,44 @@ export function validateOwnedPublishedSelection(
   return immutable(rows);
 }
 /** Private deterministic projection only: test permission is never production authority. */
+export type ReceiptWikiProjection = Omit<OwnedWikiProjection, 'kind'> & {
+  kind: 'SCHEMA11_RECEIPT_WIKI';
+  version: 2;
+};
 export function projectOwnedWiki(
   requestInput: unknown,
   knowledgeInput: unknown,
   control: RuntimeRequestControl,
 ): OwnedWikiProjection {
+  return projectPublishedWiki(requestInput, knowledgeInput, control, 1) as OwnedWikiProjection;
+}
+export function projectReceiptWiki(
+  requestInput: unknown,
+  knowledgeInput: unknown,
+  control: RuntimeRequestControl,
+): ReceiptWikiProjection {
+  return projectPublishedWiki(requestInput, knowledgeInput, control, 2) as ReceiptWikiProjection;
+}
+function projectPublishedWiki(
+  requestInput: unknown,
+  knowledgeInput: unknown,
+  control: RuntimeRequestControl,
+  sourceVersion: 1 | 2,
+): OwnedWikiProjection | ReceiptWikiProjection {
   const budget = new KnowledgeBudget(control),
     request = parseOwnedWikiRequest(requestInput, budget.control);
   budget.data(requestInput);
-  const rows = validateOwnedPublishedSelection(request, knowledgeInput, budget);
+  const rows = validatePublishedSelection(request, knowledgeInput, budget, sourceVersion);
   const diagnostics: OwnedWikiProjection['diagnostics'] = [],
     sections: OwnedWikiProjection['sections'] = [];
-  const lines = ['# Standard Wiki', '', 'OWNED_TEST_WIKI — NOT_EVALUABLE / NOT_AUTHORIZED', ''];
+  const lines = [
+    '# Standard Wiki',
+    '',
+    sourceVersion === 2
+      ? 'SCHEMA11_RECEIPT_WIKI \u2014 NOT_EVALUABLE / NOT_AUTHORIZED'
+      : 'OWNED_TEST_WIKI \u2014 NOT_EVALUABLE / NOT_AUTHORIZED',
+    '',
+  ];
   for (const section of standardWikiProfile.sections) {
     const members =
         section.type === null
@@ -447,8 +499,10 @@ export function projectOwnedWiki(
     { inputDigest, provenance, markdown },
     budget.control,
   );
-  const output: OwnedWikiProjection = {
-    kind: 'OWNED_TEST_WIKI',
+  const output: OwnedWikiProjection | ReceiptWikiProjection = {
+    ...(sourceVersion === 2
+      ? { kind: 'SCHEMA11_RECEIPT_WIKI' as const, version: 2 as const }
+      : { kind: 'OWNED_TEST_WIKI' as const }),
     profile: standardWikiProfile,
     status,
     diagnostics,

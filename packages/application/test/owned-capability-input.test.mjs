@@ -389,3 +389,122 @@ test('cancel and byte budget stop before reading, without a new allowance or mod
   await assert.rejects(run(g), (e) => e.code === 'MODEL_INPUT_TOO_LARGE');
   assert.equal(g.reads.length, 0);
 });
+
+import { withReadyPublication } from '../../storage/test/helpers/schema11-publication-fixture.mjs';
+async function withReceiptComponent(t, body) {
+  return withReadyPublication(
+    t,
+    async (f) => {
+      f.writer.publishOwnedPrepared(f.ready.handle, f.limits, f.c);
+      const seed = f.owned.seed;
+      seed.options.selectedComponents = f.refs;
+      seed.output.payload.structuredContent.componentRefs = [
+        {
+          scope: 'WORKSPACE',
+          workspaceId: f.w,
+          entity: { kind: 'COMPONENT', id: f.refs[0].itemId, revisionId: f.refs[0].revisionId },
+        },
+      ];
+      const read = (refs, c) =>
+        f.api.readSelectedCapabilityInputs(refs, f.limits, c, (m) =>
+          assert(m.fields.includes('SNAPSHOT_INPUT_DIGEST')),
+        );
+      await body({ ...f, seed, read });
+    },
+    undefined,
+    async (t, callback) => {
+      const f = await owned(t);
+      return callback({
+        db: f.db,
+        store: f.store,
+        knowledgeRef: f.selected,
+        workspaceId: 'w',
+        repositoryIds: f.snapshot.selection.repositoryIds,
+        snapshot: f.snapshot,
+        control: () => f.c,
+        limits,
+        permissions: { kind: 'TEST_KNOWLEDGE_READ_NOT_AUTHORITY', check() {} },
+        seed: f,
+      });
+    },
+  );
+}
+test('schema11 actual Component receipt and captured digest reach the existing Capability TEST_DOUBLE without attempt IDs', async (t) =>
+  withReceiptComponent(t, async (f) => {
+    const before = f.db.prepare('SELECT total_changes() n').get().n;
+    const result = await runOwnedCapabilityTestDouble(
+      f.owned.snapshot,
+      f.seed.options,
+      f.read,
+      f.seed.port,
+      f.c,
+      f.seed.a,
+    );
+    const request = f.seed.calls[0],
+      inputs = request.authorizedContext.data.capabilityInputs;
+    assert.equal(result.evidenceKind, 'TEST_DOUBLE');
+    assert.equal(result.quality, 'NOT_EVALUABLE');
+    assert.equal(result.publicationEffect, 'NOT_ATTEMPTED');
+    assert.equal(inputs.capturedInputDigest, f.owned.snapshot.inputDigest);
+    const source = inputs.components[0].provenance;
+    assert.equal(source.kind, 'SCHEMA11_RECEIPT');
+    assert.equal(source.publicationId, f.db.prepare('SELECT id FROM publication_runs').get().id);
+    assert.equal(source.candidateId, f.ready.command.entries[0].candidateId);
+    assert.equal(source.snapshotId, f.owned.snapshot.snapshotId);
+    assert.equal(Object.hasOwn(source, 'attemptId'), false);
+    assert.equal(request.inputDigest, digest(request.authorizedContext));
+    assert.deepEqual(result.capturedCoverage, f.seed.output.payload.coverage);
+    assert.equal(f.db.prepare('SELECT total_changes() n').get().n, before);
+  }));
+test('receipt Capability binding refuses changed digest, selected version, missing closure and provenance association before model call', async (t) => {
+  for (const mutate of [
+    (x) => {
+      x.sourceInputs[0].capturedInputDigest = 'f'.repeat(64);
+    },
+    (x) => {
+      x.knowledge.records[0].currentHeadRevisionId = 'other';
+    },
+    (x) => {
+      x.knowledge.records[0].revisionEnvelope.payload.supportRefs[0].valueDigest = 'f'.repeat(64);
+    },
+    (x) => {
+      x.knowledge.records[0].provenance.evaluationId = 'other';
+    },
+  ])
+    await withReceiptComponent(t, async (f) => {
+      const received = structuredClone(f.read(f.refs, f.c));
+      mutate(received);
+      await assert.rejects(
+        runOwnedCapabilityTestDouble(
+          f.owned.snapshot,
+          f.seed.options,
+          () => received,
+          f.seed.port,
+          f.c,
+          f.seed.a,
+        ),
+      );
+      assert.equal(f.seed.calls.length, 0);
+      assert.equal(f.seed.a.seen.calls, 0);
+    });
+});
+test('receipt Capability input permission denial leaves SQLite read state settled and never calls model', async (t) =>
+  withReceiptComponent(t, async (f) => {
+    const denied = (refs, c) =>
+      f.api.readSelectedCapabilityInputs(refs, f.limits, c, (m) => {
+        assert(m.fields.includes('SNAPSHOT_INPUT_DIGEST'));
+        throw Error('DENIED');
+      });
+    await assert.rejects(
+      runOwnedCapabilityTestDouble(
+        f.owned.snapshot,
+        f.seed.options,
+        denied,
+        f.seed.port,
+        f.c,
+        f.seed.a,
+      ),
+    );
+    assert.equal(f.seed.calls.length, 0);
+    assert.equal(f.db.isTransaction, false);
+  }));

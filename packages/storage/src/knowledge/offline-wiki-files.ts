@@ -1,3 +1,8 @@
+import {
+  consumeReceiptWikiArtifact,
+  parseReceiptWikiArtifact,
+  type ReceiptWikiArtifact,
+} from '../../../ir/dist/receipt-wiki-artifact-contract.js';
 import fs, { type BigIntStats } from 'node:fs';
 import { createHash, randomUUID } from 'node:crypto';
 import { tmpdir } from 'node:os';
@@ -159,9 +164,10 @@ export function createOwnedWikiArtifactDirectory(
   checkControl(control);
   return Object.freeze({ directory, ownerId });
 }
+type FileArtifact<V extends 1 | 2> = V extends 2 ? ReceiptWikiArtifact : OwnedWikiFileArtifact;
 type Pointer = {
   schema: 'codeatlas.owned-wiki-current';
-  version: 1;
+  version: 1 | 2;
   ownerId: string;
   artifactId: string;
   artifactRevisionId: string;
@@ -169,8 +175,10 @@ type Pointer = {
   sha256: string;
 };
 /** Experimental fresh-temp-root persistence only; not a trusted production outputTarget. */
-export class OwnedWikiArtifactFiles {
+class WikiArtifactFileEngine<V extends 1 | 2> {
   readonly #receipt: OwnedWikiDirectory;
+  readonly #mode: V;
+  readonly #receiptIssuer: object | undefined;
   readonly #maxBytes: number;
   readonly #ancestors: { path: string; stat: BigIntStats }[];
   readonly #marker: BigIntStats;
@@ -179,7 +187,19 @@ export class OwnedWikiArtifactFiles {
   readonly #reopened: boolean;
   #inspected = false;
   #lease: { stat: BigIntStats } | null = null;
-  constructor(receipt: OwnedWikiDirectory, maxArtifactBytes: number) {
+  constructor(
+    receipt: OwnedWikiDirectory,
+    maxArtifactBytes: number,
+    mode: V,
+    receiptIssuer?: object,
+  ) {
+    this.#mode = mode;
+    this.#receiptIssuer = receiptIssuer;
+    requireFile(mode === 1 || mode === 2, 'ARTIFACT_INVALID');
+    requireFile(
+      mode === 1 || (receiptIssuer !== null && typeof receiptIssuer === 'object'),
+      'ARTIFACT_INVALID',
+    );
     const d = Object.getOwnPropertyDescriptors(receipt ?? {});
     requireFile(
       d.directory &&
@@ -240,7 +260,7 @@ export class OwnedWikiArtifactFiles {
   private envelope(
     key: string,
     c: RuntimeRequestControl,
-  ): { artifact: OwnedWikiFileArtifact; text: string } {
+  ): { artifact: FileArtifact<V>; text: string } {
     requireFile(/^[a-f0-9]{64}$/.test(key));
     const text = this.text('revision-' + key + '.json', c);
     const e = exact(JSON.parse(text), [
@@ -252,11 +272,13 @@ export class OwnedWikiArtifactFiles {
     ]);
     requireFile(
       e.schema === 'codeatlas.owned-wiki-revision' &&
-        e.version === 1 &&
+        e.version === this.#mode &&
         e.ownerId === this.#receipt.ownerId,
       'ARTIFACT_INVALID',
     );
-    const artifact = parseArtifact(e.artifact, c);
+    const artifact = (
+      this.#mode === 2 ? parseReceiptWikiArtifact(e.artifact, c) : parseArtifact(e.artifact, c)
+    ) as FileArtifact<V>;
     requireFile(
       sha(artifact.artifactRevisionId) === key &&
         e.artifactSha256 === sha(canonicalCompilationJson(artifact, c)),
@@ -264,7 +286,7 @@ export class OwnedWikiArtifactFiles {
     );
     return { artifact, text };
   }
-  readCurrent(control: RuntimeRequestControl): OwnedWikiFileArtifact | null {
+  readCurrent(control: RuntimeRequestControl): FileArtifact<V> | null {
     this.guard();
     checkControl(control);
     if (!exists(this.path('current.json'))) return null;
@@ -279,7 +301,7 @@ export class OwnedWikiArtifactFiles {
     ]) as Pointer;
     requireFile(
       p.schema === 'codeatlas.owned-wiki-current' &&
-        p.version === 1 &&
+        p.version === this.#mode &&
         p.ownerId === this.#receipt.ownerId &&
         typeof p.revisionKey === 'string' &&
         /^[a-f0-9]{64}$/.test(p.revisionKey),
@@ -298,7 +320,7 @@ export class OwnedWikiArtifactFiles {
       this.#inspected = true;
     return e.artifact;
   }
-  readRevision(artifactRevisionId: string, control: RuntimeRequestControl): OwnedWikiFileArtifact {
+  readRevision(artifactRevisionId: string, control: RuntimeRequestControl): FileArtifact<V> {
     this.guard();
     checkControl(control);
     EntityIdSchema.parse(artifactRevisionId);
@@ -339,13 +361,17 @@ export class OwnedWikiArtifactFiles {
     control: RuntimeRequestControl,
   ): {
     effect: 'COMMITTED' | 'UNCHANGED';
-    artifact: OwnedWikiFileArtifact;
+    artifact: FileArtifact<V>;
     cleanupState: 'SETTLED' | 'UNKNOWN';
   } {
     if (this.#blocked)
       throw new OwnedWikiFileError('ARTIFACT_WRITER_BLOCKED', 'UNKNOWN', 'UNKNOWN');
     if (this.#lease) throw new OwnedWikiFileError('OUTPUT_TARGET_CONFLICT');
-    const artifact = parseArtifact(value, control),
+    const artifact = (
+        this.#mode === 2
+          ? consumeReceiptWikiArtifact(this.#receiptIssuer!, value as object, control)
+          : parseArtifact(value, control)
+      ) as FileArtifact<V>,
       artifactText = canonicalCompilationJson(artifact, control);
     requireFile(Buffer.byteLength(artifactText) <= this.#maxBytes, 'ARTIFACT_LIMIT');
     this.guard();
@@ -360,7 +386,7 @@ export class OwnedWikiArtifactFiles {
       committed = false,
       result: {
         effect: 'COMMITTED' | 'UNCHANGED';
-        artifact: OwnedWikiFileArtifact;
+        artifact: FileArtifact<V>;
         cleanupState: 'SETTLED' | 'UNKNOWN';
       } | null = null;
     const temps: { name: string; stat: BigIntStats }[] = [];
@@ -389,7 +415,7 @@ export class OwnedWikiArtifactFiles {
         const revisionText = canonicalCompilationJson(
           {
             schema: 'codeatlas.owned-wiki-revision',
-            version: 1,
+            version: this.#mode,
             ownerId: this.#receipt.ownerId,
             artifactSha256: sha(artifactText),
             artifact,
@@ -418,7 +444,7 @@ export class OwnedWikiArtifactFiles {
         requireFile(this.envelope(key, control).text === revisionText, 'ARTIFACT_INVALID');
         const pointer: Pointer = {
           schema: 'codeatlas.owned-wiki-current',
-          version: 1,
+          version: this.#mode,
           ownerId: this.#receipt.ownerId,
           artifactId: artifact.artifactId,
           artifactRevisionId: artifact.artifactRevisionId,
@@ -472,5 +498,18 @@ export class OwnedWikiArtifactFiles {
     }
     requireFile(result !== null, 'ARTIFACT_INVALID');
     return result!;
+  }
+}
+
+/** Legacy v1 constructor and results remain unchanged. */
+export class OwnedWikiArtifactFiles extends WikiArtifactFileEngine<1> {
+  constructor(receipt: OwnedWikiDirectory, maxArtifactBytes: number) {
+    super(receipt, maxArtifactBytes, 1);
+  }
+}
+/** Same filesystem lifecycle, distinct historical receipt format and one-use prepared input. */
+export class ReceiptWikiArtifactFiles extends WikiArtifactFileEngine<2> {
+  constructor(receipt: OwnedWikiDirectory, maxArtifactBytes: number, issuerIdentity: object) {
+    super(receipt, maxArtifactBytes, 2, issuerIdentity);
   }
 }

@@ -1,3 +1,4 @@
+import { readSchema11PublishedSelection } from './schema11-selected-knowledge.js';
 import { createHash } from 'node:crypto';
 import { types } from 'node:util';
 import {
@@ -24,6 +25,7 @@ import { KnowledgeBudget, KnowledgeControlStop } from '../../knowledge/dist/comp
 import {
   parseOwnedWikiRequest,
   validateOwnedPublishedSelection,
+  validateReceiptPublishedSelection,
   type OwnedPublishedRecord,
 } from '../../knowledge/dist/offline-wiki.js';
 
@@ -239,7 +241,11 @@ export function buildCapturedSemanticTestRequest(
         control,
       );
       if (!selection.selectedPublishedRevisionRefs.length) fail('CAPABILITY_UNAVAILABLE');
-      const components = validateOwnedPublishedSelection(
+      const validateComponents =
+        (input.knowledge as { kind?: string })?.kind === 'SCHEMA11_RECEIPT'
+          ? validateReceiptPublishedSelection
+          : validateOwnedPublishedSelection;
+      const components = validateComponents(
         selection,
         input.knowledge,
         new KnowledgeBudget(control),
@@ -614,6 +620,25 @@ export async function runOwnedCapabilityTestDouble(
     }
     account.checkpoint();
     const result = fields(received, ['knowledge', 'sourceInputs']);
+    let knowledge = result.knowledge;
+    if (
+      knowledge &&
+      typeof knowledge === 'object' &&
+      Object.getOwnPropertyDescriptor(knowledge, 'schema')?.value ===
+        'codeatlas.published-knowledge-projection'
+    ) {
+      // Shared strict receipt projection validator. This never relabels it as the old attempt source.
+      const original = knowledge;
+      knowledge = await readSchema11PublishedSelection(
+        selection,
+        {
+          workspaceId: snapshot.workspaceId,
+          read: async () => original,
+        },
+        control,
+      );
+      account.checkpoint();
+    }
     delegated = true;
     return await runCapturedSemanticTestDouble(
       snapshot,
@@ -628,7 +653,7 @@ export async function runOwnedCapabilityTestDouble(
       account,
       {
         selectedComponents: selection.selectedPublishedRevisionRefs,
-        knowledge: result.knowledge,
+        knowledge,
         sourceInputs: result.sourceInputs,
       },
     );

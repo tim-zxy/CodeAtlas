@@ -1,3 +1,4 @@
+import { receiptSourceProvenanceSchema } from './receipt-source-contract.js';
 import { z } from 'zod';
 import {
   basisKey,
@@ -89,8 +90,20 @@ const success = z.strictObject({
   }),
 });
 
+const successV2 = success.extend({
+  version: z.literal(2),
+  data: success.shape.data.extend({
+    items: z.array(projectContextItemSchema.extend({ provenance: receiptSourceProvenanceSchema })),
+  }),
+});
+export const projectContextRequestV2Schema = projectContextRequestSchema.extend({
+  version: z.literal(2),
+});
 const key = (r: { itemId: string; revisionId: string }) => JSON.stringify([r.itemId, r.revisionId]);
-const checked = success.superRefine((r, ctx) => {
+const checkResponse = (
+  r: z.infer<typeof success> | z.infer<typeof successV2>,
+  ctx: z.RefinementCtx,
+) => {
   const fail = () =>
       ctx.addIssue({ code: 'custom', message: 'Inconsistent limited project context' }),
     d = r.data,
@@ -155,7 +168,9 @@ const checked = success.superRefine((r, ctx) => {
       (h.summarySource !== 'NONE' && !h.summary.length)
     )
       fail();
-});
+};
+const checked = success.superRefine(checkResponse);
+const checkedV2 = successV2.superRefine(checkResponse);
 const failure = z
   .strictObject({ error: z.strictObject({ code, message: z.string() }) })
   .refine((v) => v.error.message === projectContextErrorMessages[v.error.code]);
@@ -179,5 +194,30 @@ export function projectContextWireSchemas() {
   return {
     input: { ...z.toJSONSchema(projectContextRequestSchema), type: 'object' as const },
     output: { ...z.toJSONSchema(projectContextResponseSchema), type: 'object' as const },
+  };
+}
+
+export const projectContextResponseV2Schema = z.union([
+  checkedV2,
+  z
+    .strictObject({ version: z.literal(2), error: z.strictObject({ code, message: z.string() }) })
+    .refine((v) => v.error.message === projectContextErrorMessages[v.error.code]),
+]);
+export type ReceiptProjectContextResponse = z.infer<typeof projectContextResponseV2Schema>;
+export function projectContextFailureV2(
+  code: ProjectContextErrorCode,
+): ReceiptProjectContextResponse {
+  return { version: 2, ...projectContextFailure(code) } as ReceiptProjectContextResponse;
+}
+export function serializeProjectContextResponseV2(value: unknown, c: RuntimeRequestControl) {
+  return canonicalCompilationJson(
+    projectContextResponseV2Schema.parse(JSON.parse(canonicalCompilationJson(value, c))),
+    c,
+  );
+}
+export function projectContextWireV2Schemas() {
+  return {
+    input: { ...z.toJSONSchema(projectContextRequestV2Schema), type: 'object' as const },
+    output: { ...z.toJSONSchema(projectContextResponseV2Schema), type: 'object' as const },
   };
 }

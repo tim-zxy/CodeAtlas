@@ -1,3 +1,15 @@
+## Receipt Wiki owned-files component evidence - 2026-11-16
+
+Fresh historical v2 receipt delivery gives file/projection29 + Source12 passing component checks, four builds/architecture17 and independent readonly review after one fixedP2. Old v1 lifecycle and unknown recovery retained; currentFreshness after reopen is UNASSESSED. [Scope/limitations](../superpowers/specs/2026-11-08-owned-wiki-files.md#receipt-v2-concrete-format-and-evidence---2026-11-16). This does not close formal Wiki/production/durability, A6 or Phase1 exits; original checkboxes unchanged.
+
+## P1-11 receipt Component input evidence - 2026-11-16
+
+Approved self-owned schema11 current Component/source-digest composition reaches only the existing Capability TEST_DOUBLE. Registered Application45/Store26 pass, three builds/architecture17 and independent readonly review; real-model quality, production authority and phase exits remain unverified. [Bounded contract/evidence](../superpowers/specs/2026-11-07-semantic-test-invocation.md#receipt-capability-implementation-evidence---2026-11-16). No existing acceptance checkbox changed.
+
+## Owned freshness/Wiki component evidence - 2026-11-16
+
+Approved temporary-memory one-shot Source/Storage reconciliation and explicit freshness CAS have Store24 + related51 plus1 final distinct boundary (76 total) passing bounded checks and affected builds/architecture17. Real file-byte/issuer and Storage-owner integration is distinct from Git transport/provider/semantic/permission substitutes. Historical immutable records, original coverage/currency and production closure retained. [Exact scope and limits](../superpowers/specs/2026-11-16-owned-freshness-wiki.md). This is component evidence only; no Phase1 checkbox or A6 qualification is closed.
+
 ## P1-11 owned Component input component evidence - 2026-11-11
 
 Approved same-snapshot/version/digest published Component composition reaches the

@@ -1,8 +1,14 @@
+import { createOwnedPublishedReadBinding } from '../../../packages/runtime/dist/owned-published-read-binding.js';
+import { OfflineKnowledgeSearchIndex } from '../../../packages/storage/dist/knowledge/offline-knowledge-search.js';
 // Shared fixed-scope self-owned host. Business vector is explicitly synthetic, not quality proof.
+import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { createOwnedDirectoryObserver } from '../../../packages/runtime/dist/index.js';
+import {
+  acquireAndRunOwnedManagedMcpHost,
+  OwnedMcpAcquisitionFailure,
+} from '../dist/owned-managed-host.js';
 import { createHash } from 'node:crypto';
 import {
   setup,
@@ -11,10 +17,12 @@ import {
 } from '../../../packages/agent-api/test/helpers/knowledge-search-fixture.mjs';
 import { limits as readLimits } from '../../../packages/storage/test/helpers/offline-publication-fixture.mjs';
 import {
+  createLocalPublishedReadMcpServer,
   createOwnedFiveReadToolsMcpServer,
   createOwnedExtendedReadToolsMcpServer,
   createOwnedStructureReadToolsMcpServer,
   createOwnedManagedReadToolsMcpServer,
+  createOwnedDirectoryManagedReadToolsMcpServer,
 } from '../dist/owned-business-stdio.js';
 import { withCodeQueryDatabase } from '../../../packages/storage/test/helpers/code-query-fixture.mjs';
 import { openRepositoryCodeQuery } from '../../../packages/storage/dist/index.js';
@@ -37,12 +45,33 @@ async function run(runtimeSeed = null, ownedBusiness = null) {
     'current',
     async (seed) => {
       const f = await setup();
-      const refs = f.db
-        .prepare(
-          'SELECT item_id AS itemId,revision_id AS revisionId FROM offline_heads ORDER BY item_id',
-        )
-        .all()
-        .map((r) => ({ ...r }));
+      const published = process.argv[2]?.includes('-published');
+      const publishedIndex = published
+        ? new OfflineKnowledgeSearchIndex(ownedBusiness.store, {
+            kind: 'TEST_SEARCH_PERMISSIONS_NOT_AUTHORITY',
+            check() {},
+          })
+        : null;
+      if (publishedIndex) publishedIndex.rebuild(readLimits, ownedBusiness.control());
+      const binding = published
+        ? createOwnedPublishedReadBinding({
+            store: ownedBusiness.store,
+            scope: {
+              workspaceId: ownedBusiness.workspaceId,
+              repositoryIds: ownedBusiness.repositoryIds,
+            },
+            limits: ownedBusiness.limits,
+            control: ownedBusiness.control(),
+          })
+        : null;
+      const refs = published
+        ? [ownedBusiness.knowledgeRef]
+        : f.db
+            .prepare(
+              'SELECT item_id AS itemId,revision_id AS revisionId FROM offline_heads ORDER BY item_id',
+            )
+            .all()
+            .map((r) => ({ ...r }));
       const raw = JSON.parse(
         readFileSync(
           new URL('../../../fixtures/phase1/knowledge-identity/inputs.json', import.meta.url),
@@ -120,22 +149,30 @@ async function run(runtimeSeed = null, ownedBusiness = null) {
           m.workspaceId !== 'w' ||
           JSON.stringify(m.repositoryIds) !==
             JSON.stringify(
-              [
-                ...new Set([
-                  'r',
-                  seed.repositoryId,
-                  ...(runtimeSeed ? [runtimeSeed.repositoryId] : []),
-                ]),
-              ].sort(),
+              published
+                ? ownedBusiness.repositoryIds
+                : [
+                    ...new Set([
+                      'r',
+                      seed.repositoryId,
+                      ...(runtimeSeed ? [runtimeSeed.repositoryId] : []),
+                    ]),
+                  ].sort(),
             )
         )
           throw Error('SCOPE_MISMATCH');
       };
       const hostScope = {
         workspaceId: 'w',
-        repositoryIds: [
-          ...new Set(['r', seed.repositoryId, ...(runtimeSeed ? [runtimeSeed.repositoryId] : [])]),
-        ],
+        repositoryIds: published
+          ? ownedBusiness.repositoryIds
+          : [
+              ...new Set([
+                'r',
+                seed.repositoryId,
+                ...(runtimeSeed ? [runtimeSeed.repositoryId] : []),
+              ]),
+            ],
       };
       if (runtimeSeed)
         process.stderr.write(
@@ -161,22 +198,21 @@ async function run(runtimeSeed = null, ownedBusiness = null) {
       const managed = process.argv[2]?.startsWith('managed');
       const actualObserver = process.argv[2]?.startsWith('managed-os');
       const eventActor = process.argv[2] === 'managed-os-event';
-      let observer, readEntered, releaseRead, eventReceived, reconciledEvent, actorError;
+      let readEntered, releaseRead, reconciledEvent, actorError;
       const enteredRead = new Promise((r) => (readEntered = r)),
         allowRead = new Promise((r) => (releaseRead = r)),
-        receivedEvent = new Promise((r) => (eventReceived = r)),
         eventReconciled = new Promise((r) => (reconciledEvent = r));
       const actor = eventActor
         ? (async () => {
             await enteredRead;
             let timer;
             try {
-              await writeFile(join(observer.directory, 'owned-event.txt'), 'owned test event\n');
+              await writeFile(
+                join(app.getOwnedDirectory(), 'owned-event.txt'),
+                'owned test event\n',
+              );
               await Promise.race([
-                (async () => {
-                  await receivedEvent;
-                  await eventReconciled;
-                })(),
+                eventReconciled,
                 new Promise(
                   (_, reject) =>
                     (timer = setTimeout(() => reject(Error('OWNED_EVENT_TIMEOUT')), 5000)),
@@ -200,6 +236,10 @@ async function run(runtimeSeed = null, ownedBusiness = null) {
         mode: process.argv[2] === 'managed-one-shot' ? 'ONE_SHOT' : 'MCP_STDIO',
         reconcile: async (reason, scope, c) => {
           authorize(scope);
+          if (actualObserver && reason === 'POST_ATTACH') {
+            if (!app.getOwnedDirectory()) throw Error('OWNED_OBSERVER_NOT_ATTACHED');
+            process.stderr.write('OWNED_OS_OBSERVER_ATTACHED\n');
+          }
           process.stderr.write('RECONCILE_START ' + reason + '\n');
           const source = await runtimeSeed.open(structureLimits, c);
           try {
@@ -213,31 +253,11 @@ async function run(runtimeSeed = null, ownedBusiness = null) {
           if (reason === 'OVERFLOW') overflowDone();
           if (reason === 'CHANGE' || reason === 'OVERFLOW') reconciledEvent();
         },
-        ...(process.argv[2] === 'managed-one-shot'
+        ...(process.argv[2] === 'managed-one-shot' || actualObserver
           ? {}
           : {
               watch: async (listener, scope, c) => {
                 authorize(scope);
-                if (actualObserver) {
-                  observer = await createOwnedDirectoryObserver(
-                    scope,
-                    (event) => {
-                      listener(event);
-                      eventReceived();
-                    },
-                    c,
-                  );
-                  observer.signal.addEventListener(
-                    'abort',
-                    () => {
-                      void app.close();
-                    },
-                    { once: true },
-                  );
-                  if (observer.signal.aborted) void app.close();
-                  process.stderr.write('OWNED_OS_OBSERVER_ATTACHED\n');
-                  return { close: () => observer.close() };
-                }
                 emit = listener;
                 process.stderr.write('OWNED_OBSERVER_ATTACHED\n');
                 return {
@@ -249,15 +269,61 @@ async function run(runtimeSeed = null, ownedBusiness = null) {
             }),
       };
 
-      const app = (
-        managed
-          ? createOwnedManagedReadToolsMcpServer
-          : runtimeSeed
-            ? createOwnedStructureReadToolsMcpServer
-            : extended
-              ? createOwnedExtendedReadToolsMcpServer
-              : createOwnedFiveReadToolsMcpServer
-      )(
+      let bindingValid = true;
+      let app;
+      const openServer = (
+        process.argv[2]?.includes('-published')
+          ? (options, streams) => {
+              const selected = Object.fromEntries(
+                ['scope', 'business', 'search', 'projectContext', 'status', 'limits'].map((k) => [
+                  k,
+                  options[k],
+                ]),
+              );
+              return createLocalPublishedReadMcpServer(
+                selected,
+                {
+                  signal: binding.signal,
+                  check(scope) {
+                    binding.check(binding.handle, scope);
+                    authorize(scope);
+                    if (!bindingValid) throw Error('BINDING_CHANGED');
+                  },
+                },
+                streams,
+              );
+            }
+          : actualObserver
+            ? (options, streams) => {
+                for (const value of [
+                  { ...options, directory: 'not-an-accepted-path' },
+                  {
+                    ...options,
+                    lifecycle: {
+                      ...options.lifecycle,
+                      watch: async () => {
+                        throw Error('INJECTED_WATCH');
+                      },
+                    },
+                  },
+                  { ...options, lifecycle: { ...options.lifecycle, mode: 'ONE_SHOT' } },
+                ])
+                  assert.throws(
+                    () => createOwnedDirectoryManagedReadToolsMcpServer(value, streams),
+                    /INVALID_OWNED_STDIO_OPTIONS/,
+                  );
+                process.stderr.write('OWNED_FACTORY_OVERRIDE_REFUSED\n');
+                return createOwnedDirectoryManagedReadToolsMcpServer(options, streams);
+              }
+            : managed
+              ? createOwnedManagedReadToolsMcpServer
+              : runtimeSeed
+                ? createOwnedStructureReadToolsMcpServer
+                : extended
+                  ? createOwnedExtendedReadToolsMcpServer
+                  : createOwnedFiveReadToolsMcpServer
+      ).bind(
+        undefined,
         {
           scope: hostScope,
           ...(managed ? { lifecycle } : {}),
@@ -357,7 +423,7 @@ async function run(runtimeSeed = null, ownedBusiness = null) {
                       process.stderr.write('HELD_QUERY_STARTED\n');
                       await new Promise((r) => setTimeout(r, 400));
                     }
-                    return f.index.searchPage(req, readLimits, c);
+                    return (publishedIndex ?? f.index).searchPage(req, readLimits, c);
                   },
                   tokenCounter: meter(),
                 },
@@ -382,12 +448,15 @@ async function run(runtimeSeed = null, ownedBusiness = null) {
               if (!ownedBusiness) return businessResult;
               businessReads++;
               if (req.workspaceId !== ownedBusiness.workspaceId) throw Error('SCOPE_MISMATCH');
-              return ownedBusiness.store.readPublishedKnowledge(
+              const value = await ownedBusiness.store.readPublishedKnowledge(
                 req.selectedPublishedRevisionRefs,
                 ownedBusiness.permissions,
                 ownedBusiness.limits,
                 c,
               );
+              if (process.argv[2]?.endsWith('-published-invalidated')) bindingValid = false;
+              if (process.argv[2]?.endsWith('-published-revoked')) binding.revoke();
+              return value;
             },
             tokenCounter: meter(),
           },
@@ -396,7 +465,7 @@ async function run(runtimeSeed = null, ownedBusiness = null) {
             authorize,
             knowledgeQuery: async (req, c) => {
               reads++;
-              return f.index.searchPage(req, readLimits, c);
+              return (publishedIndex ?? f.index).searchPage(req, readLimits, c);
             },
             tokenCounter: meter(),
           },
@@ -406,7 +475,17 @@ async function run(runtimeSeed = null, ownedBusiness = null) {
             authorize,
             knowledgeQuery: async (selected, c) => {
               reads++;
-              return f.store.readProjectContextProjection(selected, () => {}, readLimits, c);
+              return (published ? ownedBusiness.store : f.store).readProjectContextProjection(
+                selected,
+                () => {
+                  if (published) {
+                    if (binding.signal.aborted) throw Error('BINDING_REVOKED');
+                    authorize(hostScope);
+                  }
+                },
+                readLimits,
+                c,
+              );
             },
             tokenCounter: meter(),
           },
@@ -416,7 +495,17 @@ async function run(runtimeSeed = null, ownedBusiness = null) {
             authorize,
             knowledgeQuery: async (selected, c) => {
               reads++;
-              return f.store.readKnowledgeStatusProjection(selected, () => {}, readLimits, c);
+              return (published ? ownedBusiness.store : f.store).readKnowledgeStatusProjection(
+                selected,
+                () => {
+                  if (published) {
+                    if (binding.signal.aborted) throw Error('BINDING_REVOKED');
+                    authorize(hostScope);
+                  }
+                },
+                readLimits,
+                c,
+              );
             },
             tokenCounter: meter(),
           },
@@ -439,7 +528,7 @@ async function run(runtimeSeed = null, ownedBusiness = null) {
           limits: {
             maxMessageBytes: 4000000,
             maxConcurrentCalls: process.argv[2]?.includes('hold') ? 1 : 4,
-            maxItems: 1000000,
+            maxItems: process.argv[2] === 'managed-store-business-construction-fail' ? 0 : 1000000,
             maxDepth: 100,
             requestTimeoutMs: 10000,
           },
@@ -447,12 +536,52 @@ async function run(runtimeSeed = null, ownedBusiness = null) {
         { input: process.stdin, output: process.stdout },
       );
       if (reads !== 0) throw Error('STARTUP_READ');
-      await app.start();
-      if (reads !== 0) throw Error('STARTUP_READ');
-      process.stderr.write(
-        managed ? 'OWNED_GROUP_NO_STARTUP_TOOL_QUERY\n' : 'OWNED_GROUP_NO_STARTUP_READ\n',
-      );
-      const result = await app.completion;
+      const start = async () => {
+        await app.start();
+        if (reads !== 0) throw Error('STARTUP_READ');
+        process.stderr.write(
+          managed ? 'OWNED_GROUP_NO_STARTUP_TOOL_QUERY\n' : 'OWNED_GROUP_NO_STARTUP_READ\n',
+        );
+      };
+      let result;
+      if (ownedBusiness || actualObserver) {
+        result = await acquireAndRunOwnedManagedMcpHost(
+          async () => {
+            try {
+              app = openServer();
+            } catch (error) {
+              // This controlled zero-limit refusal occurs before lifecycle/SDK resource allocation.
+              if (
+                process.argv[2] === 'managed-store-business-construction-fail' &&
+                error.message === 'INVALID_OWNED_STDIO_OPTIONS'
+              )
+                throw new OwnedMcpAcquisitionFailure('SETTLED');
+              throw error;
+            }
+            if (reads !== 0) throw Error('STARTUP_READ');
+            return { start, close: () => app.close(), completion: app.completion };
+          },
+          () => {
+            binding?.revoke();
+            publishedIndex?.close();
+            f.close();
+            if (f.db.isOpen) throw Error('OWNED_REGISTERED_STORE_STILL_OPEN');
+            process.stderr.write('OWNED_REGISTERED_STORE_CLOSED\n');
+            return { cleanupState: 'SETTLED' };
+          },
+          new AbortController().signal,
+        );
+        if (result.exitCode !== 0) {
+          process.stderr.write('OWNED_EMBEDDING_HOST_FAILED\n');
+          process.exitCode = result.exitCode;
+          return;
+        }
+      } else {
+        app = openServer();
+        if (reads !== 0) throw Error('STARTUP_READ');
+        await start();
+        result = await app.completion;
+      }
       if (triggered && actor) await actor;
       if (actorError) throw actorError;
       if (ownedBusiness) {
@@ -461,7 +590,7 @@ async function run(runtimeSeed = null, ownedBusiness = null) {
         process.stderr.write('OWNED_BUSINESS_HISTORY_UNCHANGED\n');
         process.stderr.write('OWNED_BUSINESS_READS ' + businessReads + '\n');
       }
-      f.close();
+      if (!ownedBusiness && !actualObserver) f.close();
       process.stderr.write('OWNED_GROUP_' + result.cleanupState + '\n');
     },
   );
@@ -476,7 +605,7 @@ try {
       },
       (owned) => run(owned.runtimeSeed, owned),
     );
-    ownedBusinessClosed = true;
+    ownedBusinessClosed = !process.exitCode;
   } else if (process.argv[2]?.startsWith('structure') || process.argv[2]?.startsWith('managed'))
     await withOwnedStructureFixture(
       {

@@ -9,6 +9,7 @@ import {
 import {
   parseOwnedWikiRequest,
   validateOwnedPublishedSelection,
+  validateReceiptPublishedSelection,
   type OwnedPublishedRecord,
 } from './offline-wiki.js';
 
@@ -134,10 +135,27 @@ export function traceOwnedBusinessFlow(
   knowledgeInput: unknown,
   control: RuntimeRequestControl,
 ): OwnedBusinessTrace {
+  return tracePublishedBusinessFlow(requestInput, knowledgeInput, control, 1);
+}
+export function traceReceiptBusinessFlow(
+  requestInput: unknown,
+  knowledgeInput: unknown,
+  control: RuntimeRequestControl,
+): OwnedBusinessTrace {
+  return tracePublishedBusinessFlow(requestInput, knowledgeInput, control, 2);
+}
+function tracePublishedBusinessFlow(
+  requestInput: unknown,
+  knowledgeInput: unknown,
+  control: RuntimeRequestControl,
+  sourceVersion: 1 | 2,
+): OwnedBusinessTrace {
   const budget = new KnowledgeBudget(control),
     request = parseOwnedBusinessTraceRequest(requestInput, budget.control);
   budget.data(request);
-  const rows = validateOwnedPublishedSelection(
+  const rows = (
+    sourceVersion === 2 ? validateReceiptPublishedSelection : validateOwnedPublishedSelection
+  )(
     {
       workspaceId: request.workspaceId,
       repositoryIds: request.repositoryIds,

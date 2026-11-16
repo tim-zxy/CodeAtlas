@@ -1,3 +1,4 @@
+import { readSchema11PublishedSelection } from './schema11-selected-knowledge.js';
 import { types } from 'node:util';
 import { EntityIdSchema, type RuntimeRequestControl } from '@codeatlas/ir';
 import { KnowledgeBudget, immutable } from '../../knowledge/dist/comparison-contract.js';
@@ -5,6 +6,7 @@ import {
   BusinessTraceError,
   parseOwnedBusinessTraceRequest,
   traceOwnedBusinessFlow,
+  traceReceiptBusinessFlow,
   type OwnedBusinessTrace,
 } from '../../knowledge/dist/offline-business-trace.js';
 import { type OwnedPublishedScope } from '../../knowledge/dist/offline-wiki.js';
@@ -12,13 +14,16 @@ import { type OwnedPublishedScope } from '../../knowledge/dist/offline-wiki.js';
 export class OfflineBusinessFlowTracer {
   readonly #workspaceId: string;
   readonly #query: (scope: OwnedPublishedScope, control: RuntimeRequestControl) => Promise<unknown>;
-  constructor(ports: {
-    workspaceId: string;
-    knowledgeQuery: (
-      scope: OwnedPublishedScope,
-      control: RuntimeRequestControl,
-    ) => Promise<unknown>;
-  }) {
+  constructor(
+    ports: {
+      workspaceId: string;
+      knowledgeQuery: (
+        scope: OwnedPublishedScope,
+        control: RuntimeRequestControl,
+      ) => Promise<unknown>;
+    },
+    private readonly sourceVersion: 1 | 2 = 1,
+  ) {
     if (!ports || typeof ports !== 'object' || types.isProxy(ports))
       throw new BusinessTraceError('BUSINESS_TRACE_INVALID_INPUT');
     const d = Object.getOwnPropertyDescriptors(ports);
@@ -45,8 +50,29 @@ export class OfflineBusinessFlowTracer {
       repositoryIds: request.repositoryIds,
       selectedPublishedRevisionRefs: [request.knowledgeRef],
     });
-    const knowledge = await this.#query(exact, budget.control);
+    const knowledge =
+      this.sourceVersion === 1
+        ? await this.#query(exact, budget.control)
+        : await readSchema11PublishedSelection(
+            exact,
+            {
+              workspaceId: this.#workspaceId,
+              read: (refs, c) =>
+                this.#query({ ...exact, selectedPublishedRevisionRefs: [...refs] }, c),
+            },
+            budget.control,
+          );
     budget.tick();
-    return traceOwnedBusinessFlow(request, knowledge, budget.control);
+    return (this.sourceVersion === 1 ? traceOwnedBusinessFlow : traceReceiptBusinessFlow)(
+      request,
+      knowledge,
+      budget.control,
+    );
+  }
+}
+
+export class ReceiptBusinessFlowTracer extends OfflineBusinessFlowTracer {
+  constructor(ports: ConstructorParameters<typeof OfflineBusinessFlowTracer>[0]) {
+    super(ports, 2);
   }
 }

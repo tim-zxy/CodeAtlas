@@ -25,6 +25,7 @@ expectedPackageDependencies.runtime = {
   '@codeatlas/application': 'workspace:*',
   '@codeatlas/providers': 'workspace:*',
   '@codeatlas/storage': 'workspace:*',
+  'gpt-tokenizer': '4.1.2',
   yaml: '2.8.2',
 };
 expectedPackageDependencies['agent-api'] = {

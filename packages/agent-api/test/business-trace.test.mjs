@@ -744,3 +744,128 @@ test('exotic host Promise observation failure still invalidates authority before
     failure(await run(s, f), 'CONTEXT_UNAVAILABLE');
   }
 });
+
+import { withReadyPublication } from '../../storage/test/helpers/schema11-publication-fixture.mjs';
+import { createCl100kTokenCounter } from '../../runtime/dist/local-token-counter.js';
+import { createReceiptBusinessTraceSession } from '../dist/business-trace-tool.js';
+const receiptTraceLimits = {
+  maxDepth: 10,
+  maxSteps: 20,
+  maxEdges: 20,
+  maxOutputBytes: 1000000,
+  maxTokens: 50000,
+};
+const receiptTraceArgs = (f) => ({
+  version: 2,
+  kind: 'BUSINESS',
+  startRef: { kind: 'KNOWLEDGE_ITEM', id: f.refs[0].itemId, revisionId: f.refs[0].revisionId },
+  startStepKey: f.owned.startStepKey,
+  direction: 'FORWARD',
+  budget: receiptTraceLimits,
+});
+test('receipt BUSINESS v2 traverses actual declared steps with current source and bounded frontier', async (t) =>
+  withReadyPublication(t, async (f) => {
+    f.writer.publishOwnedPrepared(f.ready.handle, f.limits, f.c);
+    const session = createReceiptBusinessTraceSession({
+      workspaceId: f.w,
+      repositoryIds: f.owned.repositoryIds,
+      limits: receiptTraceLimits,
+      authorize() {},
+      knowledgeQuery: async (q, c) =>
+        f.api.readSelectedCoveredProjection(q.selectedPublishedRevisionRefs, f.limits, c, () => {}),
+      tokenCounter: createCl100kTokenCounter(1000000),
+    });
+    try {
+      const value = await session.execute(receiptTraceArgs(f), session.context, f.owned.control());
+      assert.ok(value.data, JSON.stringify(value));
+      assert.equal(value.version, 2);
+      assert.deepEqual(value.data.steps.map((s) => s.stepKey).sort(), f.owned.expectedStepKeys);
+      assert.equal(value.data.provenance.publicationId, f.ready.command.request.runId);
+      assert.equal(value.data.provenance.candidateId, f.ready.command.entries[0].candidateId);
+      assert.equal(value.data.provenance.attemptId, undefined);
+      assert.ok(value.meta.warnings.includes('DECLARED_BUSINESS_STEPS_ONLY'));
+      assert.equal(value.data.quality, 'NOT_EVALUABLE');
+      assert.equal(value.data.productionQuery, 'NOT_AUTHORIZED');
+      const short = await session.execute(
+        { ...receiptTraceArgs(f), budget: { ...receiptTraceLimits, maxDepth: 0 } },
+        session.context,
+        f.owned.control(),
+      );
+      assert.equal(short.meta.truncation.truncated, true);
+      assert.ok(short.meta.truncation.frontier.length > 0);
+      assert.equal(
+        (
+          await session.execute(
+            { ...receiptTraceArgs(f), version: 1 },
+            session.context,
+            f.owned.control(),
+          )
+        ).error.code,
+        'INVALID_INPUT',
+      );
+      assert.ok(
+        (
+          await session.execute(
+            {
+              ...receiptTraceArgs(f),
+              startRef: { ...receiptTraceArgs(f).startRef, revisionId: 'wrong-revision' },
+            },
+            session.context,
+            f.owned.control(),
+          )
+        ).error,
+      );
+    } finally {
+      session.close();
+    }
+  }));
+test('receipt BUSINESS v2 refuses legacy source and late permission revocation', async (t) =>
+  withReadyPublication(t, async (f) => {
+    f.writer.publishOwnedPrepared(f.ready.handle, f.limits, f.c);
+    let permitted = true;
+    const make = (query) =>
+      createReceiptBusinessTraceSession({
+        workspaceId: f.w,
+        repositoryIds: f.owned.repositoryIds,
+        limits: receiptTraceLimits,
+        authorize() {
+          if (!permitted) throw Error('DENIED');
+        },
+        knowledgeQuery: query,
+        tokenCounter: createCl100kTokenCounter(1000000),
+      });
+    const old = make(async () =>
+      f.owned.store.readPublishedKnowledge(
+        [f.owned.knowledgeRef],
+        f.owned.permissions,
+        f.limits,
+        f.c,
+      ),
+    );
+    try {
+      assert.equal(
+        (await old.execute(receiptTraceArgs(f), old.context, f.owned.control())).error.code,
+        'DATA_INVALID',
+      );
+    } finally {
+      old.close();
+    }
+    const revoked = make(async (q, c) => {
+      const value = f.api.readSelectedCoveredProjection(
+        q.selectedPublishedRevisionRefs,
+        f.limits,
+        c,
+        () => {},
+      );
+      permitted = false;
+      return value;
+    });
+    try {
+      assert.equal(
+        (await revoked.execute(receiptTraceArgs(f), revoked.context, f.owned.control())).error.code,
+        'PERMISSION_DENIED',
+      );
+    } finally {
+      revoked.close();
+    }
+  }));

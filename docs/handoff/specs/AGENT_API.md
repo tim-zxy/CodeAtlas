@@ -1,3 +1,15 @@
+## Approved private exact local counter 2026-11-16
+
+The separately approved Runtime adapter uses gpt-tokenizer4.1.2 with explicit
+cl100k_base and policy codeatlas.agent-response.cl100k_base@gpt-tokenizer-4.1.2:v1.
+It implements the existing EXACT_LOCAL_COUNTER port for the complete serialized
+Agent API response text and matching SHA256; outer MCP framing and arbitrary
+client chat totals are outside this counting policy. Caller supplies the existing
+byte ceiling; controls are checked before/after synchronous counting, special
+markers refuse by default, and no byte/fixed-count fallback exists. No production
+host, principal, permission, model or schema is enabled. Old fixture counters and
+closed main paths retain their semantics. [Evidence and limitations](../../superpowers/reviews/2026-11-15-tokenizer-audit.md#approved-runtime-adoption-and-resolved-pnpm-wait-2026-11-16).
+
 ## Owned read lifecycle integration - 2026-11-09
 
 The additive [managed host](../../superpowers/specs/2026-11-09-owned-read-lifecycle.md)

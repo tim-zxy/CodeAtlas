@@ -1,9 +1,14 @@
 import { types } from 'node:util';
-import { OfflineBusinessFlowTracer } from '@codeatlas/application';
+import { OfflineBusinessFlowTracer, ReceiptBusinessFlowTracer } from '@codeatlas/application';
 import { EntityIdSchema, basisKey, type RuntimeRequestControl } from '@codeatlas/ir';
 import { canonicalCompilationJson } from '../../ir/dist/compilation-input-contract.js';
 import {
   businessTraceBudgetSchema,
+  businessTraceRequestV2Schema,
+  businessTraceResponseV2Schema,
+  businessTraceFailureV2,
+  serializeBusinessTraceResponseV2,
+  type ReceiptBusinessTraceResponse,
   businessTraceRequestSchema,
   businessTraceResponseSchema,
   businessTraceFailure,
@@ -65,6 +70,17 @@ function callback(value: unknown): value is (...args: never[]) => unknown {
 }
 /** No token algorithm, SDK route, production principal or write port is installed here. */
 export function createOwnedBusinessTraceSession(ports: OwnedBusinessTracePorts) {
+  return createBusinessTraceSession(ports, 1);
+}
+export function createReceiptBusinessTraceSession(ports: OwnedBusinessTracePorts) {
+  return createBusinessTraceSession(ports, 2);
+}
+function createBusinessTraceSession<V extends 1 | 2>(ports: OwnedBusinessTracePorts, version: V) {
+  type Response = V extends 1 ? BusinessTraceResponse : ReceiptBusinessTraceResponse;
+  const requestSchema = version === 1 ? businessTraceRequestSchema : businessTraceRequestV2Schema,
+    responseSchema = version === 1 ? businessTraceResponseSchema : businessTraceResponseV2Schema,
+    serialize = version === 1 ? serializeBusinessTraceResponse : serializeBusinessTraceResponseV2,
+    failure = version === 1 ? businessTraceFailure : businessTraceFailureV2;
   const d = properties(ports);
   const workspaceId = EntityIdSchema.parse(d.workspaceId?.value);
   // Capture immutable scope/limits; later mutation of the caller's ports grants nothing.
@@ -113,9 +129,9 @@ export function createOwnedBusinessTraceSession(ports: OwnedBusinessTracePorts) 
   let closed = false;
   const context = Object.freeze(Object.create(null)) as object;
   const descriptor = freeze({
-    version: 1 as const,
+    version,
     supportedKinds: ['BUSINESS'] as const,
-    mode: 'OWNED_TEST_ONLY' as const,
+    mode: version === 1 ? ('OWNED_TEST_ONLY' as const) : ('SCHEMA11_OWNED_ONLY' as const),
     tokenPolicyRef: counter?.policyRef ?? null,
   });
   const close = () => {
@@ -173,7 +189,7 @@ export function createOwnedBusinessTraceSession(ports: OwnedBusinessTracePorts) 
     input: unknown,
     handle: unknown,
     callerControl: RuntimeRequestControl,
-  ): Promise<BusinessTraceResponse> {
+  ): Promise<Response> {
     try {
       active(handle, callerControl);
       const c = Object.getOwnPropertyDescriptors(callerControl);
@@ -183,11 +199,9 @@ export function createOwnedBusinessTraceSession(ports: OwnedBusinessTracePorts) 
         deadlineEpochMs: c.deadlineEpochMs!.value,
         signal: c.signal!.value,
       }) as RuntimeRequestControl;
-      let request: ReturnType<typeof businessTraceRequestSchema.parse>;
+      let request: ReturnType<typeof requestSchema.parse>;
       try {
-        request = businessTraceRequestSchema.parse(
-          JSON.parse(canonicalCompilationJson(input, control)),
-        );
+        request = requestSchema.parse(JSON.parse(canonicalCompilationJson(input, control)));
       } catch (error) {
         if (
           safeCode(error) === 'CANCELLED' ||
@@ -234,7 +248,7 @@ export function createOwnedBusinessTraceSession(ports: OwnedBusinessTracePorts) 
       };
       permission();
       if (!counter) fail('TOKEN_COUNTER_UNAVAILABLE');
-      const tracer = new OfflineBusinessFlowTracer({
+      const tracer = new (version === 1 ? OfflineBusinessFlowTracer : ReceiptBusinessFlowTracer)({
         workspaceId,
         knowledgeQuery: async (scope, c) => {
           try {
@@ -288,7 +302,8 @@ export function createOwnedBusinessTraceSession(ports: OwnedBusinessTracePorts) 
         ]),
       ].sort();
       const response = freeze(
-        businessTraceResponseSchema.parse({
+        responseSchema.parse({
+          ...(version === 2 ? { version: 2 } : {}),
           data: {
             ...data,
             startRef: request.startRef,
@@ -309,7 +324,7 @@ export function createOwnedBusinessTraceSession(ports: OwnedBusinessTracePorts) 
           },
         }),
       );
-      const text = serializeBusinessTraceResponse(response, control);
+      const text = serialize(response, control);
       if (Buffer.byteLength(text, 'utf8') > budget.maxOutputBytes) fail('BUDGET_EXCEEDED');
       const measurement = sync(
         counter.measure as (...args: never[]) => unknown,
@@ -332,9 +347,9 @@ export function createOwnedBusinessTraceSession(ports: OwnedBusinessTracePorts) 
         fail('TOKEN_COUNTER_UNAVAILABLE');
       if (m.outputTokens!.value > budget.maxTokens) fail('BUDGET_EXCEEDED');
       permission();
-      return response;
+      return response as Response;
     } catch (error) {
-      return businessTraceFailure(error instanceof TraceFailure ? error.code : mappedCode(error));
+      return failure(error instanceof TraceFailure ? error.code : mappedCode(error)) as Response;
     }
   }
   return Object.freeze({ context, descriptor, execute, close });

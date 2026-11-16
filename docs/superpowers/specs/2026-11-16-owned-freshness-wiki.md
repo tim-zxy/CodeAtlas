@@ -1,0 +1,29 @@
+# Approved owned one-shot freshness and Wiki reconciliation
+
+Status: User approved 2026-11-16. P1-15/16/18 private self-owned component scope.
+
+Use only self-created synthetic source and temporary in-memory workspace SQLite. Fix nonempty selected current published revisions and their entire captured repository/workspace/support closure. Reject document dependencies. Reuse genuine Source-owned verification and Storage-owned capture identities; verify repository bases, full source inventories/content/configuration, Runtime activation, captured values/supports, workspace bindings and policy versions. Source preparation remains separate; reconciliation never indexes, invokes Native/models or grants secret clearance.
+
+An opaque process-local one-shot command binds workspace, exact selected records/current heads, snapshots/input digests/revision sets, expected bases, rule version and the live permission/control lifetime. No JSON/digest/boolean/watcher readiness or TEST_DOUBLE can substitute for real Source evidence. Compare before update and before/after projection; release/invalidation/cancellation/restart/unknown refuses delivery. No TTL or persistent observation authority.
+
+Only AFFECTED becomes FRESH after complete matching observations. STALE never automatically recovers. Within one transaction CAS exact prior current records and mutable item payloads; update source_freshness and matching Canonical item payload together. Immutable knowledge revisions/publication receipts/evaluations/associations and publication pointers remain unchanged. No SQL migration or production schema admission. All selected records must be admitted; do not silently omit unsupported members.
+
+Explicit reconciliation precedes a fresh read binding and Wiki projection. Ordinary readonly tools/Wiki never write metadata implicitly. Withhold result until final Source/Storage/policy/permission check and resource cleanup settle. Track metadata commit (NOT_ATTEMPTED/COMMITTED/UNKNOWN) separately from cleanup (SETTLED/UNKNOWN); confirmed commits are not reclassified by later failure. Failure never retries. One-shot owned connection closes on exit, no persisted FRESH authority survives. Preserve historical evidence and original workspace files.
+
+FRESH describes the scoped observation window only. Coverage and CompilationCurrency are unchanged; quality remains NOT_EVALUABLE, production CLOSED. No project completeness/global simultaneous snapshot/missed-change qualification/secret safety or production access follows. Wiki status/profile rules stay unchanged; eliminating STALE can still leave PARTIAL, MISSING_DATA or REVIEW_REQUIRED. Rollback disables additive private entry; no backfill, production/main enablement or long-lived MCP use.
+
+## Verifiable success criteria
+
+Real owned Source byte verification and genuine Storage identity tests, exact closure and snapshot binding; atomic AFFECTED CAS, stale/head/metadata races and rollback; immutable-history preservation; copied/expired handles; revoke/cancel/drift before and after commit; separate commit/cleanup UNKNOWN; selected Wiki projection preserves original coverage/quality. Bounded affected builds, registered neighboring tests and architecture checks; independent review. Full pipeline evidence and any substitutes must be distinguished in final results.
+
+## Implementation evidence and limits
+
+Implemented private IR one-use handoff, Application observation/CAS/projection/final checks and Runtime genuine owner composition; existing schema11 Store has atomic basis-read and memory-only CAS. No SQL/manifest/Canonical change. Source/support duplicate references exposed by real captured-input integration are deduplicated only in the internally constructed reference context; strict IR validation remains.
+
+Fresh registered checks: Store24/24 (25907.7965ms), related Source/capture/Wiki51/51 (8783.0757ms), final Store6/6 delta adds one distinct memory/basis-negative case; total76. Repeated source positive1/1 and cleanup/revoke/cancel/signal-replacement1/1 confirm final changes and are not added. IR/Storage/Application/Runtime builds and architecture17 pass. Initial architecture direct-import failure corrected via existing Application boundary; no architecture allowlist changed. Initial missing-operation RED, new fixture closure/provider/ordering/coverage/selection failures, field/SQL API type failures and reference-context duplication are recorded, not marked passing before correction.
+
+Independent readonly review initially found threeP2: missing final publication CAS, post-await/post-cleanup policy/control gap and Runtime initialization cleanup. Corrected; final implementation review and last control/basis/ACTIVE delta review found no definiteP1/P2. Reviewer read source/tests but ran no tests; commands/results are integrator evidence.
+
+The end-to-end path uses actual filesystem bytes, genuine Source issuer, SQLite SourceState, real Code merger/history validation and genuine Storage capture handles through real publication receipt/CAS/Wiki. Git child transport, declared Provider/semantic inputs and permission callbacks are explicit substitutes; no parser/model/production quality follows. Positive integration uses no Runtime activation; existing nonempty Runtime/Contract/workspace capture tests were reused, not claimed as a new activated end-to-end run. Pure Wiki projector retains its own not-observer limitation; the enclosing one-shot operation supplies the independent scoped observation. Original coverage remains PARTIAL, quality NOT_EVALUABLE, production CLOSED.
+
+Evidence: local-evidence:codeatlas-owned-freshness-whe4l4ij/result.json. Original27 file byte hashes match the prior checkpoint. No push, CI, source corpus download, qualification, Native, user database, production or actual22 execution. Formal A6/Phase1 acceptance unchanged.
