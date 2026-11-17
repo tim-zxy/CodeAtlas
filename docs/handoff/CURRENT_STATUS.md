@@ -1,6 +1,6 @@
 ## Public combined candidate privacy review - 2026-11-17
 
-Four historical local account/worktree paths are omitted from this public source copy. Unmodified originals remain in the prior local candidate. Measurements, gates and historical status are unchanged; no local logs/databases or diagnostic payloads are committed. The new source identity will be the actual commit, never the local content-freeze label.
+Eleven historical local account/worktree path occurrences are omitted from this public source copy. Unmodified originals remain in the prior local candidate. Measurements, gates and historical status are unchanged; no local logs/databases or diagnostic payloads are committed. The new source identity will be the actual commit, never the local content-freeze label.
 
 ## Combined execution wiring local evidence - 2026-11-17
 
@@ -420,7 +420,7 @@ Optional existing control is now forwarded through Transport main/bootstrap/orac
 
 Self-owned Provider doubles:17/17; registered outer wiring/isolation lane2/2; existing selected Transport/prepare checks8 named passes plus one zero-match file completion; prior cleanup/control batch18/18; workspace21/21 and architecture17 pass. Independent scoped reviewer found no P1/P2. Restricted sandbox Temp casing differs from realpath and caused the unchanged canonical-path guard to refuse; the same tests pass in the normal reviewed execution context without changing that guard. No real Native child was launched by these tests.
 
-CI207 for8693159 is terminal: TypeScript/Rust PASS, Native oldR8 script catalog prerequisite FAIL, actual Native gates skipped. New source needs its own catalog/freeze and CI; do not reuse CI207 as verification of this change. Snapshot D:/workspace/CodeAtlas-frozen-8693159-v1 and historical build/evidence remain untouched. Changes are test preparation JS only: Native54/build-gate/Runtime source and tool configuration have no diff from8693159, so the prior settled Native build remains a potential input, subject to exact binary/source/environment/copy gates at the next freeze. No new formal build receipt is claimed.
+CI207 for8693159 is terminal: TypeScript/Rust PASS, Native oldR8 script catalog prerequisite FAIL, actual Native gates skipped. New source needs its own catalog/freeze and CI; do not reuse CI207 as verification of this change. Snapshot <retained-local-evidence-path> and historical build/evidence remain untouched. Changes are test preparation JS only: Native54/build-gate/Runtime source and tool configuration have no diff from8693159, so the prior settled Native build remains a potential input, subject to exact binary/source/environment/copy gates at the next freeze. No new formal build receipt is claimed.
 
 Successful explicit slots remain Native2066 + Node572 =2638, excluding implicit descendants and the outer coordinator;406 is only the observation roster. Per-file loops now honor stop before another Native call, without reducing any successful measurement. No prepare, actual analyzer, sampling, R10 acquisition, profile, PACK or production action. Phase1 remains4/21; A6 NOT_QUALIFIED; E02 PROPOSED/uninstalled.
 
@@ -2724,7 +2724,7 @@ A6 NOT_QUALIFIED and E02 PROPOSED/uninstalled. D is the sole development worktre
 
 Checkpoint f8b1a3eed52aa617ed85524c02fade8c26ef57ae and its two existing local
 predecessors were normally pushed to origin/codex/phase1-20261106-continuation.
-New active worktree D:/workspace/CodeAtlas-phase1-20261106 tracks that branch and
+New active worktree <retained-local-evidence-path> tracks that branch and
 was clean at creation; the existing C and original D worktrees remain preserved.
 All subsequent development writes use only this new D worktree. No PR was created,
 updated or merged. The104 earlier status entries were byte-identical to HEAD and
@@ -2811,8 +2811,8 @@ Original raw logs remain at their receipt paths in the existing local worktree. 
 The user requested stage completion followed by cloud submission and a new D worktree.
 Final local checks/explicit path review precede commit. No push or D worktree creation
 has occurred. Proposed checkpoint branch codex/phase1-20261106-continuation avoids
-updating existing PR22; D:/workspace/CodeAtlas-phase1-20261106 is the proposed new path.
-Existing C and D:/workspace/CodeAtlas worktrees will be preserved. Normal push triggers
+updating existing PR22; <retained-local-evidence-path> is the proposed new path.
+Existing C and <retained-local-evidence-path> worktrees will be preserved. Normal push triggers
 three hosted CI jobs, including actual Native/memory work; that reserved execution
 boundary must be resolved explicitly before push, without disabling existing gates.
 
@@ -8309,7 +8309,7 @@ The repair now awaits local-main fast-forward and fresh merged-main root verific
 
 ## Local main fast-forwarded; PR held on checkout-byte compatibility (2026-10-04)
 
-User selected integration options1+2. Local `D:/workspace/CodeAtlas` main was fast-forwarded to `06ddfa682b4da5aade7874792a4d39b84ae6f102`; its Git tree matches the C worktree, nine reviewed reports are byte-equal and all27 prior dirty-status files were individually byte-equal to their HEAD. Only the obstructing index entry was refreshed; no reset, stash, deletion or user-content overwrite. Remote main remains73756f0. No feature push or PR creation has occurred.
+User selected integration options1+2. Local `<retained-local-evidence-path>` main was fast-forwarded to `06ddfa682b4da5aade7874792a4d39b84ae6f102`; its Git tree matches the C worktree, nine reviewed reports are byte-equal and all27 prior dirty-status files were individually byte-equal to their HEAD. Only the obstructing index entry was refreshed; no reset, stash, deletion or user-content overwrite. Remote main remains73756f0. No feature push or PR creation has occurred.
 
 Fresh main16-project build preserves approved Node453a41…; native build/fmt/Clippy-D, IR types, architecture17, real Native/registry136/136, client2/2 and handshake4/4 pass. **Required main root fails:991total/973pass/17fail/1existing skip.** All17 failures are verification-corpus provenance (15actual-port classes, fresh-worker and reviewed-profile checks), not waived or represented as green.
 

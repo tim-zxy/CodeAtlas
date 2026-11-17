@@ -264,7 +264,7 @@ Optional existing control is now forwarded through Transport main/bootstrap/orac
 
 Self-owned Provider doubles:17/17; registered outer wiring/isolation lane2/2; existing selected Transport/prepare checks8 named passes plus one zero-match file completion; prior cleanup/control batch18/18; workspace21/21 and architecture17 pass. Independent scoped reviewer found no P1/P2. Restricted sandbox Temp casing differs from realpath and caused the unchanged canonical-path guard to refuse; the same tests pass in the normal reviewed execution context without changing that guard. No real Native child was launched by these tests.
 
-CI207 for8693159 is terminal: TypeScript/Rust PASS, Native oldR8 script catalog prerequisite FAIL, actual Native gates skipped. New source needs its own catalog/freeze and CI; do not reuse CI207 as verification of this change. Snapshot D:/workspace/CodeAtlas-frozen-8693159-v1 and historical build/evidence remain untouched. Changes are test preparation JS only: Native54/build-gate/Runtime source and tool configuration have no diff from8693159, so the prior settled Native build remains a potential input, subject to exact binary/source/environment/copy gates at the next freeze. No new formal build receipt is claimed.
+CI207 for8693159 is terminal: TypeScript/Rust PASS, Native oldR8 script catalog prerequisite FAIL, actual Native gates skipped. New source needs its own catalog/freeze and CI; do not reuse CI207 as verification of this change. Snapshot <retained-local-evidence-path> and historical build/evidence remain untouched. Changes are test preparation JS only: Native54/build-gate/Runtime source and tool configuration have no diff from8693159, so the prior settled Native build remains a potential input, subject to exact binary/source/environment/copy gates at the next freeze. No new formal build receipt is claimed.
 
 Successful explicit slots remain Native2066 + Node572 =2638, excluding implicit descendants and the outer coordinator;406 is only the observation roster. Per-file loops now honor stop before another Native call, without reducing any successful measurement. No prepare, actual analyzer, sampling, R10 acquisition, profile, PACK or production action. Phase1 remains4/21; A6 NOT_QUALIFIED; E02 PROPOSED/uninstalled.
 
@@ -1383,7 +1383,7 @@ Phase1 A6/E02 or changes the4/21 formal acceptance count.
 ## CI environment routing, exact historical bytes and D handoff trace - 2026-11-06
 
 Explicit GitHub/automatic CI approval -> reviewed f8b1a3e checkpoint normal push ->
-new tracked D:/workspace/CodeAtlas-phase1-20261106 -> same commit/clean creation and
+new tracked <retained-local-evidence-path> -> same commit/clean creation and
 104 exact byte checks/45 offline smoke. Existing worktrees preserved, one active writer.
 First hosted run42151555522 is retained with Rust success, TS15 failures and Native
 in-progress after a real Fixture failure; no qualification/evaluation acceptance implied.
