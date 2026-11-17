@@ -1,3 +1,11 @@
+## Combined-v1 execution wiring preparation - 2026-11-17
+
+User-approved isolated [minimal wiring/freeze preparation](../superpowers/plans/2026-11-17-combined-execution-freeze.md) adds explicit offline-only command/generator4 and a separately pinned local controller, retaining legacy default and all original gates. No new source/control commit or formal seed, real Native build/qualification, numerical adoption, production, publication/PACK/actual22 follows. Current local synthetic evidence is not phase acceptance; original checkboxes/history remain.
+
+## Approved private combined replay implementation candidate - 2026-11-17
+
+User approved [private combined-v1](../superpowers/specs/2026-11-17-private-combined-replay-v1.md): proof writes precede full tail verification and synchronous projection; original restoration/cleanup remain. Transient mutate-and-restore rejection is explicitly not equivalent to legacy timing. Old entry, raw evidence, numerical and phase gates remain unchanged. Only an isolated implementation and small synthetic tests are authorized; no formal qualification, Native, publication, profile, PACK or actual22. New identities and separate execution approval remain prerequisites for real use.
+
 ## Approved independent R11 actual22 coordinator - 2026-11-10
 
 User explicitly approved [this independent deny-only entry](../superpowers/specs/2026-11-10-r11-actual-coordinator.md) for implementation and self-owned substitutes. Frozen script/reader/candidate identities and successful measurement/validation remain unchanged. New executor/request/tool seals do not grant real execution, publication, numerical/production authority or CI switch. Offline50 tests/architecture17 and independent review pass; actual22 and every phase/quality gate remain outstanding. Original failed trees/evidence stay protected.

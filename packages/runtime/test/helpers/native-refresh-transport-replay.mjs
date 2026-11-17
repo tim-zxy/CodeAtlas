@@ -60,6 +60,11 @@ import {
 } from './native-refresh-cancel-prefix.mjs';
 
 const replayOwners = new WeakMap();
+// Private combined-v1 operation lease; legacy APIs cannot interleave with it.
+const combinedReplayOwners = new WeakSet();
+function assertNoCombinedReplay(owner) {
+  assert.ok(!combinedReplayOwners.has(owner), 'Private combined replay is active');
+}
 export async function readRefreshReplayWorkloadControls(workloadCase, dContext) {
   const fixtureContext =
     dContext === undefined ? undefined : snapshotDRefreshFixtureContext(dContext);
@@ -507,6 +512,10 @@ async function readRefreshTransportReplays(manifestPath, bindingPath, names, dCo
 }
 
 export async function restoreRefreshTransportReplay(value) {
+  assertNoCombinedReplay(replayOwners.get(value));
+  return restoreOwnedRefreshTransportReplay(value);
+}
+async function restoreOwnedRefreshTransportReplay(value) {
   const owner = replayOwners.get(value);
   assert.ok(owner, 'Replay requires its original issued ownership record');
   assert.equal(owner.active, false, 'Replay operation is active');
@@ -565,13 +574,61 @@ export async function restoreRefreshTransportReplay(value) {
 // One fixed fresh functional child, not a callback/receipt registration API or
 // measurement path. Parent-owned capture is the authority for later restore.
 export async function runRefreshTransportFunctionalReplay(value) {
+  assertNoCombinedReplay(replayOwners.get(value));
   return runOwnedRefreshReplay(value);
 }
 
 export async function runRefreshTransportMeasuredReplay(value, mode, repetition) {
+  assertNoCombinedReplay(replayOwners.get(value));
   assert.ok(['offline', 'actual'].includes(mode));
   nonnegative(repetition);
   return runOwnedRefreshReplay(value, { mode, repetition });
+}
+
+// Implementation-only trust version 1. Not selected by CLI, collectors or actual22.
+// Proof writes precede full tail validation and same-continuation projection.
+// This does not detect every transient change caught by the legacy two checks.
+export async function runRefreshTransportCombinedOfflineReplayV1(value, repetition) {
+  nonnegative(repetition);
+  const owner = replayOwners.get(value);
+  assert.ok(owner, 'Original replay ownership required');
+  assertNoCombinedReplay(owner);
+  assert.equal(owner.active, false);
+  assert.equal(owner.stage, 'PRISTINE');
+  combinedReplayOwners.add(owner);
+  try {
+    const result = await acquireOwnedRefreshReplay(value, { mode: 'offline', repetition });
+    const row = await verifyOwnedRefreshTransportReplay(value, result.receipt, repetition);
+    let persistenceFailure;
+    let persistenceFailed = false;
+    try {
+      await writeReplayArtifact(
+        path.join(result.artifactDirectory, 'observation.json'),
+        encodeRefreshReplayJson(row),
+      );
+    } catch (error) {
+      persistenceFailed = true;
+      persistenceFailure = error;
+    }
+    try {
+      await restoreOwnedRefreshTransportReplay(value);
+    } catch (error) {
+      if (persistenceFailed)
+        throw new AggregateError(
+          [persistenceFailure, error],
+          'Combined observation persistence and restoration failed',
+        );
+      throw error;
+    }
+    if (persistenceFailed) throw persistenceFailure;
+    return row;
+  } catch (error) {
+    // Even if restoration settled, failed delivery is not an automatic retry grant.
+    owner.stage = 'FAILED';
+    throw error;
+  } finally {
+    combinedReplayOwners.delete(owner);
+  }
 }
 
 // File-backed independent candidate/holdout check. One full original corpus
@@ -736,6 +793,33 @@ export async function runRefreshTransportCommand(
   control,
   generatorRevision = 'p05-refresh-replay-v3',
 ) {
+  return runRefreshTransportCommandOwned(args, dContext, control, generatorRevision, false);
+}
+
+export const refreshTransportCombinedExecutionRevision = 'p05-refresh-combined-offline-v1';
+
+// Explicit opt-in only: fixed topology generator and offline observations.
+// Never accepts approved/actual collection or changes the legacy default.
+export async function runRefreshTransportCombinedCommandV1(args, dContext, control) {
+  assert.ok(Array.isArray(args) && args.every((part) => typeof part === 'string'));
+  args = Object.freeze([...args]);
+  const [command, mode] = args;
+  assert.ok(
+    (command === 'bench' && args.length === 2) ||
+      (command === 'candidate' && args.length === 4) ||
+      (command === 'collect' && mode === 'candidate' && args.length === 4),
+    'Combined-v1 permits only offline bench/candidate/holdout',
+  );
+  return runRefreshTransportCommandOwned(args, dContext, control, 'p05-refresh-replay-v4', true);
+}
+
+async function runRefreshTransportCommandOwned(
+  args,
+  dContext,
+  control,
+  generatorRevision,
+  combined,
+) {
   if (control) await control.checkpoint('TRANSPORT_BEGIN');
   const fixtureContext =
     dContext === undefined ? undefined : snapshotDRefreshFixtureContext(dContext);
@@ -753,9 +837,19 @@ export async function runRefreshTransportCommand(
       fixtureContext,
     );
     assert.equal(values[0].schemaVersion, 2, 'Operational evidence requires v2 corpus');
+    if (combined)
+      for (const value of values) {
+        const manifest = replayOwners.get(value)?.manifest;
+        assert.equal(manifest?.schemaVersion, 3, 'Combined-v1 requires topology corpus');
+        assert.equal(manifest.generator.revision, 'p05-refresh-replay-v4');
+      }
     return values;
   };
   const measureOwned = async (value, mode, repetition) => {
+    if (combined) {
+      assert.equal(mode, 'offline', 'Combined-v1 cannot grant actual admission');
+      return runRefreshTransportCombinedOfflineReplayV1(value, repetition);
+    }
     let primaryFailure;
     try {
       const result = await runRefreshTransportMeasuredReplay(value, mode, repetition);
@@ -990,6 +1084,12 @@ export async function runRefreshTransportCommand(
 }
 
 async function runOwnedRefreshReplay(value, measurement) {
+  const result = await acquireOwnedRefreshReplay(value, measurement);
+  const verification = await verifyRefreshTransportReplay(value, result.receipt);
+  return { ...result, verification };
+}
+
+async function acquireOwnedRefreshReplay(value, measurement) {
   const owner = replayOwners.get(value);
   assert.ok(owner, 'Original replay ownership required');
   assert.equal(owner.active, false);
@@ -1136,8 +1236,7 @@ async function runOwnedRefreshReplay(value, measurement) {
   } finally {
     owner.active = false;
   }
-  const verification = await verifyRefreshTransportReplay(value, result.receipt);
-  return { ...result, verification };
+  return result;
 }
 
 async function guardIssuedReplayReceipt(issued) {
@@ -1229,6 +1328,11 @@ export async function exportRefreshTransportAttempt(value, destinationRoot) {
 // Independent read-only verification uses the actual pre-close flags issued by
 // the original child. Reopening a verifier never substitutes for those flags.
 export async function verifyRefreshTransportReplay(value, receiptValue) {
+  assertNoCombinedReplay(replayOwners.get(value));
+  return verifyOwnedRefreshTransportReplay(value, receiptValue);
+}
+
+async function verifyOwnedRefreshTransportReplay(value, receiptValue, combinedRepetition) {
   const owner = replayOwners.get(value),
     issued = replayReceipts.get(receiptValue);
   assert.ok(
@@ -1361,7 +1465,9 @@ export async function verifyRefreshTransportReplay(value, receiptValue) {
         : receipt.operationFailureText.split('\n')[0] === item.oracle.refusal.message;
   await verifyRefreshReplayAsset(binding.artifactRoot, oracle);
   await guardIssuedReplayReceipt(issued);
-  await revalidateReplayInputs(owner);
+  // Legacy timing is unchanged; combined-v1 moves this complete check after
+  // all asynchronous proof writes, immediately before synchronous projection.
+  if (combinedRepetition === undefined) await revalidateReplayInputs(owner);
   const proof = {
     ...(owner.manifest.schemaVersion >= 2 ? { outputProof } : {}),
     persistentStateVerified,
@@ -1441,6 +1547,17 @@ export async function verifyRefreshTransportReplay(value, receiptValue) {
   }
   issued.verification = verification;
   owner.stage = 'VERIFIED';
+  if (combinedRepetition !== undefined) {
+    await revalidateReplayInputs(owner);
+    await guardReplayLocation(owner);
+    await guardIssuedReplayReceipt(issued);
+    return buildRefreshTransportFinalObservation(
+      value,
+      receiptValue,
+      verification,
+      combinedRepetition,
+    );
+  }
   return verification;
 }
 
@@ -2728,6 +2845,24 @@ function topologyImportKey(edge) {
   return edge.from + '\0' + edge.kind + '\0' + edge.specifier;
 }
 
+// Per-call membership only; never cache file bytes, metadata or hashes.
+// Unsupported row shapes retain the original filter path and error precedence.
+function indexDependencyPrefixes(dependencies) {
+  if (!Array.isArray(dependencies)) return null;
+  const index = new Map();
+  for (const item of dependencies) {
+    const slot =
+      item && typeof item === 'object' ? Object.getOwnPropertyDescriptor(item, 'path') : undefined;
+    if (!slot || !('value' in slot) || typeof slot.value !== 'string') return null;
+    const slash = slot.value.indexOf('/');
+    if (slash < 0) continue;
+    const prefix = slot.value.slice(0, slash);
+    if (!index.has(prefix)) index.set(prefix, []);
+    index.get(prefix).push(item);
+  }
+  return index;
+}
+
 export function validateRefreshReplayTopologyRecord(input, dependencies, roots) {
   const topology = decodeRefreshReplayJson(encodeRefreshReplayJson(input));
   dependencies = decodeRefreshReplayJson(encodeRefreshReplayJson(dependencies));
@@ -2760,6 +2895,7 @@ export function validateRefreshReplayTopologyRecord(input, dependencies, roots) 
     nodes.set(workspace.id, workspace.name);
   }
   assert.ok(topology.workspaces.length > 0, 'Empty topology workspaces');
+  const dependencyIndex = indexDependencyPrefixes(dependencies);
   for (const instance of topology.instances) {
     recordKeys(instance, ['id', 'name', 'version', 'path', 'inventoryDigest']);
     canonicalRelativePath(instance.path);
@@ -2782,9 +2918,13 @@ export function validateRefreshReplayTopologyRecord(input, dependencies, roots) 
     digest(instance.inventoryDigest);
     assert.ok(!nodes.has(instance.id), 'Duplicate topology instance');
     nodes.set(instance.id, instance.name);
-    const entries = dependencies
-      .filter((x) => x.path.startsWith(instance.id + '/'))
-      .map((x) => ({ path: x.path.slice(instance.id.length + 1), sha256: x.sha256 }));
+    const members = dependencyIndex
+      ? (dependencyIndex.get(instance.id) ?? [])
+      : dependencies.filter((x) => x.path.startsWith(instance.id + '/'));
+    const entries = members.map((x) => ({
+      path: x.path.slice(instance.id.length + 1),
+      sha256: x.sha256,
+    }));
     ordered(entries, (x) => x.path);
     assert.ok(
       entries.length > 0 && entries.some((x) => x.path === 'package.json'),
@@ -2812,10 +2952,11 @@ export function validateRefreshReplayTopologyRecord(input, dependencies, roots) 
       );
     }
   }
+  const instanceIds = new Set(topology.instances.map((x) => x.id));
   for (const entry of dependencies) {
     const root = entry.path.split('/')[0];
     assert.ok(
-      ['repository', 'native'].includes(root) || topology.instances.some((x) => x.id === root),
+      ['repository', 'native'].includes(root) || instanceIds.has(root),
       'Unbound topology inventory',
     );
   }
@@ -2844,10 +2985,15 @@ export function validateRefreshReplayTopologyRecord(input, dependencies, roots) 
       );
     else assert.equal(nodes.get(edge.target), edge.specifier, 'Unknown or aliased topology target');
   }
+  const outgoing = new Map();
+  for (const edge of topology.imports) {
+    if (!outgoing.has(edge.from)) outgoing.set(edge.from, []);
+    outgoing.get(edge.from).push(edge);
+  }
   const reached = new Set(['repository', ...topology.workspaces.map((x) => x.id)]);
   const queue = [...reached];
   for (let i = 0; i < queue.length; i++)
-    for (const edge of topology.imports.filter((x) => x.from === queue[i]))
+    for (const edge of outgoing.get(queue[i]) ?? [])
       if (edge.target !== null && !reached.has(edge.target)) {
         reached.add(edge.target);
         queue.push(edge.target);
@@ -2888,11 +3034,15 @@ export async function verifyRefreshReplayDependencyCatalog(
     current.dependencies,
     'Dependency catalog membership/hash drift',
   );
+  const dependencyIndex =
+    current.topology === undefined ? null : indexDependencyPrefixes(current.dependencies);
   for (const root of current.roots) {
     const prefix = root.name + '/';
-    const entries = current.dependencies
-      .filter((entry) => entry.path.startsWith(prefix))
-      .map((entry) => ({ ...entry, path: entry.path.slice(prefix.length) }));
+    const members =
+      dependencyIndex && typeof root.name === 'string' && !root.name.includes('/')
+        ? (dependencyIndex.get(root.name) ?? [])
+        : current.dependencies.filter((entry) => entry.path.startsWith(prefix));
+    const entries = members.map((entry) => ({ ...entry, path: entry.path.slice(prefix.length) }));
     await verifyRefreshReplayDependencies(root.path, entries);
   }
 }

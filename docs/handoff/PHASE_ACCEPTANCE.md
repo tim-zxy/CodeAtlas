@@ -1,3 +1,11 @@
+## Combined-v1 execution wiring preparation - 2026-11-17
+
+User-approved isolated [minimal wiring/freeze preparation](../superpowers/plans/2026-11-17-combined-execution-freeze.md) adds explicit offline-only command/generator4 and a separately pinned local controller, retaining legacy default and all original gates. No new source/control commit or formal seed, real Native build/qualification, numerical adoption, production, publication/PACK/actual22 follows. Current local synthetic evidence is not phase acceptance; original checkboxes/history remain.
+
+## Approved private combined replay implementation candidate - 2026-11-17
+
+User approved [private combined-v1](../superpowers/specs/2026-11-17-private-combined-replay-v1.md): proof writes precede full tail verification and synchronous projection; original restoration/cleanup remain. Transient mutate-and-restore rejection is explicitly not equivalent to legacy timing. Old entry, raw evidence, numerical and phase gates remain unchanged. Only an isolated implementation and small synthetic tests are authorized; no formal qualification, Native, publication, profile, PACK or actual22. New identities and separate execution approval remain prerequisites for real use.
+
 ## Receipt Wiki owned-files component evidence - 2026-11-16
 
 Fresh historical v2 receipt delivery gives file/projection29 + Source12 passing component checks, four builds/architecture17 and independent readonly review after one fixedP2. Old v1 lifecycle and unknown recovery retained; currentFreshness after reopen is UNASSESSED. [Scope/limitations](../superpowers/specs/2026-11-08-owned-wiki-files.md#receipt-v2-concrete-format-and-evidence---2026-11-16). This does not close formal Wiki/production/durability, A6 or Phase1 exits; original checkboxes unchanged.

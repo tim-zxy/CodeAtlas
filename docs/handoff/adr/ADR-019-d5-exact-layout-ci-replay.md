@@ -1,3 +1,11 @@
+## Combined-v1 execution wiring preparation - 2026-11-17
+
+The user-approved [isolated execution/freeze preparation](../../superpowers/plans/2026-11-17-combined-execution-freeze.md) explicitly selects the previously approved private offline trust version. It preserves Native, topology, budget,22/110/22, reconstruction, stopping and cleanup gates. Legacy entry/default and original evidence stay intact. No formal run/new seed or altered lineage rule is approved or created by this preparation.
+
+## Approved private combined replay v1 candidate - 2026-11-17
+
+User accepted the bounded [versioned trust-contract amendment](../../superpowers/specs/2026-11-17-private-combined-replay-v1.md). Only an isolated private offline entry verifies after proof writes and synchronously projects, retaining restoration and cleanup. It does not preserve every transient-drift rejection window. Legacy entry and all formal evidence/admission standards remain; this approval covers implementation and synthetic checks only, never formal qualification or historical evidence reuse. Disable the new entry for rollback.
+
 ## Approved independent R11 actual22 coordinator - 2026-11-10
 
 User explicitly approved [this independent deny-only entry](../../superpowers/specs/2026-11-10-r11-actual-coordinator.md) for implementation and self-owned substitutes. Frozen script/reader/candidate identities and successful measurement/validation remain unchanged. New executor/request/tool seals do not grant real execution, publication, numerical/production authority or CI switch. Offline50 tests/architecture17 and independent review pass; actual22 and every phase/quality gate remain outstanding. Original failed trees/evidence stay protected.

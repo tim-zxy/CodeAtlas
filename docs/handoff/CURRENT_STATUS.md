@@ -1,3 +1,31 @@
+## Public combined candidate privacy review - 2026-11-17
+
+Four historical local account/worktree paths are omitted from this public source copy. Unmodified originals remain in the prior local candidate. Measurements, gates and historical status are unchanged; no local logs/databases or diagnostic payloads are committed. The new source identity will be the actual commit, never the local content-freeze label.
+
+## Combined execution wiring local evidence - 2026-11-17
+
+Explicit offline-v1 command and separate local stage controller are prepared. Fresh grouped27/27 small checks,0fail/cancel/skip/TODO,5038.4708ms plus architecture17 pass. Includes previous16 real file/SQLite combo checks,4 index checks,5 command-route and2 stage substitutes; none is Native qualification. Independent final readonly/delta review has no definiteP1/P2. Original controller normalizes byte-for-byte after removing only the new revision check/command selection; measured combined primitive is unchanged. Old defaults and gates remain.
+
+Old seed ZIP and original54 Native source entries match. Original inner build verifier passes unchanged receipt, Native310969...99cf and compiledd863bb...25e; no outer cloud image/tools check, new reader build/seed or source/control commit. [Exact freeze path/risks](../superpowers/plans/2026-11-17-combined-execution-freeze.md). Initial fixture errors were expected missing-route RED plus strict Full22 propagation, missing import/newline and separate seed/layout assumptions; tests were corrected to existing rules, not gates weakened. No publication, real Native/qualification, numerical adoption/PACK/actual22 or production. Source candidate and control are local only; historical evidence and old UNKNOWN remain.
+
+## Combined-v1 execution wiring preparation - 2026-11-17
+
+User-approved isolated [minimal wiring/freeze preparation](../superpowers/plans/2026-11-17-combined-execution-freeze.md) adds explicit offline-only command/generator4 and a separately pinned local controller, retaining legacy default and all original gates. No new source/control commit or formal seed, real Native build/qualification, numerical adoption, production, publication/PACK/actual22 follows. Current local synthetic evidence is not phase acceptance; original checkboxes/history remain.
+
+## Private combined replay v1 isolated candidate - 2026-11-17
+
+Approved implementation-only trust refinement now has a separately named offline entry: original owner lease, one semantic verification, proof writes, complete tail bytes/topology/location/receipt/result check, synchronous existing projection, then exclusive observation persistence and original restoration before delivery. All failure paths latch FAILED; dual write/restore errors retain both originals. Legacy entry/collectors and formal qualification are not switched. Short-lived mutate/restore detection is explicitly not equivalent; its old-reject/new-accept counterexample is preserved.
+
+Fresh small synthetic tests16 + existing catalog-index4 pass20/20,0fail/cancel/skip/TODO,4020.3415ms; architecture17 passes. Actual file guards,16-table closed SQLite images, prefix proof and restoration run; Native acquisition/discovery are test-only substitutes, not qualification. Independent final readonly review has no remaining definiteP1/P2 after one corrected dual-failure finding. Full contract, original fixture failures, exact check-count savings and limits: [combined-v1](../superpowers/specs/2026-11-17-private-combined-replay-v1.md). Scoped cleanup removes only self-owned test roots; candidate and evidence retained. No Native/real sampling, profile/PACK/actual22, publication/push or phase acceptance. Fresh exact freeze/execution approval remains necessary; old96a965b/e8 evidence and UNKNOWN remain untouched.
+
+## Isolated per-call replay catalog index candidate - 2026-11-16
+
+Local implementation-only candidate based on 96a965b. Existing test:native-refresh appends the new small regression without removing or reordering its prior test files. One replay test helper now groups dependency membership and graph edges within each call; instance membership uses a local Set. Canonical ordering, legacy fallback and malformed-input rejection remain. Every physical file open/full read/SHA/path/stat/close, replay sequence, worker/checkpoint and budget are unchanged. No cross-call cache, new dependency, SQL/public contract or production access. This is not a qualification layout: tests reuse existing dist copies and dependency junctions, not a fresh build.
+
+Fresh bounded evidence: new catalog-index tests 4/4 against the unchanged real helper baseline, including8 malformed/missing/unreachable/digest variants, exact file-open ordering, repeated reads, late-file tamper and legacy nested roots. Baseline RED was only the per-instance rescan complexity guard; new behavior GREEN. Independent read-only review found no P1/P2, reviewer ran no tests. Single 30-second-bounded pure-CPU synthetic comparison, Node 24.15.0/Windows, five alternating measured rounds after warmup:3 instances/24entries median0.6566->0.6287ms;32 instances/512 entries 9.8862->6.1403ms;168 instances/8400 entries 370.9497->69.8591ms (5.31x). No claim about real Transport total time, I/O or Native cost; per-call indexes retain O(entries+edges) references and budgets do not change. Scoped format and diff checks pass.
+
+Reproduce the four tests with CODEATLAS_REPLAY_BASELINE_FILE pointing to the untouched 96a965b helper and Node --disable-warning=ExperimentalWarning --test packages/runtime/test/native-refresh-catalog-index.test.mjs; without that optional baseline, independent fixture expectations still run. Source/helper identities must be freshly frozen before any execution. Old 96a965b/e8fd7c9 evidence and original worktrees remain unmodified; no relabelling or partial Transport concatenation. No Native build, real sampling, profile adoption, PACK, actual22, publication or push. A6/Phase1 acceptance remains unchanged.
+
 ## Historical receipt Wiki file delivery - 2026-11-16
 
 Completed approved private v2 artifact path: genuine successful Source/Storage one-shot result -> process-bound preparer -> original temp-only atomic file engine -> separately versioned revision/current records and historical-only reopen. Real publication/candidate/snapshot/source bindings and observation window retained; ENDED/currentFreshness UNASSESSED plus explicit historical Markdown. Reopen does not renew Source/permissions; old v1 API/files remain independent. No SQL/Canonical/public tool, real user data, production or push.
@@ -2745,7 +2773,7 @@ follow-up commit/push. Phase1 remains4/21, A6 NOT_QUALIFIED, E02 PROPOSED/uninst
 Three bounded streams overlapped: HOST/A6 receiver implementation and root execution
 preparation; read-only E02 evidence mapping; read-only P1-10/11 decisions. Shared code
 and authority documents have one integrator. This was not three concurrent coding jobs.
-The actual worktree remains C:/Users/Freya/.codex/worktrees/e4fb/CodeAtlas.
+The actual worktree remains <retained-local-evidence-path>
 
 Original C# Entry/lifetime receiver passes 4/4 (784ms): full 17-entry inventory opens
 and reversely releases; missing manifest, wrong ancestor and unknown kind refuse at
@@ -3664,7 +3692,7 @@ A6 NOT_QUALIFIED and Phase1 4/21 remain unchanged.
 
 ## Mixed Native offline inputs and schema templates prepared - 2026-11-05
 
-Actual worktree remains C:/Users/Freya/.codex/worktrees/e4fb/CodeAtlas,
+Actual worktree remains <retained-local-evidence-path>,
 HEAD292760e069879dc5c49ebe3f2b86c8e46090a82c (fresh read-only Git check).
 Six selected Source literal files passed bounded byte/hash/file-identity checks.
 The existing migration runner produced exclusively new schema-only templates:
@@ -6445,7 +6473,7 @@ task7-worker-review-result.md. It permits current corpus/regression qualificatio
 NOT merge, calibration approval or Phase acceptance. The one final current
 original22 materializer/reader/restore/measured qualification run is in progress
 in task7-measured-full22-reviewed.log; original artifacts are retained under
-C:/Users/Freya/AppData/Local/Temp/codeatlas-corpus-materializer-RE2Vak/new.
+<retained-local-evidence-path>
 No included source/helper/script/build changes occur during this run. Numeric
 profiles, four-purpose calibration/holdouts, actual gates and Phase0.5 exits
 remain open. The prior reviewer-running note below is superseded, not its
@@ -6498,7 +6526,7 @@ The full original22 replay pack, complete reader, drift refusals, original-
 ownership restoration and seven parent-issued verification/restoration classes
 pass20/20 (1583985.0668ms/exit0, task7-full-replay-attempt4.log). Materialization
 alone takes835549.753ms and retains22 seeds/44 fresh original-process trials at
-C:/Users/Freya/AppData/Local/Temp/codeatlas-corpus-materializer-49feQs.
+<retained-local-evidence-path>
 Earlier failed attempts remain retained; the common typed-preflight field bug
 is corrected and passes. No oracle/bootstrap/generation enters the fresh child.
 
