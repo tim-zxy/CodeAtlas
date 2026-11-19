@@ -1579,3 +1579,7 @@ strict bounds, disabled flags, conflict/error no-echo and output-failure refusal
 [48-case evidence](../superpowers/reviews/2026-11-12-codex-cli-preview.md) covers
 this additive CLI slice and existing guards; it does not close apply/install,
 production MCP, full E15 or Phase1. Original gates/counters remain unchanged.
+
+## P1-09 acceptance on the Phase 1 integration line
+
+E05 and E06 close one parent. The fixed-commit producer and consumer derive one MATCHED contract and one PUBLISH edge. One local workspace transaction committed; an independent read-only connection returned CURRENT and verified both endpoint revisions, one activation and one pointer. The original six-result oracle, historical RED and the W003-W006 migration/recovery evidence remain applicable. The isolated integration rebuilt the Runtime dependency closure using the frozen Phase 1 lockfile and verified the matching, stitching, persistence and registry gates. The count is 5/21 (P1-00, P1-01, P1-02, P1-03 and P1-09). Production Host transport, Windows physical qualification and the remaining sixteen parents retain their own gates. [Portable acceptance record](../superpowers/reviews/2026-11-19-p1-09-acceptance.json).

@@ -1,0 +1,54 @@
+{
+  "scope": "P1-09",
+  "gates": [
+    "E05",
+    "E06"
+  ],
+  "status": "ACCEPTED",
+  "phase1": {
+    "accepted": 5,
+    "total": 21
+  },
+  "integrationBase": "c6ac0ba9f6b0954cae409b2dfa6a3998228c6b77",
+  "testedProduct": "7a9b24c1c3956f5df891d597ab299f1a871f1c51",
+  "evidence": {
+    "matching": "Independent six-outcome oracle and matching-only provider selection",
+    "failureAndRecovery": "Original RED and W003-W006 lock, rollback and read-only reopen evidence retained; applicable runner, migrations and original test inputs unchanged",
+    "ownedSource": "Previously captured fixed-commit sender and listener using V2/V8, rebound and verified at the integrated workspace boundary",
+    "coverage": {
+      "status": "COMPLETE",
+      "limitations": [],
+      "unverifiedRefs": []
+    },
+    "matches": [
+      "MATCHED"
+    ],
+    "edges": [
+      "PUBLISH"
+    ],
+    "commit": "COMMITTED",
+    "freshnessAfterReadonlyReopen": "CURRENT",
+    "revisionsMatchBothPinnedInputs": true,
+    "publicationCount": 1,
+    "pointerCount": 1,
+    "edgeConfidence": 0.5,
+    "mismatchedSourceRefused": true
+  },
+  "verification": {
+    "workspacePackagesBuilt": 11,
+    "targetedTestsPassed": 23,
+    "targetedTestsFailed": 0,
+    "fixtureRegistryPassed": true,
+    "architecturalProjectsChecked": 17,
+    "fixtures": [
+      "p1-contract-matching-v1",
+      "p1-cross-repo-v1"
+    ]
+  },
+  "excluded": [
+    "live broker",
+    "deployed Host transport",
+    "Windows physical resource qualification",
+    "CI execution"
+  ]
+}
