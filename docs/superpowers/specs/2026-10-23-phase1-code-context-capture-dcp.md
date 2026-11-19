@@ -162,3 +162,9 @@ A1..4顺序；B0和C的设计问题逻辑上可独立，本会话仍顺序、不
 [实施作者审查](../reviews/2026-10-23-phase1-code-context-capture-implementation-review.md)记录独立预冻结、真实SQL交付、RED/GREEN、资源与生命周期、32文件范围和未执行门禁；最终收据为.superpowers/sdd/2026-10-23-phase1-code-context-capture/implementation-verification.json。原R010、完整v3清单/token、Source策略、Runtime/profile与全部Phase门禁不变。history/removal、stage/atomicApply、实际child/collector归属及计量仍不由A证明。
 
 Final local32-file regression:422PASS/0FAIL/1explicitTODO (423 total;new capture suite100PASS);Storage TypeScript build and architecture17 pass;Fixture registry46/exact20Phase1,Syntax catalog0. The TODO is the existing C1 real-file-symlink EPERM gate,not an A failure or a waived Phase gate. 本地A完成不等于独立review、完整root／联合门禁或Phase1完成。
+
+## Private fixed-commit capture v1 (2026-11-19)
+
+For the approved P1-09 local input, the trusted Application may issue a process-local capture for one authorized repository root, full commit OID and explicit set of paths. Source verifies Git tree membership and blob bytes. A complete revision requires proof that all tree members are accounted for. A narrower authorized selection yields PARTIAL with no admissible revision. The versioned manifest binds the root tree OID, per-path blob OIDs, byte counts, content fingerprints, classifications and inventory fingerprint. Application rechecks the live per-path RAW policy at consumption.
+
+Runtime may bind this capture to a dedicated local repository database. Initial creation requires an exclusive new file. Reopening requires the same verified manifest and live authority. Store binds CodeContext and Stage to this selection. Native observations still need the registered repository locator and the existing Stage provenance and resource checks. This decision does not authorize changing Native request transport or substituting a checkout for immutable object bytes.

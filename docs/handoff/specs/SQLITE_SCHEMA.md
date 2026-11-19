@@ -539,3 +539,7 @@ Final local32-file regression:422PASS/0FAIL/1explicitTODO (423 total;new capture
 ## Approved private Evaluation schema compatibility — 2026-11-03
 
 The [reviewed compatibility amendment](../../superpowers/specs/2026-11-03-phase1-evaluation-schema-compatibility-proposal.md) is explicitly approved. The existing private Code-fact projection accepts exact repository SQL10 or SQL13; SQL11/12 and unknown/future versions remain refused. It reads only the original named legacy columns. Query-only, same-snapshot/outer-transaction ownership, Source/support integrity, caller budgets and separate Native READ_SEAL admission remain unchanged. This neither interprets Syntax/Runtime tables nor grants full Phase1 Evaluation or physical qualification. Existing R010 controls and actual current IndexSession/Apply/reopen cases supply evidence; no migration, backfill, public API, numeric gate or profile changes.
+
+### Dedicated immutable source capture v1
+
+A new, private per-commit database uses the existing R013 layout and an additional fixed_commit_capture_v1 singleton. Its versioned manifest binds the repository, commit, complete file inventory and blob identities. Ordinary repository databases cannot be promoted to this class. The private loader checks immutable source tables against the authenticated manifest at reopen. The existing R013 migration and WORKTREE file format retain their original identities.

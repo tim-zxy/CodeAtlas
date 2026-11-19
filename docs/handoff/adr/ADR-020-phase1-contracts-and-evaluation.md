@@ -728,3 +728,7 @@ The approved extension binds repository-versioned declarations to product-identi
 ### P1-09 local immutable input (2026-11-19)
 
 Approved private Source selection for an already authorized local root, full commit OID and explicit repository-relative paths, with byte and tree membership verification. [Contract and scope](../../superpowers/specs/2026-11-03-phase1-declared-http-schema-design.md#private-local-fixed-commit-source-selection-2026-11-19). Working-tree CodeContext and Stage contracts continue to apply to their original scope.
+
+### P1-09 fixed-commit analysis capture (2026-11-19)
+
+The approved private COMMIT capture may coexist with WORKTREE capture. Application issues and revalidates the grant-bound selection; Store validates the manifest before binding Stage. See the [capture and coverage contract](../../superpowers/specs/2026-10-23-phase1-code-context-capture-dcp.md#private-fixed-commit-capture-v1-2026-11-19).
