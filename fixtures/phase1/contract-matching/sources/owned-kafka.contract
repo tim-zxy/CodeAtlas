@@ -1,0 +1,32 @@
+{
+  "schema": "codeatlas.declared-kafka-schema",
+  "version": 1,
+  "bindings": [
+    {
+      "contractFactKey": "runtime-fact:c5a324f3feb20d0fd296a0bb3ab18130f8d34596dff9153ebd199d81ac29bcd0",
+      "role": "CONSUMER",
+      "channel": "events",
+      "namespace": "owned-events",
+      "payload": {
+        "type": "string",
+        "encoding": "utf-8"
+      },
+      "key": {
+        "kind": "ABSENT"
+      }
+    },
+    {
+      "contractFactKey": "runtime-fact:2344e4119dcfbbe151ca8f548300cafb66a2bdc0d77ff5d8bcf357df0f289cd3",
+      "role": "PRODUCER",
+      "channel": "events",
+      "namespace": "owned-events",
+      "payload": {
+        "type": "string",
+        "encoding": "utf-8"
+      },
+      "key": {
+        "kind": "ABSENT"
+      }
+    }
+  ]
+}

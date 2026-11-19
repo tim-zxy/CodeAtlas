@@ -720,3 +720,7 @@ Real Runtime derivation precedes final Source verification and original synchron
 atomic Store application; failure refuses publication and preserves UNKNOWN recovery.
 Old V1/V5, public/production admission, physical values and acceptance gates remain.
 No real Git/Native/HOST, rights, baseline installation or Phase1 acceptance approval.
+
+### P1-09 versioned Kafka declarations (2026-11-19)
+
+The approved extension binds repository-versioned declarations to product-identified Kafka contracts for namespace, payload and key. The versioned Source policy and scope are specified in the [declaration contract](../../superpowers/specs/2026-11-03-phase1-declared-http-schema-design.md#additive-kafka-declaration-policy-2026-11-19). E05/E06 stay mapped to one P1-09 parent.

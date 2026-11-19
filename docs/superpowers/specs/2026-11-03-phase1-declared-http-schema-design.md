@@ -136,3 +136,9 @@ Store 使用原 HistoryReadBudget；原始输入、正文、解码后保留投�
 ## 2026-11-03 本地实施结算
 
 T1–T4及执行适用性澄清均已批准并实施，达到B_DECLARED_HTTP_SCHEMA_LOCAL_EXIT。[准确根范围、Fixture、测试/构建/架构与作者评审](../plans/2026-11-03-phase1-declared-http-schema-crossrepo.md)。两个已声明consumer MATCHED、一个真实调用边、实际owned发布/只读重开与Source CAS后AFFECTED/last-good均通过；有调用site却缺boundary仍PARTIAL。旧无schema文档输入仍UNRESOLVED，旧V1/V2和原置信/SQL迁移保持。原“待批准/尚未实施/127范围不含T4”是历史；不据本地退出签收原整个Phase1/Evaluation或物理资格。
+
+## Additive Kafka declaration policy (2026-11-19)
+
+The approved P1-09 extension uses a distinct matching policy, `declared-kafka-schema-v1`. Its Source document has schema `codeatlas.declared-kafka-schema`, version 1, and nonempty bindings. Each binding names one existing repository-local contract fact key, its exact Kafka role and channel, an explicit namespace, payload and key. The first supported payload is a UTF-8 string. The key is a UTF-8 string or explicitly absent. See the [owned declaration](../../../fixtures/phase1/contract-matching/sources/owned-kafka.contract). Unrepresented schemas require additional design and evidence.
+
+The document and contract must share the current repository revision. The existing authored-text Source support, exact byte digest, current contract membership and duplicate-attachment checks apply. Store admission additionally requires the authoritative Source revision to be COMMIT with a commit identity and the exact bound inventory fingerprint for repositories supplying Kafka declarations. Existing namespace facts cannot be overwritten. Per-endpoint Source evidence is included in the match. A declaration establishes schema compatibility only. Successful stitching and publication still require current graphs, a reachable publish boundary and a consume boundary, existing policy and a COMPLETE result.

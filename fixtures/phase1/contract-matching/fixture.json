@@ -11,6 +11,7 @@
     "matching": "matching-inputs.json",
     "declaredSchema": "declared-schema-inputs.json",
     "declaredCallerSource": "sources/caller-http.contract",
+    "declaredKafkaSource": "sources/owned-kafka.contract",
     "declaredProviderSource": "sources/provider-http.contract"
   },
   "expected": {

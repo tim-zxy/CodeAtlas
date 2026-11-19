@@ -165,7 +165,6 @@ function validated(
   b: HistoryReadBudget,
   maxInputBytes?: number,
 ) {
-  b.own(input);
   const r = exact(input, ['expectedOldActivationId', 'frozen', 'matches', 'execution']);
   check(r.expectedOldActivationId === null || typeof r.expectedOldActivationId === 'string');
   const { frozen, context } = authenticatedFrozen(r.frozen, snapshots, b, maxInputBytes);
@@ -295,8 +294,19 @@ const owners = new WeakMap<
   }
 >();
 const outcomes = new WeakMap<object, WorkspaceRuntimeOutcome>();
-function snapshots(stores: readonly RuntimeFactStore[], b: HistoryReadBudget) {
-  return stores.map((s) => readRuntimeBindingForWorkspace(s, b));
+function kafkaSourceRepositories(input: unknown): ReadonlySet<string> | undefined {
+  const frozen = record(input);
+  if (frozen.matchingPolicyVersion !== 'declared-kafka-schema-v1') return undefined;
+  return new Set(
+    array(frozen.schemaDocuments).map((d) => text(record(record(d).sourceFile).repositoryId)),
+  );
+}
+function snapshots(
+  stores: readonly RuntimeFactStore[],
+  b: HistoryReadBudget,
+  committedSources?: ReadonlySet<string>,
+) {
+  return stores.map((s) => readRuntimeBindingForWorkspace(s, b, committedSources));
 }
 function sameBindings(actual: Snapshot[], frozen: FrozenContractSet) {
   return (
@@ -328,7 +338,7 @@ export type WorkspaceRuntimeTraceV2 = (
       matches: WorkspaceRuntimeBatch['matches'];
       execution: Execution;
     }
-) & { evidenceScope: 'EXPLICIT_DECLARED_HTTP_SCHEMA' };
+) & { evidenceScope: 'EXPLICIT_DECLARED_HTTP_SCHEMA' | 'EXPLICIT_DECLARED_KAFKA_SCHEMA' };
 export class ContractStore {
   constructor(db: DatabaseSync, workspaceId: string, repositories: readonly RuntimeFactStore[]) {
     check(!types.isProxy(db) && db instanceof DatabaseSync && db.isOpen);
@@ -368,7 +378,7 @@ export class ContractStore {
     const b = new HistoryReadBudget(checkedHistoryLimits(limits));
     check(!db.isTransaction);
     b.own(input);
-    const current = snapshots(repositories, b);
+    const current = snapshots(repositories, b, kafkaSourceRepositories(input));
     const { frozen } = authenticatedFrozen(input, current, b, maxInputBytes);
     db.exec('BEGIN');
     try {
@@ -417,13 +427,20 @@ export class ContractStore {
       b = new HistoryReadBudget(checkedHistoryLimits(limits));
     check(!db.isTransaction);
     outcomes.set(this, { status: 'NOT_COMMITTED', activationId: null, freshness: 'UNKNOWN' });
-    const prepared = validated(input, snapshots(repositories, b), b, maxInputBytes);
+    b.own(input);
+    const committedSources = kafkaSourceRepositories(record(input).frozen);
+    const prepared = validated(
+      input,
+      snapshots(repositories, b, committedSources),
+      b,
+      maxInputBytes,
+    );
     let id: string | null = null,
       committing = false;
     try {
       db.exec('BEGIN IMMEDIATE');
       assertWorkspaceRuntimeSchema(runtimeSql(db, b));
-      const current = snapshots(repositories, b);
+      const current = snapshots(repositories, b, committedSources);
       frozenSet(db, workspace, prepared, b, current);
       check(sameBindings(current, prepared.frozen), 'WORKSPACE_INPUT_CHANGED');
       if (maxInputBytes !== undefined)
@@ -581,7 +598,10 @@ export class ContractStore {
       };
       outcomes.set(this, result);
       try {
-        result.freshness = sameBindings(snapshots(repositories, b), prepared.frozen)
+        result.freshness = sameBindings(
+          snapshots(repositories, b, committedSources),
+          prepared.frozen,
+        )
           ? 'CURRENT'
           : 'AFFECTED';
       } catch (e) {
@@ -659,9 +679,15 @@ export class ContractStore {
     return this.traceRuntime(limits, 1);
   }
   traceWorkspaceRuntimeV2(limits: HistoryReadLimits): WorkspaceRuntimeTraceV2 {
+    const trace = this.traceRuntime(limits, 2);
     return {
-      ...this.traceRuntime(limits, 2),
-      evidenceScope: 'EXPLICIT_DECLARED_HTTP_SCHEMA',
+      ...trace,
+      evidenceScope:
+        trace.status !== 'NOT_AVAILABLE' &&
+        isDeclaredFrozen(trace.frozen) &&
+        trace.frozen.matchingPolicyVersion === 'declared-kafka-schema-v1'
+          ? 'EXPLICIT_DECLARED_KAFKA_SCHEMA'
+          : 'EXPLICIT_DECLARED_HTTP_SCHEMA',
     } as WorkspaceRuntimeTraceV2;
   }
   private traceRuntime(limits: HistoryReadLimits, format: 1 | 2): WorkspaceRuntimeTrace {
@@ -688,7 +714,10 @@ export class ContractStore {
     check((stored.formatVersion ?? 1) === format, 'UNSUPPORTED_WORKSPACE_RUNTIME_FORMAT');
     let current = false;
     try {
-      current = sameBindings(snapshots(repositories, b), stored.frozen);
+      current = sameBindings(
+        snapshots(repositories, b, kafkaSourceRepositories(stored.frozen)),
+        stored.frozen,
+      );
     } catch (e) {
       if (!(e instanceof Error && e.message === 'RUNTIME_NOT_CURRENT')) throw e;
     }

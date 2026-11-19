@@ -99,6 +99,7 @@ export function prepareFrozenContractsV2(
   set: FrozenContractSetV2;
   context: Phase1ReferenceContext;
   declarations: readonly DerivedHttpSchemaDeclaration[];
+  kafkaDeclarations?: ReturnType<typeof parseFrozenContractSetV2>['kafkaDeclarations'];
   consumed: { items: number; inputBytes: number };
 } {
   assertRuntimeRequestControl(control);
@@ -128,6 +129,7 @@ function matchCore(
   assertRuntimeRequestControl(control);
   const { set, context } = prepared ?? prepareFrozenContracts(input);
   const declarations = new Map(prepared?.declarations.map((d) => [scopedRefKey(d.contractRef), d]));
+  const kafka = new Map(prepared?.kafkaDeclarations?.map((d) => [scopedRefKey(d.contractRef), d]));
   const services = new Map(set.catalog.services.map((s) => [String(s.id), s]));
   const ownServices = (ref: ScopedRef) =>
     set.catalog.contractBindings
@@ -151,18 +153,25 @@ function matchCore(
     }
     const consumer = row.contract,
       sig = consumer.signature;
+    const listener = kafka.get(scopedRefKey(row.ref));
+    const declaredKafka =
+      prepared?.set.matchingPolicyVersion === 'declared-kafka-schema-v1' &&
+      sig.kind === 'MESSAGE' &&
+      sig.transport === 'KAFKA';
+    const namespace = sig.kind === 'MESSAGE' ? (listener?.namespace ?? sig.namespace) : null;
     const targetIdentities = set.catalog.entries.filter((e) =>
       sig.kind === 'MESSAGE'
-        ? sig.namespace !== null &&
+        ? namespace !== null &&
           e.identityKind === 'MESSAGE_NAMESPACE' &&
           e.namespace === sig.transport &&
-          e.key === sig.namespace
+          e.key === namespace
         : e.identityKind === 'LOGICAL_SERVICE' &&
           e.key === (sig.kind === 'HTTP' ? sig.serviceHint : sig.service),
     );
     const serviceIds = new Set(targetIdentities.map((e) => String(e.serviceRef.entity.id)));
     const schemaSupports: SupportRef[] = [],
       declaredCompatible = new Set<string>();
+    if (listener) schemaSupports.push(listener.sourceSupport);
     const reasons: string[] = [],
       compatible: typeof set.contractRefs = [],
       conflicts: typeof set.contractRefs = [],
@@ -170,7 +179,8 @@ function matchCore(
     let status: ContractMatch['status'] = 'UNRESOLVED';
     const targets = [...serviceIds].map((id) => services.get(id)!);
     let candidates: typeof set.contractRefs = [];
-    if (!targetIdentities.length) reasons.push('SERVICE_IDENTITY_UNPROVEN');
+    if (declaredKafka && !listener) reasons.push('SCHEMA_COMPATIBILITY_UNPROVEN');
+    else if (!targetIdentities.length) reasons.push('SERVICE_IDENTITY_UNPROVEN');
     else if (
       sig.kind === 'MESSAGE' &&
       !ownServices(row.ref).some((id) => serviceIds.has(String(id)))
@@ -232,7 +242,22 @@ function matchCore(
           sig.kind === 'HTTP' &&
           s.kind === 'HTTP' &&
           schemas.every(([a, b]) => a === null && b === null);
-        if (declaredHttp) {
+        if (declaredKafka && s.kind === 'MESSAGE' && s.transport === 'KAFKA') {
+          if (used >= control.maxItems) {
+            termination = 'BUDGET';
+            break;
+          }
+          used++;
+          const sender = kafka.get(scopedRefKey(provider.ref));
+          if (sender) schemaSupports.push(sender.sourceSupport);
+          unproved = !sender || !listener;
+          if (sender && listener) {
+            contradiction ||=
+              sender.namespace !== listener.namespace ||
+              canonicalRuntimeJson(sender.payload) !== canonicalRuntimeJson(listener.payload) ||
+              canonicalRuntimeJson(sender.key) !== canonicalRuntimeJson(listener.key);
+          }
+        } else if (declaredHttp) {
           const a = declarations.get(scopedRefKey(row.ref)),
             b = declarations.get(scopedRefKey(provider.ref));
           if (a) schemaSupports.push(a.sourceSupport);
@@ -256,7 +281,11 @@ function matchCore(
       if (compatible.length > 1) {
         status = 'AMBIGUOUS';
         reasons.push('MULTIPLE_SUPPORTED_PROVIDERS');
-      } else if (compatible.length === 1 && (sig.kind === 'MESSAGE' || serviceIds.size === 1)) {
+      } else if (
+        compatible.length === 1 &&
+        (!declaredKafka || !unknown.length) &&
+        (sig.kind === 'MESSAGE' || serviceIds.size === 1)
+      ) {
         status = 'MATCHED';
         reasons.push('UNIQUE_SUPPORTED_PROVIDER');
       } else if (!compatible.length && !unknown.length && conflicts.length) {

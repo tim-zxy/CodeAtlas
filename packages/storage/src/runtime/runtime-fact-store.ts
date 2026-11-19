@@ -902,6 +902,7 @@ export interface RuntimeWorkspaceSnapshot {
 export function readRuntimeBindingForWorkspace(
   store: RuntimeFactStore,
   b: HistoryReadBudget,
+  committedSources?: ReadonlySet<string>,
 ): RuntimeWorkspaceSnapshot {
   const owner = connections.get(store);
   check(owner && !owner.db.isTransaction);
@@ -961,6 +962,23 @@ export function readRuntimeBindingForWorkspace(
     const roots = runtimeSql(db, b).read('repository', ['id', 'root_path'], 'id=?', [repo]);
     check(roots.length === 1);
     const rootPath = text(roots[0]!.root_path);
+    if (committedSources?.has(repo)) {
+      const revisions = runtimeSql(db, b).read(
+        'revisions',
+        ['kind', 'commit_identity', 'content_fingerprint'],
+        'repository_id=? AND id=?',
+        [repo, binding.repoBasis.revisionId],
+      );
+      const revision = revisions[0];
+      check(
+        revisions.length === 1 &&
+          revision?.kind === 'COMMIT' &&
+          typeof revision.commit_identity === 'string' &&
+          revision.commit_identity.length > 0 &&
+          revision.content_fingerprint === binding.repoBasis.contentFingerprint,
+        'WORKSPACE_KAFKA_COMMIT_REQUIRED',
+      );
+    }
     db.exec('COMMIT');
     return { binding, rootPath, candidate, values };
   } catch (e) {

@@ -99,3 +99,76 @@ test('declared HTTP exhausted comparison allowance never spends beyond its decla
   assert.equal(out.termination, 'BUDGET');
   assert(out.consumed.items <= prepared.consumed.items);
 });
+
+test('Kafka declarations bind both endpoints to versioned Source and exact wire shapes', () => {
+  const x = fixture();
+  x.matchingPolicyVersion = 'declared-kafka-schema-v1';
+  const serviceRef = x.catalog.entries[0].serviceRef;
+  for (const binding of x.catalog.contractBindings) binding.serviceRef = serviceRef;
+  for (const entry of x.catalog.entries)
+    Object.assign(entry, {
+      identityKind: 'MESSAGE_NAMESPACE',
+      namespace: 'KAFKA',
+      key: 'owned-events',
+    });
+  for (const { contract } of x.contractRefs) {
+    contract.protocol = 'MESSAGE';
+    contract.signature = {
+      kind: 'MESSAGE',
+      transport: 'KAFKA',
+      channel: 'events',
+      namespace: null,
+      role: contract.direction === 'PROVIDER' ? 'PRODUCER' : 'CONSUMER',
+      payloadSchemaRef: null,
+      keySchemaRef: null,
+    };
+  }
+  for (const doc of x.schemaDocuments)
+    rebody(doc, (data) => {
+      data.schema = 'codeatlas.declared-kafka-schema';
+      data.bindings = x.contractRefs
+        .filter((r) => r.ref.repositoryId === doc.sourceFile.repositoryId)
+        .map(({ contract }) => ({
+          contractFactKey: contract.factKey,
+          role: contract.signature.role,
+          channel: 'events',
+          namespace: 'owned-events',
+          payload: { type: 'string', encoding: 'utf-8' },
+          key: { kind: 'ABSENT' },
+        }));
+    });
+  const match = (input) => api.matchContractsV2(seal(input), control()).matches;
+  const matched = match(x);
+  assert(matched.length > 0 && matched.every((m) => m.payload.status === 'MATCHED'));
+  assert(
+    matched.every(
+      (m) => m.payload.supportRefs.filter((s) => s.entity.kind === 'SOURCE_FILE').length === 2,
+    ),
+  );
+  const missing = structuredClone(x);
+  missing.schemaDocuments.pop();
+  assert(match(missing).every((m) => m.payload.selectedProviderRef === null));
+  const conflict = structuredClone(x);
+  rebody(conflict.schemaDocuments[1], (doc) => {
+    doc.bindings[0].key = { type: 'string', encoding: 'utf-8' };
+  });
+  assert(match(conflict).every((m) => m.payload.status === 'CONFLICTED'));
+  for (const mutate of [
+    (doc) => {
+      doc.bindings[0].role = 'CONSUMER';
+    },
+    (doc) => {
+      doc.bindings[0].channel = 'other';
+    },
+    (doc) => {
+      doc.bindings.push(doc.bindings[0]);
+    },
+  ]) {
+    const changed = structuredClone(x);
+    rebody(changed.schemaDocuments[1], mutate);
+    assert.throws(() => match(changed));
+  }
+  const wrongRevision = structuredClone(x);
+  wrongRevision.schemaDocuments[0].sourceFile.revisionId = 'rev:other';
+  assert.throws(() => match(wrongRevision));
+});

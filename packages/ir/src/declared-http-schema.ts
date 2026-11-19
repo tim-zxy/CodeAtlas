@@ -34,6 +34,25 @@ export const DeclaredHttpSchemaDocumentSchema = z.strictObject({
     )
     .min(1),
 });
+// Exact wire representations; an absent key is explicit and never inferred from a Java type.
+const kafkaValue = z.strictObject({ type: z.literal('string'), encoding: z.literal('utf-8') });
+const kafkaBinding = z.strictObject({
+  contractFactKey: Phase1ExactStringSchema,
+  role: z.enum(['PRODUCER', 'CONSUMER']),
+  channel: Phase1ExactStringSchema,
+  namespace: Phase1ExactStringSchema,
+  payload: kafkaValue,
+  key: z.union([kafkaValue, absent]),
+});
+const kafkaDocument = z.strictObject({
+  schema: z.literal('codeatlas.declared-kafka-schema'),
+  version: z.literal(1),
+  bindings: z.array(kafkaBinding).min(1),
+});
+type KafkaAttachment = z.infer<typeof kafkaBinding> & {
+  contractRef: ScopedRef;
+  sourceSupport: SupportRef;
+};
 export const SourceSchemaDocumentSchema = z.strictObject({
   sourceFile: SourceFileSchema,
   sourceSupport: SupportRefSchema,
@@ -44,7 +63,7 @@ export const SourceSchemaDocumentSchema = z.strictObject({
 });
 export type SourceSchemaDocument = z.infer<typeof SourceSchemaDocumentSchema>;
 export const FrozenContractSetV2Schema = FrozenContractSetSchema.extend({
-  matchingPolicyVersion: z.literal('declared-http-schema-v1'),
+  matchingPolicyVersion: z.enum(['declared-http-schema-v1', 'declared-kafka-schema-v1']),
   schemaDocuments: z.array(SourceSchemaDocumentSchema),
 });
 export type FrozenContractSetV2 = z.infer<typeof FrozenContractSetV2Schema>;
@@ -106,9 +125,26 @@ export function decodeDeclaredHttpSchemaDocuments(
   context: Phase1ReferenceContext,
   limits: DeclaredSchemaLimits,
 ) {
+  const { declarations, consumed } = decodeSchemaDocuments(
+    documents,
+    contracts,
+    context,
+    limits,
+    'declared-http-schema-v1',
+  );
+  return { declarations, consumed };
+}
+function decodeSchemaDocuments(
+  documents: readonly SourceSchemaDocument[],
+  contracts: FrozenContractSetV2['contractRefs'],
+  context: Phase1ReferenceContext,
+  limits: DeclaredSchemaLimits,
+  policy: FrozenContractSetV2['matchingPolicyVersion'],
+) {
   ensurePhase1Data(documents);
   const meter = counter(limits),
     declarations: DerivedHttpSchemaDeclaration[] = [],
+    kafkaDeclarations: KafkaAttachment[] = [],
     sources = new Set<string>(),
     attached = new Set<string>();
   const checked = documents.map((d) => SourceSchemaDocumentSchema.parse(d));
@@ -155,6 +191,31 @@ export function decodeDeclaredHttpSchemaDocuments(
     );
     const parsed = JSON.parse(d.contentUtf8) as unknown;
     meter.item(parsed);
+    if (policy === 'declared-kafka-schema-v1') {
+      for (const binding of kafkaDocument.parse(parsed).bindings) {
+        const matches = byKey.get(JSON.stringify([f.repositoryId, binding.contractFactKey])) ?? [];
+        phase1Assert(matches.length === 1);
+        const row = matches[0]!,
+          sig = row.contract.signature;
+        phase1Assert(
+          row.ref.entity.revisionId === f.revisionId &&
+            sig.kind === 'MESSAGE' &&
+            sig.transport === 'KAFKA' &&
+            sig.role === binding.role &&
+            sig.channel === binding.channel &&
+            (sig.namespace === null || sig.namespace === binding.namespace) &&
+            sig.payloadSchemaRef === null &&
+            sig.keySchemaRef === null,
+        );
+        const id = scopedRefKey(row.ref);
+        phase1Assert(!attached.has(id));
+        attached.add(id);
+        const declaration = { ...binding, contractRef: row.ref, sourceSupport: s };
+        meter.item(declaration);
+        kafkaDeclarations.push(declaration);
+      }
+      continue;
+    }
     const doc = DeclaredHttpSchemaDocumentSchema.parse(parsed);
     for (const b of doc.bindings) {
       const matches = byKey.get(JSON.stringify([f.repositoryId, b.contractFactKey])) ?? [];
@@ -182,7 +243,8 @@ export function decodeDeclaredHttpSchemaDocuments(
     }
   }
   declarations.sort((a, b) => cmp(scopedRefKey(a.contractRef), scopedRefKey(b.contractRef)));
-  return { declarations, consumed: meter.receipt() };
+  kafkaDeclarations.sort((a, b) => cmp(scopedRefKey(a.contractRef), scopedRefKey(b.contractRef)));
+  return { declarations, kafkaDeclarations, consumed: meter.receipt() };
 }
 export function parseFrozenContractSetV2(
   input: unknown,
@@ -199,12 +261,19 @@ export function parseFrozenContractSetV2(
     );
     phase1Assert(b && basisKey(b.repoBasis) === basisKey(d.sourceSupport.basis));
   }
-  const decoded = decodeDeclaredHttpSchemaDocuments(
+  const decoded = decodeSchemaDocuments(
     set.schemaDocuments,
     set.contractRefs,
     context,
     limits,
+    set.matchingPolicyVersion,
   );
   phase1Assert(workspaceRuntimeInputDigestV2(set) === set.workspaceBasis.workspaceActivationDigest);
-  return { set, ...decoded };
+  const { declarations, kafkaDeclarations, consumed } = decoded;
+  return {
+    set,
+    declarations,
+    consumed,
+    ...(set.matchingPolicyVersion === 'declared-kafka-schema-v1' ? { kafkaDeclarations } : {}),
+  };
 }

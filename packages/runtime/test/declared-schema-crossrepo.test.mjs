@@ -354,3 +354,85 @@ test('declared Source schemas publish real Java to Python HTTP workspace edges a
     [pyDoc],
   );
 });
+
+test('Kafka source replay resolves declared endpoint selectors and refuses mutable revision publication', async (t) => {
+  const doc = {
+    id: 'file:owned:kafka-declaration',
+    path: 'contracts/owned-kafka.contract',
+    contentUtf8: fs.readFileSync(
+      new URL(
+        '../../../fixtures/phase1/contract-matching/sources/owned-kafka.contract',
+        import.meta.url,
+      ),
+      'utf8',
+    ),
+  };
+  const { readRuntimeBindingForWorkspace } =
+    await import('../../storage/dist/runtime/runtime-fact-store.js');
+  const { HistoryReadBudget } =
+    await import('../../storage/dist/analysis/activation-history-format.js');
+  await withFrozenStage(
+    t,
+    async (x) => {
+      await composeFrozenFrameworkRuntimeV2({
+        workspaceId: 'workspace:owned',
+        repositoryId: x.repositoryId,
+        stage: x.stage,
+        lease: x.frozen.lease,
+        store: new MixedAnalysisStore(x.f.db),
+        expectedOldRuntime: null,
+        limits: historyLimits,
+        routes: [{ languageId: 'java', frameworkId: 'kafka', configuration: {} }],
+      }).publish(workflowRequest(x.repositoryId, 'INDEX'));
+      const store = new RuntimeFactStore(x.f.db, x.repositoryId);
+      const snapshot = readRuntimeBindingForWorkspace(store, new HistoryReadBudget(historyLimits));
+      const { facts, bindings } = snapshot.candidate;
+      t.diagnostic(
+        JSON.stringify({
+          runtimeCoverage: snapshot.candidate.coverage,
+          boundaryKinds: facts.payload.edges
+            .filter((e) => e.boundaryRef)
+            .map((e) => e.transitionKind),
+          runtimeBoundaryNodes: facts.payload.nodes.filter((n) => n.kind === 'BOUNDARY').length,
+        }),
+      );
+      const declared = JSON.parse(doc.contentUtf8).bindings;
+      for (const binding of declared) {
+        const contract = facts.payload.contracts.find((c) => c.factKey === binding.contractFactKey);
+        assert(contract);
+        assert.equal(contract.signature.role, binding.role);
+        assert.equal(contract.signature.channel, binding.channel);
+        assert(
+          bindings.payload.bindings.some(
+            (b) =>
+              b.contractRef?.entity.id === contract.id &&
+              b.kind === (binding.role === 'PRODUCER' ? 'MESSAGE_PUBLISH' : 'MESSAGE_CONSUME'),
+          ),
+        );
+      }
+      assert(
+        snapshot.values.some(
+          (v) =>
+            v.support.entity.id === doc.id &&
+            v.value.contentFingerprint ===
+              'sha256:' + createHash('sha256').update(doc.contentUtf8).digest('hex'),
+        ),
+      );
+      assert.throws(
+        () =>
+          readRuntimeBindingForWorkspace(
+            store,
+            new HistoryReadBudget(historyLimits),
+            new Set([x.repositoryId]),
+          ),
+        /WORKSPACE_KAFKA_COMMIT_REQUIRED/,
+      );
+      t.diagnostic(
+        'J2 recorded library input; both endpoint selectors resolved, authenticated Source file present, WORKTREE refused',
+      );
+    },
+    'J2',
+    false,
+    [doc],
+  );
+});
