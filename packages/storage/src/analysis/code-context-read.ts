@@ -523,7 +523,9 @@ export function readCodeContextSnapshot(
           typeof value === 'object' &&
           'value' in value &&
           (domain === 'codeatlas-code-activation-v1' ||
-            (domain === 'codeatlas-source-inventory-v1' && tag === 'SOURCE_FILE'))
+            ((domain === 'codeatlas-source-inventory-v1' ||
+              domain === 'codeatlas-commit-source-inventory-v2') &&
+              tag === 'SOURCE_FILE'))
         )
           remember(tag, value.value);
       },

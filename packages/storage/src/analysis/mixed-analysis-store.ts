@@ -155,6 +155,8 @@ export function inspectMixedAnalysisOutcome(
     b.own(receipt);
     check(receipt.path && !connections.get(store)?.isTransaction);
     db = new DatabaseSync(receipt.path, { readOnly: true, enableForeignKeyConstraints: true });
+    const original = connections.get(store);
+    if (original?.isOpen) fixedCommitSelection(original, receipt.repositoryId)?.rebind(db, b);
     const h = (
       receipt.schemaVersion === 13 ? captureRuntimeActivationContext : captureActivationContext
     )(

@@ -43,6 +43,7 @@ type Selection = {
   rootTreeOid: string;
   manifestDigest: string;
   recheck(): void;
+  rebind(db: DatabaseSync, budget: HistoryReadBudget): void;
   count: number;
   matches(file: SourceFile): boolean;
 };
@@ -120,9 +121,17 @@ export function installCommitSourceCapture(
   limits: HistoryReadLimits,
   recheck: () => void,
 ) {
+  return bindCapture(db, input, new HistoryReadBudget(checkedHistoryLimits(limits)), recheck);
+}
+
+function bindCapture(
+  db: DatabaseSync,
+  input: CommitInput,
+  budget: HistoryReadBudget,
+  recheck: () => void,
+) {
   const check = () => requireHistory(typeof recheck === 'function' && recheck() === undefined);
   check();
-  const budget = new HistoryReadBudget(checkedHistoryLimits(limits));
   budget.own(input);
   exact(input, [
     'version',
@@ -288,6 +297,10 @@ export function installCommitSourceCapture(
       recheck: () => {
         incarnation.setReadBigInts(false);
         check();
+      },
+      rebind: (reopened: DatabaseSync, b: HistoryReadBudget) => {
+        requireHistory(marker(reopened));
+        bindCapture(reopened, b.parse(manifest) as CommitInput, b, recheck);
       },
       count: files.length,
       matches: (file: SourceFile) => isDeepStrictEqual(filesById.get(file.id), file),

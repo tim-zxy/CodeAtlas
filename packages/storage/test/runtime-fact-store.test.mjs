@@ -468,7 +468,7 @@ test('Runtime empty trace refuses a genuine schema13 database with non-UTF8 enco
   assert.equal(db.prepare('SELECT count(*) n FROM runtime_state').get().n, 0);
 });
 test('dedicated commit source requires a complete live binding on creation and read-only reopen', async (t) => {
-  const { openNewCommitCaptureDatabase, installCommitSourceCapture } =
+  const { openNewCommitCaptureDatabase, installCommitSourceCapture, fixedCommitSelection } =
     await import('../dist/source-state/commit-capture.js');
   const { readCodeContextSnapshot } = await import('../dist/analysis/code-context-read.js');
   const { mkdtemp, rm } = await import('node:fs/promises');
@@ -520,12 +520,13 @@ test('dedicated commit source requires a complete live binding on creation and r
     if (!granted) throw Error('REVOKED');
   };
   const install = (m = input) => installCommitSourceCapture(db, m, historyLimits, check);
-  const read = () =>
+  const snapshot = () =>
     readCodeContextSnapshot(db, repositoryId, historyLimits, {
       schemaVersion: 13,
       maxItems: historyLimits.maxItems,
       maxDepth: historyLimits.maxDepth,
-    }).view;
+    });
+  const read = () => snapshot().view;
   assert.throws(() => openNewCommitCaptureDatabase(path), { code: 'EEXIST' });
   assert.throws(() => install({ ...input, selectionCoverage: 'PARTIAL' }), /INVALID_HISTORY/);
   assert.equal(db.prepare('SELECT count(*) n FROM repository').get().n, 0);
@@ -545,5 +546,14 @@ test('dedicated commit source requires a complete live binding on creation and r
   granted = true;
   assert.throws(() => install({ ...input, rootTreeOid: 'e'.repeat(40) }), /INVALID_HISTORY/);
   assert.deepEqual(install(), { manifestDigest });
+  assert.deepEqual(snapshot().entries.SOURCE_FILE, input.inventory);
   assert.equal(read().sourceFileCount, 1);
+  const recovery = new DatabaseSync(path, { readOnly: true });
+  try {
+    const { HistoryReadBudget } = await import('../dist/analysis/activation-history-format.js');
+    fixedCommitSelection(db, repositoryId).rebind(recovery, new HistoryReadBudget(historyLimits));
+    assert.equal(fixedCommitSelection(recovery, repositoryId).manifestDigest, manifestDigest);
+  } finally {
+    recovery.close();
+  }
 });
