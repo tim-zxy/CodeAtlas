@@ -112,3 +112,7 @@ export function classifyMixedSample(
 ) {
   return classifySampleCore(path, sample, sizeBytes, true);
 }
+
+export function classifyCommittedBytes(path: RepositoryRelativePath, bytes: Buffer) {
+  return classifyMixedSample(path, bytes.subarray(0, sampleBytes), bytes.length);
+}

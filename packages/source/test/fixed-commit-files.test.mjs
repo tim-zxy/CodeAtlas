@@ -59,6 +59,8 @@ test('fixed selection returns committed bytes after a checkout edit; missing com
   };
   const authorize = (p) => assert.equal(p, 'sample.java');
   const result = await readFixedCommitFiles(request, account, authorize);
+  assert.equal(result.selectionCoverage, 'COMPLETE');
+  assert.equal(result.rootTreeOid, git('rev-parse', request.commitOid + '^{tree}'));
   assert.deepEqual(result.files, [
     {
       path: 'sample.java',
@@ -68,6 +70,20 @@ test('fixed selection returns committed bytes after a checkout edit; missing com
     },
   ]);
   assert.equal(result.files[0].bytes.buffer.byteLength, contents.length);
+  await fs.mkdir(path.join(root, 'unselected'));
+  await fs.writeFile(path.join(root, 'unselected', 'other.txt'), 'unselected data');
+  git('add', '--', 'unselected/other.txt');
+  git('commit', '--quiet', '-m', 'additional subtree');
+  const partialCommit = git('rev-parse', 'HEAD');
+  const partial = await readFixedCommitFiles(
+    { ...request, commitOid: partialCommit },
+    account,
+    authorize,
+  );
+  assert.equal(partial.selectionCoverage, 'PARTIAL');
+  assert.deepEqual(partial.files, result.files);
+  assert(!JSON.stringify(partial).includes('unselected'));
+
   await assert.rejects(
     readFixedCommitFiles({ ...request, commitOid: '0'.repeat(40) }, account, authorize),
     { code: 'SOURCE_CHANGED' },

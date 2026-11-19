@@ -1,7 +1,10 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { resolve } from 'node:path';
-import { createFixedCommitSourceReader } from '../dist/fixed-commit-source.js';
+import {
+  createFixedCommitSourceReader,
+  useFixedCommitCapture,
+} from '../dist/fixed-commit-source.js';
 import { makeAccount } from '../../source/test/fixtures/mixed-source-git-double.mjs';
 
 const workspaceId = 'workspace:owned',
@@ -98,4 +101,16 @@ test('fixed commit read rechecks the live grant at the Source access boundary', 
   assert.equal(calls, 2);
   assert.equal(usage.reads, 0);
   assert.equal(usage.invalid, true);
+});
+
+test('fixed capture cannot be reconstructed from DTO fields', () => {
+  const forged = Object.freeze({
+    selectionCoverage: 'COMPLETE',
+    repositoryId: repository.id,
+    commitOid,
+  });
+  assert.throws(
+    () => useFixedCommitCapture(forged, () => assert.fail('unissued capture delivered')),
+    /INVALID_COMMIT_CAPTURE/,
+  );
 });

@@ -32,6 +32,8 @@ export async function readFixedCommitFiles(
 ): Promise<{
   repositoryId: string;
   commitOid: string;
+  rootTreeOid: string;
+  selectionCoverage: 'COMPLETE' | 'PARTIAL';
   files: { path: string; bytes: Buffer; blobOid: string; contentFingerprint: string }[];
 }> {
   try {
@@ -102,9 +104,24 @@ export async function readFixedCommitFiles(
         /^tree (?:[0-9a-f]{40}|[0-9a-f]{64})$/.test(firstLine.toString('latin1')),
     );
     const rootTree = firstLine.subarray(5).toString('latin1');
+    // Compare raw tree entry names with the authorized path prefixes. We never
+    // descend into an unselected directory or open an unselected blob.
+    const children = new Map<string, Set<string>>();
+    for (const selected of paths) {
+      let parent = '';
+      for (const component of selected.split('/')) {
+        account.visitItem();
+        let names = children.get(parent);
+        if (!names) children.set(parent, (names = new Set()));
+        names.add(Buffer.from(component).toString('hex'));
+        parent += component + '/';
+      }
+    }
+    let complete = true;
     const files = [];
     for (const p of paths) {
       let oid = rootTree;
+      let parent = '';
       const parts = p.split('/');
       for (const [index, part] of parts.entries()) {
         const tree = await readObject(oid, 'tree');
@@ -116,7 +133,9 @@ export async function readFixedCommitFiles(
             end = tree.indexOf(0, space + 1);
           const next = end + 1 + commitOid.length / 2;
           requireObject(space > offset && end > space + 1 && next <= tree.length);
-          if (tree.subarray(space + 1, end).equals(name)) {
+          const entryName = tree.subarray(space + 1, end);
+          if (complete && !children.get(parent)!.has(entryName.toString('hex'))) complete = false;
+          if (entryName.equals(name)) {
             const mode = tree.subarray(offset, space).toString('latin1');
             requireObject(
               found === undefined &&
@@ -130,6 +149,7 @@ export async function readFixedCommitFiles(
         }
         requireObject(found !== undefined);
         oid = found;
+        parent += part + '/';
       }
       await authorize(p);
       account.checkpoint();
@@ -150,7 +170,13 @@ export async function readFixedCommitFiles(
       await authorize(p);
       account.checkpoint();
     }
-    return { repositoryId, commitOid, files };
+    return {
+      repositoryId,
+      commitOid,
+      rootTreeOid: rootTree,
+      selectionCoverage: complete ? 'COMPLETE' : 'PARTIAL',
+      files,
+    };
   } catch (error) {
     account.invalidate();
     if (error && typeof error === 'object' && 'code' in error && error.code === 'ENOENT')
