@@ -1,7 +1,12 @@
 import { createHash } from 'node:crypto';
 import { lstat, open, realpath } from 'node:fs/promises';
 import path from 'node:path';
-import { ensurePhase1Data, SourceFileSchema, type SourceFile } from '@codeatlas/ir';
+import {
+  ensurePhase1Data,
+  SourceFileSchema,
+  type RepositoryRelativePath,
+  type SourceFile,
+} from '@codeatlas/ir';
 import { SourceScanError } from './errors.js';
 import { safeAncestors, assertSameAncestors } from './path-safety.js';
 import type { MixedSourceAccount } from './mixed-source-verification.js';
@@ -83,77 +88,11 @@ export async function readDocumentSourceBytes(
     const root = path.resolve(input.rootPath);
     await authorize(file);
     account.checkpoint();
-    const rootIdentity = await lstat(root);
-    const checkRoot = async () => {
-      account.checkpoint();
-      const current = await lstat(root);
-      if (
-        !current.isDirectory() ||
-        current.isSymbolicLink() ||
-        current.dev !== rootIdentity.dev ||
-        current.ino !== rootIdentity.ino ||
-        path.relative(root, await realpath(root)) !== ''
-      )
-        changed();
-    };
-    await checkRoot();
-    const absolute = path.resolve(root, ...file.path.split('/'));
-    const relative = path.relative(root, absolute);
-    if (
-      !relative ||
-      relative === '..' ||
-      relative.startsWith('..' + path.sep) ||
-      path.isAbsolute(relative)
-    )
-      changed();
-    const ancestors = await safeAncestors(absolute, file.path);
-    const before = await lstat(absolute);
-    if (
-      !before.isFile() ||
-      before.isSymbolicLink() ||
-      before.nlink !== 1 ||
-      !Number.isSafeInteger(before.size) ||
-      before.size < 0
-    )
-      changed();
-    account.reserveBuffer(before.size);
-    account.checkpoint();
-    const bytes = Buffer.alloc(before.size);
-    const handle = await open(absolute, 'r');
-    let length = 0;
-    const hash = createHash('sha256');
-    let primary: unknown;
-    try {
-      await checkRoot();
-      await assertSameAncestors(absolute, file.path, ancestors);
-      if (!sameFile(before, await handle.stat())) changed();
-      while (length < before.size) {
-        account.checkpoint();
-        const allowance = Math.min(65536, before.size - length);
-        account.readBytes(allowance);
-        account.checkpoint();
-        const { bytesRead } = await handle.read(bytes, length, allowance, length);
-        if (!bytesRead) changed();
-        hash.update(bytes.subarray(length, length + bytesRead));
-        length += bytesRead;
-      }
-      if (!sameFile(before, await handle.stat())) changed();
-      await assertSameAncestors(absolute, file.path, ancestors);
-    } catch (error) {
-      primary = error;
-      throw error;
-    } finally {
-      try {
-        await handle.close();
-      } catch {
-        // Do not mutate a frozen primary or expose filesystem/secret diagnostics.
-        throw unknownCleanup(primary);
-      }
-    }
-    if (!sameFile(before, await lstat(absolute))) changed();
-    await assertSameAncestors(absolute, file.path, ancestors);
-    await checkRoot();
-    const contentFingerprint = 'sha256:' + hash.digest('hex');
+    const {
+      bytes,
+      sizeBytes: length,
+      contentFingerprint,
+    } = await readBoundedRegularFile(root, file.path, account, Number.MAX_SAFE_INTEGER);
     if (contentFingerprint !== file.contentFingerprint) changed();
     await authorize(file);
     account.checkpoint();
@@ -166,4 +105,87 @@ export async function readDocumentSourceBytes(
       changed();
     throw error;
   }
+}
+
+// Internal transport shared by authenticated document and loose Git object reads.
+export async function readBoundedRegularFile(
+  root: string,
+  relativePath: RepositoryRelativePath,
+  account: MixedSourceAccount,
+  maxBytes: number,
+) {
+  const rootIdentity = await lstat(root);
+  const checkRoot = async () => {
+    account.checkpoint();
+    const current = await lstat(root);
+    if (
+      !current.isDirectory() ||
+      current.isSymbolicLink() ||
+      current.dev !== rootIdentity.dev ||
+      current.ino !== rootIdentity.ino ||
+      path.relative(root, await realpath(root)) !== ''
+    )
+      changed();
+  };
+  await checkRoot();
+  const absolute = path.resolve(root, ...relativePath.split('/'));
+  const relative = path.relative(root, absolute);
+  if (
+    !relative ||
+    relative === '..' ||
+    relative.startsWith('..' + path.sep) ||
+    path.isAbsolute(relative)
+  )
+    changed();
+  const ancestors = await safeAncestors(absolute, relativePath);
+  const before = await lstat(absolute);
+  if (
+    !before.isFile() ||
+    before.isSymbolicLink() ||
+    before.nlink !== 1 ||
+    !Number.isSafeInteger(before.size) ||
+    before.size < 0
+  )
+    changed();
+  if (before.size > maxBytes)
+    throw new SourceScanError('INVALID_INPUT', 'Source file exceeds limit');
+  account.reserveBuffer(before.size);
+  account.checkpoint();
+  const bytes = Buffer.alloc(before.size);
+  const handle = await open(absolute, 'r');
+  let length = 0;
+  const hash = createHash('sha256');
+  let primary: unknown;
+  try {
+    await checkRoot();
+    await assertSameAncestors(absolute, relativePath, ancestors);
+    if (!sameFile(before, await handle.stat())) changed();
+    while (length < before.size) {
+      account.checkpoint();
+      const allowance = Math.min(65536, before.size - length);
+      account.readBytes(allowance);
+      account.checkpoint();
+      const { bytesRead } = await handle.read(bytes, length, allowance, length);
+      if (!bytesRead) changed();
+      hash.update(bytes.subarray(length, length + bytesRead));
+      length += bytesRead;
+    }
+    if (!sameFile(before, await handle.stat())) changed();
+    await assertSameAncestors(absolute, relativePath, ancestors);
+  } catch (error) {
+    primary = error;
+    throw error;
+  } finally {
+    try {
+      await handle.close();
+    } catch {
+      // Do not mutate a frozen primary or expose filesystem/secret diagnostics.
+      throw unknownCleanup(primary);
+    }
+  }
+  if (!sameFile(before, await lstat(absolute))) changed();
+  await assertSameAncestors(absolute, relativePath, ancestors);
+  await checkRoot();
+  const contentFingerprint = 'sha256:' + hash.digest('hex');
+  return { bytes, sizeBytes: length, contentFingerprint };
 }

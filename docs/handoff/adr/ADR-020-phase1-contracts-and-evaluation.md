@@ -724,3 +724,7 @@ No real Git/Native/HOST, rights, baseline installation or Phase1 acceptance appr
 ### P1-09 versioned Kafka declarations (2026-11-19)
 
 The approved extension binds repository-versioned declarations to product-identified Kafka contracts for namespace, payload and key. The versioned Source policy and scope are specified in the [declaration contract](../../superpowers/specs/2026-11-03-phase1-declared-http-schema-design.md#additive-kafka-declaration-policy-2026-11-19). E05/E06 stay mapped to one P1-09 parent.
+
+### P1-09 local immutable input (2026-11-19)
+
+Approved private Source selection for an already authorized local root, full commit OID and explicit repository-relative paths, with byte and tree membership verification. [Contract and scope](../../superpowers/specs/2026-11-03-phase1-declared-http-schema-design.md#private-local-fixed-commit-source-selection-2026-11-19). Working-tree CodeContext and Stage contracts continue to apply to their original scope.
