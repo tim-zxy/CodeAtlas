@@ -1,3 +1,4 @@
+import { fixedCommitSelection } from '../source-state/commit-capture.js';
 import { randomUUID } from 'node:crypto';
 import {
   RuntimeDerivationV2Schema,
@@ -963,6 +964,13 @@ export function readRuntimeBindingForWorkspace(
     check(roots.length === 1);
     const rootPath = text(roots[0]!.root_path);
     if (committedSources?.has(repo)) {
+      const source = fixedCommitSelection(db, repo);
+      check(
+        source &&
+          source.revision.id === binding.repoBasis.revisionId &&
+          source.revision.contentFingerprint === binding.repoBasis.contentFingerprint,
+        'WORKSPACE_KAFKA_COMMIT_REQUIRED',
+      );
       const revisions = runtimeSql(db, b).read(
         'revisions',
         ['kind', 'commit_identity', 'content_fingerprint'],

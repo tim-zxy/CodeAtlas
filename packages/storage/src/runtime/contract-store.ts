@@ -97,6 +97,27 @@ function contextFor(snapshots: Snapshot[]) {
 function isDeclaredFrozen(value: FrozenContractSet): value is FrozenContractSetV2 {
   return Object.hasOwn(value, 'schemaDocuments');
 }
+function declaredSources(frozen: FrozenContractSetV2) {
+  return frozen.kafkaSourceFiles
+    ? [...frozen.schemaDocuments, ...frozen.kafkaSourceFiles]
+    : frozen.schemaDocuments;
+}
+function authenticateSources(frozen: FrozenContractSetV2, snapshots: Snapshot[]) {
+  for (const source of declaredSources(frozen)) {
+    const key = supportKey(source.sourceSupport);
+    check(
+      snapshots.some((s) =>
+        s.values.some(
+          (v) =>
+            v.support.entity.kind === 'SOURCE_FILE' &&
+            supportKey(v.support) === key &&
+            isDeepStrictEqual(v.value, source.sourceFile),
+        ),
+      ),
+      'WORKSPACE_SCHEMA_SOURCE_CHANGED',
+    );
+  }
+}
 function authenticatedFrozen(
   input: unknown,
   snapshots: Snapshot[],
@@ -108,17 +129,7 @@ function authenticatedFrozen(
         ? FrozenContractSetSchema.parse(input)
         : FrozenContractSetV2Schema.parse(input),
     context = contextFor(snapshots);
-  if (isDeclaredFrozen(raw)) {
-    for (const d of raw.schemaDocuments) {
-      const current = snapshots
-        .flatMap((s) => s.values)
-        .find((v) => supportKey(v.support) === supportKey(d.sourceSupport));
-      check(
-        current && isDeepStrictEqual(current.value, d.sourceFile),
-        'WORKSPACE_SCHEMA_SOURCE_CHANGED',
-      );
-    }
-  }
+  if (isDeclaredFrozen(raw)) authenticateSources(raw, snapshots);
   let frozen: FrozenContractSet | FrozenContractSetV2;
   if (maxInputBytes !== undefined) {
     check(
@@ -134,6 +145,7 @@ function authenticatedFrozen(
       maxDepth: remaining.maxDepth,
     });
     b.own(decoded.declarations);
+    if (decoded.kafkaDeclarations) b.own(decoded.kafkaDeclarations);
     frozen = decoded.set;
   } else frozen = parseFrozenContractSet(raw, context);
   check(
@@ -298,7 +310,9 @@ function kafkaSourceRepositories(input: unknown): ReadonlySet<string> | undefine
   const frozen = record(input);
   if (frozen.matchingPolicyVersion !== 'declared-kafka-schema-v1') return undefined;
   return new Set(
-    array(frozen.schemaDocuments).map((d) => text(record(record(d).sourceFile).repositoryId)),
+    [...array(frozen.schemaDocuments), ...array(frozen.kafkaSourceFiles ?? [])].map((d) =>
+      text(record(record(d).sourceFile).repositoryId),
+    ),
   );
 }
 function snapshots(
@@ -714,10 +728,10 @@ export class ContractStore {
     check((stored.formatVersion ?? 1) === format, 'UNSUPPORTED_WORKSPACE_RUNTIME_FORMAT');
     let current = false;
     try {
-      current = sameBindings(
-        snapshots(repositories, b, kafkaSourceRepositories(stored.frozen)),
-        stored.frozen,
-      );
+      const live = snapshots(repositories, b, kafkaSourceRepositories(stored.frozen));
+      current = sameBindings(live, stored.frozen);
+      if (current && isDeclaredFrozen(stored.frozen) && stored.frozen.kafkaSourceFiles)
+        authenticateSources(stored.frozen, live);
     } catch (e) {
       if (!(e instanceof Error && e.message === 'RUNTIME_NOT_CURRENT')) throw e;
     }
@@ -780,7 +794,7 @@ function readWorkspaceActivation(
       frozen,
       frozenContractReferenceContext(
         frozen,
-        frozen.schemaDocuments.map((d) => d.sourceSupport),
+        declaredSources(frozen).map((d) => d.sourceSupport),
       ),
       {
         maxInputBytes: remaining.maxSerializedBytes,
@@ -789,6 +803,7 @@ function readWorkspaceActivation(
       },
     );
     b.own(decoded.declarations);
+    if (decoded.kafkaDeclarations) b.own(decoded.kafkaDeclarations);
   }
   const matches: WorkspaceRuntimeBatch['matches'] = array(value.matches).map((m) => {
     const v = exact(m, ['schema', 'version', 'payload']);
