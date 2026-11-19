@@ -1,5 +1,7 @@
 import { createHash } from 'node:crypto';
 import { z } from 'zod';
+import { SourceRangeSchema } from './references.js';
+import { ContentFingerprintSchema, RepositoryRelativePathSchema } from './source-identity.js';
 import { SourceFileSchema } from './source-file.js';
 import { FrozenContractSetSchema, parseFrozenContractSet } from './contract-ir.js';
 import { canonicalRuntimeJson, workspaceServiceCatalogDigest } from './runtime-identity.js';
@@ -37,7 +39,16 @@ export const DeclaredHttpSchemaDocumentSchema = z.strictObject({
 // Exact wire representations; an absent key is explicit and never inferred from a Java type.
 const kafkaValue = z.strictObject({ type: z.literal('string'), encoding: z.literal('utf-8') });
 const kafkaBinding = z.strictObject({
-  contractFactKey: Phase1ExactStringSchema,
+  selector: z.strictObject({
+    path: RepositoryRelativePathSchema,
+    contentFingerprint: ContentFingerprintSchema,
+    range: z.strictObject({
+      startLine: SourceRangeSchema.shape.startLine,
+      startColumn: SourceRangeSchema.shape.startColumn,
+      endLine: SourceRangeSchema.shape.endLine,
+      endColumn: SourceRangeSchema.shape.endColumn,
+    }),
+  }),
   role: z.enum(['PRODUCER', 'CONSUMER']),
   channel: Phase1ExactStringSchema,
   namespace: Phase1ExactStringSchema,
@@ -50,6 +61,7 @@ const kafkaDocument = z.strictObject({
   bindings: z.array(kafkaBinding).min(1),
 });
 type KafkaAttachment = z.infer<typeof kafkaBinding> & {
+  callSiteSupport: SupportRef;
   contractRef: ScopedRef;
   sourceSupport: SupportRef;
 };
@@ -65,6 +77,9 @@ export type SourceSchemaDocument = z.infer<typeof SourceSchemaDocumentSchema>;
 export const FrozenContractSetV2Schema = FrozenContractSetSchema.extend({
   matchingPolicyVersion: z.enum(['declared-http-schema-v1', 'declared-kafka-schema-v1']),
   schemaDocuments: z.array(SourceSchemaDocumentSchema),
+  kafkaSourceFiles: z
+    .array(SourceSchemaDocumentSchema.pick({ sourceFile: true, sourceSupport: true }))
+    .optional(),
 });
 export type FrozenContractSetV2 = z.infer<typeof FrozenContractSetV2Schema>;
 export type DeclaredSchemaLimits = { maxInputBytes: number; maxItems: number; maxDepth: number };
@@ -92,6 +107,13 @@ export function workspaceRuntimeInputDigestV2(set: FrozenContractSetV2): string 
     [...set.schemaDocuments]
       .sort((a, b) => cmp(supportKey(a.sourceSupport), supportKey(b.sourceSupport)))
       .map(canonicalRuntimeJson),
+    ...(set.kafkaSourceFiles === undefined
+      ? []
+      : [
+          [...set.kafkaSourceFiles]
+            .sort((a, b) => cmp(supportKey(a.sourceSupport), supportKey(b.sourceSupport)))
+            .map(canonicalRuntimeJson),
+        ]),
   ]);
 }
 function counter(limits: DeclaredSchemaLimits) {
@@ -140,6 +162,7 @@ function decodeSchemaDocuments(
   context: Phase1ReferenceContext,
   limits: DeclaredSchemaLimits,
   policy: FrozenContractSetV2['matchingPolicyVersion'],
+  kafkaSourceFiles: NonNullable<FrozenContractSetV2['kafkaSourceFiles']> = [],
 ) {
   ensurePhase1Data(documents);
   const meter = counter(limits),
@@ -152,7 +175,77 @@ function decodeSchemaDocuments(
   const available = new Map(context.availableSupports.map((s) => [supportKey(s), s]));
   meter.item(context.availableSupports);
   const byKey = new Map<string, typeof contracts>();
+  // Coordinates select a product-observed contract only via an authenticated
+  // source value in the same repository activation. A fact key may change
+  // when only the declaration changes.
+  const filesById = new Map<string, (typeof kafkaSourceFiles)[number]>();
+  const paths = new Set<string>();
+  for (const { sourceFile: f, sourceSupport: s } of kafkaSourceFiles) {
+    meter.bytes(Buffer.byteLength(canonicalRuntimeJson({ sourceFile: f, sourceSupport: s })));
+    meter.item(f);
+    meter.item(s);
+    phase1Assert(
+      'repositoryId' in s.basis &&
+        f.repositoryId === s.basis.repositoryId &&
+        f.revisionId === s.basis.revisionId &&
+        s.entity.kind === 'SOURCE_FILE' &&
+        s.entity.id === f.id &&
+        s.entity.revisionId === f.revisionId &&
+        available.has(supportKey(s)) &&
+        s.valueDigest ===
+          createHash('sha256')
+            .update('codeatlas-phase1-support-value-v1\0' + canonicalRuntimeJson(f))
+            .digest('hex'),
+    );
+    const id = JSON.stringify([basisKey(s.basis), f.id]);
+    const path = JSON.stringify([basisKey(s.basis), f.path]);
+    phase1Assert(!filesById.has(id) && !paths.has(path));
+    filesById.set(id, { sourceFile: f, sourceSupport: s });
+    paths.add(path);
+  }
+  const bySite = new Map<
+    string,
+    { row: (typeof contracts)[number]; callSiteSupport: SupportRef }[]
+  >();
+  function siteKey(
+    basis: string,
+    path: string,
+    fingerprint: string,
+    role: string,
+    r: { startLine: number; startColumn: number; endLine: number; endColumn: number },
+  ) {
+    return JSON.stringify([
+      basis,
+      path,
+      fingerprint,
+      role,
+      r.startLine,
+      r.startColumn,
+      r.endLine,
+      r.endColumn,
+    ]);
+  }
   for (const c of contracts) {
+    if (policy === 'declared-kafka-schema-v1') {
+      const { signature: sig, sourceRange: r, basis } = c.contract;
+      meter.item(r);
+      if (sig.kind === 'MESSAGE' && sig.transport === 'KAFKA' && r) {
+        const f = filesById.get(JSON.stringify([basisKey(basis), r.sourceFileId]));
+        if (f) {
+          const key = siteKey(
+            basisKey(basis),
+            f.sourceFile.path,
+            f.sourceFile.contentFingerprint,
+            sig.role,
+            r,
+          );
+          const group = bySite.get(key) ?? [];
+          group.push({ row: c, callSiteSupport: f.sourceSupport });
+          bySite.set(key, group);
+        }
+      }
+      continue;
+    }
     meter.item(c.ref);
     const key = JSON.stringify([c.contract.repositoryId, c.contract.factKey]);
     const found = byKey.get(key) ?? [];
@@ -193,9 +286,19 @@ function decodeSchemaDocuments(
     meter.item(parsed);
     if (policy === 'declared-kafka-schema-v1') {
       for (const binding of kafkaDocument.parse(parsed).bindings) {
-        const matches = byKey.get(JSON.stringify([f.repositoryId, binding.contractFactKey])) ?? [];
+        const selector = binding.selector;
+        const matches =
+          bySite.get(
+            siteKey(
+              basisKey(s.basis),
+              selector.path,
+              selector.contentFingerprint,
+              binding.role,
+              selector.range,
+            ),
+          ) ?? [];
         phase1Assert(matches.length === 1);
-        const row = matches[0]!,
+        const { row, callSiteSupport } = matches[0]!,
           sig = row.contract.signature;
         phase1Assert(
           row.ref.entity.revisionId === f.revisionId &&
@@ -210,7 +313,7 @@ function decodeSchemaDocuments(
         const id = scopedRefKey(row.ref);
         phase1Assert(!attached.has(id));
         attached.add(id);
-        const declaration = { ...binding, contractRef: row.ref, sourceSupport: s };
+        const declaration = { ...binding, contractRef: row.ref, sourceSupport: s, callSiteSupport };
         meter.item(declaration);
         kafkaDeclarations.push(declaration);
       }
@@ -253,9 +356,17 @@ export function parseFrozenContractSetV2(
 ) {
   ensurePhase1Data(input);
   const set = FrozenContractSetV2Schema.parse(input);
-  const { matchingPolicyVersion: _policy, schemaDocuments: _documents, ...base } = set;
+  const {
+    matchingPolicyVersion: _policy,
+    schemaDocuments: _documents,
+    kafkaSourceFiles,
+    ...base
+  } = set;
   parseFrozenContractSet(base, context);
-  for (const d of set.schemaDocuments) {
+  phase1Assert(
+    set.matchingPolicyVersion === 'declared-kafka-schema-v1' || kafkaSourceFiles === undefined,
+  );
+  for (const d of [...set.schemaDocuments, ...(kafkaSourceFiles ?? [])]) {
     const b = set.repositoryBindings.find(
       (b) => b.repoBasis.repositoryId === d.sourceFile.repositoryId,
     );
@@ -267,6 +378,7 @@ export function parseFrozenContractSetV2(
     context,
     limits,
     set.matchingPolicyVersion,
+    kafkaSourceFiles,
   );
   phase1Assert(workspaceRuntimeInputDigestV2(set) === set.workspaceBasis.workspaceActivationDigest);
   const { declarations, kafkaDeclarations, consumed } = decoded;

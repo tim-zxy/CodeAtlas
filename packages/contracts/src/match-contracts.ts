@@ -107,7 +107,7 @@ export function prepareFrozenContractsV2(
   const raw = FrozenContractSetV2Schema.parse(input),
     context = frozenContractReferenceContext(
       raw,
-      raw.schemaDocuments.map((d) => d.sourceSupport),
+      [...raw.schemaDocuments, ...(raw.kafkaSourceFiles ?? [])].map((d) => d.sourceSupport),
     );
   return { ...parseFrozenContractSetV2(raw, context, control), context };
 }
@@ -171,7 +171,7 @@ function matchCore(
     const serviceIds = new Set(targetIdentities.map((e) => String(e.serviceRef.entity.id)));
     const schemaSupports: SupportRef[] = [],
       declaredCompatible = new Set<string>();
-    if (listener) schemaSupports.push(listener.sourceSupport);
+    if (listener) schemaSupports.push(listener.sourceSupport, listener.callSiteSupport);
     const reasons: string[] = [],
       compatible: typeof set.contractRefs = [],
       conflicts: typeof set.contractRefs = [],
@@ -249,7 +249,7 @@ function matchCore(
           }
           used++;
           const sender = kafka.get(scopedRefKey(provider.ref));
-          if (sender) schemaSupports.push(sender.sourceSupport);
+          if (sender) schemaSupports.push(sender.sourceSupport, sender.callSiteSupport);
           unproved = !sender || !listener;
           if (sender && listener) {
             unproved = 'kind' in sender.key || 'kind' in listener.key;
