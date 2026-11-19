@@ -467,3 +467,84 @@ test('Runtime empty trace refuses a genuine schema13 database with non-UTF8 enco
   assert.equal(db.isTransaction, false);
   assert.equal(db.prepare('SELECT count(*) n FROM runtime_state').get().n, 0);
 });
+test('dedicated commit source requires a complete live binding on creation and read-only reopen', async (t) => {
+  const { openNewCommitCaptureDatabase, installCommitSourceCapture } =
+    await import('../dist/source-state/commit-capture.js');
+  const { readCodeContextSnapshot } = await import('../dist/analysis/code-context-read.js');
+  const { mkdtemp, rm } = await import('node:fs/promises');
+  const { tmpdir } = await import('node:os');
+  const { join } = await import('node:path');
+  const dir = await mkdtemp(join(tmpdir(), 'codeatlas-capture-store-')),
+    path = join(dir, 'dedicated.sqlite');
+  let db = openNewCommitCaptureDatabase(path);
+  t.after(async () => {
+    if (db.isOpen) db.close();
+    await rm(dir, { recursive: true, force: true });
+  });
+  const repositoryId = 'owned',
+    commitOid = 'a'.repeat(40),
+    revisionId = 'commit:' + commitOid,
+    contentFingerprint = 'b'.repeat(64);
+  const input = {
+    version: 1,
+    repositoryId,
+    rootPath: dir,
+    commitOid,
+    rootTreeOid: 'c'.repeat(40),
+    selectionCoverage: 'COMPLETE',
+    selectionFingerprint: contentFingerprint,
+    revision: {
+      id: revisionId,
+      repositoryId,
+      kind: 'COMMIT',
+      commitIdentity: commitOid,
+      contentFingerprint,
+    },
+    inventory: [
+      {
+        id: 'file:owned',
+        repositoryId,
+        revisionId,
+        path: 'owned.txt',
+        contentFingerprint,
+        classification: { role: 'SOURCE', provenance: 'AUTHORED', contentKind: 'TEXT' },
+        languageHint: null,
+        sensitivity: 'PUBLIC',
+      },
+    ],
+    files: [{ path: 'owned.txt', sizeBytes: 5, blobOid: 'd'.repeat(40), contentFingerprint }],
+  };
+  applyMigrationPlan(db, await prefixPlan(13));
+  db.prepare('INSERT INTO repository(slot,id,root_path) VALUES(1,?,?)').run(repositoryId, dir);
+  db.prepare('INSERT INTO repository_state(repository_id) VALUES(?)').run(repositoryId);
+  let granted = true;
+  const check = () => {
+    if (!granted) throw Error('REVOKED');
+  };
+  const install = (m = input) => installCommitSourceCapture(db, m, historyLimits, check);
+  const read = () =>
+    readCodeContextSnapshot(db, repositoryId, historyLimits, {
+      schemaVersion: 13,
+      maxItems: historyLimits.maxItems,
+      maxDepth: historyLimits.maxDepth,
+    }).view;
+  assert.throws(() => openNewCommitCaptureDatabase(path), { code: 'EEXIST' });
+  assert.throws(() => install({ ...input, selectionCoverage: 'PARTIAL' }), /INVALID_HISTORY/);
+  const { manifestDigest } = install();
+  assert.equal(read().kind, 'FIXED_COMMIT_CODE_CAPTURE');
+  assert.equal(read().targetSource.revisionId, revisionId);
+  assert.equal(read().fixedCapture.manifestDigest, manifestDigest);
+  assert.throws(
+    () => db.prepare('DELETE FROM revisions').run(),
+    /FIXED_COMMIT_SOURCE_IS_IMMUTABLE/,
+  );
+  granted = false;
+  assert.throws(read, /REVOKED/);
+  db.close();
+  db = new DatabaseSync(path, { readOnly: true });
+  assert.throws(read, /INVALID_HISTORY/);
+  granted = true;
+  assert.throws(() => install({ ...input, rootTreeOid: 'e'.repeat(40) }), /INVALID_HISTORY/);
+  assert.deepEqual(install(), { manifestDigest });
+  assert.equal(read().sourceFileCount, 1);
+});

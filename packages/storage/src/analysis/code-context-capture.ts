@@ -41,6 +41,7 @@ export function captureRepositoryCodeContext(
     db.exec('BEGIN');
     transaction = true;
     const view = readCodeContextSnapshot(db, id, limits, { schemaVersion: 10 }).view;
+    if (view.schemaVersion !== 1) fail();
     db.exec('COMMIT');
     transaction = false;
     const marker = db.prepare('SELECT 1 WHERE 0');

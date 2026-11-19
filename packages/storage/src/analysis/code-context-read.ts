@@ -1,3 +1,5 @@
+import { isDeepStrictEqual } from 'node:util';
+import { fixedCommitSelection } from '../source-state/commit-capture.js';
 import { createCodeIdentityEncoder } from './code-identity.js';
 import { DatabaseSync, type SQLInputValue } from 'node:sqlite';
 import { types } from 'node:util';
@@ -13,6 +15,7 @@ import {
   ProviderCapabilityObservationSchema,
   ProviderCoverageStatusSchema,
   WorktreeRevisionSchema,
+  CommitRevisionSchema,
   SourceFileSchema,
   RepositorySchema,
   RepoBasisSchema,
@@ -23,6 +26,7 @@ import {
   type ContentFingerprint,
   type RepoBasis,
   type WorktreeRevision,
+  type CommitRevision,
   type CanonicalEdge,
 } from '@codeatlas/ir';
 import { boundedJson } from './bounded-json.js';
@@ -48,6 +52,15 @@ export interface RepositoryCodeContextView {
   readonly committedSnapshotCount: number;
   readonly historicalSourceProof: 'UNAVAILABLE';
 }
+type FixedCommitContextView = Omit<RepositoryCodeContextView, 'schemaVersion' | 'kind'> & {
+  readonly schemaVersion: 2;
+  readonly kind: 'FIXED_COMMIT_CODE_CAPTURE';
+  readonly fixedCapture: Readonly<{
+    commitOid: string;
+    rootTreeOid: string;
+    manifestDigest: string;
+  }>;
+};
 export interface CapturedRepositoryCodeContext {
   readonly handle: object;
   readonly view: RepositoryCodeContextView;
@@ -288,7 +301,7 @@ export function readCodeContextSnapshot(
     | { readonly schemaVersion: 10 }
     | { readonly schemaVersion: 11 | 13; readonly maxItems: number; readonly maxDepth: number },
 ): {
-  readonly view: RepositoryCodeContextView;
+  readonly view: RepositoryCodeContextView | FixedCommitContextView;
   readonly consumed: {
     readonly rows: number;
     readonly serializedBytes: number;
@@ -556,16 +569,29 @@ export function readCodeContextSnapshot(
   const state = single('repository_state', 'repository_id=?', [repoId]);
   if (!repo || !state) fail();
   const repository = RepositorySchema.parse({ id: repo.id, rootPath: repo.root_path });
-  const revRow = single('revisions', "repository_id=? AND kind='WORKTREE'", [repoId]);
-  const revision: WorktreeRevision | null = revRow
-    ? WorktreeRevisionSchema.parse({
-        id: revRow.id,
-        repositoryId: revRow.repository_id,
-        kind: revRow.kind,
-        contentFingerprint: revRow.content_fingerprint,
-        baseRevisionId: revRow.base_revision_id,
-      })
+  const fixed = fixedCommitSelection(db, repoId);
+  if (fixed && (mode.schemaVersion !== 13 || fixed.rootPath !== repository.rootPath)) fail();
+  const revRow = fixed
+    ? single('revisions', "repository_id=? AND id=? AND kind='COMMIT'", [repoId, fixed.revision.id])
+    : single('revisions', "repository_id=? AND kind='WORKTREE'", [repoId]);
+  const revision: WorktreeRevision | CommitRevision | null = revRow
+    ? fixed
+      ? CommitRevisionSchema.parse({
+          id: revRow.id,
+          repositoryId: revRow.repository_id,
+          kind: revRow.kind,
+          contentFingerprint: revRow.content_fingerprint,
+          commitIdentity: revRow.commit_identity,
+        })
+      : WorktreeRevisionSchema.parse({
+          id: revRow.id,
+          repositoryId: revRow.repository_id,
+          kind: revRow.kind,
+          contentFingerprint: revRow.content_fingerprint,
+          baseRevisionId: revRow.base_revision_id,
+        })
     : null;
+  if (fixed && !isDeepStrictEqual(revision, fixed.revision)) fail();
   const indexed =
     state.indexed_revision_id === null ? null : EntityIdSchema.parse(state.indexed_revision_id);
   const fingerprint =
@@ -591,7 +617,17 @@ export function readCodeContextSnapshot(
   );
   let sourceInventoryDigest: string | null = null;
   if (revision) {
-    const source = digest('codeatlas-source-inventory-v1');
+    const source = digest(
+      fixed ? 'codeatlas-commit-source-inventory-v2' : 'codeatlas-source-inventory-v1',
+    );
+    if (fixed) {
+      if (sources.n !== fixed.count) fail();
+      source.group('FIXED_COMMIT', 1);
+      source.emit({
+        key: [fixed.revision.id],
+        value: { version: 2, rootTreeOid: fixed.rootTreeOid, manifestDigest: fixed.manifestDigest },
+      });
+    }
     source.group('TARGET', 1);
     source.emit({ key: [revision.id], value: revision });
     source.group('SOURCE_FILE', sources.n);
@@ -606,6 +642,7 @@ export function readCodeContextSnapshot(
         languageHint: r.language_hint,
         sensitivity: r.sensitivity,
       });
+      if (fixed && !fixed.matches(f)) fail();
       source.emit({ key: [f.id], value: f }, bytes);
     }
     sourceInventoryDigest = source.end();
@@ -844,9 +881,18 @@ export function readCodeContextSnapshot(
       codeActivationDigest: code.end(),
     });
   }
-  const view: RepositoryCodeContextView = {
-    schemaVersion: 1,
-    kind: 'REPOSITORY_CODE_CAPTURE',
+  const view: RepositoryCodeContextView | FixedCommitContextView = {
+    ...(fixed
+      ? {
+          schemaVersion: 2 as const,
+          kind: 'FIXED_COMMIT_CODE_CAPTURE' as const,
+          fixedCapture: {
+            commitOid: fixed.revision.commitIdentity,
+            rootTreeOid: fixed.rootTreeOid,
+            manifestDigest: fixed.manifestDigest,
+          },
+        }
+      : { schemaVersion: 1 as const, kind: 'REPOSITORY_CODE_CAPTURE' as const }),
     repositoryId: repoId,
     repositoryLocatorDigest,
     activeBasis,
@@ -862,6 +908,7 @@ export function readCodeContextSnapshot(
     committedSnapshotCount,
     historicalSourceProof: 'UNAVAILABLE',
   };
+  fixed?.recheck();
   memory(context + weight(view));
   guard(view);
   if (mode.schemaVersion !== 10) {
