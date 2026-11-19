@@ -1,3 +1,4 @@
+import { fixedCommitSelection } from '../source-state/commit-capture.js';
 import {
   writeMixedRuntimeBatchLocked,
   type RuntimeBatchCandidate,
@@ -611,6 +612,7 @@ export class MixedAnalysisStore {
         );
       }
       receipt.after = persistentImage(db, b);
+      fixedCommitSelection(db, repo);
       committing = true;
       receipt.status = 'COMMIT_OUTCOME_UNKNOWN';
       db.exec('COMMIT');
