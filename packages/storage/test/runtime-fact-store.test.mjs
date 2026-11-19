@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { existsSync } from 'node:fs';
+import { existsSync, realpathSync } from 'node:fs';
 import test from 'node:test';
 import { DatabaseSync } from 'node:sqlite';
 import { historyFixture, historyLimits, prefixPlan } from './helpers/r011-history-fixture.mjs';
@@ -474,7 +474,7 @@ test('dedicated commit source requires a complete live binding on creation and r
   const { mkdtemp, rm } = await import('node:fs/promises');
   const { tmpdir } = await import('node:os');
   const { join } = await import('node:path');
-  const dir = await mkdtemp(join(tmpdir(), 'codeatlas-capture-store-')),
+  const dir = realpathSync.native(await mkdtemp(join(tmpdir(), 'codeatlas-capture-store-'))),
     path = join(dir, 'dedicated.sqlite');
   let db = openNewCommitCaptureDatabase(path);
   t.after(async () => {
@@ -515,8 +515,6 @@ test('dedicated commit source requires a complete live binding on creation and r
     files: [{ path: 'owned.txt', sizeBytes: 5, blobOid: 'd'.repeat(40), contentFingerprint }],
   };
   applyMigrationPlan(db, await prefixPlan(13));
-  db.prepare('INSERT INTO repository(slot,id,root_path) VALUES(1,?,?)').run(repositoryId, dir);
-  db.prepare('INSERT INTO repository_state(repository_id) VALUES(?)').run(repositoryId);
   let granted = true;
   const check = () => {
     if (!granted) throw Error('REVOKED');
@@ -530,6 +528,7 @@ test('dedicated commit source requires a complete live binding on creation and r
     }).view;
   assert.throws(() => openNewCommitCaptureDatabase(path), { code: 'EEXIST' });
   assert.throws(() => install({ ...input, selectionCoverage: 'PARTIAL' }), /INVALID_HISTORY/);
+  assert.equal(db.prepare('SELECT count(*) n FROM repository').get().n, 0);
   const { manifestDigest } = install();
   assert.equal(read().kind, 'FIXED_COMMIT_CODE_CAPTURE');
   assert.equal(read().targetSource.revisionId, revisionId);

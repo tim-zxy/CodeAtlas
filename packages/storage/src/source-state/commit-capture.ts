@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
-import { closeSync, openSync } from 'node:fs';
-import { isAbsolute } from 'node:path';
+import { closeSync, openSync, fstatSync, lstatSync, realpathSync } from 'node:fs';
+import { dirname, isAbsolute, resolve } from 'node:path';
 import { DatabaseSync, type StatementSync } from 'node:sqlite';
 import { isDeepStrictEqual } from 'node:util';
 import {
@@ -46,7 +46,7 @@ type Selection = {
   count: number;
   matches(file: SourceFile): boolean;
 };
-const fresh = new WeakMap<DatabaseSync, StatementSync>();
+const fresh = new WeakMap<DatabaseSync, { incarnation: StatementSync; assertIdentity(): void }>();
 const selected = new WeakMap<DatabaseSync, Selection>();
 const table = 'fixed_commit_capture_v1';
 const header =
@@ -67,10 +67,35 @@ const marker = (db: DatabaseSync) =>
 // The private file class extends the current repository layout. Ordinary files cannot be promoted.
 export function openNewCommitCaptureDatabase(file: string): DatabaseSync {
   requireHistory(isAbsolute(file));
-  closeSync(openSync(file, 'wx', 0o600));
-  const db = new DatabaseSync(file, { enableForeignKeyConstraints: true });
-  fresh.set(db, db.prepare('SELECT 1'));
-  return db;
+  const filename = resolve(file);
+  const parent = dirname(filename);
+  requireHistory(realpathSync.native(parent) === parent);
+  const lease = openSync(filename, 'wx', 0o600);
+  let db: DatabaseSync | undefined;
+  try {
+    const created = fstatSync(lease, { bigint: true });
+    const assertIdentity = () => {
+      const current = lstatSync(filename, { bigint: true });
+      requireHistory(
+        current.isFile() &&
+          current.nlink === 1n &&
+          current.dev === created.dev &&
+          current.ino === created.ino &&
+          realpathSync.native(parent) === parent &&
+          realpathSync.native(filename) === filename,
+      );
+    };
+    assertIdentity();
+    db = new DatabaseSync(filename, { allowExtension: false, enableForeignKeyConstraints: true });
+    assertIdentity();
+    fresh.set(db, { incarnation: db.prepare('SELECT 1'), assertIdentity });
+    return db;
+  } catch (error) {
+    if (db?.isOpen) db.close();
+    throw error;
+  } finally {
+    closeSync(lease);
+  }
 }
 
 function sourceRow(file: SourceFile) {
@@ -161,12 +186,18 @@ export function installCommitSourceCapture(
   if (create) {
     const initial = fresh.get(db);
     requireHistory(initial);
-    initial.setReadBigInts(false);
+    initial.incarnation.setReadBigInts(false);
+    initial.assertIdentity();
   }
   db.exec(create ? 'BEGIN IMMEDIATE' : 'BEGIN');
   try {
     requireHistory(db.prepare('PRAGMA user_version').get()?.user_version === 13);
     const sql = runtimeSql(db, budget);
+    if (create && !db.prepare('SELECT 1 FROM repository LIMIT 1').get()) {
+      requireHistory(!db.prepare('SELECT 1 FROM repository_state LIMIT 1').get());
+      sql.insert('repository', { slot: 1, id: revision.repositoryId, root_path: input.rootPath });
+      sql.insert('repository_state', { repository_id: revision.repositoryId });
+    }
     const repos = sql.read('repository', ['id', 'root_path'], 'slot=1', []);
     requireHistory(
       repos.length === 1 &&
@@ -236,6 +267,7 @@ export function installCommitSourceCapture(
           stored.every((row) => isDeepStrictEqual({ ...row }, byId.get(String(row.id)))),
       );
     }
+    if (create) fresh.get(db)!.assertIdentity();
     check();
     db.exec('COMMIT');
   } catch (error) {
