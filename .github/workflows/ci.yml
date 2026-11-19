@@ -159,6 +159,7 @@ jobs:
         if: always()
         run: node --test --test-concurrency=1 scripts/test-syntax-peak-collector.mjs
       - name: Require approved exact-pack Native REFRESH actual22
+        id: actual22
         timeout-minutes: 110
         if: success() && !cancelled() && steps.script_catalog.outcome == 'success'
         shell: pwsh
@@ -191,6 +192,7 @@ jobs:
           $previousNodeOptions = $env:NODE_OPTIONS
           $previousGitHubToken = $env:GITHUB_TOKEN
           $previousGhToken = $env:GH_TOKEN
+          $actualTimer = [Diagnostics.Stopwatch]::StartNew()
           try {
             $env:NODE_OPTIONS = "$previousNodeOptions --import=$diagnosticImport".Trim()
             Remove-Item Env:GITHUB_TOKEN -ErrorAction SilentlyContinue
@@ -203,26 +205,19 @@ jobs:
             $env:GH_TOKEN = $previousGhToken
             Remove-Item Env:CODEATLAS_ACTUAL_DIAGNOSTIC_DIR
           }
+          "duration_ms=$($actualTimer.ElapsedMilliseconds)" >> $env:GITHUB_OUTPUT
           exit $collectExitCode
-      - name: Preserve memory observations including failures
-        if: always()
+      - name: Validate public Native summary
+        id: public_summary
+        if: always() && (steps.actual22.outcome == 'success' || steps.actual22.outcome == 'failure')
+        env:
+          ACTUAL_OUTCOME: ${{ steps.actual22.outcome }}
+          ACTUAL_DURATION_MS: ${{ steps.actual22.outputs.duration_ms }}
+        run: node .github/qualification/public-summary.mjs
+      - name: Upload validated Native summary
+        if: always() && steps.public_summary.outcome == 'success' && steps.public_summary.outputs.ready == 'true'
         uses: actions/upload-artifact@v4
         with:
-          name: native-memory-observations
-          path: .superpowers/native-memory
+          name: native-verification-summary
+          path: ${{ runner.temp }}/codeatlas-public-summary/summary.json
           if-no-files-found: error
-      - name: Preserve original fixed-volume REFRESH scratch on export failure
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: native-refresh-original-fallback
-          path: |
-            C:/CodeAtlas-P05-D5/evidence/corpus/replay
-            C:/CodeAtlas-P05-D5-R2/evidence/corpus/replay
-            C:/CodeAtlas-P05-D5-R3/evidence/corpus/replay
-            C:/CodeAtlas-P05-D5-R4/evidence/corpus/replay
-            C:/CodeAtlas-P05-D5-R5/evidence/corpus/replay
-            C:/CodeAtlas-P05-D5-R8/evidence/corpus/replay
-            C:/CodeAtlas-P05-D5-R10/evidence/corpus/replay
-          # Absent before acquisition is expected; the required actual step still fails.
-          if-no-files-found: ignore

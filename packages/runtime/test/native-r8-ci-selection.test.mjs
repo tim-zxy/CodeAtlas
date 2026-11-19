@@ -53,11 +53,7 @@ test('A1 CI selection preserves jobs, original actual gates, stop control and to
   const actualIndex = nativeSteps.findIndex((value) => value.name === step.name);
   for (const prerequisite of nativeSteps.slice(0, actualIndex))
     assert.notEqual(prerequisite['continue-on-error'], true);
-  for (const name of [
-    'Preserve memory observations including failures',
-    'Preserve original fixed-volume REFRESH scratch on export failure',
-  ])
-    assert.equal(nativeSteps.find((value) => value.name === name).if, 'always()');
+  assert.notEqual(step['continue-on-error'], true);
   assert.match(step.run, /Remove-Item Env:GITHUB_TOKEN -ErrorAction SilentlyContinue/);
   assert.match(step.run, /Remove-Item Env:GH_TOKEN -ErrorAction SilentlyContinue/);
   assert.match(step.run, /finally \{[\s\S]*\$env:GITHUB_TOKEN = \$previousGitHubToken/);
@@ -85,16 +81,29 @@ test('A1 CI selection preserves jobs, original actual gates, stop control and to
   assert.match(entry, /await verifyIdentity\(true\)/);
 });
 
-test('R8 CI selection retains original and current fixed-volume failure evidence', () => {
-  const text = workflow();
-  const fallback = text.split(
-    'Preserve original fixed-volume REFRESH scratch on export failure',
-  )[1];
-  assert.ok(fallback, 'Original fallback step required');
-  for (const suffix of ['', '-R2', '-R3', '-R4', '-R5', '-R8'])
-    assert.ok(fallback.includes('C:/CodeAtlas-P05-D5' + suffix + '/evidence/corpus/replay'));
-  assert.match(fallback, /if: always\(\)/);
-  assert.match(fallback, /name: native-refresh-original-fallback/);
+test('CI exports only a validated fixed summary and keeps original failures', () => {
+  const jobs = Object.values(parse(workflow()).jobs);
+  const steps = jobs.flatMap((job) => job.steps);
+  const uploads = steps.filter((s) => s.uses?.startsWith('actions/upload-artifact@'));
+  assert.equal(uploads.length, 1);
+  assert.deepEqual(uploads[0].with, {
+    name: 'native-verification-summary',
+    path: '${{ runner.temp }}/codeatlas-public-summary/summary.json',
+    'if-no-files-found': 'error',
+  });
+  assert.equal(
+    uploads[0].if,
+    "always() && steps.public_summary.outcome == 'success' && steps.public_summary.outputs.ready == 'true'",
+  );
+  const gate = steps.find((s) => s.id === 'public_summary');
+  assert.equal(
+    gate.if,
+    "always() && (steps.actual22.outcome == 'success' || steps.actual22.outcome == 'failure')",
+  );
+  assert.equal(gate.run, 'node .github/qualification/public-summary.mjs');
+  assert.equal(gate.env.ACTUAL_OUTCOME, '${{ steps.actual22.outcome }}');
+  assert.equal(gate.env.ACTUAL_DURATION_MS, '${{ steps.actual22.outputs.duration_ms }}');
+  assert.match(steps.find((s) => s.id === 'actual22').run, /exit \$collectExitCode/);
 });
 
 test('R8 CI selection pins the verified asset and retains strict approval refusals', () => {
@@ -251,8 +260,82 @@ test('R8 CI script prerequisite failure cannot pass or run the expensive qualifi
     assert.ok(step, name + ' remains required');
     assert.match(step.if, /steps\.script_catalog\.outcome == 'success'/);
   }
-  assert.match(
-    job.steps.find((step) => step.name === 'Preserve memory observations including failures').if,
-    /always\(\)/,
+  assert.match(job.steps.find((step) => step.id === 'public_summary').if, /always\(\)/);
+});
+import { spawnSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
+
+test('public summary validates real receipt files before signaling upload', async (t) => {
+  const root = await realpath(await mkdtemp(path.join(tmpdir(), 'codeatlas-summary-')));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const source = path.join(root, '.superpowers/native-memory/exact-pack/acceptance');
+  await mkdir(source, { recursive: true });
+  const approved = readFileSync(
+    new URL('../../../fixtures/ipc/refresh-v3/approved-transport-a1.json', import.meta.url),
   );
+  await mkdir(path.join(root, 'fixtures/ipc/refresh-v3'), { recursive: true });
+  await writeFile(path.join(root, 'fixtures/ipc/refresh-v3/approved-transport-a1.json'), approved);
+  const base = {
+    schemaVersion: 1,
+    command: 'collect',
+    success: true,
+    stage: 'ACTUAL',
+    approvalSha256: createHash('sha256').update(approved).digest('hex'),
+    archiveSha256: JSON.parse(approved).archive.sha256,
+  };
+  const failed = {
+    schemaVersion: 1,
+    command: 'collect',
+    success: false,
+    stage: 'ARCHIVE',
+    code: 'D5_CI_FAILED',
+  };
+  const script = fileURLToPath(
+    new URL('../../../.github/qualification/public-summary.mjs', import.meta.url),
+  );
+  for (const [id, receipt, outcome, elapsed, expected] of [
+    ['missing', null, 'failure', '', null],
+    ['extra', { ...failed, detail: 'unexpected' }, 'failure', '10', null],
+    ['mismatch', { ...base, archiveSha256: '0'.repeat(64) }, 'success', '10', null],
+    ['range', base, 'success', '6600001', null],
+    ['contradiction', base, 'failure', '10', null],
+    ['ok', base, 'success', '10', 'PASSED'],
+    ['failed', failed, 'failure', '10', 'FAILED'],
+  ]) {
+    const dest = path.join(root, id),
+      output = path.join(dest, 'output');
+    await mkdir(dest);
+    await writeFile(output, '');
+    if (receipt) await writeFile(path.join(source, 'ci-result.json'), JSON.stringify(receipt));
+    const run = spawnSync(process.execPath, [script], {
+      cwd: root,
+      env: {
+        ...process.env,
+        RUNNER_TEMP: dest,
+        GITHUB_OUTPUT: output,
+        ACTUAL_DURATION_MS: elapsed,
+        ACTUAL_OUTCOME: outcome,
+      },
+    });
+    assert.equal(run.status, 0, id);
+    const ready = readFileSync(output, 'utf8');
+    const summary = path.join(dest, 'codeatlas-public-summary/summary.json');
+    if (expected === null) {
+      assert.equal(ready, '', id);
+      assert.throws(() => readFileSync(summary), { code: 'ENOENT' });
+      continue;
+    }
+    assert.equal(ready, 'ready=true\n');
+    const value = JSON.parse(readFileSync(summary, 'utf8'));
+    assert.deepEqual(Object.keys(value).sort(), [
+      'durationMs',
+      'receiptSha256',
+      'status',
+      'successfulCollections',
+    ]);
+    assert.equal(value.status, expected);
+    assert.equal(value.successfulCollections, Number(expected === 'PASSED'));
+    assert.equal(value.durationMs, 10);
+    assert.match(value.receiptSha256, /^[0-9a-f]{64}$/);
+  }
 });

@@ -1,3 +1,7 @@
+## Public CI artifact retention exception (2026-11-19)
+
+For public CI downloads, this decision supersedes the raw-directory upload provisions below. The runner still generates original diagnostics and executes the existing replay, ownership and failure checks. Only a validated summary of the actual22 invocation may be downloaded. Its fields are status, successful collection count, elapsed milliseconds and a SHA-256 digest of the validated receipt fields. A missing or invalid receipt produces no downloadable artifact. Original replay directories remain runner-local.
+
 ## Approved independent R11 actual22 coordinator - 2026-11-10
 
 User explicitly approved [this independent deny-only entry](../../superpowers/specs/2026-11-10-r11-actual-coordinator.md) for implementation and self-owned substitutes. Frozen script/reader/candidate identities and successful measurement/validation remain unchanged. New executor/request/tool seals do not grant real execution, publication, numerical/production authority or CI switch. Offline50 tests/architecture17 and independent review pass; actual22 and every phase/quality gate remain outstanding. Original failed trees/evidence stay protected.
