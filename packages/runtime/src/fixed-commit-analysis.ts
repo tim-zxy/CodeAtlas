@@ -15,7 +15,7 @@ import {
 } from '../../storage/dist/source-state/commit-capture.js';
 
 import { isDeepStrictEqual } from 'node:util';
-import { ensurePhase1Data, type CommitRevision } from '../../ir/dist/index.js';
+
 import {
   NativeAnalyzeRequestV2Schema,
   type NativeAnalyzeRequestV2,
@@ -80,7 +80,7 @@ interface NativeInput {
   rootTreeOid: string;
   manifestDigest: string;
   selectionFingerprint: string;
-  revision: CommitRevision;
+  revision: Extract<NativeAnalyzeRequestV2['payload']['revision'], { kind: 'COMMIT' }>;
   files: Awaited<ReturnType<typeof readFixedCommitCaptureFiles>>;
 }
 
@@ -100,7 +100,7 @@ export async function withFixedCommitNativeInput<T>(
   const owner = owners.get(db);
   requireBound(owner);
   owner.account.own(request);
-  ensurePhase1Data(request);
+  owner.history.own(request, false);
   const q: NativeRequest = freezeComposition(
     (request as { protocolVersion?: number } | null)?.protocolVersion === 2
       ? NativeAnalyzeRequestV2Schema.parse(request)
@@ -112,7 +112,7 @@ export async function withFixedCommitNativeInput<T>(
   const contracts = 'contracts' in stageOwner ? stageOwner.contracts : undefined;
   if (contracts !== undefined) {
     owner.account.own(contracts);
-    ensurePhase1Data(contracts);
+    owner.history.own(contracts, false);
   }
   const checkedContracts =
     contracts === undefined ? undefined : freezeComposition(structuredClone(contracts));

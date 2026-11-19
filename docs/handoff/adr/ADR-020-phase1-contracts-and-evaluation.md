@@ -732,3 +732,5 @@ Approved private Source selection for an already authorized local root, full com
 ### P1-09 fixed-commit analysis capture (2026-11-19)
 
 The approved private COMMIT capture may coexist with WORKTREE capture. Application issues and revalidates the grant-bound selection; Store validates the manifest before binding Stage. See the [capture and coverage contract](../../superpowers/specs/2026-10-23-phase1-code-context-capture-dcp.md#private-fixed-commit-capture-v1-2026-11-19).
+
+P1-09 permits private bounded Native V2/V8 consumption of authorized immutable file bytes. The [fixed-commit input contract](../../superpowers/specs/2026-10-23-phase1-code-context-capture-dcp.md#private-native-consumption-of-commit-bytes) preserves the real repository locator, live authorization, original WORKTREE behavior and existing qualification gates.

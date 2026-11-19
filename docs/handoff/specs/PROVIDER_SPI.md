@@ -573,3 +573,5 @@ B0b-3/B1/C,productionrouting/trustedhistory/retainedsupport/oneNativeSnapshot/at
 ## A/B本地闭环合同已批准 — 2026-11-02
 
 用户明确批准[精确合同](../../superpowers/specs/2026-11-02-phase1-ab-local-closure-contract.md)及U0–U7整包，状态ACCEPTED_FOR_LOCAL_IMPLEMENTATION；wire8/Syntax4/context5、最小语言表面证据、框架覆盖/site-plan、V2候选摘要/activation JSON及同lease联合提交按该合同执行。旧入口/历史/门禁不改，新增用途沿原规范0.5不代表概率校准。仅计划列明的本地库级运行/owned SQLite及范围内修复复验；生产CLI、profile、用户DB、云端CI/Git写入仍未授权。实施结果尚未验收，父项4/21、17OPEN不变。
+
+For P1-09 fixed-commit analysis, private V2/V8 consumers must use the [authorized commit bytes](../../superpowers/specs/2026-10-23-phase1-code-context-capture-dcp.md#private-native-consumption-of-commit-bytes). Each input is scoped to one capture and request. A missing byte input refuses the fixed-commit operation. WORKTREE source access and public provider contracts retain their existing behavior.
