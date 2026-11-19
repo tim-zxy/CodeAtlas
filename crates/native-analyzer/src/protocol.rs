@@ -29,7 +29,7 @@ enum RequestFailure {
     },
 }
 
-pub(crate) fn serve_once<R: Read, W: Write, E: Write + Send>(
+pub fn serve_once<R: Read, W: Write, E: Write + Send>(
     input: &mut R,
     output: &mut W,
     diagnostics: &mut E,
@@ -37,7 +37,7 @@ pub(crate) fn serve_once<R: Read, W: Write, E: Write + Send>(
     serve_once_impl(input, output, diagnostics, None)
 }
 
-pub(crate) fn serve_once_with_workers<R: Read, W: Write, E: Write + Send>(
+pub fn serve_once_with_workers<R: Read, W: Write, E: Write + Send>(
     input: &mut R,
     output: &mut W,
     diagnostics: &mut E,

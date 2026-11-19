@@ -1,6 +1,3 @@
-mod analyze;
-mod protocol;
-
 use std::ffi::OsStr;
 use std::num::NonZeroUsize;
 use std::process::ExitCode;
@@ -8,7 +5,7 @@ use std::process::ExitCode;
 fn main() -> ExitCode {
     let mut arguments = std::env::args_os().skip(1);
     match (arguments.next(), arguments.next(), arguments.next()) {
-        (None, None, None) => protocol::serve_once(
+        (None, None, None) => codeatlas_native_analyzer::serve_once(
             &mut std::io::stdin().lock(),
             &mut std::io::stdout().lock(),
             &mut std::io::stderr(),
@@ -27,7 +24,7 @@ fn main() -> ExitCode {
                 eprintln!("codeatlas-native-analyzer: invalid parse workers");
                 return ExitCode::from(2);
             };
-            protocol::serve_once_with_workers(
+            codeatlas_native_analyzer::serve_once_with_workers(
                 &mut std::io::stdin().lock(),
                 &mut std::io::stdout().lock(),
                 &mut std::io::stderr(),

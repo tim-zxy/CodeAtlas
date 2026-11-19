@@ -1,4 +1,11 @@
+extern crate self as codeatlas_native_analyzer;
+mod analyze;
+mod protocol;
+#[doc(hidden)]
+pub use protocol::{serve_once, serve_once_with_workers};
 pub mod analysis_state;
+#[doc(hidden)]
+pub mod fixed_commit;
 pub mod java;
 pub mod java_relations;
 pub mod java_syntax;

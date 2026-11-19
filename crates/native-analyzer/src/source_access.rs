@@ -48,7 +48,9 @@ pub fn read_verified_source(
     Ok(bytes)
 }
 
-fn validate_relative_components(relative_path: &str) -> Result<PathBuf, SourceAccessError> {
+pub(crate) fn validate_relative_components(
+    relative_path: &str,
+) -> Result<PathBuf, SourceAccessError> {
     if relative_path.is_empty()
         || relative_path.contains('\\')
         || relative_path.contains(':')

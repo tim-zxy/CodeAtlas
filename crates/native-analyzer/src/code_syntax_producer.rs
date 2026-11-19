@@ -45,6 +45,15 @@ pub(crate) fn write_code_syntax_observation_mode(
     output: &mut impl Write,
     mode: crate::code_syntax::CodeSyntaxMode,
 ) -> io::Result<()> {
+    emit_with_source(request, limits, output, mode, None)
+}
+pub(crate) fn emit_with_source(
+    request: &CodeSyntaxRequest,
+    limits: &SyntaxWalkControl<'_>,
+    output: &mut impl Write,
+    mode: crate::code_syntax::CodeSyntaxMode,
+    committed: Option<&crate::fixed_commit::BoundFiles>,
+) -> io::Result<()> {
     let binding_v6 = mode.selector().is_some();
     let v7 = matches!(
         mode,
@@ -52,6 +61,14 @@ pub(crate) fn write_code_syntax_observation_mode(
             | crate::code_syntax::CodeSyntaxMode::FrameworkSurfaceV4
     );
     let p = &request.header()["payload"];
+    if matches!(mode, crate::code_syntax::CodeSyntaxMode::FrameworkSurfaceV4)
+        && p["targetSource"]["revisionId"]
+            .as_str()
+            .is_some_and(|v| v.starts_with("commit:"))
+        && committed.is_none()
+    {
+        return Err(crate::fixed_commit::denied());
+    }
     let b = &p["resourceBudget"];
     let mut binding = json!({"expectedActivationBasis":p["expectedActivationBasis"],"targetSource":p["targetSource"],"ownerBinding":p["ownerBinding"],"extractorVersion":p["extractorVersion"],"codeContract":p["codeContract"],"requestChecksum":request.request_checksum()});
     if binding_v6 {
@@ -136,14 +153,18 @@ pub(crate) fn write_code_syntax_observation_mode(
                 max_items: remaining_items,
                 ..control
             };
-            let source = read_verified_source(
-                Path::new(p["repository"]["rootPath"].as_str().unwrap()),
-                file["path"].as_str().unwrap(),
-                file["contentFingerprint"].as_str().unwrap(),
-                control
-                    .max_source_bytes
-                    .min(max_input.saturating_sub(input_bytes)),
-            )
+            let limit = control
+                .max_source_bytes
+                .min(max_input.saturating_sub(input_bytes));
+            let source = match committed {
+                Some(files) => files.read(file, limit),
+                None => read_verified_source(
+                    Path::new(p["repository"]["rootPath"].as_str().unwrap()),
+                    file["path"].as_str().unwrap(),
+                    file["contentFingerprint"].as_str().unwrap(),
+                    limit,
+                ),
+            }
             .map_err(source_code)?;
             #[cfg(test)]
             if input_bytes.checked_add(source.len()).is_none() {

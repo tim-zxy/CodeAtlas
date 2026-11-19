@@ -357,6 +357,7 @@ fn run_with_diagnostic<W: Write, F: Fn(&str) + Sync, G: Fn(&str) + Sync>(
                         scope.spawn(move || {
                             let result = if let Some(observer) = observation {
                                 parse_source(
+                                    None,
                                     root,
                                     file,
                                     deadline,
@@ -852,6 +853,7 @@ mod tests {
         }
         let caps = vec!["SYMBOL", "IMPORT", "CALL", "INHERITANCE", "REFERENCE"];
         let request = Request {
+            committed: None,
             protocol_version: 3,
             id: "full".into(),
             snapshot_id: "baseline".into(),
@@ -1094,6 +1096,7 @@ mod tests {
         );
         let index = super::build_index(&files, 256 * 1024 * 1024, &|| Ok(())).unwrap();
         let request = Request {
+            committed: None,
             protocol_version: 3,
             id: "full".into(),
             snapshot_id: "baseline".into(),

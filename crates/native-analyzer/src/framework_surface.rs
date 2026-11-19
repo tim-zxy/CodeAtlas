@@ -4,7 +4,7 @@ use crate::{
     syntax::{SyntaxRequestError, SyntaxWalkControl},
 };
 use std::io::{self, Write};
-pub struct FrameworkSurfaceRequest(CodeSyntaxRequest);
+pub struct FrameworkSurfaceRequest(pub(crate) CodeSyntaxRequest);
 impl FrameworkSurfaceRequest {
     pub fn header(&self) -> &serde_json::Value {
         self.0.header()

@@ -55,6 +55,7 @@ const RESULT_BYTES_PER_WORKER: usize = (WORKER_RESERVATION_BYTES / 4) as usize;
 const JAVA_RESOLVER_VERSION: &str = "1";
 
 struct Request {
+    committed: Option<Arc<crate::fixed_commit::BoundFiles>>,
     protocol_version: u64,
     id: String,
     snapshot_id: String,
@@ -81,7 +82,9 @@ pub(crate) fn run<W: Write, E: Write>(
         .and_then(exact)
         .unwrap_or("")
         .to_owned();
-    let parsed = parse_request(&request);
+    let parsed = (request["payload"]["revision"]["kind"] != "COMMIT")
+        .then(|| parse_request(&request))
+        .flatten();
     let request = match parsed {
         Some(request) => request,
         None => {
@@ -173,6 +176,24 @@ pub(crate) fn run_full_v3<W: Write, E: Write + Send>(
     );
     observation.finish();
     result
+}
+
+pub(crate) fn worker_reservation(workers: NonZeroUsize) -> u64 {
+    (workers.get() as u64).saturating_mul(WORKER_RESERVATION_BYTES)
+}
+
+pub(crate) fn run_committed<W: Write>(
+    request: &Value,
+    source: crate::fixed_commit::BoundFiles,
+    workers: NonZeroUsize,
+    output: &mut W,
+) -> io::Result<ExitCode> {
+    let mut parsed = parse_request(request).ok_or_else(crate::fixed_commit::denied)?;
+    parsed.max_memory_bytes = parsed
+        .max_memory_bytes
+        .saturating_sub(source.retained_bytes());
+    parsed.committed = Some(Arc::new(source));
+    run_parsed(parsed, workers, output, None, None)
 }
 
 fn run_parsed<W: Write>(
@@ -290,9 +311,11 @@ fn run_parsed<W: Write>(
             return stream.fail(&context, "BUDGET_EXCEEDED", "Analysis deadline exceeded");
         }
         let root = request.root.clone();
+        let committed = request.committed.clone();
         let Some(results) =
             timed_batch(chunk, remaining, move |file, deadline, cancelled, slot| {
                 parse_source(
+                    committed.as_deref(),
                     &root,
                     &file,
                     deadline,
@@ -461,9 +484,11 @@ fn run_relations<W: Write>(
             return stream.fail(context, "BUDGET_EXCEEDED", "Analysis deadline exceeded");
         }
         let root = request.root.clone();
+        let committed = request.committed.clone();
         let Some(results) =
             timed_batch(chunk, remaining, move |file, deadline, cancelled, slot| {
                 parse_source(
+                    committed.as_deref(),
                     &root,
                     &file,
                     deadline,
@@ -520,9 +545,11 @@ fn run_relations<W: Write>(
             return stream.fail(context, "BUDGET_EXCEEDED", "Analysis deadline exceeded");
         }
         let root = request.root.clone();
+        let committed = request.committed.clone();
         let Some(results) =
             timed_batch(chunk, remaining, move |file, deadline, cancelled, slot| {
                 parse_source(
+                    committed.as_deref(),
                     &root,
                     &file,
                     deadline,
@@ -970,6 +997,7 @@ fn parse_request(value: &Value) -> Option<Request> {
         }
     }
     Some(Request {
+        committed: None,
         protocol_version: integer(&object["protocolVersion"])?,
         id: id.into(),
         snapshot_id: snapshot_id.into(),
@@ -1123,6 +1151,7 @@ fn ordered_batch<T: Sync, R: Send, F: Fn(&T) -> R + Sync>(
 }
 
 fn parse_source(
+    committed: Option<&crate::fixed_commit::BoundFiles>,
     root: &str,
     source_file: &Value,
     deadline: Instant,
@@ -1131,7 +1160,8 @@ fn parse_source(
     observation: Option<(&dyn ParseObserver, usize)>,
 ) -> Result<LanguageAnalysis, ProcessingError> {
     let entered = AtomicBool::new(false);
-    let result = parse_source_observed(
+    let result = parse_source_bound(
+        committed,
         root,
         source_file,
         deadline,
@@ -1167,6 +1197,26 @@ fn parse_source_observed<F: Fn(&str) + Sync>(
     with_relations: bool,
     on_parse: &F,
 ) -> Result<LanguageAnalysis, ProcessingError> {
+    parse_source_bound(
+        None,
+        root,
+        source_file,
+        deadline,
+        cancelled,
+        with_relations,
+        on_parse,
+    )
+}
+
+fn parse_source_bound<F: Fn(&str) + Sync>(
+    committed: Option<&crate::fixed_commit::BoundFiles>,
+    root: &str,
+    source_file: &Value,
+    deadline: Instant,
+    cancelled: &AtomicBool,
+    with_relations: bool,
+    on_parse: &F,
+) -> Result<LanguageAnalysis, ProcessingError> {
     if Instant::now() >= deadline || cancelled.load(Ordering::Relaxed) {
         return Err(ProcessingError::Deadline);
     }
@@ -1180,9 +1230,11 @@ fn parse_source_observed<F: Fn(&str) + Sync>(
     let expected = source_file["contentFingerprint"]
         .as_str()
         .expect("validated fingerprint");
-    let source_bytes =
-        read_verified_source(Path::new(root), path, expected, SOURCE_BYTES_PER_WORKER)
-            .map_err(ProcessingError::Source)?;
+    let source_bytes = match committed {
+        Some(files) => files.read(source_file, SOURCE_BYTES_PER_WORKER),
+        None => read_verified_source(Path::new(root), path, expected, SOURCE_BYTES_PER_WORKER),
+    }
+    .map_err(ProcessingError::Source)?;
     if Instant::now() >= deadline || cancelled.load(Ordering::Relaxed) {
         return Err(ProcessingError::Deadline);
     }
@@ -2110,6 +2162,7 @@ mod tests {
         let path = root.join("src/A.java");
         fs::write(&path, first).unwrap();
         let request = Request {
+            committed: None,
             protocol_version: version,
             id: "relation-race".into(),
             snapshot_id: "snapshot".into(),
@@ -2178,6 +2231,7 @@ mod tests {
         let path = root.join("src/A.java");
         fs::write(&path, source).unwrap();
         let request = Request {
+            committed: None,
             protocol_version: 1,
             id: "relation-bytes".into(),
             snapshot_id: "snapshot".into(),
