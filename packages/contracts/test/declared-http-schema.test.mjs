@@ -134,7 +134,7 @@ test('Kafka declarations bind both endpoints to versioned Source and exact wire 
           channel: 'events',
           namespace: 'owned-events',
           payload: { type: 'string', encoding: 'utf-8' },
-          key: { kind: 'ABSENT' },
+          key: { type: 'string', encoding: 'utf-8' },
         }));
     });
   const match = (input) => api.matchContractsV2(seal(input), control()).matches;
@@ -148,12 +148,27 @@ test('Kafka declarations bind both endpoints to versioned Source and exact wire 
   const missing = structuredClone(x);
   missing.schemaDocuments.pop();
   assert(match(missing).every((m) => m.payload.selectedProviderRef === null));
+  const unkeyed = structuredClone(x);
+  for (const document of unkeyed.schemaDocuments)
+    rebody(document, (doc) => {
+      for (const binding of doc.bindings) binding.key = { kind: 'ABSENT' };
+    });
+  const unkeyedResult = api.matchContractsV2(seal(unkeyed), control());
+  assert.equal(unkeyedResult.coverage.status, 'PARTIAL');
+  assert(
+    unkeyedResult.matches.every(
+      (m) => m.payload.status === 'UNRESOLVED' && m.payload.selectedProviderRef === null,
+    ),
+  );
   const conflict = structuredClone(x);
   rebody(conflict.schemaDocuments[1], (doc) => {
-    doc.bindings[0].key = { type: 'string', encoding: 'utf-8' };
+    doc.bindings[0].key = { kind: 'ABSENT' };
   });
   assert(match(conflict).every((m) => m.payload.status === 'CONFLICTED'));
   for (const mutate of [
+    (doc) => {
+      delete doc.bindings[0].key;
+    },
     (doc) => {
       doc.bindings[0].role = 'CONSUMER';
     },

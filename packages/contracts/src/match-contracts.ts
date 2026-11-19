@@ -252,6 +252,7 @@ function matchCore(
           if (sender) schemaSupports.push(sender.sourceSupport);
           unproved = !sender || !listener;
           if (sender && listener) {
+            unproved = 'kind' in sender.key || 'kind' in listener.key;
             contradiction ||=
               sender.namespace !== listener.namespace ||
               canonicalRuntimeJson(sender.payload) !== canonicalRuntimeJson(listener.payload) ||
