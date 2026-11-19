@@ -1,3 +1,4 @@
+import { isDeepStrictEqual } from 'node:util';
 import {
   ensurePhase1Data,
   CommitRevisionSchema,
@@ -118,6 +119,9 @@ const captures = new WeakMap<
   {
     manifest: Readonly<CommitManifest>;
     authorize: () => void;
+    reread: (
+      paths: readonly string[],
+    ) => ReturnType<ReturnType<typeof createFixedCommitSourceReader>>;
   }
 >();
 
@@ -201,7 +205,11 @@ export function createFixedCommitCapture(owner: CommitReadOwner) {
       };
       recheck();
       const handle = Object.freeze({});
-      captures.set(handle, { manifest, authorize: recheck });
+      captures.set(handle, {
+        manifest,
+        authorize: recheck,
+        reread: (paths) => read(paths, account),
+      });
       return handle;
     } catch (error) {
       account.invalidate();
@@ -223,4 +231,51 @@ export function useFixedCommitCapture<T>(
     throw error;
   }
   return consume(captured.manifest);
+}
+
+// Private consumer of a previously captured inventory. No caller-provided root,
+// grant, classification or blob identity participates in the reread.
+interface CommitNativeFile {
+  sourceFile: SourceFile;
+  blobOid: string;
+  sizeBytes: number;
+  bytes: Buffer;
+}
+export async function readFixedCommitCaptureFiles(
+  handle: object,
+  sourceFiles: readonly SourceFile[],
+): Promise<CommitNativeFile[]> {
+  const capture = captures.get(handle);
+  if (!capture) throw Error('INVALID_COMMIT_CAPTURE');
+  const m = capture.manifest;
+  if (!m.revision || m.selectionCoverage !== 'COMPLETE') throw Error('INVALID_COMMIT_CAPTURE');
+  const indices = new Map(m.inventory.map((file, i) => [file.path, i]));
+  const enrollment = sourceFiles.map((file) => {
+    const index = indices.get(file.path);
+    if (index === undefined || !isDeepStrictEqual(file, m.inventory[index]))
+      throw Error('INVALID_COMMIT_CAPTURE');
+    return { sourceFile: m.inventory[index]!, expected: m.files[index]! };
+  });
+  useFixedCommitCapture(handle, () => undefined);
+  if (!enrollment.length) return [];
+  const observed = await capture.reread(enrollment.map(({ sourceFile }) => sourceFile.path));
+  if (
+    observed.repositoryId !== m.repositoryId ||
+    observed.commitOid !== m.commitOid ||
+    observed.rootTreeOid !== m.rootTreeOid ||
+    observed.files.length !== enrollment.length
+  )
+    throw Error('INVALID_COMMIT_CAPTURE');
+  const result = enrollment.map(({ sourceFile, expected }, i) => {
+    const file = observed.files[i]!;
+    if (
+      file.path !== expected.path ||
+      file.contentFingerprint !== expected.contentFingerprint ||
+      file.blobOid !== expected.blobOid ||
+      file.bytes.length !== expected.sizeBytes
+    )
+      throw Error('INVALID_COMMIT_CAPTURE');
+    return { sourceFile, blobOid: file.blobOid, sizeBytes: file.bytes.length, bytes: file.bytes };
+  });
+  return useFixedCommitCapture(handle, () => result);
 }
