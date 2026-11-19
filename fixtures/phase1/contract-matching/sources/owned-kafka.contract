@@ -3,7 +3,16 @@
   "version": 1,
   "bindings": [
     {
-      "contractFactKey": "runtime-fact:c5a324f3feb20d0fd296a0bb3ab18130f8d34596dff9153ebd199d81ac29bcd0",
+      "selector": {
+        "path": "kafka/source-adequacy/KafkaSource.java",
+        "contentFingerprint": "sha256:75efaeb25730a4b46838fbfded89cc1b5ed53961663a6072a8f1ac22edbf1bfe",
+        "range": {
+          "startLine": 10,
+          "startColumn": 4,
+          "endLine": 10,
+          "endColumn": 37
+        }
+      },
       "role": "CONSUMER",
       "channel": "events",
       "namespace": "owned-events",
@@ -16,7 +25,16 @@
       }
     },
     {
-      "contractFactKey": "runtime-fact:2344e4119dcfbbe151ca8f548300cafb66a2bdc0d77ff5d8bcf357df0f289cd3",
+      "selector": {
+        "path": "kafka/source-adequacy/KafkaSource.java",
+        "contentFingerprint": "sha256:75efaeb25730a4b46838fbfded89cc1b5ed53961663a6072a8f1ac22edbf1bfe",
+        "range": {
+          "startLine": 8,
+          "startColumn": 8,
+          "endLine": 8,
+          "endColumn": 38
+        }
+      },
       "role": "PRODUCER",
       "channel": "events",
       "namespace": "owned-events",

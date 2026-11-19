@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { isDeepStrictEqual } from 'node:util';
 import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
@@ -398,8 +399,19 @@ test('Kafka source replay resolves declared endpoint selectors and refuses mutab
       );
       const declared = JSON.parse(doc.contentUtf8).bindings;
       for (const binding of declared) {
-        const contract = facts.payload.contracts.find((c) => c.factKey === binding.contractFactKey);
-        assert(contract);
+        const file = snapshot.values.find(
+          (v) => v.support.entity.kind === 'SOURCE_FILE' && v.value.path === binding.selector.path,
+        );
+        assert(file);
+        assert.equal(file.value.contentFingerprint, binding.selector.contentFingerprint);
+        const matches = facts.payload.contracts.filter((c) =>
+          isDeepStrictEqual(c.sourceRange, {
+            sourceFileId: file.support.entity.id,
+            ...binding.selector.range,
+          }),
+        );
+        assert.equal(matches.length, 1);
+        const [contract] = matches;
         assert.equal(contract.signature.role, binding.role);
         assert.equal(contract.signature.channel, binding.channel);
         assert(

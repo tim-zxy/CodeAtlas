@@ -1,5 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { canonicalRuntimeJson } from '@codeatlas/ir';
 import * as api from '../dist/match-contracts.js';
 import { fixture, seal, rebody, control, expected } from './fixtures/declared-schema.mjs';
 test('declared HTTP matcher proves both explicit consumers without rewriting repo contracts', () => {
@@ -123,26 +125,63 @@ test('Kafka declarations bind both endpoints to versioned Source and exact wire 
       keySchemaRef: null,
     };
   }
-  for (const doc of x.schemaDocuments)
+  x.kafkaSourceFiles = [];
+  for (const doc of x.schemaDocuments) {
+    const contracts = x.contractRefs.filter(
+      (r) => r.ref.repositoryId === doc.sourceFile.repositoryId,
+    );
+    const sites = contracts.map(({ contract }) =>
+      contract.signature.role === 'PRODUCER'
+        ? 'template.send("events", key, value)'
+        : '@KafkaListener(topics = "events")',
+    );
+    const code = {
+      ...doc.sourceFile,
+      id: 'file:kafka-sites:' + doc.sourceFile.repositoryId,
+      path: 'Sites.java',
+      classification: { role: 'SOURCE', provenance: 'AUTHORED', contentKind: 'TEXT' },
+      languageHint: 'java',
+      contentFingerprint: 'sha256:' + createHash('sha256').update(sites.join('\n')).digest('hex'),
+    };
+    const sourceSupport = {
+      ...doc.sourceSupport,
+      entity: { ...doc.sourceSupport.entity, id: code.id },
+      valueDigest: createHash('sha256')
+        .update('codeatlas-phase1-support-value-v1\0' + canonicalRuntimeJson(code))
+        .digest('hex'),
+    };
+    x.kafkaSourceFiles.push({ sourceFile: code, sourceSupport });
+    const ranges = sites.map((site, index) => ({
+      startLine: index,
+      startColumn: 0,
+      endLine: index,
+      endColumn: site.length,
+    }));
+    contracts.forEach(({ contract }, i) => {
+      contract.sourceRange = { sourceFileId: code.id, ...ranges[i] };
+    });
     rebody(doc, (data) => {
       data.schema = 'codeatlas.declared-kafka-schema';
-      data.bindings = x.contractRefs
-        .filter((r) => r.ref.repositoryId === doc.sourceFile.repositoryId)
-        .map(({ contract }) => ({
-          contractFactKey: contract.factKey,
-          role: contract.signature.role,
-          channel: 'events',
-          namespace: 'owned-events',
-          payload: { type: 'string', encoding: 'utf-8' },
-          key: { type: 'string', encoding: 'utf-8' },
-        }));
+      data.bindings = contracts.map(({ contract }, i) => ({
+        selector: {
+          path: code.path,
+          contentFingerprint: code.contentFingerprint,
+          range: ranges[i],
+        },
+        role: contract.signature.role,
+        channel: 'events',
+        namespace: 'owned-events',
+        payload: { type: 'string', encoding: 'utf-8' },
+        key: { type: 'string', encoding: 'utf-8' },
+      }));
     });
+  }
   const match = (input) => api.matchContractsV2(seal(input), control()).matches;
   const matched = match(x);
   assert(matched.length > 0 && matched.every((m) => m.payload.status === 'MATCHED'));
   assert(
     matched.every(
-      (m) => m.payload.supportRefs.filter((s) => s.entity.kind === 'SOURCE_FILE').length === 2,
+      (m) => m.payload.supportRefs.filter((s) => s.entity.kind === 'SOURCE_FILE').length === 4,
     ),
   );
   const missing = structuredClone(x);
