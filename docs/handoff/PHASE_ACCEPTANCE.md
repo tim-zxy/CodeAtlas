@@ -1,3 +1,12 @@
+## P1-08 Execution Graph and Runtime Flow
+
+E03/E04 are accepted together on `5ef13a43f27c4679bda5d306d021e6755c744991`. Accepted parents are P1-00, P1-01, P1-02, P1-03, P1-08 and P1-09 (6/21).
+
+- Historical RED evidence comes from the original B3 Execution and B5 Store failures before implementation. The original run SHA and full launcher arguments were not recorded.
+- On this commit, the [GitHub TypeScript job](https://github.com/tim-zxy/CodeAtlas/actions/runs/44525740803/job/135565700209) passed all 27 component cases (Graph 6, Flow 5, Store 14, Application 2). The explicit fixture covers TASK and BATCH.
+- In a separate isolated Windows run of this commit, R012 and R013 each failed at its own boundary. After closing the writer, independent read-only reopen verified the predecessor schema and rows. Each unmodified retry succeeded and reopened at the expected version with the owner preserved.
+- The same Windows run resolved per-step supports for JOB and EVENT and preserved topology under input reordering. P5 and J4 used recorded Native inputs with actual Stage, Application, Store and read-only reopen. P5 returned REQUEST. J4 resolved the DATA_CHANGE entry, handler, resource and supports in EVENT. Private Windows receipt SHA-256: `0679d9511fdf29cab4e76d8ad297a56741a4fb17ce9b0d8be8ff1d3916837c3f`.
+
 ## P1-11 owned Component input component evidence - 2026-11-11
 
 Approved same-snapshot/version/digest published Component composition reaches the
