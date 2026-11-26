@@ -1,3 +1,7 @@
+## P1-08 evidence for E03/E04
+
+The [frozen P1-08 five steps](../superpowers/plans/2026-10-22-phase1-foundation-and-runtime.md) map to the registered `p1-execution-flow-v1` and `p1-runtime-storage-v1` fixtures. The [acceptance entry](PHASE_ACCEPTANCE.md#p1-08-execution-graph-and-runtime-flow) distinguishes historical RED, target-commit GitHub component results and target-commit Windows recovery and support readback.
+
 ## Current replay test explicit generator4 repair - 2026-11-14
 
 Existing approved generator4 topology -> current root replay-test fixture explicitly selects it without changing generator3 defaults -> Manifest3 assertion and retained cancellation-prefix verification. Legacy refusal tests remain. Combined topology/selection23/23 PASS; no Native/cloud run, frozen closure or quality-gate change. Full real replay45-failure closure remains unverified pending clean diagnostic environment. [Evidence and limits](CURRENT_STATUS.md#local-current-replay-fixture-generator4-repair---2026-11-14).

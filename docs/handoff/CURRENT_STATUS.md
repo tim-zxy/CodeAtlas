@@ -1,3 +1,7 @@
+## Phase 1 status after P1-08 registration
+
+P1-08 closes E03/E04 as one parent on `5ef13a43f27c4679bda5d306d021e6755c744991`. The Phase 1 count moves from 5/21 to 6/21, with 15 parents open. See the [P1-08 acceptance evidence](PHASE_ACCEPTANCE.md#p1-08-execution-graph-and-runtime-flow). Windows Native qualification and exact-pack release gates retain their separate status.
+
 ## Local current replay fixture generator4 repair - 2026-11-14
 
 Cloud diagnostic43542706340 reproduced a legacy-generator multi-version topology refusal. Only two current replay-test preparation calls now explicitly select existing generator4; current materialization asserts Manifest3/generator4. The cancellation-prefix physical/reference check remains active for d-cancel rather than accidentally taking the old nonprefix branch. Legacy generator2/3 defaults, refusal cases, manifest vectors and all frozen helpers/measurements remain unchanged. Both changed root test files are absent from the approved A1 replay manifest; .github scheduling and documentation are outside the measured closure.
